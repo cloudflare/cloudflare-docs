@@ -42,7 +42,7 @@ Uploading the CA private key is only required if you wish to use [Zero Trust's b
 3. In the **Certificate Authority** dropdown, select **Bring your own CA**.
 4. Upload your CA certificate file (PEM encoded) and enter a name for the CA.
 5. Select **Continue**.
-6. On the **Associate Hostnames** page, enter the fully qualified hostnames that should use this CA for mTLS validation and select **Add** for each one. You can also skip this step and associate hostnames later.
+6. On the **Associate Hostnames** page, enter the fully qualified domain name that should use this CA for mTLS validation and select **Add** for each one. You can also skip this step and associate hostnames later.
 7. Select **Save** to confirm.
 
 </TabItem> <TabItem label="API">
@@ -82,7 +82,7 @@ Uploading the CA private key is only required if you wish to use [Zero Trust's b
 </TabItem> </Tabs>
 
 After uploading the CA and associating hostnames, create a custom rule to enforce client certificate validation.
-You can do this [via the dashboard](/api-shield/security/mtls/configure/) or [via API](/waf/custom-rules/create-api/).
+You can do this [via the dashboard](/learning-paths/mtls/mtls-app-security/#3-validate-the-client-certificate-in-the-waf) or [via API](/waf/custom-rules/create-api/).
 
 ```txt
   "expression": "(http.host in {\"<HOSTNAME_1>\" \"<HOSTNAME_2>\"} and not cf.tls_client_auth.cert_verified)",
@@ -105,7 +105,7 @@ If you wish to remove the association from the Cloudflare-managed certificate an
 
    <DashButton url="/?to=/:account/:zone/ssl-tls/client-certificates" />
 
-2. On the **Hosts** section of the **Client Certificates** card, select **Edit**.
+2. On the **Hosts** section under **Cloudflare-issued Client Certificates**, select **Edit**.
 3. Select the cross next to the hostname you want to remove. The list of hostname associations will be updated.
 4. Select **Save** to confirm.
 
@@ -168,8 +168,8 @@ If you want to remove a CA that you have previously uploaded, you must first rem
    <DashButton url="/?to=/:account/:zone/ssl-tls/client-certificates" />
 
 2. Select the **BYOCA** tab.
-3. Select the **...** next to the CA you want to inspect.
-4. The **Certificate Details** panel displays the associated hostnames.
+3. Find the CA you want to inspect and select the three dots next to it.
+4. Select **Edit hostnames**. The **Certificate Details** panel displays the associated hostnames.
 
 </TabItem> <TabItem label="API">
 
