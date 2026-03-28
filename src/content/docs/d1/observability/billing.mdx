@@ -13,16 +13,97 @@ The metrics displayed in the [Cloudflare dashboard](https://dash.cloudflare.com/
 
 ## View metrics in the dashboard
 
-Total account billable usage analytics for D1 are available in the Cloudflare dashboard. To view current and past metrics for an account:
+Billable Usage Dashboard
+The Billable Usage Dashboard gives Pay-as-you-go (PayGo) customers daily visibility into usage-based costs across their Cloudflare account. Data is sourced from the same system that generates your monthly invoice, so the figures you see in the dashboard will match your bill.
 
-1. In the Cloudflare dashboard, go to the **Billing** page.
+The Billable Usage Dashboard shows usage-based overage charges only. Fixed-fee plan subscriptions (for example, a Pro plan) are not included.
 
-   <DashButton url="/?to=/:account/billing" />
-2. Go to **Billable Usage**.
+Availability
+The Billable Usage Dashboard is available to Pay-as-you-go (PayGo) accounts only. Enterprise contract accounts are not currently supported.
 
-From here you can view charts of your account's D1 usage on a daily or month-to-date timeframe.
+To access the dashboard, you must have the Billing read permission on your account.
 
-Note that billable usage history is stored for a maximum of 30 days.
+Access the dashboard
+Log in to the Cloudflare dashboard.
+Select your account.
+Go to Manage Account > Billing.
+Select Billable Usage.
+What you will see
+Chart
+A bar chart displays your daily usage charges for the selected billing period. Each bar represents the total rated cost across all usage-based products on your account for that day.
+
+Usage table
+Below the chart, a sortable table breaks down each charge period by product and day:
+
+
+
+Service Name
+
+The Cloudflare product generating the usage charge
+
+Billing Period Start
+
+The start date of the billing cycle this charge falls within
+
+Charge Period Start
+
+The start of the daily charge period
+
+Charge Period End
+
+The end of the daily charge period
+
+Consumed Quantity
+
+The amount of the resource used during the charge period
+
+Consumed Unit
+
+The unit of measurement (for example, Requests, Minutes, Bytes)
+
+Cost
+
+The cost for that charge period in your billing currency
+
+Cumulative Cost
+
+The running total cost accumulated since the billing period start
+
+Date range
+By default, the dashboard shows data for your current billing period. Use the date picker to navigate to a previous billing period.
+
+How data aligns with your invoice
+The dashboard reads from the same data source used to generate your monthly invoice.
+
+Usage data is aligned to your billing cycle, not the calendar month. Your billing period start date is determined by the first purchase date on your account.
+Costs reflect the published rate card for your account.
+The cumulative cost shown at the end of a completed billing period will match the usage overage charges on the corresponding invoice.
+Previous versions of the Billable Usage Dashboard were based on GraphQL queries that used a different data source. Those figures were approximate and aligned to the calendar month. The current dashboard corrects both of these discrepancies.
+
+Covered products
+The dashboard shows usage-based charges for all usage-based products active on your account. Which products appear depends on your subscriptions. Examples of usage-based products include Workers, R2, Stream, Images, Argo, and Load Balancing.
+
+There may be up to a 24-hour delay before the previous day's usage appears.
+
+Limitations
+Account-level data only. Zone-level breakdowns are not yet available.
+No data export. CSV/JSON export is not yet available.
+Enterprise accounts not supported. This dashboard is available to PayGo accounts only.
+24-hour data latency. Usage from the current day may not yet appear.
+Set up usage notifications
+To avoid unexpected overage charges, configure usage-based notifications in the Cloudflare dashboard. Notifications can alert you when usage exceeds a defined threshold during a billing period.
+
+To set up notifications:
+
+Log in to the Cloudflare dashboard.
+Select your account.
+Go to Notifications.
+Create a new notification for Billable Usage.
+Related resources
+Invoices
+Billing policy
+Billable Usage API reference
+Update billing information
 
 ## Billing Notifications
 
