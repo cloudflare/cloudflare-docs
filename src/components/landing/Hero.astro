@@ -1,0 +1,61 @@
+---
+import { Icon } from "@astrojs/starlight/components";
+import { stagger } from "./constants";
+---
+
+<section
+	id="hero"
+	class="px-8 pt-24 pb-16 max-[900px]:px-5 max-[900px]:pt-16 max-[900px]:pb-12 max-[480px]:pt-12"
+>
+	<p
+		class={`font-mono text-xs uppercase tracking-[0.12em] mb-5 text-accent ${stagger(0.03)}`}
+	>
+		Helping build a better Internet
+	</p>
+
+	<h1
+		class={`text-[clamp(2.75rem,5vw,3.5rem)] font-medium -tracking-[0.025em] leading-[1.08] text-balance mb-4 text-primary dark:text-white ${stagger(0.05)}`}
+	>
+		Cloudflare Developer Docs
+	</h1>
+
+	<p
+		class={`text-lg text-pretty max-w-[480px] leading-relaxed mb-8 max-[480px]:text-base max-[480px]:mb-6 text-[#52525b] dark:text-[#a1a1aa] ${stagger(0.1)}`}
+	>
+		Everything you need to build a better Internet; guides, references, and
+		tools for Cloudflare's developer platform.
+	</p>
+
+	<div
+		class={`flex items-center gap-5 text-sm max-[480px]:flex-wrap max-[480px]:gap-3 ${stagger(0.16)}`}
+	>
+		<a
+			href="/workers/get-started/guide/"
+			class="focus-visible:outline-accent inline-flex h-10 cursor-pointer items-center gap-2 rounded-lg rounded-md bg-[#18181b] px-4 text-base font-medium text-white no-underline transition-colors duration-150 hover:bg-[#f56500] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 dark:bg-[#fafafa] dark:text-[#09090b] dark:hover:bg-[#e4e4e7] dark:hover:text-[#09090b]"
+		>
+			Get started
+			<Icon name="right-arrow" size="0.75rem" />
+		</a>
+		<span
+			class="h-4 w-px bg-black/10 max-[480px]:hidden dark:bg-white/10"
+			aria-hidden="true"></span>
+		<a
+			href="/directory/"
+			class="focus-visible:outline-accent cursor-pointer text-[#52525b] no-underline transition-colors duration-150 hover:text-[#f56500] focus-visible:outline-2 focus-visible:outline-offset-2 dark:text-[#d4d4d8] dark:hover:text-[#f56500]"
+		>
+			All products
+		</a>
+		<a
+			href="/api/"
+			class="focus-visible:outline-accent cursor-pointer text-[#52525b] no-underline transition-colors duration-150 hover:text-[#f56500] focus-visible:outline-2 focus-visible:outline-offset-2 dark:text-[#d4d4d8] dark:hover:text-[#f56500]"
+		>
+			API reference
+		</a>
+		<a
+			href="/learning-paths/"
+			class="focus-visible:outline-accent cursor-pointer text-[#52525b] no-underline transition-colors duration-150 hover:text-[#f56500] focus-visible:outline-2 focus-visible:outline-offset-2 max-[480px]:hidden dark:text-[#d4d4d8] dark:hover:text-[#f56500]"
+		>
+			Learning paths
+		</a>
+	</div>
+</section>

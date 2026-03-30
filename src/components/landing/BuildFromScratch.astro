@@ -1,0 +1,388 @@
+---
+/**
+ * Steelmanned Minimal Tabs
+ *
+ * Improvements over base:
+ * - Icons restored in tab bar (product identity)
+ * - Tab bar has subtle background differentiation from panel
+ * - Active tab gets bg fill, not just underline
+ * - Command block has segmented $ | command | copy layout (matching PlatformStats precision)
+ * - CTA is a bordered button, not naked text
+ * - Tags rendered as low-contrast text links (less noise)
+ * - Plus marks on outer container (structural language from PlatformStats)
+ * - Consistent border/bg tokens throughout
+ */
+import { Icon } from "astro-icon/components";
+
+const primitives = [
+	{
+		id: "compute",
+		label: "Compute",
+		icon: "workers-vpc",
+		iconColor: "#0a95ff",
+		iconBg: "rgba(10, 149, 255, 0.1)",
+		iconBgDark: "rgba(10, 149, 255, 0.16)",
+		heading: "Run code at the edge",
+		description:
+			"Deploy serverless functions and full-stack apps onto Cloudflare's global network. No servers to manage, no cold starts — your code runs in 330+ cities, milliseconds from every user.",
+		command: "npm create cloudflare@latest my-app",
+		cta: {
+			label: "Deploy your first Worker",
+			href: "/workers/get-started/guide/",
+		},
+		tags: [
+			{ label: "Workers", href: "/workers/" },
+			{ label: "Pages", href: "/pages/" },
+			{ label: "Containers", href: "/containers/" },
+			{ label: "Workflows", href: "/workflows/" },
+			{ label: "Queues", href: "/queues/" },
+		],
+	},
+	{
+		id: "ai",
+		label: "AI",
+		icon: "workers-ai",
+		iconColor: "#19e306",
+		iconBg: "#f2f5e1",
+		iconBgDark: "rgba(25, 227, 6, 0.16)",
+		heading: "Add intelligence to anything you build",
+		description:
+			"Run inference, build agents, and search across your data — all from inside your Workers, with no external API calls or GPU infrastructure.",
+		command: "npx wrangler ai models list",
+		cta: { label: "Browse available models", href: "/workers-ai/models/" },
+		tags: [
+			{ label: "Workers AI", href: "/workers-ai/" },
+			{ label: "AI Gateway", href: "/ai-gateway/" },
+			{ label: "AI Agents", href: "/agents/" },
+			{ label: "Vectorize", href: "/vectorize/" },
+			{ label: "Browser Rendering", href: "/browser-rendering/" },
+		],
+	},
+	{
+		id: "storage",
+		label: "Storage",
+		icon: "kv",
+		iconColor: "#ee0ddb",
+		iconBg: "rgba(238, 13, 219, 0.1)",
+		iconBgDark: "rgba(238, 13, 219, 0.16)",
+		heading: "Persist data close to your users",
+		description:
+			"S3-compatible object storage, a relational SQL database, and low-latency KV — all queryable directly from Workers with no connection pooling.",
+		command: "npx wrangler r2 bucket create my-bucket",
+		cta: { label: "Get started with R2", href: "/r2/get-started/" },
+		tags: [
+			{ label: "R2", href: "/r2/" },
+			{ label: "D1", href: "/d1/" },
+			{ label: "KV", href: "/kv/" },
+			{ label: "Hyperdrive", href: "/hyperdrive/" },
+		],
+	},
+	{
+		id: "media",
+		label: "Media",
+		icon: "images",
+		iconColor: "#9616ff",
+		iconBg: "rgba(150, 22, 255, 0.1)",
+		iconBgDark: "rgba(150, 22, 255, 0.22)",
+		heading: "Serve images and video at scale",
+		description:
+			"Store, transform, and deliver images and video from Cloudflare's network. Resize on the fly, stream live or on-demand — no separate infrastructure.",
+		command: "npx wrangler pages project create my-site",
+		cta: { label: "Get started with Images", href: "/images/get-started/" },
+		tags: [
+			{ label: "Images", href: "/images/" },
+			{ label: "Stream", href: "/stream/" },
+			{ label: "Realtime", href: "/realtime/" },
+		],
+	},
+];
+---
+
+<section
+	class="px-8 pt-14 pb-4 max-[900px]:px-5 max-[900px]:pt-10"
+	aria-labelledby="build-heading"
+	id="build"
+>
+	<div class="mb-3">
+		<span class="text-accent font-mono text-xs tracking-widest uppercase"
+			>Build</span
+		>
+	</div>
+	<h2
+		id="build-heading"
+		class="mb-9 text-2xl leading-tight font-medium -tracking-tight text-balance text-zinc-900 dark:text-zinc-50"
+	>
+		Everything you need to build at the edge
+	</h2>
+
+	<div
+		class="relative overflow-visible border border-zinc-200 dark:border-[#2a2a2a]"
+		id="build-tabs-root"
+	>
+		<!-- Corner plus marks -->
+		{
+			[
+				"-top-[5.5px] -left-[5.5px]",
+				"-top-[5.5px] -right-[5.5px]",
+				"-bottom-[5.5px] -left-[5.5px]",
+				"-right-[5.5px] -bottom-[5.5px]",
+			].map((pos) => (
+				<svg
+					width="10"
+					height="10"
+					viewBox="0 0 10 10"
+					class={`pointer-events-none absolute ${pos} z-10`}
+					aria-hidden="true"
+				>
+					<line
+						x1="0"
+						y1="5"
+						x2="10"
+						y2="5"
+						stroke-width="1"
+						class="stroke-accent dark:stroke-white"
+					/>
+					<line
+						x1="5"
+						y1="0"
+						x2="5"
+						y2="10"
+						stroke-width="1"
+						class="stroke-accent dark:stroke-white"
+					/>
+				</svg>
+			))
+		}
+
+		<!-- Tab bar -->
+		<div
+			class="flex border-b border-zinc-200 bg-zinc-100/80 dark:border-[#2a2a2a] dark:bg-zinc-900/60"
+			role="tablist"
+			aria-label="Build primitives"
+		>
+			{
+				primitives.map((p, i) => (
+					<button
+						role="tab"
+						type="button"
+						aria-selected={i === 0 ? "true" : "false"}
+						aria-controls={`build-panel-${p.id}`}
+						id={`build-tab-${p.id}`}
+						class={[
+							"build-tab group relative flex shrink-0 items-center gap-2 px-5 py-3",
+							"font-mono text-xs tracking-widest uppercase",
+							"cursor-pointer transition-colors duration-150 select-none",
+							"border-r border-zinc-200 last:border-r-0 dark:border-[#2a2a2a]",
+							"focus-visible:outline-accent focus-visible:outline-2 focus-visible:-outline-offset-2",
+							i === 0
+								? "build-tab-active dark:text-accent text-zinc-900"
+								: "build-tab-inactive",
+						].join(" ")}
+					>
+						{p.label}
+						<span
+							class={`bg-accent pointer-events-none absolute bottom-0 left-0 h-0.5 transition-[width] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] ${i === 0 ? "w-full" : "w-0"}`}
+							aria-hidden="true"
+						/>
+					</button>
+				))
+			}
+		</div>
+
+		<!-- Panels -->
+		{
+			primitives.map((p, i) => (
+				<div
+					role="tabpanel"
+					id={`build-panel-${p.id}`}
+					aria-labelledby={`build-tab-${p.id}`}
+					hidden={i !== 0}
+					class="bg-l-card dark:bg-l-card-dark p-8 max-[600px]:p-5"
+				>
+					<div class="max-w-[640px]">
+					<div class="mb-4 flex items-center gap-3">
+						<div
+							class="build-panel-icon flex size-8 shrink-0 items-center justify-center rounded border border-dashed"
+							style={`--build-icon-color:${p.iconColor};--build-icon-bg:${p.iconBg};--build-icon-bg-dark:${p.iconBgDark};`}
+						>
+							<Icon name={p.icon} size="16px" />
+						</div>
+							<h3 class="text-xl font-medium -tracking-tight text-zinc-900 dark:text-zinc-50">
+								{p.heading}
+							</h3>
+						</div>
+						<p class="mb-6 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
+							{p.description}
+						</p>
+
+						{/* Command block — segmented */}
+						<div class="mb-6 flex max-w-[560px] items-stretch overflow-hidden rounded border border-zinc-200 dark:border-[#2a2a2a]">
+							<code
+								id={`build-cmd-${p.id}`}
+								class="bg-l-card dark:bg-l-card-dark min-w-0 flex-1 truncate px-3 py-4 font-mono text-sm leading-none text-zinc-700 select-all dark:text-zinc-300"
+							>
+								{p.command}
+							</code>
+							<button
+								type="button"
+								data-copy-target={`build-cmd-${p.id}`}
+								aria-label="Copy to clipboard"
+								class="build-copy-btn focus-visible:outline-accent flex w-10 shrink-0 cursor-pointer items-center justify-center border-l border-zinc-200 text-zinc-500 transition-colors duration-150 hover:bg-zinc-200 hover:text-zinc-700 focus-visible:outline-2 focus-visible:-outline-offset-2 dark:border-[#2a2a2a] dark:text-zinc-400 dark:hover:bg-zinc-700 dark:hover:text-zinc-100"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="18"
+									height="18"
+									fill="currentColor"
+									viewBox="0 0 256 256"
+									aria-hidden="true"
+								>
+									<path d="M216,32H88a8,8,0,0,0-8,8V80H40a8,8,0,0,0-8,8V216a8,8,0,0,0,8,8H168a8,8,0,0,0,8-8V176h40a8,8,0,0,0,8-8V40A8,8,0,0,0,216,32ZM160,208H48V96H160Zm48-48H176V88a8,8,0,0,0-8-8H96V48H208Z" />
+								</svg>
+							</button>
+						</div>
+
+						{/* CTA + tags row */}
+						<div class="flex items-center gap-6 max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-4">
+							<a
+								href={p.cta.href}
+								class="focus-visible:outline-accent inline-flex shrink-0 cursor-pointer items-center gap-2 rounded-md bg-[#18181b] px-4 py-2 text-sm font-medium text-white no-underline transition-colors duration-150 hover:bg-[#f56500] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 dark:bg-[#fafafa] dark:text-[#09090b] dark:hover:bg-[#e4e4e7] dark:hover:text-[#09090b]"
+							>
+								{p.cta.label}
+								<svg
+									width="12"
+									height="12"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="shrink-0"
+									aria-hidden="true"
+								>
+									<>
+										<line x1="5" y1="12" x2="19" y2="12" />
+										<polyline points="12 5 19 12 12 19" />
+									</>
+								</svg>
+							</a>
+							<p class="relative top-px font-mono text-xs text-zinc-600 dark:text-zinc-300">
+								{p.tags.map((tag, idx) => (
+									<>
+										{idx > 0 && <span class="mx-1" aria-hidden="true">·</span>}
+										<a href={tag.href} class="text-zinc-600 no-underline hover:underline hover:underline-offset-4 dark:text-zinc-300">{tag.label}</a>
+									</>
+								))}
+							</p>
+						</div>
+					</div>
+				</div>
+			))
+		}
+	</div>
+</section>
+
+<style is:global>
+	.build-tab-active {
+		background: var(--color-l-card);
+	}
+	.build-tab-inactive {
+		background: transparent;
+		color: #52525b;
+	}
+	:root[data-theme="dark"] .build-tab-inactive {
+		color: #a1a1aa;
+	}
+	.build-tab-inactive:hover {
+		background: var(--color-l-card);
+		color: #18181b;
+	}
+	:root[data-theme="dark"] .build-tab-active {
+		background: var(--color-l-card-dark);
+	}
+	:root[data-theme="dark"] .build-tab-inactive:hover {
+		background: var(--color-l-card-dark);
+		color: #fafafa;
+	}
+
+	.build-panel-icon {
+		color: var(--build-icon-color);
+		border-color: var(--build-icon-color);
+		background: var(--build-icon-bg);
+	}
+	:root[data-theme="dark"] .build-panel-icon {
+		background: var(--build-icon-bg-dark);
+	}
+</style>
+
+<script>
+	const root = document.getElementById("build-tabs-root");
+	if (root) {
+		const tabs = Array.from(
+			root.querySelectorAll<HTMLButtonElement>("[role=tab]"),
+		);
+		const panels = Array.from(
+			root.querySelectorAll<HTMLElement>("[role=tabpanel]"),
+		);
+		function activate(idx: number) {
+			tabs.forEach((tab, i) => {
+				const active = i === idx;
+				tab.setAttribute("aria-selected", String(active));
+				tab.classList.toggle("build-tab-active", active);
+				tab.classList.toggle("text-zinc-900", active);
+				tab.classList.toggle("dark:text-accent", active);
+				tab.classList.toggle("build-tab-inactive", !active);
+				const bar = tab.querySelector("span:last-child") as HTMLElement | null;
+				if (bar) {
+					bar.classList.toggle("w-full", active);
+					bar.classList.toggle("w-0", !active);
+				}
+			});
+			panels.forEach((p, i) => {
+				if (i === idx) p.removeAttribute("hidden");
+				else p.setAttribute("hidden", "");
+			});
+		}
+		tabs.forEach((tab, i) => {
+			tab.addEventListener("click", () => activate(i));
+			tab.addEventListener("keydown", (e: KeyboardEvent) => {
+				if (e.key === "ArrowRight") {
+					e.preventDefault();
+					const n = (i + 1) % tabs.length;
+					activate(n);
+					tabs[n].focus();
+				}
+				if (e.key === "ArrowLeft") {
+					e.preventDefault();
+					const n = (i - 1 + tabs.length) % tabs.length;
+					activate(n);
+					tabs[n].focus();
+				}
+			});
+		});
+	}
+
+	// Copy buttons
+	document
+		.querySelectorAll<HTMLButtonElement>(".build-copy-btn")
+		.forEach((btn) => {
+			btn.addEventListener("click", async () => {
+				const targetId = btn.dataset.copyTarget;
+				if (!targetId) return;
+				const codeEl = document.getElementById(targetId);
+				if (!codeEl) return;
+				const text = codeEl.textContent?.trim() ?? "";
+				try {
+					await navigator.clipboard.writeText(text);
+				} catch {
+					return;
+				}
+				const prev = btn.innerHTML;
+				btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34Z"/></svg>`;
+				setTimeout(() => {
+					btn.innerHTML = prev;
+				}, 1500);
+			});
+		});
+</script>

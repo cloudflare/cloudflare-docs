@@ -1,0 +1,111 @@
+---
+/**
+ * S6: Categorized grid with flair
+ *
+ * Two categories, three cards each. Cards have:
+ * - Large product icon as the visual anchor
+ * - Bold scenario text
+ * - Product name as accent mono label
+ * - CTA button links to product docs
+ * - Plus marks on the outer grid corners
+ * - gap-px grid technique from PlatformStats
+ */
+import ProductCard from "./ProductCard.astro";
+import ProductCardGrid from "./ProductCardGrid.astro";
+
+const categories = [
+	{
+		label: "Network & Application",
+		threats: [
+			{
+				scenario: "Under DDoS attack",
+				product: "WAF",
+				href: "/waf/custom-rules/",
+				icon: "ddos-protection",
+				detail: "Custom rules, rate limiting, automatic mitigation",
+			},
+			{
+				scenario: "SSL is fragile or misconfigured",
+				product: "SSL/TLS",
+				href: "/ssl/origin-configuration/ssl-modes/",
+				icon: "ssl",
+				detail: "Automatic certificates, strict mode, mTLS",
+			},
+			{
+				scenario: "Bots abusing login or forms",
+				product: "Turnstile",
+				href: "/turnstile/get-started/",
+				icon: "turnstile",
+				detail: "Invisible challenge, zero CAPTCHA friction",
+			},
+		],
+	},
+	{
+		label: "Access & Identity",
+		threats: [
+			{
+				scenario: "Expose internal services safely",
+				product: "Tunnel",
+				href: "/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/",
+				icon: "tunnel",
+				detail: "Outbound-only encrypted tunnels, no open ports",
+			},
+			{
+				scenario: "Secure access to internal tools",
+				product: "Zero Trust",
+				href: "/cloudflare-one/setup/",
+				icon: "access",
+				detail: "Identity-aware access, device posture checks",
+			},
+			{
+				scenario: "Filter outbound traffic network-wide",
+				product: "Gateway",
+				href: "/cloudflare-one/traffic-policies/",
+				icon: "gateway",
+				detail: "DNS filtering, HTTP policies, network controls",
+			},
+		],
+	},
+];
+---
+
+<section
+	class="px-8 pt-14 pb-12 max-[900px]:px-5 max-[900px]:pt-10"
+	aria-labelledby="s6-heading"
+	id="secure"
+>
+	<div class="mb-8">
+		<span class="text-accent font-mono text-xs tracking-widest uppercase"
+			>Secure</span
+		>
+	</div>
+	<h2
+		id="s6-heading"
+		class="mb-1.5 text-2xl leading-tight font-medium -tracking-tight text-balance text-zinc-900 md:text-3xl dark:text-zinc-100"
+	>
+		Secure what you already have
+	</h2>
+	<p
+		class="mb-8 max-w-[600px] text-sm leading-relaxed text-pretty text-zinc-500 md:text-lg dark:text-zinc-400"
+	>
+		Add Cloudflare in front of what is already running — no rebuild required.
+	</p>
+
+	<div class="space-y-8">
+		{
+			categories.map((cat) => (
+				<ProductCardGrid label={cat.label}>
+					{cat.threats.map((t) => (
+						<ProductCard
+							icon={t.icon}
+							product={t.product}
+							scenario={t.scenario}
+							detail={t.detail}
+							href={t.href}
+						/>
+					))}
+				</ProductCardGrid>
+			))
+		}
+	</div>
+</section>

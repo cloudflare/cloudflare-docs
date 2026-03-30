@@ -1,0 +1,257 @@
+---
+import { stagger } from "./constants";
+
+const stats = [
+	{
+		value: 330,
+		suffix: "+",
+		unit: "cities",
+		label: "Global network",
+		detail: "Points of presence",
+	},
+	{
+		value: 100,
+		suffix: "+",
+		unit: "products",
+		label: "Platform surface",
+		detail: "Developer primitives",
+	},
+	{
+		value: 78,
+		suffix: "M+",
+		unit: "req/s",
+		label: "Average throughput",
+		detail: "At the edge",
+	},
+	{
+		value: 99.99,
+		suffix: "%",
+		unit: "uptime",
+		label: "Network SLA",
+		detail: "Contractual guarantee",
+	},
+];
+---
+
+<section
+	id="platform"
+	class={`px-8 pt-10 pb-12 max-[900px]:px-5 max-[900px]:pt-8 max-[900px]:pb-8 ${stagger(0.42)}`}
+	aria-labelledby="stats-heading"
+>
+	<div class="mb-3">
+		<span class="text-accent font-mono text-xs tracking-widest uppercase"
+			>Platform at a Glance</span
+		>
+	</div>
+
+	<div
+		class="grid grid-cols-4 gap-px overflow-visible border border-[#e8e8e8] bg-[#e8e8e8] max-[768px]:grid-cols-2 dark:border-[#2a2a2a] dark:bg-[#2a2a2a]"
+		id="stats-grid"
+	>
+		{
+			stats.map((stat, i) => (
+				<div class="bg-l-card hover:bg-l-card-hover dark:bg-l-card-dark dark:hover:bg-l-card-hover-dark relative flex flex-col justify-between px-5 py-5 transition-colors duration-150">
+					{/* Corner plus marks — all four corners */}
+					<svg
+						width="10"
+						height="10"
+						viewBox="0 0 10 10"
+						class="pointer-events-none absolute -top-[5.5px] -left-[5.5px] z-10"
+						aria-hidden="true"
+					>
+						<line
+							x1="0"
+							y1="5"
+							x2="10"
+							y2="5"
+							stroke-width="1"
+							class="stroke-accent dark:stroke-white"
+						/>
+						<line
+							x1="5"
+							y1="0"
+							x2="5"
+							y2="10"
+							stroke-width="1"
+							class="stroke-accent dark:stroke-white"
+						/>
+					</svg>
+					<svg
+						width="10"
+						height="10"
+						viewBox="0 0 10 10"
+						class="pointer-events-none absolute -top-[5.5px] -right-[5.5px] z-10"
+						aria-hidden="true"
+					>
+						<line
+							x1="0"
+							y1="5"
+							x2="10"
+							y2="5"
+							stroke-width="1"
+							class="stroke-accent dark:stroke-white"
+						/>
+						<line
+							x1="5"
+							y1="0"
+							x2="5"
+							y2="10"
+							stroke-width="1"
+							class="stroke-accent dark:stroke-white"
+						/>
+					</svg>
+					<svg
+						width="10"
+						height="10"
+						viewBox="0 0 10 10"
+						class="pointer-events-none absolute -bottom-[5.5px] -left-[5.5px] z-10"
+						aria-hidden="true"
+					>
+						<line
+							x1="0"
+							y1="5"
+							x2="10"
+							y2="5"
+							stroke-width="1"
+							class="stroke-accent dark:stroke-white"
+						/>
+						<line
+							x1="5"
+							y1="0"
+							x2="5"
+							y2="10"
+							stroke-width="1"
+							class="stroke-accent dark:stroke-white"
+						/>
+					</svg>
+					<svg
+						width="10"
+						height="10"
+						viewBox="0 0 10 10"
+						class="pointer-events-none absolute -right-[5.5px] -bottom-[5.5px] z-10"
+						aria-hidden="true"
+					>
+						<line
+							x1="0"
+							y1="5"
+							x2="10"
+							y2="5"
+							stroke-width="1"
+							class="stroke-accent dark:stroke-white"
+						/>
+						<line
+							x1="5"
+							y1="0"
+							x2="5"
+							y2="10"
+							stroke-width="1"
+							class="stroke-accent dark:stroke-white"
+						/>
+					</svg>
+
+					{/* Index */}
+					<div
+						class="mb-2.5 font-mono text-[10px] text-zinc-400 uppercase tabular-nums select-none dark:text-zinc-600"
+						aria-hidden="true"
+					>
+						{String(i + 1).padStart(2, "0")}
+					</div>
+
+					{/* Stat value */}
+					<p class="mb-1">
+						<span
+							class="stat-counter font-mono text-3xl leading-none font-medium -tracking-tight text-zinc-900 tabular-nums dark:text-white"
+							data-target={stat.value}
+							data-suffix={stat.suffix}
+							data-decimals={stat.value % 1 !== 0 ? "2" : "0"}
+						>
+							{stat.value % 1 !== 0 ? stat.value.toFixed(2) : stat.value}
+							{stat.suffix}
+						</span>
+					</p>
+
+					{/* Unit */}
+					<p class="text-accent mb-3 font-mono text-xs tracking-wide uppercase">
+						{stat.unit}
+					</p>
+
+					{/* Label + detail */}
+					<div class="border-t border-dashed border-[#e8e8e8] pt-3 dark:border-[#2a2a2a]">
+						<div class="space-y-0.5">
+							<p class="text-sm leading-tight font-medium text-zinc-900 dark:text-zinc-50">
+								{stat.label}
+							</p>
+							<p class="font-mono text-xs text-zinc-500 dark:text-zinc-400">
+								{stat.detail}
+							</p>
+						</div>
+					</div>
+				</div>
+			))
+		}
+	</div>
+</section>
+
+<script>
+	function easeOutExpo(t: number): number {
+		return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+	}
+
+	function animateCounter(el: HTMLElement) {
+		const target = parseFloat(el.dataset.target ?? "0");
+		const suffix = el.dataset.suffix ?? "";
+		const decimals = parseInt(el.dataset.decimals ?? "0", 10);
+		const prefersReducedMotion = window.matchMedia(
+			"(prefers-reduced-motion: reduce)",
+		).matches;
+
+		if (prefersReducedMotion) {
+			el.textContent = target.toFixed(decimals) + suffix;
+			return;
+		}
+
+		const duration = 1400;
+		const start = performance.now();
+
+		function tick(now: number) {
+			const elapsed = now - start;
+			const progress = Math.min(elapsed / duration, 1);
+			const eased = easeOutExpo(progress);
+			const current = target * eased;
+
+			el.textContent = current.toFixed(decimals) + suffix;
+
+			if (progress < 1) {
+				requestAnimationFrame(tick);
+			} else {
+				el.textContent = target.toFixed(decimals) + suffix;
+			}
+		}
+
+		requestAnimationFrame(tick);
+	}
+
+	const counters = document.querySelectorAll<HTMLElement>(".stat-counter");
+
+	if ("IntersectionObserver" in window) {
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						animateCounter(entry.target as HTMLElement);
+						observer.unobserve(entry.target);
+					}
+				});
+			},
+			{ threshold: 0.3 },
+		);
+		counters.forEach((el) => observer.observe(el));
+	} else {
+		counters.forEach((el) => {
+			const target = parseFloat(el.dataset.target ?? "0");
+			const suffix = el.dataset.suffix ?? "";
+			const decimals = parseInt(el.dataset.decimals ?? "0", 10);
+			el.textContent = target.toFixed(decimals) + suffix;
+		});
+	}
+</script>

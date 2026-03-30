@@ -1,0 +1,189 @@
+---
+/**
+ * ProductCard — Reusable card for showcasing a product with icon, scenario, detail, and CTA.
+ *
+ * Props:
+ * - icon: Icon name from the astro-icon set
+ * - product: Short product label (e.g. "WAF", "SSL/TLS")
+ * - scenario: Bold heading text describing the use case
+ * - detail: Supporting description text
+ * - href: Link destination for the CTA
+ * - cta: CTA button text (defaults to "Get started")
+ */
+import { Icon } from "astro-icon/components";
+
+interface Props {
+	icon: string;
+	product: string;
+	scenario: string;
+	detail: string;
+	href: string;
+	cta?: string;
+}
+
+const BLUE = "#0a95ff";
+const MAGENTA = "#ee0ddb";
+const AI_GREEN = "#19e306";
+const AI_BG = "#f2f5e1";
+const MEDIA_PURPLE = "#9616ff";
+const MEDIA_BG = "rgba(150, 22, 255, 0.1)";
+const ACCENT = "#f56500";
+
+const computeProducts = new Set([
+	"workers",
+	"containers",
+	"sandbox",
+	"sandboxes",
+	"durable objects",
+	"browser rendering",
+	"workflows",
+]);
+
+const storageProducts = new Set([
+	"r2",
+	"data platform",
+	"hyperdrive",
+	"d1",
+	"kv",
+	"queues",
+]);
+
+const aiProducts = new Set([
+	"workers ai",
+	"agents",
+	"ai agents",
+	"ai gateway",
+	"vectorize",
+	"ai search",
+]);
+
+const mediaProducts = new Set([
+	"images",
+	"stream",
+	"screem",
+	"realtime",
+	"realtimekit",
+	"realtime kit",
+	"turn",
+	"sfu",
+	"turn / sfu",
+	"turn/sfu",
+]);
+
+const normalizeProduct = (value: string) =>
+	value
+		.toLowerCase()
+		.replace(/[\-_]/g, " ")
+		.replace(/\s+/g, " ")
+		.trim();
+
+const getIconHoverPalette = (value: string) => {
+	const normalized = normalizeProduct(value);
+	if (storageProducts.has(normalized)) {
+		return {
+			color: MAGENTA,
+			bg: "color-mix(in srgb, #ee0ddb 10%, transparent)",
+			bgDark: "color-mix(in srgb, #ee0ddb 16%, transparent)",
+		};
+	}
+	if (aiProducts.has(normalized)) {
+		return {
+			color: AI_GREEN,
+			bg: AI_BG,
+			bgDark: "color-mix(in srgb, #19e306 22%, transparent)",
+		};
+	}
+	if (mediaProducts.has(normalized)) {
+		return {
+			color: MEDIA_PURPLE,
+			bg: MEDIA_BG,
+			bgDark: "rgba(150, 22, 255, 0.22)",
+		};
+	}
+	if (computeProducts.has(normalized)) {
+		return {
+			color: BLUE,
+			bg: "color-mix(in srgb, #0a95ff 10%, transparent)",
+			bgDark: "color-mix(in srgb, #0a95ff 16%, transparent)",
+		};
+	}
+	return {
+		color: ACCENT,
+		bg: "color-mix(in srgb, #f56500 10%, transparent)",
+		bgDark: "color-mix(in srgb, #f56500 16%, transparent)",
+	};
+};
+
+const { icon, product, scenario, detail, href, cta = "Get started" } =
+	Astro.props;
+
+const iconHoverPalette = getIconHoverPalette(product);
+---
+
+<div
+	class="pc-card group/product-card bg-l-card hover:bg-l-card-hover dark:bg-l-card-dark dark:hover:bg-l-card-hover-dark flex flex-1 flex-col p-6 transition-colors duration-150"
+	style={`--pc-hover-color: ${iconHoverPalette.color}; --pc-hover-bg: ${iconHoverPalette.bg}; --pc-hover-bg-dark: ${iconHoverPalette.bgDark};`}
+>
+	{/* Header: icon + product label */}
+	<div class="mb-4 flex items-center justify-between">
+		<span
+			class="pc-icon-shell relative flex size-11 items-center justify-center rounded-md border border-zinc-200 bg-zinc-100 text-zinc-400 transition-[background-color,border-color,color] duration-200 dark:border-[#2a2a2a] dark:bg-zinc-800 dark:text-zinc-500"
+		>
+			<Icon name={icon} size="24px" class="pc-icon transition-colors duration-200" />
+		</span>
+		<span class="text-accent font-mono text-xs tracking-wide uppercase">
+			{product}
+		</span>
+	</div>
+
+	{/* Scenario */}
+	<p
+		class="mb-2 text-base leading-snug font-medium text-zinc-900 md:text-lg dark:text-zinc-50"
+	>
+		{scenario}
+	</p>
+	<p
+		class="mb-6 flex-1 text-sm leading-relaxed text-zinc-500 md:text-base dark:text-zinc-400"
+	>
+		{detail}
+	</p>
+
+	{/* CTA */}
+	<a
+		href={href}
+		class="group/cta hover:text-accent hover:underline focus-visible:outline-accent inline-flex w-fit items-center gap-2 rounded-md py-1 text-sm font-medium text-zinc-600 no-underline underline-offset-4 transition-colors duration-150 focus-visible:outline-2 focus-visible:-outline-offset-2 dark:text-zinc-300"
+	>
+		{cta}
+		<svg
+			width="14"
+			height="14"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			stroke-width="2"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			class="transition-transform duration-150 group-hover/cta:translate-x-0.5"
+			aria-hidden="true"
+		>
+			<line x1="5" y1="12" x2="19" y2="12"></line>
+			<polyline points="12 5 19 12 12 19"></polyline>
+		</svg>
+	</a>
+</div>
+
+<style>
+	.pc-card:hover .pc-icon-shell,
+	.pc-card:focus-within .pc-icon-shell {
+		background: var(--pc-hover-bg, rgba(245, 101, 0, 0.1));
+		border-color: var(--pc-hover-color, #f56500);
+		border-style: dashed;
+		color: var(--pc-hover-color, #f56500);
+	}
+
+	:root[data-theme="dark"] .pc-card:hover .pc-icon-shell,
+	:root[data-theme="dark"] .pc-card:focus-within .pc-icon-shell {
+		background: var(--pc-hover-bg-dark, rgba(245, 101, 0, 0.16));
+		color: var(--pc-hover-color, #f56500);
+	}
+</style>

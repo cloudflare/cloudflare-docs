@@ -1,259 +1,402 @@
 ---
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import type { StarlightPageProps } from "@astrojs/starlight/props";
+import StructuralGrid from "../components/landing/StructuralGrid.astro";
+import FullPageLines from "../components/landing/FullPageLines.astro";
+import Hero from "../components/landing/Hero.astro";
+import PlatformStats from "../components/landing/PlatformStats.astro";
+import BuildFromScratch from "../components/landing/BuildFromScratch.astro";
+import SecureSection from "../components/landing/SecureSection.astro";
+import RequestLifecycle from "../components/landing/RequestLifecycle.astro";
+import AccelerateSection from "../components/landing/AccelerateSection.astro";
+import "../styles/landing.css";
 
-import HeroImageDark from "~/assets/Dev-Docs-Header-Illustration-Dark-Mode-cropped.svg";
-import HeroImageLight from "~/assets/Dev-Docs-Header-Illustration-Light-Mode-cropped.svg";
+const heading = (icon: string) => ({
+	text: icon,
+	variant: "default" as const,
+	class: "sidebar-heading",
+});
 
-import SectionImageDeveloperPlatformDark from "~/assets/developer-platform-dark.svg";
-import SectionImageDeveloperPlatformLight from "~/assets/developer-platform-light.svg";
-import SectionImageZeroTrustDark from "~/assets/zero-trust-dark.svg";
-import SectionImageZeroTrustLight from "~/assets/zero-trust-light.svg";
+const groupIcon = (icon: string) => ({
+	text: icon,
+	variant: "default" as const,
+	class: "sidebar-group-icon",
+});
 
-import {
-	FourCardGrid,
-	ListCard,
-	TryItSection,
-	FeaturedContentSection,
-	RecommendedContentSection,
-	FooterHeroBlock,
-} from "~/components";
-
-const frontmatter = {
-	title: "Welcome to Cloudflare",
-	description:
-		"Explore guides and tutorials to start building on Cloudflare's platform",
-	template: "splash",
-	hero: {
-		title: "Welcome to Cloudflare",
-		tagline:
-			"Explore guides and tutorials to start building on Cloudflare's platform",
-		image: {
-			dark: HeroImageDark,
-			light: HeroImageLight,
-		},
-	},
-} as const;
-
-const topCards = [
+const sidebar = [
 	{
-		title: "Featured",
-		links: [
-			{ text: "AI tools", href: "/style-guide/ai-tooling/" },
+		label: "Get started",
+		collapsed: false,
+		badge: heading("heading-get-started"),
+		items: [
+			{ label: "Overview", link: "/" },
+			{ label: "Fundamentals", link: "/fundamentals/" },
+			{ label: "API reference", link: "/api/" },
 			{
-				text: "Troubleshoot errors",
-				href: "/support/troubleshooting/http-status-codes/",
-			},
-			{ text: "Register a domain", href: "/registrar/" },
-			{ text: "Setup 1.1.1.1", href: "/1.1.1.1/setup/" },
-			{
-				text: "Get started with Cloudflare",
-				href: "/learning-paths/get-started/concepts/",
+				label: "Troubleshooting",
+				link: "/support/troubleshooting/http-status-codes/",
 			},
 		],
-		cta: {
-			text: "View all docs",
-			href: "/directory/",
-		},
 	},
 	{
-		title: "Developer Products",
-		links: [
-			{ text: "Workers", href: "/workers/" },
-			{ text: "Pages", href: "/pages/" },
-			{ text: "R2", href: "/r2/" },
-			{ text: "Images", href: "/images/" },
-			{ text: "Stream", href: "/stream/" },
+		label: "Build",
+		collapsed: false,
+		badge: heading("heading-build"),
+		items: [
+			{
+				label: "Compute",
+				collapsed: true,
+				badge: groupIcon("workers"),
+				items: [
+					{ label: "Workers", link: "/workers/" },
+					{ label: "Pages", link: "/pages/" },
+					{ label: "Containers", link: "/containers/" },
+					{ label: "Workflows", link: "/workflows/" },
+					{ label: "Durable Objects", link: "/durable-objects/" },
+					{ label: "Queues", link: "/queues/" },
+					{ label: "Pipelines", link: "/pipelines/" },
+					{
+						label: "Cloudflare for Platforms",
+						link: "/cloudflare-for-platforms/",
+					},
+					{ label: "Workers VPC", link: "/workers-vpc/" },
+				],
+			},
+			{
+				label: "AI",
+				collapsed: true,
+				badge: groupIcon("workers-ai"),
+				items: [
+					{ label: "Workers AI", link: "/workers-ai/" },
+					{ label: "AI Gateway", link: "/ai-gateway/" },
+					{ label: "AI Search", link: "/ai-search/" },
+					{ label: "AI Agents", link: "/agents/" },
+					{ label: "Vectorize", link: "/vectorize/" },
+					{ label: "Browser Rendering", link: "/browser-rendering/" },
+					{ label: "AI Crawl Control", link: "/ai-crawl-control/" },
+				],
+			},
+			{
+				label: "Storage & Database",
+				collapsed: true,
+				badge: groupIcon("kv"),
+				items: [
+					{ label: "D1", link: "/d1/" },
+					{ label: "R2", link: "/r2/" },
+					{ label: "KV", link: "/kv/" },
+					{ label: "Hyperdrive", link: "/hyperdrive/" },
+				],
+			},
+			{
+				label: "Media",
+				collapsed: true,
+				badge: groupIcon("images"),
+				items: [
+					{ label: "Images", link: "/images/" },
+					{ label: "Stream", link: "/stream/" },
+					{ label: "Realtime", link: "/realtime/" },
+				],
+			},
 		],
-		cta: {
-			text: "View all developer products",
-			href: "/directory/?product-group=Developer+platform",
-		},
 	},
 	{
-		title: "AI Products",
-		links: [
-			{ text: "AI Search", href: "/ai-search/" },
-			{ text: "Workers AI", href: "/workers-ai/" },
-			{ text: "AI Crawl Control", href: "/ai-crawl-control/" },
-			{ text: "AI Gateway", href: "/ai-gateway/" },
-			{ text: "AI Agents", href: "/agents/" },
+		label: "Protect & Connect",
+		collapsed: false,
+		badge: heading("heading-protect-connect"),
+		items: [
+			{
+				label: "Application Security",
+				collapsed: true,
+				badge: groupIcon("waf"),
+				items: [
+					{ label: "WAF", link: "/waf/" },
+					{ label: "DDoS Protection", link: "/ddos-protection/" },
+					{ label: "SSL/TLS", link: "/ssl/" },
+					{ label: "Bots", link: "/bots/" },
+					{ label: "API Shield", link: "/api-shield/" },
+					{ label: "Page Shield", link: "/page-shield/" },
+					{ label: "Turnstile", link: "/turnstile/" },
+					{ label: "Security Center", link: "/security-center/" },
+				],
+			},
+			{
+				label: "Zero Trust",
+				collapsed: true,
+				badge: groupIcon("cloudflare-one"),
+				items: [
+					{ label: "Cloudflare One", link: "/cloudflare-one/" },
+					{
+						label: "Access",
+						link: "/cloudflare-one/access-controls/policies/",
+					},
+					{
+						label: "Tunnel",
+						link: "/cloudflare-one/networks/connectors/cloudflare-tunnel/",
+					},
+					{ label: "Gateway", link: "/cloudflare-one/traffic-policies/" },
+					{
+						label: "Browser Isolation",
+						link: "/cloudflare-one/remote-browser-isolation/",
+					},
+					{ label: "WARP Client", link: "/warp-client/" },
+					{ label: "Email Security", link: "/email-security/" },
+				],
+			},
+			{
+				label: "Networking",
+				collapsed: true,
+				badge: groupIcon("network"),
+				items: [
+					{ label: "Magic Transit", link: "/magic-transit/" },
+					{ label: "Magic WAN", link: "/cloudflare-wan/" },
+					{ label: "Network Interconnect", link: "/network-interconnect/" },
+					{ label: "Spectrum", link: "/spectrum/" },
+					{ label: "BYOIP", link: "/byoip/" },
+				],
+			},
+			{
+				label: "Delivery & Performance",
+				collapsed: true,
+				badge: groupIcon("speed"),
+				items: [
+					{ label: "Cache", link: "/cache/" },
+					{ label: "Speed", link: "/speed/" },
+					{ label: "Load Balancing", link: "/load-balancing/" },
+					{ label: "Waiting Room", link: "/waiting-room/" },
+					{ label: "Argo Smart Routing", link: "/argo-smart-routing/" },
+					{ label: "Zaraz", link: "/zaraz/" },
+				],
+			},
 		],
-		cta: {
-			text: "View all AI products",
-			href: "/directory/?product-group=AI",
-		},
 	},
 	{
-		title: "Zero Trust",
-		links: [
-			{ text: "Access", href: "/cloudflare-one/access-controls/policies/" },
+		label: "Manage & Observe",
+		collapsed: false,
+		badge: heading("heading-other"),
+		items: [
 			{
-				text: "Tunnel",
-				href: "/cloudflare-one/networks/connectors/cloudflare-tunnel/",
+				label: "Domains & DNS",
+				collapsed: true,
+				badge: groupIcon("dns"),
+				items: [
+					{ label: "DNS", link: "/dns/" },
+					{ label: "1.1.1.1", link: "/1.1.1.1/" },
+					{ label: "Registrar", link: "/registrar/" },
+					{ label: "Email Routing", link: "/email-routing/" },
+					{ label: "DMARC Management", link: "/dmarc-management/" },
+				],
 			},
-			{ text: "Gateway", href: "/cloudflare-one/traffic-policies/" },
 			{
-				text: "Browser Isolation",
-				href: "/cloudflare-one/remote-browser-isolation/",
+				label: "Observe",
+				collapsed: true,
+				badge: groupIcon("analytics"),
+				items: [
+					{ label: "Analytics", link: "/analytics/" },
+					{ label: "Web Analytics", link: "/web-analytics/" },
+					{ label: "Logs", link: "/logs/" },
+					{ label: "Log Explorer", link: "/log-explorer/" },
+					{ label: "Health Checks", link: "/health-checks/" },
+				],
 			},
 			{
-				text: "Replace your VPN",
-				href: "/learning-paths/replace-vpn/concepts/",
+				label: "Resources",
+				collapsed: true,
+				badge: groupIcon("learning-paths"),
+				items: [
+					{ label: "Learning paths", link: "/learning-paths/" },
+					{ label: "All products", link: "/directory/" },
+					{ label: "Terraform", link: "/terraform/" },
+					{ label: "Pulumi", link: "/pulumi/" },
+					{ label: "Reference architecture", link: "/reference-architecture/" },
+					{ label: "Support", link: "/support/" },
+				],
 			},
 		],
-		cta: {
-			text: "View all Cloudflare One products",
-			href: "/directory/?product-group=Cloudflare+One",
-		},
 	},
 ];
 
-const featuredSections = [
-	{
-		title: "Developer Platform",
-		text: "The Cloudflare Developer Platform provides a serverless execution environment that allows you to create entirely new applications or augment existing ones without configuring or maintaining infrastructure.",
-		image: {
-			light: SectionImageDeveloperPlatformLight,
-			dark: SectionImageDeveloperPlatformDark,
-		},
-		imagePosition: "before",
-		cards: [
-			// Currently unused.
-			// {
-			// 	title: "Create API Tokens",
-			// 	text: "If you are going to be using the Cloudflare API, you first need an API token to authenticate your requests.",
-			// 	cta: {
-			// 		title: "Create Tokens",
-			// 		href: "/fundamentals/api/get-started/create-token/",
-			// 	},
-			// },
-			// {
-			// 	title: "View Workers Examples",
-			// 	text: "Review fully functional sample scripts to get started with Workers.",
-			// 	cta: {
-			// 		title: "View Examples",
-			// 		href: "/workers/examples/",
-			// 	},
-			// },
-		],
+const props = {
+	frontmatter: {
+		title: "Cloudflare Developer Docs",
+		description:
+			"Build, protect, and accelerate anything on Cloudflare's global network. Deploy serverless applications, secure your perimeter, and deliver content from 330+ cities worldwide.",
+		template: "doc",
+		tableOfContents: false,
 	},
-	{
-		title: "Zero Trust",
-		text: "Cloudflare Zero Trust replaces legacy security perimeters with our global network, making the Internet faster and safer for teams around the world.",
-		image: {
-			light: SectionImageZeroTrustLight,
-			dark: SectionImageZeroTrustDark,
-		},
-		imagePosition: "after",
-		cards: [
-			{
-				title: "Install the WARP Client",
-				text: "The Cloudflare WARP client allows individuals and organizations to have a faster, more secure, and more private experience online.",
-				cta: {
-					title: "Get started",
-					href: "/cloudflare-one/team-and-resources/devices/warp/",
-				},
-			},
-			{
-				title: "Set up a tunnel",
-				text: "Cloudflare Tunnel provides you with a secure way to connect your resources to Cloudflare without a publicly routable IP address.",
-				cta: {
-					title: "Set up a tunnel",
-					href: "/cloudflare-one/networks/connectors/cloudflare-tunnel/",
-				},
-			},
-		],
-	},
-];
-
-const recommendedSection = {
-	title: "Other docs you might also like",
-	cards: [
-		{
-			title: "Install an Origin CA certificate",
-			text: "Use Origin Certificate Authority (CA) certificates to encrypt traffic between Cloudflare and your origin web server and reduce origin bandwidth.",
-			cta: {
-				title: "Install Origin CA",
-				href: "/ssl/origin-configuration/origin-ca/",
-			},
-		},
-		{
-			title: "Change your nameservers",
-			text: "Make Cloudflare your primary DNS provider by updating your authoritative nameservers at your domain registrar.",
-			cta: {
-				title: "Update nameservers",
-				href: "/dns/zone-setups/full-setup/setup/",
-			},
-		},
-		{
-			title: "SSL/TLS Encryption mode",
-			text: "Your domain's encryption mode controls how Cloudflare connects to your origin server and how SSL certificates at your origin will be validated.",
-			cta: {
-				title: "Set encryption mode",
-				href: "/ssl/origin-configuration/ssl-modes/",
-			},
-		},
-		{
-			title: "Allow traffic from specific countries only",
-			text: "Block requests based on a list of allowed countries by configuring a custom rule in the Web Application Firewall (WAF).",
-			cta: {
-				title: "Allow traffic from specific countries only",
-				href: "/waf/custom-rules/use-cases/allow-traffic-from-specific-countries/",
-			},
-		},
-	],
-};
+	sidebar,
+	hasSidebar: true,
+	hideBreadcrumbs: true,
+	hideTitle: true,
+	headings: [],
+} as StarlightPageProps;
 ---
 
-<StarlightPage frontmatter={frontmatter}>
-	<FourCardGrid>
-		{
-			topCards.map((card) => (
-				<ListCard title={card.title}>
-					<ul>
-						{card.links.map((link) => (
-							<li>
-								<a
-									href={link.href}
-									class="hover:text-accent! dark:text-accent-high! text-black! dark:hover:text-black!"
-								>
-									{link.text}
-								</a>
-							</li>
-						))}
-					</ul>
-					<p>
-						<strong>
-							<a href={card.cta.href}>{card.cta.text}</a>
-						</strong>
-					</p>
-				</ListCard>
-			))
-		}
-	</FourCardGrid>
-	<div class="hidden md:block">
-		<hr />
-		<TryItSection />
-		<hr />
-		{
-			featuredSections.map((section) => (
-				<>
-					<FeaturedContentSection
-						title={section.title}
-						text={section.text}
-						image={section.image}
-						imagePosition={section.imagePosition}
-						cards={section.cards}
-					/>
-					<hr />
-				</>
-			))
-		}
-		<RecommendedContentSection
-			title={recommendedSection.title}
-			cards={recommendedSection.cards}
-		/>
-		<hr />
-		<FooterHeroBlock />
+<StarlightPage {...props}>
+	<div class="landing-root">
+		<div class="relative">
+			<FullPageLines />
+			<StructuralGrid />
+			<main class="relative z-10 mx-auto max-w-[1280px]" id="main-content">
+				<!-- Origin marker -->
+				<div class="relative h-0 max-[1024px]:hidden">
+					<div class="pointer-events-none absolute inset-0">
+						<svg
+							class="v27-broadcast"
+							width="56"
+							height="56"
+							viewBox="0 0 56 56"
+							style="animation-delay:0s;margin-left:0;margin-top:32px"
+							><line
+								x1="0"
+								y1="28"
+								x2="56"
+								y2="28"
+								stroke="#f56500"
+								stroke-width="1"></line><line
+								x1="28"
+								y1="0"
+								x2="28"
+								y2="56"
+								stroke="#f56500"
+								stroke-width="1"></line></svg
+						>
+						<svg
+							class="v27-broadcast"
+							width="56"
+							height="56"
+							viewBox="0 0 56 56"
+							style="animation-delay:2s;margin-left:0;margin-top:32px"
+							><line
+								x1="0"
+								y1="28"
+								x2="56"
+								y2="28"
+								stroke="#f56500"
+								stroke-width="1"></line><line
+								x1="28"
+								y1="0"
+								x2="28"
+								y2="56"
+								stroke="#f56500"
+								stroke-width="1"></line></svg
+						>
+						<svg
+							class="v27-origin-static"
+							width="28"
+							height="28"
+							viewBox="0 0 28 28"
+							style="margin-left:0;margin-top:32px"
+							><line
+								x1="0"
+								y1="14"
+								x2="28"
+								y2="14"
+								stroke="#f56500"
+								stroke-width="1"></line><line
+								x1="14"
+								y1="0"
+								x2="14"
+								y2="28"
+								stroke="#f56500"
+								stroke-width="1"></line></svg
+						>
+					</div>
+				</div>
+
+				<Hero />
+				<PlatformStats />
+
+				<BuildFromScratch />
+
+				<RequestLifecycle />
+
+				<SecureSection />
+
+				<AccelerateSection />
+			</main>
+		</div>
 	</div>
 </StarlightPage>
+
+<script>
+	// Instant scroll to hash target on page load (no smooth animation).
+	// Subsequent in-page clicks use CSS scroll-behavior: smooth.
+	{
+		const hash = window.location.hash;
+		if (hash.length > 1) {
+			let target: Element | null = null;
+			let id = hash.slice(1);
+			try {
+				id = decodeURIComponent(id);
+			} catch {
+				// keep raw id when hash is malformed
+			}
+			target = document.getElementById(id);
+			if (!target) {
+				try {
+					target = document.querySelector(hash);
+				} catch {
+					target = null;
+				}
+			}
+			if (target) {
+				// Temporarily disable smooth scrolling for the initial jump
+				const html = document.documentElement;
+				const prev = html.style.scrollBehavior;
+				html.style.scrollBehavior = "auto";
+				requestAnimationFrame(() => {
+					target.scrollIntoView();
+					// Restore after the frame so future clicks are smooth again
+					requestAnimationFrame(() => {
+						html.style.scrollBehavior = prev;
+					});
+				});
+			}
+		}
+	}
+</script>
+
+<style is:global>
+	/* Starlight layout overrides */
+	.right-sidebar-container,
+	mobile-starlight-toc {
+		display: none;
+	}
+
+	.main-frame {
+		padding-top: var(--sl-nav-height);
+	}
+	.main-pane {
+		padding: 0;
+		gap: 0;
+		isolation: isolate;
+		z-index: 0;
+	}
+	.content-panel {
+		padding: 0;
+		margin: 0;
+		overflow: visible;
+	}
+	.sl-container {
+		max-width: none;
+		margin: 0;
+		padding: 0;
+		overflow: visible;
+	}
+	.sl-markdown-content {
+		margin: 0;
+		padding: 0;
+		overflow: visible;
+	}
+	.sl-markdown-content > :first-child {
+		margin-top: 0;
+	}
+	.sl-markdown-content
+		:not(a, strong, em, del, span, input, code, br)
+		+ :not(a, strong, em, del, span, input, code, br, :where(.not-content *)) {
+		margin-top: 0;
+	}
+	footer {
+		display: none;
+	}
+</style>
