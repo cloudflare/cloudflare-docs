@@ -65,15 +65,16 @@ A **trigger** is a configuration that defines how your Worker gets built and dep
 
 Most Builds API operations follow this pattern: first get your Worker's tag, then get the trigger UUID, then perform build operations.
 
-```mermaid
-flowchart TD
-    A["<strong>1. Get Worker tag</strong><br/>GET /workers/scripts"] --> B["<strong>2. Get trigger UUID</strong><br/>GET /builds/workers/&#123;worker_tag&#125;/triggers"]
-    B --> C{"<strong>3. Perform build operations</strong>"}
-    C --> D["<strong>Trigger a build</strong><br/>POST /builds/triggers/&#123;trigger_uuid&#125;/builds"]
-    C --> E["<strong>List builds</strong><br/>GET /builds/workers/&#123;worker_tag&#125;/builds"]
-    C --> F["<strong>Get build logs</strong><br/>GET /builds/builds/&#123;build_uuid&#125;/logs"]
-    C --> G["<strong>Cancel a build</strong><br/>PUT /builds/builds/&#123;build_uuid&#125;/cancel"]
-```
+![Workflow overview: get Worker tag, then get trigger UUID, then perform build operations.](~/assets/images/workers/builds/workflow-overview.svg)
+
+| Step | Action              | Endpoint                                              |
+| ---- | ------------------- | ----------------------------------------------------- |
+| 1    | Get Worker tag      | `GET /workers/scripts`                                |
+| 2    | Get trigger UUID    | `GET /builds/workers/:worker_tag/triggers`             |
+| 3a   | Trigger a build     | `POST /builds/triggers/:trigger_uuid/builds`           |
+| 3b   | List builds         | `GET /builds/workers/:worker_tag/builds`               |
+| 3c   | Get build logs      | `GET /builds/builds/:build_uuid/logs`                  |
+| 3d   | Cancel a build      | `PUT /builds/builds/:build_uuid/cancel`                |
 
 ## Step 1: Get your Worker tag
 
@@ -291,17 +292,17 @@ The following examples show common use cases for the Builds API.
 
 This example walks through the complete process of connecting a GitHub repository to a Worker and setting up automated builds using only the API.
 
-```mermaid
-flowchart TD
-    A["<strong>1. Get GitHub account and repo IDs</strong><br/>GET api.github.com/users/... → note account ID<br/>GET api.github.com/repos/... → note repo ID"] --> B["<strong>2. Create repo connection</strong><br/>PUT /builds/repos/connections"]
-    B --> C["<strong>3. Get Worker tag</strong><br/>GET /workers/scripts"]
-    C --> D["<strong>4. Create triggers</strong><br/>POST /builds/triggers"]
-    D --> D1["<strong>Production trigger</strong><br/>branch_includes: main<br/>deploy_command: wrangler deploy"]
-    D --> D2["<strong>Preview trigger (optional)</strong><br/>branch_includes: *<br/>branch_excludes: main<br/>deploy_command: wrangler versions upload"]
-    D1 --> E["<strong>5. Set environment variables (optional)</strong><br/>PATCH /builds/triggers/&#123;trigger_uuid&#125;/environment_variables"]
-    D2 --> E
-    E --> F["<strong>6. Trigger first build</strong><br/>POST /builds/triggers/&#123;trigger_uuid&#125;/builds"]
-```
+![Setup flow: get GitHub IDs, create repo connection, get Worker tag, create triggers, set env variables, trigger first build.](~/assets/images/workers/builds/setup-from-scratch.svg)
+
+| Step | Action                      | Endpoint                                                          |
+| ---- | --------------------------- | ----------------------------------------------------------------- |
+| 1    | Get GitHub account/repo IDs | `GET api.github.com/users/...` and `GET api.github.com/repos/...` |
+| 2    | Create repo connection      | `PUT /builds/repos/connections`                                   |
+| 3    | Get Worker tag              | `GET /workers/scripts`                                            |
+| 4a   | Create production trigger   | `POST /builds/triggers`                                           |
+| 4b   | Create preview trigger      | `POST /builds/triggers`                                           |
+| 5    | Set environment variables   | `PATCH /builds/triggers/:trigger_uuid/environment_variables`       |
+| 6    | Trigger first build         | `POST /builds/triggers/:trigger_uuid/builds`                      |
 
 #### Prerequisites
 
@@ -449,60 +450,51 @@ Your Worker is now connected to GitHub. Future pushes to `main` will automatical
 
 Redeploy your current active deployment to refresh build-time data. This is useful when you need to rebuild without code changes.
 
-```mermaid
-flowchart LR
-    A["<strong>1. Get active deployment</strong><br/>GET /workers/scripts/&#123;worker_name&#125;/deployments"] --> B["<strong>2. Find the build for that version</strong><br/>GET /builds/builds?version_ids=&#123;version_id&#125;"]
-    B --> C["<strong>3. Retrigger with same branch and commit</strong><br/>POST /builds/triggers/&#123;trigger_uuid&#125;/builds"]
+![Redeploy flow: get active deployment, find the build for that version, retrigger with same branch and commit.](~/assets/images/workers/builds/redeploy-flow.svg)
+
+| Step | Action                            | Endpoint                                              |
+| ---- | --------------------------------- | ----------------------------------------------------- |
+| 1    | Get active deployment             | `GET /workers/scripts/:worker_name/deployments`        |
+| 2    | Find the build for that version   | `GET /builds/builds?version_ids=:version_id`           |
+| 3    | Retrigger with same branch/commit | `POST /builds/triggers/:trigger_uuid/builds`           |
+
+**Step 1: Get the active deployment's version ID**
+
+Use the [`GET /workers/scripts/{script_name}/deployments`](/api/resources/workers/subresources/scripts/subresources/deployments/methods/list/) endpoint with the `worker_name` from [Step 1](#step-1-get-your-worker-tag):
+
+```bash
+curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/scripts/{worker_name}/deployments" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  | jq '.result.deployments[0].versions[0].version_id'
 ```
 
-This script chains multiple API calls together:
+Save the `version_id` from the output.
 
-```js
-async function redeploy() {
-	const accountId = "<ACCOUNT_ID>";
-	const workerName = "<WORKER_NAME>";
-	const apiToken = process.env.CF_API_TOKEN;
+**Step 2: Find the build for that version**
 
-	// Step 1: Get the active deployment's version ID
-	const deploymentsResponse = await fetch(
-		`https://api.cloudflare.com/client/v4/accounts/${accountId}/workers/scripts/${workerName}/deployments`,
-		{
-			headers: { Authorization: `Bearer ${apiToken}` },
-		},
-	);
-	const deployments = await deploymentsResponse.json();
-	const versionId = deployments.result.deployments[0].versions[0].version_id;
+Use the [`GET /builds/builds`](/api/resources/workers_builds/subresources/builds/methods/get_by_version_ids/) endpoint with the `version_id` from the previous step:
 
-	// Step 2: Get the build that created this version
-	const buildsResponse = await fetch(
-		`https://api.cloudflare.com/client/v4/accounts/${accountId}/builds/builds?version_ids=${versionId}`,
-		{
-			headers: { Authorization: `Bearer ${apiToken}` },
-		},
-	);
-	const buildsByVersion = await buildsResponse.json();
-	const build = buildsByVersion.result.builds[versionId];
+```bash
+curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/builds?version_ids={version_id}" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  | jq '.result.builds'
+```
 
-	// Step 3: Retrigger using the same trigger, branch, and commit
-	await fetch(
-		`https://api.cloudflare.com/client/v4/accounts/${accountId}/builds/triggers/${build.trigger.trigger_uuid}/builds`,
-		{
-			method: "POST",
-			headers: {
-				Authorization: `Bearer ${apiToken}`,
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				branch: build.build_trigger_metadata.branch,
-				commit_hash: build.build_trigger_metadata.commit_hash,
-			}),
-		},
-	);
+From the response, note the `trigger.trigger_uuid`, `build_trigger_metadata.branch`, and `build_trigger_metadata.commit_hash`.
 
-	console.log("Redeploy triggered successfully");
-}
+**Step 3: Retrigger with the same branch and commit**
 
-redeploy();
+Use the [`POST /builds/triggers/{uuid}/builds`](/api/resources/workers_builds/subresources/builds/methods/create/) endpoint with the values from the previous step:
+
+```bash
+curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/triggers/{trigger_uuid}/builds" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --request POST \
+  --data '{
+    "branch": "{branch}",
+    "commit_hash": "{commit_hash}"
+  }'
 ```
 
 ## Troubleshooting
