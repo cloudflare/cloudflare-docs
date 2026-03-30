@@ -18,9 +18,19 @@ Cloudflare's client-side security helps manage <GlossaryTooltip term="client-sid
 Client-side security uses two types of <GlossaryTooltip term="content security policy (CSP)" link="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">Content Security Policy (CSP)</GlossaryTooltip> headers for different purposes:
 
 - For resource monitoring (scripts and connections)
-- To enforce your content security rules or log violations of these rules
+- To enforce content security rules or log violations of these rules
 
-## HTTP header used in resource monitoring
+## Comparison
+
+| Resource monitoring HTTP header               | Content security rules HTTP headers                                                           |
+| --------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `content-security-policy-report-only`         | `content-security-policy-report-only` (log rules)<br/>`content-security-policy` (allow rules) |
+| Automatic — on when monitoring is enabled     | Manual — created via rules you define                                                         |
+| ~20% of HTML responses (sampled)              | 100% of matching responses (not sampled)                                                      |
+| `'none'` directives — reports everything      | CSP directives come from your allowlist                                                       |
+| Browser sends violation reports to Cloudflare | Log rules report violations only<br/>Allow rules block disallowed resources                   |
+
+## HTTP header used for resource monitoring
 
 When you turn on resource monitoring, Cloudflare automatically adds a `content-security-policy-report-only` header with `'none'` directives to a sample of approximately 20% of HTML responses. For details on the header format, refer to [CSP HTTP header format](/client-side-security/reference/csp-header/).
 
@@ -39,9 +49,9 @@ When you create [content security rules](/client-side-security/rules/), Cloudfla
 
 Unlike headers used for resource monitoring, these HTTP headers apply only to responses matching the expression you define in each rule and are not sampled. You have full control over these headers through your [content security rules](/client-side-security/rules/) configuration.
 
----
-
 Customers with Client-Side Security Advanced have access to additional classification mechanisms based on threat feeds to determine if a script, or a connection made by a script, is malicious. For more information, refer to [Malicious script and connection detection](/client-side-security/how-it-works/malicious-script-detection/).
+
+---
 
 ## Learn more
 
