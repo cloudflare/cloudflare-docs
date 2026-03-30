@@ -18,7 +18,7 @@
 ## High-risk items and unknowns
 
 | Item                                                  | Risk   | Status                                                        |
-| ----------------------------------------------------- | ------ | ------------------------------------------------------------- |
+|-------------------------------------------------------|--------|---------------------------------------------------------------|
 | **`Page.astro` Vite alias**                           | HIGH   | Unknown — We're coupled to low-level private implementation   |
 | **`patch-package` hunks against Starlight internals** | HIGH   | Unknown — We're coupled to low-level private implementation   |
 | **`starlight-links-validator` Zod 4 incompatibility** | HIGH   | Confirmed broken upstream                                     |
@@ -42,7 +42,7 @@ Targets are determined by [withastro/docs#13230].
 That is the north star.
 
 | Package                        | Current  | Target                                                 |
-| ------------------------------ | -------- | ------------------------------------------------------ |
+| ------------------------------ | -------- |--------------------------------------------------------|
 | `astro`                        | `5.13.7` | `6.0.0-beta.8`                                         |
 | `@astrojs/starlight`           | `0.36.0` | `https://pkg.pr.new/@astrojs/starlight@3644`           |
 | `@astrojs/starlight-docsearch` | `0.6.0`  | `https://pkg.pr.new/@astrojs/starlight-docsearch@3644` |

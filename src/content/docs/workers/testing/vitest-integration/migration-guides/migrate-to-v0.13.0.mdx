@@ -12,13 +12,13 @@ Version 0.13.0 of `@cloudflare/vitest-pool-workers` introduces support for Vites
 
 ## Use the codemod
 
-A codemod is available to automate many of the migration steps:
+A codemod is available to automate the configuration file migration:
 
 ```sh
 wrangler codemod vitest-pool-v3-to-v4
 ```
 
-The codemod will update your configuration file and imports. You should still review this guide to understand the changes and handle any edge cases.
+The codemod will update your Vitest configuration file (for example, `vitest.config.ts`). You will still need to manually update your test file imports and review this guide to handle the remaining migration steps.
 
 ## Update Vitest to version 4
 
@@ -174,6 +174,8 @@ The `fetchMock` export from `cloudflare:test` has been removed. To mock outbound
     expect(await response.text()).toBe("mocked");
 -
 -   fetchMock.deactivate();
++
++   globalThis.fetch = originalFetch;
   });
 ```
 
