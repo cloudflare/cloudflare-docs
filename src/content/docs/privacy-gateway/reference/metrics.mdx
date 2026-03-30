@@ -60,21 +60,25 @@ Requests are sampled.
 
 <Details header="Sum fields">
 
-- `requests` – `uint64` — Total request count. _(Request node)_
-- `bytesToGateway` – `uint64` — Total bytes sent from client to gateway. _(Request node)_
-- `bytesToClient` – `uint64` — Total bytes sent from gateway back to client. _(Request node)_
-- `connections` – `uint64` — Total connection count. _(Ingress and egress connection nodes)_
+| Field | Type | Description | Node |
+| --- | --- | --- | --- |
+| `requests` | `uint64` | Total request count. | Request |
+| `bytesToGateway` | `uint64` | Total bytes sent from client to gateway. | Request |
+| `bytesToClient` | `uint64` | Total bytes sent from gateway back to client. | Request |
+| `connections` | `uint64` | Total connection count. | Ingress and egress connection |
 
 </Details>
 
 <Details header="Quantile fields">
 
-- `clientRelayRttMsP50` – `float64` — Median round-trip time between client and relay, in milliseconds. _(Ingress connection node)_
-- `clientRelayRttMsP95` – `float64` — 95th percentile RTT between client and relay, in milliseconds. _(Ingress connection node)_
-- `clientRelayRttMsP99` – `float64` — 99th percentile RTT between client and relay, in milliseconds. _(Ingress connection node)_
-- `relayGatewayRttMsP50` – `float64` — Median round-trip time between relay and gateway, in milliseconds. _(Egress connection node)_
-- `relayGatewayRttMsP95` – `float64` — 95th percentile RTT between relay and gateway, in milliseconds. _(Egress connection node)_
-- `relayGatewayRttMsP99` – `float64` — 99th percentile RTT between relay and gateway, in milliseconds. _(Egress connection node)_
+| Field | Type | Description | Node |
+| --- | --- | --- | --- |
+| `clientRelayRttMsP50` | `float64` | Median round-trip time between client and relay, in milliseconds. | Ingress connection |
+| `clientRelayRttMsP95` | `float64` | 95th percentile RTT between client and relay, in milliseconds. | Ingress connection |
+| `clientRelayRttMsP99` | `float64` | 99th percentile RTT between client and relay, in milliseconds. | Ingress connection |
+| `relayGatewayRttMsP50` | `float64` | Median round-trip time between relay and gateway, in milliseconds. | Egress connection |
+| `relayGatewayRttMsP95` | `float64` | 95th percentile RTT between relay and gateway, in milliseconds. | Egress connection |
+| `relayGatewayRttMsP99` | `float64` | 99th percentile RTT between relay and gateway, in milliseconds. | Egress connection |
 
 </Details>
 
@@ -84,28 +88,34 @@ Requests are sampled.
 
 <Details header="All nodes">
 
-- `date` – `Date` — Calendar date (day granularity).
-- `datetimeMinute` – `Time` — Timestamp truncated to the minute.
-- `datetimeFiveMinutes` – `Time` — Timestamp truncated to five-minute intervals.
-- `datetimeFifteenMinutes` – `Time` — Timestamp truncated to fifteen-minute intervals.
-- `datetimeHour` – `Time` — Timestamp truncated to the hour.
-- `colo` – `string` — Cloudflare data center that handled the request.
-- `endpoint` – `string` — The appId that generated traffic.
+| Field | Type | Description |
+| --- | --- | --- |
+| `date` | `Date` | Calendar date (day granularity). |
+| `datetimeMinute` | `Time` | Timestamp truncated to the minute. |
+| `datetimeFiveMinutes` | `Time` | Timestamp truncated to five-minute intervals. |
+| `datetimeFifteenMinutes` | `Time` | Timestamp truncated to fifteen-minute intervals. |
+| `datetimeHour` | `Time` | Timestamp truncated to the hour. |
+| `colo` | `string` | Cloudflare data center that handled the request. |
+| `endpoint` | `string` | The appId that generated traffic. |
 
 </Details>
 
 <Details header="Request node only">
 
-- `relayStatusCode` – `uint16` — HTTP status code returned by the relay to the client.
-- `gatewayStatusCode` – `uint16` — HTTP status code returned by the gateway to the relay. A value of `0` means the request did not reach the gateway (relay-side failure or timeout).
-- `proxyStatus` – `string` — Proxy-level error classification. Indicates the category of failure when the relay could not successfully forward to the gateway. `null` when the request succeeded with no proxy-level error. Refer to [Proxy status codes](#proxy-status-codes) for possible values.
+| Field | Type | Description |
+| --- | --- | --- |
+| `relayStatusCode` | `uint16` | HTTP status code returned by the relay to the client. |
+| `gatewayStatusCode` | `uint16` | HTTP status code returned by the gateway to the relay. A value of `0` means the request did not reach the gateway (relay-side failure or timeout). |
+| `proxyStatus` | `string` | Proxy-level error classification. Indicates the category of failure when the relay could not successfully forward to the gateway. `null` when the request succeeded with no proxy-level error. Refer to [Proxy status codes](#proxy-status-codes) for possible values. |
 
 </Details>
 
 <Details header="Ingress connection node only">
 
-- `httpVersion` – `string` — HTTP protocol version used for the client-to-relay connection.
-- `tlsVersion` – `string` — TLS version negotiated on the client-to-relay connection.
+| Field | Type | Description |
+| --- | --- | --- |
+| `httpVersion` | `string` | HTTP protocol version used for the client-to-relay connection. |
+| `tlsVersion` | `string` | TLS version negotiated on the client-to-relay connection. |
 
 </Details>
 
