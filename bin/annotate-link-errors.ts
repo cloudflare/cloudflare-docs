@@ -9,7 +9,7 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 
-const DOCS_DIR = "src/content/docs";
+const CONTENT_DIR = "src/content";
 const LOG_PATH = process.argv[2] ?? "build.log";
 
 // Strip ANSI escape codes.
@@ -18,14 +18,39 @@ function stripAnsi(str: string): string {
 	return str.replace(/\x1B\[[0-9;]*[mGKHF]/g, "");
 }
 
-// Find the source MDX file for a given slug (e.g. "workers/get-started/").
-// Checks <slug>/index.mdx first, then <slug>.mdx (without trailing slash).
+// Find the source MDX file for a built page slug (e.g. "changelog/fundamentals/2026-test/").
+//
+// The slug corresponds to a URL path, but the source file may live in any content collection
+// under src/content/ — not just src/content/docs/. For example:
+//   changelog/fundamentals/2026-test/ → src/content/changelog/fundamentals/2026-test.mdx
+//   workers/get-started/              → src/content/docs/workers/get-started/index.mdx
+//
+// Strategy: try <collection>/<rest>/index.mdx and <collection>/<rest>.mdx for every collection,
+// where <collection> is the first path segment and <rest> is the remainder.
 function findSourceFile(slug: string): string | null {
 	const bare = slug.replace(/\/$/, "");
-	const candidates = [
-		path.join(DOCS_DIR, bare, "index.mdx"),
-		path.join(DOCS_DIR, `${bare}.mdx`),
-	];
+	const segments = bare.split("/");
+
+	// Build candidate paths to check, ordered from most to least specific.
+	const candidates: string[] = [];
+
+	// 1. Try each content collection whose name matches the first slug segment.
+	//    e.g. "changelog/fundamentals/2026-test" → src/content/changelog/fundamentals/2026-test.mdx
+	const [first, ...rest] = segments;
+	if (first && rest.length > 0) {
+		const restPath = rest.join("/");
+		candidates.push(
+			path.join(CONTENT_DIR, first, restPath, "index.mdx"),
+			path.join(CONTENT_DIR, first, `${restPath}.mdx`),
+		);
+	}
+
+	// 2. Try under src/content/docs/ with the full slug (handles most docs pages).
+	candidates.push(
+		path.join(CONTENT_DIR, "docs", bare, "index.mdx"),
+		path.join(CONTENT_DIR, "docs", `${bare}.mdx`),
+	);
+
 	for (const candidate of candidates) {
 		if (fs.existsSync(candidate)) return candidate;
 	}
