@@ -48,12 +48,7 @@ For each scoped alert, Cloudflare does the following:
 When you create a scoped alert you will not receive notifications for resources that are not allowed by a policy (either [in allow or in log mode](/client-side-security/rules/#rule-actions)). These are [rule violations](/client-side-security/rules/violations/) that you can review in the dashboard, through GraphQL, or via Logpush.
 
 :::note
-
-You will not receive notifications for a scoped alert in the following cases:
-
-- No configured content security rules in the zone
-- Content security rule is not enabled
-
+Scoped alerts only fire if the zone has at least one enabled content security rule.
 :::
 
 For unscoped alerts, you will receive alerts for resources detected in all your zones, and you may receive alerts about resources that violate your configured content security rules.
