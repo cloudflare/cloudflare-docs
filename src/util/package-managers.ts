@@ -51,11 +51,7 @@ const commands: Record<
 	},
 	bun: {
 		add: "bun add",
-		create: "bun create",
-		dlx: "bunx",
-		exec: "bunx",
 		install: "bun install",
-		run: "bun run",
 		remove: "bun remove",
 		dev: "-d",
 	},
