@@ -65,6 +65,21 @@ When a new commit is made to `ecommerce-monorepo`, a build and deploy will be tr
   - README.md
 </FileTree>
 
+### Workspace catalog dependencies
+
+If your monorepo uses [Bun's catalog dependencies](https://bun.sh/docs/install/catalogs) or pnpm workspace protocol, you may encounter errors when Workers Builds runs `bun install` and cannot resolve dependencies that use `@catalog:` or workspace protocols.
+
+This occurs because the **root directory** setting determines where `bun install` runs from, and Bun needs access to the workspace configuration file at the monorepo root to resolve catalog dependencies.
+
+**Solution:** Set the root directory to the monorepo root (`/`) and update your deploy command to navigate to your Worker subdirectory:
+
+| Setting | Standard Setup | With Catalog Dependencies |
+| ------- | --------------- | -------------------------- |
+| Root directory | `/workers/product-service` | `/` (monorepo root) |
+| Deploy command | `npx wrangler deploy` | `cd workers/product-service && npx wrangler deploy` |
+
+This ensures `bun install` runs from the monorepo root where the workspace configuration and catalog definitions are located, while the deploy command still targets your specific Worker.
+
 ## Wrangler Environments
 
 You can use [Wrangler Environments](/workers/wrangler/environments/) with Workers Builds by completing the following steps:
