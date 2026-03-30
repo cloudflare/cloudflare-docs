@@ -20,11 +20,11 @@ $ARGUMENTS
 2. **Identify the product**: Determine which Cloudflare product(s) the changes relate to. Common products include:
    - Workers, KV, R2, D1, Queues, Durable Objects (DO), Hyperdrive, Containers, Pipelines
    - Pages, Images, Stream, Calls
-   - WAF, DDoS, Bot Management, API Shield, Page Shield
+   - WAF, DDoS, Bot Management, API Shield, Client-side security
    - Zero Trust (ZT), Access, Gateway, WARP, Tunnel, CASB, DLP, DEX
    - DNS, Registrar, SSL/TLS, Load Balancing, Spectrum
    - Analytics, Logs, Notifications
-   
+
    Use short product names where common (DO, KV, ZT, etc.).
 
 3. **Create the PR title**: Use format `{Product}: {short description}`
@@ -51,7 +51,7 @@ $ARGUMENTS
 Adds documentation for the new streaming response API that enables real-time data processing in Workers.
 
 - Add streaming response guide
-- Update fetch handler examples  
+- Update fetch handler examples
 - Add SSE configuration options
 - Fix broken link in overview
 ```

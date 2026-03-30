@@ -9,36 +9,36 @@ The table below lists the [Logpush datasets](/logs/logpush/logpush-job/datasets/
 
 Be aware that if you enable CMB for a dataset that does not support your region, no data will be pushed to your destination.
 
-| Dataset name                   | Level   | Respects CMB | Available with US CMB region | Available with EU CMB region |
-| ------------------------------ | ------- | ------------ | ---------------------------- | ---------------------------- |
-| Access Requests                | Account | ✅           | ✅                           | ✅                           |
-| AI Gateway Events              | Account | ✅           | ✅                           | ✅                           |
-| Audit Logs                     | Account | ✘            | ✅                           | ✘                            |
-| Browser Isolation User Actions | Account | ✅           | ✅                           | ✅                           |
-| CASB Findings                  | Account | ✘            | ✅                           | ✘                            |
-| DEX Application Tests          | Account | ✅           | ✘                            | ✅                           |
-| DEX Device State Events        | Account | ✅           | ✘                            | ✅                           |
-| Device Posture Results         | Account | ✘            | ✅                           | ✘                            |
-| DLP Forensic Copies            | Account | N/A[^1]      | ✘                            | ✘                            |
-| DNS Firewall logs              | Account | ✅           | ✅                           | ✅                           |
-| DNS logs                       | Zone    | ✅           | ✅                           | ✅                           |
-| Email security Alerts          | Account | ✅           | ✅                           | ✅                           |
-| Firewall events                | Zone    | ✅           | ✅                           | ✅                           |
-| Gateway DNS                    | Account | ✅           | ✅                           | ✅                           |
-| Gateway HTTP                   | Account | ✅           | ✅                           | ✅                           |
-| Gateway Network                | Account | ✅           | ✅                           | ✅                           |
-| HTTP requests                  | Zone    | ✅           | ✅                           | ✅                           |
-| IPSec Logs                     | Account | ✅           | ✅                           | ✅                           |
-| Magic IDS Detections           | Account | ✅           | ✅                           | ✅                           |
-| NEL reports                    | Zone    | ✘            | ✅                           | ✘                            |
-| Network Analytics Logs         | Account | ✅           | ✅                           | ✅                           |
-| Page Shield                    | Zone    | ✅           | ✅                           | ✅                           |
-| Sinkhole Events                | Account | ✅           | ✅                           | ✅                           |
-| Spectrum events                | Zone    | ✅           | ✅                           | ✅                           |
-| WARP Config Changes            | Account | ✅           | ✘                            | ✅                           |
-| WARP Toggle Changes            | Account | ✅           | ✘                            | ✅                           |
-| Workers Trace Events           | Account | ✅           | ✅                           | ✅                           |
-| Zaraz Events                   | Zone    | ✅           | ✅                           | ✅                           |
-| Zero Trust Sessions            | Account | ✅           | ✅                           | ✅                           |
+| Dataset name                                | Level   | Respects CMB | Available with US CMB region | Available with EU CMB region |
+| ------------------------------------------- | ------- | ------------ | ---------------------------- | ---------------------------- |
+| Access Requests                             | Account | ✅           | ✅                           | ✅                           |
+| AI Gateway Events                           | Account | ✅           | ✅                           | ✅                           |
+| Audit Logs                                  | Account | ✘            | ✅                           | ✘                            |
+| Browser Isolation User Actions              | Account | ✅           | ✅                           | ✅                           |
+| CASB Findings                               | Account | ✘            | ✅                           | ✘                            |
+| Client-side security (formerly Page Shield) | Zone    | ✅           | ✅                           | ✅                           |
+| DEX Application Tests                       | Account | ✅           | ✘                            | ✅                           |
+| DEX Device State Events                     | Account | ✅           | ✘                            | ✅                           |
+| Device Posture Results                      | Account | ✘            | ✅                           | ✘                            |
+| DLP Forensic Copies                         | Account | N/A[^1]      | ✘                            | ✘                            |
+| DNS Firewall logs                           | Account | ✅           | ✅                           | ✅                           |
+| DNS logs                                    | Zone    | ✅           | ✅                           | ✅                           |
+| Email security Alerts                       | Account | ✅           | ✅                           | ✅                           |
+| Firewall events                             | Zone    | ✅           | ✅                           | ✅                           |
+| Gateway DNS                                 | Account | ✅           | ✅                           | ✅                           |
+| Gateway HTTP                                | Account | ✅           | ✅                           | ✅                           |
+| Gateway Network                             | Account | ✅           | ✅                           | ✅                           |
+| HTTP requests                               | Zone    | ✅           | ✅                           | ✅                           |
+| IPSec Logs                                  | Account | ✅           | ✅                           | ✅                           |
+| Magic IDS Detections                        | Account | ✅           | ✅                           | ✅                           |
+| NEL reports                                 | Zone    | ✘            | ✅                           | ✘                            |
+| Network Analytics Logs                      | Account | ✅           | ✅                           | ✅                           |
+| Sinkhole Events                             | Account | ✅           | ✅                           | ✅                           |
+| Spectrum events                             | Zone    | ✅           | ✅                           | ✅                           |
+| WARP Config Changes                         | Account | ✅           | ✘                            | ✅                           |
+| WARP Toggle Changes                         | Account | ✅           | ✘                            | ✅                           |
+| Workers Trace Events                        | Account | ✅           | ✅                           | ✅                           |
+| Zaraz Events                                | Zone    | ✅           | ✅                           | ✅                           |
+| Zero Trust Sessions                         | Account | ✅           | ✅                           | ✅                           |
 
 [^1]: Customer Metadata Boundary does not apply in this case, as these logs are sent directly from the processing location to your configured destination.

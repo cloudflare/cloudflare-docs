@@ -271,7 +271,7 @@ All plans have access to:
 
 * `tlsClientAuth` Object | null
 
-  * Only set when using Cloudflare Access or API Shield (mTLS). Object with the following properties: `certFingerprintSHA1`, `certFingerprintSHA256`, `certIssuerDN`, `certIssuerDNLegacy`, `certIssuerDNRFC2253`, `certIssuerSKI`, `certIssuerSerial`, `certNotAfter`, `certNotBefore`, `certPresented`, `certRevoked`, `certSKI`, `certSerial`, `certSubjectDN`, `certSubjectDNLegacy`, `certSubjectDNRFC2253`, `certVerified`.
+  * Various details about the client certificate (for mTLS connections). Refer to [Client certificate variables](/ssl/client-certificates/client-certificate-variables/) for more details.
 
 * `tlsClientCiphersSha1` string
 

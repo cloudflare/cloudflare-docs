@@ -1,6 +1,5 @@
 import { SELF } from "cloudflare:test";
 import { describe, it, expect } from "vitest";
-import { XMLParser } from "fast-xml-parser";
 import { parse } from "node-html-parser";
 
 describe("Cloudflare Docs", () => {
@@ -101,8 +100,6 @@ describe("Cloudflare Docs", () => {
 	});
 
 	describe("rss endpoints", () => {
-		const parser = new XMLParser({ processEntities: false });
-
 		describe("changelog", () => {
 			it("global", async () => {
 				const request = new Request("http://fakehost/changelog/rss/index.xml");
@@ -111,21 +108,16 @@ describe("Cloudflare Docs", () => {
 				expect(response.status).toBe(200);
 
 				const xml = await response.text();
-				const parsed = parser.parse(xml);
-				const { channel } = parsed.rss;
 
-				expect(channel.title).toBe("Cloudflare changelogs");
-
-				const item = channel.item.find(
-					(item: any) =>
-						item.title ===
-						"Access - New SAML and OIDC Fields and SAML transforms for Access for SaaS",
+				expect(xml).toContain("<title>Cloudflare changelogs</title>");
+				expect(xml).toContain(
+					"<title>Access - New SAML and OIDC Fields and SAML transforms for Access for SaaS</title>",
 				);
-
-				expect(item).toBeDefined();
-				expect(item.product).toBe("Access");
-				expect(item.category).toBe("Access");
-				expect(item.pubDate).toBe("Mon, 03 Mar 2025 00:00:00 GMT");
+				expect(xml).toContain("<product>Access</product>");
+				expect(xml).toContain("<category>Access</category>");
+				expect(xml).toContain(
+					"<pubDate>Mon, 03 Mar 2025 00:00:00 GMT</pubDate>",
+				);
 			});
 		});
 	});

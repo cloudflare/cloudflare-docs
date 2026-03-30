@@ -1,0 +1,42 @@
+---
+pcx_content_type: reference
+title: Client certificate variables
+sidebar:
+  order: 10
+---
+
+When a request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/), Cloudflare exposes certificate details as variables in the Ruleset Engine and as properties on the Workers `request.cf` object.
+
+## Ruleset Engine fields
+
+Client certificate fields are available as [mTLS fields](/ruleset-engine/rules-language/fields/reference/?field-category=mTLS) in Ruleset Engine-based products such as [WAF custom rules](/waf/custom-rules/) and [request header modification rules](/rules/transform/request-header-modification/).
+
+## Workers variables
+
+These variables are also available as part of the [`request.cf.tlsClientAuth`](/workers/runtime-apis/request/#incomingrequestcfproperties) object via Cloudflare Workers. See the linked Ruleset field for the definition.
+
+:::note
+Some `tlsClientAuth` properties have a different type than their Ruleset field equivalent. Those are called out below.
+:::
+
+- [`request.cf.tlsClientAuth.certRevoked`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_revoked/) — In Workers, this is a string (`"1"` for revoked, `"0"` for not revoked) rather than a boolean.
+- [`request.cf.tlsClientAuth.certVerified`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_verified/) — In Workers, this is a string (`"SUCCESS"` when valid, `"NONE"` when not present) rather than a boolean. On failure, the string contains the error reason (for example, `"FAILED:unable to get local issuer certificate"`).
+- [`request.cf.tlsClientAuth.certPresented`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_presented/) — In Workers, this is a string (`"1"` when a certificate is presented, `"0"` otherwise) rather than a boolean.
+- [`request.cf.tlsClientAuth.certIssuerDN`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_issuer_dn/)
+- [`request.cf.tlsClientAuth.certSubjectDN`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_subject_dn/)
+- [`request.cf.tlsClientAuth.certIssuerDNRFC2253`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_issuer_dn_rfc2253/)
+- [`request.cf.tlsClientAuth.certSubjectDNRFC2253`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_subject_dn_rfc2253/)
+- [`request.cf.tlsClientAuth.certIssuerDNLegacy`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_issuer_dn_legacy/)
+- [`request.cf.tlsClientAuth.certSubjectDNLegacy`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_subject_dn_legacy/)
+- [`request.cf.tlsClientAuth.certSerial`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_serial/)
+- [`request.cf.tlsClientAuth.certIssuerSerial`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_issuer_serial/)
+- [`request.cf.tlsClientAuth.certFingerprintSHA256`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_fingerprint_sha256/)
+- [`request.cf.tlsClientAuth.certFingerprintSHA1`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_fingerprint_sha1/)
+- [`request.cf.tlsClientAuth.certNotBefore`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_not_before/)
+- [`request.cf.tlsClientAuth.certNotAfter`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_not_after/)
+- [`request.cf.tlsClientAuth.certSKI`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_ski/)
+- [`request.cf.tlsClientAuth.certIssuerSKI`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_issuer_ski/)
+- [`request.cf.tlsClientAuth.certRFC9440`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_rfc9440/)
+- [`request.cf.tlsClientAuth.certRFC9440TooLarge`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_rfc9440_too_large/)
+- [`request.cf.tlsClientAuth.certChainRFC9440`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_chain_rfc9440/)
+- [`request.cf.tlsClientAuth.certChainRFC9440TooLarge`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_chain_rfc9440_too_large/)
