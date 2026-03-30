@@ -31,12 +31,10 @@ MyContainer.outbound = async (request, env, ctx) => {
 };
 ```
 
-:::note[TLS support coming soon]
-Containers currently only intercept HTTP traffic. HTTPS interception is coming soon. This will enable using Workers as a transparent proxy for credential injection.
 
 Even though this is just using HTTP, traffic to Workers is secure and runs on the same machine as the Container.
-If needed, you can also upgrade requests to TLS from the Worker itself.
-:::
+You can also upgrade requests to HTTPS from the Worker itself to make sure there is no unexpected
+plain-text traffic outgoing to the internet.
 
 Use `outboundByHost` to map specific domain names or IP addresses to handler functions:
 
@@ -101,20 +99,51 @@ The `ctx` argument exposes `containerId`, which lets you interact with the conta
 You can also use `containerId` to apply different rules per container instance — for example, to look up per-instance configuration from KV.
 :::
 
+## Intercept HTTPS traffic
+You can intercept HTTPS traffic by opting-in on the Container class like:
+```js
+export class MyContainer extends Container {
+  // Make sure the container trusts /etc/cloudflare/certs/cloudflare-containers-ca.crt
+  interceptHttps = true;
+}
+
+MyContainer.outbound = (req, env, ctx) => {
+	// All HTTP(S) requests will trigger this hook.
+	return fetch(req);
+};
+```
+
+This feature is extremely useful for Sandbox-like services that want to redirect untrusted traffic off a container-instance to
+Workers so they can filter, modify requests and more.
+
+:::note
+For use-cases like container to Worker communication, we recommend to use HTTP as communication is encrypted and secure by our networking stack.
+:::
+
+When `interceptHttps` is enabled, an ephemeral CA file will be created at `/etc/cloudflare/certs/cloudflare-containers-ca.crt` once your container starts.
+For the Worker HTTPS interception to work you need to trust the CA file, as the Container runtime does not try to append it to the certificate chain by default.
+
+:::note
+For example, if your Linux distro is Ubuntu based, you can copy it to `/usr/local/share/ca-certificates/` and run a CLI tool like `update-ca-certificates`.
+Products like Sandboxes can already handle this for you.
+:::
+
 ## Change policies at runtime
 
 Use `outboundHandlers` to define named handlers, then assign them to specific hosts at runtime using `setOutboundByHost()`. You can also apply a handler globally with `setOutboundHandler()`.
 
-{/* TODO: replace this example with credential injection once TLS interception ships */}
+You could have credentials only accessible by a trusted Worker without needing to expose it to a container that might be untrusted:
 
 ```js
-export class MyContainer extends Container {}
+export class MyContainer extends Container {
+	// Make sure the container trusts /etc/cloudflare/certs/cloudflare-containers-ca.crt
+	interceptHttps = true;
+}
 
 MyContainer.outboundHandlers = {
-	kvAccess: async (request, env, ctx) => {
-		const key = new URL(request.url).pathname.slice(1);
-		const value = await env.KV.get(key);
-		return new Response(value ?? "", { status: value ? 200 : 404 });
+	authenticatedGithub: async (request, env, ctx) => {
+		const githubToken = env.GITHUB_TOKEN;
+		return authenticateGitHttpsRequest(request, githubToken, ctx.containerId);
 	},
 };
 ```
@@ -125,18 +154,49 @@ Apply handlers to hosts programmatically from your Worker:
 async setUpContainer(req, env) {
   const container = await env.MY_CONTAINER.getByName("my-instance");
 
-  // Give the container access to KV on a specific host during setup
-  await container.setOutboundByHost("my.kv", "kvAccess");
-  await container.exec("node setup.js");
+  // Give the container access to github.com on a specific host during setup
+  await container.setOutboundByHost("github.com", "authenticatedGithub");
 
-  // Remove access once setup is complete
-  await container.removeOutboundByHost("my.kv");
+	// do something with github.com on your container...
+}
+
+async removeAccessToGithub(req, env) {
+  const container = await env.MY_CONTAINER.getByName("my-instance");
+
+  // Remove access to Github
+  await container.removeOutboundByHost("github.com");
 }
 ```
 
+## Filter traffic
+
+You can filter outbound traffic with the `allow` and `deny` properties in Container class.
+
+```js
+export class MyContainer extends Container {
+	// Make sure the container trusts /etc/cloudflare/certs/cloudflare-containers-ca.crt
+	interceptHttps = true;
+
+	// block internet access
+	enableInternet = false;
+
+	// allow is useful to allow to access the internet on a per domain basis
+	allow = ["allowed.com"];
+
+	// deny is useful when `enableInternet = true` or the `outbound` hook is being set
+	// It is superfluous when `enableInternet = false` is set
+	deny = ["disallowed.com"];
+}
+```
+
+The `outboundByHost` configuration takes precedence over the `allow` and `deny` lists.
+When using a general `outbound` hook, `deny`
+
+
 ## Low-level API
 
-To configure outbound interception directly on `ctx.container`, use `interceptOutboundHttp` for a specific IP or CIDR range, or `interceptAllOutboundHttp` for all traffic. Both accept a `WorkerEntrypoint`.
+To configure outbound interception directly on `ctx.container`, use `interceptOutboundHttp` for a specific hostname blob, IP or CIDR range,
+or `interceptAllOutboundHttp` for all traffic. Both accept a `WorkerEntrypoint`.
 
 ```js
 import { WorkerEntrypoint } from "cloudflare:workers";
@@ -169,7 +229,20 @@ const updated = this.ctx.exports.MyOutboundWorker({
 await this.ctx.container.interceptOutboundHttp("203.0.113.0/24", updated);
 ```
 
+
+As for HTTPS, `interceptOutboundHttps` works exactly the same way as `interceptOutboundHttp`.
+```js
+// Intercept a specific hostname
+this.ctx.container.interceptOutboundHttps("foo.com", worker);
+
+// Intercept all traffic
+this.ctx.container.interceptOutboundHttps("*", worker);
+```
+
 The `Container` class will call these methods automatically when using the various functions shown above.
+
+You can also call them yourself inside the `Container` class if you have specific cases
+that the class does not fulfill.
 
 ## Local development
 
