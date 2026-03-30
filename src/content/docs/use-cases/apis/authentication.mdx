@@ -28,15 +28,18 @@ Build and deploy serverless applications on Cloudflare's global network.
 
 </CardGrid>
 
-## Features
+### Access
 
-- **Identity providers** (Access) - Integrate with Okta, Azure AD, Google Workspace, and other identity providers (IdPs) to gate API access
-- **JWT validation** (Workers) - Verify and decode JSON Web Tokens (JWTs) at the edge before requests reach your backend
-- **Service tokens** (Service Tokens) - Issue long-lived credentials for machine-to-machine authentication between services
-- **Custom auth logic** (Workers) - Build any authentication scheme — API keys, Hash-based Message Authentication Code (HMAC) signatures, custom headers — directly at the edge
+- **Identity providers** - Integrate with Okta, Azure AD, Google Workspace, and other identity providers (IdPs) to gate API access
+- **Service tokens** - Issue long-lived credentials for machine-to-machine authentication between services
+
+### Workers
+
+- **JWT validation** - Verify and decode JSON Web Tokens (JWTs) at the edge before requests reach your backend
+- **Custom auth logic** - Build any authentication scheme — API keys, Hash-based Message Authentication Code (HMAC) signatures, custom headers — directly at the edge
 
 ## Get started
 
-1. [Cloudflare Access get started](/cloudflare-one/access-controls/policies/)
+1. [Configure applications with Cloudflare Access](/cloudflare-one/applications/configure-apps/)
 2. [Service tokens](/cloudflare-one/access-controls/service-credentials/service-tokens/)
 3. [Workers get started](/workers/get-started/)

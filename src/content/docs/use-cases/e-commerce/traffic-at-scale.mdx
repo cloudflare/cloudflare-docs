@@ -38,19 +38,28 @@ Build and deploy serverless applications on Cloudflare's global network.
 
 </LinkTitleCard>
 
-
 </CardGrid>
 
-## Features
+### Load balancing
 
-- **Origin protection** (Load Balancing + Waiting Room) - Distribute traffic across origin servers and queue excess visitors to prevent overload during peak events
-- **Automatic failover** (Load Balancing) - Health checks detect unhealthy origins and reroute traffic automatically
-- **Flash sale readiness** (Waiting Room) - Queue visitors fairly during extreme demand, preserving a consistent experience without crashing the site
-- **Reduced latency** (Argo Smart Routing) - Route requests through the fastest available network paths between edge and origin
+- **Origin protection** - Distribute traffic across origin servers and queue excess visitors to prevent overload during peak events
+- **Automatic failover** - Health checks detect unhealthy origins and reroute traffic automatically
+
+### Waiting Room
+
+- **Flash sale readiness** - Queue visitors fairly during extreme demand, preserving a consistent experience without crashing the site
+
+### Argo Smart Routing
+
+- **Reduced latency** - Route requests through the fastest available network paths between edge and origin
 
 ## Get started
 
 1. [Set up Load Balancing](/load-balancing/get-started/)
 2. [Configure Waiting Room](/waiting-room/get-started/)
-3. [Enable Cache Reserve](/cache/advanced-configuration/cache-reserve/)
-4. [Create Health Checks](/health-checks/get-started/)
+3. [Create Health Checks](/health-checks/get-started/)
+
+## See also
+
+Cloudflare Smart Shield acts as an intermediate caching layer between Cloudflare's content delivery network and your origin server, consolidating multiple requests from various locations into a single request.
+[Learn more about Smart Shield](/smart-shield/)

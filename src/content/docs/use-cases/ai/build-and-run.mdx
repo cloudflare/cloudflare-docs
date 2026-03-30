@@ -40,15 +40,24 @@ Stateful objects with strongly consistent storage and coordination.
 
 </CardGrid>
 
-## Features
+### Workers
 
-- **Global inference** (Workers AI) - Run models at the Cloudflare location nearest to the user, reducing round-trip latency
-- **Pay-per-use pricing** (Workers AI) - No GPU reservations or idle costs; pay only for tokens processed
-- **Streaming responses** (Workers) - Stream AI responses token-by-token as they generate, without buffering the full reply
-- **Full-stack deployment** (Workers) - Serve frontend and backend from a single deployment without managing separate infrastructure
-- **Provider flexibility** (AI Gateway) - Route requests to OpenAI, Anthropic, Workers AI, or any other provider through a single endpoint
-- **Unified observability** (AI Gateway) - Track request volume, latency, costs, and errors across all providers in one place
-- **Stateful workflows** (Durable Objects) - Coordinate multi-step AI pipelines and maintain conversation state across requests
+- **Streaming responses** - Stream AI responses token-by-token as they generate, without buffering the full reply
+- **Full-stack deployment** - Serve frontend and backend from a single deployment without managing separate infrastructure
+
+### Workers AI
+
+- **Global inference** - Run models at the Cloudflare location nearest to the user, reducing round-trip latency
+- **Pay-per-use pricing** - No GPU reservations or idle costs; pay only for tokens processed
+
+### AI Gateway
+
+- **Provider flexibility** - Route requests to OpenAI, Anthropic, Workers AI, or any other provider through a single endpoint
+- **Unified observability** - Track request volume, latency, costs, and errors across all providers in one place
+
+### Durable Objects
+
+- **Stateful workflows** - Coordinate multi-step AI pipelines and maintain conversation state across requests
 
 ## Get started
 

@@ -53,9 +53,17 @@ Deploy low-latency AI features directly at the edge:
 
 ## Prerequisites
 
-- A [Cloudflare account](https://dash.cloudflare.com/sign-up). Workers AI, AI Gateway, Vectorize, D1, R2, and KV are account-level products — you do not need a domain added to Cloudflare to use them.
+### Create a new application
+
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up). Workers AI, Vectorize, D1, R2, and KV are account-level products — you do not need a domain added to Cloudflare to use them.
 - [Node.js](https://nodejs.org/) (version 16.17.0 or later) installed on your machine.
 - [Wrangler](/workers/wrangler/install-and-update/) installed. Wrangler is the command-line interface (CLI) for deploying Workers and managing bindings.
+
+### Use an existing application
+
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up).
+- [AI Gateway](/ai-gateway/) does not require a domain added to Cloudflare. You can place it in front of any existing AI provider (OpenAI, Anthropic, and others) by updating your API endpoint to route through AI Gateway.
+- If you plan to add Workers AI inference or Vectorize to an existing application, you also need [Node.js](https://nodejs.org/) (version 16.17.0 or later) and [Wrangler](/workers/wrangler/install-and-update/) installed.
 
 ---
 
