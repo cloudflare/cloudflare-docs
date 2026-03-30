@@ -51,8 +51,34 @@ Local development sessions create a standalone, local-only environment that mirr
 
 Refer to the [`wrangler dev` documentation](/workers/wrangler/commands/general/#dev) to learn more about how to configure a local development session.
 
+## Manage Workflows locally
+
+:::note
+The `--local` flag for `wrangler workflows` commands requires Wrangler version `4.79.0` or greater. Use `npx wrangler@latest` to always use the latest version.
+:::
+
+While a `wrangler dev` session is running, you can use all [`wrangler workflows` commands](/workers/wrangler/commands/workflows/) with the `--local` flag to interact with your local Workflow instances.
+
+For example, to list your local Workflows:
+
+```sh
+npx wrangler workflows list --local
+```
+
+To trigger a Workflow locally:
+
+```sh
+npx wrangler workflows trigger my-workflow --local
+```
+
+To inspect a specific instance:
+
+```sh
+npx wrangler workflows instances describe my-workflow <INSTANCE_ID> --local
+```
+
+All commands accept `--port` to target a specific `wrangler dev` session (defaults to `8787`).
+
 ## Known Issues
 
 Workflows are not supported as [remote bindings](/workers/development-testing/#remote-bindings) or when using `npx wrangler dev --remote`.
-
-Wrangler Workflows commands `npx wrangler workflow [cmd]` are not supported for local development, as they target production API.
