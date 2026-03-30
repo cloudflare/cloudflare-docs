@@ -14,6 +14,36 @@ E-commerce applications require exceptional performance, security, and reliabili
 
 <DirectoryListing />
 
+## Architecture patterns
+
+### Self-hosted storefront
+
+Protect and accelerate a store running on your own infrastructure:
+
+1. **SSL/TLS** encrypts all traffic between shoppers and your store
+2. **Cache** serves static assets from 300+ edge locations
+3. **WAF** and **DDoS Protection** block attacks before they reach your origin
+4. **Images** optimizes product images on-the-fly
+
+### SaaS-hosted storefront
+
+Add Cloudflare on top of a platform like Shopify, BigCommerce, or Salesforce Commerce Cloud:
+
+1. **Cloudflare for SaaS** (Orange-to-Orange setup) layers your Cloudflare zone over your provider's existing Cloudflare configuration
+2. **Application security** adds protection beyond what the platform provides
+3. **Zaraz** loads analytics and marketing tags server-side to improve page speed
+
+### High-traffic store
+
+Handle flash sales, seasonal peaks, and viral demand:
+
+1. **Load Balancing** distributes traffic across multiple origin servers
+2. **Waiting Room** queues excess visitors to prevent origin overload
+3. **Cache** and **Argo Smart Routing** reduce origin load and improve response times
+4. **Health Checks** detect unhealthy origins and reroute traffic automatically
+
+---
+
 ## Prerequisites
 
 ### Create a new application
