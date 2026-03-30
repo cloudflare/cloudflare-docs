@@ -10,23 +10,6 @@ description: Review DNS queries, network traffic, and HTTP requests inspected by
 
 import { Render, GlossaryTooltip, DirectoryListing, InlineBadge } from "~/components";
 
-## Log viewer <InlineBadge preset="beta" />
-
-Gateway activity logs use an updated log viewer with the following capabilities:
-
-- **Filter by field** - Select any field value to add it as a filter.
-- **Customize columns** - Choose which fields to display in the log table. Querying for fewer fields improves log loading performance.
-- **View details** - Select a timestamp to view the full details of a log entry.
-- **Switch to classic view** - Select **Use old UI** to return to the previous log viewer.
-
-## Overview
-
-:::note[Private source IP substitution]
-
-Gateway logs will only show the public IP address for the **Source IP** field. Private IP addresses are substituted by a public IP address via network address translation (NAT).
-
-:::
-
 Gateway activity logs show the individual DNS queries, Network packets, and HTTP requests inspected by Gateway. You can also download encrypted [SSH command logs](/cloudflare-one/insights/logs/dashboard-logs/ssh-command-logs/) for sessions proxied by Gateway.
 
 To view Gateway activity logs, log in to [Cloudflare One](https://one.dash.cloudflare.com/) and go to **Insights** > **Logs** and choose a type of Gateway log. Select an individual row to investigate the event in more detail.
@@ -34,6 +17,16 @@ To view Gateway activity logs, log in to [Cloudflare One](https://one.dash.cloud
 Enterprise users can generate more detailed logs with [Logpush](/cloudflare-one/insights/logs/logpush/).
 
 <DirectoryListing />
+
+:::note[Private source IP substitution]
+
+Gateway logs will only show the public IP address for the **Source IP** field. Private IP addresses are substituted by a public IP address via network address translation (NAT).
+
+:::
+
+## Log viewer <InlineBadge preset="beta" />
+
+Gateway activity logs use an updated log viewer with the following capabilities: filter by field, customize columns, view details by selecting a timestamp, and switch to the classic view. Querying for fewer fields improves log loading performance.
 
 ## Selective logging
 
