@@ -1,0 +1,215 @@
+---
+title: Migrate to @cloudflare/vitest-pool-workers v0.13.0+
+pcx_content_type: how-to
+sidebar:
+  order: 1
+head: []
+description: Migrate to @cloudflare/vitest-pool-workers version 0.13.0 and above
+  which adds support for Vitest v4.
+---
+
+Version 0.13.0 of `@cloudflare/vitest-pool-workers` introduces support for Vitest v4 and includes breaking changes to improve stability and lay the foundation for a v1 release. This guide walks you through migrating from earlier versions.
+
+## Use the codemod
+
+A codemod is available to automate many of the migration steps:
+
+```sh
+wrangler codemod vitest-pool-v3-to-v4
+```
+
+The codemod will update your configuration file and imports. You should still review this guide to understand the changes and handle any edge cases.
+
+## Update Vitest to version 4
+
+`@cloudflare/vitest-pool-workers` v0.13.0 requires Vitest v4.1.0 or later and drops support for Vitest v2 and v3.
+
+```diff
+  {
+    "devDependencies": {
+-     "vitest": "^2.0.0",
++     "vitest": "^4.1.0",
+-     "@cloudflare/vitest-pool-workers": "^0.12.0",
++     "@cloudflare/vitest-pool-workers": "^0.13.0"
+    }
+  }
+```
+
+## Update your Vitest configuration
+
+The `defineWorkersConfig()` function has been removed. Use the `cloudflareTest()` plugin with Vitest's standard `defineConfig()` instead.
+
+```diff
+- import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers";
++ import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
++ import { defineConfig } from "vitest/config";
+
+- export default defineWorkersConfig({
+-   test: {
+-     poolOptions: {
+-       workers: {
+-         wrangler: { configPath: "./wrangler.jsonc" },
+-       },
+-     },
+-   },
+- });
++ export default defineConfig({
++   plugins: [
++     cloudflareTest({
++       wrangler: { configPath: "./wrangler.jsonc" },
++     }),
++   ],
++ });
+```
+
+:::note
+
+The `cloudflareTest()` plugin configures Vitest to use the Workers integration with the correct module resolution settings.
+
+:::
+
+## Remove isolatedStorage and singleWorker options
+
+The `isolatedStorage` and `singleWorker` options have been removed in favor of a simpler isolation model that more closely matches Vitest's default behavior.
+
+Storage isolation is now on a per-test-file basis by default. If you need multiple test files to share the same storage, use Vitest's `--max-workers=1 --no-isolate` flags:
+
+```sh
+vitest run --max-workers=1 --no-isolate
+```
+
+```diff
+- import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers";
+-
+- export default defineWorkersConfig({
+-   test: {
+-     poolOptions: {
+-       workers: {
+-         isolatedStorage: true,
+-         singleWorker: true,
+-         wrangler: { configPath: "./wrangler.jsonc" },
+-       },
+-     },
+-   },
+- });
++ import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
++ import { defineConfig } from "vitest/config";
++
++ export default defineConfig({
++   plugins: [
++     cloudflareTest({
++       wrangler: { configPath: "./wrangler.jsonc" },
++     }),
++   ],
++ });
+```
+
+## Update imports from cloudflare:test
+
+### SELF binding
+
+The `SELF` export from `cloudflare:test` has been deprecated in favor of `exports` from `cloudflare:workers`. Use `exports.default.fetch()` instead of `SELF.fetch()`.
+
+```diff
+- import { SELF } from "cloudflare:test";
++ import { exports } from "cloudflare:workers";
+
+  it("dispatches fetch event", async () => {
+-   const response = await SELF.fetch("http://example.com");
++   const response = await exports.default.fetch("http://example.com");
+    expect(await response.text()).toBe("Hello World!");
+  });
+```
+
+:::caution
+
+`exports.default.fetch()` runs your Worker in the same isolate as your tests and does not expose static assets. To test static assets, use the `env.ASSETS` binding or write an integration test using [`startDevWorker()`](/workers/testing/unstable_startworker/).
+
+:::
+
+### env export
+
+The `env` export from `cloudflare:test` is deprecated. Import `env` from `cloudflare:workers` instead.
+
+```diff
+- import { env } from "cloudflare:test";
++ import { env } from "cloudflare:workers";
+
+  it("uses binding", async () => {
+    await env.KV_NAMESPACE.put("key", "value");
+    expect(await env.KV_NAMESPACE.get("key")).toBe("value");
+  });
+```
+
+:::note
+
+If you need to override `env` values in tests, use [`withEnv()`](/workers/runtime-apis/bindings/#overriding-env-values) instead of importing from `cloudflare:test`.
+
+:::
+
+## Replace fetchMock
+
+The `fetchMock` export from `cloudflare:test` has been removed. To mock outbound `fetch()` requests, mock `globalThis.fetch` directly or use ecosystem libraries like [MSW](https://mswjs.io/).
+
+### Mocking with globalThis.fetch
+
+```diff
+- import { fetchMock } from "cloudflare:test";
+- import { SELF } from "cloudflare:test";
++ import { exports } from "cloudflare:workers";
+
+  it("mocks outbound request", async () => {
+-   fetchMock.activate();
+-   fetchMock.mock("https://api.example.com/data", new Response("mocked"));
++   const originalFetch = globalThis.fetch;
++   globalThis.fetch = async (input) => {
++     if (input.toString().includes("api.example.com")) {
++       return new Response("mocked");
++     }
++     return originalFetch(input);
++   };
+
+-   const response = await SELF.fetch("http://example.com");
++   const response = await exports.default.fetch("http://example.com");
+    expect(await response.text()).toBe("mocked");
+-
+-   fetchMock.deactivate();
+  });
+```
+
+For a complete example of request mocking, refer to the [request mocking example](https://github.com/cloudflare/workers-sdk/blob/main/fixtures/vitest-pool-workers-examples/request-mocking/test/imperative.test.ts).
+
+## Update TypeScript configuration
+
+If you are using TypeScript, ensure your test files have access to the correct types:
+
+```jsonc title="test/tsconfig.json"
+{
+	"extends": "../tsconfig.json",
+	"compilerOptions": {
+		"moduleResolution": "bundler",
+		"types": [
+			"@cloudflare/vitest-pool-workers", // provides `cloudflare:test` and `cloudflare:workers` types
+		],
+	},
+	"include": [
+		"./**/*.ts",
+		"../src/worker-configuration.d.ts", // output of `wrangler types`
+	],
+}
+```
+
+Define the type of the `env` object by extending the `ProvidedEnv` interface:
+
+```ts title="test/env.d.ts"
+declare module "cloudflare:workers" {
+	// ProvidedEnv controls the type of `import("cloudflare:workers").env`
+	interface ProvidedEnv extends Env {}
+}
+```
+
+## Related resources
+
+- [Write your first test](/workers/testing/vitest-integration/write-your-first-test/)
+- [Configuration API reference](/workers/testing/vitest-integration/configuration/)
+- [Test APIs reference](/workers/testing/vitest-integration/test-apis/)
