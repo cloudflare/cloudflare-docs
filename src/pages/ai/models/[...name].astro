@@ -1,6 +1,5 @@
 ---
 import type { GetStaticPaths, MarkdownHeading } from "astro";
-import { getCollection } from "astro:content";
 import StarlightPage, {
 	type StarlightPageProps,
 } from "@astrojs/starlight/components/StarlightPage.astro";
@@ -8,6 +7,8 @@ import { LinkButton, Tabs, TabItem, Code, Aside, Badge } from "~/components";
 import ModelInfo from "~/components/models/ModelInfo.tsx";
 import ModelFeatures from "~/components/models/ModelFeatures.tsx";
 import SchemaViewer from "~/components/models/SchemaViewer.astro";
+import CatalogSchemaTable from "~/components/models/CatalogSchemaTable.astro";
+import ExampleCard from "~/components/models/ExampleCard.astro";
 
 import TextGenerationCode from "~/components/models/code/TextGenerationCode.astro";
 import AutomaticSpeechRecognitionCode from "~/components/models/code/AutomaticSpeechRecognitionCode.astro";
@@ -27,144 +28,136 @@ import WhisperBase64Code from "~/components/models/code/WhisperBase64Code.astro"
 import MelottsCode from "~/components/models/code/MelottsCode.astro";
 import LlamaGuard from "~/components/models/code/LlamaGuard.astro";
 import BgeRerankerBase from "~/components/models/code/Bge-Reranker-Base.astro";
-
-import Render from "~/components/Render.astro";
-import { authorData } from "~/components/models/data";
-import { hasProperty } from "~/util/model-properties";
 import OpenAIResponsesTextGenerationCode from "~/components/models/code/OpenAIResponsesTextGenerationCode.astro";
 import DeepgramAura from "~/components/models/code/DeepgramAura.astro";
 import DeepgramNova from "~/components/models/code/DeepgramNova.astro";
 import DeepgramFlux from "~/components/models/code/DeepgramFlux.astro";
 
-export const getStaticPaths = (async () => {
-	const models = await getCollection("workers-ai-models");
+import Render from "~/components/Render.astro";
+import { authorData } from "~/components/models/data";
+import { hasProperty } from "~/util/model-properties";
+import { getResolvedModels, getModelAuthor } from "~/util/model-resolver";
 
-	return models.map((entry) => {
-		return {
-			params: {
-				name: entry.data.name.split("/")[2],
-			},
-			props: { model: entry.data },
-		};
-	});
+export const getStaticPaths = (async () => {
+	const models = await getResolvedModels();
+
+	return models.map((model) => ({
+		params: { name: model.slug },
+		props: { model },
+	}));
 }) satisfies GetStaticPaths;
 
 const { name } = Astro.params;
 const { model } = Astro.props;
 
+// Display name: use catalog displayName, or fall back to last segment of model ID
+const displayName = model.displayName !== model.slug
+	? model.displayName
+	: model.name.split("/").at(-1);
+
+// For catalog models, first example is the "Usage" section
+const firstExample = model.examples?.[0];
+const remainingExamples = model.examples?.slice(1) ?? [];
+const hasCatalogUsage = !!firstExample?.code_snippets?.length;
+
+// Legacy code example overrides (only used when no catalog usage)
 let CodeExamples = null;
-switch (model.task.name) {
-	case "Text Generation":
-		CodeExamples = TextGenerationCode;
-		break;
-	case "Automatic Speech Recognition":
-		CodeExamples = AutomaticSpeechRecognitionCode;
-		break;
-	case "Image Classification":
-		CodeExamples = ImageClassificationCode;
-		break;
-	case "Object Detection":
-		CodeExamples = ObjectDetectionCode;
-		break;
-	case "Image-to-Text":
-		CodeExamples = ImageToTextCode;
-		break;
-	case "Text-to-Image":
-		CodeExamples = TextToImageCode;
-		break;
-	case "Translation":
-		CodeExamples = TranslationCode;
-		break;
-	case "Summarization":
-		CodeExamples = SummarizationCode;
-		break;
-	case "Text Embeddings":
-		CodeExamples = TextEmbeddingCode;
-		break;
-	case "Text Classification":
-		CodeExamples = TextClassificationCode;
-		break;
+if (!hasCatalogUsage) {
+	switch (model.task.name) {
+		case "Text Generation":
+			CodeExamples = TextGenerationCode;
+			break;
+		case "Automatic Speech Recognition":
+			CodeExamples = AutomaticSpeechRecognitionCode;
+			break;
+		case "Image Classification":
+			CodeExamples = ImageClassificationCode;
+			break;
+		case "Object Detection":
+			CodeExamples = ObjectDetectionCode;
+			break;
+		case "Image-to-Text":
+			CodeExamples = ImageToTextCode;
+			break;
+		case "Text-to-Image":
+			CodeExamples = TextToImageCode;
+			break;
+		case "Translation":
+			CodeExamples = TranslationCode;
+			break;
+		case "Summarization":
+			CodeExamples = SummarizationCode;
+			break;
+		case "Text Embeddings":
+			CodeExamples = TextEmbeddingCode;
+			break;
+		case "Text Classification":
+			CodeExamples = TextClassificationCode;
+			break;
+	}
+
+	// Model-specific overrides
+	if (model.name === "@cf/runwayml/stable-diffusion-v1-5-img2img") {
+		CodeExamples = StableDiffusionV15Img2ImgCode;
+	}
+	if (model.name === "@cf/runwayml/stable-diffusion-v1-5-inpainting") {
+		CodeExamples = StableDiffusionV15InpaintingCode;
+	}
+	if (model.name === "@cf/black-forest-labs/flux-1-schnell") {
+		CodeExamples = Flux1Schnell;
+	}
+	if (model.name === "@cf/black-forest-labs/flux-2-dev" ||
+		model.name === "@cf/black-forest-labs/flux-2-klein-4b" ||
+		model.name === "@cf/black-forest-labs/flux-2-klein-9b") {
+		CodeExamples = Flux2;
+	}
+	if (model.name === "@cf/openai/whisper-large-v3-turbo") {
+		CodeExamples = WhisperBase64Code;
+	}
+	if (model.name === "@cf/myshell-ai/melotts") {
+		CodeExamples = MelottsCode;
+	}
+	if (model.name === "@cf/meta/llama-guard-3-8b") {
+		CodeExamples = LlamaGuard;
+	}
+	if (model.name === "@cf/baai/bge-reranker-base") {
+		CodeExamples = BgeRerankerBase;
+	}
+	if (model.name === "@cf/openai/gpt-oss-120b" || model.name === "@cf/openai/gpt-oss-20b") {
+		CodeExamples = OpenAIResponsesTextGenerationCode;
+	}
+	if (model.name === "@cf/deepgram/aura-1") {
+		CodeExamples = DeepgramAura;
+	}
+	if (model.name === "@cf/deepgram/nova-3") {
+		CodeExamples = DeepgramNova;
+	}
+	if (model.name === "@cf/deepgram/flux") {
+		CodeExamples = DeepgramFlux;
+	}
 }
 
-// Overrides
-if (model.name === "@cf/runwayml/stable-diffusion-v1-5-img2img") {
-	CodeExamples = StableDiffusionV15Img2ImgCode;
-}
-
-if (model.name === "@cf/runwayml/stable-diffusion-v1-5-inpainting") {
-	CodeExamples = StableDiffusionV15InpaintingCode;
-}
-
-if (model.name === "@cf/black-forest-labs/flux-1-schnell") {
-	CodeExamples = Flux1Schnell;
-}
-
-if (model.name === "@cf/black-forest-labs/flux-2-dev") {
-	CodeExamples = Flux2;
-}
-
-if (model.name === "@cf/black-forest-labs/flux-2-klein-4b") {
-	CodeExamples = Flux2;
-}
-
-if (model.name === "@cf/black-forest-labs/flux-2-klein-9b") {
-	CodeExamples = Flux2;
-}
-
-if (model.name === "@cf/openai/whisper-large-v3-turbo") {
-	CodeExamples = WhisperBase64Code;
-}
-
-if (model.name === "@cf/myshell-ai/melotts") {
-	CodeExamples = MelottsCode;
-}
-
-if (model.name === "@cf/meta/llama-guard-3-8b") {
-	CodeExamples = LlamaGuard;
-}
-
-if (model.name === "@cf/baai/bge-reranker-base") {
-	CodeExamples = BgeRerankerBase;
-}
-
-if (
-	model.name === "@cf/openai/gpt-oss-120b" ||
-	model.name === "@cf/openai/gpt-oss-20b"
-) {
-	CodeExamples = OpenAIResponsesTextGenerationCode;
-}
-
-if (model.name === "@cf/deepgram/aura-1") {
-	CodeExamples = DeepgramAura;
-}
-
-if (model.name === "@cf/deepgram/nova-3") {
-	CodeExamples = DeepgramNova;
-}
-
-if (model.name === "@cf/deepgram/flux") {
-	CodeExamples = DeepgramFlux;
-}
+const hasCodeExamples = hasCatalogUsage || CodeExamples;
+const hasRemainingExamples = remainingExamples.length > 0;
 
 const description = model.description;
-
 const isBeta = hasProperty(model.properties, "beta");
 
 let hasPlayground = model.task.name === "Text Generation";
-
-// temporary workaround for playground limitations
 if (model.name.includes("@cf/openai/gpt-oss")) {
 	hasPlayground = false;
 }
 
-const author = (authorData as any)[model.name.split("/")[1]];
+const authorId = getModelAuthor(model.name);
+const author = authorData[authorId];
 
 const hasSupportedLanguages = model.name === "@cf/deepgram/nova-3";
 
-// Strong type coercion needed due to Starlight's component override for hideTitle
+const hasSchema = model.schema.input && Object.keys(model.schema.input).length > 0;
+
 const starlightPageProps = {
 	frontmatter: {
-		title: name,
+		title: displayName,
 		description,
 		pcx_content_type: "reference",
 	},
@@ -175,11 +168,12 @@ const starlightPageProps = {
 		hasPlayground
 			? { depth: 2, slug: "Playground", text: "Playground" }
 			: false,
-		CodeExamples ? { depth: 2, slug: "Usage", text: "Usage" } : false,
-		{ depth: 2, slug: "Parameters", text: "Parameters" },
-		{ depth: 3, slug: "Input", text: "Input" },
-		{ depth: 3, slug: "Output", text: "Output" },
-		{ depth: 2, slug: "API Schemas", text: "API Schemas" },
+		hasCodeExamples ? { depth: 2, slug: "Usage", text: "Usage" } : false,
+		hasRemainingExamples ? { depth: 2, slug: "Examples", text: "Examples" } : false,
+		hasSchema ? { depth: 2, slug: "Parameters", text: "Parameters" } : false,
+		hasSchema && model.dataSource !== "catalog" ? { depth: 3, slug: "Input", text: "Input" } : false,
+		hasSchema && model.dataSource !== "catalog" ? { depth: 3, slug: "Output", text: "Output" } : false,
+		hasSchema ? { depth: 2, slug: "API-Schemas", text: "API Schemas" } : false,
 	].filter((v) => Boolean(v)) as MarkdownHeading[],
 	hideTitle: true,
 } as StarlightPageProps;
@@ -196,7 +190,7 @@ const starlightPageProps = {
 				/>
 			) : (
 				<div class="mr-4 flex h-12 w-12 items-center justify-center rounded-md bg-gray-100 text-2xl font-black text-gray-400 uppercase">
-					{model.name.split("/")[1].substring(0, 1)}
+					{authorId.substring(0, 1)}
 				</div>
 			)
 		}
@@ -205,7 +199,7 @@ const starlightPageProps = {
 				id="_top"
 				class="-mt-4! mb-0! flex items-center text-4xl! leading-none! font-bold!"
 			>
-				{name}
+				{displayName}
 				{isBeta && <Badge text="Beta" variant="caution" class="mt-2 ml-3" />}
 			</h1>
 			<span class="-mt-1 block"><ModelInfo model={model} /></span>
@@ -245,13 +239,6 @@ const starlightPageProps = {
 	}
 
 	<ModelFeatures model={model} />
-	{
-		(model.name === "@cf/moonshotai/kimi-k2.5" ||
-			model.name === "@cf/nvidia/nemotron-3-120b-a12b" ||
-			model.name === "@cf/zai-org/glm-4.7-flash") && (
-			<Render file="session-affinity-note" product="workers-ai" />
-		)
-	}
 	{
 		model.name === "@cf/deepgram/nova-3" && (
 			<Aside>
@@ -304,7 +291,16 @@ const starlightPageProps = {
 	}
 
 	{
-		CodeExamples && (
+		hasCatalogUsage && firstExample && (
+			<>
+			<h2 id="Usage">Usage</h2>
+			<ExampleCard example={firstExample} layout="stack" />
+			</>
+		)
+	}
+
+	{
+		!hasCatalogUsage && CodeExamples && (
 			<>
 				<h2 id="Usage">Usage</h2>
 				<CodeExamples name={model.name} lora={false} />
@@ -312,37 +308,67 @@ const starlightPageProps = {
 		)
 	}
 
-	<h2 id="Parameters">Parameters</h2>
-	<p><span class="text-red-500">*</span> indicates a required field</p>
-	<h3 id="Input">Input</h3>
-	<SchemaViewer schema={model.schema.input} />
-
-	<h3 id="Output">Output</h3>
 	{
-		model.schema.output.format === "binary" ? (
+		hasRemainingExamples && (
 			<>
-				<p>
-  				{(model.schema.output.contentType as string)?.startsWith("audio/") ? (
-	  				<>The binding returns a <code>ReadableStream</code> with the audio in {(model.schema.output.contentType as string).replace("audio/", "").toUpperCase()} format (check the model's output schema).</>
-		  		) : (
-						<>The binding returns a <code>ReadableStream</code> with the output (check the model's output schema).</>
-					)}
-				</p>
+				<h2 id="Examples">Examples</h2>
+				{remainingExamples.map((example) => (
+					<details>
+						<summary>
+							<strong>{example.name}</strong>
+							{example.description && <span> &mdash; {example.description}</span>}
+						</summary>
+						<ExampleCard example={example} />
+					</details>
+				))}
 			</>
-		) : (
-			<SchemaViewer schema={model.schema.output} />
 		)
 	}
 
-	<h2 id="API Schemas">API Schemas</h2>
-	<p>The following schemas are based on JSON Schema</p>
+	{
+		hasSchema && (
+			<>
+				<h2 id="Parameters">Parameters</h2>
+				{model.dataSource === "catalog" ? (
+					<>
+						<CatalogSchemaTable schema={model.schema.input} title="Input" />
+						<CatalogSchemaTable schema={model.schema.output} title="Output" />
+					</>
+				) : (
+					<>
+						<p><span class="text-red-500">*</span> indicates a required field</p>
+						<h3 id="Input">Input</h3>
+						<SchemaViewer schema={model.schema.input} />
 
-	<Tabs>
-		<TabItem label="Input">
-			<Code code={JSON.stringify(model.schema.input, null, 4)} lang="json" />
-		</TabItem>
-		<TabItem label="Output">
-			<Code code={JSON.stringify(model.schema.output, null, 4)} lang="json" />
-		</TabItem>
-	</Tabs>
+						<h3 id="Output">Output</h3>
+						{
+							model.schema.output.format === "binary" ? (
+								<p>
+									{(model.schema.output.contentType as string)?.startsWith("audio/") ? (
+										<>The binding returns a <code>ReadableStream</code> with the audio in {(model.schema.output.contentType as string).replace("audio/", "").toUpperCase()} format (check the model's output schema).</>
+									) : (
+										<>The binding returns a <code>ReadableStream</code> with the output (check the model's output schema).</>
+									)}
+								</p>
+							) : (
+								<SchemaViewer schema={model.schema.output} />
+							)
+						}
+					</>
+				)}
+
+				<h2 id="API-Schemas">API Schemas</h2>
+				<p>The following schemas are based on JSON Schema</p>
+
+				<Tabs>
+					<TabItem label="Input">
+						<Code code={JSON.stringify(model.schema.input, null, 4)} lang="json" />
+					</TabItem>
+					<TabItem label="Output">
+						<Code code={JSON.stringify(model.schema.output, null, 4)} lang="json" />
+					</TabItem>
+				</Tabs>
+			</>
+		)
+	}
 </StarlightPage>

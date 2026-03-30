@@ -19,27 +19,27 @@ const { node } = Astro.props;
 	}
 
 	{
-		node.annotations.default && (
+		node.annotations?.default && (
 			<MetaInfo text={`default ${node.annotations.default}`} />
 		)
 	}
 	{
-		(node.validations.minLength !== undefined ||
-			node.validations.minimum !== undefined) && (
+		(node.validations?.minLength !== undefined ||
+			node.validations?.minimum !== undefined) && (
 			<MetaInfo
-				text={`min ${node.validations.minLength || node.validations.minimum}`}
+				text={`min ${node.validations?.minLength || node.validations?.minimum}`}
 			/>
 		)
 	}
 	{
-		(node.validations.maxLength !== undefined ||
-			node.validations.maximum !== undefined) && (
+		(node.validations?.maxLength !== undefined ||
+			node.validations?.maximum !== undefined) && (
 			<MetaInfo
-				text={`max ${node.validations.maxLength || node.validations.maximum}`}
+				text={`max ${node.validations?.maxLength || node.validations?.maximum}`}
 			/>
 		)
 	}
-	<p>{node.annotations.description}</p>
+	<p>{node.annotations?.description}</p>
 
 	{
 		node.children && (

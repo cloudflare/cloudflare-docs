@@ -1,0 +1,20 @@
+---
+interface Props {
+	name: string;
+	depth: number;
+	isArray: boolean;
+	isObject: boolean;
+}
+
+const { name, depth, isArray, isObject } = Astro.props;
+---
+
+<span class="inline-block" style={`margin-left: ${depth * 2}rem`}>
+	{name}{
+		isArray && <span class="ml-1 text-gray-400 dark:text-gray-600">[]</span>
+	}{
+		isObject && (
+			<span class="ml-1 text-gray-400 dark:text-gray-600">{"{}"}</span>
+		)
+	}
+</span>
