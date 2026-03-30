@@ -85,7 +85,8 @@ function run(): void {
 
 		const slugMatch = content.match(/^▶\s+(.+)$/);
 		if (slugMatch) {
-			currentSlug = slugMatch[1].trim();
+			// Strip both leading and trailing slashes — the validator may emit a leading slash.
+			currentSlug = slugMatch[1].trim().replace(/^\//, "");
 			continue;
 		}
 
