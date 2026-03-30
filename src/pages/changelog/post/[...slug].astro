@@ -62,15 +62,14 @@ const props = {
 	</div>
 </StarlightPage>
 
+<!--TODO: Solve DRY with what's in src/components/changelog/ChangelogEntryList.astro-->
 <style>
-	:root {
-		.sl-container {
-			--sl-content-width: 50rem !important;
-			margin-inline: auto !important;
-		}
+	:global(.sl-container) {
+		--sl-content-width: 50rem !important;
+		margin-inline: auto !important;
+	}
 
-		#footer-links {
-			justify-content: center;
-		}
+	:global(#footer-links) {
+		justify-content: center;
 	}
 </style>

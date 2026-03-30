@@ -11,14 +11,16 @@ We have implemented `llms.txt` and `llms-full.txt` as follows:
 
 To obtain a Markdown version of a single documentation page, you can:
 
-- Send a request to `/$page/index.md` — Add `/index.md` to the end of any page to get the Markdown version. For example, [`/style-guide/index.md`](/style-guide/index.md).
-
-- Send a request to `/$page/` with an `Accept` header requesting a page in Markdown format — Uses [Markdown for Agents](/fundamentals/reference/markdown-for-agents/). For example:
+- Send a request to any page with an `Accept: text/markdown` header — Uses [Markdown for Agents](/fundamentals/reference/markdown-for-agents/) to convert the page to Markdown at the network layer. For example:
 
   ```bash
-  curl "https://developers.cloudflare.com/style-guide/" \
+  curl "https://developers.cloudflare.com/style-guide/ai-tooling/" \
     --header "Accept: text/markdown"
   ```
+
+- Send a request to `/$page/index.md` — Add `/index.md` to the end of any page to get the Markdown version. For example, [`/style-guide/ai-tooling/index.md`](/style-guide/ai-tooling/index.md).
+
+Both methods return the same Markdown output, powered by [Markdown for Agents](/fundamentals/reference/markdown-for-agents/).
 
 In the top right of this page, you will see a `Page options` button where you can copy the current page as Markdown that can be given to your LLM of choice.
 

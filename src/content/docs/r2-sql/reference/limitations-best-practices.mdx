@@ -11,276 +11,95 @@ sidebar:
 R2 SQL is in open beta. Limitations and best practices will change over time.
 :::
 
-R2 SQL is designed for querying **partitioned** Apache Iceberg tables in your R2 data catalog. This document outlines the supported features, limitations, and best practices of R2 SQL.
+This page summarizes supported features, limitations, and best practices.
 
-## Quick Reference
+## Quick reference
 
-| Feature               | Supported | Notes                                            |
-| :-------------------- | :-------- | :----------------------------------------------- |
-| Basic SELECT          | Yes       | Columns, \*                                      |
-| Aggregation functions | Yes       | COUNT(\*), SUM, AVG, MIN, MAX                    |
-| Single table FROM     | Yes       | Note, aliasing not supported                     |
-| WHERE clause          | Yes       | Filters, comparisons, equality, etc              |
-| JOINs                 | No        | No table joins                                   |
-| Array filtering       | No        | No array type support                            |
-| JSON filtering        | No        | No nested object queries                         |
-| Simple LIMIT          | Yes       | 1-10,000 range, no pagination support            |
-| ORDER BY              | Yes       | Partition key or with GROUP BY columns           |
-| GROUP BY              | Yes       | Supported                                        |
-| HAVING                | Yes       | Supported                                        |
+| Feature                                                 | Supported | Notes                                                                        |
+| :------------------------------------------------------ | :-------- | :--------------------------------------------------------------------------- |
+| SELECT, WHERE, GROUP BY, HAVING, ORDER BY, LIMIT        | Yes       |                                                                              |
+| Column aliases (`AS`)                                   | Yes       |                                                                              |
+| Expressions (CASE, CAST, LIKE, BETWEEN, IN, arithmetic) | Yes       | Full expression support                                                      |
+| EXPLAIN                                                 | Yes       | Returns execution plan                                                       |
+| 163 scalar functions                                    | Yes       | Math, string, datetime, regex, crypto, array, map, struct                    |
+| 33 aggregate functions                                  | Yes       | Basic, approximate, statistical, bitwise, boolean, positional                |
+| Approximate aggregates                                  | Yes       | `approx_distinct`, `approx_median`, `approx_percentile_cont`, `approx_top_k` |
+| Struct / Array / Map column types                       | Yes       | Bracket notation, `get_field()`, array functions, map functions           |
+| CTEs (`WITH ... AS`)                                    | Yes       | Single-table only. No JOINs or cross-table references within CTEs.           |
+| JOINs                                                   | No        | Single-table only                                                            |
+| Subqueries                                              | No        |                                                                              |
+| Window functions (`OVER`)                               | No        |                                                                              |
+| `SELECT DISTINCT`                                       | No        | Use `approx_distinct`                                                        |
+| `OFFSET`                                                | No        |                                                                              |
+| `UNION` / `INTERSECT` / `EXCEPT`                        | No        |                                                                              |
+| `INSERT` / `UPDATE` / `DELETE`                          | No        | Read-only                                                                    |
+| `CREATE` / `DROP` / `ALTER`                             | No        | Read-only                                                                    |
 
-## Supported SQL Clauses
-
-R2 SQL supports: `DESCRIBE`, `SHOW`, `SELECT`, `FROM`, `WHERE`, `GROUP BY`, `HAVING`, `ORDER BY`, and `LIMIT`. New features will be released in the future, keep an eye on this page for the latest.
-
----
-
-## SELECT Clause
-
-### Supported Features
-
-- **Individual columns**: `SELECT column1, column2`
-- **All columns**: `SELECT *`
-
-### Limitations
-
-- **No JSON field querying**: Cannot query individual fields from JSON objects
-- **Limited aggregation functions**: See Aggregation Functions section below for details
-- **No synthetic data**: Cannot create synthetic columns like `SELECT 1 AS what, "hello" AS greeting`
-- **No field aliasing**: `SELECT field AS another_name` (applies to both regular columns and aggregations)
-
-### Examples
-
-```sql
--- Valid
-SELECT timestamp, user_id, status FROM my_table;
-SELECT * FROM my_table;
-
--- Invalid
-SELECT user_id AS uid, timestamp AS ts FROM my_table;
-SELECT COUNT(*) FROM events FROM FROM my_table;
-SELECT json_field.property FROM my_table;
-SELECT 1 AS synthetic_column FROM my_table;
-```
+For the full SQL syntax, refer to the [SQL reference](/r2-sql/sql-reference/).
 
 ---
 
-## Aggregation Functions
+## Unsupported SQL features
 
-### Supported Features
-
-- **COUNT(*)**: Count total rows **note**: only `*` is supported
-- **SUM(column)**: Sum numeric values
-- **AVG(column)**: Calculate average of numeric values
-- **MIN(column)**: Find minimum value
-- **MAX(column)**: Find maximum value
-- **With GROUP BY**: All aggregations work with `GROUP BY`
-
-### Limitations
-
-- **No aliases**: `AS` keyword not supported (`SELECT COUNT(*) AS total` fails)
-- **COUNT(*) only**: `COUNT(column_name)` or `COUNT(DISTINCT column)` is not supported
-
-### Examples
-
-```sql
--- Valid
-SELECT department, COUNT(*) FROM sales GROUP BY department;
-SELECT region, AVG(amount) FROM sales GROUP BY region;
-SELECT category, MIN(price), MAX(price) FROM products GROUP BY category;
-SELECT SUM(quantity) FROM sales GROUP BY department ORDER BY SUM(amount) DESC;
-
--- Invalid
-SELECT COUNT(*) AS total FROM sales GROUP BY department; -- No aliases
-SELECT COUNT(department) FROM sales; -- Must use COUNT(*)
-SELECT COUNT(DISTINCT region) FROM sales; -- No DISTINCT support
-```
+| Feature                                                                       | Error                                                    |
+| :---------------------------------------------------------------------------- | :------------------------------------------------------- |
+| JOINs (any type)                                                              | `unsupported feature: JOIN operations are not supported` |
+| Multi-table CTEs (JOINs or cross-table references within `WITH`)              | Single-table CTEs are supported                          |
+| Subqueries (FROM, WHERE, scalar)                                              | `unsupported feature: subqueries`                        |
+| `SELECT DISTINCT`                                                             | `unsupported feature: SELECT DISTINCT is not supported`  |
+| `OFFSET`                                                                      | `unsupported feature: OFFSET clause is not supported`    |
+| `UNION` / `INTERSECT` / `EXCEPT`                                              | Set operations not supported                             |
+| Window functions (`OVER`)                                                     | `unsupported feature: window functions (OVER clause)`    |
+| `INSERT` / `UPDATE` / `DELETE`                                                | `only read-only queries are allowed`                     |
+| `CREATE` / `DROP` / `ALTER`                                                   | `only read-only queries are allowed`                     |
+| `UNNEST` / `PIVOT` / `UNPIVOT`                                                | Not supported                                            |
+| Wildcard modifiers (`ILIKE`, `EXCLUDE`, `EXCEPT`, `REPLACE`, `RENAME` on `*`) | Not supported                                            |
+| `LATERAL VIEW` / `QUALIFY`                                                    | Not supported                                            |
 
 ---
 
-## GROUP BY Clause
+## Unsupported expression patterns
 
-### Supported Features
-
-- **Single column grouping**: `GROUP BY column`
-- **Multiple column grouping**: `GROUP BY column1, column2`
-- **With WHERE**: Filter before grouping
-- **With LIMIT**: Limit grouped results
-
-### Limitations
-
-- **No expressions**: Cannot use expressions in GROUP BY (e.g., `GROUP BY YEAR(date)`)
-
-### Examples
-
-```sql
-SELECT region, COUNT(*) FROM sales GROUP BY region;
-SELECT dept, category, COUNT(*) FROM sales GROUP BY dept, category;
-SELECT region, COUNT(*) FROM sales WHERE status = 'completed' GROUP BY region;
-SELECT dept, COUNT(*) FROM sales GROUP BY dept ORDER BY COUNT(*) DESC LIMIT 10;
-SELECT is_active, SUM(amount) FROM sales GROUP BY is_active;
-SELECT dept, SUM(amount) FROM sales GROUP BY dept ORDER BY SUM(amount) DESC;
-```
+| Pattern                                                 | Alternative                                                                                       |
+| :------------------------------------------------------ | :------------------------------------------------------------------------------------------------ |
+| `func(DISTINCT ...)` on any aggregate                   | Use `approx_distinct` for counting                                                                |
+| `PERCENTILE_CONT` / `PERCENTILE_DISC`                   | Use [`approx_percentile_cont`](/r2-sql/sql-reference/aggregate-functions/#approx_percentile_cont) |
+| `MEDIAN`                                                | Use [`approx_median`](/r2-sql/sql-reference/aggregate-functions/#approx_median)                   |
+| `ARRAY_AGG`                                             | No alternative (unsupported for memory safety)                                                    |
+| `STRING_AGG`                                            | No alternative (unsupported for memory safety)                                                    |
+| Scalar subqueries (`SELECT ... WHERE x = (SELECT ...)`) | Not supported                                                                                     |
+| `EXISTS (SELECT ...)`                                   | Not supported                                                                                     |
+| `IN (SELECT ...)`                                       | Use `IN (value1, value2, ...)` with a literal list                                                |
 
 ---
 
-## HAVING Clause
+## Runtime constraints
 
-### Supported Features
-
-- **With COUNT(*)**: Filter groups by count
-- **Comparison operators**: `>`, `>=`, `=`, `<`, `<=`, `!=`, `BETWEEN`, `AND`, `IS NOT NULL`
-- **With GROUP BY**: Must be used with GROUP BY
-
-### Examples
-
-```sql
-SELECT region, COUNT(*) FROM sales GROUP BY region HAVING COUNT(*) > 1000;
-SELECT dept, SUM(amount) FROM sales GROUP BY dept HAVING SUM(amount) > 100000; -- HAVING with SUM
-SELECT region, COUNT(*) FROM sales GROUP BY region HAVING COUNT(*) > 100 AND COUNT(*) < 1000;
-```
+| Constraint                           | Details                                                                                               |
+| :----------------------------------- | :---------------------------------------------------------------------------------------------------- |
+| Single table per query               | Queries must reference exactly one table. No JOINs, no subqueries. CTEs may reference a single table. |
+| Partitioned Iceberg tables only      | Unpartitioned tables are not supported.                                                               |
+| Parquet format only                  | No CSV, JSON, or other formats.                                                                       |
+| Read-only                            | R2 SQL is a query engine, not a database. No writes.                                                  |
+| `now()` / `current_time()` precision | Quantized to 10ms boundaries and forced to UTC.                                                       |
 
 ---
 
-## FROM Clause
+## Common error codes
 
-### Supported Features
-
-- **Single table queries**: `SELECT * FROM table_name`
-
-### Limitations
-
-- **No multiple tables**: Cannot specify multiple tables in FROM clause
-- **No subqueries**: `SELECT ... FROM (SELECT ...)` is not supported
-- **No JOINs**: No INNER, LEFT, RIGHT, or FULL JOINs
-- **No SQL functions**: Cannot use functions like `read_parquet()`
-- **No synthetic tables**: Cannot create tables from values
-- **No schema evolution**: Schema cannot be altered (no ALTER TABLE, migrations)
-- **Immutable datasets**: No UPDATE or DELETE operations allowed
-- **Fully defined schema**: Dynamic or union-type fields are not supported
-- **No table aliasing**: `SELECT * FROM table_name AS alias`
-
-### Examples
-
-```sql
---Valid
-SELECT * FROM http_requests;
-
---Invalid
-SELECT * FROM table1, table2;
-SELECT * FROM table1 JOIN table2 ON table1.id = table2.id;
-SELECT * FROM (SELECT * FROM events WHERE status = 200);
-```
+| Code  | Meaning                                                            |
+| :---- | :----------------------------------------------------------------- |
+| 40003 | Invalid SQL syntax                                                 |
+| 40004 | Invalid query (unsupported feature, unknown column, type mismatch) |
+| 80001 | Edge service connection failure (retry)                            |
 
 ---
 
-## WHERE Clause
+## Best practices
 
-### Supported Features
-
-- **Simple type filtering**: Supports `string`, `boolean`, `number` types, and timestamps expressed as RFC3339
-- **Boolean logic**: Supports `AND`, `OR`, `NOT` operators
-- **Comparison operators**: `>`, `>=`, `=`, `<`, `<=`, `!=`
-- **Grouped conditions**: `WHERE col_a="hello" AND (col_b>5 OR col_c != 3)`
-- **Pattern matching:** `WHERE col_a LIKE ‘hello w%’` (prefix matching only)
-- **NULL Handling :** `WHERE col_a IS NOT NULL` (`IS`/`IS NOT`)
-
-### Limitations
-
-- **No column-to-column comparisons**: Cannot use `WHERE col_a = col_b`
-- **No array filtering**: Cannot filter on array types (array\[number\], array\[string\], array\[boolean\])
-- **No JSON/object filtering**: Cannot filter on fields inside nested objects or JSON
-- **No SQL functions**: No function calls in WHERE clause
-- **No arithmetic operators**: Cannot use `+`, `-`, `*`, `/` in conditions
-
-### Examples
-
-```sql
---Valid
-SELECT * FROM events WHERE timestamp BETWEEN '2024-01-01' AND '2024-01-02';
-SELECT * FROM logs WHERE status = 200 AND user_type = 'premium';
-SELECT * FROM requests WHERE (method = 'GET' OR method = 'POST') AND response_time < 1000;
-
---Invalid
-SELECT * FROM logs WHERE tags[0] = 'error'; -- Array filtering
-SELECT * FROM requests WHERE metadata.user_id = '123'; -- JSON field filtering
-SELECT * FROM events WHERE col_a = col_b; -- Column comparison
-SELECT * FROM logs WHERE response_time + latency > 5000; -- Arithmetic
-```
-
----
-
-## ORDER BY Clause
-
-### Supported Features
-
-- **ASC**: Ascending order
-- **DESC**: Descending order (Default, on full partition key)
-- **With partition key**: Order by partition key columns
-- **With GROUP BY**: Can order by all aggregation columns
-
-### Limitations
-
-- **Non-partition keys not supported**: `ORDER BY` on columns other than the partition key is not supported (except with aggregations)
-
-### Examples
-
-```sql
--- Valid
-SELECT * FROM table_name WHERE ... ORDER BY partitionKey;
-SELECT * FROM table_name WHERE ... ORDER BY partitionKey DESC;
-SELECT dept, COUNT(*) FROM table_name GROUP BY dept ORDER BY COUNT(*) DESC;
-
--- Invalid
-SELECT * FROM table_name GROUP BY dept ORDER BY nonPartitionKey DESC --ORDER BY a non-grouped column
-```
-
----
-
-## LIMIT Clause
-
-### Supported Features
-
-- **Simple limits**: `LIMIT number`
-- **Range**: Minimum 1, maximum 10,000
-
-### Limitations
-
-- **No pagination**: `LIMIT offset, count` syntax not supported
-- **No SQL functions**: Cannot use functions to determine limit
-- **No arithmetic**: Cannot use expressions like `LIMIT 10 * 50`
-
-### Examples
-
-```sql
--- Valid
-SELECT * FROM events LIMIT 100
-SELECT * FROM logs WHERE ... LIMIT 10000
-
--- Invalid
-SELECT * FROM events LIMIT 100, 50; -- Pagination
-SELECT * FROM logs LIMIT COUNT(*); / 2 -- Functions
-SELECT * FROM events LIMIT 10 * 10; -- Arithmetic
-```
-
----
-
-## Unsupported SQL Clauses
-
-The following SQL clauses are **not supported**:
-
-- `UNION`/`INTERSECT`/`EXCEPT`
-- `WITH` (Common Table Expressions)
-- `WINDOW` functions
-- `INSERT`/`UPDATE`/`DELETE`
-- `CREATE`/`ALTER`/`DROP`
----
-
-## Best Practices
-
-1. Always include time filters in your WHERE clause to ensure efficient queries.
-2. Use specific column selection instead of `SELECT *` when possible for better performance.
-3. Flatten your data to avoid nested JSON objects if you need to filter on those fields.
-4. Use `COUNT(*)` exclusively - avoid `COUNT(column_name)` or `COUNT(DISTINCT column)`.
-5. Enable compaction in R2 Data Catalog to reduce the number of data files needed to be scanned.
----
+1. Always include time-range filters in `WHERE` to limit data scanned.
+2. Use specific column names instead of `SELECT *` for better performance.
+3. Use `LIMIT` to control result set size.
+4. Use approximate aggregation functions (`approx_distinct`, `approx_median`, `approx_percentile_cont`) instead of exact alternatives on large datasets.
+5. Enable compaction in R2 Data Catalog to reduce the number of files scanned per query.
+6. Use `EXPLAIN` to inspect the execution plan and verify predicate pushdown.

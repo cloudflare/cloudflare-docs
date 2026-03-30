@@ -12,7 +12,7 @@ import { TabItem, Tabs, PackageManagers, Render } from "~/components";
 
 TypeScript is a first-class language on Cloudflare Workers. All APIs provided in Workers are fully typed, and type definitions are generated directly from [workerd](https://github.com/cloudflare/workerd), the open-source Workers runtime.
 
-We recommend you generate types for your Worker by running [`wrangler types`](/workers/wrangler/commands/#types). Cloudflare also publishes type definitions to [GitHub](https://github.com/cloudflare/workers-types) and [npm](https://www.npmjs.com/package/@cloudflare/workers-types) (`npm install -D @cloudflare/workers-types`).
+We recommend you generate types for your Worker by running [`wrangler types`](/workers/wrangler/commands/general/#types). Cloudflare also publishes type definitions to [GitHub](https://github.com/cloudflare/workers-types) and [npm](https://www.npmjs.com/package/@cloudflare/workers-types) (`npm install -D @cloudflare/workers-types`).
 
 <h3 id="generate-types">
 	Generate types that match your Worker's configuration
@@ -34,7 +34,7 @@ To ensure that your type definitions always match your Worker's configuration, y
 
 <PackageManagers type="exec" pkg="wrangler" args={"types"} />
 
-See [the `wrangler types` command docs](/workers/wrangler/commands/#types) for more details.
+See [the `wrangler types` command docs](/workers/wrangler/commands/general/#types) for more details.
 
 :::note
 

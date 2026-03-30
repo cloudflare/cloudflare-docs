@@ -27,14 +27,14 @@ it("dispatches fetch event", () => {
 })
 ```
 
-With the Workers Vitest integration, you can accomplish the same goal using `SELF` from `cloudflare:test`. `SELF` is a [service binding](/workers/runtime-apis/bindings/service-bindings/) to the default export defined by the `main` option in your [Wrangler configuration file](/workers/wrangler/configuration/). This `main` Worker runs in the same isolate as tests so any global mocks will apply to it too.
+With the Workers Vitest integration, you can accomplish the same goal using `exports` from `cloudflare:workers`. `exports.default` refers to the default export defined by the `main` option in your [Wrangler configuration file](/workers/wrangler/configuration/). This `main` Worker runs in the same isolate as tests so any global mocks will apply to it too.
 
 ```js
-import { SELF } from "cloudflare:test";
+import { exports } from "cloudflare:workers";
 import "../src/"; // Currently required to automatically rerun tests when `main` changes
 
 it("dispatches fetch event", async () => {
-	const response = await SELF.fetch("http://example.com");
+	const response = await exports.default.fetch("http://example.com");
 	...
 });
 ```
@@ -55,19 +55,19 @@ await unstable_dev("src/index.ts", {
 
 With the Workers Vitest integration, you can now set this reference to a [Wrangler configuration file](/workers/wrangler/configuration/) in `vitest.config.js` for all of your tests:
 
-```js null {5-7}
-export default defineWorkersConfig({
-  test: {
-    poolOptions: {
-      workers: {
-        wrangler: {
-          configPath: "wrangler.toml",
-        },
-      },
-    },
-  },
+```js {3-5}
+import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
+import { defineConfig } from "vitest/config";
+
+export default defineConfig({
+	plugins: [
+		cloudflareTest({
+			wrangler: {
+				configPath: "wrangler.jsonc",
+			},
+		}),
+	],
 });
----
 ```
 
 ## Test service Workers

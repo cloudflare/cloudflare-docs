@@ -63,10 +63,11 @@ You can stream real-time logs from a running tunnel without SSH access to the se
 
 <Render file="tunnel/logs/view-logs-cli" product="cloudflare-one" />
 
-3. If you are running multiple [replicas](/tunnel/configuration/#replicas-and-high-availability), specify which replica to stream logs from:
+3. If you are running multiple [replicas](/tunnel/configuration/#replicas-and-high-availability), you can specify which replica to stream logs from:
    ```sh
    cloudflared tail --connector-id <REPLICA ID> <UUID>
    ```
+   To find the replica ID, go to **Networks** > **Connectors** and select your tunnel. All active replicas appear in the **Connectors** list on the tunnel overview page. The replica ID is the **Connector ID**.
 
 <Details header="Log filtering options">
 	<Render

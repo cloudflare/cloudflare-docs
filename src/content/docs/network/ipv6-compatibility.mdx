@@ -6,7 +6,7 @@ tags:
   - IPv6
 ---
 
-import { FeatureTable, TabItem, Tabs, DashButton } from "~/components";
+import { FeatureTable, TabItem, Tabs, Render, DashButton } from "~/components";
 
 Cloudflare enables IPv6 on all domains without requiring additional configuration or hardware (as long as your host provides IPv6 support).
 
@@ -28,9 +28,15 @@ If you have signed up for Cloudflare through a [Cloudflare hosting partner](http
 
 ## Disable IPv6 compatibility
 
-If your origin web server only understands IPv4 formatted IP addresses, non-Enterprise customers should [enable **Pseudo IPv4**](/network/pseudo-ipv4/).
+If your origin web server only understands IPv4 formatted IP addresses, non-Enterprise customers should [configure Pseudo IPv4](/network/pseudo-ipv4/).
 
-Alternatively, customers with an Enterprise account can disable Cloudflare's IPv6 compatibility.
+Alternatively, customers with an Enterprise account can turn off Cloudflare's IPv6 compatibility.
+
+<Render
+	file="note-ipv6-client-to-ipv4-origin"
+	product="network"
+	params={{ page: "ipv6-compatibility" }}
+/>
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -44,13 +50,13 @@ To turn off IPv6 compatibility in the dashboard:
 
 </TabItem> <TabItem label="API">
 
-To disable IPv6 compatibility using the API, send a [`PATCH`](/api/resources/zones/subresources/settings/methods/edit/) request with `ipv6` as the setting name in the URI path, and the `value` parameter set to `"off"`.
+To turn off IPv6 compatibility using the API, send a [`PATCH`](/api/resources/zones/subresources/settings/methods/edit/) request with `ipv6` as the setting name in the URI path, and the `value` parameter set to `"off"`.
 
 </TabItem> </Tabs>
 
 :::note
 
-Even when IPv6 is disabled, domains may still receive IPv6 traffic (for example, via the Tor network). To completely disable all IPv6 traffic:
+Even when IPv6 is turned off, domains may still receive IPv6 traffic (for example, via the Tor network). To completely turn off all IPv6 traffic:
 
 - Turn off [**Onion Routing**](/network/onion-routing/).
 - Use a [WAF custom rule](/waf/custom-rules/create-dashboard/) to block `0:0:0:0:0:0:0:0/0` using the condition `ip.src in {::/0}`.
@@ -64,6 +70,6 @@ Even when IPv6 is disabled, domains may still receive IPv6 traffic (for example,
 
 Provide the following information to [Cloudflare Support](/support/contacting-cloudflare-support/) if you experience issues with IPv6 connectivity:
 
-- A [traceroute](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#perform-a-traceroute) that demonstrates the IPv6 connection issues.
+- A [traceroute](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#perform-a-traceroute) that demonstrates the IPv6 connection issues.
 - The [Cloudflare data center serving your request](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#identify-the-cloudflare-data-center-serving-your-request) when the IPv6 issues occur.
 - Confirmation of whether [disabling IPv6 Compatibility](#disable-ipv6-compatibility) resolves the issue.

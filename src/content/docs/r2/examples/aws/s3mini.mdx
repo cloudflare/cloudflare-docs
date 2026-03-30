@@ -13,10 +13,6 @@ import { Render } from "~/components";
 
 Unlike the AWS SDKs, s3mini expects a **bucket-scoped endpoint** — the bucket name is part of the endpoint URL, so you do not pass a separate `bucket` parameter to each operation.
 
-:::note
-s3mini does not support presigned URL generation. If you need presigned URLs, refer to the [aws-sdk-js-v3](/r2/examples/aws/aws-sdk-js-v3/#generate-presigned-urls) or [aws4fetch](/r2/examples/aws/aws4fetch/#generate-presigned-urls) examples instead.
-:::
-
 ## Install
 
 ```sh

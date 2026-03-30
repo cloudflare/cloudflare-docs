@@ -1,0 +1,43 @@
+---
+title: Retry-After HTTP header for retryable 1xxx errors
+description: "Cloudflare-generated 1xxx error responses now include a standard Retry-After HTTP header when the error is retryable, letting HTTP clients honour the server-suggested wait time directly from response headers."
+products:
+  - fundamentals
+date: 2026-03-12
+---
+
+Cloudflare-generated 1xxx error responses now include a standard `Retry-After` HTTP header when the error is retryable. Agents and HTTP clients can read the recommended wait time from response headers alone — no body parsing required.
+
+## Changes
+
+Seven retryable error codes now emit `Retry-After`:
+
+| Error code | Retry-After (seconds) | Error name |
+|---|---|---|
+| 1004 | 120 | DNS resolution error |
+| 1005 | 120 | Banned zone |
+| 1015 | 30 | Rate limited |
+| 1033 | 120 | Argo Tunnel error |
+| 1038 | 60 | HTTP headers limit exceeded |
+| 1200 | 60 | Cache connection limit |
+| 1205 | 5 | Too many redirects |
+
+The header value matches the existing `retry_after` body field in JSON and Markdown responses.
+
+If a WAF rate limiting rule has already set a dynamic `Retry-After` value on the response, that value takes precedence.
+
+## Availability
+
+Available for all zones on all plans.
+
+## Verify
+
+Check for the header on any retryable error:
+
+```bash
+curl -s --compressed -D - -o /dev/null -H "Accept: application/json" -A "TestAgent/1.0" -H "Accept-Encoding: gzip, deflate" "<YOUR_DOMAIN>/cdn-cgi/error/1015" | grep -i retry-after
+```
+
+References:
+- [RFC 9110 section 10.2.3 - Retry-After](https://www.rfc-editor.org/rfc/rfc9110#section-10.2.3)
+- [Cloudflare 1xxx error documentation](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/)

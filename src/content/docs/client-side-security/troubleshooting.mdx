@@ -1,0 +1,103 @@
+---
+pcx_content_type: troubleshooting
+source: https://support.cloudflare.com/hc/en-us/articles/360059485272-Troubleshooting-Page-Shield
+title: Troubleshooting
+sidebar:
+  order: 10
+---
+
+import { GlossaryTooltip } from "~/components";
+
+## Cloudflare does not show any client-side resources after activation
+
+Cloudflare does not collect data on every single page view. Instead, it uses a sampling approach to gather information efficiently. This means that domains with lower traffic might take longer to generate initial reports, as these domains need more page views to accumulate enough samples. To speed up the reporting process, it is recommended that you actively generate traffic to your application after [activating client-side resource monitoring](/client-side-security/get-started/). This will provide Cloudflare with more data to work with, leading to faster report generation.
+
+Other steps you can take to troubleshoot this issue:
+
+- Verify that [client-side resource monitoring is turned on](/client-side-security/get-started/#1-activate-client-side-resource-monitoring).
+- After enabling client-side resource monitoring and generating some traffic to your application (at least 100 requests), wait approximately one hour to ensure that Cloudflare has already collected and processed enough data to display in the client-side resource monitoring dashboard.
+- Use your browser's dev tools (**Network** tab) to check if the [`content-security-policy-report-only` HTTP header](/client-side-security/reference/csp-header/) is present.
+- Use analytics dashboards to verify if traffic is being proxied by Cloudflare.
+- Check if there are duplicate or conflicting Content Security Policy (CSP) headers in responses. Your origin server might be adding CSP headers to the response.
+
+## The dashboard shows scripts and connections that I do not recognize
+
+Scripts often reference other scripts outside your application.
+
+But, if you see unexpected scripts on your resource monitoring dashboard, check them for signs of malicious activity.
+
+## I get warnings in my browser's developer tools related to Content Security Policy (CSP)
+
+Cloudflare uses a <GlossaryTooltip term="content security policy (CSP)">Content Security Policy (CSP)</GlossaryTooltip> report-only directive to gather a list of all scripts running on your application.
+
+Some browsers display scripts being reported as warnings in the console pane of their developer tools. For example:
+
+```txt
+[Report Only] Refused to execute inline script because it violates
+the following Content Security Policy directive: "script-src 'none'".
+
+Either the 'unsafe-inline' keyword, a hash ('sha256-RFWPLDbv2BY+rCkDzsE+0fr8ylGr2R2faWMhq4lfEQc='), or a nonce ('nonce-...')
+is required to enable inline execution.
+```
+
+You can safely ignore these warnings, since they are related to the reports that Cloudflare requires to detect loaded scripts. For more information, refer to [How client-side security works](/client-side-security/how-it-works/).
+
+## I get rule violation reports for a domain I allowlisted
+
+Rule violations reported via CSP's [report-only directive](/client-side-security/reference/csp-header/) do not take into consideration any redirects or redirect HTTP status codes. This is [by design](https://www.w3.org/TR/CSP3/#create-violation-for-request) for security reasons.
+
+Some third-party services you may want to cover in your allow rules perform redirects. An example of such a service is Google Ads, which [does not work well with CSP policies](https://support.google.com/adsense/thread/102839782?hl=en&msgid=103611259).
+
+For example, if you add the `adservice.google.com` domain to an allow rule, you could get rule violation reports for this domain due to redirects to a different domain (not present in your allow rule). In this case, the violation report would still mention the original domain, and not the domain of the redirected destination, which can cause some confusion.
+
+To try to solve this issue, add the domain of the redirected destination to your allow rule. You may need to add several domains to your rule due to redirects.
+
+## My rule is not triggering (CSP header not added)
+
+If you have configured a content security rule but the expected CSP header is not being added to responses, [Transform Rules](/rules/transform/) may be rewriting the request path before the content security rule is evaluated.
+
+Cloudflare evaluates rules in a [specific order](/ruleset-engine/reference/phases-list/) across different phases. [URL Rewrite Rules](/rules/transform/url-rewrite/) run early in the request lifecycle, while content security rules are evaluated later, during response phases.
+
+This means that if your content security rule is matching incoming requests based on the request URI path (for example, using the field `http.request.uri.path`), the content security rule will evaluate against the rewritten path, not the original URI path requested by the visitor.
+
+### Solution
+
+To fix this issue, choose one of the following approaches:
+
+- **Update the content security rule condition to match the rewritten path**: Change your rule's expression to match the rewritten URI path instead of the original visitor's URI path.
+
+- **Use raw fields to match the original URI path**: Use the [`raw.http.request.uri.path`](/ruleset-engine/rules-language/fields/reference/raw.http.request.uri.path/) field instead of the [`http.request.uri.path`](/ruleset-engine/rules-language/fields/reference/http.request.uri.path/) field in your content security rule expression. [Raw fields](/ruleset-engine/rules-language/fields/reference/?field-category=Raw+fields) preserve the original request values and are not affected by Transform Rules.
+
+When troubleshooting this issue, consider using [Cloudflare Trace](/rules/trace-request/) to verify how the request path changes as it passes through different phases.
+
+## Responses contain duplicate CSP headers
+
+If responses have duplicate `Content-Security-Policy` or `Content-Security-Policy-Report-Only` headers, this is likely caused by having both client-side security and a [response header transform rule](/rules/transform/response-header-modification/) adding the same header type.
+
+Content security rules automatically add CSP headers to responses:
+
+- [Log rules](/client-side-security/rules/#rule-actions) add `Content-Security-Policy-Report-Only` headers.
+- [Allow rules](/client-side-security/rules/#rule-actions) add `Content-Security-Policy` headers.
+
+If you have a response header transform rule configured with the **Add** operation for the same header type, both headers will be present in the response.
+
+When browsers encounter multiple CSP headers, they enforce all of them, and the most restrictive policy wins. This can lead to unexpected blocking of legitimate resources.
+
+### Solution
+
+If you need to use Response Header Transform Rules alongside client-side security policies, use the **Set static** or **Set dynamic** operations. These operations replace any existing header value, including headers added by Cloudflare's client-side security. Using these operations will make your transform rule take precedence over client-side security.
+
+Follow these steps to troubleshoot this issue:
+
+1. Use your browser's dev tools (**Network** tab) to inspect the response headers and check for duplicate CSP headers.
+2. Review your configured [Response Header Transform Rules](/rules/transform/response-header-modification/) and check if any are using the **Add** operation for `Content-Security-Policy` or `Content-Security-Policy-Report-Only` headers.
+3. Change the operation from **Add** to **Set static** or **Set dynamic** if you want the transform rule to override client-side security's CSP headers.
+4. Alternatively, disable or adjust the content security rule scope to avoid overlap with your transform rule.
+
+### Recommended patterns
+
+| Scenario                                     | Recommended approach                                                                                                         |
+| -------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| Client-side security manages all CSP headers | Do not create Response Header Transform Rules for CSP headers.                                                               |
+| Transform Rule manages all CSP headers       | Use **Set static** or **Set dynamic** operations, and consider excluding the affected paths from your content security rule. |
+| Different CSP headers for different paths    | Use content security rule conditions to target specific paths, and avoid overlapping Transform Rules.                        |
