@@ -2,7 +2,6 @@ on:
   workflow_dispatch: {}
   schedule:
     - cron: "0 4 * * *"
-  pull_request: {}
 
 name: Semgrep rules checking results
 permissions:

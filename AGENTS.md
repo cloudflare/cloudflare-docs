@@ -83,7 +83,7 @@ reviewed: 2025-01-15 # YYYY-MM-DD of last content review
 ---
 ```
 
-Valid `pcx_content_type` values: `changelog`, `concept`, `configuration`, `design-guide`, `example`, `faq`, `get-started`, `how-to`, `integration-guide`, `implementation-guide`, `learning-unit`, `navigation`, `overview`, `reference`, `reference-architecture`, `reference-architecture-diagram`, `release-notes`, `troubleshooting`, `tutorial`, `video`.
+Valid `pcx_content_type` values: `changelog`, `concept`, `configuration`, `design-guide`, `example`, `faq`, `get-started`, `how-to`, `integration-guide`, `implementation-guide`, `learning-unit`, `navigation`, `overview`, `reference`, `reference-architecture`, `reference-architecture-diagram`, `release-notes`, `solution-guide`, `troubleshooting`, `tutorial`, `video`.
 
 Tags are validated against an allowlist in `src/schemas/tags.ts`. Invalid tags will fail the build.
 

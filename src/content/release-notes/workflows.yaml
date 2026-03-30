@@ -3,6 +3,12 @@ link: "/workflows/reference/changelog/"
 productName: Workflows
 productLink: "/workflows/"
 entries:
+  - publish_date: "2026-03-26"
+    title: "JavaScript Workflows steps can now return streamed output"
+    description: |-
+      In JavaScript Workflows, `ReadableStream<Uint8Array>` is now a supported serializable return type for `step.do()`, which lets a step persist large binary output without fitting it into the normal 1 MiB non-stream step-result limit.
+
+      Streamed outputs still count toward Workflow instance storage limits. For requirements and caveats, refer to the [Workers API](/workflows/build/workers-api/#step).
   - publish_date: "2026-03-23"
     title: "Workflow instances now support pause(), resume(), restart(), and terminate() methods in local development"
     description: |-

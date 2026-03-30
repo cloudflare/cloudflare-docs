@@ -11,7 +11,11 @@ Only available on Enterprise plans. For more information, contact your account t
 
 Gateway supports the [Cloudflare Tenant API](/tenant/), which allows Cloudflare-partnered managed service providers (MSPs) to set up and manage Cloudflare accounts and services for their customers. With the Tenant API, MSPs can create Zero Trust deployments with global Gateway policy control. Policies can be customized or overridden at a group or individual account level.
 
-The Tenant platform only supports [DNS policies](/cloudflare-one/traffic-policies/dns-policies/). For more information, refer to the [Cloudflare Zero Trust for managed service providers](https://blog.cloudflare.com/gateway-managed-service-provider/) blog post.
+:::caution
+The Tenant platform only supports [DNS policies](/cloudflare-one/traffic-policies/dns-policies/). HTTP, network, egress, and resolver policies are not available through the Tenant API.
+:::
+
+For more information, refer to the [Cloudflare Zero Trust for managed service providers](https://blog.cloudflare.com/gateway-managed-service-provider/) blog post.
 
 ## Get started
 
@@ -81,7 +85,7 @@ flowchart TD
         n1["Block social media"]
   end
  subgraph s2["Siloed account C"]
-        n2["Block instant messaing"]
+        n2["Block instant messaging"]
   end
  subgraph s3["Siloed account B"]
         n3["Block news"]

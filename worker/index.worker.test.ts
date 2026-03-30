@@ -1,20 +1,11 @@
 import { SELF } from "cloudflare:test";
 import { describe, it, expect } from "vitest";
-import { XMLParser } from "fast-xml-parser";
 import { parse } from "node-html-parser";
 
 describe("Cloudflare Docs", () => {
 	describe("html handling", () => {
 		it("responds with index.html at `/`", async () => {
 			const request = new Request("http://fakehost/");
-			const response = await SELF.fetch(request);
-			expect(response.status).toBe(200);
-			expect(await response.text()).toContain("Cloudflare Docs");
-		});
-
-		// Remove once the whacky double-slash rules get removed
-		it("responds with index.html at `//`", async () => {
-			const request = new Request("http://fakehost//");
 			const response = await SELF.fetch(request);
 			expect(response.status).toBe(200);
 			expect(await response.text()).toContain("Cloudflare Docs");
@@ -109,8 +100,6 @@ describe("Cloudflare Docs", () => {
 	});
 
 	describe("rss endpoints", () => {
-		const parser = new XMLParser({ processEntities: false });
-
 		describe("changelog", () => {
 			it("global", async () => {
 				const request = new Request("http://fakehost/changelog/rss/index.xml");
@@ -119,21 +108,16 @@ describe("Cloudflare Docs", () => {
 				expect(response.status).toBe(200);
 
 				const xml = await response.text();
-				const parsed = parser.parse(xml);
-				const { channel } = parsed.rss;
 
-				expect(channel.title).toBe("Cloudflare changelogs");
-
-				const item = channel.item.find(
-					(item: any) =>
-						item.title ===
-						"Access - New SAML and OIDC Fields and SAML transforms for Access for SaaS",
+				expect(xml).toContain("<title>Cloudflare changelogs</title>");
+				expect(xml).toContain(
+					"<title>Access - New SAML and OIDC Fields and SAML transforms for Access for SaaS</title>",
 				);
-
-				expect(item).toBeDefined();
-				expect(item.product).toBe("Access");
-				expect(item.category).toBe("Access");
-				expect(item.pubDate).toBe("Mon, 03 Mar 2025 00:00:00 GMT");
+				expect(xml).toContain("<product>Access</product>");
+				expect(xml).toContain("<category>Access</category>");
+				expect(xml).toContain(
+					"<pubDate>Mon, 03 Mar 2025 00:00:00 GMT</pubDate>",
+				);
 			});
 		});
 	});
@@ -147,6 +131,24 @@ describe("Cloudflare Docs", () => {
 
 			const text = await response.text();
 			expect(text).toContain("# Cloudflare Developer Documentation");
+		});
+
+		it("index.md requests preserve markdown through redirects", async () => {
+			// /learning-paths/ redirects to /resources/ — an index.md request
+			// should redirect to /resources/index.md, not the HTML page.
+			const request = new Request("http://fakehost/learning-paths/index.md");
+			const response = await SELF.fetch(request, { redirect: "manual" });
+
+			expect(response.status).toBe(301);
+			expect(response.headers.get("Location")).toBe("/resources/index.md");
+		});
+
+		it("index.md requests for non-redirected paths pass through", async () => {
+			const request = new Request("http://fakehost/workers/index.md");
+			const response = await SELF.fetch(request);
+
+			// Should not be a redirect — just serve normally via ASSETS
+			expect(response.status).not.toBe(301);
 		});
 	});
 

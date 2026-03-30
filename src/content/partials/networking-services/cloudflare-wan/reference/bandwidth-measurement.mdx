@@ -3,11 +3,11 @@ params:
   - cloudflareTunnelURL
 ---
 
-Cloudflare measures Cloudflare WAN (formerly Magic WAN) usage based on the 95th percentile of bandwidth utilized by your configured network.
+Cloudflare measures Cloudflare WAN (formerly Magic WAN) usage based on the 95th percentile of bandwidth utilized by your configured network. This measurement reflects your overall network capacity consumption.
 
 ## How bandwidth is measured
 
-Cloudflare WAN bandwidth includes the sum of traffic routed to and from the Cloudflare WAN network namespace. This measurement includes traffic from the following tunnel types:
+Cloudflare WAN bandwidth includes the sum of traffic routed to and from the Cloudflare WAN network namespace across all your connections. This measurement includes traffic from the following tunnel types:
 
 - [GRE (Generic Routing Encapsulation)](https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/)
 - [IPsec (Internet Protocol Security)](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/)
@@ -18,4 +18,6 @@ For each tunnel, Cloudflare uses the highest 95th percentile value (ingress or e
 
 ## 95th percentile calculation
 
-To measure the 95th percentile bandwidth at each tunnel, Cloudflare records bandwidth to and from the global network at five-minute intervals, sorts these measurements in descending order, and discards the top 5% of recorded measurements. The highest remaining value is the 95th percentile bandwidth measurement for that time period.
+The 95th percentile method is an industry-standard approach to bandwidth measurement that accounts for short traffic spikes. By discarding the highest 5% of samples, the measurement reflects your sustained bandwidth usage rather than momentary peaks.
+
+To calculate the 95th percentile, Cloudflare records bandwidth to and from the global network at five-minute intervals, sorts these measurements in descending order, and discards the top 5% of recorded measurements. The highest remaining value is the 95th percentile bandwidth measurement for that time period.

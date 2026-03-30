@@ -5,13 +5,14 @@ params:
   - onRampsUrl
   - zeroTrustUrl
   - applianceUrl
+  - secureWanTrafficUrl
 ---
 
 import { GlossaryTooltip } from "~/components";
 
 Traditional wide area networks (WANs) were designed for a world where applications ran in corporate data centers and employees worked from offices. These architectures rely on private circuits like Multiprotocol Label Switching (MPLS), hub-and-spoke routing through central data centers, and dedicated hardware at every branch.
 
-As organizations adopt cloud services and support remote work, this model creates bottlenecks. Backhauling traffic to a central data center adds latency for cloud-bound traffic, and branch hardware requires ongoing maintenance and capital investment. WAN transformation replaces this architecture with cloud-native Network-as-a-Service (NaaS), routing traffic through a global network instead of private circuits.
+As organizations adopt cloud services and support remote work, this model creates bottlenecks. Backhauling traffic to a central data center adds latency for cloud-bound traffic, and branch hardware requires ongoing maintenance and capital investment. WAN transformation replaces this architecture with cloud-native networking — routing traffic through a distributed global network instead of private circuits, and applying security inline rather than at a central chokepoint.
 
 With Cloudflare One, your corporate WAN runs over Cloudflare's global network. You connect sites through <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> or <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip> tunnels, and Cloudflare handles routing, security inspection, and traffic optimization at the nearest point of presence.
 
@@ -65,7 +66,7 @@ Set up site-to-site connectivity by establishing IPsec or GRE tunnels from your 
 
 Enable Cloudflare Gateway to apply secure web gateway (SWG) policies to Internet-bound traffic from your sites. Add Cloudflare Network Firewall rules to enforce packet-level filtering. Traffic from every site is inspected at the nearest Cloudflare data center — no backhaul required.
 
-For more information, refer to [Cloudflare Gateway](/cloudflare-one/traffic-policies/) and [Cloudflare Network Firewall](/cloudflare-network-firewall/).
+For a complete overview of which security services apply to WAN traffic, refer to <a href={props.secureWanTrafficUrl}>Secure WAN traffic</a>. For configuration details, refer to [Cloudflare Gateway](/cloudflare-one/traffic-policies/) and [Cloudflare Network Firewall](/cloudflare-network-firewall/).
 
 ### 4. Reduce infrastructure
 

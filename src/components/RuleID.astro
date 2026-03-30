@@ -13,39 +13,29 @@ const { id } = props.parse(Astro.props);
 ---
 
 <rule-id id={id}>
-	<button title="Click to copy the full ID" class="px-0">
-		<code class="flex">
-			{`...${id.slice(-8)}`}
-		</code>
+	<button
+		title="Copy rule ID"
+		aria-label="Copy rule ID"
+		class="inline-flex cursor-copy items-center rounded-md border border-[color:var(--color-table-fill)] bg-[var(--sl-color-gray-6)] px-1.5 py-0.5 transition-colors duration-150 hover:border-[color:var(--sl-color-gray-3)] hover:bg-[var(--color-table-fill)]"
+	>
+		<span class="font-mono text-[0.8125rem] font-medium"
+			>{`...${id.slice(-8)}`}</span
+		>
 	</button>
 </rule-id>
-
-<style>
-	button {
-		transition: opacity 100ms ease;
-
-		opacity: 0.75;
-
-		&:hover {
-			cursor: copy;
-			opacity: 1;
-		}
-	}
-</style>
 
 <script>
 	import { addTooltip } from "~/util/tippy";
 
 	class RuleID extends HTMLElement {
-		handleCopy() {
-			navigator.clipboard.writeText(this.id);
-		}
 		connectedCallback() {
 			const button = this.querySelector<HTMLButtonElement>("button");
 
-			addTooltip(this, "Copied", { trigger: "click", hideAfter: 1000 });
+			addTooltip(this, "Copied!", { trigger: "click", hideAfter: 1000 });
 
-			button?.addEventListener("click", () => this.handleCopy());
+			button?.addEventListener("click", () => {
+				navigator.clipboard.writeText(this.id);
+			});
 		}
 	}
 

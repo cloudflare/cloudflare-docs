@@ -293,7 +293,7 @@ export default {
 };
 ```
 
-Check that the request is a `PUT` and wrap the remainder of the code in a `try/catch` block. First, parse the body of the request coming in, ensuring that it is JSON, before you update the cache with the new data and return it to the user. If anything goes wrong, return a `500` status code. If the route is hit with an HTTP method other than `PUT` — for example, `POST` or `DELETE` — return a `404` error.
+Check that the request is a `PUT` and wrap the remainder of the code in a `try...catch` block. First, parse the body of the request coming in, ensuring that it is JSON, before you update the cache with the new data and return it to the user. If anything goes wrong, return a `500` status code. If the route is hit with an HTTP method other than `PUT` — for example, `POST` or `DELETE` — return a `404` error.
 
 With this script, you can now add some dynamic functionality to your HTML page to actually hit this route. First, create an input for your todo name and a button for submitting the todo.
 

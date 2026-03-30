@@ -64,18 +64,20 @@ package.json @cloudflare/content-engineering
 
 # Cloudflare One
 
-/src/content/docs/cloudflare-one/ @ranbel @cloudflare/pcx-technical-writing
+/src/content/docs/cloudflare-one/ @ranbel @Maddy-Cloudflare @codyanthony850 @cloudflare/pcx-technical-writing
+/src/content/partials/cloudflare-one/ @ranbel @Maddy-Cloudflare @codyanthony850 @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/applications/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/identity/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/access-controls/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/team-and-resources/devices/ @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/ @nikitacano @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/tunnel/ @nikitacano @ranbel @cloudflare/pcx-technical-writing
-/src/content/docs/cloudflare-one/cloud-and-saas-findings/ @cloudflare/pcx-technical-writing
-/src/content/docs/cloudflare-one/traffic-policies/ @cloudflare/pcx-technical-writing
-/src/content/docs/cloudflare-one/remote-browser-isolation/ @deadlypants1973 @cloudflare/pcx-technical-writing
-/src/content/docs/cloudflare-one/data-loss-prevention/ @cloudflare/pcx-technical-writing
-/src/content/docs/cloudflare-one/insights/dex/ @deadlypants1973 @cloudflare/pcx-technical-writing
+/src/content/partials/cloudflare-one/tunnel/ @nikitacano @ranbel @cloudflare/pcx-technical-writing
+/src/content/docs/cloudflare-one/cloud-and-saas-findings/ @Maddy-Cloudflare @codyanthony850 @cloudflare/pcx-technical-writing
+/src/content/docs/cloudflare-one/traffic-policies/ @Maddy-Cloudflare @codyanthony850@cloudflare/pcx-technical-writing
+/src/content/docs/cloudflare-one/remote-browser-isolation/ @codyanthony850 @cloudflare/pcx-technical-writing
+/src/content/docs/cloudflare-one/data-loss-prevention/ @Maddy-Cloudflare @codyanthony850 @cloudflare/pcx-technical-writing
+/src/content/docs/cloudflare-one/insights/dex/ @codyanthony850 @cloudflare/pcx-technical-writing
 /src/content/docs/email-security/ @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 
 # Consumer products
@@ -221,7 +223,7 @@ src/content/docs/smart-shield/ @RebeccaTamachiro @cloudflare/pcx-technical-writi
 /src/content/docs/bots/ @patriciasantaana @cloudflare/pcx-technical-writing
 /src/content/docs/dmarc-management/ @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 /src/content/docs/firewall/ @pedrosousa @cloudflare/firewall @cloudflare/pcx-technical-writing
-/src/content/docs/page-shield/ @pedrosousa @cloudflare/pcx-technical-writing
+/src/content/docs/client-side-security/ @pedrosousa @cloudflare/pcx-technical-writing
 /src/content/docs/secrets-store/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
 /src/content/docs/security-center/ @cloudflare/pcx-technical-writing
 /src/content/docs/ssl/ @RebeccaTamachiro @cloudflare/pcx-technical-writing

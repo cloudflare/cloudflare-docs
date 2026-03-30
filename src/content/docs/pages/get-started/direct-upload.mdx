@@ -51,7 +51,7 @@ To begin, install [`npm`](https://docs.npmjs.com/getting-started). Then [install
 
 #### Create your project
 
-Log in to Wrangler with the [`wrangler login` command](/workers/wrangler/commands/general/#login). Then run the [`pages project create` command](/workers/wrangler/commands/pages/#project-create):
+Log in to Wrangler with the [`wrangler login` command](/workers/wrangler/commands/general/#login). Then run the [`pages project create` command](/workers/wrangler/commands/pages/#pages-project-create):
 
 ```sh
 npx wrangler pages project create
@@ -63,7 +63,7 @@ Subsequent deployments will reuse both of these values (saved in your `node_modu
 
 #### Deploy your assets
 
-From here, you have created an empty project and can now deploy your assets for your first deployment and for all subsequent deployments in your production environment. To do this, run the [`wrangler pages deploy`](/workers/wrangler/commands/general/#deploy-1) command:
+From here, you have created an empty project and can now deploy your assets for your first deployment and for all subsequent deployments in your production environment. To do this, run the [`wrangler pages deploy`](/workers/wrangler/commands/general/#deploy) command:
 
 ```sh
 npx wrangler pages deploy <BUILD_OUTPUT_DIRECTORY>
@@ -97,13 +97,13 @@ If you would like to streamline the project creation and asset deployment steps,
 
 #### Other useful commands
 
-If you would like to use Wrangler to obtain a list of all available projects for Direct Upload, use [`pages project list`](/workers/wrangler/commands/pages/#project-list):
+If you would like to use Wrangler to obtain a list of all available projects for Direct Upload, use [`pages project list`](/workers/wrangler/commands/pages/#pages-project-list):
 
 ```sh
 npx wrangler pages project list
 ```
 
-If you would like to use Wrangler to obtain a list of all unique preview URLs for a particular project, use [`pages deployment list`](/workers/wrangler/commands/pages/#deployment-list):
+If you would like to use Wrangler to obtain a list of all unique preview URLs for a particular project, use [`pages deployment list`](/workers/wrangler/commands/pages/#pages-deployment-list):
 
 ```sh
 npx wrangler pages deployment list
