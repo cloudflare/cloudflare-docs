@@ -73,7 +73,7 @@ const mediaProducts = new Set([
 const normalizeProduct = (value: string) =>
 	value
 		.toLowerCase()
-		.replace(/[\-_]/g, " ")
+		.replace(/[-_]/g, " ")
 		.replace(/\s+/g, " ")
 		.trim();
 
