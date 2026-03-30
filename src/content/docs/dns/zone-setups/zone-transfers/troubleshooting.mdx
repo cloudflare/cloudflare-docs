@@ -6,28 +6,25 @@ description: Learn how to troubleshoot issues with secondary nameservers.
 head:
   - tag: title
     content: Troubleshooting secondary nameservers
-
 ---
 
 When [updating your registrar](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/#4-update-registrar) with the Cloudflare secondary nameservers (`nsXXXX.secondary.cloudflare.com`), you get an error.
 
 :::note
 
-
 The exact error message depends on the system. Some examples would be: `Entity reference not found`,` Authorization error`, `Unable to create foreign nameserver`.
-
 
 :::
 
 Upon contacting your registrar, their services confirm that the Cloudflare nameservers cannot be added at this time.
 
-***
+---
 
-## Root Cause
+## Cause
 
-This issue may arise when one of our nameservers used for secondary setup are removed from the Verisign side.
+This issue may arise when one of the Cloudflare nameservers used for secondary setup is removed from the Verisign side.
 
-***
+---
 
 ## Solution
 

@@ -28,7 +28,7 @@ When Cloudflare CASB is combined with Cloudflare's [Secure Web Gateway](/cloudfl
 ## Securing user access to data at rest
 
 1. Cloudflare authenticates users attempting to access SaaS applications, whether they are initiating the request from managed or unmanaged endpoints.
-   1. For managed endpoints, we recommend deploying our [device agent](/cloudflare-one/team-and-resources/devices/warp/) to maximize visibility and control of all traffic between the end user’s device and the resources being requested.
+   1. For managed endpoints, we recommend deploying our [device agent](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) to maximize visibility and control of all traffic between the end user’s device and the resources being requested.
    2. For unmanaged endpoints, we have [client-less solutions](/reference-architecture/diagrams/sase/sase-clientless-access-private-dns/) which all you to still have visibility over and inspection into the data accessed by users.
 
 2. Cloudflare's [Zero Trust Network Access](/cloudflare-one/access-controls/policies/) (ZTNA) service can integrate directly with your [SaaS applications](/cloudflare-one/access-controls/applications/http-apps/saas-apps/) using standard protocols (e.g. SAML or OIDC) to become the initial enforcement point for user access. Access calls your [identity provider](/cloudflare-one/integrations/identity-providers/) (IdP) of choice and uses additional security signals about your users and devices to make policy decisions.

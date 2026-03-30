@@ -1,0 +1,11 @@
+---
+title: Advanced WAF customization for AI Crawl Control blocks
+description: You can now extend the AI Crawl Control WAF rule with custom user agents, path-based exceptions, and additional expression clauses without affecting your AI Crawl Control settings.
+date: 2026-03-24
+---
+
+AI Crawl Control now supports extending the underlying WAF rule with custom modifications. Any changes you make directly in the WAF custom rules editor — such as adding path-based exceptions, extra user agents, or additional expression clauses — are preserved when you update crawler actions in AI Crawl Control.
+
+If the WAF rule expression has been modified in a way AI Crawl Control cannot parse, a warning banner appears on the **Crawlers** page with a link to view the rule directly in WAF.
+
+For more information, refer to [WAF rule management](/ai-crawl-control/features/manage-ai-crawlers/#waf-rule-management).

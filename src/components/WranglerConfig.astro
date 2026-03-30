@@ -3,7 +3,7 @@ import { parse } from "node-html-parser";
 import { Code, Tabs, TabItem } from "@astrojs/starlight/components";
 import TOML from "@iarna/toml";
 import { parse as jsoncParse } from "jsonc-parser";
-import { z } from "astro:schema";
+import { z } from "astro/zod";
 
 const props = z.object({
 	removeSchema: z.boolean().optional().default(false),

@@ -3,7 +3,7 @@ reviewed: 2024-03-04
 category: Zero Trust
 difficulty: Intermediate
 pcx_content_type: tutorial
-title: Access a web application via its private hostname without WARP
+title: Access a web application via its private hostname without the Cloudflare One Client
 description: >-
   With Cloudflare Browser Isolation and resolver policies, users can connect to private web-based applications via their private hostnames.
 tags:
@@ -13,7 +13,7 @@ tags:
 
 import { Render } from "~/components";
 
-With Cloudflare Browser Isolation and resolver policies, users can connect to private web-based applications via their private hostnames without needing to install the WARP client. By the end of this tutorial, users who pass your Gateway DNS and network policies will be able to access your private application at `https://<your-team-name>.cloudflareaccess.com/browser/https://internalrecord.com`.
+With Cloudflare Browser Isolation and resolver policies, users can connect to private web-based applications via their private hostnames without needing to install the Cloudflare One Client. By the end of this tutorial, users who pass your Gateway DNS and network policies will be able to access your private application at `https://<your-team-name>.cloudflareaccess.com/browser/https://internalrecord.com`.
 
 ## Before you begin
 
@@ -93,7 +93,7 @@ To test, open a browser and go to `https://<team-name>.cloudflareaccess.com/brow
 
 :::note
 
-Device posture checks are not supported because they require the WARP client.
+Device posture checks are not supported because they require the Cloudflare One Client.
 
 :::
 

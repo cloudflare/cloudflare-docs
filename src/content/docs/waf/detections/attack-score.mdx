@@ -6,13 +6,13 @@ sidebar:
   label: Attack score
 ---
 
-import { GlossaryTooltip, Type } from "~/components";
+import { Type } from "~/components";
 
-The attack score [traffic detection](/waf/concepts/#detection-versus-mitigation) helps identify variations of known attacks and their malicious payloads. This detection complements [WAF Managed Rules](/waf/managed-rules/).
+The attack score [traffic detection](/waf/concepts/#detection-versus-mitigation) classifies each request using a machine learning algorithm, assigning a score from 1 to 99 based on the likelihood that the request is malicious. This detection complements [WAF Managed Rules](/waf/managed-rules/).
 
-WAF's managed rulesets contain rules that are continuously updated to better detect malicious payloads. They target specific patterns of established attack vectors and have a very low rate of false positives. However, managed rulesets are not optimized for attacks based on variations of the original signature introduced, for example, by fuzzing techniques.
+[Managed Rules](/waf/managed-rules/) match requests against known attack signatures — specific patterns of established attack vectors. They have a very low rate of false positives. However, attackers can modify known payloads, for example by using fuzzing techniques (a testing technique that sends modified inputs to find vulnerabilities), to evade exact signature matches.
 
-Attack score allows you to identify these attack variations and their malicious payloads. It classifies each request using a machine learning algorithm, assigning an attack score from 1 to 99 based on the likelihood that the request is malicious. Just like [Bot Management](/bots/plans/bm-subscription/), you can use this score to identify potentially malicious traffic that is not an exact match to any of the rules in WAF Managed Rules.
+Attack score addresses this gap. You can use the score to identify potentially malicious traffic that is not an exact match to any of the rules in WAF Managed Rules.
 
 To maximize protection, Cloudflare recommends that you use both Managed Rules and attack score.
 
@@ -41,14 +41,14 @@ The Cloudflare WAF provides the following attack score fields:
 [7]: https://www.cloudflare.com/learning/security/threats/cross-site-scripting/
 [8]: https://www.cloudflare.com/learning/security/what-is-remote-code-execution/
 
-You can use these fields in expressions of [custom rules](/waf/custom-rules/) and [rate limiting rules](/waf/rate-limiting-rules/). Attack score fields of data type `Number` vary between `1` and `99` with the following meaning:
+You can use these fields in expressions of [custom rules](/waf/custom-rules/) and [rate limiting rules](/waf/rate-limiting-rules/). Numeric score fields range from `1` to `99`:
 
 - A score of `1` indicates that the request is almost certainly malicious.
 - A score of `99` indicates that the request is likely clean.
 
-The special score `100` indicates that the request reached the Cloudflare WAF attack score classification system, but the system decided not to score the request.
+A score of `100` means the request reached the WAF attack score system, but the system decided not to score it.
 
-In [Logpush](/logs/logpush/), you may also get the special score `0`, which means that the request did not reach the stage where attack scores are calculated (for example, the request has already been mitigated by a previous rule or another protection system). The value `0` is not shown in the Cloudflare dashboard.
+In [Logpush](/logs/logpush/) data, a score of `0` means the request did not reach the attack score stage — for example, because a previous rule or protection system already mitigated it. The value `0` does not appear in the Cloudflare dashboard.
 
 The global WAF Attack Score is mathematically derived from individual attack scores (for example, from SQLi Attack Score and XSS Attack Score), reflecting their interdependence. However, the global score is not a sum of individual scores. A low global score usually indicates medium to low individual scores, while a high global score suggests higher individual scores.
 
@@ -67,7 +67,7 @@ Attack score automatically detects and decodes Base64, JavaScript (Unicode escap
 
 ## Rule recommendations
 
-Cloudflare does not recommend that you block traffic solely based on the WAF Attack Score for all values below `50`, since the _Likely attack_ range (scores between `21` and `50`) tends to have false positives. If you want to block traffic based on this score, do one of the following:
+Blocking traffic solely based on attack score for all values below `50` is not recommended. The _Likely attack_ range (scores `21`–`50`) can include legitimate requests incorrectly flagged as malicious (false positives). If you want to block traffic based on attack score, do one of the following:
 
 - Use a more strict WAF Attack Score value in your expression. For example, block traffic with a WAF attack score below `20` or below `15` (you may need to adjust the exact threshold).
 
@@ -79,7 +79,7 @@ Cloudflare does not recommend that you block traffic solely based on the WAF Att
 
 ### 1. Create a custom rule
 
-If you are an Enterprise customer, [create a custom rule](/waf/custom-rules/create-dashboard/) that blocks requests with a **WAF Attack Score** less than or equal to 20 (recommended initial threshold). For example:
+Enterprise customers can [create a custom rule](/waf/custom-rules/create-dashboard/) that blocks requests with a **WAF Attack Score** less than or equal to `20` (recommended initial threshold). For example:
 
 | Field            | Operator              | Value |
 | ---------------- | --------------------- | ----- |
@@ -109,4 +109,4 @@ If you are an Enterprise customer and you created a rule with _Log_ action, chan
 
 ## Additional remarks
 
-The WAF attack score is different from [bot score](/bots/concepts/bot-score/). WAF attack score identifies variations of attacks that WAF Managed Rules do not catch, while bot score identifies bots.
+WAF attack score and [bot score](/bots/concepts/bot-score/) serve different purposes. Attack score identifies variations of attacks that WAF Managed Rules do not catch. Bot score identifies whether a request comes from automated traffic.

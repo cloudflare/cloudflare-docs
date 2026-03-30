@@ -23,13 +23,17 @@ Accounts with an Enterprise subscription but not the [Bot Management add-on](/bo
 
 <Render file="about-plan-considerations" product="bots" />
 
-### WAF custom rules
+### Interaction with other app security features
 
-[WAF custom rules](/waf/custom-rules/) are executed before Super Bot Fight Mode.
+<Render
+	file="app-security-interoperability"
+	product="waf"
+	params={{ botsFeatureName: "Super Bot Fight Mode" }}
+/>
 
-This order has a critical impact on traffic processing. If a WAF custom rule performs a terminating action (such as _Block_, _Non-Interactive Challenge_, _Managed Challenge_, or _Interactive Challenge_), the request will not be processed further, and the Super Bot Fight Mode configuration will not be evaluated.
+### Configure exceptions to Super Bot Fight Mode
 
-To configure exceptions to Super Bot Fight Mode, you should use the [_Skip_ action in your WAF custom rules](/waf/custom-rules/skip/). The _Skip_ action allows the request to bypass the Super Bot Fight Mode phase without terminating the request, enabling it to continue through the rest of the security stack.
+[Custom rules](/waf/custom-rules/) are executed before Super Bot Fight Mode. To configure exceptions to Super Bot Fight Mode, create a custom rule with the [_Skip_ action](/waf/custom-rules/skip/). The _Skip_ action allows the request to bypass the Super Bot Fight Mode phase without terminating the request, enabling it to continue through the rest of the security stack.
 
 ## Enable Super Bot Fight Mode
 

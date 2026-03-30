@@ -1,0 +1,113 @@
+# Runs daily and deletes branches with no associated PR that haven't had a
+# commit in over 60 days — these are abandoned branches that were never
+# turned into a PR.
+#
+# Respects protected branches and skips fork branches.
+# Deletes all matching branches per run, oldest first.
+
+name: Delete stale branches
+
+on:
+  schedule:
+    - cron: "0 4 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  delete-stale-branches:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete unassociated branches older than 60 days
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          deleted=0
+
+          protected=$(gh api "repos/$GITHUB_REPOSITORY/branches?protected=true&per_page=100" \
+            | jq -r '.[].name')
+
+          is_protected() {
+            echo "$protected" | grep -qx "$1"
+          }
+
+          delete_branch() {
+            local branch="$1"
+            local reason="$2"
+
+            if is_protected "$branch"; then
+              echo "Skipped (protected): $branch"
+              return
+            fi
+
+            gh api "repos/$GITHUB_REPOSITORY/git/refs/heads/$branch" \
+              -X DELETE 2>/dev/null \
+              && { echo "Deleted ($reason): $branch"; deleted=$((deleted + 1)); } \
+              || echo "Skipped (already gone): $branch"
+          }
+
+          echo "--- Unassociated branches older than 60 days (oldest first) ---"
+
+          pr_branches=$(gh pr list \
+            --repo "$GITHUB_REPOSITORY" \
+            --state open \
+            --limit 1000 \
+            --json headRefName \
+            | jq -r '.[].headRefName' \
+            | sort -u)
+
+          cutoff=$(date -d '60 days ago' --utc +%Y-%m-%dT%H:%M:%SZ 2>/dev/null \
+            || date -u -v-60d +%Y-%m-%dT%H:%M:%SZ)
+
+          echo "Cutoff date: $cutoff"
+
+          candidates=$(mktemp)
+
+          owner="${GITHUB_REPOSITORY%%/*}"
+          repo="${GITHUB_REPOSITORY##*/}"
+          cursor="null"
+
+          while true; do
+            response=$(gh api graphql -f query="
+              query(\$owner: String!, \$repo: String!, \$cursor: String) {
+                repository(owner: \$owner, name: \$repo) {
+                  refs(refPrefix: \"refs/heads/\", first: 100, after: \$cursor) {
+                    pageInfo { hasNextPage endCursor }
+                    nodes {
+                      name
+                      target {
+                        ... on Commit {
+                          committedDate
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            " -f owner="$owner" -f repo="$repo" -f cursor="$cursor")
+
+            has_next=$(echo "$response" | jq -r '.data.repository.refs.pageInfo.hasNextPage')
+            cursor=$(echo "$response" | jq -r '.data.repository.refs.pageInfo.endCursor')
+
+            while IFS=$'\t' read -r branch last_commit; do
+              if echo "$pr_branches" | grep -qx "$branch"; then
+                continue
+              fi
+
+              if [[ "$last_commit" < "$cutoff" ]]; then
+                printf '%s\t%s\n' "$last_commit" "$branch" >> "$candidates"
+              fi
+            done < <(echo "$response" | jq -r '.data.repository.refs.nodes[] | [.name, .target.committedDate] | @tsv')
+
+            [ "$has_next" = "true" ] || break
+          done
+
+          while IFS=$'\t' read -r last_commit branch; do
+            delete_branch "$branch" "no PR, last commit $last_commit"
+          done < <(sort "$candidates")
+
+          rm -f "$candidates"
+
+          echo "--- Done: $deleted branch(es) deleted ---"

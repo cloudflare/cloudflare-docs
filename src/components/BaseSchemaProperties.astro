@@ -1,5 +1,5 @@
 ---
-import { z } from "astro:schema";
+import { z } from "astro/zod";
 import { baseSchema } from "~/schemas";
 import { marked } from "marked";
 
@@ -8,63 +8,167 @@ import MetaInfo from "./MetaInfo.astro";
 import AnchorHeading from "./AnchorHeading.astro";
 import Details from "./Details.astro";
 
-const schema = baseSchema({
-	// @ts-expect-error Normally passed in by Astro but we are using the schema standalone.
+const fullSchema = baseSchema({
+	// @ts-expect-error Normally passed in by Astro, but we are using the schema standalone.
 	image: () => z.function(),
-}).shape;
+});
 
-const getInnerType = ({ _def }: z.ZodTypeAny | z.ZodEffects<any>) => {
-	if (_def.innerType) return getInnerType(_def.innerType);
-
-	return _def;
+// Override properties that JSON schema isn't going to understand because they're Astro-specific
+const shape = {
+	...fullSchema.shape,
+	preview_image: z
+		.string()
+		.optional()
+		.describe(
+			"A `src` path to the image that you want to use as a custom preview image for social sharing.",
+		),
+	products: z
+		.array(z.string())
+		.default([])
+		.describe(
+			"The names of related directory entries (according to their file name in `src/content/directory`). Usually, these correspond to file paths, but not always, such as with `cloudflare-tunnel`",
+		),
 };
+
+const schema = z.object(shape);
+
+// Convert to JSON Schema
+const jsonSchema = z.toJSONSchema(schema, {
+	// Handle the unrepresentable image() function
+	unrepresentable: "any",
+});
+
+// Type guard for objects
+function isObject(val: unknown): val is Record<string, unknown> {
+	return typeof val === "object" && val !== null && !Array.isArray(val);
+}
+
+// Extract the type from a JSON Schema property
+function getPropertyType(property: unknown): string {
+	if (!isObject(property)) return "unknown";
+
+	// Handle preview_image specially since it's a function
+	if (property.type === undefined || Object.keys(property).length === 0) {
+		return "string";
+	}
+
+	// Handle oneOf (used for nullable types)
+	if (property.oneOf && Array.isArray(property.oneOf)) {
+		const nonNullTypes = property.oneOf.filter(
+			(schema: unknown) =>
+				isObject(schema) && schema.type && schema.type !== "null",
+		);
+		if (nonNullTypes.length > 0 && isObject(nonNullTypes[0])) {
+			return String(nonNullTypes[0].type);
+		}
+	}
+
+	return String(property.type);
+}
+
+// Check if a property is optional
+function isOptional(key: string, required: unknown): boolean {
+	if (!Array.isArray(required)) return true;
+	return !required.includes(key);
+}
+
+// Extract enum values from a property
+function getEnumValues(property: unknown): string[] | null {
+	if (!isObject(property)) return null;
+
+	// Handle oneOf union types (Zod 4 represents z.union([z.literal(...)]) as oneOf with const)
+	if (property.oneOf && Array.isArray(property.oneOf)) {
+		const literals: string[] = [];
+		for (const option of property.oneOf) {
+			if (isObject(option)) {
+				// Check for const (literal values)
+				if (option.const !== undefined) {
+					literals.push(String(option.const));
+				}
+				// Also check for enum values within the oneOf
+				else if (option.enum && Array.isArray(option.enum)) {
+					literals.push(...option.enum.map(String));
+				}
+			}
+		}
+		return literals.length > 0 ? literals : null;
+	}
+
+	// Handle anyOf union types (alternative union representation)
+	if (property.anyOf && Array.isArray(property.anyOf)) {
+		const literals: string[] = [];
+		for (const option of property.anyOf) {
+			if (isObject(option)) {
+				if (option.const !== undefined) {
+					literals.push(String(option.const));
+				} else if (option.enum && Array.isArray(option.enum)) {
+					literals.push(...option.enum.map(String));
+				}
+			}
+		}
+		return literals.length > 0 ? literals : null;
+	}
+
+	// Handle direct enum (z.enum())
+	if (property.enum && Array.isArray(property.enum)) {
+		return property.enum.map(String);
+	}
+
+	return null;
+}
+
+// Extract description from a property
+function getDescription(property: unknown): string | null {
+	if (!isObject(property)) return null;
+	return property.description ? String(property.description) : null;
+}
+
+// Get properties from the JSON Schema
+const properties =
+	isObject(jsonSchema) && isObject(jsonSchema.properties)
+		? jsonSchema.properties
+		: {};
+
+const required = isObject(jsonSchema) ? jsonSchema.required : [];
 ---
 
 {
-	Object.entries(schema)
+	Object.entries(properties)
 		.sort()
-		.map(([key, outer]) => {
-			const outerType = outer._def.typeName;
-			const outerDescription = outer._def.description;
-
-			const inner = getInnerType(outer);
-			const innerType =
-				key === "preview_image"
-					? "string"
-					: inner.typeName.split("Zod")[1].toLowerCase();
+		.map(([key, property]) => {
+			const propertyType = getPropertyType(property);
+			const optional = isOptional(key, required);
+			const description = getDescription(property);
+			const enumValues = getEnumValues(property);
 
 			return (
 				<>
 					<AnchorHeading depth={3} title={key} />
 					<p>
 						<strong>Type: </strong>
-						<Type text={innerType} />
-						{outerType === "ZodOptional" && (
+						<Type text={propertyType} />
+						{optional && (
 							<>
 								{" "}
 								<MetaInfo text="optional" />
 							</>
 						)}
 					</p>
-					{outerDescription && (
+					{description && (
 						<p>
 							<strong>Description: </strong>
-							<Fragment set:html={marked.parseInline(outerDescription)} />
+							<Fragment set:html={marked.parseInline(description)} />
 						</p>
 					)}
-					{inner.typeName === "ZodUnion" && (
+					{enumValues && enumValues.length > 0 && (
 						<p>
 							<Details header="Allowed values">
 								<ul>
-									{inner.options
-										.filter(
-											(option: any) => option._def.typeName === "ZodLiteral",
-										)
-										.map((option: any) => (
-											<li>
-												<code>{option._def.value}</code>
-											</li>
-										))}
+									{enumValues.map((value) => (
+										<li>
+											<code>{value}</code>
+										</li>
+									))}
 								</ul>
 							</Details>
 						</p>

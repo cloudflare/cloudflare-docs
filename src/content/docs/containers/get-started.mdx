@@ -66,7 +66,7 @@ And see images deployed to the Cloudflare Registry with the following command:
 
 ### Make requests to Containers
 
-Now, open the URL for your Worker. It should look something like `https://hello-containers.YOUR_ACCOUNT_NAME.workers.dev`.
+Now, open the URL for your Worker. It should look something like `https://hello-containers.<YOUR_WORKERS_SUBDOMAIN>.workers.dev`.
 
 If you make requests to the paths `/container/1` or `/container/2`, your Worker routes requests to specific containers.
 Each different path after "/container/" routes to a unique container.
@@ -113,25 +113,23 @@ Your [Wrangler configuration file](/workers/wrangler/configuration/) defines the
 		{
 			"max_instances": 10,
 			"class_name": "MyContainer",
-			"image": "./Dockerfile"
-		}
+			"image": "./Dockerfile",
+		},
 	],
 	"durable_objects": {
 		"bindings": [
 			{
 				"name": "MY_CONTAINER",
-				"class_name": "MyContainer"
-			}
-		]
+				"class_name": "MyContainer",
+			},
+		],
 	},
 	"migrations": [
 		{
 			"tag": "v1",
-			"new_sqlite_classes": [
-				"MyContainer"
-			]
-		}
-	]
+			"new_sqlite_classes": ["MyContainer"],
+		},
+	],
 }
 ```
 
@@ -139,7 +137,7 @@ Your [Wrangler configuration file](/workers/wrangler/configuration/) defines the
 
 Important points about this config:
 
-- `image` points to a Dockerfile or to a directory containing a Dockerfile.
+- `image` points to a Dockerfile, to a directory containing a Dockerfile, or to a fully qualified image reference such as `registry.cloudflare.com/<YOUR_ACCOUNT_ID>/<IMAGE>:<TAG>`.
 - `class_name` must be a [Durable Object class name](/durable-objects/api/base/).
 - `max_instances` declares the maximum number of simultaneously running container instances
   that will run.

@@ -11,6 +11,8 @@ To use Cloudflare DNS as an authoritative DNS provider - be it in a [primary (fu
 
 <Render file="nameservers-registrar-callout" product="dns" />
 
+---
+
 ## Specific processes
 
 Although Cloudflare will [provide you the nameservers](/dns/nameservers/#authoritative-nameservers-offering) or allow you to create your own [custom nameservers](/dns/nameservers/custom-nameservers/), the final step to make Cloudflare an authoritative DNS provider for your domain may have to be done outside of Cloudflare. If you are not using [Cloudflare Registrar](/registrar/), consider which of the following sections correspond to your use case.
@@ -49,6 +51,18 @@ If you are onboarding a subdomain `shop.example.com` as a [child domain](/dns/zo
 Delegation means that `shop.example.com` has specific `NS` records set up for it within the DNS records management of the parent zone (`example.com`).
 
 If that is the case, when setting up your zone in Cloudflare or opting for a different set of [nameservers](/dns/nameservers/), you have to update the `NS` records in the parent domain, and not at the registrar.
+
+---
+
+## Restricted nameserver management
+
+Some providers act as registrars but do not expose nameserver settings. If you cannot change nameservers at your registrar or hosting platform, you can either:
+
+- Transfer your domain to a registrar that allows nameserver management.
+- Transfer your domain to Cloudflare Registrar. All domains on [Cloudflare Registrar](/registrar/) automatically use Cloudflare nameservers.
+- Use a [CNAME setup (partial)](/dns/zone-setups/partial-setup/) instead. This option does not require nameserver changes and is available on Business and Enterprise plans.
+
+---
 
 ## Further guidance
 

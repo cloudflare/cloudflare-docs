@@ -110,7 +110,8 @@ Mounted buckets are automatically unmounted when the container is destroyed.
 
 ```ts
 interface MountBucketOptions {
-	endpoint: string;
+	endpoint?: string;
+	localBucket?: boolean;
 	provider?: BucketProvider;
 	credentials?: BucketCredentials;
 	readOnly?: boolean;
@@ -121,10 +122,16 @@ interface MountBucketOptions {
 
 **Fields**:
 
-- `endpoint` (required) - S3-compatible endpoint URL
+- `endpoint` (required when `localBucket` is `false` or unset) - S3-compatible endpoint URL
   - R2: `'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com'`
   - S3: `'https://s3.amazonaws.com'`
   - GCS: `'https://storage.googleapis.com'`
+
+- `localBucket` (optional) - Mount an R2 bucket using the Worker's R2 binding during local development with `wrangler dev`
+  - When `true`, the SDK syncs the R2 binding directly instead of using an S3 endpoint
+  - `endpoint` and `credentials` are not required when this is `true`
+	- `provider` and `s3fsOptions` are not used when this is `true`
+  - Default: `false`
 
 - `provider` (optional) - Storage provider hint
   - Enables provider-specific optimizations

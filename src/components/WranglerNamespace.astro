@@ -1,6 +1,6 @@
 ---
-import { z } from "astro:schema";
-import { experimental_getWranglerCommands } from "wrangler";
+import { z } from "astro/zod";
+import { commands } from "~/util/wrangler";
 import WranglerCommand from "./WranglerCommand.astro";
 
 const props = z.object({
@@ -10,7 +10,7 @@ const props = z.object({
 
 const { namespace, headingLevel } = props.parse(Astro.props);
 
-const { registry } = experimental_getWranglerCommands();
+const { registry } = commands;
 
 const node = registry.subtree.get(namespace);
 

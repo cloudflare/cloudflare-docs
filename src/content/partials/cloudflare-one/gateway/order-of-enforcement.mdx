@@ -84,6 +84,23 @@ If the TCP connection to the destination server is successful, Gateway will appl
 
 Connections to Zero Trust will always appear in your [Zero Trust network session logs](/logs/logpush/logpush-job/datasets/account/zero_trust_network_sessions/) regardless of connection success. Because Gateway does not inspect failed connections, they will not appear in your [Gateway activity logs](/cloudflare-one/insights/logs/gateway-logs/).
 
+### Filter TCP SYN packets with Cloudflare Network Firewall
+
+Because Gateway sends a TCP SYN to the destination server before evaluating policies, Gateway Network or HTTP Block policies do not prevent the initial TCP SYN from reaching the destination server. If you need to prevent TCP SYN packets from being sent to specific destination IP addresses, you can create a [Cloudflare Network Firewall](/cloudflare-one/traffic-policies/packet-filtering/) rule to block traffic at the packet level. As shown in the [enforcement flowchart](#order-of-enforcement), Cloudflare Network Firewall evaluates traffic before Gateway checks for origin availability.
+
+:::note
+Cloudflare Network Firewall is available to Enterprise users only.
+:::
+
+To block TCP SYN packets to a specific destination:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Firewall policies** > **Custom policies**.
+2. Select **Add a policy**.
+3. Create a rule with the destination IP address or CIDR range you want to block. For example, to block all traffic to `10.0.0.0/8`, use the expression `ip.dst in {10.0.0.0/8}` with a **Block** action.
+4. Select **Add new policy**.
+
+For more information on creating packet filtering rules, refer to [Add policies](/cloudflare-one/traffic-policies/packet-filtering/add-policies/).
+
 ## Priority between policy builders
 
 Gateway applies your policies in the following order:

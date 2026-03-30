@@ -2,13 +2,9 @@
 {}
 ---
 
-A dynamic threshold rule (beta) will analyze a network's traffic patterns over time and automatically adjust the rule's DDoS (Distributed Denial of Service) threshold, in terms of bits or packets, based on traffic history. The total traffic across all IP prefixes and IP addresses in the rule is compared to the current value of the dynamic threshold. If the total traffic exceeds the dynamic threshold, Network Flow (formerly Magic Network Monitoring) sends an alert.
+A dynamic threshold rule (beta) monitors your network traffic patterns and automatically adjusts the Distributed Denial of Service (DDoS) threshold based on traffic history. Network Flow (formerly Magic Network Monitoring) compares total traffic across all IP prefixes and addresses in the rule against the dynamic threshold, measured in bits or packets per second. If traffic exceeds the threshold, Network Flow sends an alert.
 
-Dynamic thresholds are calculated using a statistical measure called [Z-score](https://en.wikipedia.org/wiki/Standard_score) (also referred to as standard score). Review [How the dynamic rule threshold is calculated](#how-the-dynamic-rule-threshold-is-calculated) to learn more.
-
-Customers who send NetFlow and/or sFlow data to Cloudflare can configure dynamic threshold rules.
-
-A dynamic threshold rule can only be configured through [Cloudflare's Network Flow Rules API](/api/resources/magic_network_monitoring/subresources/rules/). Customers are unable to configure dynamic threshold rules in the Cloudflare dashboard.
+To use dynamic threshold rules, you must send NetFlow or sFlow data to Cloudflare. You can only configure dynamic threshold rules through the [Network Flow Rules API](/api/resources/magic_network_monitoring/subresources/rules/) — they are not available in the dashboard.
 
 ## Rule configuration fields
 
@@ -17,9 +13,9 @@ A dynamic threshold rule can only be configured through [Cloudflare's Network Fl
 | **Rule name** | Must be unique and cannot contain spaces. Supports characters `A-Z`, `a-z`, `0-9`, underscore (`_`), dash (`-`), period (`.`), and tilde (`~`). Maximum of 256 characters. |
 | **Rule type** | zscore |
 | **Target** | Can be defined in either bits per second or packets per second. |
-| **Sensitivity** | Z-Score sensitivity has three values: low, medium, and high. |
+| **Sensitivity** | Controls how easily traffic anomalies trigger alerts. Available values: low, medium, and high. Higher sensitivity triggers alerts on smaller deviations from normal traffic. |
 | **Auto-advertisement** | If you are a [Magic Transit On Demand](/magic-transit/on-demand) customer, you can enable this feature to automatically enable Magic Transit if the rule's dynamic threshold is triggered. Network Flow supports Magic Transit's supernet capability. To learn more refer to [Auto-Advertisement section](/network-flow/rules/#rule-auto-advertisement). |
-| **Rule IP prefix** | The IP prefix associated with the rule for monitoring traffic volume. Must be a CIDR (Classless Inter-Domain Routing) range such as `160.168.0.1/24`. The maximum is 5,000 unique CIDR entries. To learn more and review an example, refer to the [Rule IP prefixes](/network-flow/rules/#rule-ip-prefixes) section. |
+| **Rule IP prefix** | The IP prefix associated with the rule for monitoring traffic volume. Must be a CIDR range such as `160.168.0.1/24`. The maximum is 5,000 unique CIDR entries. To learn more and review an example, refer to the [Rule IP prefixes](/network-flow/rules/#rule-ip-prefixes) section. |
 
 ## API documentation
 
@@ -27,7 +23,7 @@ To review an example API configuration call using CURL and the expected output f
 
 ## How the dynamic rule threshold is calculated
 
-Dynamic thresholds for this rule type use a statistical measure called Z-Score. The dynamic threshold for this rule will automatically adjust based on your traffic history as this rule uses statistical analysis to detect traffic anomalies. Z-Score compares short-term traffic patterns (five-minute time window) against long-term baselines (four-hour time window).
+Z-score compares short-term traffic patterns (five-minute window) against long-term baselines (four-hour window) to detect anomalies. The threshold adjusts automatically as your traffic history grows.
 
 Z-Score is calculated by using the following formula:
 

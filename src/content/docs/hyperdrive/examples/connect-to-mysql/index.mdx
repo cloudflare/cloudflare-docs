@@ -1,5 +1,4 @@
 ---
-
 pcx_content_type: example
 title: Connect to MySQL
 hideChildren: false
@@ -66,19 +65,15 @@ Other drivers and ORMs not listed may also be supported: this list is not exhaus
 
 Hyperdrive supports the following MySQL TLS/SSL connection modes when connecting to your origin database:
 
-| Mode              | Supported                       | Details                                                                                                            |
-| ----------------- | ------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| `DISABLED`        | No                              | Hyperdrive does not support insecure plain text connections.                                                       |
-| `PREFERRED`       | No (use `required`)             | Hyperdrive will always use TLS.                                                                                    |
-| `REQUIRED`        | Yes (default)                   | TLS is required, and server certificates are validated (based on WebPKI).                                          |
-| `VERIFY_CA`       | Not currently supported in beta | Verifies the server's TLS certificate is signed by a root CA on the client.                                        |
-| `VERIFY_IDENTITY` | Not currently supported in beta | Identical to `VERIFY_CA`, but also requires that the database hostname matches the certificate's Common Name (CN). |
+| Mode              | Supported           | Details                                                                                                                                                        |
+| ----------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `DISABLED`        | No                  | Hyperdrive does not support insecure plain text connections.                                                                                                   |
+| `PREFERRED`       | No (use `REQUIRED`) | Hyperdrive will always use TLS.                                                                                                                                |
+| `REQUIRED`        | Yes (default)       | TLS is required, and server certificates are validated (based on WebPKI).                                                                                      |
+| `VERIFY_CA`       | Yes                 | Verifies the server's TLS certificate is signed by a root CA on the client.                                                                                    |
+| `VERIFY_IDENTITY` | Yes                 | In addition to `VERIFY_CA` checks, Hyperdrive requires the database hostname to match a Subject Alternative Name (SAN) or Common Name (CN) on the certificate. |
 
-:::note
-
-Hyperdrive does not currently support `VERIFY_CA` or `VERIFY_IDENTITY` for MySQL (beta).
-
-:::
+Refer to [SSL/TLS certificates](/hyperdrive/configuration/tls-ssl-certificates-for-hyperdrive/) documentation for details on how to configure `VERIFY_CA` or `VERIFY_IDENTITY` TLS (SSL) modes for Hyperdrive.
 
 ## Driver examples
 

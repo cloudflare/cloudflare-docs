@@ -12,6 +12,11 @@ Scopes are one of three constituent parts of a policy that allows granting of ac
 
 To allow for flexible combinations of access to users, Cloudflare currently has account-level scopes, domain scopes, and resource-specific scopes. Each scope is associated with a different set of [roles](/fundamentals/manage-members/roles/).
 
+- **Account scope:** Use when the member needs access across the entire account, for example, billing or account-level settings.
+- **Specific domains:** Use when the member should only manage certain domains, for example, a developer who works on staging domains but should not modify production.
+- **Domain groups:** Use when you have related domains that share the same access needs, for example, all production domains.
+- **Specific resources:** Use when access should be limited to individual resources.
+
 ***
 
 ## Choose the scope of roles

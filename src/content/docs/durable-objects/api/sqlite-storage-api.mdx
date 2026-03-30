@@ -130,7 +130,7 @@ class MyDurableObject(DurableObject):
 </Tabs>
 
 - SQL API methods accessed with `ctx.storage.sql` are only allowed on [Durable Object classes with SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class) and will return an error if called on Durable Object classes with a KV-storage backend.
-- When writing data, every row update of an index counts as an additional row. However, indexes may be beneficial for read-heavy use cases. Refer to [Index for SQLite Durable Objects](/durable-objects/best-practices/access-durable-objects-storage/#index-for-sqlite-durable-objects).
+- When writing data, every row update of an index counts as an additional row. However, indexes may be beneficial for read-heavy use cases. Refer to [Index for SQLite Durable Objects](/durable-objects/best-practices/access-durable-objects-storage/#indexes-in-sqlite).
 - Writing data to [SQLite virtual tables](https://www.sqlite.org/vtab.html) also counts towards rows written.
 
 <Render file="d1-do-supported-sqlite-extensions" product="d1" params={{ product: "Durable Objects support" }}/>
