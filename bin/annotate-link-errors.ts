@@ -44,19 +44,25 @@ function findLinkLine(filePath: string, link: string): number | null {
 	}
 
 	// Build a list of candidate strings to search for, from most to least specific.
-	const candidates = new Set<string>([link]);
+	// Each variant is tried both as a bare string and wrapped in markdown link syntax "(<url>)".
+	const variants = new Set<string>([link]);
 	// Strip hash fragment: "/path/#anchor" → "/path/"
 	const withoutHash = link.replace(/#.*$/, "");
-	if (withoutHash !== link) candidates.add(withoutHash);
+	if (withoutHash !== link) variants.add(withoutHash);
 	// Strip trailing slash: "/path/" → "/path"
 	const withoutTrailingSlash = link.replace(/\/$/, "");
-	if (withoutTrailingSlash !== link) candidates.add(withoutTrailingSlash);
+	if (withoutTrailingSlash !== link) variants.add(withoutTrailingSlash);
 	// Strip both hash and trailing slash
 	const withoutHashOrSlash = withoutHash.replace(/\/$/, "");
-	if (withoutHashOrSlash !== withoutHash) candidates.add(withoutHashOrSlash);
+	if (withoutHashOrSlash !== withoutHash) variants.add(withoutHashOrSlash);
+
+	// For each variant, try markdown syntax first ("(url)"), then bare string.
+	const candidates: string[] = [];
+	for (const v of variants) {
+		if (v) candidates.push(`(${v})`, v);
+	}
 
 	for (const candidate of candidates) {
-		if (!candidate) continue;
 		for (let i = 0; i < lines.length; i++) {
 			if (lines[i].includes(candidate)) return i + 1;
 		}
