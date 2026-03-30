@@ -52,7 +52,7 @@ The `WorkflowEvent` type accepts an optional [type parameter](https://www.typesc
 
 Refer to the [events and parameters](/workflows/build/events-and-parameters/) documentation for how to handle events within your Workflow code.
 
-Finally, any JS control-flow primitive (if conditions, loops, try-catches, promises, etc) can be used to manage steps inside the `run` method.
+Finally, any JS control-flow primitive (if conditions, loops, `try...catch` blocks, promises, and more) can be used to manage steps inside the `run` method.
 
 ## WorkflowEvent
 
@@ -91,12 +91,12 @@ Primitive types like `string`, `number`, and `boolean`, along with composite str
 
 On the other hand, objects that include `Function` or `Symbol` types, and objects with circular references, cannot be serialized. The Workflow instance will throw an error if objects with those types is returned.
 
-In JavaScript Workflows, `ReadableStream<Uint8Array>` is a supported serializable return type when a step needs to persist larger binary output than the normal 1 MiB non-stream step-result limit. 
+In JavaScript Workflows, `ReadableStream<Uint8Array>` is a supported serializable return type when a step needs to persist larger binary output than the normal 1 MiB non-stream step-result limit.
 
-Return a new stream from the callback. 
+Return a new stream from the callback.
 
 :::caution
-Do not return a locked stream or a stream that has already been read. BYOB streams and BYOB readers are not supported. 
+Do not return a locked stream or a stream that has already been read. BYOB streams and BYOB readers are not supported.
 :::
 
 After a `ReadableStream<Uint8Array>` object has been persisted within a step, it should not be reused - rely on the new fresh stream that gets returned from step. The bytes are preserved from the original stream, but the implementation might differ.
