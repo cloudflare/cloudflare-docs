@@ -14,7 +14,7 @@ Privacy Proxy exports telemetry data using the [OpenTelemetry Protocol (OTLP)](h
 During onboarding, provide Cloudflare with your OpenTelemetry collector endpoint:
 
 - **Endpoint URL**: The HTTPS endpoint where telemetry data should be sent.
-- **Authentication**: Headers or credentials required to authenticate with your collector.
+- **Authentication**: Headers or credentials required to authenticate with your collector. Supported authentication types include bearer token headers, custom header-based authentication, and mutual TLS (mTLS).
 
 Cloudflare configures your Privacy Proxy instance to export telemetry to this endpoint.
 
@@ -89,19 +89,6 @@ histogram_quantile(0.95, rate(privacy_proxy_connect_latency_seconds_bucket[5m]))
 # Error rate
 sum(rate(privacy_proxy_requests_by_status{status=~"5.."}[5m])) / sum(rate(privacy_proxy_requests_total[5m]))
 ```
-
----
-
-## Data privacy
-
-Telemetry data does not include:
-
-- User IP addresses
-- Request content or headers (beyond what is needed for metrics)
-- Destination URLs or hostnames (aggregated only)
-- Authentication tokens or credentials
-
-Cloudflare exports only operational metrics that help you monitor service health without compromising user privacy.
 
 ---
 
