@@ -1,0 +1,155 @@
+---
+pcx_content_type: concept
+title: Preview builds
+description: Understand how Workers Builds creates isolated preview environments for feature branches using Worker Previews.
+sidebar:
+  order: 7
+---
+
+import { Render, Tabs, TabItem } from "~/components";
+
+When you enable non-production branch builds, every push to a feature branch creates an isolated **Worker Preview** — a fully functional copy of your Worker with its own bindings, environment variables, secrets, and URL. This lets your team test changes in a production-like environment without affecting live traffic or production data.
+
+## How preview builds work
+
+When you push to a non-production branch:
+
+1. Workers Builds detects the push event from your connected Git repository.
+2. A build runs your configured build command (for example, `npm run build`).
+3. The build system creates a **Worker Preview** — an isolated child Worker named after your branch.
+4. Your code is deployed to the Preview with its own set of bindings and secrets.
+5. A PR/MR comment is posted with the preview URL.
+
+The preview URL follows the format:
+
+```
+https://<BRANCH_NAME>-<WORKER_NAME>.<SUBDOMAIN>.workers.dev
+```
+
+Each subsequent push to the same branch updates the existing Preview with a new deployment. The preview URL stays stable — it always points to the latest deployment on that branch.
+
+:::note
+Worker Previews are different from [Preview URLs](/workers/configuration/previews/). Preview URLs generate a versioned URL for each Worker version but share production bindings. Worker Previews create fully isolated environments with their own configuration.
+:::
+
+## What changes for existing Builds users
+
+If you have been using non-production branch builds with the default `wrangler versions upload` command, enabling Worker Previews upgrades your branch preview experience:
+
+| | Before (Preview URLs) | After (Worker Previews) |
+|---|---|---|
+| **What gets created** | A versioned URL pointing to your production Worker | An isolated child Worker with its own environment |
+| **Bindings and secrets** | Same as production | Configured separately via Preview Defaults |
+| **Branch URL** | `<branch>-<worker>.<subdomain>.workers.dev` | `<branch>-<worker>.<subdomain>.workers.dev` |
+| **Commit URL** | `<version-prefix>-<worker>.<subdomain>.workers.dev` | `<deployment-id>-<worker>.<subdomain>.workers.dev` |
+| **Observability** | Shares production settings | Independently configurable |
+| **PR comments** | Shows branch and commit preview URLs | Shows Preview URL and deployment URL |
+
+The branch preview URL format stays the same, so existing bookmarks and integrations continue to work. The key difference is that your preview now runs with its own isolated configuration instead of sharing production secrets and bindings.
+
+## Enable preview builds
+
+To enable preview builds with Worker Previews:
+
+1. Go to **Workers & Pages** > your Worker > **Settings** > **Build**.
+2. Under **Branch control**, enable **Builds for non-production branches**.
+3. Select **Enable preview builds**. This updates your non-production branch deploy command to use Worker Previews.
+
+Once enabled, your build configuration will show Worker Previews as active. Every push to a feature branch will create or update an isolated Preview environment.
+
+## Configure Preview Defaults
+
+Preview Defaults define the bindings, variables, secrets, and observability settings that every new Preview starts with. Configure these once, and all branch previews inherit them automatically.
+
+### From the dashboard
+
+1. Go to **Workers & Pages** > your Worker > **Settings**.
+2. Switch between the **Production** and **Previews** tabs to configure each environment independently.
+3. For each binding or variable, you can either use the production value or set a preview-specific value.
+
+For example, you might point your KV binding at a staging namespace for Previews while keeping production pointed at your live namespace.
+
+### From Wrangler
+
+Add a `previews` block to your `wrangler.json` to define preview-specific overrides:
+
+```json
+{
+  "name": "my-worker",
+  "vars": {
+    "ENVIRONMENT": "production",
+    "API_URL": "https://api.example.com"
+  },
+  "kv_namespaces": [
+    { "binding": "MY_KV", "id": "production-kv-id" }
+  ],
+  "previews": {
+    "vars": {
+      "ENVIRONMENT": "preview",
+      "API_URL": "https://api.staging.example.com"
+    },
+    "kv_namespaces": [
+      { "binding": "MY_KV", "id": "staging-kv-id" }
+    ]
+  }
+}
+```
+
+Values in the `previews` block override the top-level values for Preview deployments. Any binding not specified in `previews` falls back to its Preview Default (configured in the dashboard) or is omitted.
+
+To sync your `wrangler.json` preview settings to the dashboard:
+
+```sh
+npx wrangler preview settings update
+```
+
+### Keeping environments in sync
+
+When you add a new binding or variable to production, your Previews environment may fall out of sync. The dashboard will show an **Import** action on the Bindings or Settings tab when it detects missing configuration. Use this to copy new bindings from production into your Preview Defaults — you can choose to use the production value as-is or set a preview-specific value for each one.
+
+## Preview secrets
+
+Preview secrets are managed separately from production secrets. Add a secret that only Previews can access:
+
+```sh
+npx wrangler preview secret put MY_SECRET
+```
+
+List all Preview secrets:
+
+```sh
+npx wrangler preview secret list
+```
+
+Preview secrets are stored in Preview Defaults and inherited by all Previews. They never appear in production configuration.
+
+## View and manage Previews
+
+Active Previews appear in the **Previews** tab of your Worker in the dashboard. Each Preview shows:
+
+- The branch it was created from
+- The stable preview URL
+- Recent deployments
+- Observability and settings
+
+You can also manage Previews from the CLI:
+
+```sh
+# Delete a Preview and all its deployments
+npx wrangler preview delete
+
+# Delete a specific Preview by name
+npx wrangler preview delete --name feature-branch
+```
+
+## Automatic cleanup
+
+Previews can be configured to auto-delete when their tracking branch is deleted from the repository. This setting is available per-Preview in the dashboard under the Preview's **Settings** tab.
+
+Previews also have a maximum limit per Worker. When the limit is reached, the least recently deployed Preview is automatically removed.
+
+## Limitations
+
+- [Service bindings](/workers/runtime-apis/bindings/service-bindings/) in a Preview always target the **production** instance of the bound Worker. You cannot point a service binding at another Preview.
+- Non-fetch handlers (Cron Triggers, Queue consumers, etc.) cannot be invoked directly on a Preview. To test these, call the handler from a fetch handler within your Preview.
+- [Durable Object](/durable-objects/) isolation in Previews requires additional API-side support that is currently being rolled out. Check the [Worker Previews documentation](/workers/previews/) for the latest status.

@@ -8,7 +8,7 @@ sidebar:
 
 import { Aside } from "~/components";
 
-This guide shows you how to use the [Workers Builds REST API](/api/resources/workers_builds/) to programmatically trigger builds, manage triggers, and monitor build status. The examples use `curl` commands that you can run directly in your terminal or adapt to your preferred programming language.
+This guide shows you how to use the [Workers Builds REST API](/api/resources/workers_builds/) to programmatically trigger builds, manage triggers, and monitor build status. The examples use `curl` commands that you can run directly in your terminal or adapt to your preferred programming language. Some examples pipe output through [`jq`](https://jqlang.org/) to filter JSON responses — install it if you do not have it already.
 
 ## Before you start
 
@@ -44,7 +44,7 @@ Every Builds API endpoint that references a Worker requires the **tag**, not the
 
 ### 3. What is a trigger?
 
-A **trigger** is a configuration that defines how your Worker gets built and deployed. It specifies the build command, deploy command, environment variables, and which branches should trigger builds. Each Worker has up to **two triggers**: one for production (runs on your [production branch](/workers/ci-cd/builds/build-branches/#change-production-branch)) and one for preview (runs on all other branches).
+A **trigger** is a configuration that defines how your Worker gets built and deployed. It specifies the build command, deploy command, environment variables, and which branches should trigger builds. Each Worker has up to **two triggers**: one for production (runs on your [production branch](/workers/ci-cd/builds/build-branches/#change-production-branch)) and one for preview (runs on all other branches). To set up triggers, refer to [Set up Workers Builds from scratch](#set-up-workers-builds-from-scratch).
 
 **Trigger fields:**
 
@@ -146,12 +146,12 @@ curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/trigg
   --data '{"branch": "main"}'
 ```
 
-You can specify either `branch` or `commit_hash`:
+You must specify `branch`, `commit_hash`, or both:
 
 | Field         | Description                                    |
 | ------------- | ---------------------------------------------- |
 | `branch`      | Git branch name to build (for example, `main`) |
-| `commit_hash` | Specific commit SHA to build                   |
+| `commit_hash` | Specific commit SHA to build. If provided without `branch`, builds the commit on its current branch. |
 
 The response includes the `build_uuid` which you can use to monitor the build.
 
@@ -495,6 +495,8 @@ curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/trigg
     "branch": "{branch}",
     "commit_hash": "{commit_hash}"
   }'
+
+Passing both `branch` and `commit_hash` pins the build to that exact commit on that branch.
 ```
 
 ## Troubleshooting
