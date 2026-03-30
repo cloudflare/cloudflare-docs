@@ -1,14 +1,14 @@
 ---
 pcx_content_type: how-to
 title: Build serverless backends
-description: Run server-side code at the edge with automatic scaling and global distribution.
+description: Deploy backend code globally with automatic scaling, fast startup times, and scheduled tasks.
 sidebar:
   order: 2
 ---
 
 import { CardGrid, LinkTitleCard } from "~/components";
 
-Run server-side code at the edge with automatic scaling and global distribution.
+Running backend code on traditional servers requires provisioning capacity, managing scaling, and accepting cold starts. Cloudflare Workers runs your server-side code at the edge with fast startup, automatic scaling, and global distribution across 300+ locations.
 
 ## Solutions
 
@@ -37,7 +37,7 @@ Reliable message queuing and background processing for Workers.
 ### Workers
 
 - **Global deployment** - Code runs at the Cloudflare location nearest to each user automatically
-- **No cold starts** - Sub-millisecond startup times with no warm-up period
+- **Fast startup** - V8 isolates start in milliseconds with no warm-up period, avoiding the cold start delays of container-based platforms
 - **Auto-scaling** - Handle traffic spikes without provisioning or configuration
 
 ### Cron Triggers

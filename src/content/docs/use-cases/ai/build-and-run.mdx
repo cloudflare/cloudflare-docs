@@ -1,14 +1,14 @@
 ---
 pcx_content_type: how-to
 title: Build and run AI applications
-description: Deploy AI application logic and run inference with Workers, Workers AI, AI Gateway, and Durable Objects.
+description: Build AI applications with serverless compute, edge inference, multi-provider gateways, and stateful coordination.
 sidebar:
   order: 1
 ---
 
 import { CardGrid, LinkTitleCard } from "~/components";
 
-Cloudflare Workers hosts your application logic, serves your frontend, and provides the binding through which Workers AI runs inference. AI Gateway sits in front of any provider to add caching, rate limiting, and observability. Durable Objects coordinate stateful workflows and multi-turn conversations.
+To build and deploy an AI application, you need compute for application logic, a way to run inference, and a gateway to manage costs across providers. Cloudflare Workers hosts your application logic and serves your frontend. Workers AI runs inference at the edge with pay-per-use pricing. AI Gateway adds caching, rate limiting, and observability across OpenAI, Anthropic, and other providers. Durable Objects coordinate stateful workflows and multi-turn conversations.
 
 ## Solutions
 
@@ -22,7 +22,7 @@ Build and deploy serverless applications on Cloudflare's global network.
 
 <LinkTitleCard title="Workers AI" href="/workers-ai/" icon="workers-ai">
 
-Run inference on Cloudflare's global network via a Workers binding, with pay-per-use pricing and no cold starts.
+Run inference on Cloudflare's global network via a Workers binding, with pay-per-use pricing.
 
 </LinkTitleCard>
 
