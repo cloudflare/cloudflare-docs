@@ -33,11 +33,33 @@ function findSourceFile(slug: string): string | null {
 }
 
 // Search for the first occurrence of a link URL in a file and return its 1-based line number.
-// Returns null if not found.
+// Returns null if not found or if the file cannot be read.
+// Tries progressively looser matches to handle trailing slashes and hash fragments.
 function findLinkLine(filePath: string, link: string): number | null {
-	const lines = fs.readFileSync(filePath, "utf8").split("\n");
-	for (let i = 0; i < lines.length; i++) {
-		if (lines[i].includes(link)) return i + 1;
+	let lines: string[];
+	try {
+		lines = fs.readFileSync(filePath, "utf8").split("\n");
+	} catch {
+		return null;
+	}
+
+	// Build a list of candidate strings to search for, from most to least specific.
+	const candidates = new Set<string>([link]);
+	// Strip hash fragment: "/path/#anchor" → "/path/"
+	const withoutHash = link.replace(/#.*$/, "");
+	if (withoutHash !== link) candidates.add(withoutHash);
+	// Strip trailing slash: "/path/" → "/path"
+	const withoutTrailingSlash = link.replace(/\/$/, "");
+	if (withoutTrailingSlash !== link) candidates.add(withoutTrailingSlash);
+	// Strip both hash and trailing slash
+	const withoutHashOrSlash = withoutHash.replace(/\/$/, "");
+	if (withoutHashOrSlash !== withoutHash) candidates.add(withoutHashOrSlash);
+
+	for (const candidate of candidates) {
+		if (!candidate) continue;
+		for (let i = 0; i < lines.length; i++) {
+			if (lines[i].includes(candidate)) return i + 1;
+		}
 	}
 	return null;
 }
