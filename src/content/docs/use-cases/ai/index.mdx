@@ -30,25 +30,25 @@ AI applications can present unique infrastructure challenges, such as unpredicta
 
 Combine vector search with Large Language Model (LLM) inference to ground responses in your own data:
 
-1. **Vectorize** stores embeddings of your knowledge base
-2. **Workers** receives user queries and searches for relevant context
-3. **Workers AI** or **AI Gateway** generates responses using retrieved context
+- **Vectorize** stores embeddings of your knowledge base
+- **Workers** receives user queries and searches for relevant context
+- **Workers AI** or **AI Gateway** generates responses using retrieved context
 
 ### Multi-provider AI gateway
 
 Use AI Gateway to route requests across providers while maintaining a single interface:
 
-1. **AI Gateway** proxies requests to OpenAI, Anthropic, or Workers AI
-2. Built-in caching reduces costs for repeated queries
-3. Unified logging and analytics across all providers
+- **AI Gateway** proxies requests to OpenAI, Anthropic, or Workers AI
+- Built-in caching reduces costs for repeated queries
+- Unified logging and analytics across all providers
 
 ### Real-time AI features
 
 Deploy low-latency AI features directly at the edge:
 
-1. **Workers** handles requests at the nearest Cloudflare location and runs inference via the Workers AI binding — no round-trips to origin servers
-2. **KV** caches frequent responses to reduce inference calls and latency
-3. **D1** stores session state and conversation history alongside the inference logic
+- **Workers** handles requests at the nearest Cloudflare location and runs inference via the Workers AI binding — no round-trips to origin servers
+- **KV** caches frequent responses to reduce inference calls and latency
+- **D1** stores session state and conversation history alongside the inference logic
 
 ---
 
@@ -81,13 +81,5 @@ Browse available models for text generation, embeddings, image generation, and m
 <LinkTitleCard title="AI Gateway providers" href="/ai-gateway/usage/providers/" icon="ai-gateway">
 
 Connect to OpenAI, Anthropic, Google AI, and other providers through AI Gateway.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="AI case studies" href="https://workers.cloudflare.com/built-with/collections/ai-workers/" icon="open-book">
-
-Explore how companies are building AI applications on Cloudflare.
-
-</LinkTitleCard>
 
 </CardGrid>
