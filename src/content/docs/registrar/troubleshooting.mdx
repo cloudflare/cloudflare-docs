@@ -24,13 +24,13 @@ Active DNSSEC at your current registrar will block the transfer. Disable DNSSEC 
 
 ## Authorization code is invalid or expired
 
-Authorization codes typically expire within 5-14 days depending on your registrar. If your code is rejected, request a fresh one from your current registrar. Check for trailing spaces or line breaks when copy-pasting the code. Some registrars issue a new code each time one is requested, which invalidates the previous code.
+Authorization codes are usually only valid for a limited period. If your code is rejected, request a fresh one from your current registrar. Check for trailing spaces or line breaks when copy-pasting the code.
 
 ## Cannot find where to enter your authorization code
 
 Unlike some registrars, Cloudflare does not allow you to submit an authorization code upfront. Cloudflare requires your domain to be active on its network first so that your site benefits from Cloudflare performance and security features from the moment the transfer begins. You must first [add your domain](/fundamentals/manage-domains/add-site/) to Cloudflare, [update your nameservers](/dns/nameservers/update-nameservers/), and wait for the zone to show **Active** status in the Cloudflare dashboard. Only then will the [Transfer Domains](https://dash.cloudflare.com/?to=/:account/registrar/transfer) page allow you to enter your code.
 
-If your zone is still **Pending**, verify that you updated nameservers correctly at your current registrar and wait up to 24 hours. If you already have an authorization code, keep in mind that most codes expire within 5-14 days depending on the registrar. If your code expires while you wait for the zone to activate, request a new one from your current registrar before proceeding.
+If your zone is still **Pending**, verify that you updated nameservers correctly at your current registrar and wait up to 24 hours. If you already have an authorization code, keep in mind that most codes are only valid for a limited period. If your code expires while you wait for the zone to activate, request a new one from your current registrar before proceeding.
 
 ## Transfer rejected
 
@@ -39,6 +39,7 @@ Your transfer has been rejected by your previous registrar. There are several re
 - You actively rejected the transfer request in the email you received from your registrar or on your registrar interface.
 - Your registrar determined the domain is not eligible for transfer.
 - Some registrars allow customers to enable a setting to reject all transfer requests.
+- If you are transferring from GoDaddy, make sure Domain Privacy and Domain Protection are fully disabled. GoDaddy may reject the transfer if either is still active.
 - In some instances, registrars may reject the transfer if they suspect malicious behavior.
 
 You will need to restart the transfer and approve the request or contact your current registrar to resolve this issue.
@@ -102,6 +103,14 @@ Your domain may not appear on the [Transfer Domains](https://dash.cloudflare.com
 
 Some website builder platforms (such as Block, Shopify, Squarespace, and Wix) do not allow you to change nameservers while the domain is registered with them. Because Cloudflare requires your nameservers to point to Cloudflare before a transfer can begin, a direct transfer from these platforms is not possible. For the recommended workaround, refer to [Transfer from website builders](/registrar/get-started/transfer-domain-to-cloudflare/#transfer-from-website-builders).
 
+## Email verification required
+
+Cloudflare may send a verification email to your registrant contact email address when you register or transfer a domain, or when you update your registrant email. Per ICANN requirements, if the registrant email is not verified within 15 days, a hold is placed on the domain and nameservers are replaced with a parking server until verification is complete. After successful verification, nameservers are automatically restored.
+
+Verification is triggered when your registrant contact email differs from your verified Cloudflare account email.
+
+Some TLDs — including `.mx`, `.nz`, and `.ca` — may send verification through a third-party service. In these cases, the verification email will come from `noreply@emailverification.info` rather than Cloudflare. Check your spam folder if you do not receive it.
+
 ## Restart your transfer
 
 :::note
@@ -114,7 +123,3 @@ This solution does not apply to `.uk` domains.
 
 2. Find the correct domain and select **Manage**.
 3. Select **Cancel Transfer and Retry**. After you initiate the retry, you must re-enter your auth code and confirm your WHOIS information.
-
-## Account recovery
-
-If you are locked out of the Cloudflare account you used to register your domain, refer to [Account recovery](/fundamentals/user-profiles/account-recovery/).

@@ -428,6 +428,8 @@ Currently, API Shield does not support some features of API schemas, including t
 
 There is a limit of 10,000 total operations for enabled schemas for Enterprise customers subscribed to [API Shield](/api-shield/). To raise this limit, contact your account team.
 
+Schema validation inspects request bodies up to 128 KB. Request bodies that exceed this limit are not validated, regardless of the body inspection size configured in the [WAF](/waf/managed-rules/#maximum-body-size).
+
 For limits on Free, Pro, Business, or Enterprise customers not subscribed to API Shield, refer to [Plans](/api-shield/plans/).
 
 ### Required fields

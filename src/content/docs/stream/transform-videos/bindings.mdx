@@ -26,7 +26,8 @@ The binding for Media Transformations is currently in public open beta. During t
 
 - Transformation operations via the binding will not be billed.
 - Certain operations may incur higher latency.
-:::
+  :::
+
 ## Setup
 
 The Media binding is enabled on a per-Worker basis.
@@ -187,7 +188,7 @@ Errors throw a `MediaError`, which extends the standard `Error` interface with a
 - `message`: A description of the error.
 - `stack`: Optional stack trace.
 
-Use a try-catch block to handle errors:
+Use a `try...catch` block to handle errors:
 
 ```ts
 export default {

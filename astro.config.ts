@@ -214,6 +214,12 @@ export default defineConfig({
 				"../components/Page.astro": fileURLToPath(
 					new URL("./src/components/overrides/Page.astro", import.meta.url),
 				),
+				"./SidebarSublist.astro": fileURLToPath(
+					new URL(
+						"./src/components/overrides/SidebarSublist.astro",
+						import.meta.url,
+					),
+				),
 			},
 		},
 	},

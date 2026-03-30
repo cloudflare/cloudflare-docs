@@ -11,19 +11,24 @@ sidebar:
 
 import { GlossaryTooltip } from "~/components";
 
-AI Security for Apps (formerly Firewall for AI) offers a series of detections that can help protect apps and agents powered by <GlossaryTooltip term="LLM">large language models</GlossaryTooltip> (LLMs) against abuse. This model-agnostic detection module helps you do the following:
+Applications that use <GlossaryTooltip term="LLM">large language models</GlossaryTooltip> (LLMs) are exposed to threats specific to how LLMs process input — prompt injection attacks, PII exposure in prompts, and prompts about unsafe topics.
+
+AI Security for Apps (formerly Firewall for AI) complements your existing WAF rules with detections designed for these LLM-specific threats. It is model-agnostic — the detections work regardless of which LLM you use.
 
 {/* prettier-ignore-start */}
 
-- [PII detection](/waf/detections/ai-security-for-apps/pii-detection/) — Prevent personally identifiable information (PII) from leaking. For example, phone numbers, email addresses, social security numbers, and credit card numbers.
-- [Unsafe and custom topic detection](/waf/detections/ai-security-for-apps/unsafe-topics/) — For example, detect prompts potentially related to violent crimes, hate speech, or any unsafe topic you define.
-- <a href="/waf/detections/ai-security-for-apps/prompt-injection/"><GlossaryTooltip term="prompt injection">Prompt injection</GlossaryTooltip> detection</a> — Detect prompts intentionally designed to subvert the intended behavior of your LLM as specified by the developer.
+- [PII detection](/waf/detections/ai-security-for-apps/pii-detection/) — Detect personally identifiable information (PII) in incoming prompts, such as phone numbers, email addresses, social security numbers, and credit card numbers.
+- [Unsafe and custom topic detection](/waf/detections/ai-security-for-apps/unsafe-topics/) — Detect prompts related to unsafe subjects such as violent crimes or hate speech, or custom topics specific to your organization.
+- <a href="/waf/detections/ai-security-for-apps/prompt-injection/"><GlossaryTooltip term="prompt injection">Prompt injection</GlossaryTooltip> detection</a> — Detect prompts designed to subvert your LLM's intended behavior, such as attempts to make the model ignore its instructions or reveal its system prompt.
 
 {/* prettier-ignore-end */}
 
-When enabled, the detection module runs on incoming traffic, searching for any LLM prompts attempting to exploit the model. Currently, the detection only handles requests with a JSON content type (`application/json`).
+When enabled, AI Security for Apps scans incoming requests to [endpoints labeled `cf-llm`](/api-shield/management-and-monitoring/endpoint-labels/) for LLM prompts that may contain threats. Currently, the detection only handles requests with a JSON content type (`application/json`).
 
-Cloudflare will populate [AI detection fields](/waf/detections/ai-security-for-apps/fields/) based on the scan results. You can check these results in the [Security Analytics](/waf/analytics/security-analytics/) dashboard by filtering on the `cf-llm` [managed endpoint label](/api-shield/management-and-monitoring/endpoint-labels/) and reviewing the detection results on your traffic. Additionally, you can use these fields in rule expressions ([custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/)) to protect your application against LLM abuse and data leaks.
+Based on scan results, Cloudflare populates [AI detection fields](/waf/detections/ai-security-for-apps/fields/) — fields you can use in WAF rule expressions. You can use these fields in two ways:
+
+- **Monitor:** Filter by the `cf-llm` label in [Security Analytics](/waf/analytics/security-analytics/) to review detection results across your traffic.
+- **Mitigate:** Use the fields in [custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/) to block or challenge requests based on detection results.
 
 ## Availability
 
@@ -41,5 +46,5 @@ AI Security for Apps is built into the Cloudflare [Web Application Firewall (WAF
 
 ## More resources
 
-- [Cloudflare AI Gateway](/ai-gateway/)
-- [Learning Center: What are the OWASP Top 10 risks for LLMs?](https://www.cloudflare.com/learning/ai/owasp-top-10-risks-for-llms/)
+- [AI Gateway](/ai-gateway/) — Monitor, control, and cache requests to LLM providers.
+- [What are the OWASP Top 10 risks for LLMs?](https://www.cloudflare.com/learning/ai/owasp-top-10-risks-for-llms/) — Background on the most common security risks for LLM-powered applications.

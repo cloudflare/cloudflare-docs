@@ -51,6 +51,14 @@ Wrangler supports the following environment variables:
 
   - The email address associated with your Cloudflare account, usually used for older authentication method with `CLOUDFLARE_API_KEY=`.
 
+- `CLOUDFLARE_ACCESS_CLIENT_ID` <Type text="string" /> <MetaInfo text="optional" />
+
+  - The Client ID of a [Cloudflare Access Service Token](/cloudflare-one/access-controls/service-credentials/service-tokens/), used to authenticate with Access-protected domains in non-interactive environments such as CI/CD pipelines. Must be set together with `CLOUDFLARE_ACCESS_CLIENT_SECRET`. When both variables are set, Wrangler authenticates using the service token instead of launching `cloudflared access login`.
+
+- `CLOUDFLARE_ACCESS_CLIENT_SECRET` <Type text="string" /> <MetaInfo text="optional" />
+
+  - The Client Secret of a [Cloudflare Access Service Token](/cloudflare-one/access-controls/service-credentials/service-tokens/), used together with `CLOUDFLARE_ACCESS_CLIENT_ID` to authenticate with Access-protected domains in non-interactive environments.
+
 - `CLOUDFLARE_ENV` <Type text="string" /> <MetaInfo text="optional" />
 
   - The [environment](/workers/wrangler/environments/) to use for Wrangler commands. This allows you to select an environment without using the `--env` flag. For example, `CLOUDFLARE_ENV=production wrangler deploy` will deploy to the `production` environment. The `--env` command line argument takes precedence over this environment variable.

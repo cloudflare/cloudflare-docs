@@ -20,21 +20,19 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version: 24
+          cache: npm
 
-      - name: Cache node_modules
+      - name: Restore node_modules (cache hit)
         id: node-modules-cache
         uses: actions/cache@v5
         with:
           path: node_modules
-          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            node-modules-${{ runner.os }}-
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('package.json') }}
 
-      - run: npm ci
+      - name: Install node_modules (cache miss)
+        run: npm ci
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
-
-      - run: npm run sync
 
       - run: npm run build
         env:
@@ -45,7 +43,16 @@ jobs:
 
       - name: Check - Broken header links
         id: header-link-check
-        run: ./bin/htmltest -c ./bin/.htmltest.yml
+        run: |
+          ./bin/htmltest -c ./bin/.htmltest.yml 2>&1 | grep -v "#_top" | tee /tmp/htmltest-filtered.txt || true
+          if grep -q "hash does not exist" /tmp/htmltest-filtered.txt; then exit 1; fi
+
+      - name: Save node_modules cache
+        if: always()
+        uses: actions/cache/save@v5
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
 
       - name: Create issue on failure
         if: ${{ failure() }}

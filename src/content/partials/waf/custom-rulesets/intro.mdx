@@ -5,6 +5,20 @@ params:
 
 Custom rulesets are collections of custom rules that you can deploy at the { props.scope == "account" ? "account" : "zone" } or {props.scope == "account" ? <a href="/waf/custom-rules/custom-rulesets/">zone level</a> : <a href="/waf/account/custom-rulesets/">account level</a> }.
 
-Like [custom rules](/waf/custom-rules/){props.scope == "account" && " at the zone level" }, custom rulesets allow you to control incoming traffic by filtering requests. For example, you can apply a custom ruleset to all incoming {props.scope == "account" ? "traffic of your Enterprise domains" : "requests of your zone" } or to a subset of incoming requests.
+Like [custom rules](/waf/custom-rules/){props.scope == "account" && " at the zone level" }, custom rulesets allow you to control incoming traffic by filtering requests.
+
+{/* prettier-ignore-start */}
+
+{props.scope == "account" ? (
+	<p>
+    Account-level custom rulesets allow you to define a set of custom rules once and apply them across multiple Enterprise zones in your account. Instead of configuring each zone individually, you create a ruleset at the account level and use expressions to control which zones and traffic it applies to.
+	</p>
+) : (
+  <p>
+    For example, you can apply a custom ruleset to all incoming requests of your zone or to a subset of incoming requests.
+  </p>
+)}
+
+{/* prettier-ignore-end */}
 
 At the zone level, all customers can create and deploy custom rulesets. Custom rulesets at the account level require an Enterprise plan. For more details, refer to [Availability](/waf/custom-rules/#availability).

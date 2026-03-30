@@ -8,7 +8,7 @@ sidebar:
 
 R2 Data Catalog sinks write processed data from pipelines as [Apache Iceberg](https://iceberg.apache.org/) tables to [R2 Data Catalog](/r2/data-catalog/). Iceberg tables provide ACID transactions, schema evolution, and time travel capabilities for analytics workloads.
 
-To create an R2 Data Catalog sink, run the [`pipelines sinks create`](/workers/wrangler/commands/#pipelines-sinks-create) command and specify the sink type, target bucket, namespace, and table name:
+To create an R2 Data Catalog sink, run the [`pipelines sinks create`](/workers/wrangler/commands/pipelines/#pipelines-sinks-create) command and specify the sink type, target bucket, namespace, and table name:
 
 ```bash
 npx wrangler pipelines sinks create my-sink \

@@ -10,7 +10,7 @@ head:
 
 import { Render, Tabs, TabItem, APIRequest } from "~/components";
 
-The following policies are commonly used to secure DNS traffic.
+The following Cloudflare Gateway DNS policies are commonly used to secure DNS traffic. Each example includes both dashboard and API instructions that you can adapt for your organization.
 
 For a baseline set of recommended policies, refer to [Secure your Internet traffic and SaaS apps](/learning-paths/secure-internet-traffic/build-dns-policies/recommended-dns-policies/).
 
@@ -69,7 +69,7 @@ The categories included in this policy are not always a security threat, but blo
 
 ## Block a dynamic list of categories
 
-You can add a list of category IDs to the [EDNS header](https://datatracker.ietf.org/doc/html/rfc6891) of a request sent to Gateway as a JSON object using OPT code `65050`. For example:
+You can add a list of category IDs to the [EDNS (Extension Mechanisms for DNS)](https://datatracker.ietf.org/doc/html/rfc6891) header of a request sent to Gateway as a JSON object using OPT code `65050`. EDNS allows extra metadata to be attached to a DNS query beyond the standard fields. For example:
 
 ```json
 {
@@ -77,7 +77,7 @@ You can add a list of category IDs to the [EDNS header](https://datatracker.ietf
 }
 ```
 
-With the [Request Context Categories](/cloudflare-one/traffic-policies/dns-policies/#request-context-categories) selector, you can block the category IDs sent with EDNS. This is useful to filter by categories not known at the time of creating a policy, or to enforce device-specific DNS content filtering without reaching your account limit. When Gateway uses this selector to block a DNS query, the request will return an Extended DNS Error (EDE) Code 15 - Blocked error, along with a field containing an array of the matched categories.
+With the [Request Context Categories](/cloudflare-one/traffic-policies/dns-policies/#request-context-categories) selector, you can block the category IDs sent with EDNS. This is useful to filter by categories not known at the time of creating a policy, or to enforce device-specific DNS content filtering without reaching your account limit. When Gateway uses this selector to block a DNS query, the request will return an Extended DNS Error (EDE) Code 15 (`Blocked`), along with a field containing an array of the matched categories.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -131,7 +131,7 @@ resource "cloudflare_zero_trust_gateway_policy" "block_content_categories" {
 
 ## Block banned countries
 
-You can implement policies to block websites hosted in countries categorized as high risk. The designation of such countries may result from your organization's customers or through the implementation of regulations including [EAR](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries), [OFAC](https://orpa.princeton.edu/export-controls/sanctioned-countries), and [ITAR](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries).
+You can implement policies to block websites hosted in countries categorized as high risk. The designation of such countries may result from your organization's requirements or through regulations including [EAR (Export Administration Regulations)](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries), [OFAC (Office of Foreign Assets Control)](https://orpa.princeton.edu/export-controls/sanctioned-countries), and [ITAR (International Traffic in Arms Regulations)](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries). This policy blocks DNS queries that resolve to IP addresses geolocated in the countries you specify.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -162,7 +162,7 @@ You can implement policies to block websites hosted in countries categorized as 
 
 ## Block top-level domains
 
-Blocking [frequently misused](https://www.spamhaus.org/statistics/tlds/) top-level domains (TLDs) can reduce security risks, especially when there is no discernible advantage to be gained from allowing access. Similarly, restricting access to specific country-level TLDs may be necessary to comply with regulations like [ITAR](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries) or [OFAC](https://orpa.princeton.edu/export-controls/sanctioned-countries).
+Blocking [frequently misused](https://www.spamhaus.org/statistics/tlds/) top-level domains (TLDs) — the last segment of a domain name, such as `.com` or `.ru` — can reduce security risks, especially when there is no discernible advantage to be gained from allowing access. Similarly, restricting access to specific country-level TLDs may be necessary to comply with regulations like [ITAR](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries) or [OFAC](https://orpa.princeton.edu/export-controls/sanctioned-countries).
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -455,7 +455,7 @@ The following example includes two policies. The first policy allows the specifi
 
 ## Control IP version
 
-Enterprise users can pair these policies with an [egress policy](/cloudflare-one/traffic-policies/egress-policies/) to control which IP version is used to egress to the origin server.
+Enterprise users can pair these policies with an [egress policy](/cloudflare-one/traffic-policies/egress-policies/) to control which IP version is used when Gateway connects to the destination server.
 
 Optionally, you can use the Domain selector to control the IP version for specific sites.
 
@@ -465,7 +465,7 @@ To ensure traffic routes through your preferred IP version, turn off **Modify Ga
 
 ### Force IPv4
 
-Force users to connect with IPv4 by blocking IPv6 resolution.
+Force users to connect with IPv4 by blocking `AAAA` (IPv6) record resolution.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -495,7 +495,7 @@ Force users to connect with IPv4 by blocking IPv6 resolution.
 
 ### Force IPv6
 
-Force users to connect with IPv6 by blocking IPv4 resolution.
+Force users to connect with IPv6 by blocking `A` (IPv4) record resolution.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 

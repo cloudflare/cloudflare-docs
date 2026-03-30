@@ -4,7 +4,7 @@ title: Workers Binding
 tags:
   - Bindings
 sidebar:
-  order: 3
+  order: 1
 ---
 
 import {
@@ -27,8 +27,8 @@ To use your AI Search with Workers or Pages, create an AI binding either in the 
 ```jsonc
 {
 	"ai": {
-		"binding": "AI" // i.e. available in your Worker on env.AI
-	}
+		"binding": "AI", // i.e. available in your Worker on env.AI
+	},
 }
 ```
 
@@ -49,12 +49,12 @@ const answer = await env.AI.autorag("my-autorag").aiSearch({
 	rewrite_query: true,
 	max_num_results: 2,
 	ranking_options: {
-		score_threshold: 0.3
+		score_threshold: 0.3,
 	},
-  reranking: {
-    enabled: true,
-    model: "@cf/baai/bge-reranker-base"
-  },
+	reranking: {
+		enabled: true,
+		model: "@cf/baai/bge-reranker-base",
+	},
 	stream: true,
 });
 ```
@@ -122,12 +122,12 @@ const answer = await env.AI.autorag("my-autorag").search({
 	rewrite_query: true,
 	max_num_results: 2,
 	ranking_options: {
-		score_threshold: 0.3
+		score_threshold: 0.3,
 	},
-  reranking: {
-    enabled: true,
-    model: "@cf/baai/bge-reranker-base"
-  }
+	reranking: {
+		enabled: true,
+		model: "@cf/baai/bge-reranker-base",
+	},
 });
 ```
 

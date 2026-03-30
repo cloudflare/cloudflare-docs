@@ -672,37 +672,37 @@ entries:
     data_type: Boolean
     categories: [Request, mTLS]
     keywords: [request, ssl, mtls, client, visitor]
-    summary: Indicates whether the request presented a valid but revoked client certificate.
+    summary: Indicates whether the mTLS client presented a valid but revoked client certificate.
     description: |-
       When `true`, the [`cf.tls_client_auth.cert_verified`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_verified/) field is also `true`.
 
-      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+      This field defaults to `false` if the connection does not use [mTLS authentication](/ssl/client-certificates/enable-mtls/).
 
   - name: cf.tls_client_auth.cert_verified
     data_type: Boolean
     categories: [Request, mTLS]
     keywords: [request, ssl, mtls, client, visitor]
-    summary: Returns `true` when a request presents a valid client certificate.
+    summary: Returns `true` when an mTLS client presents a valid client certificate.
     description: |-
-      Also returns `true` when a request includes a valid certificate that was revoked (refer to [`cf.tls_client_auth.cert_revoked`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_revoked/)).
+      Also returns `true` when a client presents a valid certificate that was revoked (refer to [`cf.tls_client_auth.cert_revoked`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_revoked/)).
 
-      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+      This field defaults to `false` if the connection does not use [mTLS authentication](/ssl/client-certificates/enable-mtls/).
 
   - name: cf.tls_client_auth.cert_presented
     data_type: Boolean
     categories: [Request, mTLS]
     keywords: [request, ssl, mtls, client, visitor]
-    summary: Returns `true` when a request presents a certificate (valid or not).
+    summary: Returns `true` when an mTLS client presents a certificate (valid or not).
     description: |-
-      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+      This field defaults to `false` if the connection does not use [mTLS authentication](/ssl/client-certificates/enable-mtls/).
 
   - name: cf.tls_client_auth.cert_issuer_dn
     data_type: String
     categories: [Request, mTLS]
     keywords: [request, ssl, mtls, client, visitor]
-    summary: The Distinguished Name (DN) of the Certificate Authority (CA) that issued the certificate included in the request.
+    summary: The Distinguished Name (DN) of the Certificate Authority (CA) that issued the mTLS client certificate.
     description: |-
-      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+      This field defaults to `""` if the connection does not use [mTLS authentication](/ssl/client-certificates/enable-mtls/).
     example_value: |-
       "CN=Access Testing CA,OU=TX,O=Access Testing,L=Austin,ST=Texas,C=US"
 
@@ -710,9 +710,9 @@ entries:
     data_type: String
     categories: [Request, mTLS]
     keywords: [request, ssl, mtls, client, visitor]
-    summary: The Distinguished Name (DN) of the owner (or requester) of the certificate included in the request.
+    summary: The Distinguished Name (DN) of the owner (or requester) of the mTLS client certificate.
     description: |-
-      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+      This field defaults to `""` if the connection does not use [mTLS authentication](/ssl/client-certificates/enable-mtls/).
     example_value: |-
       "CN=James Royal,OU=Access Admins,O=Access,L=Austin,ST=Texas,C=US"
 
@@ -720,9 +720,9 @@ entries:
     data_type: String
     categories: [Request, mTLS]
     keywords: [request, ssl, mtls, client, visitor]
-    summary: The Distinguished Name (DN) of the Certificate Authority (CA) that issued the certificate in the request in [RFC 2253](https://datatracker.ietf.org/doc/html/rfc2253) format.
+    summary: The Distinguished Name (DN) of the Certificate Authority (CA) that issued the mTLS client certificate in [RFC 2253](https://datatracker.ietf.org/doc/html/rfc2253) format.
     description: |-
-      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+      This field defaults to `""` if the connection does not use [mTLS authentication](/ssl/client-certificates/enable-mtls/).
     example_value: |-
       "CN=Access Testing CA,OU=TX,O=Access Testing,L=Austin,ST=Texas,C=US"
 
@@ -730,9 +730,9 @@ entries:
     data_type: String
     categories: [Request, mTLS]
     keywords: [request, ssl, mtls, client, visitor]
-    summary: The Distinguished Name (DN) of the owner (or requester) of the certificate in the request in [RFC 2253](https://datatracker.ietf.org/doc/html/rfc2253) format.
+    summary: The Distinguished Name (DN) of the owner (or requester) of the mTLS client certificate in [RFC 2253](https://datatracker.ietf.org/doc/html/rfc2253) format.
     description: |-
-      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+      This field defaults to `""` if the connection does not use [mTLS authentication](/ssl/client-certificates/enable-mtls/).
     example_value: |-
       "CN=James Royal,OU=Access Admins,O=Access,L=Austin,ST=Texas,C=US"
 
@@ -740,9 +740,9 @@ entries:
     data_type: String
     categories: [Request, mTLS]
     keywords: [request, ssl, mtls, client, visitor]
-    summary: The Distinguished Name (DN) of the Certificate Authority (CA) that issued the certificate in the request in a legacy format.
+    summary: The Distinguished Name (DN) of the Certificate Authority (CA) that issued the mTLS client certificate in a legacy format.
     description: |-
-      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+      This field defaults to `""` if the connection does not use [mTLS authentication](/ssl/client-certificates/enable-mtls/).
     example_value: |-
       "/C=US/ST=Texas/L=Austin/O=Access Testing/OU=TX/CN=Access Testing CA"
 
@@ -750,9 +750,9 @@ entries:
     data_type: String
     categories: [Request, mTLS]
     keywords: [request, ssl, mtls, client, visitor]
-    summary: The Distinguished Name (DN) of the owner (or requester) of the certificate in the request in a legacy format.
+    summary: The Distinguished Name (DN) of the owner (or requester) of the mTLS client certificate in a legacy format.
     description: |-
-      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+      This field defaults to `""` if the connection does not use [mTLS authentication](/ssl/client-certificates/enable-mtls/).
     example_value: |-
       "/C=US/ST=Texas/L=Austin/O=Access/OU=Access Admins/CN=James Royal"
 
@@ -760,9 +760,9 @@ entries:
     data_type: String
     categories: [Request, mTLS]
     keywords: [request, ssl, mtls, client, visitor]
-    summary: Serial number of the certificate in the request.
+    summary: Serial number of the mTLS client certificate.
     description: |-
-      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+      This field defaults to `""` if the connection does not use [mTLS authentication](/ssl/client-certificates/enable-mtls/).
     example_value: |-
       "527E0F20A20EA2A4146C78390F34CE7AF0878CA4"
 
@@ -770,9 +770,9 @@ entries:
     data_type: String
     categories: [Request, mTLS]
     keywords: [request, ssl, mtls, client, visitor]
-    summary: Serial number of the direct issuer of the certificate in the request.
+    summary: Serial number of the direct issuer of the mTLS client certificate.
     description: |-
-      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+      This field defaults to `""` if the connection does not use [mTLS authentication](/ssl/client-certificates/enable-mtls/).
     example_value: |-
       "2688201DBA77402EA87118876F2E1B24CF8B0395"
 
@@ -780,9 +780,9 @@ entries:
     data_type: String
     categories: [Request, mTLS]
     keywords: [request, ssl, mtls, client, visitor]
-    summary: The SHA-256 fingerprint of the certificate in the request.
+    summary: The SHA-256 fingerprint of the mTLS client certificate.
     description: |-
-      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+      This field defaults to `""` if the connection does not use [mTLS authentication](/ssl/client-certificates/enable-mtls/).
     example_value: |-
       "af363dc85bc942a892d3cee9796190fdb36d89cd588a4f1cb17c74a943439714"
 
@@ -790,9 +790,9 @@ entries:
     data_type: String
     categories: [Request, mTLS]
     keywords: [request, ssl, mtls, client, visitor]
-    summary: The SHA-1 fingerprint of the certificate in the request.
+    summary: The SHA-1 fingerprint of the mTLS client certificate.
     description: |-
-      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+      This field defaults to `""` if the connection does not use [mTLS authentication](/ssl/client-certificates/enable-mtls/).
     example_value: |-
       "933ad5282c560ae3f482a43ecd73bc9de878a190"
 
@@ -800,9 +800,9 @@ entries:
     data_type: String
     categories: [Request, mTLS]
     keywords: [request, ssl, mtls, client, visitor]
-    summary: The certificate in the request is not valid before this date.
+    summary: The mTLS client certificate is not valid before this date.
     description: |-
-      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+      This field defaults to `""` if the connection does not use [mTLS authentication](/ssl/client-certificates/enable-mtls/).
     example_value: |-
       "Mar 21 13:35:00 2022 GMT"
 
@@ -810,9 +810,9 @@ entries:
     data_type: String
     categories: [Request, mTLS]
     keywords: [request, ssl, mtls, client, visitor]
-    summary: The certificate in the request is not valid after this date.
+    summary: The mTLS client certificate is not valid after this date.
     description: |-
-      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+      This field defaults to `""` if the connection does not use [mTLS authentication](/ssl/client-certificates/enable-mtls/).
     example_value: |-
       "Mar 21 13:35:00 2023 GMT"
 
@@ -820,9 +820,9 @@ entries:
     data_type: String
     categories: [Request, mTLS]
     keywords: [request, ssl, mtls, client, visitor]
-    summary: The Subject Key Identifier (SKI) of the certificate in the request.
+    summary: The Subject Key Identifier (SKI) of the mTLS client certificate.
     description: |-
-      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+      This field defaults to `""` if the connection does not use [mTLS authentication](/ssl/client-certificates/enable-mtls/).
     example_value: |-
       "27846FAE6EAC4A8DAD9101B519CF1EB460242831"
 
@@ -830,11 +830,63 @@ entries:
     data_type: String
     categories: [Request, mTLS]
     keywords: [request, ssl, mtls, client, visitor]
-    summary: The Subject Key Identifier (SKI) of the direct issuer of the certificate in the request.
+    summary: The Subject Key Identifier (SKI) of the direct issuer of the mTLS client certificate.
     description: |-
-      This field is only filled in if the request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+      This field defaults to `""` if the connection does not use [mTLS authentication](/ssl/client-certificates/enable-mtls/).
     example_value: |-
       "8204924CF49D471E855862706D889F58F6B784D3"
+
+  - name: cf.tls_client_auth.cert_rfc9440
+    data_type: String
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor, rfc9440, cert, chain]
+    summary: The mTLS client certificate encoded as a Structured Fields Byte Sequence per [RFC 9440](https://datatracker.ietf.org/doc/html/rfc9440).
+    description: |-
+      Contains the DER-encoded, Base64-wrapped client leaf certificate formatted as an [RFC 9440](https://datatracker.ietf.org/doc/html/rfc9440#name-client-cert-http-header-fie) `Client-Cert` HTTP header value. The value is a Structured Fields Byte Sequence (the Base64 data prefixed and suffixed by `:`).
+
+      This field is populated regardless of the certificate validation result. Before using this value, verify the certificate status by checking [`cf.tls_client_auth.cert_verified`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_verified/) and [`cf.tls_client_auth.cert_revoked`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_revoked/).
+
+      Returns `""` if no client certificate was presented or if the encoded value exceeds the 10 KiB size limit. Refer to [`cf.tls_client_auth.cert_rfc9440_too_large`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_rfc9440_too_large/) to distinguish between these cases.
+
+      This field defaults to `""` if the connection does not use [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+    example_value: |-
+      ":MIIBqDCCAU6g......:"
+
+  - name: cf.tls_client_auth.cert_rfc9440_too_large
+    data_type: Boolean
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor, rfc9440, cert, chain, too large, error]
+    summary: Returns `true` when the RFC 9440 encoded mTLS client certificate exceeds the 10 KiB size limit.
+    description: |-
+      When `true`, [`cf.tls_client_auth.cert_rfc9440`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_rfc9440/) contains an empty string instead of the encoded certificate.
+
+      This field defaults to `false` if the connection does not use [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+
+  - name: cf.tls_client_auth.cert_chain_rfc9440
+    data_type: String
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor, rfc9440, cert, chain]
+    summary: The mTLS client certificate chain (excluding the leaf certificate) encoded as a structured field list per [RFC 9440](https://datatracker.ietf.org/doc/html/rfc9440).
+    description: |-
+      Contains the DER-encoded, Base64-wrapped client certificate chain formatted as an [RFC 9440](https://datatracker.ietf.org/doc/html/rfc9440#name-client-cert-chain-http-head) `Client-Cert-Chain` HTTP header value. The value is a structured field list of byte sequences. The leaf certificate is not included in the chain (it is available in [`cf.tls_client_auth.cert_rfc9440`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_rfc9440/)). The chain reflects the certificates as sent by the client, without any reordering or validation.
+
+      This field is populated regardless of the certificate validation result. Before using this value, verify the certificate status by checking [`cf.tls_client_auth.cert_verified`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_verified/) and [`cf.tls_client_auth.cert_revoked`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_revoked/).
+
+      Returns `""` if the client did not send any intermediate certificates or if the encoded value exceeds the 16 KiB size limit. Refer to [`cf.tls_client_auth.cert_chain_rfc9440_too_large`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_chain_rfc9440_too_large/) to distinguish between these cases.
+
+      This field defaults to `""` if the connection does not use [mTLS authentication](/ssl/client-certificates/enable-mtls/).
+    example_value: |-
+      ":MII.....=:, :MII....=:"
+
+  - name: cf.tls_client_auth.cert_chain_rfc9440_too_large
+    data_type: Boolean
+    categories: [Request, mTLS]
+    keywords: [request, ssl, mtls, client, visitor, rfc9440, cert, chain, too large, error]
+    summary: Returns `true` when the RFC 9440 encoded client certificate chain exceeds the 16 KiB size limit.
+    description: |-
+      When `true`, [`cf.tls_client_auth.cert_chain_rfc9440`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_chain_rfc9440/) contains an empty string instead of the encoded certificate chain.
+
+      This field defaults to `false` if the connection does not use [mTLS authentication](/ssl/client-certificates/enable-mtls/).
 
   - name: cf.tls_client_extensions_sha1
     data_type: String
@@ -898,13 +950,47 @@ entries:
     example_value: |-
       true
 
+  - name: cf.edge.l4.delivery_rate
+    data_type: Integer
+    categories: [Request]
+    keywords:
+      [request, l4, delivery rate, bandwidth, network, performance, transport]
+    summary: The most recent data delivery rate estimate for the client connection, in bytes per second.
+    description: |-
+      This metric reflects the rate at which data is being successfully delivered over the connection.
+
+      Returns `0` when L4 statistics are not available for the request.
+    example_value: |-
+      123456
+    example_block: |-
+      # Match requests where the delivery rate is below 100 KB/s
+      cf.edge.l4.delivery_rate < 100000
+
   - name: cf.timings.client_tcp_rtt_msec
     data_type: Number
     categories: [Request]
     keywords: [request, timing, tcp, rtt, performance, latency]
-    summary: The smoothed TCP round-trip time (RTT) from client to Cloudflare in milliseconds.
+    summary: The smoothed TCP round-trip time (RTT) between Cloudflare and the client in milliseconds.
+    description: |-
+      This field is only populated for TCP (HTTP/1, HTTP/2) connections. For QUIC connections, the value is `0`.
     example_value: |-
       20
+    example_block: |-
+      # Match requests over TCP where the RTT exceeds 200 ms
+      cf.timings.client_quic_rtt_msec > 200
+
+  - name: cf.timings.client_quic_rtt_msec
+    data_type: Integer
+    categories: [Request]
+    keywords: [request, timing, quic, rtt, performance, latency, http3]
+    summary: The smoothed QUIC round-trip time (RTT) between Cloudflare and the client in milliseconds.
+    description: |-
+      This field is only populated for QUIC (HTTP/3) connections. For TCP connections, the value is `0`.
+    example_value: |-
+      42
+    example_block: |-
+      # Match requests over QUIC where the RTT exceeds 200 ms
+      cf.timings.client_quic_rtt_msec > 200
 
   - name: cf.timings.edge_msec
     data_type: Integer

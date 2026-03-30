@@ -1,25 +1,29 @@
 ---
 import Default from "@astrojs/starlight/components/TableOfContents.astro";
-
 import { Icon } from "@astrojs/starlight/components";
 import FeedbackPrompt from "../FeedbackPrompt.tsx";
 
 const tags = Astro.locals.starlightRoute.entry.data.tags;
 const showFeedback = Astro.locals.starlightRoute.entry.data.feedback;
+const showActions = !Astro.url.pathname.startsWith("/support/");
+const { editUrl } = Astro.locals.starlightRoute;
 ---
 
-<Default />
-{
-	tags && (
-		<>
-			<br />
-			<div>
-				<h2>Tags</h2>
+<div class="tb-container bg-[var(--sl-color-bg-elevated)] pr-4">
+	{/* We use Starlight's native TOC component instead of re-implementing it */}
+	<Default />
+
+	{
+		tags && tags.length > 0 && (
+			<div class="mt-8 border-t border-[var(--sidebar-border)] pt-6">
+				<h3 class="mb-3 text-[11px] font-semibold tracking-widest text-[var(--sl-color-gray-3)] uppercase">
+					Tags
+				</h3>
 				<div class="flex flex-wrap gap-2">
 					{tags.map((tag) => (
 						<a
 							href={`/search/?tags=${tag}`}
-							class="overflow-hidden rounded-sm border border-(--sl-color-hairline) px-3 text-ellipsis whitespace-nowrap text-black"
+							class="rounded-full border border-[var(--sidebar-border)] bg-transparent px-3 py-1 text-[11px] font-medium text-[var(--sl-color-gray-3)] transition-colors duration-150 ease-out hover:border-[var(--sl-color-gray-2)] hover:text-[var(--sl-color-white)] focus-visible:ring-2 focus-visible:ring-[var(--sl-color-text-accent)] focus-visible:outline-none"
 							data-tag-serp-link={true}
 						>
 							{tag}
@@ -27,39 +31,147 @@ const showFeedback = Astro.locals.starlightRoute.entry.data.feedback;
 					))}
 				</div>
 			</div>
-		</>
-	)
-}
-{
-	showFeedback && (
-		<>
-			<br />
-			<FeedbackPrompt client:idle />
-		</>
-	)
-}
-{
-	!Astro.url.pathname.startsWith("/support/") && (
-		<>
-			<br />
-			<div class="flex gap-2">
-				{Astro.locals.starlightRoute.editUrl && (
-					<a
-						href={Astro.locals.starlightRoute.editUrl}
-						class="inline-flex h-8 items-center justify-center gap-2 rounded-sm border border-(--sl-color-hairline) px-3 text-black"
-					>
-						<Icon name="pencil" />
-						Edit
-					</a>
+		)
+	}
+
+	{
+		(showFeedback || showActions) && (
+			<div class="mt-6 flex flex-col gap-5 border-t border-[var(--sidebar-border)] pt-6">
+				{showFeedback && (
+					<div class="feedback-container">
+						<FeedbackPrompt client:idle />
+					</div>
 				)}
-				<a
-					href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose"
-					class="inline-flex h-8 items-center justify-center gap-2 rounded-sm border border-(--sl-color-hairline) px-3 text-black"
-				>
-					<Icon name="github" />
-					Issue
-				</a>
+
+				{showActions && (
+					<div class="flex flex-col gap-3">
+						{editUrl && (
+							<a
+								href={editUrl}
+							class="group flex items-center gap-2.5 rounded-sm text-[13px] text-[var(--sl-color-gray-2)] transition-colors duration-150 ease-out hover:text-[var(--sl-color-white)] focus-visible:ring-2 focus-visible:ring-[var(--sl-color-text-accent)] focus-visible:outline-none"
+						>
+							<Icon
+								name="pencil"
+								class="h-3.5 w-3.5"
+								aria-hidden="true"
+							/>
+							<span>Edit page</span>
+						</a>
+					)}
+					<a
+						href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose"
+						class="group flex items-center gap-2.5 rounded-sm text-[13px] text-[var(--sl-color-gray-2)] transition-colors duration-150 ease-out hover:text-[var(--sl-color-white)] focus-visible:ring-2 focus-visible:ring-[var(--sl-color-text-accent)] focus-visible:outline-none"
+					>
+						<Icon
+							name="github"
+							class="h-3.5 w-3.5"
+								aria-hidden="true"
+							/>
+							<span>Report issue</span>
+						</a>
+					</div>
+				)}
 			</div>
-		</>
-	)
-}
+		)
+	}
+</div>
+
+<style is:global>
+	/* 
+	 * "Table Track" Design System 
+	 * We inject this globally, but scope it to the .tb-container to override Starlight's defaults safely. 
+	 */
+
+	.tb-container {
+		padding-bottom: 1rem;
+	}
+
+	/* ── 1. The Header ("On this page") ── */
+	.tb-container h2#starlight__on-this-page {
+		color: var(--sl-color-white) !important;
+		font-size: var(--sl-text-h5) !important;
+		font-weight: 600 !important;
+		line-height: var(--sl-line-height-headings) !important;
+		margin-bottom: 0.5rem !important;
+		text-wrap: balance;
+	}
+
+	/* ── 2. The Active Track (The Vertical Line) ── */
+	/* Starlight's root ul component */
+	.tb-container nav > ul {
+		margin: 0 !important;
+		padding: 0 !important;
+		display: flex;
+		flex-direction: column;
+		/* The primary gray background line */
+		border-left: 2px solid var(--sidebar-border) !important;
+		list-style: none !important;
+	}
+
+	/* Sub-lists must not have their own border, they sit flat */
+	.tb-container ul ul {
+		border-left: none !important;
+		margin: 0 !important;
+		padding: 0 !important;
+		list-style: none !important;
+	}
+
+	/* Remove all native starlight list margins */
+	.tb-container ul li {
+		margin: 0 !important;
+		padding: 0 !important;
+	}
+
+	/* ── 3. The Links & Indentation ── */
+	/* We target Starlight's native link rendering inside the ul */
+	.tb-container ul a {
+		position: relative;
+		display: block !important;
+		padding: 0.375rem 0.5rem !important; /* py-1.5 px-2 equivalent */
+		line-height: 1.3 !important;
+		font-size: 13px !important;
+		text-decoration: none !important;
+		color: var(--sidebar-text) !important;
+		transition: all 150ms ease-out !important;
+		border-radius: 0 !important; /* Strip native starlight rounding */
+
+		/* 
+		 * The Magic: 
+		 * 1. Calculate left padding strictly via Starlight's native --depth CSS variable.
+		 *    Base offset is 1.25rem (gap from line to text). Nested items get +1rem per depth.
+		 * 2. Pull the link back 2px to directly overlap the root border-left track.
+		 */
+		padding-left: calc(1.25rem + (1rem * var(--depth, 0))) !important;
+		margin-left: -2px !important;
+
+		/* The hover/active track overlay */
+		border-left: 2px solid transparent !important;
+	}
+
+	/* Force specific typography for top level (H2) vs nested (H3+) */
+	.tb-container ul a[style*="--depth: 0"] {
+		color: var(--sidebar-text) !important;
+		font-weight: 400 !important;
+	}
+
+	/* Hover state */
+	.tb-container ul a:hover {
+		border-left-color: var(--sidebar-border-hover) !important;
+		color: var(--sidebar-text-strong) !important;
+	}
+
+	/* Active state (hooking into starlight's scrollspy) */
+	.tb-container ul a[aria-current="true"] {
+		border-left-color: var(--orange-accent-200) !important;
+		color: var(--sidebar-text-strong) !important;
+		font-weight: 500 !important;
+		background-color: transparent !important; /* Strip starlight native active bg */
+	}
+
+	/* Respect motion preferences */
+	@media (prefers-reduced-motion: reduce) {
+		.tb-container * {
+			transition: none !important;
+		}
+	}
+</style>

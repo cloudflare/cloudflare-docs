@@ -6,6 +6,70 @@ sidebar:
   order: 4
 ---
 
+import { TabItem, Tabs } from "~/components";
+
+This page covers operational guidance for managing WARP Connector deployments, including how to update the connector, configure cloud provider settings, and troubleshoot common networking issues.
+
+## Update WARP Connector
+
+Updating WARP Connector requires updating the `cloudflare-warp` package on your Linux host. During the update, the WARP Connector will briefly disconnect, which will interrupt traffic currently being routed through it.
+
+<Tabs> <TabItem label="Debian/Ubuntu">
+
+1. Check your current WARP Connector version:
+
+   ```sh
+   warp-cli --version
+   ```
+
+2. (Optional) Check the latest version available in the package repository:
+
+   ```sh
+   sudo apt-cache policy cloudflare-warp
+   ```
+
+3. Update the package list and upgrade the `cloudflare-warp` package:
+
+   ```sh
+   sudo apt-get update && sudo apt-get install --only-upgrade cloudflare-warp
+   ```
+
+</TabItem> <TabItem label="RedHat/CentOS">
+
+1. Check your current WARP Connector version:
+
+   ```sh
+   warp-cli --version
+   ```
+
+2. (Optional) Check the latest version available in the package repository:
+
+   ```sh
+   sudo yum info cloudflare-warp
+   ```
+
+3. Update the `cloudflare-warp` package:
+
+   ```sh
+   sudo yum update cloudflare-warp
+   ```
+
+</TabItem> </Tabs>
+
+4. Verify that WARP Connector is running the new version:
+
+   ```sh
+   warp-cli --version
+   ```
+
+5. Verify that WARP Connector has reconnected to Cloudflare:
+
+   ```sh
+   warp-cli status
+   ```
+
+   You should see `Status update: Connected` in the output.
+
 ## VPC deployments
 
 When setting up WARP Connector on a virtual private cloud (VPC), you may need to configure additional settings in the cloud service provider.

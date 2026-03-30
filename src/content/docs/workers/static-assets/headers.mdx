@@ -13,7 +13,7 @@ When serving static assets, Workers will attach some headers to the response by 
 
 - **`Content-Type`**
 
-  A `Content-Type` header is attached to the response if one is provided during [the asset upload process](/workers/static-assets/direct-upload/). [Wrangler](/workers/wrangler/commands/#deploy) automatically determines the MIME type of the file, based on its extension.
+  A `Content-Type` header is attached to the response if one is provided during [the asset upload process](/workers/static-assets/direct-upload/). [Wrangler](/workers/wrangler/commands/general/#deploy) automatically determines the MIME type of the file, based on its extension.
 
 - **`Cache-Control: public, max-age=0, must-revalidate`**
 

@@ -5,20 +5,18 @@ sidebar:
   order: 4
 ---
 
-When you set up Email security using an [MX/Inline deployment](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment/), your existing email provider will accept messages coming from Email security's egress IP addresses.
+When Email Security processes inbound messages through an [MX/Inline deployment](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment/), it re-delivers the messages to your mailbox from its own IP addresses, known as egress IPs (the source addresses Cloudflare sends outbound mail from). Your existing email provider (such as Microsoft 365 or Google Workspace) needs to be configured to accept connections from these addresses, otherwise it will reject the messages as coming from an unauthorized sender.
 
-Setting up egress IPs allows Cloudflare to deliver emails to your inbox.
-
-Refer to this page for reference on what IP subnet mask ranges to use.
+Add all of the following addresses to your mail provider's IP allowlist.
 
 :::caution[Additional information for Microsoft 365]
 
-Microsoft 365 does not support IPv6 addresses nor the following IPv4 subnet mask ranges:
+Microsoft 365 does not support IPv6 addresses or the following IPv4 ranges:
 
-- `104.30.32.0/19`
+- `104.30.32.0/19` 
 - `134.195.26.0/23`
 
-If you use Microsoft 365, you will have to use the broken down `/24` subnet mask IP addresses. Refer to [Microsoft 365 `/24` addresses](#microsoft-365-24-addresses) for a list of supported IPv4 addresses.
+If you use Microsoft 365, use the individual `/24` blocks (256 addresses each) listed in [Microsoft 365 `/24` addresses](#microsoft-365-24-addresses) instead.
 
 :::
 

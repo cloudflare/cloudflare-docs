@@ -33,7 +33,7 @@ Use DNS policies to block malicious domains, restrict content categories, or pre
 
 <Details header="Network policies">
 
-**[Network policies](/cloudflare-one/traffic-policies/network-policies/)** inspect individual TCP, UDP, and GRE packets. They can match on IP addresses, ports, protocols, and the server name sent at the start of an encrypted connection (Server Name Indication, or SNI).
+**[Network policies](/cloudflare-one/traffic-policies/network-policies/)** inspect individual TCP, UDP, and Generic Routing Encapsulation (GRE) packets. They can match on IP addresses, ports, protocols, and the server name sent at the start of an encrypted connection (Server Name Indication, or SNI).
 
 Use network policies to block access to specific ports or non-HTTP services such as SSH and RDP.
 
@@ -41,7 +41,7 @@ Use network policies to block access to specific ports or non-HTTP services such
 
 <Details header="HTTP policies">
 
-**[HTTP policies](/cloudflare-one/traffic-policies/http-policies/)** inspect the full content of web requests — including URLs, headers, and uploaded or downloaded files. Gateway decrypts HTTPS traffic so it can examine what DNS and network policies cannot see.
+**[HTTP policies](/cloudflare-one/traffic-policies/http-policies/)** inspect the full content of web requests — including URLs, headers, and uploaded or downloaded files. Gateway decrypts HTTPS traffic so it can examine what DNS and network policies cannot see. This requires installing a [Cloudflare root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on user devices.
 
 Use HTTP policies to block specific URLs, scan file uploads for sensitive data, block malware in downloads, and control which accounts users can sign in to — for example, allow your company Google Workspace account but block personal Gmail.
 
@@ -99,3 +99,8 @@ The right policy type depends on the traffic you want to filter:
 | Assign static egress IPs               | Egress           | Lets third-party services identify your organization                   |
 | Drop traffic before other policies run | Packet filtering | Blocks by packet attributes without user context                       |
 | Route DNS to custom nameservers        | Resolver         | Overrides the default Cloudflare resolver                              |
+
+## Troubleshooting
+
+For help resolving common issues with Gateway policies, refer to [Troubleshooting](/cloudflare-one/traffic-policies/troubleshooting/).
+

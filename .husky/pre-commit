@@ -1,0 +1,32 @@
+#!/bin/sh
+# Convert CRLF to LF in all staged files before committing.
+# This guards against AI tooling and Windows environments introducing CRLF.
+
+STAGED=$(git diff --cached --name-only)
+
+if [ -z "$STAGED" ]; then
+  exit 0
+fi
+
+FIXED=0
+
+while IFS= read -r file; do
+  # Skip files that no longer exist on disk (e.g. deleted files)
+  if [ ! -f "$file" ]; then
+    continue
+  fi
+
+  # Check for carriage returns
+  if grep -qU $'\r' "$file"; then
+    # perl -pi works cross-platform (macOS BSD and Linux GNU)
+    perl -pi -e 's/\r\n/\n/g; s/\r/\n/g' "$file"
+    FIXED=1
+  fi
+done << EOF
+$STAGED
+EOF
+
+if [ "$FIXED" = "1" ]; then
+  echo "pre-commit: CRLF line endings converted to LF in staged files."
+  git add --update
+fi

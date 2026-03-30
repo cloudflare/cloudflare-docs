@@ -8,7 +8,7 @@ description: >-
   Settings versus creating WAF custom rules for bot management.
 ---
 
-import { Render } from "~/components";
+import { GlossaryTooltip, Render } from "~/components";
 
 Bot protection on Cloudflare works through two complementary mechanisms: built-in settings configured through toggles in **Security Settings**, and [WAF custom rules](/waf/custom-rules/) that you write using [bot management fields](/bots/reference/bot-management-variables/). Understanding when to use each approach helps you avoid creating duplicate rules and simplifies your security configuration.
 
@@ -36,7 +36,7 @@ Custom rules are valuable when you need capabilities that built-in settings do n
 
 Since Bot settings apply to all traffic across your domain, you may need an alternative approach to bot handling for different paths using custom rules — for example, stricter protection on `/login/` than on `/public/`.
 
-#### Example 
+#### Example
 
 Block likely automated traffic only on your login endpoint:
 
@@ -62,7 +62,7 @@ Challenge likely automated traffic only from specific ASNs:
 
 ### Custom actions
 
-Bot settings offer **Block**, **Managed Challenge**, and **Allow** as actions. 
+Bot settings offer **Block**, **Managed Challenge**, and **Allow** as actions.
 
 If you need other actions, such as **Log** (for testing rules before enforcement), **Interactive Challenge**, or **Skip** (to bypass other rules), you need custom rules.
 
@@ -76,6 +76,6 @@ To send bot scores, verified bot status, or JA3/JA4 fingerprints to your origin 
 
 ## Execution order
 
-Custom rules execute before Super Bot Fight Mode managed rules. If a custom rule takes a terminating action (such as **Block** or **Managed Challenge**), the request does not reach bot settings. 
+Custom rules execute before Super Bot Fight Mode managed rules. If a custom rule takes a <GlossaryTooltip term="terminating action">terminating action</GlossaryTooltip> (such as _Block_ or _Managed Challenge_), the request does not reach bot settings.
 
 Refer to [Security features interoperability](/waf/feature-interoperability/) for more information.

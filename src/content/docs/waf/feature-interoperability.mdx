@@ -6,13 +6,20 @@ sidebar:
 description: How Cloudflare security features interact and execute in order.
 ---
 
-import { Details, Tabs, TabItem, Steps, DashButton } from "~/components";
+import {
+	Details,
+	Tabs,
+	TabItem,
+	Steps,
+	DashButton,
+	GlossaryTooltip,
+} from "~/components";
 
 Cloudflare applies multiple security features to every incoming request. Each feature runs at a specific stage, and the order determines which feature acts first. Understanding this order helps you avoid conflicts and reduce false positives.
 
 ## Execution order
 
-Cloudflare security features powered by the [Ruleset Engine](/ruleset-engine/) run in a fixed sequence of phases. When a request arrives, it passes through each phase in order. If a rule takes a [terminating action](/ruleset-engine/rules-language/actions/) (for example, _Block_ or _Managed Challenge_), the request stops and does not reach later phases.
+Cloudflare security features powered by the [Ruleset Engine](/ruleset-engine/) run in a fixed sequence of phases. When a request arrives, it passes through each phase in order. If a rule takes a <GlossaryTooltip term="terminating action" link="/ruleset-engine/rules-language/actions/">terminating action</GlossaryTooltip> (for example, _Block_ or _Managed Challenge_), the request stops and does not reach later phases.
 
 The security-related request phases, in execution order, are:
 

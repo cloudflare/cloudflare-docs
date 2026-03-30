@@ -130,7 +130,7 @@ You will also need to create a **Personal access token** that you'll use to acce
 - Scope: the `data.records:write` scope must be set on the token
 - Access: access should be granted to the base you have been working with in this tutorial
 
-The results access token should now be set in your application. To make the token available in your codebase, use the [`wrangler secret`](/workers/wrangler/commands/#secret) command. The `secret` command encrypts and stores environment variables for use in your function, without revealing them to users.
+The results access token should now be set in your application. To make the token available in your codebase, use the [`wrangler secret`](/workers/wrangler/commands/general/#secret) command. The `secret` command encrypts and stores environment variables for use in your function, without revealing them to users.
 
 Run `wrangler secret put`, passing `AIRTABLE_ACCESS_TOKEN` as the name of your secret:
 

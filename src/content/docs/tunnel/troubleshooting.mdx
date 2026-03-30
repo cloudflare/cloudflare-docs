@@ -7,7 +7,9 @@ sidebar:
 
 import { Render, Tabs, TabItem } from "~/components";
 
-Use this page to diagnose and resolve common issues with Cloudflare Tunnel. For tunnel health monitoring, logs, and metrics, refer to [Monitoring](/tunnel/monitoring/).
+Use this page to diagnose and resolve common issues with Cloudflare Tunnel. Many issues are resolved by upgrading to the latest version of `cloudflared` — refer to [Update cloudflared](/tunnel/downloads/update-cloudflared/) before investigating further.
+
+For tunnel health monitoring, logs, and metrics, refer to [Monitoring](/tunnel/monitoring/).
 
 ## Connection errors
 
@@ -151,3 +153,23 @@ Replace `198.41.200.43` with the IP shown in your [error message](#dialcontext-e
 	product="cloudflare-one"
 	params={{ tunnelMode: true }}
 />
+
+### Collect debug logs
+
+To capture verbose output for troubleshooting:
+
+- **Locally-managed tunnels**: Run `cloudflared` with the `--loglevel debug` flag:
+
+  ```sh
+  cloudflared tunnel --loglevel debug run
+  ```
+
+  To persist logs to a file, add the `--logfile` flag:
+
+  ```sh
+  cloudflared tunnel --loglevel debug --logfile /var/log/cloudflared/cloudflared.log run
+  ```
+
+- **Remotely-managed tunnels** (created via the dashboard): Configure logging in the tunnel's [run parameters](/tunnel/advanced/run-parameters/#loglevel). You can also stream logs in real time using the [remote log streaming](/tunnel/monitoring/#remote-log-streaming) feature.
+
+Attach the debug logs when contacting support — refer to the checklist above for the full list of information to include.

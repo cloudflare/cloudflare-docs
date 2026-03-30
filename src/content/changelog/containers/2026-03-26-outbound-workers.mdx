@@ -1,0 +1,88 @@
+---
+title: Easily connect Containers and Sandboxes to Workers
+description: Use outbound Workers to give containers access to KV, R2, and other Workers bindings.
+products:
+  - containers
+date: 2026-03-26
+---
+
+[Containers](/containers/) and [Sandboxes](/sandbox/) now support connecting directly to Workers over HTTP. This allows you to call Workers
+functions and [bindings](/workers/runtime-apis/bindings/), like [KV](/kv) or [R2](/r2/), from within the container at specific hostnames.
+
+## Run Worker code
+
+Define an `outbound` handler to capture any HTTP request or use `outboundByHost` to capture requests to individual hostnames and IPs.
+
+```js
+export class MyApp extends Sandbox {}
+
+MyApp.outbound = async (request, env, ctx) => {
+	// you can run arbitrary functions defined in your Worker on any HTTP request
+	return await someWorkersFunction(request.body);
+};
+
+MyApp.outboundByHost = {
+	"my.worker": async (request, env, ctx) => {
+		return await anotherFunction(request.body);
+	},
+};
+```
+
+In this example, requests from the container to `http://my.worker` will run the function defined within `outboundByHost`,
+and any other HTTP requests will run the `outbound` handler. These handlers run entirely inside the Workers runtime,
+outside of the container sandbox.
+
+:::note[TLS support coming soon]
+Containers and Sandboxes currently only intercept HTTP traffic. HTTPS interception is coming soon. This will enable using Workers as a transparent proxy for credential injection.
+
+Even though this is just using HTTP, traffic to Workers is secure and runs on the same machine as the container.
+If needed, you can also upgrade requests to TLS from the Worker itself.
+:::
+
+## Access Workers bindings
+
+Each handler has access to `env`, so it can call any binding set in [Wrangler config](/workers/wrangler/configuration/#bindings).
+Code inside the container makes a standard HTTP request to that hostname and the outbound Worker translates it into a binding call.
+
+```js
+export class MyApp extends Sandbox {}
+
+MyApp.outboundByHost = {
+	"my.kv": async (request, env, ctx) => {
+		const key = new URL(request.url).pathname.slice(1);
+		const value = await env.KV.get(key);
+		return new Response(value ?? "", { status: value ? 200 : 404 });
+	},
+	"my.r2": async (request, env, ctx) => {
+		const key = new URL(request.url).pathname.slice(1);
+		const object = await env.BUCKET.get(key);
+		return new Response(object?.body ?? "", { status: object ? 200 : 404 });
+	},
+};
+```
+
+Now, from inside the container sandbox, `curl http://my.kv/some-key` will access [Workers KV](/kv) and `curl http://my.r2/some-object` will access [R2](/r2/).
+
+## Access Durable Object state
+
+Use `ctx.containerId` to reference the container's automatically provisioned [Durable Object](/durable-objects).
+
+```js
+export class MyContainer extends Container {}
+
+MyContainer.outboundByHost = {
+	"get-state.do": async (request, env, ctx) => {
+		const id = env.MY_CONTAINER.idFromString(ctx.containerId);
+		const stub = env.MY_CONTAINER.get(id);
+		return stub.getStateForKey(request.body);
+	},
+};
+```
+
+This provides an easy way to associate state with any container instance, and includes a [built-in SQLite database](/durable-objects/get-started/#2-write-a-durable-object-class-using-sql-api).
+
+## Get Started Today
+
+Upgrade to `@cloudflare/containers` version 0.2.0 or later, or `@cloudflare/sandbox` version 0.8.0 or later to use outbound Workers.
+
+Refer to [Containers outbound traffic](/containers/platform-details/outbound-traffic/) and [Sandboxes outbound traffic](/sandbox/guides/outbound-traffic/) for more details and examples.
