@@ -6,53 +6,31 @@ sidebar:
   order: 3
 ---
 
-import { CardGrid, LinkTitleCard } from "~/components";
-
 Multi-tenant platforms need to store customer data with appropriate isolation — per-tenant databases, separate object storage, or row-level separation. Cloudflare provides serverless storage options that support tenant isolation at the database, bucket, or key-prefix level.
 
 ## Solutions
 
-<CardGrid>
-
-<LinkTitleCard title="D1" href="/d1/" icon="d1">
-
-Serverless SQL database built on SQLite, with global read replication.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="R2" href="/r2/" icon="r2">
-
-S3-compatible object storage with zero egress fees.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="Durable Objects" href="/durable-objects/" icon="durable-objects">
-
-Stateful objects with strongly consistent storage and coordination.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="KV" href="/kv/" icon="kv">
-
-Globally distributed key-value storage for low-latency reads.
-
-</LinkTitleCard>
-
-</CardGrid>
-
 ### D1
+
+Serverless SQL database built on SQLite, with global read replication. [Learn more about D1](/d1/).
 
 - **Database per tenant** - Create isolated D1 databases per customer for complete data separation, or use row-level isolation in a shared database
 
 ### R2
 
+S3-compatible object storage with zero egress fees. [Learn more about R2](/r2/).
+
 - **Object storage** - Store customer files and assets per tenant using prefix or bucket-level isolation, with no egress fees
 
 ### Durable Objects
 
+Stateful objects with strongly consistent storage and coordination. [Learn more about Durable Objects](/durable-objects/).
+
 - **Real-time coordination** - Manage stateful workflows and provide strong consistency for multi-tenant operations
 
 ### KV
+
+Globally distributed key-value storage for low-latency reads. [Learn more about KV](/kv/).
 
 - **Edge configuration** - Store per-tenant settings, feature flags, and session data at the edge for low-latency reads
 

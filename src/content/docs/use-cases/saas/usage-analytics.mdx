@@ -6,35 +6,21 @@ sidebar:
   order: 5
 ---
 
-import { CardGrid, LinkTitleCard } from "~/components";
-
 Usage-based billing and per-tenant performance monitoring require detailed analytics broken down by customer. Cloudflare Workers Analytics Engine tracks request counts, latency, and bytes per tenant ID, while Logpush exports detailed logs for compliance and audit trails.
 
 ## Solutions
 
-<CardGrid>
-
-<LinkTitleCard title="Workers analytics engine" href="/analytics/analytics-engine/" icon="analytics">
-
-Store and query time-series analytics data from Workers.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="Logpush" href="/logs/" icon="logs">
-
-Stream logs from Cloudflare products to external destinations.
-
-</LinkTitleCard>
-
-</CardGrid>
-
 ### Workers Analytics Engine
+
+Store and query time-series analytics data from Workers. [Learn more about Workers Analytics Engine](/analytics/analytics-engine/).
 
 - **Per-tenant metrics** - Track request counts, latency, and bytes transferred broken down by tenant ID
 - **Billing data** - Query usage data per customer to power usage-based billing calculations
 - **Performance insights** - Identify which tenants are generating the most load or experiencing the most errors
 
 ### Logpush
+
+Stream logs from Cloudflare products to external destinations. [Learn more about Logpush](/logs/).
 
 - **Compliance logging** - Export detailed logs to your Security Information and Event Management (SIEM) system or data warehouse for audit trails and enterprise compliance
 

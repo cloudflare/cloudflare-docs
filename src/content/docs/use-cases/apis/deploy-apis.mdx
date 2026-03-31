@@ -6,50 +6,26 @@ sidebar:
   order: 1
 ---
 
-import { CardGrid, LinkTitleCard } from "~/components";
-
 Deploying APIs on traditional infrastructure means managing servers, configuring regions, and provisioning for traffic spikes. Cloudflare Workers runs your API handlers in 300+ locations worldwide with automatic scaling and fast startup times.
 
 ## Solutions
 
-<CardGrid>
-
-<LinkTitleCard title="Workers" href="/workers/" icon="workers">
-
-Build and deploy serverless applications on Cloudflare's global network.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="D1" href="/d1/" icon="d1">
-
-Serverless SQL database built on SQLite, with global read replication.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="Durable Objects" href="/durable-objects/" icon="durable-objects">
-
-Stateful objects with strongly consistent storage and coordination.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="Queues" href="/queues/" icon="queues">
-
-Reliable message queuing and background processing for Workers.
-
-</LinkTitleCard>
-
-</CardGrid>
-
 ### Workers
+
+Build and deploy serverless applications on Cloudflare's global network. [Learn more about Workers](/workers/).
 
 - **Global deployment** - API handlers run in 300+ Cloudflare locations worldwide with no regional configuration
 - **Auto-scaling** - Handle traffic spikes without provisioning servers or setting capacity limits
 
 ### Queues
 
+Reliable message queuing and background processing for Workers. [Learn more about Queues](/queues/).
+
 - **Async processing** - Offload webhook delivery and background jobs without blocking the API response
 
 ### D1 and Durable Objects
+
+Serverless SQL database built on SQLite, with global read replication ([learn more about D1](/d1/)). Stateful objects with strongly consistent storage and coordination ([learn more about Durable Objects](/durable-objects/)).
 
 - **Integrated storage** - Structured Query Language (SQL) database and strongly consistent state storage available as Worker bindings
 

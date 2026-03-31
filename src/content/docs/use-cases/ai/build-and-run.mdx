@@ -6,56 +6,34 @@ sidebar:
   order: 1
 ---
 
-import { CardGrid, LinkTitleCard } from "~/components";
-
 To build and deploy an AI application, you need compute for application logic, a way to run inference, and a gateway to manage costs across providers. Cloudflare Workers hosts your application logic and serves your frontend. Workers AI runs inference at the edge with pay-per-use pricing. AI Gateway adds caching, rate limiting, and observability across OpenAI, Anthropic, and other providers. Durable Objects coordinate stateful workflows and multi-turn conversations.
 
 ## Solutions
 
-<CardGrid>
-
-<LinkTitleCard title="Workers" href="/workers/" icon="workers">
-
-Build and deploy serverless applications on Cloudflare's global network.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="Workers AI" href="/workers-ai/" icon="workers-ai">
-
-Run inference on Cloudflare's global network via a Workers binding, with pay-per-use pricing.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="AI Gateway" href="/ai-gateway/" icon="ai-gateway">
-
-Proxy requests to any AI provider with caching, rate limiting, and unified analytics.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="Durable Objects" href="/durable-objects/" icon="durable-objects">
-
-Stateful objects with strongly consistent storage and coordination.
-
-</LinkTitleCard>
-
-</CardGrid>
-
 ### Workers
+
+Build and deploy serverless applications on Cloudflare's global network. [Learn more about Workers](/workers/).
 
 - **Streaming responses** - Stream AI responses token-by-token as they generate, without buffering the full reply
 - **Full-stack deployment** - Serve frontend and backend from a single deployment without managing separate infrastructure
 
 ### Workers AI
 
+Run inference on Cloudflare's global network via a Workers binding, with pay-per-use pricing. [Learn more about Workers AI](/workers-ai/).
+
 - **Global inference** - Run models at the Cloudflare location nearest to the user, reducing round-trip latency
 - **Pay-per-use pricing** - No GPU reservations or idle costs; pay only for tokens processed
 
 ### AI Gateway
 
+Proxy requests to any AI provider with caching, rate limiting, and unified analytics. [Learn more about AI Gateway](/ai-gateway/).
+
 - **Provider flexibility** - Route requests to OpenAI, Anthropic, Workers AI, or any other provider through a single endpoint
 - **Unified observability** - Track request volume, latency, costs, and errors across all providers in one place
 
 ### Durable Objects
+
+Stateful objects with strongly consistent storage and coordination. [Learn more about Durable Objects](/durable-objects/).
 
 - **Stateful workflows** - Coordinate multi-step AI pipelines and maintain conversation state across requests
 

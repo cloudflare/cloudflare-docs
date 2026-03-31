@@ -6,44 +6,26 @@ sidebar:
   order: 4
 ---
 
-import { CardGrid, LinkTitleCard } from "~/components";
-
 Internal services and microservices often need to communicate without exposing endpoints to the public internet. Cloudflare Tunnel creates outbound-only connections with no inbound firewall rules, while Access enforces Zero Trust policies for every request between services.
 
 ## Solutions
 
-<CardGrid>
-
-<LinkTitleCard title="Cloudflare Tunnel" href="/cloudflare-one/networks/connectors/cloudflare-tunnel/" icon="cloudflare-one">
-
-Connect infrastructure to Cloudflare without opening inbound firewall ports.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="Access" href="/cloudflare-one/access-controls/policies/" icon="cloudflare-one">
-
-Zero Trust access control for applications and infrastructure.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="Service Tokens" href="/cloudflare-one/access-controls/service-credentials/service-tokens/" icon="cloudflare-one">
-
-Non-interactive credentials for machine-to-machine authentication.
-
-</LinkTitleCard>
-
-</CardGrid>
-
 ### Cloudflare Tunnel
+
+Connect infrastructure to Cloudflare without opening inbound firewall ports. [Learn more about Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/).
 
 - **No public exposure** - Internal Application Programming Interfaces (APIs) remain private; Tunnel establishes an outbound-only connection with no inbound firewall rules needed
 
 ### Access
 
+Zero Trust access control for applications and infrastructure. [Learn more about Access](/cloudflare-one/access-controls/policies/).
+
 - **Zero Trust policies** - Verify identity and enforce per-service policies for every request between services
 - **Centralized policy management** - Manage access rules for all internal services from a single control plane
 
 ### Service Tokens
+
+Non-interactive credentials for machine-to-machine authentication. [Learn more about Service Tokens](/cloudflare-one/access-controls/service-credentials/service-tokens/).
 
 - **Service-to-service auth** - Authenticate internal services with non-interactive credentials managed in Cloudflare One
 

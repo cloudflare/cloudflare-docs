@@ -6,35 +6,21 @@ sidebar:
   order: 4
 ---
 
-import { CardGrid, LinkTitleCard } from "~/components";
-
 Real-time features, such as live chat, collaborative editing, and multiplayer interactions, require persistent connections and strongly consistent state. Cloudflare Durable Objects maintain WebSocket connections and coordinate shared state, while Queues handle background event processing.
 
 ## Solutions
 
-<CardGrid>
-
-<LinkTitleCard title="Durable Objects" href="/durable-objects/" icon="durable-objects">
-
-Stateful objects with strongly consistent storage and coordination.
-
-</LinkTitleCard>
-
-<LinkTitleCard title="Queues" href="/queues/" icon="queues">
-
-Reliable message queuing and background processing for Workers.
-
-</LinkTitleCard>
-
-</CardGrid>
-
 ### Durable Objects
+
+Stateful objects with strongly consistent storage and coordination. [Learn more about Durable Objects](/durable-objects/).
 
 - **WebSocket support** - Maintain persistent connections and broadcast messages across clients in real time
 - **Collaborative editing** - Build multiplayer and co-editing experiences with strongly consistent shared state
 - **Strong consistency** - Coordinate state across many concurrent connections with transactional guarantees
 
 ### Queues
+
+Reliable message queuing and background processing for Workers. [Learn more about Queues](/queues/).
 
 - **Event processing** - Handle webhooks and background jobs reliably without blocking the main request path
 
