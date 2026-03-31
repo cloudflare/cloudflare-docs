@@ -19,15 +19,16 @@ If you use Cloudflare products that control or restrict bot traffic such as [Bot
 
 When you connect a domain, the crawler looks for your website's sitemap to determine which pages to visit:
 
-1. The crawler first checks `robots.txt` for listed sitemaps.
-2. If no `robots.txt` is found, the crawler checks for a sitemap at `/sitemap.xml`.
-3. If no sitemap is available, the domain cannot be crawled.
+1. If you configure one or more custom sitemap URLs in the dashboard under **Parser options** > **Specific sitemap**, AI Search crawls only those sitemap URLs.
+2. Otherwise, the crawler checks `robots.txt` for listed sitemaps.
+3. If no `robots.txt` is found, the crawler checks for a sitemap at `/sitemap.xml`.
+4. If no sitemap is available, the domain cannot be crawled.
 
 ### Indexing order
 
 If your sitemaps include `<priority>` attributes, AI Search reads all sitemaps and indexes pages based on each page's priority value, regardless of which sitemap the page is in.
 
-If no `<priority>` is specified, pages are indexed in the order the sitemaps are listed in `robots.txt`, from top to bottom.
+If no `<priority>` is specified, pages are indexed in the order the sitemaps are provided, either from the configured custom sitemap URLs or from `robots.txt` from top to bottom.
 
 AI Search supports `.gz` compressed sitemaps. Both `robots.txt` and sitemaps can use partial URLs.
 
@@ -166,7 +167,9 @@ You can configure parsing options during onboarding or in your instance settings
 
 ### Specific sitemap
 
-By default, AI Search crawls all sitemaps listed in your `robots.txt` in the order they appear (top to bottom). If you do not want the crawler to index everything, you can specify a single sitemap URL to limit which pages are crawled. You can add up to 5 specific sitemaps.
+By default, AI Search crawls all sitemaps listed in your `robots.txt` in the order they appear (top to bottom). If you do not want the crawler to index everything, or if your sitemap is hosted at a non-standard path, you can configure custom sitemap URLs in the dashboard under **Parser options** > **Specific sitemap**.
+
+When custom sitemap URLs are configured, AI Search uses those sitemap URLs instead of auto-discovering sitemaps from `robots.txt` or `/sitemap.xml`. You can add up to five sitemap URLs.
 
 ### Rendering mode
 
