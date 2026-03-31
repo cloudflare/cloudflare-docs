@@ -68,7 +68,7 @@ Due to DNS caching by recursive resolvers, the transition back to proxied behavi
 
 ### Included
 
-Enforce DNS-only does apply to proxied [Load Balancer](/load-balancing/) records.
+Enforce DNS-only affects proxied [Load Balancing](/load-balancing/) records.
 
 ### Exceptions
 
@@ -80,7 +80,7 @@ Enforce DNS-only does not affect the following records:
 - [Workers](/workers/) custom domains: Proxied A records pointing to `100::`.
 - [R2](/r2/) custom domains: Proxied CNAME records pointing to `public.r2.dev`.
 - [Web3 gateways](/web3/): Ethereum and IPFS DNSLink gateways (CNAMEs to `ethereum.cloudflare.com` or `ipfs.cloudflare.com`).
-- [Cloudflare Tunnel](/tunnel/) records: These records are required for tunnel routing and setting them to DNS-only may break tunnel connectivity.
+- [Cloudflare Tunnel](/tunnel/) records: These records are required for tunnel routing and setting them to DNS-only would break tunnel connectivity.
 
 ## Check current status
 
@@ -91,4 +91,4 @@ Use the [Show DNS Settings](/api/resources/dns/subresources/settings/subresource
 ## Related resources
 
 - [Proxy status](/dns/proxy-status/) - Understand how proxied and DNS-only records behave.
-- [Batch record changes](/dns/manage-dns-records/how-to/batch-record-changes/#edit-proxy-status-in-bulk) - Change proxy status for individual records in bulk within a single zone.
+- [Batch record changes](/dns/manage-dns-records/how-to/batch-record-changes/#edit-proxy-status-in-bulk) - Change proxy status for multiple records in bulk within a single zone.
