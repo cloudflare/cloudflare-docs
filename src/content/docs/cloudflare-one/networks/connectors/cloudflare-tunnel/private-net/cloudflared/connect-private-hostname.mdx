@@ -59,11 +59,8 @@ Your devices must also forward the following traffic to Cloudflare:
 Configuration steps vary depending on your [device on-ramp](#device-connectivity):
 
 <Details header="Cloudflare One Clients">
-	1.{" "}
-	<Render
-		file="gateway/egress-selector-split-tunnels"
-		product="cloudflare-one"
-	/>
+	1. <Render file="gateway/egress-selector-split-tunnels"
+		product="cloudflare-one"/>
 	2. In [Local Domain
 	Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/),
 	delete the top-level domain for your private hostname. This configures WARP to
