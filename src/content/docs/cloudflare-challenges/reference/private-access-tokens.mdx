@@ -5,8 +5,8 @@ sidebar:
   order: 3
 ---
 
-When a visitor is presented with a Challenge Page, Cloudflare uses the result of a Private Access Token (PAT) to decide which challenges the visitor must solve. If a visitor presents a valid token, certain challenges are not issued, which reduces the number of steps required to pass.
+When a visitor is presented with a Challenge Page, Cloudflare evaluates various signals - including the presence of a Private Access Token (PAT) - to decide which challenges to issue. If a visitor presents a valid token, certain challenges are not issued, which reduces the number of steps required to pass.
 
-A PAT does not automatically solve a Challenge or let a visitor bypass the Challenge Page. The visitor still encounters the Challenge Page regardless of whether they have a valid PAT.
+A PAT does not automatically solve a challenge or let a visitor bypass the Challenge Page. The visitor still encounters the Challenge Page regardless of whether they have a valid PAT.
 
 While some challenges require interactivity, most challenges served are invisible to the visitor.

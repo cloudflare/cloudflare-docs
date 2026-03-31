@@ -70,7 +70,7 @@ Cross-origin resource sharing (CORS) preflight requests, or `OPTIONS`, exclude u
 
 ### Challenges on Cloudflare-protected sites
 
-Cloudflare issues Challenges to website visitors to protect against malicious activity, such as bot attacks and DDoS attempts. If a legitimate human visitor is unexpectedly challenged, the reason typically stems from a security feature flagging their request.
+Cloudflare issues challenges to website visitors to protect against malicious activity, such as bot attacks and DDoS attempts. If a legitimate human visitor is unexpectedly challenged, the reason typically stems from a security feature flagging their request.
 
 | Source | Description |
 | --- | --- |
@@ -81,10 +81,10 @@ Cloudflare issues Challenges to website visitors to protect against malicious ac
 | Browser Integrity Check | Cloudflare verifies that browsers meet certain standards. |
 | Challenge Passage | Technologies like Privacy Pass reduce the frequency of repeated Challenges. |
 
-To avoid repeated Challenges, visitors can take the following steps to ensure their environment does not trigger security checks:
+To avoid repeated challenges, visitors can take the following steps to ensure their environment does not trigger security checks:
 
 - Ensure your web browser is updated to the latest stable version for full compatibility with modern challenge technologies.
-- Temporarily disable browser extensions, such as ad blockers or privacy tools, that may block standard browser headers or the necessary Challenge scripts.
+- Temporarily disable browser extensions, such as ad blockers or privacy tools, that may block standard browser headers or the necessary challenge scripts.
 - If your IP address has a poor reputation (often seen with shared VPNs or corporate proxies), try switching to a different, trusted network connection.
 
 ### Allowlist traffic from mitigation actions
