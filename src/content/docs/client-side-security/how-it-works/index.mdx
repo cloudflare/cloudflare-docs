@@ -29,12 +29,12 @@ The following table compares the CSP HTTP headers used for monitoring resources 
 | `content-security-policy-report-only`         | `content-security-policy-report-only` (log rules)<br/>`content-security-policy` (allow rules) |
 | Automatic — on when monitoring is enabled     | Manual — created via rules you define                                                         |
 | Added to a sample of HTML responses           | Added to 100% of matching responses (not sampled)                                             |
-| `'none'` directives — reports everything      | CSP directives come from your allowlist                                                       |
+| Reports everything by disallowing anything    | CSP directives come from your allowlist                                                       |
 | Browser sends violation reports to Cloudflare | Log rules report violations only<br/>Allow rules block disallowed resources                   |
 
 ## Header used for resource monitoring
 
-When you turn on resource monitoring, Cloudflare automatically adds a `content-security-policy-report-only` HTTP header with `'none'` directives to a sample of HTML responses. For details on the header format, refer to [CSP HTTP header format](/client-side-security/reference/csp-header/).
+When you turn on resource monitoring, Cloudflare automatically adds a `content-security-policy-report-only` HTTP header to a sample of HTML responses. For details on the header format, refer to [CSP HTTP header format](/client-side-security/reference/csp-header/).
 
 This header instructs the browser to report all loaded scripts and connections without blocking them. This allows Cloudflare to provide you with a list of all scripts running on your application and the connections they make to third-party endpoints. Cloudflare also monitors ingress and egress traffic for cookies, either set by origin servers or by the visitor's browser.
 
