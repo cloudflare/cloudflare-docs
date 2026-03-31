@@ -402,10 +402,13 @@ const props = {
 		margin-top: 0;
 	}
 	body:has(.landing-root) footer .custom-footer-section {
+		position: relative;
+		z-index: 1;
 		max-width: 1280px;
 		margin-inline: auto;
 		padding-inline: 1.5rem;
 		padding-bottom: 1.5rem;
 		border-top: 1px solid var(--sl-color-gray-6);
+		background-color: var(--sl-color-bg);
 	}
 </style>
