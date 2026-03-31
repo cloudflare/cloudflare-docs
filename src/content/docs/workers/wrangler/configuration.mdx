@@ -284,6 +284,9 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
   - Declares the secret names your Worker requires. Used for validation during local development and deploy, and as the source of truth for type generation. Refer to [Secrets](#secrets).
   - `required` <Type text="string[]" /> <MetaInfo text="optional" /> — A list of secret names that must be set to deploy your Worker.
 
+- `secrets_store_secrets` <Type text="object" /> <MetaInfo text="optional" />
+	- A list of Secrets Store bindings that your worker should be bound to. Refer to [Secrets Store](/secrets-store/).
+
 ## Types of routes
 
 There are three types of [routes](/workers/configuration/routing/): [Custom Domains](/workers/configuration/routing/custom-domains/), [routes](/workers/configuration/routing/routes/), and [`workers.dev`](/workers/configuration/routing/workers-dev/).
