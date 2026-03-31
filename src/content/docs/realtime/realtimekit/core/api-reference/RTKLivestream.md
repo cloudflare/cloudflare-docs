@@ -1,7 +1,7 @@
 ---
 title: RTKLivestream
 sidebar_position: 5
-web_core_version: 1.2.4
+web_core_version: 1.3.0-staging.2
 ---
 
 <!-- Auto Generated Below -->
