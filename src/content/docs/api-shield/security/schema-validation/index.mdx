@@ -192,7 +192,7 @@ To set up a fallthrough action:
 {/* prettier-ignore-end */}
 
 :::note
-You can use the `cf.api_gateway.fallthrough_triggered` syntax in your own custom rule for a more customized logic check. This detection will evaluate as `true` when a request does not match an endpoint in Endpoint Management, so it is important to check against your API's hostname or root path to ensure that you are not blocking any non-API traffic on your zone.
+You can use the `cf.api_gateway.fallthrough_detected` field in your own custom rule for a more customized logic check. This field evaluates as `true` when a request does not match an endpoint in Endpoint Management. Check against your API hostname or root path to ensure that you are not blocking non-API traffic on your zone.
 :::
 
 ### Change the action of an entire schema
