@@ -1,0 +1,46 @@
+---
+pcx_content_type: how-to
+title: Create a rule in the dashboard
+sidebar:
+  order: 3
+head:
+  - tag: title
+    content: Create a Cache Response Rule in the dashboard
+---
+
+import { Render, DashButton } from "~/components";
+
+1. In the Cloudflare dashboard, go to **Cache** > **Cache Rules**.
+
+   <DashButton url="/?to=/:account/:zone/caching/cache-rules" />
+
+2. Select the **Cache Response Rules** tab.
+3. Select **Create rule**.
+
+4. Enter a descriptive name for the rule in **Rule name**.
+5. Under **When incoming requests match**, select **All incoming requests** if you want the rule to apply to all traffic or **Custom filter expression** if you want the rule to only apply to traffic matching the custom expression.
+6. If you selected **Custom filter expression**, define the [rule expression](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-builder). Use the **Field** drop-down list to choose an HTTP property and select an **Operator**. Both request fields (such as URI path or hostname) and response fields (such as response status code or response headers) are available for matching. Refer to [Available settings](/cache/how-to/cache-response-rules/settings/) for the full list of available fields and operators.
+
+   :::note
+   Rules can be further customized by using the **Edit expression** option. You can find more information in [Edit expressions in the dashboard](/ruleset-engine/rules-language/expressions/edit-expressions/).
+   :::
+
+7. Following the selection of the field and operator, enter the corresponding value that will trigger the Cache Response Rule. For example, if the selected field is `Hostname` and the operator is `equals`, a value of `example.com` would mean the rule matches any request to that hostname.
+8. Under **Then**, select one of the following actions:
+
+   - **Modify cache-control directives**: Set or remove `Cache-Control` directives sent by your origin. For each directive, choose **Set directive** or **Remove directive**. For duration-based directives like `max-age` or `s-maxage`, enter a value in seconds. Turn on **Cloudflare only** to apply the directive only within Cloudflare's cache without changing what visitors receive. Refer to [Supported directives](/cache/how-to/cache-response-rules/settings/#supported-directives) for the full list.
+
+   - **Modify cache tags**: Add, override, or remove cache tags on the response for targeted [purging](/cache/how-to/purge-cache/purge-by-tags/). Select one of the following operations:
+     - **Add to existing tags**: Append new tags to the current set.
+     - **Override existing tags**: Replace all current tags with the specified tags.
+     - **Remove from existing tags**: Remove specific tags from the current set.
+
+     For the tag source, you can either specify tags manually or select **Parse from response header** to extract tags from a response header value. When parsing from a header, you can split the header value using a custom separator (for example, commas instead of spaces).
+
+   - **Strip headers**: Remove `Set-Cookie`, `ETag`, or `Last-Modified` headers from the origin response before Cloudflare evaluates the response for caching. Select which headers to strip.
+
+   For more details on each action, refer to [Available settings](/cache/how-to/cache-response-rules/settings/#available-actions).
+9. Under **Place at**, from the dropdown, you can select the order of your rule. From the main page, you can also change the order of the rules you have created.
+10. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
+
+   <Render file="rules-creation-dash-dns-popup" product="rules" />

@@ -17,7 +17,7 @@ products:
     bots,
     ddos-protection,
     dns-firewall,
-    page-shield,
+    client-side-security,
     ssl,
     spectrum,
     security-center,
@@ -139,7 +139,7 @@ The reason the Cloudflare network exists is to provide services to customers to 
         4. [L7 DDoS](#l7-ddos)
         5. [API Shield](#api-shield)
         6. [Bot Management](#bot-management)
-        7. [Page Shield](#page-shield)
+        7. [Client-side security](#client-side-security)
         8. [SSL/TLS](#ssltls)
         9. [Security Center](#security-center)
         10. [Cloudflare for SaaS](#cloudflare-for-saas)
@@ -194,7 +194,7 @@ Cloudflare security products that can be used for L3 and L4 security include Clo
 
 - Layer 7, referred to as the “application layer,” is the top layer of the data processing that occurs just below the surface or behind the scenes of the software applications that users interact with. HTTP and API requests/responses are layer 7 events.
 
-Cloudflare has a suite of application security products that includes [Web Application Firewall](/waf/) (WAF), [Rate Limiting](/waf/rate-limiting-rules/), [L7 DDoS](/ddos-protection/managed-rulesets/http/), [API Shield](/api-shield/), [Bot Management](/bots/), and [Page Shield](/page-shield/).
+Cloudflare has a suite of application security products that includes [Web Application Firewall](/waf/) (WAF), [Rate Limiting](/waf/rate-limiting-rules/), [L7 DDoS](/ddos-protection/managed-rulesets/http/), [API Shield](/api-shield/), [Bot Management](/bots/), and [client-side security](/client-side-security/).
 
 Note that SaaS applications could be considered both public and private. For example, Salesforce has direct Internet-facing access but contains very private information and is usually only accessible by employee accounts that are provisioned by IT. For the purpose of this document, we will consider SaaS applications as private resources.
 
@@ -260,22 +260,22 @@ Products: [SSL/TLS - mTLS](/ssl/client-certificates/enable-mtls/), [API Shield (
 
 ##### Client-side attacks
 
-Client-side attacks like [Magecart](https://blog.cloudflare.com/detecting-magecart-style-attacks-for-pageshield) involve compromising third-party libraries, compromising a website, or exploiting vulnerabilities in order to exfiltrate sensitive user data to an attacker-controlled domain. Page Shield leverages Cloudflare’s position in the network as a reverse proxy to receive information directly from the browser about:
+Client-side attacks like [Magecart](https://blog.cloudflare.com/detecting-magecart-style-attacks-for-pageshield) involve compromising third-party libraries, compromising a website, or exploiting vulnerabilities in order to exfiltrate sensitive user data to an attacker-controlled domain. Client-side security leverages Cloudflare’s position in the network as a reverse proxy to receive information directly from the browser about:
 
 1. What JavaScript files/modules are being loaded
 2. Outbound connections made
-3. Inventory of cookies used by the application (planned to be available late 2024)
+3. Inventory of cookies used by the application
 
-Page Shield uses threat-feed detections of malicious JavaScript domains and URLs. In addition, it can download JavaScript source files and run them through a machine learning classifier to identify malicious behavior and activity; the result is a JS Integrity Score designating if the JavaScript file is malicious. Page Shield can also detect changes to JavaScript files. Alerts using emails, webhooks, and PagerDuty can be set based on different criteria such as new resources identified, code changes, and malicious code/domains/URLs.
+Client-side security uses threat-feed detections of malicious JavaScript domains and URLs. In addition, it can download JavaScript source files and run them through a machine learning classifier to identify malicious behavior and activity; the result is a JS Integrity Score designating if the JavaScript file is malicious. Client-side security can also detect changes to JavaScript files. Alerts using emails, webhooks, and PagerDuty can be set based on different criteria such as new resources identified, code changes, and malicious code/domains/URLs.
 
-Page Shield [Content Security policies](/page-shield/policies/) can be created and applied to add an additional level of security that helps detect and mitigate certain types of attacks, including:
+[Content security rules](/client-side-security/rules/) can be created and applied to add an additional level of security that helps detect and mitigate certain types of attacks, including:
 
 - Content/code injection
 - Cross-site scripting (XSS)
 - Embedding malicious resources
 - Malicious iframes (clickjacking)
 
-Products: [Page Shield](/page-shield/)
+Products: [Client-side security](/client-side-security/)
 
 ##### Data exfiltration
 
@@ -301,9 +301,9 @@ Products: [Bot Management](/bots/), [WAF](/waf/), [Rate Limiting](/waf/rate-limi
 
 ##### Credit card skimming
 
-Credit card skimming is a fraudulent method to skim payment information from websites. Page Shield can be used to detect clients using malicious JavaScript libraries or making connections to known malicious domains or URLs. Page Shield will also detect changes to files/code being used on a site and give a JS Integrity Score to JavaScript files assessing whether the code is malicious. Content Security Policies (CSPs) can be deployed to enforce a positive security model. These capabilities can prevent compromised code from performing malicious behavior such as credit card skimming.
+Credit card skimming is a fraudulent method to skim payment information from websites. Client-side security can be used to detect clients using malicious JavaScript libraries or making connections to known malicious domains or URLs. Client-side security will also detect changes to files/code being used on a site and give a JS Integrity Score to JavaScript files assessing whether the code is malicious. Content Security Policies (CSPs) can be deployed to enforce a positive security model. These capabilities can prevent compromised code from performing malicious behavior such as credit card skimming.
 
-Products: [Page Shield](/page-shield/)
+Products: [Client-side security](/client-side-security/)
 
 ##### Inventory hoarding
 
@@ -420,11 +420,11 @@ With [Turnstile](/turnstile/), Cloudflare has completely moved away from CAPTCHA
 
 ![Turnstile can be deployed to totally avoid presenting users with a CAPTCHA.](~/assets/images/reference-architecture/security/security-ref-arch-13.svg)
 
-##### Page Shield
+##### Client-side security
 
-[Page Shield](/page-shield/) ensures the safety of website visitors’ browser environment and protects against client-side attacks like Magecart. By using a Content Security Policy (CSP) deployed with a report-only directive to collect information from the browser, Page Shield tracks loaded resources like scripts and detects new resources or connections being made by the browser. Additionally, Page Shield alerts customers if it detects scripts from malicious domains or URLs — or connections being made from the browser to malicious domains or URLs.
+[Client-side security](/client-side-security/) (formerly known as Page Shield) ensures the safety of website visitors’ browser environment and protects against client-side attacks like Magecart. By using a Content Security Policy (CSP) deployed with a report-only directive to collect information from the browser, client-side security tracks loaded resources like scripts and detects new resources or connections being made by the browser. Additionally, client-side security alerts customers if it detects scripts from malicious domains or URLs — or connections being made from the browser to malicious domains or URLs.
 
-Page Shield can download JavaScript source files and run them through a machine learning classifier to identify malicious behavior and activity; the result is a JS Integrity Score designating if the JavaScript file is malicious.
+Client-side security can download JavaScript source files and run them through a machine learning classifier to identify malicious behavior and activity; the result is a JS Integrity Score designating if the JavaScript file is malicious.
 
 ##### SSL/TLS
 
@@ -528,7 +528,7 @@ Existing private infrastructure can be complex. Cloudflare provides a variety of
 | [Cloudflare One Appliance](/cloudflare-wan/configuration/appliance/)                                          | Appliance-based IPsec or GRE tunnel from networking devices to Cloudflare, routing entire network traffic.                                                   | Uses the same technology as Cloudflare WAN; however, instead of using existing networking devices, a dedicated appliance or virtual machine is used — the Cloudflare One Appliance. |
 | [cloudflared](/cloudflare-one/networks/connectors/cloudflare-tunnel/)                                         | Software agent deployed on servers or alongside services like Kubernetes for creating a tunnel for incoming connections to private applications or networks. | IT admins or application owners can easily install this tunnel software to expose their application to the Cloudflare network.                                                      |
 | [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/)           | Software agent deployed on servers for creating a tunnel for incoming and outgoing connections to private applications or networks.                          | Similar to cloudflared, but supports East to West traffic and is often used in place of Cloudflare WAN when there is no ability to create an IPsec tunnel from existing devices.    |
-| [WARP Desktop Agent](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/)                                        | Software agent deployed on user devices, creating a tunnel for traffic to and from private applications and networks.                                        | Connecting end user devices like phones and laptops to be part of the Cloudflare network.                                                                                           |
+| [WARP Desktop Agent](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/)                       | Software agent deployed on user devices, creating a tunnel for traffic to and from private applications and networks.                                        | Connecting end user devices like phones and laptops to be part of the Cloudflare network.                                                                                           |
 | [Cloudflare Network Interconnect](https://www.cloudflare.com/network-services/products/network-interconnect/) | Direct connection between your physical networks and Cloudflare.                                                                                             | When your applications live in the same data centers we operate in, we can connect those networks directly to Cloudflare.                                                           |
 
 For more details on how these methods work, please refer to our [SASE reference architecture](/reference-architecture/architectures/sase/).

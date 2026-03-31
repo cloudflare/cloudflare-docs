@@ -16,7 +16,7 @@ import {
 	Badge,
 } from "~/components";
 
-Cloudflare Gateway can perform [SSL/TLS decryption](https://www.cloudflare.com/learning/security/what-is-https-inspection/) in order to inspect HTTPS traffic for malware and other security risks.
+Cloudflare Gateway can perform [SSL/TLS decryption](https://www.cloudflare.com/learning/security/what-is-https-inspection/) to inspect HTTPS traffic for malware and other security risks. TLS decryption is required for HTTP policies to inspect HTTPS traffic. Without it, information contained within HTTPS encryption, such as the full URL, headers, and request body, [will not be visible to Gateway](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect).
 
 When you turn on TLS decryption, Gateway will decrypt all traffic sent over HTTPS, apply your HTTP policies, and then re-encrypt the request with a [user-side certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/).
 
@@ -103,11 +103,11 @@ Chrome Enterprise users can turn off automatic HTTPS upgrades for all URLs with 
 
 ### Mutual TLS (mTLS)
 
-When decrypting TLS to inspect traffic, connections that use mutual TLS (mTLS) will fail because Gateway cannot return the necessary client certificate. To prevent connection failures, create a [Do Not Inspect policy](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) for this traffic.
+In mutual TLS (mTLS), both the client and server present certificates to verify each other's identity. When Gateway decrypts TLS traffic, it terminates the connection from the client and creates a new connection to the origin server. Because Gateway cannot forward the client's certificate to the origin, the mTLS handshake fails. To prevent connection failures, create a [Do Not Inspect policy](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) for this traffic.
 
 ### ESNI and ECH
 
-Websites that adhere to [ESNI or Encrypted Client Hello (ECH) standards](https://blog.cloudflare.com/encrypted-client-hello/) encrypt the Server Name Indicator (SNI) during the TLS handshake and are therefore incompatible with HTTP inspection. This is because Gateway relies on the SNI to match an HTTP request to a policy. If the ECH fails, browsers will retry the TLS handshake using the unencrypted SNI from the initial request. To avoid this behavior, you can disable ECH in your users' browsers.
+Websites that adhere to [ESNI or Encrypted Client Hello (ECH) standards](https://blog.cloudflare.com/encrypted-client-hello/) encrypt the Server Name Indication (SNI) during the TLS handshake and are therefore incompatible with HTTP inspection. Gateway relies on the SNI to match an HTTP request to a policy — if the SNI is encrypted, Gateway cannot determine which policy to apply. If the ECH fails, browsers will retry the TLS handshake using the unencrypted SNI from the initial request. To avoid this behavior, you can disable ECH in your users' browsers.
 
 You can still apply all [network policy filters](/cloudflare-one/traffic-policies/network-policies/#selectors) except for SNI and SNI Domain. To restrict ESNI and ECH traffic, an option is to filter out all port `80` and `443` traffic that does not include an SNI header.
 

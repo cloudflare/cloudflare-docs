@@ -1,0 +1,51 @@
+---
+title: AI Search UI snippets and MCP support
+description: Embed AI Search components in your website and connect AI agents via MCP.
+products:
+  - ai-search
+date: 2026-03-23
+---
+
+import { DashButton } from "~/components";
+
+[AI Search](/ai-search/) now supports public endpoints, UI snippets, and MCP, making it easy to add search to your website or connect AI agents.
+
+Public endpoints allow you to expose AI Search capabilities without requiring API authentication. To enable public endpoints:
+
+1. Go to **AI Search** in the Cloudflare dashboard.
+   <DashButton url="/?to=/:account/ai/ai-search" />
+2. Select your instance, and turn on **Public Endpoint** in **Settings**.
+   For more details, refer to [Public endpoint configuration](/ai-search/configuration/public-endpoint/).
+
+## UI snippets
+
+UI snippets are pre-built search and chat components you can embed in your website. Visit [search.ai.cloudflare.com](https://search.ai.cloudflare.com/) to configure and preview components for your AI Search instance.
+
+![Example of the search-modal-snippet component](~/assets/images/ai-search/ui-snippet-search-modal.png)
+
+To add a search modal to your page:
+
+```html
+<script
+	type="module"
+	src="https://<INSTANCE_ID>.search.ai.cloudflare.com/assets/v0.0.25/search-snippet.es.js"
+></script>
+
+<search-modal-snippet
+	api-url="https://<INSTANCE_ID>.search.ai.cloudflare.com/"
+	placeholder="Search..."
+>
+</search-modal-snippet>
+```
+
+For more details, refer to the [UI snippets documentation](/ai-search/configuration/embed-search-snippets/).
+
+## MCP
+
+The MCP endpoint allows AI agents to search your content via the Model Context Protocol. Connect your MCP client to:
+
+```txt
+https://<INSTANCE_ID>.search.ai.cloudflare.com/mcp
+```
+
+For more details, refer to the [MCP documentation](/ai-search/usage/mcp/).

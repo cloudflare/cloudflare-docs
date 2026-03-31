@@ -15,13 +15,13 @@ This feature requires an Enterprise plan.
 
 ## Account-level deployment
 
-At the account level, you can deploy each [WAF managed ruleset](/waf/managed-rules/#available-managed-rulesets) more than once. This means that you can apply the same managed ruleset with different configurations to different subsets of incoming traffic for the Enterprise zones in your account.
+At the zone level, each [WAF managed ruleset](/waf/managed-rules/#available-managed-rulesets) can only be deployed once. At the account level, you can deploy each managed ruleset more than once. This allows you to apply the same ruleset with different configurations to different subsets of incoming traffic across the Enterprise zones in your account.
 
-For example, you could deploy the [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/) multiple times with different paranoia levels and a different action (_Managed Challenge_ action for PL3 and _Log_ action for PL4).
+For example, you could deploy the [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/) multiple times with different [paranoia levels](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#paranoia-level) and a different action (_Managed Challenge_ action for PL3 and _Log_ action for PL4). Higher paranoia levels enable additional rules that are more likely to produce false positives.
 
 <Details header="Example: Deploy OWASP with two different configurations">
 
-The following example deploys the [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/) multiple times at the account level through the following execute rules:
+The following example deploys the [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/) multiple times at the account level through the following [execute rules](/ruleset-engine/managed-rulesets/deploy-managed-ruleset/):
 
 - First execute rule: Enable OWASP rules up to paranoia level 3 (PL3) and set the action to _Managed Challenge_.
 - Second execute rule: Enable OWASP rules up to PL4 and set the action to _Log_.
@@ -48,7 +48,7 @@ Once you finish your configuration, the **Deployed managed rulesets** list will 
 
 </TabItem> <TabItem label="API">
 
-The following `POST` request for the [Create an account ruleset](/api/resources/rulesets/methods/create/) operation creates an [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) for the `http_request_firewall_managed` phase at the account level. The ruleset includes two rules deploying the Cloudflare OWASP Core Ruleset twice with different configurations.
+The following `POST` request for the [Create an account ruleset](/api/resources/rulesets/methods/create/) operation creates an [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) for the `http_request_firewall_managed` [phase](/ruleset-engine/about/phases/) at the account level. The ruleset includes two rules deploying the Cloudflare OWASP Core Ruleset twice with different configurations.
 
 <APIRequest
 	path="/accounts/{account_id}/rulesets"
