@@ -95,15 +95,9 @@ function findLinkLine(filePath: string, link: string): number | null {
 	return null;
 }
 
-function emitAnnotation(
-	file: string,
-	line: number | null,
-	link: string,
-	errorType: string,
-): void {
+function emitAnnotation(file: string, line: number | null, link: string): void {
 	const location = line !== null ? `file=${file},line=${line}` : `file=${file}`;
-	// GHA annotation format: ::error file=<path>,line=<n>::<message>
-	console.log(`::error ${location}::${link} — ${errorType}`);
+	console.log(`::error ${location}::Invalid link: "${link}" was not resolved.`);
 }
 
 function run(): void {
@@ -148,20 +142,19 @@ function run(): void {
 		const linkMatch = content.match(/^\s*[├└]─\s+(\S+)\s+-\s+(.+)$/);
 		if (linkMatch && currentSlug) {
 			const link = linkMatch[1];
-			const errorType = linkMatch[2].trim();
 
 			const sourceFile = findSourceFile(currentSlug);
 			if (!sourceFile) {
 				// Can't map to a file — emit a generic annotation on the run.
 				console.log(
-					`::error::${link} — ${errorType} (in ${currentSlug}, source file not found)`,
+					`::error::Invalid link: "${link}" was not resolved. (in ${currentSlug}, source file not found)`,
 				);
 				annotationCount++;
 				continue;
 			}
 
 			const lineNumber = findLinkLine(sourceFile, link);
-			emitAnnotation(sourceFile, lineNumber, link, errorType);
+			emitAnnotation(sourceFile, lineNumber, link);
 			annotationCount++;
 		}
 	}
