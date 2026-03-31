@@ -16,13 +16,13 @@ Global, [zone-level](/ssl/origin-configuration/authenticated-origin-pull/set-up/
 
 ## Before you begin
 
-Make sure your zone is using an [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/) of **Full** or higher.
+- Make sure your zone is using an [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/) of **Full** or higher.
 
-:::caution
+- Consider your security and certificate needs:
 
-The Cloudflare-provided certificate is not exclusive to your account. It only guarantees that a request is coming from the Cloudflare network. If you need stricter security, set up [zone-level](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/) or [per-hostname](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/) AOP with your own certificate instead.
+   - The Cloudflare-provided certificate is not exclusive to your account. It only guarantees that a request is coming from the Cloudflare network. If you need stricter security, set up [zone-level](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/) or [per-hostname](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/) AOP with your own certificate instead.
 
-:::
+   - Global AOP is applied to all proxied hostnames on your zone, including [custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/) configured on a Cloudflare for SaaS zone. If you need a different AOP certificate for different custom hostnames, use [per-hostname AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/).
 
 ## 1. Download the Cloudflare certificate
 

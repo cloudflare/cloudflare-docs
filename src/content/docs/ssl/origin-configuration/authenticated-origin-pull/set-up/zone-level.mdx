@@ -32,7 +32,11 @@ If you need a different AOP certificate for different custom hostnames, use [per
 
 :::
 
-Zone-level AOP requires you to upload your own certificate.
+Zone-level AOP requires you to upload your own certificate. Refer to the steps below for an example of how to generate a custom certificate using OpenSSL. The CA root certificate that you use to issue the custom certificate should be the same CA that you will [upload to your origin](#3-configure-origin-to-accept-client-certificates).
+
+<Details header="OpenSSL example">
+	<Render file="custom-cert-openssl-commands" product="ssl" />
+</Details>
 
 ## 1. Upload your certificate to Cloudflare
 
@@ -46,9 +50,19 @@ Zone-level AOP requires you to upload your own certificate.
 3. In the **Zone-level** section, select **Upload certificate**.
 4. Paste the certificate and private key, then select **Upload**.
 
+:::note
+
+You must upload a [leaf certificate](/ssl/concepts/#chain-of-trust). If you upload a root CA instead, the upload will fail.
+:::
+
 </TabItem> <TabItem label="API">
 
-Follow the API instructions to [upload a custom certificate to Cloudflare](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate), but use the [`origin_tls_client_auth` endpoint](/api/resources/origin_tls_client_auth/subresources/zone_certificates/methods/create/).
+Use the [Upload a zone-level client certificate](/api/resources/origin_tls_client_auth/subresources/zone_certificates/methods/create/) endpoint to upload your certificate.
+
+:::note
+
+You must upload a [leaf certificate](/ssl/concepts/#chain-of-trust). If you upload a root CA instead, the API will return a `missing leaf certificate` error.
+:::
 
 </TabItem> </Tabs>
 
