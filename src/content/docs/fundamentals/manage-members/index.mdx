@@ -1,17 +1,20 @@
 ---
 pcx_content_type: navigation
-title: Members
+title: Members and permissions
 sidebar:
   order: 5
+  label: Members and permissions
 head:
   - tag: title
-    content: Account members
+    content: Members and permissions
 
 ---
 
 import { DirectoryListing } from "~/components"
 
 On any Cloudflare account, you can collaborate by adding members to your account and assigning them access via one or several policies.
+
+Configuring permissions for each member helps prevent accidental changes to your account. For example, you can scope a team member to only manage staging domains, so they do not accidentally modify a production site. Use policies to grant each member the minimum level of access they need.
 
 Every policy has three parts:
 

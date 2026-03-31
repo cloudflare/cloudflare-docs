@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 100" fill="none">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .step-num { font-size: 11px; font-weight: 700; fill: #fff; }
+    .step-label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+    .step-sub { font-size: 12px; fill: #555; font-family: 'SF Mono', SFMono-Regular, Consolas, monospace; }
+    .box { fill: #f8f9fa; stroke: #d0d5dd; stroke-width: 1.5; rx: 8; }
+    .box-hl { fill: #fff3e6; stroke: #f6821f; stroke-width: 1.5; rx: 8; }
+    .pill { fill: #f6821f; rx: 10; ry: 10; }
+    .arrow { stroke: #d0d5dd; stroke-width: 1.5; fill: none; marker-end: url(#arrowhead); }
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#d0d5dd"/>
+    </marker>
+  </defs>
+
+  <!-- All boxes: 16px horizontal padding, 14px top padding to pill, 14px bottom padding from subtitle -->
+  <!-- Pill: 52x20. Label starts 8px right of pill. Subtitle 20px below label baseline. -->
+  <!-- Box height: 14 + 20 + 6 + 16 + 20 + 14 = 90 → use 80 -->
+
+  <!-- Step 1: box fits "Get Worker tag" + "GET /workers/scripts" -->
+  <rect class="box" x="10" y="8" width="218" height="80"/>
+  <rect class="pill" x="26" y="22" width="52" height="20"/>
+  <text class="step-num" x="52" y="36" text-anchor="middle">Step 1</text>
+  <text class="step-label" x="86" y="36">Get Worker tag</text>
+  <text class="step-sub" x="26" y="62">GET /workers/scripts</text>
+
+  <line class="arrow" x1="228" y1="48" x2="264" y2="48"/>
+
+  <!-- Step 2: box fits "Get trigger UUID" + "GET .../triggers" -->
+  <rect class="box" x="272" y="8" width="218" height="80"/>
+  <rect class="pill" x="288" y="22" width="52" height="20"/>
+  <text class="step-num" x="314" y="36" text-anchor="middle">Step 2</text>
+  <text class="step-label" x="348" y="36">Get trigger UUID</text>
+  <text class="step-sub" x="288" y="62">GET .../triggers</text>
+
+  <line class="arrow" x1="490" y1="48" x2="526" y2="48"/>
+
+  <!-- Step 3: box fits "Build operations" + "Trigger / List / Logs" -->
+  <rect class="box-hl" x="534" y="8" width="218" height="80"/>
+  <rect class="pill" x="550" y="22" width="52" height="20"/>
+  <text class="step-num" x="576" y="36" text-anchor="middle">Step 3</text>
+  <text class="step-label" x="610" y="36">Build operations</text>
+  <text class="step-sub" x="550" y="62">Trigger / List / Logs</text>
+</svg>

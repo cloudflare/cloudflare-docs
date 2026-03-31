@@ -218,10 +218,10 @@ product:notifications:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/notifications/**
-product:page-shield:
+product:client-side-security:
   - changed-files:
       - any-glob-to-any-file:
-          - src/content/docs/page-shield/**
+          - src/content/docs/client-side-security/**
 product:pages:
   - changed-files:
       - any-glob-to-any-file:

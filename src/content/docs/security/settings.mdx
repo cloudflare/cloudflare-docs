@@ -88,7 +88,7 @@ The bot traffic security category includes features and settings from [Bots](/bo
 In the **API abuse** security category you can manage the following settings:
 
 - [Developer portal](/api-shield/management-and-monitoring/developer-portal/) creation
-- [Endpoint discovery](/api-shield/security/api-discovery/) (always enabled if included in your Enterprise subscriptions; requires you to configure a [session identifier](/api-shield/management-and-monitoring/session-identifiers/))
+- Web asset discovery (always enabled if included in your Enterprise subscriptions. For Enterprise subscriptions, [API endpoint discovery](/api-shield/security/api-discovery/) is also included, which requires you to configure a [session identifier](/api-shield/management-and-monitoring/session-identifiers/))
 - [Endpoint labels](/api-shield/management-and-monitoring/endpoint-labels/)
 - [JWT validation](/api-shield/security/jwt-validation/) (requires you to add a [JWT configuration](/api-shield/security/jwt-validation/api/#token-configurations))
 
@@ -100,14 +100,14 @@ The API abuse security category includes features and settings from [API Shield]
 
 In the **Client-side abuse** security category you can manage the following settings:
 
-- [Continuous script monitoring](/page-shield/how-it-works/) (previously [Page Shield](/page-shield/)):
-  - [Reporting endpoint](/page-shield/reference/settings/#reporting-endpoint) to use your hostname instead of a Cloudflare-owned endpoint (only for Enterprise customers with a paid add-on)
-  - [Data logged in client-side abuse reports](/page-shield/reference/settings/#connection-target-details) (only the hostname or the full URI)
+- [Continuous script monitoring](/client-side-security/how-it-works/):
+  - [Reporting endpoint](/client-side-security/reference/settings/#reporting-endpoint) to use your hostname instead of a Cloudflare-owned endpoint (only for Enterprise customers with a paid add-on)
+  - [Data logged in client-side abuse reports](/client-side-security/reference/settings/#connection-target-details) (only the hostname or the full URI)
 - [Email Address Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/)
 - [Hotlink Protection](/waf/tools/scrape-shield/hotlink-protection/)
 
 :::note
-The client-side abuse security category includes features and settings from [Page Shield](/page-shield/) and [Scrape Shield](/waf/tools/scrape-shield/) in the previous dashboard navigation structure.
+The client-side abuse security category includes features and settings from [client-side security](/client-side-security/) (formerly known as Page Shield) and [Scrape Shield](/waf/tools/scrape-shield/) in the previous dashboard navigation structure.
 :::
 
 ## All settings
@@ -126,14 +126,14 @@ The following table links to additional information about each available setting
 | Challenge Passage: [Timeout](/cloudflare-challenges/challenge-types/challenge-pages/challenge-passage/)               | **Security** > **Settings**                                                                                                                                                |
 | [Client certificates](/ssl/client-certificates/)                                                                      | **SSL** > **Client Certificates**                                                                                                                                          |
 | [Cloudflare managed ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/)                                | **Security** > **WAF** > **Managed rules** tab                                                                                                                             |
-| [Continuous script monitoring](/page-shield/how-it-works/):                                                           | **Security** > **Page Shield**                                                                                                                                             |
-| — [Reporting endpoint](/page-shield/reference/settings/#reporting-endpoint)                                           | **Security** > **Page Shield** > **Settings**                                                                                                                              |
-| — [Data processing](/page-shield/reference/settings/#connection-target-details)                                       | **Security** > **Page Shield** > **Settings**                                                                                                                              |
-| — [Alerts](/page-shield/alerts/configure/)                                                                            | **Security** > **Page Shield** > **Settings**<br/>Account Home > **Notifications**                                                                                         |
+| [Continuous script monitoring](/client-side-security/how-it-works/):                                                  | **Security** > **Client-side security**                                                                                                                                    |
+| — [Reporting endpoint](/client-side-security/reference/settings/#reporting-endpoint)                                  | **Security** > **Client-side security** > **Settings**                                                                                                                     |
+| — [Data processing](/client-side-security/reference/settings/#connection-target-details)                              | **Security** > **Client-side security** > **Settings**                                                                                                                     |
+| — [Alerts](/client-side-security/alerts/configure/)                                                                   | **Security** > **Client-side security** > **Settings**<br/>Account Home > **Notifications**                                                                                |
 | [Create a developer portal](/api-shield/management-and-monitoring/developer-portal/)                                  | **Security** > **API Shield** > **Settings**                                                                                                                               |
 | [Custom fallthrough rules](/api-shield/security/schema-validation/#add-validation-by-adding-a-fallthrough-rule)       | **Security** > **API Shield** > **Settings**                                                                                                                               |
 | [Email Address Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/)                                      | **Scrape Shield**                                                                                                                                                          |
-| [Endpoint discovery](/api-shield/security/api-discovery/):                                                            | **API Shield** > **Discovery**                                                                                                                                             |
+| [API endpoint discovery](/api-shield/security/api-discovery/):                                                        | **API Shield** > **Discovery**                                                                                                                                             |
 | — [Session identifiers](/api-shield/management-and-monitoring/session-identifiers/)                                   | **Security** > **API Shield** > **Settings**                                                                                                                               |
 | [Endpoint labels](/api-shield/management-and-monitoring/endpoint-labels/)                                             | **Security** > **Settings** > **Labels**                                                                                                                                   |
 | [Hotlink Protection](/waf/tools/scrape-shield/hotlink-protection/)                                                    | **Scrape Shield**                                                                                                                                                          |

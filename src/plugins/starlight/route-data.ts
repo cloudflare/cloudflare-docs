@@ -1,15 +1,15 @@
 import { defineRouteMiddleware } from "@astrojs/starlight/route-data";
 import { tags as allowedTags } from "~/schemas/tags";
 
+const tagValues = Object.values(allowedTags).flat();
+
 export const onRequest = defineRouteMiddleware(({ locals }) => {
 	const { entry } = locals.starlightRoute;
 	const { tags } = entry.data;
 
 	if (tags) {
 		const transformed = tags.map((tag) => {
-			const values = Object.values(allowedTags).flat();
-
-			const match = values.find(
+			const match = tagValues.find(
 				(val) =>
 					val.label.toLowerCase() === tag.toLowerCase() ||
 					val.variants?.find((v) => v.toLowerCase() === tag.toLowerCase()),
