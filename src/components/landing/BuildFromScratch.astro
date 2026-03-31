@@ -199,7 +199,7 @@ const primitives = [
 					hidden={i !== 0}
 					class="bg-l-card dark:bg-l-card-dark p-8 max-[600px]:p-5"
 				>
-					<div class="max-w-[640px]">
+					<div class="w-full">
 					<div class="mb-4 flex items-center gap-3">
 						<div
 							class="build-panel-icon flex size-8 shrink-0 items-center justify-center rounded border border-dashed"
@@ -216,7 +216,7 @@ const primitives = [
 						</p>
 
 						{/* Command block — segmented */}
-						<div class="mb-6 flex max-w-[560px] items-stretch overflow-hidden rounded border border-zinc-200 dark:border-[#2a2a2a]">
+						<div class="mb-6 flex max-w-[680px] items-stretch overflow-hidden rounded border border-zinc-200 dark:border-[#2a2a2a]">
 							<code
 								id={`build-cmd-${p.id}`}
 								class="bg-l-card dark:bg-l-card-dark min-w-0 flex-1 truncate px-3 py-4 font-mono text-sm leading-none text-zinc-700 select-all dark:text-zinc-300"
@@ -243,7 +243,7 @@ const primitives = [
 						</div>
 
 						{/* CTA + tags row */}
-						<div class="flex items-center gap-6 max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-4">
+						<div class="flex w-full items-center gap-6 max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-4">
 							<a
 								href={p.cta.href}
 								class="focus-visible:outline-accent inline-flex shrink-0 cursor-pointer items-center gap-2 rounded-md bg-[#18181b] px-4 py-2 text-sm font-medium text-white no-underline transition-colors duration-150 hover:bg-[#f56500] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 dark:bg-[#fafafa] dark:text-[#09090b] dark:hover:bg-[#e4e4e7] dark:hover:text-[#09090b]"
@@ -267,12 +267,14 @@ const primitives = [
 									</>
 								</svg>
 							</a>
-							<p class="relative top-px font-mono text-xs text-zinc-600 dark:text-zinc-300">
+							<p class="relative top-px min-w-0 flex-1 font-mono text-xs text-zinc-600 dark:text-zinc-300">
 								{p.tags.map((tag, idx) => (
-									<>
-										{idx > 0 && <span class="mx-1" aria-hidden="true">·</span>}
+									<span class="inline-flex items-center">
 										<a href={tag.href} class="text-zinc-600 no-underline hover:underline hover:underline-offset-4 dark:text-zinc-300">{tag.label}</a>
-									</>
+										{idx < p.tags.length - 1 && (
+											<span class="mx-1" aria-hidden="true">·</span>
+										)}
+									</span>
 								))}
 							</p>
 						</div>

@@ -2,17 +2,6 @@
 	scrollbar-gutter: stable;
 }
 
-.sidebar-header {
-	position: sticky;
-	top: 0;
-	z-index: 1;
-	display: flex;
-	flex-direction: column;
-	gap: 0.5rem;
-	padding: 1rem 0;
-	background-color: var(--sl-color-bg-sidebar, var(--sl-color-bg));
-}
-
 .sidebar-content {
 	gap: 2px;
 	padding: 0rem 1.5rem 1.5rem 1.5rem;

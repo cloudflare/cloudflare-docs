@@ -31,6 +31,7 @@ const phases = [
 		outcome: "Resolve DNS in single-digit milliseconds",
 		detail:
 			"Fastest authoritative DNS. DNSSEC, wildcard records, proxy control.",
+		cta: "Optimize DNS performance",
 		tags: ["Authoritative DNS", "DNSSEC"],
 		color: "bg-orange-400",
 		colorMuted: "bg-orange-400/20",
@@ -46,6 +47,7 @@ const phases = [
 		outcome: "Route around congestion automatically",
 		detail:
 			"Real-time network intelligence — typically 30% faster than public internet.",
+		cta: "Turn on Argo Smart Routing",
 		tags: ["Smart Routing", "Tiered Caching"],
 		color: "bg-amber-500",
 		colorMuted: "bg-amber-500/20",
@@ -60,6 +62,7 @@ const phases = [
 		href: "/cache/get-started/",
 		outcome: "Cache at the edge, not from origin",
 		detail: "Serve from 330+ cities. Cache Rules, tiered caching, purge API.",
+		cta: "Improve cache hit ratio",
 		tags: ["Cache Rules", "Tiered Cache", "Cache Reserve"],
 		color: "bg-yellow-500",
 		colorMuted: "bg-yellow-500/20",
@@ -75,6 +78,7 @@ const phases = [
 		outcome: "Make database queries feel local",
 		detail:
 			"Connection pooling and caching at the edge. Slash query latency for Postgres, MySQL, and more.",
+		cta: "Speed up database queries",
 		tags: ["Connection Pooling", "Query Caching"],
 		color: "bg-lime-500",
 		colorMuted: "bg-lime-500/20",
@@ -90,6 +94,7 @@ const phases = [
 		outcome: "Transform and serve images from the edge",
 		detail:
 			"Resize, convert to modern formats, and deliver from 330+ cities. No origin round-trip.",
+		cta: "Optimize image delivery",
 		tags: ["Transform", "Polish", "WebP/AVIF"],
 		color: "bg-teal-500",
 		colorMuted: "bg-teal-500/20",
@@ -105,18 +110,17 @@ const phases = [
 		outcome: "Move third-party scripts off the main thread",
 		detail:
 			"Load analytics, ads, and pixels server-side. Fewer network requests, faster page loads.",
+		cta: "Move scripts with Zaraz",
 		tags: ["Server-side Tags", "Consent Mgmt"],
 		color: "bg-sky-500",
 		colorMuted: "bg-sky-500/20",
 	},
 ];
 
-/** Total "before" time label */
-const beforeTotal = "~1,240 ms";
 ---
 
 <section
-	class="px-8 pt-14 pb-14 max-[900px]:px-5 max-[900px]:pt-10 max-[900px]:pb-10"
+	class="px-8 pt-10 pb-10 max-[900px]:px-5"
 	aria-labelledby="accelerate-heading"
 	id="accelerate"
 >
@@ -133,7 +137,7 @@ const beforeTotal = "~1,240 ms";
 		See where the milliseconds go
 	</h2>
 	<p
-		class="mb-8 max-w-[600px] text-sm leading-relaxed text-pretty text-zinc-500 md:text-lg dark:text-zinc-400"
+		class="mb-6 max-w-[600px] text-sm leading-relaxed text-pretty text-zinc-500 md:text-lg dark:text-zinc-400"
 	>
 		Every request is a waterfall of latency. Hover a phase to see which product
 		eliminates it — toggle to see the compound effect.
@@ -154,29 +158,29 @@ const beforeTotal = "~1,240 ms";
 				aria-hidden="true"></span>
 			<button
 				type="button"
-				id="wf-toggle-before"
+				id="wf-toggle-after"
 				role="radio"
 				aria-checked="true"
 				tabindex="0"
-				class="wf-toggle-btn wf-toggle-active focus-visible:outline-accent relative z-10 flex min-h-[44px] cursor-pointer items-center gap-2 rounded-lg px-5 py-2.5 text-base font-medium transition-colors duration-200 focus-visible:outline-2 focus-visible:-outline-offset-2 max-[600px]:px-3"
-			>
-				<span
-					class="wf-toggle-dot size-2 shrink-0 rounded-full transition-colors duration-200"
-					aria-hidden="true"></span>
-				Without Cloudflare
-			</button>
-			<button
-				type="button"
-				id="wf-toggle-after"
-				role="radio"
-				aria-checked="false"
-				tabindex="-1"
-				class="wf-toggle-btn focus-visible:outline-accent relative z-10 flex min-h-[44px] cursor-pointer items-center gap-2 rounded-lg px-5 py-2.5 text-base font-medium transition-colors duration-200 focus-visible:outline-2 focus-visible:-outline-offset-2 max-[600px]:px-3"
+				class="wf-toggle-btn wf-toggle-active focus-visible:outline-accent relative z-10 flex min-h-[40px] cursor-pointer items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors duration-200 focus-visible:outline-2 focus-visible:-outline-offset-2 max-[600px]:px-2.5"
 			>
 				<span
 					class="wf-toggle-dot size-2 shrink-0 rounded-full transition-colors duration-200"
 					aria-hidden="true"></span>
 				With Cloudflare
+			</button>
+			<button
+				type="button"
+				id="wf-toggle-before"
+				role="radio"
+				aria-checked="false"
+				tabindex="-1"
+				class="wf-toggle-btn focus-visible:outline-accent relative z-10 flex min-h-[40px] cursor-pointer items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors duration-200 focus-visible:outline-2 focus-visible:-outline-offset-2 max-[600px]:px-2.5"
+			>
+				<span
+					class="wf-toggle-dot size-2 shrink-0 rounded-full transition-colors duration-200"
+					aria-hidden="true"></span>
+				Without Cloudflare
 			</button>
 		</div>
 		<div
@@ -186,7 +190,7 @@ const beforeTotal = "~1,240 ms";
 			<span
 				id="wf-total-value"
 				class="text-sm font-semibold text-zinc-900 tabular-nums dark:text-zinc-100"
-				>{beforeTotal}</span
+				>~95 ms</span
 			>
 		</div>
 	</div>
@@ -264,7 +268,7 @@ const beforeTotal = "~1,240 ms";
 				<a
 					href={p.href}
 					class:list={[
-						"wf-row group relative grid items-center gap-3 px-4 py-3.5 no-underline transition-colors duration-150",
+						"wf-row group relative grid items-center gap-3 px-4 py-3 no-underline transition-colors duration-150",
 						"bg-l-card hover:bg-l-card-hover dark:bg-l-card-dark dark:hover:bg-l-card-hover-dark",
 						"focus-visible:outline-accent focus-visible:outline-2 focus-visible:-outline-offset-2",
 						"max-[600px]:grid-cols-[1fr] max-[600px]:gap-2 max-[600px]:px-3 max-[600px]:py-3",
@@ -275,7 +279,7 @@ const beforeTotal = "~1,240 ms";
 				>
 					{/* Accent bar — bottom reveal on hover */}
 					<span
-						class="bg-accent pointer-events-none absolute bottom-0 left-0 h-0.5 w-0 transition-[width] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:w-full"
+						class="bg-accent pointer-events-none absolute bottom-0 left-0 h-px w-0 transition-[width] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:w-full"
 						aria-hidden="true"
 					/>
 
@@ -288,28 +292,28 @@ const beforeTotal = "~1,240 ms";
 							<p class="truncate text-sm leading-tight font-medium text-zinc-800 dark:text-zinc-100">
 								{p.phase}
 							</p>
-							<p class="wf-product-label text-accent truncate font-mono text-[11px] tracking-widest uppercase opacity-0 transition-opacity duration-300">
+							<p class="wf-product-label text-accent truncate font-mono text-[11px] tracking-widest uppercase opacity-100 transition-opacity duration-300">
 								{p.product}
 							</p>
 						</div>
 					</div>
 
 					{/* Center: waterfall bar visualization */}
-					<div class="relative h-8 max-[600px]:h-6" aria-hidden="true">
+					<div class="relative h-6 max-[600px]:h-5" aria-hidden="true">
 						{/* Background track */}
 						<div class="absolute inset-0 rounded-sm bg-zinc-100 dark:bg-zinc-800/50" />
 
 						{/* "Before" bar (slow) */}
 						<div
 							class={`wf-bar wf-bar-before absolute top-1 bottom-1 rounded-sm transition-[left,width,box-shadow] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${p.color}`}
-							style={`left: ${p.before.offset}%; width: ${p.before.width}%;`}
+							style={`left: ${p.after.offset}%; width: ${p.after.width}%;`}
 							data-offset-before={p.before.offset}
 							data-width-before={p.before.width}
 							data-offset-after={p.after.offset}
 							data-width-after={p.after.width}
 						>
 							<span class="wf-bar-label absolute top-1/2 right-1.5 -translate-y-1/2 font-mono text-[9px] font-medium whitespace-nowrap text-white/90 tabular-nums drop-shadow-sm">
-								{Math.round(p.before.width * 13)}ms
+								{Math.round(p.after.width * 13)}ms
 							</span>
 						</div>
 
@@ -346,7 +350,7 @@ const beforeTotal = "~1,240 ms";
 
 		<!-- Total bar / savings summary row -->
 		<div
-			class="wf-summary bg-l-card dark:bg-l-card-dark border-t border-zinc-200 px-4 py-3.5 dark:border-[#2a2a2a]"
+			class="wf-summary bg-l-card dark:bg-l-card-dark border-t border-zinc-200 px-4 py-3 dark:border-[#2a2a2a]"
 			aria-live="polite"
 		>
 			<div class="flex items-center justify-between gap-4">
@@ -361,7 +365,7 @@ const beforeTotal = "~1,240 ms";
 						<div
 							id="wf-total-bar"
 							class="bg-accent absolute inset-y-0 left-0 rounded-full transition-[width] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
-							style="width: 95%;"
+							style="width: 8%;"
 						>
 						</div>
 					</div>
@@ -369,7 +373,7 @@ const beforeTotal = "~1,240 ms";
 				<div class="flex items-center gap-2">
 					<span
 						id="wf-savings-badge"
-						class="hidden font-mono text-xs font-semibold text-emerald-600 tabular-nums dark:text-emerald-400"
+						class="font-mono text-xs font-semibold text-emerald-600 tabular-nums dark:text-emerald-400"
 					>
 						-92% faster
 					</span>
@@ -379,9 +383,7 @@ const beforeTotal = "~1,240 ms";
 	</div>
 
 	<!-- Section bridge — connects waterfall to product cards -->
-	<h3
-		class="not-content mb-8 pt-20 text-lg font-medium -tracking-tight text-zinc-900 dark:text-zinc-100"
-	>
+	<h3 class="not-content mb-6 pt-12 text-lg font-medium -tracking-tight text-zinc-900 dark:text-zinc-100">
 		Explore by product
 	</h3>
 
@@ -399,7 +401,7 @@ const beforeTotal = "~1,240 ms";
 						scenario={p.outcome}
 						detail={p.detail}
 						href={p.href}
-						cta="Explore docs"
+						cta={p.cta}
 					/>
 				</div>
 			))
@@ -450,7 +452,19 @@ const beforeTotal = "~1,240 ms";
 	}
 	/* Only the "With Cloudflare" button gets the accent dot */
 	#wf-toggle-after.wf-toggle-active .wf-toggle-dot {
-		background-color: var(--color-accent, #f56500);
+		background-color: color-mix(in srgb, white 88%, transparent);
+	}
+	#wf-toggle-after.wf-toggle-active {
+		background: var(--color-accent, #f56500);
+		color: white;
+	}
+	#wf-toggle-after.wf-toggle-active::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		border: 1px solid color-mix(in srgb, black 12%, transparent);
+		border-radius: inherit;
+		pointer-events: none;
 	}
 	#wf-toggle-before.wf-toggle-active .wf-toggle-dot {
 		background-color: var(--color-zinc-500, #71717a);
@@ -572,7 +586,7 @@ const beforeTotal = "~1,240 ms";
 		const rows = section.querySelectorAll<HTMLElement>(".wf-row");
 		const cards = section.querySelectorAll<HTMLElement>(".wf-product-card");
 
-		let isAfter = false;
+		let isAfter = true;
 
 		/** Position the sliding indicator behind the active button */
 		function positionSlider(activeBtn: HTMLElement | null) {
@@ -586,7 +600,7 @@ const beforeTotal = "~1,240 ms";
 		}
 
 		// Set initial slider position
-		requestAnimationFrame(() => positionSlider(btnBefore));
+		requestAnimationFrame(() => positionSlider(btnAfter));
 
 		function setMode(after: boolean) {
 			isAfter = after;
@@ -604,7 +618,13 @@ const beforeTotal = "~1,240 ms";
 
 			// Show product names only in "With Cloudflare" state
 			productLabels.forEach((label) => {
-				label.style.opacity = after ? "1" : "0";
+				if (after) {
+					label.style.display = "block";
+					label.style.opacity = "1";
+				} else {
+					label.style.display = "none";
+					label.style.opacity = "0";
+				}
 			});
 
 			// Animate bars
@@ -655,8 +675,8 @@ const beforeTotal = "~1,240 ms";
 
 		const onToggleKeyDown = (event: KeyboardEvent) => {
 			if (!btnBefore || !btnAfter) return;
-			const radios = [btnBefore, btnAfter];
-			const currentIndex = isAfter ? 1 : 0;
+			const radios = [btnAfter, btnBefore];
+			const currentIndex = isAfter ? 0 : 1;
 			let nextIndex = currentIndex;
 
 			switch (event.key) {
@@ -679,14 +699,14 @@ const beforeTotal = "~1,240 ms";
 			}
 
 			event.preventDefault();
-			setMode(nextIndex === 1);
+			setMode(nextIndex === 0);
 			radios[nextIndex].focus();
 		};
 
 		btnBefore?.addEventListener("keydown", onToggleKeyDown);
 		btnAfter?.addEventListener("keydown", onToggleKeyDown);
 
-		setMode(false);
+		setMode(true);
 
 		// Cross-highlight: hovering a waterfall row highlights the matching product card and vice versa
 		function highlightPhase(phaseId: string | null) {

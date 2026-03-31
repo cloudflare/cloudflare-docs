@@ -161,12 +161,15 @@ const stats = [
 					<p class="mb-1">
 						<span
 							class="stat-counter font-mono text-3xl leading-none font-medium -tracking-tight text-zinc-900 tabular-nums dark:text-white"
-							data-target={stat.value}
-							data-suffix={stat.suffix}
-							data-decimals={stat.value % 1 !== 0 ? "2" : "0"}
 						>
-							{stat.value % 1 !== 0 ? stat.value.toFixed(2) : stat.value}
-							{stat.suffix}
+							<span
+								class="stat-counter-value inline-block"
+								data-target={stat.value}
+								data-decimals={stat.value % 1 !== 0 ? "2" : "0"}
+								style={`min-width: ${(stat.value % 1 !== 0 ? stat.value.toFixed(2) : String(stat.value)).length}ch;`}
+							>
+								{stat.value % 1 !== 0 ? stat.value.toFixed(2) : stat.value}
+							</span><span class="stat-counter-suffix">{stat.suffix}</span>
 						</span>
 					</p>
 
@@ -193,65 +196,86 @@ const stats = [
 </section>
 
 <script>
-	function easeOutExpo(t: number): number {
-		return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+	function easeOutCubic(t: number): number {
+		return 1 - Math.pow(1 - t, 3);
 	}
 
 	function animateCounter(el: HTMLElement) {
+		if (el.dataset.animated === "true") return;
+
 		const target = parseFloat(el.dataset.target ?? "0");
-		const suffix = el.dataset.suffix ?? "";
 		const decimals = parseInt(el.dataset.decimals ?? "0", 10);
+		const scale = 10 ** decimals;
+		const targetScaled = Math.round(target * scale);
 		const prefersReducedMotion = window.matchMedia(
 			"(prefers-reduced-motion: reduce)",
 		).matches;
 
 		if (prefersReducedMotion) {
-			el.textContent = target.toFixed(decimals) + suffix;
+			el.textContent = target.toFixed(decimals);
+			el.dataset.animated = "true";
 			return;
 		}
 
-		const duration = 1400;
+		const duration = 1250;
 		const start = performance.now();
+		let lastScaled = -1;
 
 		function tick(now: number) {
 			const elapsed = now - start;
 			const progress = Math.min(elapsed / duration, 1);
-			const eased = easeOutExpo(progress);
-			const current = target * eased;
+			const eased = easeOutCubic(progress);
+			const nextScaled = Math.min(targetScaled, Math.floor(targetScaled * eased));
 
-			el.textContent = current.toFixed(decimals) + suffix;
+			if (nextScaled !== lastScaled) {
+				el.textContent = (nextScaled / scale).toFixed(decimals);
+				lastScaled = nextScaled;
+			}
 
 			if (progress < 1) {
 				requestAnimationFrame(tick);
 			} else {
-				el.textContent = target.toFixed(decimals) + suffix;
+				el.textContent = target.toFixed(decimals);
+				el.dataset.animated = "true";
 			}
 		}
 
 		requestAnimationFrame(tick);
 	}
 
-	const counters = document.querySelectorAll<HTMLElement>(".stat-counter");
-
-	if ("IntersectionObserver" in window) {
-		const observer = new IntersectionObserver(
-			(entries) => {
-				entries.forEach((entry) => {
-					if (entry.isIntersecting) {
-						animateCounter(entry.target as HTMLElement);
-						observer.unobserve(entry.target);
-					}
-				});
-			},
-			{ threshold: 0.3 },
+	function initPlatformStatsCounters() {
+		const counters = document.querySelectorAll<HTMLElement>(
+			".stat-counter-value",
 		);
-		counters.forEach((el) => observer.observe(el));
-	} else {
-		counters.forEach((el) => {
-			const target = parseFloat(el.dataset.target ?? "0");
-			const suffix = el.dataset.suffix ?? "";
-			const decimals = parseInt(el.dataset.decimals ?? "0", 10);
-			el.textContent = target.toFixed(decimals) + suffix;
-		});
+
+		if ("IntersectionObserver" in window) {
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							animateCounter(entry.target as HTMLElement);
+							observer.unobserve(entry.target);
+						}
+					});
+				},
+				{ threshold: 0.35 },
+			);
+			counters.forEach((el) => observer.observe(el));
+		} else {
+			counters.forEach((el) => {
+				const target = parseFloat(el.dataset.target ?? "0");
+				const decimals = parseInt(el.dataset.decimals ?? "0", 10);
+				el.textContent = target.toFixed(decimals);
+				el.dataset.animated = "true";
+			});
+		}
+	}
+
+	initPlatformStatsCounters();
+	if (!(window as Window & { __platformStatsCountersBound?: boolean })
+		.__platformStatsCountersBound) {
+		document.addEventListener("astro:page-load", initPlatformStatsCounters);
+		(window as Window & { __platformStatsCountersBound?: boolean })
+			.__platformStatsCountersBound = true;
 	}
 </script>

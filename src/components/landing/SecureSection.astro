@@ -20,23 +20,26 @@ const categories = [
 			{
 				scenario: "Under DDoS attack",
 				product: "WAF",
-				href: "/waf/custom-rules/",
+				href: "/waf",
 				icon: "ddos-protection",
 				detail: "Custom rules, rate limiting, automatic mitigation",
+				cta: "Harden your app with WAF",
 			},
 			{
 				scenario: "SSL is fragile or misconfigured",
 				product: "SSL/TLS",
-				href: "/ssl/origin-configuration/ssl-modes/",
+				href: "/ssl",
 				icon: "ssl",
 				detail: "Automatic certificates, strict mode, mTLS",
+				cta: "Set up SSL/TLS",
 			},
 			{
 				scenario: "Bots abusing login or forms",
 				product: "Turnstile",
-				href: "/turnstile/get-started/",
+				href: "/turnstile",
 				icon: "turnstile",
 				detail: "Invisible challenge, zero CAPTCHA friction",
+				cta: "Add Turnstile protection",
 			},
 		],
 	},
@@ -46,16 +49,18 @@ const categories = [
 			{
 				scenario: "Expose internal services safely",
 				product: "Tunnel",
-				href: "/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/",
+				href: "/cloudflare-one/networks/connectors/cloudflare-tunnel",
 				icon: "tunnel",
 				detail: "Outbound-only encrypted tunnels, no open ports",
+				cta: "Create a secure Tunnel",
 			},
 			{
 				scenario: "Secure access to internal tools",
 				product: "Zero Trust",
-				href: "/cloudflare-one/setup/",
+				href: "/cloudflare-one/",
 				icon: "access",
 				detail: "Identity-aware access, device posture checks",
+				cta: "Set up Zero Trust access",
 			},
 			{
 				scenario: "Filter outbound traffic network-wide",
@@ -63,6 +68,7 @@ const categories = [
 				href: "/cloudflare-one/traffic-policies/",
 				icon: "gateway",
 				detail: "DNS filtering, HTTP policies, network controls",
+				cta: "Create Gateway policies",
 			},
 		],
 	},
@@ -102,6 +108,7 @@ const categories = [
 							scenario={t.scenario}
 							detail={t.detail}
 							href={t.href}
+							cta={t.cta}
 						/>
 					))}
 				</ProductCardGrid>

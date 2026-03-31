@@ -114,8 +114,14 @@ const getIconHoverPalette = (value: string) => {
 	};
 };
 
-const { icon, product, scenario, detail, href, cta = "Get started" } =
-	Astro.props;
+const {
+	icon,
+	product,
+	scenario,
+	detail,
+	href,
+	cta = "Get started",
+} = Astro.props;
 
 const iconHoverPalette = getIconHoverPalette(product);
 ---

@@ -36,6 +36,19 @@ const sidebar = [
 				label: "Troubleshooting",
 				link: "/support/troubleshooting/http-status-codes/",
 			},
+			{
+				label: "Resources",
+				collapsed: true,
+				badge: groupIcon("learning-paths"),
+				items: [
+					{ label: "Learning paths", link: "/learning-paths/" },
+					{ label: "Directory", link: "/directory/" },
+					{ label: "Terraform", link: "/terraform/" },
+					{ label: "Pulumi", link: "/pulumi/" },
+					{ label: "Reference architecture", link: "/reference-architecture/" },
+					{ label: "Support", link: "/support/" },
+				],
+			},
 		],
 	},
 	{
@@ -143,6 +156,18 @@ const sidebar = [
 				],
 			},
 			{
+				label: "Domains & DNS",
+				collapsed: true,
+				badge: groupIcon("dns"),
+				items: [
+					{ label: "DNS", link: "/dns/" },
+					{ label: "1.1.1.1", link: "/1.1.1.1/" },
+					{ label: "Registrar", link: "/registrar/" },
+					{ label: "Email Routing", link: "/email-routing/" },
+					{ label: "DMARC Management", link: "/dmarc-management/" },
+				],
+			},
+			{
 				label: "Networking",
 				collapsed: true,
 				badge: groupIcon("network"),
@@ -175,18 +200,6 @@ const sidebar = [
 		badge: heading("heading-other"),
 		items: [
 			{
-				label: "Domains & DNS",
-				collapsed: true,
-				badge: groupIcon("dns"),
-				items: [
-					{ label: "DNS", link: "/dns/" },
-					{ label: "1.1.1.1", link: "/1.1.1.1/" },
-					{ label: "Registrar", link: "/registrar/" },
-					{ label: "Email Routing", link: "/email-routing/" },
-					{ label: "DMARC Management", link: "/dmarc-management/" },
-				],
-			},
-			{
 				label: "Observe",
 				collapsed: true,
 				badge: groupIcon("analytics"),
@@ -196,19 +209,6 @@ const sidebar = [
 					{ label: "Logs", link: "/logs/" },
 					{ label: "Log Explorer", link: "/log-explorer/" },
 					{ label: "Health Checks", link: "/health-checks/" },
-				],
-			},
-			{
-				label: "Resources",
-				collapsed: true,
-				badge: groupIcon("learning-paths"),
-				items: [
-					{ label: "Learning paths", link: "/learning-paths/" },
-					{ label: "All products", link: "/directory/" },
-					{ label: "Terraform", link: "/terraform/" },
-					{ label: "Pulumi", link: "/pulumi/" },
-					{ label: "Reference architecture", link: "/reference-architecture/" },
-					{ label: "Support", link: "/support/" },
 				],
 			},
 		],
@@ -396,7 +396,16 @@ const props = {
 		+ :not(a, strong, em, del, span, input, code, br, :where(.not-content *)) {
 		margin-top: 0;
 	}
-	footer {
-		display: none;
+
+	/* Restore footer spacing — scoped to the landing page only */
+	body:has(.landing-root) footer {
+		margin-top: 0;
+	}
+	body:has(.landing-root) footer .custom-footer-section {
+		max-width: 1280px;
+		margin-inline: auto;
+		padding-inline: 1.5rem;
+		padding-bottom: 1.5rem;
+		border-top: 1px solid var(--sl-color-gray-6);
 	}
 </style>
