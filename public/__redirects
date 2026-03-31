@@ -2422,6 +2422,17 @@
 # Catch-all redirects (must come last)
 /cloudflare-one/faq/troubleshooting/ /cloudflare-one/troubleshooting/ 301
 
+# Zero Trust logs restructure (dashboard-logs + logpush)
+/cloudflare-one/insights/logs/audit-logs/ /cloudflare-one/insights/logs/dashboard-logs/access-authentication-logs/ 301
+/cloudflare-one/insights/logs/gateway-logs/ /cloudflare-one/insights/logs/dashboard-logs/gateway-logs/ 301
+/cloudflare-one/insights/logs/gateway-logs/manage-pii/ /cloudflare-one/insights/logs/dashboard-logs/gateway-logs/manage-pii/ 301
+/cloudflare-one/insights/logs/posture-logs/ /cloudflare-one/insights/logs/dashboard-logs/posture-logs/ 301
+/cloudflare-one/insights/logs/scim-logs/ /cloudflare-one/insights/logs/dashboard-logs/scim-logs/ 301
+/cloudflare-one/insights/logs/tunnel-audit-logs/ /cloudflare-one/insights/logs/dashboard-logs/tunnel-audit-logs/ 301
+/cloudflare-one/insights/logs/enable-logs/ /cloudflare-one/insights/logs/logpush/email-security-logs/ 301
+/cloudflare-one/insights/logs/use-logpush-with-ids/ /cloudflare-one/insights/logs/logpush/ids-logs/ 301
+/cloudflare-one/insights/logs/filter-views/ /cloudflare-one/insights/logs/logpush/network-firewall-log-filters/ 301
+
 # ============================================================================
 # DYNAMIC REDIRECTS
 # ============================================================================
@@ -2652,13 +2663,3 @@
 /changelog/2025-* /changelog/post/2025-:splat 301
 /changelog/2026-* /changelog/post/2026-:splat 301
 
-# Zero Trust logs restructure (dashboard-logs + logpush)
-/cloudflare-one/insights/logs/audit-logs/ /cloudflare-one/insights/logs/dashboard-logs/access-authentication-logs/ 301
-/cloudflare-one/insights/logs/gateway-logs/ /cloudflare-one/insights/logs/dashboard-logs/gateway-logs/ 301
-/cloudflare-one/insights/logs/gateway-logs/manage-pii/ /cloudflare-one/insights/logs/dashboard-logs/gateway-logs/manage-pii/ 301
-/cloudflare-one/insights/logs/posture-logs/ /cloudflare-one/insights/logs/dashboard-logs/posture-logs/ 301
-/cloudflare-one/insights/logs/scim-logs/ /cloudflare-one/insights/logs/dashboard-logs/scim-logs/ 301
-/cloudflare-one/insights/logs/tunnel-audit-logs/ /cloudflare-one/insights/logs/dashboard-logs/tunnel-audit-logs/ 301
-/cloudflare-one/insights/logs/enable-logs/ /cloudflare-one/insights/logs/logpush/email-security-logs/ 301
-/cloudflare-one/insights/logs/use-logpush-with-ids/ /cloudflare-one/insights/logs/logpush/ids-logs/ 301
-/cloudflare-one/insights/logs/filter-views/ /cloudflare-one/insights/logs/logpush/network-firewall-log-filters/ 301
