@@ -39,7 +39,6 @@ const sidebar = [
 			{
 				label: "Resources",
 				collapsed: true,
-				badge: groupIcon("learning-paths"),
 				items: [
 					{ label: "Learning paths", link: "/learning-paths/" },
 					{ label: "Directory", link: "/directory/" },
@@ -236,7 +235,11 @@ const props = {
 		<div class="relative">
 			<FullPageLines />
 			<StructuralGrid />
-			<main class="relative z-10 mx-auto max-w-[1280px]" id="main-content">
+			<main
+				class="relative z-10 mx-auto max-w-[1280px]"
+				id="main-content"
+				style="padding-inline: var(--l-section-pad); padding-top: var(--l-pad-top);"
+			>
 				<!-- Origin marker -->
 				<div class="relative h-0 max-[1024px]:hidden">
 					<div class="pointer-events-none absolute inset-0">
@@ -406,7 +409,7 @@ const props = {
 		z-index: 1;
 		max-width: 1280px;
 		margin-inline: auto;
-		padding-inline: 1.5rem;
+		padding-inline: var(--l-section-pad, 1.5rem);
 		padding-bottom: 1.5rem;
 		border-top: 1px solid var(--sl-color-gray-6);
 		background-color: var(--sl-color-bg);

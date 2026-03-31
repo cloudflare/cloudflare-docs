@@ -108,6 +108,8 @@
  * complex values (radial-gradient, mask-image) with no Tailwind equivalent.
  */
 .landing-root {
+	--l-section-pad: 2rem; /* 32px — single token for balanced inset */
+	--l-pad-top: var(--l-section-pad);
 	overflow-x: clip;
 	font-family:
 		"Inter Tight",
@@ -130,6 +132,13 @@
 	--l-grid-mark-accent: rgba(0, 0, 0, 0.12);
 	--l-h-line: rgba(0, 0, 0, 0.05);
 	--l-h-line-fine: rgba(0, 0, 0, 0.025);
+}
+
+@media (max-width: 900px) {
+	.landing-root {
+		--l-section-pad: 1.25rem; /* 20px — keeps the inset balanced on small screens */
+		--l-pad-top: 4rem; /* 64px — pt-16, more breathing room on mobile */
+	}
 }
 
 :root[data-theme="dark"] .landing-root {
