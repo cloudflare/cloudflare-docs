@@ -1,36 +1,20 @@
 ---
-/**
- * AccelerateSection variant-a — "The Waterfall"
- *
- * A request-lifecycle waterfall that shows where latency hides
- * and which Cloudflare product eliminates it. Inspired by DevTools
- * network panels — rendered as styled HTML/CSS bars with hover
- * interactions that connect phases to products.
- *
- * Toggle between "Without Cloudflare" and "With Cloudflare" to see
- * latency bars shrink in real time.
- */
 import { Icon } from "astro-icon/components";
 import ProductCard from "./ProductCard.astro";
 import ProductCardGrid from "./ProductCardGrid.astro";
 
-/**
- * Each phase of a request lifecycle.
- * `before` / `after` are percentage widths (of a ~1200ms budget).
- * `offset` is when the phase starts (percentage left-offset).
- */
 const phases = [
 	{
 		id: "dns",
 		phase: "DNS Lookup",
-		before: { offset: 0, width: 18 },
-		after: { offset: 0, width: 3 },
+		before: { offset: 0, width: 9.6 },
+		after: { offset: 0, width: 0.85 },
 		product: "DNS",
 		icon: "dns",
 		href: "/dns/",
 		outcome: "Resolve DNS in single-digit milliseconds",
 		detail:
-			"Fastest authoritative DNS. DNSSEC, wildcard records, proxy control.",
+			"Fastest authoritative DNS — 11ms average. DNSSEC, wildcard records, proxy control.",
 		cta: "Optimize DNS performance",
 		tags: ["Authoritative DNS", "DNSSEC"],
 		color: "bg-orange-400",
@@ -39,8 +23,8 @@ const phases = [
 	{
 		id: "connect",
 		phase: "TCP + TLS",
-		before: { offset: 18, width: 22 },
-		after: { offset: 3, width: 4 },
+		before: { offset: 9.6, width: 19.2 },
+		after: { offset: 0.85, width: 2 },
 		product: "Argo Smart Routing",
 		icon: "argo-smart-routing",
 		href: "/argo-smart-routing/",
@@ -55,8 +39,8 @@ const phases = [
 	{
 		id: "wait",
 		phase: "Server Wait (TTFB)",
-		before: { offset: 40, width: 35 },
-		after: { offset: 7, width: 5 },
+		before: { offset: 28.8, width: 38.46 },
+		after: { offset: 2.85, width: 0.4 },
 		product: "Cache",
 		icon: "cache",
 		href: "/cache/get-started/",
@@ -70,8 +54,8 @@ const phases = [
 	{
 		id: "db",
 		phase: "Database Query",
-		before: { offset: 75, width: 18 },
-		after: { offset: 12, width: 3 },
+		before: { offset: 52, width: 48.1 },
+		after: { offset: 3.25, width: 12 },
 		product: "Hyperdrive",
 		icon: "hyperdrive",
 		href: "/hyperdrive/",
@@ -86,8 +70,8 @@ const phases = [
 	{
 		id: "assets",
 		phase: "Asset Optimization",
-		before: { offset: 40, width: 30 },
-		after: { offset: 7, width: 6 },
+		before: { offset: 28.8, width: 20.8 },
+		after: { offset: 2.85, width: 10.8 },
 		product: "Images",
 		icon: "images",
 		href: "/images/",
@@ -102,8 +86,8 @@ const phases = [
 	{
 		id: "scripts",
 		phase: "Third-party Scripts",
-		before: { offset: 60, width: 35 },
-		after: { offset: 15, width: 5 },
+		before: { offset: 52, width: 38.46 },
+		after: { offset: 14, width: 0 },
 		product: "Zaraz",
 		icon: "zaraz",
 		href: "/zaraz/",
@@ -190,7 +174,7 @@ const phases = [
 			<span
 				id="wf-total-value"
 				class="text-sm font-semibold text-zinc-900 tabular-nums dark:text-zinc-100"
-				>~95 ms</span
+				>~110 ms</span
 			>
 		</div>
 	</div>
@@ -365,7 +349,7 @@ const phases = [
 						<div
 							id="wf-total-bar"
 							class="bg-accent absolute inset-y-0 left-0 rounded-full transition-[width] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
-							style="width: 8%;"
+							style="width: 9%;"
 						>
 						</div>
 					</div>
@@ -375,7 +359,7 @@ const phases = [
 						id="wf-savings-badge"
 						class="font-mono text-xs font-semibold text-emerald-600 tabular-nums dark:text-emerald-400"
 					>
-						-92% faster
+						-91% faster
 					</span>
 				</div>
 			</div>
@@ -658,10 +642,10 @@ const phases = [
 
 			// Update total bar + label
 			if (totalBar) {
-				totalBar.style.width = after ? "8%" : "95%";
+				totalBar.style.width = after ? "9%" : "95%";
 			}
 			if (totalValue) {
-				totalValue.textContent = after ? "~95 ms" : "~1,240 ms";
+				totalValue.textContent = after ? "~110 ms" : "~1,300 ms";
 			}
 			if (savingsBadge) {
 				savingsBadge.classList.toggle("hidden", !after);

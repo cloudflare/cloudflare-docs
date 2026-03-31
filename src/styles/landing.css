@@ -19,7 +19,7 @@
 	/* Shared landing card surfaces — used across Stats, Build, Secure */
 	--color-l-card: #fff;
 	--color-l-card-dark: #1d1d1d;
-	--color-l-card-hover: #fff;
+	--color-l-card-hover: #fafafa;
 	--color-l-card-hover-dark: #252525;
 
 	@keyframes v27-enter {
@@ -108,7 +108,7 @@
  * complex values (radial-gradient, mask-image) with no Tailwind equivalent.
  */
 .landing-root {
-	--l-section-pad: 2rem; /* 32px — single token for balanced inset */
+	--l-section-pad: max(2rem, 4vw);
 	--l-pad-top: var(--l-section-pad);
 	overflow-x: clip;
 	font-family:
@@ -134,16 +134,21 @@
 	--l-h-line-fine: rgba(0, 0, 0, 0.025);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1439px) {
 	.landing-root {
-		--l-section-pad: 1.25rem; /* 20px — keeps the inset balanced on small screens */
+		--l-section-pad: max(2rem, 4vw);
+	}
+}
+
+@media (max-width: 800px) {
+	.landing-root {
 		--l-pad-top: 4rem; /* 64px — pt-16, more breathing room on mobile */
 	}
 }
 
 :root[data-theme="dark"] .landing-root {
 	color: #fafafa;
-
+	background: blue;
 	--l-dot-color: rgba(255, 255, 255, 0.05);
 	--l-dot-size: 22px 22px;
 	--l-dot-mask: radial-gradient(
