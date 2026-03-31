@@ -9,9 +9,7 @@ description: Use Access authentication logs to review authentication events and
   requests to protected URI paths and infrastructure targets.
 ---
 
-import { GlossaryTooltip, TabItem, Tabs, APIRequest, InlineBadge } from "~/components";
-
-Access authentication logs use an updated log viewer <InlineBadge preset="beta" /> with the following capabilities: filter by field, customize columns, view details by selecting a timestamp, and switch to the classic view. Querying for fewer fields improves log loading performance.
+import { GlossaryTooltip, TabItem, Tabs, APIRequest } from "~/components";
 
 Cloudflare Access generates two types of audit logs:
 
@@ -38,8 +36,18 @@ Authentication logs do not capture the user's actions during a self-hosted or Sa
 
 To view logs for identity-based authentication events:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Insights** > **Logs** > **Access authentication logs**.
-2. Select a row to view details such as the login method, the IP address of the user, and more.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Insights** > **Logs**.
+2. Select **Access authentication logs**.
+
+	:::note[Log viewer (beta)]
+	Access authentication logs use an updated log viewer with enhanced filtering capabilities. To switch to the classic view, select **Return to old logs**.
+	:::
+3. (Optional) Filter the logs that display in the log viewer. You can filter logs by their timestamp and event details (such as the Access application, user email, policy decision, and more).
+
+	:::tip
+	Querying for fewer fields improves log loading performance.
+	:::
+4. Select an individual timestamp to investigate the event in more detail.
 
 </TabItem> <TabItem label="API">
 

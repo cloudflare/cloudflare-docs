@@ -8,11 +8,9 @@ sidebar:
 description: Review DNS queries, network traffic, and HTTP requests inspected by Gateway.
 ---
 
-import { Render, GlossaryTooltip, DirectoryListing, InlineBadge } from "~/components";
+import { Render, GlossaryTooltip, DirectoryListing } from "~/components";
 
 Gateway activity logs show the individual DNS queries, Network packets, and HTTP requests inspected by Gateway. You can also download encrypted [SSH command logs](/cloudflare-one/insights/logs/dashboard-logs/ssh-command-logs/) for sessions proxied by Gateway.
-
-To view Gateway activity logs, log in to [Cloudflare One](https://one.dash.cloudflare.com/) and go to **Insights** > **Logs** and choose a type of Gateway log. Select an individual row to investigate the event in more detail.
 
 Enterprise users can generate more detailed logs with [Logpush](/cloudflare-one/insights/logs/logpush/).
 
@@ -24,9 +22,24 @@ Gateway logs will only show the public IP address for the **Source IP** field. P
 
 :::
 
-## Log viewer <InlineBadge preset="beta" />
+## View Gateway activity logs
 
-Gateway activity logs use an updated log viewer with the following capabilities: filter by field, customize columns, view details by selecting a timestamp, and switch to the classic view. Querying for fewer fields improves log loading performance.
+To view Gateway activity logs:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Insights** > **Logs**.
+2. Choose a type of Gateway log:
+	- **DNS query logs**
+	- **Network logs**
+	- **HTTP request logs**
+	:::note[Log viewer (beta)]
+	Gateway logs use an updated log viewer with enhanced filtering capabilities. To switch to the classic view, select **Return to old logs**.
+	:::
+3. (Optional) Filter the logs that display in the log viewer. You can filter logs by their timestamp and event details (such as host, URL, user email, policy action, and more).
+
+	:::tip
+	Querying for fewer fields improves log loading performance.
+	:::
+4. Select an individual timestamp to investigate the event in more detail.
 
 ## Selective logging
 
