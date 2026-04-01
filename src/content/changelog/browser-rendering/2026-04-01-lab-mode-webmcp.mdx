@@ -1,0 +1,29 @@
+---
+title: "Lab Mode with WebMCP support now available"
+description: "Access experimental Chrome 146 features including WebMCP, enabling AI agents to discover and execute website tools directly for faster, more reliable browser automation."
+products:
+  - browser-rendering
+date: 2026-04-01
+---
+
+Browser Rendering now supports [Lab Mode](/browser-rendering/lab-mode-webmcp/), giving you early access to experimental Chrome features before they reach the stable browser pools. Lab Mode runs Chrome 146 beta with cutting-edge capabilities, including WebMCP support.
+
+[WebMCP](https://developer.chrome.com/blog/webmcp-epp) (Web Model Context Protocol) is a browser API that lets websites expose structured tools — functions with schemas and descriptions that AI agents can discover and execute directly. Instead of slow screenshot-analyze-click loops, agents can call website functions like `searchFlights()` or `bookTicket()` with typed parameters.
+
+With Lab Mode and WebMCP, you can:
+
+- **Test WebMCP integrations** — Develop AI agent workflows that interact with WebMCP-enabled websites
+- **Discover website tools** — Use `navigator.modelContextTesting.listTools()` to see available actions
+- **Execute tools directly** — Call `navigator.modelContextTesting.executeTool()` with typed parameters
+- **Handle human-in-the-loop interactions** — Some tools pause for user confirmation before completing sensitive actions
+
+To start a Lab Mode session, add `lab=true` to your `/devtools/browser` request:
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/devtools/browser?lab=true&keep_alive=300000" \
+  -H "Authorization: Bearer {api_token}"
+```
+
+Lab sessions run in a dedicated pool isolated from production workloads and count against your regular rate limits.
+
+For a step-by-step guide on using Lab Mode and WebMCP, refer to [Lab Mode and WebMCP](/browser-rendering/lab-mode-webmcp/).
