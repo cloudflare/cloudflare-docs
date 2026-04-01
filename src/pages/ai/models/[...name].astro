@@ -41,10 +41,22 @@ import { getResolvedModels, getModelAuthor } from "~/util/model-resolver";
 export const getStaticPaths = (async () => {
 	const models = await getResolvedModels();
 
-	return models.map((model) => ({
-		params: { name: model.slug },
-		props: { model },
-	}));
+	// Generate pages at both full model ID path and short slug for backwards compatibility
+	const paths = models.flatMap((model) => {
+		const fullSlug = model.slug; // e.g., "@cf/moonshotai/kimi-k2.5"
+		const shortSlug = model.name.split("/").at(-1); // e.g., "kimi-k2.5"
+
+		const entries = [{ params: { name: fullSlug }, props: { model } }];
+
+		// Add short slug alias if different from full slug
+		if (shortSlug && shortSlug !== fullSlug) {
+			entries.push({ params: { name: shortSlug }, props: { model } });
+		}
+
+		return entries;
+	});
+
+	return paths;
 }) satisfies GetStaticPaths;
 
 const { name } = Astro.params;

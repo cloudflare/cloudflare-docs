@@ -10,7 +10,7 @@ head:
     content: Overview
 ---
 
-import { CardGrid, Description, LinkTitleCard, Plan } from "~/components";
+import { Description, Feature, Plan, RelatedProduct } from "~/components";
 
 <Description>
 
@@ -24,46 +24,70 @@ Cloudflare AI provides a unified platform for running AI models, whether hosted 
 
 ## Get started
 
-<CardGrid>
+<Feature header="Models" href="/ai/models/" cta="Browse models">
 
-<LinkTitleCard title="Models" href="/ai/models/" icon="seti:json">
-	Browse all available AI models across Workers AI and AI Gateway
-</LinkTitleCard>
+Explore all AI models available through Cloudflare, including hosted models on Workers AI and external providers through AI Gateway.
 
-<LinkTitleCard title="Workers AI" href="/workers-ai/" icon="cloudflare">
-	Run inference on Cloudflare's GPU-powered infrastructure
-</LinkTitleCard>
-
-<LinkTitleCard title="AI Gateway" href="/ai-gateway/" icon="cloudflare">
-	Observe and control your AI applications
-</LinkTitleCard>
-
-</CardGrid>
-
-## Features
-
-- **Unified model catalog** - Browse all available models in one place
-- **Single API** - Use `env.AI.run()` for any model, regardless of where it runs
-- **Automatic routing** - Model IDs determine routing (`@cf/` for Workers AI, `provider/model` for AI Gateway)
+</Feature>
 
 ## Related products
 
-<CardGrid>
+<RelatedProduct header="Workers AI" href="/workers-ai/" product="workers-ai">
+	Run machine learning models, powered by serverless GPUs, on Cloudflare's
+	global network.
+</RelatedProduct>
 
-<LinkTitleCard title="Workers AI" href="/workers-ai/">
-	Serverless GPU inference on Cloudflare's network
-</LinkTitleCard>
+<RelatedProduct header="AI Gateway" href="/ai-gateway/" product="ai-gateway">
+	Observe and control your AI applications with caching, rate limiting, request
+	retries, model fallback, and more.
+</RelatedProduct>
 
-<LinkTitleCard title="AI Gateway" href="/ai-gateway/">
-	Proxy, cache, and observe AI API calls
-</LinkTitleCard>
+<RelatedProduct header="Vectorize" href="/vectorize/" product="vectorize">
+	Build full-stack AI applications with Vectorize, Cloudflare's vector database.
+</RelatedProduct>
 
-<LinkTitleCard title="Vectorize" href="/vectorize/">
-	Vector database for AI embeddings
-</LinkTitleCard>
+<RelatedProduct header="Agents" href="/agents/" product="agents">
+	Build AI-powered agents to perform tasks, persist state, and interact with
+	external services.
+</RelatedProduct>
 
-<LinkTitleCard title="Agents" href="/agents/">
-	Build AI agents with the Agents SDK
-</LinkTitleCard>
+<RelatedProduct header="AI Search" href="/ai-search/" product="ai-search">
+	Create fully managed RAG pipelines for your AI applications.
+</RelatedProduct>
 
-</CardGrid>
+<RelatedProduct
+	header="AI Crawl Control"
+	href="/ai-crawl-control/"
+	product="ai-crawl-control"
+>
+	Analyze and control third-party AI crawlers on your website.
+</RelatedProduct>
+
+<RelatedProduct
+	header="Browser Rendering"
+	href="/browser-rendering/"
+	product="browser-rendering"
+>
+	Control and interact with headless browser instances for AI data extraction.
+</RelatedProduct>
+
+<RelatedProduct
+	header="Cloudflare Agent"
+	href="/cloudflare-agent/"
+	product="cloudflare-agent"
+>
+	An AI-powered assistant that helps you navigate, configure, and manage
+	Cloudflare.
+</RelatedProduct>
+
+<RelatedProduct
+	header="Dynamic Workers"
+	href="/dynamic-workers/"
+	product="dynamic-workers"
+>
+	Spin up isolated Workers on demand to execute code.
+</RelatedProduct>
+
+<RelatedProduct header="Sandbox SDK" href="/sandbox-sdk/" product="sandbox">
+	Build secure, isolated code execution environments.
+</RelatedProduct>

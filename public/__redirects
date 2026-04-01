@@ -208,6 +208,7 @@
 /ai-gateway/configuration/custom-metadata/ /ai-gateway/observability/custom-metadata/ 301
 /ai-gateway/universal/ /ai-gateway/usage/universal/ 301
 /ai-gateway/chat-completion/ /ai-gateway/usage/chat-completion/ 301
+/ai-gateway/models/* /ai/models/:splat 301
 
 # analytics
 /analytics/migration-guides/zone-analytics/ /analytics/graphql-api/migration-guides/zone-analytics/ 301
@@ -2115,6 +2116,7 @@
 /workers-ai/models/granite-4.0-h-micro/ /ai/models/@cf/ibm-granite/granite-4.0-h-micro/ 301
 /workers-ai/models/hermes-2-pro-mistral-7b/ /ai/models/@hf/nousresearch/hermes-2-pro-mistral-7b/ 301
 /workers-ai/models/indictrans2-en-indic-1B/ /ai/models/@cf/ai4bharat/indictrans2-en-indic-1B/ 301
+/workers-ai/models/kimi-k2.5/ /ai/models/@cf/moonshotai/kimi-k2.5/ 301
 /workers-ai/models/llama-2-13b-chat-awq/ /ai/models/@hf/thebloke/llama-2-13b-chat-awq/ 301
 /workers-ai/models/llama-2-7b-chat-fp16/ /ai/models/@cf/meta/llama-2-7b-chat-fp16/ 301
 /workers-ai/models/llama-2-7b-chat-hf-lora/ /ai/models/@cf/meta-llama/llama-2-7b-chat-hf-lora/ 301

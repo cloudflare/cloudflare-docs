@@ -1,0 +1,209 @@
+{
+	"model_id": "google/nano-banana",
+	"provider_id": "google",
+	"name": "Nano Banana",
+	"description": "Google's latest image editing model in Gemini 2.5",
+	"task": "Image Generation",
+	"tags": [
+		"image-generation"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "0.0.1",
+	"pricing": {
+		"per_image": 0.01
+	},
+	"examples": [
+		{
+			"name": "Cozy Coffee Shop",
+			"description": "Interior scene with warm lighting and a cat",
+			"input": {
+				"prompt": "A cozy coffee shop interior with warm lighting, plants hanging from the ceiling, and a cat sleeping on a velvet armchair by the window",
+				"aspect_ratio": "16:9"
+			},
+			"output": {
+				"image": "https://replicate.delivery/xezq/LOB8lf7PV81RfUcAqkPBeuZ9J4DE20XyH1Z6Mk7nRTZtxmSsA/tmpwa9w0ve8.jpeg"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\"google/nano-banana\", {\n  \"prompt\": \"A cozy coffee shop interior with warm lighting, plants hanging from the ceiling, and a cat sleeping on a velvet armchair by the window\",\n  \"aspect_ratio\": \"16:9\"\n}, {\n  gateway: { id: \"{GATEWAY_ID}\" }\n});\nconsole.log(response.result);"
+				}
+			]
+		},
+		{
+			"name": "Character Mashup",
+			"description": "Combine two people into a selfie scene",
+			"input": {
+				"prompt": "have the people smile and take a selfie from a phone",
+				"image_input": [
+					"https://replicate.delivery/pbxt/NeRx7gSc6ORMdhCjOzV0Of9VAEDNjQ56RJWVXFTjT53AK5L1/billie.jpeg",
+					"https://replicate.delivery/pbxt/NeRx7dSeZKRgWr0V6ilLhZsk8HSZgV3Z9VsauD7FSYrrvuXD/michael.jpeg"
+				],
+				"output_format": "jpg"
+			},
+			"output": {
+				"image": "https://replicate.delivery/xezq/mbE0pfJqUtTfu0vp7gjG93nkNYNsy78a1onho9oos56fkTjqA/tmpgxxuv701.jpg"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\"google/nano-banana\", {\n  \"prompt\": \"have the people smile and take a selfie from a phone\",\n  \"image_input\": [\n    \"https://replicate.delivery/pbxt/NeRx7gSc6ORMdhCjOzV0Of9VAEDNjQ56RJWVXFTjT53AK5L1/billie.jpeg\",\n    \"https://replicate.delivery/pbxt/NeRx7dSeZKRgWr0V6ilLhZsk8HSZgV3Z9VsauD7FSYrrvuXD/michael.jpeg\"\n  ],\n  \"output_format\": \"jpg\"\n}, {\n  gateway: { id: \"{GATEWAY_ID}\" }\n});\nconsole.log(response.result);"
+				}
+			]
+		},
+		{
+			"name": "Vintage Tokyo Poster",
+			"description": "Retro travel poster style illustration",
+			"input": {
+				"prompt": "A vintage travel poster for Tokyo, Japan in the style of 1960s airline advertisements, with Mount Fuji in the background and cherry blossoms framing the scene",
+				"aspect_ratio": "9:16"
+			},
+			"output": {
+				"image": "https://replicate.delivery/xezq/8SFezUxl8nx2HqSyhznw2tdgJ7J9EU39Z6uSxJvZzZf0YTJWA/tmpmru_1vc9.jpeg"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\"google/nano-banana\", {\n  \"prompt\": \"A vintage travel poster for Tokyo, Japan in the style of 1960s airline advertisements, with Mount Fuji in the background and cherry blossoms framing the scene\",\n  \"aspect_ratio\": \"9:16\"\n}, {\n  gateway: { id: \"{GATEWAY_ID}\" }\n});\nconsole.log(response.result);"
+				}
+			]
+		},
+		{
+			"name": "Dewdrops Macro",
+			"description": "Photorealistic macro photography",
+			"input": {
+				"prompt": "A photorealistic macro shot of dewdrops on a spider web at sunrise, with rainbow light refracting through each droplet",
+				"aspect_ratio": "1:1"
+			},
+			"output": {
+				"image": "https://replicate.delivery/xezq/1i1kL3iCGgpEGlUdXTCScBfQfHfZ5aZe556DtugeAQxqGbKxC/tmpkqbpjy7j.jpeg"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\"google/nano-banana\", {\n  \"prompt\": \"A photorealistic macro shot of dewdrops on a spider web at sunrise, with rainbow light refracting through each droplet\",\n  \"aspect_ratio\": \"1:1\"\n}, {\n  gateway: { id: \"{GATEWAY_ID}\" }\n});\nconsole.log(response.result);"
+				}
+			]
+		},
+		{
+			"name": "Pixel Art Marketplace",
+			"description": "Isometric pixel art scene",
+			"input": {
+				"prompt": "An isometric pixel art scene of a bustling medieval marketplace with merchants, knights, and a dragon perched on the town hall roof",
+				"aspect_ratio": "1:1"
+			},
+			"output": {
+				"image": "https://replicate.delivery/xezq/NTzWZYEFkf1BaSrYfHUr6vdHiI0PZ60Bke8hbDqUJJ8vxmSsA/tmpy7rr33k9.jpeg"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\"google/nano-banana\", {\n  \"prompt\": \"An isometric pixel art scene of a bustling medieval marketplace with merchants, knights, and a dragon perched on the town hall roof\",\n  \"aspect_ratio\": \"1:1\"\n}, {\n  gateway: { id: \"{GATEWAY_ID}\" }\n});\nconsole.log(response.result);"
+				}
+			]
+		},
+		{
+			"name": "Image Editing with Reference",
+			"description": "Transform bedsheets to match a logo style",
+			"input": {
+				"prompt": "Make the sheets in the style of the logo. Make the scene natural.",
+				"image_input": [
+					"https://replicate.delivery/pbxt/NbYIclp4A5HWLsJ8lF5KgiYSNaLBBT1jUcYcHYQmN1uy5OnN/tmpcqc07f_q.png",
+					"https://replicate.delivery/pbxt/NbYId45yH8s04sptdtPcGqFIhV7zS5GTcdS3TtNliyTAoYPO/Screenshot%202025-08-26%20at%205.30.12%E2%80%AFPM.png"
+				],
+				"output_format": "jpg"
+			},
+			"output": {
+				"image": "https://replicate.delivery/xezq/eQ2MQYrD6XzheEgCe7OcHlUJAXYc8HaMJmGPmbTOCClZS7dqA/tmp4vqrduzh.jpg"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\"google/nano-banana\", {\n  \"prompt\": \"Make the sheets in the style of the logo. Make the scene natural.\",\n  \"image_input\": [\n    \"https://replicate.delivery/pbxt/NbYIclp4A5HWLsJ8lF5KgiYSNaLBBT1jUcYcHYQmN1uy5OnN/tmpcqc07f_q.png\",\n    \"https://replicate.delivery/pbxt/NbYId45yH8s04sptdtPcGqFIhV7zS5GTcdS3TtNliyTAoYPO/Screenshot%202025-08-26%20at%205.30.12%E2%80%AFPM.png\"\n  ],\n  \"output_format\": \"jpg\"\n}, {\n  gateway: { id: \"{GATEWAY_ID}\" }\n});\nconsole.log(response.result);"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://gemini.google/about/",
+	"terms": "https://policies.google.com/terms",
+	"cover_image_url": "https://replicate.delivery/xezq/A9Y99OEE5DIHJVfqbvoFVTPwogX0kYZnRhekuvhfckkiTwfYB/tmp4lnpo502.jpeg",
+	"metadata": {
+		"Architecture": "Diffusion Transformer",
+		"License": "Commercial Use"
+	},
+	"created_at": "2026-03-20 17:46:49",
+	"default_example": null,
+	"code_snippets": [],
+	"schema": {
+		"model_id": "google/nano-banana",
+		"version": "1.0.0",
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string"
+				},
+				"image_input": {
+					"maxItems": 3,
+					"type": "array",
+					"items": {
+						"type": "string",
+						"format": "uri"
+					}
+				},
+				"aspect_ratio": {
+					"type": "string",
+					"enum": [
+						"1:1",
+						"3:2",
+						"2:3",
+						"3:4",
+						"4:3",
+						"4:5",
+						"5:4",
+						"9:16",
+						"16:9",
+						"21:9"
+					]
+				},
+				"output_format": {
+					"type": "string",
+					"enum": [
+						"jpg",
+						"png",
+						"webp"
+					]
+				},
+				"image_size": {
+					"type": "string",
+					"enum": [
+						"1K",
+						"2K",
+						"4K"
+					]
+				}
+			},
+			"required": [
+				"prompt"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"type": "string",
+					"format": "uri"
+				}
+			},
+			"required": [
+				"image"
+			],
+			"additionalProperties": false
+		}
+	}
+}

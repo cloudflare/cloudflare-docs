@@ -2,7 +2,8 @@ import { useEffect, useState, useMemo } from "react";
 import ModelInfo from "./models/ModelInfo";
 import ModelBadges from "./models/ModelBadges";
 import { authorData } from "./models/data";
-import type { WorkersAIModelsSchema } from "~/schemas";
+import type { ResolvedModel } from "~/util/model-types";
+import { getModelAuthor } from "~/util/model-helpers";
 import { setSearchParams } from "~/util/url";
 import {
 	getCapabilities,
@@ -17,7 +18,7 @@ type Filters = {
 	capabilities: string[];
 };
 
-const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
+const ModelCatalog = ({ models }: { models: ResolvedModel[] }) => {
 	const [filters, setFilters] = useState<Filters>({
 		search: "",
 		authors: [],
@@ -107,13 +108,15 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 	}));
 
 	const tasks = [...new Set(models.map((model) => model.task.name))];
-	const authors = [...new Set(models.map((model) => model.name.split("/")[1]))];
+	const authors = [
+		...new Set(models.map((model) => getModelAuthor(model.name))),
+	];
 	const modelProperties = getLabelsByCategory(models, "model");
 	const platformProperties = getLabelsByCategory(models, "platform");
 
 	const modelList = mapped.filter(({ model }) => {
 		if (filters.authors.length > 0) {
-			if (!filters.authors.includes(model.name.split("/")[1])) {
+			if (!filters.authors.includes(getModelAuthor(model.name))) {
 				return false;
 			}
 		}
@@ -307,7 +310,7 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 				{modelList.map((model) => {
 					const isBeta = hasProperty(model.model.properties, "beta");
 
-					const author = model.model.name.split("/")[1];
+					const author = getModelAuthor(model.model.name);
 					const authorInfo = authorData[author];
 					const isPinned = pinnedModelNames.includes(model.model.name);
 
@@ -315,7 +318,7 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 						<a
 							key={model.model.id}
 							className="relative mb-3 flex w-full flex-col rounded-md border border-solid border-gray-200 p-3 text-inherit! no-underline hover:bg-gray-50 lg:w-[48%] dark:border-gray-700 dark:hover:bg-gray-800"
-							href={`/workers-ai/models/${model.model_display_name}`}
+							href={`/ai/models/${model.model.name}/`}
 						>
 							{isPinned && (
 								<span className="absolute top-1 right-2" title="Pinned model">

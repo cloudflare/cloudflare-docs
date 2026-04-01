@@ -16,10 +16,7 @@ const ModelInfo = ({ model }: { model: ModelType }) => {
 			: "Hosted";
 	return (
 		<span className="mt-2 block! leading-5 text-gray-400">
-			{model.task.name} • {author} •{" "}
-			<span className={hosting === "Proxied" ? "text-orange-400" : ""}>
-				{hosting}
-			</span>
+			{model.task.name} • {author} • {hosting}
 		</span>
 	);
 };
