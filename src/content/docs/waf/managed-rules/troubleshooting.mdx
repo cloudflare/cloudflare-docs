@@ -9,7 +9,7 @@ sidebar:
   label: Troubleshooting
 ---
 
-import { RuleID } from "~/components";
+import { Tabs, TabItem, DashButton, RuleID } from "~/components";
 
 By default, WAF's managed rulesets are compatible with most websites and web applications. However, false positives and false negatives may occur:
 
@@ -27,9 +27,21 @@ Cloudflare WAF includes multiple [managed rulesets](/waf/managed-rules/#availabl
 
 Before taking action, identify which rule blocked the request:
 
-1. Go to **Security** > **Analytics** > **Events** in the Cloudflare dashboard.
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
+
+1. In the Cloudflare dashboard, go to the **Analytics** page.
+
+   <DashButton url="/?to=/:account/:zone/security/analytics" />
+
+2. Select the **Events** tab.
+3. Filter by the request details (IP address, URI path, timestamp, or Ray ID) to find the blocked event.
+
+</TabItem> <TabItem label="Old dashboard">
+
+1. In the Cloudflare dashboard, go to **Security** > **Events**.
 2. Filter by the request details (IP address, URI path, timestamp, or Ray ID) to find the blocked event.
-3. Note the **Rule ID** and **Rule message** — these determine which remediation step to follow.
+
+</TabItem> </Tabs>
 
 ### Recommended remediation steps
 
