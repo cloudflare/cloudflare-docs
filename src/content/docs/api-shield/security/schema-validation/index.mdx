@@ -445,18 +445,6 @@ The default body size limits are:
 This limit is separate from the [WAF maximum body inspection size](/waf/managed-rules/#maximum-body-size), which controls how much of the request payload the WAF scans. Increasing one does not affect the other.
 :::
 
-#### Increase the body size limit
-
-If your API endpoints receive legitimate request bodies that exceed the default limit for your plan, you can request an increase up to 1 MB (1,048,576 bytes) per zone.
-
-To request an increase, contact [Cloudflare Support](https://developers.cloudflare.com/support/contacting-cloudflare-support/) and provide the following information:
-
-- The zone name(s) requiring the increase.
-- The desired body size limit (up to 1 MB).
-- A brief description of the use case (for example, large JSON payloads for data ingestion APIs).
-
-After the change is applied, Schema validation will inspect request bodies up to the new limit on the specified zone(s).
-
 #### Identify requests exceeding the body size limit
 
 If Schema validation is blocking or logging requests due to the body size limit, you will see events in **Security** > **Events** with the Schema validation rule as the source.
