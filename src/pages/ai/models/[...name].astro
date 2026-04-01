@@ -9,6 +9,7 @@ import ModelFeatures from "~/components/models/ModelFeatures.tsx";
 import SchemaViewer from "~/components/models/SchemaViewer.astro";
 import CatalogSchemaTable from "~/components/models/CatalogSchemaTable.astro";
 import ExampleCard from "~/components/models/ExampleCard.astro";
+import CopyableCode from "~/components/models/CopyableCode.astro";
 
 import TextGenerationCode from "~/components/models/code/TextGenerationCode.astro";
 import AutomaticSpeechRecognitionCode from "~/components/models/code/AutomaticSpeechRecognitionCode.astro";
@@ -217,7 +218,9 @@ const starlightPageProps = {
 		</div>
 	</div>
 
-	<span class="mt-4 block font-mono text-sm text-gray-400">{model.name}</span>
+	<div class="mt-4">
+		<CopyableCode text={model.name} label="Copy model ID" />
+	</div>
 
 	<p class="mt-3 mb-2!">{description}</p>
 

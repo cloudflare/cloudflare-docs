@@ -1,0 +1,55 @@
+---
+interface Props {
+	text: string;
+	label?: string;
+}
+
+const { text, label = "Copy" } = Astro.props;
+---
+
+<copyable-code data-text={text}>
+	<span
+		class="inline-flex cursor-pointer items-center gap-2 rounded-md border border-gray-200 bg-gray-50 px-3 py-1.5 font-mono text-sm text-gray-600 transition-colors hover:border-gray-300 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:border-gray-600 dark:hover:bg-gray-700"
+	>
+		<span>{text}</span>
+		<button
+			type="button"
+			title={label}
+			aria-label={label}
+			class="text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
+		>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="16"
+				height="16"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+			>
+				<rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
+				<path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
+			</svg>
+		</button>
+	</span>
+</copyable-code>
+
+<script>
+	import { addTooltip } from "~/util/tippy";
+
+	class CopyableCode extends HTMLElement {
+		connectedCallback() {
+			const text = this.dataset.text ?? "";
+
+			addTooltip(this, "Copied!", { trigger: "click", hideAfter: 1000 });
+
+			this.addEventListener("click", () => {
+				navigator.clipboard.writeText(text);
+			});
+		}
+	}
+
+	customElements.define("copyable-code", CopyableCode);
+</script>
