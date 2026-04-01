@@ -176,8 +176,6 @@
 /agents/model-context-protocol/mcp-handler-api/ /agents/api-reference/mcp-handler-api/ 301
 /agents/api-reference/calling-agents/ /agents/api-reference/routing/ 301
 
-# ai
-/ai/ /use-cases/ai/ 301
 # ai-audit
 /ai-audit/features/detect-ai-crawlers/ /ai-crawl-control/features/analyze-ai-crawlers/ 301
 /ai-audit/features/enforce-robots-txt/ /ai-crawl-control/features/analyze-ai-crawlers/ 301
