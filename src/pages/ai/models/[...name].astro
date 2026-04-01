@@ -63,9 +63,10 @@ export const getStaticPaths = (async () => {
 const { model } = Astro.props;
 
 // Display name: use catalog displayName, or fall back to last segment of model ID
-const displayName = model.displayName !== model.slug
-	? model.displayName
-	: model.name.split("/").at(-1);
+const displayName =
+	model.displayName !== model.slug
+		? model.displayName
+		: model.name.split("/").at(-1);
 
 // For catalog models, first example is the "Usage" section
 const firstExample = model.examples?.[0];
@@ -118,9 +119,11 @@ if (!hasCatalogUsage) {
 	if (model.name === "@cf/black-forest-labs/flux-1-schnell") {
 		CodeExamples = Flux1Schnell;
 	}
-	if (model.name === "@cf/black-forest-labs/flux-2-dev" ||
+	if (
+		model.name === "@cf/black-forest-labs/flux-2-dev" ||
 		model.name === "@cf/black-forest-labs/flux-2-klein-4b" ||
-		model.name === "@cf/black-forest-labs/flux-2-klein-9b") {
+		model.name === "@cf/black-forest-labs/flux-2-klein-9b"
+	) {
 		CodeExamples = Flux2;
 	}
 	if (model.name === "@cf/openai/whisper-large-v3-turbo") {
@@ -135,7 +138,10 @@ if (!hasCatalogUsage) {
 	if (model.name === "@cf/baai/bge-reranker-base") {
 		CodeExamples = BgeRerankerBase;
 	}
-	if (model.name === "@cf/openai/gpt-oss-120b" || model.name === "@cf/openai/gpt-oss-20b") {
+	if (
+		model.name === "@cf/openai/gpt-oss-120b" ||
+		model.name === "@cf/openai/gpt-oss-20b"
+	) {
 		CodeExamples = OpenAIResponsesTextGenerationCode;
 	}
 	if (model.name === "@cf/deepgram/aura-1") {
@@ -165,7 +171,8 @@ const author = authorData[authorId];
 
 const hasSupportedLanguages = model.name === "@cf/deepgram/nova-3";
 
-const hasSchema = model.schema.input && Object.keys(model.schema.input).length > 0;
+const hasSchema =
+	model.schema.input && Object.keys(model.schema.input).length > 0;
 
 const starlightPageProps = {
 	frontmatter: {
@@ -181,10 +188,16 @@ const starlightPageProps = {
 			? { depth: 2, slug: "Playground", text: "Playground" }
 			: false,
 		hasCodeExamples ? { depth: 2, slug: "Usage", text: "Usage" } : false,
-		hasRemainingExamples ? { depth: 2, slug: "Examples", text: "Examples" } : false,
+		hasRemainingExamples
+			? { depth: 2, slug: "Examples", text: "Examples" }
+			: false,
 		hasSchema ? { depth: 2, slug: "Parameters", text: "Parameters" } : false,
-		hasSchema && model.dataSource !== "catalog" ? { depth: 3, slug: "Input", text: "Input" } : false,
-		hasSchema && model.dataSource !== "catalog" ? { depth: 3, slug: "Output", text: "Output" } : false,
+		hasSchema && model.dataSource !== "catalog"
+			? { depth: 3, slug: "Input", text: "Input" }
+			: false,
+		hasSchema && model.dataSource !== "catalog"
+			? { depth: 3, slug: "Output", text: "Output" }
+			: false,
 		hasSchema ? { depth: 2, slug: "API-Schemas", text: "API Schemas" } : false,
 	].filter((v) => Boolean(v)) as MarkdownHeading[],
 	hideTitle: true,
@@ -196,12 +209,12 @@ const starlightPageProps = {
 		{
 			author ? (
 				<img
-					class="mr-4 block h-12 w-12 rounded-xs dark:bg-gray-200 dark:ring-2 dark:ring-gray-200"
+					class="mr-4 block h-14 w-14 rounded-xs dark:ml-1 dark:bg-gray-200 dark:ring-4 dark:ring-gray-200"
 					src={author.logo}
 					alt={`${author.name} logo`}
 				/>
 			) : (
-				<div class="mr-4 flex h-12 w-12 items-center justify-center rounded-md bg-gray-100 text-2xl font-black text-gray-400 uppercase">
+				<div class="mr-4 flex h-14 w-14 items-center justify-center rounded-md bg-gray-100 text-2xl font-black text-gray-400 uppercase">
 					{authorId.substring(0, 1)}
 				</div>
 			)
@@ -307,8 +320,8 @@ const starlightPageProps = {
 	{
 		hasCatalogUsage && firstExample && (
 			<>
-			<h2 id="Usage">Usage</h2>
-			<ExampleCard example={firstExample} layout="stack" />
+				<h2 id="Usage">Usage</h2>
+				<ExampleCard example={firstExample} layout="stack" />
 			</>
 		)
 	}
@@ -330,7 +343,9 @@ const starlightPageProps = {
 					<details>
 						<summary>
 							<strong>{example.name}</strong>
-							{example.description && <span> &mdash; {example.description}</span>}
+							{example.description && (
+								<span> &mdash; {example.description}</span>
+							)}
 						</summary>
 						<ExampleCard example={example} />
 					</details>
@@ -350,24 +365,36 @@ const starlightPageProps = {
 					</>
 				) : (
 					<>
-						<p><span class="text-red-500">*</span> indicates a required field</p>
+						<p>
+							<span class="text-red-500">*</span> indicates a required field
+						</p>
 						<h3 id="Input">Input</h3>
 						<SchemaViewer schema={model.schema.input} />
 
 						<h3 id="Output">Output</h3>
-						{
-							model.schema.output.format === "binary" ? (
-								<p>
-									{(model.schema.output.contentType as string)?.startsWith("audio/") ? (
-										<>The binding returns a <code>ReadableStream</code> with the audio in {(model.schema.output.contentType as string).replace("audio/", "").toUpperCase()} format (check the model's output schema).</>
-									) : (
-										<>The binding returns a <code>ReadableStream</code> with the output (check the model's output schema).</>
-									)}
-								</p>
-							) : (
-								<SchemaViewer schema={model.schema.output} />
-							)
-						}
+						{model.schema.output.format === "binary" ? (
+							<p>
+								{(model.schema.output.contentType as string)?.startsWith(
+									"audio/",
+								) ? (
+									<>
+										The binding returns a <code>ReadableStream</code> with the
+										audio in{" "}
+										{(model.schema.output.contentType as string)
+											.replace("audio/", "")
+											.toUpperCase()}{" "}
+										format (check the model's output schema).
+									</>
+								) : (
+									<>
+										The binding returns a <code>ReadableStream</code> with the
+										output (check the model's output schema).
+									</>
+								)}
+							</p>
+						) : (
+							<SchemaViewer schema={model.schema.output} />
+						)}
 					</>
 				)}
 
@@ -376,10 +403,16 @@ const starlightPageProps = {
 
 				<Tabs>
 					<TabItem label="Input">
-						<Code code={JSON.stringify(model.schema.input, null, 4)} lang="json" />
+						<Code
+							code={JSON.stringify(model.schema.input, null, 4)}
+							lang="json"
+						/>
 					</TabItem>
 					<TabItem label="Output">
-						<Code code={JSON.stringify(model.schema.output, null, 4)} lang="json" />
+						<Code
+							code={JSON.stringify(model.schema.output, null, 4)}
+							lang="json"
+						/>
 					</TabItem>
 				</Tabs>
 			</>
