@@ -2786,9 +2786,6 @@
 # AI Gateway models (unified under /ai/models/)
 /ai-gateway/models/* /ai/models/:splat 301
 
-# Workers AI models (unified under /ai/models/)
-/workers-ai/models/* /ai/models/:splat 301
-
 # Changelog (individual entry route moved to /post/)
 /changelog/2024-* /changelog/post/2024-:splat 301
 /changelog/2025-* /changelog/post/2025-:splat 301

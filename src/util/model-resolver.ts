@@ -205,3 +205,24 @@ export async function getResolvedModels(): Promise<ResolvedModel[]> {
 
 	return resolved;
 }
+
+/**
+ * Get only legacy Workers AI models (hosted on Cloudflare infrastructure).
+ * These are models from workers-ai-models collection that are NOT in the catalog.
+ */
+export async function getLegacyModels(): Promise<ResolvedModel[]> {
+	const [catalogModels, legacyModels] = await Promise.all([
+		getCollection("catalog-models"),
+		getCollection("workers-ai-models"),
+	]);
+
+	// Get catalog slugs to exclude
+	const catalogSlugs = new Set(
+		catalogModels.map((entry) => entry.data.model_id),
+	);
+
+	// Return only legacy models not in catalog
+	return legacyModels
+		.filter((entry) => !catalogSlugs.has(entry.data.name))
+		.map((entry) => legacyToResolved(entry.data));
+}
