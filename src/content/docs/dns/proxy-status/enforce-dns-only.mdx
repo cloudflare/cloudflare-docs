@@ -76,7 +76,6 @@ Enforce DNS-only does not affect the following records:
 
 - [Spectrum](/spectrum/) applications: CNAME records pointing to Spectrum endpoints are already DNS-only.
 - [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) records on SaaS provider zones: The default origin where [custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/) are routed must be proxied.
-- Cloudflare for SaaS records on customer zones: Setting CNAME records on a customer zone to DNS-only would not help if the SaaS provider's zone remains proxied.
 - [Workers](/workers/) custom domains: Proxied A records pointing to `100::`.
 - [R2](/r2/) custom domains: Proxied CNAME records pointing to `public.r2.dev`.
 - [Web3 gateways](/web3/): Ethereum and IPFS DNSLink gateways (CNAMEs to `ethereum.cloudflare.com` or `ipfs.cloudflare.com`).
