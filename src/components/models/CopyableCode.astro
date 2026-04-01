@@ -74,17 +74,21 @@ const { text, label = "Copy" } = Astro.props;
 		connectedCallback() {
 			const text = this.dataset.text ?? "";
 			const button = this.querySelector("button");
+			const icon = this.querySelector<SVGElement>(".copy-icon");
+
+			const copyPath = icon?.innerHTML;
+			const checkPath = '<polyline points="20 6 9 17 4 12"></polyline>';
 
 			button?.addEventListener("click", async () => {
 				await navigator.clipboard.writeText(text);
 
-				// Brief visual feedback
-				const icon = this.querySelector<SVGElement>(".copy-icon");
-				if (icon) {
+				if (icon && copyPath) {
+					icon.innerHTML = checkPath;
 					icon.style.color = "var(--sl-color-green)";
 					setTimeout(() => {
+						icon.innerHTML = copyPath;
 						icon.style.color = "";
-					}, 1000);
+					}, 1500);
 				}
 			});
 		}
