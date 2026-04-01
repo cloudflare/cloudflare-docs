@@ -153,7 +153,7 @@ const ModelCatalog = ({ models }: { models: ResolvedModel[] }) => {
 					onChange={(e) => setFilters({ ...filters, search: e.target.value })}
 				/>
 
-				<details className="mb-6! hidden md:block">
+				<details className="mb-6! hidden md:block" open>
 					<summary className="cursor-pointer text-sm font-bold text-gray-600 uppercase select-none dark:text-gray-200">
 						Task Type
 					</summary>
@@ -186,7 +186,7 @@ const ModelCatalog = ({ models }: { models: ResolvedModel[] }) => {
 					))}
 				</details>
 
-				<details className="mb-6! hidden md:block">
+				<details className="mb-6! hidden md:block" open>
 					<summary className="cursor-pointer text-sm font-bold text-gray-600 uppercase select-none dark:text-gray-200">
 						Capabilities
 					</summary>
@@ -262,7 +262,7 @@ const ModelCatalog = ({ models }: { models: ResolvedModel[] }) => {
 					)}
 				</details>
 
-				<details className="mb-6! hidden md:block">
+				<details className="mb-6! hidden md:block" open>
 					<summary className="cursor-pointer text-sm font-bold text-gray-600 uppercase select-none dark:text-gray-200">
 						Authors
 					</summary>
