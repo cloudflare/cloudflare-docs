@@ -37,17 +37,18 @@ import DeepgramFlux from "~/components/models/code/DeepgramFlux.astro";
 import Render from "~/components/Render.astro";
 import { authorData } from "~/components/models/data";
 import { hasProperty } from "~/util/model-properties";
-import { getResolvedModels, getModelAuthor } from "~/util/model-resolver";
+import { getLegacyModels, getModelAuthor } from "~/util/model-resolver";
 
 export const getStaticPaths = (async () => {
-	const models = await getResolvedModels();
+	const models = await getLegacyModels();
 
-	// Generate pages at full model ID path only (e.g., "@cf/moonshotai/kimi-k2.5")
-	// Short slugs are handled by /workers-ai/models/[...name].astro for legacy URLs
-	return models.map((model) => ({
-		params: { name: model.slug },
-		props: { model },
-	}));
+	// Generate pages at short slug only for workers-ai (e.g., "kimi-k2.5")
+	const paths = models.map((model) => {
+		const shortSlug = model.name.split("/").at(-1); // e.g., "kimi-k2.5"
+		return { params: { name: shortSlug }, props: { model } };
+	});
+
+	return paths;
 }) satisfies GetStaticPaths;
 
 const { model } = Astro.props;
