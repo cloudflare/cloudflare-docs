@@ -328,7 +328,7 @@ const ModelCatalog = ({ models }: { models: ResolvedModel[] }) => {
 							<div className="-mb-1 flex items-center">
 								{authorInfo?.logo ? (
 									<img
-										className="mr-2 block w-6 rounded p-0.5 dark:bg-gray-200"
+										className="mr-2 block w-6 rounded-xs p-0.5 dark:bg-gray-200 dark:ring-2 dark:ring-gray-200"
 										src={authorInfo.logo}
 										alt={`${authorInfo.name} logo`}
 									/>
