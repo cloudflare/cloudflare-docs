@@ -1,0 +1,381 @@
+---
+pcx_content_type: solution-guide
+title: Stop Malicious Bots While Allowing Legitimate Traffic
+description: Block malicious bots while allowing legitimate traffic using Bot Fight Mode, Turnstile, WAF custom rules, and rate limiting.
+sidebar:
+  label: Stop Malicious Bots
+---
+
+Automated traffic targets sites in different ways: credential stuffing on login pages, scraping product data, spamming contact forms. The right defense depends on which of these apply to your site and what plan you are on. This guide covers a layered approach using Cloudflare tools, from baseline protection to targeted WAF rules. The core workflow uses features on Free and Pro plans, with callouts for advanced options on higher tiers.
+
+## Review your bot traffic
+
+Before you change any bot settings, review your traffic data. Making changes without understanding your traffic risks blocking legitimate visitors or missing the bots that cause the most damage.
+
+### Find your bot analytics
+
+Bot analytics show you how much of your traffic is automated, which pages bots target, and how Cloudflare scores each request.
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
+2. Go to **Security** > **Analytics** > **Bot analysis**.
+3. Review the bot score distribution chart. Scores closer to 1 indicate automated traffic. Scores closer to 99 indicate human traffic.
+4. Check the top requested paths to find which endpoints receive the most bot traffic. Login pages, API endpoints, and checkout flows are common targets.
+5. Look for patterns before making changes. Sudden spikes in low-score traffic, specific user agents appearing at high volume, or geographic concentration of requests all indicate bot activity worth investigating.
+
+:::note[Bot Analytics requires a Pro plan or above]
+Bot score distribution data and detailed bot analytics are available on Pro, Business, and Enterprise plans. Free plan users can review basic security metrics through **Security** > **Events**. For full bot analytics capabilities, refer to [Bot Analytics](/bots/bot-analytics/).
+:::
+
+### Understand bot categories
+
+Cloudflare classifies bot traffic into categories based on bot scores and verification status. Understanding these categories helps you write rules that target the right traffic.
+
+**Verified bots** are crawlers and services that Cloudflare has confirmed as legitimate. Googlebot, Bingbot, and uptime monitors fall into this category. Cloudflare maintains a [verified bot list](/bots/concepts/bot/verified-bots/policy/) with strict requirements — each bot must serve a benign purpose, respect `robots.txt`, and crawl with the consent of domain owners. Always allow verified bots through your protections.
+
+**Likely automated** traffic receives bot scores between 1 and 29. A score of 1 means the request is definitely automated. Scores from 2 to 29 indicate likely automated behavior. This category is your primary target. It includes scrapers, credential stuffing tools, inventory hoarding bots, and spam submitters.
+
+**Likely human** traffic receives bot scores between 30 and 99. These requests appear to come from real users. Do not challenge or block this traffic, or you risk degrading the experience for legitimate visitors.
+
+## Block automated traffic with Bot Fight Mode
+
+Bot Fight Mode identifies requests that match known bot patterns and issues a computational challenge. It reduces automated traffic across your entire site without requiring you to write any rules.
+
+### Turn on Bot Fight Mode
+
+Bot Fight Mode is available on all Cloudflare plans, including Free.
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
+2. Go to **Security Settings** and filter by **Bot traffic**.
+3. Find **Bot Fight Mode** and turn it on.
+
+That is the only step required. Bot Fight Mode begins challenging suspected bot traffic immediately.
+
+### Set expectations for Bot Fight Mode
+
+Bot Fight Mode provides broad, baseline protection. Understanding what it does and does not do helps you decide which additional layers you need.
+
+**What it does:**
+
+- Identifies requests that match known bot patterns using Cloudflare heuristics
+- Issues a computational challenge (a background test that bots fail and browsers pass silently) to suspected bots rather than hard-blocking them
+- Applies site-wide with no additional configuration
+
+**What it does not do:**
+
+- Does not distinguish between good bots (such as Googlebot) and bad bots. All automated traffic receives the same challenge.
+- Does not protect specific URL paths more than others. The challenge applies uniformly across your site.
+- Cannot be bypassed with WAF custom rule Skip actions. If Bot Fight Mode challenges a request you want to allow, your only options are IP Access rules or turning off Bot Fight Mode entirely.
+
+### Upgrade to Super Bot Fight Mode
+
+If you need to allow verified bots while still challenging malicious ones, Super Bot Fight Mode provides more granular controls:
+
+- **Verified bot allowlisting** — automatically allows known good bots through without challenges
+- **Per-category actions** — configure different responses for definitely automated, likely automated, and verified bot traffic
+- **Static resource protection** — extends bot detection to static assets like images and scripts
+- **JavaScript detections** — uses client-side signals for additional bot identification
+
+For setup instructions, refer to [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/).
+
+:::note[Super Bot Fight Mode requires a Pro plan or above]
+Super Bot Fight Mode is available on Pro, Business, and Enterprise plans. Free plan users can use Bot Fight Mode for baseline protection.
+:::
+
+:::caution
+If your organization uses [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/), set **Definitely Automated** to **Allow** in Super Bot Fight Mode. Otherwise, tunnel connections may fail with a `websocket: bad handshake` error.
+:::
+
+:::note[Enterprise Bot Management]
+For organizations that need machine learning-based bot scoring, behavioral analysis, and custom allow/block rules, Cloudflare Bot Management provides the most granular detection and response capabilities. Bot Management assigns a score from 1 (likely bot) to 99 (likely human) to every request, which you can reference in WAF custom rules. For more information, refer to [Bot Management](/bots/plans/bm-subscription/).
+:::
+
+## Protect forms from automated abuse
+
+Forms are among the most common targets for automated abuse. Login forms receive credential stuffing attempts that test stolen passwords against real accounts. Registration forms attract bots that create fake accounts for spam or fraud. Contact forms collect phishing links and advertising spam.
+
+### Add Turnstile to a form
+
+Turnstile is a free, privacy-preserving challenge that verifies visitors are human before they submit a form. Unlike traditional CAPTCHAs, Turnstile does not require users to solve visual puzzles. In Managed mode, most visitors pass without any visible interaction.
+
+Adding Turnstile involves three steps: create a widget, add the client-side snippet, and validate the token on your server.
+
+**1. Create a Turnstile widget**
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
+2. Go to **Turnstile**.
+3. Select **Add widget**.
+4. Enter a name for the widget and add the hostnames where it will appear.
+5. Choose a widget mode:
+   - _Managed_ — Cloudflare decides whether to show a challenge. Most users pass without interaction.
+   - _Non-interactive_ — always runs a background challenge with no user interaction.
+   - _Invisible_ — runs in the background with no visible widget.
+6. Select **Create**.
+7. Copy the **Site Key** (public) and **Secret Key** (private). You need both in the following steps.
+
+**2. Add the client-side snippet**
+
+Add the Turnstile script and widget container to your form HTML:
+
+```html
+<script
+	src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+	async
+	defer
+></script>
+
+<form action="/submit" method="POST">
+	<!-- Your existing form fields -->
+	<div class="cf-turnstile" data-sitekey="<YOUR_SITE_KEY>"></div>
+	<button type="submit">Submit</button>
+</form>
+```
+
+Replace `<YOUR_SITE_KEY>` with the site key from the previous step. The widget renders inside the `div` and produces a token when the visitor passes the challenge.
+
+**3. Validate the token on your server**
+
+Before processing the form submission, send the token to the Turnstile siteverify endpoint to confirm the visitor passed the challenge:
+
+```bash
+curl "https://challenges.cloudflare.com/turnstile/v0/siteverify" \
+  --header "Content-Type: application/json" \
+  --data '{
+  "secret": "<YOUR_SECRET_KEY>",
+  "response": "<TURNSTILE_RESPONSE_TOKEN>"
+}'
+```
+
+Replace `<YOUR_SECRET_KEY>` with your secret key and `<TURNSTILE_RESPONSE_TOKEN>` with the `cf-turnstile-response` value from the form submission. The endpoint returns a JSON object with a `success` field. Only process the form submission if `success` is `true`.
+
+For complete integration details, refer to [Turnstile get started](/turnstile/get-started/).
+
+:::note[Turnstile is free on all plans]
+Turnstile is available at no cost on all Cloudflare plans, including Free. You do not need a paid plan to add Turnstile to your forms. Turnstile also works on sites that are not proxied through Cloudflare. Refer to [Turnstile](/turnstile/) for full documentation.
+:::
+
+### When to use Turnstile versus rate limiting
+
+Turnstile and rate limiting solve different problems. Use them together for the strongest protection on form endpoints.
+
+**Turnstile** verifies that a visitor is human at the point of form submission. It prevents a single bot from submitting a form even once. Use Turnstile when you need to confirm the visitor is a real person before processing their input.
+
+**Rate limiting** caps the number of requests a client can make to an endpoint within a time window. It prevents volumetric abuse — the same IP hitting your login endpoint hundreds of times per minute. Use rate limiting when you need to control request volume regardless of whether the client is human.
+
+**Both together** provide the strongest coverage. Turnstile blocks automated submissions at the form level. Rate limiting catches high-volume attacks that bypass or do not encounter the form, such as direct `POST` requests to the endpoint that skip the client-side widget.
+
+For login endpoints, a tiered rate limiting approach works well alongside Turnstile. Create rules that escalate the response based on the volume of failed attempts:
+
+- **Short-window rule**: If a single IP sends more than 4 `POST` requests to `/login` that return `401` or `403` within 1 minute, issue a Managed Challenge.
+- **Long-window rule**: If a single IP accumulates more than 20 failed login attempts within 1 hour, block the IP for 24 hours.
+
+This pattern uses a counting expression that only counts `POST` requests returning authentication failure codes. Legitimate users who log in successfully on the first attempt never trigger the rule.
+
+For step-by-step rule creation, refer to [Create a rate limiting rule in the dashboard](/waf/rate-limiting-rules/create-zone-dashboard/). For the full tiered credential stuffing example, refer to [Rate limiting best practices](/waf/rate-limiting-rules/best-practices/).
+
+:::note[Tiered rate limiting rules require a Business plan or above]
+Rules that use counting expressions with response codes (such as counting only `401` and `403` responses) require a Business plan or above. On Free and Pro plans, you can create simpler rate limiting rules with IP-based counting. Refer to [Rate limiting rules](/waf/rate-limiting-rules/) for plan availability details.
+:::
+
+## Target bot patterns with WAF rules
+
+After turning on built-in bot protection, you may still see automated traffic that slips through. Bots that omit standard headers, hammer specific paths, or mimic browsers just well enough to avoid heuristic detection require targeted rules.
+
+WAF custom rules and rate limiting rules let you act on specific traffic patterns. The WAF separates detection (scoring traffic) from mitigation (acting on those scores). Detections like bot score label incoming requests, but they do not block anything on their own. You write rules that reference those signals to decide what action to take.
+
+### Block requests with missing or suspicious headers
+
+Legitimate browsers always send headers like `User-Agent`, `Accept`, and `Accept-Language`. Many bots omit these headers or send non-browser values. A custom rule targeting requests with empty or suspicious headers catches bots that evade score-based detection.
+
+Before creating custom rules, review the built-in bot settings under **Security Settings** > **Bot traffic**. These settings handle common scenarios without requiring you to write expressions:
+
+| Use case                                        | Setting                        |
+| ----------------------------------------------- | ------------------------------ |
+| Block AI crawlers                               | **Block AI bots**              |
+| Block definitely automated traffic (score 1)    | **Definitely automated**       |
+| Challenge likely automated traffic (score 2-29) | **Likely automated**           |
+| Allow verified bots                             | **Verified bots**              |
+| Extend protection to static resources           | **Static resource protection** |
+
+If the built-in settings do not cover your needs, create a custom rule:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
+2. Go to **Security** > **WAF** > **Custom rules**.
+3. Select **Create rule**.
+4. Build an expression that targets requests to sensitive paths where the `User-Agent` header is empty or matches known bad patterns. For example, to challenge requests to `/login` with an empty user agent:
+
+   ```txt
+   (http.request.uri.path eq "/login" and http.user_agent eq "")
+   ```
+
+5. Set the action to **Log** first. This lets you observe which requests the rule matches without blocking legitimate traffic.
+6. Select **Deploy**.
+7. After 24-48 hours, review the results in **Security** > **Events**. If the rule matches only bot traffic, change the action to **Managed Challenge** or **Block**.
+
+To prevent your rule from blocking search engine crawlers and monitoring services, add a verified bot exception. Create a separate rule with higher priority that uses the Skip action:
+
+```txt
+(cf.client.bot)
+```
+
+Set this rule's action to **Skip** > **All remaining custom rules**. This ensures verified bots bypass your custom rules while all other traffic is evaluated.
+
+For step-by-step rule creation, refer to [Create a custom rule in the dashboard](/waf/custom-rules/create-dashboard/).
+
+:::note[Custom rule availability by plan]
+All Cloudflare plans include custom rules. Free plans include five custom rules. The number of available rules increases with higher plans. For the full availability breakdown, refer to [Custom rules](/waf/custom-rules/#availability).
+:::
+
+If your bot traffic is concentrated from countries where you have no real users, you can combine geographic filters with the rules above. Add `ip.src.country` to your expression to restrict the rule to specific regions. For examples, refer to [Block traffic by geographical location](/waf/custom-rules/use-cases/block-by-geographical-location/).
+
+### Rate limit high-frequency paths
+
+Bots target high-value paths like login, checkout, and API endpoints with high-frequency requests. Rate limiting rules cap the number of requests a single client can make to these paths within a time window.
+
+The key challenge is choosing the right threshold. Set it too low and you block legitimate users. Set it too high and bots slip through.
+
+1. Identify which paths to protect first. Prioritize login pages, checkout flows, contact forms, and API endpoints.
+2. Estimate the normal request rate for those paths. Consider how many times a legitimate user would hit `/login` in a one-minute window. For most login pages, more than five requests per minute from a single IP is unusual.
+3. Create a rate limiting rule with a conservative threshold. Start with the Log action to observe what the rule would block without actually blocking it:
+   - **Expression**: `http.request.uri.path eq "/login" and http.request.method eq "POST"`
+   - **Counting characteristic** (the field used to group requests): IP address
+   - **Rate**: 10 requests per 1 minute
+   - **Action**: Log
+4. Review the results in **Security** > **Events** after 24-48 hours. Check whether any legitimate traffic would have been blocked.
+5. Once you are confident the threshold is correct, change the action from Log to **Managed Challenge** or **Block**.
+
+For step-by-step rule creation, refer to [Create a rate limiting rule in the dashboard](/waf/rate-limiting-rules/create-zone-dashboard/).
+
+:::note[Security Analytics rate analysis requires an Enterprise plan]
+Enterprise customers can use the **Request rate analysis** tab in Security Analytics to visualize request rate distributions and set thresholds using an interactive slider. On Free, Pro, and Business plans, estimate thresholds based on your expected traffic patterns and use the Log action to validate before enforcing. Refer to [Find an appropriate rate limit](/waf/rate-limiting-rules/find-rate-limit/) for the full methodology.
+:::
+
+### Use bot score in WAF rules
+
+Bot score gives you a numeric signal to distinguish automated traffic from human visitors. Each request receives a score from 1 to 99, where lower scores indicate more automated behavior:
+
+| Score | Category         | Meaning                                          |
+| ----- | ---------------- | ------------------------------------------------ |
+| 1     | Automated        | Definitely a bot                                 |
+| 2-29  | Likely automated | Probably a bot                                   |
+| 30-99 | Likely human     | Probably a real user                             |
+| N/A   | Verified bot     | Known good bot (Googlebot, Bingbot, and similar) |
+
+You reference the `cf.bot_management.score` field in WAF custom rule expressions to act on these scores. For example, to challenge likely automated traffic on your checkout page:
+
+```txt
+(cf.bot_management.score lt 30 and http.request.uri.path eq "/checkout" and not cf.bot_management.verified_bot)
+```
+
+Set the action to **Managed Challenge**. This expression challenges requests with a bot score under 30 on the checkout path while allowing verified bots through.
+
+For broader protection, use a layered set of rules ordered by priority:
+
+1. **Skip verified bots**: Expression `(cf.bot_management.verified_bot)` with action **Skip** > **All remaining custom rules**. This ensures known good bots are never blocked.
+2. **Block definitely automated**: Expression `(cf.bot_management.score eq 1)` with action **Block**. Score 1 traffic is definitively automated.
+3. **Challenge likely automated**: Expression `(cf.bot_management.score gt 1 and cf.bot_management.score lt 30)` with action **Managed Challenge**. This catches the gray area between definite bots and likely humans.
+
+Deploy these rules in order so the Skip rule executes first. Set rules 2 and 3 to **Log** initially, review the matched traffic in **Security** > **Events** for 24-48 hours, then change to **Block** and **Managed Challenge** once you confirm the thresholds are not catching legitimate traffic.
+
+For the full list of bot management fields available in rule expressions, refer to [Bot Management variables](/bots/reference/bot-management-variables/).
+
+:::note[Bot score in WAF rules requires a Pro plan or above]
+The `cf.bot_management.score` field is available to Pro, Business, and Enterprise customers. On Free plans, use `cf.client.bot` to identify verified bots, but granular bot scoring is not available. Enterprise customers with the Bot Management add-on get access to additional detection engines including machine learning and anomaly detection for more accurate scoring. Refer to [Bot scores](/bots/concepts/bot-score/) for details on each detection engine.
+:::
+
+## Verify and tune your rules
+
+After you deploy bot protection rules, verify that they block malicious traffic without interfering with legitimate visitors. Security Events shows you what your rules are doing in real time. Use that data to tune thresholds and create exceptions before problems affect real users.
+
+### Check Security Events
+
+Security Events displays every request that Cloudflare mitigated — blocked, challenged, or flagged. This is where you confirm your rules are working as intended.
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
+2. Go to **Security** > **Events**.
+3. Review the **Events summary** for an overview of mitigated requests over time.
+4. Check **Events by service** to see which rules are triggering. Events are labeled by their source: Bot Fight Mode, Super Bot Fight Mode, WAF custom rules, or rate limiting rules.
+5. Scroll to **Sampled logs** to inspect individual requests. Each log entry shows the action taken, the rule that triggered, the source IP, user agent, URI path, and country.
+
+Look for false positives — legitimate traffic that your rules incorrectly challenged or blocked. Common signs include:
+
+- Requests from known monitoring services or payment processors appearing in blocked events
+- User agents matching legitimate browsers but receiving challenges
+- High volumes of challenged requests from countries where you have real users
+
+Bot Fight Mode and Super Bot Fight Mode are aggressive by design. False positives are expected, especially in the first few days after turning them on. The key difference between the two is how you handle exceptions:
+
+- **Bot Fight Mode** (Free) cannot be bypassed with WAF custom rule Skip actions. Your options are IP Access rules or turning off Bot Fight Mode entirely.
+- **Super Bot Fight Mode** (Pro and above) can be bypassed with WAF custom rules using the Skip action, giving you more flexibility to create exceptions.
+
+For more information on handling false positives, refer to [False positives](/bots/troubleshooting/false-positives/).
+
+### Tune based on what you see
+
+After reviewing Security Events for 24-48 hours, you will likely need to adjust your rules. Here are three common scenarios and how to address each one.
+
+**Scenario 1: Verified bots are being challenged.**
+
+Search engine crawlers like Googlebot or Bingbot appear in your challenged or blocked events. Create a WAF custom rule with a Skip action that allows verified bots through:
+
+- **Expression**: `(cf.bot_management.verified_bot)` (Pro and above) or `(cf.client.bot)` (all plans)
+- **Action**: Skip > All remaining custom rules
+
+Place this rule at the top of your custom rule list so it executes first. On Free plans where Bot Fight Mode cannot be bypassed with Skip actions, add the bot IP ranges to your IP Access Allow list instead.
+
+**Scenario 2: Your monitoring tools or services are being blocked.**
+
+Internal monitoring tools, health check services, or partner APIs appear in blocked events. The fix depends on which feature is blocking them:
+
+- If **Super Bot Fight Mode** (Pro and above) is blocking the traffic, create a WAF custom rule with a Skip action matching the tool IP address or user agent. For example: `(ip.src eq 192.0.2.1)` with action **Skip** > **Skip Super Bot Fight Mode**.
+- If **Bot Fight Mode** (Free) is blocking the traffic, add the tool IP address to your IP Access Allow list. Bot Fight Mode does not trigger when an IP Access rule matches the request.
+
+For details on Skip action configuration, refer to [WAF custom rules Skip action](/waf/custom-rules/skip/).
+
+**Scenario 3: Malicious traffic is still getting through.**
+
+You see bot activity in your logs that your current rules do not catch. Tighten your defenses:
+
+- **Lower your bot score threshold.** If you are challenging traffic with scores below 30, try lowering the threshold to challenge scores below 50. Monitor for false positives after each change.
+- **Add path-specific rules.** Create custom rules that apply stricter thresholds to your most targeted paths. For example, challenge all traffic with a bot score below 50 on `/login` while keeping the site-wide threshold at 30.
+- **Combine signals.** Use multiple fields in a single expression for more precise targeting. For example, challenge requests to `/login` that have a low bot score and an empty `Accept-Language` header:
+
+  ```txt
+  (http.request.uri.path eq "/login" and cf.bot_management.score lt 30 and len(http.request.headers["accept-language"][0]) eq 0)
+  ```
+
+Custom rules execute before Super Bot Fight Mode in the WAF evaluation order. A custom rule that takes a terminating action (Block, Managed Challenge) prevents the request from reaching Super Bot Fight Mode. Keep this in mind when troubleshooting why a rule does not appear to trigger. For details on rule execution order, refer to [WAF feature interoperability](/waf/feature-interoperability/).
+
+### Set up alerts
+
+Bot attacks can spike without warning. Set up alerts so you are notified when automated traffic increases, rather than discovering the problem after it affects your site.
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
+2. Go to **Notifications**.
+3. Select **Add**.
+4. Select **Bot Management** from the product list.
+5. Choose an alert type:
+   - **Bot Detection Alert** — notifies you when Cloudflare detects an abnormal spike in bot traffic. The alert triggers when the Z-score (a statistical measure of how far bot traffic deviates from normal) exceeds 3.5 and bot requests exceed 200 per five-minute window.
+   - **Custom Bot Detection Alert** — allows filtering by user agent, hostname, URI path, IP address, ASN, JA3 TLS fingerprint, JA4 TLS fingerprint, or Bot Detection IDs. Also supports grouping by JA4 fingerprint, ASN, or Bot Detection IDs.
+6. Enter a notification name and optional description.
+7. Select the domains to monitor.
+8. Configure a delivery method (email, PagerDuty, or webhook).
+9. Select **Save**.
+
+Bot Detection Alerts exclude verified bots, so legitimate crawler traffic does not trigger false alert spikes.
+
+For general notification configuration and delivery method options, refer to [Notifications](/notifications/).
+
+:::note[Custom Bot Detection Alerts require Bot Management]
+Custom Bot Detection Alerts with advanced filtering and grouping dimensions require Bot Management (Enterprise add-on). The standard Bot Detection Alert is available to all Bot Management customers.
+:::
+
+## Related resources
+
+- [Bot Analytics](/bots/bot-analytics/) — Monitor bot traffic patterns across your domain
+- [Bot Fight Mode](/bots/get-started/bot-fight-mode/) — Baseline bot protection available on all plans
+- [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/) — Granular bot controls for Pro, Business, and Enterprise plans
+- [Turnstile](/turnstile/) — Free, privacy-preserving challenge for forms and user interactions
+- [WAF custom rules](/waf/custom-rules/) — Write targeted rules using traffic signals and bot scores
+- [Rate limiting rules](/waf/rate-limiting-rules/) — Control request volume to protect endpoints from abuse
+- [Enterprise Bot Management](/bots/plans/bm-subscription/) — Machine learning-based bot scoring and behavioral analysis
+- [Security Events](/waf/analytics/security-events/) — Review and investigate mitigated requests
