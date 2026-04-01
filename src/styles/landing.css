@@ -148,7 +148,6 @@
 
 :root[data-theme="dark"] .landing-root {
 	color: #fafafa;
-	background: blue;
 	--l-dot-color: rgba(255, 255, 255, 0.05);
 	--l-dot-size: 22px 22px;
 	--l-dot-mask: radial-gradient(
