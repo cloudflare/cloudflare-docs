@@ -33,7 +33,7 @@ export default function App() {
 }
 ```
 
-Use the [Create Participant API](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/) to fetch the `authToken`.
+Use the [Add participant API](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/) to fetch the `authToken`.
 
 ## Create a meeting component
 
@@ -112,7 +112,7 @@ Use the `rtk-meeting` component to render the meeting UI:
 
 Pass the `authToken` and connect the meeting object to the UI component:
 
-Use the [Create Participant API](/api/resources/realtime_kit/#create-a-participant) to fetch the `authToken`.
+Use the [Add participant API](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/) to fetch the `authToken`.
 
 ```html
 <script>
@@ -186,7 +186,7 @@ class AppComponent {
 }
 ```
 
-Use the [Create Participant API](/api/resources/realtime_kit/#create-a-participant/) to fetch the `authToken`.
+Use the [Add participant API](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/) to fetch the `authToken`.
 
 </RTKCodeSnippet>
 
@@ -196,7 +196,7 @@ Use the [Create Participant API](/api/resources/realtime_kit/#create-a-participa
 
 Create a `RealtimeKitUI` instance with your auth token, then call `startMeeting(completion:)` to get a view controller. Present it to display the full meeting UI.
 
-Use the [Create Participant API](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/) to fetch the `authToken`.
+Use the [Add participant API](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/) to fetch the `authToken`.
 
 ```swift
 import RealtimeKit
@@ -226,7 +226,7 @@ present(controller, animated: true)
 
 Create an `RtkMeetingInfo` with your auth token, wrap it in `RealtimeKitUIInfo`, build the UI Kit, and call `startMeeting()`.
 
-Use the [Create Participant API](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/) to fetch the `authToken`.
+Use the [Add participant API](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/) to fetch the `authToken`.
 
 ```kotlin
 import com.cloudflare.realtimekit.models.RtkMeetingInfo
@@ -250,7 +250,7 @@ rtkUIKit.startMeeting()
 
 Create an `RtkMeetingInfo` with your auth token, wrap it in `RealtimeKitUIInfo`, and build the UI Kit. The returned `RealtimeKitUI` object is a Flutter widget — place it directly in your widget tree.
 
-Use the [Create Participant API](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/) to fetch the `authToken`.
+Use the [Add participant API](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/) to fetch the `authToken`.
 
 ```dart
 import 'package:flutter/material.dart';
@@ -277,7 +277,7 @@ Call `RealtimeKitUIBuilder.dispose()` when you no longer need the meeting UI.
 
 Use the `useRealtimeKitClient` hook from the core React Native package to create a meeting instance:
 
-Use the [Create Participant API](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/) to fetch the `authToken`.
+Use the [Add participant API](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/) to fetch the `authToken`.
 
 ```typescript
 import {
