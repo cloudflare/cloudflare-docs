@@ -9,6 +9,10 @@ import { Render, DashButton } from "~/components";
 
 You can enable mutual Transport Layer Security (mTLS) for any hostname. For more information, refer to the [Client certificates overview](/ssl/client-certificates/).
 
+:::note[Cloudflare-issued or BYOCA]
+The following process only refers to certificates issued from the Cloudflare-managed CA. For hostnames that should be validated using your own CA, refer to the [BYOCA documentation](/ssl/client-certificates/byo-ca/).
+:::
+
 To enable mTLS for a host from the Cloudflare dashboard:
 
 1. In the Cloudflare dashboard, go to the **Client Certificates** page.
@@ -27,7 +31,7 @@ To enable mTLS for a host from the Cloudflare dashboard:
 As explained in the [Client certificates overview](/ssl/client-certificates/#how-it-works), Cloudflare validates client certificates against CAs set at account level. This means that these certificates can be used for validation across multiple zones/domains (`example.com`), as long as the zones are under the same Cloudflare account and you have enabled mTLS for the host.
 
 :::note[Bring your own CA]
-If you need to use your own CA (instead of the Cloudflare Managed CA), refer to [BYOCA](/ssl/client-certificates/byo-ca/). This option is available on Enterprise accounts.
+If you need to use your own CA (instead of the Cloudflare-managed CA), refer to [BYOCA](/ssl/client-certificates/byo-ca/). This option is available on Enterprise accounts.
 :::
 
 ## Next steps
