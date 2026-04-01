@@ -44,12 +44,13 @@ Refer to the steps below for an example of how to generate a custom certificate 
 
 2. Select the **Authenticated Origin Pulls** tab.
 3. In the **Per-hostname** section, select **Upload certificate**.
-4. Paste the certificate and private key, then select **Upload**.
-
+4. Paste the certificate and private key, then select **Continue**.
 :::note
-
 You must upload a [leaf certificate](/ssl/concepts/#chain-of-trust). If you upload a root CA instead, the upload will fail.
 :::
+5. Review your certificate details, save the certificate ID for future reference, and select **Continue**.
+6. On the **Associate Hostnames** page, enter the fully qualified domain name that should use this certificate and select **Add** for each one. You can also skip this step and associate hostnames later.
+7. Select **Save** to confirm.
 
 </TabItem> <TabItem label="API">
 
