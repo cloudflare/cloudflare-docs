@@ -145,8 +145,10 @@ jobs:
 
       # Distinguish between "link check failed" and "real build failure" by grepping
       # the captured build output for the link validator's specific error message.
-      # A non-empty dist/ alone is NOT sufficient — a partial build failure can leave
-      # pages in dist/ without the build completing.
+      # The link validator runs in astro:build:done (after all pages are written to
+      # dist/), so its error string can only appear when the build itself completed.
+      # Any other failure — including partial builds with a non-empty dist/ — will
+      # not contain that string and will correctly fail here.
       - name: Check build result
         id: check_link_result
         shell: bash
@@ -156,15 +158,7 @@ jobs:
             exit 0
           fi
 
-          # Build failed — determine why.
-          # If dist/ is missing or empty, the build failed before producing any output.
-          if [ ! -d dist ] || [ -z "$(ls -A dist)" ]; then
-            echo "::error::Build failed before producing output. Check the Build step logs."
-            exit 1
-          fi
-
-          # dist/ has content, but the build still failed. Check if the ONLY failure
-          # was the link validator (which throws after all pages are written).
+          # Build failed. Was it only the link validator?
           if grep -q "Links validation failed" /tmp/build-output.log; then
             echo "failed=true" >> "$GITHUB_OUTPUT"
             echo "::warning::Build succeeded but link validation failed. Preview will still be deployed."
