@@ -208,7 +208,6 @@
 /ai-gateway/configuration/custom-metadata/ /ai-gateway/observability/custom-metadata/ 301
 /ai-gateway/universal/ /ai-gateway/usage/universal/ 301
 /ai-gateway/chat-completion/ /ai-gateway/usage/chat-completion/ 301
-/ai-gateway/models/* /ai/models/:splat 301
 
 # analytics
 /analytics/migration-guides/zone-analytics/ /analytics/graphql-api/migration-guides/zone-analytics/ 301
@@ -2177,9 +2176,6 @@
 /workers-ai/models/whisper/ /ai/models/@cf/openai/whisper/ 301
 /workers-ai/models/zephyr-7b-beta-awq/ /ai/models/@hf/thebloke/zephyr-7b-beta-awq/ 301
 
-# Unified AI models catalog - catch-all for any remaining /workers-ai/models/ URLs
-/workers-ai/models/* /ai/models/:splat 301
-
 /workers-ai/platform/bindings/ /workers-ai/configuration/bindings/ 301
 /workers-ai/get-started/local-dev-setup/ /workers-ai/get-started/workers-wrangler/ 301
 /workers-ai/configuration/function-calling/ /workers-ai/features/function-calling/ 301
@@ -2786,6 +2782,12 @@
 
 # Agents x402 (moved under agentic-payments)
 /agents/x402/* /agents/agentic-payments/x402/:splat 301
+
+# AI Gateway models (unified under /ai/models/)
+/ai-gateway/models/* /ai/models/:splat 301
+
+# Workers AI models (unified under /ai/models/)
+/workers-ai/models/* /ai/models/:splat 301
 
 # Changelog (individual entry route moved to /post/)
 /changelog/2024-* /changelog/post/2024-:splat 301
