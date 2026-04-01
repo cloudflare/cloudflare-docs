@@ -18,7 +18,13 @@ type Filters = {
 	capabilities: string[];
 };
 
-const ModelCatalog = ({ models }: { models: ResolvedModel[] }) => {
+const ModelCatalog = ({
+	models,
+	basePath = "/ai/models",
+}: {
+	models: ResolvedModel[];
+	basePath?: string;
+}) => {
 	const [filters, setFilters] = useState<Filters>({
 		search: "",
 		authors: [],
@@ -318,7 +324,7 @@ const ModelCatalog = ({ models }: { models: ResolvedModel[] }) => {
 						<a
 							key={model.model.id}
 							className="relative flex flex-col rounded-md border border-solid border-gray-200 p-3 text-inherit! no-underline hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
-							href={`/ai/models/${model.model.name}/`}
+							href={`${basePath}/${basePath === "/workers-ai/models" ? model.model.name.split("/").at(-1) : model.model.name}/`}
 						>
 							{isPinned && (
 								<span className="absolute top-1 right-2" title="Pinned model">

@@ -16,7 +16,7 @@ const models = await getLegacyModels();
 	>
 		Check out the <a href="/ai/models/">unified AI model catalog</a>.
 	</Aside>
-	<ModelCatalog models={models} client:load />
+	<ModelCatalog models={models} basePath="/workers-ai/models" client:load />
 </StarlightPage>
 
 <style>
