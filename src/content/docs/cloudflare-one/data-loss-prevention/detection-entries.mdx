@@ -7,11 +7,11 @@ sidebar:
 
 import { Details } from "~/components";
 
-Detection entries are the data patterns that DLP looks for when scanning your web traffic and SaaS applications. You add detection entries to [DLP profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/), which define what DLP should detect. There are three types:
+Detection entries are the data patterns that Cloudflare DLP looks for when scanning your web traffic and SaaS applications. You add detection entries to [DLP profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/), which define what DLP should detect. Detection entries include:
 
 - [Datasets](#datasets) — uploaded spreadsheets of specific values to match against (for example, credit card numbers or internal SKUs)
 - [Document entries](#documents) — fingerprints of example documents used to find similar content
-- [AI prompt topics](#ai-prompt-topics) — categories of sensitive prompts submitted to generative AI tools
+- [AI prompt topics](#ai-prompt-topics) — categories of prompts submitted to generative AI tools
 
 For datasets containing sensitive data, you can configure values to be hashed before reaching Cloudflare and redacted from matches in [payload logs](/cloudflare-one/data-loss-prevention/dlp-policies/logging-options/#log-the-payload-of-matched-rules).
 
