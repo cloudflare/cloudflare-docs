@@ -10,9 +10,11 @@ const models = await getLegacyModels();
 <StarlightPage
 	frontmatter={{ title: "Workers AI Models", tableOfContents: false }}
 >
-	<Aside type="tip" title="Looking for more models?">
-		Looking for all available AI models including external providers? Check out
-		the <a href="/ai/models/">unified AI model catalog</a>.
+	<Aside
+		type="tip"
+		title="Looking for more models, including external providers?"
+	>
+		Check out the <a href="/ai/models/">unified AI model catalog</a>.
 	</Aside>
 	<ModelCatalog models={models} client:load />
 </StarlightPage>

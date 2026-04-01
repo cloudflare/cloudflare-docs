@@ -297,7 +297,7 @@ const ModelCatalog = ({ models }: { models: ResolvedModel[] }) => {
 					))}
 				</details>
 			</div>
-			<div className="mt-0! flex w-full flex-wrap items-stretch gap-[1%] self-start md:w-3/4">
+			<div className="mt-0! grid w-full grid-cols-1 gap-3 self-start md:w-3/4 lg:grid-cols-2">
 				{modelList.length === 0 && (
 					<div className="flex w-full flex-col justify-center rounded-md border bg-gray-50 py-6 text-center align-middle dark:border-gray-500 dark:bg-gray-800">
 						<span className="text-lg font-bold!">No models found</span>
@@ -317,7 +317,7 @@ const ModelCatalog = ({ models }: { models: ResolvedModel[] }) => {
 					return (
 						<a
 							key={model.model.id}
-							className="relative mb-3 flex w-full flex-col rounded-md border border-solid border-gray-200 p-3 text-inherit! no-underline hover:bg-gray-50 lg:w-[48%] dark:border-gray-700 dark:hover:bg-gray-800"
+							className="relative flex flex-col rounded-md border border-solid border-gray-200 p-3 text-inherit! no-underline hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
 							href={`/ai/models/${model.model.name}/`}
 						>
 							{isPinned && (
