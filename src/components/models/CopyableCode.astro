@@ -70,16 +70,22 @@ const { text, label = "Copy" } = Astro.props;
 </style>
 
 <script>
-	import { addTooltip } from "~/util/tippy";
-
 	class CopyableCode extends HTMLElement {
 		connectedCallback() {
 			const text = this.dataset.text ?? "";
+			const button = this.querySelector("button");
 
-			addTooltip(this, "Copied!", { trigger: "click", hideAfter: 1000 });
+			button?.addEventListener("click", async () => {
+				await navigator.clipboard.writeText(text);
 
-			this.addEventListener("click", () => {
-				navigator.clipboard.writeText(text);
+				// Brief visual feedback
+				const icon = this.querySelector<SVGElement>(".copy-icon");
+				if (icon) {
+					icon.style.color = "var(--sl-color-green)";
+					setTimeout(() => {
+						icon.style.color = "";
+					}, 1000);
+				}
 			});
 		}
 	}
