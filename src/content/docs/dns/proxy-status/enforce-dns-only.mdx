@@ -66,20 +66,24 @@ Due to DNS caching by recursive resolvers, the transition back to proxied behavi
 
 ## Other Cloudflare products
 
+Refer to the sections below in case you use other Cloudflare products that rely on DNS records.
+
 ### Included
 
-Enforce DNS-only affects proxied [Load Balancing](/load-balancing/) records.
+Enforce DNS-only affects the following records:
+
+- Proxied [Load Balancing](/load-balancing/): An **LB** record is visible on the DNS records table but proxy status is managed through the [Load Balancing configurations](/load-balancing/how-to/create-load-balancer/).
+- [Workers](/workers/) custom domains: records added to the DNS records table when you set up Workers [custom domains](/workers/configuration/routing/custom-domains/).
 
 ### Exceptions
 
 Enforce DNS-only does not affect the following records:
 
-- [Spectrum](/spectrum/) applications: CNAME records pointing to Spectrum endpoints are already DNS-only.
-- [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) records on SaaS provider zones: The default origin where [custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/) are routed must be proxied.
-- [Workers](/workers/) custom domains: Proxied A records pointing to `100::`.
-- [R2](/r2/) custom domains: Proxied CNAME records pointing to `public.r2.dev`.
-- [Web3 gateways](/web3/): Ethereum and IPFS DNSLink gateways (CNAMEs to `ethereum.cloudflare.com` or `ipfs.cloudflare.com`).
-- [Cloudflare Tunnel](/tunnel/) records: These records are required for tunnel routing and setting them to DNS-only would break tunnel connectivity.
+- [Spectrum](/spectrum/) applications: DNS records managed by the Spectrum application.
+- [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) fallback origin: The proxied DNS record you designate as the [fallback origin](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/#1-create-fallback-origin) for custom hostnames.
+- [R2](/r2/) custom domains: read-only proxied records added to the DNS records table when you set up [R2 custom domains](/r2/buckets/public-buckets/#connect-a-bucket-to-a-custom-domain).
+- [Web3 gateways](/web3/): CNAMEs to `ethereum.cloudflare.com`, `ipfs.cloudflare.com`, or `universal-gateway.ipfs.cloudflare.com`. These are read-only proxied records managed by the [gateway configuration](/web3/reference/gateway-dns-records/).
+- [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/): CNAME records pointing to a tunnel subdomain (**Target** ending in `.cfargotunnel.com`).
 
 ## Check current status
 
