@@ -7,16 +7,13 @@ import { Aside } from "~/components";
 const models = await getLegacyModels();
 ---
 
-<StarlightPage frontmatter={{ title: "Workers AI Models", tableOfContents: false }}>
-	<Aside type="tip">
-		Looking for all available AI models including external providers? Check out the <a href="/ai/models/">unified AI model catalog</a>.
+<StarlightPage
+	frontmatter={{ title: "Workers AI Models", tableOfContents: false }}
+>
+	<Aside type="tip" title="Looking for more models?">
+		Looking for all available AI models including external providers? Check out
+		the <a href="/ai/models/">unified AI model catalog</a>.
 	</Aside>
-
-	<p>
-		These models are hosted on Cloudflare's infrastructure and run directly on Workers AI.
-		For the complete catalog including external models available through AI Gateway, visit <a href="/ai/models/">AI Models</a>.
-	</p>
-
 	<ModelCatalog models={models} client:load />
 </StarlightPage>
 
