@@ -1,0 +1,47 @@
+---
+title: Browser Rendering CDP endpoints now accessible from any environment
+description: Connect to Browser Rendering from any environment using Chrome DevTools Protocol endpoints for session management, browser automation, and live debugging.
+products:
+  - browser-rendering
+date: 2026-04-12
+---
+
+import { CURL } from "~/components";
+
+Browser Rendering now supports the [Chrome DevTools Protocol (CDP)](https://chromedevtools.github.io/devtools-protocol/) via the `/devtools` endpoints. You can create persistent browser sessions, manage multiple tabs, and control browsers using CDP commands from any environment that supports WebSocket connections. This includes local development machines, CI/CD pipelines, and external servers.
+
+With CDP support, you can:
+
+- **Create and manage browser sessions** - Launch browser instances that remain active for extended periods using `POST /devtools/browser`
+- **Manage tabs programmatically** - List, create, and close tabs via HTTP endpoints like `GET /devtools/browser/{session_id}/json/list`
+- **Automate with Puppeteer** - Connect Puppeteer scripts directly to Browser Rendering for browser automation
+- **Use AI agents with MCP** - Configure AI coding agents to control browsers via the Model Context Protocol
+- **Debug live sessions** - Open Chrome DevTools UI to inspect and debug remote browser sessions in real time
+
+The CDP endpoints complement the existing REST API by providing lower-level browser control. While the REST API offers high-level operations like screenshots and PDFs, CDP enables fine-grained control over browser behavior, network monitoring, and JavaScript execution.
+
+For example, to create a browser session and open a tab:
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/ACCOUNT_ID/browser-rendering/devtools/browser"
+	method="POST"
+	headers={{
+		Authorization: "Bearer {api_token}",
+	}}
+	query={{
+		keep_alive: "600000",
+	}}
+/>
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/ACCOUNT_ID/browser-rendering/devtools/browser/SESSION_ID/json/new"
+	method="PUT"
+	headers={{
+		Authorization: "Bearer {api_token}",
+	}}
+	query={{
+		url: "https://example.com",
+	}}
+/>
+
+Learn more about using CDP with Browser Rendering in the [documentation](/browser-rendering/rest-api/devtools/).
