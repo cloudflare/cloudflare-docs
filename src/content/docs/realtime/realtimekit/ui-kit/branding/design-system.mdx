@@ -24,7 +24,7 @@ The `provideRtkDesignSystem()` utility allows you to override the existing desig
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id={["mobile-android", "mobile-flutter", "mobile-react-native"]}>
+<RTKCodeSnippet id={["mobile-android", "mobile-flutter", "mobile-ios", "mobile-react-native"]}>
 
 Each mobile platform exposes a design token system that controls colors, borders, typography, and spacing. You configure tokens before launching a meeting and the UI Kit applies them across all components.
 
@@ -350,6 +350,40 @@ The `generateBrandColors()` helper derives five brand shades from a single hex v
 
 </RTKCodeSnippet>
 
+<RTKCodeSnippet id="mobile-ios">
+
+The iOS UI Kit uses `DesignLibrary.shared` as its central design token registry. Create a custom configurator that conforms to `DesignLibraryConfiguratorProtocol` and pass it to the design library before starting a meeting.
+
+```swift
+import RealtimeKitUI
+
+class CustomConfigurator: DesignLibraryConfiguratorProtocol {
+    let colorBrandBase: BrandColorToken.Shade = .init(hex: "#FF6B35")!
+    let colorBackgroundBase: BackgroundColorToken.Shade = .init(hex: "#080808")!
+
+    let textColorBackgroundBase: TextColorToken.Background.Shade = .init(hex: "#FFFFFF")!
+    let textColorBrandBase: TextColorToken.Brand.Shade = .init(hex: "#111111")!
+
+    let statusDangerColor: StatusColor.Shade = .init(hex: "#FF2D2D")!
+    let statusSuccessColor: StatusColor.Shade = .init(hex: "#83D017")!
+    let statusWarningColor: StatusColor.Shade = .init(hex: "#FFCD07")!
+
+    let cornerRadiusRoundFactor: CGFloat = 4.0
+    let cornerRadiusExtraRoundFactor: CGFloat = 8.0
+    let cornerRadiusCircularFactor: CGFloat = 8.0
+
+    let borderSizeThinFactor: CGFloat = 1.0
+    let borderSizeFatFactor: CGFloat = 2.0
+}
+
+// Apply the custom configurator
+DesignLibrary.shared.setConfigurator(configurator: CustomConfigurator())
+```
+
+The SDK auto-generates shade variations from each base color. Brand shades run 300–700 and background shades run 600–1000, derived by lightening the base color.
+
+</RTKCodeSnippet>
+
 ## Design Tokens
 
 <RTKCodeSnippet id={["web-web-components", "web-react", "web-angular"]}>
@@ -362,19 +396,19 @@ These design tokens are stored and shared among components with the help of [CSS
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id={["mobile-android", "mobile-flutter", "mobile-react-native"]}>
+<RTKCodeSnippet id={["mobile-android", "mobile-flutter", "mobile-ios", "mobile-react-native"]}>
 
 The token system covers colors, borders, typography, and spacing. The table below shows the default values across all mobile platforms.
 
-| Token              | Android   | Flutter   | React Native |
-| ------------------ | --------- | --------- | ------------ |
-| Brand color        | `#2160FD` | `#2160FD` | `#2160FD`    |
-| Background         | `#080808` | `#080808` | `#080808`    |
-| Text on background | `#FFFFFF` | `#FFFFFF` | `#FFFFFF`    |
-| Text on brand      | `#111111` | —         | `#FFFFFF`    |
-| Danger             | `#FF2D2D` | `#FF2D2D` | `#FF2D2D`    |
-| Success            | `#83D017` | `#83D017` | `#83D017`    |
-| Warning            | `#FFCD07` | `#FFCD07` | `#FFCD07`    |
+| Token              | Android   | Flutter   | iOS       | React Native |
+| ------------------ | --------- | --------- | --------- | ------------ |
+| Brand color        | `#2160FD` | `#2160FD` | `#0246FD` | `#2160FD`    |
+| Background         | `#080808` | `#080808` | `#050505` | `#080808`    |
+| Text on background | `#FFFFFF` | `#FFFFFF` | `#FFFFFF` | `#FFFFFF`    |
+| Text on brand      | `#111111` | —         | `#111111` | `#FFFFFF`    |
+| Danger             | `#FF2D2D` | `#FF2D2D` | `#FF2D2D` | `#FF2D2D`    |
+| Success            | `#83D017` | `#83D017` | `#83D017` | `#83D017`    |
+| Warning            | `#FFCD07` | `#FFCD07` | `#FFCD07` | `#FFCD07`    |
 
 </RTKCodeSnippet>
 
@@ -429,6 +463,24 @@ provideRtkDesignSystem({
 
 </RTKCodeSnippet>
 
+<RTKCodeSnippet id="mobile-ios">
+
+The iOS UI Kit uses the system font (`UIFont.systemFont`) by default. Font customization is not exposed through the `DesignLibraryConfiguratorProtocol`. To change fonts, create a custom `AppThemeProtocol` implementation and override the appearance properties for individual components.
+
+```swift
+class CustomTheme: AppThemeProtocol {
+    // ...
+    var clockViewAppearance: RtkTextAppearance {
+        let model = RtkTextAppearanceModel()
+        model.font = UIFont(name: "Helvetica", size: 12) ?? .systemFont(ofSize: 12)
+        return model
+    }
+    // ...
+}
+```
+
+</RTKCodeSnippet>
+
 ### Colours
 
 <RTKCodeSnippet id={["web-web-components", "web-react", "web-angular"]}>
@@ -476,9 +528,38 @@ const designTokens = {
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id={["mobile-android", "mobile-flutter", "mobile-react-native"]}>
+<RTKCodeSnippet id={["mobile-android", "mobile-flutter", "mobile-ios", "mobile-react-native"]}>
 
 Brand color shades run from 300 (lightest) to 700 (darkest), with 500 as the primary shade. Background shades run from 600 (lightest) to 1000 (deepest).
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+Set `colorBrandBase` and `colorBackgroundBase` in your `DesignLibraryConfiguratorProtocol` implementation. The SDK auto-generates shades 300–700 for brand and 600–1000 for background by lightening the base color in 12% increments.
+
+iOS also exposes a `video` property on `BackgroundColorToken` that controls the color behind video tiles when no stream is active. It defaults to `shade800`.
+
+```swift
+class CustomConfigurator: DesignLibraryConfiguratorProtocol {
+    let colorBrandBase: BrandColorToken.Shade = .init(hex: "#FF6B35")!
+    let colorBackgroundBase: BackgroundColorToken.Shade = .init(hex: "#1A1A1A")!
+
+    let textColorBackgroundBase: TextColorToken.Background.Shade = .init(hex: "#FFFFFF")!
+    let textColorBrandBase: TextColorToken.Brand.Shade = .init(hex: "#111111")!
+
+    let statusDangerColor: StatusColor.Shade = .init(hex: "#FF2D2D")!
+    let statusSuccessColor: StatusColor.Shade = .init(hex: "#83D017")!
+    let statusWarningColor: StatusColor.Shade = .init(hex: "#FFCD07")!
+
+    // Border properties (required by protocol)
+    let cornerRadiusRoundFactor: CGFloat = 4.0
+    let cornerRadiusExtraRoundFactor: CGFloat = 8.0
+    let cornerRadiusCircularFactor: CGFloat = 8.0
+    let borderSizeThinFactor: CGFloat = 1.0
+    let borderSizeFatFactor: CGFloat = 2.0
+}
+```
 
 </RTKCodeSnippet>
 
@@ -565,6 +646,12 @@ Spacing configuration is not available through the design token API on this plat
 
 </RTKCodeSnippet>
 
+<RTKCodeSnippet id="mobile-ios">
+
+The iOS UI Kit uses a `SpaceToken` with a base unit of 4 points. The spacing scale runs from `space0` (0) to `space9` (36). Spacing configuration is not exposed through the public `DesignLibraryConfiguratorProtocol`. All spacing values are derived internally from the base unit.
+
+</RTKCodeSnippet>
+
 ### Borders
 
 <RTKCodeSnippet id={["web-web-components", "web-react", "web-angular"]}>
@@ -587,7 +674,7 @@ const designTokens = {
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id={["mobile-android", "mobile-flutter", "mobile-react-native"]}>
+<RTKCodeSnippet id={["mobile-android", "mobile-flutter", "mobile-ios", "mobile-react-native"]}>
 
 All mobile platforms support the same border radius and border width options.
 
@@ -597,7 +684,7 @@ All mobile platforms support the same border radius and border width options.
 | `borderWidth`  | `none`, `thin`, `fat`                           |
 
 :::note
-Flutter uses the enum value `RtkBorderRadius.extrarounded` (no hyphen). React Native uses the string `'extra-rounded'` (with hyphen).
+Flutter and iOS use the enum value `extrarounded` (no hyphen). React Native uses the string `'extra-rounded'` (with hyphen).
 :::
 
 </RTKCodeSnippet>
@@ -640,5 +727,28 @@ provideRtkDesignSystem({
 	borderWidth: "fat",
 });
 ```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+Set `cornerRadiusRoundFactor`, `cornerRadiusExtraRoundFactor`, `cornerRadiusCircularFactor`, `borderSizeThinFactor`, and `borderSizeFatFactor` in your `DesignLibraryConfiguratorProtocol` implementation. These factors control the multiplier used for each border style.
+
+```swift
+class CustomConfigurator: DesignLibraryConfiguratorProtocol {
+    // ... color properties ...
+
+    let cornerRadiusRoundFactor: CGFloat = 4.0
+    let cornerRadiusExtraRoundFactor: CGFloat = 8.0
+    let cornerRadiusCircularFactor: CGFloat = 8.0
+
+    let borderSizeThinFactor: CGFloat = 1.0
+    let borderSizeFatFactor: CGFloat = 2.0
+}
+
+DesignLibrary.shared.setConfigurator(configurator: CustomConfigurator())
+```
+
+iOS uses `BorderRadiusToken.RadiusType` with values `.sharp`, `.rounded`, `.extrarounded`, and `.circular`. Border width uses `BorderWidthToken.Width` with values `.none`, `.thin`, and `.fat`.
 
 </RTKCodeSnippet>
