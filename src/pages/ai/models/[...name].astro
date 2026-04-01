@@ -59,7 +59,6 @@ export const getStaticPaths = (async () => {
 	return paths;
 }) satisfies GetStaticPaths;
 
-const { name } = Astro.params;
 const { model } = Astro.props;
 
 // Display name: use catalog displayName, or fall back to last segment of model ID
