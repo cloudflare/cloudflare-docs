@@ -11,6 +11,10 @@ sidebar:
 canonical: /waf/managed-rules/troubleshooting/
 ---
 
+:::note
+This page applies only to the previous version of WAF managed rules. If you are troubleshooting the new implementation of WAF Managed Rules, refer to [Troubleshoot managed rules](/waf/managed-rules/troubleshooting/) instead.
+:::
+
 By default, WAF managed rules are fully managed via the Cloudflare dashboard and are compatible with most websites and web applications. However, false positives and false negatives may occur:
 
 - **False positives**: Legitimate requests detected and filtered as malicious.
@@ -22,17 +26,13 @@ The definition of suspicious content is subjective for each website. For example
 
 To test for false positives, set WAF managed rules to _Simulate_ mode. This mode allows you to record the response to possible attacks without challenging or blocking incoming requests. Also, review the Security Events' [sampled logs](/waf/analytics/security-events/#sampled-logs) to determine which managed rules caused false positives.
 
-If you find a false positive, there are several potential resolutions:
+If you find a false positive, consider the following remediation options (ordered from least to most impact on security):
 
-- **Add the client’s IP addresses to the [IP Access Rules](/waf/tools/ip-access-rules/) allowlist:** If the browser or client visits from the same IP addresses, allowing is recommended.
-- **Disable the corresponding managed rule(s)**: Stops blocking or challenging false positives, but reduces overall site security. A request blocked by Rule ID `981176` refers to OWASP rules. Decrease OWASP sensitivity to resolve the issue.
-- **Bypass WAF managed rules with a firewall rule (deprecated):** [Create a firewall rule](/firewall/cf-dashboard/create-edit-delete-rules/#create-a-firewall-rule) with the _Bypass_ action to deactivate WAF managed rules for a specific combination of parameters. For example, [bypass managed rules](/firewall/cf-firewall-rules/actions/) for a specific URL and a specific IP address or user agent.
-- **(Not recommended) Disable WAF managed rules for traffic to a URL:** Lowers security on the particular URL endpoint. Configured via [Page Rules](/rules/page-rules/).
-
-Additional guidelines are as follows:
-
-- If one specific rule causes false positives, set rule’s **Mode** to _Disable_ rather than turning _Off_ the entire rule **Group**.
-- For false positives with the administrator section of your website, create a [page rule](/rules/page-rules/) to **Disable Security** for the admin section of your site resources — for example, `example.com/admin`.
+1. **Add the requesting IP to the allowlist**: Use [IP Access rules](/waf/tools/ip-access-rules/) to allowlist the IP. This is the best option if the affected users always connect from the same IP address and does not reduce site security for other visitors.
+2. **Disable the specific WAF rule**: Turn off only the rule causing the false positive. This reduces security slightly but stops the incorrect block or challenge. It is recommended that you turn off a single rule rather than turning off an entire rule group.
+3. **Create a skip rule**: Create a [custom rule](/waf/custom-rules/skip/) with the _Skip_ action to skip the **Managed rules (previous version)** component. Target a specific URL combined with IP address or user-agent conditions.
+4. **Adjust OWASP settings**: If the blocking rule is `981176` (rule ID in the legacy OWASP managed ruleset), increase the OWASP score threshold and/or lower the OWASP paranoia level. Refer to [OWASP ModSecurity Core Rule Set](/waf/reference/legacy/old-waf-managed-rules/#owasp-modsecurity-core-rule-set) for more information.
+5. **Create a WAF override via API** (deprecated): Use the [WAF Overrides API](/api/resources/firewall/subresources/waf/subresources/overrides) to disable a specific legacy WAF rule for a particular URI without affecting other traffic. These overrides apply only to the previous version of the WAF.
 
 ## Troubleshoot false negatives
 

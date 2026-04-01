@@ -43,53 +43,46 @@ Before taking action, identify which rule blocked the request:
 
 </TabItem> </Tabs>
 
-### Recommended remediation steps
+Note the **Rule ID** and **Rule message** — these determine which remediation step to follow.
 
-Follow this decision tree based on the rule that triggered the false positive:
+:::tip
+If you have configured [payload logging](/waf/managed-rules/payload-logging/configure/), you can inspect the request payload in the event details and confirm whether traffic is a genuine false positive. For more information, refer to [View the payload content in the dashboard](/waf/managed-rules/payload-logging/view/).
+:::
 
-#### 1. Add a WAF exception (recommended first step)
+### Apply remediation measures
 
-[WAF exceptions](/waf/managed-rules/waf-exceptions/) let you skip specific rules or entire managed rulesets for requests that match certain conditions. This is the recommended approach because it preserves protection for all other traffic.
+Do the following based on the rule that triggered the false positive:
 
-Define exceptions in the [Cloudflare dashboard](/waf/managed-rules/waf-exceptions/define-dashboard/) or via the [Rulesets API](/waf/managed-rules/waf-exceptions/define-api/).
+#### 1. Add a WAF exception
 
-To inspect the request payload and confirm whether traffic is a genuine false positive, you can [configure payload logging](/waf/managed-rules/payload-logging/configure/).
+[WAF exceptions](/waf/managed-rules/waf-exceptions/) let you skip specific rules or entire managed rulesets for requests that match certain conditions. This is the recommended approach because it preserves protection for all other traffic. You can define exceptions in the [dashboard](/waf/managed-rules/waf-exceptions/define-dashboard/) or [via API](/waf/managed-rules/waf-exceptions/define-api/).
 
-#### 2. Adjust OWASP settings (if rule 949110 is triggering)
+#### 2. Adjust OWASP settings (if applicable)
 
-A request blocked by the rule with ID <RuleID id="6179ae15870a4bb7b2d480d4843b323c" /> and description `949110: Inbound Anomaly Score Exceeded` was blocked by the [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/). The OWASP ruleset calculates a cumulative [threat score](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#request-threat-score) — when the score exceeds the configured threshold, the request is blocked.
+A request blocked by the rule with ID <RuleID id="6179ae15870a4bb7b2d480d4843b323c" /> and description `949110: Inbound Anomaly Score Exceeded` was blocked by the [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/). The OWASP ruleset calculates a cumulative [threat score](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#request-threat-score). When the score exceeds the configured threshold, the request is blocked.
 
 To resolve OWASP false positives:
 
 - **Increase the anomaly score threshold**: Increase the [score threshold](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#score-threshold) so that more rule matches are required before blocking.
 - **Lower the paranoia level**: Reduce the [paranoia level](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#paranoia-level) to disable more aggressive rules that are more likely to produce false positives.
 
-For configuration steps, refer to [Configure the OWASP managed ruleset](/waf/managed-rules/reference/owasp-core-ruleset/configure-dashboard/).
+Refer to the following pages for step-by-step instructions:
+
+- [Configure the OWASP managed ruleset in the dashboard](/waf/managed-rules/reference/owasp-core-ruleset/configure-dashboard/)
+- [Configure the OWASP managed ruleset via API](/waf/managed-rules/reference/owasp-core-ruleset/configure-api/)
 
 #### 3. Disable specific managed rules
 
-Create an override to disable the individual rule causing the false positive. This reduces overall security, so only disable the minimum number of rules necessary.
+Create an override to disable the individual managed rule causing the false positive. This reduces overall security, so only disable the minimum number of rules necessary.
 
-Refer to the [dashboard instructions](/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset) or the [API instructions](/ruleset-engine/managed-rulesets/override-managed-ruleset/) on creating an override.
+Refer to the following pages for step-by-step instructions:
+
+- [Configure a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset) (dashboard)
+- [Override a managed ruleset](/ruleset-engine/managed-rulesets/override-managed-ruleset/) (API)
 
 :::note
 If you contact Cloudflare Support to verify whether a WAF managed rule triggers as expected, [provide a HAR file](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#generate-a-har-file) captured while sending the specific request of concern.
 :::
-
-### Legacy WAF remediation options
-
-:::note
-The legacy WAF has been replaced by the current WAF managed rulesets. If you are still using the legacy WAF, consider migrating to the current WAF. The following options apply only to the legacy WAF.
-:::
-
-If you are on the legacy WAF, the following remediation options are available (ordered from least to most impact on security):
-
-1. **Add the requesting IP to the allowlist**: Use [IP Access Rules](/waf/tools/ip-access-rules/) to allowlist the IP. This is the best option if the affected users always connect from the same IP address and does not reduce site security for other visitors.
-2. **Disable the specific WAF rule**: Turn off only the rule causing the false positive. This reduces security slightly but stops the incorrect block or challenge.
-3. **Create a bypass rule**: Create a [custom rule](/waf/custom-rules/skip/) with a bypass action targeting a specific URL combined with IP address or user-agent conditions.
-4. **Adjust OWASP settings**: If the blocking rule is `981176` (legacy OWASP) or `949110` (current OWASP), increase the OWASP score threshold and/or lower the OWASP paranoia level.
-5. **Disable WAF for a specific endpoint via Page Rule** (not recommended): This disables the WAF entirely for that URL pattern, removing all WAF protection for matching requests.
-6. **WAF overrides via API** (legacy WAF only): Use the [WAF Overrides API](/api/resources/firewall/subresources/waf/subresources/overrides/methods/list/) to disable a specific legacy WAF rule for a particular URI without affecting other traffic. These overrides apply only to the previous version of the WAF.
 
 ### Additional recommendations
 
@@ -137,3 +130,9 @@ If WAF's managed rulesets do not detect a specific attack pattern after verifyin
 - Use [WAF attack score](/waf/detections/attack-score/) to complement signature-based managed rules with machine-learning detection. Attack score classifies each request with a score indicating the likelihood it is malicious, even when no managed rule matches.
 
 - Create a [custom rule](/waf/custom-rules/) to block the specific attack pattern. Use fields such as URI path, query string, or HTTP request headers to match the malicious requests.
+
+## More resources
+
+If you are still using the previous version of WAF managed rules, refer to [Troubleshoot WAF managed rules (previous version)](/waf/reference/legacy/old-waf-managed-rules/troubleshooting/).
+
+To learn more about upgrading to the new version of WAF Managed Rules, refer to [WAF managed rules upgrade](/waf/reference/legacy/old-waf-managed-rules/upgrade/).
