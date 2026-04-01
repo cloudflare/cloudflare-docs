@@ -1,0 +1,44 @@
+---
+pcx_content_type: how-to
+title: Optimize performance
+description: Accelerate your application with caching, smart routing, and edge optimization.
+sidebar:
+  order: 5
+---
+
+Slow page loads increase bounce rates and reduce conversions. Cloudflare accelerates your application with edge caching, Argo Smart Routing to avoid congested network paths, and automatic asset optimization that improves Core Web Vitals scores.
+
+## Solutions
+
+### Cache
+
+Cache content at Cloudflare's global network of edge locations. [Learn more about Cache](/cache/).
+
+- **Edge caching** - Serve responses from the nearest Cloudflare location to reduce latency and origin load
+
+### Argo Smart Routing
+
+Route traffic through the fastest paths across Cloudflare's network. [Learn more about Argo Smart Routing](/argo-smart-routing/).
+
+- **Smart routing** - Automatically avoid congested network paths between edge and origin
+
+### Speed
+
+Automatic optimizations for HTML, CSS, JavaScript, and fonts. [Learn more about Speed](/speed/).
+
+- **Asset optimization** - Automatic minification of HTML, CSS, and JavaScript plus Brotli compression
+- **Core Web Vitals** - Improve Largest Contentful Paint (LCP), Interaction to Next Paint (INP), and Cumulative Layout Shift (CLS) scores with built-in optimizations
+
+### Workers
+
+Build and deploy serverless applications on Cloudflare's global network. [Learn more about Workers](/workers/).
+
+- **Edge logic** - Run custom performance optimizations at the edge, such as HTML rewriting and dynamic content assembly, without round-trips to your origin
+
+
+## Get started
+
+1. [Configure Cache Rules](/cache/how-to/cache-rules/)
+2. [Enable Argo Smart Routing](/argo-smart-routing/get-started/)
+3. [Enable Speed optimizations](/speed/optimization/)
+4. [Rewrite HTML at the edge with HTMLRewriter](/workers/runtime-apis/html-rewriter/)

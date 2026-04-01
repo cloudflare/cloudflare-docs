@@ -1,0 +1,31 @@
+---
+pcx_content_type: how-to
+title: Block application attacks
+description: Protect against SQL injection, XSS, and other OWASP Top 10 vulnerabilities.
+sidebar:
+  order: 2
+---
+
+Web applications face constant threats from SQL injection, Cross-Site Scripting (XSS), and other Open Web Application Security Project (OWASP) Top 10 vulnerabilities. Cloudflare WAF managed rulesets block these attacks automatically, and rate limiting prevents brute force abuse.
+
+## Solutions
+
+### Application security (WAF)
+
+Get automatic protection from vulnerabilities and create your own custom rules. [Learn more about WAF](/waf/).
+
+- **Managed rulesets** - Pre-configured rules covering OWASP Top 10 and emerging threats, updated by Cloudflare
+- **Zero-day protection** - Rules are updated as new vulnerabilities are discovered, with no action required from you
+- **Custom rules** - Block or challenge requests based on any request attribute including headers, cookies, and IP reputation
+
+### Rate limiting
+
+Limit request rates based on flexible matching criteria. [Learn more about rate limiting](/waf/rate-limiting-rules/).
+
+- **Rate limiting** - Prevent brute force attacks and Application Programming Interface (API) abuse with flexible per-endpoint request limits
+
+## Get started
+
+1. [Deploy WAF managed rulesets](/waf/managed-rules/deploy-zone-dashboard/)
+2. [Create custom rules](/waf/custom-rules/create-dashboard/)
+3. [Configure rate limiting rules](/waf/rate-limiting-rules/create-zone-dashboard/)
