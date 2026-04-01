@@ -2180,9 +2180,6 @@
 # Unified AI models catalog - catch-all for any remaining /workers-ai/models/ URLs
 /workers-ai/models/* /ai/models/:splat 301
 
-# /ai/ index redirects to models catalog
-/ai/ /ai/models/ 301
-
 /workers-ai/platform/bindings/ /workers-ai/configuration/bindings/ 301
 /workers-ai/get-started/local-dev-setup/ /workers-ai/get-started/workers-wrangler/ 301
 /workers-ai/configuration/function-calling/ /workers-ai/features/function-calling/ 301
