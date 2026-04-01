@@ -13,7 +13,7 @@ const { example, fallbackSnippets, layout = "side-by-side" } = Astro.props;
 const snippets = example.code_snippets ?? fallbackSnippets ?? [];
 const hasSnippets = snippets.length > 0;
 
-const rawImageUrl = example.output?.image_url;
+const rawImageUrl = example.output?.image ?? example.output?.image_url;
 const imageUrl = typeof rawImageUrl === "string" ? rawImageUrl : undefined;
 const hasImage = !!imageUrl;
 
