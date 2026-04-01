@@ -1,11 +1,12 @@
 ---
 pcx_content_type: how-to
 title: Using with Puppeteer (CDP)
+description: Connect Puppeteer to Browser Rendering sessions from any Node.js environment to automate browser tasks using the Chrome DevTools Protocol.
 sidebar:
   order: 2
 ---
 
-import { Render } from "~/components";
+import { PackageManagers, Render } from "~/components";
 
 You can use [Puppeteer](https://pptr.dev/) to connect to Browser Rendering sessions from any Node.js environment and automate browser tasks programmatically via CDP. This is useful for scripts running on your local machine, CI/CD pipelines, or external servers.
 
@@ -21,9 +22,7 @@ You can use [Puppeteer](https://pptr.dev/) to connect to Browser Rendering sessi
 
 Install the `puppeteer-core` package (the version without bundled Chrome):
 
-```bash
-npm install puppeteer-core
-```
+<PackageManagers pkg="puppeteer-core" />
 
 ## Connect to Browser Rendering
 

@@ -1,6 +1,7 @@
 ---
 pcx_content_type: concept
 title: /devtools - Browser sessions management
+description: Create persistent browser sessions, manage tabs, and interact with browsers using Chrome DevTools Protocol (CDP) commands via the /devtools endpoints.
 sidebar:
   order: 12
 ---
@@ -9,7 +10,7 @@ import { Render } from "~/components";
 
 The `/devtools` endpoints provide session management capabilities that follow the [Chrome DevTools Protocol (CDP)](https://chromedevtools.github.io/devtools-protocol/). These endpoints allow you to create persistent browser sessions, manage multiple tabs, and interact with browsers using CDP commands. This is useful for advanced automation, debugging, and remote browser control.
 
-Unlike the [Workers binding](/browser-rendering/workers-bindings/), the Browser Sessions endpoints can be accessed from any environment that supports WebSocket connections — including local development machines, external servers, and CI/CD pipelines. This means you can connect to Browser Rendering from Node.js scripts, Puppeteer, Playwright, or any CDP-compatible client.
+Unlike [Workers Bindings](/browser-rendering/workers-bindings/), the browser sessions endpoints can be accessed from any environment that supports WebSocket connections — including local development machines, external servers, and CI/CD pipelines. This means you can connect to Browser Rendering from Node.js scripts, Puppeteer, Playwright, or any CDP-compatible client.
 
 <Render file="rest-api-token-permissions" product="browser-rendering" />
 
@@ -19,7 +20,7 @@ The Chrome DevTools Protocol (CDP) is a remote debugging protocol that allows yo
 
 ## Use cases
 
-The Browser Sessions endpoints enable you to:
+The browser sessions endpoints enable you to:
 
 - **Create and manage persistent browser sessions** — Launch browser instances that remain active for extended periods
 - **Open, close, and list browser tabs (targets)** — Manage multiple debuggable targets (pages, iframes, etc.) within a single browser instance
@@ -33,11 +34,11 @@ Once you acquire a browser session, you can interact with it in two ways:
 
 ### CDP over WebSocket
 
-Connect to the WebSocket endpoint `/devtools/browser` to acquire a session and send [CDP commands](https://chromedevtools.github.io/devtools-protocol/) directly over the connection. This is the standard way to use CDP and works with any CDP client, including [Puppeteer](/browser-rendering/rest-api/devtools/puppeteer/), Playwright, and [MCP clients](/browser-rendering/rest-api/devtools/mcp-clients/).
+Connect to the WebSocket endpoint `/devtools/browser` to acquire a session and send [CDP commands](https://chromedevtools.github.io/devtools-protocol/) directly over the connection. This is the standard way to use CDP and works with any CDP client, including [Puppeteer](/browser-rendering/rest-api/devtools/puppeteer/), [Playwright](/browser-rendering/playwright/), and [MCP clients](/browser-rendering/rest-api/devtools/mcp-clients/).
 
 ### HTTP API
 
-We also provide HTTP endpoints to manage the browser lifecycle without using WebSockets. These follow the standard [CDP HTTP endpoints](https://chromedevtools.github.io/devtools-protocol/#endpoints):
+HTTP endpoints are also available to manage the browser lifecycle without using WebSockets. These follow the standard [CDP HTTP endpoints](https://chromedevtools.github.io/devtools-protocol/#endpoints):
 
 1. **Create session** — `POST /devtools/browser`
 2. **List tabs** — `GET /devtools/browser/{session_id}/json/list`

@@ -1,13 +1,14 @@
 ---
 pcx_content_type: how-to
 title: Using with MCP clients (CDP)
+description: Configure AI coding agents to control Browser Rendering sessions through the Model Context Protocol (MCP) using the chrome-devtools-mcp package.
 sidebar:
   order: 3
 ---
 
 import { Render } from "~/components";
 
-You can use the Browser Sessions API with AI coding agents through the [Model Context Protocol (MCP)](https://modelcontextprotocol.io/). The [chrome-devtools-mcp](https://github.com/ChromeDevTools/chrome-devtools-mcp) package provides an MCP server that allows AI assistants to control and inspect browser sessions.
+You can use the browser sessions API with AI coding agents through the [Model Context Protocol (MCP)](https://modelcontextprotocol.io/). The [chrome-devtools-mcp](https://github.com/ChromeDevTools/chrome-devtools-mcp) package provides an MCP server that allows AI assistants to control and inspect browser sessions.
 
 <Render file="rest-api-token-permissions" product="browser-rendering" />
 
@@ -75,15 +76,15 @@ For other MCP clients, refer to the [chrome-devtools-mcp documentation](https://
 
 After configuring the MCP client, you can ask your AI agent to perform browser tasks:
 
-```
+```txt
 Navigate to https://example.com and take a screenshot of the homepage
 ```
 
-```
+```txt
 Check the console messages on the current page for any errors
 ```
 
-```
+```txt
 Run a Lighthouse audit on https://developers.cloudflare.com
 ```
 
