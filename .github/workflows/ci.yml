@@ -23,7 +23,7 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: 24.x
+          node-version: 24.14.0
           cache: npm
 
       - name: Check for CRLF line endings
@@ -103,7 +103,7 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: 24.x
+          node-version: 24.14.0
           cache: npm
 
       - name: Restore node_modules (cache hit)
@@ -173,7 +173,7 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: 24.x
+          node-version: 24.14.0
           cache: npm
 
       - name: Restore node_modules (cache hit)
@@ -216,7 +216,7 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: 24.x
+          node-version: 24.14.0
           cache: npm
 
       - name: Restore node_modules (cache hit)
@@ -251,7 +251,7 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: 24.x
+          node-version: 24.14.0
           cache: npm
 
       - name: Restore node_modules (cache hit)
