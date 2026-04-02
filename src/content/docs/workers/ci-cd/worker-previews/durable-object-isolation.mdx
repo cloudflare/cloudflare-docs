@@ -8,13 +8,13 @@ sidebar:
     text: Beta
 ---
 
-import { WranglerConfig, Tabs, TabItem } from "~/components";
+import { WranglerConfig } from "~/components";
 
 When using [Worker Previews](/workers/ci-cd/worker-previews/), each preview environment can have its own isolated [Durable Object](/durable-objects/) namespace. This means Durable Object instances created by a preview are completely separate from production — different instance IDs, different storage, no shared state.
 
 Without proper configuration, previews will share the production DO namespace, and preview traffic will read and write production Durable Object state. This guide covers three approaches to achieve DO isolation, from the simplest (recommended) to more manual methods.
 
-## Approach 1: Use `ctx.exports` (recommended) {#ctx-exports}
+## Approach 1: Use `ctx.exports` (recommended)
 
 The simplest way to get isolated Durable Objects in previews is to use [`ctx.exports`](/workers/runtime-apis/context/#exports) instead of a traditional DO binding. With `ctx.exports`, you do not need to configure any DO bindings in your Wrangler configuration file — the runtime automatically resolves the correct namespace for each environment.
 
@@ -149,7 +149,7 @@ Preview-owned namespaces include a `preview` property in the API response:
 }
 ```
 
-## Approach 2: Use a DO binding with the dashboard {#dashboard-binding}
+## Approach 2: Use a DO binding with the dashboard
 
 If you are using a traditional DO binding (`env.MY_DO`) instead of `ctx.exports`, you can configure DO isolation through the Cloudflare dashboard.
 
@@ -172,7 +172,7 @@ After saving, re-run `wrangler preview` to create a new deployment that picks up
 The preview namespace only appears in the dropdown after you have created at least one preview for the Worker. The platform auto-provisions the namespace on preview creation.
 :::
 
-## Approach 3: Use a DO binding with Wrangler configuration {#wrangler-binding}
+## Approach 3: Use a DO binding with Wrangler configuration
 
 You can also configure DO isolation in your Wrangler configuration file by adding a `previews` block with `durable_objects.bindings`.
 
