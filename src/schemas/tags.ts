@@ -99,7 +99,7 @@ const protocols: Array<Tag> = [
 	{ label: "mTLS" },
 	{ label: "NetFlow" },
 	{ label: "MQTT" },
-	{ label: "OIDC", variants ["OpenID Connect", "oidc"]},
+	{ label: "OIDC", variants: ["OpenID Connect", "oidc"]},
 	{ label: "Post-quantum", variants: ["pqc", "post-quantum cryptography"] },
 	{ label: "QUIC" },
 	{ label: "RDP" },
@@ -141,7 +141,7 @@ const use_cases: Array<Tag> = [
 	{ label: "Migration" },
 	{ label: "MCP" },
 	{ label: "Playback" },
-	{ label: "Posture", variants: ["security posture", "device posture"] }
+	{ label: "Posture", variants: ["security posture", "device posture"] },
 	{ label: "Prisma ORM" },
 	{ label: "Privacy" },
 	{ label: "Private networks" },
