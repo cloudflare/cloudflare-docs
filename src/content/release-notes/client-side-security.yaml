@@ -10,6 +10,13 @@ entries:
       Additionally, Page Shield policies are now called content security rules. This name matches the terminology already used in the new [application security dashboard](/security/).
 
   - publish_date: "2026-03-03"
+    title: Deprecated code behavior analysis scores
+    description: |-
+      Code behavior analysis scores have been removed from the malicious script details. The updated GNN and LLM-based detection approach has proven significantly more effective at identifying true positives, making the separate behavior analysis scores redundant.
+
+      Malicious code analysis scores and threat intelligence remain available for reviewing detected scripts. For more information, refer to [Review resources considered malicious](/client-side-security/detection/review-malicious-scripts/).
+
+  - publish_date: "2026-03-03"
     title: LLM-assisted false positive reduction for malicious script detection
     description: |-
       Page Shield now includes an additional machine learning step, utilizing an LLM powered by Workers AI, to assist in analyzing the JavaScript code of scripts loaded by your website visitors. This enhancement specifically helps reduce the false positive rate of our detection engines, focusing your attention on true positives.

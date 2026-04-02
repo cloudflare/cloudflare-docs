@@ -400,30 +400,17 @@ Requires `@tanstack/react-start` v1.138.0 or later.
 
 :::
 
+### Prerendering data sources
+
 :::caution
 
-Prerendering runs during build and uses local environment variables, secrets, and bindings storage data. Use [remote bindings](/workers/development-testing/#remote-bindings) to prerender with production data.
+Prerendering runs at build time. It uses your local environment variables, secrets, and bindings storage data.
 
 :::
 
-### Prerender in CI environments
+To prerender with production data, use [remote bindings](/workers/development-testing/#remote-bindings).
 
-When prerendering in CI, your Worker code may need environment variables or secrets not available in the build environment. Include a `.env` file with variable references that resolve to values from your CI environment:
+In CI environments, environment variables or secrets may not be available during the build. To make them accessible:
 
-```sh title=".env"
-API_KEY=${API_KEY}
-DATABASE_URL=${DATABASE_URL}
-```
-
-Set `CLOUDFLARE_INCLUDE_PROCESS_ENV=true` in your CI environment and provide the required values as environment variables. If using [Workers Builds](/workers/ci-cd/builds/), update your [build settings](/workers/ci-cd/builds/configuration/#build-settings).
-
-:::note
-
-For local development, create a `.env.local` file with actual values. Do not commit this file to your repository. Values in `.env.local` override references in `.env`:
-
-```sh title=".env.local"
-API_KEY=my-local-dev-key
-DATABASE_URL=postgres://localhost/mydb
-```
-
-:::
+- Set `CLOUDFLARE_INCLUDE_PROCESS_ENV=true` in your CI environment and provide the required values as environment variables.
+- If using [Workers Builds](/workers/ci-cd/builds/), update your [build settings](/workers/ci-cd/builds/configuration/#build-settings).

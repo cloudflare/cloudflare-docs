@@ -7,13 +7,20 @@ sidebar:
 
 import { Tabs, TabItem } from "~/components";
 
-The challenge solve rate (CSR) is the percentage of issued challenges — Non-Interactive Challenge, Managed Challenge, or Interactive Challenge actions — that were solved.
+The Challenge solve rate (CSR) is the percentage of issued challenges — Non-Interactive Challenge, Managed Challenge, or Interactive Challenge actions — that were solved.
+
+Every challenge involves two separate events:
+
+- **Challenge trigger**: The original request matches a WAF rule with a challenge action. Cloudflare issues a challenge to the visitor's browser.
+- **Challenge solved**: The visitor's browser completes the challenge and sends back a validated response. This event is logged as challenge Solved.
+
+Most automated traffic abandons immediately upon encountering the challenge script and never reaches the second event. This is why the count of unsolved challenges is typically very large — those abandonments count as failures in the formula.
 
 ```txt
 CSR = number of challenges solved / number of challenges issued
 ```
 
-This metric helps you evaluate your rule's effectiveness, as well as whether you need to make any adjustments to the rule's criteria or action. Rules in Challenge mode will start generating Challenge Solve Rate data (CSR) which indicates the false positive percentage.
+CSR indicates the false positive percentage of a rule. A high CSR means a large share of issued challenges were solved by real visitors, which may indicate the rule is matching too much legitimate traffic. Use CSR to evaluate whether your rule's criteria or action needs adjustment.
 
 You can find the CSR of a rule by going to its corresponding dashboard page:
 
@@ -30,26 +37,21 @@ For [custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiti
 
 ---
 
-## Challenge actions in Security Events 
+## Challenge actions in Security Events
 
-If you find a Challenge Solved action, such as `[js]challengeSolved` or `challengeSolved`, in your Security Events that does not seem to match the underlying rule criteria, it is because this action refers to the successful mitigation of a previous request.
+If you find a Challenge Solved action, such as `[js]challengeSolved` or `challengeSolved`, in your Security Events that does not match the underlying rule criteria, it is because this action refers to the successful mitigation of a previous request — not a re-match of the original rule.
 
-The Challenge lifecycle involves two distinct events, which are crucial for interpreting your logs:
+The parameters of the solved request may no longer match the original rule's expression. For example, if a challenge was issued due to a low bot score, the score for the solved request may have already changed to a non-suspicious value upon successful verification.
 
-- Challenge trigger: The original request matched a WAF custom rule with a Challenge action. This request contains the suspicious parameters that triggered the rule.
-- Challenge solved: The client's browser sends back a subsequent request containing the validated solution. This action is logged as Challenge Solved.
-
-The parameters of the solved request may no longer match the original rule's expression. For example, if a Challenge was issued due to a low Bot Score, the score for the solved request may have already changed to a non-suspicious value upon successful verification.
-
-The Challenge Solved action is purely an informative signal that a previously issued Challenge was answered, allowing the visitor's traffic to proceed. It does not imply that the subsequent request re-matched the initial trigger rule.
+The Challenge Solved action is an informative signal that a previously issued challenge was answered, allowing the visitor's traffic to proceed.
 
 ---
 
 ## Failed Challenges
 
-You will not find a dedicated metric for failed Challenges in Security Analytics because Cloudflare calculates failure indirectly, based on the difference between Challenges issued and Challenges solved.
+You will not find a dedicated metric for failed challenges in Security Analytics because Cloudflare calculates failure indirectly, based on the difference between challenges issued and challenges solved.
 
-The system views any issued Challenge that does not result in a successful clearance cookie as a failure. This is why the number of failed Challenges may appear exceptionally high: the majority of issued Challenges are never completed.
+The system views any issued challenge that does not result in a successful clearance cookie as a failure. This is why the number of failed challenges may appear exceptionally high: the majority of issued challenges are never completed.
 
 The official calculation for failures is:
 
@@ -57,11 +59,11 @@ The official calculation for failures is:
 Failed Challenges = Total Challenges Issued − Total Challenges Solved
 ```
 
-The large number of unmatched Challenges is primarily due to automated traffic (bots or scrapers) that abandon the process immediately upon encountering the initial Challenge script.
+The large number of unmatched challenges is primarily due to automated traffic (bots or scrapers) that abandon the process immediately upon encountering the initial challenge script.
 
-Key reasons a Challenge may be issued but never solved:
+Key reasons a challenge may be issued but never solved:
 
-- The visitor gives up on the Challenge or navigates away from the page.
-- The visitor attempts to solve the Challenge but cannot provide a valid answer.
+- The visitor gives up on the challenge or navigates away from the page.
+- The visitor attempts to solve the challenge but cannot provide a valid answer.
 - The system receives an invalid or malformed answer from the client.
 - The script environment (often a bot's controlled browser) fails to run the necessary client-side checks.

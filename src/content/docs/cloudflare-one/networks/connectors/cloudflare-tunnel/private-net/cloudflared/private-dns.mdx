@@ -66,7 +66,7 @@ Use the following troubleshooting strategies if you are running into issues whil
 
 - Double-check the [order of precedence](/cloudflare-one/traffic-policies/order-of-enforcement/#order-of-precedence) for your [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/). Ensure that a more global Block or Allow policy will not supersede application-specific policies.
 
-- Check your [Gateway network logs](/cloudflare-one/insights/logs/gateway-logs/#network-logs) to see whether your UDP DNS resolutions are being allowed or blocked.
+- Check your [Gateway network logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/#network-logs) to see whether your UDP DNS resolutions are being allowed or blocked.
 
 - Ensure that your internal DNS resolver is available over a routable private IP address. You can check that by trying the `dig` command on your machine running `cloudflared`.
 

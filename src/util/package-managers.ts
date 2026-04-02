@@ -1,4 +1,4 @@
-export type Manager = "npm" | "yarn" | "pnpm";
+export type Manager = "npm" | "yarn" | "pnpm" | "bun";
 export type CommandType =
 	| "add"
 	| "create"
@@ -49,9 +49,15 @@ const commands: Record<
 		remove: "pnpm remove",
 		dev: "-D",
 	},
+	bun: {
+		add: "bun add",
+		install: "bun install",
+		remove: "bun remove",
+		dev: "-d",
+	},
 };
 
-export const MANAGERS: Manager[] = ["npm", "yarn", "pnpm"];
+export const MANAGERS: Manager[] = ["npm", "yarn", "pnpm", "bun"];
 
 export function getCommand(
 	mgr: Manager,

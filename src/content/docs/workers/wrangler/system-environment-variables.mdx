@@ -98,6 +98,32 @@ Wrangler supports the following environment variables:
 
 * `WRANGLER_R2_SQL_AUTH_TOKEN` <Type text="string" /> <MetaInfo text="optional" />
   - API token used for executing queries with [R2 SQL](/r2-sql).
+
+- `WRANGLER_OUTPUT_FILE_PATH` <Type text="string" /> <MetaInfo text="optional" />
+
+  - Specifies a file path where Wrangler will write output data in [ND-JSON](https://github.com/ndjson/ndjson-spec) (newline-delimited JSON) format. Each line in the file is a separate JSON object containing information about Wrangler operations such as deployments, version uploads, and errors. This is useful for CI/CD pipelines and automation tools that need to programmatically access deployment information. If both `WRANGLER_OUTPUT_FILE_PATH` and `WRANGLER_OUTPUT_FILE_DIRECTORY` are set, `WRANGLER_OUTPUT_FILE_PATH` takes precedence.
+
+- `WRANGLER_OUTPUT_FILE_DIRECTORY` <Type text="string" /> <MetaInfo text="optional" />
+
+  - Specifies a directory where Wrangler will create a randomly-named file (format: `wrangler-output-<timestamp>-<random>.json`) to write output data in [ND-JSON](https://github.com/ndjson/ndjson-spec) format. This is useful when you want to keep output files organized in a specific directory but do not need to control the exact filename. If both `WRANGLER_OUTPUT_FILE_PATH` and `WRANGLER_OUTPUT_FILE_DIRECTORY` are set, `WRANGLER_OUTPUT_FILE_PATH` takes precedence.
+
+### Example output file
+
+When these environment variables are set, Wrangler writes one JSON object per line to the output file. Each entry includes a `timestamp` field and a `type` field indicating the kind of operation. Here is an example of what the file might contain after running `wrangler deploy`:
+
+```json
+{"type":"wrangler-session","version":1,"wrangler_version":"3.78.0","command_line_args":["deploy"],"log_file_path":"/path/to/logs/wrangler-2024-11-03_12-00-00_abc.log","timestamp":"2024-11-03T12:00:00.000Z"}
+{"type":"deploy","version":1,"worker_name":"my-worker","worker_tag":"abc123def456","version_id":"v1-abc123","targets":["https://my-worker.example.workers.dev"],"worker_name_overridden":false,"wrangler_environment":"production","timestamp":"2024-11-03T12:00:05.000Z"}
+```
+
+The `wrangler-session` entry is written when Wrangler starts and contains information about the command being run. The `deploy` entry is written when a deployment completes successfully and includes the worker name, version ID, and deployment URLs.
+
+Other entry types include:
+- `version-upload` - Written by `wrangler versions upload` with version ID and preview URLs
+- `version-deploy` - Written by `wrangler versions deploy` with deployment information
+- `pages-deploy` - Written by `wrangler pages deploy` with Pages deployment details
+- `command-failed` - Written when a command fails, including error code and message
+
 ## Example `.env` file
 
 The following is an example `.env` file:

@@ -33,12 +33,12 @@ End users can connect to private hostnames using the following traffic on-ramps:
 
 Private hostname routing only works for applications connected with `cloudflared`. Other traffic off-ramps require IP-based routes.
 
-| Connector                                                                                  | Compatibility | Minimum version |
-| ------------------------------------------------------------------------------------------ | ------------- | -- |
-| [cloudflared](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/)                        | ✅            | 2025.7.0 |
-| [Peer-to-peer](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/peer-to-peer/)              | ❌             | |
-| [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) | ❌             | |
-| [Cloudflare WAN](/cloudflare-wan/zero-trust/cloudflare-gateway/)                                                             | ❌             | |
+| Connector                                                                                           | Compatibility | Minimum version |
+| --------------------------------------------------------------------------------------------------- | ------------- | --------------- |
+| [cloudflared](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/)       | ✅            | 2025.7.0        |
+| [Peer-to-peer](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/peer-to-peer/)     | ❌            |                 |
+| [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) | ❌            |                 |
+| [Cloudflare WAN](/cloudflare-wan/zero-trust/cloudflare-gateway/)                                    | ❌            |                 |
 
 ## Connect a private hostname
 
@@ -46,17 +46,25 @@ This section covers how to enable remote access to a private hostname applicatio
 
 ### Prerequisites
 
-To connect to private hostnames, your devices must forward the following traffic to Cloudflare:
+Before you can connect to private hostnames, you must enable the Gateway proxy.
+
+<Render file="tunnel/enable-gateway-proxy" product="cloudflare-one" />
+
+Your devices must also forward the following traffic to Cloudflare:
 
 - Initial resolved IPs:
-	<Render file="gateway/egress-selector-cgnat-ips" product="cloudflare-one"/>
+  <Render file="gateway/egress-selector-cgnat-ips" product="cloudflare-one" />
 - DNS queries for your private hostname
 
 Configuration steps vary depending on your [device on-ramp](#device-connectivity):
 
 <Details header="Cloudflare One Clients">
-1. <Render file="gateway/egress-selector-split-tunnels" product="cloudflare-one"/>
-2. In [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/), delete the top-level domain for your private hostname. This configures WARP to send the DNS query to Cloudflare Gateway for resolution.
+	1. <Render file="gateway/egress-selector-split-tunnels"
+		product="cloudflare-one"/>
+	2. In [Local Domain
+	Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/),
+	delete the top-level domain for your private hostname. This configures WARP to
+	send the DNS query to Cloudflare Gateway for resolution.
 </Details>
 
 <Details header="WARP Connector">
@@ -75,14 +83,14 @@ Configuration steps vary depending on your [device on-ramp](#device-connectivity
 
 ### 1. Connect the application to Cloudflare
 
-<Render file="tunnel/create-tunnel" product="cloudflare-one"/>
+<Render file="tunnel/create-tunnel" product="cloudflare-one" />
 
 9. In the **Hostname routes** tab, enter the fully qualified domain name (FQDN) that represents your application (for example, `wiki.internal.local`).
 
-    <Render
-      file="tunnel/hostname-format-restrictions"
-      product="cloudflare-one"
-    />
+   <Render
+   	file="tunnel/hostname-format-restrictions"
+   	product="cloudflare-one"
+   />
 
 10. Select **Complete setup**.
 
@@ -99,28 +107,22 @@ If the machine running `cloudflared` can already resolve `wiki.internal.local` t
 #### Scenario B: Use a specific private DNS server (Advanced)
 
 <Render
-  file="tunnel/hostname-route-dns-advanced"
-  product="cloudflare-one"
-  params={{ hostname: "wiki.internal.local" }}
+	file="tunnel/hostname-route-dns-advanced"
+	product="cloudflare-one"
+	params={{ hostname: "wiki.internal.local" }}
 />
 
 ### 3. (Recommended) Filter network traffic with Gateway
 
-<Render file="tunnel/filter-network-traffic" product="cloudflare-one"/>
+<Render file="tunnel/filter-network-traffic" product="cloudflare-one" />
 
-#### Enable the Gateway proxy
+<Render file="tunnel/catch-all-policy" product="cloudflare-one" />
 
-<Render file="tunnel/enable-gateway-proxy" product="cloudflare-one"/>
-
-#### Zero Trust policies
-
-<Render file="tunnel/catch-all-policy" product="cloudflare-one"/>
-
-##### Option 1: Access application (recommended)
+#### Option 1: Access application (recommended)
 
 You can create an [Access self-hosted application](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/) for your private hostname and configure [Access policies](/cloudflare-one/access-controls/policies/) within that application. This option allows you to manage user access alongside your SaaS and other web apps.
 
-##### Option 2: Gateway firewall policies
+#### Option 2: Gateway firewall policies
 
 If you prefer to secure the application using a traditional firewall model, you can build Gateway network policies using the [SNI](/cloudflare-one/traffic-policies/network-policies/#sni) or [SNI Domain](/cloudflare-one/traffic-policies/network-policies/#sni-domain) selector. For an additional layer of protection, add a Gateway DNS policy to allow or block the [Host](/cloudflare-one/traffic-policies/dns-policies/#host) or [Domain](/cloudflare-one/traffic-policies/dns-policies/#domain) from resolving.
 
@@ -143,10 +145,7 @@ If you prefer to secure the application using a traditional firewall model, you 
 
 :::note[SNI selector limitations]
 
-<Render
-  file="gateway/selectors/sni-443"
-  product="cloudflare-one"
-/>
+<Render file="gateway/selectors/sni-443" product="cloudflare-one" />
 
 Additionally, SNI selectors will only apply to Cloudflare One Client traffic. If your users will be connecting from other [on-ramps](#device-connectivity), you can allow or block network traffic using the [Destination IP](/cloudflare-one/traffic-policies/network-policies/#destination-ip) selector instead of SNI.
 :::
@@ -161,39 +160,41 @@ If you cannot connect, verify the following:
 
 1. **Confirm DNS resolution** - From the device, confirm that you can successfully resolve the private hostname:
 
-    ```sh
-    nslookup wiki.internal.local
-    ```
+   ```sh
+   nslookup wiki.internal.local
+   ```
 
-    ```sh output
-    Server:		127.0.2.2
-    Address:	127.0.2.2#53
+   ```sh output
+   Server:		127.0.2.2
+   Address:	127.0.2.2#53
 
-    Non-authoritative answer:
-    Name:	wiki.internal.local
-    Address: 100.80.200.48
-    ```
+   Non-authoritative answer:
+   Name:	wiki.internal.local
+   Address: 100.80.200.48
+   ```
 
-    The query should resolve using [WARP's DNS proxy](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/client-architecture/#dns-traffic) and return a Gateway <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip>. If the query fails to resolve or returns a different IP, check your [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/) configuration and [Gateway resolver policies](/cloudflare-one/traffic-policies/resolver-policies/).
+   The query should resolve using [WARP's DNS proxy](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/client-architecture/#dns-traffic) and return a Gateway <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip>. If the query fails to resolve or returns a different IP, check your [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/) configuration and [Gateway resolver policies](/cloudflare-one/traffic-policies/resolver-policies/).
 
-2. **Check Gateway logs** - Review your [Gateway network logs](/cloudflare-one/insights/logs/gateway-logs/) to see if the connection is being blocked by a policy.
+2. **Check Gateway logs** - Review your [Gateway network logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/) to see if the connection is being blocked by a policy.
 
 3. **Verify tunnel status** - Confirm that your tunnel is healthy and connected by checking [tunnel status](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/).
 
 4. **Test connectivity to initial resolved IP** - When you connect to the application using its private hostname, the device should make a connection to the <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip>:
-    ```sh
-    curl -v4 http://wiki.internal.local
-    ```
-    ```sh output
-    * Trying 100.80.200.48:80...
-    * Connected to wiki.internal.local (100.80.200.48) port 80
-    ...
-    ```
 
-    If the request fails, confirm that the initial resolved IP [routes through the WARP tunnel](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/). You can also check your [tunnel logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/) to confirm that requests are routing to the application's private IP.
+   ```sh
+   curl -v4 http://wiki.internal.local
+   ```
+
+   ```sh output
+   * Trying 100.80.200.48:80...
+   * Connected to wiki.internal.local (100.80.200.48) port 80
+   ...
+   ```
+
+   If the request fails, confirm that the initial resolved IP [routes through the WARP tunnel](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/). You can also check your [tunnel logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/) to confirm that requests are routing to the application's private IP.
 
 ## Limitations
 
 ### Google Chrome restricts access to private hostnames
 
-<Render file="gateway/egress-selector-chrome-issue" product="cloudflare-one"/>
+<Render file="gateway/egress-selector-chrome-issue" product="cloudflare-one" />

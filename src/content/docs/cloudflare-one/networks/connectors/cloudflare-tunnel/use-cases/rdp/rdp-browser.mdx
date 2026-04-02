@@ -361,7 +361,7 @@ The login flow differs slightly when using an Microsoft Entra ID-bound username:
 ## Known limitations
 
 - **TLS certificate verification**: Cloudflare uses TLS to connect to the RDP target but does not verify the origin TLS certificate.
-- **WARP authentication**: Since browser-based RDP traffic does not go through the Cloudflare One Client, users cannot use their [WARP session identity](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/#configure-warp-sessions-in-access) to authenticate.
+- **Device authentication identity**: Since browser-based RDP traffic does not go through the Cloudflare One Client, users cannot use their [Cloudflare One Client session identity](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/#configure-warp-sessions-in-access) to authenticate.
 - **Audio over RDP**: Users cannot use their microphone and speaker to interact with the remote machine.
 - **Clipboard size limit**: Data copied between the local machine and the browser-based RDP session may not exceed 500 KB.
 - **Clipboard data types**: Clipboard controls only support text data. Image and file clipboard transfers are not supported.

@@ -45,9 +45,9 @@ Once you save the new DNS record, the Cloudflare dashboard will show a Shopify i
 
 Do not enable the [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/) setting in an O2O scenario with Shopify.
 
-This setting forces a redirect on all requests, including the `/.well-known/acme-challenge/` path used for HTTP-01 domain validation. This prevents Shopify from automatically provisioning or renewing SSL certificates via Let's Encrypt for your domain.
+This setting forces a redirect on all requests, including the `/.well-known/acme-challenge/*` URI path used for HTTP-01 domain validation. This prevents Shopify from automatically provisioning or renewing SSL certificates via Let's Encrypt for your domain.
 
-Instead, create a [redirect rule](/rules/url-forwarding/single-redirects/create-dashboard/) to enforce HTTPS while excluding the validation path mentioned above.
+Instead, create a [redirect rule](/rules/url-forwarding/single-redirects/create-dashboard/) to enforce HTTPS while excluding the validation path mentioned above (use a [wildcard pattern](/ruleset-engine/rules-language/operators/#wildcard-matching) like `/.well-known/acme-challenge/*`).
 
 :::
 

@@ -1,0 +1,31 @@
+---
+pcx_content_type: how-to
+title: Control costs and improve quality
+description: Reduce AI inference costs and improve reliability with response caching, rate limiting, and unified provider analytics.
+sidebar:
+  order: 3
+---
+
+AI inference costs can grow unpredictably as your application scales, especially when using multiple providers. Cloudflare AI Gateway caches identical queries to avoid redundant inference calls, applies rate limits per user or API key, and provides unified analytics across all providers.
+
+## Solutions
+
+### AI Gateway
+
+Cache responses, rate limit requests, and monitor usage across providers. [Learn more about AI Gateway](/ai-gateway/).
+
+- **Response caching** - Cache identical queries so repeated prompts do not trigger a new inference call
+- **Rate limiting** - Set request limits per user or Application Programming Interface (API) key to prevent abuse and control spending
+- **Unified analytics** - Track usage, latency, and cost across all AI providers from one dashboard
+
+### Workers Analytics Engine
+
+Store and query time-series analytics data from Workers. [Learn more about Workers Analytics Engine](/analytics/analytics-engine/).
+
+- **Custom metrics** - Build AI-specific dashboards tracking tokens, latency distributions, and error rates
+
+## Get started
+
+1. [AI Gateway get started](/ai-gateway/get-started/)
+2. [Configure caching](/ai-gateway/features/caching/)
+3. [Workers Analytics Engine get started](/analytics/analytics-engine/get-started/)
