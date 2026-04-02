@@ -3,26 +3,22 @@ title: Deploy Hooks are now available for Workers Builds
 description: Trigger a build for a specific branch by sending a POST request to a unique URL.
 products:
   - workers
-date: 2026-04-02
+date: 2026-04-01
 ---
 
 import { TypeScriptExample } from "~/components";
 
-Deploy Hooks let you trigger a build and deployment from any external system — your CMS, a CI pipeline, a Slack bot, or a scheduled Worker. Each hook is a unique URL tied to a specific branch in [Workers Builds](/workers/ci-cd/builds/); send it a `POST` and your Worker builds and deploys.
+[Workers Builds](/workers/ci-cd/builds/) now supports Deploy Hooks — trigger builds from your headless CMS, a Cron Trigger, a Slack bot, or any system that can send an HTTP request.
+
+Each Deploy Hook is a unique URL tied to a specific branch. Send it a `POST` and your Worker builds and deploys.
 
 ```sh
 curl -X POST "https://api.cloudflare.com/client/v4/workers/builds/deploy_hooks/<DEPLOY_HOOK_ID>"
 ```
 
-Create a Deploy Hook in **Workers & Pages** > your Worker > **Settings** > **Builds** > **Deploy Hooks**.
+To create one, go to **Workers & Pages** > your Worker > **Settings** > **Builds** > **Deploy Hooks**.
 
-## Use Deploy Hooks with Workers
-
-Because a Deploy Hook is just a URL, a Worker can call it. This opens up patterns like scheduled rebuilds, webhook proxies, or any workflow where one Worker triggers a build for another.
-
-### Rebuild on a schedule
-
-A Worker with a [Cron Trigger](/workers/configuration/cron-triggers/) that rebuilds every hour:
+Since a Deploy Hook is a URL, you can also call it from another Worker. For example, a Worker with a [Cron Trigger](/workers/configuration/cron-triggers/) can rebuild your project on a schedule:
 
 <TypeScriptExample>
 
@@ -36,34 +32,14 @@ export default {
 
 </TypeScriptExample>
 
-### Proxy a CMS webhook
-
-A Worker that sits between your CMS and the deploy hook, validating the request before triggering a build:
-
-<TypeScriptExample>
-
-```ts
-export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    if (request.headers.get("x-webhook-secret") !== env.WEBHOOK_SECRET) {
-      return new Response("Unauthorized", { status: 401 });
-    }
-    const res = await fetch(env.DEPLOY_HOOK_URL, { method: "POST" });
-    return new Response(await res.text(), { status: res.status });
-  },
-} satisfies ExportedHandler<Env>;
-```
-
-</TypeScriptExample>
-
-More examples like [deploying from a Slack slash command](/workers/ci-cd/builds/deploy-hooks/#deploy-from-a-slack-slash-command) are in the full documentation.
+You can also use Deploy Hooks to [rebuild when your CMS publishes new content](/workers/ci-cd/builds/deploy-hooks/#cms-integration) or [deploy from a Slack slash command](/workers/ci-cd/builds/deploy-hooks/#deploy-from-a-slack-slash-command).
 
 ## Built-in optimizations
 
-- **No duplicate builds**: If your hook fires twice before the first build starts running, we don't create a second build. The response includes `already_exists: true` so your system can tell.
+- **Automatic deduplication**: If a Deploy Hook fires multiple times before the first build starts running, redundant builds are automatically skipped. This keeps your build queue clean when webhooks retry or CMS events arrive in bursts.
 - **Last triggered**: The dashboard shows when each hook was last triggered.
 - **Build source**: Your Worker's build history shows which Deploy Hook started each build by name.
 
-Deploy Hooks are rate limited to 10 builds per minute per Worker and 100 per account. For all build limits, see [Limits & pricing](/workers/ci-cd/builds/limits-and-pricing/).
+Deploy Hooks are rate limited to 10 builds per minute per Worker and 100 builds per minute per account. For all limits, see [Limits & pricing](/workers/ci-cd/builds/limits-and-pricing/).
 
 To get started, read the [Deploy Hooks documentation](/workers/ci-cd/builds/deploy-hooks/).
