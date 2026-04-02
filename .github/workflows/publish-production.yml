@@ -63,6 +63,10 @@ jobs:
           REPO: ${{ github.repository }}
           RUN_ID: ${{ github.run_id }}
         run: |
+          # Use jq to safely construct JSON payload
+          MESSAGE="❌ *Publish Production* workflow failed.\nActor: $ACTOR\n<https://github.com/$REPO/actions/runs/$RUN_ID|View run>"
+          JSON_PAYLOAD=$(jq -n --arg text "$MESSAGE" '{text: $text}')
+
           curl -X POST "$WEBHOOK_URL" \
             -H "Content-Type: application/json" \
-            -d "{\"text\": \"❌ *Publish Production* workflow failed.\nActor: $ACTOR\n<https://github.com/$REPO/actions/runs/$RUN_ID|View run>\"}"
+            -d "$JSON_PAYLOAD"
