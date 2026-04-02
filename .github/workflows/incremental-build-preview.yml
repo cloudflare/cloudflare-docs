@@ -72,17 +72,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # -- Upload build to R2 for future incremental runs --
-      - name: Upload build cache to R2
-        if: success() && hashFiles('dist/index.html') != ''
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.BUILD_CACHE_R2_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.BUILD_CACHE_R2_SECRET_KEY }}
-          AWS_DEFAULT_REGION: auto
-        run: |
-          tar -czf /tmp/build-cache.tar.gz dist/ $([ -d dist-meta ] && echo "dist-meta/")
-          aws s3 cp /tmp/build-cache.tar.gz "s3://${{ env.BUILD_CACHE_R2_BUCKET }}/latest.tar.gz" --endpoint-url ${{ secrets.BUILD_CACHE_R2_ENDPOINT }}
-
       # -- Deploy preview --
       - name: Deploy to Cloudflare Workers
         id: deploy
