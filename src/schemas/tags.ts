@@ -99,7 +99,7 @@ const protocols: Array<Tag> = [
 	{ label: "mTLS" },
 	{ label: "NetFlow" },
 	{ label: "MQTT" },
-	{ label: "OIDC", variants: ["OpenID Connect", "oidc"]},
+	{ label: "OIDC", variants: ["OpenID Connect", "oidc"] },
 	{ label: "Post-quantum", variants: ["pqc", "post-quantum cryptography"] },
 	{ label: "QUIC" },
 	{ label: "RDP" },
