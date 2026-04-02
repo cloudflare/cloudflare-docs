@@ -12,22 +12,20 @@ const { header, href, cta } = Astro.props;
 const title = cta ?? `Use ${header}`;
 ---
 
-<div
-	class="feature border-t border-t-[var(--color-cl1-gray-8)] pt-6 mb-7"
->
+<div class="feature mb-7 border-t border-t-[var(--color-cl1-gray-8)] pt-6">
 	<h3
-		class="m-0 mb-2 text-[1.3125rem] font-bold leading-[1.3] tracking-[-0.02em]"
+		class="m-0 mb-2 text-[1.3125rem] leading-[1.3] font-bold tracking-[-0.02em]"
 	>
 		{header}
 	</h3>
 	<div
-		class="feature-description text-base leading-[1.65] text-[var(--sl-color-text)] mb-3"
+		class="feature-description mb-3 text-base leading-[1.65] text-[var(--sl-color-text)]"
 	>
 		<slot />
 	</div>
 	<a
 		href={href}
-		class="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--sl-color-white)] no-underline border-b-2 border-b-[var(--color-cl1-brand-orange)] pb-px transition-[border-color] duration-200 ease-in-out hover:border-b-[var(--sl-color-white)]"
+		class="inline-flex items-center gap-1.5 border-b-2 border-b-[var(--color-cl1-brand-orange)] pb-px text-sm font-semibold text-[var(--sl-color-white)] no-underline transition-[border-color] duration-200 ease-in-out hover:border-b-[var(--sl-color-white)]"
 	>
 		{title}
 		<Icon name="right-arrow" size="0.875rem" />
@@ -35,10 +33,9 @@ const title = cta ?? `Use ${header}`;
 </div>
 
 <style>
-	/* First feature on the page — no top divider */
-	:global(.sl-markdown-content) > .feature:first-of-type {
+	/* First feature in a consecutive group — no top divider */
+	:global(.sl-markdown-content > .feature:not(.feature + .feature)) {
 		border-top: none;
-		padding-top: 0;
 	}
 
 	/* Reset paragraph margins inside the slot content */
