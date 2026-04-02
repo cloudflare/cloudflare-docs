@@ -85,7 +85,7 @@ function detectApiModes(schema: {
 				id: "streaming",
 				name: "Streaming",
 				description:
-					"Send a request with stream: true and receive server-sent events",
+					"Send a request with `stream: true` and receive server-sent events",
 				input: syncInput,
 				output: outputVariants[streamOutputIndex],
 			});

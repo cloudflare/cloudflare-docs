@@ -29,6 +29,51 @@ interface Props {
 
 const { schema, title } = Astro.props;
 
+// Check if schema is a flat/simple schema (no properties, no oneOf/anyOf with properties)
+// These are things like streaming output: { type: "string", contentType: "...", format: "binary" }
+function isFlatSchema(schemaObj: Record<string, unknown>): boolean {
+	// Has properties = not flat
+	if (schemaObj.properties) return false;
+	// Has oneOf/anyOf with properties inside = not flat
+	const variants = (schemaObj.oneOf || schemaObj.anyOf) as
+		| Record<string, unknown>[]
+		| undefined;
+	if (variants?.some((v) => v.properties)) return false;
+	// Has type and some other attributes but no nested structure
+	return !!(schemaObj.type || schemaObj.contentType || schemaObj.format);
+}
+
+const isFlat = isFlatSchema(schema);
+
+// Convert flat schema keys into rows for display
+// e.g. { type: "string", format: "binary" } => rows with name=type, type=string
+function flatSchemaToRows(
+	schemaObj: Record<string, unknown>,
+): import("./SchemaDisplay.astro").SchemaRowData[] {
+	const keys = Object.keys(schemaObj);
+	return keys.map((key, i) => ({
+		id: key,
+		name: key,
+		type: String(schemaObj[key]),
+		isArray: false,
+		isObject: false,
+		isOneOf: false,
+		isOneOfChild: false,
+		isFirstOneOfChild: false,
+		isLastOneOfChild: false,
+		required: false,
+		defaultValue: undefined,
+		description: undefined,
+		enumValues: undefined,
+		minValue: undefined,
+		maxValue: undefined,
+		depth: 0,
+		isLast: i === keys.length - 1,
+		ancestorIsLast: [],
+		children: undefined,
+	}));
+}
+
 // Generate unique ID for sessionStorage keys
 const schemaId = `schema-${title.toLowerCase()}-${Date.now()}`;
 
@@ -318,8 +363,14 @@ function processSchema(schemaToProcess: Record<string, unknown>) {
 	return collectRows(topNodes, 0, []);
 }
 
-// For non-variant schemas, process normally
-const rows = topLevelVariants ? [] : processSchema(schema);
+// For flat schemas, convert keys to rows directly
+// For non-variant schemas, process with tree parser
+// For variant schemas, defer to variantRows
+const rows = isFlat
+	? flatSchemaToRows(schema)
+	: topLevelVariants
+		? []
+		: processSchema(schema);
 
 // For variant schemas, process each variant
 const variantRows =

@@ -353,38 +353,7 @@ const starlightPageProps = {
 										<SchemaDisplay schema={mode.input} title="Input" />
 									</TabItem>
 									<TabItem label="Output">
-										{mode.output.format === "binary" ||
-										mode.output.type === "string" ? (
-											<p class="text-sm text-gray-600 dark:text-gray-400">
-												{mode.output.contentType === "text/event-stream" ? (
-													<>
-														Returns a stream of server-sent events (SSE). Each
-														event contains a JSON object with the model's
-														incremental response.
-													</>
-												) : (mode.output.contentType as string)?.startsWith(
-														"audio/",
-												  ) ? (
-													<>
-														Returns audio data in{" "}
-														{(mode.output.contentType as string)
-															.replace("audio/", "")
-															.toUpperCase()}{" "}
-														format.
-													</>
-												) : (
-													<>
-														Returns binary data
-														{mode.output.contentType
-															? ` with content type ${mode.output.contentType}`
-															: ""}
-														.
-													</>
-												)}
-											</p>
-										) : (
-											<SchemaDisplay schema={mode.output} title="Output" />
-										)}
+										<SchemaDisplay schema={mode.output} title="Output" />
 									</TabItem>
 								</Tabs>
 							</div>

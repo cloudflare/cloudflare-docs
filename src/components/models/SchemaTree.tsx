@@ -156,6 +156,9 @@ function SchemaNode({
 	// For oneOf children, use different styling
 	// Skip OR divider for top-level oneOf (depth 0) - those use the variant selector instead
 	if (row.isOneOfChild) {
+		// Only show outer border when: last oneOf child AND (no children OR not expanded)
+		const showOneOfBorder =
+			row.isLastOneOfChild && (!hasChildren || !isExpanded);
 		return (
 			<>
 				{/* Show OR divider before non-first options, but not at top level */}
@@ -163,16 +166,16 @@ function SchemaNode({
 					<OrDivider depth={row.depth} />
 				)}
 
-				{/* Hide bottom border if OR divider will follow (not last oneOf child) */}
+				{/* Hide bottom border if OR divider will follow, or if expanded (children provide border) */}
 				<div
 					className={
-						row.isLastOneOfChild
+						showOneOfBorder
 							? "border-b border-gray-100 dark:border-gray-800"
 							: ""
 					}
 				>
 					<div
-						className={`py-3 ${hasChildren ? "cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50" : ""}`}
+						className={`py-3 ${hasChildren ? "cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50" : ""} ${hasChildren && isExpanded ? "border-b border-gray-100 dark:border-gray-800" : ""}`}
 						style={{ paddingLeft: indentPx }}
 						onClick={hasChildren ? handleToggle : undefined}
 						role={hasChildren ? "button" : undefined}
@@ -241,11 +244,17 @@ function SchemaNode({
 	}
 
 	// Regular node styling
+	// Only show outer border when collapsed or no children - expanded children provide their own closing border
+	const showOuterBorder = !hasChildren || !isExpanded;
 	return (
-		<div className="border-b border-gray-100 dark:border-gray-800">
+		<div
+			className={
+				showOuterBorder ? "border-b border-gray-100 dark:border-gray-800" : ""
+			}
+		>
 			{/* Clickable row */}
 			<div
-				className={`py-3 ${hasChildren ? "cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50" : ""}`}
+				className={`py-3 ${hasChildren ? "cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50" : ""} ${hasChildren && isExpanded ? "border-b border-gray-100 dark:border-gray-800" : ""}`}
 				style={{ paddingLeft: indentPx }}
 				onClick={hasChildren ? handleToggle : undefined}
 				role={hasChildren ? "button" : undefined}
