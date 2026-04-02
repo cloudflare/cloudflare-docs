@@ -8,7 +8,7 @@ date: 2026-04-02
 
 import { TypeScriptExample } from "~/components";
 
-Deploy Hooks are now available in [Workers Builds](/workers/ci-cd/builds/). Each hook is a unique URL tied to a specific branch — send it a `POST` and your Worker builds and deploys.
+Deploy Hooks let you trigger a build and deployment from any external system — your CMS, a CI pipeline, a Slack bot, or a scheduled Worker. Each hook is a unique URL tied to a specific branch in [Workers Builds](/workers/ci-cd/builds/); send it a `POST` and your Worker builds and deploys.
 
 ```sh
 curl -X POST "https://api.cloudflare.com/client/v4/workers/builds/deploy_hooks/<DEPLOY_HOOK_ID>"
