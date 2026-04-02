@@ -5,6 +5,10 @@ on:
     branches:
       - production
 
+env:
+  INTEGRATION_R2_BUCKET: astro-partial-builds-integration
+  BUILD_CACHE_R2_BUCKET: cloudflare-docs-production-build-cache
+
 concurrency:
   group: incremental-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
@@ -47,7 +51,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.ASTRO_PARTIAL_BUILDS_INTEGRATION_R2_SECRET_KEY }}
           AWS_DEFAULT_REGION: auto
         run: |
-          aws s3 cp "s3://astro-incremental-builds/latest.tgz" /tmp/astro-incremental-builds.tgz \
+          aws s3 cp "s3://${{ env.INTEGRATION_R2_BUCKET }}/latest.tgz" /tmp/astro-incremental-builds.tgz \
             --endpoint-url ${{ secrets.ASTRO_PARTIAL_BUILDS_INTEGRATION_R2_ENDPOINT }} \
             || { echo "::error::Failed to download astro-incremental-builds tarball from R2"; exit 1; }
 
@@ -62,7 +66,7 @@ jobs:
           AWS_DEFAULT_REGION: auto
         run: |
           mkdir -p .previous-build
-          aws s3 cp "s3://cloudflare-docs-production-build-cache/latest.tar.gz" /tmp/previous-build.tar.gz \
+          aws s3 cp "s3://${{ env.BUILD_CACHE_R2_BUCKET }}/latest.tar.gz" /tmp/previous-build.tar.gz \
             --endpoint-url ${{ secrets.BUILD_CACHE_R2_ENDPOINT }} || true
           if [ -f /tmp/previous-build.tar.gz ]; then
             tar -xzf /tmp/previous-build.tar.gz -C .previous-build
@@ -92,7 +96,7 @@ jobs:
           AWS_DEFAULT_REGION: auto
         run: |
           tar -czf /tmp/build-cache.tar.gz dist/ $([ -d dist-meta ] && echo "dist-meta/")
-          aws s3 cp /tmp/build-cache.tar.gz "s3://cloudflare-docs-production-build-cache/latest.tar.gz" --endpoint-url ${{ secrets.BUILD_CACHE_R2_ENDPOINT }}
+          aws s3 cp /tmp/build-cache.tar.gz "s3://${{ env.BUILD_CACHE_R2_BUCKET }}/latest.tar.gz" --endpoint-url ${{ secrets.BUILD_CACHE_R2_ENDPOINT }}
 
       # -- Deploy preview --
       - name: Deploy to Cloudflare Workers
