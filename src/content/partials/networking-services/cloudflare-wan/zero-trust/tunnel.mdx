@@ -41,13 +41,13 @@ Do not configure routes that overlap with these reserved ranges.
 
 ### Interaction with WAN routes
 
-If your account also uses WAN connections (IPsec, GRE, CNI), route selection behavior depends on your routing mode.
+If your account also uses WAN connections (IPsec, GRE, and CNI), route selection behavior depends on your routing mode.
 
-For details, refer to <a href={props.trafficSteeringURL}>Route evaluation with Zero Trust connections</a>.
+For more information, refer to <a href={props.trafficSteeringURL}>Route evaluation with Zero Trust connections</a>.
 
 ## Interaction with other route selection mechanisms
 
-Longest-prefix-match routing (described above) is the default route selection method. Other mechanisms can bypass or augment route evaluation.
+Longest-prefix-match routing is the default route selection method. Other mechanisms can bypass or augment route evaluation.
 
 ### Automatic Return Routing (ARR)
 
@@ -59,7 +59,7 @@ When ARR is enabled:
 2. For return traffic, Cloudflare routes packets back to the tagged source connection directly, bypassing the routing table.
 3. This allows multiple sites to use identical private IP ranges without NAT or VRF configuration.
 
-ARR requires Unified Routing mode. For details, refer to <a href={props.arrURL}>Automatic Return Routing</a>.
+ARR requires Unified Routing mode. For more information, refer to <a href={props.arrURL}>Automatic Return Routing</a>.
 
 ### Hostname Routes (Initial resolved IPs)
 
@@ -72,7 +72,7 @@ When Hostname Routes are enabled:
 3. Cloudflare looks up the Initial resolved IP to determine the real destination IP and the assigned next hop (specific tunnel or interconnect).
 4. Traffic is forwarded to the assigned next hop, bypassing route evaluation for next-hop selection.
 
-This enables hostname-based policies for non-HTTP traffic without requiring customers to know destination IPs in advance.
+This enables hostname-based policies for non-HTTP traffic without requiring you to know destination IPs in advance.
 
 ## Test `cloudflared` tunnel integration
 

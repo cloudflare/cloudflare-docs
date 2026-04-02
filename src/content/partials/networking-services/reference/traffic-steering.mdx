@@ -297,7 +297,7 @@ When your account uses both Zero Trust routes (Cloudflare Tunnel, WARP Connector
 | Route type | Connection methods |
 | --- | --- |
 | Zero Trust routes | Cloudflare Tunnel, WARP Connector |
-| WAN routes | IPsec, GRE, CNI |
+| WAN routes | IPsec, GRE, and CNI |
 		`}
 		inline={false}
 		/>
@@ -341,7 +341,7 @@ If your account has Cloudflare WAN enabled, traffic from Cloudflare One Client f
 		<AnchorHeading depth={4} title="Site-to-site traffic (WAN to WAN)" />
 		<Markdown
 		text={`
-For traffic between WAN connections (IPsec to IPsec, GRE to GRE, CNI to CNI) that does not require Gateway filtering, longest-prefix-match applies within the WAN routing table. This traffic does not interact with Zero Trust routing.
+For traffic between WAN connections (IPsec to IPsec, GRE to GRE, and CNI to CNI) that does not require Gateway filtering, longest-prefix-match applies within the WAN routing table. This traffic does not interact with Zero Trust routing.
 		`}
 		inline={false}
 		/>
@@ -382,7 +382,7 @@ Cross-system traffic follows the same rules as [site-to-site traffic with Gatewa
 		<AnchorHeading depth={3} title="Check your routing mode" />
 		<Markdown
 		text={`
-To determine your account's routing mode:
+To determine the routing mode for your account:
 
 1. Go to **Routes**.
 		`}
