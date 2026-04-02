@@ -1,0 +1,260 @@
+---
+pcx_content_type: get-started
+title: Get started
+description: Set up Worker Previews, create your first preview, configure bindings, and test isolation.
+sidebar:
+  order: 0
+  badge:
+    text: Beta
+---
+
+import { WranglerConfig } from "~/components";
+
+This guide walks you through setting up Worker Previews from scratch — installing Wrangler, enabling previews, creating your first preview, configuring bindings, managing secrets, and verifying that your preview environment is isolated from production.
+
+:::note
+Worker Previews is currently in private beta. You need a pre-release version of Wrangler to use this feature.
+:::
+
+## Prerequisites
+
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages)
+- [Node.js](https://nodejs.org/) v18 or later
+- A Worker project with a Git repository initialized (`git init`)
+
+## 1. Install the pre-release Wrangler
+
+Worker Previews requires a pre-release build of Wrangler. Install it in your project:
+
+```bash
+npm install https://pkg.pr.new/wrangler@12983
+```
+
+Verify the installation:
+
+```bash
+npx wrangler --version
+```
+
+You should see a version like `4.79.0` or later with `introducing-wrangler-preview` in the output.
+
+## 2. Deploy your Worker to production
+
+Before creating previews, your Worker must be deployed to production at least once:
+
+```bash
+npx wrangler deploy
+```
+
+This establishes the production baseline — bindings, variables, and resources that previews will inherit from.
+
+## 3. Enable Worker Previews in the dashboard
+
+1. Open the [Cloudflare dashboard](https://dash.cloudflare.com/) and navigate to your Worker.
+2. Go to the **Settings** tab.
+3. Look for the **Get started** banner at the top of the Settings page.
+4. Click **Get started** and complete the setup wizard.
+
+The wizard configures **Preview Defaults** — base settings (observability, logpush) that all previews inherit. Workers with no existing variables, secrets, or bindings will see a simplified wizard with only observability settings.
+
+:::note
+The "Get started" banner appears on the **Settings** tab, not the **Previews** tab. If you land on the Previews tab first and see "No Previews yet," navigate to Settings to complete setup.
+:::
+
+## 4. Create your first preview
+
+Create a Git branch and run `wrangler preview`:
+
+```bash
+git checkout -b my-feature
+npx wrangler preview
+```
+
+Wrangler will output:
+
+```
+Preview: my-feature (new)
+  https://my-feature-my-worker.example.workers.dev
+
+Deployment: abc12345-...
+  https://abc12345-my-worker.example.workers.dev
+```
+
+You now have two URLs:
+
+- **Stable URL** (`my-feature-my-worker...`) — always points to the latest deployment in this preview.
+- **Deployment URL** (`abc12345-my-worker...`) — an immutable URL for this specific deployment.
+
+### Re-running on the same branch
+
+Running `wrangler preview` again on the same branch adds a new deployment to the existing preview. It does not create a new preview:
+
+```bash
+# Make changes...
+npx wrangler preview
+# Output: Preview: my-feature (updated)
+```
+
+### Custom preview names
+
+Use `--name` to create a preview with a name independent of your branch:
+
+```bash
+npx wrangler preview --name staging
+```
+
+Custom-named previews are fully independent — deleting the branch does not affect them, and they can be managed by name regardless of which branch you are on.
+
+## 5. Configure preview bindings and variables
+
+### Environment variables via Wrangler configuration
+
+Add a `previews` block to your Wrangler configuration file to set preview-specific variables:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "my-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-11-17",
+	"vars": {
+		"ENVIRONMENT": "production"
+	},
+	"previews": {
+		"vars": {
+			"ENVIRONMENT": "preview"
+		}
+	}
+}
+```
+
+</WranglerConfig>
+
+Apply the changes:
+
+```bash
+npx wrangler preview settings update
+```
+
+Then create or update a preview to pick up the new settings:
+
+```bash
+npx wrangler preview
+```
+
+### Secrets
+
+Preview secrets are managed separately from production secrets. Adding a preview secret does not affect production:
+
+```bash
+# Add a secret to Preview Defaults (inherited by all previews)
+npx wrangler preview secret put MY_API_KEY
+# Enter the secret value when prompted
+
+# List preview secrets
+npx wrangler preview secret list
+
+# Verify production is untouched
+npx wrangler secret list
+```
+
+### Bindings via the dashboard
+
+For bindings like KV, R2, or D1, you can configure preview-specific values in the dashboard:
+
+1. Go to your Worker's **Settings** > **Bindings**.
+2. Toggle to **Previews** (instead of Production) at the top of the page.
+3. For each binding, you will see a **Use production value** checkbox.
+   - **Checked** (default): The preview uses the same resource as production.
+   - **Unchecked**: You can select a different resource (for example, a separate KV namespace for testing).
+4. Save your changes.
+5. Re-run `wrangler preview` to create a new deployment that uses the updated bindings.
+
+:::caution
+If "Use production value" is checked, preview traffic will read and write to your production resources. Uncheck it and select a separate resource if you need isolation for that binding.
+:::
+
+## 6. View preview settings
+
+To see all the settings that will be applied to previews:
+
+```bash
+npx wrangler preview settings
+```
+
+This shows the merged result of Preview Defaults (from the API) and the `previews` block in your Wrangler configuration file. Example output:
+
+```
+Previews settings
+  compatibility_date   2025-11-17
+  observability        enabled, 1.0 sampling
+  logpush              disabled
+  Bindings
+  ENVIRONMENT   Environment Variable   "preview"
+  KV_STORE      KV Namespace           abc123def456
+```
+
+## 7. Test your preview
+
+Verify your preview is working by sending requests to the preview URL:
+
+```bash
+# Test the stable preview URL
+curl https://my-feature-my-worker.example.workers.dev/
+
+# Compare with production
+curl https://my-worker.example.workers.dev/
+```
+
+To verify binding isolation, you can check that preview-specific variables are returned:
+
+```bash
+# If your Worker returns the ENVIRONMENT variable
+curl https://my-feature-my-worker.example.workers.dev/
+# Should return: "preview"
+
+curl https://my-worker.example.workers.dev/
+# Should return: "production"
+```
+
+For Durable Object isolation testing, refer to [Durable Object isolation](/workers/ci-cd/worker-previews/durable-object-isolation/).
+
+## 8. Delete a preview
+
+When you are done testing, delete the preview:
+
+```bash
+npx wrangler preview delete
+```
+
+You will be prompted to confirm. This deletes the preview and all its deployments.
+
+To delete a named preview from any branch:
+
+```bash
+npx wrangler preview delete --name staging
+```
+
+:::note
+Previews also have an **Auto-deletion** setting in the dashboard. When enabled, the preview is automatically deleted when the tracking branch is deleted in the repository.
+:::
+
+## Wrangler CLI reference
+
+| Command | Description |
+| --- | --- |
+| `wrangler preview` | Create or update a preview for the current branch |
+| `wrangler preview --name NAME` | Create or update a preview with a custom name |
+| `wrangler preview settings` | View current Preview Defaults |
+| `wrangler preview settings update` | Update Preview Defaults from Wrangler configuration file |
+| `wrangler preview secret put NAME` | Add a secret to Preview Defaults |
+| `wrangler preview secret list` | List preview secrets |
+| `wrangler preview secret delete NAME` | Delete a preview secret |
+| `wrangler preview delete` | Delete the preview for the current branch |
+| `wrangler preview delete --name NAME` | Delete a named preview |
+
+## Next steps
+
+- [Durable Object isolation](/workers/ci-cd/worker-previews/durable-object-isolation/) — Configure isolated DO storage so preview traffic never touches production data
+- [Worker Previews overview](/workers/ci-cd/worker-previews/) — Concepts, binding isolation behavior, and comparison with Preview URLs
