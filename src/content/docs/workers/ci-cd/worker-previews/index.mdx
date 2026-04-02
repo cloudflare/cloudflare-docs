@@ -1,0 +1,134 @@
+---
+pcx_content_type: concept
+title: Worker Previews
+description: Create isolated preview environments for your Worker with their own URLs, bindings, and resources.
+sidebar:
+  order: 2
+  badge:
+    text: Beta
+---
+
+import { WranglerConfig } from "~/components";
+
+Worker Previews let you create fully isolated preview environments for your Worker. Each preview gets its own URL, bindings, variables, secrets, and — for Durable Objects — its own isolated storage namespace.
+
+Unlike [Preview URLs](/workers/configuration/previews/), which share the same bindings and resources as your production Worker, Worker Previews provide true environment isolation. Preview traffic never touches your production data when configured correctly.
+
+:::note
+Worker Previews is currently in private beta. You need a pre-release version of Wrangler to use this feature.
+:::
+
+## How Worker Previews work
+
+When you run `wrangler preview`, Wrangler creates a preview environment tied to your current Git branch. Each preview gets:
+
+- A **stable URL** in the format `<PREVIEW_NAME>-<WORKER_NAME>.<SUBDOMAIN>.workers.dev`
+- An **immutable deployment URL** for each push, in the format `<DEPLOYMENT_ID>-<WORKER_NAME>.<SUBDOMAIN>.workers.dev`
+- Its own **bindings, variables, and secrets**, inherited from Preview Defaults or your Wrangler configuration
+- For Durable Objects, an **auto-provisioned isolated namespace** per preview
+
+Each time you run `wrangler preview` on the same branch, a new deployment is added to the existing preview. The stable URL always points to the latest deployment.
+
+## Quick start
+
+1. Install the pre-release Wrangler build:
+
+```bash
+npm i https://pkg.pr.new/wrangler@12983
+```
+
+2. Create a preview from a Git branch:
+
+```bash
+git checkout -b my-feature
+npx wrangler preview
+```
+
+This creates a preview named `my-feature` with its own URL.
+
+## Preview Defaults
+
+Preview Defaults are Worker-level settings that all previews inherit. You can configure them via the Cloudflare dashboard (Settings > Bindings, toggled to Previews) or via the Wrangler CLI.
+
+### Using the `previews` block in Wrangler configuration
+
+Add a `previews` block to your Wrangler configuration file to define settings that apply to all previews:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "my-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-11-17",
+	"previews": {
+		"vars": {
+			"ENVIRONMENT": "preview"
+		}
+	}
+}
+```
+
+</WranglerConfig>
+
+### Managing preview secrets
+
+```bash
+# Add a secret to Preview Defaults (inherited by all previews)
+npx wrangler preview secret put MY_SECRET
+
+# List preview secrets
+npx wrangler preview secret list
+
+# Delete a preview secret
+npx wrangler preview secret delete MY_SECRET
+```
+
+### Viewing and updating preview settings
+
+```bash
+# View current preview settings
+npx wrangler preview settings
+
+# Update preview settings from your Wrangler configuration
+npx wrangler preview settings update
+```
+
+## Worker Previews vs Preview URLs
+
+| Feature | Preview URLs | Worker Previews |
+| --- | --- | --- |
+| Isolated bindings | No | Yes |
+| Isolated DO storage | No | Yes |
+| Own variables/secrets | No | Yes |
+| Stable URL per branch | Aliased only | Automatic |
+| Gradual deployments | Yes (via versions) | No |
+| Rollback | Yes (via versions) | No |
+
+Worker Previews are designed for testing changes in isolation before deploying to production. If you need gradual deployments or rollback capabilities, use [versions and deployments](/workers/configuration/versions-and-deployments/).
+
+## Managing previews
+
+### List previews
+
+View all previews in the Cloudflare dashboard under the Previews tab, or query the API.
+
+### Delete a preview
+
+```bash
+npx wrangler preview delete
+```
+
+### Custom preview names
+
+Use `--name` to create a preview with a custom name, independent of your current branch:
+
+```bash
+npx wrangler preview --name staging
+```
+
+## Related resources
+
+- [Durable Object isolation in Worker Previews](/workers/ci-cd/worker-previews/durable-object-isolation/) — How to achieve isolated DO storage in previews
+- [Versions and deployments](/workers/configuration/versions-and-deployments/) — Production deployment workflows
+- [Preview URLs](/workers/configuration/previews/) — Versioned and aliased preview URLs (different from Worker Previews)

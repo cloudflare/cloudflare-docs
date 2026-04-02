@@ -1,0 +1,267 @@
+---
+pcx_content_type: how-to
+title: Durable Object isolation
+description: Achieve isolated Durable Object storage in Worker Previews so preview traffic never touches production data.
+sidebar:
+  order: 1
+  badge:
+    text: Beta
+---
+
+import { WranglerConfig, Tabs, TabItem } from "~/components";
+
+When using [Worker Previews](/workers/ci-cd/worker-previews/), each preview environment can have its own isolated [Durable Object](/durable-objects/) namespace. This means Durable Object instances created by a preview are completely separate from production — different instance IDs, different storage, no shared state.
+
+Without proper configuration, previews will share the production DO namespace, and preview traffic will read and write production Durable Object state. This guide covers three approaches to achieve DO isolation, from the simplest (recommended) to more manual methods.
+
+## Approach 1: Use `ctx.exports` (recommended) {#ctx-exports}
+
+The simplest way to get isolated Durable Objects in previews is to use [`ctx.exports`](/workers/runtime-apis/context/#exports) instead of a traditional DO binding. With `ctx.exports`, you do not need to configure any DO bindings in your Wrangler configuration file — the runtime automatically resolves the correct namespace for each environment.
+
+When you deploy to production, `ctx.exports.MyDurableObject` points to the production namespace. When you create a preview, `ctx.exports.MyDurableObject` automatically points to an auto-provisioned, isolated preview namespace.
+
+### Prerequisites
+
+- Compatibility date of `2025-11-17` or later (when `ctx.exports` became the default)
+- Your Durable Object class must extend the [`DurableObject` base class](/durable-objects/api/base/)
+- A [migration](/durable-objects/reference/durable-objects-migrations/) must be configured for the DO class
+
+### Step 1: Define your Durable Object class
+
+Create a Worker with a Durable Object class that extends `DurableObject`:
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {}
+
+export class Counter extends DurableObject {
+  async increment(): Promise<number> {
+    let count: number =
+      (await this.ctx.storage.get<number>("count")) ?? 0;
+    count++;
+    await this.ctx.storage.put("count", count);
+    return count;
+  }
+
+  async getCount(): Promise<number> {
+    return (await this.ctx.storage.get<number>("count")) ?? 0;
+  }
+}
+```
+
+### Step 2: Access the DO via `ctx.exports`
+
+In your fetch handler, use `ctx.exports` to get the DO namespace binding. No `env` binding is needed:
+
+```ts
+export default {
+  async fetch(
+    request: Request,
+    env: Env,
+    ctx: ExecutionContext
+  ): Promise<Response> {
+    const url = new URL(request.url);
+
+    // Access DO namespace via ctx.exports — no binding configuration required
+    const counterNamespace = (ctx as any).exports
+      .Counter as DurableObjectNamespace<Counter>;
+
+    const id = counterNamespace.idFromName("my-counter");
+    const stub = counterNamespace.get(id);
+
+    if (url.pathname === "/increment") {
+      const count = await stub.increment();
+      return Response.json({ count });
+    }
+
+    const count = await stub.getCount();
+    return Response.json({ count });
+  },
+};
+```
+
+### Step 3: Configure Wrangler
+
+Your Wrangler configuration file only needs the migration — no `durable_objects.bindings` section and no `previews` block:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "my-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-11-17",
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_classes": ["Counter"]
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+### Step 4: Deploy and create a preview
+
+```bash
+# Deploy to production
+npx wrangler deploy
+
+# Create a preview on a branch
+git checkout -b my-feature
+npx wrangler preview
+```
+
+The preview will automatically get its own isolated DO namespace. You can verify isolation by comparing DO instance IDs between production and the preview — they will be different, confirming separate namespaces.
+
+### How auto-provisioning works
+
+When a preview is created, the platform automatically provisions a new DO namespace for each Durable Object class. The preview namespace follows the naming pattern:
+
+```
+{previewSlug}_{ClassName}
+```
+
+For example, if your Worker is `my-worker`, your preview is named `my-feature`, and your DO class is `Counter`, the auto-provisioned namespace will be named `my-feature_Counter`.
+
+You can verify this via the API:
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/durable_objects/namespaces \
+  -H "Authorization: Bearer {api_token}"
+```
+
+Preview-owned namespaces include a `preview` property in the API response:
+
+```json
+{
+  "id": "a9f7f39f-...",
+  "name": "my-feature_Counter",
+  "script": "my-worker",
+  "class": "Counter",
+  "preview": {
+    "id": "1c981f01-...",
+    "slug": "my-feature",
+    "name": "my-feature"
+  }
+}
+```
+
+## Approach 2: Use a DO binding with the dashboard {#dashboard-binding}
+
+If you are using a traditional DO binding (`env.MY_DO`) instead of `ctx.exports`, you can configure DO isolation through the Cloudflare dashboard.
+
+### Step 1: Enable previews on the Worker
+
+Navigate to your Worker's **Settings** tab and complete the Previews setup wizard if you have not already.
+
+### Step 2: Configure the DO binding for previews
+
+1. Go to your Worker's **Settings** > **Bindings** tab.
+2. Toggle to **Previews** (instead of Production).
+3. Find your Durable Object binding (for example, `MY_COUNTER`).
+4. Uncheck **Use production value**.
+5. From the namespace dropdown, select the auto-provisioned preview namespace (for example, `my-worker_my-feature_Counter`).
+6. Save.
+
+After saving, re-run `wrangler preview` to create a new deployment that picks up the updated binding.
+
+:::note
+The preview namespace only appears in the dropdown after you have created at least one preview for the Worker. The platform auto-provisions the namespace on preview creation.
+:::
+
+## Approach 3: Use a DO binding with Wrangler configuration {#wrangler-binding}
+
+You can also configure DO isolation in your Wrangler configuration file by adding a `previews` block with `durable_objects.bindings`.
+
+:::caution
+When using the `previews` block for DO bindings, you must include `script_name` pointing to the Worker that owns the DO class. Without `script_name`, deployment will fail with: `Cannot create binding for class 'ClassName' that is not exported by the script`.
+:::
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "my-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-11-17",
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "MY_COUNTER",
+				"class_name": "Counter"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_classes": ["Counter"]
+		}
+	],
+	"previews": {
+		"durable_objects": {
+			"bindings": [
+				{
+					"name": "MY_COUNTER",
+					"class_name": "Counter",
+					"script_name": "my-worker"
+				}
+			]
+		}
+	}
+}
+```
+
+</WranglerConfig>
+
+After updating your Wrangler configuration file, apply the change:
+
+```bash
+npx wrangler preview settings update
+npx wrangler preview
+```
+
+:::note
+When using `script_name` pointing to the same Worker (self-referencing), the preview will share the production DO namespace by default. True isolation requires the auto-provisioning behavior, which is handled automatically when using `ctx.exports` (Approach 1) or when selecting an auto-provisioned namespace in the dashboard (Approach 2).
+:::
+
+## Approach comparison
+
+| | `ctx.exports` | Dashboard binding | Wrangler config binding |
+| --- | --- | --- | --- |
+| Binding configuration required | No | Yes | Yes |
+| Auto-isolation | Yes | Manual selection | No (self-ref shares production) |
+| `script_name` required | No | No | Yes |
+| Works with RPC methods | Yes | Yes | Yes |
+| Recommended for new projects | Yes | - | - |
+
+## Common issues
+
+### Preview returns `error code: 1101`
+
+This typically means the Worker threw an exception when accessing the Durable Object. Verify that:
+
+1. Your DO class extends `DurableObject` from `cloudflare:workers`.
+2. A migration is configured in your Wrangler configuration file.
+3. If using `ctx.exports`, your compatibility date is `2025-11-17` or later.
+
+### Preview shares production DO instances
+
+If production and preview return the same DO instance IDs, the preview is using the production namespace. To fix this:
+
+- **If using `ctx.exports`**: Verify the auto-provisioned namespace exists by checking `GET /accounts/{account_id}/workers/durable_objects/namespaces`. If missing, delete the preview and recreate it.
+- **If using a binding**: Ensure you have either unchecked "Use production value" in the dashboard and selected the preview namespace, or that auto-provisioning created a separate namespace.
+
+### `Cannot create binding for class not exported by script`
+
+When using the `previews.durable_objects.bindings` configuration, you must include `script_name` in the binding. This is required even when the DO class is defined in the same Worker.
+
+## Related resources
+
+- [Worker Previews overview](/workers/ci-cd/worker-previews/)
+- [`ctx.exports` API reference](/workers/runtime-apis/context/#exports)
+- [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/)
+- [Durable Objects namespace API](/durable-objects/api/namespace/)
