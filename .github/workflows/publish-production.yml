@@ -36,7 +36,9 @@ jobs:
         with:
           path: |
             node_modules/.astro/assets
-          key: static
+          key: astro-assets-${{ hashFiles('src/assets/**') }}
+          restore-keys: |
+            astro-assets-
 
       - name: Build
         run: npm run build
