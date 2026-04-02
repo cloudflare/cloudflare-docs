@@ -2,11 +2,117 @@ import { getCollection } from "astro:content";
 import type { CatalogModelsSchema } from "~/schemas/catalog-models";
 import type { WorkersAIModelsSchema } from "~/schemas/workers-ai-models";
 
-import type { ResolvedModel } from "./model-types";
+import type { ApiMode, ResolvedModel } from "./model-types";
 
 // Re-export client-safe helpers and types for convenience
 export { getModelAuthor } from "./model-helpers";
-export type { ResolvedModel } from "./model-types";
+export type { ResolvedModel, ApiMode } from "./model-types";
+
+/**
+ * Detect and split a model's schema into logical API modes.
+ * Handles common patterns like:
+ * - Sync vs Batch (anyOf with requests array)
+ * - Prompt vs Messages input formats
+ * - JSON vs Streaming output
+ */
+function detectApiModes(schema: {
+	input: Record<string, unknown>;
+	output: Record<string, unknown>;
+}): ApiMode[] | undefined {
+	const { input, output } = schema;
+	const modes: ApiMode[] = [];
+
+	// Check for anyOf/oneOf at the input level
+	const inputVariants =
+		(input.anyOf as Record<string, unknown>[]) ||
+		(input.oneOf as Record<string, unknown>[]);
+
+	// Check for anyOf/oneOf at the output level
+	const outputVariants =
+		(output.anyOf as Record<string, unknown>[]) ||
+		(output.oneOf as Record<string, unknown>[]);
+
+	if (!inputVariants || inputVariants.length === 0) {
+		// No variants to split - return undefined to use combined schema
+		return undefined;
+	}
+
+	// Find batch input (has "requests" property)
+	const batchInputIndex = inputVariants.findIndex((v) => {
+		const props = v.properties as Record<string, unknown> | undefined;
+		return props && "requests" in props;
+	});
+
+	// Find sync input (not batch)
+	const syncInputIndex = inputVariants.findIndex(
+		(_, i) => i !== batchInputIndex,
+	);
+
+	// Find JSON output (contentType: application/json or has properties)
+	const jsonOutputIndex =
+		outputVariants?.findIndex((v) => {
+			return (
+				v.contentType === "application/json" ||
+				(v.type === "object" && v.properties)
+			);
+		}) ?? -1;
+
+	// Find streaming output (type: string, or format: binary for SSE)
+	const streamOutputIndex =
+		outputVariants?.findIndex((v) => {
+			return v.type === "string" || v.format === "binary";
+		}) ?? -1;
+
+	// Build sync mode
+	if (syncInputIndex !== -1) {
+		const syncInput = inputVariants[syncInputIndex];
+		const syncOutput =
+			jsonOutputIndex !== -1 && outputVariants
+				? outputVariants[jsonOutputIndex]
+				: output;
+
+		modes.push({
+			id: "sync",
+			name: "Synchronous",
+			description: "Send a request and receive a complete response",
+			input: syncInput,
+			output: syncOutput,
+		});
+
+		// Build streaming mode (same input as sync, different output)
+		if (streamOutputIndex !== -1 && outputVariants) {
+			modes.push({
+				id: "streaming",
+				name: "Streaming",
+				description:
+					"Send a request with stream: true and receive server-sent events",
+				input: syncInput,
+				output: outputVariants[streamOutputIndex],
+			});
+		}
+	}
+
+	// Build batch mode
+	if (batchInputIndex !== -1) {
+		const batchInput = inputVariants[batchInputIndex];
+		// Batch typically uses the same JSON output format
+		const batchOutput =
+			jsonOutputIndex !== -1 && outputVariants
+				? outputVariants[jsonOutputIndex]
+				: output;
+
+		modes.push({
+			id: "batch",
+			name: "Batch",
+			description: "Send multiple requests in a single API call",
+			input: batchInput,
+			output: batchOutput,
+		});
+	}
+
+	// Only return modes if we found meaningful splits
+	return modes.length > 1 ? modes : undefined;
+}
 
 /**
  * Normalize raw pricing unit keys (e.g. "per_image", "per_megapixel") into a
@@ -91,6 +197,11 @@ function catalogToResolved(model: CatalogModelsSchema): ResolvedModel {
 		});
 	}
 
+	const schema = {
+		input: model.schema?.input || {},
+		output: model.schema?.output || {},
+	};
+
 	return {
 		name: model.model_id,
 		modelId: model.model_id,
@@ -102,10 +213,8 @@ function catalogToResolved(model: CatalogModelsSchema): ResolvedModel {
 			name: model.task,
 			description: "", // Catalog doesn't include task description
 		},
-		schema: {
-			input: model.schema?.input || {},
-			output: model.schema?.output || {},
-		},
+		schema,
+		apiModes: detectApiModes(schema),
 		tags: model.tags || [],
 		contextLength: model.context_length ?? undefined,
 		maxOutputTokens: model.max_output_tokens ?? undefined,
@@ -140,6 +249,11 @@ function legacyToResolved(model: WorkersAIModelsSchema): ResolvedModel {
 	const contextWindow = getProp("context_window");
 	const maxOutputTokens = getProp("max_output_tokens");
 
+	const schema = {
+		input: model.schema.input,
+		output: model.schema.output,
+	};
+
 	return {
 		name: model.name,
 		modelId: model.name,
@@ -151,10 +265,8 @@ function legacyToResolved(model: WorkersAIModelsSchema): ResolvedModel {
 			name: model.task.name,
 			description: model.task.description,
 		},
-		schema: {
-			input: model.schema.input,
-			output: model.schema.output,
-		},
+		schema,
+		apiModes: detectApiModes(schema),
 		tags: model.tags || [],
 		contextLength:
 			typeof contextWindow === "string"

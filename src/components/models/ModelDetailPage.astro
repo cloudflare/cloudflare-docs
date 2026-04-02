@@ -6,8 +6,7 @@ import StarlightPage, {
 import { LinkButton, Tabs, TabItem, Code, Aside, Badge } from "~/components";
 import ModelInfo from "~/components/models/ModelInfo.tsx";
 import ModelFeatures from "~/components/models/ModelFeatures.tsx";
-import SchemaViewer from "~/components/models/SchemaViewer.astro";
-import CatalogSchemaTable from "~/components/models/CatalogSchemaTable.astro";
+import SchemaDisplay from "~/components/models/SchemaDisplay.astro";
 import ExampleCard from "~/components/models/ExampleCard.astro";
 import CopyableCode from "~/components/models/CopyableCode.astro";
 
@@ -176,12 +175,6 @@ const starlightPageProps = {
 			? { depth: 2, slug: "Examples", text: "Examples" }
 			: false,
 		hasSchema ? { depth: 2, slug: "Parameters", text: "Parameters" } : false,
-		hasSchema && model.dataSource !== "catalog"
-			? { depth: 3, slug: "Input", text: "Input" }
-			: false,
-		hasSchema && model.dataSource !== "catalog"
-			? { depth: 3, slug: "Output", text: "Output" }
-			: false,
 		hasSchema ? { depth: 2, slug: "API-Schemas", text: "API Schemas" } : false,
 	].filter((v) => Boolean(v)) as MarkdownHeading[],
 	hideTitle: true,
@@ -339,67 +332,157 @@ const starlightPageProps = {
 	}
 
 	{
-		hasSchema && (
+		hasSchema && model.apiModes && model.apiModes.length > 1 ? (
 			<>
 				<h2 id="Parameters">Parameters</h2>
-				{model.dataSource === "catalog" ? (
-					<>
-						<CatalogSchemaTable schema={model.schema.input} title="Input" />
-						<CatalogSchemaTable schema={model.schema.output} title="Output" />
-					</>
-				) : (
-					<>
-						<p>
-							<span class="text-red-500">*</span> indicates a required field
-						</p>
-						<h3 id="Input">Input</h3>
-						<SchemaViewer schema={model.schema.input} />
 
-						<h3 id="Output">Output</h3>
-						{model.schema.output.format === "binary" ? (
-							<p>
-								{(model.schema.output.contentType as string)?.startsWith(
-									"audio/",
-								) ? (
-									<>
-										The binding returns a <code>ReadableStream</code> with the
-										audio in{" "}
-										{(model.schema.output.contentType as string)
-											.replace("audio/", "")
-											.toUpperCase()}{" "}
-										format (check the model's output schema).
-									</>
-								) : (
-									<>
-										The binding returns a <code>ReadableStream</code> with the
-										output (check the model's output schema).
-									</>
+				<div class="space-y-3">
+					{model.apiModes.map((mode) => (
+						<details class="group rounded-lg border border-gray-200 p-0 py-3 dark:border-gray-700">
+							<summary class="cursor-pointer px-8 font-medium text-gray-900 dark:text-gray-100">
+								<span>{mode.name}</span>
+								{mode.description && (
+									<span class="text-sm font-normal text-gray-500 dark:text-gray-400">
+										— {mode.description}
+									</span>
 								)}
-							</p>
-						) : (
-							<SchemaViewer schema={model.schema.output} />
-						)}
-					</>
-				)}
+							</summary>
+							<div class="border-t border-gray-200 p-4 pb-0 dark:border-gray-700">
+								<Tabs syncKey={`schema-${mode.id}`}>
+									<TabItem label="Input">
+										<SchemaDisplay schema={mode.input} title="Input" />
+									</TabItem>
+									<TabItem label="Output">
+										{mode.output.format === "binary" ||
+										mode.output.type === "string" ? (
+											<p class="text-sm text-gray-600 dark:text-gray-400">
+												{mode.output.contentType === "text/event-stream" ? (
+													<>
+														Returns a stream of server-sent events (SSE). Each
+														event contains a JSON object with the model's
+														incremental response.
+													</>
+												) : (mode.output.contentType as string)?.startsWith(
+														"audio/",
+												  ) ? (
+													<>
+														Returns audio data in{" "}
+														{(mode.output.contentType as string)
+															.replace("audio/", "")
+															.toUpperCase()}{" "}
+														format.
+													</>
+												) : (
+													<>
+														Returns binary data
+														{mode.output.contentType
+															? ` with content type ${mode.output.contentType}`
+															: ""}
+														.
+													</>
+												)}
+											</p>
+										) : (
+											<SchemaDisplay schema={mode.output} title="Output" />
+										)}
+									</TabItem>
+								</Tabs>
+							</div>
+						</details>
+					))}
+				</div>
 
-				<h2 id="API-Schemas">API Schemas</h2>
-				<p>The following schemas are based on JSON Schema</p>
-
-				<Tabs>
-					<TabItem label="Input">
-						<Code
-							code={JSON.stringify(model.schema.input, null, 4)}
-							lang="json"
-						/>
-					</TabItem>
-					<TabItem label="Output">
-						<Code
-							code={JSON.stringify(model.schema.output, null, 4)}
-							lang="json"
-						/>
-					</TabItem>
-				</Tabs>
+				<h2 id="API-Schemas">API Schemas (Raw)</h2>
+				<div class="space-y-3">
+					{model.apiModes.map((mode) => (
+						<details class="group rounded-lg border border-gray-200 dark:border-gray-700">
+							<summary class="cursor-pointer px-4 py-3 font-medium text-gray-900 dark:text-gray-100">
+								<span>{mode.name}</span>
+							</summary>
+							<div class="border-t border-gray-200 dark:border-gray-700">
+								<div class="px-4 py-4">
+									<h4 class="mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
+										Input
+									</h4>
+									<div class="[&_pre]:max-h-[400px] [&_pre]:overflow-y-auto">
+										<Code
+											code={JSON.stringify(mode.input, null, 2)}
+											lang="json"
+										/>
+									</div>
+								</div>
+								<div class="border-t border-gray-200 px-4 py-4 dark:border-gray-700">
+									<h4 class="mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
+										Output
+									</h4>
+									<div class="[&_pre]:max-h-[400px] [&_pre]:overflow-y-auto">
+										<Code
+											code={JSON.stringify(mode.output, null, 2)}
+											lang="json"
+										/>
+									</div>
+								</div>
+							</div>
+						</details>
+					))}
+				</div>
 			</>
+		) : (
+			hasSchema && (
+				<>
+					<h2 id="Parameters">Parameters</h2>
+					<Tabs syncKey="schema-tab">
+						<TabItem label="Input">
+							<SchemaDisplay schema={model.schema.input} title="Input" />
+						</TabItem>
+						<TabItem label="Output">
+							{model.schema.output.format === "binary" ? (
+								<p>
+									{(model.schema.output.contentType as string)?.startsWith(
+										"audio/",
+									) ? (
+										<>
+											The binding returns a <code>ReadableStream</code> with the
+											audio in{" "}
+											{(model.schema.output.contentType as string)
+												.replace("audio/", "")
+												.toUpperCase()}{" "}
+											format (check the model's output schema).
+										</>
+									) : (
+										<>
+											The binding returns a <code>ReadableStream</code> with the
+											output (check the model's output schema).
+										</>
+									)}
+								</p>
+							) : (
+								<SchemaDisplay schema={model.schema.output} title="Output" />
+							)}
+						</TabItem>
+					</Tabs>
+
+					<h2 id="API-Schemas">API Schemas</h2>
+					<Tabs syncKey="schema-tab">
+						<TabItem label="Input">
+							<div class="[&_pre]:max-h-[500px] [&_pre]:overflow-y-auto">
+								<Code
+									code={JSON.stringify(model.schema.input, null, 2)}
+									lang="json"
+								/>
+							</div>
+						</TabItem>
+						<TabItem label="Output">
+							<div class="[&_pre]:max-h-[500px] [&_pre]:overflow-y-auto">
+								<Code
+									code={JSON.stringify(model.schema.output, null, 2)}
+									lang="json"
+								/>
+							</div>
+						</TabItem>
+					</Tabs>
+				</>
+			)
 		)
 	}
 </StarlightPage>

@@ -6,6 +6,18 @@
 import type { CodeSnippet, ModelExample } from "~/schemas/catalog-models";
 
 /**
+ * Represents a distinct API mode for a model (e.g., sync, streaming, batch).
+ * Each mode has its own input/output schema derived from the combined schema.
+ */
+export interface ApiMode {
+	id: string; // e.g., "sync", "streaming", "batch"
+	name: string; // Human-readable name, e.g., "Synchronous", "Streaming", "Batch"
+	description?: string; // Optional description of this mode
+	input: Record<string, unknown>; // Input schema for this mode
+	output: Record<string, unknown>; // Output schema for this mode
+}
+
+/**
  * Unified model interface that works with both catalog and legacy data sources.
  * When a model exists in the catalog, catalog data replaces legacy entirely.
  */
@@ -24,11 +36,15 @@ export interface ResolvedModel {
 		description: string;
 	};
 
-	// Schema
+	// Schema (combined/raw)
 	schema: {
 		input: Record<string, unknown>;
 		output: Record<string, unknown>;
 	};
+
+	// API modes - split schema into logical usage patterns
+	// e.g., sync vs streaming vs batch
+	apiModes?: ApiMode[];
 
 	// Capabilities & metadata
 	tags: string[];
