@@ -152,7 +152,8 @@ The steps below write a sample program that drops all User Datagram Protocol (UD
    :::
 
    In the example snippet below, the program will drop any packet where the IPv6 header exists or where the UDP destination port is 66.
-   It will then check some application header value in the UDP payload and verify its last byte is some fixed value `0xCF`. 
+
+   It will then check the application header value in the UDP payload and verify its last byte is a fixed value `0xCF`. 
 
    ```c
     struct ipv6hdr *ipv6_hdr;
