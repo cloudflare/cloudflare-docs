@@ -271,11 +271,11 @@ The example program below implements a UDP-based challenge-response mechanism us
 
 The challenge mechanism works as follows:
 
-1. **New source IP**: When a packet arrives from an unknown source IP, the program generates a challenge packet containing a random nonce and marks the source IP as "challenged" in the state table. The original packet is dropped.
+When a packet arrives from an unknown source IP, the program generates a challenge packet containing a random nonce and marks the source IP as "challenged" in the state table. The original packet is dropped.
 
-2. **Challenged source IP**: If a packet arrives from a source IP that has already been challenged, the program checks if the packet contains the correct challenge response (the nonce XORed with a secret value). If the response is correct, the source IP is marked as "verified". If incorrect, the source IP is immediately blocklisted.
+If a packet arrives from a source IP that has already been challenged, the program checks if the packet contains the correct challenge response (the nonce XORed with a secret value). If the response is correct, the source IP is marked as "verified". If incorrect, the source IP is immediately blocklisted.
 
-3. **Verified source IP**: Packets from verified source IPs are passed through without further checks.
+Packets from verified source IPs are passed through without further checks.
 
 <Steps>
 1. Include the Cloudflare eBPF header files and define the helper version.
