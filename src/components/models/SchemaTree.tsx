@@ -20,6 +20,7 @@ export interface SchemaRowData {
 	isOneOf: boolean;
 	isOneOfChild: boolean;
 	isFirstOneOfChild: boolean;
+	isLastOneOfChild: boolean;
 	required: boolean;
 	defaultValue?: string;
 	description?: string;
@@ -117,12 +118,12 @@ function OrDivider({ depth }: { depth: number }) {
 	const indentPx = depth * 24;
 	return (
 		<div
-			className="flex items-center gap-2 py-2 text-xs text-gray-400 dark:text-gray-500"
+			className="flex items-center gap-2 py-0 text-xs text-gray-400 dark:text-gray-500"
 			style={{ paddingLeft: indentPx + 16 }}
 		>
-			<span className="h-px flex-1 bg-gray-200 dark:bg-gray-700" />
+			<span className="h-px flex-1 border-t border-dashed border-gray-200 dark:border-gray-800" />
 			<span className="font-medium tracking-wider uppercase">or</span>
-			<span className="h-px flex-1 bg-gray-200 dark:bg-gray-700" />
+			<span className="h-px flex-1 border-t border-dashed border-gray-200 dark:border-gray-800" />
 		</div>
 	);
 }
@@ -153,13 +154,23 @@ function SchemaNode({
 	const indentPx = 16 + row.depth * 24; // 16px base padding + depth indent
 
 	// For oneOf children, use different styling
+	// Skip OR divider for top-level oneOf (depth 0) - those use the variant selector instead
 	if (row.isOneOfChild) {
 		return (
 			<>
-				{/* Show OR divider before non-first options */}
-				{!row.isFirstOneOfChild && <OrDivider depth={row.depth} />}
+				{/* Show OR divider before non-first options, but not at top level */}
+				{!row.isFirstOneOfChild && row.depth > 0 && (
+					<OrDivider depth={row.depth} />
+				)}
 
-				<div className="border-b border-gray-100 dark:border-gray-800">
+				{/* Hide bottom border if OR divider will follow (not last oneOf child) */}
+				<div
+					className={
+						row.isLastOneOfChild
+							? "border-b border-gray-100 dark:border-gray-800"
+							: ""
+					}
+				>
 					<div
 						className={`py-3 ${hasChildren ? "cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50" : ""}`}
 						style={{ paddingLeft: indentPx }}
@@ -405,7 +416,7 @@ export default function SchemaTree({ rows, schemaId }: SchemaTreeProps) {
 					No parameters match your search.
 				</p>
 			) : (
-				<div className="max-h-[500px] overflow-y-auto rounded-md border border-gray-200 dark:border-gray-700">
+				<div className="max-h-[500px] overflow-y-scroll rounded-md border border-gray-200 dark:border-gray-700">
 					<div className="not-content divide-y divide-gray-100 dark:divide-gray-800">
 						{filteredRows.map((row) => (
 							<SchemaNode

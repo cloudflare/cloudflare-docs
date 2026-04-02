@@ -66,6 +66,7 @@ export interface SchemaRowData {
 	isOneOf: boolean;
 	isOneOfChild: boolean; // This item is a child of a oneOf/anyOf
 	isFirstOneOfChild: boolean; // First child (no OR divider before)
+	isLastOneOfChild: boolean; // Last child (no OR divider after, so show border)
 	required: boolean;
 	defaultValue?: string;
 	description?: string;
@@ -258,6 +259,7 @@ function collectRows(
 			isOneOf,
 			isOneOfChild: !!(isOneOfChild || isAnyOfChild),
 			isFirstOneOfChild: !!(isOneOfChild || isAnyOfChild) && i === 0,
+			isLastOneOfChild: !!(isOneOfChild || isAnyOfChild) && isLast,
 			required,
 			defaultValue,
 			description,
