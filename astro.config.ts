@@ -126,6 +126,7 @@ export default defineConfig({
 		...(process.env.INCREMENTAL_BUILD
 			? await (async () => {
 					try {
+						// @ts-ignore - only installed in CI for incremental preview builds
 						const { default: incrementalBuilds } = await import(
 							"astro-incremental-builds"
 						);
