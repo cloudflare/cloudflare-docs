@@ -4,16 +4,15 @@ releaseNotes: |-
   The next stable release for Linux will introduce the new Cloudflare One Client UI, providing a cleaner and more intuitive design as well as easier access to common actions and information.
 
   **Changes and improvements**
-  - Empty MDM files are now rejected instead of being incorrectly accepted as a single MDM config
-  - Fixed various connection hangs in proxy mode caused by upstream quiche bugs
+  - Empty MDM files are now rejected instead of being incorrectly accepted as a single MDM config.
+  - Fixed an issue in local proxy mode where the client could become unresponsive due to upstream connection timeouts.
   - Fixed an issue where the emergency disconnect status of a prior organization persisted after a switch to a different organization.
-  - Consumer-only CLI commands are now clearly distinguished from Zero Trust commands
-  - Added detailed QUIC connection metrics to diagnostic logs for better troubleshooting
-  - Added monitoring for tunnel statistics collection timeouts
-  - Switched tunnel congestion control algorithm for [proxy mode](https://developers.cloudflare.com/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/#local-proxy-mode) to Cubic for improved reliability across platforms
-  - Fixed initiating managed network detections checks when no network is available, which caused device profile flapping
+  - Consumer-only CLI commands are now clearly distinguished from Zero Trust commands.
+  - Added detailed QUIC connection metrics to diagnostic logs for better troubleshooting.
+  - Added monitoring for tunnel statistics collection timeouts.
+  - Switched tunnel congestion control algorithm for local proxy mode to Cubic for improved reliability across platforms.
+  - Fixed initiating managed network detections checks when no network is available, which caused device profile flapping.
 
-  **Known issues**
 version: 2026.3.846.0
 releaseDate: 2026-04-02T15:39:10.549Z
 packageURL: https://downloads.cloudflareclient.com/v1/download/fedora35-intel/version/2026.3.846.0
