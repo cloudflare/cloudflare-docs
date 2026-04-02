@@ -22,7 +22,6 @@ import { resolveInlineRef } from "@stoplight/json";
 import SchemaTreeView from "./SchemaTree.tsx";
 import SchemaVariantSelector from "./SchemaVariantSelector.tsx";
 import type { SchemaRowData } from "./types";
-export type { SchemaRowData };
 
 interface Props {
 	schema: Record<string, unknown>;
@@ -99,6 +98,26 @@ const defaultResolver: SchemaTreeRefDereferenceFn =
 		if (resolved) return resolved;
 		throw new ReferenceError(`Could not resolve '${pointer}'`);
 	};
+
+// Skip structural JSON Schema keys that we handle separately
+const SKIP_KEYS = new Set([
+	"type",
+	"properties",
+	"items",
+	"required",
+	"description",
+	"default",
+	"enum",
+	"oneOf",
+	"anyOf",
+	"allOf",
+	"title",
+	"additionalProperties",
+]);
+
+// Skip internal JSON Schema keywords ($-prefixed) and vendor extensions (x-prefixed)
+const shouldSkipKey = (key: string) =>
+	SKIP_KEYS.has(key) || key.startsWith("$") || key.startsWith("x-");
 
 function collectRows(
 	nodes: SchemaNode[] | undefined,
@@ -183,30 +202,6 @@ function collectRows(
 			);
 
 		// Collect all metadata from fragment and validations
-		// Skip structural keys that we handle separately
-		const skipKeys = new Set([
-			"type",
-			"properties",
-			"items",
-			"required",
-			"description",
-			"default",
-			"enum",
-			"oneOf",
-			"anyOf",
-			"allOf",
-			"$ref",
-			"$id",
-			"$schema",
-			"$comment",
-			"title",
-			"additionalProperties",
-		]);
-
-		// Check if a key should be skipped (includes $-prefixed and x-prefixed keys)
-		const shouldSkipKey = (key: string) =>
-			skipKeys.has(key) || key.startsWith("$") || key.startsWith("x-");
-
 		const metadata: Record<string, string | number | boolean> = {};
 
 		// Get metadata from fragment (format, etc.)

@@ -1,5 +1,6 @@
 import { useState } from "react";
-import SchemaTree, { type SchemaRowData } from "./SchemaTree.tsx";
+import SchemaTree from "./SchemaTree.tsx";
+import type { SchemaRowData } from "./types";
 
 interface SchemaVariant {
 	title: string;

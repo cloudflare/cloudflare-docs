@@ -12,12 +12,6 @@ import type { SchemaRowData } from "./types";
  * - sessionStorage persistence for collapse state
  */
 
-export type { SchemaRowData };
-
-// Type indicator symbols
-const ARRAY_BRACKETS = "[]";
-const OBJECT_BRACES = "{}";
-
 interface SchemaTreeProps {
 	rows: SchemaRowData[];
 	schemaId: string;
@@ -184,12 +178,12 @@ function SchemaNode({
 							</span>
 							{row.isArray && (
 								<span className="font-mono text-gray-400 dark:text-gray-500">
-									{ARRAY_BRACKETS}
+									[]
 								</span>
 							)}
 							{row.isObject && !row.isOneOf && (
 								<span className="font-mono text-gray-400 dark:text-gray-500">
-									{OBJECT_BRACES}
+									{"{}"}
 								</span>
 							)}
 						</div>
@@ -274,14 +268,10 @@ function SchemaNode({
 						{highlightMatch(row.name, searchTerm)}
 					</span>
 					{row.isArray && (
-						<span className="text-gray-400 dark:text-gray-500">
-							{ARRAY_BRACKETS}
-						</span>
+						<span className="text-gray-400 dark:text-gray-500">[]</span>
 					)}
 					{row.isObject && !row.isOneOf && (
-						<span className="text-gray-400 dark:text-gray-500">
-							{OBJECT_BRACES}
-						</span>
+						<span className="text-gray-400 dark:text-gray-500">{"{}"}</span>
 					)}
 				</div>
 
