@@ -274,11 +274,11 @@ jobs:
         id: deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
         run: |
-          SHORT_SHA="${{ github.event.pull_request.head.sha }}"
-          SHORT_SHA="${SHORT_SHA:0:8}"
-          BRANCH="${{ github.event.pull_request.head.ref }}"
-          BRANCH_SLUG=$(echo "$BRANCH" | iconv -c -t ascii//TRANSLIT | sed -E 's/[~^]+//g' | sed -E 's/[^a-zA-Z0-9]+/-/g' | sed -E 's/^-+|-+$//g' | tr A-Z a-z)
+          SHORT_SHA="${PR_HEAD_SHA:0:8}"
+          BRANCH_SLUG=$(echo "$PR_HEAD_REF" | iconv -c -t ascii//TRANSLIT | sed -E 's/[~^]+//g' | sed -E 's/[^a-zA-Z0-9]+/-/g' | sed -E 's/^-+|-+$//g' | tr A-Z a-z)
 
           echo "branch_slug=$BRANCH_SLUG" >> "$GITHUB_OUTPUT"
 
