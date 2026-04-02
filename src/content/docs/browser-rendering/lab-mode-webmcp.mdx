@@ -6,20 +6,16 @@ sidebar:
   badge: Beta
 ---
 
-import { Render, InlineBadge } from "~/components";
+import { Render } from "~/components";
 
+Lab Mode gives you early access to experimental Chrome features.
+It runs Chrome beta versions with cutting-edge capabilities, including [WebMCP](https://developer.chrome.com/blog/webmcp-epp) (Web Model Context Protocol) — a browser API that lets websites expose structured tools for AI agents to discover and execute directly. Instead of slow screenshot-analyze-click loops, agents can call website functions like `searchFlights()` or `bookTicket()` with typed parameters, making browser automation faster, more reliable, and less fragile.
 
-## Why Lab Mode?
+Lab sessions run in a dedicated pool, so you can experiment without affecting stability.
 
-Lab mode gives you early access to experimental Chrome features before they reach our stable browser pools. It runs Chrome 146 beta with cutting-edge capabilities like WebMCP, allowing you to test and prepare your applications for upcoming browser features. Lab sessions run in a dedicated pool isolated from production workloads, so you can experiment without affecting stability.
+## Getting started
 
-## What is WebMCP?
-
-WebMCP (Web Model Context Protocol) is a new browser API that lets websites expose structured tools—functions with schemas and descriptions that AI agents can discover and execute directly. Instead of slow screenshot-analyze-click loops, agents can call website functions like `searchFlights()` or `bookTicket()` with typed parameters. This makes browser automation faster, more reliable, and less fragile. Learn more in the [Chrome blog post](https://developer.chrome.com/blog/webmcp-epp).
-
-## Try It
-
-### You as the agent
+### Manual testing with DevTools
 
 #### 1. Start a Lab Session and open Devtools
 
