@@ -21,6 +21,8 @@ import { type Dictionary } from "@stoplight/types";
 import { resolveInlineRef } from "@stoplight/json";
 import SchemaTreeView from "./SchemaTree.tsx";
 import SchemaVariantSelector from "./SchemaVariantSelector.tsx";
+import type { SchemaRowData } from "./types";
+export type { SchemaRowData };
 
 interface Props {
 	schema: Record<string, unknown>;
@@ -47,9 +49,7 @@ const isFlat = isFlatSchema(schema);
 
 // Convert flat schema keys into rows for display
 // e.g. { type: "string", format: "binary" } => rows with name=type, type=string
-function flatSchemaToRows(
-	schemaObj: Record<string, unknown>,
-): import("./SchemaDisplay.astro").SchemaRowData[] {
+function flatSchemaToRows(schemaObj: Record<string, unknown>): SchemaRowData[] {
 	const keys = Object.keys(schemaObj);
 	return keys.map((key, i) => ({
 		id: key,
@@ -99,29 +99,6 @@ const defaultResolver: SchemaTreeRefDereferenceFn =
 		if (resolved) return resolved;
 		throw new ReferenceError(`Could not resolve '${pointer}'`);
 	};
-
-// Schema row data structure
-export interface SchemaRowData {
-	id: string;
-	name: string;
-	type: string;
-	isArray: boolean;
-	isObject: boolean;
-	isOneOf: boolean;
-	isOneOfChild: boolean; // This item is a child of a oneOf/anyOf
-	isFirstOneOfChild: boolean; // First child (no OR divider before)
-	isLastOneOfChild: boolean; // Last child (no OR divider after, so show border)
-	required: boolean;
-	defaultValue?: string;
-	description?: string;
-	enumValues?: string[];
-	// Generic metadata - all other schema properties (format, min, max, minItems, maxItems, etc.)
-	metadata?: Record<string, string | number | boolean>;
-	depth: number;
-	isLast: boolean;
-	ancestorIsLast: boolean[];
-	children?: SchemaRowData[];
-}
 
 function collectRows(
 	nodes: SchemaNode[] | undefined,
@@ -219,9 +196,16 @@ function collectRows(
 			"anyOf",
 			"allOf",
 			"$ref",
+			"$id",
+			"$schema",
+			"$comment",
 			"title",
 			"additionalProperties",
 		]);
+
+		// Check if a key should be skipped (includes $-prefixed and x-prefixed keys)
+		const shouldSkipKey = (key: string) =>
+			skipKeys.has(key) || key.startsWith("$") || key.startsWith("x-");
 
 		const metadata: Record<string, string | number | boolean> = {};
 
@@ -230,7 +214,7 @@ function collectRows(
 		if (fragment) {
 			for (const [key, value] of Object.entries(fragment)) {
 				if (
-					!skipKeys.has(key) &&
+					!shouldSkipKey(key) &&
 					(typeof value === "string" ||
 						typeof value === "number" ||
 						typeof value === "boolean")
@@ -244,7 +228,7 @@ function collectRows(
 		if (reg.validations) {
 			for (const [key, value] of Object.entries(reg.validations)) {
 				if (
-					!skipKeys.has(key) &&
+					!shouldSkipKey(key) &&
 					key !== "enum" &&
 					(typeof value === "string" ||
 						typeof value === "number" ||

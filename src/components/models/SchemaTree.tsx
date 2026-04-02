@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
+import type { SchemaRowData } from "./types";
 
 /**
  * SchemaTree - Interactive flex-based view for schema parameters
@@ -11,26 +12,11 @@ import { useState, useEffect, useCallback, useMemo } from "react";
  * - sessionStorage persistence for collapse state
  */
 
-export interface SchemaRowData {
-	id: string;
-	name: string;
-	type: string;
-	isArray: boolean;
-	isObject: boolean;
-	isOneOf: boolean;
-	isOneOfChild: boolean;
-	isFirstOneOfChild: boolean;
-	isLastOneOfChild: boolean;
-	required: boolean;
-	defaultValue?: string;
-	description?: string;
-	enumValues?: string[];
-	metadata?: Record<string, string | number | boolean>;
-	depth: number;
-	isLast: boolean;
-	ancestorIsLast: boolean[];
-	children?: SchemaRowData[];
-}
+export type { SchemaRowData };
+
+// Type indicator symbols
+const ARRAY_BRACKETS = "[]";
+const OBJECT_BRACES = "{}";
 
 interface SchemaTreeProps {
 	rows: SchemaRowData[];
@@ -198,12 +184,12 @@ function SchemaNode({
 							</span>
 							{row.isArray && (
 								<span className="font-mono text-gray-400 dark:text-gray-500">
-									[]
+									{ARRAY_BRACKETS}
 								</span>
 							)}
 							{row.isObject && !row.isOneOf && (
 								<span className="font-mono text-gray-400 dark:text-gray-500">
-									{"{}"}
+									{OBJECT_BRACES}
 								</span>
 							)}
 						</div>
@@ -214,11 +200,14 @@ function SchemaNode({
 							{row.metadata &&
 								Object.entries(row.metadata).map(([key, value]) => (
 									<span key={key}>
-										{key}: {String(value)}
+										<span className="font-medium">{key}:</span> {String(value)}
 									</span>
 								))}
 							{row.enumValues && row.enumValues.length > 0 && (
-								<span>enum: {row.enumValues.join(", ")}</span>
+								<span>
+									<span className="font-medium">enum:</span>{" "}
+									{row.enumValues.join(", ")}
+								</span>
 							)}
 						</div>
 
@@ -285,10 +274,14 @@ function SchemaNode({
 						{highlightMatch(row.name, searchTerm)}
 					</span>
 					{row.isArray && (
-						<span className="text-gray-400 dark:text-gray-500">[]</span>
+						<span className="text-gray-400 dark:text-gray-500">
+							{ARRAY_BRACKETS}
+						</span>
 					)}
 					{row.isObject && !row.isOneOf && (
-						<span className="text-gray-400 dark:text-gray-500">{"{}"}</span>
+						<span className="text-gray-400 dark:text-gray-500">
+							{OBJECT_BRACES}
+						</span>
 					)}
 				</div>
 
