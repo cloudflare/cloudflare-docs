@@ -6,7 +6,6 @@ on:
       - production
 
 env:
-  INTEGRATION_R2_BUCKET: astro-partial-builds-integration
   BUILD_CACHE_R2_BUCKET: cloudflare-docs-production-build-cache
 
 concurrency:
@@ -43,20 +42,6 @@ jobs:
       - name: Install node_modules (cache miss)
         run: npm ci
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
-
-      # -- Download astro-incremental-builds integration from R2 --
-      - name: Download incremental builds integration from R2
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.ASTRO_PARTIAL_BUILDS_INTEGRATION_R2_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.ASTRO_PARTIAL_BUILDS_INTEGRATION_R2_SECRET_KEY }}
-          AWS_DEFAULT_REGION: auto
-        run: |
-          aws s3 cp "s3://${{ env.INTEGRATION_R2_BUCKET }}/latest.tgz" /tmp/astro-incremental-builds.tgz \
-            --endpoint-url ${{ secrets.ASTRO_PARTIAL_BUILDS_INTEGRATION_R2_ENDPOINT }} \
-            || { echo "::error::Failed to download astro-incremental-builds tarball from R2"; exit 1; }
-
-      - name: Install incremental builds integration
-        run: npm install /tmp/astro-incremental-builds.tgz --no-save
 
       # -- Restore previous build from R2 --
       - name: Download previous build from R2
