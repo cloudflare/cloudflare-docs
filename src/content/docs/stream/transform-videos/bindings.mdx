@@ -206,7 +206,7 @@ export default {
 		// const video = await fetch('https://example.com/video.mp4');
 
 		// Extract audio using the media transformations binding:
-		const audo = await env.MEDIA.input(video.body)
+		const audio = await env.MEDIA.input(video.body)
 			.transform()
 			.output({
 				mode: 'audio',
