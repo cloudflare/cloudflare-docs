@@ -9,7 +9,7 @@ import { DashButton } from "~/components";
 
 D1 exposes analytics to track billing metrics (rows read, rows written, and total storage) across all databases in your account.
 
-The metrics displayed in the [Cloudflare dashboard](https://dash.cloudflare.com/) are sourced from Cloudflare's [GraphQL Analytics API](/analytics/graphql-api/). You can access the metrics [programmatically](/d1/observability/metrics-analytics/#query-via-the-graphql-api) via GraphQL or HTTP client.
+The metrics displayed in the [Cloudflare dashboard](https://dash.cloudflare.com/) are sourced from Cloudflare's [GraphQL Analytics API](/analytics/graphql-api/). You can access the metrics [programmatically](/d1/observability/metrics-analytics/#query-via-the-graphql-api) by using a GraphQL or HTTP client.
 
 ## View metrics in the dashboard
 
@@ -20,7 +20,7 @@ The Billable Usage Dashboard gives Pay-as-you-go (PayGo) customers daily visibil
 The Billable Usage Dashboard shows usage-based overage charges only. Fixed-fee plan subscriptions (for example, a Pro plan) are not included.
 
 :::note
-The Billable Usage Dashboard is available to Pay-as-you-go (PayGo) accounts only. Enterprise contract accounts are not currently supported.
+The Billable Usage Dashboard is available to PayGo accounts only. Enterprise contract accounts are not currently supported.
 
 To access the dashboard, you must have the Billing read permission on your account.
 :::
@@ -57,7 +57,7 @@ Below the chart, a sortable table breaks down each charge period by product and 
 
 #### Date range
 
-By default, the dashboard shows data for your current billing period. Use the date picker to navigate to a previous billing period.
+By default, the dashboard shows data for your current billing period. Use the date picker to view a previous billing period.
 
 #### How data aligns with your invoice
 
@@ -68,12 +68,12 @@ The dashboard reads from the same data source used to generate your monthly invo
 - The cumulative cost shown at the end of a completed billing period will match the usage overage charges on the corresponding invoice.
 
 :::note
-Previous versions of the Billable Usage Dashboard were based on GraphQL queries that used a different data source. Those figures were approximate and aligned to the calendar month. The current dashboard corrects both of these discrepancies.
+Previous versions of the Billable Usage Dashboard used GraphQL queries from a different data source. Those figures were approximate and aligned to the calendar month. The current dashboard corrects both of these discrepancies.
 :::
 
 #### Covered products
 
-The dashboard shows usage-based charges for all usage-based products active on your account. Which products appear depends on your subscriptions. Examples of usage-based products include Workers, R2, Stream, Images, Argo, and Load Balancing.
+The dashboard shows charges for all usage-based products active on your account. The products that appear depend on your subscriptions. Examples of usage-based products include Workers, R2, Stream, Images, Argo, and Load Balancing.
 
 :::note
 There may be up to a 24-hour delay before the previous day's usage appears.
@@ -108,8 +108,8 @@ To set up notifications:
 
 ## Billing Notifications
 
-Usage-based billing notifications are available within the [Cloudflare dashboard](https://dash.cloudflare.com) for users looking to monitor their total account usage.
+Usage-based billing notifications are available in the [Cloudflare dashboard](https://dash.cloudflare.com) to help you monitor your total account usage.
 
-Notifications on the following metrics are available:
+You can set up notifications for the following metrics:
 - Rows Read
 - Rows Written
