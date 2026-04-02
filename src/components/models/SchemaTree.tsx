@@ -25,8 +25,7 @@ export interface SchemaRowData {
 	defaultValue?: string;
 	description?: string;
 	enumValues?: string[];
-	minValue?: number;
-	maxValue?: number;
+	metadata?: Record<string, string | number | boolean>;
 	depth: number;
 	isLast: boolean;
 	ancestorIsLast: boolean[];
@@ -209,9 +208,18 @@ function SchemaNode({
 							)}
 						</div>
 
-						{/* Line 2: Type */}
-						<div className="mt-0.5 pl-5 text-xs text-gray-500 dark:text-gray-400">
-							{row.type}
+						{/* Line 2: Type + metadata */}
+						<div className="mt-0.5 flex flex-wrap items-center gap-2 pl-5 text-xs text-gray-500 dark:text-gray-400">
+							<span>{row.type}</span>
+							{row.metadata &&
+								Object.entries(row.metadata).map(([key, value]) => (
+									<span key={key}>
+										{key}: {String(value)}
+									</span>
+								))}
+							{row.enumValues && row.enumValues.length > 0 && (
+								<span>enum: {row.enumValues.join(", ")}</span>
+							)}
 						</div>
 
 						{/* Line 3: Description if present */}
@@ -287,7 +295,7 @@ function SchemaNode({
 				{/* Line 2: Metadata and description */}
 				<div className="mt-1 flex flex-wrap items-baseline gap-x-3 gap-y-1 pl-5 text-sm">
 					{/* Type and badges */}
-					<span className="flex flex-wrap items-center gap-1.5">
+					<span className="flex flex-wrap items-center gap-3">
 						<code className="text-xs text-gray-500 dark:text-gray-400">
 							{row.type}
 						</code>
@@ -298,17 +306,22 @@ function SchemaNode({
 						)}
 						{row.defaultValue !== undefined && (
 							<span className="text-xs text-gray-400">
-								default:{" "}
-								<code className="text-gray-500 dark:text-gray-400">
-									{row.defaultValue}
-								</code>
+								<span className="font-medium">default:</span> {row.defaultValue}
 							</span>
 						)}
-						{row.minValue !== undefined && (
-							<span className="text-xs text-gray-400">min: {row.minValue}</span>
-						)}
-						{row.maxValue !== undefined && (
-							<span className="text-xs text-gray-400">max: {row.maxValue}</span>
+						{/* Render all metadata */}
+						{row.metadata &&
+							Object.entries(row.metadata).map(([key, value]) => (
+								<span key={key} className="text-xs text-gray-400">
+									<span className="font-medium">{key}:</span> {String(value)}
+								</span>
+							))}
+						{/* Enum values */}
+						{row.enumValues && row.enumValues.length > 0 && (
+							<span className="text-xs text-gray-400">
+								<span className="font-medium">enum:</span>{" "}
+								{row.enumValues.join(", ")}
+							</span>
 						)}
 					</span>
 
@@ -316,13 +329,6 @@ function SchemaNode({
 					{row.description && (
 						<span className="text-gray-600 dark:text-gray-300">
 							{highlightMatch(row.description, searchTerm)}
-						</span>
-					)}
-
-					{/* Enum values */}
-					{row.enumValues && row.enumValues.length > 0 && (
-						<span className="basis-full text-xs text-gray-500 dark:text-gray-400">
-							Allowed: {row.enumValues.join(", ")}
 						</span>
 					)}
 				</div>

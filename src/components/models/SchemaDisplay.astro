@@ -65,8 +65,7 @@ function flatSchemaToRows(
 		defaultValue: undefined,
 		description: undefined,
 		enumValues: undefined,
-		minValue: undefined,
-		maxValue: undefined,
+		metadata: undefined,
 		depth: 0,
 		isLast: i === keys.length - 1,
 		ancestorIsLast: [],
@@ -116,8 +115,8 @@ export interface SchemaRowData {
 	defaultValue?: string;
 	description?: string;
 	enumValues?: string[];
-	minValue?: number;
-	maxValue?: number;
+	// Generic metadata - all other schema properties (format, min, max, minItems, maxItems, etc.)
+	metadata?: Record<string, string | number | boolean>;
 	depth: number;
 	isLast: boolean;
 	ancestorIsLast: boolean[];
@@ -199,14 +198,71 @@ function collectRows(
 		const description =
 			(reg.annotations?.description as string | undefined) ??
 			nullableChildDescription;
-		const enumValues = (reg.validations?.enum as unknown[])?.map(String);
+		// Check both validations and fragment for enum (different schema parsers put it in different places)
+		const enumValues =
+			((reg.validations?.enum as unknown[]) ??
+				((reg.fragment as Record<string, unknown>)?.enum as unknown[]))?.map(
+				String,
+			);
 
-		const minValue =
-			(reg.validations?.minimum as number) ??
-			(reg.validations?.minLength as number);
-		const maxValue =
-			(reg.validations?.maximum as number) ??
-			(reg.validations?.maxLength as number);
+		// Collect all metadata from fragment and validations
+		// Skip structural keys that we handle separately
+		const skipKeys = new Set([
+			"type",
+			"properties",
+			"items",
+			"required",
+			"description",
+			"default",
+			"enum",
+			"oneOf",
+			"anyOf",
+			"allOf",
+			"$ref",
+			"title",
+			"additionalProperties",
+		]);
+
+		const metadata: Record<string, string | number | boolean> = {};
+
+		// Get metadata from fragment (format, etc.)
+		const fragment = reg.fragment as Record<string, unknown>;
+		if (fragment) {
+			for (const [key, value] of Object.entries(fragment)) {
+				if (
+					!skipKeys.has(key) &&
+					(typeof value === "string" ||
+						typeof value === "number" ||
+						typeof value === "boolean")
+				) {
+					metadata[key] = value;
+				}
+			}
+		}
+
+		// Get metadata from validations (minimum, maximum, minLength, maxLength, minItems, maxItems, etc.)
+		if (reg.validations) {
+			for (const [key, value] of Object.entries(reg.validations)) {
+				if (
+					!skipKeys.has(key) &&
+					key !== "enum" &&
+					(typeof value === "string" ||
+						typeof value === "number" ||
+						typeof value === "boolean")
+				) {
+					metadata[key] = value;
+				}
+			}
+		}
+
+		// For arrays, also get format from items
+		if (isArray && reg.children?.length === 1) {
+			const itemsNode = reg.children[0] as RegularNode;
+			const itemsFragment = itemsNode.fragment as Record<string, unknown>;
+			if (itemsFragment?.format && typeof itemsFragment.format === "string") {
+				metadata["format"] = itemsFragment.format;
+			}
+		}
 
 		// Collect children recursively
 		// For arrays, skip the "items" intermediate node and lift its children
@@ -309,8 +365,7 @@ function collectRows(
 			defaultValue,
 			description,
 			enumValues,
-			minValue,
-			maxValue,
+			metadata: Object.keys(metadata).length > 0 ? metadata : undefined,
 			depth,
 			isLast,
 			ancestorIsLast,
