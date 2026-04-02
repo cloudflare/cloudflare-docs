@@ -119,20 +119,41 @@ export default defineConfig({
 	experimental: {
 		contentIntellisense: true,
 	},
-	incrementalBuild: {
-		pageCollections: ["docs"],
-		partialCollections: ["partials"],
-		partialResolver: (name: string, props: any) => {
-			if (name === "Render" && props.file && props.product) {
-				return `src/content/partials/${props.product}/${props.file}.mdx`;
-			}
-			return null;
-		},
-	},
 	server: {
 		port: 1111,
 	},
 	integrations: [
+		...(process.env.INCREMENTAL_BUILD
+			? await (async () => {
+					try {
+						const { default: incrementalBuilds } = await import(
+							"astro-incremental-builds"
+						);
+						return [
+							incrementalBuilds({
+								previousDist:
+									process.env.PREVIOUS_DIST ?? ".previous-build/dist",
+								pageCollections: ["docs"],
+								partialCollections: ["partials"],
+								partialResolver: (
+									name: string,
+									props: Record<string, string>,
+								) => {
+									if (name === "Render" && props.file && props.product) {
+										return `src/content/partials/${props.product}/${props.file}.mdx`;
+									}
+									return null;
+								},
+							}),
+						];
+					} catch {
+						console.warn(
+							"astro-incremental-builds not installed, skipping incremental build.",
+						);
+						return [];
+					}
+				})()
+			: []),
 		starlight({
 			title: "Cloudflare Docs",
 			logo: {

@@ -28,7 +28,7 @@ jobs:
           node-version: 24.x
           cache: npm
 
-      # -- Install docs dependencies (gets regular astro from npm) --
+      # -- Install docs dependencies --
       - name: Restore node_modules (cache hit)
         id: node-modules-cache
         uses: actions/cache@v5
@@ -40,18 +40,19 @@ jobs:
         run: npm ci
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
-      # -- Download pre-built ced-astro fork from R2 --
-      - name: Download ced-astro tarball from R2
+      # -- Download astro-incremental-builds integration from R2 --
+      - name: Download incremental builds integration from R2
         env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CED_ASTRO_R2_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: 2f3dc21d188ba781322b520bbde5fb5a
+          AWS_ACCESS_KEY_ID: ${{ secrets.ASTRO_PARTIAL_BUILDS_INTEGRATION_R2_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.ASTRO_PARTIAL_BUILDS_INTEGRATION_R2_SECRET_KEY }}
+          AWS_DEFAULT_REGION: auto
         run: |
-          npx wrangler r2 object get ced-astro/builds/latest.tgz --file /tmp/astro.tgz --remote --config /dev/null \
-            || { echo "::error::Failed to download ced-astro tarball from R2. Has the GitLab CI pipeline run?"; exit 1; }
+          aws s3 cp "s3://astro-incremental-builds/latest.tgz" /tmp/astro-incremental-builds.tgz \
+            --endpoint-url ${{ secrets.ASTRO_PARTIAL_BUILDS_INTEGRATION_R2_ENDPOINT }} \
+            || { echo "::error::Failed to download astro-incremental-builds tarball from R2"; exit 1; }
 
-      # -- Override astro with the fork --
-      - name: Install ced-astro over regular astro
-        run: npm install /tmp/astro.tgz --no-save
+      - name: Install incremental builds integration
+        run: npm install /tmp/astro-incremental-builds.tgz --no-save
 
       # -- Restore previous build from R2 --
       - name: Download previous build from R2
@@ -62,7 +63,7 @@ jobs:
         run: |
           mkdir -p .previous-build
           aws s3 cp "s3://cloudflare-docs-production-build-cache/latest.tar.gz" /tmp/previous-build.tar.gz \
-            --endpoint-url https://b54f07a6c269ecca2fa60f1ae4920c99.r2.cloudflarestorage.com || true
+            --endpoint-url ${{ secrets.BUILD_CACHE_R2_ENDPOINT }} || true
           if [ -f /tmp/previous-build.tar.gz ]; then
             tar -xzf /tmp/previous-build.tar.gz -C .previous-build
           fi
@@ -73,25 +74,25 @@ jobs:
         with:
           path: |
             node_modules/.astro/assets
-          key: static
+          key: astro-assets-${{ hashFiles('src/assets/**') }}
+          restore-keys: |
+            astro-assets-
 
       - name: Build
-        run: |
-          export NODE_OPTIONS='--max-old-space-size=8192'
-          npx astro build --previous-dist .previous-build/dist
+        run: INCREMENTAL_BUILD=1 npm run build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # -- Upload build to R2 for future incremental runs --
       - name: Upload build cache to R2
-        if: always() && hashFiles('dist/index.html') != ''
+        if: success() && hashFiles('dist/index.html') != ''
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.BUILD_CACHE_R2_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.BUILD_CACHE_R2_SECRET_KEY }}
           AWS_DEFAULT_REGION: auto
         run: |
           tar -czf /tmp/build-cache.tar.gz dist/ $([ -d dist-meta ] && echo "dist-meta/")
-          aws s3 cp /tmp/build-cache.tar.gz "s3://cloudflare-docs-production-build-cache/latest.tar.gz" --endpoint-url https://b54f07a6c269ecca2fa60f1ae4920c99.r2.cloudflarestorage.com
+          aws s3 cp /tmp/build-cache.tar.gz "s3://cloudflare-docs-production-build-cache/latest.tar.gz" --endpoint-url ${{ secrets.BUILD_CACHE_R2_ENDPOINT }}
 
       # -- Deploy preview --
       - name: Deploy to Cloudflare Workers

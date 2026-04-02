@@ -1,6 +1,7 @@
 # build output
 dist/
 dist-meta/
+.previous-build/
 distmd/
 distllms/
 

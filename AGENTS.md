@@ -366,6 +366,39 @@ New web components in this codebase should use the `cfdocs-` prefix for custom e
 
 Existing components (`warp-download`, `stream-player`, `rule-id`, `check-box`, `r2-local-uploads-diagram`, `animated-workflow-diagram`, `autoconfig-diagram`) are exempt from the `cfdocs-` prefix requirement and do not need to be renamed.
 
+## Incremental / partial builds
+
+This site supports incremental builds via the `astro-incremental-builds` Astro integration. When enabled, only pages whose content has changed since the previous build are re-rendered; unchanged pages are copied from the cached previous build output.
+
+### Related repositories
+
+- **Integration**: `astro-partial-builds-integration` — the `astro-incremental-builds` package (Phases 1+2 as a stock Astro integration). The tarball is stored in R2 and installed in CI via the incremental build preview workflow.
+
+### How it works
+
+1. `computeDirtyPathnames()` diffs the current data store against the previous build's cached data store to find changed/new/deleted content entries
+2. A `partialResolver` callback traces `<Render>` component usage to build a partial→page dependency map, so changes to shared partials correctly mark all consuming pages as dirty
+3. The integration wraps Astro's `setPrerenderer()` to filter `getStaticPaths()` to only dirty pathnames
+4. After the build, `copyCleanPages()` copies unchanged HTML from the previous `dist/` into the new output
+5. `persistBuildMetadata()` writes `dist-meta/` (data store, component manifest, dep map) for the next run
+
+### Local testing workflow
+
+```bash
+# 1. Full build (creates dist/ + dist-meta/)
+npm run build
+
+# 2. Cache it as the baseline
+npm run build:cache
+
+# 3. Make a content change (edit an MDX file)
+
+# 4. Run incremental build
+npm run build:incremental
+```
+
+The `build:incremental` script sets `INCREMENTAL_BUILD=1`, which activates the integration in `astro.config.ts`. The integration reads its `previousDist` from the config (defaults to `.previous-build/dist`).
+
 ## Commit conventions
 
 - Format: `[Product] description` or `type: description`
