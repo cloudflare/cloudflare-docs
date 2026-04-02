@@ -10,7 +10,7 @@ entries:
 
       All commands also accept `--port` to target a specific `wrangler dev` session (defaults to `8787`).
 
-      More information available in the [changelog](/changelog/2026-03-31-wrangler-workflows-local/).
+      More information available in the [changelog](/changelog/post/2026-04-01-wrangler-workflows-local/).
   - publish_date: "2026-03-26"
     title: "JavaScript Workflows steps can now return streamed output"
     description: |-
