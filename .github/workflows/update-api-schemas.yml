@@ -22,6 +22,13 @@ jobs:
           LATEST_COMMIT=$(curl -s -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/cloudflare/api-schemas/commits/main | \
             jq -r '.sha')
+
+          # Validate that we got a valid git SHA (40 hex characters)
+          if ! [[ "$LATEST_COMMIT" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "Error: Invalid commit SHA received from API: '$LATEST_COMMIT'"
+            exit 1
+          fi
+
           echo "latest_commit=$LATEST_COMMIT" >> $GITHUB_OUTPUT
 
       - name: Check current commit reference
