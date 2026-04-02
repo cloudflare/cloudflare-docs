@@ -68,7 +68,28 @@ jobs:
             astro-assets-
 
       - name: Build
-        run: INCREMENTAL_BUILD=1 npm run build
+        id: build
+        run: |
+          BUILD_START=$(date +%s)
+          INCREMENTAL_BUILD=1 npm run build 2>&1 | tee /tmp/build.log
+          BUILD_END=$(date +%s)
+          BUILD_DURATION=$((BUILD_END - BUILD_START))
+          BUILD_MIN=$((BUILD_DURATION / 60))
+          BUILD_SEC=$((BUILD_DURATION % 60))
+          echo "duration=${BUILD_MIN}m ${BUILD_SEC}s" >> "$GITHUB_OUTPUT"
+
+          # Detect build type from integration log output
+          if grep -q "Full rebuild required" /tmp/build.log; then
+            echo "build_type=full" >> "$GITHUB_OUTPUT"
+          elif grep -q "Incremental build:" /tmp/build.log; then
+            PAGES_REBUILT=$(grep "Incremental build:" /tmp/build.log | grep -oP '\d+ page' | grep -oP '\d+')
+            PAGES_COPIED=$(grep "Copied" /tmp/build.log | grep -oP '\d+ clean' | grep -oP '\d+')
+            echo "build_type=incremental" >> "$GITHUB_OUTPUT"
+            echo "pages_rebuilt=${PAGES_REBUILT:-0}" >> "$GITHUB_OUTPUT"
+            echo "pages_copied=${PAGES_COPIED:-0}" >> "$GITHUB_OUTPUT"
+          else
+            echo "build_type=full" >> "$GITHUB_OUTPUT"
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -90,14 +111,36 @@ jobs:
           SHORT_SHA="${{ steps.deploy.outputs.short_sha }}"
           PREVIEW_URL="https://incr-${SHORT_SHA}.preview.developers.cloudflare.com"
           PR_NUMBER="${{ github.event.pull_request.number }}"
+          BUILD_DURATION="${{ steps.build.outputs.duration }}"
+          BUILD_TYPE="${{ steps.build.outputs.build_type }}"
+          PAGES_REBUILT="${{ steps.build.outputs.pages_rebuilt }}"
+          PAGES_COPIED="${{ steps.build.outputs.pages_copied }}"
+
+          if [ "$BUILD_TYPE" = "incremental" ]; then
+            BUILD_INFO="Incremental — ${PAGES_REBUILT} page(s) rebuilt, ${PAGES_COPIED} copied from cache"
+            BUILD_EMOJI="⚡"
+          else
+            BUILD_INFO="Full rebuild (no previous build cache or source files changed)"
+            BUILD_EMOJI="🔨"
+          fi
+
+          BODY=$(cat <<EOF
+          ### ${BUILD_EMOJI} Incremental Build Preview
+
+          | | |
+          |---|---|
+          | **Preview** | ${PREVIEW_URL} |
+          | **Build type** | ${BUILD_INFO} |
+          | **Build time** | ${BUILD_DURATION} |
+          | **Commit** | \`${SHORT_SHA}\` |
+          EOF
+          )
 
           # Check for existing incremental build comment
           EXISTING=$(gh api \
             "repos/${{ github.repository }}/issues/${PR_NUMBER}/comments" \
             --jq '.[] | select(.user.login == "github-actions[bot]" and (.body | contains("Incremental Build Preview"))) | .id' \
             | head -1)
-
-          BODY="**Incremental Build Preview:** ${PREVIEW_URL}"
 
           if [ -n "$EXISTING" ]; then
             gh api \
