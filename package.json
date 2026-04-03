@@ -140,9 +140,16 @@
 		"vitest": "3.2.4",
 		"wrangler": "4.79.0"
 	},
-	"engines": {
-		"npm": ">=11.9.0",
-		"node": "^24.14.0"
-	},
-	"packageManager": "npm@11.9.0+sha512.BBZoU926FCypj4b7V7ElinxsWcy4Kss88UG3ejFYmKyq7Uc5XnT34Me2nEhgCOaL5qY4HvGu5aI92C4OYd7NaA=="
+	"devEngines": {
+		"runtime": {
+			"name": "node",
+			"version": ">=24.0.0",
+			"onFail": "error"
+		},
+		"packageManager": {
+			"name": "npm",
+			"version": ">=11.0.0",
+			"onFail": "error"
+		}
+	}
 }

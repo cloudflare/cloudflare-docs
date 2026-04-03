@@ -22,6 +22,7 @@ jobs:
           fetch-depth: 1
 
       - uses: actions/setup-node@v6
+        id: setup-node
         with:
           node-version: 24.x
           cache: npm
@@ -57,7 +58,7 @@ jobs:
         uses: actions/cache@v5
         with:
           path: node_modules
-          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('package.json') }}
+          key: node-modules-${{ runner.os }}-node-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('package.json') }}
 
       - name: Install node_modules (cache miss)
         run: npm ci
@@ -102,6 +103,7 @@ jobs:
           fetch-depth: 1
 
       - uses: actions/setup-node@v6
+        id: setup-node
         with:
           node-version: 24.x
           cache: npm
@@ -111,7 +113,7 @@ jobs:
         uses: actions/cache@v5
         with:
           path: node_modules
-          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('package.json') }}
+          key: node-modules-${{ runner.os }}-node-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('package.json') }}
 
       - name: Install node_modules (cache miss)
         run: npm ci
@@ -185,6 +187,7 @@ jobs:
           fetch-depth: 1
 
       - uses: actions/setup-node@v6
+        id: setup-node
         with:
           node-version: 24.x
           cache: npm
@@ -194,7 +197,7 @@ jobs:
         uses: actions/cache@v5
         with:
           path: node_modules
-          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('package.json') }}
+          key: node-modules-${{ runner.os }}-node-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('package.json') }}
 
       - name: Install node_modules (cache miss)
         run: npm ci
@@ -228,6 +231,7 @@ jobs:
           fetch-depth: 1
 
       - uses: actions/setup-node@v6
+        id: setup-node
         with:
           node-version: 24.x
           cache: npm
@@ -237,7 +241,7 @@ jobs:
         uses: actions/cache@v5
         with:
           path: node_modules
-          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('package.json') }}
+          key: node-modules-${{ runner.os }}-node-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('package.json') }}
 
       - name: Install node_modules (cache miss)
         run: npm ci
@@ -263,6 +267,7 @@ jobs:
           fetch-depth: 1
 
       - uses: actions/setup-node@v6
+        id: setup-node
         with:
           node-version: 24.x
           cache: npm
@@ -272,7 +277,7 @@ jobs:
         uses: actions/cache@v5
         with:
           path: node_modules
-          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('package.json') }}
+          key: node-modules-${{ runner.os }}-node-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('package.json') }}
 
       - name: Install node_modules (cache miss)
         run: npm ci
