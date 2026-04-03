@@ -99,16 +99,16 @@ Adding Turnstile involves three steps: create a widget, add the client-side snip
 
 **1. Create a Turnstile widget**
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Go to **Turnstile**.
-3. Select **Add widget**.
-4. Enter a name for the widget and add the hostnames where it will appear.
-5. Choose a widget mode:
-   - _Managed_ — Cloudflare decides whether to show a challenge. Most users pass without interaction.
-   - _Non-interactive_ — always runs a background challenge with no user interaction.
-   - _Invisible_ — runs in the background with no visible widget.
-6. Select **Create**.
-7. Copy the **Site Key** (public) and **Secret Key** (private). You need both in the following steps.
+1. In the Cloudflare dashboard, go to the **Turnstile** page.
+2. Select **Add widget**.
+3. Fill out the required information:
+   - **Widget name**: A descriptive name for your widget.
+   - **Hostname management**: Domains where the widget will be used.
+   - **Widget mode**: Choose from Managed, Non-Interactive, or Invisible.
+4. Select **Create** to save your widget.
+5. Copy your sitekey and secret key, and store the secret key securely. You need both in the following steps.
+
+For full widget management options, refer to [Create and manage widgets using the dashboard](/turnstile/get-started/widget-management/dashboard/).
 
 **2. Add the client-side snippet**
 
@@ -323,7 +323,11 @@ Security Events displays every request that Cloudflare mitigated — blocked, ch
 </TabItem>
 </Tabs>
 
-Review the **Events summary** for an overview of mitigated requests over time. 4. Check **Events by service** to see which rules are triggering. Events are labeled by their source: Bot Fight Mode, Super Bot Fight Mode, custom rules, or rate limiting rules. 5. Scroll to **Sampled logs** to inspect individual requests. Each log entry shows the action taken, the rule that triggered, the source IP, user agent, URI path, and country.
+Review the following sections:
+
+- **Events summary**: Overview of mitigated requests over time.
+- **Events by service**: Which rules are triggering. Events are labeled by their source: Bot Fight Mode, Super Bot Fight Mode, custom rules, or rate limiting rules.
+- **Sampled logs**: Individual request details. Each log entry shows the action taken, the rule that triggered, the source IP, user agent, URI path, and country.
 
 Look for false positives — legitimate traffic that your rules incorrectly challenged or blocked. Common signs include:
 
