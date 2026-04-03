@@ -309,7 +309,19 @@ After you deploy bot protection rules, verify that they block malicious traffic 
 
 Security Events displays every request that Cloudflare mitigated — blocked, challenged, or flagged. This is where you confirm your rules are working as intended.
 
-<Render file="security-events-nav" product="waf" />
+<Tabs syncKey="dashNewNav">
+<TabItem label="New dashboard" icon="rocket">
+
+1. In the Cloudflare dashboard, go to the **Analytics** page.
+2. Select the **Events** tab.
+
+</TabItem>
+<TabItem label="Old dashboard">
+
+1. In the Cloudflare dashboard, go to **Security** > **Events**.
+
+</TabItem>
+</Tabs>
 
 Review the **Events summary** for an overview of mitigated requests over time. 4. Check **Events by service** to see which rules are triggering. Events are labeled by their source: Bot Fight Mode, Super Bot Fight Mode, custom rules, or rate limiting rules. 5. Scroll to **Sampled logs** to inspect individual requests. Each log entry shows the action taken, the rule that triggered, the source IP, user agent, URI path, and country.
 
