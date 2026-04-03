@@ -129,7 +129,7 @@ Do not enable `HttpOnly` if:
 
 The binding cookie (`CF_Binding`) is an optional cookie issued when a user successfully authenticates. The binding cookie is sent by the user's browser and tied to a specific application's `CF_Authorization` cookie. This cookie is stripped at Cloudflare's network and never forwarded to the origin server.
 
-The binding cookie protects against a stolen `CF_Authorization` cookie being used without the associated binding cookie. If a request arrives at Cloudflare's network with a valid `CF_Authorization` cookie but without the expected binding cookie, Cloudflare rejects the request.
+The `CF_Authorization` cookie cannot be used without the associated binding cookie, which prevents a stolen `CF_Authorization` cookie from being reused by an attacker. If a request arrives at Cloudflare's network with a valid `CF_Authorization` cookie but without the expected binding cookie, Cloudflare rejects the request.
 
 #### When not to use Binding Cookie
 
