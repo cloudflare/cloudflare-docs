@@ -16,6 +16,16 @@ while IFS= read -r file; do
     continue
   fi
 
+  # Only process known text files (matches .gitattributes).
+  # Skip binary files (images, fonts, etc.) to avoid corruption.
+  case "${file##*/}" in
+    __redirects|.editorconfig|.gitattributes|.prettierignore) ;;
+    *) case "$file" in
+         *.astro|*.css|*.go|*.html|*.ini|*.js|*.jsx|*.json|*.md|*.mdx|*.mjs|*.svg|*.toml|*.ts|*.tsx|*.txt|*.vue|*.xml|*.yaml|*.yml) ;;
+         *) continue ;;
+       esac ;;
+  esac
+
   # Check for carriage returns
   if grep -qU $'\r' "$file"; then
     # perl -pi works cross-platform (macOS BSD and Linux GNU)

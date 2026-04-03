@@ -65,12 +65,14 @@ package.json @cloudflare/content-engineering
 # Cloudflare One
 
 /src/content/docs/cloudflare-one/ @ranbel @Maddy-Cloudflare @codyanthony850 @cloudflare/pcx-technical-writing
+/src/content/partials/cloudflare-one/ @ranbel @Maddy-Cloudflare @codyanthony850 @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/applications/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/identity/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/access-controls/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/team-and-resources/devices/ @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/ @nikitacano @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/tunnel/ @nikitacano @ranbel @cloudflare/pcx-technical-writing
+/src/content/partials/cloudflare-one/tunnel/ @nikitacano @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/cloud-and-saas-findings/ @Maddy-Cloudflare @codyanthony850 @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/traffic-policies/ @Maddy-Cloudflare @codyanthony850@cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/remote-browser-isolation/ @codyanthony850 @cloudflare/pcx-technical-writing

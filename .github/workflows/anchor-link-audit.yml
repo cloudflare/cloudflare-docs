@@ -38,8 +38,19 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install dependencies
-        run: curl https://htmltest.wjdp.uk | bash
+      - name: Install htmltest
+        run: |
+          HTMLTEST_VERSION="0.17.0"
+          HTMLTEST_ARCHIVE="htmltest_${HTMLTEST_VERSION}_linux_amd64.tar.gz"
+          HTMLTEST_URL="https://github.com/wjdp/htmltest/releases/download/v${HTMLTEST_VERSION}/${HTMLTEST_ARCHIVE}"
+          # Checksum from https://github.com/wjdp/htmltest/releases/download/v0.17.0/htmltest_0.17.0_checksums.txt
+          HTMLTEST_CHECKSUM="775c597ee74899d6002cd2d93076f897f4ba68686bceabe2e5d72e84c57bc0fb"
+
+          curl -sL -o "${HTMLTEST_ARCHIVE}" "${HTMLTEST_URL}"
+          echo "${HTMLTEST_CHECKSUM}  ${HTMLTEST_ARCHIVE}" | sha256sum --check
+          tar -xzf "${HTMLTEST_ARCHIVE}"
+          chmod +x htmltest
+          mv htmltest ./bin/htmltest
 
       - name: Check - Broken header links
         id: header-link-check

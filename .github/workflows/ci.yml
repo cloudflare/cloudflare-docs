@@ -122,34 +122,49 @@ jobs:
         with:
           path: |
             node_modules/.astro/assets
-          key: static
+          key: astro-assets-${{ hashFiles('src/assets/**') }}
+          restore-keys: |
+            astro-assets-
 
       # The starlight-links-validator plugin runs in astro:build:done, which fires
       # AFTER all pages have been written to dist/. If link validation fails, the
       # build exits non-zero but dist/ is complete. We use continue-on-error so the
       # job succeeds (allowing deploy + post-build to run), then check the outcome below.
-      - run: npm run build
+      # We capture build output with tee so we can grep it to distinguish link-check
+      # failures from real build failures.
+      - name: Build
         id: build_step
-        name: Build
         continue-on-error: true
+        shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUN_LINK_CHECK: true
+        run: |
+          set -o pipefail
+          npm run build 2>&1 | tee /tmp/build-output.log
 
-      # Distinguish between "link check failed" (dist/ exists) and "real build failure" (no dist/).
-      # If the build produced no output, we must fail the job immediately.
+      # Distinguish between "link check failed" and "real build failure" by grepping
+      # the captured build output for the link validator's specific error message.
+      # The link validator runs in astro:build:done (after all pages are written to
+      # dist/), so its error string can only appear when the build itself completed.
+      # Any other failure — including partial builds with a non-empty dist/ — will
+      # not contain that string and will correctly fail here.
       - name: Check build result
         id: check_link_result
+        shell: bash
         run: |
-          if [ ! -d dist ] || [ -z "$(ls -A dist)" ]; then
-            echo "Build failed before producing output. Check the Build job logs for the error."
-            exit 1
+          if [ "${{ steps.build_step.outcome }}" = "success" ]; then
+            echo "failed=false" >> "$GITHUB_OUTPUT"
+            exit 0
           fi
-          if [ "${{ steps.build_step.outcome }}" = "failure" ]; then
+
+          # Build failed. Was it only the link validator?
+          if grep -q "Links validation failed" /tmp/build-output.log; then
             echo "failed=true" >> "$GITHUB_OUTPUT"
             echo "::warning::Build succeeded but link validation failed. Preview will still be deployed."
           else
-            echo "failed=false" >> "$GITHUB_OUTPUT"
+            echo "::error::Build failed for a reason other than link validation. Check the Build step logs."
+            exit 1
           fi
 
       - uses: actions/upload-artifact@v7
@@ -272,11 +287,11 @@ jobs:
         id: deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
         run: |
-          SHORT_SHA="${{ github.event.pull_request.head.sha }}"
-          SHORT_SHA="${SHORT_SHA:0:8}"
-          BRANCH="${{ github.event.pull_request.head.ref }}"
-          BRANCH_SLUG=$(echo "$BRANCH" | iconv -c -t ascii//TRANSLIT | sed -E 's/[~^]+//g' | sed -E 's/[^a-zA-Z0-9]+/-/g' | sed -E 's/^-+|-+$//g' | tr A-Z a-z)
+          SHORT_SHA="${PR_HEAD_SHA:0:8}"
+          BRANCH_SLUG=$(echo "$PR_HEAD_REF" | iconv -c -t ascii//TRANSLIT | sed -E 's/[~^]+//g' | sed -E 's/[^a-zA-Z0-9]+/-/g' | sed -E 's/^-+|-+$//g' | tr A-Z a-z)
 
           echo "branch_slug=$BRANCH_SLUG" >> "$GITHUB_OUTPUT"
 

@@ -3,6 +3,9 @@ pcx_content_type: how-to
 title: Session management
 sidebar:
   order: 2
+tags:
+- JSON web token (JWT)
+- Authentication
 ---
 
 import { GlossaryTooltip, Render } from "~/components";
@@ -89,9 +92,9 @@ Users who match a policy configured with a _Same as application session timeout_
 
 <Render file="access/self-hosted-app/ssh-sessions" product="cloudflare-one" />
 
-### WARP session duration
+### Cloudflare One Client session duration
 
-When [WARP authentication identity](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/#configure-warp-sessions-in-access) is enabled for an Access application, the WARP session duration takes precedence over all other session durations (application, policy, and global). As long as the WARP session is valid and the user is running the Cloudflare One Client, the user will not be prompted to re-authenticate with the IdP — even if the global session has expired.
+When [Device authentication identity](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/#configure-client-sessions-in-access) is enabled for an Access application, the Cloudflare One Client session duration takes precedence over all other session durations (application, policy, and global). As long as the Cloudflare One Client session is valid and the user is running the Cloudflare One Client, the user will not be prompted to re-authenticate with the IdP — even if the global session has expired.
 
 ### Order of enforcement
 
@@ -105,8 +108,8 @@ flowchart TB
 
     %% In with user traffic
     start["User goes to Access application"]
-    start--"WARP authentication enabled" -->warpsession[WARP session expired?]
-    start-- "WARP authentication disabled" --> policysession[Policy session expired?]
+    start--"Device authentication identity enabled" -->warpsession[Device client session expired?]
+    start-- "Device authentication identity disabled" --> policysession[Policy session expired?]
 
 		warpsession--"Yes"-->idp[Prompt to log in to IdP]
 		warpsession--"No"-->accessgranted[Access granted]

@@ -1,0 +1,79 @@
+---
+pcx_content_type: overview
+title: Web sites and web apps
+description: Build and deploy full-stack web applications on Cloudflare with Workers, D1, KV, R2, Durable Objects, and Queues.
+head:
+  - tag: title
+    content: Web sites and web apps · Use cases
+sidebar:
+  order: 5
+---
+
+import { CardGrid, DirectoryListing, LinkTitleCard } from "~/components";
+
+Build and deploy full-stack web applications globally with serverless compute, storage, and instant deployments. Cloudflare Workers runs your frontend and backend logic at the edge. D1 provides a serverless SQL database. KV stores key-value data globally. R2 provides S3-compatible object storage with zero egress fees. Durable Objects coordinates real-time state. Queues handles background processing.
+
+<DirectoryListing />
+
+## Architecture patterns
+
+### Full-stack application
+
+Build a complete application with frontend and backend:
+
+- **Workers** serves your frontend assets (React, Vue, Astro, and similar frameworks) and handles Application Programming Interface (API) routes
+- **D1** stores application data
+- **R2** stores user uploads and assets
+
+### Real-time collaborative app
+
+Build multiplayer or collaborative features:
+
+- **Durable Objects** coordinates state and WebSocket connections
+- **Workers** handles HTTP requests and routing
+- **KV** caches frequently accessed data
+- **Queues** processes background tasks
+
+### Static site with dynamic features
+
+Add interactivity to static content:
+
+- **Workers** serves static HTML/CSS/JavaScript (JS) and handles form submissions and API calls
+- **KV** stores form data and user preferences
+- **R2** stores uploaded files
+
+---
+
+## Prerequisites
+
+### Create a new application
+
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up). 
+- [Node.js](https://nodejs.org/) (version 16.17.0 or later) installed on your machine.
+- [Wrangler](/workers/wrangler/install-and-update/) installed. Wrangler is the CLI for creating, testing, and deploying Workers projects.
+
+### Use an existing application
+
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up).
+- A domain [added to Cloudflare](/fundamentals/manage-domains/add-site/) with DNS records proxied through Cloudflare. This is required for security features (SSL/TLS, Application security), caching, and performance optimizations.
+- [Node.js](https://nodejs.org/) (version 16.17.0 or later) and [Wrangler](/workers/wrangler/install-and-update/) if you plan to add Workers-based functionality to your existing application.
+
+---
+
+## Related resources
+
+<CardGrid>
+
+<LinkTitleCard title="Workers documentation" href="/workers/" icon="workers">
+
+Complete documentation for building and deploying applications on Cloudflare.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Developer platform tutorials" href="/workers/tutorials/" icon="open-book">
+
+Step-by-step guides for building on Cloudflare.
+
+</LinkTitleCard>
+
+</CardGrid>

@@ -1,0 +1,20 @@
+releaseNotes: |-
+  This release contains minor fixes and improvements.
+
+  The next stable release for macOS will introduce the new Cloudflare One Client UI, providing a cleaner and more intuitive design as well as easier access to common actions and information.
+
+  **Changes and improvements**
+  - Empty MDM files are now rejected instead of being incorrectly accepted as a single MDM config.
+  - Fixed an issue in local proxy mode where the client could become unresponsive due to upstream connection timeouts.
+  - Fixed an issue where the emergency disconnect status of a prior organization persisted after a switch to a different organization.
+  - Consumer-only CLI commands are now clearly distinguished from Zero Trust commands.
+  - Added detailed QUIC connection metrics to diagnostic logs for better troubleshooting.
+  - Added monitoring for tunnel statistics collection timeouts.
+  - Switched tunnel congestion control algorithm for local proxy mode to Cubic for improved reliability across platforms.
+  - Fixed initiating managed network detections checks when no network is available, which caused device profile flapping.
+
+version: 2026.3.846.0
+releaseDate: 2026-04-02T16:28:33.819Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2026.3.846.0
+packageSize: 113087111
+platformName: macOS

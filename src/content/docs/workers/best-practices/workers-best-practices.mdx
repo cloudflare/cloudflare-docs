@@ -855,7 +855,7 @@ function verifyTokenInsecure(provided: string, expected: string): boolean {
 
 ### Do not use passThroughOnException as error handling
 
-`passThroughOnException()` is a fail-open mechanism that sends requests to your origin when your Worker throws an unhandled exception. While it can be useful during migration from an origin server, it hides bugs and makes debugging difficult. Use explicit try/catch blocks with structured error responses instead.
+`passThroughOnException()` is a fail-open mechanism that sends requests to your origin when your Worker throws an unhandled exception. While it can be useful during migration from an origin server, it hides bugs and makes debugging difficult. Use explicit `try...catch` blocks with structured error responses instead.
 
 <TypeScriptExample filename="src/index.ts">
 

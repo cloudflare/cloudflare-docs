@@ -13,7 +13,7 @@ The External Emergency Disconnect feature allows organizations to remotely disco
 
 When External Emergency Disconnect is enabled, Cloudflare One Clients will periodically poll a customer-hosted HTTPS endpoint. A client will only change its connection state if it receives a valid JSON payload with the new state. Any failure to successfully retrieve the state (such as endpoint unreachability, invalid certificate fingerprint, or an improperly structured payload) will not cause a state change on the client.
 
-You can use External Emergency Disconnect in combination with the dashboard-initiated [Disconnect WARP on all devices](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#disconnect-warp-on-all-devices) setting. A disconnect signal retrieved from the external endpoint will [take precedence](#warp-settings-precedence).
+You can use External Emergency Disconnect in combination with the dashboard-initiated [Disconnect the Cloudflare One Client on all devices](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#disconnect-the-cloudflare-one-client-on-all-devices) setting. A disconnect signal retrieved from the external endpoint will [take precedence](#warp-settings-precedence).
 
 ## Use cases
 
@@ -277,9 +277,9 @@ Learn how global disconnect settings interact and how they impact other device c
 
 ### Global disconnection settings
 
-The client will honor disconnect signals from both the Cloudflare dashboard (via [Disconnect WARP on all devices](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#disconnect-warp-on-all-devices)) and the external endpoint. A global disconnect is enforced if either source triggers it.
+The client will honor disconnect signals from both the Cloudflare dashboard (via [Disconnect the Cloudflare One Client on all devices](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#disconnect-the-cloudflare-one-client-on-all-devices)) and the external endpoint. A global disconnect is enforced if either source triggers it.
 
-|                                       | [Disconnect WARP on all devices](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#disconnect-warp-on-all-devices) is `On` | [Disconnect WARP on all devices](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#disconnect-warp-on-all-devices) is `Off` |
+|                                       | [Disconnect the Cloudflare One Client on all devices](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#disconnect-the-cloudflare-one-client-on-all-devices) is `On` | [Disconnect the Cloudflare One Client on all devices](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#disconnect-the-cloudflare-one-client-on-all-devices) is `Off` |
 | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **External endpoint returns `true`**  | Force disconnected                                                                                                                                     | Force disconnected                                                                                                                                      |
 | **External endpoint returns `false`** | Force disconnected                                                                                                                                     | Normal operation                                                                                                                                        |
@@ -288,9 +288,9 @@ The client will honor disconnect signals from both the Cloudflare dashboard (via
 
 [Auto connect](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#auto-connect) does not apply while a global disconnect is in effect.
 
-### Lock WARP switch
+### Lock device client switch
 
-[Lock WARP switch](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#lock-warp-switch) does not apply while a global disconnect is in effect. Users will be unable to connect the Cloudflare One Client unless they have an [admin override code](#admin-override).
+[Lock device client switch](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#lock-device-client-switch) does not apply while a global disconnect is in effect. Users will be unable to connect the Cloudflare One Client unless they have an [admin override code](#admin-override).
 
 ### Admin override
 

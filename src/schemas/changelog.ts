@@ -1,7 +1,7 @@
 import { reference, type SchemaContext } from "astro:content";
 import { z } from "astro/zod";
 
-export const changelogSchema = ({ image }: SchemaContext) =>
+export const changelogSchema = (_context: SchemaContext) =>
 	z.object({
 		title: z.string(),
 		description: z.string(),
@@ -13,7 +13,6 @@ export const changelogSchema = ({ image }: SchemaContext) =>
 			.describe(
 				"An array of directory entries to associate this changelog entry with. You may omit the entry named after the folder this entry is in.",
 			),
-		preview_image: z.optional(image()),
 		hidden: z
 			.boolean()
 			.default(false)
