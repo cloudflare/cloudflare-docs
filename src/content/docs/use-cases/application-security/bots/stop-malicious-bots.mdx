@@ -18,8 +18,8 @@ Before you change any bot settings, review your traffic data. Making changes wit
 
 Bot analytics show you how much of your traffic is automated, which pages bots target, and how Cloudflare scores each request.
 
-:::note[Bot Analytics requires a Pro plan or above]
-Bot score distribution data and detailed bot analytics are available on Pro, Business, and Enterprise plans. Free plan users can review basic security metrics through **Security** > **Events**. For full bot analytics capabilities, refer to [Bot Analytics](/bots/bot-analytics/).
+:::note[Bot Analytics requires a Business plan or above]
+Bot score distribution data and detailed bot analytics are available on Business and Enterprise plans. Free and Pro plan users can review basic security metrics through **Security** > **Events**. For full bot analytics capabilities, refer to [Bot Analytics](/bots/bot-analytics/).
 :::
 
 <Tabs syncKey="dashNewNav">
@@ -47,7 +47,8 @@ Review the following:
 Cloudflare classifies bot traffic into categories based on bot scores and verification status:
 
 - **Verified bots**: Crawlers and services that Cloudflare has confirmed as legitimate, such as Googlebot, Bingbot, and uptime monitors. Cloudflare maintains a [verified bot list](/bots/concepts/bot/verified-bots/policy/) with strict requirements. Always allow verified bots through your protections.
-- **Likely automated** (scores 1-29): A score of 1 means the request is definitely automated. Scores from 2 to 29 indicate likely automated behavior. This is your primary target — scrapers, credential stuffing tools, inventory hoarding bots, and spam submitters.
+- **Automated** (score 1): Definitely a bot. Cloudflare is highly confident the request is automated.
+- **Likely automated** (scores 2-29): Probably a bot. This category and Automated are your primary targets — scrapers, credential stuffing tools, inventory hoarding bots, and spam submitters.
 - **Likely human** (scores 30-99): These requests appear to come from real users. Do not challenge or block this traffic.
 
 ## Block automated traffic with Bot Fight Mode
@@ -240,7 +241,7 @@ Set this rule's action to **Skip** > **All remaining custom rules**. This ensure
 For step-by-step rule creation, refer to [Create a custom rule in the dashboard](/waf/custom-rules/create-dashboard/).
 
 :::note[Custom rule availability by plan]
-All Cloudflare plans include custom rules. Free plans include five custom rules. The number of available rules increases with higher plans. For the full availability breakdown, refer to [Custom rules](/waf/custom-rules/#availability).
+All Cloudflare plans include custom rules. The number of available rules increases with higher plans. For the full availability breakdown, refer to [Custom rules](/waf/custom-rules/#availability).
 :::
 
 If your bot traffic is concentrated from countries where you have no real users, you can combine geographic filters with the rules above. Add `ip.src.country` to your expression to restrict the rule to specific regions. For examples, refer to [Block traffic by geographical location](/waf/custom-rules/use-cases/block-by-geographical-location/).
@@ -269,10 +270,15 @@ Enterprise customers can use the **Request rate analysis** tab in Security Analy
 
 ### Use bot score in custom rules
 
+:::note[Bot score in custom rules requires Enterprise Bot Management]
+The `cf.bot_management.score` field is only available to Enterprise customers who have purchased Bot Management. Pro and Business customers can see bot traffic divided into groupings (Automated, Likely automated, Likely human, Verified bot) in the dashboard, but cannot reference granular bot scores in custom rule expressions. On Free plans, use `cf.client.bot` to identify verified bots. Refer to [Bot scores](/bots/concepts/bot-score/) for details on each plan's capabilities.
+:::
+
 Bot score gives you a numeric signal to distinguish automated traffic from human visitors. Each request receives a score from 1 to 99, where lower scores indicate more automated behavior:
 
 | Score | Category         | Meaning                                          |
 | ----- | ---------------- | ------------------------------------------------ |
+| 0     | Not computed     | Bot score was not calculated for this request    |
 | 1     | Automated        | Definitely a bot                                 |
 | 2-29  | Likely automated | Probably a bot                                   |
 | 30-99 | Likely human     | Probably a real user                             |
@@ -301,10 +307,6 @@ For broader protection, use a layered set of rules ordered by priority:
 Deploy these rules in order so the Skip rule executes first. Set rules 2 and 3 to **Log** initially, review the matched traffic in **Security** > **Events** for 24-48 hours, then change to **Block** and **Managed Challenge** once you confirm the thresholds are not catching legitimate traffic.
 
 For the full list of bot management fields available in rule expressions, refer to [Bot Management variables](/bots/reference/bot-management-variables/).
-
-:::note[Bot score in custom rules requires a Pro plan or above]
-The `cf.bot_management.score` field is available to Pro, Business, and Enterprise customers. On Free plans, use `cf.client.bot` to identify verified bots, but granular bot scoring is not available. Enterprise customers with the Bot Management add-on get access to additional detection engines including machine learning and anomaly detection for more accurate scoring. Refer to [Bot scores](/bots/concepts/bot-score/) for details on each detection engine.
-:::
 
 ## Verify and tune your rules
 
