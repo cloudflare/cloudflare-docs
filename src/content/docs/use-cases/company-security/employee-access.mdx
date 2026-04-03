@@ -1,0 +1,38 @@
+---
+pcx_content_type: how-to
+title: Access internal applications securely
+description: Implement Zero Trust access to internal applications without the complexity of VPNs.
+sidebar:
+  order: 1
+---
+
+Traditional VPNs grant broad network access, create bottlenecks, and are difficult to scale. Cloudflare replaces VPNs with Zero Trust access — verifying identity and device posture on every request — using Cloudflare Tunnel, Access, and the Cloudflare One client.
+
+## Solutions
+
+### Cloudflare One
+
+Secure your organization with a cloud security platform that replaces legacy perimeters with Cloudflare's global network. [Learn more about Cloudflare One](/cloudflare-one/).
+
+- **Zero Trust access** - Verify identity and device posture on every request before granting access to internal applications
+- **Granular policies** - Control access by user, group, device posture, and location with per-application rules
+
+### Cloudflare Tunnel
+
+Connect infrastructure to Cloudflare without opening inbound firewall ports. [Learn more about Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/).
+
+- **No network exposure** - Internal apps remain private; Tunnel creates an outbound-only connection with no inbound firewall changes
+
+### Cloudflare One client
+
+Securely route traffic through Cloudflare's network. [Learn more about Cloudflare One client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/).
+
+- **Better performance** - Lower latency than traditional VPN architectures, as traffic routes through Cloudflare's global network rather than backhauling to a central data center
+
+## Get started
+
+### Access internal applications securely
+
+- [Secure a private web app](/cloudflare-one/setup/secure-private-apps/private-web-app/)
+- [Set up clientless SSH](/cloudflare-one/setup/secure-private-apps/clientless-ssh/)
+- [Set up in-browser RDP](/cloudflare-one/setup/secure-private-apps/in-browser-rdp/)

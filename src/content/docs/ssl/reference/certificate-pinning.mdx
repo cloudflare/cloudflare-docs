@@ -12,10 +12,16 @@ description: Learn why Cloudflare does not support HTTP public key pinning
 
 Cloudflare does not support HTTP public key pinning (HPKP)[^1] for Universal, Advanced, or Custom Hostname certificates.
 
-This is because Cloudflare regularly changes the edge certificates provisioned for your domain and - if you had HPKP enabled - your domain would go offline. Additionally, [industry experts](https://scotthelme.co.uk/im-giving-up-on-hpkp/) discourage using HPKP.
+Cloudflare regularly rotates the edge certificates provisioned for your domain. If HPKP were enabled, your domain would go offline each time a certificate rotates because the new certificate would not match the pinned key. Additionally, [industry experts](https://scotthelme.co.uk/im-giving-up-on-hpkp/) discourage using HPKP. For a detailed overview, refer to the Cloudflare blog post on [why certificate pinning is outdated](https://blog.cloudflare.com/why-certificate-pinning-is-outdated/).
 
-For a better solution to the problem that HPKP is trying to solve - preventing certificate misissuance - use [Certificate Transparency Monitoring](/ssl/edge-certificates/additional-options/certificate-transparency-monitoring/). Also consider Cloudflare's blog post on [modern alternatives to certificate pinning practices](https://blog.cloudflare.com/why-certificate-pinning-is-outdated/).
+## Recommended alternative
 
-To avoid downtime when pinning your certificates, use [custom certificates](/ssl/edge-certificates/custom-certificates/) and select [**user-defined** bundle method](/ssl/edge-certificates/custom-certificates/bundling-methodologies/#user-defined). This way you can control which CA, intermediate, and certificate will be used after renewal.
+The problem HPKP tries to solve is preventing certificate misissuance. A safer way to detect misissuance without risking downtime is [Certificate Transparency Monitoring](/ssl/edge-certificates/additional-options/certificate-transparency-monitoring/), which alerts you when a certificate is issued for your domain.
+
+## If you must pin certificates
+
+If your use case requires certificate pinning, the only advisable approach is to upload a [custom certificate](/ssl/edge-certificates/custom-certificates/) to Cloudflare and pin to that certificate. Because you control the certificate lifecycle — including renewal timing, CA selection, and key material — you can ensure pin continuity. However, pinning still carries outage risk: if a renewal deploys a new key, clients pinned to the old key will fail TLS. If you need pin continuity, you must intentionally reuse the same key material during renewal. Test renewed certificates in the [staging environment](/ssl/edge-certificates/staging-environment/) before production.
+
+Select the [**user-defined** bundle method](/ssl/edge-certificates/custom-certificates/bundling-methodologies/#user-defined) so that you control exactly which CA, intermediate, and leaf certificate are served.
 
 [^1]: Key pinning allows a host to instruct a browser to only accept certain public keys when communicating with it for a given period of time.

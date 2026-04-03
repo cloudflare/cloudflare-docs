@@ -32,11 +32,13 @@ jobs:
 
       - name: Create PR if needed
         if: steps.get-commit.outputs.latest_commit != steps.check-current.outputs.current_commit
+        env:
+          NEW_COMMIT: ${{ steps.get-commit.outputs.latest_commit }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Set up git config
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          NEW_COMMIT="${{ steps.get-commit.outputs.latest_commit }}"
           BRANCH_NAME="update-api-schemas-$NEW_COMMIT"
 
           # Check if PR already exists
@@ -63,5 +65,3 @@ jobs:
             --body "This PR updates the api-schemas commit reference to the latest version ($NEW_COMMIT)." \
             --base production \
             --head $BRANCH_NAME
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

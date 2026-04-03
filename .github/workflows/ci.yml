@@ -10,99 +10,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  compile:
-    name: Compiles
+  pre-build:
+    name: Pre Build
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          fetch-depth: 1
-      - uses: actions/setup-node@v6
-        with:
-          node-version: 22
-          cache: "npm"
-      - uses: actions/cache/restore@v5
-        with:
-          path: |
-            node_modules/.astro/assets
-          key: static
-
-      - run: |
-          FILES=$(
-            find src/content \
-              -type f \
-              -not -name '*.mdx' \
-              -not -name '*.md' \
-              -not -name '*.json' \
-              -not -name '*.yml' \
-              -not -name '*.yaml' \
-              -not -name '*.txt' \
-              -not -wholename 'src/content/collections/*'
-          )
-
-          if [ -n "$FILES" ]; then
-            echo "Found files with invalid file extensions:\n\n$FILES"
-            exit 1
-          fi
-
-      - name: Restore node_modules (cache hit)
-        id: node-modules-cache
-        uses: actions/cache@v5
-        with:
-          path: node_modules
-          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
-
-      - name: Install node_modules (cache miss)
-        run: npm ci
-        if: steps.node-modules-cache.outputs.cache-hit != 'true'
-
-      - run: npx tsx bin/post-codeowners-comment/index.ts
-        continue-on-error: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - run: npm run check
-
-      - uses: reviewdog/action-eslint@v1
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          reporter: github-pr-review
-          fail_level: error
-          filter_mode: nofilter
-
-      - run: npm run format:core:check
-      ## TODO: content formatting checks
-      - run: npm run build
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RUN_LINK_CHECK: true
-
-      - run: npm run check:worker
-
-      - uses: actions/cache/save@v5
-        with:
-          path: |
-            node_modules/.astro/assets
-          key: static
-
-      - name: Check - Validate redirects (infinite loops, sources with fragment)
-        run: npx tsm bin/validate-redirects.ts
-
-      - name: Tests
-        run: npm run test
-
-      - name: Post PR CI failure comment
-        if: always()
-        continue-on-error: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx tsx bin/post-pr-ci-failure-comment/index.ts
-
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    outputs:
-      link_check_failed: ${{ steps.check_link_result.outputs.failed }}
     permissions:
       contents: read
       pull-requests: write
@@ -113,7 +23,7 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: 22.x
+          node-version: 24.x
           cache: npm
 
       - name: Check for CRLF line endings
@@ -123,7 +33,8 @@ jobs:
             exit 1
           fi
 
-      - run: |
+      - name: Check for invalid file extensions
+        run: |
           FILES=$(
             find src/content \
               -type f \
@@ -146,17 +57,11 @@ jobs:
         uses: actions/cache@v5
         with:
           path: node_modules
-          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('package.json') }}
 
       - name: Install node_modules (cache miss)
         run: npm ci
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
-
-      - uses: actions/cache/restore@v5
-        with:
-          path: |
-            node_modules/.astro/assets
-          key: static
 
       - run: npx tsx bin/post-codeowners-comment/index.ts
         continue-on-error: true
@@ -165,77 +70,7 @@ jobs:
 
       - run: npm run check
 
-      # The starlight-links-validator plugin runs in astro:build:done, which fires
-      # AFTER all pages have been written to dist/. If link validation fails, the
-      # build exits non-zero but dist/ is complete. We use continue-on-error so the
-      # job succeeds (allowing deploy + validate to run), then check the outcome below.
-      - run: npm run build
-        id: build_step
-        name: Build
-        continue-on-error: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RUN_LINK_CHECK: true
-
-      # Distinguish between "link check failed" (dist/ exists) and "real build failure" (no dist/).
-      # If the build produced no output, we must fail the job immediately.
-      - name: Check build result
-        id: check_link_result
-        run: |
-          if [ ! -d dist ] || [ -z "$(ls -A dist)" ]; then
-            echo "Build failed before producing output. Check the Build job logs for the error."
-            exit 1
-          fi
-          if [ "${{ steps.build_step.outcome }}" = "failure" ]; then
-            echo "failed=true" >> "$GITHUB_OUTPUT"
-            echo "::warning::Build succeeded but link validation failed. Preview will still be deployed."
-          else
-            echo "failed=false" >> "$GITHUB_OUTPUT"
-          fi
-
-      - uses: actions/cache/save@v5
-        with:
-          path: |
-            node_modules/.astro/assets
-          key: static
-
-      - uses: actions/upload-artifact@v7
-        with:
-          name: dist
-          path: dist
-
-  validate:
-    name: Validate
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          fetch-depth: 1
-
-      - uses: actions/setup-node@v6
-        with:
-          node-version: 22.x
-          cache: npm
-
-      - name: Restore node_modules (cache hit)
-        id: node-modules-cache
-        uses: actions/cache@v5
-        with:
-          path: node_modules
-          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
-
-      - name: Install node_modules (cache miss)
-        run: npm ci
-        if: steps.node-modules-cache.outputs.cache-hit != 'true'
-
-      - uses: actions/download-artifact@v8
-        with:
-          name: dist
-          path: dist
+      - run: npm run check:worker
 
       - uses: reviewdog/action-eslint@v1
         with:
@@ -250,7 +85,128 @@ jobs:
         run: npx tsm bin/validate-redirects.ts
 
       - name: Tests
-        run: npm run test
+        run: npm run test:prebuild
+
+  build:
+    name: Build
+    needs: pre-build
+    runs-on: ubuntu-latest
+    outputs:
+      link_check_failed: ${{ steps.check_link_result.outputs.failed }}
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24.x
+          cache: npm
+
+      - name: Restore node_modules (cache hit)
+        id: node-modules-cache
+        uses: actions/cache@v5
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('package.json') }}
+
+      - name: Install node_modules (cache miss)
+        run: npm ci
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
+
+      - name: Restore Astro assets from cache
+        uses: actions/cache@v5
+        with:
+          path: |
+            node_modules/.astro/assets
+          key: astro-assets-${{ hashFiles('src/assets/**') }}
+          restore-keys: |
+            astro-assets-
+
+      # The starlight-links-validator plugin runs in astro:build:done, which fires
+      # AFTER all pages have been written to dist/. If link validation fails, the
+      # build exits non-zero but dist/ is complete. We use continue-on-error so the
+      # job succeeds (allowing deploy + post-build to run), then check the outcome below.
+      # We capture build output with tee so we can grep it to distinguish link-check
+      # failures from real build failures.
+      - name: Build
+        id: build_step
+        continue-on-error: true
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_LINK_CHECK: true
+        run: |
+          set -o pipefail
+          npm run build 2>&1 | tee /tmp/build-output.log
+
+      # Distinguish between "link check failed" and "real build failure" by grepping
+      # the captured build output for the link validator's specific error message.
+      # The link validator runs in astro:build:done (after all pages are written to
+      # dist/), so its error string can only appear when the build itself completed.
+      # Any other failure — including partial builds with a non-empty dist/ — will
+      # not contain that string and will correctly fail here.
+      - name: Check build result
+        id: check_link_result
+        shell: bash
+        run: |
+          if [ "${{ steps.build_step.outcome }}" = "success" ]; then
+            echo "failed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Build failed. Was it only the link validator?
+          if grep -q "Links validation failed" /tmp/build-output.log; then
+            echo "failed=true" >> "$GITHUB_OUTPUT"
+            echo "::warning::Build succeeded but link validation failed. Preview will still be deployed."
+          else
+            echo "::error::Build failed for a reason other than link validation. Check the Build step logs."
+            exit 1
+          fi
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: dist
+          path: dist
+
+  post-build:
+    name: Post Build
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24.x
+          cache: npm
+
+      - name: Restore node_modules (cache hit)
+        id: node-modules-cache
+        uses: actions/cache@v5
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('package.json') }}
+
+      - name: Install node_modules (cache miss)
+        run: npm ci
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
+
+      - uses: actions/download-artifact@v8
+        with:
+          name: dist
+          path: dist
+
+      - name: Tests (Workers)
+        run: npm run test:postbuild
 
       - name: Link validation
         if: needs.build.outputs.link_check_failed == 'true'
@@ -260,7 +216,7 @@ jobs:
 
   notify:
     name: Notify
-    needs: [build, validate]
+    needs: [pre-build, build, post-build]
     if: always()
     runs-on: ubuntu-latest
     permissions:
@@ -273,7 +229,7 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: 22.x
+          node-version: 24.x
           cache: npm
 
       - name: Restore node_modules (cache hit)
@@ -281,7 +237,7 @@ jobs:
         uses: actions/cache@v5
         with:
           path: node_modules
-          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('package.json') }}
 
       - name: Install node_modules (cache miss)
         run: npm ci
@@ -308,7 +264,7 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: 22.x
+          node-version: 24.x
           cache: npm
 
       - name: Restore node_modules (cache hit)
@@ -316,7 +272,7 @@ jobs:
         uses: actions/cache@v5
         with:
           path: node_modules
-          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('package.json') }}
 
       - name: Install node_modules (cache miss)
         run: npm ci
@@ -331,11 +287,11 @@ jobs:
         id: deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
         run: |
-          SHORT_SHA="${{ github.event.pull_request.head.sha }}"
-          SHORT_SHA="${SHORT_SHA:0:8}"
-          BRANCH="${{ github.event.pull_request.head.ref }}"
-          BRANCH_SLUG=$(echo "$BRANCH" | iconv -c -t ascii//TRANSLIT | sed -E 's/[~^]+//g' | sed -E 's/[^a-zA-Z0-9]+/-/g' | sed -E 's/^-+|-+$//g' | tr A-Z a-z)
+          SHORT_SHA="${PR_HEAD_SHA:0:8}"
+          BRANCH_SLUG=$(echo "$PR_HEAD_REF" | iconv -c -t ascii//TRANSLIT | sed -E 's/[~^]+//g' | sed -E 's/[^a-zA-Z0-9]+/-/g' | sed -E 's/^-+|-+$//g' | tr A-Z a-z)
 
           echo "branch_slug=$BRANCH_SLUG" >> "$GITHUB_OUTPUT"
 

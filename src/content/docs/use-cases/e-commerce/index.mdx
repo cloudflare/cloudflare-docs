@@ -1,0 +1,79 @@
+---
+pcx_content_type: overview
+title: E-commerce
+description: Protect and accelerate online stores with Cloudflare WAF, DDoS protection, caching, image optimization, and Waiting Room.
+head:
+  - tag: title
+    content: E-commerce · Use cases
+sidebar:
+  order: 10
+---
+
+import { CardGrid, DirectoryListing, LinkTitleCard } from "~/components";
+
+E-commerce applications require exceptional performance, security, and reliability. Cloudflare protects and accelerates online stores with application security against attacks, bot security against credential stuffing and fraud, cache and image optimization for fast global delivery of product pages, load balancing and Waiting Room for handling traffic spikes, and Zaraz for server-side analytics and marketing tags.
+
+<DirectoryListing />
+
+## Architecture patterns
+
+### Self-hosted storefront
+
+Protect and accelerate a store running on your own infrastructure:
+
+- **SSL/TLS** encrypts all traffic between shoppers and your store
+- **Cache** serves static assets from 300+ edge locations
+- **Application security** blocks attacks before they reach your origin
+- **Images** optimizes product images on-the-fly
+
+### SaaS-hosted storefront
+
+Add Cloudflare on top of a platform like Shopify, BigCommerce, or Salesforce Commerce Cloud:
+
+- **Cloudflare for SaaS** (Orange-to-Orange setup) layers your Cloudflare zone over your provider's existing Cloudflare configuration
+- **Application security** adds protection beyond what the platform provides
+- **Zaraz** loads analytics and marketing tags server-side to improve page speed
+
+### High-traffic store
+
+Handle flash sales, seasonal peaks, and viral demand:
+
+- **Load Balancing** distributes traffic across multiple origin servers
+- **Waiting Room** queues excess visitors to prevent origin overload
+- **Cache** and **Argo Smart Routing** reduce origin load and improve response times
+- **Health Checks** detect unhealthy origins and reroute traffic automatically
+
+---
+
+## Prerequisites
+
+### Create a new application
+
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up).
+- A domain [added to Cloudflare](/fundamentals/manage-domains/add-site/) with DNS records proxied through Cloudflare. All solutions in this use case require traffic to pass through Cloudflare's network.
+
+### Use an existing application
+
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up).
+- A domain [added to Cloudflare](/fundamentals/manage-domains/add-site/) with DNS records proxied through Cloudflare's network.
+- If your store is hosted on a SaaS platform that already uses Cloudflare — such as [Shopify](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/shopify/), [BigCommerce](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/bigcommerce/), or [Salesforce Commerce Cloud](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/salesforce-commerce-cloud/) — follow the setup steps in the provider guide for your platform to add your own Cloudflare zone on top of your provider's existing configuration.
+
+---
+
+## Related resources
+
+<CardGrid>
+
+<LinkTitleCard title="E-commerce case studies" href="https://www.cloudflare.com/case-studies/?industry=Ecommerce%20%26%20Retail" icon="open-book">
+
+Explore how e-commerce companies use Cloudflare.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Reference architectures" href="/reference-architecture/" icon="open-book">
+
+Detailed diagrams and design patterns for enterprise deployments.
+
+</LinkTitleCard>
+
+</CardGrid>

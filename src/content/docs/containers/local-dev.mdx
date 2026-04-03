@@ -1,6 +1,7 @@
 ---
 pcx_content_type: reference
 title: Local Development
+description: Learn how to run Container-enabled Workers locally with `wrangler dev` and `vite dev`.
 sidebar:
   order: 6
 ---
@@ -13,11 +14,16 @@ Docker compatible CLI tool and Engine are installed. For instance, you could use
 When you start a dev session, your container image will be built or downloaded. If your
 [Wrangler configuration](/workers/wrangler/configuration/#containers) sets
 the `image` attribute to a local path, the image will be built using the local Dockerfile.
-If the `image` attribute is set to a URL, the image will be pulled from the Cloudflare registry.
+If the `image` attribute is set to an image reference, the image will be pulled from the referenced registry, such as the Cloudflare Registry, Docker Hub, or Amazon ECR.
 
 :::note
-Currently, the Cloudflare Vite-plugin does not support registry links in local development, unlike `wrangler dev`.
-As a workaround, you can create a minimal Dockerfile that uses `FROM <registry-link>`. Make sure to `EXPOSE` a port for local dev as well.
+With `wrangler dev`, image references from the Cloudflare Registry, Docker Hub, and Amazon ECR are supported in local development.
+
+With `vite dev`, image references from external registries such as Docker Hub and Amazon ECR are supported, but `vite dev` cannot pull directly from the Cloudflare Registry.
+
+If you use a private Docker Hub or ECR image with `vite dev`, authenticate to that registry locally, for example with `docker login`.
+
+As a workaround for Cloudflare Registry images, point `vite dev` at a local Dockerfile that uses `FROM <IMAGE_REFERENCE>`. Docker then pulls the base image during the local build. Make sure to `EXPOSE` a port for local dev as well.
 :::
 
 Container instances will be launched locally when your Worker code calls to create
@@ -98,4 +104,4 @@ To resolve this, you can either:
   This snippet will store the certificate into the image. Depending on whether your production environment needs the certificate, you may choose to do this only during development or use it in production too.
   :::
 
-  Wrangler invokes Docker automatically when you run `wrangler dev` or `wrangler deploy`, so if you need to pass build secrets, you will need to build and push the image manually using `wrangler containers images push`.
+  Wrangler invokes Docker automatically when you run `wrangler dev` or `wrangler deploy`, so if you need to pass build secrets, you will need to build and push the image manually using `wrangler containers push`.

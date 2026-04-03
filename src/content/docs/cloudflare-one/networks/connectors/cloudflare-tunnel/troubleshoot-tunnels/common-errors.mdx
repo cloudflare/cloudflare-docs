@@ -7,7 +7,7 @@ sidebar:
 
 import { GlossaryTooltip, Render } from "~/components";
 
-This section covers the most common errors you might encounter when connecting resources with Cloudflare Tunnel. If you do not see your issue listed below, refer to the [troubleshooting FAQ](/cloudflare-one/faq/troubleshooting/), view your [Tunnel logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/), or [contact Cloudflare Support](/support/contacting-cloudflare-support/).
+This section covers the most common errors you might encounter when connecting resources with Cloudflare Tunnel. If you do not see your issue listed below, refer to [Troubleshooting Cloudflare One](/cloudflare-one/troubleshooting/), view your [Tunnel logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/), or [contact Cloudflare Support](/support/contacting-cloudflare-support/).
 
 ## Tunnel status
 
@@ -53,6 +53,12 @@ To ping an IP address behind Cloudflare Tunnel, your system must allow ICMP traf
 
 This error occurs when you try to add a CIDR route that falls within the Cloudflare One Client's <GlossaryTooltip term="WARP CGNAT IP">CGNAT IP range</GlossaryTooltip>. The `100.96.0.0/12` range, which covers addresses from `100.96.0.1` to `100.111.255.254`, is reserved for internal WARP routing and cannot be added as a Cloudflare Tunnel route. To connect your private network, you will need to change its IP/CIDR so that it does not overlap with `100.96.0.0/12`.
 
-## Troubleshooting
+## I see `This site can't provide a secure connection.`
 
-[Troubleshooting](/cloudflare-one/faq/troubleshooting/) - Browse other Cloudflare One-related troubleshooting errors and solutions.
+If you see an error with the title `This site can't provide a secure connection` and a subtitle of `<hostname> uses an unsupported protocol`, you must [order an Advanced Certificate](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/#create-a-certificate).
+
+If you added a [multi-level subdomain](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/#2a-connect-an-application) (more than one level of subdomain), you must [order an Advanced Certificate for the hostname](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/#2a-connect-an-application) as Cloudflare's Universal certificate will not cover the public hostname by default.
+
+
+For more information on Tunnel errors, view your [Tunnel logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/) or [contact Cloudflare Support](/support/contacting-cloudflare-support/).
+

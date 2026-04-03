@@ -32,7 +32,7 @@ To create a Gateway HTTP policy with Application Granular Controls:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Firewall policies**. Select **HTTP**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Firewall policies** > **HTTP**.
 2. Select **Add a policy**.
 3. Name the policy.
 4. Under **Traffic**, build a logical expression that defines the traffic you want to allow or block. Because granular controls are specific to each application, you must use the _Application_ selector with the _is_ operator.
@@ -77,11 +77,11 @@ Gateway defines Application Granular Controls at different levels of granularity
 
 ### Application Controls
 
-Application Controls are pre-defined controls which represent user intent, such as uploads or downloads. Cloudflare defines and organizes sets of operations deemed related to specific intents in an application. Application Controls represent the most commonly used controls.
+Application Controls are pre-defined controls that represent user intent, such as uploads or downloads. Cloudflare organizes sets of related operations into Application Controls for each supported application. Use Application Controls when a pre-defined grouping matches your intent.
 
 ### Operations
 
-Operations are the individual API-level actions that an application uses. Defining controls at operation level allows for more fine-grained policies to support use cases such as blocking only certain types of downloads. You can also define controls where there is not an existing application control that covers the required intent, such as blocking comments. However, because each SaaS application uses a unique set of operations with its own scope and behaviors, the use of operation level controls often requires analysis for each desired use case. You can also use operation-level controls in cases where you need variations to the Cloudflare-defined application controls, such as including or excluding certain operations.
+Operations are the individual API-level actions that an application uses. Use Operations for more fine-grained control than Application Controls provide — for example, blocking only certain types of downloads or blocking comments where no Application Control exists. Because each SaaS application uses a unique set of operations with its own scope and behaviors, operation-level controls may require analysis for each use case.
 
 Cloudflare provides Operations based on the [available APIs for an application](#application-apis). For more information on how Operations map to [Application Controls](#application-controls), refer to [Compatible applications](#compatible-applications).
 

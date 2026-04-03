@@ -30,14 +30,14 @@ The following limits apply to gateway configurations, logs, and related features
 <sup>1</sup> If you have reached 10 million logs stored per gateway, new logs
 will stop being saved. To continue saving logs, you must delete older logs in
 that gateway to free up space or create a new gateway. Refer to [Auto Log
-Cleanup](/ai-gateway/observability/logging/#auto-log-cleanup) for more details
-on how to automatically delete logs.
+Cleanup](/ai-gateway/observability/logging/#automatic-log-deletion) for more
+details on how to automatically delete logs.
 
 <sup>2</sup> If you have reached 100,000 logs stored per account, across all
 gateways, new logs will stop being saved. To continue saving logs, you must
 delete older logs. Refer to [Auto Log
-Cleanup](/ai-gateway/observability/logging/#auto-log-cleanup) for more details
-on how to automatically delete logs.
+Cleanup](/ai-gateway/observability/logging/#automatic-log-deletion) for more
+details on how to automatically delete logs.
 
 <sup>3</sup> Logs larger than 10 MB will not be stored.
 
@@ -48,6 +48,5 @@ on how to automatically delete logs.
 <Render file="data-loss-prevention/dlp-limits-table" product="cloudflare-one" />
 
 DLP profiles are shared with Cloudflare One and are not coupled to individual gateways. You can apply the same DLP profiles across multiple gateways without additional profile limits. There is no separate limit on the number of DLP policies per gateway.
-
 
 <Render file="limits-increase" product="ai-gateway" />

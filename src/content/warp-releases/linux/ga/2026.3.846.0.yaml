@@ -1,0 +1,39 @@
+releaseNotes: |-
+  This release contains minor fixes and improvements.
+
+  The next stable release for Linux will introduce the new Cloudflare One Client UI, providing a cleaner and more intuitive design as well as easier access to common actions and information.
+
+  **Changes and improvements**
+  - Empty MDM files are now rejected instead of being incorrectly accepted as a single MDM config.
+  - Fixed an issue in local proxy mode where the client could become unresponsive due to upstream connection timeouts.
+  - Fixed an issue where the emergency disconnect status of a prior organization persisted after a switch to a different organization.
+  - Consumer-only CLI commands are now clearly distinguished from Zero Trust commands.
+  - Added detailed QUIC connection metrics to diagnostic logs for better troubleshooting.
+  - Added monitoring for tunnel statistics collection timeouts.
+  - Switched tunnel congestion control algorithm for local proxy mode to Cubic for improved reliability across platforms.
+  - Fixed initiating managed network detections checks when no network is available, which caused device profile flapping.
+
+version: 2026.3.846.0
+releaseDate: 2026-04-02T15:39:10.549Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/fedora35-intel/version/2026.3.846.0
+packageSize: 57220073
+platformName: Linux
+linuxPlatforms:
+  fedora35-intel: 57220073
+  jammy-arm: 53704246
+  jammy-intel: 54652942
+  fedora34-arm: 56661119
+  noble-intel: 54444314
+  fedora34-intel: 57566835
+  bookworm-intel: 54642082
+  trixie-arm: 53917276
+  noble-arm: 54097340
+  focal-intel: 54968766
+  centos8-intel: 57129949
+  trixie-intel: 54444182
+  bullseye-arm: 53943494
+  centos8-arm: 56445507
+  bullseye-intel: 54878064
+  fedora35-arm: 56227651
+  focal-arm: 54019592
+  bookworm-arm: 53685254

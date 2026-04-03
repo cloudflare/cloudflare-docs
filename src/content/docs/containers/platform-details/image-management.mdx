@@ -1,6 +1,7 @@
 ---
 pcx_content_type: navigation
 title: Image Management
+description: Learn how to use Cloudflare Registry, Docker Hub, and Amazon ECR images with Containers.
 sidebar:
   order: 5
   group:
@@ -9,7 +10,7 @@ sidebar:
 
 import { WranglerConfig, PackageManagers } from "~/components";
 
-## Pushing images during `wrangler deploy`
+## Push images during `wrangler deploy`
 
 When running `wrangler deploy`, if you set the `image` attribute in your [Wrangler configuration](/workers/wrangler/configuration/#containers) to a path to a Dockerfile, Wrangler will build your container image locally using Docker, then push it to a registry run by Cloudflare.
 This registry is integrated with your Cloudflare account and is backed by [R2](/r2/). All authentication is handled automatically by
@@ -21,10 +22,11 @@ Just provide the path to your Dockerfile:
 
 ```json
 {
-	"containers": {
-		"image": "./Dockerfile"
-		// ...rest of config...
-	}
+	"containers": [
+		{
+			"image": "./Dockerfile"
+		}
+	]
 }
 ```
 
@@ -39,58 +41,95 @@ Docker or a Docker-compatible CLI tool must be running for Wrangler to build and
 This is not necessary if you are using a pre-built image, as described below.
 :::
 
-## Using pre-built container images
+## Use pre-built container images
 
-Currently, we support images stored in the Cloudflare managed registry at `registry.cloudflare.com` and in [Amazon ECR](https://aws.amazon.com/ecr/).
-Support for additional external registries is coming soon.
+Containers support images from the Cloudflare managed registry at `registry.cloudflare.com`, [Docker Hub](https://hub.docker.com/), and [Amazon ECR](https://aws.amazon.com/ecr/).
 
-If you wish to use a pre-built image from another registry provider, first, make sure it exists locally, then
-push it to the Cloudflare Registry:
+:::note
+Cloudflare does not cache images pulled from Docker Hub or Amazon ECR.
 
-```
-docker pull <public-image>
-docker tag <public-image> <image>:<tag>
-```
+Docker Hub pulls may be subject to Docker Hub pull limits or fair-use restrictions. Pulling images from Amazon ECR may incur AWS egress charges.
+:::
 
-Wrangler provides a command to push images to the Cloudflare Registry:
+### Use public Docker Hub images
 
-<PackageManagers
-	type="exec"
-	pkg="wrangler"
-	args="containers push <image>:<tag>"
-/>
+To use a public Docker Hub image, set `image` to a fully qualified Docker Hub image reference in your Wrangler configuration.
 
-Or, you can use the `-p` flag with `wrangler containers build` to build and push an image in one step:
-
-<PackageManagers
-	type="exec"
-	pkg="wrangler"
-	args="containers build -p -t <tag> ."
-/>
-
-This will output an image registry URI that you can then use in your Wrangler configuration:
+For example:
 
 <WranglerConfig>
 
 ```json
 {
-	"containers": {
-		"image": "registry.cloudflare.com/your-account-id/your-image:tag"
-		// ...rest of config...
-	}
+	"containers": [
+		{
+			"image": "docker.io/<NAMESPACE>/<REPOSITORY>:<TAG>"
+		}
+	]
 }
 ```
 
 </WranglerConfig>
 
-### Using Amazon ECR container images
+Public Docker Hub images do not require registry configuration.
 
-To use container images stored in [Amazon ECR](https://aws.amazon.com/ecr/), you will need to configure the ECR registry domain with credentials.
-These credentials get stored in [Secrets Store](/secrets-store) under the `containers` scope.
-When we prepare your container, these credentials will be used to generate an ephemeral token that can pull your image.
-We do not currently support public ECR images.
-To generate the necessary credentials for ECR, you will need to create an IAM user with a read-only policy.
-The following example grants access to all image repositories under AWS account `123456789012` in `us-east-1`.
+Private Docker Hub images use the private registry configuration flow described next.
+
+If Docker Hub credentials have been configured, those credentials are used to pull both public and private images.
+
+:::note
+Official Docker Hub images use the `library` namespace. For example, use `docker.io/library/<IMAGE>:<TAG>` instead of `docker.io/<IMAGE>:<TAG>`.
+:::
+
+### Configure private registry credentials
+
+To use a private image from Docker Hub or Amazon ECR, run [`wrangler containers registries configure`](/workers/wrangler/commands/containers/#containers-registries-configure) for the registry domain.
+
+Wrangler prompts for the secret and stores it in [Secrets Store](/secrets-store). If you do not already have a Secrets Store store, Wrangler prompts you to create one first.
+
+Use `--secret-name` to name or reuse a secret, `--secret-store-id` to target a specific Secrets Store store, and `--skip-confirmation` for non-interactive runs. In CI or scripts, pass the secret through `stdin`.
+
+### Use private Docker Hub images
+
+Configure Docker Hub in Wrangler using these values:
+
+- registry domain: `docker.io`
+- username flag: `--dockerhub-username=<YOUR_DOCKERHUB_USERNAME>`
+- secret: Docker Hub personal access token with read-only access
+
+To create a Docker Hub personal access token:
+
+1. Sign in to [Docker Home](https://app.docker.com/).
+2. Go to **Account settings** > **Personal access tokens**.
+3. Select **Generate new token**.
+4. Give the token **Read** access, then copy the token value.
+
+Interactive:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="containers registries configure docker.io --dockerhub-username=<YOUR_DOCKERHUB_USERNAME>"
+/>
+
+CI or scripts:
+
+```bash
+printf '%s' "$DOCKERHUB_PAT" | npx wrangler containers registries configure docker.io --dockerhub-username=<YOUR_DOCKERHUB_USERNAME> --secret-name=<SECRET_NAME> --skip-confirmation
+```
+
+After you configure the registry, use the same fully qualified Docker Hub image reference shown above.
+
+### Use private Amazon ECR images
+
+Configure Amazon ECR in Wrangler using these values:
+
+- registry domain: `<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com`
+- access key flag: `--aws-access-key-id=<AWS_ACCESS_KEY_ID>`
+- secret: matching AWS secret access key
+
+Public ECR images are not supported.
+To generate the required credentials, create an IAM user with a read-only policy. The following example grants access to all image repositories in AWS account `123456789012` in `us-east-1`.
 
 ```json
 {
@@ -118,48 +157,94 @@ The following example grants access to all image repositories under AWS account 
 }
 ```
 
-You can then use the credentials for the IAM User to [configure a registry in Wrangler](/workers/wrangler/commands/containers/#containers-registries).
-Wrangler will prompt you to create a Secrets Store store if one does not already exist, and then create your secret.
+After you create the IAM user, use its credentials to [configure the registry in Wrangler](/workers/wrangler/commands/containers/#containers-registries-configure). Wrangler prompts you to create a Secrets Store store if one does not already exist, then stores the secret there.
+
+Interactive:
 
 <PackageManagers
 	type="exec"
 	pkg="wrangler"
-	args="containers registries configure 123456789012.dkr.ecr.us-east-1.amazonaws.com --aws-access-key-id=AKIAIOSFODNN7EXAMPLE"
+	args="containers registries configure <AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com --aws-access-key-id=<AWS_ACCESS_KEY_ID>"
 />
 
-Once this is setup, you will be able to use ECR images in your wrangler config.
+CI or scripts:
 
-:::note
-We do not cache ECR images. We will pull images to prewarm and start containers. This may incur egress charges for AWS ECR.
+```bash
+printf '%s' "$AWS_SECRET_ACCESS_KEY" | npx wrangler containers registries configure <AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com --aws-access-key-id=<AWS_ACCESS_KEY_ID> --secret-name=<SECRET_NAME> --skip-confirmation
+```
 
-We plan to add image caching in R2 in the future.
-:::
+After you configure the registry, use the fully qualified Amazon ECR image reference in your Wrangler configuration:
 
 <WranglerConfig>
 
 ```json
 {
-	"containers": {
-		"image": "123456789012.dkr.ecr.us-east-1.amazonaws.com/example-repo:tag"
-		// ...rest of config...
-	}
+	"containers": [
+		{
+			"image": "<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/<REPOSITORY>:<TAG>"
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+### Use images from other registries
+
+If you want to use a pre-built image from another registry provider, first make sure it exists locally, then push it to the Cloudflare Registry:
+
+```bash
+docker pull <PUBLIC_IMAGE>
+docker tag <PUBLIC_IMAGE> <IMAGE>:<TAG>
+```
+
+Wrangler provides a command to push images to the Cloudflare Registry:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="containers push <IMAGE>:<TAG>"
+/>
+
+Or, you can use the `-p` flag with `wrangler containers build` to build and push an image in one step:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="containers build -p -t <TAG> ."
+/>
+
+This will output an image registry URI that you can then use in your Wrangler configuration:
+
+<WranglerConfig>
+
+```json
+{
+	"containers": [
+		{
+			"image": "registry.cloudflare.com/<YOUR_ACCOUNT_ID>/<IMAGE>:<TAG>"
+		}
+	]
 }
 ```
 
 </WranglerConfig>
 
 :::note
-Currently, the Cloudflare Vite-plugin does not support registry links in local development, unlike `wrangler dev`.
-As a workaround, you can create a minimal Dockerfile that uses `FROM <registry-link>`. Make sure to `EXPOSE` a port in local dev as well.
+With `wrangler dev`, image references from the Cloudflare Registry, Docker Hub, and Amazon ECR are supported in local development.
+
+With `vite dev`, image references from external registries such as Docker Hub and Amazon ECR are supported, but `vite dev` cannot pull directly from the Cloudflare Registry.
+
+If you use a private Docker Hub or ECR image with `vite dev`, authenticate to that registry locally, for example with `docker login`.
 :::
 
-## Pushing images with CI
+## Push images with CI
 
 To use an image built in a continuous integration environment, install `wrangler` then
 build and push images using either `wrangler containers build` with the `--push` flag, or
 using the `wrangler containers push` command.
 
-## Registry Limits
+## Registry limits
 
 Images are limited in size by available disk of the configured [instance type](/containers/platform-details/limits/#instance-types) for a Container.
 

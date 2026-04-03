@@ -94,7 +94,7 @@ For example, for all traffic from the subnet to egress through WARP Connector, a
 You can now test if traffic from your subnet routes through Cloudflare. For example,
 
 1. On the `10.0.0.2` device, run `curl --ipv4 www.google.com`.
-2. Check your [Gateway DNS logs](/cloudflare-one/insights/logs/gateway-logs/) for queries from `warp_connector@<your-team-name>.cloudflareaccess.com`. Logs may take a few minutes to populate.
+2. Check your [Gateway DNS logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/) for queries from `warp_connector@<your-team-name>.cloudflareaccess.com`. Logs may take a few minutes to populate.
 
 ```mermaid
     flowchart LR

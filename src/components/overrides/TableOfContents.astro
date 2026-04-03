@@ -24,14 +24,9 @@ const { editUrl } = Astro.locals.starlightRoute;
 						<a
 							href={`/search/?tags=${tag}`}
 							class="rounded-full border border-[var(--sidebar-border)] bg-transparent px-3 py-1 text-[11px] font-medium text-[var(--sl-color-gray-3)] transition-colors duration-150 ease-out hover:border-[var(--sl-color-gray-2)] hover:text-[var(--sl-color-white)] focus-visible:ring-2 focus-visible:ring-[var(--sl-color-text-accent)] focus-visible:outline-none"
+							data-tag-serp-link={true}
 						>
-					<a
-						href={`/search/?tags=${tag}`}
-						class="rounded-full border border-[var(--sidebar-border)] bg-transparent px-3 py-1 text-[11px] font-medium text-[var(--sl-color-gray-3)] transition-colors duration-150 ease-out hover:border-[var(--sl-color-gray-2)] hover:text-[var(--sl-color-white)] focus-visible:ring-2 focus-visible:ring-[var(--sl-color-text-accent)] focus-visible:outline-none"
-						data-tag-serp-link={true}
-					>
-						{tag}
-					</a>
+							{tag}
 						</a>
 					))}
 				</div>

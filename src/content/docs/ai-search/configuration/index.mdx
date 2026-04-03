@@ -2,7 +2,7 @@
 pcx_content_type: navigation
 title: Configuration
 sidebar:
-  order: 5
+  order: 6
 ---
 
 import { MetaInfo, Type } from "~/components";
@@ -14,6 +14,7 @@ The table below lists all available configuration options:
 | Configuration                                                                  | Editable after creation | Description                                                                                               |
 | ------------------------------------------------------------------------------ | ----------------------- | --------------------------------------------------------------------------------------------------------- |
 | [Data source](/ai-search/configuration/data-source/)                           | no                      | The source where your knowledge base is stored                                                            |
+| [Custom metadata schema](/ai-search/configuration/metadata/#define-a-schema)   | no                      | Define custom metadata fields for filtering (max 5 fields)                                                |
 | [Path filtering](/ai-search/configuration/path-filtering/)                     | yes                     | Include or exclude specific paths from indexing                                                           |
 | [Chunk size](/ai-search/configuration/chunking/)                               | yes                     | Number of tokens per chunk                                                                                |
 | [Chunk overlap](/ai-search/configuration/chunking/)                            | yes                     | Number of overlapping tokens between chunks                                                               |
@@ -31,3 +32,5 @@ The table below lists all available configuration options:
 | [AI Gateway](/ai-gateway)                                                      | yes                     | AI Gateway for monitoring and controlling model usage                                                     |
 | AI Search name                                                                 | no                      | Name of your AI Search instance                                                                           |
 | [Service API token](/ai-search/configuration/service-api-token/)               | yes                     | API token that grants AI Search permission to configure resources on your account                         |
+| [Public endpoint](/ai-search/configuration/public-endpoint/)                   | yes                     | Enable public access to search, chat, and MCP endpoints                                                   |
+| [UI snippets](/ai-search/configuration/embed-search-snippets/)                 | yes                     | Embed pre-built search and chat components in your website                                                |
