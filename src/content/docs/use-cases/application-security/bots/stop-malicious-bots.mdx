@@ -22,11 +22,25 @@ Bot analytics show you how much of your traffic is automated, which pages bots t
 Bot score distribution data and detailed bot analytics are available on Pro, Business, and Enterprise plans. Free plan users can review basic security metrics through **Security** > **Events**. For full bot analytics capabilities, refer to [Bot Analytics](/bots/bot-analytics/).
 :::
 
+<Tabs syncKey="dashNewNav">
+<TabItem label="New dashboard" icon="rocket">
+
+1. In the Cloudflare dashboard, go to **Security** > **Analytics** > **Bot analysis**.
+
+</TabItem>
+<TabItem label="Old dashboard">
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
-2. Go to **Security** > **Analytics** > **Bot analysis**.
-3. Review the bot score distribution chart. Scores closer to 1 indicate automated traffic. Scores closer to 99 indicate human traffic.
-4. Check the top requested paths to find which endpoints receive the most bot traffic. Login pages, API endpoints, and checkout flows are common targets.
-5. Look for patterns before making changes. Sudden spikes in low-score traffic, specific user agents appearing at high volume, or geographic concentration of requests all indicate bot activity worth investigating.
+2. Go to **Security** > **Bots**.
+
+</TabItem>
+</Tabs>
+
+Review the following:
+
+- **Bot score distribution chart**: Scores closer to 1 indicate automated traffic. Scores closer to 99 indicate human traffic.
+- **Top requested paths**: Which endpoints receive the most bot traffic. Login pages, API endpoints, and checkout flows are common targets.
+- **Traffic patterns**: Sudden spikes in low-score traffic, specific user agents appearing at high volume, or geographic concentration of requests all indicate bot activity worth investigating.
 
 ### Understand bot categories
 
@@ -282,9 +296,7 @@ Set the action to **Managed Challenge**. This rule challenges requests with a bo
 
 For broader protection, use a layered set of rules ordered by priority:
 
-1. **Skip verified bots**: Expression `(cf.bot_management.verified_bot)` with action **Skip** > **All remaining custom rules**. This ensures known good bots are never blocked.
-2. **Block definitely automated**: Expression `(cf.bot_management.score eq 1)` with action **Block**. Score 1 traffic is definitively automated.
-3. **Challenge likely automated**: Expression `(cf.bot_management.score gt 1 and cf.bot_management.score lt 30)` with action **Managed Challenge**. This catches the gray area between definite bots and likely humans.
+<Render file="bot-score-baseline-rules" product="bots" />
 
 Deploy these rules in order so the Skip rule executes first. Set rules 2 and 3 to **Log** initially, review the matched traffic in **Security** > **Events** for 24-48 hours, then change to **Block** and **Managed Challenge** once you confirm the thresholds are not catching legitimate traffic.
 

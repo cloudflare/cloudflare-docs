@@ -1,0 +1,19 @@
+---
+{}
+---
+
+**Rule 1:**
+
+- **Expression**: `(cf.bot_management.verified_bot)`
+- **Action**: _Skip:_
+  - _All remaining custom rules_
+
+**Rule 2:**
+
+- **Expression**: `(cf.bot_management.score eq 1)`
+- **Action**: _Block_
+
+**Rule 3:**
+
+- **Expression**: `(cf.bot_management.score gt 1 and cf.bot_management.score lt 30)`
+- **Action**: _Managed Challenge_
