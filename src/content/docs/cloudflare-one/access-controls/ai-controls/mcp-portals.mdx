@@ -121,7 +121,16 @@ Cloudflare Access automatically creates an Access application for each MCP serve
 
 ## Route portal traffic through Gateway
 
-When Gateway routing is turned on, calls to MCP servers protected by your MCP server portal appear in your [Gateway HTTP logs](/cloudflare-one/insights/logs/gateway-logs/#http-logs) alongside the rest of your organization's HTTP traffic. You can then create [Gateway HTTP policies](/cloudflare-one/traffic-policies/) with [DLP profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/) — both [predefined](/cloudflare-one/data-loss-prevention/dlp-profiles/predefined-profiles/) and custom — to detect and block sensitive data from leaving your users' devices.
+When Gateway routing is turned on, calls to MCP servers protected by your MCP server portal appear in your [Gateway HTTP logs](/cloudflare-one/insights/logs/gateway-logs/#http-logs) alongside the rest of your organization's HTTP traffic. You can then create [Gateway HTTP policies](/cloudflare-one/traffic-policies/) to match [DLP profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/) — both [predefined](/cloudflare-one/data-loss-prevention/dlp-profiles/predefined-profiles/) and custom — to detect and block sensitive data from leaving your users' devices and being sent to your upstream MCP servers.
+
+To configure DLP with MCP server portals, ensure that the policy is set to match the upstream MCP server, not the portal URL.
+
+For example, this policy blocks traffic that contains credentials and secrets or financial information:
+
+| Selector         | Operator | Value         | Logic | Action |
+| ---------------- | -------- | ------------- | ----- | ------ |
+| Host      | in       | `example-mcp-server.example.workers.dev`  | And   | Block  |
+| DLP Profile | in       | Credentials and Secrets, Financial Information |       |        |
 
 :::note
 DLP [AI prompt profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/predefined-profiles/#ai-prompt) do not apply to MCP server portal traffic.
