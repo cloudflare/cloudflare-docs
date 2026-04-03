@@ -1,0 +1,37 @@
+---
+title: Routing Section Expansion on Cloudflare Radar
+description: The Routing page on Cloudflare Radar is now a dedicated section with separate Overview, RPKI, and Anomalies sub-pages, plus new Top 100 ASes and RPKI prefix validation widgets
+products:
+  - radar
+date: 2026-04-01
+---
+
+[**Radar**](/radar/) now features an expanded [Routing section](https://radar.cloudflare.com/routing) with dedicated sub-pages, providing a more organized and in-depth view of the global routing ecosystem. This restructuring lays the groundwork for additional routing features and widgets coming in the near future.
+
+## Dedicated sub-pages
+
+The single Routing page has been split into three focused sub-pages:
+
+- [**Overview**](https://radar.cloudflare.com/routing) — Routing statistics, IP address space trends, BGP announcements, and the new Top 100 ASes ranking.
+- [**RPKI**](https://radar.cloudflare.com/routing/rpki) — RPKI validation status, ASPA deployment trends, and per-ASN ASPA provider details.
+- [**Anomalies**](https://radar.cloudflare.com/routing/anomalies) — BGP route leaks, origin hijacks, and Multi-Origin AS (MOAS) conflicts.
+
+![Screenshot of the routing section menu](~/assets/images/radar/routing-section-menu.png)
+
+## New widgets
+
+The routing overview now includes a **Top 100 ASes** table ranking autonomous systems by customer cone size, IPv4 address space, or IPv6 address space. Users can switch between rankings using a segmented control.
+
+![Screenshot of the top-100 ASes table](~/assets/images/radar/top-100-ases-table.png)
+
+The RPKI sub-page introduces a **RPKI validation** view for per-ASN pages, showing prefixes grouped by RPKI validation status (Valid, Invalid, Unknown) with visibility scores.
+
+![Screenshot of the RPKI validation view](~/assets/images/radar/rpki-validation-view.png)
+
+## Improved IP address space chart
+
+The [IP address space](https://radar.cloudflare.com/routing) chart now displays both IPv4 and IPv6 trends stacked vertically and is available on global, country, and AS views.
+
+![Screenshot of the IPv4 and IPv6 combined IP space chart](~/assets/images/radar/combined-ipv4-ipv6-space.png)
+
+Check out the [Radar routing section](https://radar.cloudflare.com/routing) to explore the data, and stay tuned for more routing insights coming soon.

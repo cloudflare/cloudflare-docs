@@ -5,15 +5,15 @@ sidebar:
   order: 7
 ---
 
-With Gateway tenant control, you can allow your users access to corporate SaaS applications while blocking access to personal applications. This helps prevent the loss of sensitive or confidential data from a corporate network.
+Tenant control allows your users to access corporate SaaS applications while blocking access to personal accounts on the same service. For example, you can allow access to your company's Google Workspace while blocking personal Gmail logins.
 
-When creating an HTTP policy with an Allow action, you will have the option to configure custom headers. Gateway can use custom headers to control SaaS application access. If a user's HTTP request is headed to your organization's account for the SaaS application, Gateway will approve the request. If the request does not match the information in the header, Gateway will block the request.
+Gateway implements tenant control by injecting custom HTTP headers into matching requests. These headers tell the SaaS application which tenant (organization) is authorized. If the user attempts to authenticate with a personal account, the SaaS application reads the header and rejects the request.
 
 ## Add custom headers for a SaaS application
 
 To create an HTTP policy with custom headers:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Traffic policies** > **Firewall policies**. Select **HTTP**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Traffic policies** > **Firewall policies** > **HTTP**.
 2. Select **Add a policy**.
 3. Build an expression to match the SaaS traffic you want to control.
 4. In **Action**, select _Allow_. In **Untrusted certificate action**, select _Block_.

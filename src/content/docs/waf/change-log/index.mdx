@@ -12,7 +12,7 @@ head:
 
 import { LinkButton, RSSButton } from "~/components";
 
-The [WAF changelog](/waf/change-log/changelog/) provides information about changes to managed rulesets and general updates to WAF protection.
+The [WAF changelog](/waf/change-log/changelog/) provides information about changes to [managed rulesets](/waf/managed-rules/) and general updates to WAF protection.
 
 <LinkButton type="primary" href="/waf/change-log/changelog/">
 	View changelog
@@ -24,20 +24,32 @@ The [WAF changelog](/waf/change-log/changelog/) provides information about chang
 
 ## Changelog for managed rulesets
 
-Cloudflare has a regular cadence of releasing updates and new rules to WAF managed rulesets. The updates either improve a rule's accuracy, lower false positives rates, or increase the protection due to a change in the threat landscape.
+Cloudflare regularly releases updates and adds new rules to WAF [managed rulesets](/waf/managed-rules/). Updates improve rule accuracy, reduce false positives, or increase protection in response to changes in the threat landscape.
 
-The release cycle for new rules happens on a 7-day cycle, typically every Monday or Tuesday depending on public holidays. For updates of existing rules, Cloudflare will initially deploy the updated rule as a `BETA` rule (denoted in rule description) and with a `beta` tag, before updating the original rule on the next release cycle. Cloudflare will deploy the updated or new rules into logging only mode (_Log_ action), with `beta` and `new` tags. Most newly created rules will carry both the `beta` and `new` tags. Logging only mode allows you to identify any increases in security event volumes which look like potential false positives. On the following Monday (or Tuesday) the rules will change from logging only mode to the intended default action (**New Action** column in the changelog table), with the `beta` and `new` tags removed.
+### Release cycle
 
-Cloudflare may also add rules on the same 7-day release cycle in disabled mode to make the remediation logic available to customers, who can activate the rule if needed. Having these rules in place allows Cloudflare to perform impact testing and performance checks without affecting traffic. These deactivated rules will not have the `beta` and `new` tags assigned to them.
+New and updated rules follow a seven-day release cycle, typically on Monday or Tuesday (adjusted for public holidays).
 
-Cloudflare is very proactive in responding to new vulnerabilities, which may need to be released outside of the 7-day cycle, defined as an Emergency Release.
+**Week 1 — Logging only:** Cloudflare deploys new or updated rules in logging-only mode with the _Log_ action. Rules in this mode record matching requests but do not block traffic. Most newly created rules carry both the `beta` and `new` tags. Use this period to review your security events for unexpected matches that could be false positives.
+
+**Week 2 — Default action:** On the following release day, the rules change from the _Log_ action to their intended default action (shown in the **New Action** column of the changelog table). The `beta` and `new` tags are removed.
+
+For updates to existing rules, Cloudflare first deploys the updated version as a separate `BETA` rule (noted in the rule description) with a `beta` tag, before updating the original rule on the next release cycle.
+
+### Disabled rules
+
+Cloudflare may also add rules in disabled mode on the same release cycle. These rules make remediation logic available without affecting traffic, and allow Cloudflare to perform impact testing and performance checks. You can activate a disabled rule at any time if you need its protection. Disabled rules do not carry the `beta` or `new` tags.
+
+### Emergency releases
+
+For new vulnerabilities, Cloudflare may release rules outside the regular seven-day cycle. These are emergency releases.
 
 :::caution
-[Ruleset overrides and tag overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/) apply to existing and **future** rules in the managed ruleset, which includes changes in regular and emergency releases.
+[Ruleset overrides and tag overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/) apply to existing and **future** rules in a managed ruleset. This means overrides you configure today will automatically apply to rules added in regular and emergency releases.
 :::
 
-If you do notice a new or updated rule generating an increased volume of security events, you can disable or change the rule from its _Default_ action. Once you change a rule to use an action other than the default one, Cloudflare will not be able to override the rule action.
+If you notice a new or updated rule generating an increased volume of security events, you can disable it or change its action from the default. Once you change a rule to use an action other than the default one, Cloudflare will not be able to override the rule action.
 
 ## General updates
 
-The [changelog](/waf/change-log/changelog/) also includes more general updates to WAF protection.
+The [changelog](/waf/change-log/changelog/) also includes general updates to WAF protection that are not specific to managed rulesets.

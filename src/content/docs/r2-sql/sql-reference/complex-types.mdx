@@ -1,0 +1,624 @@
+---
+title: Complex types
+pcx_content_type: reference
+description: Reference for querying struct, array, and map column types in R2 SQL.
+tags:
+  - SQL
+sidebar:
+  order: 4
+---
+
+R2 SQL supports querying struct, array, and map column types stored in Iceberg tables. This page covers access patterns, supported functions, and examples for each type.
+
+---
+
+## Structs
+
+Struct columns contain named fields. Access fields using bracket notation or the `get_field()` function.
+
+### Bracket notation
+
+```sql
+SELECT pricing['price'] AS price,
+       pricing['discount_percent'] AS discount
+FROM my_namespace.products
+LIMIT 5
+```
+
+### get_field function
+
+```sql
+SELECT get_field(pricing, 'price') AS price,
+       get_field(pricing, 'discount_percent') AS discount
+FROM my_namespace.products
+LIMIT 5
+```
+
+### Struct fields in WHERE
+
+```sql
+SELECT customer_id, pricing['price'] AS price
+FROM my_namespace.products
+WHERE pricing['price'] > 50
+LIMIT 10
+```
+
+### Struct fields in ORDER BY
+
+```sql
+SELECT customer_id, pricing['price'] AS price
+FROM my_namespace.products
+WHERE pricing['price'] IS NOT NULL
+ORDER BY pricing['price'] DESC
+LIMIT 10
+```
+
+### Struct fields in GROUP BY
+
+```sql
+SELECT platforms['windows'] AS windows_support,
+       COUNT(*) AS product_count,
+       AVG(pricing['price']) AS avg_price
+FROM my_namespace.products
+WHERE pricing['price'] IS NOT NULL
+GROUP BY platforms['windows']
+```
+
+### Creating structs inline
+
+```sql
+-- named_struct creates a struct with named fields
+SELECT named_struct('id', customer_id, 'amount', total_amount) AS info
+FROM my_namespace.sales_data
+WHERE total_amount IS NOT NULL
+LIMIT 1
+
+-- struct creates a struct with positional fields
+SELECT struct(customer_id, total_amount, region) AS info
+FROM my_namespace.sales_data
+WHERE total_amount IS NOT NULL
+LIMIT 1
+```
+
+---
+
+## Arrays
+
+Array columns contain ordered lists of values. Array indexing is **1-based**.
+
+### Index access
+
+```sql
+SELECT customer_id, tags[1] AS first_tag, tags[2] AS second_tag
+FROM my_namespace.products
+LIMIT 5
+```
+
+### Create arrays
+
+#### make_array
+
+Creates an array from a list of values.
+
+```sql
+SELECT make_array(1, 2, 3) AS nums
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+#### string_to_array
+
+Splits a string into an array by a delimiter.
+
+```sql
+SELECT string_to_array(categories, ',') AS cat_array
+FROM my_namespace.products
+WHERE categories IS NOT NULL
+LIMIT 5
+```
+
+#### range
+
+Generates an array of integers from start (inclusive) to stop (exclusive).
+
+```sql
+SELECT range(0, 5) AS nums
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+#### generate_series
+
+Generates an array of integers from start to stop (inclusive).
+
+```sql
+SELECT generate_series(1, 5) AS nums
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### Inspect arrays
+
+#### array_length
+
+Returns the number of elements in an array.
+
+```sql
+SELECT customer_id, array_length(tags) AS tag_count
+FROM my_namespace.products
+LIMIT 5
+```
+
+#### cardinality
+
+Returns the total number of elements in an array. Alias for `array_length`.
+
+```sql
+SELECT customer_id, cardinality(tags) AS tag_count
+FROM my_namespace.products
+LIMIT 5
+```
+
+#### empty
+
+Returns true if an array has zero elements.
+
+```sql
+SELECT customer_id, empty(tags) AS has_no_tags
+FROM my_namespace.products
+LIMIT 5
+```
+
+#### array_ndims
+
+Returns the number of dimensions of an array.
+
+```sql
+SELECT array_ndims(make_array(1, 2, 3)) AS ndims
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+#### array_dims
+
+Returns the dimensions of an array.
+
+```sql
+SELECT array_dims(make_array(1, 2, 3)) AS dims
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### Search arrays
+
+#### array_has
+
+Returns true if an array contains a value.
+
+```sql
+SELECT customer_id, array_has(tags, 'premium') AS is_premium
+FROM my_namespace.products
+LIMIT 5
+```
+
+#### array_has_all
+
+Returns true if the first array contains all elements of the second.
+
+```sql
+SELECT array_has_all(make_array(1, 2, 3, 4), make_array(2, 3)) AS has_all
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+#### array_has_any
+
+Returns true if the first array contains any element of the second.
+
+```sql
+SELECT array_has_any(make_array(1, 2, 3), make_array(3, 4, 5)) AS has_any
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+#### array_position
+
+Returns the position of the first occurrence of a value (1-indexed). Returns 0 if not found.
+
+```sql
+SELECT array_position(make_array('a', 'b', 'c', 'b'), 'b') AS pos
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+#### array_positions
+
+Returns all positions of a value as an array.
+
+```sql
+SELECT array_positions(make_array(1, 2, 1, 3, 1), 1) AS positions
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### Transform arrays
+
+#### array_sort
+
+Sorts array elements.
+
+```sql
+SELECT array_sort(make_array(3, 1, 2)) AS sorted
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+#### array_reverse
+
+Reverses the order of array elements.
+
+```sql
+SELECT array_reverse(make_array(1, 2, 3)) AS reversed
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+#### array_distinct
+
+Removes duplicate elements from an array.
+
+```sql
+SELECT array_distinct(make_array(1, 2, 2, 3, 3, 3)) AS unique_vals
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+#### flatten
+
+Flattens a nested array by one level.
+
+```sql
+SELECT flatten(make_array(make_array(1, 2), make_array(3, 4))) AS flat
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+#### array_slice
+
+Returns a slice of an array from a start index to an end index (both inclusive, 1-indexed).
+
+```sql
+SELECT array_slice(make_array(10, 20, 30, 40, 50), 2, 4) AS sliced
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### Modify arrays
+
+#### array_append
+
+Appends a value to the end of an array.
+
+```sql
+SELECT array_append(make_array(1, 2, 3), 4) AS appended
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+#### array_prepend
+
+Prepends a value to the beginning of an array.
+
+```sql
+SELECT array_prepend(0, make_array(1, 2, 3)) AS prepended
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+#### array_concat
+
+Concatenates two or more arrays.
+
+```sql
+SELECT array_concat(make_array(1, 2), make_array(3, 4)) AS merged
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+#### array_remove
+
+Removes the first occurrence of a value from an array.
+
+```sql
+SELECT array_remove(make_array(1, 2, 3, 2), 2) AS result
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+#### array_remove_all
+
+Removes all occurrences of a value from an array.
+
+```sql
+SELECT array_remove_all(make_array(1, 2, 3, 2, 2), 2) AS result
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+#### array_remove_n
+
+Removes the first _n_ occurrences of a value from an array.
+
+```sql
+SELECT array_remove_n(make_array(1, 2, 2, 2, 3), 2, 2) AS result
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+#### array_replace
+
+Replaces the first occurrence of a value in an array.
+
+```sql
+SELECT array_replace(make_array(1, 2, 3), 2, 99) AS result
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+#### array_replace_n
+
+Replaces the first _n_ occurrences of a value in an array.
+
+```sql
+SELECT array_replace_n(make_array(1, 2, 2, 2, 3), 2, 99, 2) AS result
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+#### array_replace_all
+
+Replaces all occurrences of a value in an array.
+
+```sql
+SELECT array_replace_all(make_array(1, 2, 3, 2), 2, 99) AS result
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+#### array_pop_back
+
+Removes the last element from an array.
+
+```sql
+SELECT array_pop_back(make_array(1, 2, 3)) AS result
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+#### array_pop_front
+
+Removes the first element from an array.
+
+```sql
+SELECT array_pop_front(make_array(1, 2, 3)) AS result
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+#### array_repeat
+
+Repeats a value a given number of times as an array.
+
+```sql
+SELECT array_repeat(region, 3) AS repeated
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+#### array_resize
+
+Resizes an array to a given length, filling with a default value.
+
+```sql
+SELECT array_resize(make_array(1, 2), 5, 0) AS resized
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### Set operations on arrays
+
+#### array_intersect
+
+Returns elements common to both arrays.
+
+```sql
+SELECT array_intersect(make_array(1, 2, 3), make_array(2, 3, 4)) AS common
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+#### array_union
+
+Returns all unique elements from both arrays.
+
+```sql
+SELECT array_union(make_array(1, 2, 3), make_array(3, 4, 5)) AS merged
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+#### array_except
+
+Returns elements in the first array that are not in the second.
+
+```sql
+SELECT array_except(make_array(1, 2, 3, 4), make_array(2, 4)) AS diff
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### Aggregate array values
+
+#### array_max
+
+Returns the maximum value in an array.
+
+```sql
+SELECT customer_id, array_max(scores) AS max_score
+FROM my_namespace.products
+LIMIT 5
+```
+
+#### array_min
+
+Returns the minimum value in an array.
+
+```sql
+SELECT customer_id, array_min(scores) AS min_score
+FROM my_namespace.products
+LIMIT 5
+```
+
+#### array_any_value
+
+Returns the first non-NULL value in an array.
+
+```sql
+SELECT array_any_value(make_array(NULL, 42, NULL)) AS first_val
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+#### array_element
+
+Returns the element at a given index (1-indexed). Equivalent to bracket-notation access (`arr[idx]`).
+
+```sql
+SELECT array_element(make_array(10, 20, 30), 2) AS second_val
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+### Convert arrays
+
+#### array_to_string
+
+Joins array elements into a string with a separator.
+
+```sql
+SELECT customer_id, array_to_string(tags, ', ') AS tag_list
+FROM my_namespace.products
+LIMIT 5
+```
+
+---
+
+## Maps
+
+Map columns store key-value pairs. Use `map_keys`, `map_values`, and `map_extract` to query them.
+
+### map_keys
+
+Returns all keys from a map as an array.
+
+```sql
+SELECT map_keys(metadata) AS keys
+FROM my_namespace.products
+LIMIT 5
+```
+
+### map_values
+
+Returns all values from a map as an array.
+
+```sql
+SELECT map_values(metadata) AS vals
+FROM my_namespace.products
+LIMIT 5
+```
+
+### map_extract
+
+Returns the value for a specific key.
+
+```sql
+SELECT map_extract(metadata, 'source') AS source,
+       map_extract(metadata, 'store_name') AS store
+FROM my_namespace.products
+LIMIT 5
+```
+
+### Creating maps inline
+
+```sql
+SELECT map(make_array('a', 'b'), make_array(1, 2)) AS m
+FROM my_namespace.sales_data
+LIMIT 1
+```
+
+---
+
+## Complete function index
+
+### Struct functions
+
+| Function                     | Description                          |
+| :--------------------------- | :----------------------------------- |
+| `struct_col['field']`        | Bracket notation field access        |
+| `get_field(struct, 'field')` | Function-based field access          |
+| `named_struct(k1, v1, ...)`  | Create struct with named fields      |
+| `struct(v1, v2, ...)`        | Create struct with positional fields |
+
+### Array functions
+
+| Function                            | Description                              |
+| :---------------------------------- | :--------------------------------------- |
+| `make_array(v1, v2, ...)`           | Create array from values                 |
+| `string_to_array(str, delim)`       | Split string into array                  |
+| `range(start, stop)`                | Generate integer range (exclusive stop)  |
+| `generate_series(start, stop)`      | Generate integer series (inclusive stop) |
+| `array_length(arr)`                 | Number of elements                       |
+| `cardinality(arr)`                  | Number of elements                       |
+| `empty(arr)`                        | True if empty                            |
+| `array_ndims(arr)`                  | Number of dimensions                     |
+| `array_dims(arr)`                   | Dimension information                    |
+| `array_has(arr, val)`               | Contains check                           |
+| `array_has_all(arr, arr2)`          | Contains all check                       |
+| `array_has_any(arr, arr2)`          | Contains any check                       |
+| `array_position(arr, val)`          | First position of value                  |
+| `array_positions(arr, val)`         | All positions of value                   |
+| `array_sort(arr)`                   | Sort elements                            |
+| `array_reverse(arr)`                | Reverse order                            |
+| `array_distinct(arr)`               | Remove duplicates                        |
+| `flatten(arr)`                      | Flatten one level                        |
+| `array_slice(arr, start, end)`      | Extract sub-array                        |
+| `array_append(arr, val)`            | Append to end                            |
+| `array_prepend(val, arr)`           | Prepend to start                         |
+| `array_concat(arr1, arr2)`          | Concatenate arrays                       |
+| `array_remove(arr, val)`            | Remove first occurrence                  |
+| `array_remove_all(arr, val)`        | Remove all occurrences                   |
+| `array_remove_n(arr, val, n)`       | Remove first _n_ occurrences             |
+| `array_replace(arr, old, new)`      | Replace first occurrence                 |
+| `array_replace_n(arr, old, new, n)` | Replace first _n_ occurrences            |
+| `array_replace_all(arr, old, new)`  | Replace all occurrences                  |
+| `array_pop_back(arr)`               | Remove last element                      |
+| `array_pop_front(arr)`              | Remove first element                     |
+| `array_repeat(val, n)`              | Repeat value _n_ times                   |
+| `array_resize(arr, size, default)`  | Resize with default fill                 |
+| `array_intersect(arr1, arr2)`       | Common elements                          |
+| `array_union(arr1, arr2)`           | Union of elements                        |
+| `array_except(arr1, arr2)`          | Difference of elements                   |
+| `array_max(arr)`                    | Maximum value                            |
+| `array_min(arr)`                    | Minimum value                            |
+| `array_any_value(arr)`              | First non-NULL value                     |
+| `array_to_string(arr, delim)`       | Join elements as string                  |
+| `array_element(arr, idx)`           | Element at index                         |
+
+### Map functions
+
+| Function                  | Description                          |
+| :------------------------ | :----------------------------------- |
+| `map(keys_arr, vals_arr)` | Create map from key and value arrays |
+| `map_keys(map)`           | All keys as array                    |
+| `map_values(map)`         | All values as array                  |
+| `map_extract(map, key)`   | Value for a specific key             |

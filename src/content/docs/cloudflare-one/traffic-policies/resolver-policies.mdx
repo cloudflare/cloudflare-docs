@@ -50,7 +50,9 @@ To get started with resolving internal DNS queries with resolver policies, refer
 
 ### Local Domain Fallback
 
-If your resolver is only reachable by a client device and not by Gateway via a Cloudflare Tunnel, IPsec/GRE tunnel, or other public Internet connections, you should configure [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/) for your device. If both Local Domain Fallback and resolver policies are configured for the same device, Cloudflare will apply your client-side Local Domain Fallback rules first. If you onboard DNS queries to Gateway with the Cloudflare One Client and route them with resolver policies, the source IP of the queries will be the IP address assigned by the Cloudflare One Client.
+Use resolver policies when your DNS server is reachable from Cloudflare's network — for example, through a Cloudflare Tunnel, IPsec/GRE tunnel, or the public Internet. Use [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/) when the DNS server is only reachable from the user's device.
+
+If both Local Domain Fallback and resolver policies are configured for the same device, Cloudflare will apply your client-side Local Domain Fallback rules first. If you onboard DNS queries to Gateway with the Cloudflare One Client and route them with resolver policies, the source IP of the queries will be the IP address assigned by the Cloudflare One Client.
 
 <Render file="warp/ldf-best-practice" product="cloudflare-one" />
 
@@ -161,7 +163,13 @@ Use this selector to filter based on the country where the query arrived to Gate
 <Render
 	file="gateway/value"
 	product="cloudflare-one"
-	params={{ selector: "Host", selectordescription: "hostname", operator: "matches regex", valueOne: ".*whispersystems.org", valueTwo: ".*signal.org" }}
+	params={{
+		selector: "Host",
+		selectordescription: "hostname",
+		operator: "matches regex",
+		valueOne: ".*whispersystems.org",
+		valueTwo: ".*signal.org",
+	}}
 />
 
 ## Logical operators

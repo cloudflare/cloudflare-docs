@@ -1,0 +1,34 @@
+---
+title: Tunnel
+pcx_content_type: navigation
+sidebar:
+  order: 25
+---
+
+import { Render, LinkButton } from "~/components";
+
+Explore common issues and solutions for Cloudflare Tunnel.
+
+<Render 
+  file="tunnel/common-errors" 
+  product="cloudflare-one" 
+  params={{
+    logsURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/",
+    protocolURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/protocols/",
+    configFileURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/configuration-file/",
+    originServerNameURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/origin-parameters/",
+    caPoolURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/origin-parameters/",
+    noTLSVerifyURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/origin-parameters/",
+    ulimitsURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/availability/ulimits/"
+  }} 
+/>
+
+---
+
+## More Tunnel resources
+
+For more information, refer to the full Tunnel troubleshooting guide.
+
+<LinkButton href="/cloudflare-one/networks/connectors/cloudflare-tunnel/troubleshoot-tunnels/">
+  Full Tunnel troubleshooting guide ❯
+</LinkButton>

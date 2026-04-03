@@ -45,7 +45,7 @@ You can collect client diagnostic logs remotely from the Zero Trust dashboard by
 
 <Render file="dex/pcaps-download" product="cloudflare-one" />
 
-#### WARP diagnostics analyzer (beta)
+#### Diagnostics analyzer (beta)
 
 <Render file="dex/pcaps-view-warp-diag" product="cloudflare-one" />
 
@@ -166,27 +166,55 @@ The Cloudflare One Client does not provide an official method to configure loggi
 
 To view client logs on mobile devices:
 
-1. Open the 1.1.1.1 app.
+<Tabs>
+<TabItem label="iOS">
+
+1. Open the Cloudflare One Agent app.
 2. Go to **Settings** > **Advanced** > **Diagnostics**.
-3. Scroll down to **Debug logs** and choose from the [available logs](#mobile-app-logs).
+3. Collect extension logs:
+	1. From the **Diagnostics** page, select **Console logs** > **Extension logs**.
+	2. Select **Share** and choose a file sharing method.
+	3. Enter a descriptive file name (such as `extension.log`) if available for your sharing method. Then share or save the file.
+4. Collect application logs:
+	1. From the **Diagnostics** page, select **Console logs** > **Application logs**.
+	2. Select **Share** and choose a file sharing method.
+	3. Enter a descriptive file name (such as `application.log`) if available for your sharing method. Then share or save the file.
+5. (Optional) Collect qlogs for devices using the [MASQUE tunnel protocol](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#device-tunnel-protocol):
+	1. From the **Diagnostics** page, turn on **Enable qlogs**.
+	2. Select **Export QLogs**.
+	3. Enter a descriptive file name (such as `qlogs.zip`) if available for your sharing method. Then share or save the file.
+</TabItem>
+<TabItem label="Android/ChromeOS">
+
+1. Open the Cloudflare One Agent app.
+2. Go to **Settings** > **Advanced** > **Diagnostics**.
+3. Scroll down to the **Debug logs** section.
+4. (Optional) Turn on **Enable qlogs** for devices using the [MASQUE tunnel protocol](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#device-tunnel-protocol).
+5. Select **Download logs**.
+6. Share the `warp-debugging-info-<date>-<time>.zip` file via email, Google Drive, or another installed app.
+
+</TabItem>
+</Tabs>
 
 ### Mobile app logs
 
-Mobile app logs contain a subset of the information available for desktop clients. To learn more about these files, refer to their equivalent [warp-diag logs](#warp-diag-logs).
+The following log files are available for iOS, Android, and ChromeOS devices.
 
 #### iOS
 
-| Name                                    | Equivalent warp-diag log             |
+| Name                                    | Description           |
 | --------------------------------------- | ------------------------------------ |
-| **DNS logs**                            | `daemon_dns.log`                     |
-| **Console logs** > **Extension logs**   | `daemon.log`                         |
-| **Console logs** > **Application logs** | `connectivity.txt` and `gui-log.log` |
-| **Routing table**                       | `netstat.txt`                        |
+| **Extension logs**                          | Logs from the core VPN tunnel service, including connection state changes and packet flow operations between the device and Cloudflare's network. Similar to the desktop `daemon.log` file.                   |
+| **Application logs**                        | Logs from the iOS app process, including GUI events, setting changes, and API calls.                         |
+| **Qlogs**                                  | QUIC protocol event logs used to debug MASQUE/HTTP3 tunnel connections. Archive contains up to 10 `.sqlog` files named by connection ID. |
 
 #### Android/ChromeOS
 
-| Name             | Equivalent warp-diag log                             |
+The `warp-debugging-info-<date>-<time>.zip` archive contains the following files:
+
+| Name             | Description                           |
 | ---------------- | ---------------------------------------------------- |
-| **DNS logs**     | `daemon_dns.log`                                     |
-| **Console logs** | `connectivity.txt`, `netstat.log`, and `gui-log.log` |
-| **Native logs**  | `daemon.log`                                         |
+| `unhandled_exception.log`   | Captures errors in the Android application layer that were not caught and could have crashed the app.                                |
+| `console.log` | Logs from the Android application layer, including VPN service events, API calls, failed DNS queries, GUI interactions, and setting changes. |
+| `native_tunnel.log`  | Logs from the core VPN tunnel service, including connection state changes and packet flow operations between the device and Cloudflare's network. Similar to the desktop `daemon.log` file.                        |
+| `<connection_id>.sqlog`    | QUIC protocol event logs used to debug MASQUE/HTTP3 tunnel connections. |

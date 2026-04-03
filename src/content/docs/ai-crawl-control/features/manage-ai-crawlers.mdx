@@ -124,6 +124,12 @@ For more information, refer to [What is Pay Per Crawl?](/ai-crawl-control/featur
 You can also create more complex rules when taking action on AI crawlers, using [Cloudflare WAF](/waf/). For more information on creating more specific rules, refer to [Create a custom rule in the dashboard](/waf/custom-rules/create-dashboard/).
 :::
 
+## WAF rule management
+
+When you block a crawler in AI Crawl Control, the system creates or updates a WAF custom rule on your zone to enforce that block. For advanced scenarios such as adding path-based exceptions or extra user agents, you can extend this rule directly in WAF.
+
+For more information, refer to [AI Crawl Control with Cloudflare WAF](/ai-crawl-control/configuration/ai-crawl-control-with-waf/).
+
 ## Configure block response
 
 <Plan type="paid" />
@@ -162,11 +168,9 @@ Use the dropdown menu to select the desired response code. You can choose from:
 - `402 Payment Required`: Use this option if you wish to indicate that the AI crawler must pay to access your content.
 
 :::note
-Behind the scenes, AI Crawl Control uses [Cloudflare WAF](/waf/) to return custom block responses.
+AI Crawl Control uses [Cloudflare WAF](/waf/) to return custom block responses. If you have manually configured the AI Crawl Control WAF rule to return a response code other than `403` or `402`, AI Crawl Control will not be able to enforce the response code you have selected, and the dropdown will appear blank. Ensure you have selected either `403` or `402`.
 
-If you have manually configured a WAF rule to return a response code other than `403` or `402`, AI Crawl Control will not be able to enforce the response code you have selected, and the dropdown will appear blank. Ensure you have selected either `403` or `402`.
-
-Refer to [Configure a custom response for blocked requests](/waf/custom-rules/create-dashboard/#configure-a-custom-response-for-blocked-requests) for more information.
+Refer to [Configure a custom response for blocked requests](/waf/custom-rules/create-dashboard/#configure-a-custom-response-for-blocked-requests) and [AI Crawl Control with Cloudflare WAF](/ai-crawl-control/configuration/ai-crawl-control-with-waf/) for more information.
 :::
 
 ### Edit the response body
@@ -178,3 +182,4 @@ In the **Response body** text field, enter the response you wish to display for 
 ## Related resources
 
 - Use [pay per crawl](/ai-crawl-control/features/pay-per-crawl/what-is-pay-per-crawl/) to charge AI crawlers every time they access your content.
+- Learn how AI Crawl Control interacts with WAF, including advanced rule customization, in [AI Crawl Control with Cloudflare WAF](/ai-crawl-control/configuration/ai-crawl-control-with-waf/).

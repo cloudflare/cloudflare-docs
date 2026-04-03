@@ -5,7 +5,7 @@ sidebar:
   order: 10
 ---
 
-Use Retro Scan to identify security threats that your current email provider may have missed. Cloudflare will analyze up to 14 days of historical emails in your Outlook inbox and provide a detailed report of malicious messages that may require remediation. You will receive an email notification once your report is ready.
+Use Retro Scan to check whether your current email security provider has missed any threats. Cloudflare scans up to 14 days of emails in your Microsoft 365 mailbox and generates a report of malicious messages. Once the scan is complete, you will receive an email notification with a link to the report.
 
 :::note
 Retro Scan is only available for Microsoft 365 accounts.
@@ -16,27 +16,25 @@ To start a free scan:
 1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
 2. Select **Email security** > **Overview**.
 3. Select **Start a free scan** > **Generate report**.
-4. Enable your [Microsoft integration](/cloudflare-one/email-security/setup/post-delivery-deployment/api/m365-api/#enable-microsoft-integration). Once you enabled your Microsoft integration, you will redirected to a page where you will add your domains and specify your current email security system.
+4. Enable your [Microsoft integration](/cloudflare-one/email-security/setup/post-delivery-deployment/api/m365-api/#enable-microsoft-integration). Once you have enabled your Microsoft integration, you will be redirected to a page where you will add your domains and specify your current email security system.
 5. Generate Retro Scan report:
    - **Connect domains**: Select at least one domain from your integration, then select **Continue**.
    - **Select current solution**: Select the email security tool you are currently using, then select **Continue**.
-   - **Review details**: Review the details you previously selected. Then, select **Continue**. You will be notified by email once the report is available.
-6. Go to your email inbox and select the link to view the full report.
+   - **Review details**: Confirm the domain and current solution you selected, then select **Continue**. You will receive an email notification once the report is ready.
+6. When you receive the notification email, select the link to view the full report.
 7. On the Cloudflare dashboard, select **View report**.
 
 The dashboard will display **Overview** and **Details** pages.
 
 ### Overview
 
-Overview displays the total scanned domains. The overview shows you:
+The **Overview** page shows a summary of the scan results across your selected domains, including:
 
-- [Disposition evaluation](/cloudflare-one/email-security/monitoring/#disposition-evaluation)
+- [Disposition evaluation](/cloudflare-one/email-security/monitoring/#disposition-evaluation), the verdict assigned to each scanned message (for example: malicious, suspicious, or spam)
 - Malicious threat types
-- Malicious targets
+- Malicious targets, the top recipients targeted by malicious messages
 - Malicious threat origins
 
 ### Details
 
-Details allows you to review the first 1,000 emails assigned a disposition.
-
-Select an email to review [details](/cloudflare-one/email-security/investigation/search-email/#details) about the message.
+The **Details** page lists up to 1,000 emails that were assigned a disposition during the scan. Select any email to review [details](/cloudflare-one/email-security/investigation/search-email/#details) about the message.

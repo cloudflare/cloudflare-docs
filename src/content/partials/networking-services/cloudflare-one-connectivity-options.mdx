@@ -74,7 +74,7 @@ For detailed configuration, refer to the [Cloudflare One Client documentation](/
 
 WARP Connector is a software client that enables mesh networking for services, containers, and virtual machines (VMs). It acts as a Layer 3 router for a subnet, on-ramping and off-ramping traffic through Cloudflare while preserving source IP addresses end-to-end.
 
-Use WARP Connector to connect sites with IoT devices or IP phones that cannot run WARP, enable VoIP and SIP protocols requiring server-initiated connections, or deploy site-to-site connectivity without dedicated network hardware.
+Use WARP Connector to connect sites with IoT devices or IP phones that cannot run WARP, enable VoIP and SIP protocols requiring server-initiated connections, or deploy software-defined site-to-site connectivity from a Linux host.
 
 For VPN replacement and Zero Trust Network Access (ZTNA) use cases, Cloudflare Tunnel via `cloudflared` is the [primary recommended on-ramp](/learning-paths/replace-vpn/concepts/). Cloudflare Tunnel requires minimal network infrastructure changes and integrates directly with Cloudflare Access for identity-aware application protection.
 
@@ -218,7 +218,7 @@ CNI requires an Enterprise plan and is available only in locations where Cloudfl
 :::
 
 :::note[Important to know]
-CNI supports both Magic Transit (DDoS protection) and Cloudflare WAN (private networking). CNI also supports [BGP peering](/network-interconnect/get-started/) (beta) with the Cloudflare Virtual Network routing table for dynamic route exchange. When used with Magic Transit, cleaned inbound traffic always flows over CNI. Return traffic can either egress directly to the Internet (Direct Server Return, default) or route back through Cloudflare via [Magic Transit Egress](/magic-transit/reference/egress/).
+CNI supports both Magic Transit (DDoS protection) and Cloudflare WAN (private networking). CNI also supports [BGP peering](/network-interconnect/get-started/) (closed beta) with the Cloudflare Virtual Network routing table for dynamic route exchange. BGP over CNI is not currently available to new customers — contact your account team if you are interested. When used with Magic Transit, cleaned inbound traffic always flows over CNI. Return traffic can either egress directly to the Internet (Direct Server Return, default) or route back through Cloudflare via [Magic Transit Egress](/magic-transit/reference/egress/).
 :::
 
 For detailed configuration, refer to the <a href={props.cniURL}>Cloudflare Network Interconnect documentation</a>.
@@ -274,13 +274,20 @@ Use the following guidance to select the appropriate connectivity option for you
 | Expose a private web application without a public IP | [Cloudflare Tunnel](#cloudflare-tunnel) |
 | Secure end-user devices | [Cloudflare One Client](#cloudflare-one-client) |
 | Replace traditional VPN for remote access | [Cloudflare Tunnel](#cloudflare-tunnel) (primary) + [WARP Connector](#warp-connector) (for bidirectional needs) |
-| Connect a site with IoT devices or VoIP systems | [WARP Connector](#warp-connector) |
+| Connect a site with IoT devices or VoIP systems | [GRE](#gre-tunnels) or [IPsec tunnels](#ipsec-tunnels) (from existing router/firewall), [Cloudflare One Appliance](#cloudflare-one-appliance) (zero-touch deployment), or [WARP Connector](#warp-connector) (requires a Linux host) |
 | Connect a branch office using existing routers | [GRE](#gre-tunnels) or [IPsec tunnels](#ipsec-tunnels) |
 | Encrypt traffic over the public Internet | [IPsec tunnels](#ipsec-tunnels) |
 | Zero-touch branch office deployment | [Cloudflare One Appliance](#cloudflare-one-appliance) |
 | Connect cloud VPCs (AWS, Azure, GCP) with minimal configuration | [Multi-Cloud Networking](#multi-cloud-networking) |
 | Bypass the public Internet entirely | [Cloudflare Network Interconnect](#cloudflare-network-interconnect-cni) |
 | High-throughput enterprise connectivity | [Cloudflare One Appliance](#cloudflare-one-appliance) or [CNI](#cloudflare-network-interconnect-cni) |
+
+:::note
+The connectivity options on this page connect your private infrastructure, sites, and users through Cloudflare's network. If you also need to protect public-facing services, these are handled by separate products:
+
+- **Non-HTTP traffic** (TCP/UDP protocols such as gaming, email, or custom services) — refer to [Spectrum](/spectrum/).
+- **Network-level DDoS protection** (for on-premises, cloud-hosted, and hybrid networks) — refer to [Magic Transit](/magic-transit/).
+:::
 
 ### Recommendations by team
 
@@ -301,12 +308,12 @@ WARP Connector and Cloudflare One Appliance both provide site-level connectivity
 | ---- | ---- | ---- |
 | **Protocol** | MASQUE / WireGuard | IPsec |
 | **Deployment model** | Software on Linux host (can run alongside other workloads) | Dedicated hardware appliance or virtual machine |
-| **Best for** | Cloud VPCs, development environments, sites without dedicated network hardware, smaller deployments | Enterprise branch offices, data centers, sites requiring high throughput (1 Gbps+) |
-| **Platform support** | Linux only (x86_64). Currently in beta. | Hardware appliance (Dell VEP1460) or virtual (VMware ESXi, Proxmox) |
+| **Best for** | Cloud VPCs, development environments, smaller deployments with an available Linux host | Enterprise branch offices, data centers, sites requiring high throughput (1 Gbps+) |
+| **Platform support** | Linux only (x86_64, ARM64). Currently in beta. | Hardware appliance (Dell VEP1460) or virtual (VMware ESXi, Proxmox) |
 | **High availability** | Not currently supported | Supported through multiple connectors per site |
 | **Management** | Configured as a device in the Cloudflare One Client settings | Centralized through the Cloudflare WAN dashboard with zero-touch provisioning |
 
-Use WARP Connector when you need lightweight, software-only connectivity for cloud workloads or sites without dedicated network hardware. Use Cloudflare One Appliance when you need enterprise-grade throughput, high availability, or integration with existing network infrastructure.
+Use WARP Connector when you need lightweight, software-only connectivity for cloud workloads or sites where a Linux host is available. Use Cloudflare One Appliance when you need enterprise-grade throughput, high availability, or integration with existing network infrastructure.
 
 ---
 
