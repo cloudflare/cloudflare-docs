@@ -121,7 +121,7 @@ Cloudflare Access automatically creates an Access application for each MCP serve
 
 ## Route portal traffic through Gateway
 
-When Gateway routing is turned on, calls to MCP servers protected by your MCP server portal appear in your [Gateway HTTP logs](/cloudflare-one/insights/logs/gateway-logs/#http-logs) alongside the rest of your organization's HTTP traffic. You can then create [Data Loss prevention (DLP) policies](#example-gateway-policy) to detect and block sensitive data from leaving your users' devices and being sent to your upstream MCP servers.
+When Gateway routing is turned on, calls to MCP servers protected by your MCP server portal appear in your [Gateway HTTP logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/) alongside the rest of your organization's HTTP traffic. You can then create [Data Loss prevention (DLP) policies](#example-gateway-policy) to detect and block sensitive data from leaving your users' devices and being sent to your upstream MCP servers.
 
 ### Enable Gateway routing
 
@@ -132,7 +132,7 @@ To route MCP server portal traffic through Gateway:
 3. Under **Basic information**, turn on **Route traffic through Cloudflare Gateway**.
 4. Select **Save**.
 
-Portal traffic will now appear in your [Gateway HTTP logs](/cloudflare-one/insights/logs/gateway-logs/#http-logs). To apply DLP scanning, [create a Gateway HTTP policy](#example-gateway-policy).
+Portal traffic will now appear in your [Gateway HTTP logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/). To apply DLP scanning, [create a Gateway HTTP policy](#example-gateway-policy).
 
 ### Example Gateway policy
 
