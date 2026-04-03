@@ -2,11 +2,14 @@
 pcx_content_type: how-to
 title: Tiered policies
 sidebar:
+  label: Cloudflare Organizations
   order: 15
+  badge:
+    text: Beta
 ---
 
-:::note[Beta]
-Tiered policies with Cloudflare Organizations is currently in beta and available on Enterprise plans. To get started, refer to [Get started](#get-started).
+:::note
+Only available on Enterprise plans.
 :::
 
 Gateway supports using [Cloudflare Organizations](/fundamentals/organizations/) to share configurations between and apply specific policies to accounts within an Organization. Tiered Gateway policies with Organizations support [DNS](/cloudflare-one/traffic-policies/dns-policies/), [network](/cloudflare-one/traffic-policies/network-policies/), [HTTP](/cloudflare-one/traffic-policies/http-policies/), and [resolver](/cloudflare-one/traffic-policies/resolver-policies/) policies.
@@ -16,8 +19,6 @@ For a DNS-only deployment using the Tenant API, refer to [Managed service provid
 ## Get started
 
 To set up Cloudflare Organizations, refer to [Create an Organization](/fundamentals/organizations/#create-an-organization). Once you have provisioned and configured your Organization's accounts, you can create [Gateway policies](/cloudflare-one/traffic-policies/).
-
-For more information about Cloudflare Organizations, refer to the [Organizations](/fundamentals/organizations/) documentation.
 
 ## Account types
 
@@ -83,14 +84,17 @@ flowchart TD
     classDef Forest stroke-width:1px, stroke-dasharray:none, stroke:#2D6A4F, fill:#D8F3DC, color:#2D6A4F
 ```
 
-In the diagram above, blue policies are shared from the source account, orange policies are not shared, and green policies are created locally in recipient accounts.
+In the diagram above:
+- Blue policies (**Block malware** and **Block spyware**) are shared from the source account.
+- Orange policies (**Block DNS tunnel**) are not shared.
+- Green policies (**Block social media** and **Block instant messaging**) are created locally in recipient accounts.
 
-### Limitations
+## Limitations
 
-Tiered policies have the following limitations:
+Tiered policies with Organizations have the following limitations:
 
 - [Egress policies](/cloudflare-one/traffic-policies/egress-policies/) cannot be shared between accounts.
-- Source accounts cannot share policies that use [device posture](/cloudflare-one/reusable-components/posture-checks/) selectors, the detected protocol selector, or the quarantine action. Source and recipient accounts can still create and apply policies with these selectors and actions separately from the Organization share.
+- Source accounts cannot share policies that use [device posture](/cloudflare-one/reusable-components/posture-checks/) selectors, the [Detected protocol](/cloudflare-one/traffic-policies/network-policies/#detected-protocol) selector, or the [Quarantine](/cloudflare-one/traffic-policies/http-policies/#quarantine) action. Source and recipient accounts can still create and apply policies with these selectors and actions separately from the Organization share.
 - Policies can only be shared within an Organization. Sharing to sub-organizations is not supported.
 
 :::caution
@@ -151,9 +155,9 @@ When sharing is complete, Gateway will stop sharing the policy with all recipien
 
 When you edit or delete a shared policy in a source account, Gateway will require confirmation before making any changes. Changes made to shared policies will apply to all recipient accounts. Deleting a shared policy will delete the policy from both the source account and all recipient accounts.
 
-## Manage settings
+## Manage Gateway settings
 
-You can share Zero Trust settings from your source account to recipient accounts in your Cloudflare Organization, including the Gateway block page and extended email address matching. Other Gateway settings configured in a source account, such as [AV scanning](/cloudflare-one/traffic-policies/http-policies/antivirus-scanning/) and [file sandboxing](/cloudflare-one/traffic-policies/http-policies/file-sandboxing/), will not affect recipient account configurations.
+You can share certain Gateway settings - the Gateway block page and extended email address matching - from your source account to recipient accounts in your Cloudflare Organization. Other Gateway settings configured in a source account, such as [AV scanning](/cloudflare-one/traffic-policies/http-policies/antivirus-scanning/) and [file sandboxing](/cloudflare-one/traffic-policies/http-policies/file-sandboxing/), will not affect recipient account configurations.
 
 ### Share Gateway block page
 
