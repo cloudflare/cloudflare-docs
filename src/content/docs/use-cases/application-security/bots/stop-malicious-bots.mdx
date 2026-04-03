@@ -55,17 +55,9 @@ Cloudflare classifies bot traffic into categories based on bot scores and verifi
 
 Bot Fight Mode identifies requests that match known bot patterns and issues a computational challenge. It reduces automated traffic across your entire site without requiring you to write any rules.
 
-### Turn on Bot Fight Mode
+### What Bot Fight Mode does and does not do
 
-Bot Fight Mode is available on all Cloudflare plans, including Free.
-
-<Render file="enable-bfm" product="bots" />
-
-Bot Fight Mode begins challenging suspected bot traffic immediately.
-
-### Set expectations for Bot Fight Mode
-
-Bot Fight Mode provides broad, baseline protection. Understanding what it does and does not do helps you decide which additional layers you need.
+Bot Fight Mode is available on all Cloudflare plans, including Free. It provides broad, baseline protection. Understanding what it does and does not do helps you decide whether to turn it on and which additional layers you need.
 
 **What it does:**
 
@@ -78,6 +70,12 @@ Bot Fight Mode provides broad, baseline protection. Understanding what it does a
 - Does not distinguish between good bots (such as Googlebot) and bad bots. All automated traffic receives the same challenge.
 - Does not protect specific URL paths more than others. The challenge applies uniformly across your site.
 - Cannot be bypassed with WAF custom rule Skip actions. If Bot Fight Mode challenges a request you want to allow, your only options are IP Access rules or turning off Bot Fight Mode entirely.
+
+### Turn on Bot Fight Mode
+
+<Render file="enable-bfm" product="bots" />
+
+Bot Fight Mode begins challenging suspected bot traffic immediately.
 
 ### Upgrade to Super Bot Fight Mode
 
@@ -105,6 +103,16 @@ For organizations that need machine learning-based bot scoring, behavioral analy
 ## Protect forms from automated abuse
 
 Forms are among the most common targets for automated abuse. Login forms receive credential stuffing attempts that test stolen passwords against real accounts. Registration forms attract bots that create fake accounts for spam or fraud. Contact forms collect phishing links and advertising spam.
+
+Two tools protect form endpoints: Turnstile and rate limiting. They solve different problems and work best together.
+
+### Turnstile versus rate limiting
+
+**Turnstile** verifies that a visitor is human at the point of form submission. It prevents a single bot from submitting a form even once. Use Turnstile when you need to confirm the visitor is a real person before processing their input.
+
+**Rate limiting** caps the number of requests a client can make to an endpoint within a time window. It prevents volumetric abuse — the same IP hitting your login endpoint hundreds of times per minute. Use rate limiting when you need to control request volume regardless of whether the client is human.
+
+**Both together** provide the strongest coverage. Turnstile blocks automated submissions at the form level. Rate limiting catches high-volume attacks that bypass or do not encounter the form, such as direct `POST` requests to the endpoint that skip the client-side widget.
 
 ### Add Turnstile to a form
 
@@ -159,15 +167,7 @@ For complete integration details, refer to [Turnstile get started](/turnstile/ge
 Turnstile is available at no cost on all Cloudflare plans, including Free. You do not need a paid plan to add Turnstile to your forms. Turnstile also works on sites that are not proxied through Cloudflare. Refer to [Turnstile](/turnstile/) for full documentation.
 :::
 
-### When to use Turnstile versus rate limiting
-
-Turnstile and rate limiting solve different problems. Use them together for the strongest protection on form endpoints.
-
-**Turnstile** verifies that a visitor is human at the point of form submission. It prevents a single bot from submitting a form even once. Use Turnstile when you need to confirm the visitor is a real person before processing their input.
-
-**Rate limiting** caps the number of requests a client can make to an endpoint within a time window. It prevents volumetric abuse — the same IP hitting your login endpoint hundreds of times per minute. Use rate limiting when you need to control request volume regardless of whether the client is human.
-
-**Both together** provide the strongest coverage. Turnstile blocks automated submissions at the form level. Rate limiting catches high-volume attacks that bypass or do not encounter the form, such as direct `POST` requests to the endpoint that skip the client-side widget.
+### Rate limit form endpoints
 
 For login endpoints, a tiered rate limiting approach works well alongside Turnstile. Create rules that escalate the response based on the volume of failed attempts:
 
@@ -248,14 +248,14 @@ If your bot traffic is concentrated from countries where you have no real users,
 
 ### Rate limit high-frequency paths
 
-Bots target high-value paths like login, checkout, and API endpoints with high-frequency requests. Rate limiting rules cap the number of requests a single client can make to these paths within a time window.
+Beyond form endpoints (covered in the previous section), bots also target checkout flows, API endpoints, and other high-value paths with high-frequency requests. Rate limiting rules cap the number of requests a single client can make to these paths within a time window.
 
 The key challenge is choosing the right threshold. Set it too low and you block legitimate users. Set it too high and bots slip through.
 
-1. Identify which paths to protect first. Prioritize login pages, checkout flows, contact forms, and API endpoints.
-2. Estimate the normal request rate for those paths. Consider how many times a legitimate user would hit `/login` in a one-minute window. For most login pages, more than five requests per minute from a single IP is unusual.
-3. Create a rate limiting rule with a conservative threshold. Start with the Log action to observe what the rule would block without actually blocking it:
-   - **Expression**: `http.request.uri.path eq "/login" and http.request.method eq "POST"`
+1. Identify which paths to protect. Prioritize checkout flows, API endpoints, and any path that triggers expensive operations.
+2. Estimate the normal request rate. Consider how many times a legitimate user would hit the endpoint in a one-minute window.
+3. Create a rate limiting rule with a conservative threshold. Start with the Log action to observe what the rule would match without blocking:
+   - **Expression**: `http.request.uri.path eq "/api/checkout" and http.request.method eq "POST"`
    - **Counting characteristic** (the field used to group requests): IP address
    - **Rate**: 10 requests per 1 minute
    - **Action**: Log
