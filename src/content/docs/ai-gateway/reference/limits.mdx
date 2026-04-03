@@ -18,11 +18,11 @@ The following limits apply to gateway configurations, logs, and related features
 | [Custom metadata](/ai-gateway/observability/custom-metadata/)         | 5 entries per request               |
 | [Datasets](/ai-gateway/evaluations/set-up-evaluations/)               | 10 per gateway                      |
 | Gateways free plan                                                    | 10 per account                      |
-| Gateways paid plan                                                    | 20 per account                      |
+| Gateways paid plan                                                    | 10 per account (default)            |
 | Gateway name length                                                   | 64 characters                       |
 | Log storage rate limit                                                | 500 logs per second per gateway     |
 | Logs stored [paid plan](/ai-gateway/reference/pricing/)               | 10 million per gateway <sup>1</sup> |
-| Logs stored [free plan](/ai-gateway/reference/pricing/)               | 100,000 per gateway <sup>2</sup>    |
+| Logs stored [free plan](/ai-gateway/reference/pricing/)               | 100,000 total across all gateways <sup>2</sup> |
 | [Log size stored](/ai-gateway/observability/logging/)                 | 10 MB per log <sup>3</sup>          |
 | [Logpush jobs](/ai-gateway/observability/logging/logpush/)            | 4 per account                       |
 | [Logpush size limit](/ai-gateway/observability/logging/logpush/)      | 1MB per log                         |
@@ -34,7 +34,7 @@ room for new ones, or stop saving new logs. You can also use
 external storage. Refer to [Automatic log deletion](/ai-gateway/observability/logging/#automatic-log-deletion)
 for more details.
 
-<sup>2</sup> Same behavior as <sup>1</sup>.
+<sup>2</sup> On the free plan, the log storage limit applies to total logs across all gateways in your account. Same auto-delete or stop-saving behavior as <sup>1</sup>.
 
 <sup>3</sup> Logs larger than 10 MB will not be stored.
 
