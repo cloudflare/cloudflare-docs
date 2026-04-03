@@ -9,7 +9,7 @@ Logging is a fundamental building block for application development. Logs provid
 
 Your AI Gateway dashboard shows logs of individual requests, including the user prompt, model response, provider, timestamp, request status, token usage, cost, and duration. When [DLP](/ai-gateway/features/dlp/) policies are configured, logs for requests that trigger a DLP match also include the DLP action taken (Flag or Block), matched policy IDs, matched profile IDs, and the specific detection entries that were triggered. These logs persist, giving you the flexibility to store them for your preferred duration and do more with valuable request data.
 
-By default, each gateway can store up to 10 million logs. You can customize this limit per gateway in your gateway settings to align with your specific requirements. If your storage limit is reached, new logs will stop being saved. To continue saving logs, you must delete older logs to free up space for new logs.
+Each gateway has a storage limit based on your plan. You can customize this limit per gateway in your gateway settings. If your storage limit is reached, new logs will stop being saved. To continue saving logs, you must delete older logs to free up space for new logs.
 To learn more about your plan limits, refer to [Limits](/ai-gateway/reference/limits/).
 
 We recommend using an authenticated gateway when storing logs to prevent unauthorized access and protects against invalid requests that can inflate log storage usage and make it harder to find the data you need. Learn more about setting up an [authenticated gateway](/ai-gateway/configuration/authentication/).
@@ -94,7 +94,7 @@ These fields are available both in the dashboard log viewer and through the [Log
 To manage your log storage effectively, you can:
 
 - Set Storage Limits: Configure a limit on the number of logs stored per gateway in your gateway settings to ensure you only pay for what you need.
-- Enable Automatic Log Deletion: Activate the Automatic Log Deletion feature in your gateway settings to automatically delete the oldest logs once the log limit you've set or the default storage limit of 10 million logs is reached. This ensures new logs are always saved without manual intervention.
+- Enable Automatic Log Deletion: Activate the Automatic Log Deletion feature in your gateway settings to automatically delete the oldest logs once the storage limit for your account is reached. This ensures new logs are always saved without manual intervention.
 
 ## How to delete logs
 
@@ -102,7 +102,7 @@ To manage your log storage effectively and ensure continuous logging, you can de
 
 ### Automatic Log Deletion
 
-​To maintain continuous logging within your gateway's storage constraints, enable Automatic Log Deletion in your Gateway settings. This feature automatically deletes the oldest logs once the log limit you've set or the default storage limit of 10 million logs is reached, ensuring new logs are saved without manual intervention.
+​To maintain continuous logging within your gateway's storage constraints, enable Automatic Log Deletion in your Gateway settings. This feature automatically deletes the oldest logs once the storage limit for your account is reached, ensuring new logs are saved without manual intervention.
 
 ### Manual deletion
 

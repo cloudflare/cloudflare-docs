@@ -19,12 +19,12 @@ Persistent logs are available on all plans. Log storage limits vary by plan.
 
 ### Log storage limits
 
-| Plan         | Log storage limit                    |
-| ------------ | ------------------------------------ |
+| Plan         | Log storage limit                      |
+| ------------ | -------------------------------------- |
 | Workers Free | 100,000 logs total across all gateways |
-| Workers Paid | 10,000,000 logs per gateway          |
+| Workers Paid | 10,000,000 logs per gateway            |
 
-On the Workers Free plan, the log storage limit applies to your total logs across all gateways in your account. On the Workers Paid plan, the limit applies per gateway. When you reach the storage limit, you can configure your gateway to either automatically delete the oldest logs to make room for new ones, or stop saving new logs. You can also use [Logpush](/ai-gateway/observability/logging/logpush/) to export logs to external storage. For more details, refer to [Automatic log deletion](/ai-gateway/observability/logging/#automatic-log-deletion).
+For more details on log storage behavior and automatic log deletion, refer to [Limits](/ai-gateway/reference/limits/) and [Logging](/ai-gateway/observability/logging/#automatic-log-deletion).
 
 ## Logpush
 
