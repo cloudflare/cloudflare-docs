@@ -1,0 +1,34 @@
+---
+{}
+---
+
+import { Tabs, TabItem, Steps, DashButton } from "~/components";
+
+<Tabs syncKey="dashNewNav">
+<TabItem label="New dashboard" icon="rocket">
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the **Security rules** page.
+
+   <DashButton url="/?to=/:account/:zone/security/security-rules" />
+
+2. Select **Create rule** > **Custom rules**.
+
+</Steps>
+
+</TabItem>
+<TabItem label="Old dashboard">
+
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
+
+2. Go to **Security** > **WAF** > **Custom rules**.
+
+3. Select **Create rule**.
+
+</Steps>
+
+</TabItem>
+</Tabs>

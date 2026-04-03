@@ -6,7 +6,7 @@ sidebar:
   label: Stop malicious bots (guide)
 ---
 
-import { Tabs, TabItem } from "~/components";
+import { Tabs, TabItem, Render } from "~/components";
 
 Automated traffic targets sites in different ways: credential stuffing on login pages, scraping product data, spamming contact forms. The right defense depends on which of these apply to your site and what plan you are on. This guide covers a layered approach using Cloudflare tools, from baseline protection to targeted custom rules. The core workflow uses features on Free and Pro plans, with callouts for advanced options on higher tiers.
 
@@ -44,23 +44,7 @@ Bot Fight Mode identifies requests that match known bot patterns and issues a co
 
 Bot Fight Mode is available on all Cloudflare plans, including Free.
 
-<Tabs syncKey="dashNewNav">
-<TabItem label="New dashboard" icon="rocket">
-
-1. In the Cloudflare dashboard, go to the **Security Settings** page.
-2. Filter by **Bot traffic**.
-3. Go to **Bot Fight Mode**.
-4. Turn **Bot Fight Mode** on.
-
-</TabItem>
-<TabItem label="Old dashboard">
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
-2. Go to **Security** > **Bots**.
-3. For **Bot Fight Mode**, select **On**.
-
-</TabItem>
-</Tabs>
+<Render file="enable-bfm" product="bots" />
 
 Bot Fight Mode begins challenging suspected bot traffic immediately.
 
@@ -212,23 +196,9 @@ Before creating custom rules, review the built-in bot settings under **Security 
 
 If the built-in settings do not cover your needs, create a custom rule:
 
-<Tabs syncKey="dashNewNav">
-<TabItem label="New dashboard" icon="rocket">
+<Render file="create-custom-rule-nav" product="waf" />
 
-1. In the Cloudflare dashboard, go to the **Security rules** page.
-2. Select **Create rule** > **Custom rules**.
-3. Build an expression that targets requests to sensitive paths where the `User-Agent` header is empty or matches known bad patterns. For example, to challenge requests to `/login` with an empty user agent:
-
-</TabItem>
-<TabItem label="Old dashboard">
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
-2. Go to **Security** > **WAF** > **Custom rules**.
-3. Select **Create rule**.
-4. Build an expression that targets requests to sensitive paths where the `User-Agent` header is empty or matches known bad patterns. For example, to challenge requests to `/login` with an empty user agent:
-
-</TabItem>
-</Tabs>
+Build an expression that targets requests to sensitive paths where the `User-Agent` header is empty or matches known bad patterns. For example, to challenge requests to `/login` with an empty user agent:
 
 ```txt
 (http.request.uri.path eq "/login" and http.user_agent eq "")
@@ -325,24 +295,9 @@ After you deploy bot protection rules, verify that they block malicious traffic 
 
 Security Events displays every request that Cloudflare mitigated — blocked, challenged, or flagged. This is where you confirm your rules are working as intended.
 
-<Tabs syncKey="dashNewNav">
-<TabItem label="New dashboard" icon="rocket">
+<Render file="security-events-nav" product="waf" />
 
-1. In the Cloudflare dashboard, go to the **Analytics** page.
-2. Select the **Events** tab.
-
-</TabItem>
-<TabItem label="Old dashboard">
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
-2. Go to **Security** > **Events**.
-
-</TabItem>
-</Tabs>
-
-3. Review the **Events summary** for an overview of mitigated requests over time.
-4. Check **Events by service** to see which rules are triggering. Events are labeled by their source: Bot Fight Mode, Super Bot Fight Mode, custom rules, or rate limiting rules.
-5. Scroll to **Sampled logs** to inspect individual requests. Each log entry shows the action taken, the rule that triggered, the source IP, user agent, URI path, and country.
+Review the **Events summary** for an overview of mitigated requests over time. 4. Check **Events by service** to see which rules are triggering. Events are labeled by their source: Bot Fight Mode, Super Bot Fight Mode, custom rules, or rate limiting rules. 5. Scroll to **Sampled logs** to inspect individual requests. Each log entry shows the action taken, the rule that triggered, the source IP, user agent, URI path, and country.
 
 Look for false positives — legitimate traffic that your rules incorrectly challenged or blocked. Common signs include:
 

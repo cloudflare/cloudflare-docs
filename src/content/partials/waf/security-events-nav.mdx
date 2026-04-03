@@ -1,0 +1,19 @@
+---
+{}
+---
+
+import { Tabs, TabItem, DashButton } from "~/components";
+
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
+
+1. In the Cloudflare dashboard, go to the **Analytics** page.
+
+   <DashButton url="/?to=/:account/:zone/security/analytics" />
+
+2. Select the **Events** tab.
+
+</TabItem> <TabItem label="Old dashboard">
+
+- In the Cloudflare dashboard, go to **Security** > **Events**.
+
+</TabItem> </Tabs>

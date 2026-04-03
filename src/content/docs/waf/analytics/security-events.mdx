@@ -8,6 +8,7 @@ sidebar:
 import {
 	FeatureTable,
 	GlossaryTooltip,
+	Render,
 	Steps,
 	Tabs,
 	TabItem,
@@ -37,19 +38,7 @@ Available features vary according to your Cloudflare plan:
 
 To open Security Events for a given zone:
 
-<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
-
-1. In the Cloudflare dashboard, go to the **Analytics** page.
-
-   <DashButton url="/?to=/:account/:zone/security/analytics" />
-
-2. Select the **Events** tab.
-
-</TabItem> <TabItem label="Old dashboard">
-
-- In the Cloudflare dashboard, go to **Security** > **Events**.
-
-</TabItem> </Tabs>
+<Render file="security-events-nav" product="waf" />
 
 Additionally, Enterprise customers have access to the account-level dashboard:
 

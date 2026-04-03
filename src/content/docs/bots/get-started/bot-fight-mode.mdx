@@ -41,29 +41,7 @@ Bot Fight Mode is a simple, free product that helps detect and mitigate bot traf
 
 To start using Bot Fight Mode:
 
-{/* prettier-ignore-start */}
-
-<Tabs syncKey="dashNewNav">
-    <TabItem label="New dashboard" icon="rocket">
-        <Steps>
-          1. In the Cloudflare dashboard, go to the **Security Settings** page.
-
-              <DashButton url="/?to=/:account/:zone/security/settings" />
-          2. Filter by **Bot traffic**.
-          3. Go to **Bot Fight Mode**.
-          4. Turn **Bot Fight Mode** on.
-        </Steps>
-    </TabItem>
-    <TabItem label="Old dashboard">
-        <Steps>
-         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-         2. Go to **Security** > **Bots**.
-         3. For **Bot Fight Mode**, select **On**.
-        </Steps>
-    </TabItem>
-</Tabs>
-
-{/* prettier-ignore-end */}
+<Render file="enable-bfm" product="bots" />
 
 <Render file="sbfm-upgrade" product="bots" />
 
