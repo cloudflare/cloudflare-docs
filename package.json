@@ -3,6 +3,7 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
+		"preinstall": "npx only-allow npm",
 		"astro": "npx astro",
 		"prebuild": "npx tsx bin/fetch-skills.ts",
 		"build": "export NODE_OPTIONS='--max-old-space-size=8192' || set NODE_OPTIONS=\"--max-old-space-size=8192\" && npx astro build",
