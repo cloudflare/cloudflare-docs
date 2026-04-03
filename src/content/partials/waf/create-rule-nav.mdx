@@ -1,5 +1,5 @@
 ---
-{}
+inputParameters: ruleType;;oldNavPath
 ---
 
 import { Tabs, TabItem, Steps, DashButton } from "~/components";
@@ -13,7 +13,7 @@ import { Tabs, TabItem, Steps, DashButton } from "~/components";
 
    <DashButton url="/?to=/:account/:zone/security/security-rules" />
 
-2. Select **Create rule** > **Custom rules**.
+2. Select **Create rule** > **{props.ruleType}**.
 
 </Steps>
 
@@ -24,7 +24,7 @@ import { Tabs, TabItem, Steps, DashButton } from "~/components";
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
 
-2. Go to **Security** > **WAF** > **Custom rules**.
+2. Go to **Security** > **WAF** > **{props.oldNavPath}**.
 
 3. Select **Create rule**.
 

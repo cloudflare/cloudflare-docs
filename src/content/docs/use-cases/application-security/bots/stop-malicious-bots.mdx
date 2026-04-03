@@ -196,7 +196,11 @@ Before creating custom rules, review the built-in bot settings under **Security 
 
 If the built-in settings do not cover your needs, create a custom rule:
 
-<Render file="create-custom-rule-nav" product="waf" />
+<Render
+	file="create-rule-nav"
+	product="waf"
+	params={{ ruleType: "Custom rules", oldNavPath: "Custom rules" }}
+/>
 
 Build an expression that targets requests to sensitive paths where the `User-Agent` header is empty or matches known bad patterns. For example, to challenge requests to `/login` with an empty user agent:
 
