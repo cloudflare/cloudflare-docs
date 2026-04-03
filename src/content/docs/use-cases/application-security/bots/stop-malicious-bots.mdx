@@ -176,6 +176,8 @@ For login endpoints, a tiered rate limiting approach works well alongside Turnst
 
 This pattern uses a counting expression that only counts `POST` requests returning authentication failure codes. Legitimate users who log in successfully on the first attempt never trigger the rule.
 
+Deploy both rules with the **Log** action first. Review the results in **Security** > **Events** after 24-48 hours to confirm the thresholds are not catching legitimate users. Then change to the enforcing actions.
+
 For step-by-step rule creation, refer to [Create a rate limiting rule in the dashboard](/waf/rate-limiting-rules/create-zone-dashboard/). For the full tiered credential stuffing example, refer to [Rate limiting best practices](/waf/rate-limiting-rules/best-practices/).
 
 :::note[Tiered rate limiting rules require a Business plan or above]
@@ -202,7 +204,9 @@ Before creating custom rules, review the built-in bot settings under **Security 
 | Allow verified bots                             | **Verified bots**              |
 | Extend protection to static resources           | **Static resource protection** |
 
-If the built-in settings do not cover your needs, create a custom rule:
+If the built-in settings do not cover your needs, create custom rules. Start by creating an exception for verified bots so they are protected before you deploy any blocking rules.
+
+**First, create a verified bot exception:**
 
 <Tabs syncKey="dashNewNav">
 <TabItem label="New dashboard" icon="rocket">
@@ -220,23 +224,23 @@ If the built-in settings do not cover your needs, create a custom rule:
 </TabItem>
 </Tabs>
 
-Build an expression that targets requests to sensitive paths where the `User-Agent` header is empty or matches known bad patterns. For example, to challenge requests to `/login` with an empty user agent:
-
-```txt
-(http.request.uri.path eq "/login" and http.user_agent eq "")
-```
-
-5. Set the action to **Log** first. This lets you observe which requests the rule matches without blocking legitimate traffic.
-6. Select **Deploy**.
-7. After 24-48 hours, review the results in **Security** > **Events**. If the rule matches only bot traffic, change the action to **Managed Challenge** or **Block**.
-
-To prevent your rule from blocking search engine crawlers and monitoring services, add a verified bot exception. Create a separate rule with higher priority that uses the Skip action:
+Use the expression:
 
 ```txt
 (cf.client.bot)
 ```
 
-Set this rule's action to **Skip** > **All remaining custom rules**. This ensures verified bots bypass your custom rules while all other traffic is evaluated.
+Set the action to **Skip** > **All remaining custom rules**. This ensures verified bots (search engine crawlers, monitoring services) bypass your custom rules. Place this rule at the top of your custom rule list so it executes first.
+
+**Then, create a blocking rule:**
+
+Create a second custom rule that targets requests with missing or suspicious headers. For example, to challenge requests to `/login` with an empty user agent:
+
+```txt
+(http.request.uri.path eq "/login" and http.user_agent eq "")
+```
+
+Set the action to **Log** first. This lets you observe which requests the rule matches without blocking legitimate traffic. After 24-48 hours, review the results in **Security** > **Events**. If the rule matches only bot traffic, change the action to **Managed Challenge** or **Block**.
 
 For step-by-step rule creation, refer to [Create a custom rule in the dashboard](/waf/custom-rules/create-dashboard/).
 
