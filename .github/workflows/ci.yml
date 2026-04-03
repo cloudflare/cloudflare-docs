@@ -17,11 +17,13 @@ jobs:
       contents: read
       pull-requests: write
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - name: Check out repo
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 1
 
-      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
+      - name: Set up node
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         with:
           node-version: 24.x
           cache: npm
@@ -63,23 +65,25 @@ jobs:
         run: npm ci
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
-      - run: npx tsx bin/post-codeowners-comment/index.ts
+      - name: Post codeowners comment
+        run: npx tsx bin/post-codeowners-comment/index.ts
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: npm run check
+      - name: Check Astro and CF Worker
+        run: npm run check
 
-      - run: npm run check:worker
-
-      - uses: reviewdog/action-eslint@556a3fdaf8b4201d4d74d406013386aa4f7dab96 # v1
+      - name: Run eslint
+        uses: reviewdog/action-eslint@556a3fdaf8b4201d4d74d406013386aa4f7dab96 # v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: github-pr-review
           fail_level: error
           filter_mode: nofilter
 
-      - run: npm run format:core:check
+      - name: Check formatting (js,jsx,ts,tsx,mjs,css)
+        run: npm run format:core:check
 
       - name: Validate redirects
         run: npx tsm bin/validate-redirects.ts
@@ -97,11 +101,13 @@ jobs:
       contents: read
       pull-requests: write
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - name: Check out repo
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 1
 
-      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
+      - name: Set up node
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         with:
           node-version: 24.x
           cache: npm
@@ -167,7 +173,8 @@ jobs:
             exit 1
           fi
 
-      - uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+      - name: Upload artifact
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
         with:
           name: dist
           path: dist
@@ -180,11 +187,13 @@ jobs:
       contents: read
       pull-requests: write
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - name: Check out repo
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 1
 
-      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
+      - name: Set up node
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         with:
           node-version: 24.x
           cache: npm
@@ -200,7 +209,8 @@ jobs:
         run: npm ci
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
-      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+      - name: Download artifact
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           name: dist
           path: dist
@@ -223,11 +233,13 @@ jobs:
       contents: read
       pull-requests: write
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - name: Check out repo
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 1
 
-      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
+      - name: Set up node
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         with:
           node-version: 24.x
           cache: npm
@@ -258,11 +270,13 @@ jobs:
       contents: read
       pull-requests: write
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - name: Check out repo
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 1
 
-      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
+      - name: Set up node
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         with:
           node-version: 24.x
           cache: npm
@@ -278,7 +292,8 @@ jobs:
         run: npm ci
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
-      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+      - name: Download artifact
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           name: dist
           path: dist
