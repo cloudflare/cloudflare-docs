@@ -1,0 +1,98 @@
+---
+pcx_content_type: how-to
+title: Enable managed OAuth
+description: Allow non-browser clients to authenticate with Access-protected applications using a standard OAuth 2.0 flow.
+sidebar:
+  order: 10
+---
+
+import { APIRequest, GlossaryTooltip, Tabs, TabItem } from "~/components";
+
+When you protect an application with Cloudflare Access, browsers authenticate users through a login redirect flow. Non-browser clients — such as CLIs, AI agents, SDKs, and scripts — cannot complete this flow because they receive a 302 redirect with no usable token or authorization endpoint.
+
+Managed OAuth turns Cloudflare Access into a standard OAuth 2.0 authorization server for your application. When enabled, non-browser clients receive a `401` response with a `WWW-Authenticate` header that directs them to Access's OAuth discovery endpoints. The client can then complete a standard authorization code flow: it opens the user's browser to the normal Access login page, the user authenticates with their identity provider (IdP), and the client receives an OAuth access token scoped to that application.
+
+Access resolves the token to the same identity as a normal browser login. Your origin sees no difference.
+
+:::note
+If you run your own OAuth server behind an Access application and rely on your own `WWW-Authenticate` headers, do not enable this feature. Enabling managed OAuth replaces the `401` response behavior on the protected application.
+:::
+
+## Prerequisites
+
+- A [self-hosted Access application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) or an [MCP server portal](/cloudflare-one/access-controls/ai-controls/mcp-portals/)
+
+## Enable managed OAuth on a self-hosted application
+
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **Applications**.
+2. Find the application you want to configure, then select the three dots > **Edit**.
+3. Go to the **Overview** tab.
+4. Under **Basic information**, turn on **Enable managed OAuth**.
+5. Select **Save application**.
+
+</TabItem>
+<TabItem label="API">
+
+Make a `PUT` request to the [Access applications](/api/resources/zero_trust/subresources/access/subresources/applications/methods/update/) endpoint and set `oauth_enabled` to `true`:
+
+<APIRequest
+	path="/accounts/{account_id}/access/apps/{app_id}"
+	method="PUT"
+	json={{
+		oauth_enabled: true,
+	}}
+/>
+
+</TabItem>
+</Tabs>
+
+## Enable managed OAuth on an MCP server portal
+
+Managed OAuth is available on [MCP server portals](/cloudflare-one/access-controls/ai-controls/mcp-portals/) and is the mechanism that allows MCP clients to authenticate users through the portal without a browser cookie flow.
+
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **AI controls**.
+2. Find the portal you want to configure, then select the three dots > **Edit**.
+3. Under **Basic information**, turn on **Enable managed OAuth**.
+4. Select **Save**.
+
+</TabItem>
+<TabItem label="API">
+
+Make a `PUT` request to the [Access applications](/api/resources/zero_trust/subresources/access/subresources/applications/methods/update/) endpoint for the portal's underlying Access application and set `oauth_enabled` to `true`:
+
+<APIRequest
+	path="/accounts/{account_id}/access/apps/{app_id}"
+	method="PUT"
+	json={{
+		oauth_enabled: true,
+	}}
+/>
+
+</TabItem>
+</Tabs>
+
+## How it works
+
+Once managed OAuth is enabled, non-browser clients can authenticate using the following flow:
+
+1. The client makes a request to the protected application and receives a `401` response. The `WWW-Authenticate` header in the response points the client to Access's OAuth discovery metadata.
+
+2. The client fetches the OAuth authorization server metadata from the well-known endpoint:
+
+   ```txt
+   https://<your-app-domain>/.well-known/oauth-authorization-server
+   ```
+
+   This endpoint conforms to [RFC 8414](https://datatracker.ietf.org/doc/html/rfc8414) and [RFC 9728](https://datatracker.ietf.org/doc/html/rfc9728) and returns the authorization and token endpoint URLs for the application.
+
+3. The client initiates an authorization code flow. It opens the user's browser to the Access authorization endpoint, where the user logs in to their IdP as usual.
+
+4. Access issues an OAuth access token to the client. The client uses this token in subsequent requests to the protected application.
+
+Access enforces the same policies as a normal browser login. Users who do not pass your [Access policies](/cloudflare-one/access-controls/policies/) are denied regardless of how they authenticate.
