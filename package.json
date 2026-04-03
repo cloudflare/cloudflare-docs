@@ -18,7 +18,7 @@
 		"format:core:fix": "npm run format:core -- --write",
 		"format:content": "npx prettier --write \"**/*.{md,mdx,astro}\"",
 		"format:data": "npx prettier --write \"**/*.{json,yaml,yml}\"",
-		"postinstall": "npx patch-package && npm run sync",
+		"postinstall": "npx patch-package",
 		"preview": "npx astro preview",
 		"script:optimize-svgs": "npx tsx scripts/optimize-svgs.ts",
 		"start": "npx astro dev",
