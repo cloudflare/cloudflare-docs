@@ -6,13 +6,11 @@ sidebar:
   order: 10
 ---
 
-import { APIRequest, GlossaryTooltip, Tabs, TabItem } from "~/components";
+import { APIRequest, Tabs, TabItem } from "~/components";
 
-When you protect an application with Cloudflare Access, browsers authenticate users through a login redirect flow. Non-browser clients — such as CLIs, AI agents, SDKs, and scripts — cannot complete this flow because they receive a 302 redirect with no usable token or authorization endpoint.
+When you protect an application with Cloudflare Access, non-browser clients — such as CLIs, AI agents, SDKs, and scripts — cannot complete the browser-based login redirect. They receive a 302 redirect with no usable token or authorization endpoint.
 
-Managed OAuth turns Cloudflare Access into a standard OAuth 2.0 authorization server for your application. When enabled, non-browser clients receive a `401` response with a `WWW-Authenticate` header that directs them to Access's OAuth discovery endpoints. The client can then complete a standard authorization code flow: it opens the user's browser to the normal Access login page, the user authenticates with their identity provider (IdP), and the client receives an OAuth access token scoped to that application.
-
-Access resolves the token to the same identity as a normal browser login. Your origin sees no difference.
+Managed OAuth solves this by turning Access into a standard OAuth 2.0 authorization server for your application. Access enforces the same policies as a browser login, and your origin sees no difference.
 
 :::note
 If you run your own OAuth server behind an Access application and rely on your own `WWW-Authenticate` headers, do not enable this feature. Enabling managed OAuth replaces the `401` response behavior on the protected application.
@@ -27,22 +25,23 @@ If you run your own OAuth server behind an Access application and rely on your o
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **Applications**.
-2. Find the application you want to configure, then select the three dots > **Edit**.
-3. Go to the **Overview** tab.
-4. Under **Basic information**, turn on **Enable managed OAuth**.
+1. In [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
+2. Find the application you want to configure, then select the three dots on the right > **Edit**.
+3. Go to the **Advanced settings** tab, turn on **Managed OAuth**.
 5. Select **Save application**.
 
 </TabItem>
 <TabItem label="API">
 
-Make a `PUT` request to the [Access applications](/api/resources/zero_trust/subresources/access/subresources/applications/methods/update/) endpoint and set `oauth_enabled` to `true`:
+Make a `PUT` request to the [Access applications](/api/resources/zero_trust/subresources/access/subresources/applications/methods/update/) endpoint and set `oauth_configuration.enabled` to `true`:
 
 <APIRequest
 	path="/accounts/{account_id}/access/apps/{app_id}"
 	method="PUT"
 	json={{
-		oauth_enabled: true,
+		oauth_configuration: {
+			enabled: true,
+		},
 	}}
 />
 
@@ -56,34 +55,90 @@ Managed OAuth is available on [MCP server portals](/cloudflare-one/access-contro
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **AI controls**.
-2. Find the portal you want to configure, then select the three dots > **Edit**.
-3. Under **Basic information**, turn on **Enable managed OAuth**.
-4. Select **Save**.
+1. In [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **AI controls**.
+2. Find the portal you want to configure, then select the three dots on the right > **Edit**.
+3. Go to the **Advanced settings** tab, turn on **Managed OAuth**.
+5. Select **Save application**.
 
 </TabItem>
 <TabItem label="API">
 
-Make a `PUT` request to the [Access applications](/api/resources/zero_trust/subresources/access/subresources/applications/methods/update/) endpoint for the portal's underlying Access application and set `oauth_enabled` to `true`:
+Make a `PUT` request to the [Access applications](/api/resources/zero_trust/subresources/access/subresources/applications/methods/update/) endpoint for the portal's underlying Access application and set `oauth_configuration.enabled` to `true`:
 
 <APIRequest
 	path="/accounts/{account_id}/access/apps/{app_id}"
 	method="PUT"
 	json={{
-		oauth_enabled: true,
+		oauth_configuration: {
+			enabled: true,
+		},
 	}}
 />
 
 </TabItem>
 </Tabs>
 
+## API configuration reference
+
+The `oauth_configuration` object on the [Access applications endpoint](/api/resources/zero_trust/subresources/access/subresources/applications/methods/update/) supports the following fields:
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `enabled` | boolean | Turn managed OAuth on or off for the application. Defaults to `true` if omitted. |
+
+### Dynamic client registration
+
+The `dynamic_client_registration` object controls how OAuth clients register with Access.
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `enabled` | boolean | Turn dynamic client registration on or off. |
+| `allow_any_on_localhost` | boolean | Allow any client with redirect URIs on `localhost`. |
+| `allow_any_on_loopback` | boolean | Allow any client with redirect URIs on `127.0.0.1`. |
+| `allowed_uris` | array of strings | Redirect URIs allowed for dynamically registered clients. Must use `https`. Paths may end in `/*` to match all sub-paths. |
+
+### Grant settings
+
+The `grant` object controls token lifetime and session duration.
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `access_token_lifetime` | string | Lifetime of the OAuth access token. Format: `300ms`, `5m`, `2h45m`. Valid time units are ns, us (or µs), ms, s, m, h |
+| `session_duration` | string | Duration of the OAuth session. Same format as `access_token_lifetime`. |
+
+### Full example
+
+This example enables managed OAuth with dynamic client registration and custom token lifetimes:
+
+<APIRequest
+	path="/accounts/{account_id}/access/apps/{app_id}"
+	method="PUT"
+	json={{
+		oauth_configuration: {
+			enabled: true,
+			dynamic_client_registration: {
+				enabled: true,
+				allow_any_on_localhost: true,
+				allow_any_on_loopback: true,
+				allowed_uris: [
+					"https://playground.ai.cloudflare.com/*",
+				],
+			},
+			grant: {
+				access_token_lifetime: "5m",
+				session_duration: "24h",
+			},
+		},
+	}}
+/>
+
 ## How it works
 
-Once managed OAuth is enabled, non-browser clients can authenticate using the following flow:
+When managed OAuth is enabled, Access returns a `401` response instead of a `302` redirect to non-browser clients. The `401` includes a `WWW-Authenticate` header that points the client to Access's OAuth discovery metadata.
 
-1. The client makes a request to the protected application and receives a `401` response. The `WWW-Authenticate` header in the response points the client to Access's OAuth discovery metadata.
+The authorization flow proceeds as follows:
 
-2. The client fetches the OAuth authorization server metadata from the well-known endpoint:
+1. The client fetches the OAuth authorization server metadata from the well-known endpoint:
 
    ```txt
    https://<your-app-domain>/.well-known/oauth-authorization-server
@@ -91,8 +146,6 @@ Once managed OAuth is enabled, non-browser clients can authenticate using the fo
 
    This endpoint conforms to [RFC 8414](https://datatracker.ietf.org/doc/html/rfc8414) and [RFC 9728](https://datatracker.ietf.org/doc/html/rfc9728) and returns the authorization and token endpoint URLs for the application.
 
-3. The client initiates an authorization code flow. It opens the user's browser to the Access authorization endpoint, where the user logs in to their IdP as usual.
+2. The client initiates an authorization code flow. It opens the user's browser to the Access authorization endpoint, where the user logs in to their IdP as usual.
 
-4. Access issues an OAuth access token to the client. The client uses this token in subsequent requests to the protected application.
-
-Access enforces the same policies as a normal browser login. Users who do not pass your [Access policies](/cloudflare-one/access-controls/policies/) are denied regardless of how they authenticate.
+3. Access issues an OAuth access token to the client. The client uses this token in subsequent requests to the protected application.
