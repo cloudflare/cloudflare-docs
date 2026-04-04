@@ -1,0 +1,74 @@
+---
+pcx_content_type: overview
+title: Company security
+description: Secure employees, devices, and data with Cloudflare Zero Trust access, secure web gateway, email security, and data loss prevention.
+head:
+  - tag: title
+    content: Company security · Use cases
+sidebar:
+  order: 4
+---
+
+import { CardGrid, DirectoryListing, LinkTitleCard } from "~/components";
+
+Protect employees, devices, and data with Zero Trust access, secure web gateway, and email security. Cloudflare Access and Tunnel replace VPNs with identity-verified, per-request access to internal applications. Gateway filters DNS and HTTP traffic to block threats. DLP prevents sensitive data from leaving your network. Email Security stops phishing, BEC, and malware. DMARC management prevents domain spoofing.
+
+<DirectoryListing />
+
+## Architecture patterns
+
+### VPN replacement
+
+Replace traditional VPNs with Zero Trust access to internal applications:
+
+- **Cloudflare Tunnel** connects internal apps to Cloudflare without opening inbound firewall ports
+- **Access** verifies identity and device posture on every request
+- **Cloudflare One client** routes device traffic through Cloudflare's network
+
+### Secure web gateway
+
+Filter and inspect Internet-bound traffic from employees:
+
+- **Gateway** applies DNS and HTTP filtering policies to block threats and enforce acceptable use
+- **Browser Isolation** executes risky web content in a remote browser
+- **DLP** inspects outbound traffic for sensitive data patterns
+
+### Email threat protection
+
+Stop phishing, malware, and spoofing before they reach the inbox:
+
+- **Email Security** scans inbound messages for phishing, Business Email Compromise (BEC), and malicious attachments
+- **DMARC management** enforces email authentication and prevents domain spoofing
+
+---
+
+## Prerequisites
+
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up).
+- A [Cloudflare One organization](/cloudflare-one/setup/) created in the Cloudflare dashboard. Access, Gateway (Secure Web Gateway), Data Loss Prevention (DLP), Cloud Access Security Broker (CASB), Browser Isolation, and Device Posture all operate within Cloudflare One.
+
+---
+
+## Related resources
+
+<CardGrid>
+
+<LinkTitleCard title="Cloudflare One documentation" href="/cloudflare-one/" icon="cloudflare-one">
+
+Complete documentation for Zero Trust and Secure Access Service Edge (SASE).
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Email Security documentation" href="/email-security/" icon="email-security">
+
+Complete documentation for email threat protection.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Zero Trust case studies" href="https://www.cloudflare.com/case-studies/?product=Zero+Trust" icon="open-book">
+
+Explore how enterprises implement Zero Trust with Cloudflare.
+
+</LinkTitleCard>
+
+</CardGrid>

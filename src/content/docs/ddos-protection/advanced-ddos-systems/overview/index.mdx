@@ -20,7 +20,7 @@ General settings enable and control the use of the Advanced TCP Protection and t
 
 ## Thresholds
 
-Thresholds are based on your network's unique traffic and are configured by Cloudflare. The sensitivity levels manipulate the thresholds.
+Thresholds are based on your network's unique traffic and are configured by Cloudflare. The sensitivity levels manipulate the thresholds. Thresholds apply to Advanced TCP Protection and Advanced DNS protection.
 
 When you get access to Advanced DDoS Protection systems, you are [automatically provisioned](#automatic-thresholds) with default settings in monitoring mode.
 
@@ -85,7 +85,7 @@ The auto-threshold calculation component currently runs only in PDX. Therefore, 
 
 ## Prefixes
 
-The prefixes that you have [onboarded](/magic-transit/how-to/advertise-prefixes/) to and approved by Cloudflare instruct the system on which traffic to route through the system.
+The prefixes that you have [onboarded](/magic-transit/how-to/advertise-prefixes/) to and approved by Cloudflare instruct the system on which traffic to route through the system. Prefixes apply to Advanced TCP Protection, Advanced DNS Protection, and Programmable Flow Protection.
 
 [Add the prefixes](/ddos-protection/advanced-ddos-systems/how-to/add-prefix/) you would like to use with Advanced TCP and DNS Protection. You will be able to register prefixes that you previously [onboarded to Magic Transit](/magic-transit/how-to/advertise-prefixes/) or a subset of these prefixes.
 
@@ -101,7 +101,7 @@ Refer to [Concepts](/ddos-protection/advanced-ddos-systems/concepts/) for more i
 
 ## Rules
 
-[Create a rule](/ddos-protection/advanced-ddos-systems/how-to/create-rule/) for Advanced TCP and Advanced DNS Protection (as needed) to enable mitigation.
+[Create a rule](/ddos-protection/advanced-ddos-systems/how-to/create-rule/) for Advanced TCP Protection, Advanced DNS Protection, and Programmable Flow Protection to enable mitigation.
 
 You can create a rule for SYN Flood Protection and another rule for Out-of-state TCP Protection, both with global scope and in monitoring mode. These rules will apply to all received <GlossaryTooltip term="data packet">packets</GlossaryTooltip>.
 

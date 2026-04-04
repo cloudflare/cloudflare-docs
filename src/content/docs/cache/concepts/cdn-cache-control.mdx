@@ -10,7 +10,9 @@ pcx_content_type: concept
 
 You have several options available to determine how `CDN-Cache-Control` directives interact with `Cache-Control` directives.
 
-An origin can:
+If a [Cache Response Rule](/cache/how-to/cache-response-rules/) sets `Cache-Control` directives using the `set_cache_control` action, those directives take precedence over any origin-set `Cloudflare-CDN-Cache-Control` and `CDN-Cache-Control` headers.
+
+When no Cache Response Rule applies, an origin can:
 
 * Return the `CDN-Cache-Control` response header which Cloudflare evaluates to make caching decisions. `Cache-Control`, if also returned by the origin, is proxied as is and does not affect caching decisions made by Cloudflare. Additionally, `CDN-Cache-Control` is proxied downstream in case there are other CDNs between Cloudflare and the browser.
 

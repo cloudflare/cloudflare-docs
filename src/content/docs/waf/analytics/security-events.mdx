@@ -14,7 +14,9 @@ import {
 	DashButton,
 } from "~/components";
 
-Security Events allows you to review <GlossaryTooltip term="mitigated request">mitigated requests</GlossaryTooltip> and helps you tailor your security configurations.
+Security Events allows you to review <GlossaryTooltip term="mitigated request">mitigated requests</GlossaryTooltip> and helps you tailor your security configurations. Use Security Events to investigate requests that Cloudflare security products acted on or flagged, identify false positives, and fine-tune your security rules.
+
+If you want to analyze all incoming traffic, including requests that Cloudflare did not act on, refer to [Security Analytics](/waf/analytics/security-analytics/) instead.
 
 The main elements of the dashboard are the following:
 
@@ -23,7 +25,7 @@ The main elements of the dashboard are the following:
 - [Top events by source](#top-events-by-source): Provides details of the traffic flagged or actioned by a Cloudflare security feature (for example, IP addresses, User Agents, Paths, Countries, Hosts, ASNs).
 - [Sampled logs](#sampled-logs): Summarizes security events by date to show the action taken and the applied Cloudflare security product.
 
-Security Events displays information about requests actioned or flagged by Cloudflare security products, including features such as [Browser Integrity Check](/waf/tools/browser-integrity-check/). Each incoming HTTP request might generate one or more security events. The Security Events dashboard only shows these events, not the HTTP requests themselves.
+Security Events displays information about requests actioned or flagged by Cloudflare security products, including features such as [Browser Integrity Check](/waf/tools/browser-integrity-check/). A single HTTP request can generate one or more security events when it triggers security features. The Security Events dashboard shows these individual events, not the HTTP requests themselves.
 
 ## Availability
 
@@ -68,7 +70,7 @@ To manually add a filter:
 <Steps>
 
 1. Select **Add filter**.
-2. Select a field, an operator, and a value. For example, to filter events by IP address, select _IP_ for **Action**, select _equals_ for the operator, and enter the IP address.
+2. Select a field, an operator, and a value. For example, to filter events by IP address, select _IP_ for the field, select _equals_ for the operator, and enter the IP address.
 3. Select **Apply**.
 
 </Steps>
@@ -118,7 +120,7 @@ A deleted custom rule or rate limiting rule will show as `Rule unavailable` unde
 
 ## Sampled logs
 
-**Sampled logs** summarizes security events by date to show the action taken and the applied Cloudflare security feature.
+**Sampled logs** shows a subset of security events for the selected time period, listed by date with the action taken and the applied Cloudflare security feature. For large volumes of traffic, Cloudflare uses [sampling](/analytics/graphql-api/sampling/) to return results faster. This means that not every individual event may appear in the list.
 
 ![Example list of events in Sampled logs, with one of the events expanded to show its details](~/assets/images/waf/events-sampled-logs.png)
 
@@ -174,8 +176,8 @@ The generated report will reflect all applied filters.
 
 Security Events currently has these limitations:
 
-- Security Events may use sampled data to improve performance. If your search uses sampled data, Security Events might not display all events and filters might not return the expected results. To display more events, select a smaller time frame.
+- Security Events may use sampled data to improve performance. If your search uses sampled data, Security Events might not display all events and filters might not return the expected results. To display more events, select a smaller time frame (a narrower time range reduces the volume of data, which reduces or eliminates sampling).
 
 - The Cloudflare dashboard may show an inaccurate number of events per page. Data queries are highly optimized, but this means that pagination may not always work because the source data may have been sampled. The GraphQL Analytics API does not have this pagination issue.
 
-- Triggered OWASP rules appear in the Security Events page under **Additional logs**, but they are not included in exported JSON files.
+- Triggered [OWASP rules](/waf/managed-rules/reference/owasp-core-ruleset/) appear in the Security Events page under **Additional logs**, but they are not included in exported JSON files.

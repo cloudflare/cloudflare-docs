@@ -73,7 +73,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/sso_connectors"
   --json '{"email_domain":"{domain}"}'
 ```
 
-```json output
+```json
 {
 	"success": true,
 	"errors": [],
@@ -169,6 +169,23 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/sso_connectors/
 </TabItem>
 </Tabs>
 
+## Test your IdP before enforcement
+
+Before enabling SSO for your domain, verify that your identity provider is configured correctly:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Integrations** > **Identity providers**.
+2. Find your IdP and select **Test**.
+3. Confirm that the test returns a successful authentication result.
+
+If the test fails, review your IdP configuration against the [identity provider setup instructions](/cloudflare-one/integrations/identity-providers/) before enabling the SSO connector.
+
+### Troubleshoot IdP errors
+
+If you encounter errors during IdP setup or testing, provide the following when [contacting support](/support/contacting-cloudflare-support/):
+
+1. The error message returned by the IdP test.
+2. A sanitized [HAR file](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#generate-a-har-file) captured while running the IdP test from the dashboard.
+
 ## Limitations
 
 Cloudflare dashboard SSO does not support:
@@ -243,7 +260,7 @@ If there is an issue with your SSO IdP provider, you can add an alternate IdP us
      | jq '.result[] | select(.type == "dash_sso")'
    ```
 
-   ```json output {2}
+```txt
    {
    	"id": "3537a672-e4d8-4d89-aab9-26cb622918a1",
    	"uid": "3537a672-e4d8-4d89-aab9-26cb622918a1",
@@ -305,7 +322,7 @@ The following API calls will disable SSO enforcement for an account. This action
      --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
    ```
 
-   ```json output
+```txt
    {
    	"result": [
    		{
@@ -332,7 +349,7 @@ The following API calls will disable SSO enforcement for an account. This action
      }'
    ```
 
-   ```json output
+```txt
    {
    	"result": [
    		{

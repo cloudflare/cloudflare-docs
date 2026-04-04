@@ -1,0 +1,49 @@
+---
+pcx_content_type: reference
+title: SSH command logs
+sidebar:
+  order: 6
+description: Review SSH commands a user ran on a target.
+---
+
+SSH command logs record the commands that users run on infrastructure targets protected by [Access for Infrastructure](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/). Use these logs to audit user activity on your SSH servers.
+
+To view SSH command logs, log in to [Cloudflare One](https://one.dash.cloudflare.com/) and go to **Insights** > **Logs** > **SSH command logs**.
+
+## Prerequisites
+
+To generate SSH command logs, you must:
+
+1. Set up [Access for Infrastructure](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/) for your SSH servers.
+2. [Enable SSH command logging](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#ssh-command-logs) by uploading an encryption public key.
+
+## View SSH logs
+
+SSH command logs displayed in the dashboard are encrypted using a public key you provide. To view the contents of the logs:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Insights** > **Logs** > **SSH command logs**.
+2. Filter the logs using the name of your SSH application.
+3. Select the SSH session for which you want to export command logs.
+4. In the side panel, scroll down to **SSH logs** and select **Download**.
+5. Decrypt the log using the [SSH Logging CLI](https://github.com/cloudflare/ssh-log-cli/).
+
+## Explanation of the fields
+
+| Field                      | Description                                                                                     |
+| -------------------------- | ----------------------------------------------------------------------------------------------- |
+| **Session ID**             | Unique identifier for the SSH session.                                                          |
+| **User email**             | Email address of the user who initiated the SSH session.                                        |
+| **Target ID**              | Identifier of the infrastructure target being accessed.                                         |
+| **Client address**         | Source IP address of the SSH connection.                                                        |
+| **Server address**         | Destination IP address of the SSH server.                                                       |
+| **Session start datetime** | Timestamp when the SSH session started.                                                         |
+| **Session finish datetime**| Timestamp when the SSH session ended.                                                           |
+| **Program type**           | Type of SSH program (`shell`, `exec`, `x11`, `direct-tcpip`, or `forwarded-tcpip`).             |
+| **Payload**                | Captured request/response data in asciicast v2 format, including commands for `exec` programs. |
+| **Error**                  | SSH error message, if an error occurred.                                                        |
+
+## Export SSH logs with Logpush
+
+Enterprise users can export SSH command logs using [Logpush](/cloudflare-one/insights/logs/logpush/). Logpush payloads are not encrypted with a customer-provided public key.
+
+For a list of all available fields, refer to [SSH Logs](/logs/logpush/logpush-job/datasets/account/ssh_logs/).

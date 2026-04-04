@@ -31,78 +31,38 @@ While in beta, Cloudflare will assist and provide guidance to users to write the
 
 ## Get started
 
-After Programmable Flow Protection has been enabled to your account:
+After Programmable Flow Protection has been enabled to your account, go to **Networking** > **L3/4 DDoS Protection** > **Advanced Protection** in the Cloudflare dashboard. Within the **Programmable Flow Protection** tab:
 
 <Steps>
-1. Write a C program and [upload it via the API](#upload-a-program).  
+1. Upload your eBPF program written in C.   
   
-    The program is validated by the system and stored in your account. The API compiles the program, then runs a verifier against the compiled program to enforce memory checks and verify program termination. If the program fails compilation or verification, the API will return a detailed error message.
+    The program is validated by the system and stored in your account. The API compiles the program, then runs a verifier against the compiled program to enforce memory checks and verify program termination. If the program fails compilation or verification, the Cloudflare dashboard will return a detailed error message.
   
-2. Create a [rule](#create-a-rule).
-
-    A rule for Programmable Flow Protection must contain the following fields:
-
-        - `Name`
-        - `Program ID` (must already exist in the API and be in `success` state)
-        - `Scope` (one of: `global`, `regional`, `datacenter`)
-        - `Mode` (one of: `enabled`, `monitoring`, `disabled`)
-        - `Expression`
-
-        The `Expression` field specifies what traffic a rule will apply to. If a rule's expression is set to `true`, then that rule will apply to all traffic in an account. Alternatively, an expression can specify the following fields to match on:
-
-        - `ip.src`
-        - `ip.dst`
-        - `udp.srcport`
-        - `udp.dstport`
-
-        The `Expression` field for Programmable Flow Protection is similar to the `Filter` field for Advanced TCP Protection, except the `Expression` field applies to all modes while a `Filter` field is specified for each mode.
-
-        :::note
-        A rule for Programmable Flow Protection does not contain burst sensitivity, rate sensitivity, or profile sensitivity.
-        :::
+2. Create a [rule](/ddos-protection/advanced-ddos-systems/how-to/create-rule/#create-a-programmable-flow-protection-rule)
 
 3. To observe the program's behavior, query the `programmableFlowProtectionNetworkAnalyticsAdaptiveGroups` group in GraphQL.
+
+    :::note
+    The Network Analytics dashboard does not yet support filtering by the Programmable Flow Protection feature. This feature will be added soon.
+    :::
+
 </Steps>
 
 You can create additional rules with different [rule settings](/ddos-protection/advanced-ddos-systems/concepts/#rule-settings) [scoped](/ddos-protection/advanced-ddos-systems/concepts/#scope) to various regions and Cloudflare locations to change the [mode](/ddos-protection/advanced-ddos-systems/concepts/#mode) (Mitigation or Monitoring) to accommodate for your traffic patterns and business use cases.
 
+The Programmable Flow Protection system supports the [Data Localization suite](/data-localization/).
+
 :::caution[Beta functionality limitations]
 
-- The current program limit for deployment is restricted to one program per account.
-- The system supports the [Data Localization suite](/data-localization/).
-- Currently, it is only possible to control the system via the API.
-- For more information on beta services, refer to section 2.6 in the [Enterprise Terms of Service](https://www.cloudflare.com/enterpriseterms/).
+For more information on beta services, refer to section 2.6 in the [Enterprise Terms of Service](https://www.cloudflare.com/enterpriseterms/).
   :::
 
 ### Write a basic program
 
-The steps below write a sample program that drops all User Datagram Protocol (UDP) traffic destined to port 66.
+The steps below write a sample program that drops all User Datagram Protocol (UDP) traffic with an IPv6 header. It also drops traffic destined to port 66, as well as traffic that does not have some custom specific application header value in the UDP payload.
 
 <Steps>
-1. Include Linux primitive header files.
-
-    The IP and UDP `headers` struct definitions are necessary to parse the program's input packet. The `inet` header file contains helper functions to convert data between network and host order.
-
-    :::note
-    You must include the same files that a Linux BPF program would be compiled with.
-    :::
-
-    ```c
-    #include <linux/ip.h>
-    #include <linux/udp.h>
-    #include <arpa/inet.h>
-    ```
-
-2. Include the Cloudflare eBPF header files.
-
-   These files have [helper functions](#helper-functions) to parse the input packet data to the BPF program, as well as the versioning data for the Programmable Flow Protection API.
-
-   ```c
-   #include "cf_ebpf_defs.h"
-   #include "cf_ebpf_helper.h"
-   ```
-
-3. Add a define directive to specify the versioned helper functions in use.
+1. Add a define directive to specify the versioned helper functions in use.
 
    As Cloudflare adds more features to the Programmable Flow Protection API, we will publish new versions of its API. Versions are guaranteed to be backwards compatible.
 
@@ -110,7 +70,18 @@ The steps below write a sample program that drops all User Datagram Protocol (UD
    #define CF_EBPF_HELPER_V0
    ```
 
-4. Define the entry function for packet processing.
+
+2. Include the Cloudflare eBPF header files.
+
+   These files have [helper functions](#helper-functions) to parse the input packet data to the BPF program.
+
+   ```c
+   #include <cf_ebpf_defs.h>
+   #include <cf_ebpf_helper.h>
+   ```
+
+
+3. Define the entry function for packet processing.
 
    Your program must have the exact function signature below to properly pass Cloudflare's program verification.
 
@@ -120,7 +91,7 @@ The steps below write a sample program that drops all User Datagram Protocol (UD
    uint64_t cf_ebpf_main(void *state)
    ```
 
-5. Cast the input argument into usable structs.
+4. Cast the input argument into usable structs.
 
    Convert the input data into `cf_ebpf_generic_ctx`, which tells Cloudflare the data boundaries in the memory that we are reading.
 
@@ -132,7 +103,7 @@ The steps below write a sample program that drops all User Datagram Protocol (UD
    struct cf_ebpf_packet_data *p;
    ```
 
-6. Fill variables by calling the helper function.
+5. Fill variables by calling the helper function.
 
    You must fill in the variables by calling the helper function `parse_packet_data`, which Cloudflare has provided in a header file included in step 2.
 
@@ -147,28 +118,30 @@ The steps below write a sample program that drops all User Datagram Protocol (UD
    Available values after successful parsing:
 
    ```c
-   cf_ebpf_packet_data
-   /* Total length of the packet. */
-   size_t   total_packet_length;
-   /* Size of the IP header. Supports IPv4 (including options) and IPv6. */
-   size_t   ip_header_length;
-   /* Bytes of the packet, starting with the IP header. */
-   uint8_t  packet_buffer[1500];
+   struct cf_ebpf_packet_data {
+        /* Total length of the packet. */
+        size_t   total_packet_length;
+        /* Size of the IP header. Supports IPv4 (including options) and IPv6. */
+        size_t   ip_header_length;
+        /* Bytes of the packet, starting with the IP header. */
+        uint8_t  packet_buffer[1500];
    };
 
    struct cf_ebpf_parsed_headers {
-   /* Pointer to the parsed IPv4 header, if present (otherwise null). */
-   struct iphdr   *ipv4;
-   /* Pointer to the parsed IPv6 header, if present (otherwise null). */
-   struct ipv6hdr *ipv6;
-   /* Pointer to the parsed UDP header. */
-   struct udphdr  *udp;
-   /* Raw pointer to the last valid byte of the packet context data. */
-   uint8_t        *data_end;
+        /* Pointer to the parsed IPv4 header, if present (otherwise null). */
+        struct iphdr   *ipv4;
+        /* Pointer to the parsed IPv6 header, if present (otherwise null). */
+        struct ipv6hdr *ipv6;
+        /* Pointer to the parsed UDP header. */
+        struct udphdr  *udp;
+        /* Raw pointer to the last valid byte of the packet context data. */
+        uint8_t        *data_end;
    };
    ```
 
-7. Write your custom logic.
+   For a full definition of helper functions and structures, refer to [Supported BPF helper functions and structures](/ddos-protection/advanced-ddos-systems/overview#supported-bpf-helper-functions-and-structures).
+
+6. Write your custom logic.
 
    Prior steps have established the code that should be the same for any program that you write, regardless of its logic.
 
@@ -180,20 +153,44 @@ The steps below write a sample program that drops all User Datagram Protocol (UD
 
    In the example snippet below, the program will drop any packet where the IPv6 header exists or where the UDP destination port is 66.
 
+   It will then check the application header value in the UDP payload and verify its last byte is a fixed value `0xCF`. 
+
    ```c
-   struct ipv6hdr *ipv6_hdr;
-   struct udphdr *udp_hdr;
-   ipv6_hdr = (struct ipv6hdr *)headers.ipv6;
-   if (ipv6_hdr != NULL) {
-     return CF_EBPF_DROP;
-   }
-   udp_hdr = (struct udphdr *)headers.udp;
-   if (htons(udp_hdr->dest) == 66) {
-       return CF_EBPF_DROP;
-   }
+    struct ipv6hdr *ipv6_hdr;
+    struct udphdr *udp_hdr;
+    ipv6_hdr = (struct ipv6hdr *)headers.ipv6;
+    if (ipv6_hdr != NULL) {
+      return CF_EBPF_DROP;
+    }
+    udp_hdr = (struct udphdr *)headers.udp;
+    if (ntohs(udp_hdr->dest) == 66) {
+        return CF_EBPF_DROP;
+    }
+
+    struct apphdr *app = (struct apphdr *)(udp_hdr + 1);
+    if ((uint8_t *)(app + 1) > headers.data_end) {
+        return CF_EBPF_DROP;
+    }
+
+    // The verifier has a special limit that it will not allow offsets
+    // beyond 65535. We need this check (token_len > 64000) in order
+    // to satisfy that, even though it is not possible.
+    uint16_t token_len = app->length;
+    if (token_len > 64000) {
+        return CF_EBPF_DROP;
+    }
+
+    if ((uint8_t *)(app->token + token_len) > headers.data_end) {
+        return CF_EBPF_DROP;
+    }
+
+    uint8_t *last_byte = app->token + token_len - 1;
+    if (*last_byte != 0xCF) {
+        return CF_EBPF_DROP;
+    }
    ```
 
-8. Pass any packets that did not get dropped by program logic by returning `CF_EBPF_PASS`.
+7. Pass any packets that did not get dropped by program logic by returning `CF_EBPF_PASS`.
 
    The currently supported return values are:
    - `CF_EBPF_PASS = return value 0`
@@ -207,25 +204,18 @@ The steps below write a sample program that drops all User Datagram Protocol (UD
 
 </Steps>
 
-### Write a complex program
-
-The example program below parses the UDP payload into a known custom application header and ensures that the last byte is considered valid.
-
+For reference, the example below is the basic program in its entirety:
 ```c
-#include <linux/ip.h>
-#include <linux/udp.h>
-#include <arpa/inet.h>
+#define CF_EBPF_HELPER_V0
 
-#include "cf_ebpf_defs.h"
-#include "cf_ebpf_helper.h"
+#include <cf_ebpf_defs.h>
+#include <cf_ebpf_helper.h>
 
 struct apphdr {
     uint8_t       version;
     uint16_t      length;   // Length of the variable-length token
     unsigned char token[0]; // Variable-length token
 } __attribute__((packed));
-
-SEC(CF_EBPF_VERSION_1_0_0)
 
 uint64_t
 cf_ebpf_main(void *state)
@@ -245,7 +235,7 @@ cf_ebpf_main(void *state)
     }
 
     udp_hdr = (struct udphdr *)headers.udp;
-    if (htons(udp_hdr->dest) == 66) {
+    if (ntohs(udp_hdr->dest) == 66) {
         return CF_EBPF_DROP;
     }
 
@@ -274,9 +264,249 @@ cf_ebpf_main(void *state)
 }
 ```
 
-The program calculates the start of the UDP payload as the first byte after the end of the UDP header. The address of the UDP payload must be less than the total memory that the program was given in order to pass the verifier.
 
-Once it has the correct offset, the program casts the UDP payload into the expected application header format. The program perform another bounds check on the memory of the application header to pass the verifier. Then, it ensures that the last byte of the token is `0xCF` to conform with the test condition.
+### Write a complex program
+
+The example program below implements a UDP-based challenge-response mechanism using helper functions to maintain state between packets from the same source IP. This is useful for mitigating DDoS attacks by requiring clients to prove they can receive and respond to challenges before allowing their traffic through.
+
+The challenge mechanism works as follows:
+
+When a packet arrives from an unknown source IP, the program generates a challenge packet containing a random nonce and marks the source IP as "challenged" in the state table. The original packet is dropped.
+
+If a packet arrives from a source IP that has already been challenged, the program checks if the packet contains the correct challenge response (the nonce XORed with a secret value). If the response is correct, the source IP is marked as "verified". If incorrect, the source IP is immediately blocklisted.
+
+Packets from verified source IPs are passed through without further checks.
+
+<Steps>
+1. Include the Cloudflare eBPF header files and define the helper version.
+
+   ```c
+   #define CF_EBPF_HELPER_V0
+
+   #include <cf_ebpf_defs.h>
+   #include <cf_ebpf_helper.h>
+   ```
+
+2. Define constants for the challenge-response protocol.
+
+   The challenge response is computed by XORing the nonce with a secret value. The expiry time determines how long a challenged or verified status remains valid.
+
+   ```c
+   #define CHALLENGE_SECRET 0xDEADBEEFCAFEBABEULL
+   #define CHALLENGE_EXPIRY_SECS 60
+   #define VERIFIED_EXPIRY_SECS 3600
+   ```
+
+3. Define a structure for challenge packets.
+
+   The challenge packet contains the nonce that the client must respond to, and space for the client's response.
+
+   ```c
+   struct challenge_packet {
+       uint64_t nonce;        // Random nonce for this challenge
+       uint64_t response;     // Expected: nonce XOR CHALLENGE_SECRET
+   };
+   ```
+
+4. Define the entry function and parse the packet.
+
+   ```c
+   uint64_t cf_ebpf_main(void *state)
+   {
+       struct cf_ebpf_generic_ctx *ctx = state;
+       struct cf_ebpf_parsed_headers headers;
+       struct cf_ebpf_packet_data *p;
+
+       if (parse_packet_data(ctx, &p, &headers) != 0) {
+           return CF_EBPF_DROP;
+       }
+
+       struct udphdr *udp_hdr = headers.udp;
+   ```
+
+5. Check the source IP status using `get_src_ip_status`.
+
+   The status indicates whether this source IP is new, challenged, verified, or blocklisted. The expiry timestamp indicates when the status expires.
+
+   ```c
+       uint8_t status;
+       uint64_t expiry;
+       int ret = get_src_ip_status(&status, &expiry);
+
+       // Check if status has expired
+       int64_t now = timestamp();
+       if (ret == 0 && expiry > 0 && (uint64_t)now > expiry) {
+           // Status expired, treat as new connection
+           ret = -1;
+       }
+   ```
+
+6. Handle verified source IPs. 
+
+   The Programmable Flow Protection platform will drop packets from blocklisted IPs before the program is invoked. There is no need to explicitly handle the blocklisted case.
+
+   If the source IP has been verified (passed a previous challenge), allow the packet through.
+
+   ```c
+       if (ret == 0 && status == CF_EBPF_SRC_IP_STATUS_VERIFIED) {
+           return CF_EBPF_PASS;
+       }
+   ```
+
+7. Check if this is a challenge response from a challenged source IP.
+
+   If the source IP was previously challenged, check if the current packet contains a valid challenge response. If the response is correct, mark the source IP as verified. If the response is incorrect, blocklist the source IP immediately.
+
+   ```c
+       if (ret == 0 && status == CF_EBPF_SRC_IP_STATUS_CHALLENGED) {
+           // Get the stored nonce from user data
+           uint64_t stored_nonce;
+           if (get_src_ip_data(&stored_nonce) != 0) {
+               return CF_EBPF_DROP;
+           }
+
+           // Parse the challenge response from the packet payload
+           struct challenge_packet *resp = (struct challenge_packet *)(udp_hdr + 1);
+           if ((uint8_t *)(resp + 1) > headers.data_end) {
+               return CF_EBPF_DROP;
+           }
+
+           // Verify the response: should be nonce XOR secret
+           uint64_t expected_response = stored_nonce ^ CHALLENGE_SECRET;
+           if (resp->response == expected_response) {
+               // Correct response - mark as verified
+               set_src_ip_status(CF_EBPF_SRC_IP_STATUS_VERIFIED, VERIFIED_EXPIRY_SECS);
+               set_src_ip_data(0);  // Clear the nonce
+               return CF_EBPF_PASS;
+           }
+
+           // Wrong response - blocklist immediately
+           set_src_ip_status(CF_EBPF_SRC_IP_STATUS_BLOCKLISTED, 0);
+           return CF_EBPF_DROP;
+       }
+   ```
+
+8. Issue a new challenge for new source IPs.
+
+   Generate a random nonce, store it in the state table, create a challenge packet, and send it using `set_challenge`.
+
+   ```c
+       // Generate a new challenge for this source IP
+       uint64_t nonce = rand();
+
+       // Store the nonce and mark as challenged
+       set_src_ip_status(CF_EBPF_SRC_IP_STATUS_CHALLENGED, CHALLENGE_EXPIRY_SECS);
+       set_src_ip_data(nonce);
+
+       // Build the challenge packet to send back
+       struct challenge_packet challenge;
+       challenge.nonce = nonce;
+       challenge.response = 0;  // Client will fill this in
+
+       // Set the challenge packet buffer
+       set_challenge((uint8_t *)&challenge, sizeof(challenge));
+
+       // Drop the original packet until client responds to challenge
+       return CF_EBPF_DROP;
+   }
+   ```
+
+</Steps>
+
+For reference, the example below is the complex program in its entirety:
+
+```c
+#define CF_EBPF_HELPER_V0
+
+#include <cf_ebpf_defs.h>
+#include <cf_ebpf_helper.h>
+
+// Challenge-response protocol constants
+#define CHALLENGE_SECRET 0xDEADBEEFCAFEBABEULL
+#define CHALLENGE_EXPIRY_SECS 60
+#define VERIFIED_EXPIRY_SECS 3600
+
+// Challenge packet structure
+struct challenge_packet {
+    uint64_t nonce;
+    uint64_t response;
+};
+
+uint64_t cf_ebpf_main(void *state)
+{
+    struct cf_ebpf_generic_ctx *ctx = state;
+    struct cf_ebpf_parsed_headers headers;
+    struct cf_ebpf_packet_data *p;
+
+    if (parse_packet_data(ctx, &p, &headers) != 0) {
+        return CF_EBPF_DROP;
+    }
+
+    struct udphdr *udp_hdr = headers.udp;
+
+    // Check source IP status
+    uint8_t status;
+    uint64_t expiry;
+    int ret = get_src_ip_status(&status, &expiry);
+
+    // Check if status has expired
+    int64_t now = timestamp();
+    if (ret == 0 && expiry > 0 && (uint64_t)now > expiry) {
+        ret = -1;  // Treat as new connection
+    }
+
+    // Handle verified source IPs - allow through
+    if (ret == 0 && status == CF_EBPF_SRC_IP_STATUS_VERIFIED) {
+        return CF_EBPF_PASS;
+    }
+
+    // Handle challenged source IPs - check for valid response
+    if (ret == 0 && status == CF_EBPF_SRC_IP_STATUS_CHALLENGED) {
+        uint64_t stored_nonce;
+        if (get_src_ip_data(&stored_nonce) != 0) {
+            return CF_EBPF_DROP;
+        }
+
+        // Parse challenge response from packet payload
+        struct challenge_packet *resp = (struct challenge_packet *)(udp_hdr + 1);
+        if ((uint8_t *)(resp + 1) > headers.data_end) {
+            return CF_EBPF_DROP;
+        }
+
+        // Check response using XOR
+        uint64_t expected_response = stored_nonce ^ CHALLENGE_SECRET;
+        if (resp->response == expected_response) {
+            // Correct response - mark as verified
+            set_src_ip_status(CF_EBPF_SRC_IP_STATUS_VERIFIED, VERIFIED_EXPIRY_SECS);
+            set_src_ip_data(0);
+            return CF_EBPF_PASS;
+        }
+
+        // Wrong response - blocklist immediately
+        set_src_ip_status(CF_EBPF_SRC_IP_STATUS_BLOCKLISTED, 0);
+        return CF_EBPF_DROP;
+    }
+
+    // New source IP - issue initial challenge
+    uint64_t nonce = rand();
+    set_src_ip_status(CF_EBPF_SRC_IP_STATUS_CHALLENGED, CHALLENGE_EXPIRY_SECS);
+    set_src_ip_data(nonce);
+
+    struct challenge_packet challenge;
+    challenge.nonce = nonce;
+    challenge.response = 0;
+    set_challenge((uint8_t *)&challenge, sizeof(challenge));
+
+    return CF_EBPF_DROP;
+}
+```
+
+This program demonstrates several key concepts:
+
+- **State management**: Using `get_src_ip_status`, `set_src_ip_status`, `get_src_ip_data`, and `set_src_ip_data` to track the challenge state for each source IP.
+- **Challenge emission**: Using `set_challenge` to send a challenge packet back to the client.
+- **Cryptographic verification**: Using a shared secret to verify that the client correctly responded to the challenge.
+- **Expiry handling**: Using timestamps to expire stale state entries.
 
 ---
 
@@ -292,112 +522,74 @@ Helper functions may be removed or changed. New helper functions may be introduc
 
 The table below provides a list of currently supported helper functions:
 
-| Function name       | Input parameters                                                               | Output parameters | Description                                                                                                                                                                                                                             |
-| ------------------- | ------------------------------------------------------------------------------ | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `cf_ebpf_rand`      | None                                                                           | `uint64_t`        | Generates a random unsigned integer.                                                                                                                                                                                                    |
-| `parse_packet_data` | `cf_ebpf_generic_ctx`<br />`cf_ebpf_packet_data`<br />`cf_ebpf_parsed_headers` | `int`             | Use input `cf_ebpf_generic_ctx` and `cf_ebpf_packet_data` to generate valid `cf_ebpf_parsed_headers`.<br />Upon success, `cf_ebpf_parsed_headers` will contain valid IP and UDP headers.<br />Returns `0` on success or `1` on failure. |
+| Function name       | Function signature                                                               | Description                                                                                                                                                                                                                             |
+| ------------------- | ------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `rand`      | `uint64_t rand(void)`                                                                           | Generates a random unsigned integer.                                                                                                                                                                                                    |
+| `timestamp` | `uint64_t timestamp(void)` | Returns the current timestamp. |
+| `hash_md5` | `int hash_md5(uint8_t *src, size_t src_len, uint8_t *dst)` | Computes MD5 hash of the source buffer and stores result in destination buffer. |
+| `hash_sha256` | `int hash_sha256(uint8_t *src, size_t src_len, uint8_t *dst)` | Computes SHA-256 hash of the source buffer and stores result in destination buffer. |
+| `hash_sha512` | `int hash_sha512(uint8_t *src, size_t src_len, uint8_t *dst)` | Computes SHA-512 hash of the source buffer and stores result in destination buffer. |
+| `hash_crc32` | `int hash_crc32(uint8_t *src, size_t src_len, uint8_t *dst)` | Computes CRC32 hash of the source buffer and stores result in destination buffer. |
+| `hmac_sha256` | `int hmac_sha256(uint8_t *key, size_t key_len, uint8_t *msg, size_t msg_len, uint8_t *dst)` | Computes HMAC-SHA256 of the message using the provided key and stores result in destination buffer. |
+| `hmac_sha512` | `int hmac_sha512(uint8_t *key, size_t key_len, uint8_t *msg, size_t msg_len, uint8_t *dst)` | Computes HMAC-SHA512 of the message using the provided key and stores result in destination buffer. |
+| `set_challenge` | `int set_challenge(uint8_t *src, size_t src_len)` | Sets challenge data for the current packet. |
+| `get_src_ip_status` | `uint64_t get_src_ip_status(void)` | Retrieves the status value associated with the source IP address from the state table. |
+| `set_src_ip_status` | `int set_src_ip_status(uint64_t status)` | Sets the status value associated with the source IP address in the state table. |
+| `get_src_ip_data` | `int get_src_ip_data(uint8_t *dst, size_t dst_len)` | Retrieves custom data associated with the source IP address from the state table. |
+| `set_src_ip_data` | `int set_src_ip_data(uint8_t *src, size_t src_len)` | Stores custom data associated with the source IP address in the state table. |
+| `get_flow_data` | `int get_flow_data(uint8_t *dst, size_t dst_len)` | Retrieves custom data associated with the current flow from the state table. |
+| `set_flow_data` | `int set_flow_data(uint8_t *src, size_t src_len)` | Stores custom data associated with the current flow in the state table. |
+| `entropy` | `double entropy(uint8_t *src, size_t src_len)` | Calculates the entropy of the source buffer. |
+| `set_network_analytics_tag` | `int set_network_analytics_tag(Tag value)` | Sets a custom tag for network analytics reporting. |
+| `ntohs` | `uint16_t ntohs(uint16_t netshort)` | Converts a 16-bit integer from network byte order to host byte order. |
+| `htons` | `uint16_t htons(uint16_t hostshort)` | Converts a 16-bit integer from host byte order to network byte order. |
+| `ntohl` | `uint32_t ntohl(uint32_t netlong)` | Converts a 32-bit integer from network byte order to host byte order. |
+| `htonl` | `uint32_t htonl(uint32_t hostlong)` | Converts a 32-bit integer from host byte order to network byte order. |
+| `ntohll` | `uint64_t ntohll(uint64_t netlonglong)` | Converts a 64-bit integer from network byte order to host byte order. |
+| `htonll` | `uint64_t htonll(uint64_t hostlonglong)` | Converts a 64-bit integer from host byte order to network byte order. |
+| `parse_packet_data` | `int parse_packet_data(cf_ebpf_generic_ctx, cf_ebpf_packet_data, cf_ebpf_parsed_headers)` | Use input `cf_ebpf_generic_ctx` and `cf_ebpf_packet_data` to generate valid `cf_ebpf_parsed_headers`.<br />Upon success, `cf_ebpf_parsed_headers` will contain valid IP and UDP headers.<br />Returns `0` on success or `1` on failure. |
 
 ---
+
+With the exception of `rand`, `timestamp`, `ntohs`, `htons`, `ntohl`, `htonl`, `ntohll`, and `htonll`, all helper functions return a `0` on success and non-zero value on failure.
 
 ## Program API endpoints
 
 ### Upload a program
 
-To upload a program, use the following API endpoint. The Cloudflare API will receive the source code in the `C` file, compile it into BPF bytecode, and run the verifier against it.
+To upload a program, navigate to Networking > L3/4 DDoS protection > Advanced Protection in the Cloudflare dashboard. Then select the tab titled Programmable Flow Protection.
+
+Under **Programs**, click the button "Upload new program." This will prompt you to select a file to upload with your `C` source code. 
+
+The Cloudflare API will receive the source code in the `C` file, compile it into BPF bytecode, and run the verifier against it.
 
 If compilation or verification fails, the API will return a detailed error message.
 
 If compilation and verification succeeds, Cloudflare will store the source code and object file to the account and return the program ID.
 
-Be sure to use the `@` before specifying the path to the source code file. The `Authorization` header is populated by creating a Cloudflare API token of type `Account.DDoS Protection`.
-
-```bash wrap title="Request"
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/programs \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---header "Content-Type: text/x-csrc" \
---data-binary "@<PATH_TO_SOURCE_CODE_FILE>"
-```
-
-<Tabs>
-<TabItem label="Example successful response">
-
-```json wrap output
-{
-	"result": {
-		"id": "ae6bdb2c-d269-4e4b-8e33-2d12d92c8930",
-		"account_id": 8835764,
-		"created_on": "2025-11-10T15:53:08.680909289Z",
-		"modified_on": "2025-11-10T15:53:08.680909339Z",
-		"state": "success"
-	},
-	"success": true,
-	"errors": [],
-	"messages": []
-}
-```
-
-</TabItem>
-<TabItem label="Example unsuccessful response">
-
-```json wrap output
-{
-	"result": {
-		"id": "932e102f-7b3f-45ca-83f5-5ac36a5cd8eb",
-		"account_id": 8835764,
-		"created_on": "2025-11-10T15:55:26.465227278Z",
-		"modified_on": "2025-11-10T15:55:26.465227328Z",
-		"err_msg": "eBPF verification failed: 61: Upper bound must be at most packet_size (valid_access(r3.offset, width=1) for read)\n\n (error: exit status 1)",
-		"state": "failed_verifier"
-	},
-	"success": true,
-	"errors": [],
-	"messages": []
-}
-```
-
-</TabItem>
-</Tabs>
 
 ### Update a program
 
 During the development process, you may find it useful to update the same program (identified by the same program ID) instead of repeatedly creating new programs as new resources.
 
-For example, the above program (ID `932e102f-7b3f-45ca-83f5-5ac36a5cd8eb`) failed to pass the verifier, so you can edit it further and try using the same program ID with a `PATCH` operation to avoid polluting your set of programs with files that failed to compile or verify.
+To update the program, select the three dots next to your program. Then, select **Overwrite**. This will prompt you to choose a file to upload as your `C` source code. 
 
-```bash wrap title="Request"
-curl --request PATCH \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/programs/$PROGRAM_ID \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---header "Content-Type: text/x-csrc" \
---data-binary "@<PATH_TO_SOURCE_CODE_FILE>"
-```
+:::note
+It is possible to update and overwrite a program that is currently in use by one or more rules. When doing so, you will be warned that the program is currently active and will be overwritten. However, if an active program is being updated with a program that either does not compile or can not be verified, the update will fail and the old program will continue to be in use.
+:::
 
 ### View all programs
 
-To view all uploaded programs and their program IDs and success status, use the following `GET` endpoint. Programs will be ordered alphanumerically by their resource IDs by default. To change the order of returned resources, use the supported pagination query parameters.
+To view all uploaded programs and their success statuses, view the table under the section entitled **Programs**.
 
-```bash wrap title="Request"
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/programs \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
-```
 
 ### Delete a program
 
-To delete a stored program by its ID, use the following `DELETE` endpoint. If an active rule exists that references this program, the API will refuse to delete the program. The referencing rule must be deleted before deleting its program.
+To delete a program, select the three dots next to the program that you wish to delete. Then, select **Delete**. 
 
-```bash wrap title="Request"
-curl --request DELETE \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/programs/$PROGRAM_ID \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
-```
+Note that you will not be able to delete a program that is referenced in an active Rule.
 
-To delete all stored programs for an account, use the following `DELETE` endpoint. If any active rule exists that references any program, the API will refuse to delete the programs. The referencing rules must be deleted before deleting its program.
-
-```bash wrap title="Request"
-curl --request DELETE \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/programs \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
-```
+Note that programs that have a "failed" status (meaning they failed to compile or pass verification) will be automatically and permanently deleted after 30 days of inactivity.
 
 ---
 
@@ -405,10 +597,9 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flo
 
 ### Create a rule
 
-<Render
-	file="advanced-ddos/create-pfp-rule"
-	product="ddos-protection"
-/>
+To create a rule, go to **Networking** > **L3/4 DDoS protection** > **Advanced Protection** in the Cloudflare dashboard. Then, select **Programmable Flow Protection**.
+
+Under **Rules**, select **Create rule**. Fill out the corresponding fields of your new rule.
 
 ### List all rules
 
@@ -471,7 +662,7 @@ This API endpoint debugs a program by intaking:
 This endpoint runs the referenced BPF program against the input PCAP and outputs a new annotated PCAP file. The output PCAP file will contain the exact same packets as the input PCAP file, and will also include the program verdict annotated in the **Packet Comment** section of each packet.
 
 ```bash wrap title="Request"
-curl 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/programs/$PROGRAM_ID/pcap?ip_offset=<IP_OFFSET_VALUE>' \
+curl 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/programs/$PROGRAM_ID/pcap' \
 --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --header "Content-Type: application/vnd.tcpdump.pcap" \
 --data-binary "@<PATH_TO_INPUT_PCAP_FILE>" \
@@ -604,6 +795,60 @@ struct cf_ebpf_parsed_headers {
    uint8_t        *data_end;
 };
 
+/* 
+* IPv4 header, used as field of cf_ebpf_parsed_headers */
+* source: https://github.com/torvalds/linux/blob/a7423e6ea2f8f6f453de79213c26f7a36c86d9a2/include/uapi/linux/ip.h#L87
+*/
+struct iphdr {
+#if defined(__BYTE_ORDER__) && __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+    uint8_t  version:4,
+             ihl:4;
+#else
+    uint8_t  ihl:4,
+             version:4;
+#endif
+    uint8_t  tos;
+    uint16_t tot_len;
+    uint16_t id;
+    uint16_t frag_off;
+    uint8_t  ttl;
+    uint8_t  protocol;
+    uint16_t check;
+    uint32_t saddr;
+    uint32_t daddr;
+};
+
+/* 
+* IPv6 header, used as field of cf_ebpf_parsed_headers
+* source: https://github.com/torvalds/linux/blob/a7423e6ea2f8f6f453de79213c26f7a36c86d9a2/include/uapi/linux/ipv6.h#L118
+*/ 
+struct ipv6hdr {
+#if defined(__BYTE_ORDER__) && __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
+    uint8_t  version:4,
+             priority:4;
+#else
+    uint8_t  priority:4,
+             version:4;
+#endif
+    uint8_t  flow_lbl[3];
+    uint16_t payload_len;
+    uint8_t  nexthdr;
+    uint8_t  hop_limit;
+    uint8_t  saddr[16];
+    uint8_t  daddr[16];
+};
+
+/* 
+* UDP header, used as field of cf_ebpf_parsed_headers
+* source: https://github.com/torvalds/linux/blob/a7423e6ea2f8f6f453de79213c26f7a36c86d9a2/include/uapi/linux/udp.h#L23
+*/
+struct udphdr {
+    uint16_t source;
+    uint16_t dest;
+    uint16_t len;
+    uint16_t check;
+};
+
 
 /* Function to construct cf_ebpf_parsed_headers from cf_ebpf_generic_ctx and
 * cf_ebpf_packet_data_v1. Performs required memory checks to pass verifier.
@@ -614,8 +859,74 @@ static inline int parse_packet_data(
    struct cf_ebpf_generic_ctx *ctx,
    struct cf_ebpf_packet_data **out_p,
    struct cf_ebpf_parsed_headers *out_headers
-)
+);
 
-/* Function that returns random unsigned integer value */
-uint64_t cf_ebpf_rand()
+/* Returns a random unsigned integer value. */
+uint64_t rand(void);
+
+/* Returns the current timestamp. */
+uint64_t timestamp(void);
+
+/* Computes MD5 hash of the source buffer and stores result in destination buffer. */
+int hash_md5(uint8_t *src, size_t src_len, uint8_t *dst);
+
+/* Computes SHA-256 hash of the source buffer and stores result in destination buffer. */
+int hash_sha256(uint8_t *src, size_t src_len, uint8_t *dst);
+
+/* Computes SHA-512 hash of the source buffer and stores result in destination buffer. */
+int hash_sha512(uint8_t *src, size_t src_len, uint8_t *dst);
+
+/* Computes CRC32 hash of the source buffer and stores result in destination buffer. */
+int hash_crc32(uint8_t *src, size_t src_len, uint8_t *dst);
+
+/* Computes HMAC-SHA256 of the message using the provided key and stores result in destination buffer. */
+int hmac_sha256(uint8_t *key, size_t key_len, uint8_t *msg, size_t msg_len, uint8_t *dst);
+
+/* Computes HMAC-SHA512 of the message using the provided key and stores result in destination buffer. */
+int hmac_sha512(uint8_t *key, size_t key_len, uint8_t *msg, size_t msg_len, uint8_t *dst);
+
+/* Sets challenge data for the current packet. */
+int set_challenge(uint8_t *src, size_t src_len);
+
+/* Retrieves the status value associated with the source IP address from the state table. */
+uint64_t get_src_ip_status(void);
+
+/* Sets the status value associated with the source IP address in the state table. */
+int set_src_ip_status(uint64_t status);
+
+/* Retrieves custom data associated with the source IP address from the state table. */
+int get_src_ip_data(uint8_t *dst, size_t dst_len);
+
+/* Stores custom data associated with the source IP address in the state table. */
+int set_src_ip_data(uint8_t *src, size_t src_len);
+
+/* Retrieves custom data associated with the current flow from the state table. */
+int get_flow_data(uint8_t *dst, size_t dst_len);
+
+/* Stores custom data associated with the current flow in the state table. */
+int set_flow_data(uint8_t *src, size_t src_len);
+
+/* Calculates the entropy of the source buffer. */
+double entropy(uint8_t *src, size_t src_len);
+
+/* Sets a custom tag for network analytics reporting. */
+int set_network_analytics_tag(uint64_t tag);
+
+/* Converts a 16-bit integer from network byte order to host byte order. */
+uint16_t ntohs(uint16_t netshort);
+
+/* Converts a 16-bit integer from host byte order to network byte order. */
+uint16_t htons(uint16_t hostshort);
+
+/* Converts a 32-bit integer from network byte order to host byte order. */
+uint32_t ntohl(uint32_t netlong);
+
+/* Converts a 32-bit integer from host byte order to network byte order. */
+uint32_t htonl(uint32_t hostlong);
+
+/* Converts a 64-bit integer from network byte order to host byte order. */
+uint64_t ntohll(uint64_t netlonglong);
+
+/* Converts a 64-bit integer from host byte order to network byte order. */
+uint64_t htonll(uint64_t hostlonglong);
 ```

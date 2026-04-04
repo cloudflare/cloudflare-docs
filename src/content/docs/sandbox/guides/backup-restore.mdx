@@ -448,7 +448,7 @@ This means `mksquashfs` could not read one or more files inside the directory yo
 - **Store handles externally** - Persist `DirectoryBackup` handles to KV, D1, or Durable Object storage for cross-request access
 - **Configure R2 lifecycle rules** - Set up [object lifecycle rules](/r2/buckets/object-lifecycles/) to automatically delete expired backups from R2, since TTL is only enforced at restore time
 - **Clean up old backups** - Delete previous backup objects from R2 when you no longer need them, or use the delete-then-write pattern for rolling backups
-- **Handle errors** - Wrap backup and restore calls in try/catch blocks
+- **Handle errors** - Wrap backup and restore calls in `try...catch` blocks
 - **Re-restore after restart** - The FUSE mount is ephemeral, so re-restore from the backup handle after container restarts
 
 ## Related resources

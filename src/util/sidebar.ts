@@ -107,15 +107,16 @@ export async function generateSidebar(group: Group) {
 	}
 
 	const product = directory.find((p) => p.id === group.label);
-	if (product && product.data.entry.group === "Developer platform") {
+	if (product) {
 		const links = [
-			["llms.txt", `${product.data.entry.url}llms.txt`],
-			["prompt.txt", "/workers/prompt.txt"],
+			[`${product.data.name} llms.txt`, `${product.data.entry.url}llms.txt`],
 			[
 				`${product.data.name} llms-full.txt`,
 				`${product.data.entry.url}llms-full.txt`,
 			],
-			["Developer Platform llms-full.txt", "/developer-platform/llms-full.txt"],
+			["Cloudflare Docs llms.txt", "/llms.txt"],
+			["Cloudflare Docs llms-full.txt", "/llms-full.txt"],
+			["Cloudflare Skills", "/style-guide/ai-tooling/#skills"],
 		];
 
 		group.entries.push({

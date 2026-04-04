@@ -26,7 +26,7 @@ import { Render, Details } from "~/components";
 
 </Details>
 
-A device IP identifies and routes traffic to a specific device in your Zero Trust organization. When a user registers the Cloudflare One Client (formerly WARP), Cloudflare assigns a virtual IPv4 and IPv6 address to the [device registration](/cloudflare-one/team-and-resources/devices/device-registration/). The Cloudflare One Client uses these IP addresses to create a [virtual network interface](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/client-architecture/#ip-traffic) on the device, which allows your private network to reach the device via [WARP-to-WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/peer-to-peer/), [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/), or [Cloudflare WAN](/cloudflare-one/networks/connectors/cloudflare-wan/) on-ramps.
+A device IP identifies and routes traffic to a specific device in your Zero Trust organization. When a user registers the Cloudflare One Client (formerly WARP), Cloudflare assigns a virtual IPv4 and IPv6 address to the [device registration](/cloudflare-one/team-and-resources/devices/device-registration/). The Cloudflare One Client uses these IP addresses to create a [virtual network interface](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/client-architecture/#ip-traffic) on the device, which allows your private network to reach the device via [peer-to-peer](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/peer-to-peer/), [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/), or [Cloudflare WAN](/cloudflare-one/networks/connectors/cloudflare-wan/) on-ramps.
 
 You can verify device IPs and, if needed, reconfigure address pools to avoid overlapping IPs with existing internal resources.
 
@@ -42,6 +42,10 @@ If your organization already uses the default IPv4 range for internal networking
 The default IPv6 range is owned by Cloudflare and therefore should not conflict with services on your private network. The device IPv6 range is not configurable.
 
 ## Create an IP subnet
+
+:::note
+Custom device IP subnets require [Unified Routing (beta)](/cloudflare-one/networks/connectors/cloudflare-wan/reference/traffic-steering/#unified-routing-mode-beta). If your account is on Legacy routing mode, contact your account team to discuss migration and availability.
+:::
 
 Create a custom IP subnet when the [default IPv4 range](#default-device-ips) conflicts with services on your private network.
 

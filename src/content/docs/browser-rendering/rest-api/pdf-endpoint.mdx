@@ -18,14 +18,16 @@ https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/pdf
 ```
 
 ## Required fields
+
 You must provide either `url` or `html`:
--  `url` (string)
--  `html` (string)
+
+- `url` (string)
+- `html` (string)
 
 ## Common use cases
 
--  Capture a PDF of a webpage
--  Generate PDFs, such as invoices, licenses, reports, and certificates, directly from HTML
+- Capture a PDF of a webpage
+- Generate PDFs, such as invoices, licenses, reports, and certificates, directly from HTML
 
 ## Basic usage
 
@@ -60,9 +62,7 @@ const client = new Cloudflare({
 const pdf = await client.browserRendering.pdf.create({
 	account_id: process.env["CLOUDFLARE_ACCOUNT_ID"],
 	url: "https://example.com/",
-    addStyleTag: [
-        { content: "body { font-family: Arial; }" }
-    ]
+	addStyleTag: [{ content: "body { font-family: Arial; }" }],
 });
 
 console.log(pdf);
@@ -201,19 +201,10 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 
 ### Use custom fonts
 
-If your PDF requires a font that is not pre-installed in the Browser Rendering environment, you can load custom fonts using the `addStyleTag` parameter. For instructions and examples, refer to [Use your own custom font](/browser-rendering/reference/supported-fonts/#rest-api).
+If your PDF requires a font that is not pre-installed in the Browser Rendering environment, you can load custom fonts using the `addStyleTag` parameter. For instructions and examples, refer to [Use your own custom font](/browser-rendering/features/custom-fonts/#rest-api).
 
-<Render
-  file="javascript-heavy-pages"
-  product="browser-rendering"
-/>
+<Render file="javascript-heavy-pages" product="browser-rendering" />
 
-<Render
-  file="setting-custom-user-agent"
-  product="browser-rendering"
-/>
+<Render file="setting-custom-user-agent" product="browser-rendering" />
 
-<Render
-  file="faq"
-  product="browser-rendering"
-/>
+<Render file="faq" product="browser-rendering" />

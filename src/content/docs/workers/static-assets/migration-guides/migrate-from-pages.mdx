@@ -168,7 +168,7 @@ Then, update your configuration file's `main` field to point to the location of 
 
 ##### Pages Functions with a `functions/` folder
 
-If you use **Pages Functions with a [folder of `functions/`](/pages/functions/)**, you must first compile these functions into a single Worker script with the [`wrangler pages functions build`](/workers/wrangler/commands/pages/#functions-build) command.
+If you use **Pages Functions with a [folder of `functions/`](/pages/functions/)**, you must first compile these functions into a single Worker script with the [`wrangler pages functions build`](/workers/wrangler/commands/pages/#pages-functions-build) command.
 
 <PackageManagers
 	type="exec"
@@ -302,7 +302,7 @@ If you are [using Workers Builds](#builds), ensure you also [configure any varia
 
 ### Wrangler commands
 
-Where previously you used [`wrangler pages dev`](/workers/wrangler/commands/pages/#dev-1) and [`wrangler pages deploy`](/workers/wrangler/commands/general/#deploy-1), now instead use [`wrangler dev`](/workers/wrangler/commands/general/#dev) and [`wrangler deploy`](/workers/wrangler/commands/general/#deploy). Additionally, if you are using a Vite-powered framework, [our new Vite plugin](/workers/vite-plugin/) may be able offer you an even simpler development experience.
+Where previously you used [`wrangler pages dev`](/workers/wrangler/commands/pages/#pages-dev) and [`wrangler pages deploy`](/workers/wrangler/commands/general/#deploy), now instead use [`wrangler dev`](/workers/wrangler/commands/general/#dev) and [`wrangler deploy`](/workers/wrangler/commands/general/#deploy). Additionally, if you are using a Vite-powered framework, [our new Vite plugin](/workers/vite-plugin/) may be able offer you an even simpler development experience.
 
 :::note[Wrangler uses a different default port for the local development]
 
@@ -457,7 +457,7 @@ This compatibility matrix compares the features of Workers and Pages. Unless oth
 | [Monorepos](/workers/ci-cd/builds/advanced-setups/)                                                         | ✅      | ✅      |
 | [Build Watch Paths](/workers/ci-cd/builds/build-watch-paths/)                                               | ✅      | ✅      |
 | [Build Caching](/workers/ci-cd/builds/build-caching/)                                                       | ✅      | ✅      |
-| [Deploy Hooks](/pages/configuration/deploy-hooks/)                                                          | ⏳      | ✅      |
+| [Deploy Hooks](/workers/ci-cd/builds/deploy-hooks/)                                                         | ✅      | ✅      |
 | [Branch Deploy Controls](/pages/configuration/branch-build-controls/)                                       | 🟡 [^3] | ✅      |
 | [Custom Branch Aliases](/pages/how-to/custom-branch-aliases/)                                               | ⏳      | ✅      |
 | **Pages Functions**                                                                                         |         |         |
