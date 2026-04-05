@@ -1,0 +1,73 @@
+---
+pcx_content_type: concept
+title: Namespaces
+sidebar:
+  order: 3
+---
+
+import { WranglerConfig } from "~/components";
+
+Every AI Search instance belongs to a **namespace**. A namespace is a logical grouping of instances within your account. Instance names must be unique within a namespace.
+
+## How namespaces work
+
+When you add an `ai_search_namespaces` binding to your [Wrangler configuration](/ai-search/api/search/workers-binding/#configure-the-binding), you specify which namespace the binding has access to. The binding grants full access to all instances within that namespace — you can get, list, create, and delete instances at runtime.
+
+<WranglerConfig>
+
+```toml
+[[ai_search_namespaces]]
+binding = "AI_SEARCH"
+namespace = "default"
+```
+
+</WranglerConfig>
+
+At runtime, `env.AI_SEARCH` is the namespace handle. Use `env.AI_SEARCH.get("instance-name")` to get a handle to a specific instance:
+
+```ts
+const instance = env.AI_SEARCH.get("my-instance");
+const results = await instance.search({
+	messages: [{ role: "user", content: "How does caching work?" }],
+});
+```
+
+The `get()` method is synchronous and does not make a network call. The instance is resolved lazily when you call a method like `search()` or `chatCompletions()`.
+
+## Default namespace
+
+A `default` namespace is automatically created for every account. If you do not need multiple namespaces, use `default` for all your instances.
+
+## Multiple namespaces
+
+You can declare multiple namespace bindings in the same Worker. Each binding maps to a different namespace and provides isolated access to its instances.
+
+<WranglerConfig>
+
+```toml
+[[ai_search_namespaces]]
+binding = "PROD_DOCS"
+namespace = "production"
+
+[[ai_search_namespaces]]
+binding = "STAGING_DOCS"
+namespace = "staging"
+```
+
+</WranglerConfig>
+
+Common reasons to use multiple namespaces:
+
+- **Environment separation** — Keep production and staging instances isolated. A binding scoped to `staging` cannot access instances in `production`.
+- **Domain separation** — Separate instances by product area, for example `blog`, `support`, and `docs`.
+- **Tenant isolation** — Assign each tenant their own namespace so that instance names do not collide across tenants.
+
+## Namespaces and instance uniqueness
+
+An instance name must be unique within a namespace. The combination of account ID, namespace, and instance name forms the unique identifier:
+
+```
+UNIQUE(account_id, namespace, instance_name)
+```
+
+This means you can have an instance named `docs` in both the `production` and `staging` namespaces without conflict.

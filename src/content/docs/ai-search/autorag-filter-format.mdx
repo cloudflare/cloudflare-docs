@@ -60,11 +60,7 @@ To filter for all files within a folder and its subfolders, use a compound filte
 For example, consider this file structure:
 
 <FileTree>
-- customer-a
-  - profile.md
-  - contracts
-    - property
-      - contract-1.pdf
+	- customer-a - profile.md - contracts - property - contract-1.pdf
 </FileTree>
 
 Using `{ type: "eq", key: "folder", value: "customer-a/" }` only matches files directly in that folder (like `profile.md`), not files in subfolders.
@@ -89,4 +85,4 @@ This filter matches all paths starting with `customer-a/` by using:
 ## Related
 
 - [Metadata filtering](/ai-search/configuration/metadata/) - New AI Search REST API filter format
-- [Migrate from AutoRAG Search API](/ai-search/how-to/migrate-from-autorag-api/) - Migration guide with before/after examples
+- [Migrate from AutoRAG Search API](/ai-search/api/migration/rest-api/) - Migration guide with before/after examples

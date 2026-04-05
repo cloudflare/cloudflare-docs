@@ -247,6 +247,16 @@
 /ai-search/tutorial/ /ai-search/how-to/ 301
 /ai-search/tutorial/brower-rendering-autorag-tutorial/ /ai-search/how-to/brower-rendering-autorag-tutorial/ 301
 /ai-search/autorag-api/ /api/resources/ai_search/ 301
+/ai-search/usage/workers-binding/ /ai-search/api/search/workers-binding/ 301
+/ai-search/usage/workers-binding-legacy/ /ai-search/api/workers-binding-legacy/ 301
+/ai-search/usage/rest-api/ /ai-search/api/search/rest-api/ 301
+/ai-search/usage/public-endpoint/ /ai-search/api/search/public-endpoint/ 301
+/ai-search/usage/mcp/ /ai-search/api/search/mcp/ 301
+/ai-search/usage/ /ai-search/api/search/ 301
+/ai-search/instances-api/workers-binding/ /ai-search/api/instances/workers-binding/ 301
+/ai-search/instances-api/rest-api/ /ai-search/api/instances/rest-api/ 301
+/ai-search/instances-api/ /ai-search/api/instances/ 301
+/ai-search/how-to/migrate-from-autorag-api/ /ai-search/api/migration/rest-api/ 301
 
 # bots
 /bots/about/plans/ /bots/plans/ 301

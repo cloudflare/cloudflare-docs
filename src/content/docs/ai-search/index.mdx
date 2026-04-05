@@ -2,7 +2,7 @@
 pcx_content_type: overview
 title: Overview
 
-description: Build scalable, fully-managed RAG applications with Cloudflare AI Search. Create retrieval-augmented generation pipelines to deliver accurate, context-aware AI without managing infrastructure.
+description: Cloudflare AI Search is a managed search service. Index your content and query it with natural language from a Workers binding, REST API, or MCP server.
 tags:
   - AI
 sidebar:
@@ -22,15 +22,13 @@ import {
 	Feature,
 } from "~/components";
 
-<Description>
-	Create AI-powered search for your data
-</Description>
+<Description>Add natural language search to your applications.</Description>
 
 <Plan type="all" />
 
-AI Search is Cloudflare’s managed search service. You can connect your data such as websites or unstructured content, and it automatically creates a continuously updating index that you can query with natural language in your applications or AI agents. It natively integrates with Cloudflare’s developer platform tools like Vectorize, AI Gateway, R2, Browser Rendering and Workers AI, while also supporting third-party providers and open standards. 
+AI Search is a managed search service. Connect a website, an R2 bucket, or upload your own documents, and your application gets a natural language search API.
 
-It supports retrieval-augmented generation (RAG) patterns, enabling you to build enterprise search, natural language search, and AI-powered chat without managing infrastructure.
+AI Search indexes your content automatically and keeps it up to date. Users ask questions in plain English and get answers grounded in your content. Use it for documentation search, knowledge bases, support chatbots, or any application where users need to find information. Access it from a [Workers binding](/ai-search/api/search/workers-binding/), the [REST API](/ai-search/api/search/rest-api/), or as an [MCP server](/ai-search/api/search/mcp/).
 
 <div>
 	<LinkButton href="/ai-search/get-started">Get started</LinkButton>
@@ -54,15 +52,15 @@ Automatically and continuously index your data source, keeping your content fres
 
 </Feature>
 
-<Feature header="Multitenancy support" href="/ai-search/how-to/multitenancy/" cta="Add filters">
+<Feature header="Metadata filtering" href="/ai-search/configuration/metadata/" cta="Add filters">
 
-Create multitenancy by scoping search to each tenant’s data using folder-based metadata filters.
+Define custom metadata fields and filter search results by category, version, language, or any attribute you define.
 
 </Feature>
 
-<Feature header="Workers Binding" href="/ai-search/usage/workers-binding/" cta="Add to Worker">
+<Feature header="Built-in MCP and UI snippets" href="/ai-search/configuration/public-endpoint/" cta="Get started">
 
-Call your AI Search instance for search or AI Search directly from a Cloudflare Worker using the native binding integration.
+Every instance includes a built-in MCP endpoint for AI agents and embeddable search and chat components for your website.
 
 </Feature>
 
@@ -78,7 +76,7 @@ Cache repeated queries and results to improve latency and reduce compute on repe
 
 <RelatedProduct header="Workers AI" href="/workers-ai/" product="workers-ai">
 
-Run machine learning models, powered by serverless GPUs, on Cloudflare’s global network.
+Run machine learning models, powered by serverless GPUs, on Cloudflare's global network.
 
 </RelatedProduct>
 
@@ -90,7 +88,7 @@ Observe and control your AI applications with caching, rate limiting, request re
 
 <RelatedProduct header="Vectorize" href="/vectorize/" product="vectorize">
 
-Build full-stack AI applications with Vectorize, Cloudflare’s vector database.
+Build full-stack AI applications with Vectorize, Cloudflare's vector database.
 
 </RelatedProduct>
 
@@ -114,10 +112,10 @@ Store large amounts of unstructured data without the costly egress bandwidth fee
 
 <LinkTitleCard
 	title="Get started"
-	href="/workers-ai/get-started/workers-wrangler/"
+	href="/ai-search/get-started/"
 	icon="open-book"
 >
-	Build and deploy your first Workers AI application.
+	Create your first AI Search instance and run your first query.
 </LinkTitleCard>
 
 <LinkTitleCard

@@ -35,21 +35,26 @@ The default system prompt can change and evolve over time to improve performance
 
 ### Configure via API
 
-When you make a `/ai-search` request using the [Workers Binding](/ai-search/usage/workers-binding/) or [REST API](/ai-search/usage/rest-api/), you can set the system prompt programmatically.
+When you make a `/ai-search` request using the [Workers Binding](/ai-search/api/search/workers-binding/) or [REST API](/ai-search/api/search/rest-api/), you can set the system prompt programmatically.
 
 For example:
 
-```javascript
-const answer = await env.AI.autorag("my-autorag").aiSearch({
-  query: "How do I train a llama to deliver coffee?",
-  model: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
-  system_prompt: "You are a helpful assistant."
+```ts
+const instance = env.AI_SEARCH.get("my-instance");
+
+const response = await instance.chatCompletions({
+	messages: [
+		{ role: "system", content: "You are a helpful assistant." },
+		{ role: "user", content: "How do I train a llama to deliver coffee?" },
+	],
+	model: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
 });
 ```
 
 import { DashButton } from "~/components";
 
 ### Configure via Dashboard
+
 The system prompt for your AI Search can be set after it has been created:
 
 1. Go to **AI Search** in the Cloudflare dashboard.

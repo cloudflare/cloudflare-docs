@@ -8,13 +8,13 @@ import { MetaInfo, Type } from "~/components";
 
 The unique identifier for the AI Search instance. Must be 1-32 characters and match the pattern `^[a-z0-9_]+(?:-[a-z0-9_]+)*$`.
 
-`type` <Type text="string" /> <MetaInfo text="required" />
+`type` <Type text="string" /> <MetaInfo text="optional" />
 
-The type of data source. Valid values: `r2`, `web-crawler`.
+The type of data source. Valid values: `r2`, `web-crawler`. Required when creating an instance with a data source. Omit when creating an empty instance for use with the [Items API](/ai-search/api/items/workers-binding/).
 
-`source` <Type text="string" /> <MetaInfo text="required" />
+`source` <Type text="string" /> <MetaInfo text="optional" />
 
-The data source location. For `r2` type, this is the R2 bucket name. For `web-crawler` type, this is the website domain.
+The data source location. For `r2` type, this is the R2 bucket name. For `web-crawler` type, this is the website domain. Required when `type` is specified.
 
 `source_params` <Type text="object" /> <MetaInfo text="optional" />
 
@@ -60,6 +60,18 @@ Additional parameters for the data source.
 
     - `r2_jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
       - The jurisdiction for the storage bucket.
+
+`index_method` <Type text="object" /> <MetaInfo text="optional" />
+
+Configures which indexing methods are enabled for the instance. Determines whether vector (semantic) search, keyword search, or both are available. At least one must be `true`.
+
+- `vector` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Enable vector-based semantic search. Defaults to `true`.
+
+- `keyword` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Enable keyword-based search. Defaults to `false`.
+
+Set both to `true` for hybrid search.
 
 `token_id` <Type text="string" /> <MetaInfo text="optional" />
 

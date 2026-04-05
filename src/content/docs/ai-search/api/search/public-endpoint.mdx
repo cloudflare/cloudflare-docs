@@ -26,7 +26,7 @@ For configuration options like rate limiting and CORS, refer to [Public endpoint
 
 ## Chat completions
 
-The `/chat/completions` endpoint searches your data source and generates a response using the model and retrieved context. It uses the same OpenAI-compatible format as the [REST API](/ai-search/usage/rest-api/#chat-completions).
+The `/chat/completions` endpoint searches your data source and generates a response using the model and retrieved context. It uses the same OpenAI-compatible format as the [REST API](/ai-search/api/search/rest-api/#chat-completions).
 
 ```bash
 curl https://<INSTANCE_ID>.search.ai.cloudflare.com/chat/completions \
@@ -45,7 +45,7 @@ For the full list of options, refer to the [Chat Completions API reference](/api
 
 ## Search
 
-The `/search` endpoint returns relevant chunks from your data source without generating a response. It uses the same format as the [REST API](/ai-search/usage/rest-api/#search).
+The `/search` endpoint returns relevant chunks from your data source without generating a response. It uses the same format as the [REST API](/ai-search/api/search/rest-api/#search).
 
 ```bash
 curl https://<INSTANCE_ID>.search.ai.cloudflare.com/search \
@@ -65,5 +65,5 @@ For the full list of options, refer to the [Search API reference](/api/resources
 ## Next steps
 
 - [UI snippets](/ai-search/configuration/embed-search-snippets/) - Add pre-built search and chat components to your website.
-- [MCP](/ai-search/usage/mcp/) - Connect AI agents using the Model Context Protocol.
+- [MCP](/ai-search/api/search/mcp/) - Connect AI agents using the Model Context Protocol.
 - [Public endpoint configuration](/ai-search/configuration/public-endpoint/) - Configure rate limiting, CORS, and security settings.

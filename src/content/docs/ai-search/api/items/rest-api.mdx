@@ -1,0 +1,47 @@
+---
+pcx_content_type: reference
+title: REST API
+sidebar:
+  order: 2
+---
+
+Use the AI Search REST API to upload, list, and manage individual documents within an instance.
+
+## Authentication
+
+All requests require an API token with AI Search edit permissions. Include the token in the `Authorization` header:
+
+```txt
+Authorization: Bearer <API_TOKEN>
+```
+
+## Items endpoints
+
+Manage individual documents within an AI Search instance.
+
+| Description      | Method   | Endpoint                                                                   |
+| ---------------- | -------- | -------------------------------------------------------------------------- |
+| List items       | `GET`    | `/accounts/{account_id}/ai-search/instances/{id}/items`                    |
+| Upload an item   | `POST`   | `/accounts/{account_id}/ai-search/instances/{id}/items`                    |
+| Get item info    | `GET`    | `/accounts/{account_id}/ai-search/instances/{id}/items/{item_id}`          |
+| Delete an item   | `DELETE` | `/accounts/{account_id}/ai-search/instances/{id}/items/{item_id}`          |
+| Download an item | `GET`    | `/accounts/{account_id}/ai-search/instances/{id}/items/{item_id}/download` |
+
+### Example: Upload a document
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-search/instances/$INSTANCE_ID/items" \
+  -H "Authorization: Bearer $API_TOKEN" \
+  -F "file=@guide.pdf"
+```
+
+### Example: List items
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-search/instances/$INSTANCE_ID/items" \
+  -H "Authorization: Bearer $API_TOKEN"
+```
+
+## API reference
+
+For complete API specifications including all parameters and response fields, refer to the [AI Search API reference](/api/resources/ai_search/).

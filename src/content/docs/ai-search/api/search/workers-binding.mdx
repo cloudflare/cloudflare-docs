@@ -1,0 +1,153 @@
+---
+pcx_content_type: reference
+title: Workers binding
+sidebar:
+  order: 1
+---
+
+import { Render, MetaInfo, Type } from "~/components";
+
+Use the AI Search [namespace binding](/ai-search/concepts/namespaces/) to query your AI Search instances from a [Cloudflare Worker](/workers/). For binding setup, refer to [Configure the binding](/ai-search/api/#configure-the-binding).
+
+## `search()`
+
+Search for relevant content chunks from your indexed data source. Returns scored chunks with source references.
+
+```ts
+const instance = env.AI_SEARCH.get("my-instance");
+
+const results = await instance.search({
+	messages: [{ role: "user", content: "How does caching work?" }],
+});
+```
+
+### Parameters
+
+<Render file="v2-search-params" product="ai-search" />
+
+### Response
+
+<Render file="v2-search-response" product="ai-search" />
+
+## `chatCompletions()`
+
+Generate chat completions using your AI Search instance as context. This method retrieves relevant content and uses it to generate a response.
+
+```ts
+const instance = env.AI_SEARCH.get("my-instance");
+
+const response = await instance.chatCompletions({
+	messages: [
+		{ role: "system", content: "You are a helpful documentation assistant." },
+		{ role: "user", content: "Explain the rules of hooks" },
+	],
+	model: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+	ai_search_options: {
+		retrieval: {
+			max_num_results: 5,
+		},
+		query_rewrite: {
+			enabled: true,
+		},
+	},
+});
+```
+
+### Stream responses
+
+Set `stream: true` to receive responses as Server-Sent Events (SSE) as they are generated:
+
+```ts
+const instance = env.AI_SEARCH.get("my-instance");
+
+const stream = await instance.chatCompletions({
+	messages: [{ role: "user", content: "How does Suspense work?" }],
+	stream: true,
+});
+
+return new Response(stream, {
+	headers: {
+		"content-type": "text/event-stream",
+		"cache-control": "no-cache",
+	},
+});
+```
+
+When `stream` is enabled, the method returns a `ReadableStream` of SSE events. Each event contains a JSON object with `choices[0].delta.content` for incremental text. The stream ends with a `data: [DONE]` event.
+
+### Parameters
+
+<Render file="v2-chat-completions-params" product="ai-search" />
+
+### Response (non-streaming)
+
+```json
+{
+	"id": "chatcmpl-abc123",
+	"object": "chat.completion",
+	"created": 1771886959,
+	"model": "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+	"choices": [
+		{
+			"index": 0,
+			"message": {
+				"role": "assistant",
+				"content": "To configure caching, set the cache parameter..."
+			},
+			"finish_reason": "stop"
+		}
+	],
+	"usage": {
+		"prompt_tokens": 6507,
+		"completion_tokens": 137,
+		"total_tokens": 6644
+	},
+	"chunks": [
+		{
+			"id": "chunk-001",
+			"type": "text",
+			"score": 0.85,
+			"text": "To configure caching, set the cache parameter to true...",
+			"item": {
+				"key": "docs/configuration/caching.md",
+				"timestamp": 1709568000
+			}
+		}
+	]
+}
+```
+
+| Field                       | Type   | Description                                                                         |
+| --------------------------- | ------ | ----------------------------------------------------------------------------------- |
+| `id`                        | string | Unique identifier for the completion.                                               |
+| `object`                    | string | Always `chat.completion`.                                                           |
+| `created`                   | number | Unix timestamp of when the completion was created.                                  |
+| `model`                     | string | The model used to generate the response.                                            |
+| `choices`                   | array  | Array of completion choices.                                                        |
+| `choices[].message.role`    | string | Always `assistant`.                                                                 |
+| `choices[].message.content` | string | The generated response text.                                                        |
+| `choices[].finish_reason`   | string | Why the model stopped generating. Typically `stop`.                                 |
+| `usage.prompt_tokens`       | number | Number of tokens in the prompt.                                                     |
+| `usage.completion_tokens`   | number | Number of tokens in the generated response.                                         |
+| `usage.total_tokens`        | number | Total tokens used.                                                                  |
+| `chunks`                    | array  | The source chunks used as context. Same format as the [search response](#response). |
+
+### Response (streaming)
+
+When `stream: true`, the method returns a `ReadableStream` of Server-Sent Events. The retrieved chunks are sent first as a `chunks` event, followed by the streamed response.
+
+```txt
+data: {"chunks":[{"id":"chunk-001","type":"text","score":0.85,"text":"...","item":{"key":"docs/caching.md"}}]}
+
+data: {"id":"chatcmpl-abc123","choices":[{"delta":{"content":"To "}}]}
+
+data: {"id":"chatcmpl-abc123","choices":[{"delta":{"content":"configure "}}]}
+
+data: {"id":"chatcmpl-abc123","choices":[{"delta":{"content":"caching..."}}]}
+
+data: [DONE]
+```
+
+## Local development
+
+Local development is supported by proxying requests to your deployed AI Search instance. When running in local mode with `wrangler dev`, your Worker forwards queries to the configured remote AI Search instance and returns results as if they were served locally.

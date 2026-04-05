@@ -1,0 +1,82 @@
+---
+pcx_content_type: how-to
+title: Build per-tenant search
+sidebar:
+  order: 8
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+Create isolated AI Search instances for each tenant at runtime. New tenants get their own instance without redeploying your Worker. This example uses the [Instance API](/ai-search/api/instances/workers-binding/) for lifecycle management and the [Items API](/ai-search/api/items/workers-binding/) for document uploads.
+
+## Prerequisites
+
+- A Worker with an `ai_search_namespaces` binding configured
+
+<WranglerConfig>
+
+```toml
+[[ai_search_namespaces]]
+binding = "TENANTS"
+namespace = "default"
+```
+
+</WranglerConfig>
+
+## Implementation
+
+This Worker exposes endpoints to onboard tenants, upload documents, search, and offboard:
+
+<TypeScriptExample>
+
+```ts
+export type Env = {
+	TENANTS: AiSearchNamespace;
+};
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		const url = new URL(request.url);
+		const tenantId = request.headers.get("x-tenant-id");
+
+		if (!tenantId) {
+			return new Response("Missing x-tenant-id header", { status: 400 });
+		}
+
+		if (url.pathname === "/onboard" && request.method === "POST") {
+			const instance = await env.TENANTS.create({
+				id: `tenant-${tenantId}`,
+			});
+			return Response.json({ success: true, instance: await instance.info() });
+		}
+
+		if (url.pathname === "/upload" && request.method === "POST") {
+			const formData = await request.formData();
+			const file = formData.get("file") as File;
+
+			const item = await env.TENANTS.get(`tenant-${tenantId}`).items.upload(
+				file.name,
+				await file.arrayBuffer(),
+			);
+			return Response.json({ success: true, item });
+		}
+
+		if (url.pathname === "/search") {
+			const query = url.searchParams.get("q") || "";
+			const results = await env.TENANTS.get(`tenant-${tenantId}`).search({
+				messages: [{ role: "user", content: query }],
+			});
+			return Response.json(results);
+		}
+
+		if (url.pathname === "/offboard" && request.method === "DELETE") {
+			await env.TENANTS.delete(`tenant-${tenantId}`);
+			return Response.json({ success: true });
+		}
+
+		return new Response("Not found", { status: 404 });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>

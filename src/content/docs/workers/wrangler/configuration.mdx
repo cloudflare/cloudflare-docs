@@ -265,6 +265,9 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 - `r2_buckets` <Type text="object" /> <MetaInfo text="optional" />
   - A list of R2 buckets that your Worker should be bound to. Refer to [R2 buckets](#r2-buckets).
 
+- `ai_search_namespaces` <Type text="object" /> <MetaInfo text="optional" />
+  - A list of AI Search namespaces that your Worker should be bound to. Refer to [AI Search namespaces](#ai-search-namespaces).
+
 - `vectorize` <Type text="object" /> <MetaInfo text="optional" />
   - A list of Vectorize indexes that your Worker should be bound to. Refer to [Vectorize indexes](#vectorize-indexes).
 
@@ -815,6 +818,35 @@ Example:
 		{
 			"binding": "<BINDING_NAME2>",
 			"id": "<NAMESPACE_ID2>",
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+### AI Search namespaces
+
+[AI Search](/ai-search/) is Cloudflare's managed search service. A [namespace](/ai-search/concepts/namespaces/) is a logical grouping of AI Search instances. The binding grants full access to all instances within the namespace.
+
+To bind AI Search namespaces to your Worker, assign an array of the below object to the `ai_search_namespaces` key.
+
+- `binding` <Type text="string" /> <MetaInfo text="required" />
+  - The binding name used to refer to the AI Search namespace.
+
+- `namespace` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the AI Search namespace. A `default` namespace is created automatically for every account. If the namespace does not exist, Wrangler creates it on deploy.
+
+Example:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"ai_search_namespaces": [
+		{
+			"binding": "<BINDING_NAME>",
+			"namespace": "default",
 		},
 	],
 }

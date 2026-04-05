@@ -3,10 +3,10 @@ link: "/ai-search/platform/release-note/"
 productName: AI Search
 productLink: "/ai-search/"
 entries:
-  - publish_date: "2026-03-06"
-    title: New AI Search Workers binding
+  - publish_date: "2026-04-16"
+    title: AI Search namespace binding
     description: |-
-      The new `env.AI.aiSearch()` binding provides a cleaner API for AI Search operations with account-level and instance-level methods. Requires `@cloudflare/workers-types` version 4.20260304.0 or later for TypeScript types and `wrangler` version 4.68.1 or later for local development. The previous `env.AI.autorag()` binding continues to work.
+      The new `ai_search_namespaces` [Workers binding](/ai-search/api/search/workers-binding/) provides first-class access to AI Search from your Worker. Group instances into [namespaces](/ai-search/concepts/namespaces/) for isolation, create and manage instances at runtime, and upload documents through the [Items API](/ai-search/api/items/workers-binding/). The previous `env.AI.autorag()` binding continues to work.
   - publish_date: "2026-04-01"
     title: Wrangler CLI support for AI Search
     description: |-
@@ -18,11 +18,11 @@ entries:
   - publish_date: "2026-03-23"
     title: Public endpoint, UI snippets, and MCP support
     description: |-
-      AI Search now supports [public endpoints](/ai-search/configuration/public-endpoint/), [UI snippets](/ai-search/configuration/embed-search-snippets/), and [MCP](/ai-search/usage/mcp/), making it easy to add search to your website or connect AI agents.
+      AI Search now supports [public endpoints](/ai-search/configuration/public-endpoint/), [UI snippets](/ai-search/configuration/embed-search-snippets/), and [MCP](/ai-search/api/search/mcp/), making it easy to add search to your website or connect AI agents.
   - publish_date: "2026-03-23"
     title: New REST API endpoints
     description: |-
-      AI Search introduces new [REST API](/ai-search/usage/rest-api/) endpoints for search that use an OpenAI-compatible format. You can use the familiar `messages` array structure that works with existing OpenAI SDKs and tools. The previous AutoRAG API endpoints will continue working as expected. New features will only be added to the new API. See the [migration guide](/ai-search/how-to/migrate-from-autorag-api/) for instructions.
+      AI Search introduces new [REST API](/ai-search/api/search/rest-api/) endpoints for search that use an OpenAI-compatible format. You can use the familiar `messages` array structure that works with existing OpenAI SDKs and tools. The previous AutoRAG API endpoints will continue working as expected. New features will only be added to the new API. See the [migration guide](/ai-search/api/migration/rest-api/) for instructions.
   - publish_date: "2026-02-09"
     title: Crawler user agent renamed
     description: |-
@@ -143,7 +143,7 @@ entries:
   - publish_date: "2025-04-23"
     title: Response streaming in AI Search binding added
     description: |-
-      AI Search now supports response streaming in the `AI Search` method of the [Workers binding](/ai-search/usage/workers-binding/), allowing you to stream results as they're retrieved by setting `stream: true`.
+      AI Search now supports response streaming in the `AI Search` method of the [Workers binding](/ai-search/api/search/workers-binding/), allowing you to stream results as they're retrieved by setting `stream: true`.
   - publish_date: "2025-04-07"
     title: AI Search is now in open beta!
     description: |-

@@ -1,0 +1,59 @@
+---
+pcx_content_type: overview
+title: API
+sidebar:
+  order: 4
+  group:
+    hideIndex: true
+---
+
+import { LinkCard } from "@astrojs/starlight/components";
+import { DirectoryListing, WranglerConfig } from "~/components";
+
+Access AI Search from a [Cloudflare Worker](/workers/) using the namespace binding, or from any HTTP client using the [REST API](/ai-search/api/search/rest-api/).
+
+## Configure the binding
+
+Add an `ai_search_namespaces` entry to your Wrangler configuration:
+
+<WranglerConfig>
+
+```toml
+[[ai_search_namespaces]]
+binding = "AI_SEARCH"
+namespace = "default"
+```
+
+</WranglerConfig>
+
+| Field       | Type   | Required | Description                                                                                                                                                                                                |
+| ----------- | ------ | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `binding`   | string | Yes      | The variable name available on `env`. For example, `"AI_SEARCH"` makes it accessible as `env.AI_SEARCH`.                                                                                                   |
+| `namespace` | string | Yes      | The name of the [namespace](/ai-search/concepts/namespaces/) to bind to. A `default` namespace is created automatically for every account. If the namespace does not exist, Wrangler creates it on deploy. |
+
+### Requirements
+
+| Package                     | Minimum version |
+| --------------------------- | --------------- |
+| `@cloudflare/workers-types` | `4.20260304.0`  |
+| `wrangler`                  | `4.68.1`        |
+
+### Quick start
+
+```ts
+export type Env = {
+	AI_SEARCH: AiSearchNamespace;
+};
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		const results = await env.AI_SEARCH.get("my-instance").search({
+			messages: [{ role: "user", content: "How does caching work?" }],
+		});
+
+		return Response.json(results);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+<DirectoryListing />

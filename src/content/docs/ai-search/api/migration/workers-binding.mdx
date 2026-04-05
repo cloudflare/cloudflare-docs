@@ -1,0 +1,123 @@
+---
+pcx_content_type: how-to
+title: Workers binding
+sidebar:
+  order: 1
+---
+
+import { WranglerConfig } from "~/components";
+
+This guide explains how to migrate from the legacy `env.AI.autorag()` Workers binding to the new [namespace binding](/ai-search/api/).
+
+## What changed
+
+|                     | `env.AI.autorag()` (legacy)         | Namespace binding                                                                |
+| ------------------- | ----------------------------------- | -------------------------------------------------------------------------------- |
+| **Wrangler config** | `"ai": \{ "binding": "AI" \}`       | `"ai_search_namespaces": [\{ "binding": "AI_SEARCH", "namespace": "default" \}]` |
+| **Access pattern**  | `env.AI.autorag("name")`            | `env.AI_SEARCH.get("name")`                                                      |
+| **Search params**   | `\{ query: "..." \}`                | `\{ messages: [\{ role: "user", content: "..." \}] \}`                           |
+| **Response shape**  | `data[]` with `file_id`, `filename` | `chunks[]` with `id`, `text`, `item`                                             |
+
+## Step 1: Update Wrangler configuration
+
+Replace the `ai` binding with an `ai_search_namespaces` entry:
+
+**Before:**
+
+<WranglerConfig>
+
+```toml
+[ai]
+binding = "AI"
+```
+
+</WranglerConfig>
+
+**After:**
+
+<WranglerConfig>
+
+```toml
+[[ai_search_namespaces]]
+binding = "AI_SEARCH"
+namespace = "default"
+```
+
+</WranglerConfig>
+
+## Step 2: Update the type definition
+
+**Before:**
+
+```ts
+export interface Env {
+	AI: Ai;
+}
+```
+
+**After:**
+
+```ts
+export interface Env {
+	AI_SEARCH: AiSearchNamespace;
+}
+```
+
+## Step 3: Update search calls
+
+**Before:**
+
+```ts
+const result = await env.AI.autorag("my-instance").search({
+	query: "How does caching work?",
+});
+```
+
+**After:**
+
+```ts
+const result = await env.AI_SEARCH.get("my-instance").search({
+	messages: [{ role: "user", content: "How does caching work?" }],
+});
+```
+
+## Step 4: Update response handling
+
+The response shape changed. Update any code that reads from the response:
+
+**Before:**
+
+```ts
+for (const item of result.data) {
+	console.log(item.filename, item.score);
+	for (const content of item.content) {
+		console.log(content.text);
+	}
+}
+```
+
+**After:**
+
+```ts
+for (const chunk of result.chunks) {
+	console.log(chunk.item.key, chunk.score);
+	console.log(chunk.text);
+}
+```
+
+### Field mapping
+
+| Old field                         | New field                 |
+| --------------------------------- | ------------------------- |
+| `data[]`                          | `chunks[]`                |
+| `data[].file_id`                  | `chunks[].id`             |
+| `data[].filename`                 | `chunks[].item.key`       |
+| `data[].score`                    | `chunks[].score`          |
+| `data[].content[].text`           | `chunks[].text`           |
+| `data[].attributes.modified_date` | `chunks[].item.timestamp` |
+
+## Backwards compatibility
+
+The `env.AI.autorag()` binding is deprecated but will continue to work indefinitely. Existing code does not need to be migrated immediately.
+
+For the legacy API reference, refer to [Workers binding (legacy)](/ai-search/api/workers-binding-legacy/).

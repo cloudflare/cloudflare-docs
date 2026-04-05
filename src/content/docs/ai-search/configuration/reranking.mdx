@@ -15,7 +15,7 @@ By default, reranking is **disabled** for all AI Search instances. You can enabl
 
 When enabled, AI Search will:
 
-1. Retrieve a set of relevant results from your index, constrained by your `max_num_of_results` and `score_threshold` parameters.  
+1. Retrieve a set of relevant results from your index, constrained by your `max_num_of_results` and `score_threshold` parameters.
 2. Pass those results through a [reranking model](/ai-search/configuration/models/supported-models/).
 3. Return the reranked results, which the text generation model can use for answer generation.
 
@@ -27,21 +27,26 @@ You can configure reranking in several ways:
 
 ### Configure via API
 
-When you make a `/search` or `/ai-search` request using the [Workers Binding](/ai-search/usage/workers-binding/) or [REST API](/ai-search/usage/rest-api/), you can:
+When you make a `/search` or `/ai-search` request using the [Workers Binding](/ai-search/api/search/workers-binding/) or [REST API](/ai-search/api/search/rest-api/), you can:
 
 - Enable or disable reranking per request
 - Specify the reranking model
 
 For example:
 
-```javascript
-const answer = await env.AI.autorag("my-autorag").aiSearch({
-  query: "How do I train a llama to deliver coffee?",
-  model: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
-  reranking: {
-    enabled: true,
-    model: "@cf/baai/bge-reranker-base"
-  }
+```ts
+const instance = env.AI_SEARCH.get("my-instance");
+
+const results = await instance.search({
+	messages: [
+		{ role: "user", content: "How do I train a llama to deliver coffee?" },
+	],
+	ai_search_options: {
+		reranking: {
+			enabled: true,
+			model: "@cf/baai/bge-reranker-base",
+		},
+	},
 });
 ```
 
@@ -52,7 +57,7 @@ When creating a new RAG in the dashboard:
 1. Go to **AI Search** in the Cloudflare dashboard.
 
    <DashButton url="/?to=/:account/ai/ai-search" />
-   
+
 2. Select **Create** > **Get started**.
 3. In the **Retrieval configuration** step, open the **Reranking** dropdown.
 4. Toggle **Reranking** on.

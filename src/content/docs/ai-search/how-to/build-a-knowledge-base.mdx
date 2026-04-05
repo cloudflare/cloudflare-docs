@@ -1,0 +1,93 @@
+---
+pcx_content_type: how-to
+title: Build a knowledge base
+sidebar:
+  order: 7
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+Create an AI Search instance, upload your own documents, and search them with natural language. This example uses the [Items API](/ai-search/api/items/workers-binding/) to upload content and the [Search API](/ai-search/api/search/workers-binding/) to query it.
+
+## Prerequisites
+
+- A Worker with an `ai_search_namespaces` binding configured
+
+<WranglerConfig>
+
+```toml
+[[ai_search_namespaces]]
+binding = "AI_SEARCH"
+namespace = "default"
+```
+
+</WranglerConfig>
+
+## Implementation
+
+This Worker exposes endpoints to create an instance, upload files, search, and chat:
+
+<TypeScriptExample>
+
+```ts
+export type Env = {
+	AI_SEARCH: AiSearchNamespace;
+};
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		const url = new URL(request.url);
+
+		if (url.pathname === "/setup") {
+			const instance = await env.AI_SEARCH.create({ id: "knowledge-base" });
+			return Response.json({ created: (await instance.info()).id });
+		}
+
+		if (url.pathname === "/upload" && request.method === "POST") {
+			const kb = env.AI_SEARCH.get("knowledge-base");
+			const formData = await request.formData();
+			const file = formData.get("file") as File;
+
+			const item = await kb.items.uploadAndPoll(
+				file.name,
+				await file.arrayBuffer(),
+				{ timeoutMs: 60_000 },
+			);
+
+			return Response.json({
+				id: item.id,
+				key: item.key,
+				status: item.status,
+			});
+		}
+
+		if (url.pathname === "/search") {
+			const query = url.searchParams.get("q") || "";
+			const results = await env.AI_SEARCH.get("knowledge-base").search({
+				messages: [{ role: "user", content: query }],
+				ai_search_options: {
+					retrieval: { max_num_results: 5 },
+				},
+			});
+
+			return Response.json(results);
+		}
+
+		if (url.pathname === "/chat") {
+			const query = url.searchParams.get("q") || "";
+			const stream = await env.AI_SEARCH.get("knowledge-base").chatCompletions({
+				messages: [{ role: "user", content: query }],
+				stream: true,
+			});
+
+			return new Response(stream, {
+				headers: { "content-type": "text/event-stream" },
+			});
+		}
+
+		return new Response("Not found", { status: 404 });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>

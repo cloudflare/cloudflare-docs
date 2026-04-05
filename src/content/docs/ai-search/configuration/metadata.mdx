@@ -66,7 +66,7 @@ Metadata filtering narrows down search results based on metadata, so only releva
 If you are using the legacy AutoRAG API, refer to [AutoRAG API filter format](/ai-search/autorag-filter-format/) for the filter syntax.
 :::
 
-Here is an example of metadata filtering using the [REST API](/ai-search/usage/rest-api/):
+Here is an example of metadata filtering using the [REST API](/ai-search/api/search/rest-api/):
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai-search/instances/{NAME}/search \
@@ -193,11 +193,7 @@ Use range queries to filter for all files within a folder and its subfolders.
 For example, consider this file structure:
 
 <FileTree>
-- customer-a
-  - profile.md
-  - contracts
-    - property
-      - contract-1.pdf
+	- customer-a - profile.md - contracts - property - contract-1.pdf
 </FileTree>
 
 Using `{ "folder": "customer-a/" }` only matches files directly in that folder (like `profile.md`), not files in subfolders.

@@ -1,0 +1,205 @@
+---
+pcx_content_type: reference
+title: Workers binding
+sidebar:
+  order: 1
+---
+
+import { MetaInfo, Type } from "~/components";
+
+Use the Items API to upload, list, and manage individual documents within an AI Search instance. Access it through the `items` property on an instance handle. For binding setup, refer to [Configure the binding](/ai-search/api/#configure-the-binding).
+
+```ts
+const instance = env.AI_SEARCH.get("my-instance");
+await instance.items.upload("guide.pdf", pdfArrayBuffer);
+```
+
+## `items.upload()`
+
+Uploads a document for indexing. Returns immediately. The document is queued for processing. Supports PDF, TXT, MD, HTML, and other text-based formats.
+
+```ts
+const instance = env.AI_SEARCH.get("my-instance");
+
+// Upload from a string
+await instance.items.upload(
+	"faq.md",
+	"# FAQ\n\nQ: How do I reset my password?\nA: Go to Settings > Security...",
+);
+
+// Upload from an ArrayBuffer
+const pdfResponse = await fetch("https://example.com/guide.pdf");
+const pdfBuffer = await pdfResponse.arrayBuffer();
+await instance.items.upload("guide.pdf", pdfBuffer);
+
+// Upload from a ReadableStream
+await instance.items.upload("doc.txt", request.body);
+```
+
+### Upload with metadata
+
+Attach custom metadata to a document for filtering in search queries:
+
+```ts
+await instance.items.upload("guide.pdf", pdfBuffer, {
+	metadata: {
+		category: "onboarding",
+		language: "en",
+		version: "2.0",
+	},
+});
+```
+
+### Parameters
+
+`name` <Type text="string" /> <MetaInfo text="required" />
+
+The filename for the uploaded document. Used as the item key.
+
+`content` <Type text="ReadableStream | ArrayBuffer | string" /> <MetaInfo text="required" />
+
+The document content. Pass a string for plain text or markdown, an `ArrayBuffer` for binary files like PDFs, or a `ReadableStream` for streaming uploads.
+
+`options` <Type text="object" /> <MetaInfo text="optional" />
+
+- `metadata` <Type text="Record&lt;string, string&gt;" /> <MetaInfo text="optional" />
+  - Custom metadata key-value pairs to attach to the item. Use for filtering in search queries. Maximum 5 fields per instance.
+
+### Response
+
+Returns an `AiSearchItemInfo` object:
+
+| Field    | Type   | Description                                                                  |
+| -------- | ------ | ---------------------------------------------------------------------------- |
+| `id`     | string | The unique item identifier.                                                  |
+| `key`    | string | The filename or key of the item.                                             |
+| `status` | string | The processing status: `queued`, `running`, `completed`, `error`, `skipped`. |
+
+## `items.uploadAndPoll()`
+
+Uploads a document and polls until processing completes or the timeout is reached. Use this when you need to search the document immediately after upload.
+
+```ts
+const item = await instance.items.uploadAndPoll("guide.pdf", pdfBuffer, {
+	pollIntervalMs: 2000,
+	timeoutMs: 60_000,
+});
+
+if (item.status === "completed") {
+	console.log("Document indexed successfully");
+} else {
+	console.log(`Document status: ${item.status}`);
+}
+```
+
+### Parameters
+
+Same as [`items.upload()`](#parameters) with additional polling options:
+
+`options.pollIntervalMs` <Type text="number" /> <MetaInfo text="optional" />
+
+How often to check the item status, in milliseconds. Defaults to `1000` (1 second).
+
+`options.timeoutMs` <Type text="number" /> <MetaInfo text="optional" />
+
+Maximum time to wait for processing to complete, in milliseconds. Defaults to `30000` (30 seconds).
+
+### Response
+
+Same as [`items.upload()`](#response), but the `status` field reflects the final processing state (typically `completed` or `error`).
+
+## `items.list()`
+
+Returns a paginated list of items in the instance.
+
+```ts
+const { result: items, result_info } = await instance.items.list({
+	page: 1,
+	per_page: 50,
+});
+
+for (const item of items) {
+	console.log(`${item.key} - ${item.status}`);
+}
+```
+
+### Parameters
+
+`page` <Type text="number" /> <MetaInfo text="optional" />
+
+The page number to return. Defaults to `1`.
+
+`per_page` <Type text="number" /> <MetaInfo text="optional" />
+
+The number of items per page. Defaults to `25`.
+
+### Response
+
+| Field                     | Type   | Description                                                  |
+| ------------------------- | ------ | ------------------------------------------------------------ |
+| `result`                  | array  | Array of item objects with `id`, `key`, and `status` fields. |
+| `result_info`             | object | Pagination metadata.                                         |
+| `result_info.total_count` | number | Total number of items in the instance.                       |
+| `result_info.page`        | number | The current page number.                                     |
+| `result_info.per_page`    | number | Items per page.                                              |
+
+## `items.delete()`
+
+Deletes an item and its indexed chunks.
+
+```ts
+await instance.items.delete("item-id-123");
+```
+
+### Parameters
+
+`itemId` <Type text="string" /> <MetaInfo text="required" />
+
+The unique identifier of the item to delete.
+
+### Response
+
+Returns `void`. Throws an error if the item does not exist.
+
+## `items.get()`
+
+Returns a handle to a specific item for retrieving its status or downloading the original file.
+
+### `items.get().info()`
+
+Returns the status and metadata of a specific item.
+
+```ts
+const itemInfo = await instance.items.get("item-id-123").info();
+console.log(itemInfo.key, itemInfo.status);
+```
+
+#### Response
+
+| Field    | Type   | Description                                                                  |
+| -------- | ------ | ---------------------------------------------------------------------------- |
+| `id`     | string | The unique item identifier.                                                  |
+| `key`    | string | The filename or key of the item.                                             |
+| `status` | string | The processing status: `queued`, `running`, `completed`, `error`, `skipped`. |
+
+### `items.get().download()`
+
+Downloads the original source file for an item.
+
+```ts
+const file = await instance.items.get("item-id-123").download();
+
+console.log(file.filename);
+console.log(file.contentType);
+console.log(file.size);
+// file.body is a ReadableStream
+```
+
+#### Response
+
+| Field         | Type           | Description                                                 |
+| ------------- | -------------- | ----------------------------------------------------------- |
+| `filename`    | string         | The original filename.                                      |
+| `contentType` | string         | The MIME type of the file (for example, `application/pdf`). |
+| `size`        | number         | The file size in bytes.                                     |
+| `body`        | ReadableStream | A readable stream of the file contents.                     |

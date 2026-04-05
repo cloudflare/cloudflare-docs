@@ -1,0 +1,53 @@
+---
+title: AI Search namespace binding
+description: Access AI Search instances with the new ai_search_namespaces binding for namespace isolation, dynamic instance management, and file uploads.
+products:
+  - ai-search
+date: 2026-04-16
+---
+
+The new `ai_search_namespaces` [Workers binding](/ai-search/api/search/workers-binding/) provides first-class access to [AI Search](/ai-search/) from your Worker. The binding follows the same pattern as `kv_namespaces` and `r2_buckets`, and supports dynamic instance management at runtime.
+
+## What is new
+
+- **Namespace isolation**: Group instances into [namespaces](/ai-search/concepts/namespaces/) for environment or tenant separation
+- **Dynamic instance management**: Create, update, and delete instances at runtime without redeploying
+- **Items API**: Upload and manage individual documents through the [Items API](/ai-search/api/items/workers-binding/)
+- **Streaming**: Stream chat completion responses as Server-Sent Events
+- **Messages-based API**: Uses a `messages` array format consistent with chat completion APIs
+
+## Example
+
+Add the binding to your Wrangler configuration and start querying:
+
+```ts
+// wrangler.jsonc
+// "ai_search_namespaces": [{ "binding": "AI_SEARCH", "namespace": "default" }]
+
+export type Env = {
+	AI_SEARCH: AiSearchNamespace;
+};
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		const results = await env.AI_SEARCH.get("my-instance").search({
+			messages: [{ role: "user", content: "How do I configure caching?" }],
+		});
+
+		return Response.json(results);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+## Requirements
+
+| Package                     | Minimum version |
+| --------------------------- | --------------- |
+| `@cloudflare/workers-types` | `4.20260304.0`  |
+| `wrangler`                  | `4.68.1`        |
+
+## Backwards compatibility
+
+The previous `env.AI.autorag()` binding is deprecated but will continue to work indefinitely. Existing code does not need to be migrated.
+
+For full documentation, refer to the [Workers binding guide](/ai-search/api/search/workers-binding/).
