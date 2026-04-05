@@ -268,6 +268,9 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 - `ai_search_namespaces` <Type text="object" /> <MetaInfo text="optional" />
   - A list of AI Search namespaces that your Worker should be bound to. Refer to [AI Search namespaces](#ai-search-namespaces).
 
+- `ai_search` <Type text="object" /> <MetaInfo text="optional" />
+  - A list of AI Search instance bindings bound directly to pre-existing instances in the default namespace. Refer to [AI Search instances](#ai-search-instances).
+
 - `vectorize` <Type text="object" /> <MetaInfo text="optional" />
   - A list of Vectorize indexes that your Worker should be bound to. Refer to [Vectorize indexes](#vectorize-indexes).
 
@@ -847,6 +850,33 @@ Example:
 		{
 			"binding": "<BINDING_NAME>",
 			"namespace": "default",
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+### AI Search instances
+
+To bind directly to a pre-existing [AI Search](/ai-search/) instance in the [default namespace](/ai-search/concepts/namespaces/#default-namespace), assign an array of the below object to the `ai_search` key. This binding does not support namespace-level operations like `list()`, `create()`, or `delete()`.
+
+- `binding` <Type text="string" /> <MetaInfo text="required" />
+  - The binding name used to refer to the AI Search instance.
+
+- `instance_name` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the AI Search instance. Must exist in the default namespace at deploy time.
+
+Example:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"ai_search": [
+		{
+			"binding": "<BINDING_NAME>",
+			"instance_name": "<INSTANCE_NAME>",
 		},
 	],
 }

@@ -12,15 +12,15 @@ This guide walks you through creating an AI Search instance using the REST API.
 
 ## 1. Create an API token
 
-You need an API token with AI Search edit permissions.
+You need an API token with **AI Search:Edit** and **AI Search:Run** permissions.
 
 1. In the Cloudflare dashboard, go to **My Profile** > **API Tokens**.
 2. Select **Create Token**.
 3. Select **Create Custom Token**.
 4. Enter a **Token name**, for example `AI Search Manager`.
 5. Under **Permissions**, add two permissions:
-   - **Account** > **AI Search** > **Edit**
-   - **Account** > **AI Search** > **Run**
+   - **Account** > **AI Search:Edit**
+   - **Account** > **AI Search:Run**
 6. Select **Continue to summary**, then select **Create Token**.
 7. Copy and save the token value. This is your `API_TOKEN`.
 
@@ -48,7 +48,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-sear
   -H "Authorization: Bearer <API_TOKEN>" \
   -H "Content-Type: application/json" \
   --data '{
-    "id": "my-docs",
+    "id": "my-instance",
     "type": "web-crawler",
     "source": "example.com"
   }'
@@ -56,14 +56,14 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-sear
 
 **R2 bucket:**
 
-Connecting an R2 bucket requires a [service API token](/ai-search/configuration/service-api-token/). Pass the `token_id` field in the create request. Refer to the [service API token configuration](/ai-search/configuration/service-api-token/) for setup instructions.
+Connecting an R2 bucket requires a [service API token](/ai-search/configuration/service-api-token/). If you have never created an R2-backed instance before, you need to pass the `token_id` field in the create request. Refer to the [service API token configuration](/ai-search/configuration/service-api-token/) for setup instructions.
 
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances" \
   -H "Authorization: Bearer <API_TOKEN>" \
   -H "Content-Type: application/json" \
   --data '{
-    "id": "my-docs",
+    "id": "my-instance",
     "type": "r2",
     "source": "<R2_BUCKET_NAME>",
     "token_id": "<SERVICE_TOKEN_ID>"
@@ -86,11 +86,21 @@ AI Search indexes uploaded files automatically.
 
 Once your content is indexed, you can run your first query.
 
-1. Go to **Compute & AI** > **AI Search**.
-2. Select your instance.
-3. Select the **Playground** tab.
-4. Select **Search with AI** or **Search**.
-5. Enter a query to test the response.
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/my-instance/search" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "messages": [
+      {
+        "content": "How do I get started?",
+        "role": "user"
+      }
+    ]
+  }'
+```
+
+You can also test queries in the dashboard by going to your instance and selecting the **Playground** tab.
 
 ## Add to your application
 

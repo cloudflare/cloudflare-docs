@@ -5,9 +5,13 @@ sidebar:
   order: 1
 ---
 
-import { MetaInfo, Type } from "~/components";
+import { Render, MetaInfo, Type } from "~/components";
 
-Use the Items API to upload, list, and manage individual documents within an AI Search instance. Access it through the `items` property on an instance handle. For binding setup, refer to [Configure the binding](/ai-search/api/#configure-the-binding).
+[Workers](/workers/) provides a serverless execution environment that allows you to create new applications or augment existing ones. Use a Workers binding to upload, list, and manage documents in your AI Search instances from a Cloudflare Worker. Access the Items API through the `items` property on an instance handle.
+
+## Configure the binding
+
+<Render file="binding-config" product="ai-search" />
 
 ```ts
 const instance = env.AI_SEARCH.get("my-instance");
