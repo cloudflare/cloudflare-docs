@@ -8,7 +8,7 @@ sidebar:
 
 import { Tabs, TabItem, Render } from "~/components";
 
-The right defense against malicious bot traffic depends on what you are seeing on your site and what plan you are on. This guide covers a layered approach using Cloudflare products, from baseline protection to targeted custom rules. The core workflow uses features on Free and Pro plans, with callouts for advanced options on higher tiers.
+The right defense against malicious bot traffic depends on what you are seeing on your site and what plan you are on. This guide covers a layered approach using [Cloudflare Bots](/bots/), [WAF](/waf/), and [Turnstile](/turnstile/), from baseline protection to targeted custom rules. The core workflow uses features on Free and Pro plans, with callouts for advanced options on higher tiers.
 
 ## Review your bot traffic
 
@@ -102,7 +102,7 @@ For organizations that need machine learning-based bot scoring, behavioral analy
 
 ## Protect forms from automated abuse
 
-[Turnstile](/turnstile/) and [rate limiting rules](/waf/rate-limiting-rules/) protect form endpoints in different ways and work best together.
+[Turnstile](/turnstile/) and [WAF rate limiting rules](/waf/rate-limiting-rules/) protect form endpoints in different ways and work best together.
 
 ### Turnstile versus rate limiting
 
@@ -182,7 +182,7 @@ Rules that use counting expressions with response codes (such as counting only `
 
 ## Target bot patterns with custom rules
 
-[Custom rules](/waf/custom-rules/) and rate limiting rules let you target specific traffic patterns that built-in bot protection does not catch. Cloudflare separates detection (scoring traffic) from mitigation (acting on those scores). You write rules that reference detection signals to decide what action to take.
+[WAF custom rules](/waf/custom-rules/) and [WAF rate limiting rules](/waf/rate-limiting-rules/) let you target specific traffic patterns that built-in bot protection does not catch. Cloudflare separates detection (scoring traffic) from mitigation (acting on those scores). You write rules that reference detection signals to decide what action to take.
 
 ### Block requests with missing or suspicious headers
 
@@ -407,11 +407,19 @@ Custom Bot Detection Alerts with advanced filtering and grouping dimensions requ
 
 ## Related resources
 
-- [Bot Analytics](/bots/bot-analytics/) — Monitor bot traffic patterns across your domain
+**Bots**
+
 - [Bot Fight Mode](/bots/get-started/bot-fight-mode/) — Baseline bot protection available on all plans
 - [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/) — Granular bot controls for Pro, Business, and Enterprise plans
-- [Turnstile](/turnstile/) — Free, privacy-preserving challenge for forms and user interactions
-- [WAF custom rules](/waf/custom-rules/) — Write targeted rules using traffic signals and bot scores
-- [Rate limiting rules](/waf/rate-limiting-rules/) — Control request volume to protect endpoints from abuse
 - [Enterprise Bot Management](/bots/plans/bm-subscription/) — Machine learning-based bot scoring and behavioral analysis
+- [Bot Analytics](/bots/bot-analytics/) — Monitor bot traffic patterns across your domain
+
+**WAF**
+
+- [Custom rules](/waf/custom-rules/) — Write targeted rules using traffic signals and bot scores
+- [Rate limiting rules](/waf/rate-limiting-rules/) — Control request volume to protect endpoints from abuse
 - [Security Events](/waf/analytics/security-events/) — Review and investigate mitigated requests
+
+**Turnstile**
+
+- [Turnstile](/turnstile/) — Free, privacy-preserving challenge for forms and user interactions
