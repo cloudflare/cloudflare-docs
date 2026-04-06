@@ -5,40 +5,44 @@ sidebar:
   order: 5
 ---
 
-AI Search allows you to configure how content is retrieved from your vector index and used to generate a final response. Two options control this behavior:
+AI Search allows you to configure how search results are retrieved at query time. The following settings can be set as instance-level defaults and overridden on a per-request basis using `ai_search_options.retrieval` in the [REST API](/ai-search/usage/rest-api/) or [Workers Binding](/ai-search/usage/workers-binding/).
 
-- **Match threshold**: Minimum similarity score required for a vector match to be considered relevant.
-- **Maximum number of results**: Maximum number of top-matching results to return (`top_k`).
+## Search method
 
-AI Search uses the [`query()`](/vectorize/best-practices/query-vectors/) method from [Vectorize](/vectorize/) to perform semantic search. This function compares the embedded query vector against the stored vectors in your index and returns the most similar results.
+Each query uses one of three search methods:
+
+| Method               | Description                                                                                                                                                                                         |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Vector** (default) | Embeds the query and retrieves the most semantically similar chunks from Vectorize. Handles paraphrasing and conceptual similarity well.                                                            |
+| **Keyword**          | Runs a BM25 full-text search to find chunks that contain the query terms. Handles exact term matches well -- error codes, SKUs, function names.                                                     |
+| **Hybrid**           | Runs both vector and keyword search in parallel, then merges the results using a [fusion method](/ai-search/configuration/hybrid-search/#fusion-method). Combines the strengths of both approaches. |
+
+The available methods depend on which backends are enabled on the instance (`index_method`). By default, only vector search is active. To enable keyword or hybrid search, refer to [Hybrid search](/ai-search/configuration/hybrid-search/).
+
+To override the search method on a per-request basis, set `retrieval_type` to `"vector"`, `"keyword"`, or `"hybrid"` in `ai_search_options.retrieval`.
 
 ## Match threshold
 
-The `match_threshold` sets the minimum similarity score (for example, cosine similarity) that a document chunk must meet to be included in the results. Threshold values range from `0` to `1`.
+The `match_threshold` sets the minimum similarity score that a chunk must meet to be included in the results. Values range from `0` to `1`.
 
-- A higher threshold means stricter filtering, returning only highly similar matches.
-- A lower threshold allows broader matches, increasing recall but possibly reducing precision.
+- A higher threshold returns only highly similar matches (higher precision).
+- A lower threshold allows broader matches (higher recall, lower precision).
 
 ## Maximum number of results
 
-This setting controls the number of top-matching chunks returned by Vectorize after filtering by similarity score. It corresponds to the `topK` parameter in `query()`. The maximum allowed value is 50.
+The `max_num_results` setting controls the number of top-matching chunks returned after filtering by match threshold. The maximum allowed value is 50.
 
-- Use a higher value if you want to synthesize across multiple documents. However, providing more input to the model can increase latency and cost.
-- Use a lower value if you prefer concise answers with minimal context.
+- Use a higher value to synthesize across multiple documents. More context can increase latency and cost.
+- Use a lower value for concise answers with minimal context.
 
 ## How they work together
 
-AI Search's retrieval step follows this sequence:
+At query time, AI Search retrieves results based on the active [search method](#search-method):
 
-1. Your query is embedded using the configured Workers AI model.
-2. `query()` is called to search the Vectorize index, with `topK` set to the `maximum_number_of_results`.
-3. Results are filtered using the `match_threshold`.
-4. The filtered results are passed into the generation step as context.
+1. If vector or hybrid search is active, the query is embedded using the configured embedding model and searched against the Vectorize index with `topK` set to `max_num_results`.
+2. If keyword or hybrid search is active, a BM25 keyword search runs against the keyword index.
+3. In hybrid mode, results from both retrievers are merged using the configured [fusion method](/ai-search/configuration/hybrid-search/#fusion-method).
+4. Results below the `match_threshold` are filtered out.
+5. The remaining results are passed to the generation step as context.
 
-If no results meet the threshold, AI Search will not generate a response.
-
-## Configuration
-
-These values can be configured at the AI Search instance level or overridden on a per-request basis using the [REST API](/ai-search/usage/rest-api/) or the [Workers Binding](/ai-search/usage/workers-binding/).
-
-Use the parameters `match_threshold` and `max_num_results` to customize retrieval behavior per request.
+If no results meet the threshold, AI Search does not generate a response.
