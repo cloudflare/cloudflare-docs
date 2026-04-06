@@ -10,7 +10,7 @@ sidebar:
 
 import { WranglerConfig } from "~/components";
 
-When using [Worker Previews](/workers/ci-cd/worker-previews/), each preview environment can have its own isolated [Durable Object](/durable-objects/) namespace. This means Durable Object instances created by a preview are completely separate from production — different instance IDs, different storage, no shared state.
+When using [Worker Previews](/workers/worker-previews/), each preview environment can have its own isolated [Durable Object](/durable-objects/) namespace. This means Durable Object instances created by a preview are completely separate from production — different instance IDs, different storage, no shared state.
 
 Without proper configuration, previews will share the production DO namespace, and preview traffic will read and write production Durable Object state. This guide covers three approaches to achieve DO isolation, from the simplest (recommended) to more manual methods.
 
@@ -91,7 +91,7 @@ Your Wrangler configuration file only needs the migration — no `durable_object
 {
 	"name": "my-worker",
 	"main": "src/index.ts",
-	"compatibility_date": "2025-11-17",
+	"compatibility_date": "$today",
 	"migrations": [
 		{
 			"tag": "v1",
@@ -186,7 +186,7 @@ When using the `previews` block for DO bindings, you must include `script_name` 
 {
 	"name": "my-worker",
 	"main": "src/index.ts",
-	"compatibility_date": "2025-11-17",
+	"compatibility_date": "$today",
 	"durable_objects": {
 		"bindings": [
 			{
@@ -261,7 +261,7 @@ When using the `previews.durable_objects.bindings` configuration, you must inclu
 
 ## Related resources
 
-- [Worker Previews overview](/workers/ci-cd/worker-previews/)
+- [Worker Previews overview](/workers/worker-previews/)
 - [`ctx.exports` API reference](/workers/runtime-apis/context/#exports)
 - [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/)
 - [Durable Objects namespace API](/durable-objects/api/namespace/)

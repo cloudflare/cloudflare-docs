@@ -3,7 +3,7 @@ pcx_content_type: get-started
 title: Worker Previews
 description: Create isolated preview environments for your Worker with their own URLs, bindings, and resources.
 sidebar:
-  order: 2
+  order: 7
   badge:
     text: Beta
 ---
@@ -109,7 +109,7 @@ Add a `previews` block to your Wrangler configuration file to set preview-specif
 {
 	"name": "my-worker",
 	"main": "src/index.ts",
-	"compatibility_date": "2025-11-17",
+	"compatibility_date": "$today",
 	"vars": {
 		"ENVIRONMENT": "production"
 	},
@@ -175,7 +175,7 @@ curl https://my-worker.example.workers.dev/
 
 If your Worker returns the `ENVIRONMENT` variable, the preview should return `"preview"` and production should return `"production"`.
 
-For Durable Object isolation testing, refer to [Durable Object isolation](/workers/ci-cd/worker-previews/durable-object-isolation/).
+For Durable Object isolation testing, refer to [Durable Object isolation](/workers/worker-previews/durable-object-isolation/).
 
 ## 7. View preview settings
 
@@ -223,5 +223,5 @@ Previews have an **Auto-deletion** setting in the dashboard. When enabled, the p
 
 ## Next steps
 
-- [Concepts](/workers/ci-cd/worker-previews/concepts/) — How previews relate to versions, deployments, and bindings
-- [Durable Object isolation](/workers/ci-cd/worker-previews/durable-object-isolation/) — Isolated DO storage in previews
+- [Concepts](/workers/worker-previews/concepts/) — How previews relate to versions, deployments, and bindings
+- [Durable Object isolation](/workers/worker-previews/durable-object-isolation/) — Isolated DO storage in previews

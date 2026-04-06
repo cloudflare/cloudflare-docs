@@ -1,0 +1,166 @@
+---
+pcx_content_type: how-to
+title: Custom domains
+description: Serve Worker Previews on your own custom domains instead of just workers.dev URLs.
+sidebar:
+  order: 3
+  badge:
+    text: Beta
+---
+
+import { WranglerConfig } from "~/components";
+
+By default, Worker Previews are only accessible on `workers.dev` URLs (for example, `my-feature-my-worker.subdomain.workers.dev`). With custom domain support, you can serve preview traffic on your own domain — so a preview called `new-checkout` becomes accessible at `new-checkout.app.example.com`.
+
+This lets you test zone-level features (WAF rules, cache rules, etc.) that are tied to your domain, directly against a preview environment.
+
+:::note
+Custom domain support for Worker Previews is currently in private beta.
+:::
+
+## How it works
+
+Both `workers.dev` and custom domains support preview traffic, each with a `previews_enabled` flag:
+
+| Domain type | Configured via | Production default | Previews default |
+| --- | --- | --- | --- |
+| `workers.dev` | Worker settings API | Not enabled | Not enabled |
+| Custom domains | Domains API | `true` | `false` |
+
+- **workers.dev** is a setting on the Worker itself. Not enabled by default — you explicitly enable it through the Worker settings.
+- **Custom domains** are separate resources created through the [Domains API](/api/resources/workers/subresources/domains/methods/update/). When created, `production_enabled` defaults to `true` and `previews_enabled` defaults to `false`.
+
+When you set `previews_enabled` to `true` on a custom domain (for example, `app.example.com`), each preview automatically gets a subdomain. A preview called `new-checkout` becomes accessible at `new-checkout.app.example.com`. A wildcard DNS record and wildcard SSL certificate are created automatically behind the scenes.
+
+## Prerequisites
+
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages)
+- A Worker with [Worker Previews enabled](/workers/worker-previews/)
+- A [custom domain](/workers/configuration/routing/custom-domains/) already attached to your Worker
+- The domain's zone must be on Cloudflare (proxied through Cloudflare DNS)
+
+## Enable previews on a custom domain
+
+### Using the API
+
+Use the [Domains API](/api/resources/workers/subresources/domains/methods/update/) to enable previews on an existing custom domain:
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/domains \
+  -X PUT \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer {api_token}" \
+  -d '{
+    "zone_id": "{zone_id}",
+    "hostname": "app.example.com",
+    "service": "my-worker",
+    "production_enabled": true,
+    "previews_enabled": true
+  }'
+```
+
+This enables both production and preview traffic on `app.example.com`. After this:
+
+- Production traffic continues to be served at `app.example.com`
+- Preview traffic is served at `{preview-name}.app.example.com`
+
+### Using Wrangler configuration
+
+Add `production_enabled` and `previews_enabled` to your custom domain route in your Wrangler configuration file:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "my-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"routes": [
+		{
+			"pattern": "app.example.com",
+			"custom_domain": true,
+			"production_enabled": true,
+			"previews_enabled": true
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+## Preview URL structure
+
+Once `previews_enabled` is `true` on a custom domain, each preview gets a subdomain:
+
+| URL | What it serves |
+| --- | --- |
+| `app.example.com` | Production traffic |
+| `new-checkout.app.example.com` | Preview `new-checkout` |
+| `hotfix-auth.app.example.com` | Preview `hotfix-auth` |
+
+The preview name in the subdomain matches the preview name from `wrangler preview` (which defaults to your Git branch name).
+
+## Domain configuration options
+
+You can control which traffic types a custom domain serves by combining the two flags:
+
+| `production_enabled` | `previews_enabled` | Result |
+| --- | --- | --- |
+| `true` | `false` | `app.example.com` serves production only (default) |
+| `true` | `true` | `app.example.com` serves production, `*.app.example.com` serves previews |
+| `false` | `true` | Only `*.app.example.com` serves previews, no production on `app.example.com` |
+| `false` | `false` | Domain is disabled for this Worker |
+
+## Verify your setup
+
+After enabling `previews_enabled`, create a preview and test the custom domain URL:
+
+```bash
+# Create a preview
+git checkout -b my-feature
+npx wrangler preview
+
+# Test the workers.dev preview URL
+curl https://my-feature-my-worker.subdomain.workers.dev/
+
+# Test the custom domain preview URL
+curl https://my-feature.app.example.com/
+```
+
+Both URLs should return the same response from your preview environment.
+
+## Disable previews on a custom domain
+
+To stop serving preview traffic on a custom domain, set `previews_enabled` to `false`:
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/domains \
+  -X PUT \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer {api_token}" \
+  -d '{
+    "zone_id": "{zone_id}",
+    "hostname": "app.example.com",
+    "service": "my-worker",
+    "production_enabled": true,
+    "previews_enabled": false
+  }'
+```
+
+Existing preview deployments will still be accessible via their `workers.dev` URLs, but the custom domain subdomains will stop resolving.
+
+## What happens behind the scenes
+
+When you set `previews_enabled` to `true` on a custom domain:
+
+1. A wildcard DNS record (`*.app.example.com`) is created automatically
+2. A wildcard SSL SAN (Subject Alternative Name) is added to the certificate
+3. Incoming requests to `{preview-name}.app.example.com` are routed to the corresponding preview environment
+
+You do not need to manually create DNS records or SSL certificates.
+
+## Related resources
+
+- [Worker Previews overview](/workers/worker-previews/) — Get started with Worker Previews
+- [Custom domains](/workers/configuration/routing/custom-domains/) — Set up custom domains for Workers
+- [Concepts](/workers/worker-previews/concepts/) — How previews, versions, and deployments relate

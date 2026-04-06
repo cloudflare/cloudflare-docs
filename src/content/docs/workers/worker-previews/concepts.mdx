@@ -18,10 +18,9 @@ Workers has several related primitives. They serve different purposes and do not
 
 | Primitive | Created by | What it is |
 | --- | --- | --- |
-| **Version** | `wrangler deploy` or `wrangler versions upload` | A code + config snapshot on the production Worker |
-| **Deployment** | `wrangler deploy` or `wrangler versions deploy` | Traffic routing to one or more production versions. Supports gradual rollouts and rollbacks |
-| **Preview** | `wrangler preview` | An isolated branch environment with its own URL, bindings, and resources |
-| **Preview deployment** | `wrangler preview` (each run on the same branch) | An immutable snapshot within a preview |
+| **Version** | `wrangler deploy` or `wrangler versions upload` | An immutable snapshot of your Worker's code and config |
+| **Deployment** | `wrangler deploy` or `wrangler versions deploy` | Routes production traffic to one or more versions. Supports gradual rollouts and rollbacks |
+| **Preview** | `wrangler preview` | An isolated environment tied to a branch, with its own stable URL, bindings, and resources. Each run pushes new code to the preview — the stable URL always points to the latest push |
 
 ### Key differences
 
@@ -64,7 +63,7 @@ Each binding type behaves differently in previews. Some are isolated automatical
 | **Secrets** | Inherited from Preview Defaults | Use `wrangler preview secret put` |
 | **KV namespaces** | Uses production namespace unless configured otherwise | Uncheck "Use production value" in dashboard, select a different namespace |
 | **R2 buckets** | Uses production bucket | Configure a separate bucket in Preview Defaults |
-| **Durable Objects** | Auto-provisioned isolated namespace per preview when using `ctx.exports` | Use [`ctx.exports`](/workers/ci-cd/worker-previews/durable-object-isolation/) (recommended) or configure manually |
+| **Durable Objects** | Auto-provisioned isolated namespace per preview when using `ctx.exports` | Use [`ctx.exports`](/workers/worker-previews/durable-object-isolation/) (recommended) or configure manually |
 | **D1 databases** | Uses production database | Configure a separate database in Preview Defaults |
 | **Service bindings** | Uses production target | Configure in Preview Defaults |
 
@@ -72,7 +71,7 @@ Each binding type behaves differently in previews. Some are isolated automatical
 For any binding where "Use production value" is checked (the default for most binding types), preview traffic reads and writes to your production resources. Always verify your binding configuration before testing with real data.
 :::
 
-Durable Objects are a special case because the platform can auto-provision isolated namespaces per preview. Refer to [Durable Object isolation](/workers/ci-cd/worker-previews/durable-object-isolation/) for a detailed guide.
+Durable Objects are a special case because the platform can auto-provision isolated namespaces per preview. Refer to [Durable Object isolation](/workers/worker-previews/durable-object-isolation/) for a detailed guide.
 
 ## Preview URLs
 
@@ -90,7 +89,6 @@ Worker Previews support three domain types, each with independent production and
 | Domain type | Preview URL pattern | Configured via |
 | --- | --- | --- |
 | `workers.dev` | `<PREVIEW_NAME>-<WORKER_NAME>.<SUBDOMAIN>.workers.dev` | Worker settings |
-| `cloudflare.app` | `<PREVIEW_NAME>-<WORKER_NAME>.cloudflare.app` | Worker settings |
 | Custom domains | `<PREVIEW_NAME>.app.example.com` | Domains API with `previews_enabled: true` |
 
 When `previews_enabled` is set on a custom domain, a wildcard DNS record and wildcard SSL SAN are created automatically. Each preview gets a subdomain of the custom domain.
@@ -132,8 +130,8 @@ Use Worker Previews when you need isolated testing environments. Continue to use
 
 ## Related resources
 
-- [Get started with Worker Previews](/workers/ci-cd/worker-previews/) — Step-by-step setup guide
-- [Durable Object isolation](/workers/ci-cd/worker-previews/durable-object-isolation/) — Isolated DO storage in previews
+- [Get started with Worker Previews](/workers/worker-previews/) — Step-by-step setup guide
+- [Durable Object isolation](/workers/worker-previews/durable-object-isolation/) — Isolated DO storage in previews
 - [Versions and deployments](/workers/configuration/versions-and-deployments/) — Production deployment workflows
 - [Preview URLs](/workers/configuration/previews/) — Versioned and aliased preview URLs
 - [`ctx.exports` API reference](/workers/runtime-apis/context/#exports) — Automatic loopback bindings
