@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-This guide covers how to create an organization, assign accounts, and invite members.
+This guide covers how to create an organization and assign accounts.
 
 ## Prerequisites
 
@@ -34,53 +34,10 @@ The organization overview page displays after creation.
 After creating an organization, you can assign accounts to manage them centrally.
 
 1. From the organization overview, select **Assign an account**.
-2. Search for an account name. Only Enterprise accounts where you are a Super Administrator will appear.
+2. Search for an account name. Only accounts where you are a Super Administrator will appear.
 3. Select the account.
 4. Select **Assign to organization**.
 
 The assigned account now appears on the organization overview page. From here, you can view the account, copy its ID, or rename it.
 
 To remove an account from your organization, contact [Cloudflare Support](/support/contacting-cloudflare-support/).
-
-## Organization Super Administrator
-
-When you create an organization, you become an Organization Super Administrator. This role provides implicit access to all accounts in your organization and allows you to manage memberships at the organization level.
-
-Implicit access means you do not need explicit membership on each account. When you access any account within your organization, you automatically have Super Administrator permissions.
-
-:::note
-Any Organization Super Administrator can add or remove other Organization Super Administrators at any time.
-:::
-### Invite members
-
-You can invite additional members to your organization. Invited members receive implicit Super Administrator access to all accounts in the organization.
-
-1. From the organization overview, select **Members**.
-2. Select **Invite member**.
-3. Enter the email address.
-4. Select **Send invitation**.
-
-The user receives an email invitation. After accepting, they have implicit access to all accounts in the organization.
-
-Invited members must have 2FA or SSO enabled to join.
-
-
-## Manage your organization
-
-### Rename your organization
-
-1. Go to **Organizations** > **Manage Organization**.
-2. Next to **Organization name**, select **Rename**.
-3. Enter the new name.
-4. Select **Rename**.
-
-### Edit customer identification data
-
-1. Go to **Organizations** > **Manage Organization**.
-2. Next to **Customer identification data**, select **Edit**.
-3. Update the information.
-4. Select **Save**.
-
-## Terraform
-
-You can manage Organizations using the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/organization).
