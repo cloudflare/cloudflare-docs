@@ -279,7 +279,7 @@ pnpm run lint               # ESLint
 pnpm run format:core:check  # Prettier formatting check
 pnpm run build              # Full build with link checking (set RUN_LINK_CHECK=true)
 pnpm run test               # All test suites
-tsm bin/validate-redirects.ts  # Only if public/__redirects was modified
+pnpm dlx tsm bin/validate-redirects.ts  # Only if public/__redirects was modified
 ```
 
 ### Fixing formatting
