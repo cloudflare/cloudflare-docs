@@ -4,18 +4,18 @@ title: DigiCert Legacy Root (G1) distrust by major browsers
 sidebar:
   order: 2
   label: DigiCert G1 distrust
-description: Impact of DigiCert G1 root distrust on Cloudflare certificates.
+description: Learn how the DigiCert G1 root distrust may affect your Cloudflare configuration.
 ---
 
 Browsers and operating systems are completing the removal of DigiCert's legacy G1 root certificates from their trust stores, effective **April 15, 2026**.
 
-DigiCert announced this planned deprecation and has been issuing certificates from their newer G2 roots for several years.
+DigiCert announced this planned deprecation in 2023 and has been issuing certificates from their newer G2 roots since 2020.
 
 Since DigiCert is not within the [certificate authorities](/ssl/reference/certificate-authorities/) used by Cloudflare, this change may only affect customers who upload [custom certificates](/ssl/edge-certificates/custom-certificates/) issued from DigiCert G1 roots.
 
 ## The change
 
-The primary root being distrusted is **DigiCert Global Root CA**. Other legacy G1 intermediates cross-signed from this root are also affected.
+The primary root being distrusted is **DigiCert Global Root CA**. The distrust also affects other legacy G1 intermediates cross-signed from this root.
 
 DigiCert Global Root G2 and G3 remain fully trusted. Certificates that chain to G2 are unaffected.
 
