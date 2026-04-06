@@ -32,8 +32,8 @@ curl https://api.cloudflare.com/client/v4/graphql \
     "query": "query DailyRequestVolume($accountTag: String!, $startDate: Date!, $endDate: Date!) { viewer { accounts(filter: { accountTag: $accountTag }) { privacyProxyRequestMetricsAdaptiveGroups(filter: { date_geq: $startDate, date_leq: $endDate }, limit: 10000, orderBy: [date_ASC]) { count dimensions { date } } } } }",
     "variables": {
       "accountTag": "<YOUR_ACCOUNT_TAG>",
-      "startDate": "2026-01-01",
-      "endDate": "2026-01-31"
+      "startDate": "2026-04-04",
+      "endDate": "2026-04-06"
     }
   }'
 ```
@@ -206,8 +206,8 @@ query DailyRequestVolume(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "startDate": "2026-01-01",
-  "endDate": "2026-01-31"
+  "startDate": "2026-04-04",
+  "endDate": "2026-04-06"
 }
 ```
 
@@ -249,8 +249,8 @@ query ErrorBreakdown(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "start": "2026-01-01T00:00:00Z",
-  "end": "2026-01-01T23:59:59Z"
+  "start": "2026-04-04T00:00:00Z",
+  "end": "2026-04-06T23:59:59Z"
 }
 ```
 
@@ -291,8 +291,8 @@ query TopProxyErrors(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "start": "2026-01-01",
-  "end": "2026-01-02"
+  "start": "2026-04-04",
+  "end": "2026-04-06"
 }
 ```
 
@@ -332,8 +332,8 @@ query TunnelTypeDistribution(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "startDate": "2026-01-01",
-  "endDate": "2026-01-31"
+  "startDate": "2026-04-04",
+  "endDate": "2026-04-06"
 }
 ```
 
@@ -380,8 +380,8 @@ query IngressTrafficOverview(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "startDate": "2026-01-01",
-  "endDate": "2026-01-31"
+  "startDate": "2026-04-04",
+  "endDate": "2026-04-06"
 }
 ```
 
@@ -424,8 +424,8 @@ query IngressDurationByColo(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "startDate": "2026-01-01",
-  "endDate": "2026-01-31"
+  "startDate": "2026-04-04",
+  "endDate": "2026-04-06"
 }
 ```
 
@@ -466,8 +466,8 @@ query IngressProtocolDistribution(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "start": "2026-01-01T00:00:00Z",
-  "end": "2026-01-01T23:59:59Z"
+  "start": "2026-04-04T00:00:00Z",
+  "end": "2026-04-06T23:59:59Z"
 }
 ```
 
@@ -514,8 +514,8 @@ query EgressBytesOverview(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "startDate": "2026-01-01",
-  "endDate": "2026-01-31"
+  "startDate": "2026-04-04",
+  "endDate": "2026-04-06"
 }
 ```
 
@@ -558,8 +558,8 @@ query EgressLatencyByColo(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "startDate": "2026-01-01",
-  "endDate": "2026-01-31"
+  "startDate": "2026-04-04",
+  "endDate": "2026-04-06"
 }
 ```
 
@@ -603,8 +603,8 @@ query EgressPerformanceTrend(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "start": "2026-01-01T08:00:00Z",
-  "end": "2026-01-01T14:00:00Z"
+  "start": "2026-04-04T08:00:00Z",
+  "end": "2026-04-06T14:00:00Z"
 }
 ```
 
@@ -648,8 +648,8 @@ query AuthVolumeByMethod(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "startDate": "2026-01-01",
-  "endDate": "2026-01-31"
+  "startDate": "2026-04-04",
+  "endDate": "2026-04-06"
 }
 ```
 
@@ -690,8 +690,8 @@ query AuthFailureSpike(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "start": "2026-01-01T10:00:00Z",
-  "end": "2026-01-01T14:00:00Z"
+  "start": "2026-04-04T10:00:00Z",
+  "end": "2026-04-06T14:00:00Z"
 }
 ```
 
@@ -731,8 +731,8 @@ query AuthSuccessRate(
 ```json
 {
   "accountTag": "<YOUR_ACCOUNT_TAG>",
-  "start": "2026-01-01T00:00:00Z",
-  "end": "2026-01-01T23:59:59Z"
+  "start": "2026-04-04T00:00:00Z",
+  "end": "2026-04-06T23:59:59Z"
 }
 ```
 
