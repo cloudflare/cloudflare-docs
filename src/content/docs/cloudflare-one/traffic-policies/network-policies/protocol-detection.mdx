@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Badge, Render } from "~/components";
+import { Render } from "~/components";
 
 Gateway supports the detection, logging, and filtering of network protocols using packet attributes.
 
@@ -20,7 +20,7 @@ To turn on protocol detection:
 
 You can now use _Detected Protocol_ as a selector in a [Network policy](/cloudflare-one/traffic-policies/network-policies/#detected-protocol).
 
-### Inspect on all ports <Badge text="Beta" variant="caution" size="small" />
+### Inspect on all ports
 
 <Render
 	file="gateway/inspect-on-all-ports"
@@ -54,13 +54,13 @@ Gateway supports detection and filtering of the following protocols:
 | DCERPC                                                            | Distributed Computing Environment / Remote Procedure Call.                                   |
 | MQTT                                                              | Message Queuing Telemetry Transport — lightweight IoT messaging protocol.                    |
 | TPKT                                                              | TPKT commonly initiates RDP sessions, so you can use it to identify and filter RDP traffic.  |
-| IMAP <Badge text="Beta" variant="caution" size="small" />         | Internet Message Access Protocol — email retrieval.                                          |
-| POP3 <Badge text="Beta" variant="caution" size="small" />         | Post Office Protocol v3 — email retrieval.                                                   |
-| SMTP <Badge text="Beta" variant="caution" size="small" />         | Simple Mail Transfer Protocol — email sending.                                               |
-| MYSQL <Badge text="Beta" variant="caution" size="small" />        | MySQL database wire protocol.                                                                |
-| RSYNC-DAEMON <Badge text="Beta" variant="caution" size="small" /> | rsync daemon protocol.                                                                       |
-| LDAP <Badge text="Beta" variant="caution" size="small" />         | Lightweight Directory Access Protocol.                                                       |
-| NTP <Badge text="Beta" variant="caution" size="small" />          | Network Time Protocol.                                                                       |
+| IMAP         | Internet Message Access Protocol — email retrieval.                                          |
+| POP3         | Post Office Protocol v3 — email retrieval.                                                   |
+| SMTP         | Simple Mail Transfer Protocol — email sending.                                               |
+| MYSQL        | MySQL database wire protocol.                                                                |
+| RSYNC-DAEMON | rsync daemon protocol.                                                                       |
+| LDAP         | Lightweight Directory Access Protocol.                                                       |
+| NTP          | Network Time Protocol.                                                                       |
 
 ## Example network policy
 
