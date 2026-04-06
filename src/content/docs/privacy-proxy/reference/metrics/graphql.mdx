@@ -487,7 +487,8 @@ query ApproximateActiveConnections(
         filter: {
           datetime_geq: $start
           datetime_leq: $end
-        }
+          datetimeMinute_geq: $start
+          datetimeMinute_leq: $end
         limit: 10000
         orderBy: [datetimeMinute_ASC]
       ) {
