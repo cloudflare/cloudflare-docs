@@ -3,6 +3,9 @@
 # STATIC REDIRECTS
 # ============================================================================
 
+# Privacy Proxy
+/privacy-proxy/reference/observability/ /privacy-proxy/reference/metrics/opentelemetry/ 301
+
 # homepage
 /cloudflare-one/identity/ /cloudflare-one/integrations/identity-providers/ 301
 /cloudflare-one/applications/ /cloudflare-one/access-controls/applications/http-apps/ 301
