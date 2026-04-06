@@ -49,6 +49,10 @@
 	height: 1rem;
 }
 
+.has-title .explain-button {
+	margin-top: 2.088rem;
+}
+
 /* Light mode styles */
 @media (prefers-color-scheme: light) {
 	.explain-button {
