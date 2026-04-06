@@ -255,13 +255,40 @@ For more information on the code mode pattern behind `search_and_execute`, refer
 
 ## Manage portal sessions
 
-Once connected to a portal, users can manage their upstream MCP server sessions without leaving their MCP client.
+Once connected to a portal, users can manage their upstream MCP server sessions without leaving their MCP client. The portal uses [MCP elicitations](https://modelcontextprotocol.io/specification/2025-03-26/server/elicitation) to provide a server selection page where you can enable or disable servers, log out of individual servers, and reauthenticate.
+
+### Return to the server selection page
+
+To manage your server connections during an active session, ask your AI agent to take you back to the server selection page. For example, prompt your agent with:
+
+> Take me back to the server selection page.
+
+The portal responds with an authorization URL via elicitation. Open this URL in your web browser to access the server selection page:
+
+```txt
+https://<subdomain>.<domain>/authorize?elicitationId=<ELICITATION_ID>
+```
+
+From this page you can:
+
+- **Enable or disable servers** — Toggle individual upstream MCP servers on or off. Disabling a server removes its tools from the active session, which reduces context window usage.
+- **Log out and reauthenticate** — Log out of a server and log back in if you need to change which data the server has access to. For example, you may need to reauthenticate with different permissions.
+
+### Enable or disable a server inline
+
+You can also enable or disable a specific server directly from your MCP client without visiting the server selection page. Ask your AI agent by name, for example:
+
+> Enable the wiki server.
+
+> Disable my Jira server.
+
+The portal toggles the server and updates the active tool list immediately. Disabling a server removes its tools from the session, which reduces context window usage.
 
 ### Reauthenticate a server
 
-When an upstream MCP server token expires or needs a refresh, the portal prompts you to reauthenticate directly from within your MCP client. The portal opens an authorization prompt in your browser. After you complete the login, the updated session returns to the client automatically.
+When an upstream MCP server token expires or needs a refresh, the portal prompts you to reauthenticate directly from within your MCP client. The portal provides an authorization URL via elicitation that you open in your browser. After you complete the login, the updated session returns to the client automatically.
 
-If your MCP client does not support in-session reauthentication, you can force all MCP servers to reauthenticate by clearing cached credentials:
+If your MCP client does not support elicitations, you can force all MCP servers to reauthenticate by clearing cached credentials:
 
 :::note
 This command clears credentials for all MCP servers using `mcp-remote@latest`, not just MCP portals.
@@ -273,19 +300,9 @@ rm -rf ~/.mcp-auth
 
 After clearing credentials, reconnect to the portal from your MCP client.
 
-### Enable or disable servers
-
-You can toggle individual upstream MCP servers on or off during an active session. The portal uses [MCP elicitations](https://modelcontextprotocol.io/specification/2025-03-26/server/elicitation) to present a server selection prompt within your MCP client. You can also ask your AI agent to enable or disable a specific server by name.
-
-Disabling a server removes its tools from the active session. This is useful for reducing context window usage when you do not need all available servers.
-
 ### Authorize new servers
 
 When an admin adds a new upstream MCP server to a portal, the portal automatically prompts connected users to authorize the new server. The portal batches admin changes and redirects you to the authorization flow once, rather than interrupting for each individual server update.
-
-### Clear a server session
-
-To revoke your authorization for an individual upstream MCP server, ask your AI agent to disconnect or log out from that server. The portal clears the session for that server while keeping your other server sessions active.
 
 ## View portal logs
 
