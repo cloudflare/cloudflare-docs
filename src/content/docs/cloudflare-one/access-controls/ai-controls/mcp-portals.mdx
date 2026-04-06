@@ -10,7 +10,7 @@ sidebar:
     text: Beta
 ---
 
-import { Render, GlossaryTooltip } from "~/components";
+import { Render, GlossaryTooltip, Tabs, TabItem, APIRequest } from "~/components";
 
 An MCP server portal centralizes multiple [Model Context Protocol (MCP) servers](https://www.cloudflare.com/learning/ai/what-is-model-context-protocol-mcp/) onto a single HTTP endpoint.
 
@@ -131,10 +131,26 @@ Code mode is useful for portals that aggregate many MCP servers or servers that 
 
 To turn off code mode for a portal:
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
 1. In [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **AI controls**.
 2. Find the portal you want to configure, then select the three dots > **Edit**.
 3. Under **Basic information**, turn off **Code mode**.
 4. Select **Save**.
+
+</TabItem> <TabItem label="API">
+
+Send a `PUT` request to the [Update a MCP Portal](/api/resources/zero_trust/subresources/access/subresources/ai_controls/subresources/mcp/subresources/portals/methods/update/) endpoint with `allow_code_mode` set to `false`:
+
+<APIRequest
+	path="/accounts/{account_id}/access/ai-controls/mcp/portals/{portal_id}"
+	method="PUT"
+	json={{
+		allow_code_mode: false,
+	}}
+/>
+
+</TabItem> </Tabs>
 
 ### Connect with code mode
 
