@@ -68,6 +68,7 @@
 		"@types/node": "24.6.0",
 		"@types/react": "19.0.7",
 		"@types/react-dom": "19.0.4",
+		"@types/unist": "3.0.3",
 		"@typescript-eslint/parser": "8.44.0",
 		"algoliasearch": "5.37.0",
 		"astro": "6.0.5",
