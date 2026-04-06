@@ -6,18 +6,24 @@ products:
   - access
 ---
 
-Cloudflare Access now supports managed OAuth, which allows non-browser clients, such as CLIs, AI agents, SDKs, and scripts, to authenticate with Access-protected applications using a standard OAuth 2.0 authorization code flow.
+Cloudflare Access supports managed OAuth, which allows non-browser clients — such as CLIs, AI agents, SDKs, and scripts — to authenticate with Access-protected applications using a standard OAuth 2.0 authorization code flow.
 
 Previously, non-browser clients that attempted to access a protected application received a 302 redirect to a login page they could not complete. The established workaround was `cloudflared access curl`, which required installing additional tooling.
 
-With managed OAuth, clients instead receive a `401` response with a `WWW-Authenticate` header that points to Access's OAuth discovery endpoints ([RFC 8414](https://datatracker.ietf.org/doc/html/rfc8414) and [RFC 9728](https://datatracker.ietf.org/doc/html/rfc9728)). The client opens the end user's browser to the Access login page, the end user authenticates with their identity provider, and the client receives an OAuth access token for subsequent requests.
+With managed OAuth, clients instead receive a `401` response with a `WWW-Authenticate` header that points to Access's OAuth discovery endpoints ([RFC 8414](https://datatracker.ietf.org/doc/html/rfc8414) and [RFC 9728](https://datatracker.ietf.org/doc/html/rfc9728)). The client opens the end user's browser to the Access login page. The end user authenticates with their identity provider, and the client receives an OAuth access token for subsequent requests.
 
-Access enforces the same policies as a browser login — the OAuth layer is a new transport mechanism, not a separate authentication path.
+Access enforces the same policies as a browser login; the OAuth layer is a new transport mechanism, not a separate authentication path.
 
-Managed OAuth can be enabled on any self-hosted Access application or [MCP server portal](/cloudflare-one/access-controls/ai-controls/mcp-portals/). It is opt-in to avoid interfering with applications that run their own OAuth servers and rely on their own `WWW-Authenticate` headers.
+Managed OAuth can be enabled on any self-hosted Access application or [MCP server portal](/cloudflare-one/access-controls/ai-controls/mcp-portals/). It is opt-in for existing applications to avoid interfering with those that run their own OAuth servers and rely on their own `WWW-Authenticate` headers.
 
-To enable managed OAuth, go to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Zero Trust** > **Access controls** > **Applications**, edit the application, and turn on **Managed OAuth** under **Advanced settings**. It can also be enabled via the API by setting `oauth_configuration.enabled` to `true` on the [Access applications endpoint](/api/resources/zero_trust/subresources/access/subresources/applications/methods/update/).
+:::note
+For MCP server portals, managed OAuth is enabled by default on new portals. It remains opt-in for self-hosted applications.
+:::
+
+To enable managed OAuth, go to **Zero Trust** > **Access controls** > **Applications**, edit the application, and turn on **Managed OAuth** under **Advanced settings**.
+
+You can also enable it via the API by setting `oauth_configuration.enabled` to `true` on the [Access applications endpoint](/api/resources/zero_trust/subresources/access/subresources/applications/methods/update/).
 
 ![Managed OAuth settings in the Cloudflare dashboard](~/assets/images/changelog/access/managed-oauth.png)
 
-For full setup instructions, refer to [Enable managed OAuth](/cloudflare-one/access-controls/applications/http-apps/managed-oauth/).
+For setup instructions, refer to [Enable managed OAuth](/cloudflare-one/access-controls/applications/http-apps/managed-oauth/).
