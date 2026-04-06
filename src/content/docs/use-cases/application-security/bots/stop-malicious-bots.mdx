@@ -16,7 +16,7 @@ Before you change any bot settings, review your traffic data to understand what 
 
 ### Find your bot analytics
 
-Bot analytics show you how much of your traffic is automated, which pages bots target, and how Cloudflare scores each request.
+[Bot analytics](/bots/bot-analytics/) show you how much of your traffic is automated, which pages bots target, and how Cloudflare scores each request.
 
 :::note[Bot Analytics requires a Business plan or above]
 Bot score distribution data and detailed bot analytics are available on Business and Enterprise plans. Free and Pro plan users can review basic security metrics through **Security** > **Events**. For full bot analytics capabilities, refer to [Bot Analytics](/bots/bot-analytics/).
@@ -267,7 +267,7 @@ Enterprise customers can use the **Request rate analysis** tab in Security Analy
 ### Use bot score in custom rules
 
 :::note[Bot score in custom rules requires Enterprise Bot Management]
-The `cf.bot_management.score` field is only available to Enterprise customers who have purchased Bot Management. Pro and Business customers can see bot traffic divided into groupings (Automated, Likely automated, Likely human, Verified bot) in the dashboard, but cannot reference granular bot scores in custom rule expressions. On Free plans, use `cf.client.bot` to identify verified bots. Refer to [Bot scores](/bots/concepts/bot-score/) for details on each plan's capabilities.
+The `cf.bot_management.score` field is only available to Enterprise customers who have purchased [Bot Management](/bots/plans/bm-subscription/). Pro and Business customers can see bot traffic divided into groupings (Automated, Likely automated, Likely human, Verified bot) in the dashboard, but cannot reference granular bot scores in custom rule expressions. On Free plans, use `cf.client.bot` to identify verified bots. Refer to [Bot scores](/bots/concepts/bot-score/) for details on each plan's capabilities.
 :::
 
 Bot score gives you a numeric signal to distinguish automated traffic from human visitors. Each request receives a score from 1 to 99, where lower scores indicate more automated behavior:
@@ -338,7 +338,7 @@ Look for false positives (legitimate traffic that your rules incorrectly challen
 - User agents matching legitimate browsers but receiving challenges
 - High volumes of challenged requests from countries where you have real users
 
-Bot Fight Mode and Super Bot Fight Mode are aggressive by design. False positives are expected, especially in the first few days after turning them on. The key difference between the two is how you handle exceptions:
+[Bot Fight Mode](/bots/get-started/bot-fight-mode/) and [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/) are aggressive by design. False positives are expected, especially in the first few days after turning them on. The key difference between the two is how you handle exceptions:
 
 - **Bot Fight Mode** (Free) cannot be bypassed with WAF custom rule Skip actions. Your options are IP Access rules or turning off Bot Fight Mode entirely.
 - **Super Bot Fight Mode** (Pro and above) can be bypassed with WAF custom rules using the Skip action, giving you more flexibility to create exceptions.
