@@ -29,7 +29,7 @@ To view details about the posture findings that CASB found:
 
 Cloud & SaaS findings will display details about your posture finding, including the finding type, [severity level](#severity-levels), number of instances, associated integration, current status, and date detected. For more information on each instance of the finding, select **Manage**.
 
-To manage the finding's visibility, you can update the finding's [severity level](#severity-levels) or [hide the finding](#hide-findings) from view. You can also [send a posture finding instance to a webhook](#send-posture-finding-instances-to-a-webhook). Some findings also provide a remediation guide to resolve the issue or support [creating a Gateway HTTP policy](#resolve-finding-with-a-gateway-policy) to block the traffic.
+To manage the finding's visibility, you can update the finding's [severity level](#severity-levels) or [hide the finding](#hide-findings) from view. You can also [send a posture finding instance to a webhook](#send-webhook). Some findings also provide a remediation guide to resolve the issue or support [creating a Gateway HTTP policy](#resolve-finding-with-a-gateway-policy) to block the traffic.
 
 ### Severity levels
 
@@ -109,6 +109,8 @@ The finding's status will change from **Active** to **Ignored**. CASB will conti
 4. In the three-dot menu, select **Move to hidden**.
 
 The instance will be moved from **Active** to **Hidden** within the finding. If the finding occurs again for the same user, CASB will report the new instance quietly in the **Hidden** tab. You can move hidden instances back to the **Active** tab at any time.
+
+<a id="send-webhook" />
 
 ## Send posture finding instances to a webhook
 
