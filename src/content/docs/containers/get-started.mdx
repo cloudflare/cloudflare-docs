@@ -23,7 +23,7 @@ In this guide, we will build and push a container image alongside your Worker co
 
 ### Deploy without Docker
 
-If you do not have Docker running locally but want to deploy Worker code changes without rebuilding the container image, pass `--containers-rollout=none` to the deploy command:
+If you do not have Docker running locally but want to deploy Worker code changes without rebuilding the container image, pass [`--containers-rollout=none`](/workers/wrangler/commands/#deploy) to the deploy command:
 
 <PackageManagers
 	type="exec"
@@ -31,7 +31,7 @@ If you do not have Docker running locally but want to deploy Worker code changes
 	args="deploy --containers-rollout=none"
 />
 
-This skips the container image build and push steps, deploying your Worker code while reusing the existing container image from a previous deployment. You must have deployed the container at least once with Docker before using this option.
+This skips the container image build and push steps and deploys your Worker code while reusing the existing container image from a previous deployment. You must have deployed the container at least once with Docker before using this option.
 
 ## Deploy your first Container
 
