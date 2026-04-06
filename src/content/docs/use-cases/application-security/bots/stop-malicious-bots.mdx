@@ -57,7 +57,7 @@ Bot Fight Mode identifies requests that match known bot patterns and issues a co
 
 ### What Bot Fight Mode does and does not do
 
-Bot Fight Mode is available on all Cloudflare plans, including Free. It provides broad, baseline protection. Understanding what it does and does not do helps you decide whether to turn it on and which additional layers you need.
+Bot Fight Mode is available on all Cloudflare plans, including Free. It provides broad, baseline protection.
 
 **What it does:**
 
@@ -113,8 +113,6 @@ Two tools protect form endpoints: Turnstile and rate limiting. They solve differ
 **Both together** provide the strongest coverage. Turnstile blocks automated submissions at the form level. Rate limiting catches high-volume attacks that bypass or do not encounter the form, such as direct `POST` requests to the endpoint that skip the client-side widget.
 
 ### Add Turnstile to a form
-
-Turnstile is a free, privacy-preserving challenge that verifies visitors are human before they submit a form. Unlike traditional CAPTCHAs, Turnstile does not require users to solve visual puzzles. In Managed mode, most visitors pass without any visible interaction.
 
 Adding Turnstile involves three steps: create a widget, add the client-side snippet, and validate the token on your server.
 
@@ -248,9 +246,7 @@ If your bot traffic is concentrated from countries where you have no real users,
 
 ### Rate limit high-frequency paths
 
-Beyond form endpoints (covered in the previous section), bots also target checkout flows, API endpoints, and other high-value paths with high-frequency requests. Rate limiting rules cap the number of requests a single client can make to these paths within a time window.
-
-The key challenge is choosing the right threshold. Set it too low and you block legitimate users. Set it too high and bots slip through.
+Beyond form endpoints, bots also target checkout flows, API endpoints, and other high-value paths. Rate limiting rules cap the number of requests a single client can make to these paths within a time window.
 
 1. Identify which paths to protect. Prioritize checkout flows, API endpoints, and any path that triggers expensive operations.
 2. Estimate the normal request rate. Consider how many times a legitimate user would hit the endpoint in a one-minute window.
@@ -314,7 +310,7 @@ After you deploy bot protection rules, use Security Events to verify they are wo
 
 ### Check Security Events
 
-Security Events displays every request that Cloudflare mitigated — blocked, challenged, or flagged. This is where you confirm your rules are working as intended.
+Security Events displays every request that Cloudflare mitigated, including blocks, challenges, and flags.
 
 <Tabs syncKey="dashNewNav">
 <TabItem label="New dashboard" icon="rocket">
@@ -387,7 +383,7 @@ Custom rules execute before Super Bot Fight Mode in the WAF evaluation order. A 
 
 ### Set up alerts
 
-Bot attacks can spike without warning. Set up alerts so you are notified when automated traffic increases, rather than discovering the problem after it affects your site.
+Set up alerts to get notified when automated traffic increases.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2. Go to **Notifications**.
