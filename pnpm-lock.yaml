@@ -47,6 +47,9 @@ importers:
       '@cloudflare/workers-types':
         specifier: 4.20260331.1
         version: 4.20260331.1
+      '@eslint/js':
+        specifier: 9.35.0
+        version: 9.35.0
       '@expressive-code/core':
         specifier: 0.41.7
         version: 0.41.7
@@ -149,6 +152,9 @@ importers:
       eslint:
         specifier: 9.35.0
         version: 9.35.0(jiti@2.6.1)
+      eslint-formatter-checkstyle:
+        specifier: 9.0.1
+        version: 9.0.1
       eslint-plugin-astro:
         specifier: 1.6.0
         version: 1.6.0(eslint@9.35.0(jiti@2.6.1))
@@ -3727,6 +3733,10 @@ packages:
     engines: {node: '>=12'}
     peerDependencies:
       eslint: '>=6.0.0'
+
+  eslint-formatter-checkstyle@9.0.1:
+    resolution: {integrity: sha512-DeD1XkqFr22ZK+KsREcW3YFUsYtS5hTZb52m+fLVeAHMnTtgtLP9xiA55b5qiNvNxDf/hbTN+9X8lZl9jHH/cQ==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   eslint-plugin-astro@1.6.0:
     resolution: {integrity: sha512-yGIbLHuj5MOUXa0s4sZ6cVhv6ehb+WLF80tsrGaxMk6VTUExruMzubQDzhOYt8fbR1c9vILCCRSCsKI7M1whig==}
@@ -10109,6 +10119,8 @@ snapshots:
     dependencies:
       eslint: 9.35.0(jiti@2.6.1)
       semver: 7.7.4
+
+  eslint-formatter-checkstyle@9.0.1: {}
 
   eslint-plugin-astro@1.6.0(eslint@9.35.0(jiti@2.6.1)):
     dependencies:
