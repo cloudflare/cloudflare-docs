@@ -22,6 +22,8 @@ Key benefits include:
 
 - **Customized tools per portal**: Admins can tailor an MCP portal to a particular use case by choosing the specific tools and prompt templates that they want to make available to users through the portal. This allows users to access a curated set of tools and prompts — the less external context exposed to the AI model, the better the AI responses tend to be.
 
+- **Context optimization**: Portals support query parameter options that reduce context window usage by minimizing or hiding tool definitions. Refer to [Optimize context](#optimize-context) for details.
+
 - **Observability**: Once the user's AI agent is connected to the portal, Cloudflare Access logs the individual requests made using the tools in the portal. You can optionally route portal traffic through [Cloudflare Gateway](#route-portal-traffic-through-gateway) for richer HTTP logging and data loss prevention (DLP) scanning.
 
 This guide explains how to add MCP servers to Cloudflare Access, create an MCP portal with customized tools and policies, and connect users to the portal using an MCP client.
@@ -185,15 +187,105 @@ For MCP clients with server configuration files, we recommend using the `npx` co
 
 We do not recommend using the `serverURL` parameter since it may cause issues with portal session creation and management.
 
-If you want to force your MCP client to reauthenticate, most MCP clients will refresh a session after removing the existing MCP OAuth sessions. To clear authentication credentials used by your MCP client, open a terminal and run the following command:
+## Optimize context
+
+MCP server portals support context optimization options that reduce how many tokens tool definitions consume in the model's context window. These options are useful when a portal aggregates many MCP servers or servers that expose a large number of tools.
+
+To use context optimization, append the `optimize_context` query parameter to your portal URL when connecting from an MCP client.
+
+### Minimize tools
+
+The `minimize_tools` option strips tool descriptions and input schemas from all upstream tools, leaving only their names. The portal exposes a special `query` tool that agents use to search and retrieve full tool definitions on demand. Agents can discover tools without loading all definitions upfront.
+
+This option provides up to 5x savings in token usage, though querying tool definitions before use adds a small amount of overhead.
+
+To connect with `minimize_tools`, use the following portal URL:
+
+```txt
+https://<subdomain>.<domain>/mcp?optimize_context=minimize_tools
+```
+
+For MCP clients with server configuration files:
+
+```json title="MCP client configuration with minimize_tools"
+{
+	"mcpServers": {
+		"example-portal": {
+			"command": "npx",
+			"args": [
+				"-y",
+				"mcp-remote@latest",
+				"https://<subdomain>.<domain>/mcp?optimize_context=minimize_tools"
+			]
+		}
+	}
+}
+```
+
+### Search and execute
+
+The `search_and_execute` option hides all upstream tools and exposes only two tools to the agent: `query` and `execute`. The `query` tool searches and retrieves tool definitions. The `execute` tool runs the upstream tools. The generated code runs in an isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/) environment, which keeps authentication credentials and environment variables out of the model context.
+
+This option reduces the initial token cost of portal tools to a small constant, regardless of how many tools are available. However, the agent becomes fully reliant on `query` to discover tools before it can call them.
+
+To connect with `search_and_execute`, use the following portal URL:
+
+```txt
+https://<subdomain>.<domain>/mcp?optimize_context=search_and_execute
+```
+
+For MCP clients with server configuration files:
+
+```json title="MCP client configuration with search_and_execute"
+{
+	"mcpServers": {
+		"example-portal": {
+			"command": "npx",
+			"args": [
+				"-y",
+				"mcp-remote@latest",
+				"https://<subdomain>.<domain>/mcp?optimize_context=search_and_execute"
+			]
+		}
+	}
+}
+```
+
+For more information on the code mode pattern behind `search_and_execute`, refer to the [Code mode SDK reference](/agents/api-reference/codemode/).
+
+## Manage portal sessions
+
+Once connected to a portal, users can manage their upstream MCP server sessions without leaving their MCP client.
+
+### Reauthenticate a server
+
+When an upstream MCP server token expires or needs a refresh, the portal prompts you to reauthenticate directly from within your MCP client. The portal opens an authorization prompt in your browser. After you complete the login, the updated session returns to the client automatically.
+
+If your MCP client does not support in-session reauthentication, you can force all MCP servers to reauthenticate by clearing cached credentials:
 
 :::note
-This command will trigger all MCP servers using `mcp-remote@latest` to force reauthenticate, not just MCP portals.
+This command clears credentials for all MCP servers using `mcp-remote@latest`, not just MCP portals.
 :::
 
 ```sh
 rm -rf ~/.mcp-auth
 ```
+
+After clearing credentials, reconnect to the portal from your MCP client.
+
+### Enable or disable servers
+
+You can toggle individual upstream MCP servers on or off during an active session. The portal uses [MCP elicitations](https://modelcontextprotocol.io/specification/2025-03-26/server/elicitation) to present a server selection prompt within your MCP client. You can also ask your AI agent to enable or disable a specific server by name.
+
+Disabling a server removes its tools from the active session. This is useful for reducing context window usage when you do not need all available servers.
+
+### Authorize new servers
+
+When an admin adds a new upstream MCP server to a portal, the portal automatically prompts connected users to authorize the new server. The portal batches admin changes and redirects you to the authorization flow once, rather than interrupting for each individual server update.
+
+### Clear a server session
+
+To revoke your authorization for an individual upstream MCP server, ask your AI agent to disconnect or log out from that server. The portal clears the session for that server while keeping your other server sessions active.
 
 ## View portal logs
 

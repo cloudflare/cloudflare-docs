@@ -1,0 +1,23 @@
+---
+title: Session management for MCP server portals
+description: Manage sessions for MCP servers protected by portals, including reauthentication, server toggling, and automatic authorization prompts.
+date: 2026-04-02
+products:
+  - access
+---
+
+[MCP server portals](/cloudflare-one/access-controls/ai-controls/mcp-portals/) support in-session management of upstream MCP server connections. Users can reauthenticate, enable or disable individual servers, and clear server sessions without leaving their MCP client.
+
+### Reauthenticate from within a session
+
+When an upstream MCP server token expires or needs a refresh, users can reauthenticate directly from their MCP client. The portal presents an authorization prompt that the user completes in their browser, then returns the updated session to the client. This removes the need to manually delete cached credentials and restart the client.
+
+### Enable or disable individual servers
+
+Users can toggle individual upstream MCP servers on or off during an active session. The portal uses [MCP elicitations](https://modelcontextprotocol.io/specification/2025-03-26/server/elicitation) to present a server selection prompt within the MCP client. Disabling a server removes its tools from the active session, which reduces context window usage.
+
+### Automatic authorization for new servers
+
+When an admin adds a new upstream MCP server to a portal, connected users are automatically prompted to authorize the new server. The portal batches admin changes and redirects the user to the authorization flow once, rather than interrupting for each individual server update.
+
+For more information, refer to [Manage portal sessions](/cloudflare-one/access-controls/ai-controls/mcp-portals/#manage-portal-sessions).
