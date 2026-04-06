@@ -435,6 +435,12 @@ Type: `string`
 
 String that represents the JSON array with the returned resource records (for example, '[{"name": "example.com", "type": "CNAME", "class": "IN", "ttl": 3600, "rdata": "cname.example.com."}]').
 
+## ResponseTimeMs
+
+Type: `int`
+
+Total response time of the DNS request in milliseconds.
+
 ## SrcIP
 
 Type: `string`

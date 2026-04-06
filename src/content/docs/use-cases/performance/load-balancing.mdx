@@ -1,0 +1,31 @@
+---
+pcx_content_type: how-to
+title: Balance traffic across origins
+description: Distribute traffic across multiple servers for reliability and performance.
+sidebar:
+  order: 5
+---
+
+If a single origin server handles all your traffic, any failure or overload takes your application offline. Cloudflare's load balancing distributes traffic across multiple origins with health checks and automatic failover.
+
+## Solutions
+
+### Load balancing
+
+Distribute traffic across origins with health checks and failover. [Learn more about load balancing](/load-balancing/).
+
+- **Traffic distribution** - Spread incoming load across multiple origin servers using weighted or latency-based policies
+- **Failover** - Reroute traffic to healthy origins instantly when a server fails its health check
+- **Geographic steering** - Route users to the nearest or best-performing origin based on latency or geography
+
+### Health checks
+
+Monitor origin server health and availability. [Learn more about health checks](/health-checks/).
+
+- **Health monitoring** - Continuously probe origins and automatically remove unhealthy servers from rotation
+
+## Get started
+
+1. [Create a load balancer](/load-balancing/get-started/)
+2. [Configure health checks](/health-checks/get-started/)
+3. [Set up steering policies](/load-balancing/understand-basics/traffic-steering/)

@@ -1,9 +1,111 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: overview
 title: Use cases
+description: Find which Cloudflare solutions solve your use case, from building new web apps to protecting and accelerating your existing apps and systems.
+sidebar:
+  order: 1
+---
+
+import { CardGrid, Description, LinkTitleCard } from "~/components";
+
+<Description>
+
+Select a category below to find the Cloudflare solutions, features, and architecture patterns that apply to your use case.
+
+</Description>
+
+## Build something new
+
+Deploy applications, APIs, and platforms on Cloudflare from the ground up.
+
+<CardGrid>
+
+<LinkTitleCard title="Web sites or web apps" href="/use-cases/web-apps/" icon="workers">
+
+Build, deploy and secure full-stack applications globally with serverless compute and storage.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="AI applications" href="/use-cases/ai/" icon="workers-ai">
+
+Build and deploy AI-powered applications with inference, vector databases, and model gateways.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="SaaS platforms" href="/use-cases/saas/" icon="cloudflare-for-platforms">
+
+Build multi-tenant platforms with custom domains, isolated compute, and per-customer configuration.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="APIs and microservices" href="/use-cases/apis/" icon="api-shield">
+
+Build, secure, and manage APIs with rate limiting, authentication, and observability.
+
+</LinkTitleCard>
+
+</CardGrid>
+
+## Secure and accelerate your applications
+
+Add Cloudflare to an existing application or infrastructure.
+
+<CardGrid>
+
+<LinkTitleCard title="Protect your application" href="/use-cases/application-security/" icon="waf">
+
+Block attacks with application security, DDoS protection, and SSL/TLS encryption.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Accelerate content delivery" href="/use-cases/performance/" icon="cache">
+
+Speed up your applications with global caching, image optimization, and smart routing.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Implement company-wide security" href="/use-cases/company-security/" icon="cloudflare-one">
+
+Protect employees, devices, and data with Zero Trust access, secure web gateway, and email security.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Deliver images or stream videos" href="/use-cases/media-streaming/" icon="stream">
+
+Deliver video, images, and rich media at scale with encoding, optimization, and global distribution.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Improve e-commerce security and performance" href="/use-cases/e-commerce/" icon="zaraz">
+
+Secure and accelerate online storefronts with caching, bot protection, and global delivery.
+
+</LinkTitleCard>
+
+</CardGrid>
 
 ---
 
-import { DirectoryListing } from "~/components"
+## More resources
 
-<DirectoryListing />
+<CardGrid>
+
+<LinkTitleCard title="Reference architectures" href="/reference-architecture/" icon="open-book">
+
+Detailed diagrams and design patterns for enterprise deployments.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Learning paths" href="/learning-paths/" icon="open-book">
+
+Structured, module-based guidance for specific workflows.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Tutorials" href="/tutorials/" icon="open-book">
+
+Step-by-step guides to help you build with Cloudflare solutions.
+
+</LinkTitleCard>
+
+</CardGrid>

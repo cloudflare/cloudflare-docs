@@ -191,7 +191,7 @@ Policies with Block actions block network traffic from reaching certain IPs or p
 <Render
 	file="gateway/client-notifications"
 	product="cloudflare-one"
-	params={{ toggleName: "**Display block notification for WARP Client**" }}
+	params={{ toggleName: "**Display block notification for Cloudflare One Client**" }}
 />
 
 ### Network Override
@@ -243,7 +243,7 @@ Policies with Network Override actions override traffic directed to or coming fr
 If the override destination IP is unreachable, Gateway still rewrites the destination but does not log the connection. The traffic fails silently with no log entry. Verify that your override IP is reachable before deploying this policy.
 :::
 
-Gateway will only log successful override connections in your [network logs](/cloudflare-one/insights/logs/gateway-logs/#network-logs).
+Gateway will only log successful override connections in your [network logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/#network-logs).
 
 ## Selectors
 

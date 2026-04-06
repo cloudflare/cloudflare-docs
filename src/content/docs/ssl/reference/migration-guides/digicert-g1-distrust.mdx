@@ -1,0 +1,40 @@
+---
+pcx_content_type: reference
+title: DigiCert Legacy Root (G1) distrust by major browsers
+sidebar:
+  order: 2
+  label: DigiCert G1 distrust
+description: Learn how the DigiCert G1 root distrust may affect your Cloudflare configuration.
+---
+
+Browsers and operating systems are completing the removal of DigiCert's legacy G1 root certificates from their trust stores, effective **April 15, 2026**.
+
+DigiCert announced this planned deprecation in 2023 and has been issuing certificates from their newer G2 roots since 2020.
+
+Since DigiCert is not within the [certificate authorities](/ssl/reference/certificate-authorities/) used by Cloudflare, this change may only affect customers who upload [custom certificates](/ssl/edge-certificates/custom-certificates/) issued from DigiCert G1 roots.
+
+## The change
+
+The primary root being distrusted is **DigiCert Global Root CA**. The distrust also affects other legacy G1 intermediates cross-signed from this root.
+
+DigiCert Global Root G2 and G3 remain fully trusted. Certificates that chain to G2 are unaffected.
+
+Refer to [DigiCert's root and intermediate CA certificate updates](https://knowledge.digicert.com/general-information/digicert-root-and-intermediate-ca-certificate-updates-2023) for the full list of affected roots.
+
+## DigiCert's recommendation
+
+DigiCert recommends reissuing any affected certificates from a G2 intermediate. This is a standard reissuance — you do not need to generate a new key in most cases.
+
+## Cloudflare-managed certificates
+
+Since Cloudflare does not use DigiCert roots, you can avoid this dependency entirely by switching to Cloudflare-managed certificates:
+
+- Use [Advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/) for more control and flexibility with automatic renewals.
+- Enable [Total TLS](/ssl/edge-certificates/additional-options/total-tls/) to automatically issue certificates for your [proxied hostnames](/dns/proxy-status/).
+- Use [Delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/) to reduce manual intervention when renewing certificates for [partial (CNAME) setup](/dns/zone-setups/partial-setup/) zones.
+
+## More resources
+
+- [DigiCert root and intermediate CA certificate updates](https://knowledge.digicert.com/general-information/digicert-root-and-intermediate-ca-certificate-updates-2023)
+- [Custom certificates](/ssl/edge-certificates/custom-certificates/)
+- [Certificate bundling methodologies](/ssl/edge-certificates/custom-certificates/bundling-methodologies/)

@@ -73,9 +73,9 @@ When creating or editing policies, it may take up to 60 seconds for that policy 
 	thumbnail="https://imagedelivery.net/xDOJvHcv1KwTQn6S-BGFIw/a6fd20a9-4cdf-4640-81b1-cada4c4f3f00/public"
 />
 
-## Get started
+## Set up Cloudflare Gateway traffic policies
 
-For each policy type, follow this workflow:
+Before you create Cloudflare Gateway traffic policies, you need connect the devices or networks you want to protect and confirm that Cloudflare Gateway can inspect their traffic. For each traffic policy type, follow this workflow:
 
 1. Connect the devices or networks you want to protect.
 2. Verify that Gateway is receiving traffic from your devices.
@@ -86,11 +86,11 @@ For example, if your goal is to prevent employees from accessing known malware d
 
 For step-by-step setup guides, refer to [DNS](/cloudflare-one/traffic-policies/get-started/dns/), [Network](/cloudflare-one/traffic-policies/get-started/network/), and [HTTP](/cloudflare-one/traffic-policies/get-started/http/) policies.
 
-### Select a policy type
+### How to choose a Cloudflare Gateway policy type
 
-The right policy type depends on the traffic you want to filter:
+The following table maps common traffic-filtering goals to the best Cloudflare Gateway policy type:
 
-| Goal                                   | Policy type      | Why                                                                    |
+| Filtering goal                         | Policy type      | Why                                                                    |
 | -------------------------------------- | ---------------- | ---------------------------------------------------------------------- |
 | Block websites by URL                  | HTTP             | Inspects the full URL path, not just the domain                        |
 | Block domains (all pages)              | DNS              | Prevents the domain from resolving                                     |
@@ -100,7 +100,9 @@ The right policy type depends on the traffic you want to filter:
 | Drop traffic before other policies run | Packet filtering | Blocks by packet attributes without user context                       |
 | Route DNS to custom nameservers        | Resolver         | Overrides the default Cloudflare resolver                              |
 
-## Troubleshooting
+After you choose a Cloudflare Gateway policy type, continue with the matching setup guide to create the policy that fits your traffic-filtering goal.
 
-For help resolving common issues with Gateway policies, refer to [Troubleshooting](/cloudflare-one/traffic-policies/troubleshooting/).
+## Troubleshoot Cloudflare Gateway policies
+
+For help resolving common issues with Cloudflare Gateway policies, refer to [Troubleshooting](/cloudflare-one/traffic-policies/troubleshooting/).
 

@@ -19,12 +19,12 @@ The request that triggers auto-creation must include a valid `cf-aig-authorizati
 
 The auto-created default gateway uses the following settings:
 
-| Setting | Default value |
-| --- | --- |
-| Authentication | On |
-| Log collection | On |
-| Caching | Off (TTL of 0) |
-| Rate limiting | Off |
+| Setting        | Default value  |
+| -------------- | -------------- |
+| Authentication | On             |
+| Log collection | On             |
+| Caching        | Off (TTL of 0) |
+| Rate limiting  | Off            |
 
 After creation, you can edit the default gateway settings like any other gateway. If you delete the default gateway, sending a new authenticated request to the `default` gateway ID auto-creates it again.
 
@@ -45,6 +45,28 @@ Auto-creation only applies to the gateway ID `default`. Using any other gateway 
 For more details about what settings are available for editing, refer to [Configuration](/ai-gateway/configuration/).
 
 :::
+
+## Retry requests
+
+You can configure your gateway to automatically retry failed requests to upstream providers. This is useful when you do not control the client and cannot implement client-side retries or backoff logic.
+
+To configure retry settings:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **AI** > **AI Gateway** and select your gateway.
+3. Go to **Settings** and find the **Retry Requests** section.
+4. Turn on the toggle to turn on automatic retries.
+5. Configure the following settings:
+   - **Retry count** — the maximum number of retry attempts (up to 5).
+   - **Delay** — the base delay between retries. Available values: 100ms, 500ms, 1 second, 2 seconds, 3 seconds, or 5 seconds.
+   - **Backoff** — the backoff strategy for subsequent retries: Constant, Linear, or Exponential.
+6. Select **Save**.
+
+![Retry Requests settings in the AI Gateway dashboard](~/assets/images/ai-gateway/auto-retry-settings.png)
+
+These gateway-level defaults apply to all requests routed through the gateway. Per-request headers can override these defaults — refer to [Request handling](/ai-gateway/configuration/request-handling/#request-retries) for details.
+
+For more complex failover scenarios where you need to fail across different providers, refer to [Dynamic Routing](/ai-gateway/features/dynamic-routing/).
 
 ## Delete gateway
 

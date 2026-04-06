@@ -12,31 +12,34 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
+        id: setup-node
         with:
           node-version: 24.x
           cache: npm
 
       - name: Restore node_modules (cache hit)
         id: node-modules-cache
-        uses: actions/cache@v5
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           path: node_modules
-          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('package.json') }}
+          key: node-modules-${{ runner.os }}-node-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('package.json') }}
 
       - name: Install node_modules (cache miss)
         run: npm ci
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
       - name: Restore Astro assets from cache
-        uses: actions/cache@v5
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           path: |
             node_modules/.astro/assets
-          key: static
+          key: astro-assets-${{ hashFiles('src/assets/**') }}
+          restore-keys: |
+            astro-assets-
 
       - name: Build
         run: npm run build
@@ -44,7 +47,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
         continue-on-error: true
         with:
           name: site-html
@@ -57,7 +60,16 @@ jobs:
 
       - name: Notify Google Chat on failure
         if: failure()
+        env:
+          WEBHOOK_URL: ${{ secrets.CED_TEAM_ALERTS_CHANNEL_WEBHOOK }}
+          ACTOR: ${{ github.actor }}
+          REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
         run: |
-          curl -X POST "${{ secrets.CED_TEAM_ALERTS_CHANNEL_WEBHOOK }}" \
+          # Use jq to safely construct JSON payload
+          MESSAGE="❌ *Publish Production* workflow failed.\nActor: $ACTOR\n<https://github.com/$REPO/actions/runs/$RUN_ID|View run>"
+          JSON_PAYLOAD=$(jq -n --arg text "$MESSAGE" '{text: $text}')
+
+          curl -X POST "$WEBHOOK_URL" \
             -H "Content-Type: application/json" \
-            -d "{\"text\": \"❌ *Publish Production* workflow failed.\nActor: ${{ github.actor }}\n<https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|View run>\"}"
+            -d "$JSON_PAYLOAD"
