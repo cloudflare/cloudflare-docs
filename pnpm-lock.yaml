@@ -317,6 +317,9 @@ importers:
       unist-util-visit:
         specifier: 5.0.0
         version: 5.0.0
+      unist-util-visit-parents:
+        specifier: 6.0.2
+        version: 6.0.2
       vite-tsconfig-paths:
         specifier: 5.1.4
         version: 5.1.4(typescript@5.9.3)(vite@7.3.1(@types/node@24.6.0)(jiti@2.6.1)(lightningcss@1.29.2)(tsx@4.20.5)(yaml@2.8.3))
