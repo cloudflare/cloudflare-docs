@@ -159,7 +159,7 @@
 	"devEngines": {
 		"runtime": {
 			"name": "node",
-			"version": ">=24.0.0",
+			"version": "^24.0.0",
 			"onFail": "error"
 		},
 		"packageManager": {
