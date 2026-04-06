@@ -12,7 +12,7 @@ The right defense against malicious bot traffic depends on what you are seeing o
 
 ## Review your bot traffic
 
-Before you change any bot settings, review your traffic data. Making changes without understanding your traffic risks blocking legitimate visitors or missing the bots that cause the most damage.
+Before you change any bot settings, review your traffic data to understand what bots are doing on your site.
 
 ### Find your bot analytics
 
@@ -102,8 +102,6 @@ For organizations that need machine learning-based bot scoring, behavioral analy
 
 ## Protect forms from automated abuse
 
-Forms are among the most common targets for automated abuse. Login forms receive credential stuffing attempts that test stolen passwords against real accounts. Registration forms attract bots that create fake accounts for spam or fraud. Contact forms collect phishing links and advertising spam.
-
 Two tools protect form endpoints: Turnstile and rate limiting. They solve different problems and work best together.
 
 ### Turnstile versus rate limiting
@@ -186,9 +184,7 @@ Rules that use counting expressions with response codes (such as counting only `
 
 ## Target bot patterns with custom rules
 
-After turning on built-in bot protection, you may still see automated traffic that slips through. Bots that omit standard headers, hammer specific paths, or mimic browsers just well enough to avoid heuristic detection require targeted rules.
-
-Custom rules and rate limiting rules let you act on specific traffic patterns. Cloudflare separates detection (scoring traffic) from mitigation (acting on those scores). Detections like bot score label incoming requests, but they do not block anything on their own. You write rules that reference those signals to decide what action to take.
+Custom rules and rate limiting rules let you target specific traffic patterns that built-in bot protection does not catch. Cloudflare separates detection (scoring traffic) from mitigation (acting on those scores). You write rules that reference detection signals to decide what action to take.
 
 ### Block requests with missing or suspicious headers
 
@@ -314,7 +310,7 @@ For the full list of bot management fields available in rule expressions, refer 
 
 ## Verify and tune your rules
 
-After you deploy bot protection rules, verify that they block malicious traffic without interfering with legitimate visitors. Security Events shows you what your rules are doing in real time. Use that data to tune thresholds and create exceptions before problems affect real users.
+After you deploy bot protection rules, use Security Events to verify they are working as intended and tune thresholds based on what you see.
 
 ### Check Security Events
 
