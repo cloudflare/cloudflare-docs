@@ -106,7 +106,7 @@ Two tools protect form endpoints: Turnstile and rate limiting. They solve differ
 
 ### Turnstile versus rate limiting
 
-**Turnstile** verifies that a visitor is human at the point of form submission. It prevents a single bot from submitting a form even once. Use Turnstile when you need to confirm the visitor is a real person before processing their input.
+**Turnstile** verifies that a visitor is human at the point of form submission. It prevents a single bot from submitting a form even once. Unlike traditional CAPTCHAs, Turnstile does not require visual puzzles. In Managed mode, most visitors pass without any interaction. Use Turnstile when you need to confirm the visitor is a real person before processing their input.
 
 **Rate limiting** caps the number of requests a client can make to an endpoint within a time window. It prevents volumetric abuse — the same IP hitting your login endpoint hundreds of times per minute. Use rate limiting when you need to control request volume regardless of whether the client is human.
 
@@ -114,7 +114,7 @@ Two tools protect form endpoints: Turnstile and rate limiting. They solve differ
 
 ### Add Turnstile to a form
 
-Turnstile does not require users to solve visual puzzles. In Managed mode, most visitors pass without any visible interaction. Adding it involves three steps: create a widget, add the client-side snippet, and validate the token on your server.
+Adding Turnstile involves three steps: create a widget, add the client-side snippet, and validate the token on your server.
 
 **1. Create a Turnstile widget**
 
