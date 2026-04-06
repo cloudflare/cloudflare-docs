@@ -11,4 +11,5 @@ blockExoticSubdeps: true
 onlyBuiltDependencies:
   - esbuild
   - sharp
+  - tldjs
   - workerd
