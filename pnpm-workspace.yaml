@@ -5,3 +5,10 @@ minimumReleaseAge: 1440
 # Prevent transitive dependencies from using exotic sources (git repos, direct tarball URLs).
 # Only direct dependencies may use exotic sources.
 blockExoticSubdeps: true
+
+# Explicit allowlist of packages permitted to run install scripts.
+# These are well-known packages that require build scripts to download platform-specific binaries.
+onlyBuiltDependencies:
+  - esbuild
+  - sharp
+  - workerd
