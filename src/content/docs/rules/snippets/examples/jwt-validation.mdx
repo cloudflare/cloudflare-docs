@@ -11,6 +11,10 @@ description: Extract the JWT token from a header, decode it, and implement
   validation checks to verify it.
 ---
 
+:::caution[Not secure for production use]
+This example **does not verify the JWT signature** and should not be used as-is in production. Without signature verification, any token with a valid format and non-expired `exp` claim will be accepted, allowing attackers to forge tokens. To properly validate JWTs, you must verify the cryptographic signature using the [WebCrypto API](/workers/runtime-apis/web-crypto/). Alternatively, consider using [API Shield JWT Validation](/api-shield/security/jwt-validation/), which handles signature verification for you.
+:::
+
 ```js
 export default {
 	async fetch(request) {
