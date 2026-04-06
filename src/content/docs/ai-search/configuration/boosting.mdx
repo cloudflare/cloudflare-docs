@@ -1,0 +1,240 @@
+---
+pcx_content_type: concept
+title: Boosting
+sidebar:
+  order: 5
+---
+
+import { DashButton } from "~/components";
+
+Boosting lets you bias search results toward documents with specific metadata characteristics that your query text cannot express -- for example, promoting recent documents, surfacing higher-priority pages, or deprioritizing drafts. It works alongside semantic relevance rather than replacing it, so results stay topically relevant while respecting your ranking preferences.
+
+## How it works
+
+Boosting applies after the initial retrieval step and before [reranking](/ai-search/configuration/reranking/) (if enabled). The full pipeline is:
+
+1. **Search** -- AI Search retrieves up to 50 candidate chunks using vector search, keyword search, or both (depending on your [hybrid search](/ai-search/configuration/hybrid-search/) configuration).
+2. **Boost** -- each candidate is re-scored using the metadata fields you specify in `boost_by`. The boost is additive: a weighted metadata score is added to the original retrieval score.
+3. **Rerank** -- if reranking is enabled, the boosted results are reranked by a reranking model.
+4. **Return** -- the top `max_num_results` are returned.
+
+When `boost_by` is configured, AI Search always retrieves the full pool of 50 candidates internally, regardless of your `max_num_results` setting. This gives the boost algorithm a wider set to re-rank before trimming to your requested count.
+
+### Scoring
+
+For each candidate chunk, AI Search computes a per-field boost score and then combines them:
+
+1. **Per-field normalization** -- each field value is normalized to a 0-1 range:
+   - For `asc` or `desc` directions on numeric and datetime fields: min-max normalization across the candidate set. `asc` inverts the result so lower values score higher.
+   - For `datetime` fields: an exponential curve (`score^2`) is applied after normalization, so documents at the preferred end of the date range receive disproportionately more boost. A document at the midpoint of the range receives only 25% of the maximum boost.
+   - For `exists` / `not_exists` directions: 1.0 if the condition is met, 0.0 otherwise.
+
+2. **Averaging** -- the per-field scores are averaged across all boost fields that have a value for that chunk. AI Search skips fields with missing values rather than counting them as zero.
+
+3. **Additive adjustment** -- the averaged boost score is scaled to 30% of the maximum retrieval score in the candidate set and added to the original score: `boosted = score + 0.3 * max_score * avg_boost`.
+
+4. **Re-normalization** -- all scores are re-normalized to the 0-1 range and the results are re-sorted.
+
+This means boosting can change the order of results within the candidate set, but cannot promote a chunk that the initial search step did not retrieve.
+
+## Supported fields
+
+You can boost by the built-in `timestamp` field or by any field defined in your [custom metadata schema](/ai-search/configuration/metadata/#define-a-schema). The `timestamp` field behaves as a `datetime` type.
+
+| Field type | Supported directions                  |
+| ---------- | ------------------------------------- |
+| `datetime` | `asc`, `desc`, `exists`, `not_exists` |
+| `number`   | `asc`, `desc`, `exists`, `not_exists` |
+| `text`     | `exists`, `not_exists` only           |
+| `boolean`  | `exists`, `not_exists` only           |
+
+### Directions
+
+| Direction    | Effect                                                      |
+| ------------ | ----------------------------------------------------------- |
+| `desc`       | Higher field values score higher (for example, most recent) |
+| `asc`        | Lower field values score higher (for example, lowest cost)  |
+| `exists`     | Documents that have the field score higher                  |
+| `not_exists` | Documents that do not have the field score higher           |
+
+If you omit `direction`, AI Search applies a type-appropriate default:
+
+| Field type category                         | Default direction |
+| ------------------------------------------- | ----------------- |
+| Numeric (`number`, `datetime`, `timestamp`) | `asc`             |
+| Non-numeric (`text`, `boolean`)             | `exists`          |
+
+## Configuration
+
+Specify `boost_by` as an array of up to 3 objects. Each object must reference a unique field.
+
+| Field       | Type     | Required | Description                                                                   |
+| ----------- | -------- | -------- | ----------------------------------------------------------------------------- |
+| `field`     | `string` | yes      | Metadata field name or `timestamp`. Must match your schema. Case-insensitive. |
+| `direction` | `string` | no       | One of `asc`, `desc`, `exists`, `not_exists`. Defaults by type (see above).   |
+
+Using `asc` or `desc` on a `text` or `boolean` field returns an error.
+
+### REST API
+
+Set `boost_by` inside `retrieval_options` when creating or updating an instance:
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "id": "my-search",
+    "type": "web-crawler",
+    "source": "example.com",
+    "retrieval_options": {
+      "boost_by": [
+        { "field": "timestamp", "direction": "desc" }
+      ]
+    }
+  }'
+```
+
+To update boosting on an existing instance:
+
+```bash
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/my-search" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "retrieval_options": {
+      "boost_by": [
+        { "field": "timestamp", "direction": "desc" },
+        { "field": "priority", "direction": "desc" }
+      ]
+    }
+  }'
+```
+
+To remove boosting, set `boost_by` to an empty array:
+
+```bash
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/my-search" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "retrieval_options": {
+      "boost_by": []
+    }
+  }'
+```
+
+### Dashboard
+
+1. Go to **AI Search** in the Cloudflare dashboard.
+
+   <DashButton url="/?to=/:account/ai/ai-search" />
+
+2. Select an existing AI Search instance, or create a new one.
+3. Go to the **Settings** tab.
+4. Under **Boosting**, add up to 3 metadata fields and select a direction for each.
+
+## Per-request overrides
+
+You can override `boost_by` on individual requests using `ai_search_options.retrieval`. Per-request values fully replace the instance-level default -- they are not merged.
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/my-search/search" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "messages": [{"role": "user", "content": "latest security best practices"}],
+    "ai_search_options": {
+      "retrieval": {
+        "boost_by": [
+          { "field": "timestamp", "direction": "desc" }
+        ]
+      }
+    }
+  }'
+```
+
+To disable boosting for a single request when an instance-level default is configured, pass an empty array:
+
+```json
+"ai_search_options": {
+  "retrieval": {
+    "boost_by": []
+  }
+}
+```
+
+## Common patterns
+
+**Prioritize recent documents:**
+
+```json
+"boost_by": [{ "field": "timestamp", "direction": "desc" }]
+```
+
+**Promote results with a custom numeric priority:**
+
+```json
+"boost_by": [{ "field": "priority", "direction": "desc" }]
+```
+
+**Boost lower-cost options:**
+
+```json
+"boost_by": [{ "field": "cost", "direction": "asc" }]
+```
+
+**Promote documents that have an author field set:**
+
+```json
+"boost_by": [{ "field": "author", "direction": "exists" }]
+```
+
+**Suppress drafts (promote documents without a draft flag):**
+
+```json
+"boost_by": [{ "field": "draft", "direction": "not_exists" }]
+```
+
+**Combine recency and priority:**
+
+```json
+"boost_by": [
+  { "field": "timestamp", "direction": "desc" },
+  { "field": "priority", "direction": "desc" }
+]
+```
+
+## Interaction with other features
+
+### Metadata filtering
+
+Boosting and [metadata filtering](/ai-search/configuration/metadata/) serve different purposes. Filters exclude documents entirely -- boosting re-ranks them. You can use both together: filters narrow the candidate set, then boosting re-orders what remains.
+
+```json
+{
+	"messages": [{ "role": "user", "content": "authentication setup" }],
+	"ai_search_options": {
+		"retrieval": {
+			"boost_by": [{ "field": "timestamp", "direction": "desc" }]
+		},
+		"filters": {
+			"type": "eq",
+			"key": "category",
+			"value": "documentation"
+		}
+	}
+}
+```
+
+### Custom metadata schema changes
+
+If you update your [custom metadata schema](/ai-search/configuration/metadata/#define-a-schema) and remove a field that is referenced by `boost_by`, AI Search automatically prunes the stale boost entry. If all boost entries become stale, `boost_by` is removed entirely. The `timestamp` field is always valid.
+
+## Limitations
+
+- Maximum of 3 boost fields per request.
+- Field names must match a field in your custom metadata schema or the built-in `timestamp` field.
+- `text` and `boolean` fields only support `exists` and `not_exists` directions. Using `asc` or `desc` on these types returns an error.
+- Boost fields within a single request must be unique -- the same field cannot appear twice.
+- Boosting re-ranks the candidate set retrieved by the initial search step. It cannot surface documents that were not retrieved.
