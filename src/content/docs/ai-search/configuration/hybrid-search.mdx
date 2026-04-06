@@ -1,0 +1,209 @@
+---
+pcx_content_type: concept
+title: Hybrid search
+sidebar:
+  order: 6
+---
+
+import { DashButton } from "~/components";
+
+Hybrid search combines vector (semantic) search with keyword (BM25) search in a single retrieval step. By default, AI Search uses vector search only. Enabling hybrid search adds a keyword index alongside the vector index so both run in parallel on every query.
+
+Vector search embeds the query and finds chunks that are semantically similar, even when the exact words differ. Keyword search tokenizes the query and matches chunks that contain the query terms literally. These two methods complement each other:
+
+- Vector search handles paraphrasing, synonyms, and conceptual similarity well, but can miss queries that depend on a specific term appearing verbatim (for example, an error code like `ERR_1015` or a product SKU like `CF-WAF-ENT`).
+- Keyword search finds exact term matches reliably, but does not understand meaning -- it cannot match "how to fix rate limiting" to a chunk that says "resolving request throttling."
+
+Running both in parallel and merging the results gives you the strengths of each approach, typically improving recall without sacrificing precision.
+
+## How it works
+
+When hybrid search is enabled, AI Search performs the following steps during retrieval:
+
+1. **Vector search** -- embeds the query using the configured embedding model and retrieves the most semantically similar chunks from Vectorize.
+2. **Keyword search** -- tokenizes the query and runs a BM25 full-text search against a dedicated keyword index to find chunks that contain the query terms.
+3. **Fusion** -- merges both result sets into a single ranked list using the configured [fusion method](#fusion-method).
+4. The fused results are passed to [reranking](/ai-search/configuration/reranking/) (if enabled), then filtered by [match threshold](/ai-search/configuration/retrieval-configuration/), and finally sent to the generation model.
+
+Because the two retrievers surface different kinds of matches, results that both methods agree on rank highest, while results found by only one method still appear -- just lower in the list.
+
+## Configuration options
+
+### Index method
+
+The `index_method` field controls which retrieval backends are active for your instance.
+
+| Field     | Type      | Default | Description                                                                |
+| --------- | --------- | ------- | -------------------------------------------------------------------------- |
+| `vector`  | `boolean` | `true`  | Enable vector (embedding) search via Vectorize                             |
+| `keyword` | `boolean` | `false` | Enable keyword (BM25) search. Setting this to `true` enables hybrid search |
+
+At least one of `vector` or `keyword` must be `true`. Changing this field triggers a full reindex of your data source -- the keyword index is built during reindexing.
+
+### Fusion method
+
+The `fusion_method` field controls how vector and keyword results are merged into a single ranked list.
+
+| Value | Default | Behavior                                                                                                                                                                                                                                                                                                                     |
+| ----- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `rrf` | Yes     | **Reciprocal Rank Fusion.** Scores each result based on its rank position across both retrievers. A chunk that appears at rank 3 in vector and rank 5 in keyword scores higher than a chunk at rank 1 in keyword but absent from vector. This makes `rrf` immune to differences in how the two retrievers distribute scores. |
+| `max` | No      | Normalizes keyword scores to 0-1, then takes the higher of `vector_score` and the normalized keyword score for each chunk. Favors whichever retriever scored the chunk highest -- useful when one retriever is consistently more relevant for your data.                                                                     |
+
+`rrf` is recommended for most use cases because it does not depend on score calibration between the two retrievers.
+
+### Keyword tokenizer
+
+The `keyword_tokenizer` field (inside `indexing_options`) controls how text is split into tokens for the BM25 keyword index. This is an indexing-time setting -- changing it triggers a full reindex.
+
+| Value     | Default | Behavior                                                                                                                                                                                                    |
+| --------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `porter`  | Yes     | Splits text into words and applies Porter stemming, so inflected forms map to the same root. For example, a query for "running" matches chunks containing "run." Best for natural language content.         |
+| `trigram` | No      | Splits text into overlapping 3-character windows, enabling substring and partial-term matching. For example, a query for "config" matches chunks containing "configuration." Best for code and identifiers. |
+
+### Keyword match mode
+
+The `keyword_match_mode` field (inside `retrieval_options`) controls how multiple query terms are combined during keyword search.
+
+| Value | Default | Behavior                                                                                                                                                                                    |
+| ----- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `and` | Yes     | All query terms must appear in a chunk for it to match. Higher precision, fewer results. Use this when you want tight, targeted results.                                                    |
+| `or`  | No      | Any query term can match. Higher recall, more results, but may include less relevant chunks. Use this when you want broad coverage and plan to rely on fusion or reranking to sort quality. |
+
+## Defaults
+
+When you create an AI Search instance, hybrid search is **disabled** by default (`index_method.keyword` is `false`). If you enable it, the following defaults apply:
+
+| Parameter                              | Default  |
+| -------------------------------------- | -------- |
+| `index_method.vector`                  | `true`   |
+| `index_method.keyword`                 | `false`  |
+| `fusion_method`                        | `rrf`    |
+| `indexing_options.keyword_tokenizer`   | `porter` |
+| `retrieval_options.keyword_match_mode` | `and`    |
+
+## Enable hybrid search
+
+### REST API
+
+To enable hybrid search when creating a new instance, set `index_method.keyword` to `true`:
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "id": "my-search",
+    "type": "web-crawler",
+    "source": "example.com",
+    "index_method": {
+      "vector": true,
+      "keyword": true
+    },
+    "fusion_method": "rrf",
+    "indexing_options": {
+      "keyword_tokenizer": "porter"
+    },
+    "retrieval_options": {
+      "keyword_match_mode": "and"
+    }
+  }'
+```
+
+To enable hybrid search on an existing instance, send a `PUT` request with the updated `index_method`:
+
+```bash
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/my-search" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "index_method": {
+      "vector": true,
+      "keyword": true
+    }
+  }'
+```
+
+Enabling keyword search on an existing instance triggers a full reindex to build the keyword index.
+
+### Dashboard
+
+1. Go to **AI Search** in the Cloudflare dashboard.
+
+   <DashButton url="/?to=/:account/ai/ai-search" />
+
+2. Select an existing AI Search instance, or create a new one.
+3. Go to the **Settings** tab.
+4. Under **Hybrid search**, turn on keyword search.
+5. Configure the tokenizer and match mode as needed.
+
+## Disable hybrid search
+
+To disable hybrid search, set `index_method.keyword` to `false`. The keyword index is deleted when hybrid search is disabled.
+
+```bash
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/my-search" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "index_method": {
+      "vector": true,
+      "keyword": false
+    }
+  }'
+```
+
+## Per-request overrides
+
+You can override hybrid search settings on individual requests using `ai_search_options.retrieval`. This does not change the instance configuration.
+
+| Field                | Type                                    | Description                                                                                         |
+| -------------------- | --------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| `retrieval_type`     | `"vector"` \| `"keyword"` \| `"hybrid"` | Force a specific search mode for this request. Must be compatible with the instance `index_method`. |
+| `fusion_method`      | `"rrf"` \| `"max"`                      | Override the fusion method for this request.                                                        |
+| `keyword_match_mode` | `"and"` \| `"or"`                       | Override the keyword match mode for this request.                                                   |
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/my-search/search" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "messages": [{"role": "user", "content": "Error code 1015 rate limiting"}],
+    "ai_search_options": {
+      "retrieval": {
+        "retrieval_type": "hybrid",
+        "fusion_method": "rrf",
+        "keyword_match_mode": "or"
+      }
+    }
+  }'
+```
+
+:::note
+Requesting a `retrieval_type` that is not compatible with the instance `index_method` returns an error. For example, requesting `"hybrid"` when `index_method.keyword` is `false` returns HTTP 400.
+:::
+
+## Scoring details
+
+When hybrid search is active, each chunk in the response includes a `scoring_details` object with per-retriever scores:
+
+| Field             | Type     | Description                                                          |
+| ----------------- | -------- | -------------------------------------------------------------------- |
+| `vector_score`    | `float`  | Vector similarity score (0 to 1)                                     |
+| `keyword_score`   | `float`  | Raw BM25 keyword score (not the normalized value used during fusion) |
+| `vector_rank`     | `int`    | Rank position in the vector result set                               |
+| `keyword_rank`    | `int`    | Rank position in the keyword result set                              |
+| `fusion_method`   | `string` | Fusion method used (`rrf` or `max`)                                  |
+| `reranking_score` | `float`  | Score from the reranking model, if reranking is enabled              |
+
+Use these fields to understand why a result was ranked the way it was and to tune your fusion method and match mode.
+
+## When to use hybrid search
+
+Hybrid search is most effective when your content or queries contain specific terms that benefit from exact matching:
+
+- **Technical documentation** -- error codes, API endpoint names, configuration keys
+- **Product catalogs** -- SKUs, model numbers, brand names
+- **Legal or compliance content** -- regulation numbers, clause references
+- **Code repositories** -- function names, variable names, file paths
+
+For purely conversational queries over narrative content, vector-only search may perform equally well. Enable hybrid search and compare results using the [scoring details](#scoring-details) to determine whether it improves retrieval for your use case.
