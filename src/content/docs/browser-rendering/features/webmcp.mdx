@@ -1,23 +1,22 @@
 ---
 pcx_content_type: concept
-title: Lab Mode and WebMCP
+title: WebMCP
 sidebar:
-  order: 2
+  order: 4
   badge: Beta
 ---
 
 import { Render } from "~/components";
 
-Lab Mode gives you early access to experimental Chrome features.
-It runs Chrome beta versions with cutting-edge capabilities, including [WebMCP](https://developer.chrome.com/blog/webmcp-epp) (Web Model Context Protocol) — a browser API that lets websites expose structured tools for AI agents to discover and execute directly. Instead of slow screenshot-analyze-click loops, agents can call website functions like `searchFlights()` or `bookTicket()` with typed parameters, making browser automation faster, more reliable, and less fragile.
-
-Lab sessions run in a dedicated pool, so you can experiment without affecting stability.
+[WebMCP](https://developer.chrome.com/blog/webmcp-epp) (Web Model Context Protocol) is a browser API that lets websites expose structured tools for AI agents to discover and execute directly. Instead of slow screenshot-analyze-click loops, agents can call website functions like `searchFlights()` or `bookTicket()` with typed parameters, making browser automation faster, more reliable, and less fragile.
 
 ## Getting started
 
 ### Manual testing with DevTools
 
-#### 1. Start a Lab Session and open Devtools
+#### 1. Start a Lab session and open DevTools
+
+WebMCP is currently available in Chrome beta, so it requires a Lab session. Lab sessions run in a separate pool from the standard Browser Rendering pool, using Chrome beta with experimental features enabled. Your production workloads on the standard pool remain on a stable version of Chrome.
 
 Use the REST API to acquire a lab browser session:
 
@@ -56,7 +55,7 @@ Copy the `devtoolsFrontendUrl` value and open it in your browser to see a live v
 You can now interact with the page as you would in a regular browser.
 
 - Navigate to some of the sites listed in the [WebMCP documentation](https://github.com/GoogleChromeLabs/webmcp-tools/?tab=readme-ov-file#demos)
-- In **Console** tab, evaluate `navigator.modelContextTesting.listTools()` to list available tools. For instance, when I open hthttps://googlechromelabs.github.io/webmcp-tools/demos/hotel-chain/:
+- In **Console** tab, evaluate `navigator.modelContextTesting.listTools()` to list available tools. For instance, when I open https://googlechromelabs.github.io/webmcp-tools/demos/hotel-chain/:
 
 ```json
 [
@@ -132,7 +131,7 @@ And there you go! Mr. Bond's Parisian getaway is secured.
 
 #### 1. Configure Chrome DevTools MCP
 
-[Chrome DevTools MCP](https://github.com/anthropics/anthropic-quickstarts/tree/main/mcp-devtools) allows AI agents to control a browser via CDP. Configure your MCP client (Claude Desktop, OpenCode, Cursor, etc.) with the following:
+[Chrome DevTools MCP](https://github.com/anthropics/anthropic-quickstarts/tree/main/mcp-devtools) allows AI agents to control a browser via CDP. Configure your MCP client (Claude Desktop, OpenCode, Cursor, etc.) with the following. For more details on MCP client configuration, refer to [Using with MCP clients](/browser-rendering/cdp/mcp-clients/).
 
 ```json
 {
@@ -200,7 +199,7 @@ evaluate_script({
 
 Once configured, your AI agent can navigate to WebMCP-enabled sites and use WebMCP tools. Here's an example conversation:
 
-**You:** Go to hthttps://googlechromelabs.github.io/webmcp-tools/demos/hotel-chain/ and find me a hotel in Paris with breakfast. Use WebMCP tools when available.
+**You:** Go to https://googlechromelabs.github.io/webmcp-tools/demos/hotel-chain/ and find me a hotel in Paris with breakfast. Use WebMCP tools when available.
 
 _Agent navigates to the site, lists WebMCP tools, executes `search_location` with "Paris", then `filter_search_results` with breakfast amenity, and presents the results._
 
