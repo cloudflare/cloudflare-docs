@@ -6,24 +6,24 @@ sidebar:
   label: Challenges
 ---
 
-Challenges can be issued in three primary ways depending on which Cloudflare products or features are in use. Each method is designed to balance security with seamless visitor experience. 
+Challenges can be issued in three primary ways depending on which Cloudflare products or features are in use. Each method is designed to balance security with seamless visitor experience.
 
-| Product | Challenge type(s) |
-| --- | --- |
-| [WAF](/waf/) ([custom rules](/waf/custom-rules/), [rate limiting rules](/waf/rate-limiting-rules/), [IP access rules](/waf/tools/ip-access-rules/)) | [Interstitial Challenge Page](/cloudflare-challenges/challenge-types/challenge-pages/) |
-| [Bot Management](/bots/get-started/bot-management/) | [JavaScript Detections](/bots/additional-configurations/javascript-detections/) |
-| [Bot Fight Mode](/bots/get-started/bot-fight-mode/), [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/) | [Interstitial Challenge Page](/cloudflare-challenges/challenge-types/challenge-pages/) |
-| [Turnstile](/turnstile/) | Embedded widget |
-| [HTTP DDoS attack protection](/ddos-protection/managed-rulesets/http/) | Any Challenge |
-| [Under Attack Mode](/fundamentals/reference/under-attack-mode/) | [Managed Challenge](/cloudflare-challenges/challenge-types/challenge-pages/#managed-challenge) |
+| Product                                                                                                                                             | Challenge type(s)                                                                              |
+| --------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| [WAF](/waf/) ([custom rules](/waf/custom-rules/), [rate limiting rules](/waf/rate-limiting-rules/), [IP access rules](/waf/tools/ip-access-rules/)) | [Interstitial Challenge Page](/cloudflare-challenges/challenge-types/challenge-pages/)         |
+| [Bot Management](/bots/get-started/bot-management/)                                                                                                 | [JavaScript Detections](/bots/additional-configurations/javascript-detections/)                |
+| [Bot Fight Mode](/bots/get-started/bot-fight-mode/), [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/)                                | [Interstitial Challenge Page](/cloudflare-challenges/challenge-types/challenge-pages/)         |
+| [Turnstile](/turnstile/)                                                                                                                            | Embedded widget                                                                                |
+| [HTTP DDoS attack protection](/ddos-protection/managed-rulesets/http/)                                                                              | Any Challenge                                                                                  |
+| [Under Attack Mode](/fundamentals/reference/under-attack-mode/)                                                                                     | [Managed Challenge](/cloudflare-challenges/challenge-types/challenge-pages/#managed-challenge) |
 
-Challenge Pages and Turnstile rely on the same underlying mechanism to issue Challenges to your website or application's visitors.
+Challenge Pages and Turnstile rely on the same underlying mechanism to issue challenges to your website or application's visitors.
 
-JavaScript Detections supports Cloudflare's Enterprise Bot Management. While it still relies on client-side detections, JavaScript Detections function using a more performant challenge logic than Challenge Pages or Turnstile.
+JavaScript Detections is an optional feature within [Bot Management](/bots/get-started/bot-management/). When enabled, Cloudflare injects a JavaScript snippet into HTML responses to gather client-side signals. Unlike Challenge Pages, JavaScript Detections runs on every HTML request without pausing or interrupting the visitor. It populates a pass/fail result (`cf.bot_management.js_detection.passed`) that you can then act on using a [WAF custom rule](/waf/custom-rules/).
 
 ---
 
-## Available Challenges
+## Available challenges
 
 Refer to the following pages for more information on the different challenge types:
 

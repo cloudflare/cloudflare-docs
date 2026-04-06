@@ -23,6 +23,7 @@ Detected credentials are compared against a database of known leaked credentials
 
 - The [Have I Been Pwned (HIBP)](https://haveibeenpwned.com) matched passwords dataset (passwords only)
 - Cloudflare-collected credentials (usernames)
+- Leaked credentials pairs (username and password)
 
 Based on the results, Cloudflare populates [leaked credentials fields](#leaked-credentials-fields) for scanned requests. You can use these fields in two ways:
 
@@ -33,7 +34,7 @@ Leaked credentials can appear in your traffic for different reasons. An attacker
 
 ### Notify your origin server
 
-Leaked credentials detection provides a [managed transform](/rules/transform/managed-transforms/reference/#add-leaked-credentials-checks-header) that adds an `Exposed-Credential-Check` request header to matching requests. The header value indicates what was leaked — for example, `1` if both username and password were previously leaked, or `4` if only the password was leaked.
+Leaked credentials detection provides a [managed transform](/rules/transform/managed-transforms/reference/#add-leaked-credentials-checks-header) that adds an `Exposed-Credential-Check` request header to matching requests. The header value indicates what was leaked — for example, `1` if both username and password were a leaked pair, `2` if the username was leaked, or `4` if only the password was leaked.
 
 You can use this header at your origin server to warn users and prompt them to reset their password.
 

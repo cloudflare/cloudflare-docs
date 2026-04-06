@@ -1,5 +1,5 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: how-to
 title: Meeting Locale
 sidebar:
   order: 9
@@ -12,16 +12,32 @@ import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnipp
 RealtimeKit's UI Kit allows you to customize all the text within the video call interface. You can personalize the text to align with your specific locale needs.
 
 :::note[Prerequisites]
-This page builds upon the [Render Default Meeting UI](/realtime/realtimekit/ui-kit/) & [Build Your Own UI](/realtime/realtimekit/ui-kit/build-your-own-ui/) guides. Make sure you've read it first and understand how to use the default meeting UI components.
+This page builds upon the [Render Default Meeting UI](/realtime/realtimekit/ui-kit/) & [Build Your Own UI](/realtime/realtimekit/ui-kit/build-your-own-ui/) guides. Make sure you have read them first and understand how to use the default meeting UI components.
 :::
 
-<RTKSDKSelector />
+<RTKSDKSelector disabledPlatforms={["mobile-ios", "mobile-android"]} />
 
-## Customize the Language Pack
+## Customize the language pack
+
+<RTKCodeSnippet id={["web-web-components", "web-react", "web-angular"]}>
 
 RealtimeKit's default language pack can be customized to match your application's locale requirements. You can override any text string used in the UI Kit components.
 
-## Import the Language Utilities
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+The Flutter UI Kit loads string overrides from an ARB (Application Resource Bundle) JSON file. You provide the asset path when building the UI Kit, and the SDK replaces all matching string keys with your custom values.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+The React Native UI Kit uses a language dictionary object to store all UI strings. You can override any key by passing a partial dictionary to the `useLanguage()` function, then pass the result to the `RtkMeeting` component via the `t` prop.
+
+</RTKCodeSnippet>
+
+## Import the language utilities
 
 <RTKCodeSnippet id="web-web-components">
 
@@ -61,11 +77,32 @@ import {
 
 </RTKCodeSnippet>
 
-## Create Your Custom Language Pack
+<RTKCodeSnippet id="mobile-flutter">
 
-To replace RealtimeKit's default locale with your own, create a custom language pack by spreading the `defaultLanguage` object and overriding specific keys:
+```dart
+import 'package:realtimekit_ui/realtimekit_ui.dart';
+```
+
+No additional imports are required. The `arbPath` parameter is available on `RealtimeKitUIBuilder.build()`.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+```typescript
+import {
+	defaultLanguage,
+	useLanguage,
+} from "@cloudflare/realtimekit-react-native-ui";
+```
+
+</RTKCodeSnippet>
+
+## Create your custom language pack
 
 <RTKCodeSnippet id="web-web-components">
+
+To replace RealtimeKit's default locale with your own, create a custom language pack by spreading the `defaultLanguage` object and overriding specific keys:
 
 ```html
 <body>
@@ -194,9 +231,94 @@ The `useLanguage` function takes in your custom locale object as an argument and
 
 </RTKCodeSnippet>
 
-## Using Custom Locale with UI Provider
+<RTKCodeSnippet id="mobile-flutter">
+
+Create an ARB JSON file with a `@locale` key and the string keys you want to override. Add the file to your Flutter assets.
+
+**1. Create the ARB file** at `assets/lang/es.arb`:
+
+```json
+{
+	"@locale": "es",
+	"join": "Unirse",
+	"leave": "Salir",
+	"cancel": "Cancelar",
+	"micOn": "Mic Encendido",
+	"micOff": "Mic Apagado",
+	"videoOn": "Video Encendido",
+	"videoOff": "Video Apagado",
+	"mute": "Silenciar",
+	"participants": "Participantes",
+	"chat": "Chat",
+	"settings": "Configuración"
+}
+```
+
+**2. Register the asset** in `pubspec.yaml`:
+
+```yaml
+flutter:
+  assets:
+    - assets/lang/
+```
+
+**3. Pass `arbPath`** when building the UI Kit:
+
+```dart
+final rtkUI = RealtimeKitUIBuilder.build(
+  uiKitInfo: uiKitInfo,
+  arbPath: 'assets/lang/es.arb',
+);
+Navigator.push(context, MaterialPageRoute(builder: (_) => rtkUI));
+```
+
+You only need to include the keys you want to override. Any key not present in the ARB file falls back to its English default.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+Spread the `defaultLanguage` object and override specific keys. Pass the result to `RtkMeeting` via the `t` prop.
+
+```typescript
+import {
+  RtkMeeting,
+  defaultLanguage,
+  useLanguage,
+} from '@cloudflare/realtimekit-react-native-ui';
+
+function App() {
+  const myLanguagePack = useLanguage({
+    ...defaultLanguage,
+    mute_all: 'Silenciar todo',
+    leave: 'Salir',
+    join: 'Unirse',
+    participants: 'Participantes',
+    chat: 'Chat',
+    settings: 'Configuración',
+  });
+
+  return (
+    <RtkMeeting
+      meeting={meeting}
+      t={myLanguagePack}
+      showSetupScreen={true}
+    />
+  );
+}
+```
+
+The `useLanguage` function merges your overrides with the defaults. Any key you do not override keeps its English default value.
+
+</RTKCodeSnippet>
+
+## Use custom locale with UI provider
+
+<RTKCodeSnippet id={["web-web-components", "web-react", "web-angular"]}>
 
 You can also pass the custom language pack to the UI provider component when building your own custom UI:
+
+</RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-web-components">
 
@@ -311,7 +433,9 @@ export class MeetingComponent implements OnInit {
 
 </RTKCodeSnippet>
 
-## Default Language Reference
+## Default language reference
+
+<RTKCodeSnippet id={["web-web-components", "web-react", "web-angular"]}>
 
 RealtimeKit provides a comprehensive default language pack with all the text strings used throughout the UI Kit. You can override any of these keys to customize the text displayed in your meeting interface.
 
@@ -332,3 +456,122 @@ const spanishLanguagePack = useLanguage({
 	settings: "Configuración",
 });
 ```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+The following table lists all overridable string keys for the Flutter UI Kit. Use these keys in your ARB file to override the corresponding UI text.
+
+| Key                               | Default                                  |
+| --------------------------------- | ---------------------------------------- |
+| `join`                            | Join                                     |
+| `joinInAs`                        | Join in as                               |
+| `enterYourName`                   | Enter your name                          |
+| `micOn`                           | Mic On                                   |
+| `micOff`                          | Mic Off                                  |
+| `leave`                           | Leave                                    |
+| `cancel`                          | Cancel                                   |
+| `areYouSureYouWantToLeaveTheCall` | Are you sure you want to leave the call? |
+| `more`                            | more                                     |
+| `selectAudioDevice`               | Select Audio Device                      |
+| `selectVideoDevice`               | Select Video Device                      |
+| `videoOn`                         | Video On                                 |
+| `videoOff`                        | Video Off                                |
+| `mute`                            | Mute                                     |
+| `unmute`                          | Muted                                    |
+| `unpin`                           | Unpin                                    |
+| `pin`                             | Pin                                      |
+| `kick`                            | Kick                                     |
+| `removeFromStage`                 | Remove from stage                        |
+| `inviteToStage`                   | Invite to stage                          |
+| `screenShare`                     | Screen Share                             |
+| `plugins`                         | Plugins                                  |
+| `createPoll`                      | Create Poll                              |
+| `question`                        | Question                                 |
+| `askAQuestion`                    | Ask a question                           |
+| `options`                         | Options                                  |
+| `enterAnOption`                   | Enter an option                          |
+| `addOption`                       | Add an Option                            |
+| `anonymous`                       | Anonymous                                |
+| `hideResultsBeforeVoting`         | Hide Results before voting               |
+| `questionAndOptionsCantBeEmpty`   | Question and options can not be empty!   |
+| `polls`                           | Polls                                    |
+| `pollBy`                          | Poll by                                  |
+| `vote`                            | Vote                                     |
+| `voted`                           | Voted                                    |
+| `viewVoters`                      | View Voters                              |
+| `stopRecording`                   | Stop Recording                           |
+| `startRecording`                  | Start Recording                          |
+| `muteAll`                         | Mute All                                 |
+| `disableAllVideos`                | Disable all videos                       |
+| `settings`                        | Settings                                 |
+| `rec`                             | REC                                      |
+| `camera`                          | Camera                                   |
+| `microphoneInput`                 | Microphone (input)                       |
+| `chat`                            | Chat                                     |
+| `noMessages`                      | No messages                              |
+| `chatMessagesWillAppearHere`      | Chat messages will appear here           |
+| `file`                            | File                                     |
+| `image`                           | Image                                    |
+| `send`                            | Send                                     |
+| `participants`                    | Participants                             |
+| `waitlisted`                      | Waitlisted                               |
+| `inCall`                          | In Call                                  |
+| `you`                             | you                                      |
+| `turnOffVideo`                    | Turn off video                           |
+| `videoAlreadyOff`                 | Video already off                        |
+| `back`                            | Back                                     |
+| `waitingForTheHostToLetYouIn`     | Wait for the host to let you in!         |
+| `shareScreen`                     | Share Screen                             |
+| `stopSharing`                     | Stop Sharing                             |
+| `endMeetingForAll`                | End Meeting for All                      |
+| `message`                         | Message                                  |
+| `newPollCreated`                  | New Poll created                         |
+| `waitingToGoLive`                 | Waiting to go live                       |
+| `frontCamera`                     | Front Camera                             |
+| `rearCamera`                      | Rear Camera                              |
+| `externalCamera`                  | External Camera                          |
+| `headset`                         | Headset                                  |
+| `speaker`                         | Speaker                                  |
+| `bluetooth`                       | Bluetooth                                |
+| `earpiece`                        | Earpiece                                 |
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+The React Native UI Kit exposes approximately 195 overridable string keys via the `defaultLanguage` object. The table below lists commonly used keys. For the full list, refer to the `defaultLanguage` export from `@cloudflare/realtimekit-react-native-ui`.
+
+| Key                       | Default                                  |
+| ------------------------- | ---------------------------------------- |
+| `join`                    | Join                                     |
+| `leave`                   | Leave                                    |
+| `cancel`                  | Cancel                                   |
+| `leave_confirmation`      | Are you sure you want to leave the call? |
+| `mic_on`                  | Mic On                                   |
+| `mic_off`                 | Mic Off                                  |
+| `video_on`                | Video On                                 |
+| `video_off`               | Video Off                                |
+| `mute`                    | Mute                                     |
+| `mute_all`                | Mute all                                 |
+| `participants`            | Participants                             |
+| `chat`                    | Chat                                     |
+| `settings`                | Settings                                 |
+| `polls`                   | Polls                                    |
+| `screenshare`             | Screen Share                             |
+| `screenshare.start`       | Share Screen                             |
+| `screenshare.stop`        | Stop Sharing                             |
+| `recording.start`         | Start Recording                          |
+| `recording.stop`          | Stop Recording                           |
+| `end`                     | End Meeting                              |
+| `end.all`                 | End meeting for all                      |
+| `setup_screen.join_in_as` | Join in as                               |
+| `setup_screen.your_name`  | Your name                                |
+| `network.reconnecting`    | Connection lost. Trying to reconnect...  |
+| `network.restored`        | Connection restored                      |
+| `ended`                   | The meeting ended.                       |
+| `ended.left`              | You left the meeting.                    |
+| `ended.kicked`            | You were removed from the meeting.       |
+
+</RTKCodeSnippet>

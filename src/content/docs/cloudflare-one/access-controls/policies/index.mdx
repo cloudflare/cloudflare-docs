@@ -12,12 +12,12 @@ import { Render } from "~/components";
 
 Cloudflare Access determines who can reach your application by applying the Access policies you configure.
 
-An Access policy consists of an **Action** as well as rules which determine the scope of the action. To build a rule, you need to choose a **Rule type**, **Selector**, and a **Value** for the selector.
+Every Access policy has four building blocks:
 
-- [Actions](#actions)
-- [Rule types](#rule-types)
-- [Selectors](#selectors)
-- [Connection context](#connection-context)
+- [**Actions**](#actions): What happens when a user matches the policy (Allow, Block, Bypass, or Service Auth)
+- [**Rule types**](#rule-types): How criteria are combined (Include, Require, or Exclude)
+- [**Selectors**](#selectors): The attributes being checked (for example, email domain, country, or device posture)
+- **Values**: The specific values to match against (for example, `@example.com`)
 
 ## Actions
 
@@ -94,40 +94,36 @@ Service Auth rules enforce authentication flows that do not require an identity 
 
 ## Rule types
 
-Rules work like logical operators. They help you define which categories of users your policy will affect. All Access policies must contain an Include rule. This is what defines the initial pool of eligible users who can access an application. You can then add Exclude and Require rules to enforce specific policies for those users.
+Rule types determine how your criteria are combined to evaluate a user. All Access policies must contain at least one Include rule. This Include rule defines the initial pool of eligible users who can access an application. You can then add Exclude and Require rules to narrow the scope.
 
-### Include
-
-The Include rule is similar to an OR logical operator. In case more than one Include rule is specified, users need to meet only one of the criteria.
-
-### Exclude
-
-The Exclude rule works like a NOT logical operator. A user meeting any Exclusion criteria will not be allowed access to the application.
-
-### Require
-
-The Require rule works like an AND logical operator. A user must meet all specified Require rules to be allowed access.
+| Rule type | Logic | Effect |
+|-----------|-------|--------|
+| **Include** | OR | User must match at least one Include rule. |
+| **Exclude** | NOT | User matching any Exclude criterion is denied access, even if they match an Include rule. |
+| **Require** | AND | User must match all Require criteria in addition to matching an Include rule. |
 
 #### Require rules with OR operators
 
-By default, any values added to a Require rule are concatenated by an AND operator. For example, let's say you want to grant access to an application to both the full-time employees and the contractors, and only the ones based in specific countries — say Portugal and the United States. If you set up a rule with the following configuration:
+By default, multiple values in a Require rule are joined with AND logic. This can produce unexpected results.
+
+**Example problem:** You want to allow employees and contractors in Portugal or the United States. If you configure:
 
 | Action | Rule type | Selector         | Value                                 |
 | ------ | --------- | ---------------- | ------------------------------------- |
 | Allow  | Require   | Country          | `United States`, `Portugal`           |
 |        | Require   | Emails ending in | `@cloudflare.com`, `@contractors.com` |
 
-the policy will only grant access to people reaching the application from both the United States AND Portugal, and who have both an email ending in `@cloudflare.com` AND in `@contractors.com`. Therefore, nobody will have access to the application.
+This policy requires the user to be in the United States AND Portugal simultaneously, and have an email ending in both `@cloudflare.com` AND `@contractors.com`. No user can satisfy all conditions, so nobody gets access.
 
-To require only one country and one email ending:
+**Solution:** Use a [rule group](/cloudflare-one/access-controls/policies/groups/) to convert AND logic to OR logic within a Require rule.
 
-1.  [Create a rule group](/cloudflare-one/access-controls/policies/groups/) that includes users in Portugal OR in the United States:
+1.  Create a rule group called `Country requirements` that includes users in Portugal OR the United States:
 
         | Rule type | Selector | Value                       |
         | --------- | -------- | --------------------------- |
         | Include   | Country  | `United States`, `Portugal` |
 
-2.  Create a policy that requires the rule group, and that also includes users with emails ending in either `@cloudflare.com` OR `@contractors.com`:
+2.  Create a policy that requires the rule group and includes users with either email domain:
 
         | Action | Rule type | Selector          | Value                                 |
         | ------ | --------- | ----------------- | ------------------------------------- |
@@ -138,7 +134,7 @@ To require only one country and one email ending:
 
 When you add a rule to your policy, you will be asked to specify the criteria/attributes you want users to meet. These attributes are available for all Access application types, including [SaaS](/cloudflare-one/access-controls/applications/http-apps/saas-apps/), [self-hosted](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/), and [non-HTTP](/cloudflare-one/access-controls/applications/non-http/) applications.
 
-Non-identity attributes are polled continuously, meaning they are-evaluated with each new HTTP request for changes during the [user session](/cloudflare-one/access-controls/access-settings/session-management/). If you have configured [SCIM provisioning](/cloudflare-one/team-and-resources/users/scim/), you can force a user to re-attest all attributes with Access whenever you revoke the user in the IdP or update their IdP group membership.
+Non-identity attributes are polled continuously, meaning they are evaluated with each new HTTP request for changes during the [user session](/cloudflare-one/access-controls/access-settings/session-management/). If you have configured [SCIM provisioning](/cloudflare-one/team-and-resources/users/scim/), you can force a user to re-attest all attributes with Access whenever you revoke the user in the IdP or update their IdP group membership.
 
 | Selector                 | Description                                                                                                                                                                                                                               | Checked at login | Checked continuously<sup>1</sup> | Identity-based selector? |
 | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- | -------------------------------- | ------------------------ |
@@ -183,9 +179,12 @@ The available connection context settings depend on the application type:
 
 ## Order of execution
 
-Policies are evaluated based on their action type and ordering. Bypass and Service Auth policies are evaluated first, from top to bottom as shown in the UI. Then, Block and Allow policies are evaluated based on their order.
+Policies are not evaluated strictly in the order they appear in the UI. Instead, Access groups policies by action type and evaluates them in two phases:
 
-For example, if you have a list of policies arranged as follows:
+1. **Phase 1** — All **Bypass** and **Service Auth** policies are evaluated first, from top to bottom.
+2. **Phase 2** — All **Allow** and **Block** policies are evaluated in order, from top to bottom. Once a user matches an Allow or Block policy, evaluation stops and no subsequent policies can override the decision.
+
+For example, if you have policies arranged as follows:
 
 - Allow A
 - Block B
@@ -193,7 +192,7 @@ For example, if you have a list of policies arranged as follows:
 - Bypass D
 - Allow E
 
-The policies will execute in this order: Service Auth C > Bypass D > Allow A > Block B > Allow E. Once a user matches an Allow or Block policy, evaluation stops and no subsequent policies can override the decision.
+The actual evaluation order is: Service Auth C > Bypass D > Allow A > Block B > Allow E.
 
 ## Common misconfigurations
 

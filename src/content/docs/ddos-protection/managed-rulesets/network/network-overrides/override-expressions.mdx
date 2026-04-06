@@ -6,14 +6,13 @@ sidebar:
 head:
   - tag: title
     content: Override expressions for Network-layer DDoS Attack Protection
-
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip } from "~/components";
 
 Set an override expression for the Network-layer DDoS Attack Protection managed ruleset to define a specific scope for [sensitivity level](/ddos-protection/managed-rulesets/network/override-parameters/#sensitivity-level) or [action](/ddos-protection/managed-rulesets/network/override-parameters/#action) adjustments.
 
-When considering which, if any, expressions you should utilize, think of expressions as a tool to scope overrides to the specific service that the Network-layer DDoS Attack Protection managed ruleset is protecting. That is to say that most services are defined by their destination ports and IPs as opposed to source ports or IPs. Refer to [Imporant remarks](/ddos-protection/managed-rulesets/network/network-overrides/#important-remarks) for more information.
+When considering which, if any, expressions you should utilize, think of expressions as a tool to scope overrides to the specific service that the Network-layer DDoS Attack Protection managed ruleset is protecting. That is to say that most services are defined by their destination ports and IPs as opposed to source ports or IPs. Refer to [Important remarks](/ddos-protection/managed-rulesets/network/network-overrides/override-expressions/#important-remarks) for more information.
 
 For example, you can set different sensitivity levels for different destination IP addresses or ports: a medium sensitivity level for destination IP address `A` and a low sensitivity level for destination IP address `B`.
 

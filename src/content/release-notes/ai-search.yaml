@@ -3,6 +3,10 @@ link: "/ai-search/platform/release-note/"
 productName: AI Search
 productLink: "/ai-search/"
 entries:
+  - publish_date: "2026-04-01"
+    title: Wrangler CLI support for AI Search
+    description: |-
+      Manage AI Search instances from the command line with the `wrangler ai-search` command namespace. Create, list, update, delete, search, and get usage statistics for instances without leaving your terminal. All commands support `--json` for structured output that scripts and AI agents can parse directly. Refer to [Wrangler commands](/ai-search/wrangler-commands/) for full usage details.
   - publish_date: "2026-03-23"
     title: Custom metadata filtering
     description: |-

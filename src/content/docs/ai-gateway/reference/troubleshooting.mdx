@@ -58,4 +58,4 @@ For troubleshooting Data Loss Prevention issues such as DLP not triggering or un
 ### Unexpected cache hits or misses
 
 - Review your cache TTL settings
-- Check if [semantic caching](/ai-gateway/features/caching/#semantic-caching) is affecting cache behavior
+- Check if you have request headers that are [bypassing the cache](/ai-gateway/features/caching/#skip-cache-cf-aig-skip-cache) or setting a [custom cache key](/ai-gateway/features/caching/#custom-cache-key-cf-aig-cache-key).

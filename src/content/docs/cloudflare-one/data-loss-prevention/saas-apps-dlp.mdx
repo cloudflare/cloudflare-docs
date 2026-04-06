@@ -11,7 +11,7 @@ import { Render } from "~/components";
 Requires Cloudflare CASB and Cloudflare DLP.
 :::
 
-You can use [Cloudflare Data Loss Prevention (DLP)](/cloudflare-one/data-loss-prevention/) to discover if files stored in a SaaS application contains sensitive data. To perform DLP scans in a SaaS app, first configure a [DLP profile](#configure-a-dlp-profile) with the data patterns you want to detect, then [add the profile](#enable-dlp-scans-in-casb) to a CASB integration.
+You can use [Cloudflare Data Loss Prevention (DLP)](/cloudflare-one/data-loss-prevention/) to discover if files stored in a SaaS application contain sensitive data. To perform DLP scans in a SaaS app, first configure a [DLP profile](#configure-a-dlp-profile) with the data patterns you want to detect, then [add the profile](#enable-dlp-scans-in-casb) to a CASB integration.
 
 ## Supported integrations
 
@@ -55,6 +55,10 @@ CASB will scan every publicly accessible file in the integration for text that m
 2. Choose a [supported integration](#supported-integrations) and select **Configure**.
 3. Under **DLP profiles**, select the profiles that you want the integration to scan for.
 4. Select **Save integration**.
+
+:::note
+Enabling a DLP profile on an existing integration only scans publicly accessible files that have had a modification event after the profile is enabled. To scan all existing publicly accessible files, enable the DLP profile during the [initial integration setup](#add-a-new-integration).
+:::
 
 If you enable a DLP profile from the **Manage integrations** page, CASB will only scan publicly accessible files that have had a modification event since enabling the DLP profile. Modification events include changes to the following attributes:
 

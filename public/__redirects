@@ -2295,19 +2295,19 @@
 /cloudflare-one/connections/connect-networks/install-and-setup/ /cloudflare-one/connections/connect-networks/get-started/ 301
 /cloudflare-one/api-terraform/access-api-examples/azure-group/ /cloudflare-one/api-terraform/access-api-examples/entra-group/ 301
 /cloudflare-one/api-terraform/gateway-api-examples/dns-policy/ /cloudflare-one/policies/gateway/dns-policies/common-policies/ 301
-/cloudflare-one/insights/email-monitoring/email-security-logs/ /cloudflare-one/insights/logs/enable-logs/ 301
+/cloudflare-one/insights/email-monitoring/email-security-logs/ /cloudflare-one/insights/logs/logpush/email-security-logs/ 301
 /cloudflare-one/applications/configure-apps/self-hosted-apps/ /cloudflare-one/applications/configure-apps/self-hosted-public-app/ 301
 /cloudflare-one/connections/connect-apps/tunnel-monitoring/ /cloudflare-one/connections/connect-networks/monitor-tunnels/ 301
 /cloudflare-one/email-security/setup/partner-domain-tls/ /cloudflare-one/email-security/setup/pre-delivery-deployment/partner-domain-tls/ 301
 /cloudflare-one/identity/users/short-lived-certificates/ /cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/ 301
 /cloudflare-one/connections/connect-networks/locations/ /cloudflare-one/connections/connect-devices/agentless/dns/locations/ 301
-/cloudflare-one/insights/email-monitoring/enable-logs/ /cloudflare-one/insights/logs/enable-logs/ 301
+/cloudflare-one/insights/email-monitoring/enable-logs/ /cloudflare-one/insights/logs/logpush/email-security-logs/ 301
 /cloudflare-one/applications/non-http/arbitrary-tcp/ /cloudflare-one/applications/non-http/cloudflared-authentication/arbitrary-tcp/ 301
 /cloudflare-one/identity/idp-integration/ping-saml/ /cloudflare-one/identity/idp-integration/pingfederate-saml/ 301
 /cloudflare-one/identity/idp-integration/saml-okta/ /cloudflare-one/identity/idp-integration/okta-saml/ 301
 /cloudflare-one/policies/zero-trust/common-configs/ /cloudflare-one/policies/access/ 301
 /cloudflare-one/applications/casb/troubleshooting/ /cloudflare-one/applications/casb/troubleshooting/troubleshoot-integrations/ 301
-/cloudflare-one/analytics/logs/activity-log/ /cloudflare-one/insights/logs/gateway-logs/ 301
+/cloudflare-one/analytics/logs/activity-log/ /cloudflare-one/insights/logs/dashboard-logs/gateway-logs/ 301
 /cloudflare-one/identity/devices/os-version/ /cloudflare-one/reusable-components/posture-checks/client-checks/os-version/ 301
 /cloudflare-one/insights/dex/fleet-status/ /cloudflare-one/insights/dex/monitoring/ 301
 /cloudflare-one/policies/zero-trust/cors/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/cors/ 301
@@ -2317,7 +2317,7 @@
 /cloudflare-one/email-security/phish-submissions/ /cloudflare-one/email-security/settings/phish-submissions/ 301
 /cloudflare-one/tutorials/google-workspace-saas/ /cloudflare-one/applications/configure-apps/saas-apps/google-workspace-saas/ 301
 /cloudflare-one/tutorials/block-football-users/ /cloudflare-one/policies/gateway/http-policies/common-policies/#check-user-identity 301
-/cloudflare-one/tutorials/review-gateway-block/ /cloudflare-one/analytics/logs/gateway-logs/ 301
+/cloudflare-one/tutorials/review-gateway-block/ /cloudflare-one/insights/logs/dashboard-logs/gateway-logs/ 301
 /cloudflare-one/tutorials/many-cfd-one-tunnel/ /cloudflare-one/connections/connect-networks/deployment-guides/kubernetes/ 301
 /cloudflare-one/tutorials/secure-dns-devices/ /cloudflare-one/traffic-policies/get-started/dns/ 301
 /cloudflare-one/tutorials/migrate-lb-tunnel/ /cloudflare-one/connections/connect-networks/ 301
@@ -2385,6 +2385,7 @@
 /cloudflare-one/identity/devices/require-warp/ /cloudflare-one/reusable-components/posture-checks/client-checks/require-warp/ 301
 /cloudflare-one/identity/devices/service-providers/custom/ /cloudflare-one/integrations/service-providers/custom/ 301
 /cloudflare-one/identity/devices/service-providers/ /cloudflare-one/integrations/service-providers/ 301
+/cloudflare-one/data-loss-prevention/troubleshooting/ /cloudflare-one/data-loss-prevention/troubleshoot-dlp/ 301
 /cloudflare-one/policies/data-loss-prevention/exact-data-match/ /cloudflare-one/data-loss-prevention/detection-entries/#exact-data-match 301
 /cloudflare-one/policies/filtering/configuring-block-page/ /cloudflare-one/reusable-components/custom-pages/gateway-block-page/ 301
 /cloudflare-one/policies/filtering/dns-policies/safesearch/ /cloudflare-one/traffic-policies/dns-policies/#safe-search 301
@@ -2421,6 +2422,17 @@
 
 # Catch-all redirects (must come last)
 /cloudflare-one/faq/troubleshooting/ /cloudflare-one/troubleshooting/ 301
+
+# Zero Trust logs restructure (dashboard-logs + logpush)
+/cloudflare-one/insights/logs/audit-logs/ /cloudflare-one/insights/logs/dashboard-logs/access-authentication-logs/ 301
+/cloudflare-one/insights/logs/gateway-logs/ /cloudflare-one/insights/logs/dashboard-logs/gateway-logs/ 301
+/cloudflare-one/insights/logs/gateway-logs/manage-pii/ /cloudflare-one/insights/logs/dashboard-logs/gateway-logs/manage-pii/ 301
+/cloudflare-one/insights/logs/posture-logs/ /cloudflare-one/insights/logs/dashboard-logs/posture-logs/ 301
+/cloudflare-one/insights/logs/scim-logs/ /cloudflare-one/insights/logs/dashboard-logs/scim-logs/ 301
+/cloudflare-one/insights/logs/tunnel-audit-logs/ /cloudflare-one/insights/logs/dashboard-logs/tunnel-audit-logs/ 301
+/cloudflare-one/insights/logs/enable-logs/ /cloudflare-one/insights/logs/logpush/email-security-logs/ 301
+/cloudflare-one/insights/logs/use-logpush-with-ids/ /cloudflare-one/insights/logs/logpush/ids-logs/ 301
+/cloudflare-one/insights/logs/filter-views/ /cloudflare-one/insights/logs/logpush/network-firewall-log-filters/ 301
 
 # ============================================================================
 # DYNAMIC REDIRECTS
@@ -2651,3 +2663,4 @@
 /changelog/2024-* /changelog/post/2024-:splat 301
 /changelog/2025-* /changelog/post/2025-:splat 301
 /changelog/2026-* /changelog/post/2026-:splat 301
+

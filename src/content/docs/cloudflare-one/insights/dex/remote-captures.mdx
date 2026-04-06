@@ -9,7 +9,7 @@ import { Details, Render } from "~/components";
 
 <Render file="dex/pcaps-run-availability" product="cloudflare-one" />
 
-Remote captures allow administrators to collect packet captures (PCAPs) and WARP diagnostic logs directly from end user devices. This data can be used to troubleshoot network problems, investigate security incidents, and identify performance bottlenecks.
+Remote captures allow administrators to collect packet captures (PCAPs) and Cloudflare One Client diagnostic logs directly from end user devices. This data can be used to troubleshoot network problems, investigate security incidents, and identify performance bottlenecks.
 
 ## Start a remote capture
 
@@ -33,11 +33,11 @@ The downloaded PCAP folder contains three files:
 
 You can analyze `.pcap` files using Wireshark or another third-party packet capture tool.
 
-### WARP Diag contents
+### Diagnostic log files
 
-Refer to [WARP diagnostic logs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/diagnostic-logs/#warp-diag-logs) for a description of each file.
+Refer to [Cloudflare One Client diagnostic logs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/diagnostic-logs/#warp-diag-logs) for a description of each file.
 
-## WARP diagnostics analyzer (beta)
+## Diagnostics analyzer (beta)
 
 <Render file="dex/pcaps-view-warp-diag" product="cloudflare-one" />
 
@@ -51,7 +51,7 @@ Refer to [WARP diagnostic logs](/cloudflare-one/team-and-resources/devices/cloud
   | File size   | 50 MB         |
   | Packet size | 1500 bytes    |
 
-- WARP diagnostic logs have no file size limit, but files larger than 100 MB cannot be uploaded to Cloudflare and must be shared directly with the admin.
+- Cloudflare One Client diagnostic logs have no file size limit, but files larger than 100 MB cannot be uploaded to Cloudflare and must be shared directly with the admin.
 
 - Windows devices do not support concurrent remote captures. If you start a remote capture while another is in progress, the second capture will fail immediately.
 

@@ -22,7 +22,7 @@ Key benefits include:
 
 - **Customized tools per portal**: Admins can tailor an MCP portal to a particular use case by choosing the specific tools and prompt templates that they want to make available to users through the portal. This allows users to access a curated set of tools and prompts — the less external context exposed to the AI model, the better the AI responses tend to be.
 
-- **Observability**: Once the user's AI agent is connected to the portal, Cloudflare Access logs the individual requests made using the tools in the portal.
+- **Observability**: Once the user's AI agent is connected to the portal, Cloudflare Access logs the individual requests made using the tools in the portal. You can optionally route portal traffic through [Cloudflare Gateway](#route-portal-traffic-through-gateway) for richer HTTP logging and data loss prevention (DLP) scanning.
 
 This guide explains how to add MCP servers to Cloudflare Access, create an MCP portal with customized tools and policies, and connect users to the portal using an MCP client.
 
@@ -118,6 +118,38 @@ Cloudflare Access automatically creates an Access application for each MCP serve
    1. Go to the **Experience settings** tab.
    2. <Render file="access/access-block-page" product="cloudflare-one" />
 5. Select **Save application**.
+
+## Route portal traffic through Gateway
+
+When Gateway routing is turned on, calls to MCP servers protected by your MCP server portal appear in your [Gateway HTTP logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/) alongside the rest of your organization's HTTP traffic. You can then create [Data Loss prevention (DLP) policies](#example-gateway-policy) to detect and block sensitive data from leaving your users' devices and being sent to your upstream MCP servers.
+
+### Enable Gateway routing
+
+To route MCP server portal traffic through Gateway:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **AI controls**
+2. Find the portal you want to configure, then select the three dots > **Edit**.
+3. Under **Basic information**, turn on **Route traffic through Cloudflare Gateway**.
+4. Select **Save**.
+
+Portal traffic will now appear in your [Gateway HTTP logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/). To apply DLP scanning, [create a Gateway HTTP policy](#example-gateway-policy).
+
+### Example Gateway policy
+
+To scan traffic for sensitive data, [create a Gateway HTTP policy](/cloudflare-one/data-loss-prevention/dlp-policies/) that matches both the MCP server and a predefined or custom [DLP profile](/cloudflare-one/data-loss-prevention/dlp-profiles/).
+
+Gateway HTTP policies for MCP portal traffic must explicitly target the MCP server — this differs from typical Gateway HTTP policies which apply to all inspected traffic. Ensure that your policy matches the upstream MCP server (for example, `https://example-mcp-server.example.workers.dev/mcp`) rather than the portal URL (`https://<subdomain>.<domain>/mcp`).
+
+For example, the following policy blocks traffic that contains [credentials and secrets](/cloudflare-one/data-loss-prevention/dlp-profiles/predefined-profiles/#credentials-and-secrets) or [financial information](/cloudflare-one/data-loss-prevention/dlp-profiles/predefined-profiles/#financial-information):
+
+| Selector         | Operator | Value         | Logic | Action |
+| ---------------- | -------- | ------------- | ----- | ------ |
+| Host      | in       | `example-mcp-server.example.workers.dev`  | And   | Block  |
+| DLP Profile | in       | _Credentials and Secrets_, _Financial Information_ |       |        |
+
+:::note
+DLP [AI prompt profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/predefined-profiles/#ai-prompt) do not apply to MCP server portal traffic.
+:::
 
 ## Connect to a portal
 

@@ -13,7 +13,7 @@ description: Cloudflare client-side resource alerts notify you when new scripts
 import { Render } from "~/components";
 
 :::note
-New resource alerts require a Business plan or higher. Code change and malicious resource alerts require an Enterprise plan with a paid add-on. For details, refer to [Alert types](/client-side-security/alerts/alert-types/).
+New resource alerts require a Business plan or higher. Code change and malicious resource alerts require Client-Side Security Advanced. For details, refer to [Alert types](/client-side-security/alerts/alert-types/).
 :::
 
 <Render file="alerts-intro" product="client-side-security" />
@@ -31,7 +31,7 @@ For instructions on configuring alerts, refer to [Configure an alert](/client-si
 ## Scoped alerts
 
 :::note
-Applies to Enterprise customers with a paid add-on.
+Only available to customers with Client-Side Security Advanced.
 :::
 
 If you have configured [content security rules](/client-side-security/rules/) in a zone, you can filter alert notifications according to those rules. These alerts are called scoped alerts.
@@ -48,12 +48,7 @@ For each scoped alert, Cloudflare does the following:
 When you create a scoped alert you will not receive notifications for resources that are not allowed by a policy (either [in allow or in log mode](/client-side-security/rules/#rule-actions)). These are [rule violations](/client-side-security/rules/violations/) that you can review in the dashboard, through GraphQL, or via Logpush.
 
 :::note
-
-You will not receive notifications for a scoped alert in the following cases:
-
-- No configured content security rules in the zone
-- Content security rule is not enabled
-
+Scoped alerts only fire if the zone has at least one enabled content security rule.
 :::
 
 For unscoped alerts, you will receive alerts for resources detected in all your zones, and you may receive alerts about resources that violate your configured content security rules.
