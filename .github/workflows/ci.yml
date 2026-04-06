@@ -87,6 +87,7 @@ jobs:
           reporter: github-pr-review
           fail_level: error
           filter_mode: nofilter
+          skip_install: true
 
       - name: Check formatting (js,jsx,ts,tsx,mjs,css)
         run: pnpm run format:core:check
