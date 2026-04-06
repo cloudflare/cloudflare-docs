@@ -1,0 +1,7 @@
+# Minimum age (in minutes) a package version must be published before pnpm will install it.
+# 1440 minutes = 24 hours. Reduces risk from newly-published compromised packages.
+minimumReleaseAge: 1440
+
+# Prevent transitive dependencies from using exotic sources (git repos, direct tarball URLs).
+# Only direct dependencies may use exotic sources.
+blockExoticSubdeps: true
