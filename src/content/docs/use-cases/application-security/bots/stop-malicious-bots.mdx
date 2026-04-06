@@ -48,7 +48,7 @@ Cloudflare classifies bot traffic into categories based on bot scores and verifi
 
 - **Verified bots**: Crawlers and services that Cloudflare has confirmed as legitimate, such as Googlebot, Bingbot, and uptime monitors. Cloudflare maintains a [verified bot list](/bots/concepts/bot/verified-bots/policy/) with strict requirements. Always allow verified bots through your protections.
 - **Automated** (score 1): Definitely a bot. Cloudflare is highly confident the request is automated.
-- **Likely automated** (scores 2-29): Probably a bot. This category and Automated are your primary targets — scrapers, credential stuffing tools, inventory hoarding bots, and spam submitters.
+- **Likely automated** (scores 2-29): Probably a bot. This category and Automated are your primary targets, including scrapers, credential stuffing tools, and spam submitters.
 - **Likely human** (scores 30-99): These requests appear to come from real users. Do not challenge or block this traffic.
 
 ## Block automated traffic with Bot Fight Mode
@@ -61,7 +61,7 @@ Bot Fight Mode is available on all Cloudflare plans, including Free. It provides
 
 **What it does:**
 
-- Identifies requests that match known bot patterns using Cloudflare heuristics
+- Identifies requests that match known bot patterns
 - Issues a computational challenge (a background test that bots fail and browsers pass silently) to suspected bots rather than hard-blocking them
 - Applies site-wide with no additional configuration
 
