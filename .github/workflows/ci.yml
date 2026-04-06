@@ -80,14 +80,17 @@ jobs:
       - name: Check Astro and CF Worker
         run: pnpm run check
 
-      - name: Run eslint
-        uses: reviewdog/action-eslint@556a3fdaf8b4201d4d74d406013386aa4f7dab96 # v1
+      - name: Set up reviewdog
+        uses: reviewdog/action-setup@d8a7baabd7f3e8544ee4dbde3ee41d0011c3a93f # v1.5.0
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          reporter: github-pr-review
-          fail_level: error
-          filter_mode: nofilter
-          skip_install: true
+          reviewdog_version: v0.21.0
+
+      - name: Run eslint
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          pnpm run lint --format eslint-formatter-checkstyle | \
+            reviewdog -f=checkstyle -name=eslint -reporter=github-pr-review -fail-level=error -filter-mode=nofilter
 
       - name: Check formatting (js,jsx,ts,tsx,mjs,css)
         run: pnpm run format:core:check
