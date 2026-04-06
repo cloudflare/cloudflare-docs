@@ -4,13 +4,14 @@ title: Chrome DevTools Protocol (CDP)
 description: Create persistent browser sessions, manage tabs, and interact with browsers using Chrome DevTools Protocol (CDP) commands via the /devtools endpoints.
 sidebar:
   order: 5
+  badge: Beta
 ---
 
 import { Render } from "~/components";
 
 The `/devtools` endpoints provide session management capabilities that follow the [Chrome DevTools Protocol (CDP)](https://chromedevtools.github.io/devtools-protocol/). These endpoints allow you to create persistent browser sessions, manage multiple tabs, and interact with browsers using CDP commands. This is useful for advanced automation, debugging, and remote browser control.
 
-Unlike [Browser Sessions](/browser-rendering/workers-bindings/), the CDP endpoints can be accessed from any environment that supports WebSocket connections, including local development machines, external servers, and CI/CD pipelines. This means you can connect to Browser Rendering from Node.js scripts, Puppeteer, Playwright, or any CDP-compatible client.
+CDP endpoints can be accessed from any environment that supports WebSocket connections, including local development machines, external servers, and CI/CD pipelines. This means you can connect to Browser Rendering from Node.js scripts, Puppeteer, Playwright, or any CDP-compatible client.
 
 <Render file="rest-api-token-permissions" product="browser-rendering" />
 
@@ -34,7 +35,7 @@ Once you acquire a browser session, you can interact with it in two ways:
 
 ### CDP over WebSocket
 
-Connect to the WebSocket endpoint `/devtools/browser` to acquire a session and send [CDP commands](https://chromedevtools.github.io/devtools-protocol/) directly over the connection. This is the standard way to use CDP and works with any CDP client, including [Puppeteer](/browser-rendering/cdp/puppeteer/), [Playwright](/browser-rendering/playwright/), and [MCP clients](/browser-rendering/cdp/mcp-clients/).
+Connect to the WebSocket endpoint `/devtools/browser` to acquire a session and send [CDP commands](https://chromedevtools.github.io/devtools-protocol/) directly over the connection. This is the standard way to use CDP and works with any CDP client, including [Puppeteer](/browser-rendering/cdp/puppeteer/), Playwright, and [MCP clients](/browser-rendering/cdp/mcp-clients/).
 
 ### HTTP API
 
