@@ -236,7 +236,7 @@ The `main` key is optional for assets-only Workers.
   - Configures static assets that will be served. Refer to [Assets](/workers/static-assets/binding/) for more details.
 
 * `migrations` <Type text="object"/> <MetaInfo text="optional"/>
-  - Maps a Durable Object from a class name to a runtime state. This communicates changes to the Durable Object (creation / deletion / rename / transfer) to the Workers runtime and provides the runtime with instructions on how to deal with those changes. Refer to [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/#durable-object-migrations-in-wranglertoml).
+  - Maps a Durable Object from a class name to a runtime state. This communicates changes to the Durable Object (creation / deletion / rename / transfer) to the Workers runtime and provides the runtime with instructions on how to deal with those changes. Refer to [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/#migration-wrangler-configuration).
 
 * `placement` <Type text="object"/> <MetaInfo text="optional"/>
   - Configures where your Worker runs to minimize latency to back-end services. Refer to [Placement](/workers/configuration/placement/).
@@ -279,6 +279,10 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 
 - `tail_consumers` <Type text="object" /> <MetaInfo text="optional" />
   - A list of the Tail Workers your Worker sends data to. Refer to [Tail Workers](/workers/observability/logs/tail-workers/).
+
+- `secrets` <Type text="object" /> <MetaInfo text="optional" />
+  - Declares the secret names your Worker requires. Used for validation during local development and deploy, and as the source of truth for type generation. Refer to [Secrets](#secrets).
+  - `required` <Type text="string[]" /> <MetaInfo text="optional" /> — A list of secret names that must be set to deploy your Worker.
 
 ## Types of routes
 
@@ -552,7 +556,7 @@ To bind D1 databases to your Worker, assign an array of the below object to the 
 
 - `migrations_dir` <Type text="string" /> <MetaInfo text="optional" />
   - The migration directory containing the migration files. By default, `wrangler d1 migrations create` creates a folder named `migrations`. You can use `migrations_dir` to specify a different folder containing the migration files (for example, if you have a mono-repo setup, and want to use a single D1 instance across your apps/packages).
-  - For more information, refer to [D1 Wrangler `migrations` commands](/workers/wrangler/commands/#migrations-create) and [D1 migrations](/d1/reference/migrations/).
+  - For more information, refer to [D1 Wrangler `migrations` commands](/workers/wrangler/commands/d1/#d1-migrations-create) and [D1 migrations](/d1/reference/migrations/).
 
 :::note
 
@@ -1214,7 +1218,7 @@ The following options are available:
 
 - `image` <Type text="string" /> <MetaInfo text="required" />
   - The image to use for the container. This can either be a local path to a `Dockerfile`, in which case `wrangler deploy` will
-    build and push the image, or it can be an image URL. Currently, only the Cloudflare Registry is a supported registry.
+    build and push the image, or it can be an image reference. Supported registries are the Cloudflare Registry, Docker Hub, and Amazon ECR. For more information, refer to [Image Management](/containers/platform-details/image-management/).
 
 - `class_name` <Type text="string" /> <MetaInfo text="required" />
   - The corresponding Durable Object class name. This will make this Durable Object a container-enabled Durable Object
@@ -1254,6 +1258,12 @@ The following options are available:
   - If this is an array of numbers, each step specifies the cumulative rollout progress, so the final step must be `100`.
   - Defaults to `[10, 100]`.
   - This can be overridden ad hoc by deploying with the `--containers-rollout=immediate` flag, which will roll out to 100% of instances in one step. Note that flag will not override `rollout_active_grace_period`, if configured.
+
+- `wrangler_ssh` <Type text="object" /> <MetaInfo text="optional" />
+  - Configuration for SSH through Wrangler. Refer to [Wrangler SSH](#wrangler-ssh).
+
+- `authorized_keys` <Type text="object[]" /> <MetaInfo text="optional" />
+  - Public keys that should be added to the Container's `authorized_keys` file.
 
 <WranglerConfig>
 
@@ -1323,6 +1333,31 @@ The following options are available:
 ```
 
 </WranglerConfig>
+
+### Wrangler SSH
+
+Configuration for SSH access to a Container instance through Wrangler. For a guide on connecting to Containers via SSH, refer to [SSH](/containers/ssh/).
+
+The following options are available:
+
+- `enabled` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Whether SSH through Wrangler is enabled. Defaults to `false`.
+
+- `port` <Type text="number" /> <MetaInfo text="optional" />
+  - The port for the SSH service to run on. Defaults to `22`.
+
+### Authorized keys
+
+An authorized key is a public key that can be used to SSH into a Container.
+
+The following are properties of a key:
+
+- `name` <Type text="string" /> <MetaInfo text="required" />
+  - The display name of the key.
+
+- `public_key` <Type text="string" /> <MetaInfo text="required" />
+  - The public key itself.
+  - Currently only the `ssh-ed25519` key type is supported.
 
 ## Bundling
 
@@ -1462,11 +1497,43 @@ You can configure various aspects of local development, such as the local protoc
 
 </WranglerConfig>
 
-### Secrets
+## Secrets
 
-[Secrets](/workers/configuration/secrets/) are a type of binding that allow you to [attach encrypted text values](/workers/wrangler/commands/#secret) to your Worker.
+[Secrets](/workers/configuration/secrets/) are a type of binding that allow you to [attach encrypted text values](/workers/wrangler/commands/general/#secret) to your Worker.
+
+### Local development
 
 <Render file="secrets-in-dev" product="workers" />
+
+### `secrets` configuration property
+
+:::note
+This property is experimental and subject to change.
+:::
+
+The `secrets` configuration property lets you declare the secret names your Worker requires in your Wrangler configuration file. Required secrets are validated during local development and deploy, and used as the source of truth for type generation.
+
+<WranglerConfig>
+
+```jsonc
+{
+	"secrets": {
+		"required": ["API_KEY", "DB_PASSWORD"],
+	},
+}
+```
+
+</WranglerConfig>
+
+**Type generation**
+
+When `secrets` is defined at any config level, `wrangler types` generates typed bindings from the names listed in `secrets.required` and no longer infers secret names from `.dev.vars` or `.env` files. This lets you run type generation in environments where those files are not present.
+
+Per-environment secrets are supported. Each named environment produces its own interface, and the aggregated `Env` type marks secrets that only appear in some environments as optional.
+
+**Deploy**
+
+When `secrets` is defined, `wrangler deploy` and `wrangler versions upload` validate that all secrets in `secrets.required` are configured on the Worker before the operation succeeds. If any required secrets are missing, the command fails with an error listing which secrets need to be set.
 
 ## Module Aliasing
 
@@ -1499,6 +1566,18 @@ import { bar } from "foo";
 
 console.log(bar); // returns "baz"
 ```
+
+### Bundling issues
+
+When Wrangler bundles your Worker, it might fail to resolve dependencies. Setting up an alias for such dependencies is a simple way to fix the issue.
+
+However, before doing so, verify that the package is correctly installed in your project, either as a direct dependency in `package.json` or as a transitive dependency.
+
+If an alias is the correct solution for your dependency issue, you have several options:
+
+- **Alternative implementation** — Implement the module's logic in a Worker-compatible manner, ensuring that all the functionality remains intact.
+- **No-op module** — If the module's logic is unused or irrelevant, point the alias to an empty file. This makes the module a no-op while fixing the bundling issue.
+- **Runtime error** — If the module's logic is unused and the Worker should not attempt to use it (for example, because of security vulnerabilities), point the alias to a file with a single top-level `throw` statement. This fixes the bundling issue while ensuring the module is never actually used.
 
 ### Example: Aliasing dependencies from NPM
 
@@ -1557,7 +1636,7 @@ In many cases, this allows you to work provide just enough of an API to make a d
 [Source maps](/workers/observability/source-maps/) translate compiled and minified code back to the original code that you wrote. Source maps are combined with the stack trace returned by the JavaScript runtime to present you with a stack trace.
 
 - `upload_source_maps` <Type text="boolean" />
-  - When `upload_source_maps` is set to `true`, Wrangler will automatically generate and upload source map files when you run [`wrangler deploy`](/workers/wrangler/commands/#deploy) or [`wrangler versions deploy`](/workers/wrangler/commands/#versions-deploy).
+  - When `upload_source_maps` is set to `true`, Wrangler will automatically generate and upload source map files when you run [`wrangler deploy`](/workers/wrangler/commands/general/#deploy) or [`wrangler versions deploy`](/workers/wrangler/commands/general/#versions-deploy).
 
 Example:
 

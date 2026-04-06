@@ -131,11 +131,7 @@ let [client, server] = Object.values(new WebSocketPair());
 
 
 :::note
-
-
-WebSocket messages received by a Worker have a size limit of 1 MiB (1048576).  If a larger message is sent, the WebSocket will be automatically closed with a `1009` "Message is too large" response.
-
-
+WebSocket messages received by a Worker have a size limit of 32 MiB (33,554,432 bytes).  If a larger message is sent, the WebSocket will be automatically closed with a `1009` "Message is too large" response.
 :::
 
 ## Types

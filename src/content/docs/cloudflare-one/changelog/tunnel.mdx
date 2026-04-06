@@ -9,10 +9,10 @@ description: Review recent changes to Cloudflare Tunnel.
 
 import { ProductChangelog, Render } from "~/components";
 
-{/* <!-- All changelog entries live in src/content/changelogs/cloudflare-tunnel/. */}
+{/* <!-- All changelog entries live in src/content/changelog/tunnel/. */}
 
 <ProductChangelog
-	product="cloudflare-tunnel"
+	product="tunnel"
 	hideEntry="2024-06-16-cloudflare-one"
 />
 
@@ -26,7 +26,7 @@ You can now deploy WARP Connector using a simplified, guided workflow similar to
 
 **Bugfix for --grace-period**
 
-The new `cloudflared` build [2024.10.0](https://github.com/cloudflare/cloudflared/releases/tag/2024.10.0) has a bugfix related to the [--grace-period](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/#grace-period) tunnel run parameter. `cloudflared` connectors will now abide by the specified waiting period before forcefully closing connections to Cloudflare's network.
+The new `cloudflared` build [2024.10.0](https://github.com/cloudflare/cloudflared/releases/tag/2024.10.0) has a bugfix related to the [--grace-period](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#grace-period) tunnel run parameter. `cloudflared` connectors will now abide by the specified waiting period before forcefully closing connections to Cloudflare's network.
 
 ## 2024-08-06
 

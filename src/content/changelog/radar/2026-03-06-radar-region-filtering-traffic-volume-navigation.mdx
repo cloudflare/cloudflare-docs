@@ -1,0 +1,29 @@
+---
+title: Region Filtering, AS Traffic Volume, and Navigation Improvements on Cloudflare Radar
+description: New region filtering, traffic volume by top autonomous systems and locations, and breadcrumb navigation on Cloudflare Radar
+products:
+  - radar
+date: 2026-03-06
+---
+
+[**Radar**](/radar/) ships several new features that improve the flexibility and usability of the platform, as well as visibility into what is happening on the Internet.
+
+## Region filtering
+
+All location-aware pages now support filtering by region, including continents, geographic subregions ([Middle East](https://radar.cloudflare.com/middle-east), [Eastern Asia](https://radar.cloudflare.com/eastern-asia), etc.), political regions ([EU](https://radar.cloudflare.com/european-union), [African Union](https://radar.cloudflare.com/african-union)), and US Census regions/divisions (for example, [New England](https://radar.cloudflare.com/traffic/us-new-england), [US Northeast](https://radar.cloudflare.com/traffic/us-northeast)).
+
+![Screenshot of region filtering on Radar - Middle east](~/assets/images/radar/region-filtering-middle-east.png)
+
+## Traffic volume by top autonomous systems and locations
+
+A new traffic volume view shows the top autonomous systems and countries/territories for a given location. This is useful for quickly determining which network providers in a location may be experiencing connectivity issues, or how traffic is distributed across a region.
+
+![Screenshot of traffic volume by top autonomous systems in US](~/assets/images/radar/traffic-volume-top-as-us.png)
+
+The new AS and location dimensions have also been added to the [Data Explorer](https://radar.cloudflare.com/explorer) for the HTTP, DNS, and NetFlows datasets. Combined with other available filters, this provides a powerful tool for generating unique insights.
+
+![Screenshot of AS and location dimensions in Data Explorer](~/assets/images/radar/data-explorer-top-as-pt.png)
+
+Finally, breadcrumb navigation is now available on most pages, allowing easier navigation between parent and related pages.
+
+Check out these features on [Cloudflare Radar](https://radar.cloudflare.com).

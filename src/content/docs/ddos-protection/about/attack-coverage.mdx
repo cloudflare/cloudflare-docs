@@ -7,10 +7,9 @@ sidebar:
 head:
   - tag: title
     content: DDoS attack coverage
-
 ---
 
-import { GlossaryTooltip, InlineBadge, Render } from "~/components"
+import { GlossaryTooltip, InlineBadge, Render } from "~/components";
 
 The [DDoS Attack Protection managed rulesets](/ddos-protection/managed-rulesets/) provide protection against a variety of <GlossaryTooltip term="distributed denial-of-service (DDoS) attack">DDoS attacks</GlossaryTooltip> across L3/4 (layers 3/4) and L7 of the OSI model. Cloudflare constantly updates these managed rulesets to improve the attack coverage, increase the mitigation consistency, cover new and emerging threats, and ensure cost-efficient mitigations.
 
@@ -35,3 +34,9 @@ Magic Transit customers have access to [Advanced DNS Protection](/ddos-protectio
 
 - Use Cloudflare as your authoritative DNS provider ([primary DNS](/dns/zone-setups/full-setup/) or [secondary DNS](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/)).
 - If you are running your own <GlossaryTooltip term="nameserver">nameservers</GlossaryTooltip>, use [DNS Firewall](/dns/dns-firewall/) to get additional protection against DNS attacks like random prefix attacks.
+
+## Email-based attacks
+
+DDoS Protection covers web and network protocols, including TCP, UDP, DNS, and HTTP/S. It does not cover email protocols such as SMTP, IMAP, or POP3.
+
+For protection against email-borne threats such as phishing and malware, refer to [Email Security](/email-security/).

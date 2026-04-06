@@ -1,6 +1,7 @@
 ---
 title: DNS_PROBE_POSSIBLE
 pcx_content_type: troubleshooting
+description: Learn how to fix the DNS_PROBE_POSSIBLE browser error when using Cloudflare DNS.
 sidebar:
   order: 5
 head:
@@ -8,7 +9,7 @@ head:
     content: Fix DNS_PROBE_POSSIBLE error
 ---
 
-import { Render } from "~/components";
+import { GlossaryTooltip, Render } from "~/components";
 
 <Render
 	file="dns-errors-ts-intro"
@@ -18,7 +19,7 @@ import { Render } from "~/components";
 
 ## Background
 
-`DNS_PROBE_POSSIBLE` means that the resolver could not find DNS records for the requested hostname.
+`DNS_PROBE_POSSIBLE` means that the resolver could not find <GlossaryTooltip term="DNS record" link="/dns/manage-dns-records/">DNS records</GlossaryTooltip> for the requested hostname.
 
 Though visitors sometimes encounter this error — or similarly worded messages from Safari, Edge, or Firefox — because of network or local DNS issues, it might point to an issue with your DNS records in Cloudflare.
 

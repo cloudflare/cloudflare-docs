@@ -4,11 +4,9 @@
 
 import { Render, DashButton } from "~/components"
 
-After configuring one or multiple rule types in Network Flow (formerly Magic Network Monitoring), you can also choose to receive notifications via email, webhook, or PagerDuty when a rule is triggered.
+Network Flow (formerly Magic Network Monitoring) can notify you by email, webhook, or PagerDuty when a rule is triggered. When a rule detects a traffic anomaly, notifications alert your team so you can respond — or, if you use Magic Transit with auto-advertisement, Cloudflare can begin mitigating the attack automatically.
 
-You can configure multiple rule types and alerts together to create layers of DDoS protection based on your network environment and your security needs.
-
-You can read [Cloudflare's Notifications documentation](/notifications/) for more information on our notification platform including:
+For more information on the notification platform, refer to [Notifications documentation](/notifications/). You can also:
 
 - [Configure Cloudflare notifications](/notifications/get-started/)
 - [Configure PagerDuty](/notifications/get-started/configure-pagerduty/)
@@ -20,10 +18,10 @@ You can read [Cloudflare's Notifications documentation](/notifications/) for mor
 
 | Field | Description |
 | :---- | :---- |
-| **Notification name** | The name of the Network Flow notification for the rule type that was selected. |
+| **Notification name** | A label to identify this notification in your notifications list. |
 | **Description (optional)** | The description of the notification. |
-| **Webhooks** | The webhook(s) that will receive the notification. |
-| **Notification email** | The email(s) that will receive the notification. |
+| **Webhooks** | One or more webhooks to deliver the notification to. |
+| **Notification email** | One or more email addresses to deliver the notification to. |
 
 ## Rule Auto-Advertisement notifications
 

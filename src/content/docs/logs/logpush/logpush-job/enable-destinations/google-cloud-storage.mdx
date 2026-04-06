@@ -53,3 +53,17 @@ To enable Logpush to GCS:
 1. Create a GCS bucket. Refer to [instructions from GCS](https://cloud.google.com/storage/docs/creating-buckets#storage-create-bucket-console).
 
 2. In **Storage** > **Browser** > **Bucket** > **Permissions**, add the member `logpush@cloudflare-data.iam.gserviceaccount.com` with `Storage Object Admin` permission.
+
+## Compression and decompressive transcoding
+
+Logpush always delivers log files in gzip-compressed format. When uploading to GCS, Logpush sets `Content-Encoding: gzip` on the object metadata.
+
+GCS performs [decompressive transcoding](https://cloud.google.com/storage/docs/transcoding) by default. This means that when a client downloads an object stored with `Content-Encoding: gzip`, GCS may automatically decompress the file in transit if the client does not include `Accept-Encoding: gzip` in the request headers. When this happens, the downloaded file contains uncompressed data even though the filename retains the `.gz` extension.
+
+To download log files in their original compressed format, use one of the following approaches:
+
+- **Include `Accept-Encoding: gzip` in your download request headers.** For example, when using gsutil:
+
+  ```sh
+  gsutil -h "Accept-Encoding: gzip" cp gs://your-bucket/path/file.log.gz .
+  ```

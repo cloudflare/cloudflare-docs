@@ -7,8 +7,8 @@ sidebar:
 
 import { DirectoryListing } from "~/components";
 
-By default, Cloudflare Network Firewall permits all ingress traffic that has passed through Cloudflare's core DDoS mitigations. To proactively mitigate attacks and minimize your attack surface and leakage of attack traffic into your environment, we recommend implementing your Cloudflare Network Firewall rules using the following guidelines.
+By default, Cloudflare Network Firewall allows all incoming (ingress) traffic that has passed through Cloudflare's core DDoS mitigations. To reduce your exposure to attacks and prevent unwanted traffic from reaching your network, configure rules using the following guidelines.
 
-The best approach is to replicate your current ingress perimeter firewall rules in Network Firewall. If you are unable to export your current perimeter firewall rules, contact your Implementation Manager for help translating the rules into Network Firewall rules.
+If you are setting up firewall rules for the first time, start with the [Minimal ruleset](/cloudflare-one/traffic-policies/packet-filtering/best-practices/minimal-ruleset/). If you have existing on-premises or edge firewall rules, the best approach is to replicate those rules in Network Firewall. If you are unable to export your current firewall rules, contact your Cloudflare Implementation Manager for help translating the rules into Network Firewall rules.
 
 <DirectoryListing />

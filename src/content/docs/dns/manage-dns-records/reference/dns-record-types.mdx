@@ -15,6 +15,12 @@ import {
 
 This page provides information about some of the different types of DNS records that you can manage on Cloudflare. For guidance on how to add, edit, or delete DNS records, refer to [Manage DNS records](/dns/manage-dns-records/how-to/create-dns-records/).
 
+:::note
+Each DNS record has a maximum wire format size of 4,096 bytes. Wire format refers to how a record is encoded when transmitted over the DNS protocol ([RFC 1035](https://www.rfc-editor.org/rfc/rfc1035.html#section-3.2.1)).
+
+If you have multiple records with the same name and type, their combined content length must not exceed 8,192 characters.
+:::
+
 ---
 
 ## IP address resolution
@@ -26,7 +32,6 @@ At least one **IP address resolution** record is required for each domain on Clo
 <Render file="a-aaaa-definition" product="dns" />
 
 These records include the following fields:
-
 
 <Render file="records-name-field" product="dns" />
 - **IPv4/IPv6 address**: Your origin server address (cannot be a [Cloudflare IP](https://www.cloudflare.com/ips))
@@ -121,7 +126,7 @@ DNS management for **example.com**:
 
 | Type  | Name | Content                | Proxy status |
 | ----- | ---- | ---------------------- | ------------ |
-| CNAME | abc  | `target.external.test` | Proxied     |
+| CNAME | abc  | `target.external.test` | Proxied      |
 
 </Example>
 
@@ -144,7 +149,7 @@ In this example, a query for TXT in `abc.example.com` will **not** return the TX
 - If you encounter a CNAME record that you cannot proxy — usually associated with another CDN provider — a proxied version of that record will cause connectivity errors. Cloudflare is purposely preventing that record from being proxied to protect you from a misconfiguration. Refer to [proxying limitations](/dns/proxy-status/limitations/#proxy-eligibility) for details.
 
 :::note
-Specific CNAME record values with traffic proxied through Cloudflare will enable Orange-to-Orange (O2O) routing for the Shopify SaaS provider. Refer to the [Shopify provider guide](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/shopify/) for more information.
+Specific CNAME record values with traffic proxied through Cloudflare will enable O2O routing for the Shopify SaaS provider. Refer to the [Shopify provider guide](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/shopify/) for more information.
 :::
 
 #### Example API call
@@ -251,14 +256,6 @@ At Cloudflare, TXT records are most commonly used to demonstrate domain ownershi
 You could also use TXT to create email authentication records, but we recommend that you use our [Email security Wizard](/dns/manage-dns-records/how-to/email-records/#prevent-domain-spoofing) instead.
 
 <Render file="api-field-definitions" product="dns" />
-
-:::note
-
-The **Content** for each TXT record must be 2,048 characters or less.
-
-If you have multiple TXT records with the same **Name**, there is also a limit for the sum of their **Content** characters, which must be 8,192 or less.
-
-:::
 
 ### CAA
 
@@ -419,6 +416,7 @@ Your assigned Cloudflare nameservers, custom nameservers, and their correspondin
 :::
 
 #### Limits
+
 <Render file="ns-delegation-name-limit" product="dns" />
 
 ### DS and DNSKEY

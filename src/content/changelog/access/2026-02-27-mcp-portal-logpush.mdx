@@ -1,0 +1,38 @@
+---
+title: Export MCP server portal logs with Logpush
+description: Configure automatic export of MCP server portal logs to third-party storage destinations or SIEM tools.
+date: 2026-02-27
+products:
+  - access
+---
+
+:::note[Availability]
+Only available on Enterprise plans.
+:::
+
+[MCP server portals](/cloudflare-one/access-controls/ai-controls/mcp-portals/) now supports [Logpush](/logs/logpush/) integration. You can automatically export MCP server portal activity logs to third-party storage destinations or security information and event management (SIEM) tools for analysis and auditing.
+
+### Available log fields
+
+The MCP server portal logs dataset includes fields such as:
+
+- `Datetime` — Timestamp of the request
+- `PortalID` / `PortalAUD` — Portal identifiers
+- `ServerID` / `ServerURL` — Upstream MCP server details
+- `Method` — JSON-RPC method (for example, `tools/call`, `prompts/get`, `resources/read`)
+- `ToolCallName` / `PromptGetName` / `ResourceReadURI` — Method-specific identifiers
+- `UserID` / `UserEmail` — Authenticated user information
+- `Success` / `Error` — Request outcome
+- `ServerResponseDurationMs` — Response time from upstream server
+
+For the complete field reference, refer to [MCP portal logs](/logs/logpush/logpush-job/datasets/account/mcp_portal_logs/).
+
+### Set up Logpush
+
+To configure Logpush for MCP server portal logs, refer to [Logpush integration](/cloudflare-one/insights/logs/logpush/).
+
+:::note
+
+MCP server portals is currently in beta.
+
+:::

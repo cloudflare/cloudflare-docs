@@ -13,7 +13,7 @@ import {
 	Render,
 } from "~/components";
 
-Gateway allows you to create DNS, Network, and HTTP policies based on applications and app types. You can select individual applications or groups of app types to filter specific traffic on your network.
+Gateway allows you to create DNS, Network, and HTTP policies based on applications and application types. Because a single application often spans multiple hostnames, selecting an application by name is easier than writing separate rules for each hostname. You can select individual applications or application types to filter specific traffic on your network.
 
 ## Applications
 
@@ -58,23 +58,25 @@ Gateway sorts applications into the following app type groups:
 | Shopping                                       | Online shopping applications                                                                                                |
 | Social Networking                              | Social networking applications                                                                                              |
 | Sports                                         | Sports streaming and news applications                                                                                      |
-| Travel                                         | Travel related applications                                                                                                |
+| Travel                                         | Travel related applications                                                                                                 |
 | Video Streaming & Editing                      | Applications used for streaming and editing video                                                                           |
 | [Do Not Inspect](#do-not-inspect-applications) | Applications incompatible with the TLS certificate required by the [Gateway proxy](/cloudflare-one/traffic-policies/proxy/) |
 
 ## Application hostnames
 
-Applications categorized by Cloudflare may independently rely on a number of different internal and external resources to provide functionality. To enable effective behavior of Allow and Block Gateway policies, Cloudflare One separates application definitions into [hostnames](#hostnames) and [support hostnames](#support-hostnames).
+An application like Google Drive uses its own hostnames (for example, `drive.google.com`) and shared resources used by other applications (for example, `accounts.google.com` for login). Gateway separates these into [hostnames](#hostnames) and [support hostnames](#support-hostnames) so you can control the behavior of each application independently.
 
 ### Hostnames
 
-Hostnames are domains that are core to the application and not [used by other applications](#overlapping-hostnames). These are the domains that are specifically blocked when you block an application. The App Library surfaces these hostnames in the [Hostnames table](/cloudflare-one/team-and-resources/app-library/#overview) for an application.
+Hostnames are domains that are core to the application and not [used by other applications](#overlapping-hostnames). These are the domains that Gateway blocks when you block an application. The App Library surfaces these hostnames in the [Hostnames table](/cloudflare-one/team-and-resources/app-library/#overview) for an application.
 
 ### Support hostnames
 
-Support hostnames are shared resources which applications may call in order to function. Applications can use support hostnames for content delivery, application behavior, or third-party system integrations. Blocking these hostnames may result in unexpected behavior for other policies. In addition, not taking a specific action on one of these hostnames may affect the application's behavior, even if the application hostnames are allowed. For example, assume that `file-sharing-service.com` relies on `content-delivery.com`. If you allow access to `file-sharing-service.com` and its associated subdomains but not `content-delivery.com`, some of the functionality of `file-sharing-service.com` may break when Gateway matches the traffic.
+Support hostnames are shared resources that applications depend on for content delivery, authentication, or third-party integrations. Because multiple applications share these hostnames, blocking them can cause unexpected side effects.
 
-To ensure effective application behavior, Gateway only uses support hostnames in Allow policies. Cloudflare explicitly allows support hostname connections in these policies but will not block the connections in Block policies. For example, many Google applications use `accounts.google.com` for authentication. In a Cloudflare One environment with highly restrictive policies, `accounts.google.com` must be allowed for many applications to function correctly. If you use an application with `accounts.google.com` in its support hostnames in an Allow policy, Gateway will allow both `accounts.google.com` and the application's domains.
+For example, assume that `file-sharing-service.com` relies on `content-delivery.com`. If you allow access to `file-sharing-service.com` and its associated subdomains but not `content-delivery.com`, some of the functionality of `file-sharing-service.com` may break when Gateway matches the traffic.
+
+To prevent this, Gateway only uses support hostnames in Allow policies — it will allow support hostname connections but will not block them. For example, many Google applications use `accounts.google.com` for authentication. If you create an Allow policy for an application that lists `accounts.google.com` as a support hostname, Gateway will allow both `accounts.google.com` and the application's own domains.
 
 ## Application controls
 
@@ -111,7 +113,7 @@ Applications can be incompatible with [TLS decryption](/cloudflare-one/traffic-p
   	prepend="**Certificate pinning**: Certificate pinning is "
   />
 
-- **Non-web traffic**: Some applications send non-web traffic, such as Session Initiation Protocol (SIP) and Extensible Messaging and Presence Protocol (XMPP), over TLS. Gateway cannot inspect these protocols.
+- **Non-web traffic**: Some applications send non-web traffic over TLS, such as Session Initiation Protocol (SIP) for voice and video calls and Extensible Messaging and Presence Protocol (XMPP) for chat. Gateway cannot inspect these protocols.
 
 #### Microsoft 365 integration
 

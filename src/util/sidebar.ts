@@ -6,11 +6,10 @@ import { externalLinkArrow } from "~/plugins/rehype/external-links";
 
 type Link = Extract<StarlightRouteData["sidebar"][0], { type: "link" }> & {
 	order?: number;
-	icon?: { lottieLink: string };
 };
 type Group = Extract<StarlightRouteData["sidebar"][0], { type: "group" }> & {
 	order?: number;
-	icon?: { lottieLink: string };
+	hasActivePage?: boolean;
 };
 
 export type SidebarEntry = Link | Group;
@@ -108,12 +107,16 @@ export async function generateSidebar(group: Group) {
 	}
 
 	const product = directory.find((p) => p.id === group.label);
-	if (product && product.data.entry.group === "Developer platform") {
+	if (product) {
 		const links = [
-			["llms.txt", `/${product.id}/llms.txt`],
-			["prompt.txt", "/workers/prompt.txt"],
-			[`${product.data.name} llms-full.txt`, `/${product.id}/llms-full.txt`],
-			["Developer Platform llms-full.txt", "/developer-platform/llms-full.txt"],
+			[`${product.data.name} llms.txt`, `${product.data.entry.url}llms.txt`],
+			[
+				`${product.data.name} llms-full.txt`,
+				`${product.data.entry.url}llms-full.txt`,
+			],
+			["Cloudflare Docs llms.txt", "/llms.txt"],
+			["Cloudflare Docs llms-full.txt", "/llms-full.txt"],
+			["Cloudflare Skills", "/style-guide/ai-tooling/#skills"],
 		];
 
 		group.entries.push({
@@ -164,6 +167,7 @@ function setSidebarCurrentEntry(
 			entry.type === "group" &&
 			setSidebarCurrentEntry(entry.entries, pathname)
 		) {
+			entry.hasActivePage = true;
 			return true;
 		}
 
@@ -226,7 +230,6 @@ async function handleGroup(group: Group): Promise<SidebarEntry> {
 
 	const frontmatter = entry.data;
 
-	group.icon = frontmatter.sidebar.group?.icon ?? frontmatter.icon;
 	group.label = frontmatter.sidebar.group?.label ?? frontmatter.title;
 	group.order = frontmatter.sidebar.order ?? Number.MAX_VALUE;
 
@@ -243,7 +246,6 @@ async function handleGroup(group: Group): Promise<SidebarEntry> {
 		return {
 			type: "link",
 			href: index.href,
-			icon: group.icon,
 			label: group.label,
 			order: group.order,
 			attrs: {
@@ -323,7 +325,6 @@ async function handleLink(link: Link): Promise<Link> {
 	if (frontmatter.external_link && !frontmatter.sidebar.group?.hideIndex) {
 		return {
 			...link,
-			icon: frontmatter.icon,
 			label: link.label.concat(externalLinkArrow),
 			href: frontmatter.external_link,
 			badge: getBadge(frontmatter.external_link) ?? link.badge,

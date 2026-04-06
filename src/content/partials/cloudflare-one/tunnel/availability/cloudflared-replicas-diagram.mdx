@@ -1,0 +1,24 @@
+---
+{}
+
+---
+
+```mermaid
+graph LR
+    C((Cloudflare))
+    subgraph E[Your network]
+        cf1["cloudflared <br> (Replica for tunnel-01)"]
+        cf2["cloudflared <br> (Replica for tunnel-01)"]
+        S1[Application]
+        cf1-->S1
+        cf2-->S1
+    end
+    C -- "Connections x 4 <br>"--> cf1
+    C --> cf1
+    C --> cf1
+    C --> cf1
+    C -- Connections x 4--> cf2
+    C --> cf2
+    C --> cf2
+    C --> cf2
+```

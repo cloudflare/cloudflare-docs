@@ -3,25 +3,24 @@ title: Mobile implementation
 pcx_content_type: concept
 sidebar:
   order: 6
-
 ---
 
-Turnstile is designed to run in standard browser environments, which includes mobile devices accessing your website through mobile browsers. 
+Turnstile requires a browser environment because it runs JavaScript challenges in the visitor's browser. On mobile devices, Turnstile works in mobile browsers without additional configuration.
 
-For native mobile applications, Turnstile can be integrated using WebViews that render your web content containing Turnstile widgets.
+For native mobile applications, Turnstile does not run natively. Instead, you use a WebView — a browser component embedded inside your native app — to load a webpage that contains the Turnstile widget.
 
 ---
 
 ## WebView integration
 
-WebViews are components that allow native mobile applications to display web content. They embed a browser engine within your native application, enabling you to show web pages, forms, and JavaScript-powered content like Turnstile widgets.
+A WebView embeds a browser engine within your native application, enabling you to show web pages, forms, and JavaScript-powered content like Turnstile widgets.
 
 ### Requirements
 
 For Turnstile to function properly in WebView, the following requirements must be met.
 
 #### JavaScript support
-  
+
 - JavaScript execution must be enabled.
 - DOM storage API must be available.
 - Standard web APIs must be accessible.
@@ -42,7 +41,7 @@ For Turnstile to function properly in WebView, the following requirements must b
 
 #### Android WebView
 
-```java wrap 
+```java wrap
 WebView webView = findViewById(R.id.webview);
 WebSettings webSettings = webView.getSettings();
 
@@ -69,14 +68,14 @@ import WebKit
 
 class ViewController: UIViewController {
     @IBOutlet weak var webView: WKWebView!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // Configure WebView
         let configuration = WKWebViewConfiguration()
         configuration.preferences.javaScriptEnabled = true
-        
+
         // Load your web content with Turnstile
         if let url = URL(string: "https://yoursite.com/protected-form") {
             webView.load(URLRequest(url: url))
@@ -88,18 +87,18 @@ class ViewController: UIViewController {
 #### React Native WebView
 
 ```js wrap
-import { WebView } from 'react-native-webview';
+import { WebView } from "react-native-webview";
 
 export default function App() {
-  return (
-    <WebView
-      source={{ uri: 'https://yoursite.com/protected-form' }}
-      javaScriptEnabled={true}
-      domStorageEnabled={true}
-      allowsInlineMediaPlayback={true}
-      mediaPlaybackRequiresUserAction={false}
-    />
-  );
+	return (
+		<WebView
+			source={{ uri: "https://yoursite.com/protected-form" }}
+			javaScriptEnabled={true}
+			domStorageEnabled={true}
+			allowsInlineMediaPlayback={true}
+			mediaPlaybackRequiresUserAction={false}
+		/>
+	);
 }
 ```
 
@@ -144,6 +143,7 @@ Changing the User Agent during a session causes Turnstile challenges to fail bec
 // Android - Set consistent User Agent
 webSettings.setUserAgentString(webSettings.getUserAgentString());
 ```
+
 ```swift wrap
 // iOS - Maintain default User Agent
 webView.customUserAgent = webView.value(forKey: "userAgent") as? String
@@ -154,19 +154,22 @@ webView.customUserAgent = webView.value(forKey: "userAgent") as? String
 Strict [Content Security Policy](/turnstile/reference/content-security-policy/) settings can prevent Turnstile from loading the necessary scripts and making required network connections. This happens when CSP headers or meta tags block access to the domains and resources that Turnstile needs to function properly.
 
 ```html wrap
-<meta http-equiv="Content-Security-Policy" content="
+<meta
+	http-equiv="Content-Security-Policy"
+	content="
   default-src 'self'; 
   script-src 'self' challenges.cloudflare.com 'unsafe-inline'; 
   connect-src 'self' challenges.cloudflare.com;
   frame-src 'self' challenges.cloudflare.com;
-">
+"
+/>
 ```
 
-### Domain configuration 
+### Domain configuration
 
 WebView security restrictions can prevent access to the domains that Turnstile requires for proper operation. Some WebViews are configured to only allow specific domains or block certain types of connections, which can interfere with Turnstile's ability to load challenges and communicate with Cloudflare's servers.
 
-To resolve this, configure your WebView's allowed origins to include all domains that Turnstile needs: 
+To resolve this, configure your WebView's allowed origins to include all domains that Turnstile needs:
 
 - `challenges.cloudflare.com`
 - `about:blank`

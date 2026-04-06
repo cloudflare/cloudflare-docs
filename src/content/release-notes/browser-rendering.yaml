@@ -3,6 +3,22 @@ link: "/browser-rendering/changelog/"
 productName: Browser Rendering
 productLink: "/browser-rendering/"
 entries:
+  - publish_date: "2026-03-23"
+    title: "@cloudflare/playwright v1.2.0 released"
+    description: |-
+      * Released version 1.2.0 of [`@cloudflare/playwright`](https://github.com/cloudflare/playwright/releases/tag/v1.2.0), now upgraded to [Playwright v1.58.2](https://playwright.dev/docs/release-notes#version-158).
+  - publish_date: "2026-03-17"
+    title: "Separate bot detection IDs for Browser Rendering methods"
+    description: |-
+      * Browser Rendering now uses separate bot detection IDs for the [REST API](/browser-rendering/rest-api/) and [Workers Bindings](/browser-rendering/workers-bindings/) versus the [crawl endpoint](/browser-rendering/rest-api/crawl-endpoint/), allowing you to identify and control each method independently. For the full list of IDs, refer to [Automatic request headers](/browser-rendering/reference/automatic-request-headers/#bot-detection).
+  - publish_date: "2026-03-10"
+    title: "New REST API endpoint: /crawl (Beta)"
+    description: |-
+      * Added the [`/crawl` endpoint](/browser-rendering/rest-api/crawl-endpoint/) (beta) to the REST API. The `/crawl` endpoint scrapes content from a starting URL and follows links across the site, up to a configurable depth or page limit. Responses can be returned as HTML, Markdown, or structured JSON (powered by [Workers AI](/workers-ai/)).
+  - publish_date: "2026-03-04"
+    title: "Increased REST API rate limits"
+    description: |-
+      * Increased [REST API rate limits](/browser-rendering/limits/#workers-paid) for Workers Paid plans from 180 requests per minute (3 per second) to 600 requests per minute (10 per second). No action is needed to benefit from the higher limits.
   - publish_date: "2026-02-26"
     title: "New tutorial: Generate OG images for Astro sites"
     description: |-
