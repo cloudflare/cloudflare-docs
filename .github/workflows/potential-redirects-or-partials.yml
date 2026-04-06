@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
       - name: Potential redirects
         env:
@@ -85,11 +85,12 @@ jobs:
 
             ### Redirects
             This PR changes current filenames or deletes current files. Make sure you have [redirects](https://developers.cloudflare.com/pages/configuration/redirects/) set up to cover the following paths:"
-              for path in $CHANGED_FILES; do
+              while IFS= read -r path; do
+                [ -z "$path" ] && continue
                 clean_path=$(echo "$path" | sed 's/"//g') # Remove quotation marks
                 comment_body="$comment_body
             - [ ] \`$clean_path\`"
-              done
+              done <<< "$CHANGED_FILES"
             fi
 
             # Conditional bit for PARTIAL_FILES
@@ -98,11 +99,12 @@ jobs:
 
             ### Partials
             This PR updates partial files, which are pieces of content used across multiple files in our [Render component](https://developers.cloudflare.com/style-guide/components/render/)."
-              for path in $PARTIAL_FILES; do
+              while IFS= read -r path; do
+                [ -z "$path" ] && continue
                 updated_path=$(echo "$path" | sed -e 's/"//g' -e 's/^\///' -e 's/\/$//')
                 comment_body="$comment_body
             - [ ] \`$updated_path\` - [view affected files](https://developers.cloudflare.com/style-guide/components/render/?partial=$updated_path)"
-              done
+              done <<< "$PARTIAL_FILES"
             fi
 
             # Check if a comment already exists

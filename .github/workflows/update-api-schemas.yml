@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - name: Checkout docs repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
       - name: Get latest api-schemas commit
         id: get-commit
@@ -22,6 +22,12 @@ jobs:
           LATEST_COMMIT=$(curl -s -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/cloudflare/api-schemas/commits/main | \
             jq -r '.sha')
+
+          if ! [[ "$LATEST_COMMIT" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "Error: Unexpected value received for commit SHA: '$LATEST_COMMIT'"
+            exit 1
+          fi
+
           echo "latest_commit=$LATEST_COMMIT" >> $GITHUB_OUTPUT
 
       - name: Check current commit reference

@@ -27,9 +27,9 @@ Access generates two separate `CF_Authorization` tokens depending on the domain:
 
 Cloudflare Access allows you to protect and manage multiple domains in a single [self-hosted application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/). After a user has successfully authenticated to one domain, Access will automatically issue a `CF_Authorization` cookie when they go to another domain in the same Access application. This means that users only need to authenticate once to a multi-domain application.
 
-For Access applications with five or less domains, Access will preemptively set the cookie for all domains through a series of redirects. This allows single-page applications (SPAs) to retrieve data from other subdomains, even if the user has not explicitly visited those subdomains. Note that we cannot set cookies up-front for a wildcarded subdomain, because we do not know which concrete subdomain to redirect to (wildcarded paths are allowed).
+For Access applications with five or fewer domains, Access preemptively sets the cookie for all domains through a series of redirects when the user first authenticates. This allows single-page applications (SPAs) to retrieve data from other subdomains without requiring the user to visit each subdomain individually. Wildcarded subdomains (for example, `*.example.com`) cannot receive preemptive cookies because Access does not know which concrete subdomain to redirect to. Wildcarded paths are supported.
 
-If the Access application has more than five domains, Access will not preemptively set any cookies. Cookies are only issued as the user visits each domain. This limitation is to avoid latency issues that could affect the user experience.
+For Access applications with more than five domains, Access does not preemptively set cookies. Instead, cookies are issued as the user visits each domain. This avoids the latency that would result from redirecting through a large number of domains during authentication.
 
 ## Access cookies
 
@@ -129,7 +129,7 @@ Do not enable `HttpOnly` if:
 
 The binding cookie (`CF_Binding`) is an optional cookie issued when a user successfully authenticates. The binding cookie is sent by the user's browser and tied to a specific application's `CF_Authorization` cookie. This cookie is stripped at Cloudflare's network and never forwarded to the origin server.
 
-Binding cookies protect users' `CF_Authorization` cookies from possible malicious origins. If a request arrives to Cloudflare's network without the expected binding cookie, Cloudflare rejects the `CF_Authorization` cookie.
+The `CF_Authorization` cookie cannot be used without the associated binding cookie, which prevents a stolen `CF_Authorization` cookie from being reused by an attacker. If a request arrives at Cloudflare's network with a valid `CF_Authorization` cookie but without the expected binding cookie, Cloudflare rejects the request.
 
 #### When not to use Binding Cookie
 

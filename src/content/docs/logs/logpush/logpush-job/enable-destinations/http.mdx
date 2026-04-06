@@ -64,22 +64,61 @@ The `ownership_challenge` parameter is not required to create a Logpush job to a
 
 :::
 
-## Example curl request
+Example request using cURL:
 
 <APIRequest
 	path="/zones/{zone_id}/logpush/jobs"
 	method="POST"
 	json={{
-		name: "theburritobot.com-https",
-		output_options: {
-			field_names: ["EdgeStartTimestamp", "RayID"],
-			timestamp_format: "rfc3339",
-		},
+		name: "<DOMAIN_NAME>",
 		destination_conf:
 			"https://logs.example.com?header_Authorization=Basic%20REDACTED&tags=host:theburritobot.com,dataset:http_requests",
+		output_options: {
+			field_names: [
+				"ClientIP",
+				"ClientRequestHost",
+				"ClientRequestMethod",
+				"ClientRequestURI",
+				"EdgeEndTimestamp",
+				"EdgeResponseBytes",
+				"EdgeResponseStatus",
+				"EdgeStartTimestamp",
+				"RayID",
+			],
+			timestamp_format: "rfc3339",
+		},
 		max_upload_bytes: 5000000,
 		max_upload_records: 1000,
 		dataset: "http_requests",
 		enabled: true,
 	}}
 />
+
+Response:
+
+```json
+{
+  "errors": [],
+  "messages": [],
+  "result": {
+    "id": <JOB_ID>,
+    "dataset": "http_requests",
+    "kind": "",
+    "max_upload_bytes": 5000000,
+    "max_upload_records": 1000,
+    "enabled": true,
+    "name": "<DOMAIN_NAME>",
+    "output_options": {
+      "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp", "EdgeResponseBytes", "EdgeResponseStatus" ,"EdgeStartTimestamp", "RayID"],
+      "timestamp_format": "rfc3339"
+    },
+    "destination_conf": "https://logs.example.com?header_Authorization=Basic%20REDACTED&tags=host:theburritobot.com,dataset:http_requests",
+    "last_complete": null,
+    "last_error": null,
+    "error_message": null
+  },
+  "success": true
+}
+```
+
+Refer to [Manage Logpush with cURL](/logs/logpush/examples/example-logpush-curl/) to update a job (including enabling and disabling).

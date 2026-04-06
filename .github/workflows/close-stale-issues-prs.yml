@@ -1,4 +1,4 @@
-# Close stale issues and pull requests (uses actions/stale@v4 with GITHUB_TOKEN)
+# Close stale issues and pull requests (uses actions/stale@a20b814fb01b71def3bd6f56e7494d667ddf28da # v4 with GITHUB_TOKEN)
 on:
   schedule:
     - cron: '0 3 * * *'
@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run stale action
-        uses: actions/stale@v4
+        uses: actions/stale@a20b814fb01b71def3bd6f56e7494d667ddf28da # v4
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           stale-issue-message: "Hey there, we've marked this issue as stale because there's no recent activity on it. This label helps us identify long-standing issues in our repo (and not used to auto-close issues)."
