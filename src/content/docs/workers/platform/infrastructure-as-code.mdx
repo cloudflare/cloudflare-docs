@@ -6,7 +6,6 @@ sidebar:
 ---
 
 import { GitHubCode, TabItem, Tabs } from "~/components";
-import { Icon } from "astro-icon/components";
 
 While [Wrangler](/workers/wrangler/configuration) makes it easy to upload and manage Workers, there are times when you need a more programmatic approach. This could involve using Infrastructure as Code (IaC) tools or interacting directly with the [Workers API](/api/resources/workers/). Examples include build and deploy scripts, CI/CD pipelines, custom developer tools, and automated testing.
 
@@ -398,7 +397,7 @@ This API is in beta. See the multipart/form-data API below for the stable API.
 :::
 
 <Tabs syncKey="workers-esmodule-vs-python">
-<TabItem label="ES Module" icon="seti:javascript">
+<TabItem label="ES Module">
 
 ```bash
 account_id="replace_me"
@@ -480,7 +479,7 @@ echo "\nDeployment ID: $deployment_id\n"
 ```
 
 </TabItem>
-<TabItem label="Python" icon="seti:python">
+<TabItem label="Python">
 
 [Python Workers](/workers/languages/python/) have their own special `text/x-python` content type and `python_workers` compatibility flag.
 
@@ -573,8 +572,8 @@ echo "\nDeployment ID: $deployment_id\n"
 
 This API uses [multipart/form-data](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Methods/POST) to upload a Worker and will implicitly create a version and deployment. The above API is recommended for direct management of versions and deployments.
 
-<Tabs syncKey="workers-vs-platforms" IconComponent={Icon}>
-<TabItem icon="workers" label="Workers">
+<Tabs syncKey="workers-vs-platforms">
+<TabItem label="Workers">
 
 ```bash
 account_id="replace_me"
@@ -608,7 +607,7 @@ EOF
 ```
 
 </TabItem>
-<TabItem icon="cloudflare-for-platforms" label="Workers for Platforms">
+<TabItem label="Workers for Platforms">
 
 For [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms), you can upload a [User Worker](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#user-workers) to a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dispatch-namespace). Note the [API endpoint](/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/subresources/scripts/methods/update/) is on `/workers/dispatch/namespaces/$DISPATCH_NAMESPACE/scripts/$SCRIPT_NAME`.
 

@@ -11,9 +11,9 @@ When a visitor solves a [Cloudflare Challenge](/cloudflare-challenges/) - as par
 
 ### How it works
 
-When a visitor successfully solves a Challenge, Cloudflare sets a [`cf_clearance` cookie](/fundamentals/reference/policies-compliances/cloudflare-cookies/#additional-cookies-used-by-the-challenge-platform) in their browser. This cookie specifies the duration your website is accessible to that visitor.
+When a visitor successfully solves a challenge, Cloudflare sets a [`cf_clearance` cookie](/fundamentals/reference/policies-compliances/cloudflare-cookies/#additional-cookies-used-by-the-challenge-platform) in their browser. This cookie specifies the duration your website is accessible to that visitor.
 
-When that visitor tries to access other parts of your website, Cloudflare evaluates the cookie before presenting another Challenge. If the cookie is still valid, no Challenges will be shown.
+When that visitor tries to access other parts of your website, Cloudflare evaluates the cookie before presenting another challenge. If the cookie is still valid, no challenges will be shown.
 
 When Cloudflare evaluates a `cf_clearance` cookie, a few extra minutes are included to account for clock skew. For XmlHTTP requests, an extra hour is added to the validation time to prevent breaking XmlHTTP requests for pages that set short lifetimes.
 

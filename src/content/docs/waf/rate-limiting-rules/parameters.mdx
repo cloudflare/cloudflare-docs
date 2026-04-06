@@ -29,6 +29,8 @@ If this parameter is disabled (or when the `requests_to_origin` API field is set
 
 In some cases, you cannot disable the **Also apply rate limiting to cached assets** parameter due to configuration restrictions. Refer to [Configuration restrictions](#configuration-restrictions) for details.
 
+Depending on your [Cloudflare plan](/waf/rate-limiting-rules/#availability), this rule parameter might not be available. In that case, Cloudflare will also apply rate limiting to cached assets (the parameter is enabled by default).
+
 ### With the same characteristics
 
 - Data type: <Type text="Array<String>" />

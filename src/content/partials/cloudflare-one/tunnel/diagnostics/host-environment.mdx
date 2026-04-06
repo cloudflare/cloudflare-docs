@@ -1,0 +1,26 @@
+---
+params:
+  - metricsURL
+---
+
+1. (Linux only) To include network diagnostics in the logs, allow the `cloudflared` user to create RAW and PACKET sockets without root permissions:
+
+   ```sh
+   sudo setcap cap_net_raw+ep /usr/bin/traceroute && sudo setcap cap_net_raw+ep /usr/bin/traceroute
+   ```
+
+   If you do not set `cap_net_raw`, then traceroute data will be unavailable.
+
+2. Get diagnostic logs:
+
+   ```sh
+   cloudflared tunnel diag
+   ```
+
+   If multiple instances of `cloudflared` are running on the same host, specify the <a href={props.metricsURL}>metrics server IP and port</a> for the instance you want to diagnose. For example:
+
+   ```sh
+   cloudflared tunnel diag --metrics 127.0.0.1:20241
+   ```
+
+This command will output the status of each diagnostic task and place a `cloudflared-diag-YYYY-MM-DDThh-mm-ss.zip` file in your working directory.

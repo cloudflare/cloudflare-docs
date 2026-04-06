@@ -17,16 +17,11 @@ import { Render, Steps, DashButton } from "~/components";
 	1. In the Cloudflare dashboard, go to the **L3/4 DDoS protection** page.
 
 		<DashButton url="/?to=/:account/network-security/ddos" />
-	2. Go to **Advanced Protection** > **General settings**.
-	3. Add the prefixes you wish to onboard. Advanced DNS Protection will only be applied to the prefixes you onboard. If you already onboarded the desired prefixes when you configured Advanced TCP Protection, you do not need to take any other action.
-		:::note
-		Currently, the list of onboarded prefixes is shared with Advanced TCP Protection. Any onboarded prefixes will be subject to both Advanced TCP Protection and Advanced DNS Protection, assuming that your account team has done the initial configuration of both systems. However, you can leave Advanced TCP Protection in monitoring mode.
-		:::
-	4. Go to **Advanced DNS Protection**. 
-	5. Select **Create Advanced DNS Protection rule**. 
-	6. In **Mode**, select a mode for the rule. 
-	7. Under **Set scope**, select a [scope](/ddos-protection/advanced-ddos-systems/concepts/#scope) to determine the range of packets that will be affected by the rule. 
-	8. Under **Sensitivity**, define the [burst sensitivity](/ddos-protection/advanced-ddos-systems/concepts/#burst-sensitivity), [rate sensitivity](/ddos-protection/advanced-ddos-systems/concepts/#rate-sensitivity), and [profile sensitivity](/ddos-protection/advanced-ddos-systems/concepts/#profile-sensitivity) to determine when to initiate mitigation. 9. Select **Deploy**.
+	2. Go to **Advanced Protection** > **Advanced DNS Protection**.
+	3. Select **Create Advanced DNS Protection rule**. 
+	4. In **Mode**, select a [mode](/ddos-protection/advanced-ddos-systems/concepts/#mode) for the rule.
+	5. Under **Set scope**, select a [scope](/ddos-protection/advanced-ddos-systems/concepts/#scope) to determine the range of packets that will be affected by the rule. 
+	6. Under **Sensitivity**, define the [burst sensitivity](/ddos-protection/advanced-ddos-systems/concepts/#burst-sensitivity), [rate sensitivity](/ddos-protection/advanced-ddos-systems/concepts/#rate-sensitivity), and [profile sensitivity](/ddos-protection/advanced-ddos-systems/concepts/#profile-sensitivity) to determine when to initiate mitigation. 9. Select **Deploy**.
 </Steps>
 
 ---
@@ -56,7 +51,17 @@ To create a [SYN flood rule](/ddos-protection/advanced-ddos-systems/overview/adv
 
 ## Create a Programmable Flow Protection rule
 
-<Render
-	file="advanced-ddos/create-pfp-rule"
-	product="ddos-protection"
-/>
+To create a [Programmable Flow Protection rule](/ddos-protection/advanced-ddos-systems/overview/programmable-flow-protection):
+
+{/* prettier-ignore */}
+<Steps>
+	1. In the Cloudflare dashboard, go to the **L3/4 DDoS protection** page.
+
+		<DashButton url="/?to=/:account/network-security/ddos" />
+	2. Go to **Advanced Protection** > **Programmable Flow Protection**.
+	3. In **General Settings**, select a program. The chosen program must have a status of `success`, indicating it has successfully compiled and passed verification. This field is required.  
+	4. In **General Settings**, select a [mode](/ddos-protection/advanced-ddos-systems/concepts/#mode) for the rule. This field is required.
+	5. Under **Set scope**, optionally select a [scope](/ddos-protection/advanced-ddos-systems/concepts/#scope) for the rule. If you choose to apply the rule to a subset of incoming packets, select a region or a data center. The default scope setting is global.
+	6. Under **Set scope**, optionally select a packet filter expression. If you choose to apply a rule to a subset of incoming packets, select the IP and UDP characteristics to filter on. The default setting applies a rule to all UDP packets.
+	7. Select **Deploy**.
+</Steps>

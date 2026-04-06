@@ -23,35 +23,11 @@ When you run your tests with the Workers Vitest integration, Vitest will:
 5. Run [`setupFiles`](https://vitest.dev/config/#setupfiles) and test files in `workerd` using the appropriate Workers.
 6. Watch for changes and re-run test files using the same Workers if the configuration has not changed.
 
-## Isolation and concurrency models
+## Isolation model
 
-The [`isolatedStorage` and `singleWorker`](/workers/testing/vitest-integration/configuration/#workerspooloptions) configuration options both control isolation and concurrency. The Workers Vitest integration tries to minimise the number of `workerd` processes it starts, reusing Workers and their module caches between test runs where possible. The current implementation of isolated storage requires each `workerd` process to run one test file at a time, and does not support `.concurrent` tests. A copy of all auxiliary `workers` exists in each `workerd` process.
+Storage isolation is per test file. Each test file gets its own storage environment, and any writes to storage during a test file are not visible to other test files. The Workers Vitest integration reuses Workers and their module caches between test runs where possible. A copy of all auxiliary `workers` exists in each `workerd` process.
 
-By default, the `isolatedStorage` option is enabled. We recommend you enable the `singleWorker: true` option if you have lots of small test files.
-
-### `isolatedStorage: true, singleWorker: false` (Default)
-
-In this model, a `workerd` process is started for each test file. Test files are executed concurrently but `.concurrent` tests are not supported. Each test will read/write from an isolated storage environment, and bind to its own set of auxiliary `workers`.
-
-![Isolation Model: Isolated Storage & No Single Worker](~/assets/images/workers/testing/vitest/isolation-model-3-isolated-storage-no-single-worker.svg)
-
-### `isolatedStorage: true, singleWorker: true`
-
-In this model, a single `workerd` process is started with a single Worker for all test files. Test files are executed in serial and `.concurrent` tests are not supported. Each test will read/write from an isolated storage environment, and bind to the same auxiliary `workers`.
-
-![Isolation Model: Isolated Storage & Single Worker](~/assets/images/workers/testing/vitest/isolation-model-4-isolated-storage-single-worker.svg)
-
-### `isolatedStorage: false, singleWorker: false`
-
-In this model, a single `workerd` process is started with a Worker for each test file. Tests files are executed concurrently and `.concurrent` tests are supported. Every test will read/write from the same shared storage, and bind to the same auxiliary `workers`.
-
-![Isolation Model: No Isolated Storage & No Single Worker](~/assets/images/workers/testing/vitest/isolation-model-1-no-isolated-storage-no-single-worker.svg)
-
-### `isolatedStorage: false, singleWorker: true`
-
-In this model, a single `workerd` process is started with a single Worker for all test files. Test files are executed in serial but `.concurrent` tests are supported. Every test will read/write from the same shared storage, and bind to the same auxiliary `workers`.
-
-![Isolation Model: No Isolated Storage & Single Worker](~/assets/images/workers/testing/vitest/isolation-model-2-no-isolated-storage-single-worker.svg)
+By default, test files run concurrently. To make test files share the same storage (for example, for integration tests that depend on shared state), use the Vitest flags `--max-workers=1 --no-isolate`.
 
 ## Modules
 
@@ -94,7 +70,7 @@ The test is a simple assertion that the Worker managed to use `process`.
 
 ```typescript
 it('responds with "test"', async () => {
-	const response = await SELF.fetch("https://example.com/");
+	const response = await exports.default.fetch("https://example.com/");
 	expect(await response.text()).toMatchInlineSnapshot(`"test"`);
 });
 ```

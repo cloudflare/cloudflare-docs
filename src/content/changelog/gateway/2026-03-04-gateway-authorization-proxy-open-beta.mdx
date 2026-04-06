@@ -1,0 +1,31 @@
+---
+title: Gateway Authorization Proxy and hosted PAC files (open beta)
+description: Authorization proxy endpoints and Cloudflare-hosted PAC files are now in open beta for all plan types, enabling identity-aware Gateway policies without a device client.
+products:
+  - gateway
+date: 2026-03-04
+scheduled: true
+---
+
+The [Gateway Authorization Proxy](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/#authorization-endpoint) and [PAC file hosting](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/#create-a-hosted-pac-file) are now in open beta for all plan types.
+
+Previously, [proxy endpoints](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/#source-ip-endpoint) relied on static source IP addresses to authorize traffic, providing no user-level identity in logs or policies. The new authorization proxy replaces IP-based authorization with [Cloudflare Access](/cloudflare-one/access-controls/policies/) authentication, verifying who a user is before applying Gateway filtering without installing the WARP client.
+
+This is ideal for environments where you cannot deploy a device client, such as virtual desktops (VDI), mergers and acquisitions, or compliance-restricted endpoints.
+
+### Key capabilities
+
+- **Identity-aware proxy traffic** — Users authenticate through your identity provider (Okta, Microsoft Entra ID, Google Workspace, and others) via Cloudflare Access. Logs now show exactly which user accessed which site, and you can write [identity-based policies](/cloudflare-one/traffic-policies/identity-selectors/) like "only the Finance team can access this accounting tool."
+- **Multiple identity providers** — Display one or multiple login methods simultaneously, giving flexibility for organizations managing users across different identity systems.
+- **Cloudflare-hosted PAC files** — Create and host [PAC files](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/#create-a-hosted-pac-file) directly in Cloudflare One with pre-configured templates for Okta and Azure, hosted at `https://pac.cloudflare-gateway.com/<account-id>/<slug>` on Cloudflare's global network.
+- **Simplified billing** — Each user occupies a seat, exactly like they do with the Cloudflare One Client. No new metrics to track.
+
+### Get started
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Resolvers & Proxies** > **Proxy endpoints**.
+2. [Create an authorization proxy endpoint](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/#authorization-endpoint) and configure Access policies.
+3. [Create a hosted PAC file](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/#create-a-hosted-pac-file) or write your own.
+4. [Configure browsers](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/#3b-configure-browser-to-use-pac-file) to use the PAC file URL.
+5. [Install the Cloudflare certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) for HTTPS inspection.
+
+For more details, refer to the [proxy endpoints documentation](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) and the [announcement blog post](https://blog.cloudflare.com/gateway-authorization-proxy-identity-aware-policies/).

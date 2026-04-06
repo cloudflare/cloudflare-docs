@@ -7,7 +7,7 @@ sidebar:
   label: Labeling service
 ---
 
-import { Render, Steps, Tabs, TabItem, DashButton } from "~/components";
+import { Render, Steps, Tabs, TabItem, DashButton, GlossaryTooltip } from "~/components";
 
 API Shield's labeling service will help you organize your endpoints and address vulnerabilities in your API. The labeling service comes with managed and user-defined labels.
 
@@ -86,9 +86,9 @@ Cloudflare will only add authentication labels to endpoints with successful resp
 How you address risks to your endpoints will depend on its label(s). The following steps provide you with general guidelines on how to take action on them.
 
 <Steps>
-1. Review risks to endpoints. 
-   
-   View the endpoints labeled as risks and identify if they have been labeled for other risks. 
+1. Review risks to endpoints.
+
+   View the endpoints labeled as risks and identify if they have been labeled for other risks.
 
    For example, endpoints labeled `cf-risk-sensitive` and `cf-risk-missing-auth` or `cf-risk-mixed-auth` may contain sensitive data that is available to unauthenticated users.
 
@@ -98,7 +98,7 @@ How you address risks to your endpoints will depend on its label(s). The followi
 
 2. Review traffic to these labeled endpoints in Security Analytics.
 
-   Check for unexpected traffic sources and note any irregular traffic patterns. 
+   Check for unexpected traffic sources and note any irregular traffic patterns.
 
    :::caution[Filtering]
    Filtering by risk label includes all traffic to all endpoints labeled with that risk, not only the traffic that prompted Cloudflare to apply the label.
@@ -108,11 +108,56 @@ How you address risks to your endpoints will depend on its label(s). The followi
 
 3. Review your origin's authorization and authentication policies with your development team.
 
-   Speak with your developers or application owners in your organization to understand whether or not all requests to these endpoints should be authenticated. Modify your application to consistently enforce the authentication requirement for all traffic accessing these endpoints. 
+   Speak with your developers or application owners in your organization to understand whether or not all requests to these endpoints should be authenticated. Modify your application to consistently enforce the authentication requirement for all traffic accessing these endpoints.
 
 	Refer to [Authentication Posture](/api-shield/security/authentication-posture/) for more information.
-   
+
 </Steps>
+
+---
+
+## Analytics
+
+### GraphQL Analytics API
+
+You can query the matched operation and managed labels for individual requests using the [GraphQL Analytics API](/analytics/graphql-api/). The `webAssetsOperationId` and `webAssetsLabelsManaged` fields are available in the `httpRequestsAdaptive` and `httpRequestsAdaptiveGroups` datasets. Use [introspection](/analytics/graphql-api/features/discovery/introspection/) to explore the full schema and available filter operators.
+
+`webAssetsLabelsManaged` returns at most 10 labels per request.
+
+#### Example: query requests by managed label
+
+The following query returns the count of requests per operation ID and managed label set, filtered to requests where the matched operation carries the `cf-log-in` managed label.
+
+```graphql
+query GetAdaptiveGroups($start: DateTime!, $end: DateTime!) {
+	viewer {
+		zones(filter: { zoneTag: $zoneTag }) {
+			httpRequestsAdaptiveGroups(
+				filter: {
+					datetime_geq: $start
+					datetime_leq: $end
+					requestSource: "eyeball"
+					webAssetsLabelsManaged_hasany: ["cf-log-in"]
+				}
+				limit: 25
+				orderBy: [count_DESC]
+			) {
+				count
+				dimensions {
+					webAssetsOperationId
+					webAssetsLabelsManaged
+				}
+			}
+		}
+	}
+}
+```
+
+Replace `cf-log-in` with any [managed label](#managed-labels) or [risk label](#risk-labels). You can also omit the `webAssetsLabelsManaged_hasany` filter and use `webAssetsOperationId` as the sole dimension to group traffic by matched operation regardless of label.
+
+### Logpush
+
+You can export per-request Web Assets data to your storage or <GlossaryTooltip term="SIEM">SIEM system</GlossaryTooltip> of choice using [Logpush](/logs/logpush/). The `WebAssetsOperationID` and `WebAssetsLabelsManaged` fields are available in the [HTTP requests dataset](/logs/logpush/logpush-job/datasets/zone/http_requests/#webassetslabelsmanaged).
 
 ---
 

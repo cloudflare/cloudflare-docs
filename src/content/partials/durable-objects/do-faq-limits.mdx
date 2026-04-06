@@ -2,7 +2,7 @@
 {}
 ---
 
-import {GlossaryTooltip, WranglerConfig} from "~/components";
+import { GlossaryTooltip, WranglerConfig } from "~/components";
 
 ### How much work can a single Durable Object do?
 
@@ -25,7 +25,7 @@ Durable Objects are designed such that the number of individual objects in the s
 
 ### Can I increase Durable Objects' CPU limit?
 
-Durable Objects are Worker scripts, and have the same [per invocation CPU limits](/workers/platform/limits/#worker-limits) as any Workers do. Note that CPU time is active processing time: not time spent waiting on network requests, storage calls, or other general I/O, which don't count towards your CPU time or Durable Objects compute consumption.
+Durable Objects are Worker scripts, and have the same [per invocation CPU limits](/workers/platform/limits/#account-plan-limits) as any Workers do. Note that CPU time is active processing time: not time spent waiting on network requests, storage calls, or other general I/O, which don't count towards your CPU time or Durable Objects compute consumption.
 
 By default, the maximum CPU time per Durable Objects invocation (HTTP request, WebSocket message, or Alarm) is set to 30 seconds, but can be increased for all Durable Objects associated with a Durable Object definition by setting `limits.cpu_ms` in your Wrangler configuration:
 
@@ -33,12 +33,40 @@ By default, the maximum CPU time per Durable Objects invocation (HTTP request, W
 
 ```jsonc
 {
-  // ...rest of your configuration...
-  "limits": {
-    "cpu_ms": 300000, // 300,000 milliseconds = 5 minutes
-  },
-  // ...rest of your configuration...
+	// ...rest of your configuration...
+	"limits": {
+		"cpu_ms": 300000, // 300,000 milliseconds = 5 minutes
+	},
+	// ...rest of your configuration...
 }
 ```
 
 </WranglerConfig>
+
+### What happens when a Durable Object exceeds its storage limit?
+
+When a SQLite-backed Durable Object reaches its [maximum storage limit](/durable-objects/platform/limits/) (10 GB on Workers Paid, or 1 GB on the Free plan), write operations (such as `INSERT`, `UPDATE`, or calls to the `put()` and `sql.exec()` storage APIs) will fail with the following error:
+
+```txt
+database or disk is full: SQLITE_FULL
+```
+
+Read operations (such as `SELECT` queries, `get()`, and `list()` calls) will continue to work, and `DELETE` operations will also succeed so that you can remove data to free up space.
+
+To handle this error in your Durable Object, catch the exception thrown by the storage API:
+
+```ts
+try {
+	this.ctx.storage.sql.exec(
+		"INSERT INTO my_table (key, value) VALUES (?, ?)",
+		key,
+		value,
+	);
+} catch (e) {
+	if (e.message.includes("SQLITE_FULL")) {
+		// Storage limit reached — reads and deletes still work
+		// Consider deleting old data or returning a meaningful error to the caller
+	}
+	throw e;
+}
+```

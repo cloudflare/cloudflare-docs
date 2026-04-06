@@ -189,7 +189,7 @@ We now have secure application access to the origin(s) via Tunnel and also authe
 
 In the current setup, the origin server(s) are securely connected to the Cloudflare network via Cloudflare Tunnel and Cloudflare Access via policies enforcing authentication and other security requirements.
 
-Since Cloudflare is already set up and acting as a reverse proxy for the site, traffic is being directed through Cloudflare, so all Cloudflare services can easily be leveraged including CDN, Security Analytics, WAF, API Shield, Bot Management, Page Shield for client-side security, etc.
+Since Cloudflare is already set up and acting as a reverse proxy for the site, traffic is being directed through Cloudflare, so all Cloudflare services can easily be leveraged including CDN, Security Analytics, WAF, API Shield, Bot Management, client-side security, etc.
 
 When a DNS lookup request is made by a client for the respective website, in this case "cftestsite3.com," Cloudflare returns an anycast IP address, so all traffic is directed to the closest data center where all services will be applied before the request is forwarded over Cloudflare Tunnel to the origin server(s).
 
