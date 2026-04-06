@@ -1,0 +1,36 @@
+---
+title: Manage Browser Rendering sessions with Wrangler CLI
+description: Use the wrangler browser command namespace to manage Browser Rendering sessions from the CLI.
+products:
+  - browser-rendering
+date: 2026-04-06
+---
+
+[Browser Rendering](/browser-rendering/) now supports a `wrangler browser` command namespace. Use it to manage live browser sessions directly from the command line.
+
+The following commands are available:
+
+| Command                   | Description                            |
+| ------------------------- | -------------------------------------- |
+| `wrangler browser create` | Create a new live browser session      |
+| `wrangler browser close`  | Close a session                        |
+| `wrangler browser list`   | List active sessions                   |
+| `wrangler browser view`   | View a live browser session            |
+
+The `create` command launches a new browser session and opens it in your default browser:
+
+```sh
+wrangler browser create
+```
+
+Use `--lab` to enable lab browser features, or `--keepAlive` to set the session keep-alive duration (60-600 seconds):
+
+```sh
+wrangler browser create --lab --keepAlive 300
+```
+
+The `view` command auto-selects when only one session exists, or prompts for selection when multiple sessions are available.
+
+All commands support `--json` for structured output that scripts and AI agents can parse directly.
+
+For full usage details, refer to the [Wrangler commands documentation](/browser-rendering/reference/wrangler-commands/).
