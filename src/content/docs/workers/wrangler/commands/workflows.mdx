@@ -14,4 +14,12 @@ The `wrangler workflows` command requires Wrangler version `3.83.0` or greater. 
 
 :::
 
+:::note[`--local` option]
+All `wrangler workflows` commands support the `--local` flag to target a Workflow running in a local [`wrangler dev`](/workers/wrangler/commands/general/#dev) session instead of production. Use `--port` to specify the port of the dev session (defaults to `8787`).
+
+The `--local` flag requires Wrangler version `4.79.0` or greater.
+
+For more information, refer to [Workflows local development](/workflows/build/local-development/).
+:::
+
 <WranglerNamespace namespace="workflows" />

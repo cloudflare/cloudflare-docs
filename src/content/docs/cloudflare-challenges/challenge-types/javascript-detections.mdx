@@ -7,7 +7,7 @@ sidebar:
 
 import { Render, Tabs, TabItem, GlossaryTooltip } from "~/components";
 
-JavaScript Detections is a type of Challenge separate from Cloudflare’s Challenge Pages or Turnstile. Javascript Detections helps Cloudflare's [bot solutions](/bots/) identify automated requests.
+JavaScript Detections is a type of challenge separate from Cloudflare’s Challenge Pages or Turnstile. Javascript Detections helps Cloudflare's [bot solutions](/bots/) identify automated requests.
 
 While Challenge Pages and Turnstile rely on client-side signals to determine the authenticity of a request, Bot Management’s JavaScript Detections relies on client-side signals and run on every single request made to your website.
 
@@ -21,8 +21,8 @@ JavaScript Detections has a lifespan of 15 minutes. However, the code is injecte
 
 Once JavaScript Detections is injected on the HTML page, the visitor's browser will run the JavaScript code snippet and a `cf_clearance` cookie is issued to the visitor. The information in JavaScript Detections is stored in the `cf_clearance` cookie and is used to populate `js_detection.passed`.
 
-- If the visitor is verified and a `cf_clearance` cookie is issued, it will contain the outcome: `cf.bot_management.js.detection.passed` = `true`
-- If the verification fails, the cookie will contain the outcome: `cf.bot_management.js.detection.passed` = `false`
+- If the visitor is verified and a `cf_clearance` cookie is issued, it will contain the outcome: `cf.bot_management.js_detection.passed` = `true`
+- If the verification fails, the cookie will contain the outcome: `cf.bot_management.js_detection.passed` = `false`
 
 :::note
 The `cf_clearance` cookie cannot exceed the maximum size of 4096 bytes.
@@ -31,7 +31,7 @@ The `cf_clearance` cookie cannot exceed the maximum size of 4096 bytes.
 :::caution
 Enforcement against bots does **not** occur even if the cookie is flagged false.
 
-You must enable JavaScript Detections and then create a custom WAF rule using the `cf.bot_management.js.detection.passed` field to block or challenge a failed request.
+You must enable JavaScript Detections and then create a custom WAF rule using the `cf.bot_management.js_detection.passed` field to block or challenge a failed request.
 :::
 
 When the visitor encounters a WAF custom rule on your website, the rule will check the outcome of the `cf_clearance` cookie. The outcome of the `cf_clearance` cookie determines whether the request passes, or is blocked or challenged.
@@ -40,22 +40,22 @@ Refer to the steps below to enable and enforce JavaScript Detections.
 
 ## 1. Enable JavaScript Detections
 
-<Render 
-  file="jsd-availability" 
-  product="bots" 
-  params={{ 
-    planType: "Bot Fight Mode",
-    enablement: "automatically enabled and cannot be disabled" 
-    }} 
+<Render
+	file="jsd-availability"
+	product="bots"
+	params={{
+		planType: "Bot Fight Mode",
+		enablement: "automatically enabled and cannot be disabled",
+	}}
 />
 
-<Render 
-  file="jsd-availability" 
-  product="bots" 
-  params={{ 
-    planType: "Super Bot Fight Mode and Bot Management for Enterprise",
-    enablement: "optional" 
-    }} 
+<Render
+	file="jsd-availability"
+	product="bots"
+	params={{
+		planType: "Super Bot Fight Mode and Bot Management for Enterprise",
+		enablement: "optional",
+	}}
 />
 
 <Render file="javascript-detections-enable" product="cloudflare-challenges" />

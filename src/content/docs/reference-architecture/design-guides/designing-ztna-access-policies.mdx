@@ -494,7 +494,7 @@ As mentioned before, private IP applications work because Cloudflare proxies the
 | **Device Posture**                       |                                                                 |
 | Passed Device Posture Checks             | WARP Check (Mac OS) (File) Latest Version of macOS (OS version) |
 | **Action**                               | Allow                                                           |
-| **Enforce WARP client session duration** | 60m0s                                                           |
+| **Enforce Cloudflare One Client session duration** | 60m0s                                                           |
 
 Defining the application here is simple, as Cloudflare automatically fills in the IP range, and you need to limit the detected protocol to RDP. However, the rules for private IP applications are slightly different. You will notice they appear as network policies under the Cloudflare Gateway menu, despite managing them in Access. Certain options, such as checking for MFA and external evaluation, do not appear here. However, these attributes can be verified when the user activates their device client and authenticates to their organization.
 

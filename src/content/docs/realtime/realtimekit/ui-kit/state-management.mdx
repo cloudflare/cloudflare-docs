@@ -36,6 +36,30 @@ The UI Kit components are able to understand and synchronize with each other bec
 
 </RTKCodeSnippet>
 
+<RTKCodeSnippet id="mobile-android">
+
+The Android UI Kit manages component communication internally. When you build the UI Kit using `RealtimeKitUIBuilder`, it creates and coordinates all the necessary UI components. To observe meeting state changes from your application, attach event listeners to the Core SDK's `meeting` object.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+The iOS UI Kit manages component communication internally through the `RealtimeKitUI` module. To observe meeting state changes from your application, implement event listener protocols and register them on the Core SDK's `meeting` object.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+The Flutter UI Kit manages component communication internally through the `RealtimeKitUIBuilder`. To observe meeting state changes from your application, create event listener classes and attach them to the Core SDK's meeting object.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+The React Native UI Kit components communicate and synchronize with each other because they are nested under the `RtkMeeting` component, wrapped in `RealtimeKitProvider` and `RtkUIProvider`. To observe state changes, use hooks from the Core SDK such as `useRealtimeKitSelector`.
+
+</RTKCodeSnippet>
+
 Here's an example of how state synchronization works when opening the participants sidebar:
 
 ```mermaid
@@ -58,18 +82,66 @@ flowchart LR
 
 ## State Flow
 
-1. **Child components emit state updates**: When any UI component needs to update state, it emits a state update event
+<RTKCodeSnippet id={["web-react", "web-web-components", "web-angular"]}>
+
+1. **Child components emit state updates**: When any UI component needs to update state, it emits a `rtkStateUpdate` event
 2. **Meeting component listens and coordinates**: The meeting component listens to all these state update events from its children
 3. **State propagation**: The meeting component propagates the updated state to all other child components to keep them synchronized
-4. **External notification**: The meeting component also emits `rtkStatesUpdate` event that your application can listen to for updating your custom UI or performing actions based on state changes
+4. **External notification**: The meeting component also emits a `rtkStatesUpdate` event that your application can listen to for updating your custom UI or performing actions based on state changes
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id={["mobile-android", "mobile-ios", "mobile-flutter"]}>
+
+1. **UI Kit manages internal state**: The UI Kit handles all component communication and state synchronization internally
+2. **Your app registers event listeners**: You attach event listeners (such as `RtkMeetingRoomEventListener` and `RtkSelfEventListener`) to the Core SDK's `meeting` object
+3. **Callbacks fire on state changes**: When the meeting state changes (for example, a participant joins or audio is toggled), the corresponding listener callback is invoked
+4. **You update your UI**: Use the callback data to update your application's UI or trigger other actions
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+1. **UI Kit manages internal state**: The `RtkMeeting` component handles all internal component communication and state synchronization
+2. **Your app observes state via hooks**: Use `useRealtimeKitSelector` to select specific meeting properties and re-render when they change
+3. **React re-renders on changes**: When the selected value changes, React automatically re-renders the component with the new state
+4. **You update your UI**: Use the observed state values to conditionally render UI elements or trigger side effects
+
+</RTKCodeSnippet>
 
 ## Listening to State Updates
 
-To build custom UI or perform actions based on meeting state changes, you need to listen to the `rtkStatesUpdate` event emitted by the meeting component. This event provides you with the current state of the meeting, including active speaker, participant list, recording status, and more.
+To build custom UI or perform actions based on meeting state changes, you need to observe state updates from the UI Kit.
+
+<RTKCodeSnippet id={["web-react", "web-web-components", "web-angular"]}>
+
+Listen to the `rtkStatesUpdate` event emitted by the meeting component. This event provides you with the current state of the UI Kit, including sidebar state, screen sharing status, view type, and more.
 
 :::note
 Store the states in a state management solution (like React's `useState` or a plain JavaScript object) to alter your UI based on meeting state changes.
 :::
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id={["mobile-android", "mobile-ios", "mobile-flutter"]}>
+
+Attach event listeners to the Core SDK's `meeting` object to observe meeting state changes. The mobile UI Kit handles its own internal state, and your app interacts with the underlying meeting object directly.
+
+:::note
+Use your platform's state management (for example, LiveData or StateFlow on Android, `@Published` properties on iOS, Riverpod or ChangeNotifier on Flutter) to propagate state changes to your UI.
+:::
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+Use the `useRealtimeKitSelector` hook from `@cloudflare/realtimekit-react-native` to observe specific properties on the meeting object. This hook re-renders your component whenever the selected value changes, similar to how selectors work in state management libraries.
+
+:::note
+Store the states using React's `useState` to alter your UI based on meeting state changes.
+:::
+
+</RTKCodeSnippet>
 
 ## Example Code
 
@@ -125,7 +197,7 @@ function App() {
 }
 ```
 
-### Alternative: Using Refs (Multiple Meetings)
+**Alternative: Using Refs (Multiple Meetings)**
 
 If you're building an experience with multiple meetings on the same page or back-to-back meetings, using refs is recommended to avoid state conflicts between different meeting instances:
 
@@ -335,7 +407,324 @@ export class MeetingComponent implements OnInit, OnDestroy {
 
 </RTKCodeSnippet>
 
+<RTKCodeSnippet id="mobile-android">
+
+For Android, attach event listeners to the `meeting` object to observe state changes. Use `RtkMeetingRoomEventListener` for meeting lifecycle events and `RtkSelfEventListener` for local participant state changes.
+
+```kotlin
+import android.os.Bundle
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+
+class MeetingActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // After initializing the meeting and UI Kit (see Getting Started guide),
+        // add event listeners to observe state changes.
+
+        // Listen for meeting room state changes
+        meeting.addMeetingRoomEventListener(object : RtkMeetingRoomEventListener {
+            override fun onMeetingRoomJoinStarted() {
+                Log.d("Meeting", "Join started")
+            }
+
+            override fun onMeetingRoomJoinCompleted(meeting: RealtimeKitClient) {
+                Log.d("Meeting", "Joined the meeting")
+                // Update UI to show meeting controls
+            }
+
+            override fun onMeetingRoomJoinFailed(exception: Exception) {
+                Log.e("Meeting", "Join failed: ${exception.message}")
+            }
+
+            override fun onMeetingRoomLeaveStarted() {
+                Log.d("Meeting", "Leave started")
+            }
+
+            override fun onMeetingRoomLeft() {
+                Log.d("Meeting", "Left the meeting")
+            }
+
+            override fun onMeetingEnded() {
+                Log.d("Meeting", "Meeting ended for all participants")
+            }
+
+            override fun onActiveTabUpdate(activeTab: ActiveTab) {
+                Log.d("Meeting", "Active tab changed: $activeTab")
+            }
+        })
+
+        // Listen for local participant state changes
+        meeting.addSelfEventListener(object : RtkSelfEventListener {
+            override fun onAudioUpdate(isEnabled: Boolean) {
+                Log.d("Meeting", "Audio: ${if (isEnabled) "on" else "off"}")
+            }
+
+            override fun onVideoUpdate(isEnabled: Boolean) {
+                Log.d("Meeting", "Video: ${if (isEnabled) "on" else "off"}")
+            }
+
+            override fun onRemovedFromMeeting() {
+                Log.d("Meeting", "Removed from meeting by host")
+            }
+        })
+    }
+}
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+For iOS, implement event listener protocols and register them on the `meeting` object. Use `RtkMeetingRoomEventListener` for meeting lifecycle events and `RtkSelfEventListener` for local participant state changes.
+
+```swift
+// Listen for meeting room state changes
+extension MeetingViewModel: RtkMeetingRoomEventListener {
+    func onMeetingRoomJoinCompleted(meeting: RealtimeKitClient) {
+        // Successfully joined the meeting (equivalent to 'joined' state)
+    }
+
+    func onMeetingRoomLeft() {
+        // Successfully left the meeting
+    }
+
+    func onMeetingEnded() {
+        // The meeting has ended for all participants (equivalent to 'ended' state)
+    }
+
+    func onActiveTabUpdate(activeTab: ActiveTab) {
+        // Active tab changed (e.g., chat, polls, participants)
+        // Use this to sync your custom UI with the active sidebar section
+    }
+}
+
+// Listen for local participant state changes
+extension MeetingViewModel: RtkSelfEventListener {
+    func onAudioUpdate(isEnabled: Bool) {
+        // Audio toggled on/off
+    }
+
+    func onVideoUpdate(isEnabled: Bool) {
+        // Video toggled on/off
+    }
+
+    func onRemovedFromMeeting() {
+        // Local user was removed from the meeting by host
+    }
+}
+
+// Register the listeners
+meeting.addMeetingRoomEventListener(meetingRoomEventListener: self)
+meeting.addSelfEventListener(selfEventListener: self)
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+For Flutter, create event listener classes and attach them to the `meeting` object. Use `RtkMeetingRoomEventListener` for meeting lifecycle events and `RtkSelfEventListener` for local participant state changes.
+
+```dart
+import 'package:realtimekit_ui/realtimekit_ui.dart';
+import 'package:flutter/material.dart';
+
+// Create a listener for meeting room state changes
+class MeetingRoomListener extends RtkMeetingRoomEventListener {
+  final Function(String) onStateChange;
+
+  MeetingRoomListener({required this.onStateChange});
+
+  @override
+  void onMeetingRoomJoinStarted() {
+    onStateChange('joining');
+  }
+
+  @override
+  void onMeetingRoomJoinCompleted() {
+    onStateChange('joined');
+  }
+
+  @override
+  void onMeetingRoomJoinFailed(exception) {
+    onStateChange('failed');
+  }
+
+  @override
+  void onMeetingRoomLeaveStarted() {
+    onStateChange('leaving');
+  }
+
+  @override
+  void onMeetingRoomLeft() {
+    onStateChange('left');
+  }
+
+  @override
+  void onMeetingEnded() {
+    onStateChange('ended');
+  }
+
+  @override
+  void onActiveTabUpdate(activeTab) {
+    // Sidebar/tab state changed (chat, polls, participants)
+  }
+}
+
+// Create a listener for local participant state changes
+class SelfListener extends RtkSelfEventListener {
+  final Function(bool) onAudioChange;
+  final Function(bool) onVideoChange;
+
+  SelfListener({
+    required this.onAudioChange,
+    required this.onVideoChange,
+  });
+
+  @override
+  void onAudioUpdate(bool isEnabled) {
+    onAudioChange(isEnabled);
+  }
+
+  @override
+  void onVideoUpdate(bool isEnabled) {
+    onVideoChange(isEnabled);
+  }
+
+  @override
+  void onRemovedFromMeeting() {
+    // Local user was removed by host
+  }
+}
+
+// Register listeners after building the UI Kit
+final meeting = realtimeKitUI.meeting;
+meeting.addMeetingRoomEventListener(MeetingRoomListener(
+  onStateChange: (state) {
+    debugPrint('Meeting state: $state');
+  },
+));
+meeting.addSelfEventListener(SelfListener(
+  onAudioChange: (enabled) {
+    debugPrint('Audio: ${enabled ? "on" : "off"}');
+  },
+  onVideoChange: (enabled) {
+    debugPrint('Video: ${enabled ? "on" : "off"}');
+  },
+));
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+For React Native, use the `useRealtimeKitSelector` hook to observe specific properties on the meeting object. This pattern is similar to the web Core SDK.
+
+```tsx
+import { useEffect } from "react";
+import { View, Text } from "react-native";
+import {
+	RealtimeKitProvider,
+	useRealtimeKitClient,
+	useRealtimeKitMeeting,
+	useRealtimeKitSelector,
+} from "@cloudflare/realtimekit-react-native";
+import {
+	RtkUIProvider,
+	RtkMeeting,
+} from "@cloudflare/realtimekit-react-native-ui";
+
+function App() {
+	const [meeting, initMeeting] = useRealtimeKitClient();
+
+	useEffect(() => {
+		initMeeting({
+			authToken: "<participant_auth_token>",
+			defaults: { audio: true, video: true },
+		});
+	}, []);
+
+	return (
+		<RealtimeKitProvider value={meeting}>
+			<RtkUIProvider>
+				<MeetingWithState />
+			</RtkUIProvider>
+		</RealtimeKitProvider>
+	);
+}
+
+function MeetingWithState() {
+	const { meeting } = useRealtimeKitMeeting();
+
+	// Use selectors to observe meeting state
+	const roomState = useRealtimeKitSelector((m) => m.self.roomState);
+	const audioEnabled = useRealtimeKitSelector((m) => m.self.audioEnabled);
+	const videoEnabled = useRealtimeKitSelector((m) => m.self.videoEnabled);
+
+	useEffect(() => {
+		console.log("Room state:", roomState);
+		console.log("Audio:", audioEnabled);
+		console.log("Video:", videoEnabled);
+	}, [roomState, audioEnabled, videoEnabled]);
+
+	return (
+		<View>
+			{meeting && <RtkMeeting meeting={meeting} showSetupScreen={true} />}
+
+			{/* Use state to build custom UI */}
+			<View>
+				<Text>Room State: {roomState}</Text>
+				<Text>Audio: {audioEnabled ? "On" : "Off"}</Text>
+				<Text>Video: {videoEnabled ? "On" : "Off"}</Text>
+			</View>
+		</View>
+	);
+}
+```
+
+**Alternative: Using Event Listeners**
+
+You can also use event-based listeners for more fine-grained control, similar to the web Core SDK:
+
+```tsx
+import { useEffect } from "react";
+
+function MeetingEvents() {
+	const { meeting } = useRealtimeKitMeeting();
+
+	useEffect(() => {
+		if (!meeting) return;
+
+		const handleRoomJoined = () => {
+			console.log("Successfully joined the meeting");
+		};
+
+		const handleRoomLeft = ({ state }) => {
+			if (state === "ended") {
+				console.log("Meeting ended");
+			}
+		};
+
+		meeting.self.on("roomJoined", handleRoomJoined);
+		meeting.self.on("roomLeft", handleRoomLeft);
+
+		return () => {
+			meeting.self.removeListener("roomJoined", handleRoomJoined);
+			meeting.self.removeListener("roomLeft", handleRoomLeft);
+		};
+	}, [meeting]);
+
+	return null;
+}
+```
+
+</RTKCodeSnippet>
+
 ## State Properties
+
+<RTKCodeSnippet id={["web-react", "web-web-components", "web-angular"]}>
 
 The `rtkStatesUpdate` event provides detailed information about the UI Kit's internal state. Key properties include:
 
@@ -356,10 +745,105 @@ The `rtkStatesUpdate` event provides detailed information about the UI Kit's int
 These are **UI Kit internal states** for managing the interface. For meeting data like participants, active speaker, or recording status, use the [Core SDK's meeting object](/realtime/realtimekit/core/meeting-object-explained/) directly.
 :::
 
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id={["mobile-android", "mobile-ios", "mobile-flutter"]}>
+
+On mobile platforms, state is observed through Core SDK event listeners rather than a single state object. The key event listeners and their callbacks include:
+
+**`RtkMeetingRoomEventListener`** - Meeting lifecycle:
+
+- **`onMeetingRoomJoinStarted`**: Meeting join process has started
+- **`onMeetingRoomJoinCompleted`**: Successfully joined the meeting
+- **`onMeetingRoomJoinFailed`**: Meeting join failed (provides exception details)
+- **`onMeetingRoomLeaveStarted`**: Leave process has started
+- **`onMeetingRoomLeft`**: Successfully left the meeting
+- **`onMeetingEnded`**: Meeting ended for all participants
+- **`onActiveTabUpdate`**: Active sidebar tab changed (chat, polls, participants)
+
+**`RtkSelfEventListener`** - Local participant:
+
+- **`onAudioUpdate`**: Audio toggled on or off
+- **`onVideoUpdate`**: Video toggled on or off
+- **`onRemovedFromMeeting`**: Local user was removed by host
+
+**`RtkParticipantsEventListener`** - Remote participants:
+
+- **`onParticipantJoin`**: A participant joined the meeting
+- **`onParticipantLeave`**: A participant left the meeting
+- **`onActiveParticipantsChanged`**: Active participants list changed
+- **`onAudioUpdate`**: A remote participant's audio state changed
+- **`onVideoUpdate`**: A remote participant's video state changed
+
+:::note
+For the full list of event listeners and their callbacks, refer to the [Core SDK meeting object documentation](/realtime/realtimekit/core/meeting-object-explained/).
+:::
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+On React Native, use the `useRealtimeKitSelector` hook to observe specific properties on the meeting object. Key properties include:
+
+- **`m.self.roomState`**: Current room state (`'init'`, `'joined'`, `'left'`, etc.)
+- **`m.self.audioEnabled`**: Whether local audio is enabled (boolean)
+- **`m.self.videoEnabled`**: Whether local video is enabled (boolean)
+- **`m.self.screenShareEnabled`**: Whether screen share is active (boolean)
+- **`m.self.name`**: Local participant display name
+- **`m.self.id`**: Local participant peer ID
+- **`m.participants.joined`**: List of joined participants
+- **`m.participants.active`**: List of active participants
+
+:::note
+For the full list of available properties, refer to the [Core SDK meeting object documentation](/realtime/realtimekit/core/meeting-object-explained/).
+:::
+
+</RTKCodeSnippet>
+
 ## Best Practices
+
+<RTKCodeSnippet id={["web-react", "web-web-components", "web-angular"]}>
 
 - **Store states appropriately**: Use React's `useState` hook or a state management library (like Zustand or Redux) for React apps. For vanilla JavaScript, use a reactive state management solution or simple object storage.
 - **Avoid excessive re-renders**: Only update your UI when necessary. In React, consider using `useMemo` or `useCallback` to optimize performance.
 - **Access nested properties safely**: Always check if nested properties exist before accessing them (e.g., `states.sidebar`, `states.prefs?.mirrorVideo`).
 - **Use states for conditional rendering**: Leverage the UI states to show/hide UI elements or respond to interface changes (e.g., showing custom indicators when `states.activeScreenShare` is true).
 - **Understand the difference**: `rtkStatesUpdate` provides **UI Kit internal states** for interface management. For meeting data (participants, active speaker, recording status), use the Core SDK's `meeting` object and its events directly.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+
+- **Remove listeners on cleanup**: Always remove event listeners in `onDestroy()` to prevent memory leaks. Store listener references so you can unregister them later.
+- **Use appropriate threading**: Event listener callbacks may fire on background threads. Use `runOnUiThread` or post to the main handler when updating UI elements.
+- **Store state in observable patterns**: Use `LiveData`, `StateFlow`, or `MutableState` (Compose) to propagate state changes to your UI reactively.
+- **Understand the difference**: Event listeners provide **meeting lifecycle and participant state** changes. The UI Kit manages its own internal UI state separately.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+- **Remove listeners on cleanup**: Always remove event listeners when your view controller or view model is deallocated to prevent retain cycles and memory leaks.
+- **Use `@Published` for reactive UI**: In SwiftUI, mark state properties as `@Published` in your `ObservableObject` to automatically re-render views when meeting state changes.
+- **Handle threading**: Event listener callbacks may fire on background threads. Use `DispatchQueue.main.async` when updating UI elements from callbacks.
+- **Understand the difference**: Event listeners provide **meeting lifecycle and participant state** changes. The UI Kit manages its own internal UI state separately.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+- **Remove listeners on cleanup**: Always remove event listeners in your widget's `dispose()` method to prevent memory leaks.
+- **Use Riverpod or ChangeNotifier**: Propagate meeting state changes through Riverpod providers or `ChangeNotifier` classes to keep your widget tree in sync.
+- **Rebuild only what changed**: Use `Consumer` widgets or `select` on Riverpod providers to minimize unnecessary widget rebuilds when meeting state changes.
+- **Understand the difference**: Event listeners provide **meeting lifecycle and participant state** changes. The UI Kit manages its own internal UI state separately.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+- **Use selectors for efficiency**: The `useRealtimeKitSelector` hook only re-renders your component when the selected value changes. Select only the specific properties you need rather than the entire meeting object.
+- **Clean up event listeners**: When using `meeting.self.on()` event listeners, always return a cleanup function from `useEffect` that calls `removeListener`.
+- **Combine with `useMemo` and `useCallback`**: Use React memoization hooks to prevent unnecessary re-renders when meeting state changes frequently.
+- **Understand the difference**: `useRealtimeKitSelector` provides access to **Core SDK meeting state** (participants, media, room state). The UI Kit handles its own internal UI state through the `RtkMeeting` component.
+
+</RTKCodeSnippet>

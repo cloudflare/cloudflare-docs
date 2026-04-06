@@ -1,0 +1,80 @@
+---
+pcx_content_type: overview
+title: APIs and microservices
+description: Build, protect, and monitor APIs with Cloudflare Workers, API Shield, rate limiting, mTLS, and Logpush.
+head:
+  - tag: title
+    content: APIs and microservices · Use cases
+sidebar:
+  order: 6
+---
+
+import { CardGrid, DirectoryListing, LinkTitleCard } from "~/components";
+
+Build, secure, and manage Application Programming Interfaces (APIs) with rate limiting, authentication, and observability. Cloudflare Workers deploys API handlers globally with automatic scaling. API Shield validates requests against your OpenAPI specification. Rate Limiting prevents abuse. mTLS authenticates machine-to-machine communication. Cloudflare Tunnel and Access secure internal microservices. Logpush and Workers Analytics Engine provide monitoring.
+
+<DirectoryListing />
+
+## Architecture patterns
+
+### Secure API gateway
+
+Protect your APIs with defense in depth:
+
+- **API Shield** validates requests against your OpenAPI schema
+- **Security rules** managed rulesets block SQL injection, XSS, and OWASP Top 10 vulnerabilities
+- **Rate Limiting** prevents abuse and Distributed Denial of Service (DDoS) attacks
+- **mTLS** (mutual TLS) authenticates known clients with certificates
+
+### Edge-native APIs
+
+Build APIs that run entirely on Cloudflare:
+
+- **Workers** handles request routing and business logic
+- **D1** or **KV** stores application data
+- **Queues** handles async processing and webhooks
+
+### Microservices mesh
+
+Connect and secure internal services:
+
+- **Cloudflare Tunnel** exposes services without public IPs
+- **Access** enforces identity-based policies between services
+- **Workers** acts as an API gateway for external consumers
+
+---
+
+## Prerequisites
+
+### Create a new application
+
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up). 
+- [Node.js](https://nodejs.org/) (version 16.17.0 or later) installed on your machine.
+- [Wrangler](/workers/wrangler/install-and-update/) installed.
+
+### Use an existing application
+
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up).
+- A domain [added to Cloudflare](/fundamentals/manage-domains/add-site/) with DNS records proxied through Cloudflare. This is required for API Shield, rate limiting, and application security.
+- For securing internal services with Cloudflare Tunnel and Access: a [Cloudflare One organization](/cloudflare-one/setup/) created in the Cloudflare dashboard.
+
+---
+
+## Related resources
+
+<CardGrid>
+
+<LinkTitleCard title="API Shield documentation" href="/api-shield/" icon="api-shield">
+
+Complete documentation for API discovery, schema validation, and security.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Workers examples" href="/workers/examples/" icon="workers">
+
+Code examples for building APIs with Workers.
+
+</LinkTitleCard>
+
+
+</CardGrid>

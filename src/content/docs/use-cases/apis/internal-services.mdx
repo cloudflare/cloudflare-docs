@@ -1,0 +1,36 @@
+---
+pcx_content_type: how-to
+title: Connect your internal network services
+description: Expose internal APIs and microservices securely without opening inbound firewall ports.
+sidebar:
+  order: 4
+---
+
+Internal services and microservices often need to communicate without exposing endpoints to the public Internet. Cloudflare Tunnel creates outbound-only connections with no inbound firewall rules, while Access enforces Zero Trust policies for every request between services.
+
+## Solutions
+
+### Cloudflare Tunnel
+
+Connect infrastructure to Cloudflare without opening inbound firewall ports. [Learn more about Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/).
+
+- **No public exposure** - Internal Application Programming Interfaces (APIs) remain private; Tunnel establishes an outbound-only connection with no inbound firewall rules needed
+
+### Access
+
+Zero Trust access control for applications and infrastructure. [Learn more about Access](/cloudflare-one/access-controls/policies/).
+
+- **Zero Trust policies** - Verify identity and enforce per-service policies for every request between services
+- **Centralized policy management** - Manage access rules for all internal services from a single control plane
+
+### Service Tokens
+
+Non-interactive credentials for machine-to-machine authentication. [Learn more about Service Tokens](/cloudflare-one/access-controls/service-credentials/service-tokens/).
+
+- **Service-to-service auth** - Authenticate internal services with non-interactive credentials managed in Cloudflare One
+
+## Get started
+
+1. [Create a Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/)
+2. [Cloudflare Access get started](/cloudflare-one/access-controls/policies/)
+3. [Create service tokens](/cloudflare-one/access-controls/service-credentials/service-tokens/)

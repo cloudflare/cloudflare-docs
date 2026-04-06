@@ -20,7 +20,7 @@ This guide helps you diagnose and resolve common issues with the Cloudflare One 
 
 Cloudflare One includes two free AI helpers to speed up Cloudflare One Client investigations:
 
-[**Diagnostics Analyzer**](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/diagnostic-logs/#warp-diagnostics-analyzer-beta) - Uses AI to parse a device's client diagnostic log and summarizes key events, likely causes, and recommended next steps in a concise summary. This analyzer is available for logs collected via the dashboard.
+[**Diagnostics Analyzer**](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/diagnostic-logs/#diagnostics-analyzer-beta) - Uses AI to parse a device's client diagnostic log and summarizes key events, likely causes, and recommended next steps in a concise summary. This analyzer is available for logs collected via the dashboard.
 
 [**DEX MCP server**](/cloudflare-one/insights/dex/dex-mcp-server/) — An AI tool that allows customers to ask a question like, "Show me the connectivity and performance metrics for the device used by carly@acme.com", and receive an answer that contains data from the DEX API.
 
@@ -123,7 +123,7 @@ Refer to [diagnostic log retention window](/cloudflare-one/team-and-resources/de
 	product="cloudflare-one"
 	params={{
 		bestPractice:
-			"You must select WARP Diagnostic Logs. You can also choose to run a PCAP and reproduce the issue in the window the PCAP is running to gain further network insight. The scope of this troubleshooting covers only client diagnostic logs. If not choosing PCAPs, reproduce the issue right before running diagnostics.",
+			"You must select Device Diagnostic Logs. You can also choose to run a PCAP and reproduce the issue in the window the PCAP is running to gain further network insight. The scope of this troubleshooting covers only client diagnostic logs. If not choosing PCAPs, reproduce the issue right before running diagnostics.",
 	}}
 />
 
@@ -139,13 +139,13 @@ After you have your diagnostic files, go to [Review key files](#option-b-collect
 
 :::tip[AI-assisted troubleshooting]
 
-The [WARP Diagnostics Analyzer](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/diagnostic-logs/#warp-diagnostics-analyzer-beta) uses AI to parse a device's client diagnostic log and summarizes key events, likely causes, and recommended next steps in a concise summary.
+The [diagnostics analyzer](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/diagnostic-logs/#diagnostics-analyzer-beta) uses AI to parse a device's client diagnostic log and summarizes key events, likely causes, and recommended next steps in a concise summary.
 
 After you run a [DEX remote capture](#option-a-collect-logs-via-the-cloudflare-dashboard) for client diagnostics:
 
 1. Go to **Insights** &gt; **Digital experience** and select the **Diagnotics** tab.
 2. Find your capture in the list of captures.
-3. Select the three-dot icon next to **Status** &gt; select **View WARP Diag** to generate an AI summary.
+3. Select the three-dot icon next to **Status** &gt; select **View Device Diag** to generate an AI summary.
 
 This analyzer is available for logs collected via the dashboard.
 
@@ -257,13 +257,13 @@ Always On: true
 
 ##### Switch Locked
 
-Refers to the [Lock WARP Switch](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#lock-warp-switch) which allows the user to use the client's connection toggle and disconnect the client. In the example file, the value is `false` meaning the user is able to connect or disconnect at their discretion.
+Refers to the [Lock device client switch](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#lock-device-client-switch) which allows the user to use the client's connection toggle and disconnect the client. In the example file, the value is `false` meaning the user is able to connect or disconnect at their discretion.
 
 ```txt
 Switch Locked: false
 ```
 
-When the Lock WARP Switch is enabled (`true`), users will need an [admin override code](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#allow-admin-override-codes) to temporarily disconnect the Cloudflare One Client on their device.
+When **Lock device client switch** is enabled (`true`), users will need an [admin override code](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#allow-admin-override-codes) to temporarily disconnect the Cloudflare One Client on their device.
 
 ##### Mode
 
@@ -474,7 +474,7 @@ Both methods update the client with the latest configuration.
 1. On the end user device, open the Cloudflare One Client and select **Disconnect**.
 
 :::note[What if the end user cannot disconnect?]
-If the end user does not see the [disconnect button](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#lock-warp-switch), they will need to enter an [admin override code](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#allow-admin-override-codes).
+If the end user does not see the [disconnect button](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#lock-device-client-switch), they will need to enter an [admin override code](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#allow-admin-override-codes).
 
 [Resetting the encryption keys](#option-b-reset-the-encryption-keys) may be a faster solution.
 :::
@@ -487,7 +487,7 @@ If the end user does not see the [disconnect button](/cloudflare-one/team-and-re
 1. On the end user device, open the Cloudflare One Client and disconnect.
 
 :::note[What if the end user cannot disconnect?]
-If the end user's [connection toggle](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#lock-warp-switch) is locked, they will need an [admin override code](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#allow-admin-override-codes) to be able to disconnect.
+If the end user's [connection toggle](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#lock-device-client-switch) is locked, they will need an [admin override code](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#allow-admin-override-codes) to be able to disconnect.
 
 [Resetting the encryption keys](#option-b-reset-the-encryption-keys) may be a faster solution.
 :::
