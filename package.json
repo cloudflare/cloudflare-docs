@@ -147,6 +147,7 @@
 		"tailwindcss": "4.1.4",
 		"tippy.js": "6.3.7",
 		"ts-blank-space": "0.6.2",
+		"tsm": "2.3.0",
 		"tsx": "4.20.5",
 		"typescript": "5.9.3",
 		"typescript-eslint": "8.44.1",

@@ -96,7 +96,7 @@ jobs:
         run: pnpm run format:core:check
 
       - name: Validate redirects
-        run: pnpm dlx tsm bin/validate-redirects.ts
+        run: pnpm exec tsm bin/validate-redirects.ts
 
       - name: Tests
         run: pnpm run test:prebuild
