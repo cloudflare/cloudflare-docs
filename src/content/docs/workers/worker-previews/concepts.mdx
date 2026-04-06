@@ -112,26 +112,60 @@ Custom domain configuration example:
 
 </WranglerConfig>
 
+## What each command produces
+
+Every CLI command creates a different thing. This table shows exactly what happens:
+
+| Command | What it creates | Isolated from production? | Has its own URL? | Can be deployed to production? |
+| --- | --- | --- | --- | --- |
+| `wrangler deploy` | Version + Deployment | No — this IS production | Yes — production URL | N/A |
+| `wrangler versions upload` | Version only | No — shares production bindings | Yes — [Preview URL](/workers/configuration/previews/) (if enabled) | Yes — via `wrangler versions deploy` |
+| `wrangler versions deploy` | Deployment (traffic routing) | No — this IS production | No — routes traffic to existing version(s) | N/A |
+| `wrangler preview` | Preview (isolated environment) | Yes — own bindings, secrets, resources | Yes — stable branch URL + per-push URL | No — must `wrangler deploy` separately |
+
 ## Worker Previews vs Preview URLs
 
-[Preview URLs](/workers/configuration/previews/) are an older feature that generates URLs for each uploaded Worker version. Worker Previews are a newer, more powerful feature with true environment isolation:
+[Preview URLs](/workers/configuration/previews/) and Worker Previews both give you a URL to test changes before going to production. They solve different problems:
 
-| Feature | Preview URLs | Worker Previews |
+**Preview URLs** are generated when you upload a new version with `wrangler versions upload`. The URL lets you hit that specific version of your code, but it uses your production bindings, secrets, and resources. Preview traffic reads and writes to your production KV, R2, Durable Objects, and databases. Preview URLs are part of the versions and deployments system — you can gradually roll out a version and roll back.
+
+**Worker Previews** are created with `wrangler preview`. Each preview is a fully isolated environment with its own bindings, secrets, and resources. Preview traffic never touches production data (when configured correctly). Worker Previews are separate from the versions and deployments system — you cannot promote a preview to production or roll back within a preview.
+
+| | Preview URLs | Worker Previews |
 | --- | --- | --- |
-| Isolated bindings | No — shares production bindings | Yes — own bindings per preview |
-| Isolated DO storage | No | Yes — auto-provisioned namespaces |
-| Own variables and secrets | No | Yes |
-| Stable URL per branch | Aliased only | Automatic per branch |
-| Gradual deployments | Yes (via versions) | No |
-| Rollback | Yes (via versions) | No |
-| Custom domain support | No | Yes |
+| **Created by** | `wrangler versions upload` | `wrangler preview` |
+| **What it is** | A URL to hit a specific version | An isolated branch environment |
+| **Bindings** | Shares production | Own bindings per preview |
+| **Secrets and variables** | Shares production | Own secrets and variables |
+| **Durable Object storage** | Shares production namespace | Auto-provisioned isolated namespace |
+| **KV, R2, D1** | Shares production | Can be isolated per preview |
+| **URL format** | `<VERSION_PREFIX>-<WORKER>.<SUBDOMAIN>.workers.dev` | `<BRANCH>-<WORKER>.<SUBDOMAIN>.workers.dev` |
+| **Stable URL per branch** | Only with `--preview-alias` | Automatic |
+| **Custom domain support** | No | Yes (with `previews_enabled`) |
+| **Gradual rollout** | Yes — split traffic between versions | No |
+| **Rollback** | Yes — re-deploy an older version | No |
+| **Logs and observability** | Not available | Per-preview observability |
 
-Use Worker Previews when you need isolated testing environments. Continue to use [versions and deployments](/workers/configuration/versions-and-deployments/) for production release workflows like gradual rollouts and rollbacks.
+### When to use which
+
+**Use Preview URLs** when you want to quickly test a code change against your production data and configuration. Common for:
+- Verifying a bug fix against real data
+- Sharing a specific version URL in a PR for review
+- Staging a version before gradually rolling it out
+
+**Use Worker Previews** when you need a safe, isolated testing environment. Common for:
+- Testing against separate databases or storage
+- Running integration tests without affecting production
+- Long-lived branch environments (staging, QA)
+- Testing with different secrets or API keys
+
+Both can coexist on the same Worker. You can use Preview URLs for quick checks and Worker Previews for full integration testing.
 
 ## Related resources
 
 - [Get started with Worker Previews](/workers/worker-previews/) — Step-by-step setup guide
 - [Durable Object isolation](/workers/worker-previews/durable-object-isolation/) — Isolated DO storage in previews
+- [Custom domains](/workers/worker-previews/custom-domains/) — Serve previews on your own domain
 - [Versions and deployments](/workers/configuration/versions-and-deployments/) — Production deployment workflows
 - [Preview URLs](/workers/configuration/previews/) — Versioned and aliased preview URLs
 - [`ctx.exports` API reference](/workers/runtime-apis/context/#exports) — Automatic loopback bindings
