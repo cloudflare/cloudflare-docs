@@ -3,6 +3,7 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
+		"preinstall": "npx only-allow npm",
 		"astro": "npx astro",
 		"prebuild": "npx tsx bin/fetch-skills.ts",
 		"build": "export NODE_OPTIONS='--max-old-space-size=8192' || set NODE_OPTIONS=\"--max-old-space-size=8192\" && npx astro build",
@@ -18,7 +19,7 @@
 		"format:core:fix": "npm run format:core -- --write",
 		"format:content": "npx prettier --write \"**/*.{md,mdx,astro}\"",
 		"format:data": "npx prettier --write \"**/*.{json,yaml,yml}\"",
-		"postinstall": "npx patch-package && npm run sync",
+		"postinstall": "npx patch-package",
 		"preview": "npx astro preview",
 		"script:optimize-svgs": "npx tsx scripts/optimize-svgs.ts",
 		"start": "npx astro dev",
@@ -140,9 +141,16 @@
 		"vitest": "3.2.4",
 		"wrangler": "4.79.0"
 	},
-	"engines": {
-		"npm": ">=11.9.0",
-		"node": "^24.14.0"
-	},
-	"packageManager": "npm@11.9.0+sha512.BBZoU926FCypj4b7V7ElinxsWcy4Kss88UG3ejFYmKyq7Uc5XnT34Me2nEhgCOaL5qY4HvGu5aI92C4OYd7NaA=="
+	"devEngines": {
+		"runtime": {
+			"name": "node",
+			"version": ">=24.0.0",
+			"onFail": "error"
+		},
+		"packageManager": {
+			"name": "npm",
+			"version": ">=11.0.0",
+			"onFail": "error"
+		}
+	}
 }
