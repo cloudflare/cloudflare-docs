@@ -163,7 +163,7 @@ For complete integration details, refer to [Turnstile get started](/turnstile/ge
 Turnstile is available at no cost on all Cloudflare plans, including Free. You do not need a paid plan to add Turnstile to your forms. Turnstile also works on sites that are not proxied through Cloudflare. Refer to [Turnstile](/turnstile/) for full documentation.
 :::
 
-### Rate limit form endpoints
+### WAF rate limit form endpoints
 
 For login endpoints, a tiered rate limiting approach works well alongside Turnstile. Create rules that escalate the response based on the volume of failed attempts:
 
@@ -184,7 +184,7 @@ Rules that use counting expressions with response codes (such as counting only `
 
 [WAF custom rules](/waf/custom-rules/) and [WAF rate limiting rules](/waf/rate-limiting-rules/) let you target specific traffic patterns that built-in bot protection does not catch. Cloudflare separates detection (scoring traffic) from mitigation (acting on those scores). You write rules that reference detection signals to decide what action to take.
 
-### Block requests with missing or suspicious headers
+### Block requests with WAF custom rules
 
 Legitimate browsers always send headers like `User-Agent`, `Accept`, and `Accept-Language`. Many bots omit these headers or send non-browser values. A custom rule targeting requests with empty or suspicious headers catches bots that evade score-based detection.
 
@@ -244,7 +244,7 @@ All Cloudflare plans include custom rules. The number of available rules increas
 
 If your bot traffic is concentrated from countries where you have no real users, you can combine geographic filters with the rules above. Add `ip.src.country` to your expression to restrict the rule to specific regions. For examples, refer to [Block traffic by geographical location](/waf/custom-rules/use-cases/block-by-geographical-location/).
 
-### Rate limit high-frequency paths
+### WAF rate limit high-frequency paths
 
 Beyond form endpoints, bots also target checkout flows, API endpoints, and other high-value paths. Rate limiting rules cap the number of requests a single client can make to these paths within a time window.
 
@@ -264,7 +264,7 @@ For step-by-step rule creation, refer to [Create a rate limiting rule in the das
 Enterprise customers can use the **Request rate analysis** tab in Security Analytics to visualize request rate distributions and set thresholds using an interactive slider. On Free, Pro, and Business plans, estimate thresholds based on your expected traffic patterns and use the Log action to validate before enforcing. Refer to [Find an appropriate rate limit](/waf/rate-limiting-rules/find-rate-limit/) for the full methodology.
 :::
 
-### Use bot score in custom rules
+### Use bot score in WAF custom rules
 
 :::note[Bot score in custom rules requires Enterprise Bot Management]
 The `cf.bot_management.score` field is only available to Enterprise customers who have purchased [Bot Management](/bots/plans/bm-subscription/). Pro and Business customers can see bot traffic divided into groupings (Automated, Likely automated, Likely human, Verified bot) in the dashboard, but cannot reference granular bot scores in custom rule expressions. On Free plans, use `cf.client.bot` to identify verified bots. Refer to [Bot scores](/bots/concepts/bot-score/) for details on each plan's capabilities.
@@ -308,7 +308,7 @@ For the full list of bot management fields available in rule expressions, refer 
 
 After you deploy bot protection rules, use [WAF Security Events](/waf/analytics/security-events/) to verify they are working as intended and tune thresholds based on what you see.
 
-### Check Security Events
+### Check WAF Security Events
 
 Security Events displays every request that Cloudflare mitigated, including blocks, challenges, and flags.
 
