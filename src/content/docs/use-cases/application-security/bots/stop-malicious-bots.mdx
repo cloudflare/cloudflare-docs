@@ -108,7 +108,7 @@ Two tools protect form endpoints: Turnstile and rate limiting. They solve differ
 
 **Turnstile** verifies that a visitor is human at the point of form submission. It prevents a single bot from submitting a form even once. Unlike traditional CAPTCHAs, Turnstile does not require visual puzzles. In Managed mode, most visitors pass without any interaction. Use Turnstile when you need to confirm the visitor is a real person before processing their input.
 
-**Rate limiting** caps the number of requests a client can make to an endpoint within a time window. It prevents volumetric abuse — the same IP hitting your login endpoint hundreds of times per minute. Use rate limiting when you need to control request volume regardless of whether the client is human.
+**Rate limiting** caps the number of requests a client can make to an endpoint within a time window. It prevents volumetric abuse, such as the same IP hitting your login endpoint hundreds of times per minute. Use rate limiting when you need to control request volume regardless of whether the client is human.
 
 **Both together** provide the strongest coverage. Turnstile blocks automated submissions at the form level. Rate limiting catches high-volume attacks that bypass or do not encounter the form, such as direct `POST` requests to the endpoint that skip the client-side widget.
 
@@ -332,7 +332,7 @@ Review the following sections:
 - **Events by service**: Which rules are triggering. Events are labeled by their source: Bot Fight Mode, Super Bot Fight Mode, custom rules, or rate limiting rules.
 - **Sampled logs**: Individual request details. Each log entry shows the action taken, the rule that triggered, the source IP, user agent, URI path, and country.
 
-Look for false positives — legitimate traffic that your rules incorrectly challenged or blocked. Common signs include:
+Look for false positives (legitimate traffic that your rules incorrectly challenged or blocked). Common signs include:
 
 - Requests from known monitoring services or payment processors appearing in blocked events
 - User agents matching legitimate browsers but receiving challenges
