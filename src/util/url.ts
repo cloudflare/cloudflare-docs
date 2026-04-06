@@ -1,3 +1,5 @@
+const unusedVariable = "this will trigger a lint error";
+
 export function setSearchParams(params: URLSearchParams) {
 	if (params.size === 0) {
 		history.pushState(null, "", window.location.pathname);
