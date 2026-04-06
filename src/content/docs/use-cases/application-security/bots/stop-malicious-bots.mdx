@@ -53,7 +53,7 @@ Cloudflare classifies bot traffic into categories based on bot scores and verifi
 
 ## Block automated traffic with Bot Fight Mode
 
-Bot Fight Mode identifies requests that match known bot patterns and issues a computational challenge. It reduces automated traffic across your entire site without requiring you to write any rules.
+[Bot Fight Mode](/bots/get-started/bot-fight-mode/) identifies requests that match known bot patterns and issues a computational challenge. It reduces automated traffic across your entire site without requiring you to write any rules.
 
 ### What Bot Fight Mode does and does not do
 
@@ -102,7 +102,7 @@ For organizations that need machine learning-based bot scoring, behavioral analy
 
 ## Protect forms from automated abuse
 
-Turnstile and rate limiting rules protect form endpoints in different ways and work best together.
+[Turnstile](/turnstile/) and [rate limiting rules](/waf/rate-limiting-rules/) protect form endpoints in different ways and work best together.
 
 ### Turnstile versus rate limiting
 
@@ -182,7 +182,7 @@ Rules that use counting expressions with response codes (such as counting only `
 
 ## Target bot patterns with custom rules
 
-Custom rules and rate limiting rules let you target specific traffic patterns that built-in bot protection does not catch. Cloudflare separates detection (scoring traffic) from mitigation (acting on those scores). You write rules that reference detection signals to decide what action to take.
+[Custom rules](/waf/custom-rules/) and rate limiting rules let you target specific traffic patterns that built-in bot protection does not catch. Cloudflare separates detection (scoring traffic) from mitigation (acting on those scores). You write rules that reference detection signals to decide what action to take.
 
 ### Block requests with missing or suspicious headers
 
