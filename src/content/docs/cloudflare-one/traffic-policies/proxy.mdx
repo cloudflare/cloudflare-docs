@@ -5,7 +5,7 @@ sidebar:
   order: 12
 ---
 
-import { Badge, Tabs, TabItem, Render } from "~/components";
+import { Tabs, TabItem, Render } from "~/components";
 
 You can forward [HTTP](/cloudflare-one/traffic-policies/get-started/http/) and [network](/cloudflare-one/traffic-policies/get-started/network/) traffic to Gateway for logging and filtering. Gateway can proxy both outbound traffic and traffic directed to resources connected via a Cloudflare Tunnel, Generic Routing Encapsulation (GRE) tunnel, or IPsec tunnel. When a user connects to the Gateway proxy, Gateway will accept the connection and establish a new, separate connection to the origin server.
 
@@ -39,7 +39,7 @@ The UDP proxy forwards UDP traffic such as VoIP, [internal DNS requests](/cloudf
 
 HTTP/3 uses the QUIC protocol over UDP. To inspect HTTP/3 traffic, turn on both TLS decryption and the UDP proxy. Gateway will then intercept the HTTP/3 connection and connect to the origin server over HTTP/2. Otherwise, HTTP/3 traffic will bypass inspection. For more information on browser-specific behavior, refer to [HTTP/3 inspection](/cloudflare-one/traffic-policies/http-policies/http3/).
 
-### ICMP (Internet Control Message Protocol) <Badge text="Beta" variant="caution" size="small" />
+### ICMP (Internet Control Message Protocol)
 
 The ICMP proxy allows ICMP traffic to reach your private network through Gateway. For example, this would allow a Cloudflare One Client user to run diagnostic commands such as `ping` and `traceroute` to an internal server IP.
 
