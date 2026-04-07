@@ -18,6 +18,7 @@ import {
 	TabItem,
 	APIRequest,
 	Details,
+	Stream,
 } from "~/components";
 
 Cloudflare DNS offers a few different [setup options](/dns/zone-setups/). A primary setup (also known as full) is the most common and the only one available for Free or Pro plans. For details, refer to [About](/dns/zone-setups/full-setup/). For more introductory context, refer to [Concepts](/dns/concepts/).
@@ -66,7 +67,13 @@ Cloudflare requires your apex domain to be one level below a valid TLD defined i
 
 ## 2. Review your DNS records
 
-When you start using Cloudflare's nameservers for authoritative DNS and your zone is in a primary setup (full), Cloudflare will become your primary DNS provider. This means that your DNS records in Cloudflare need to be accurate for your domain to work properly.
+Your DNS records must be accurate for your domain to work properly. If you don't know what DNS records are, consider the video below for a quick explanation.
+
+<Stream
+	id="daf305d98363ee7d53843758dac91782"
+	title="Review your DNS records"
+	thumbnail="https://imagedelivery.net/xDOJvHcv1KwTQn6S-BGFIw/7e8cdb06-7280-4139-8f13-256e03027f00/public"
+/>
 
 <Render file="dns-scan-intro" product="dns" /> <br />
 
