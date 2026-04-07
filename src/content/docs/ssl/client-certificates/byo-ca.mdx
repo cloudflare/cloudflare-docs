@@ -28,7 +28,7 @@ When you upload your CA, Cloudflare validates the certificate according to certa
 <Render file="byo-ca-mtls-cert-requirements" product="ssl" />
 
 :::note
-Uploading the CA private key is only required if you wish to use [Zero Trust's block page](/cloudflare-one/team-and-resources/devices/user-side-certificates/custom-certificate/) and can only be achieved via API.
+Uploading the CA private key is only required if you wish to use [Zero Trust's block page](/cloudflare-one/team-and-resources/devices/user-side-certificates/custom-certificate/). To upload your own CA with the private key, use the [Upload mTLS certificate](/api/resources/mtls_certificates/methods/create/) endpoint.
 :::
 
 ## Set up mTLS with your CA
@@ -43,7 +43,7 @@ Uploading the CA private key is only required if you wish to use [Zero Trust's b
 3. In the **Certificate Authority** dropdown, select **Bring your own CA**.
 4. Upload your CA certificate file (PEM encoded) and enter a name for the CA.
 5. Select **Continue**.
-6. On the **Associate Hostnames** page, enter the fully qualified domain name that should use this CA for mTLS validation and select **Add** for each one. You can also skip this step and associate hostnames later.
+6. On the **Associate Hostnames** page, enter the hostname that should use this CA for mTLS validation and select **Add** for each one. You can also skip this step and associate hostnames later.
 7. Select **Save** to confirm.
 
 </TabItem> <TabItem label="API">
@@ -94,7 +94,7 @@ You can do this [via the dashboard](/learning-paths/mtls/mtls-app-security/#3-va
 ```
 
 :::note
-When using CNAME, enforce mTLS on the specific hostname where it should be checked. It is not enough to have it set on the CNAME target.
+When using [CNAME records](/dns/manage-dns-records/reference/dns-record-types/#cname), enforce mTLS on the specific hostname where it should be checked. It is not enough to have it set on the CNAME target.
 :::
 
 ### Multiple CAs for one hostname
