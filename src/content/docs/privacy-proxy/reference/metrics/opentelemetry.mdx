@@ -1,26 +1,26 @@
 ---
-title: Observability
+title: OpenTelemetry
 pcx_content_type: reference
 sidebar:
-  order: 1
+  order: 2
 ---
-
-Privacy Proxy supports OpenTelemetry for monitoring and observability. You can collect metrics and traces to understand proxy performance and usage.
-
-## OpenTelemetry integration
 
 Privacy Proxy exports telemetry data using the [OpenTelemetry Protocol (OTLP)](https://opentelemetry.io/docs/specs/otlp/). You can configure an endpoint to receive this data and forward it to your observability platform.
 
-### Configure telemetry export
+---
+
+## Configure telemetry export
 
 During onboarding, provide Cloudflare with your OpenTelemetry collector endpoint:
 
 - **Endpoint URL**: The HTTPS endpoint where telemetry data should be sent.
-- **Authentication**: Headers or credentials required to authenticate with your collector.
+- **Authentication**: Headers or credentials required to authenticate with your collector. Supported authentication types include bearer token headers, custom header-based authentication, and mutual TLS (mTLS).
 
 Cloudflare configures your Privacy Proxy instance to export telemetry to this endpoint.
 
-### Supported signals
+---
+
+## Supported signals
 
 Privacy Proxy exports the following telemetry signals:
 
@@ -28,6 +28,8 @@ Privacy Proxy exports the following telemetry signals:
 | ------- | ----------------------------------------------------------------------------------------------------- |
 | Metrics | Connection counts, request rates, latency histograms, error rates                                     |
 | Traces  | Per-request traces showing proxy processing time. Traces are sampled at approximately 1% of requests. |
+
+---
 
 ## Metrics
 
@@ -56,6 +58,8 @@ Privacy Proxy exports metrics that help you understand usage patterns and perfor
 | ------------------------------------------ | ------------------------------------------- |
 | `privacy_proxy_connect_latency_seconds`    | Time to establish connection to destination |
 | `privacy_proxy_first_byte_latency_seconds` | Time to first byte from destination         |
+
+---
 
 ## `Server-Timing` header
 
@@ -86,17 +90,9 @@ histogram_quantile(0.95, rate(privacy_proxy_connect_latency_seconds_bucket[5m]))
 sum(rate(privacy_proxy_requests_by_status{status=~"5.."}[5m])) / sum(rate(privacy_proxy_requests_total[5m]))
 ```
 
-## Data privacy
-
-Telemetry data does not include:
-
-- User IP addresses
-- Request content or headers (beyond what is needed for metrics)
-- Destination URLs or hostnames (aggregated only)
-- Authentication tokens or credentials
-
-Cloudflare exports only operational metrics that help you monitor service health without compromising user privacy.
+---
 
 ## Related resources
 
-- [OpenTelemetry documentation](https://opentelemetry.io/docs/) - Learn more about OpenTelemetry concepts and configuration.
+- [OpenTelemetry documentation](https://opentelemetry.io/docs/) — Learn more about OpenTelemetry concepts and configuration.
+- [GraphQL Analytics API](/privacy-proxy/reference/metrics/graphql/) — Query metrics programmatically via Cloudflare's GraphQL API.

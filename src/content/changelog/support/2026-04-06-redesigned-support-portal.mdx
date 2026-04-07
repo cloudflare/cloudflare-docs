@@ -1,0 +1,24 @@
+---
+title: Redesigned Support Portal for faster, personalized help
+description: A streamlined Support Portal featuring AI-driven ticket routing and a simplified interface for all Cloudflare customers.
+date: 2026-04-07
+---
+## Redesigned "Get Help" Portal for faster, personalized help
+
+Cloudflare has officially launched a redesigned "Get Help" Support Portal to eliminate friction and get you to a resolution faster. Previously, navigating support meant clicking through multiple tiles, categorizing your own technical issues across 50+ conditional fields, and translating your problem into Cloudflare's internal taxonomy.
+
+The new experience replaces that complexity with a personalized front door built around your specific account plan. Whether you are under a DDoS attack or have a simple billing question, the portal now presents a single, clean page that surfaces the direct paths available to you — such as "Ask AI", "Chat with a human", or "Community" — without the manual triage.
+
+## What's New
+
+- **One Page, Clear Choices**: No more navigating a grid of overlapping categories. The portal now uses action cards tailored to your plan (Free, Pro, Business, or Enterprise), ensuring you only see the support channels you can actually use.
+- **A Radically Simpler Support Form**: We've reduced the ticket submission process from four+ screens and 50+ fields to a single screen with five critical inputs. You describe the issue in your own words, and our backend handles the categorization.
+- **AI-Driven Triage**: Using [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai/) and [Vectorize](https://developers.cloudflare.com/vectorize/), the portal now automatically generates case subjects and predicts product categories.
+
+## Moving complexity to the backend
+
+Behind the scenes, we've moved the complexity from the user to our own developer stack. When you describe an issue, we use semantic embeddings to capture intent rather than just keywords.
+
+By leveraging case-based reasoning, our system compares your request against millions of resolved cases to route your inquiry to the specialist best equipped to help. This ensures that while the front-end experience is simpler for you, the back-end routing is more accurate than ever.
+
+To learn more, refer to the [Support documentation](/support/contacting-cloudflare-support/) or select **Get Help** directly in the [Cloudflare Dashboard](https://dash.cloudflare.com/).
