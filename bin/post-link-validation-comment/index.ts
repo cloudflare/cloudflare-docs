@@ -27,8 +27,7 @@ async function run(): Promise<void> {
 		}
 
 		const reportPath =
-			process.env.REPORT_PATH ??
-			".starlight-links-validator/errors.json";
+			process.env.REPORT_PATH ?? ".starlight-links-validator/errors.json";
 
 		let report: LinkValidationReport;
 		try {
