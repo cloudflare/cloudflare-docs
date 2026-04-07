@@ -1249,7 +1249,7 @@ The following options are available:
   - Build-time variables, equivalent to using `--build-arg` with `docker build`. If you want to provide environment variables to your container at _runtime_, you should [use secret bindings or `envVars` on the Container class](/containers/examples/env-vars-and-secrets/).
 
 - `rollout_active_grace_period` <Type text="number" /> <MetaInfo text="optional" />
-  - The minimum number of seconds to wait before an active container instance becomes eligible for updating during a [rollout](/containers/faq#how-do-container-updates-and-rollouts-work). At that point, the container will be sent at `SIGTERM` and still has 15 minutes to shut down before it is forcibly killed and updated.
+  - The minimum number of seconds to wait before an active container instance becomes eligible for updating during a [rollout](/containers/platform-details/rollouts/). At that point, the container will be sent a `SIGTERM` signal and still has 15 minutes to shut down before it is forcibly killed and updated.
   - Defaults to `0`.
 
 - `rollout_step_percentage` <Type text="number | number[]" /> <MetaInfo text="optional" />
