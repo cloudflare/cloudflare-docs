@@ -3,6 +3,10 @@ link: "/browser-rendering/changelog/"
 productName: Browser Rendering
 productLink: "/browser-rendering/"
 entries:
+  - publish_date: "2026-04-15"
+    title: "WebMCP support now available (Beta)"
+    description: |-
+      * Added support for [WebMCP](/browser-rendering/features/webmcp/) (Web Model Context Protocol), a browser API that lets websites expose structured tools for AI agents to discover and execute directly. Available through Lab sessions using Chrome beta. Start a WebMCP session by adding `lab=true` to your `/devtools/browser` request.
   - publish_date: "2026-03-23"
     title: "@cloudflare/playwright v1.2.0 released"
     description: |-
