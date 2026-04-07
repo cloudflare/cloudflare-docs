@@ -104,7 +104,7 @@ For organizations that need machine learning-based bot scoring, behavioral analy
 
 ### Turnstile versus WAF rate limiting
 
-**Turnstile** verifies that a visitor is human at the point of form submission. It prevents a single bot from submitting a form even once. Unlike traditional CAPTCHAs, Turnstile does not require visual puzzles. In Managed mode, most visitors pass without any interaction. Use Turnstile when you need to confirm the visitor is a real person before processing their input.
+**Turnstile** verifies that a visitor is human at the point of form submission. It prevents a single bot from submitting a form even once. Unlike traditional CAPTCHAs, Turnstile does not require visual puzzles. In Managed mode, most visitors pass without any interaction. Turnstile also works on sites that are not proxied through Cloudflare. Use Turnstile when you need to confirm the visitor is a real person before processing their input.
 
 **Rate limiting** caps the number of requests a client can make to an endpoint within a time window. It prevents volumetric abuse, such as the same IP hitting your login endpoint hundreds of times per minute. Use rate limiting when you need to control request volume regardless of whether the client is human.
 
@@ -159,13 +159,13 @@ Replace `<YOUR_SECRET_KEY>` with your secret key and `<TURNSTILE_RESPONSE_TOKEN>
 
 For complete integration details, refer to [Turnstile get started](/turnstile/get-started/).
 
-:::note[Turnstile is free on all plans]
-Turnstile is available at no cost on all Cloudflare plans, including Free. You do not need a paid plan to add Turnstile to your forms. Turnstile also works on sites that are not proxied through Cloudflare. Refer to [Turnstile](/turnstile/) for full documentation.
-:::
-
 ### Limit request volume with WAF rate limiting
 
 For login endpoints, a tiered rate limiting approach works well alongside Turnstile. Create rules that escalate the response based on the volume of failed attempts:
+
+:::note[Tiered rate limiting rules require a Business plan or above]
+Rules that use counting expressions with response codes (such as counting only `401` and `403` responses) require a Business plan or above. On Free and Pro plans, you can create simpler rate limiting rules with IP-based counting. Refer to [Rate limiting rules](/waf/rate-limiting-rules/) for plan availability details.
+:::
 
 - **Short-window rule**: If a single IP sends more than 4 `POST` requests to `/login` that return `401` or `403` within 1 minute, issue a Managed Challenge.
 - **Long-window rule**: If a single IP accumulates more than 20 failed login attempts within 1 hour, block the IP for 24 hours.
@@ -175,10 +175,6 @@ This pattern uses a counting expression that only counts `POST` requests returni
 Deploy both rules with the **Log** action first. Review the results in [Security Events](/waf/analytics/security-events/) after 24-48 hours to confirm the thresholds are not catching legitimate users. Then change to the enforcing actions.
 
 For step-by-step rule creation, refer to [Create a rate limiting rule in the dashboard](/waf/rate-limiting-rules/create-zone-dashboard/). For the full tiered credential stuffing example, refer to [Rate limiting best practices](/waf/rate-limiting-rules/best-practices/).
-
-:::note[Tiered rate limiting rules require a Business plan or above]
-Rules that use counting expressions with response codes (such as counting only `401` and `403` responses) require a Business plan or above. On Free and Pro plans, you can create simpler rate limiting rules with IP-based counting. Refer to [Rate limiting rules](/waf/rate-limiting-rules/) for plan availability details.
-:::
 
 ## Target bot patterns with WAF custom rules
 
@@ -190,6 +186,10 @@ Legitimate browsers always send headers like `User-Agent`, `Accept`, and `Accept
 
 Before creating custom rules, review the built-in bot settings in **Security** > **Settings** (filter by _Bot traffic_). These settings handle common scenarios without requiring you to write expressions:
 
+:::note[Built-in bot settings require a Pro plan or above]
+The settings in the following table are part of [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/). On Free plans, only the Bot Fight Mode toggle is available.
+:::
+
 | Use case                                        | Setting                        |
 | ----------------------------------------------- | ------------------------------ |
 | Block AI crawlers                               | **Block AI bots**              |
@@ -197,8 +197,6 @@ Before creating custom rules, review the built-in bot settings in **Security** >
 | Challenge likely automated traffic (score 2-29) | **Likely automated**           |
 | Allow verified bots                             | **Verified bots**              |
 | Extend protection to static resources           | **Static resource protection** |
-
-These settings are part of [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/) and require a Pro plan or above. On Free plans, only the Bot Fight Mode toggle is available.
 
 If the built-in settings do not cover your needs, create custom rules. Start by creating an exception for verified bots so they are protected before you deploy any blocking rules.
 
@@ -387,6 +385,10 @@ Custom rules execute before Super Bot Fight Mode in the WAF evaluation order. A 
 
 Set up alerts to get notified when automated traffic increases.
 
+:::note[Bot traffic alerts require Bot Management]
+Both alert types in this section require [Bot Management](/bots/plans/bm-subscription/) (Enterprise add-on). Custom Bot Detection Alerts provide additional filtering by user agent, hostname, URI path, IP address, ASN, and TLS fingerprint.
+:::
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2. Go to **Notifications**.
 3. Select **Add**.
@@ -402,10 +404,6 @@ Set up alerts to get notified when automated traffic increases.
 Bot Detection Alerts exclude verified bots, so legitimate crawler traffic does not trigger false alert spikes.
 
 For general notification configuration and delivery method options, refer to [Notifications](/notifications/).
-
-:::note[Custom Bot Detection Alerts require Bot Management]
-Custom Bot Detection Alerts with advanced filtering and grouping dimensions require Bot Management (Enterprise add-on). The standard Bot Detection Alert is available to all Bot Management customers.
-:::
 
 ## Related resources
 
