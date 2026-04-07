@@ -1,0 +1,66 @@
+---
+title: Detections for Platforms
+description: Identify and block potentially abusive Workers created by your end users using custom YARA rules.
+pcx_content_type: concept
+products:
+  - workers
+sidebar:
+  order: 3
+---
+
+import { Plan } from "~/components";
+
+<Plan type="enterprise" />
+
+Detections for Platforms allows you to identify and block potentially abusive Workers created by your end users using custom YARA rules.
+
+Modern platforms that allow users to deploy their own code face a unique security challenge: ensuring that user-generated scripts are not used for malicious purposes, such as phishing, malware distribution, or unauthorized data exfiltration. Detections for Platforms provides a native, high-performance way to scan user Workers in your dispatch namespaces without requiring complex third-party integrations or manual code reviews.
+
+By leveraging the industry-standard YARA logic, security and Trust & Safety teams can proactively secure their platforms by catching malicious patterns at the moment of deployment.
+
+Learn how to [get started with Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/get-started/).
+
+---
+
+## Features
+
+- **[YARA-powered Rule Engine](https://yara.readthedocs.io/en/latest/)** — Write powerful detection logic using YARA syntax to identify specific strings, byte sequences, or complex patterns within user-submitted Worker code.
+- **[Dispatch Namespace Integration](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dispatch-namespace)** — Apply security rules directly to specific namespaces. This allows you to differentiate security postures between environment types, such as production versus staging.
+- **No-Integration Abuse Detection** — Unlike external scanning tools, Detections is built directly into the Workers for Platforms pipeline. This means there is no additional latency or infrastructure to manage to keep your platform safe.
+
+---
+
+## Example rule
+
+The following is an example of a YARA rule designed to detect common AI-based bypass attempts or "vibe coding" injections:
+
+```yara
+rule AI_Bypass_Detection {
+    strings:
+        $s1 = "ignore previous instructions" nocase
+        $s2 = "ignore all prior instructions" nocase
+        $s3 = "disregard previous" nocase
+        $s4 = "bypass security" nocase
+        $s5 = "jailbreak" nocase
+        $s6 = "DAN mode" nocase
+
+    condition:
+        any of them
+}
+```
+
+---
+
+## Related products
+
+- **[Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/)** — The underlying infrastructure that enables multi-tenancy by allowing you to deploy and manage thousands of independent user Workers.
+- **[Cloudflare Workers](/workers/)** — The serverless execution environment where both your dispatch logic and your users' code run.
+- **[Outbound Workers](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/)** — Used in conjunction with Detections to monitor or restrict the external APIs and services your users' Workers are allowed to call.
+
+---
+
+## More resources
+
+- **[Official YARA Documentation](https://yara.readthedocs.io/en/latest/)** — Learn the full syntax and capabilities of the YARA language to build more effective detection rules.
+- **[Workers for Platforms Architecture](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/)** — Deep dive into how dispatch namespaces and user Workers interact.
+- **[Cloudflare Trust Hub: Abuse Approach](https://www.cloudflare.com/trust-hub/abuse-approach/)** — Understand Cloudflare's broader philosophy on managing content and platform abuse.
