@@ -1,41 +1,157 @@
 // @ts-check
 import { definePlugin } from "@expressive-code/core";
-
-/**
- * @param {import("hast").Element} node
- * @returns {import("hast").Element | null}
- */
-function findPre(node) {
-	if (node.tagName === "pre") return node;
-	if (node.children) {
-		for (const child of node.children) {
-			if (child.type === "element") {
-				const result = findPre(child);
-				if (result) return result;
-			}
-		}
-	}
-	return null;
-}
+import { h } from "@expressive-code/core/hast";
 
 export default () => {
 	return definePlugin({
 		name: "Adds 'Explain Code' button to code blocks with 10+ lines",
+		baseStyles: `
+			/*
+				This is normally set to 2.5rem if the user is unable to hover (i.e mobile)
+				and 2rem otherwise, we would like it to always be 2rem.
+			*/
+			.expressive-code .copy button {
+				width: 2rem !important;
+				height: 2rem !important;
+			}
+
+			.expressive-code .explain {
+				display: flex;
+				gap: 0.25rem;
+				flex-direction: row;
+				position: absolute;
+				inset-block-start: calc(var(--ec-brdWd) + var(--button-spacing));
+				inset-inline-end: calc(var(--ec-brdWd) + var(--ec-uiPadInl) / 2);
+
+				/* RTL support: Code is always LTR, so the inline button must match */
+				direction: ltr;
+				unicode-bidi: isolate;
+
+				@media (scripting: none) {
+					display: none;
+				}
+			}
+
+			.expressive-code .frame:has(.explain) .copy {
+				/* Move left by (explain button width + gap) */
+				inset-inline-end: calc(var(--ec-brdWd) + var(--ec-uiPadInl) / 2 + 2rem + 0.5rem);
+			}
+
+			.expressive-code .explain button {
+				position: relative;
+				align-self: flex-end;
+				z-index: 1;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				width: 2rem;
+				height: 2rem;
+				padding: 0;
+				margin: 0;
+				border: none;
+				border-radius: 0.2rem;
+				background: var(--code-background);
+				color: var(--ec-frm-inlBtnFg);
+				cursor: pointer;
+				transition-property: opacity, background, border-color;
+				transition-duration: 0.2s;
+				transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+				opacity: 0.75;
+			}
+
+			.expressive-code .explain button::before {
+				content: '';
+				position: absolute;
+				inset: 0;
+				border-radius: inherit;
+				background: var(--ec-frm-inlBtnBg);
+				opacity: var(--ec-frm-inlBtnBgIdleOpa);
+				transition-property: inherit;
+				transition-duration: inherit;
+				transition-timing-function: inherit;
+			}
+
+			.expressive-code .explain button::after {
+				content: '';
+				position: absolute;
+				pointer-events: none;
+				inset: 0;
+				border-radius: inherit;
+				border: var(--ec-brdWd) solid var(--ec-frm-inlBtnBrd);
+				opacity: var(--ec-frm-inlBtnBrdOpa);
+			}
+
+			.expressive-code .explain button svg {
+				width: 1rem;
+				height: 1rem;
+				position: relative;
+				z-index: 1;
+			}
+
+			.expressive-code .explain button:hover::before,
+			.expressive-code .explain button:focus:focus-visible::before {
+				opacity: var(--ec-frm-inlBtnBgHoverOrFocusOpa);
+			}
+
+			.expressive-code .explain button:active, .expressive-code .explain button:hover {
+				opacity: 1;
+			}
+
+			.expressive-code .explain button:active::before {
+				opacity: var(--ec-frm-inlBtnBgActOpa);
+			}
+
+			.expressive-code .explain button:focus-visible {
+				outline: 2px solid var(--ec-focusBrd);
+				outline-offset: 2px;
+			}
+
+			.expressive-code .explain-tooltip {
+			  --tooltip-bg: var(--ec-frm-inlBtnFg);
+        color: var(--code-background);
+				pointer-events: none;
+				user-select: none;
+				-webkit-user-select: none;
+				position: absolute;
+				bottom: calc(100% + 0.25rem);
+				left: 50%;
+				transform: translateX(-50%);
+				background-color: var(--tooltip-bg);
+				z-index: 100;
+				padding: 0.125rem 0.75rem;
+				border-radius: 0.2rem;
+				opacity: 0;
+				transition-property: opacity, transform;
+				transition-duration: 0.2s;
+				transition-timing-function: ease-in-out;
+				font-size: 0.75rem;
+				line-height: 1.65;
+				white-space: nowrap;
+			}
+
+			.expressive-code .explain button:hover .explain-tooltip {
+				opacity: 1;
+			}
+		`,
 		hooks: {
 			postprocessRenderedBlock: async (context) => {
 				const lineCount = context.codeBlock.code.split("\n").length;
 
 				if (lineCount < 10) return;
 
-				const preElement = findPre(
-					/** @type {import("hast").Element} */ (context.renderData.blockAst),
+				const blockAst = /** @type {import("hast").Element} */ (
+					context.renderData.blockAst
 				);
-				if (!preElement) return;
 
-				preElement.properties = preElement.properties || {};
-				preElement.properties.className = preElement.properties.className || [];
-				if (Array.isArray(preElement.properties.className)) {
-					preElement.properties.className.push("has-explain-button");
+				if (
+					blockAst.tagName !== "figure" ||
+					!Array.isArray(blockAst.properties?.className) ||
+					!blockAst.properties.className.includes("frame")
+				) {
+					console.warn(
+						"Expressive Code frames plugin is required for explain button to work correctly",
+					);
+					return;
 				}
 
 				/** @type {import("hast").Element} */
@@ -109,7 +225,9 @@ export default () => {
 					],
 				};
 
-				preElement.children.unshift(explainButton);
+				blockAst.children.push(
+					h("div", { className: ["explain"] }, [explainButton]),
+				);
 			},
 		},
 	});
