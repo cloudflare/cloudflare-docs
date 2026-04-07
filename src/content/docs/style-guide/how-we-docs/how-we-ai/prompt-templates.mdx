@@ -94,9 +94,14 @@ Generate the full content for all sections below, including example code snippet
 For style, refer to the Cloudflare Style Guide for truth (https://developers.cloudflare.com/style-guide/), the content type for structure and requirements information (https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/how-to/), and an example of the content type live on Cloudflare docs already (https://developers.cloudflare.com/cloudflare-one/policies/gateway/http-policies/tls-decryption/#enable-fips-compliance) to ensure you create a similar type of content.
 ```
 
-5. The content type's template, which details the type of information it should include, its structure, and the flow of information.
+5. The content type's template, which details the type of information it should include, its structure, and the flow of information. The template must start with valid frontmatter that includes `pcx_content_type` and `products`.
 
 ```txt
+---
+pcx_content_type: how-to
+products: [<product-identifier>]
+---
+
 Second-person imperative verb phrase
 
 Context for procedure
