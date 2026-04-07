@@ -76,8 +76,8 @@ When deploying a Worker with a D1 binding, user must have **D1 Database Admin** 
 | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | D1 Metadata Read-Only | Can list databases and read database metadata. <br/> Cannot read or write database content.                                                                 |
 | D1 Content Read-Only  | Can read database content with read-only queries. <br/> Can read all metadata. <br/> Cannot write to databases or update settings.                          |
-| D1 Editor             | Can read and write database content. <br/> Can read all metadata. <br/> Cannot manage databases or update settings.                                         |
-| D1 Admin              | Can create, list, read, update, and delete all databases. <br/> Can grant access to other users. <br/> Has full access to all D1 resources.                 |
+| D1 Editor             | Bind databases to a Worker. <br/> Can read and write database content. <br/> Can read all metadata. <br/> Cannot manage databases or update settings.                                         |
+| D1 Admin              | Bind databases to a Worker. <br/> Can create, list, read, update, and delete all databases. <br/> Can grant access to other users. <br/> Has full access to all D1 resources.                 |
 | D1 Create             | Can create new databases. <br/> User who creates a database becomes D1 Database Admin for that database. <br/> Does not grant access to existing databases. |
 
 ## D1 database roles
@@ -88,8 +88,8 @@ D1 database roles apply to a specific D1 database in your account.
 | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | D1 Database Metadata Read-Only | Can read database metadata such as settings and observability (metrics, logs, traces). <br/> Cannot read or write database content. <br/> Cannot manage database or update settings. |
 | D1 Database Content Read-Only  | Can read database content with read-only queries. <br/> Can read all metadata. <br/> Cannot write to database or update settings.                                                    |
-| D1 Database Editor             | Can read and write database content. <br/> Can read all metadata. <br/> Cannot manage database or update settings.                                                                   |
-| D1 Database Admin              | Can manage database (read, update, delete). <br/> Can grant database access to other users. <br/> Can read and update database settings. <br/> Can read and write database content.  |
+| D1 Database Editor             | Bind database to a Worker. <br/> Can read and write database content. <br/> Can read all metadata. <br/> Cannot manage database or update settings.                                                                   |
+| D1 Database Admin              | Bind database to a Worker. <br/> Can manage database (read, update, delete). <br/> Can grant database access to other users. <br/> Can read and update database settings. <br/> Can read and write database content.  |
 
 ## Related resources
 
