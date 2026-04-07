@@ -1,7 +1,7 @@
 ---
-title: WAF Release - Scheduled changes for 2026-04-06
-description: WAF managed ruleset changes scheduled for 2026-04-06
-date: 2026-03-30
+title: WAF Release - Scheduled changes for 2026-04-13
+description: WAF managed ruleset changes scheduled for 2026-04-13
+date: 2026-04-07
 scheduled: true
 ---
 
@@ -21,147 +21,48 @@ import { RuleID } from "~/components";
   </thead>
   <tbody>
     <tr>
-      <td>2026-03-30</td>
-      <td>2026-04-06</td>
+      <td>2026-04-07</td>
+      <td>2026-04-13</td>
       <td>Log</td>
       <td>N/A</td>
       <td>
-        <RuleID id="73ae1cf103da4bacaa2e1a610aa410af" />
+        <RuleID id="7767165cda1841b8b6e5abb7aef9415b" />
       </td>
-      <td>Generic Rules - Command Execution - 5 - Body</td>
+      <td>Cisco Secure FMC - RCE via upgradeReadinessCall - CVE:CVE-2026-20079</td>
       <td>This is a new detection.</td>
-   </tr>
-   <tr>
-      <td>2026-03-30</td>
-      <td>2026-04-06</td>
-      <td>Log</td>
-      <td>N/A</td>
-      <td>
-        <RuleID id="a88a85b0cc5a4bc2abead6289131ec2f" />
-      </td>
-      <td>Generic Rules - Command Execution - 5 - Header</td>
-      <td>This is a new detection.</td>
-   </tr>
+    </tr>
     <tr>
-      <td>2026-03-30</td>
-      <td>2026-04-06</td>
+      <td>2026-04-07</td>
+      <td>2026-04-13</td>
       <td>Log</td>
       <td>N/A</td>
       <td>
-        <RuleID id="28518cdc40544979bbd86720551eb9e5" />
+        <RuleID id="3dd0b2b6f45c4bc08e49bf27ee7be621" />
       </td>
-      <td>Generic Rules - Command Execution - 5 - URI</td>
+      <td>FortiClient EMS - Pre-Auth SQL Injection - CVE:CVE-2026-21643</td>
       <td>This is a new detection.</td>
-   </tr>
+    </tr>   
     <tr>
-      <td>2026-03-30</td>
-      <td>2026-04-06</td>
+      <td>2026-04-07</td>
+      <td>2026-04-13</td>
       <td>Log</td>
       <td>N/A</td>
       <td>
-        <RuleID id="1177993d53a1467997002b44d46229eb" />
+        <RuleID id="0e3a6828906c4b24bad318a9c953a72b" />
       </td>
-      <td>MCP Server - Remote Code Execution - CVE:CVE-2026-23744</td>
+      <td>Mesop - Remote Code Execution - Base64 Payload - CVE:CVE-2026-33057</td>
       <td>This is a new detection.</td>
-   </tr> 
+    </tr>  
     <tr>
-      <td>2026-03-30</td>
-      <td>2026-04-06</td>
+      <td>2026-04-07</td>
+      <td>2026-04-13</td>
       <td>Log</td>
       <td>N/A</td>
       <td>
-        <RuleID id="3d43cdfbc3c14584942f8bc4a864b9c2" />
+        <RuleID id="d95aa5410d1b4e98bf7a59d150c08f6f" />
       </td>
-      <td>XSS - OnEvents - Cookies</td>
-      <td>This is a new detection.</td>
-   </tr>
-    <tr>
-      <td>2026-03-30</td>
-      <td>2026-04-06</td>
-      <td>Log</td>
-      <td>N/A</td>
-      <td>
-        <RuleID id="c9dbce2c1da94b24916e37559712a863" />
-      </td>
-      <td>SQLi - Evasion - Body</td>
-      <td>This is a new detection.</td>
-   </tr>
-    <tr>
-      <td>2026-03-30</td>
-      <td>2026-04-06</td>
-      <td>Log</td>
-      <td>N/A</td>
-      <td>
-        <RuleID id="64d812e6d5844d7c9d7a44a440732d48" />
-      </td>
-      <td>SQLi - Evasion - Headers</td>
-      <td>This is a new detection.</td>
-   </tr>   
-   <tr>
-      <td>2026-03-30</td>
-      <td>2026-04-06</td>
-      <td>Log</td>
-      <td>N/A</td>
-      <td>
-        <RuleID id="50de9369ef7c45928a5dfb34e68a99b5" />
-      </td>
-      <td>SQLi - Evasion - URI</td>
-      <td>This is a new detection.</td>
-   </tr>
-   <tr>
-      <td>2026-03-30</td>
-      <td>2026-04-06</td>
-      <td>Log</td>
-      <td>N/A</td>
-      <td>
-        <RuleID id="765ffb5c67b94c9589106c843e8143d2" />
-      </td>
-      <td>SQLi - LIKE 3 - Body</td>
-      <td>This is a new detection.</td>
-   </tr>
-   <tr>
-      <td>2026-03-30</td>
-      <td>2026-04-06</td>
-      <td>Log</td>
-      <td>N/A</td>
-      <td>
-        <RuleID id="5c3dbd4f115e47c781491fcd70e7fb97" />
-      </td>
-      <td>SSQLi - LIKE 3 - URI</td>
-      <td>This is a new detection.</td>
-   </tr>
-   <tr>
-      <td>2026-03-30</td>
-      <td>2026-04-06</td>
-      <td>Log</td>
-      <td>N/A</td>
-      <td>
-        <RuleID id="89fa6027a0334949b1cb2e654c538bd9" />
-      </td>
-      <td>SQLi - UNION - 2 - Body</td>
-      <td>This is a new detection.</td>
-   </tr>
-   <tr>
-      <td>2026-03-30</td>
-      <td>2026-04-06</td>
-      <td>Log</td>
-      <td>N/A</td>
-      <td>
-        <RuleID id="05946b3458364f1b9d4819d561c439c9" />
-      </td>
-      <td>SQLi - UNION - 2 - URI</td>
-      <td>This is a new detection.</td>
-   </tr>
-   <tr>
-      <td>2026-03-30</td>
-      <td>2026-04-06</td>
-      <td>Log</td>
-      <td>N/A</td>
-      <td>
-        <RuleID id="b2fe5c2a39df4609b6d39908cf33ea10" />
-      </td>
-      <td>SolarWinds - Auth Bypass - CVE:CVE-2025-40552</td>
-      <td>This is a new detection.</td>
-   </tr>                 
+      <td>React Server - DOS - CVE:CVE-2026-23864 - 1 - Beta</td>
+      <td>This rule has been merged into the original rule "React Server - DOS - CVE:CVE-2026-23864 - 1" (ID: <RuleID id="aaede80b4d414dc89c443cea61680354" />)</td>
+    </tr>                        
 </tbody>
 </table>

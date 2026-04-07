@@ -12,6 +12,10 @@ import { TabItem, Tabs, Steps, DashButton } from "~/components";
 
 Use the _Skip_ action in a custom rule to skip one or more security features. A rule configured with the _Skip_ action is also known as a skip rule.
 
+Skip rules allow specific requests to bypass security features that would otherwise block or challenge them. Use skip rules when legitimate traffic matches a security rule unintentionally. For example, to allow a trusted API client through [rate limiting rules](/waf/rate-limiting-rules/), or to exempt an internal monitoring service from [Managed Rules](/waf/managed-rules/).
+
+You can skip [rate limiting rules](/waf/rate-limiting-rules/), [Managed Rules](/waf/managed-rules/), [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/) rules, and several other security products. However, you cannot skip [Bot Fight Mode](/bots/get-started/bot-fight-mode/) (available on the Free plan).
+
 For more information on the available options, refer to [Available skip options](/waf/custom-rules/skip/options/).
 
 <Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">

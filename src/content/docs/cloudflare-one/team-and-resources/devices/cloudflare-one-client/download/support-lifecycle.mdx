@@ -20,7 +20,7 @@ Cloudflare One Client releases for Windows, macOS, and Linux come in two forms: 
 
 - [Beta releases](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/beta-releases/) allow for early testing of new features before the features ship in the next stable release. Beta releases are not guaranteed to get security fixes and are not recommended for production environments.
 - [Stable releases](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/), including those labeled as LTS releases, are production-ready and will include the latest features as well as functional and security bug fixes. Functional and security bugs found in non-LTS stable releases will be fixed in later stable releases; they are not backported to previous versions. Therefore, Cloudflare recommends regularly deploying the latest stable release.
-- [LTS releases](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/lts-releases/) are guaranteed to continue receiving security bug fixes for at least 12 months or 90 days after the next LTS release, whichever is greater. For example, if there are 15 months between two consecutive LTS releases, the earlier LTS release will receive security fixes for 18 months (from its release until 90 days after the later LTS release). An upcoming stable release will be declared an LTS release in advance to notify customers of the upcoming 90-day migration period.
+- [LTS releases](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/lts-releases/) receive security bug fixes for a guaranteed minimum of 12 months. When Cloudflare publishes a new LTS release, the previous LTS release continues to receive security fixes for an additional 90 days — giving you a migration window. If the gap between two LTS releases is longer than 12 months, the migration window extends the total support period beyond 12 months. For example, if 15 months pass between two LTS releases, the earlier release receives security fixes for 18 months total (15 months until the next LTS release, plus the 90-day migration window). Cloudflare will announce an upcoming LTS release in advance so you can plan the migration.
 
   To ensure timely security fixes with less frequent [version testing](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/update/#test-before-updates), customers may choose to deploy only LTS releases and skip the stable releases in between. This approach is recommended for large or risk-averse organizations where stability is more important than rapid adoption of the latest features.
 
@@ -30,7 +30,7 @@ Cloudflare One Client releases for iOS, iPadOS, Android, ChromeOS, and ChromeOS 
 
 ### Feature deprecation policy
 
-Major features included in a specific Cloudflare One Client version will remain supported for the entire lifecycle of that version. In other words, Cloudflare will not remove features from a client version that is still within its security support window.
+Major features included in a Cloudflare One Client release will not be removed while that release is still receiving security fixes.
 
 Cloudflare will provide a minimum 90-day notice prior to removing major features in future releases. This allows customers on the stable release track to prepare for feature removal without delaying the adoption of the latest release. Customers on the LTS release track already have a 90-day overlap period between LTS releases.
 

@@ -2,16 +2,15 @@
 pcx_content_type: how-to
 title: Manage certificates
 sidebar:
-  order: 3
+  order: 4
 head:
   - tag: title
     content: Manage AOP certificates
-
 ---
 
 import { APIRequest } from "~/components";
 
-Refer to the following sections to learn how to manage certificates used with the different Authenticated Origin Pulls setups.
+Refer to the following sections to learn how to manage certificates used with [zone-level](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/) and [per-hostname](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/) Authenticated Origin Pulls. [Global AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/global/) uses a Cloudflare-provided certificate and does not require certificate management.
 
 ---
 
@@ -25,13 +24,13 @@ Make sure you have [notifications](/notifications/notification-available/#ssltls
 
 ## Use specialized certificates
 
-To apply different client certificates simultaneously at both the zone and hostname level, you can combine zone-level and per-hostname custom certificates.
+To apply different client certificates simultaneously at the zone and hostname level, you can combine zone-level and per-hostname custom certificates.
 
-First, set up [zone-level pulls](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/) using a certificate. Then, upload multiple, specialized certificates for [individual hostnames](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/). Since per-hostname certificates are more specific, they take precedence over zone certificates.
+First, set up [zone-level AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/) using your certificate. Then, upload specialized certificates for [individual hostnames](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/). Per-hostname certificates take precedence over zone-level certificates for the specified hostname.
 
 ---
 
-## Replace a certificate without downtime
+## Replace a certificate without downtime via API
 
 :::caution[No automatic removal]
 Cloudflare does not delete client certificates upon expiration unless you send a delete request to the Cloudflare API for the relevant certificate ([Delete a zone-level certificate](/api/resources/origin_tls_client_auth/subresources/zone_certificates/methods/delete/) or [Delete a hostname-level certificate](/api/resources/origin_tls_client_auth/subresources/hostname_certificates/methods/delete/)).
@@ -47,13 +46,13 @@ Cloudflare does not delete client certificates upon expiration unless you send a
 	path="/zones/{zone_id}/origin_tls_client_auth/hostnames"
 	method="PUT"
 	json={{
-		"config": [
+		config: [
 			{
-				"enabled": true,
-				"hostname": "<HOSTNAME>",
-				"cert_id": "<CERT_ID>"
-			}
-		]
+				enabled: true,
+				hostname: "<HOSTNAME>",
+				cert_id: "<CERT_ID>",
+			},
+		],
 	}}
 />
 
