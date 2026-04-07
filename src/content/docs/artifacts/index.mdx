@@ -1,0 +1,58 @@
+---
+title: Artifacts
+description: Store, version, and share filesystem artifacts across Workers, APIs, and git-compatible tools.
+pcx_content_type: overview
+sidebar:
+  order: 1
+  badge:
+    text: Beta
+head:
+  - tag: title
+    content: Artifacts
+---
+
+import { CardGrid, Description, LinkTitleCard } from "~/components";
+
+<Description>
+
+Store versioned filesystem artifacts that can be addressed through Workers, the REST API, and git-compatible workflows.
+
+</Description>
+
+Artifacts is in beta. Use Artifacts to persist file trees such as repositories, build outputs, checkpoints, and generated assets behind a versioned interface that works across Cloudflare developer tools.
+
+<CardGrid>
+
+<LinkTitleCard
+	title="Get started"
+	href="/artifacts/get-started/"
+	icon="open-book"
+>
+	Create your first Artifact with Workers or the REST API.
+</LinkTitleCard>
+
+<LinkTitleCard title="Concepts" href="/artifacts/concepts/" icon="document">
+	Learn how Artifacts works and how to structure Artifact usage.
+</LinkTitleCard>
+
+<LinkTitleCard title="API" href="/artifacts/api/" icon="document">
+	Review the Workers binding, REST API, git support, and ArtifactsFS.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Observability"
+	href="/artifacts/observability/"
+	icon="document"
+>
+	Explore metrics and queries for understanding Artifact activity.
+</LinkTitleCard>
+
+<LinkTitleCard title="Examples" href="/artifacts/examples/" icon="document">
+	See example integrations with git clients, OpenCode, and Sandbox SDK.
+</LinkTitleCard>
+
+<LinkTitleCard title="Platform" href="/artifacts/platform/" icon="document">
+	Review pricing, limits, and changelog entries for Artifacts.
+</LinkTitleCard>
+
+</CardGrid>
