@@ -42,7 +42,7 @@ The following limits apply to both Workers Paid and Workers Free plans with the 
 <Render file="limits_increase" product="workers" />
 
 ### Increasing Queue Consumer Worker CPU Limits
-[Queue consumer Workers](/queues/reference/how-queues-works/#consumers) are Worker scripts, and share the same [per invocation CPU limits](/workers/platform/limits/#worker-limits) as any Workers do. Note that CPU time is active processing time: not time spent waiting on network requests, storage calls, or other general I/O.
+[Queue consumer Workers](/queues/reference/how-queues-works/#consumers) are Worker scripts, and share the same [per invocation CPU limits](/workers/platform/limits/#account-plan-limits) as any Workers do. Note that CPU time is active processing time: not time spent waiting on network requests, storage calls, or other general I/O.
 
 By default, the maximum CPU time per consumer Worker invocation is set to 30 seconds, but can be increased by setting `limits.cpu_ms` in your Wrangler configuration:
 

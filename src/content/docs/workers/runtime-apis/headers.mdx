@@ -32,7 +32,7 @@ headers.get('x-foo'); //=> "hello, world"
 The Workers implementation of the `Headers` API differs from the web standard in several ways. These differences are intentional, and reflect the server-side nature of the Workers runtime.
 
 :::note[TypeScript users]
-Workers type definitions (from `@cloudflare/workers-types` or generated via [`wrangler types`](/workers/wrangler/commands/#types)) define a `Headers` type that includes Workers-specific methods like `getAll()`. This type is not directly compatible with the standard `Headers` type from `lib.dom.d.ts`. If you are working with code that uses both Workers types and standard web types, you may need to use type assertions.
+Workers type definitions (from `@cloudflare/workers-types` or generated via [`wrangler types`](/workers/wrangler/commands/general/#types)) define a `Headers` type that includes Workers-specific methods like `getAll()`. This type is not directly compatible with the standard `Headers` type from `lib.dom.d.ts`. If you are working with code that uses both Workers types and standard web types, you may need to use type assertions.
 :::
 
 ### `getAll()` method

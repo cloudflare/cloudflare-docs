@@ -11,7 +11,7 @@ In the following sections, we will give you some details about how different Zer
 
 ## Gateway
 
-Regional Services can be used with Gateway in all [supported regions](/data-localization/region-support/). Be aware that Regional Services only apply when using the WARP client in Traffic and DNS mode.
+Regional Services can be used with Gateway in all [supported regions](/data-localization/region-support/). Be aware that Regional Services only apply when using the Cloudflare One Client in Traffic and DNS mode.
 
 ### Egress policies
 
@@ -20,7 +20,7 @@ This allows your egress traffic to geolocate to the city selected in your [egres
 
 ### HTTP policies
 
-As part of Regional Services, Cloudflare Gateway will only perform [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) when using the [WARP client](/cloudflare-one/team-and-resources/devices/warp/) (in default [Traffic and DNS mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/)).
+As part of Regional Services, Cloudflare Gateway will only perform [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) when using the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) (in default [Traffic and DNS mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/)).
 
 {/* TODO: Reintroduce */}
 {/* <Render file="gateway/disable-udp" product="cloudflare-one" /> */}
@@ -39,7 +39,7 @@ You are able to [configure SSH proxy and command logs](/cloudflare-one/traffic-p
 
 Regional Services controls where Cloudflare decrypts traffic; because most DNS traffic is not encrypted, Gateway DNS cannot be regionalized using Regional Services.
 
-Refer to the [WARP Settings](/data-localization/how-to/zero-trust/#warp-settings) section below for more information.
+Refer to the [Cloudflare One Client settings](/data-localization/how-to/zero-trust/#cloudflare-one-client-settings) section below for more information.
 
 ### Custom certificates
 
@@ -51,8 +51,8 @@ By default, Cloudflare will store and deliver logs from data centers across our 
 
 Customers also have the option to reduce the logs that Cloudflare stores:
 
-- You can [exclude PII from logs](/cloudflare-one/insights/logs/gateway-logs/manage-pii/)
-- You can [disable logging, or only log blocked requests](/cloudflare-one/insights/logs/gateway-logs/#selective-logging).
+- You can [exclude PII from logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/manage-pii/)
+- You can [disable logging, or only log blocked requests](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/#selective-logging).
 
 #### Verify regional map application
 
@@ -66,15 +66,15 @@ To ensure that all reverse proxy requests for applications protected by Cloudfla
 
 You can [configure Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#region) to only connect to data centers within the United States, regardless of where the software was deployed.
 
-## WARP settings
+## Cloudflare One Client settings
 
 ### Local Domain Fallback
 
-You can use the WARP setting [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/) in order to use a private DNS resolver, which you can manage yourself.
+You can use the WARP setting [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/) in order to use a private DNS resolver, which you can manage yourself.
 
 ### Split Tunnels
 
-[Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) allow you to decide which IP addresses/ranges and/or domains are routed through or excluded from Cloudflare.
+[Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) allow you to decide which IP addresses/ranges and/or domains are routed through or excluded from Cloudflare.
 
 :::caution
 

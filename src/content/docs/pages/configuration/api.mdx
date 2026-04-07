@@ -48,7 +48,7 @@ export default {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json;charset=UTF-8",
-				// We recommend you store the API token as a secret using the Workers dashboard or using Wrangler as documented here: https://developers.cloudflare.com/workers/wrangler/commands/#secret
+				// We recommend you store the API token as a secret using the Workers dashboard or using Wrangler as documented here: https://developers.cloudflare.com/workers/wrangler/commands/general/#secret
 				Authorization: `Bearer ${env.API_TOKEN}`,
 			},
 		};
@@ -74,7 +74,7 @@ export default {
 		const init = {
 			headers: {
 				"Content-Type": "application/json;charset=UTF-8",
-				// We recommend you store the API token as a secret using the Workers dashboard or using Wrangler as documented here: https://developers.cloudflare.com/workers/wrangler/commands/#secret
+				// We recommend you store the API token as a secret using the Workers dashboard or using Wrangler as documented here: https://developers.cloudflare.com/workers/wrangler/commands/general/#secret
 				Authorization: `Bearer ${env.API_TOKEN}`,
 			},
 		};
@@ -119,7 +119,7 @@ export default {
 		const init = {
 			headers: {
 				"content-type": "application/json;charset=UTF-8",
-				// We recommend you store the API token as a secret using the Workers dashboard or using Wrangler as documented here: https://developers.cloudflare.com/workers/wrangler/commands/#secret
+				// We recommend you store the API token as a secret using the Workers dashboard or using Wrangler as documented here: https://developers.cloudflare.com/workers/wrangler/commands/general/#secret
 				Authorization: `Bearer ${env.API_TOKEN}`,
 			},
 		};

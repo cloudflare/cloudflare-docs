@@ -55,7 +55,11 @@ entries:
 
   - term: Cloudflare One Agent
     general_definition: |-
-      the name of the Cloudflare WARP client app on iOS and Android devices.
+      the name of the Cloudflare One Client app on iOS and Android devices.
+
+  - term: Cloudflare One Client
+    general_definition: |-
+      an application that connects corporate devices to Cloudflare for private network access, advanced web filtering, and other security functions.
 
   - term: Cloudflare Tunnel
     general_definition: |-
@@ -279,7 +283,7 @@ entries:
 
   - term: WARP client
     general_definition: |-
-      an application that connects corporate devices to Cloudflare for private network access, advanced web filtering, and other security functions.
+      the previous name for the Cloudflare One Client, an application that connects corporate devices to Cloudflare for private network access, advanced web filtering, and other security functions.
 
   - term: WARP CGNAT IP
     general_definition: |-

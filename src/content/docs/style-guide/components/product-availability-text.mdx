@@ -1,0 +1,27 @@
+---
+title: Product availability text
+styleGuide:
+  component: ProductAvailabilityText
+---
+
+The `ProductAvailabilityText` component dynamically renders a product's lifecycle status (such as "Beta" or "Alpha") inline with the product name. It renders nothing for generally available (GA) products, so it is safe to leave in place as a product matures.
+
+The `product` prop must match a file in `src/content/directory/`.
+
+```mdx live
+import { ProductAvailabilityText } from "~/components";
+
+Cloud Connector <ProductAvailabilityText product="cloud-connector" /> allows you to route matching traffic to a public cloud provider.
+```
+
+## Props
+
+| Prop | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| `product` | `string` | Yes | — | Product slug matching a file in `src/content/directory/`. |
+| `parentheses` | `string` | No | `"true"` | When `"true"`, wraps the output in parentheses (for example, `(Beta)`). Set to `"false"` for the raw text. |
+
+## Behavior
+
+- If the product availability is **GA**, the component renders nothing.
+- If the product or its availability data is not found, the component renders nothing (and logs a warning at build time).

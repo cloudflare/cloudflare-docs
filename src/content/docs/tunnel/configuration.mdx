@@ -112,7 +112,7 @@ The most commonly used parameters:
 | --------------------------------------------------------- | ----------------- | -------------------------------------------------------- |
 | [`--loglevel`](/tunnel/advanced/run-parameters/#loglevel) | `info`            | Log verbosity: `debug`, `info`, `warn`, `error`, `fatal` |
 | [`--logfile`](/tunnel/advanced/run-parameters/#logfile)   | stdout            | Path to write log output                                 |
-| [`--metrics`](/tunnel/advanced/run-parameters/#metrics)   | `127.0.0.1:2024x` | Prometheus metrics endpoint address                      |
+| [`--metrics`](/tunnel/advanced/run-parameters/#metrics)   | `127.0.0.1:20241`–`20245` | Prometheus metrics endpoint address (first available port in range) |
 | [`--protocol`](/tunnel/advanced/run-parameters/#protocol) | `auto`            | Connection protocol: `auto`, `quic`, `http2`             |
 | [`--region`](/tunnel/advanced/run-parameters/#region)     | global            | Route through US-only data centers with `us`             |
 | [`--token`](/tunnel/advanced/run-parameters/#token)       | —                 | Tunnel token (remotely-managed tunnels)                  |

@@ -170,17 +170,103 @@ I produce a comparison with:
 - **Issues identified** with specific examples
 - **Simplified version** including: plain-language summary, clear explanation building from basics, why it matters, when you would use this, tech-adjacent metaphor, common pitfalls, related concepts
 
-**8. Report and Prompt**
+**8. Report**
 
 I report: summary of improvements made, what made the original confusing, and the full terminology index.
 
-Then I ask: **What would you like to do next?**
+Then proceed immediately to Step 9 (Adversarial Review). Do not prompt the user for next steps until the review is complete.
 
-1. **Suggest additional improvements**
-2. **Create a PR** with changes
-3. **Refine specific sections**
-4. **Apply changes to original** file
-5. **Keep as reference**
+**9. Adversarial Review**
+
+After presenting the report in Step 8, **always** launch a **fresh subagent** (Task tool, `subagent_type: "general"`) to perform an adversarial review before prompting the user for next steps. Do not continue the review in the current session — the point is to eliminate confirmation bias by having a separate agent, with no access to your reasoning or the ELI5 skill instructions, evaluate the output cold. Do not skip this step.
+
+Pass the subagent the following prompt (fill in the bracketed values):
+
+---
+
+**Begin adversarial review prompt**
+
+You are a skeptical reviewer. Your single priority is verifying that every factual claim in the proposed changes is accurate and supported by a citable source. You assume claims are unsupported until proven otherwise.
+
+You are NOT a style checker or formatter. You catch unsourced assertions, misleading implications, and wrong mechanisms — not typos or tone issues.
+
+**Original file:** `[original file path]`
+**Proposed changes:** `[full ELI5 output — the simplified/enhanced content]`
+
+Read both files carefully. Your job is to review the **proposed changes only** — the original file is your baseline for what was already stated versus what is newly introduced.
+
+### What counts as a claim
+
+Any statement in the proposed changes that a reader could reasonably question:
+
+- Technical behavior ("Workers supports up to 128 MB of memory")
+- Comparisons ("faster than alternative X")
+- Numbers, limits, defaults, or quotas
+- Statements about how a product, protocol, or standard works
+- Simplified mechanism descriptions ("how it works" explanations added during simplification)
+- Analogies and metaphors — the 1:1 mapping claims ("X works like Y" requires that the mapped behavior actually matches how X works)
+- Net-new context — any "why," "when you'd use this," or "what problem it solves" framing not present in the original
+- Any claim about Cloudflare product behavior
+
+Opinions, definitions created by the doc itself, and procedural steps ("Select **Save**") are not claims.
+
+### ELI5-specific focus areas
+
+These are the highest-risk categories when documentation has been simplified. Prioritize them:
+
+1. **Simplified mechanism descriptions** — Any "how it works" explanation added during simplification that was not in the original. These carry the highest risk: a plausible-sounding explanation that describes the wrong mechanism is worse than the original jargon. Verify the actual mechanism against the source docs in this repository.
+
+2. **Misleading nuance** — Statements that are not outright wrong but flatten important nuance, creating a wrong mental model. Example: "Cloudflare generates a `robots.txt` file that instructs AI crawlers to stay away from your content" is misleading — `robots.txt` is a per-path allow/disallow mechanism, not a blanket block. The sentence omits that it specifies *where* crawlers may and may not go. Flag any statement where the simplification loses a meaningful distinction.
+
+3. **Net-new claims** — Any explanation, context, or framing added during simplification that was not present in the original document. Every piece of new information requires a citation. If the original said "zones pair with resolver policies" and the simplification adds "based on source IP, user identity, or domain," verify that all three of those selectors are actually supported.
+
+4. **Cloudflare-specific behavior** — Do not assume industry-standard behavior applies to Cloudflare products. Cloudflare implementations frequently diverge from how things are typically done (e.g., Workers request lifecycle vs. traditional serverless, Cloudflare CDN cache logic vs. other CDNs, how Cloudflare Tunnel health checks work vs. generic health check patterns). Verify every Cloudflare-specific claim against the actual documentation in `src/content/docs/` in this repository.
+
+### Review process
+
+1. **Extract** — List every claim in the proposed changes. Include claims that were carried over from the original unchanged — if the original was wrong, the simplification inherits the error.
+2. **Source** — For each claim, search the documentation in this repository (`src/content/docs/`) to find the strongest available citation:
+   - Existing documentation page in this repository (preferred — use the file path)
+   - Public Cloudflare blog post, changelog, or announcement
+   - RFC or protocol specification (for non-Cloudflare claims)
+   - If a claim was present in the original file verbatim, cite it as "present in original — `[file path]:[line number]`"
+3. **Evaluate nuance** — For each sourced claim, check whether the wording in the proposed changes accurately represents what the source says. A claim can be sourced but still misleading if it omits qualifiers, flattens conditions, or implies broader applicability than the source supports.
+4. **Flag** — Mark any problem with a severity:
+   - **critical** — Claim is central to the page's purpose and could mislead readers if wrong or imprecise.
+   - **high** — Claim is prominent but not the main point; inaccuracy would erode trust.
+   - **medium** — Claim is peripheral but still verifiable.
+   - **low** — Claim is minor or widely accepted common knowledge.
+5. **Report** — Present findings in this format:
+
+| # | Claim (exact text) | Source | Status |
+|---|---|---|---|
+| 1 | "Workers KV supports keys up to 512 bytes" | `src/content/docs/kv/api/write-key-value-pairs.mdx` | ✅ sourced |
+| 2 | "Latency is under 50 ms globally" | — | ❌ unsourced (high) |
+| 3 | "instructs crawlers to stay away from your content" | `src/content/docs/bots/robots-txt.mdx` — source says per-path allow/disallow, not blanket block | ⚠️ misleading (critical) |
+| 4 | "zones pair with resolver policies" | present in original — `path/to/file.mdx:34` | ✅ sourced (original) |
+
+### Rules
+
+- Never fix or rewrite content. Report only.
+- Every issue must include the **exact text** of the claim, not a vague summary.
+- When a source exists but the claim misrepresents it or loses nuance, flag as `⚠️ misleading` and quote the relevant part of the source.
+- Acknowledge well-sourced claims — the table should show what passed, not only what failed.
+- If you cannot find a source in this repository or any authoritative reference, flag as `❌ unsourced` and state what you searched.
+
+**End adversarial review prompt**
+
+---
+
+When the subagent returns its findings, present the full claim table to the user. If there are `❌ unsourced` or `⚠️ misleading` findings, list them separately with recommended actions (remove the claim, add a source, adjust the wording).
+
+Then ask: **What would you like to do next?**
+
+1. **Fix flagged issues** — Address unsourced or misleading claims identified by the review
+2. **Suggest additional improvements**
+3. **Create a PR** with changes
+4. **Refine specific sections**
+5. **Apply changes to original** file
+6. **Keep as reference**
 
 ## Decision Framework
 
@@ -228,6 +314,7 @@ Before finalizing, verify:
 - [ ] No rhetorical questions (examples stated as examples)
 - [ ] Every simplification describes the correct mechanism
 - [ ] Register matches the existing documentation voice
+- [ ] Adversarial review completed
 
 ## Anti-patterns to avoid
 

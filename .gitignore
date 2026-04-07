@@ -11,6 +11,12 @@ skills/
 # dependencies
 node_modules/
 
+# lockfiles from other package managers
+yarn.lock
+pnpm-lock.yaml
+bun.lockb
+bun.lock
+
 # logs
 npm-debug.log*
 yarn-debug.log*

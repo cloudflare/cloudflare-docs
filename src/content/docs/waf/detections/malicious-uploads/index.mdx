@@ -9,9 +9,9 @@ sidebar:
 
 import { GlossaryTooltip, Type, Render } from "~/components";
 
-The malicious uploads detection, also called uploaded content scanning, is a WAF [traffic detection](/waf/concepts/#detection-versus-mitigation) that scans content being uploaded to your application.
+The malicious uploads detection is a [traffic detection](/waf/concepts/#detection-versus-mitigation) that scans files and other content uploaded to your application for malware.
 
-When enabled, content scanning attempts to detect content objects, such as uploaded files, and scans them for malicious signatures like malware. The scan results, along with additional metadata, are exposed as fields available in WAF [custom rules](/waf/custom-rules/), allowing you to implement fine-grained mitigation rules.
+When you turn on this detection, the WAF inspects incoming uploads and checks them for malicious signatures. The scan results are available as [fields](#content-scanning-fields) you can use in [custom rules](/waf/custom-rules/) and [rate limiting rules](/waf/rate-limiting-rules/) to act on requests containing malicious content.
 
 :::note
 This feature is available to customers on an Enterprise plan with a paid add-on.
@@ -19,15 +19,17 @@ This feature is available to customers on an Enterprise plan with a paid add-on.
 
 ## How it works
 
-Once enabled, content scanning will run for all incoming traffic, identifying <GlossaryTooltip term="content object" link="#what-is-a-content-object">content objects</GlossaryTooltip> automatically.
+Once you turn on this detection, Cloudflare inspects all incoming traffic and identifies <GlossaryTooltip term="content object" link="#what-is-a-content-object">content objects</GlossaryTooltip> automatically.
 
-For every request with one or more detected content objects, the content scanner connects to an antivirus (AV) scanner to perform a thorough analysis of the content objects. Using the results of the scan, the WAF will populate several fields you can use in rule expressions. For example, you can create a basic rule to block requests containing malicious files, or a more complex rule where the expression matches specific file sizes, file types, or URI paths.
+When Cloudflare detects one or more content objects in a request, it sends them to an antivirus (AV) scanner for analysis. The AV scanner is the same one used in [Cloudflare Zero Trust](/cloudflare-one/traffic-policies/http-policies/antivirus-scanning/).
 
-Cloudflare uses the same [anti-virus (AV) scanner used in Cloudflare Zero Trust](/cloudflare-one/traffic-policies/http-policies/antivirus-scanning/) for WAF content scanning.
+Based on the scan results, the detection populates [fields](#content-scanning-fields) you can reference in rule expressions. For example, you can create a rule to block requests with malicious files, or a more specific rule that also matches on file size, file type, or URI path.
 
 :::note[Notes]
 
-Content scanning will not apply any mitigation actions to requests with content objects considered malicious. It only provides a signal that you can use to define your attack mitigation strategy. You must create rules — [custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/) — to perform actions based on detected signals.<br/>For more information on detection versus mitigation, refer to [Concepts](/waf/concepts/#detection-versus-mitigation).
+Content scanning does not block or challenge requests on its own. It provides detection signals only. To act on these signals, create [custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/).
+
+For more information on detection versus mitigation, refer to [Concepts](/waf/concepts/#detection-versus-mitigation).
 
 <Render file="content-scanning-latency" product="waf" />
 
@@ -35,7 +37,9 @@ Content scanning will not apply any mitigation actions to requests with content 
 
 ## What is a content object?
 
-A content object is any request payload detected by heuristics that does not match any of the following types: `text/html`, `text/x-shellscript`, `application/json`, `text/csv`, and `text/xml`. All other content types are considered a content object, such as the following:
+A content object is a file or binary payload in a request that Cloudflare identifies as scannable content. The malicious uploads detection uses heuristics to find content objects automatically, without relying on the request's `Content-Type` header (since this header can be manipulated).
+
+The following content types are excluded from scanning: `text/html`, `text/x-shellscript`, `application/json`, `text/csv`, and `text/xml`. All other detected content is treated as a content object. Common examples include:
 
 - Executable files (for example, `.exe`, `.bat`, `.dll`, and `.wasm`)
 - Documents (for example, `.doc`, `.docx`, `.pdf`, `.ppt`, and `.xls`)
@@ -43,7 +47,7 @@ A content object is any request payload detected by heuristics that does not mat
 - Image files (for example, `.jpg`, `.png`, `.gif`, `.webp`, and `.tif`)
 - Video and audio files
 
-Content scanning does not take the request's `Content-Type` header into account, since this header can be manipulated. If the system detects a malicious object but cannot determine its exact content type, it reports the malicious content object as having an `application/octet-stream` content type.
+If Cloudflare detects a malicious object but cannot determine its exact content type, it reports the object as `application/octet-stream`.
 
 ## Scanned content
 

@@ -9,15 +9,14 @@ import { Render, Tabs, TabItem, Steps, Details } from "~/components";
 
 Learn how to add the Turnstile widget to your webpage using implicit or explicit rendering methods.
 
-Choosing the appropriate rendering method for Turnstile is important and effectively helps you to add it to your website while ensuring optimal performance and user experience. Both implicit and explicit rendering have their own advantages and are suited to different types of web applications. Refer to the table below that highlights the ideal use case for each of these rendering methods:
+Turnstile offers two ways to add widgets to your page. **Implicit rendering** automatically scans your HTML for widget containers when the page loads. **Explicit rendering** gives you programmatic control to create widgets at any time using JavaScript. Use implicit rendering for static pages where forms exist at page load. Use explicit rendering for dynamic content and single-page applications (SPAs) where forms are created after the initial page load.
 
-| Feature             | Implicit rendering               | Explicit rendering                   |
-|-------------------------|--------------------------------------|------------------------------------------|
-| **Ease of setup**       | Simple, minimal code                 | Requires additional JavaScript           |
-| **Control over timing** | Renders automatically on page load   | Full control over rendering timing       |
-| **Use cases**           | Static content                       | Dynamic or interactive content           |
-| **Customization**       | Limited to HTML attributes           | Extensive via JavaScript API             |
-
+| Feature                 | Implicit rendering                 | Explicit rendering                 |
+| ----------------------- | ---------------------------------- | ---------------------------------- |
+| **Ease of setup**       | Simple, minimal code               | Requires additional JavaScript     |
+| **Control over timing** | Renders automatically on page load | Full control over rendering timing |
+| **Use cases**           | Static content                     | Dynamic or interactive content     |
+| **Customization**       | Limited to HTML attributes         | Extensive via JavaScript API       |
 
 ## Prerequisites
 
@@ -72,7 +71,7 @@ The `api.js` file must be fetched from the exact URL shown above. Proxying or ca
 Add resource hints to improve loading performance by establishing early connections to Cloudflare servers. Place this `<link>` tag in your HTML `<head>` section before the Turnstile script.
 
 ```html wrap
-<link rel="preconnect" href="https://challenges.cloudflare.com">
+<link rel="preconnect" href="https://challenges.cloudflare.com" />
 ```
 
 #### 3. Add widget elements
@@ -83,7 +82,7 @@ Add widget containers where you want the challenges to appear on your website.
 <div class="cf-turnstile" data-sitekey="<YOUR-SITE-KEY>"></div>
 ```
 
-#### 3. Configure with data attributes
+#### 4. Configure with data attributes
 
 [Customize your widgets](/turnstile/get-started/client-side-rendering/widget-configurations/) using data attributes. Insert a `div` element where you want the widget to appear.
 
@@ -129,26 +128,31 @@ An invisible input with the name `cf-turnstile-response` is added and will be se
 ```html title="Complete HTML example"
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Implicit Rendering with Cloudflare Turnstile</title>
-  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-</head>
-<body>
-  <h1>Contact Us</h1>
-  <form action="/submit" method="POST">
-    <label for="name">Name:</label><br>
-    <input type="text" id="name" name="name" required><br>
-    <label for="email">Email:</label><br>
-    <input type="email" id="email" name="email" required><br>
-    <!-- Turnstile Widget -->
-    <div class="cf-turnstile" data-sitekey="<YOUR-SITE-KEY>"></div>
-    <br>
-    <button type="submit">Submit</button>
-  </form>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Implicit Rendering with Cloudflare Turnstile</title>
+		<script
+			src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+			async
+			defer
+		></script>
+	</head>
+	<body>
+		<h1>Contact Us</h1>
+		<form action="/submit" method="POST">
+			<label for="name">Name:</label><br />
+			<input type="text" id="name" name="name" required /><br />
+			<label for="email">Email:</label><br />
+			<input type="email" id="email" name="email" required /><br />
+			<!-- Turnstile Widget -->
+			<div class="cf-turnstile" data-sitekey="<YOUR-SITE-KEY>"></div>
+			<br />
+			<button type="submit">Submit</button>
+		</form>
+	</body>
 </html>
 ```
+
 </Details>
 
 <Details header="Advanced form with callbacks">
@@ -309,7 +313,7 @@ const responseToken = turnstile.getResponse(widgetId);
 When a widget is no longer needed, it can be removed from the page using:
 
 ```js
-turnstile.remove(widgetId)
+turnstile.remove(widgetId);
 ```
 
 This will not call any callback and will remove all related DOM elements.
@@ -493,9 +497,10 @@ turnstile.execute("#container");
 ```
 
 ---
+
 ## Performance and user experience optimization
 
-Cloudflare recommends that you execute the Turnstile script as early upon the visitor's page entry as possible, so that the verification is complete and the interaction is available once the visitor attempts an action on the page. 
+Cloudflare recommends that you execute the Turnstile script as early upon the visitor's page entry as possible, so that the verification is complete and the interaction is available once the visitor attempts an action on the page.
 
 ---
 

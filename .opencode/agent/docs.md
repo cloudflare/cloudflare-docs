@@ -29,7 +29,7 @@ Do not write prose that sounds LLM-generated. Match the plain, direct style of e
 Every page must have valid frontmatter including:
 
 - `title`: A word or 2-3 word phrase
-- `pcx_content_type`: One of `how-to`, `tutorial`, `concept`, `get-started`, `overview`, `reference`, `faq`, `changelog`, `navigation`, `configuration`, `troubleshooting`
+- `pcx_content_type`: One of `how-to`, `tutorial`, `concept`, `get-started`, `overview`, `reference`, `faq`, `changelog`, `navigation`, `configuration`, `troubleshooting`, `solution-guide`
 
 ### Description
 
@@ -91,17 +91,23 @@ Documentation should read as timeless. Do not use:
 
 **You must use the named components below instead of plain code fences whenever they apply.** Do not use a raw ` ```ts ` fence when `TypeScriptExample` is appropriate. Do not use a raw ` ```toml ` or ` ```jsonc ` fence for Wrangler config when `WranglerConfig` is appropriate.
 
-| Scenario | Component | Why |
-|---|---|---|
-| TypeScript/JavaScript code | `TypeScriptExample` | Auto-generates a JS tab from TS source; one example to maintain |
-| Wrangler configuration | `WranglerConfig` | Auto-converts between JSONC and TOML; keeps both formats in sync |
-| Package install/run commands | `PackageManagers` | Shows npm/yarn/pnpm tabs automatically |
-| Everything else | Standard code fences with a language hint | Only when no named component fits |
+| Scenario                     | Component                                 | Why                                                              |
+| ---------------------------- | ----------------------------------------- | ---------------------------------------------------------------- |
+| TypeScript/JavaScript code   | `TypeScriptExample`                       | Auto-generates a JS tab from TS source; one example to maintain  |
+| Wrangler configuration       | `WranglerConfig`                          | Auto-converts between JSONC and TOML; keeps both formats in sync |
+| Package install/run commands | `PackageManagers`                         | Shows npm/yarn/pnpm tabs automatically                           |
+| Everything else              | Standard code fences with a language hint | Only when no named component fits                                |
 
 Import components from `~/components`:
 
 ```mdx
-import { TypeScriptExample, WranglerConfig, PackageManagers } from "~/components";
+import {
+	TypeScriptExample,
+	WranglerConfig,
+	PackageManagers,
+} from "~/components";
+
+;
 ```
 
 Refer to https://developers.cloudflare.com/style-guide/components/ for full component documentation and https://developers.cloudflare.com/style-guide/formatting/code-block-guidelines/ for code block formatting.

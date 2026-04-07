@@ -3,31 +3,32 @@ title: Packet captures
 pcx_content_type: navigation
 sidebar:
   order: 5
-
 ---
 
-import { DirectoryListing } from "~/components"
+import { DirectoryListing } from "~/components";
 
-Cloudflare supports two types of packet captures: full and sample. Full packet captures is the default behavior.
+Cloudflare supports two types of packet captures (PCAPs): **full** and **sample**.
+A packet capture records raw network traffic data so you can inspect it offline in tools like Wireshark. Full packet captures are the default.
 
 :::note
-The maximum packet capture runtime is 24 hours for sample and full packet captures.
+Both capture types have a maximum runtime of 300 seconds. Refer to [Packet capture limits](/cloudflare-network-firewall/packet-captures/collect-pcaps/#packet-capture-limits) for the full list of limits.
 :::
 
 ## Sample packet captures
 
-Sample packet captures collects historical data on network traffic that has already passed through Cloudflare's network. It will not collect any new traffic sent to Cloudflare's network after the packet capture has started. All sample packet captures will complete immediately after they are started because they query historical traffic data.
+Use sample packet captures when you want to inspect recent traffic quickly.
+Packet captures query historical traffic that has already passed through Cloudflare's network — not new traffic — so they complete immediately after you start them.
 
-Sample packet captures can be viewed in the Cloudflare dashboard. They only include the first 160 bytes of data. This is useful for capturing packet headers, but will not provide detailed packet data. The sample data is collected across all Cloudflare's data centers to build a PCAP file. This allows you to get a global picture of traffic across all data centers.
+You can view sample captures in the Cloudflare dashboard. They only include the first 160 bytes of each packet, which is useful for capturing packet headers but will not provide detailed packet data. Cloudflare collects this data across all of its data centers and assembles it into a PCAP file, giving you a global view of traffic across the network.
 
-You should use full packet captures if you need to collect data on packets that pass through your network less frequently.
+Use full packet captures instead if you need complete packet payloads, or if the traffic you want to capture occurs infrequently.
 
 ## Full packet captures
 
-Full packet captures will actively monitor Cloudflare's network for packets that match the selected filters, and will capture the matching packet data. The matching packet data is saved to a cloud storage bucket that is owned and configured by you.
+Full packet captures actively monitor Cloudflare's network for new traffic that matches filters you configure. Unlike sample captures, they capture packets that arrive after the capture starts, not historical data.
 
-Full packet captures will collect new traffic sent to Cloudflare's network after the packet capture has started, and include the full packet data. This type of capture cannot be viewed in the Cloudflare dashboard. You can download them from a cloud storage bucket and analyze them in Wireshark or another packet capture tool.
+Full captures include the complete packet data, not just headers. The matching packet data is saved directly to a cloud storage bucket that you own and configure. You cannot view it in the Cloudflare dashboard. You can download the resulting PCAP file and analyze it in Wireshark or another packet capture tool.
 
-Refer to the articles in this section to learn how to use packet captures.
+Before starting a full packet capture, make sure you have a cloud storage bucket set up and configured. Refer to the articles in this section for setup instructions.
 
 <DirectoryListing />
