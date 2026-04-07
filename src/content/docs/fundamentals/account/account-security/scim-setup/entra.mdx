@@ -35,6 +35,15 @@ Once you have [gathered the required data](/fundamentals/account/account-securit
 To successfully synchronize the group details into Cloudflare the `User Principal Name` (of `Identity`) and `Email` (of `Contact Information`) fields of each user must be identical. Values are case-sensitive, and the User Principal Name can only contain alphanumeric characters. Learn more about [how to create, invite, and delete users](https://learn.microsoft.com/entra/fundamentals/how-to-create-delete-users).
 :::
 
+:::caution[Required: configure the `active` attribute mapping]
+Entra ID's default attribute set for non-gallery SCIM applications does not include the `active` field. Without this mapping, Entra ID will not send a deprovisioning signal to Cloudflare when a user is removed from all provisioning groups or goes out of scope, and their account membership will not be removed.
+To enable user deprovisioning:
+1. Navigate to **Provisioning** > **Mappings** > **Provision Microsoft Entra ID Users**.
+2. Select **Add New Mapping**.
+3. Set **Source attribute** to `accountEnabled` and **Target attribute** to `active`.
+4. Select **Ok**, then **Save**.
+:::
+
 4. To validate which users and groups have been synchronized, navigate to **Provisioning logs** on the sidebar menu. You can also [review the Cloudflare Audit Logs](/fundamentals/account/account-security/review-audit-logs/).
 
 :::caution[Read-only group]
