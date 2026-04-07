@@ -141,11 +141,18 @@ jobs:
           RUN_LINK_CHECK: true
         run: npm run build
 
-      - name: Upload artifact
+      - name: Upload build artifact
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
         with:
           name: dist
           path: dist
+
+      - name: Upload link validation report
+        if: steps.build_step.outputs.has_links_validation_errors == 'true'
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+        with:
+          name: link-validation-report
+          path: .starlight-links-validator/errors.json
 
   post-build:
     name: Post Build
@@ -187,11 +194,18 @@ jobs:
       - name: Tests (Workers)
         run: npm run test:postbuild
 
+      - name: Download link validation report
+        if: needs.build.outputs.has_links_validation_errors == 'true'
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          name: link-validation-report
+          path: .starlight-links-validator
+
       - name: Link validation
         if: needs.build.outputs.has_links_validation_errors == 'true'
-        run: |
-          echo "::error::starlight-links-validator found broken internal links during the build. See the Build job logs for details."
-          exit 1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx tsx bin/post-link-validation-comment/index.ts
 
   notify:
     name: Notify

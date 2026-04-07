@@ -138,6 +138,9 @@ export default defineConfig({
 								failOnError: false,
 								errorOnInvalidHashes: false,
 								errorOnLocalLinks: false,
+								reporters: {
+									json: true,
+								},
 								exclude: [
 									"/api/",
 									"/api/**",
