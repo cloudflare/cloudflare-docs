@@ -69,6 +69,8 @@ Cloudflare requires your apex domain to be one level below a valid TLD defined i
 
 Your DNS records must be accurate for your domain to work properly. If you don't know what DNS records are, consider the video below for a quick explanation.
 
+<Render file="dns-nxdomain-warning" product="dns" />
+
 <Stream
 	id="daf305d98363ee7d53843758dac91782"
 	title="Review your DNS records"
@@ -82,9 +84,16 @@ Your DNS records must be accurate for your domain to work properly. If you don't
 <Render file="dns-scan-note" product="dns" />
 :::
 
+### Common records
+
 <Render file="dns-scan-procedure" product="dns" />
 
-<Render file="dns-nxdomain-warning" product="dns" />
+### Proxy status
+
+Each A, AAAA, and CNAME record has a [proxy status](/dns/proxy-status/) toggle:
+
+- **Proxied** (orange cloud): web traffic goes through the Cloudflare network, which provides caching, DDoS protection, and other security features.
+- **DNS only** (gray cloud): Cloudflare returns the DNS record value but does not proxy traffic. Use this for CNAME records that verify your domain for third-party services.
 
 ## 3. Change your nameservers
 

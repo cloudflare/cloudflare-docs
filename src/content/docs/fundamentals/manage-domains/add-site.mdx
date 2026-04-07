@@ -51,11 +51,9 @@ Your DNS records must be accurate for your domain to work properly. If you don't
    <Render file="dns-nxdomain-warning" product="dns" />
 
 2. If you find any missing records, [manually add](/dns/manage-dns-records/how-to/create-dns-records/) those records.
-3. Depending on your site setup, you may want to adjust the <GlossaryTooltip term="proxy status" link="/dns/proxy-status/">proxy status</GlossaryTooltip> for certain `A`, `AAAA`, or `CNAME` records.
-
-   :::note[Review CNAME records]
-   In general, CNAME records being used to verify your domain for third-party services should not be proxied. For details, refer to [Proxied CNAME records](/dns/proxy-status/#cname-records).
-   :::
+3. Depending on your site setup, you may want to adjust the <GlossaryTooltip term="proxy status" link="/dns/proxy-status/">proxy status</GlossaryTooltip> for certain `A`, `AAAA`, or `CNAME` records. Each record has a proxy status toggle:
+   - **Proxied** (orange cloud): web traffic goes through the Cloudflare network, which provides caching, DDoS protection, and other security features.
+   - **DNS only** (gray cloud): Cloudflare returns the DNS record value but does not proxy traffic. Use this for CNAME records that verify your domain for third-party services.
 
 4. Select **Continue**.
 
@@ -84,5 +82,7 @@ If you encounter unexpected results when changing your nameservers, refer to the
 - Enterprise customers can onboard lower-level subdomains using [Subdomain setup](/dns/zone-setups/subdomain-setup/).
 
 [^1]: The provider you purchased your domain from
+
 [^2]: Enterprise customers can onboard these using [Subdomain setup](/dns/zone-setups/subdomain-setup/).
+
 [^3]: A security feature that protects DNS records from spoofing
