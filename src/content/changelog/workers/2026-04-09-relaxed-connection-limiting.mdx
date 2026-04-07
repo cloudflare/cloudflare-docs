@@ -1,0 +1,9 @@
+---
+title: Relaxed simultaneous connection limiting
+description: The six-connection limit now only applies while waiting for response headers, allowing Workers to maintain more open connections simultaneously.
+date: 2026-04-09
+---
+
+The [simultaneous open connections limit](/workers/platform/limits/#simultaneous-open-connections) has been relaxed. Previously, each Worker invocation was limited to six open connections at a time for the entire lifetime of each connection, including while reading the response body. Now, a connection slot is freed as soon as response headers arrive, so the six-connection limit only constrains how many connections can be in the initial "waiting for headers" phase simultaneously.
+
+This means Workers can now have many more connections open at the same time without queueing, as long as no more than six are waiting for their initial response. This eliminates the `Response closed due to connection limit` exception that could previously occur when the runtime canceled stalled connections to prevent deadlocks.
