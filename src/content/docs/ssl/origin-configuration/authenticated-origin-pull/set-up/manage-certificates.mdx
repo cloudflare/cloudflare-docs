@@ -30,7 +30,7 @@ First, set up [zone-level AOP](/ssl/origin-configuration/authenticated-origin-pu
 
 ---
 
-## Replace a certificate without downtime
+## Replace a certificate without downtime via API
 
 :::caution[No automatic removal]
 Cloudflare does not delete client certificates upon expiration unless you send a delete request to the Cloudflare API for the relevant certificate ([Delete a zone-level certificate](/api/resources/origin_tls_client_auth/subresources/zone_certificates/methods/delete/) or [Delete a hostname-level certificate](/api/resources/origin_tls_client_auth/subresources/hostname_certificates/methods/delete/)).

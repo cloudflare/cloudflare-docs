@@ -79,12 +79,16 @@ In the API response, save the certificate `id` since it will be required in step
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
+:::note
+For per-hostname AOP, the enablement happens as you associate a hostname. If you had already associated hostnames as you uploaded the certificate, you can skip this step.
+:::
+
 1. Go to the **Origin Server** page.
 
    <DashButton url="/?to=/:account/:zone/ssl-tls/origin" />
 
 2. Select the **Authenticated Origin Pulls** tab.
-3. In the **Per-hostname** section, switch the toggle to **On** for the hostname you want to enable.
+3. In the **Per-hostname** section, find the certificate that should be used and associate the hostname with it.
 
 If you had set up logging on your origin during step 2, test and confirm that Authenticated Origin Pulls is working.
 
