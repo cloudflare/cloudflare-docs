@@ -107,8 +107,8 @@ export default () => {
 			}
 
 			.expressive-code .explain-tooltip {
-			  --tooltip-bg: var(--ec-frm-inlBtnFg);
-        color: var(--code-background);
+				--tooltip-bg: var(--ec-frm-inlBtnFg);
+				color: var(--code-background);
 				pointer-events: none;
 				user-select: none;
 				-webkit-user-select: none;
