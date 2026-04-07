@@ -15,7 +15,7 @@ import { GlossaryTooltip } from "~/components";
 
 Cloudflare's client-side security helps manage <GlossaryTooltip term="client-side resource" prepend="A client-side resource is ">client-side resources</GlossaryTooltip> (which include scripts and their connections) loaded by your website visitors, and provides visibility on the [cookies](https://www.cloudflare.com/learning/privacy/what-are-cookies/) recently detected in HTTP traffic. Client-side security can trigger alert notifications when resources change or are considered malicious.
 
-Client-side security uses two types of <GlossaryTooltip term="content security policy (CSP)" link="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">Content Security Policy (CSP)</GlossaryTooltip> HTTP headers for different purposes:
+Client-side security works by adding <GlossaryTooltip term="content security policy (CSP)" link="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">Content Security Policy (CSP)</GlossaryTooltip> HTTP headers to your site's responses. CSP is a browser-native mechanism that controls which resources a page is allowed to load and where to send reports when a resource violates the policy. Cloudflare uses two types of CSP headers for different purposes:
 
 - For resource monitoring (scripts and connections)
 - To enforce content security rules or log violations of these rules
@@ -29,14 +29,14 @@ The following table compares the CSP HTTP headers used for monitoring resources 
 | `content-security-policy-report-only`         | `content-security-policy-report-only` (log rules)<br/>`content-security-policy` (allow rules) |
 | Automatic — on when monitoring is enabled     | Manual — created via rules you define                                                         |
 | Added to a sample of HTML responses           | Added to 100% of matching responses (not sampled)                                             |
-| Reports everything by disallowing anything    | CSP directives come from your allowlist                                                       |
+| Reports all detected scripts and connections  | CSP directives come from your allowlist                                                       |
 | Browser sends violation reports to Cloudflare | Log rules report violations only<br/>Allow rules block disallowed resources                   |
 
 ## Header used for resource monitoring
 
-When you turn on resource monitoring, Cloudflare automatically adds a `content-security-policy-report-only` HTTP header to a sample of HTML responses. For details on the header format, refer to [CSP HTTP header format](/client-side-security/reference/csp-header/).
+When you turn on resource monitoring, Cloudflare automatically adds a `content-security-policy-report-only` HTTP header to a sample of HTML responses. This report-only header does not block anything. It uses CSP directives that cause browsers to generate violation reports for detected scripts and connections. For details on the header format, refer to [CSP HTTP header format](/client-side-security/reference/csp-header/).
 
-This header instructs the browser to report all loaded scripts and connections without blocking them. This allows Cloudflare to provide you with a list of all scripts running on your application and the connections they make to third-party endpoints. Cloudflare also monitors ingress and egress traffic for cookies, either set by origin servers or by the visitor's browser.
+Based on these reports, Cloudflare builds a list of all scripts running on your application and the connections they make to third-party endpoints. Cloudflare also monitors ingress and egress HTTP traffic for cookies, whether set by origin servers or by the visitor's browser.
 
 You cannot turn off the monitoring header while resource monitoring is enabled. Because the header is added to a sample of responses, there may be a [small delay](/client-side-security/troubleshooting/#cloudflare-does-not-show-any-client-side-resources-after-activation) between deploying a script or cookie and having its data displayed in the resource monitoring dashboards.
 

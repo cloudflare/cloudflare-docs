@@ -13,7 +13,9 @@ import { Details, Render, GlossaryTooltip } from "~/components";
 Only available to customers with Client-Side Security Advanced.
 :::
 
-Shortly after you configure content security rules, the Cloudflare dashboard will start displaying any violations of those rules. This information will be available for rules with any [action](/client-side-security/rules/#rule-actions) (_Allow_ and _Log_).
+A rule violation occurs when a browser loads a resource that is not covered by one of your [content security rules](/client-side-security/rules/). For log rules, the resource loads normally but is reported. For allow rules, the browser blocks the resource.
+
+Shortly after you configure content security rules, the Cloudflare dashboard will start displaying any violations of those rules. This information is available for rules with any [action](/client-side-security/rules/#rule-actions) (_Allow_ and _Log_).
 
 Information about rule violations is also available via [GraphQL API](#get-rule-violations-via-graphql-api) and [Logpush](#get-rule-violations-via-logpush).
 
@@ -27,7 +29,7 @@ Use the [Cloudflare GraphQL API](/analytics/graphql-api/) to obtain rule violati
 
 - `pageShieldReportsAdaptiveGroups`
 
-You can query the dataset for rule violations occurred in the past 30 days.
+You can query the dataset for rule violations that occurred in the past 30 days.
 
 Use [introspection](/analytics/graphql-api/features/discovery/introspection/) to explore the available fields the GraphQL schema. For more information, refer to [Explore the GraphQL schema](/analytics/graphql-api/getting-started/explore-graphql-schema/).
 
