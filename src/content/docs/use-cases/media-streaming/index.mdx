@@ -1,0 +1,83 @@
+---
+pcx_content_type: overview
+title: Media and streaming
+description: Deliver video, images, and media at scale with Cloudflare Stream, Images, R2, and global caching.
+head:
+  - tag: title
+    content: Media and streaming · Use cases
+sidebar:
+  order: 9
+---
+
+import { CardGrid, DirectoryListing, LinkTitleCard } from "~/components";
+
+Deliver video, images, and rich media at scale with encoding, optimization, and global distribution. Cloudflare Stream handles video upload, encoding, and adaptive bitrate delivery. Images transforms and optimizes images on-the-fly. R2 stores media files with zero egress fees. Cache serves content from 300+ edge locations. Hotlink Protection and signed URLs secure media from unauthorized access.
+
+<DirectoryListing />
+
+## Architecture patterns
+
+### Video platform
+
+Build a complete video hosting and delivery solution:
+
+- **Stream** handles upload, encoding, and adaptive bitrate delivery
+- **Stream Live** enables live streaming with automatic recording
+- **Signed URLs** protect content with token authentication
+
+### Image optimization pipeline
+
+Serve optimized images without pre-generating variants:
+
+1. **R2** stores original high-resolution images
+2. **Images** transforms images on-the-fly based on URL parameters
+3. **Workers** applies custom logic for format selection and caching
+
+### User-generated content
+
+Handle media uploads from users at scale:
+
+1. **R2** receives uploads directly via presigned URLs
+2. **Workers** validates and processes uploaded content
+3. **Stream** or **Images** optimizes media for delivery
+
+---
+
+## Prerequisites
+
+### Create a new application
+
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up). Stream and R2 are account-level offerings. You do not need a domain added to Cloudflare to upload, encode, or store media.
+- For Image Transformations: enable the feature per domain from the [Transformations page](https://dash.cloudflare.com/?to=/:account/images/transformations) in the dashboard. Refer to [Image Transformations](/images/transform-images/).
+
+### Use an existing application
+
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up).
+- A domain [added to Cloudflare](/fundamentals/manage-domains/add-site/) with DNS records proxied through Cloudflare. This is required for CDN caching, image optimization (Polish), and cache rules.
+- For Image Transformations on an existing domain: enable the feature from the [Transformations page](https://dash.cloudflare.com/?to=/:account/images/transformations) in the dashboard. Refer to [Image Transformations](/images/transform-images/).
+
+---
+
+## Related resources
+
+<CardGrid>
+
+<LinkTitleCard title="Stream documentation" href="/stream/" icon="stream">
+
+Complete documentation for video upload, encoding, and delivery.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Images documentation" href="/images/" icon="images">
+
+Complete documentation for image optimization and transformation.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Media case studies" href="https://www.cloudflare.com/case-studies/?industry=Media%20%26%20Entertainment" icon="open-book">
+
+Explore how media companies use Cloudflare.
+
+</LinkTitleCard>
+
+</CardGrid>

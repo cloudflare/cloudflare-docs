@@ -81,11 +81,33 @@ the upload constraints defined at time of creation or is larger than 200 MB in s
 
 If your end user's video is over 200 MB, you must use the tus protocol. Even if the file is under 200 MB, if the end user's connection is potentially unreliable, Cloudflare recommends using the tus protocol because it is resumable. For detailed information about tus protocol requirements, additional client examples, and upload options, refer to [Resumable and large files (tus)](/stream/uploading-videos/resumable-uploads/).
 
-To enable direct creator uploads with the tus protocol:
+The following diagram shows how the two steps of this process interact:
 
-1. Create your own API endpoint that returns an upload URL.
+```mermaid
+sequenceDiagram
+accTitle: Direct Creator Uploads with tus sequence diagram
+accDescr: Shows the two-step flow where a backend provisions a tus upload URL and the end user uploads directly to Stream
 
-The example below shows how to build a Worker to get a URL your end users can use to upload their video. The one-time upload URL is returned in the `Location` header of the response, not in the response body.
+participant U as End user
+participant B as Your backend
+participant S as Cloudflare Stream
+
+U->>B: Initiates upload request
+B->>S: Requests tus upload URL (authenticated)
+S->>B: Returns one-time upload URL
+B->>U: Returns one-time upload URL
+U->>S: Uploads video directly using tus
+```
+
+### Step 1: Your backend provisions a one-time upload URL
+
+:::note
+
+Before provisioning the one-time upload URL, your backend must obtain the file size from the end user. The tus protocol requires the `Upload-Length` header when creating the upload endpoint. In a browser, you can get the file size from the selected file's `.size` property (for example, `fileInput.files[0].size`).
+
+:::
+
+The example below shows how to build a Worker that returns a one-time upload URL to your end users. The one-time upload URL is returned in the `Location` header of the response, not in the response body.
 
 ```javascript {23} title="Example API endpoint"
 export async function onRequest(context) {
@@ -116,7 +138,9 @@ export async function onRequest(context) {
 }
 ```
 
-2. Use this API endpoint **directly** in your tus client. A common mistake is to extract the upload URL from your new API endpoint, and use this directly. See below for a complete example of how to use the API from Step 1 with the uppy tus client.
+### Step 2: Your end user's client uploads directly to Stream
+
+Use your backend endpoint directly in your tus client. Refer to the below example for a complete demonstration of how to use the backend from Step 1 with the uppy tus client.
 
 ```html {35} title="Upload a video using the uppy tus client"
 <html>

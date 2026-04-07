@@ -28,7 +28,7 @@
         },
         {
             "property_id": "context_window",
-            "value": "128000"
+            "value": "80000"
         },
         {
             "property_id": "terms",

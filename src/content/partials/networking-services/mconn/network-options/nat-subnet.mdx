@@ -6,7 +6,7 @@ params:
 
 ## Overview
 
-Each subnet (directly attached or routed) must use a unique address space within the Cloudflare WAN (formerly Magic WAN) overlay. Many networks already reuse private RFC 1918 space at different sites. To avoid renumbering and still satisfy the Cloudflare WAN uniqueness requirements, you can enable static network address translation (NAT) for a subnet on a Cloudflare One Appliance (formerly Magic WAN Connector).
+Every subnet in the Cloudflare WAN (formerly Magic WAN) overlay must have a unique address space — otherwise, Cloudflare cannot determine which site should receive traffic for a given IP address. In practice, many organizations reuse the same private address ranges (for example, `192.168.1.0/24`) at multiple sites. Rather than renumbering those subnets, you can enable static network address translation (NAT) for a subnet on a Cloudflare One Appliance (formerly Magic WAN Connector). NAT assigns each site a unique overlay-facing prefix while preserving the existing local addressing.
 
 With subnet NAT, the Appliance performs a static, 1:1 translation between:
 

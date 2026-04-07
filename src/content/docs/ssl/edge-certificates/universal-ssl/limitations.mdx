@@ -22,10 +22,12 @@ Cloudflare can only serve an SSL/TLS certificate for a DNS record when you set t
 
 ### Full setup
 
-Universal SSL certificates only support SSL for the root or first-level subdomains such as `example.com` and `www.example.com`. To enable SSL support on second, third, and fourth-level subdomains such as `dev.www.example.com` or `app3.dev.www.example.com`, you can:
+When you rely only on Universal SSL in a full setup zone, coverage is limited to the root domain (for example, `example.com`) and first-level subdomains (for example, `www.example.com` or `blog.example.com`). Deeper subdomains — such as `dev.www.example.com` or `app3.dev.www.example.com` — are **not** covered and will not serve a valid certificate.
 
-* Purchase [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) to order advanced certificates.
-* Upgrade to a Business or Enterprise plan to [upload custom certificates](/ssl/edge-certificates/custom-certificates/).
+To enable SSL for deeper subdomains, you can:
+
+* Purchase [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) — then turn on [Total TLS](/ssl/edge-certificates/additional-options/total-tls/) for automatic certificate coverage of all proxied subdomains, or manually create advanced certificates for specific hostnames.
+* Upload a [custom SSL certificate](/ssl/edge-certificates/custom-certificates/) that includes the required subdomains as Subject Alternative Names (SANs).
 
 ### CNAME setup
 

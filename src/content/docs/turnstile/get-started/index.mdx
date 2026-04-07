@@ -5,9 +5,9 @@ sidebar:
   order: 4
 ---
 
-import { Render, LinkButton } from "~/components";
+import { Render, LinkButton, GlossaryTooltip } from "~/components";
 
-This guide will get you started on setting up the Turnstile widget to protect your website from bots while maintaining a seamless user experience.
+Turnstile protects your website forms from bots. It works in two steps: a JavaScript widget runs challenges in the visitor's browser and produces a token, then your server sends that token to Cloudflare to confirm it is valid. This guide covers how to set up both steps.
 
 ## Prerequisites
 
@@ -21,7 +21,7 @@ Before you begin, you must have:
 
 ## Process
 
-Turnstile widgets are the foundation of your bot protection implementation.
+A Turnstile widget is an instance of Turnstile embedded on your webpage. Each widget has a <GlossaryTooltip term="sitekey">sitekey</GlossaryTooltip> (a public identifier you place in your HTML) and a <GlossaryTooltip term="secret key">secret key</GlossaryTooltip> (a private credential your server uses to validate tokens).
 
 <Render file="widget-components" product="turnstile" />
 
@@ -33,11 +33,11 @@ Implementing Turnstile involves two essential components that work together:
 
 1. Client-side: [Embed the widget](/turnstile/get-started/client-side-rendering/)
 
-   Add the Turnstile widget to your webpage to challenge visitors and generate verification tokens.
+   Add the Turnstile widget to your webpage to challenge visitors and generate tokens. A token is a string (up to 2,048 characters) generated when the visitor completes a challenge.
 
 2. Server-side: [Validate the token](/turnstile/get-started/server-side-validation/)
 
-   Verify the tokens on your server using the Siteverify API to ensure they are authentic and have not been tampered with.
+   Send tokens to Cloudflare's [Siteverify API](/turnstile/get-started/server-side-validation/) — the endpoint for validating Turnstile tokens — to confirm they are authentic and have not been tampered with.
 
 Turnstile is designed to be an independent service. You can use Turnstile on any website, regardless of whether it is proxied through the Cloudflare network. This allows for flexible deployment across multi-cloud environments, on-premises infrastructure, or sites using other CDNs. The client-side widget and server-side validation steps are completely self-contained.
 
@@ -55,11 +55,17 @@ First, you must create a Turnstile widget to get your sitekey and secret key.
 
 Select your preferred implementation method:
 
-<LinkButton href="/turnstile/get-started/widget-management/dashboard/">Cloudflare dashboard</LinkButton>
+<LinkButton href="/turnstile/get-started/widget-management/dashboard/">
+	Cloudflare dashboard
+</LinkButton>
 
-<LinkButton href="/turnstile/get-started/widget-management/api/">API</LinkButton>
+<LinkButton href="/turnstile/get-started/widget-management/api/">
+	API
+</LinkButton>
 
-<LinkButton href="/turnstile/get-started/widget-management/terraform/">Terraform</LinkButton>
+<LinkButton href="/turnstile/get-started/widget-management/terraform/">
+	Terraform
+</LinkButton>
 
 ### 2. Embed the widget
 

@@ -104,9 +104,16 @@ Yes, contact our [Sales Team](https://www.cloudflare.com/plans/enterprise/contac
 
 ## Pricing for Media Transformations
 
-After November 1st, 2025, Media Transforamtions and Image Transformations will use the same subscriptions and usage metrics.
+Media Transformations and Image Transformations use the same subscriptions and usage metrics.
+
+When transforming a video via URL:
 
 - Generating a still frame (single image) from a video counts as 1 transformation.
 - Generating an optimized video or extracting audio counts as 1 transformation _per second of the output_ content.
 - Each unique transformation, as determined by input and unique combination of flags, is only billed once per calendar month.
 - All Media and Image Transformations cost $0.50 per 1,000 monthly unique transformation operations, with a free monthly allocation of 5,000.
+
+When transforming assets via the Workers binding:
+
+- While binding Media Transformations to Workers Bindings is in beta, operations via the binding are not billed.
+- After beta, the costs for transforming via bindings will be the same as for transforming via URL, but all operations will be billed individually, not based on uniqueness. Cache or store results for cost optimization and performance.

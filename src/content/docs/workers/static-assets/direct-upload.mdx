@@ -18,7 +18,6 @@ import {
 	Tabs,
 	TypeScriptExample,
 } from "~/components";
-import { Icon } from "astro-icon/components";
 
 :::note
 
@@ -28,8 +27,8 @@ Directly uploading assets via APIs is an advanced approach which, unless you are
 
 Our API empowers users to upload and include static assets as part of a Worker. These static assets can be served for free, and additionally, users can also fetch assets through an optional [assets binding](/workers/static-assets/binding/) to power more advanced applications. This guide will describe the process for attaching assets to your Worker directly with the API.
 
-<Tabs syncKey="workers-vs-platforms" IconComponent={Icon}>
-<TabItem icon="workers" label="Workers">
+<Tabs syncKey="workers-vs-platforms">
+<TabItem label="Workers">
 ```mermaid
 sequenceDiagram
     participant User
@@ -39,7 +38,7 @@ sequenceDiagram
     User<<->>Workers API: Upload script version<br/>PUT /client/v4/accounts/:accountId/workers/scripts/:scriptName
 ```
 </TabItem>
-<TabItem icon="cloudflare-for-platforms" label="Workers for Platforms">
+<TabItem label="Workers for Platforms">
 ```mermaid
 sequenceDiagram
     participant User
@@ -65,8 +64,8 @@ The [manifest upload request](/api/resources/workers/subresources/scripts/subres
 
 `hash` represents a 32 hexadecimal character hash of the file, while `size` is the size (in bytes) of the file.
 
-<Tabs syncKey="workers-vs-platforms" IconComponent={Icon}>
-<TabItem icon="workers" label="Workers">
+<Tabs syncKey="workers-vs-platforms">
+<TabItem label="Workers">
 ```bash
 curl -X POST https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/scripts/{script_name}/assets-upload-session \
 --header 'content-type: application/json' \
@@ -89,7 +88,7 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/
 }'
 ```
 </TabItem>
-<TabItem icon="cloudflare-for-platforms" label="Workers for Platforms">
+<TabItem label="Workers for Platforms">
 ```bash
 curl -X POST https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/dispatch/namespaces/{dispatch_namespace}/scripts/{script_name}/assets-upload-session \
 --header 'content-type: application/json' \

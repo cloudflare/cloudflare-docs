@@ -11,12 +11,14 @@ Learn how to securely validate Turnstile tokens on your server using the Sitever
 
 :::caution[Mandatory server-side validation]
 
-You must call Siteverify API to complete your Turnstile configuration. The client-side widget alone does not provide protection.
+You must call the Siteverify API to complete your Turnstile implementation. The client-side widget alone does not protect your forms.
 
-You must validate tokens on your server because tokens can be forged by attackers, expire after 5 minutes (300 seconds), and are single-use and cannot be validated twice.
+Server-side validation is required because:
 
-Client-side verification alone leaves major security vulnerabilities.
-:::
+- **Tokens can be forged.** An attacker can submit any string to your form endpoint without completing a challenge.
+- **Tokens expire.** Each token is valid for 300 seconds (5 minutes) after generation.
+- **Tokens are single-use.** Each token can only be validated once. A replayed token will be rejected with the `timeout-or-duplicate` error code.
+  :::
 
 ## Process
 
@@ -38,12 +40,12 @@ The API accepts both `application/x-www-form-urlencoded` and `application/json` 
 
 #### Required parameters
 
-| Parameter         | Required | Description                                            |
-| ----------------- | -------- | ------------------------------------------------------ |
-| `secret`          | Yes      | Your widget's secret key from the Cloudflare dashboard |
-| `response`        | Yes      | The token from the client-side widget                  |
-| `remoteip`        | No       | The visitor's IP address                               |
-| `idempotency_key` | No       | UUID for retry protection                              |
+| Parameter         | Required | Description                                             |
+| ----------------- | -------- | ------------------------------------------------------- |
+| `secret`          | Yes      | Your widget's secret key from the Cloudflare dashboard  |
+| `response`        | Yes      | The token from the client-side widget                   |
+| `remoteip`        | No       | The visitor's IP address                                |
+| `idempotency_key` | No       | A UUID you generate to safely retry validation requests |
 
 #### Token characteristics
 
@@ -551,15 +553,15 @@ if (result.valid) {
 
 ### Response fields
 
-| Field                   | Description                                     |
-| ----------------------- | ----------------------------------------------- |
-| `success`               | Boolean indicating if validation was successful |
-| `challenge_ts`          | ISO timestamp when the challenge was solved     |
-| `hostname`              | Hostname where the challenge was served         |
-| `error-codes`           | Array of error codes (if validation failed)     |
-| `action`                | Custom action identifier from client-side       |
-| `cdata`                 | Custom data payload from client-side            |
-| `metadata.ephemeral_id` | Device fingerprint ID (Enterprise only)         |
+| Field                   | Description                                      |
+| ----------------------- | ------------------------------------------------ |
+| `success`               | Boolean indicating if validation was successful  |
+| `challenge_ts`          | ISO 8601 timestamp when the challenge was solved |
+| `hostname`              | Hostname where the challenge was served          |
+| `error-codes`           | Array of error codes (if validation failed)      |
+| `action`                | Custom action identifier from client-side        |
+| `cdata`                 | Custom data payload from client-side             |
+| `metadata.ephemeral_id` | Device fingerprint ID (Enterprise only)          |
 
 ### Error codes reference
 

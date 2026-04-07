@@ -33,7 +33,7 @@ Cloudflare WAN does not yet support private routing via IPv6.
 2. Select the **Cloud VPN Tunnels** tab > **Create VPN Tunnel**.
 3. Select the VPN Gateway you have created > **Continue**.
 4. Give your tunnel a descriptive name.
-5. For **Remote Peer IP Address**, use one of the public anycast Cloudflare WAN IPs given to you by your account team.
+5. For **Remote Peer IP Address**, use one of the Cloudflare anycast IP addresses assigned to your account, available in [Leased IPs](https://dash.cloudflare.com/?to=/:account/ip-addresses/address-space).
 6. In **IKE version**, select **IKEv2**.
 7. You can generate an IKE pre-shared key, or add one you already own. If you generate one during this set up, keep it somewhere safe since you will need it in other steps to finish setting up Cloudflare WAN and GCP.
 8. Choose **Route-based** as routing option.

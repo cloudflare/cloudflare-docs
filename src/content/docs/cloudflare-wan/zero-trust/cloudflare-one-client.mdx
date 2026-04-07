@@ -1,0 +1,29 @@
+---
+title: WARP
+pcx_content_type: tutorial
+head:
+  - tag: title
+    content: Use the Cloudflare One Client as an on-ramp
+description: >-
+  Use the Cloudflare One Client as an on-ramp to Cloudflare WAN and route traffic from user devices with the Cloudflare One Client installed to any network connected with Cloudflare Tunnel or Magic IP-layer tunnels (anycast GRE, IPsec, or CNI).
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="cloudflare-wan/zero-trust/warp"
+	product="networking-services"
+	params={{
+		warpURL: "/cloudflare-one/team-and-resources/devices/cloudflare-one-client/",
+		greIpsecURL: "/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels",
+		setupZeroTrustAccountURL: "/cloudflare-one/setup/#2-create-a-zero-trust-organization",
+		ztDashPath: "My Team > Devices",
+		splitTunnelsURL: "/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/",
+		warpDeploymentURL: "/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/",
+		warpIngressIpURL: "/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/firewall/#warp-ingress-ip",
+		mwanConnectorName: "Cloudflare One Appliance",
+		domainFallbackURL: "/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/#add-a-domain",
+		tracerouteURL: "/cloudflare-wan/configuration/manually/how-to/traceroute/"
+
+	}}
+/>

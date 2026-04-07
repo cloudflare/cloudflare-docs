@@ -80,6 +80,19 @@ await buildSession.exec("npm run build");
 await testSession.exec("npm test");
 ```
 
+You can also set a default command timeout for all commands in a session:
+
+```typescript
+const session = await sandbox.createSession({
+  id: "ci",
+  commandTimeoutMs: 30000 // 30s timeout for all commands
+});
+
+await session.exec("npm test"); // Times out after 30s if still running
+```
+
+Individual commands can override the session timeout with the `timeout` option on `exec()`. For more details, refer to the [Sessions API](/sandbox/api/sessions/) and the [execute commands guide](/sandbox/guides/execute-commands/#timeouts).
+
 ## What's isolated per session
 
 Each session has its own:

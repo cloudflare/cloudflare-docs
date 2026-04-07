@@ -35,7 +35,7 @@ npx wrangler queues update <QUEUE-NAME> --delivery-delay-secs 60 --message-reten
 
 * `--delivery-delay-secs` <Type text="number" /> <Type text="optional" />
 	* How long a published message is delayed for, before it is delivered to consumers.
-	* Must be between 0 and 43200 (12 hours).
+	* Must be between 0 and 86400 (24 hours).
 	* Defaults to 0.
 
 * `--message-retention-period-secs`  <Type text="number" /> <Type text="optional" />

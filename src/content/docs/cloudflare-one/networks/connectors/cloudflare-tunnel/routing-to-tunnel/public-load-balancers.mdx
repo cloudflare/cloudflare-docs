@@ -19,40 +19,14 @@ When you add a [published application route](/cloudflare-one/networks/connectors
 
 ### Create a load balancer
 
-To create a load balancer for Cloudflare Tunnel published applications:
-
-1. In the Cloudflare dashboard, go to the **Load Balancing** page.
-
-	 <DashButton url="/?to=/:account/load-balancing" />
-2. Select **Create load balancer**.
-3. Select **Public load balancer**.
-4. Under **Select website**, select the domain of your published application route.
-5. On the **Hostname** page, enter a hostname for the load balancer (for example, `lb.example.com`).
-6. On the **Pools** page, select **Create a pool**.
-7. Enter a descriptive name for the pool. For example, if you are configuring one pool per tunnel, the pool name can match your tunnel name.
-8. To add a tunnel endpoint to the pool, configure the following fields:
-			- **Endpoint Name**: Name of the server that is running the application
-			- **Endpoint Address**: `<UUID>.cfargotunnel.com`, where `<UUID>` is replaced by your Tunnel ID. You can find the **Tunnel ID** in [Cloudflare One](https://one.dash.cloudflare.com) under **Networks** > **Connectors** > **Cloudflare Tunnels**.
-			- **Header value**: Hostname of your published application route (such as `app.example.com`). To find the hostname value, open your Cloudflare Tunnel configuration and go to the **Published application routes** tab.
-			- **Weight**: Assign a [weight](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights) to the endpoint. If you only have one endpoint, enter `1`.
-	:::note
-	A single origin pool cannot have the same Tunnel UUID referenced twice.
-	:::
-9. On the **Pools** page, choose a **Fallback pool**. Refer to [Global traffic steering](/load-balancing/understand-basics/traffic-steering/steering-policies/) for information on how the load balancer routes traffic to pools.
-10. (Recommended) On the **Monitors** page, attach a monitor to the tunnel endpoint. For example, if your application is HTTP or HTTPS, you can create an HTTPS monitor to poll the application:
-	- **Type**: _HTTPS_
-	- **Path**: `/`
-	- **Port**: `443`
-	- **Expected Code(s)**: `200`
-	- **Header Name**: `Host`
-	- **Value**: `app.example.com`
-
-	:::note
-	TCP monitors are not supported for tunnel endpoints. For a workaround, refer to [Monitors and TCP tunnel origins](#monitors-and-tcp-tunnel-origins).
-	:::
-
-11. Save and deploy the load balancer.
-12. To test the load balancer, access the application using the load balancer hostname (`lb.example.com`).
+<Render
+  file="tunnel/availability/load-balancer-create"
+  product="cloudflare-one"
+  params={{
+    publishedAppRouteURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/#2a-publish-an-application",
+    tunnelIdLocation: "[Cloudflare One](https://one.dash.cloudflare.com) under **Networks** > **Connectors** > **Cloudflare Tunnels**"
+  }}
+/>
 
 Refer to the [Load Balancing documentation](/load-balancing/) for more details on load balancer settings and configurations.
 
@@ -180,21 +154,13 @@ Here is an example of what your DNS records will look like before and after sett
 
 ### Monitors and TCP tunnel origins
 
-If you have a tunnel to a port or SSH port, do not set up a [TCP monitor](/load-balancing/monitors/). Instead, set up a health check endpoint on the `cloudflared` host and create an HTTPS monitor. For example, you can use `cloudflared` to return a fixed HTTP status response:
-
-1. In your Cloudflare Tunnel, [add a published application route](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/#2a-publish-an-application) to represent the health check endpoint:
-	- **Hostame**: Enter a hostname for the health check endpoint (for example, `health-check.example.com`)
-	- **Service Type**: _HTTP_STATUS_
-	- **HTTP Status Code**: `200`
-2. From the **Load Balancing** page, [create a monitor](/load-balancing/monitors/create-monitor/) with the following properties:
-	- **Type**: _HTTPS_
-	- **Path**: `/`
-	- **Port**: `443`
-	- **Expected Code(s)**: `200`
-	- **Header Name**: `Host`
-	- **Value**: `health-check.example.com`
-
-You can now assign this monitor to your load balancer endpoint. The monitor will only verify that your server is reachable. It does not check whether the server is running and accepting requests.
+<Render
+  file="tunnel/availability/load-balancer-tcp-monitors"
+  product="cloudflare-one"
+  params={{
+    publishedAppRouteURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/#2a-publish-an-application"
+  }}
+/>
 
 ### Session affinity and replicas
 
@@ -202,8 +168,10 @@ The load balancer does not distinguish between [replicas](/cloudflare-one/networ
 
 ### Local connection preference
 
-If you notice traffic imbalances across endpoints in different locations, you may have to adjust your load balancer setup.
-
-When an end user sends a request to your application, Cloudflare routes their traffic using [Anycast routing](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) and their request typically goes to the nearest Cloudflare data center. Cloudflare Tunnel will prefer to serve the request using `cloudflared` connections in the same data center. This behavior can impact how connections are weighted and traffic is distributed.
-
-If you are running [`cloudflared` replicas](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/), switch to separate Cloudflare tunnels so that you can have more granular control over [traffic steering](/load-balancing/understand-basics/traffic-steering/).
+<Render
+  file="tunnel/availability/load-balancer-local-connection"
+  product="cloudflare-one"
+  params={{
+    replicasURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/"
+  }}
+/>

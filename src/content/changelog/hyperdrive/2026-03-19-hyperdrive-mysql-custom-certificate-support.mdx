@@ -1,0 +1,29 @@
+---
+title: Hyperdrive now supports custom TLS/SSL certificates for MySQL
+description: Configure custom server certificates (VERIFY_CA, VERIFY_IDENTITY) and client certificates (mTLS) for MySQL connections through Hyperdrive.
+products:
+  - hyperdrive
+date: 2026-03-19
+---
+
+Hyperdrive now supports custom TLS/SSL certificates for MySQL databases, bringing the same certificate options previously available for PostgreSQL to MySQL connections.
+
+You can now configure:
+
+- **Server certificate verification** with `VERIFY_CA` or `VERIFY_IDENTITY` SSL modes to verify that your MySQL database server's certificate is signed by the expected certificate authority (CA).
+- **Client certificates** (mTLS) for Hyperdrive to authenticate itself to your MySQL database with credentials beyond username and password.
+
+Create a Hyperdrive configuration with custom certificates for MySQL:
+
+```bash
+# Upload a CA certificate
+npx wrangler cert upload certificate-authority --ca-cert your-ca-cert.pem --name your-custom-ca-name
+
+# Create a Hyperdrive with VERIFY_IDENTITY mode
+npx wrangler hyperdrive create your-hyperdrive-config \
+  --connection-string="mysql://user:password@hostname:port/database" \
+  --ca-certificate-id <CA_CERT_ID> \
+  --sslmode VERIFY_IDENTITY
+```
+
+For more information, refer to [SSL/TLS certificates for Hyperdrive](/hyperdrive/configuration/tls-ssl-certificates-for-hyperdrive/) and [MySQL TLS/SSL modes](/hyperdrive/examples/connect-to-mysql/).

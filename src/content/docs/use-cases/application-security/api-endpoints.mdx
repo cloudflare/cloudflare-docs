@@ -1,0 +1,30 @@
+---
+pcx_content_type: how-to
+title: Secure API endpoints
+description: Protect APIs with schema validation, rate limiting, and authentication.
+sidebar:
+  order: 6
+---
+
+API endpoints are vulnerable to schema violations, abuse, and unauthorized access. Cloudflare API Shield validates requests against your OpenAPI specification, and mutual TLS (mTLS) authenticates known clients with certificates.
+
+## Solutions
+
+### API Shield
+
+Discover, secure, and monitor your APIs. [Learn more about API Shield](/api-shield/).
+
+- **API discovery** - Automatically identify API endpoints in your traffic, including undocumented ones
+- **Schema validation** - Reject requests that do not conform to your OpenAPI specification
+- **Sequence mitigation** - Detect and block API abuse patterns such as out-of-order requests
+
+### mTLS
+
+Mutual TLS client certificate authentication. [Learn more about mTLS](/ssl/client-certificates/).
+
+- **mTLS authentication** - Require client certificates for machine-to-machine API access
+
+## Get started
+
+1. [API Shield get started](/api-shield/get-started/)
+2. [Set up mTLS](/ssl/client-certificates/)
