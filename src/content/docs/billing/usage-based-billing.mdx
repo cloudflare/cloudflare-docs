@@ -1,5 +1,5 @@
 ---
-title: Usage-based billing
+title: Usage based billing
 pcx_content_type: overview
 sidebar:
   order: 9
@@ -7,74 +7,72 @@ sidebar:
 
 import { DashButton } from "~/components";
 
-For some Cloudflare subscriptions and services, you are charged based on how much a feature was used during your previous billing period. This differs from other services, which are a prepaid flat fee for the upcoming month (for example, plans or page rules).
+For some Cloudflare subscriptions and services, Cloudflare charges you based on how much you used a feature during your previous billing period. This differs from other services, which are a prepaid flat fee for the upcoming month (for example, plans and page rules).
 
-If your billing date is March 15 and you enabled Cloudflare Workers on March 1, your March 15 invoice will include Workers charges from March 1 through March 15. The next invoice on April 15 will include charges for Workers usage between March 16 and April 15.
+For example, if your billing date is on the 15th of the month and you turn on Cloudflare Workers in the dashboard on the 1st, your next invoice includes the Workers charges from the 1st through the 15th. The following invoice includes charges for Workers usage during the full billing period.
 
 :::note
 The pricing structure varies based on the service being used.
 :::
 
-## Billable Usage dashboard
+## Billable usage dashboard
 
-The Billable Usage dashboard gives Pay-as-you-go (PayGo) customers daily visibility into usage-based costs across their Cloudflare account. Data is sourced from the same system that generates your monthly invoice, so the figures you see in the dashboard will match your bill.
+The billable usage dashboard gives Pay-as-you-go (PayGo) customers daily visibility into usage-based costs across their Cloudflare account. The data comes from the same system that generates your monthly invoice, so the figures match your bill.
 
-The Billable Usage dashboard shows **usage-based overage charges only**. Fixed-fee plan subscriptions (for example, a Pro plan) are not included.
+The billable usage dashboard shows usage-based overage charges only. Fixed-fee plan subscriptions (for example, a Pro plan) are not included.
 
 :::note
-The Billable Usage dashboard is available to PayGo accounts only. Enterprise contract accounts are not supported.
+The billable usage dashboard is available to PayGo accounts only. Enterprise contract accounts are not supported.
 
-To access the dashboard, you must have the **Billing read** permission on your account.
+To access the dashboard, you must have the Billing read permission on your account.
 :::
 
 ### Access the dashboard
 
-1. In the Cloudflare dashboard, go to the **Billing** page.
+1. Log in to the Cloudflare dashboard.
+2. Select your account.
+3. Go to **Manage Account** > **Billing**.
 
    <DashButton url="/?to=/:account/billing" />
 
-2. Select **Billable Usage**.
+4. Select **Billable Usage**.
 
-### What the dashboard will display
+### Review the dashboard
 
-#### Chart
+**Chart**
 
 A bar chart displays your daily usage charges for the selected billing period. Each bar represents the total rated cost across all usage-based products on your account for that day.
 
-#### Usage table
+**Usage table**
 
-Below the chart, a sortable table breaks down each charge period by product and day:
+Below the chart, a sortable table shows usage broken down by product:
 
-| Column               | Description                                                            |
-| -------------------- | ---------------------------------------------------------------------- |
-| Service Name         | The Cloudflare product generating the usage charge.                    |
-| Billing Period Start | The start date of the billing cycle this charge falls within.          |
-| Charge Period Start  | The start of the daily charge period.                                  |
-| Charge Period End    | The end of the daily charge period.                                    |
-| Consumed Quantity    | The amount of the resource used during the charge period.              |
-| Consumed Unit        | The unit of measurement (for example, `Requests`, `Minutes`, `Bytes`). |
-| Cost                 | The cost for that charge period in your billing currency.              |
-| Cumulative Cost      | The running total cost accumulated since the billing period start.     |
+| Column         | Description                                                                   |
+| -------------- | ----------------------------------------------------------------------------- |
+| Product        | The Cloudflare product or service generating the usage charge                 |
+| Total Usage    | Total metered usage for the billing period, including any free tier allowance |
+| Billable Usage | Usage that exceeds the free tier and will be charged                          |
+| Usage Cost     | Cumulative total usage cost for the product in the selected billing period    |
 
-#### Date range
+### Select a date range
 
-By default, the dashboard shows data for your **current billing period**. Use the date picker to view a previous billing period.
+By default, the dashboard shows data for your current billing period. Use the date picker to view a previous billing period.
 
-### How data aligns with your invoice
+### Understand data alignment with your invoice
 
-The dashboard reads from the same data source used to generate your monthly invoice.
+The dashboard reads from the same data source that generates your monthly invoice.
 
-- Usage data is aligned to your **billing cycle**, not the calendar month. Your billing period start date is determined by the first purchase date on your account.
+- Usage data is aligned to your billing cycle, not the calendar month. Your billing period start date is determined by the first purchase date on your account.
 - Costs reflect the published rate card for your account.
-- The cumulative cost shown at the end of a completed billing period will match the usage overage charges on the corresponding invoice.
+- The total usage cost shown at the end of a completed billing period will match the usage overage charges on the corresponding invoice.
 
 :::note
-Previous versions of the Billable Usage dashboard used GraphQL queries from a different data source. Those figures were approximate and aligned to the calendar month. The current dashboard corrects both of these discrepancies.
+Previous versions of the billable usage dashboard used GraphQL queries from a different data source. Those figures were approximate and aligned to the calendar month. The current dashboard corrects both of these discrepancies.
 :::
 
-### Covered products
+### View covered products
 
-The dashboard shows charges for all usage-based products active on your account. The products that appear depend on your subscriptions. Examples of usage-based products include [Workers](/workers/), [R2](/r2/), [Stream](/stream/), [Images](/images/), Argo, and [Load Balancing](/load-balancing/).
+The dashboard shows charges for all usage-based products active on your account. The products that appear depend on your subscriptions, for example, Workers, R2, Stream, Images, Argo, and Load Balancing.
 
 :::note
 There may be up to a 24-hour delay before the previous day's usage appears.
@@ -82,21 +80,35 @@ There may be up to a 24-hour delay before the previous day's usage appears.
 
 ### Limitations
 
-- **Account-level data only** — Zone-level breakdowns are not available.
-- **No data export** — CSV/JSON export is not available.
-- **Enterprise accounts not supported** — This dashboard is available to PayGo accounts only.
-- **24-hour data latency** — Usage from the current day may not yet appear.
+- **Account-level data only** - Zone-level breakdowns are not yet available.
+- **No data export** - CSV/JSON export is not yet available.
+- **Enterprise accounts not supported** - This dashboard is available to PayGo accounts only.
+- **24-hour data latency** - Usage from the current day may not yet appear.
 
 ## Usage-based billing notifications
 
-For customers on Professional plans or higher, you can monitor usage of Cloudflare add-ons by enabling email notifications. When enabled, you will receive a notification to the billing email address on file when the traffic, queries, requests, or minutes watched exceed your desired threshold.
+If you are on a Professional plan or higher, you can monitor the usage of Cloudflare add-ons by turning on email notifications. Cloudflare sends a notification to the billing email address on file when traffic, queries, requests, or minutes watched exceed your defined threshold.
 
 :::note
 The email notifications are for informational purposes only. Actual usage and billing may vary. Your monthly invoice is the most reliable source for billing information.
 :::
 
-You can choose both the product that you want to be notified about and the threshold that triggers the notification. Thresholds depend on the product chosen.
+You can choose the product you want to monitor and the threshold that triggers the notification. Thresholds depend on the product.
 
 For example, Argo Smart Routing has **Notify when total bytes of traffic exceeds** as a threshold, and Load Balancing has **Notify when total number of DNS Queries exceeds** as a threshold.
 
-To set up an alert, refer to [Configure Cloudflare notifications](/notifications/get-started/).
+To set up an alert, refer to [Cloudflare notifications](/notifications/get-started/).
+
+### Set up usage notifications
+
+To avoid unexpected overage charges, configure usage-based notifications in the Cloudflare dashboard. Notifications alert you when usage exceeds a defined threshold during a billing period.
+
+To set up notifications:
+
+1. Log in to the Cloudflare dashboard.
+2. Select your account.
+3. Go to **Notifications**.
+
+   <DashButton url="/?to=/:account/notifications" />
+
+4. Select **Add** to create a new notification for **Billable Usage**.
