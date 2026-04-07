@@ -7,11 +7,14 @@ sidebar:
 
 import { Render, PackageManagers, TypeScriptExample, WranglerConfig } from "~/components";
 
-Session reuse applies to Browser Sessions ([Puppeteer](/browser-rendering/puppeteer/), [Playwright](/browser-rendering/playwright/), and [CDP](/browser-rendering/cdp/)). [Quick Actions](/browser-rendering/quick-actions/) handle session lifecycle automatically.
+By default, each Browser Sessions request launches a new browser instance. Reusing sessions eliminates cold-start time and improves performance by reconnecting to an existing browser instead of launching a new one.
 
-The best way to improve the performance of your browser rendering Worker is to reuse sessions. One way to do that is via [Durable Objects](/browser-rendering/how-to/browser-rendering-with-do/), which allows you to keep a long running connection from a Worker to a browser. Another way is to keep the browser open after you've finished with it, and connect to that session each time you have a new request.
+This feature applies to Browser Sessions ([Puppeteer](/browser-rendering/puppeteer/), [Playwright](/browser-rendering/playwright/), and [CDP](/browser-rendering/cdp/)). [Quick Actions](/browser-rendering/quick-actions/) handle session lifecycle automatically.
 
-In short, this entails using `browser.disconnect()` instead of `browser.close()`, and, if there are available sessions, using `puppeteer.connect(env.MY_BROWSER, sessionID)` instead of launching a new browser session.
+There are two approaches to reusing sessions:
+
+- **Disconnect and reconnect** (this page): Use `browser.disconnect()` instead of `browser.close()` to keep the browser alive, then reconnect to it on the next request. Best for stateless workloads where any available browser session will do.
+- **[Durable Objects](/browser-rendering/how-to/browser-rendering-with-do/)**: Persist a long-running browser inside a Durable Object for stateful session management. Best when you need to maintain state across requests or route specific users to specific browser instances.
 
 ## 1. Create a Worker project
 
