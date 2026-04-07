@@ -38,8 +38,8 @@ const integrations: Array<Tag> = [
 	{ label: "CrowdStrike" },
 	{ label: "GitHub" },
 	{ label: "Gitlab" },
-	{ label: "Kubernetes", variants: ["K8s"] },
 	{ label: "Grafana" },
+	{ label: "Kubernetes", variants: ["K8s"] },
 	{
 		label: "Microsoft Entra ID",
 		variants: ["AzureAD", "Azure Active Directory", "MS Entra ID", "Entra ID"],
