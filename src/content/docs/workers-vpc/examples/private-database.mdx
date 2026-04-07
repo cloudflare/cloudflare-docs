@@ -3,7 +3,7 @@ title: Connect to a private database
 pcx_content_type: example
 ---
 
-import { WranglerConfig } from "~/components";
+import { Render } from "~/components";
 
 This example demonstrates how to query a private PostgreSQL database from a Worker using [Workers VPC](/workers-vpc/) and [Hyperdrive](/hyperdrive/). The Worker connects to a database that is not exposed to the public Internet, with Hyperdrive providing connection pooling and query acceleration.
 
@@ -13,103 +13,25 @@ This example demonstrates how to query a private PostgreSQL database from a Work
 - A [Cloudflare Tunnel](/workers-vpc/configuration/tunnel/) connected to the private network where your database runs
 - A Cloudflare account with Workers VPC access
 
-## 1. Create a TCP VPC Service
+## 1. Set up VPC Service and Hyperdrive
 
-Create a [VPC Service](/workers-vpc/configuration/vpc-services/) of type `tcp` that points to your PostgreSQL database. The `--app-protocol postgresql` flag allows Hyperdrive to optimize connections.
+Follow steps 1–3 in [Connect to a private database using Workers VPC](/hyperdrive/configuration/connect-to-private-database-vpc/) to:
 
-```sh
-npx wrangler vpc service create my-postgres-db \
-  --type tcp \
-  --tcp-port 5432 \
-  --app-protocol postgresql \
-  --tunnel-id <YOUR_TUNNEL_ID> \
-  --ipv4 <YOUR_DATABASE_IP>
-```
+1. Set up a Cloudflare Tunnel in your private network.
+2. Create a TCP VPC Service pointing to your PostgreSQL database.
+3. Create a Hyperdrive configuration using the `--service-id` flag.
 
-Replace `<YOUR_TUNNEL_ID>` with the ID of the tunnel connected to your database network. Replace `<YOUR_DATABASE_IP>` with the private IP address of your database (for example, `10.0.1.50`).
+Copy the Hyperdrive configuration ID for the next step.
 
-Note the service ID returned for the next step.
+## 2. Bind Hyperdrive to a Worker
 
-## 2. Create a Hyperdrive configuration
+<Render file="create-hyperdrive-binding" product="hyperdrive" />
 
-Use `wrangler hyperdrive create` with the `--service-id` flag to route traffic through the VPC Service. When you use `--service-id`, you do not provide `--origin-host`, `--origin-port`, or `--connection-string`.
+## 3. Query the database
 
-```sh
-npx wrangler hyperdrive create my-private-db \
-  --service-id <YOUR_VPC_SERVICE_ID> \
-  --database <DATABASE_NAME> \
-  --user <DATABASE_USER> \
-  --password <DATABASE_PASSWORD> \
-  --scheme postgresql
-```
+<Render file="use-node-postgres-to-make-query" product="hyperdrive" />
 
-If successful, the command will output a Hyperdrive configuration with an `id` field. Copy this ID for the next step.
-
-## 3. Configure your Worker
-
-Update your Wrangler configuration file with the Hyperdrive binding. Replace `<YOUR_HYPERDRIVE_ID>` with the ID from the previous step.
-
-<WranglerConfig>
-```jsonc
-{
-	"$schema": "./node_modules/wrangler/config-schema.json",
-	"name": "private-db-worker",
-	"main": "src/index.ts",
-	"compatibility_date": "$today",
-	"compatibility_flags": ["nodejs_compat"],
-	"hyperdrive": [
-		{
-			"binding": "HYPERDRIVE",
-			"id": "<YOUR_HYPERDRIVE_ID>"
-		}
-	]
-}
-```
-</WranglerConfig>
-
-The `nodejs_compat` compatibility flag is required for the `pg` database driver.
-
-## 4. Implement the Worker
-
-Install the [node-postgres](https://node-postgres.com/) driver:
-
-```sh
-npm install pg
-```
-
-Create a Worker that connects to your database through Hyperdrive:
-
-```ts title="src/index.ts"
-import { Client } from "pg";
-
-export interface Env {
-	HYPERDRIVE: Hyperdrive;
-}
-
-export default {
-	async fetch(request, env, ctx): Promise<Response> {
-		const client = new Client({
-			connectionString: env.HYPERDRIVE.connectionString,
-		});
-
-		try {
-			await client.connect();
-			const result = await client.query("SELECT * FROM pg_tables LIMIT 10");
-			return Response.json(result.rows);
-		} catch (e) {
-			console.error(e);
-			return Response.json(
-				{ error: e instanceof Error ? e.message : e },
-				{ status: 500 },
-			);
-		}
-	},
-} satisfies ExportedHandler<Env>;
-```
-
-The Worker creates a new `Client` on each request using the Hyperdrive connection string. Hyperdrive maintains the underlying connection pool, so creating a new client is fast.
-
-## 5. Deploy and test
+## 4. Deploy and test
 
 Deploy your Worker:
 
@@ -120,7 +42,7 @@ npx wrangler deploy
 Send a request to verify the connection:
 
 ```sh
-curl https://private-db-worker.<YOUR_SUBDOMAIN>.workers.dev
+curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev
 ```
 
 A successful response returns a JSON array of rows from your database.
