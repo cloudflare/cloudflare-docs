@@ -28,21 +28,28 @@ Follow Steps 1–4 below only when creating a new PR (or when an existing PR has
 
 ## Step 1 — Gather context
 
-Run these commands to understand the changes before writing anything:
+Run `--stat` first to understand the scope without blowing up context:
 
 ```bash
 git log --oneline production..HEAD
 git diff production...HEAD --stat
+```
+
+If the stat output shows more than ~20 files changed, do **not** run the full diff. Instead, read specific files that are unclear from the stat output. For smaller changesets (under ~20 files), the full diff is fine:
+
+```bash
 git diff production...HEAD
 ```
 
-If the changes are largely content-focused, identify the product area to use in the title (e.g. `[Workers]`, `[DNS, Fundamentals]`). If no clear product area exists or the changes are not content-focused (tooling, CI, config, repo maintenance), use a conventional commit prefix instead: `chore:`, `fix:`, `feat:`, etc.
-
 ## Step 2 — Write the PR title
+
+### Branch: `production`
+
+This repo uses `production` as the default branch, not `main`. Always use `--base production` when creating PRs. Contributors from other repos often expect `main` — this is intentional.
 
 ### Format
 
-The dominant convention in this repo is brackets:
+For content changes, the dominant convention is product brackets:
 
 ```
 [Product] Short description
@@ -53,6 +60,22 @@ For changes spanning multiple products:
 ```
 [Product1, Product2] Short description
 ```
+
+For non-content changes (tooling, CI, config, components, worker code, repo maintenance), use a conventional commit prefix instead:
+
+```
+chore: Short description
+fix: Short description
+feat: Short description
+```
+
+### Inferring the product bracket from file paths
+
+Do not ask the author what product bracket to use — infer it from the changed file paths.
+
+- `src/content/docs/{slug}/` and `src/content/partials/{slug}/` map directly to a product. Read the `title` field from `src/content/docs/{slug}/index.mdx` to get the display name, then strip any "Cloudflare " prefix to get the bracket (e.g. title "Cloudflare Workers" → `[Workers]`).
+- `src/content/changelog/{slug}/` maps the same way — use the product bracket, not `[Changelog]`. Use `[Changelog]` only when the PR exclusively adds or updates changelog entries across multiple products.
+- If the change spans more than 3 products, use the 2–3 most prominent ones.
 
 ### Rules
 
@@ -77,7 +100,7 @@ For changes spanning multiple products:
 [Changelog] CDP + WebMCP changelog entries
 ```
 
-Use the `[Product]` bracket format as your default. For PRs that only add or update changelog entries, use `[Changelog]` as the product prefix.
+Use the `[Product]` bracket format as your default for content changes. Use conventional commit prefixes for non-content changes.
 
 ## Step 3 — Write the PR body
 
@@ -97,6 +120,7 @@ Write a short explanation covering:
 
 - What type of documentation is being changed (new page, update, fix, restructure, changelog entry)
 - Why the change is needed or what prompted it
+- Links to any relevant public context: GitHub issues, Jira tickets, related PRs, or public docs pages.
 
 Keep it factual. Do not repeat what the checklist items say. For small, focused PRs 1-2 sentences is enough. For larger PRs touching many files or multiple areas, a longer description is appropriate — use tables, lists, or code blocks over paragraphs of prose where it makes the summary easier to scan.
 
@@ -105,6 +129,8 @@ Good examples:
 Small, focused PR:
 
 > Adds a caution note for the `active` attribute mapping behavior in SCIM provisioning.
+>
+> Fixes https://github.com/cloudflare/cloudflare-docs/issues/1234
 
 Medium PR:
 
@@ -135,22 +161,33 @@ Go through each item and decide whether it applies:
 
 1. **Changelog entry** — Required if the PR documents a new feature, enhancement, or noteworthy change to a Cloudflare product. Remove this item if the PR is a fix, typo correction, internal restructure, or style update.
 
-2. **Style guide adherence** — Keep this item if the PR touches any authored content: MDX pages, partials, changelogs, frontmatter, images, or code blocks within markdown. The style guide covers writing guidelines, formatting, grammar, component usage, content types, and links — all of which only apply to authored content. Remove this item for PRs that exclusively change source code, tooling, CI, configuration files, or other non-content assets.
+2. **Style guide adherence** — Keep this item only if the PR touches user-facing authored content in `src/content/` (MDX pages, partials, changelogs, frontmatter, or images). The style guide covers writing guidelines, formatting, grammar, component usage, content types, and links — all of which only apply to content rendered on the site. Remove this item for PRs that change source code, tooling, CI, configuration files, agent skills, or any other non-content assets — even if those files happen to be Markdown.
 
 3. **Issue opened for larger changes** — Keep this item if the PR adds a new page, restructures a section, or addresses known inaccuracies. Remove it for small focused changes.
 
 4. **Redirects for renamed/moved files** — Keep this item if any `.mdx` files were renamed, moved, or deleted. Remove it if no files changed location.
 
-Remove checklist items that genuinely do not apply. Do not leave unchecked items that are irrelevant — they create noise for reviewers. If no checklist items apply, remove the entire Documentation checklist section.
+Remove individual checklist items that genuinely do not apply. Do not leave unchecked items that are irrelevant — they create noise for reviewers. Only remove the entire Documentation checklist section if **none** of the items apply (e.g. a pure CI or tooling change). If even one item applies, keep the section and remove only the irrelevant items.
+
+### What not to do
+
+These patterns create review friction and will result in the PR being sent back:
+
+- **Context-free rewrites** — If the PR significantly changes or restructures content, the summary must explain what changed and why. A diff with no explanation forces reviewers to reverse-engineer intent.
+- **Diff narration** — Do not summarise the PR by listing what changed line by line ("changed X to Y on line 42", "updated heading from A to B"). Explain why the change was made, not what it mechanically did.
+- **Cross-product changes without explanation** — If the PR touches files across multiple product areas, explain the connection. Unrelated-looking changes with no stated reason are a red flag for reviewers.
+- **Pruning the checklist wrong** — Remove individual items that do not apply. Do not delete the entire checklist section unless none of the items are relevant. Reviewers use the remaining items to quickly verify coverage.
 
 ## Step 4 — Create the PR
 
-Build the PR body by starting from the template read in Step 3 — replace the summary placeholder comment with your actual summary, remove checklist items that do not apply, and handle the screenshots section per the guidance above. Then create the PR:
+Build the PR body by starting from the template read in Step 3 — replace the summary placeholder comment with your actual summary, remove checklist items that do not apply, and handle the screenshots section per the guidance above. Then create the PR as a **draft**:
 
 ```bash
-gh pr create --base production --title "[Product] short description" --body "$BODY"
+gh pr create --base production --draft --title "[Product] short description" --body "$BODY"
 ```
+
+All PRs MUST be created as drafts. Most contributors should not land straight into the review queue — the author should review the deploy preview first and mark the PR ready when it looks correct.
 
 ## Output
 
-Show the PR URL when complete.
+Share the PR URL and let the user know it has been created as a draft — they should verify the changes and deploy preview look correct, then mark it as ready for review when they are satisfied. Do not push follow-up commits, do not request reviewers, do not make further edits to the PR unprompted. The human takes it from here.
