@@ -24,9 +24,10 @@ Cloudflare DNS offers a few different [setup options](/dns/zone-setups/). A prim
 
 ## Before you begin
 
-- **Own a domain name** — You need a registered domain (for example, `example.com`). If you do not have one, you can [register a domain at-cost through Cloudflare Registrar](https://dash.cloudflare.com/?to=/:account/domains/register). Domains purchased through Cloudflare Registrar automatically use Cloudflare for authoritative DNS, so you can skip the rest of this tutorial.
-- **Create a Cloudflare account** — If you have not already, [sign up for a Cloudflare account](/fundamentals/account/create-account/).
-- **Check whether your domain uses DNSSEC** — [DNSSEC](/dns/concepts/#dnssec) is a security feature that signs DNS records to prevent spoofing. If it is active at your registrar (the provider where you purchased your domain), you will need to turn it off before changing nameservers. Refer to [Change your nameservers](#3-change-your-nameservers) for details.
+Make sure that you:
+
+- Create a Cloudflare account — If you have not already, [sign up for a Cloudflare account](/fundamentals/account/create-account/).
+- Own a domain name — You need a registered domain (for example, `example.com`). If you do not have one, you can [register a domain at-cost through Cloudflare Registrar](https://dash.cloudflare.com/?to=/:account/domains/register). Domains purchased through Cloudflare Registrar automatically use Cloudflare for authoritative DNS, so you can skip the rest of this tutorial.
 
 ## 1. Add your domain to Cloudflare
 
@@ -84,7 +85,7 @@ When you start using Cloudflare's nameservers for authoritative DNS and your zon
 
 <Render file="minimize-downtime-tip" product="dns" />
 
-### Get nameserver names
+### 3.1. Get nameserver names
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -110,7 +111,7 @@ When you start using Cloudflare's nameservers for authoritative DNS and your zon
 Cloudflare automatically assigns nameservers to a domain and these assignments cannot be changed. For more details, refer to [Nameserver assignments](/dns/nameservers/nameserver-options/#assignment-method).
 :::
 
-### Turn off DNSSEC
+### 3.2. Turn off DNSSEC
 
 If your domain has [DNSSEC](/dns/dnssec/) active, you must [turn it off](/dns/dnssec/#disable-dnssec) at your registrar before replacing nameservers. Changing nameservers while DNSSEC is active can cause your domain to become unreachable. You can [re-enable DNSSEC through Cloudflare](/dns/dnssec/#enable-dnssec) after your domain is active.
 
@@ -118,7 +119,7 @@ If your domain has [DNSSEC](/dns/dnssec/) active, you must [turn it off](/dns/dn
 
 <Render file="dnssec-enabled-migration" product="dns" />
 
-### Update your registrar
+### 3.3. Update your registrar
 
 1. Log in to the admin account for your domain registrar. If you do not know your provider, use [ICANN Lookup](https://lookup.icann.org/).
 
@@ -141,7 +142,7 @@ To avoid common issues, refer to our [Nameserver replacement checklist](/dns/zon
 
 :::
 
-### Verify changes
+### 3.4. Verify changes
 
 Wait up to 24 hours while your registrar updates your nameservers.
 
