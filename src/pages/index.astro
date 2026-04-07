@@ -7,8 +7,8 @@ import Hero from "../components/landing/Hero.astro";
 import PlatformStats from "../components/landing/PlatformStats.astro";
 import BuildFromScratch from "../components/landing/BuildFromScratch.astro";
 import SecureSection from "../components/landing/SecureSection.astro";
-import RequestLifecycle from "../components/landing/RequestLifecycle.astro";
 import AccelerateSection from "../components/landing/AccelerateSection.astro";
+import ChangelogSection from "../components/landing/ChangelogSection.astro";
 import "../styles/landing.css";
 
 const heading = (icon: string) => ({
@@ -32,6 +32,7 @@ const sidebar = [
 			{ label: "Overview", link: "/" },
 			{ label: "Fundamentals", link: "/fundamentals/" },
 			{ label: "API reference", link: "/api/" },
+			{ label: "Directory", link: "/directory/" },
 			{
 				label: "Troubleshooting",
 				link: "/support/troubleshooting/http-status-codes/",
@@ -311,11 +312,11 @@ const props = {
 
 				<BuildFromScratch />
 
-				<RequestLifecycle />
-
 				<SecureSection />
 
 				<AccelerateSection />
+
+				<ChangelogSection />
 			</main>
 		</div>
 	</div>
