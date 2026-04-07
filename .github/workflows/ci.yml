@@ -97,7 +97,7 @@ jobs:
     needs: pre-build
     runs-on: ubuntu-latest
     outputs:
-      link_check_failed: ${{ steps.check_link_result.outputs.failed }}
+      has_links_validation_errors: ${{ steps.build_step.outputs.has_links_validation_errors }}
     permissions:
       contents: read
       pull-requests: write
@@ -134,46 +134,12 @@ jobs:
           restore-keys: |
             astro-assets-
 
-      # The starlight-links-validator plugin runs in astro:build:done, which fires
-      # AFTER all pages have been written to dist/. If link validation fails, the
-      # build exits non-zero but dist/ is complete. We use continue-on-error so the
-      # job succeeds (allowing deploy + post-build to run), then check the outcome below.
-      # We capture build output with tee so we can grep it to distinguish link-check
-      # failures from real build failures.
       - name: Build
         id: build_step
-        continue-on-error: true
-        shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUN_LINK_CHECK: true
-        run: |
-          set -o pipefail
-          npm run build 2>&1 | tee /tmp/build-output.log
-
-      # Distinguish between "link check failed" and "real build failure" by grepping
-      # the captured build output for the link validator's specific error message.
-      # The link validator runs in astro:build:done (after all pages are written to
-      # dist/), so its error string can only appear when the build itself completed.
-      # Any other failure — including partial builds with a non-empty dist/ — will
-      # not contain that string and will correctly fail here.
-      - name: Check build result
-        id: check_link_result
-        shell: bash
-        run: |
-          if [ "${{ steps.build_step.outcome }}" = "success" ]; then
-            echo "failed=false" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-
-          # Build failed. Was it only the link validator?
-          if grep -q "Links validation failed" /tmp/build-output.log; then
-            echo "failed=true" >> "$GITHUB_OUTPUT"
-            echo "::warning::Build succeeded but link validation failed. Preview will still be deployed."
-          else
-            echo "::error::Build failed for a reason other than link validation. Check the Build step logs."
-            exit 1
-          fi
+        run: npm run build
 
       - name: Upload artifact
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
@@ -222,7 +188,7 @@ jobs:
         run: npm run test:postbuild
 
       - name: Link validation
-        if: needs.build.outputs.link_check_failed == 'true'
+        if: needs.build.outputs.has_links_validation_errors == 'true'
         run: |
           echo "::error::starlight-links-validator found broken internal links during the build. See the Build job logs for details."
           exit 1
