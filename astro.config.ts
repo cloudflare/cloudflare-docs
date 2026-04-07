@@ -134,11 +134,11 @@ export default defineConfig({
 			plugins: [
 				...(RUN_LINK_CHECK
 					? [
-						starlightLinksValidator({
-							failOnError: false,
-							errorOnInvalidHashes: false,
-							errorOnLocalLinks: false,
-							exclude: [
+							starlightLinksValidator({
+								failOnError: false,
+								errorOnInvalidHashes: false,
+								errorOnLocalLinks: false,
+								exclude: [
 									"/api/",
 									"/api/**",
 									"/changelog/**",
