@@ -75,8 +75,6 @@ Bot Fight Mode is available on all Cloudflare plans, including Free. It provides
 
 <Render file="enable-bfm" product="bots" />
 
-Bot Fight Mode begins challenging suspected bot traffic immediately.
-
 ### Upgrade to Super Bot Fight Mode
 
 If you need to allow verified bots while still challenging malicious ones, Super Bot Fight Mode provides more granular controls:
@@ -149,7 +147,7 @@ Replace `<YOUR_SITE_KEY>` with the site key from the previous step. The widget r
 Before processing the form submission, send the token to the Turnstile siteverify endpoint to confirm the visitor passed the challenge:
 
 ```bash
-curl "https://challenges.cloudflare.com/turnstile/v0/siteverify" \
+curl https://challenges.cloudflare.com/turnstile/v0/siteverify \
   --header "Content-Type: application/json" \
   --data '{
   "secret": "<YOUR_SECRET_KEY>",
@@ -165,7 +163,7 @@ For complete integration details, refer to [Turnstile get started](/turnstile/ge
 Turnstile is available at no cost on all Cloudflare plans, including Free. You do not need a paid plan to add Turnstile to your forms. Turnstile also works on sites that are not proxied through Cloudflare. Refer to [Turnstile](/turnstile/) for full documentation.
 :::
 
-### WAF rate limit form endpoints
+### Limit request volume with WAF rate limiting
 
 For login endpoints, a tiered rate limiting approach works well alongside Turnstile. Create rules that escalate the response based on the volume of failed attempts:
 
@@ -174,7 +172,7 @@ For login endpoints, a tiered rate limiting approach works well alongside Turnst
 
 This pattern uses a counting expression that only counts `POST` requests returning authentication failure codes. Legitimate users who log in successfully on the first attempt never trigger the rule.
 
-Deploy both rules with the **Log** action first. Review the results in **Security** > **Events** after 24-48 hours to confirm the thresholds are not catching legitimate users. Then change to the enforcing actions.
+Deploy both rules with the **Log** action first. Review the results in [Security Events](/waf/analytics/security-events/) after 24-48 hours to confirm the thresholds are not catching legitimate users. Then change to the enforcing actions.
 
 For step-by-step rule creation, refer to [Create a rate limiting rule in the dashboard](/waf/rate-limiting-rules/create-zone-dashboard/). For the full tiered credential stuffing example, refer to [Rate limiting best practices](/waf/rate-limiting-rules/best-practices/).
 
@@ -190,7 +188,7 @@ Rules that use counting expressions with response codes (such as counting only `
 
 Legitimate browsers always send headers like `User-Agent`, `Accept`, and `Accept-Language`. Many bots omit these headers or send non-browser values. A custom rule targeting requests with empty or suspicious headers catches bots that evade score-based detection.
 
-Before creating custom rules, review the built-in bot settings under **Security Settings** > **Bot traffic**. These settings handle common scenarios without requiring you to write expressions:
+Before creating custom rules, review the built-in bot settings in **Security** > **Settings** (filter by _Bot traffic_). These settings handle common scenarios without requiring you to write expressions:
 
 | Use case                                        | Setting                        |
 | ----------------------------------------------- | ------------------------------ |
@@ -200,6 +198,8 @@ Before creating custom rules, review the built-in bot settings under **Security 
 | Allow verified bots                             | **Verified bots**              |
 | Extend protection to static resources           | **Static resource protection** |
 
+These settings are part of [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/) and require a Pro plan or above. On Free plans, only the Bot Fight Mode toggle is available.
+
 If the built-in settings do not cover your needs, create custom rules. Start by creating an exception for verified bots so they are protected before you deploy any blocking rules.
 
 **First, create a verified bot exception:**
@@ -207,7 +207,7 @@ If the built-in settings do not cover your needs, create custom rules. Start by 
 <Tabs syncKey="dashNewNav">
 <TabItem label="New dashboard" icon="rocket">
 
-1. In the Cloudflare dashboard, go to the **Security rules** page.
+1. In the Cloudflare dashboard, go to **Security** > **Security rules**.
 2. Select **Create rule** > **Custom rules**.
 
 </TabItem>
@@ -236,7 +236,7 @@ Create a second custom rule that targets requests with missing or suspicious hea
 (http.request.uri.path eq "/login" and http.user_agent eq "")
 ```
 
-Set the action to **Log** first. This lets you observe which requests the rule matches without blocking legitimate traffic. After 24-48 hours, review the results in **Security** > **Events**. If the rule matches only bot traffic, change the action to **Managed Challenge** or **Block**.
+Set the action to **Log** first. This lets you observe which requests the rule matches without blocking legitimate traffic. After 24-48 hours, review the results in [Security Events](/waf/analytics/security-events/). If the rule matches only bot traffic, change the action to **Managed Challenge** or **Block**.
 
 For step-by-step rule creation, refer to [Create a custom rule in the dashboard](/waf/custom-rules/create-dashboard/).
 
@@ -246,7 +246,7 @@ All Cloudflare plans include custom rules. The number of available rules increas
 
 If your bot traffic is concentrated from countries where you have no real users, you can combine geographic filters with the rules above. Add `ip.src.country` to your expression to restrict the rule to specific regions. For examples, refer to [Block traffic by geographical location](/waf/custom-rules/use-cases/block-by-geographical-location/).
 
-### WAF rate limit high-frequency paths
+### Protect high-frequency paths with WAF rate limiting
 
 Beyond form endpoints, bots also target checkout flows, API endpoints, and other high-value paths. Rate limiting rules cap the number of requests a single client can make to these paths within a time window.
 
@@ -257,7 +257,7 @@ Beyond form endpoints, bots also target checkout flows, API endpoints, and other
    - **Counting characteristic** (the field used to group requests): IP address
    - **Rate**: 10 requests per 1 minute
    - **Action**: Log
-4. Review the results in **Security** > **Events** after 24-48 hours. Check whether any legitimate traffic would have been blocked.
+4. Review the results in [Security Events](/waf/analytics/security-events/) after 24-48 hours. Check whether any legitimate traffic would have been blocked.
 5. Once you are confident the threshold is correct, change the action from Log to **Managed Challenge** or **Block**.
 
 For step-by-step rule creation, refer to [Create a rate limiting rule in the dashboard](/waf/rate-limiting-rules/create-zone-dashboard/). For additional patterns and thresholds, refer to [Rate limiting best practices](/waf/rate-limiting-rules/best-practices/).
@@ -266,7 +266,7 @@ For step-by-step rule creation, refer to [Create a rate limiting rule in the das
 Enterprise customers can use the **Request rate analysis** tab in Security Analytics to visualize request rate distributions and set thresholds using an interactive slider. On Free, Pro, and Business plans, estimate thresholds based on your expected traffic patterns and use the Log action to validate before enforcing. Refer to [Find an appropriate rate limit](/waf/rate-limiting-rules/find-rate-limit/) for the full methodology.
 :::
 
-### Use bot score in WAF custom rules
+### Target bot traffic by score with WAF custom rules
 
 :::note[Bot score in custom rules requires Enterprise Bot Management]
 The `cf.bot_management.score` field is only available to Enterprise customers who have purchased [Bot Management](/bots/plans/bm-subscription/). Pro and Business customers can see bot traffic divided into groupings (Automated, Likely automated, Likely human, Verified bot) in the dashboard, but cannot reference granular bot scores in custom rule expressions. On Free plans, use `cf.client.bot` to identify verified bots. Refer to [Bot scores](/bots/concepts/bot-score/) for details on each plan's capabilities.
@@ -302,7 +302,7 @@ For broader protection, use a layered set of rules ordered by priority:
 
 <Render file="bot-score-baseline-rules" product="bots" />
 
-Deploy these rules in order so the Skip rule executes first. Set rules 2 and 3 to **Log** initially, review the matched traffic in **Security** > **Events** for 24-48 hours, then change to **Block** and **Managed Challenge** once you confirm the thresholds are not catching legitimate traffic.
+Deploy these rules in order so the Skip rule executes first. Set rules 2 and 3 to **Log** initially, review the matched traffic in [Security Events](/waf/analytics/security-events/) for 24-48 hours, then change to **Block** and **Managed Challenge** once you confirm the thresholds are not catching legitimate traffic.
 
 For the full list of bot management fields available in rule expressions, refer to [Bot Management variables](/bots/reference/bot-management-variables/).
 
@@ -317,7 +317,7 @@ Security Events displays every request that Cloudflare mitigated, including bloc
 <Tabs syncKey="dashNewNav">
 <TabItem label="New dashboard" icon="rocket">
 
-1. In the Cloudflare dashboard, go to the **Analytics** page.
+1. In the Cloudflare dashboard, go to **Security** > **Analytics**.
 2. Select the **Events** tab.
 
 </TabItem>
