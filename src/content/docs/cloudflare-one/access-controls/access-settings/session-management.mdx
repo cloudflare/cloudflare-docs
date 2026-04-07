@@ -4,8 +4,8 @@ title: Session management
 sidebar:
   order: 2
 tags:
-- JSON web token (JWT)
-- Authentication
+  - JSON web token (JWT)
+  - Authentication
 ---
 
 import { GlossaryTooltip, Render } from "~/components";
@@ -16,9 +16,9 @@ A user session determines how long a user can access an Access application witho
 
 When a user logs in to an application protected by Access, Access validates their identity against your Access policies and generates two signed JSON Web Tokens (JWTs):
 
-| Token                                                                                 | Description                                                                                                          | Expiration                                                                                                                                       | Storage                                                                           |
-| ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- |
-| Global session token                                                                  | Stores the user's identity from the IdP and provides single sign-on (SSO) functionality for all Access applications. | [Global session duration](#global-session-duration)                                                                                              | Your Cloudflare <GlossaryTooltip term="team domain">team domain</GlossaryTooltip> |
+| Token                                                                                                               | Description                                                                                                          | Expiration                                                                                                                               | Storage                                                                           |
+| ------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| Global session token                                                                                                | Stores the user's identity from the IdP and provides single sign-on (SSO) functionality for all Access applications. | [Global session duration](#global-session-duration)                                                                                      | Your Cloudflare <GlossaryTooltip term="team domain">team domain</GlossaryTooltip> |
 | [Application token](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/) | Allows the user to access a specific Access application.                                                             | [Policy session duration](#policy-session-duration), which defaults to the [application session duration](#application-session-duration) | The hostname protected by the Access application                                  |
 
 The user can access the application for the entire duration of the application token's lifecycle. When the application token expires, Cloudflare will automatically issue a new application token if the global token is still valid (and the user's identity still passes your Access policies). If the global token has also expired, the user will be prompted to re-authenticate with the IdP.
@@ -31,6 +31,10 @@ In summary, Access checks sessions from most specific to least specific:
 2. **[Policy session](#policy-session-duration)** — Controls access to a specific application for users matching a specific policy.
 3. **[Application session](#application-session-duration)** — The default policy session duration for all policies in the application.
 4. **[Global session](#global-session-duration)** — Controls how often the user must log in to the IdP across all applications.
+
+:::note
+If you use [independent MFA](/cloudflare-one/access-controls/access-settings/independent-mfa/), the MFA session duration is managed separately from the sessions listed above. A user can have a valid application session but still be prompted for MFA if their MFA session has expired. For more information, refer to [MFA session duration](/cloudflare-one/access-controls/policies/mfa-requirements/#mfa-session-duration).
+:::
 
 Refer to the [Order of enforcement](#order-of-enforcement) flowchart for a visual representation.
 

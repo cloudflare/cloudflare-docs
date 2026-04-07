@@ -1,0 +1,174 @@
+---
+pcx_content_type: how-to
+title: Independent MFA
+sidebar:
+  order: 4
+tags:
+  - Authentication
+---
+
+import { Tabs, TabItem, APIRequest } from "~/components";
+
+Independent multi-factor authentication (MFA) allows you to enforce MFA requirements directly in Access without relying on your identity provider (IdP). Users authenticate with their IdP as usual, and Access prompts for an additional factor before granting access to the application.
+
+Before you can [enforce independent MFA on applications and policies](/cloudflare-one/access-controls/policies/mfa-requirements/#enforce-independent-mfa), you must turn on independent MFA at the organization level.
+
+## Prerequisites
+
+- An [authentication domain](/cloudflare-one/setup/) set for your organization.
+
+## Turn on independent MFA
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Access settings**.
+2. In the **Allow multi-factor authentication (MFA)** section, select the authenticator types you want to allow in your organization:
+   - **Authenticator application** — Time-based one-time passwords from authenticator apps.
+   - **Security key** — Hardware security keys such as YubiKeys.
+   - **Biometrics** — Device-bound authenticators such as macOS Touch ID, Face ID, and Windows Hello.
+3. Set a **Global MFA session duration**. This determines how long a successful MFA authentication remains valid before the user must authenticate again. The default is 24 hours.
+4. Select **Save**.
+
+</TabItem> <TabItem label="API">
+
+Send a `PUT` request to update your Access organization settings with MFA configuration:
+
+<APIRequest
+	path="/accounts/{account_id}/access/organizations"
+	method="PUT"
+	json={{
+		mfa_config: {
+			allowed_authenticators: ["totp", "biometrics", "security_key"],
+			session_duration: "24h",
+		},
+	}}
+/>
+
+Set `allowed_authenticators` to an array containing one or more of:
+
+- `totp` — Authenticator application (time-based one-time passwords).
+- `biometrics` — Biometrics (Touch ID, Face ID, Windows Hello).
+- `security_key` — Security keys (YubiKeys).
+
+Set `session_duration` to a duration string (for example, `30m`, `1h`, `24h`).
+
+</TabItem> </Tabs>
+
+After you turn on independent MFA, users can [enroll authenticators](/cloudflare-one/access-controls/policies/mfa-requirements/#enroll-authenticators) through the [App Launcher](/cloudflare-one/access-controls/access-settings/app-launcher/).
+
+## Enforce MFA for all applications
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Access settings**.
+2. In the **Allow multi-factor authentication (MFA)** section, select **Apply global MFA settings by default**.
+
+</TabItem> <TabItem label="API">
+
+Send a `PUT` request with `mfa_required_for_all_apps` set to `true`:
+
+<APIRequest
+	path="/accounts/{account_id}/access/organizations"
+	method="PUT"
+	json={{
+		mfa_required_for_all_apps: true,
+	}}
+/>
+
+</TabItem> </Tabs>
+
+All Access applications will require MFA using the organization-level settings (allowed authenticators and session duration). Individual applications and policies can override this setting by selecting **Custom MFA settings** or **Disable MFA**. For more information, refer to [Configure independent MFA for an application](/cloudflare-one/access-controls/policies/mfa-requirements/#configure-independent-mfa-for-an-application).
+
+:::note
+The [App Launcher](/cloudflare-one/access-controls/access-settings/app-launcher/) is exempt from the global MFA requirement. Users must be able to access the App Launcher without MFA to enroll their authenticators.
+:::
+
+## Turn off independent MFA
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Access settings**.
+2. In the **Allow multi-factor authentication (MFA)** section, toggle off all authenticator types. If any applications or policies use custom MFA settings, you must remove those custom settings first.
+
+</TabItem> <TabItem label="API">
+
+Send a `PUT` request with an empty `allowed_authenticators` array:
+
+<APIRequest
+	path="/accounts/{account_id}/access/organizations"
+	method="PUT"
+	json={{
+		mfa_config: {
+			allowed_authenticators: [],
+		},
+	}}
+/>
+
+</TabItem> </Tabs>
+
+:::caution
+Turning off independent MFA removes MFA enforcement from all applications. Verify that your identity provider MFA policies provide adequate coverage before you turn off this feature.
+:::
+
+## Manage user authenticators
+
+Administrators can view and delete authenticators enrolled by users. This is useful for resolving lockouts or responding to security events.
+
+### View user authenticators
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Team & Resources** > **Users**.
+2. Select a user.
+3. In the **MFA devices** section, view the user's enrolled authenticators. Each entry shows the MFA ID, device name, and the MFA method.
+
+</TabItem> <TabItem label="API">
+
+Send a `GET` request to list all authenticators for a user:
+
+<APIRequest
+	path="/accounts/{account_id}/access/users/{user_id}/mfa_authenticators"
+	method="GET"
+/>
+
+</TabItem> </Tabs>
+
+### Delete a user authenticator
+
+If a user is locked out or you need to revoke an authenticator for security reasons, you can delete it from the dashboard or API.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Team & Resources** > **Users**.
+2. Select the user whose authenticator you want to delete.
+3. In the **MFA devices** section, find the authenticator and select **Delete**.
+
+The user will need to enroll a new authenticator the next time they access an application that requires MFA.
+
+</TabItem> <TabItem label="API">
+
+Send a `DELETE` request to remove a specific authenticator:
+
+<APIRequest
+	path="/accounts/{account_id}/access/users/{user_id}/mfa_authenticators/{authenticator_id}"
+	method="DELETE"
+/>
+
+Parameters:
+
+- `user_id` — The UUID of the user. You can find this in the user details under **Team & Resources** > **Users**.
+- `authenticator_id` — The unique identifier for the authenticator.
+
+</TabItem> </Tabs>
+
+### Lockout recovery
+
+If a user loses access to all of their enrolled authenticators:
+
+1. Delete the user's authenticators using the steps above.
+2. The user can then access a protected application and will be provided a link to enroll a new authenticator.
+3. Alternatively, share the direct enrollment link with the user: `<your-team-name>.cloudflareaccess.com/#/AddMfaDevice`.
+
+:::note
+To prevent lockouts, recommend that users enroll multiple authenticators (for example, a security key and an authenticator application) when available.
+:::
