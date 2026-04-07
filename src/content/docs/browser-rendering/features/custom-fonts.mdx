@@ -14,10 +14,10 @@ If you need a specific font that is not pre-installed, you can inject it into th
 
 How you add a custom font depends on how you are using Browser Rendering:
 
-- If you are using [Workers Bindings](/browser-rendering/workers-bindings/) with [Puppeteer](/browser-rendering/puppeteer/) or [Playwright](/browser-rendering/playwright/), refer to the [Workers Bindings](#workers-bindings) section.
-- If you are using the [REST API](/browser-rendering/rest-api/), refer to the [REST API](#rest-api) section.
+- If you are using [Puppeteer](/browser-rendering/puppeteer/) or [Playwright](/browser-rendering/playwright/), refer to the [Puppeteer and Playwright](#puppeteer-and-playwright) section.
+- If you are using [Quick Actions](/browser-rendering/quick-actions/), refer to the [Quick Actions](#quick-actions) section.
 
-## Workers Bindings
+## Puppeteer and Playwright
 
 Use `addStyleTag` to inject a `@font-face` rule into the page before capturing your screenshot or PDF. You can load the font file from a CDN URL or embed it as a Base64-encoded string.
 
@@ -119,9 +119,9 @@ await page.addStyleTag({
 
 </TabItem> </Tabs>
 
-## REST API
+## Quick Actions
 
-When using the [REST API](/browser-rendering/rest-api/), you can load custom fonts by including the `addStyleTag` parameter in your request body. This works with both the [screenshot](/browser-rendering/rest-api/screenshot-endpoint/) and [PDF](/browser-rendering/rest-api/pdf-endpoint/) endpoints.
+When using [Quick Actions](/browser-rendering/quick-actions/), you can load custom fonts by including the `addStyleTag` parameter in your request body. This works with both the [screenshot](/browser-rendering/quick-actions/screenshot-endpoint/) and [PDF](/browser-rendering/quick-actions/pdf-endpoint/) endpoints.
 
 ### From a CDN URL
 
@@ -157,4 +157,4 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
   --output "screenshot.png"
 ```
 
-For more details on using `addStyleTag` with the REST API, refer to [Customize CSS and embed custom JavaScript](/browser-rendering/rest-api/screenshot-endpoint/#customize-css-and-embed-custom-javascript).
+For more details on using `addStyleTag` with Quick Actions, refer to [Customize CSS and embed custom JavaScript](/browser-rendering/quick-actions/screenshot-endpoint/#customize-css-and-embed-custom-javascript).

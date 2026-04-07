@@ -7,81 +7,81 @@ sidebar:
 
 import { CardGrid, LinkCard } from "~/components"
 
-## REST API examples
+## Quick Actions examples
 
-Use these [REST API](/browser-rendering/rest-api/) examples to perform quick, common tasks.
+Use these [Quick Actions](/browser-rendering/quick-actions/) examples to perform common tasks with a single HTTP request.
 
 <CardGrid>
     <LinkCard
         title="Fetch rendered HTML from a URL"
         description="Capture fully rendered HTML from a webpage after JavaScript execution."
-        href="/browser-rendering/rest-api/content-endpoint/#fetch-rendered-html-from-a-url"
+        href="/browser-rendering/quick-actions/content-endpoint/#fetch-rendered-html-from-a-url"
     />
     <LinkCard
         title="Take a screenshot of the visible viewport"
         description="Capture a screenshot of a fully rendered webpage from a URL or custom HTML."
-        href="/browser-rendering/rest-api/screenshot-endpoint/#basic-usage"
+        href="/browser-rendering/quick-actions/screenshot-endpoint/#basic-usage"
     />
     <LinkCard
         title="Take a screenshot of the full page"
         description="Capture a screenshot of an entire scrollable webpage, not just the visible viewport."
-        href="/browser-rendering/rest-api/screenshot-endpoint/#navigate-and-capture-a-full-page-screenshot"
+        href="/browser-rendering/quick-actions/screenshot-endpoint/#navigate-and-capture-a-full-page-screenshot"
     />
     <LinkCard
         title="Take a screenshot of an authenticated page"
         description="Capture a screenshot of a webpage that requires login using cookies, HTTP Basic Auth, or custom headers."
-        href="/browser-rendering/rest-api/screenshot-endpoint/#capture-a-screenshot-of-an-authenticated-page"
+        href="/browser-rendering/quick-actions/screenshot-endpoint/#capture-a-screenshot-of-an-authenticated-page"
     />
     <LinkCard
         title="Generate a PDF"
         description="Generate a PDF from a URL or custom HTML and CSS."
-        href="/browser-rendering/rest-api/pdf-endpoint/#basic-usage"
+        href="/browser-rendering/quick-actions/pdf-endpoint/#basic-usage"
     />
     <LinkCard
         title="Extract Markdown from a URL"
         description="Convert a webpage's content into Markdown format."
-        href="/browser-rendering/rest-api/markdown-endpoint/#convert-a-url-to-markdown"
+        href="/browser-rendering/quick-actions/markdown-endpoint/#convert-a-url-to-markdown"
     />
     <LinkCard
         title="Capture a snapshot from a URL"
         description="Capture both the rendered HTML and a screenshot from a webpage in a single request."
-        href="/browser-rendering/rest-api/snapshot/#capture-a-snapshot-from-a-url"
+        href="/browser-rendering/quick-actions/snapshot/#capture-a-snapshot-from-a-url"
     />
     <LinkCard
         title="Scrape headings and links from a URL"
         description="Extract structured data from specific elements on a webpage using CSS selectors."
-        href="/browser-rendering/rest-api/scrape-endpoint/#extract-headings-and-links-from-a-url"
+        href="/browser-rendering/quick-actions/scrape-endpoint/#extract-headings-and-links-from-a-url"
     />
     <LinkCard
         title="Capture structured data with an AI prompt and JSON schema"
         description="Extract structured data from a webpage using AI using a prompt or JSON schema."
-        href="/browser-rendering/rest-api/json-endpoint/#with-a-prompt-and-json-schema"
+        href="/browser-rendering/quick-actions/json-endpoint/#with-a-prompt-and-json-schema"
     />
     <LinkCard
         title="Retrieve links from a URL"
         description="Retrieve all links from a webpage, including hidden ones."
-        href="/browser-rendering/rest-api/links-endpoint/#get-all-links-on-a-page"
+        href="/browser-rendering/quick-actions/links-endpoint/#get-all-links-on-a-page"
     />
     <LinkCard
         title="Crawl a documentation site"
         description="Crawl documentation pages with include/exclude patterns to build a knowledge base."
-        href="/browser-rendering/rest-api/crawl-endpoint/#documentation-site-crawl"
+        href="/browser-rendering/quick-actions/crawl-endpoint/#documentation-site-crawl"
     />
     <LinkCard
         title="Extract structured product data with AI"
         description="Crawl a product catalog and extract structured JSON data using AI."
-        href="/browser-rendering/rest-api/crawl-endpoint/#product-catalog-extraction-with-ai"
+        href="/browser-rendering/quick-actions/crawl-endpoint/#product-catalog-extraction-with-ai"
     />
     <LinkCard
         title="Fast static content fetch"
         description="Crawl static sites without JavaScript rendering for faster results."
-        href="/browser-rendering/rest-api/crawl-endpoint/#fast-static-content-fetch"
+        href="/browser-rendering/quick-actions/crawl-endpoint/#fast-static-content-fetch"
     />
 </CardGrid>
 
-## Workers Bindings examples
+## Browser automation examples
 
-Use [Workers Bindings](/browser-rendering/workers-bindings/) for dynamic, multi-step browser automation with [Puppeteer](/browser-rendering/puppeteer/), [Playwright](/browser-rendering/playwright/), or [Stagehand](/browser-rendering/stagehand/).
+Use [Puppeteer](/browser-rendering/puppeteer/), [Playwright](/browser-rendering/playwright/), or [Stagehand](/browser-rendering/stagehand/) for dynamic, multi-step browser automation within Cloudflare Workers.
 
 <CardGrid>
     <LinkCard
@@ -107,12 +107,12 @@ Use [Workers Bindings](/browser-rendering/workers-bindings/) for dynamic, multi-
     <LinkCard
         title="Reuse browser sessions"
         description="Improve performance by reusing browser sessions across requests."
-        href="/browser-rendering/workers-bindings/reuse-sessions/"
+        href="/browser-rendering/features/reuse-sessions/"
     />
     <LinkCard
         title="Persist sessions with Durable Objects"
         description="Use Durable Objects to maintain long-running browser sessions."
-        href="/browser-rendering/workers-bindings/browser-rendering-with-do/"
+        href="/browser-rendering/how-to/browser-rendering-with-do/"
     />
     <LinkCard
         title="AI-powered browser automation with Stagehand"

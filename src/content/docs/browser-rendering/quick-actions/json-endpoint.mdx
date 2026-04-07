@@ -13,7 +13,7 @@ The `/json` endpoint extracts structured data from a webpage. You can specify th
 
 :::note[Note]
 
-By default, the `/json` endpoint leverages [Workers AI](/workers-ai/) for data extraction using [`@cf/meta/llama-3.3-70b-instruct-fp8-fast`](/workers-ai/models/llama-3.3-70b-instruct-fp8-fast/). Using this endpoint incurs usage on Workers AI, which you can monitor in the [Workers AI Dashboard](https://dash.cloudflare.com/?to=/:account/ai/workers-ai). To use a different model, refer to [Using a custom model (BYO API Key)](/browser-rendering/rest-api/json-endpoint/#using-a-custom-model-byo-api-key).
+By default, the `/json` endpoint leverages [Workers AI](/workers-ai/) for data extraction using [`@cf/meta/llama-3.3-70b-instruct-fp8-fast`](/workers-ai/models/llama-3.3-70b-instruct-fp8-fast/). Using this endpoint incurs usage on Workers AI, which you can monitor in the [Workers AI Dashboard](https://dash.cloudflare.com/?to=/:account/ai/workers-ai). To use a different model, refer to [Using a custom model (BYO API Key)](/browser-rendering/quick-actions/json-endpoint/#using-a-custom-model-byo-api-key).
 
 :::
 
@@ -385,7 +385,7 @@ If the `/json` endpoint returns null or empty results:
 
 - **Provide a clear prompt** — Be specific about what data to extract and where it appears on the page (for example, "Extract the product name, price, and description from the main product section").
 - **Define a response schema** — Use `response_format` with a JSON schema to enforce the expected output structure.
-- **Use a custom model** — If the default [Workers AI](/workers-ai/) model does not produce the desired results, use the `custom_ai` parameter to specify a different model. Refer to [Using a custom model (BYO API Key)](/browser-rendering/rest-api/json-endpoint/#using-a-custom-model-byo-api-key) for details.
+- **Use a custom model** — If the default [Workers AI](/workers-ai/) model does not produce the desired results, use the `custom_ai` parameter to specify a different model. Refer to [Using a custom model (BYO API Key)](/browser-rendering/quick-actions/json-endpoint/#using-a-custom-model-byo-api-key) for details.
 
 <Render file="javascript-heavy-pages" product="browser-rendering" />
 

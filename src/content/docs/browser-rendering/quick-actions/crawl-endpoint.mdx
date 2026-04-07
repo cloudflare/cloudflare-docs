@@ -21,7 +21,7 @@ https://api.cloudflare.com/client/v4/accounts/<account_id>/browser-rendering/cra
 ## Required fields
 - `url` (string)
 
-Refer to [optional parameters](/browser-rendering/rest-api/crawl-endpoint/#optional-parameters) for additional customization options.
+Refer to [optional parameters](/browser-rendering/quick-actions/crawl-endpoint/#optional-parameters) for additional customization options.
 
 ## Common use cases
 
@@ -31,8 +31,8 @@ Refer to [optional parameters](/browser-rendering/rest-api/crawl-endpoint/#optio
 ## How it works
 
 There are two steps to using the `/crawl` endpoint:
-1. [Initiate the crawl job](/browser-rendering/rest-api/crawl-endpoint/#initiate-the-crawl-job) — A `POST` request where you initiate the crawl and receive a response with a job `id`.
-2. [Request results of the crawl job](/browser-rendering/rest-api/crawl-endpoint/#request-results-of-the-crawl-job) — A `GET` request where you request the status or results of the crawl.
+1. [Initiate the crawl job](/browser-rendering/quick-actions/crawl-endpoint/#initiate-the-crawl-job) — A `POST` request where you initiate the crawl and receive a response with a job `id`.
+2. [Request results of the crawl job](/browser-rendering/quick-actions/crawl-endpoint/#request-results-of-the-crawl-job) — A `GET` request where you request the status or results of the crawl.
 
 Crawl jobs have a maximum run time of seven days. If a job does not finish within this time, it will be cancelled due to timeout. Job results are available for 14 days after the job completes, after which the job data is deleted.
 
@@ -42,7 +42,7 @@ Users on the Workers Free plan are subject to additional crawl-specific restrict
 
 ## Initiate the crawl job
 
-Send a `POST` request with a `url` to start a crawl job. The API responds immediately with a job `id` you will use to retrieve results. Refer to [optional parameters](/browser-rendering/rest-api/crawl-endpoint/#optional-parameters) for additional customization options.
+Send a `POST` request with a `url` to start a crawl job. The API responds immediately with a job `id` you will use to retrieve results. Refer to [optional parameters](/browser-rendering/quick-actions/crawl-endpoint/#optional-parameters) for additional customization options.
 
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl' \
@@ -169,7 +169,7 @@ Example response:
 
 If a crawled page returns an HTTP error (such as `402`, `403`, or `500`), the record for that URL will have `"status": "errored"`.
 
-This information is only available in the crawl results (step 2) — the [initiation response](/browser-rendering/rest-api/crawl-endpoint/#initiate-the-crawl-job) only returns the job `id`. Because crawl jobs run asynchronously, the crawler does not fetch page content at initiation time.
+This information is only available in the crawl results (step 2) — the [initiation response](/browser-rendering/quick-actions/crawl-endpoint/#initiate-the-crawl-job) only returns the job `id`. Because crawl jobs run asynchronously, the crawler does not fetch page content at initiation time.
 
 To view only errored records, filter by `status=errored`:
 
@@ -200,9 +200,9 @@ The following optional parameters can be used in your crawl request, in addition
 | `limit` | Number | Maximum number of pages to crawl (default is 10, maximum is 100,000). |
 | `depth` | Number | Maximum link depth to crawl from the starting URL (default is 100,000, maximum is 100,000). |
 | `source` | String | Source for discovering URLs. Options are `all`, `sitemaps`, or `links`. Default is `all`. |
-| `formats` | Array of strings | Response format (default is HTML, other options are Markdown and JSON). The JSON format leverages [Workers AI](/workers-ai/) by default for data extraction, which incurs usage on Workers AI. Refer to the [`/json` endpoint](/browser-rendering/rest-api/json-endpoint/) to learn more, including how to use a custom model and fallbacks. |
+| `formats` | Array of strings | Response format (default is HTML, other options are Markdown and JSON). The JSON format leverages [Workers AI](/workers-ai/) by default for data extraction, which incurs usage on Workers AI. Refer to the [`/json` endpoint](/browser-rendering/quick-actions/json-endpoint/) to learn more, including how to use a custom model and fallbacks. |
 | `render` | Boolean | If false, does a fast HTML fetch without executing JavaScript (default is true, [learn more about `render`](#render-parameter)). |
-| `jsonOptions` | Object | Only required if `formats` includes `json`. Contains `prompt`, `response_format`, and `custom_ai` properties (same types as the [`/json` endpoint](/browser-rendering/rest-api/json-endpoint/)). |
+| `jsonOptions` | Object | Only required if `formats` includes `json`. Contains `prompt`, `response_format`, and `custom_ai` properties (same types as the [`/json` endpoint](/browser-rendering/quick-actions/json-endpoint/)). |
 | `maxAge` | Number | Maximum length of time in seconds the crawler can use a cached resource before it must re-fetch it from the origin server (default is 86,400, maximum is 604,800). Cache is served from R2 only if the URL and parameters exactly match. |
 | `modifiedSince` | Number | Unix timestamp (in seconds) indicating to only crawl pages that were modified since this time. |
 | `options.includeExternalLinks` | Boolean | If true, follows links to external domains (default is false). |
@@ -298,7 +298,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser
 
 ### Product catalog extraction with AI
 
-Extract structured product data using the `json` format. This leverages [Workers AI](/workers-ai/) by default. Refer to the [`/json` endpoint](/browser-rendering/rest-api/json-endpoint/) to learn more.
+Extract structured product data using the `json` format. This leverages [Workers AI](/workers-ai/) by default. Refer to the [`/json` endpoint](/browser-rendering/quick-actions/json-endpoint/) to learn more.
 
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl' \
@@ -452,7 +452,7 @@ If you are crawling your own site and want Browser Rendering to access it freely
 
 ### User-Agent
 
-The `/crawl` endpoint uses `CloudflareBrowserRenderingCrawler/1.0` as its User-Agent, which is different from the other [REST API](/browser-rendering/rest-api/) endpoints. This User-Agent is not customizable. Unlike the other REST API endpoints and [Workers Bindings](/browser-rendering/workers-bindings/), the `userAgent` parameter is not supported on the `/crawl` endpoint.
+The `/crawl` endpoint uses `CloudflareBrowserRenderingCrawler/1.0` as its User-Agent, which is different from other [Quick Actions](/browser-rendering/quick-actions/) endpoints. This User-Agent is not customizable. Unlike other Quick Actions endpoints, the `userAgent` parameter is not supported on the `/crawl` endpoint.
 
 For a full list of default User-Agent strings, refer to [Automatic request headers](/browser-rendering/reference/automatic-request-headers/#user-agent).
 
@@ -540,7 +540,7 @@ If the `json` format returns null or empty results:
 
 - **Provide a clear prompt** — Be specific about what data to extract and where it appears on the page (for example, "Extract the product name, price, and description from the main product section").
 - **Define a response schema** — Use `response_format` with a JSON schema to enforce the expected output structure.
-- **Use a custom model** — If the default [Workers AI](/workers-ai/) model does not produce the desired results, use the `custom_ai` parameter to specify a different model. Refer to [Using a custom model (BYO API Key)](/browser-rendering/rest-api/json-endpoint/#using-a-custom-model-byo-api-key) for details.
+- **Use a custom model** — If the default [Workers AI](/workers-ai/) model does not produce the desired results, use the `custom_ai` parameter to specify a different model. Refer to [Using a custom model (BYO API Key)](/browser-rendering/quick-actions/json-endpoint/#using-a-custom-model-byo-api-key) for details.
 
 If you have questions or encounter other errors, refer to the [Browser Rendering FAQ and troubleshooting guide](/browser-rendering/faq/).
 

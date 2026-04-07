@@ -8,28 +8,28 @@ import { DashButton, Plan } from "~/components"
 
 <Plan type="workers-all" />
 
-There are two ways to use Browser Rendering. Depending on the method you use, here is how billing works:
-- [**REST API**](/browser-rendering/rest-api/): Charged for browser hours only
-- [**Workers Bindings**](/browser-rendering/workers-bindings/): Charged for both browser hours and concurrent browsers
+Billing depends on how you use Browser Rendering:
+- [**Quick Actions**](/browser-rendering/quick-actions/): Charged for browser hours only.
+- **Browser Sessions** ([Puppeteer](/browser-rendering/puppeteer/), [Playwright](/browser-rendering/playwright/), [CDP](/browser-rendering/cdp/)): Direct browser control, charged for both browser hours and concurrent browsers.
 
-Browser hours are shared across both methods (REST API and Workers Bindings).
+Browser hours are shared across all methods.
 
 |                                                        | Workers Free                | Workers Paid |
 |--------------------------------------------------------|-----------------------------|--------------|
 | Browser hours                                          | 10 minutes per day          | 10 hours per month, then $0.09 per additional hour |
-| Concurrent browsers (Workers Bindings only)            | 3 browsers                  | 10 browsers ([averaged monthly](#how-is-the-number-of-concurrent-browsers-calculated)), then $2.00 per additional browser |
+| Concurrent browsers (Browser Sessions only)            | 3 browsers                  | 10 browsers ([averaged monthly](#how-is-the-number-of-concurrent-browsers-calculated)), then $2.00 per additional browser |
 
 ## Examples of Workers Paid pricing
 <br/>
-#### Example: REST API pricing
-If a Workers Paid user uses the REST API for 50 hours during the month, the estimated cost for the month is as follows.
+#### Example: Quick Actions pricing
+If a Workers Paid user uses Quick Actions for 50 hours during the month, the estimated cost for the month is as follows.
 
 For browser hours:
 <br/>50 hours - 10 hours (included in plan) = 40 hours
 <br/>40 hours × $0.09 per hour = $3.60
 
-#### Example: Workers Bindings pricing
-If a Workers Paid plan user uses the Workers Bindings method for 50 hours during the month, and uses 10 concurrent browsers for the first 15 days and 20 concurrent browsers the last 15 days, the estimated cost for the month is as follows.
+#### Example: Browser Sessions pricing
+If a Workers Paid plan user uses Browser Sessions (Puppeteer, Playwright, or CDP) for 50 hours during the month, and uses 10 concurrent browsers for the first 15 days and 20 concurrent browsers the last 15 days, the estimated cost for the month is as follows.
 
 For browser hours:
 <br/>50 hours - 10 hours (included in plan) = 40 hours
@@ -54,7 +54,7 @@ You can monitor Browser Rendering usage in two ways:
 
    <DashButton url="/?to=/:account/workers/browser-rendering" />
 
-- The `X-Browser-Ms-Used` header, which is returned in every REST API response, reports browser time used for the request (in milliseconds). You can also access this header using the Typescript SDK with the .asResponse() method:
+- The `X-Browser-Ms-Used` header, which is returned in every Quick Actions response, reports browser time used for the request (in milliseconds). You can also access this header using the Typescript SDK with the .asResponse() method:
 
    ```ts
    const contentRes = await client.browserRendering.content.create({
@@ -67,7 +67,7 @@ You can monitor Browser Rendering usage in two ways:
 You can then use the tables above to estimate your costs based on your usage.
 
 ###  Do failed API calls, such as those that time out, add to billable browser hours?
-No. If a request to the Browser Rendering REST API fails with a `waitForTimeout` error, the browser session is not charged.
+No. If a Quick Actions request fails with a `waitForTimeout` error, the browser session is not charged.
 
 ### How is the number of concurrent browsers calculated?
 Cloudflare calculates concurrent browsers as the monthly average of your daily peak usage. In other words, we record the peak number of concurrent browsers each day and then average those values over the month. This approach reflects your typical traffic and ensures you are not disproportionately charged for brief spikes in browser concurrency.

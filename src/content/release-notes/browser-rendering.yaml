@@ -10,11 +10,11 @@ entries:
   - publish_date: "2026-03-17"
     title: "Separate bot detection IDs for Browser Rendering methods"
     description: |-
-      * Browser Rendering now uses separate bot detection IDs for the [REST API](/browser-rendering/rest-api/) and [Workers Bindings](/browser-rendering/workers-bindings/) versus the [crawl endpoint](/browser-rendering/rest-api/crawl-endpoint/), allowing you to identify and control each method independently. For the full list of IDs, refer to [Automatic request headers](/browser-rendering/reference/automatic-request-headers/#bot-detection).
+      * Browser Rendering now uses separate bot detection IDs for the [REST API](/browser-rendering/quick-actions/) and [Workers Bindings](/browser-rendering/workers-bindings/) versus the [crawl endpoint](/browser-rendering/quick-actions/crawl-endpoint/), allowing you to identify and control each method independently. For the full list of IDs, refer to [Automatic request headers](/browser-rendering/reference/automatic-request-headers/#bot-detection).
   - publish_date: "2026-03-10"
     title: "New REST API endpoint: /crawl (Beta)"
     description: |-
-      * Added the [`/crawl` endpoint](/browser-rendering/rest-api/crawl-endpoint/) (beta) to the REST API. The `/crawl` endpoint scrapes content from a starting URL and follows links across the site, up to a configurable depth or page limit. Responses can be returned as HTML, Markdown, or structured JSON (powered by [Workers AI](/workers-ai/)).
+      * Added the [`/crawl` endpoint](/browser-rendering/quick-actions/crawl-endpoint/) (beta) to the REST API. The `/crawl` endpoint scrapes content from a starting URL and follows links across the site, up to a configurable depth or page limit. Responses can be returned as HTML, Markdown, or structured JSON (powered by [Workers AI](/workers-ai/)).
   - publish_date: "2026-03-04"
     title: "Increased REST API rate limits"
     description: |-
@@ -46,7 +46,7 @@ entries:
   - publish_date: "2026-01-07"
     title: Bug fixes for JSON endpoint, waitForSelector timeout, and WebSocket rendering
     description: |-
-      * Updated the [`/json` endpoint](/browser-rendering/rest-api/json-endpoint/) fallback model and improved error handling for when plan limits of Workers Free plan users are reached.
+      * Updated the [`/json` endpoint](/browser-rendering/quick-actions/json-endpoint/) fallback model and improved error handling for when plan limits of Workers Free plan users are reached.
       * REST API requests using `waitForSelector` will now correctly fail if the specified selector is not found within the time limit.
       * Fixed an issue where pages using WebSockets were not rendering correctly.
   - publish_date: "2025-12-04"
@@ -56,7 +56,7 @@ entries:
   - publish_date: "2025-12-03"
     title: Improved AI JSON response parsing and debugging
     description: |-
-      * Added `rawAiResponse` field to [`/json` endpoint](/browser-rendering/rest-api/json-endpoint/) error responses, allowing you to inspect the unparsed AI output when JSON parsing fails for easier debugging.
+      * Added `rawAiResponse` field to [`/json` endpoint](/browser-rendering/quick-actions/json-endpoint/) error responses, allowing you to inspect the unparsed AI output when JSON parsing fails for easier debugging.
       * Improved AI response handling to better distinguish between valid JSON objects, arrays, and invalid payloads, increasing type safety and reliability.
   - publish_date: "2025-10-21"
     title: Added guidance on REST API timeouts and custom fonts
@@ -68,11 +68,11 @@ entries:
     description: |-
       * [Playwright](/browser-rendering/playwright/) support in Browser Rendering is now GA. We've upgraded to [Playwright v1.55](https://playwright.dev/docs/release-notes#version-155).
       * Added support for [Stagehand](/browser-rendering/stagehand/), an open source browser automation framework, powered by [Workers AI](/workers-ai). Stagehand enables developers to build more reliably and flexibly by combining code with natural-language instructions.
-      * Increased [limits](/browser-rendering/limits/#workers-paid) for paid plans on both the [REST API](https://developers.cloudflare.com/browser-rendering/rest-api/) and [Workers Bindings](https://developers.cloudflare.com/browser-rendering/workers-bindings/).
+      * Increased [limits](/browser-rendering/limits/#workers-paid) for paid plans on both the [REST API](https://developers.cloudflare.com/browser-rendering/quick-actions/) and [Workers Bindings](https://developers.cloudflare.com/browser-rendering/workers-bindings/).
   - publish_date: "2025-09-22"
     title: Added `excludeExternalLinks` parameter to `/links` REST endpoint
     description: |-
-      * Added `excludeExternalLinks` parameter when using the [`/links` endpoint](/browser-rendering/rest-api/links-endpoint/). When set to `true`, links pointing to outside the domain of the requested URL are excluded.
+      * Added `excludeExternalLinks` parameter when using the [`/links` endpoint](/browser-rendering/quick-actions/links-endpoint/). When set to `true`, links pointing to outside the domain of the requested URL are excluded.
   - publish_date: "2025-09-02"
     title: Added `X-Browser-Ms-Used` response header
     description: |-
@@ -90,9 +90,9 @@ entries:
     description: |-
       * [Playwright](/browser-rendering/playwright/) upgraded to [Playwright v1.54.1](https://github.com/microsoft/playwright/releases/tag/v1.54.1) and [Playwright MCP](/browser-rendering/playwright/playwright-mcp/) upgraded to be in sync with upstream Playwright MCP v0.0.30.
       * Local development with `npx wrangler dev` now supports [Playwright](/browser-rendering/playwright/) when using Browser Rendering. Upgrade to the latest version of wrangler to get started.
-      * The [`/content` endpoint](/browser-rendering/rest-api/content-endpoint/) now returns the page's title, making it easier to identify pages.
-      * The [`/json` endpoint](/browser-rendering/rest-api/json-endpoint/) now allows you to specify your own AI model for the extraction, using the `custom_ai` parameter.
-      * The default viewport size on the [`/screenshot` endpoint](/browser-rendering/rest-api/screenshot-endpoint/) has been increased from 800x600 to 1920x1080. You can still override the viewport via request options.
+      * The [`/content` endpoint](/browser-rendering/quick-actions/content-endpoint/) now returns the page's title, making it easier to identify pages.
+      * The [`/json` endpoint](/browser-rendering/quick-actions/json-endpoint/) now allows you to specify your own AI model for the extraction, using the `custom_ai` parameter.
+      * The default viewport size on the [`/screenshot` endpoint](/browser-rendering/quick-actions/screenshot-endpoint/) has been increased from 800x600 to 1920x1080. You can still override the viewport via request options.
   - publish_date: "2025-07-25"
     title: "@cloudflare/puppeteer 1.0.4 released"
     description: |-
@@ -129,8 +129,8 @@ entries:
     title: New free tier and REST API GA with additional endpoints
     description: |-
       * Browser Rendering now has a new free tier.
-      * The [REST API](/browser-rendering/rest-api/) is Generally Available.
-      * Released new endpoints [`/json`](/browser-rendering/rest-api/json-endpoint/), [`/links`](/browser-rendering/rest-api/links-endpoint/), and [`/markdown`](/browser-rendering/rest-api/markdown-endpoint/).
+      * The [REST API](/browser-rendering/quick-actions/) is Generally Available.
+      * Released new endpoints [`/json`](/browser-rendering/quick-actions/json-endpoint/), [`/links`](/browser-rendering/quick-actions/links-endpoint/), and [`/markdown`](/browser-rendering/quick-actions/markdown-endpoint/).
   - publish_date: "2025-04-04"
     title: Playwright support
     description: |-
@@ -138,7 +138,7 @@ entries:
   - publish_date: "2025-02-27"
     title: New Browser Rendering REST API
     description: |-
-      * Released a new [REST API](/browser-rendering/rest-api/) in open beta. Available to all customers with a Workers Paid Plan.
+      * Released a new [REST API](/browser-rendering/quick-actions/) in open beta. Available to all customers with a Workers Paid Plan.
   - publish_date: "2025-01-31"
     title: Increased limits
     description: |-
