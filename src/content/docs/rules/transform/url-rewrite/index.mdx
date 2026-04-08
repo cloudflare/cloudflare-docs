@@ -52,4 +52,4 @@ When using Cloudflare Images, you can use URL Rewrite Rules to serve images from
 
 - URL rewrite rules run in order, and later rules can overwrite changes done by previous rules.
 
-- The values of request and response fields are immutable within each [phase](/ruleset-engine/about/phases/), such as the `http_request_transform` phase where URL rewrite rules are defined. This means that later URL rewrite rules will still see the original field values when evaluating their filter expressions, not the values changed by previous rules. Refer to [Field values during rule evaluation](/ruleset-engine/about/rules/#field-values-during-rule-evaluation) for more information.
+- The values of request and response fields are immutable within each [phase](/ruleset-engine/about/phases/), such as the `http_request_transform` phase where URL rewrite rules are defined. This means that later URL rewrite rules will still use the original field values when evaluating their filter expressions, not the values changed by previous rules. Refer to [Field values during rule evaluation](/ruleset-engine/about/rules/#field-values-during-rule-evaluation) for more information.

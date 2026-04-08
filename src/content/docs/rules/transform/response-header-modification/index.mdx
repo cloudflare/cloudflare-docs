@@ -73,7 +73,7 @@ You can create a response header transform rule [in the dashboard](/rules/transf
 
 - Response header transform rules run in order, and later rules can overwrite changes done by previous rules.
 
-- The values of request and response fields are immutable within each [phase](/ruleset-engine/about/phases/), such as the `http_response_headers_transform` phase where response header transform rules are defined. This means that later response header transform rules will still see the original field values when evaluating their filter expressions, not the values changed by previous rules. Refer to [Field values during rule evaluation](/ruleset-engine/about/rules/#field-values-during-rule-evaluation) for more information.
+- The values of request and response fields are immutable within each [phase](/ruleset-engine/about/phases/), such as the `http_response_headers_transform` phase where response header transform rules are defined. This means that later response header transform rules will still use the original field values when evaluating their filter expressions, not the values changed by previous rules. Refer to [Field values during rule evaluation](/ruleset-engine/about/rules/#field-values-during-rule-evaluation) for more information.
 
 <Render
 	file="troubleshoot-rules-with-trace"
