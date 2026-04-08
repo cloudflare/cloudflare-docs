@@ -7,7 +7,7 @@ params:
 
 import { DashButton } from "~/components";
 
-This guide helps you diagnose IPsec tunnel issues, from initial establishment through ongoing operation. Use the sections below to identify your symptom and find the appropriate solution.
+This guide helps you diagnose IPsec tunnel issues, from initial establishment through ongoing operation. Use the following sections to identify your symptom and find the appropriate solution.
 
 ## Tunnel never establishes (IKE negotiation fails)
 
@@ -33,11 +33,11 @@ IKE negotiation fails when Phase 1 (IKE) or Phase 2 (IPsec) parameters do not ma
 
 Verify your parameters match Cloudflare's supported values. For the complete list, refer to <a href={props.supportedIpsecConfigLink}>Supported configuration parameters</a>.
 
-#### Pre-Shared Key (PSK) mismatch
+#### Pre-shared key (PSK) mismatch
 
 Authentication failures in Phase 1 indicate a PSK mismatch. To resolve:
 
-1. Regenerate the PSK in the Cloudflare dashboard.
+1. Go to the Cloudflare dashboard and regenerate the PSK.
 2. Copy the new PSK exactly — do not add extra spaces or characters.
 3. Update your router with the new PSK.
 

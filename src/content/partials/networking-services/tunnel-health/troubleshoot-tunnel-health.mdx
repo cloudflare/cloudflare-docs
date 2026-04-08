@@ -30,7 +30,7 @@ Use the following table to match your symptom to the most likely cause and first
 
 ### What you can check
 
-- **Dashboard**: Tunnel health status per data center and traffic volume per tunnel (go to **Connector health** page)
+- **Dashboard**: Tunnel health status per data center and traffic volume per tunnel (Go to **Connector health**)
 - **API**: Tunnel health status via the <a href={props.tunnelHealthChecksLink}>{props.productName} tunnel health API</a>
 - **Network Analytics**: Traffic volume, packet counts, and protocol distribution through <a href={props.networkAnalyticsLink}>Network Analytics</a>
 - **From your network**: Traceroute and MTR from your tunnel endpoint to Cloudflare tunnel addresses — this tests the path your health check responses take
@@ -48,10 +48,10 @@ If you are experiencing tunnel health issues, check these items first:
 
 1. **Health check type**: If using a stateful firewall (Palo Alto, Checkpoint, Cisco, Fortinet), change health check type from *Reply* to *Request*.
 2. **Anti-replay protection**: Disable anti-replay protection on your router, or set the replay window to `0`.
-3. **MTU settings**: Verify MTU is set correctly (typically `1476` for GRE, `1400-1450` for IPsec).
+3. **MTU settings**: Verify MTU is set correctly (typically `1476` for GRE, `1400`-`1450` for IPsec).
 4. **IPsec parameters**: Confirm your cryptographic parameters match <a href={props.tunnelsConfigLink}>Cloudflare's supported configuration</a>.
 5. **Health check direction**: {props.productName} defaults to <Markdown text={props.healthCheckDefault} />.
-6. **Cloudflare Network Firewall rules (less common)**: Ensure ICMP traffic from [Cloudflare IP addresses](https://www.cloudflare.com/ips/) is allowed.
+6. **Cloudflare Network Firewall rules (less common)**: Ensure ICMP traffic from [Cloudflare IP addresses](https://cloudflare.com/ips/) is allowed.
 
 ---
 
@@ -132,8 +132,7 @@ For instructions on monitoring tunnel status, refer to <a href={props.checkHealt
 | Direction | Behavior | Default for |
 | :---- | :---- | :--- |
 | **Bidirectional** | Probe and response both traverse the tunnel | Cloudflare WAN (formerly Magic WAN) |
-| **Unidirectional** | Probe traverses tunnel; response returns via Internet | Magic Transit (direct server return)
- |
+| **Unidirectional** | Probe traverses tunnel; response returns via Internet | Magic Transit (direct server return) |
 
 :::note
 Unidirectional health checks can be unreliable because intermediate network devices may drop ICMP reply packets. If you have egress traffic enabled, consider switching to bidirectional health checks.
@@ -203,7 +202,7 @@ Add an allow rule for ICMP traffic from Cloudflare IP addresses *before* any blo
 | :---- | :---- |
 | **Action** | Allow |
 | **Protocol** | ICMP |
-| **Source** | [Cloudflare IP ranges](https://www.cloudflare.com/ips/) |
+| **Source** | [Cloudflare IP ranges](https://cloudflare.com/ips/) |
 
 3. Position this rule *before* any rules that block ICMP traffic.
 
@@ -245,7 +244,7 @@ Set the replay window to `0` to effectively disable the check.
 
 Enable replay protection in the Cloudflare dashboard. This routes all tunnel traffic through a single server, maintaining proper sequence numbers at the cost of losing anycast benefits.
 
-1. Go to the Connectors page.
+1. Go to the **Connectors** page.
 
 	<DashButton url="/?to=/:account/magic-networks/connections" />
 
@@ -257,7 +256,7 @@ Enable replay protection in the Cloudflare dashboard. This routes all tunnel tra
 
 Enable ISAKMP invalid SPI recovery to help the router resynchronize Security Associations:
 
-```
+```txt
 configure terminal
 crypto isakmp invalid-spi-recovery
 exit
@@ -391,9 +390,9 @@ IPsec tunnel establishment can fail due to several configuration mismatches:
 
 4. **Verify firewall rules:** Ensure your edge firewall permits:
 
-   - UDP port 500 (IKE)
-   - UDP port 4500 (IKE NAT-T)
-   - IP protocol 50 (ESP)
+   - UDP port `500` (IKE)
+   - UDP port `4500` (IKE NAT-T)
+   - IP protocol `50` (ESP)
 
 For the complete list of supported parameters, refer to <a href={props.supportedIpsecConfigLink}>Supported configuration parameters</a>.
 
@@ -447,19 +446,10 @@ If you have worked through this guide and still experience tunnel health issues,
 
 Collect output from these commands (syntax varies by vendor):
 
-```txt
-# Show IPsec SA status
-show crypto ipsec sa
-
-# Show IKE SA status
-show crypto isakmp sa
-
-# Show tunnel interface status
-show interface tunnel <number>
-
-# Show routing table
-show ip route
-```
+- IPsec SA status: `show crypto ipsec sa`
+- IKE SA status: `show crypto isakmp sa`
+- Tunnel interface status: `show interface tunnel <number>`
+- Routing table: `show ip route`
 
 ---
 
