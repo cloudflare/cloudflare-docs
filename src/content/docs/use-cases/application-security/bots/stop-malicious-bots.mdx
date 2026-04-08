@@ -202,41 +202,31 @@ If the built-in settings do not cover your needs, create custom rules. Start by 
 
 **First, create a verified bot exception:**
 
-<Tabs syncKey="dashNewNav">
-<TabItem label="New dashboard" icon="rocket">
+<Render file="navigate-to-custom-rules" product="waf" />
 
-1. In the Cloudflare dashboard, go to **Security** > **Security rules**.
-2. Select **Create rule** > **Custom rules**.
+1. Enter a descriptive name in **Rule name**.
+2. Under **When incoming requests match**, select **Edit expression** and enter: `(cf.client.bot)`
+3. Under **Then take action**, select _Skip_ from the **Choose action** dropdown. Then select **All remaining custom rules**.
+4. Under **Place at**, select _First_ from the **Select order** dropdown so this rule executes before any blocking rules.
+5. Select **Deploy**.
 
-</TabItem>
-<TabItem label="Old dashboard">
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
-2. Go to **Security** > **WAF** > **Custom rules**.
-3. Select **Create rule**.
-
-</TabItem>
-</Tabs>
-
-Use the expression:
-
-```txt
-(cf.client.bot)
-```
-
-Set the action to **Skip** > **All remaining custom rules**. This ensures verified bots (search engine crawlers, monitoring services) bypass your custom rules. Place this rule at the top of your custom rule list so it executes first.
+This ensures verified bots (search engine crawlers, monitoring services) bypass your custom rules.
 
 **Then, create a blocking rule:**
 
 Create a second custom rule that targets requests with missing or suspicious headers. For example, to challenge requests to `/login` with an empty user agent:
 
-```txt
-(http.request.uri.path eq "/login" and http.user_agent eq "")
-```
+<Render file="navigate-to-custom-rules" product="waf" />
 
-Set the action to **Log** first. This lets you observe which requests the rule matches without blocking legitimate traffic. After 24-48 hours, review the results in [Security Events](/waf/analytics/security-events/). If the rule matches only bot traffic, change the action to **Managed Challenge** or **Block**.
+1. Enter a descriptive name in **Rule name**.
+2. Under **When incoming requests match**, select **Edit expression** and enter: `(http.request.uri.path eq "/login" and http.user_agent eq "")`
+3. Under **Then take action**, select _Managed Challenge_ from the **Choose action** dropdown.
+4. Under **Place at**, leave the **Select order** dropdown set to _Last_. This places the rule after the verified bot exception.
+5. Select **Deploy**.
 
-For step-by-step rule creation, refer to [Create a custom rule in the dashboard](/waf/custom-rules/create-dashboard/).
+Start with _Managed Challenge_ to verify the rule targets the right traffic without blocking it outright. After 24-48 hours, review the results in [Security Events](/waf/analytics/security-events/). If the rule matches only bot traffic, edit the rule and change the action to _Block_.
+
+For additional custom rule options including the visual field builder, refer to [Create a custom rule in the dashboard](/waf/custom-rules/create-dashboard/).
 
 :::note[Custom rule availability by plan]
 All Cloudflare plans include custom rules. The number of available rules increases with higher plans. For the full availability breakdown, refer to [Custom rules](/waf/custom-rules/#availability).
@@ -300,7 +290,7 @@ For broader protection, use a layered set of rules ordered by priority:
 
 <Render file="bot-score-baseline-rules" product="bots" />
 
-Deploy these rules in order so the Skip rule executes first. Set rules 2 and 3 to **Log** initially, review the matched traffic in [Security Events](/waf/analytics/security-events/) for 24-48 hours, then change to **Block** and **Managed Challenge** once you confirm the thresholds are not catching legitimate traffic.
+Deploy these rules in order so the Skip rule executes first. Start rules 2 and 3 with **Managed Challenge** to verify the expressions target the right traffic. After reviewing the matched traffic in [Security Events](/waf/analytics/security-events/) for 24-48 hours, change Rule 2 to **Block** once you confirm it is not catching legitimate users.
 
 For the full list of bot management fields available in rule expressions, refer to [Bot Management variables](/bots/reference/bot-management-variables/).
 
