@@ -61,7 +61,7 @@ It may take longer than five minutes for you to actually experience record chang
 
 ### Mix proxied and unproxied
 
-If you have multiple A or AAAA records on the same name and at least one of them is proxied, Cloudflare will treat all A or AAAA records on this name as being proxied. You cannot proxy some records on a name while leaving others DNS-only.
+If you have multiple A or AAAA records on the same name and at least one of them is proxied, Cloudflare will treat all A or AAAA records on this name as being proxied.
 
 <Details header="Example">
 
@@ -80,7 +80,7 @@ In this example, all traffic intended for `blog.example.com` will be treated as 
 
 </Details>
 
-Cloudflare will also proxy a request if a <GlossaryTooltip term="hostname">hostname</GlossaryTooltip> on a CNAME chain — where one CNAME record points to another — is proxied.
+Cloudflare will also proxy a request if a hostname on a CNAME chain — where one CNAME record points to another — is proxied.
 
 <Details header="Example">
 
@@ -116,7 +116,7 @@ CNAME to a different Cloudflare account is prohibited and will result in a [Erro
 
 ### CNAME records
 
-Proxied [CNAME records](/dns/manage-dns-records/reference/dns-record-types/#cname) are flattened by default, as they return Cloudflare anycast IPs. With CNAME flattening, Cloudflare follows the CNAME chain to find the final IP address, then returns a Cloudflare anycast IP instead. This helps DNS queries resolve faster. Refer to [CNAME flattening](/dns/cname-flattening/) for details.
+With [CNAME flattening](/dns/cname-flattening/), Cloudflare follows the CNAME chain to find the final IP address, helping DNS queries resolve faster. Proxied [CNAME records](/dns/manage-dns-records/reference/dns-record-types/#cname) are flattened by default, as they return Cloudflare anycast IPs.
 
 In some cases, Cloudflare will show a warning message or [prevent](/dns/proxy-status/limitations/#proxy-eligibility) you from proxying a CNAME record. This happens to avoid misconfigurations and is generally related to other CDN providers or to specific records used for DKIM (email authentication) validation.
 
@@ -138,6 +138,6 @@ Both HTTP/2 and HTTP/3 configurations also require that you have an SSL/TLS cert
 
 When an A, AAAA, or CNAME record is **DNS-only** — shown as a gray cloud icon in the dashboard, also known as "gray-clouded" — DNS queries for these will resolve to the record's actual origin IP address, as described in the [example](#example).
 
-DNS-only is the correct setting for records that do not serve web traffic, such as records used for email routing or third-party domain verification. However, leaving web-serving records as **DNS-only** means your origin IP addresses are visible to anyone who queries the record, potentially exposing your server to bad actors and [DDoS attacks](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/). Cloudflare also cannot [optimize, cache, and protect](/fundamentals/concepts/how-cloudflare-works/) those requests or provide HTTP/HTTPS analytics on them.
+DNS-only is the correct setting for records that do not serve web traffic, such as records used for email routing or third-party domain verification. However, leaving web-serving records as DNS-only means your origin IP addresses are visible to anyone who queries the record, potentially exposing your server to bad actors and [DDoS attacks](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/). Cloudflare also cannot [optimize, cache, and protect](/fundamentals/concepts/how-cloudflare-works/) those requests or provide HTTP/HTTPS analytics on them.
 
 <Render file="mix-proxied-and-unproxied" product="dns" />
