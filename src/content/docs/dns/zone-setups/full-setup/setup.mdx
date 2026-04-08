@@ -39,7 +39,7 @@ Make sure that you:
    <DashButton url="/?to=/:account/domains/overview" />
 
 2. Select **Onboard a domain**.
-3. Enter your apex domain (for example, `example.com`) and choose how you would like to add your DNS records. The default option scans your existing DNS provider and imports records automatically.
+3. Enter your apex domain (for example, `example.com`) and choose how you would like to add your DNS records.
 4. Select **Continue** and choose a [plan](https://www.cloudflare.com/plans/#compare-features).
 
 </TabItem> <TabItem label="API">
@@ -128,7 +128,7 @@ Cloudflare automatically assigns nameservers to a domain and these assignments c
 
 ### 3.2. Turn off DNSSEC
 
-If your domain has [DNSSEC](/dns/dnssec/) active, you must [turn it off](/dns/dnssec/#disable-dnssec) at your registrar before replacing nameservers. Changing nameservers while DNSSEC is active can cause your domain to become unreachable. You can [re-enable DNSSEC through Cloudflare](/dns/dnssec/#enable-dnssec) after your domain is active.
+If your domain has [DNSSEC](/dns/dnssec/)[^1] active, you must [turn it off](/dns/dnssec/#disable-dnssec) at your registrar before replacing nameservers. Changing nameservers while DNSSEC is active can cause your domain to become unreachable. You can [re-enable DNSSEC through Cloudflare](/dns/dnssec/#enable-dnssec) after your domain is active.
 
 <Render file="dnssec-providers" product="dns" />
 
@@ -138,11 +138,6 @@ If your domain has [DNSSEC](/dns/dnssec/) active, you must [turn it off](/dns/dn
 
 1. Log in to the admin account for your domain registrar. If you do not know your provider, use [ICANN Lookup](https://lookup.icann.org/).
 
-:::note
-
-Depending on your use case, you may have to perform this step on the DNS records management of your domain parent zone, or at a domain reseller, instead. Refer to [Nameservers](/dns/nameservers/update-nameservers/#specific-processes) for details.
-:::
-
 2. Remove your existing authoritative nameservers.
 
 3. Add the nameservers provided by Cloudflare. If their names are not **copied exactly**, your DNS will not resolve correctly.
@@ -151,10 +146,10 @@ Depending on your use case, you may have to perform this step on the DNS records
 	<Render file="ns-update-providers" product="dns" />
 </Details>
 
-:::note
-
 To avoid common issues, refer to our [Nameserver replacement checklist](/dns/zone-setups/full-setup/troubleshooting/).
 
+:::note
+Depending on your use case, you may have to perform this step on the DNS records management of your domain parent zone, or at a domain reseller, instead. Refer to [Nameservers](/dns/nameservers/update-nameservers/#specific-processes) for details.
 :::
 
 ### 3.4. Verify changes
@@ -164,7 +159,7 @@ Wait up to 24 hours while your registrar updates your nameservers.
 When your domain is **Active**:
 
 - You will receive an email from Cloudflare.
-- Your domain will have a [status](/dns/zone-setups/reference/domain-status/) of **Active** on the **Websites** page of your account.
+- Your domain will have a [status](/dns/zone-setups/reference/domain-status/) of **Active** on the **Domains** page of your account.
 - Online tools such as [https://www.whatsmydns.net/](https://www.whatsmydns.net/) will show your Cloudflare-assigned nameservers (most of these tools use cached query results, so it may take longer for them to show the updated nameservers).
 - CLI commands will show your Cloudflare-assigned nameservers
 
@@ -191,3 +186,5 @@ If you see unexpected results, refer to our [troubleshooting suggestions](/dns/z
 ## 4. Re-enable DNSSEC
 
 If you turned off DNSSEC before updating your nameservers, you can now [re-enable DNSSEC through Cloudflare](/dns/dnssec/) to protect your domain from spoofing.
+
+[^1]: A security feature that protects DNS records from spoofing
