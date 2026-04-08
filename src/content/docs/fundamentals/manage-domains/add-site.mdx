@@ -4,7 +4,7 @@ pcx_content_type: tutorial
 description: Learn how to onboard your domain to Cloudflare, to speed up and protect your website or application.
 ---
 
-import { DashButton, GlossaryTooltip, Render, Stream } from "~/components";
+import { DashButton, GlossaryTooltip, Render, Stream, Details } from "~/components";
 
 After you onboard your domain, Cloudflare will act as the [reverse proxy](/fundamentals/concepts/how-cloudflare-works/#cloudflare-as-a-reverse-proxy) and [DNS provider](/fundamentals/concepts/how-cloudflare-works/#cloudflare-as-a-dns-provider) for your site.
 
@@ -55,11 +55,15 @@ Your DNS records must be accurate for your domain to work properly. If you don't
 
 <Render file="nameserver-preamble" product="dns" />
 
-If your domain uses [DNSSEC](/dns/dnssec/)[^3], you must turn it off at your registrar before changing nameservers. Changing nameservers while DNSSEC is active can cause your domain to become unreachable. You can [re-enable DNSSEC through Cloudflare](/dns/dnssec/#enable-dnssec) after your domain is active.
+Usually, you need to add these nameservers at your registrar. Refer to [Update nameservers](/dns/nameservers/update-nameservers/) for more information.
 
-<Render file="dnssec-providers" product="dns" />
+<Details header="Provider-specific instructions" open={true}>
+	<Render file="ns-update-providers" product="dns" />
+</Details>
 
-<Render file="update-nameservers" product="fundamentals" />
+:::caution[DNSSEC]
+If your domain uses [DNSSEC](/dns/dnssec/), you must turn it off at your registrar before changing nameservers. Changing nameservers while DNSSEC is active can cause your domain to become unreachable. You can [re-enable DNSSEC through Cloudflare](/dns/dnssec/#enable-dnssec) after your domain is active.
+:::
 
 ## 4. Complete SSL/TLS setup
 
