@@ -254,45 +254,9 @@ For step-by-step rule creation, refer to [Create a rate limiting rule in the das
 Enterprise customers can use the **Request rate analysis** tab in Security Analytics to visualize request rate distributions and set thresholds using an interactive slider. On Free, Pro, and Business plans, estimate thresholds based on your expected traffic patterns and use the Log action to validate before enforcing. Refer to [Find an appropriate rate limit](/waf/rate-limiting-rules/find-rate-limit/) for the full methodology.
 :::
 
-### Use bot score in custom rules
-
-:::note[Bot score in custom rules requires Enterprise Bot Management]
-The `cf.bot_management.score` field is only available to Enterprise customers who have purchased [Bot Management](/bots/plans/bm-subscription/). Pro and Business customers can see bot traffic divided into groupings (Automated, Likely automated, Likely human, Verified bot) in the dashboard, but cannot reference granular bot scores in custom rule expressions. On Free plans, use `cf.client.bot` to identify verified bots. Refer to [Bot scores](/bots/concepts/bot-score/) for details on each plan's capabilities.
+:::note[Enterprise Bot Management: bot score in custom rules]
+Enterprise customers with [Bot Management](/bots/plans/bm-subscription/) can reference the `cf.bot_management.score` field in custom rule expressions for granular control over bot traffic. Bot Management assigns a score from 1 (definitely a bot) to 99 (likely human) to every request. Refer to [Bot scores](/bots/concepts/bot-score/) and [Bot Management variables](/bots/reference/bot-management-variables/) for details.
 :::
-
-Bot score gives you a numeric signal to distinguish automated traffic from human visitors. Each request receives a score from 1 to 99, where lower scores indicate more automated behavior:
-
-| Score | Category         | Meaning                                          |
-| ----- | ---------------- | ------------------------------------------------ |
-| 0     | Not computed     | Bot score was not calculated for this request    |
-| 1     | Automated        | Definitely a bot                                 |
-| 2-29  | Likely automated | Probably a bot                                   |
-| 30-99 | Likely human     | Probably a real user                             |
-| N/A   | Verified bot     | Known good bot (Googlebot, Bingbot, and similar) |
-
-You reference the `cf.bot_management.score` field in custom rule expressions to act on these scores. For example, to challenge likely automated traffic on your checkout page, build a rule with the following conditions:
-
-| Field                | Operator       | Value       |
-| -------------------- | -------------- | ----------- |
-| Bot Management Score | less than      | `30`        |
-| URI Path             | equals         | `/checkout` |
-| Verified Bot         | does not equal | `true`      |
-
-If you prefer the expression editor, the equivalent expression is:
-
-```txt
-(cf.bot_management.score lt 30 and http.request.uri.path eq "/checkout" and not cf.bot_management.verified_bot)
-```
-
-Set the action to **Managed Challenge**. This rule challenges requests with a bot score under 30 on the checkout path while allowing verified bots through.
-
-For broader protection, use a layered set of rules ordered by priority:
-
-<Render file="bot-score-baseline-rules" product="bots" />
-
-Deploy these rules in order so the Skip rule executes first. Start rules 2 and 3 with **Managed Challenge** to verify the expressions target the right traffic. After reviewing the matched traffic in [Security Events](/waf/analytics/security-events/) for 24-48 hours, change Rule 2 to **Block** once you confirm it is not catching legitimate users.
-
-For the full list of bot management fields available in rule expressions, refer to [Bot Management variables](/bots/reference/bot-management-variables/).
 
 ## Verify and tune your rules
 
@@ -361,39 +325,28 @@ For details on Skip action configuration, refer to [Configure a rule with the Sk
 
 You see bot activity in your logs that your current rules do not catch. Tighten your defenses:
 
-- **Lower your bot score threshold.** If you are challenging traffic with scores below 30, try lowering the threshold to challenge scores below 50. Monitor for false positives after each change.
-- **Add path-specific rules.** Create custom rules that apply stricter thresholds to your most targeted paths. For example, challenge all traffic with a bot score below 50 on `/login` while keeping the site-wide threshold at 30.
-- **Combine signals.** Use multiple fields in a single expression for more precise targeting. For example, challenge requests to `/login` that have a low bot score and an empty `Accept-Language` header:
+- **Add more header-based rules.** Target additional suspicious patterns, such as requests with empty `Accept-Language` headers or non-browser `User-Agent` values.
+- **Lower your rate limiting thresholds.** If bots are staying under your current limits, reduce the request count or shorten the time window. Deploy changes with the **Log** action first.
+- **Add path-specific rules.** Create custom rules with stricter conditions on your most targeted paths.
+- **Combine signals.** Use multiple fields in a single expression for more precise targeting. For example, challenge requests to `/login` with an empty `Accept-Language` header:
 
   ```txt
-  (http.request.uri.path eq "/login" and cf.bot_management.score lt 30 and len(http.request.headers["accept-language"][0]) eq 0)
+  (http.request.uri.path eq "/login" and len(http.request.headers["accept-language"][0]) eq 0)
   ```
 
 Custom rules execute before Super Bot Fight Mode in the evaluation order. A custom rule that takes a terminating action (Block, Managed Challenge) prevents the request from reaching Super Bot Fight Mode. Keep this in mind when troubleshooting why a rule does not appear to trigger. For details on rule execution order, refer to [Security features interoperability](/waf/feature-interoperability/).
 
-### Set up alerts
-
-Set up alerts to get notified when automated traffic increases.
-
-:::note[Bot traffic alerts require Bot Management]
-Both alert types in this section require [Bot Management](/bots/plans/bm-subscription/) (Enterprise add-on). Custom Bot Detection Alerts provide additional filtering by user agent, hostname, URI path, IP address, ASN, and TLS fingerprint.
+:::note[Enterprise Bot Management: bot score-based tuning]
+Enterprise customers with [Bot Management](/bots/plans/bm-subscription/) can tune rules using the `cf.bot_management.score` field for more granular control. For example, lower the bot score threshold from 30 to 50, or combine bot score with other signals in a single expression. Refer to [Bot Management variables](/bots/reference/bot-management-variables/) for available fields.
 :::
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Go to **Notifications**.
-3. Select **Add**.
-4. Select **Bot Management** from the product list.
-5. Choose an alert type:
-   - **Bot Detection Alert** — notifies you when Cloudflare detects an abnormal spike in bot traffic. The alert triggers when the Z-score (a statistical measure of how far bot traffic deviates from normal) exceeds 3.5 and bot requests exceed 200 per five-minute window.
-   - **Custom Bot Detection Alert** — allows filtering by user agent, hostname, URI path, IP address, ASN, JA3 TLS fingerprint, JA4 TLS fingerprint, or Bot Detection IDs. Also supports grouping by JA4 fingerprint, ASN, or Bot Detection IDs.
-6. Enter a notification name and optional description.
-7. Select the domains to monitor.
-8. Configure a delivery method (email, PagerDuty, or webhook).
-9. Select **Save**.
+### Set up alerts
 
-Bot Detection Alerts exclude verified bots, so legitimate crawler traffic does not trigger false alert spikes.
+:::note[Bot traffic alerts require Enterprise Bot Management]
+Bot Detection Alerts and Custom Bot Detection Alerts require [Bot Management](/bots/plans/bm-subscription/) (Enterprise add-on). These alerts notify you when Cloudflare detects abnormal spikes in bot traffic. For setup instructions, refer to [Notifications](/notifications/).
+:::
 
-For general notification configuration and delivery method options, refer to [Notifications](/notifications/).
+On Free, Pro, and Business plans, monitor bot activity by reviewing [Security Events](/waf/analytics/security-events/) regularly. You can also configure general [notification alerts](/notifications/) for security events such as firewall rule matches.
 
 ## Related resources
 
