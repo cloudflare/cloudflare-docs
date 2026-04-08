@@ -1,0 +1,135 @@
+---
+pcx_content_type: how-to
+title: Authenticate coding agents
+description: Grant coding agents like Claude Code, OpenCode, and Windsurf access to resources protected by Cloudflare Access using cloudflared or service tokens.
+products:
+  - access
+tags:
+  - AI
+  - Authentication
+sidebar:
+  order: 7
+---
+
+Coding agents such as Claude Code, OpenCode, and Windsurf often need to reach resources protected by [Cloudflare Access](/cloudflare-one/access-controls/). When a resource is behind Access, unauthenticated requests receive a redirect or `403` error instead of the expected response. Your agent needs a way to authenticate before it can reach the resource.
+
+This page covers two authentication methods:
+
+- [**cloudflared**](#use-cloudflared) — authenticates under your user identity. Use for interactive development where you can complete a browser login.
+- [**Service tokens**](#use-service-tokens) — authenticates with a static credential pair. Use for headless or automated workflows where no browser is available.
+
+:::note
+Cloudflare Access also supports Managed OAuth to protected resources, which you can use to grant authorization to coding agents.
+:::
+
+## Use cloudflared
+
+With `cloudflared`, your agent authenticates under your user identity. On first use, `cloudflared` opens a browser window for an interactive login. After that, the session persists for the [session duration](/cloudflare-one/access-controls/access-settings/session-management/) configured for the application. After the session expires, the next request requires a new browser login.
+
+:::caution
+`cloudflared` authentication relies on WebSockets, which may close unexpectedly during long-running sessions. If your agent requires persistent, unattended access, [service tokens](#use-service-tokens) are more reliable.
+:::
+
+### Prerequisites
+
+[Download and install cloudflared](/cloudflare-one/networks/connectors/cloudflare-tunnel/downloads/).
+
+### Make requests with cloudflared access curl
+
+For direct requests to a protected resource, use `cloudflared access curl`. This handles authentication automatically and does not require token management.
+
+```sh
+cloudflared access curl https://example.com/api/endpoint
+```
+
+If this is the first request in a session, `cloudflared` opens a browser for the user to authenticate. Prompt the user to complete the login if needed.
+
+### Use a reusable token
+
+Some agents make HTTP requests using their own client libraries instead of calling `cloudflared` directly. In this case, fetch a reusable token and pass it as a header:
+
+```bash
+CF_TOKEN=$(cloudflared access token -app=https://example.com)
+curl --header "cf-access-token: $CF_TOKEN" https://example.com/api/endpoint
+```
+
+The token is valid for the session duration configured for the application.
+
+For more information, refer to [Connect through Access using a CLI](/cloudflare-one/tutorials/cli/) and [Client-side cloudflared](/cloudflare-one/access-controls/applications/non-http/cloudflared-authentication/).
+
+## Use service tokens
+
+Service tokens are static credential pairs that authenticate requests without a browser login. Use them for automated workflows where no user is present.
+
+1. [Create a service token](/cloudflare-one/access-controls/service-credentials/service-tokens/#create-a-service-token) and save the **Client ID** and **Client Secret**.
+
+2. In the Access application's policy configuration, add a [Service Auth policy](/cloudflare-one/access-controls/policies/#service-auth). This policy type accepts service token credentials instead of requiring an identity provider login. Use the **Service Token** selector and select the token you created.
+
+   | Action       | Rule type | Selector      | Value            |
+   | ------------ | --------- | ------------- | ---------------- |
+   | Service Auth | Include   | Service Token | Your agent token |
+
+3. Store the Client ID and Client Secret in a secure location on your machine that your agent can read.
+
+4. Include both values as headers in requests to the protected resource:
+
+   ```bash
+   curl --header "CF-Access-Client-Id: $CF_ACCESS_CLIENT_ID" \
+        --header "CF-Access-Client-Secret: $CF_ACCESS_CLIENT_SECRET" \
+        https://example.com/api/endpoint
+   ```
+
+For more information, refer to [Service tokens](/cloudflare-one/access-controls/service-credentials/service-tokens/).
+
+## Configure your agent
+
+Coding agents read project-level instruction files (commonly named `AGENTS.md`) to learn how to interact with tools and services in your development environment. Add the following snippet to your `AGENTS.md` file or agent skill configuration so that the agent can detect and authenticate to Access-protected resources:
+
+````markdown
+### Interacting with protected resources
+
+A resource is protected by Cloudflare Access if any of the following are true:
+
+- The response is a 302 redirect to a URL containing `cloudflareaccess.com`
+- The response is a 403 with a `Cf-Access-Error` header
+- The response includes a `WWW-Authenticate: Bearer` challenge header referencing a Cloudflare Access policy
+
+Cloudflare Access is an identity-aware security tool that protects private
+resources over the Internet. It requires an authentication event before
+the target resource will respond.
+
+When you determine a resource is protected behind Access, authenticate
+using one of the following methods:
+
+#### Method 1: cloudflared access curl (user identity)
+
+Use this when operating under a user's identity. Prefer `cloudflared access curl`
+over managing tokens directly.
+
+1. Make requests directly:
+   ```
+   cloudflared access curl https://example.com/api/endpoint
+   ```
+   If this is the first request, cloudflared will open a browser for the user
+   to authenticate. Prompt the user to complete it.
+2. If you are already running a long-lived program and need a reusable token
+   for a standard HTTP client:
+   ```
+   CF_TOKEN=$(cloudflared access token -app=https://example.com)
+   curl --header "cf-access-token: $CF_TOKEN" https://example.com/api/endpoint
+   ```
+
+#### Method 2: Service tokens (headless)
+
+Use this for non-interactive, machine-to-machine access.
+No browser login required.
+
+Fetch the `CF-Access-Client-Id` and `CF-Access-Client-Secret` values from
+[my secure credential store] and include them as headers:
+
+```
+curl --header "CF-Access-Client-Id: $CF_ACCESS_CLIENT_ID" \
+     --header "CF-Access-Client-Secret: $CF_ACCESS_CLIENT_SECRET" \
+     https://example.com/api/endpoint
+```
+````
