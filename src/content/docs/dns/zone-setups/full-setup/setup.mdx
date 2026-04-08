@@ -42,8 +42,6 @@ Make sure that you:
 3. Enter your apex domain (for example, `example.com`) and choose how you would like to add your DNS records. The default option scans your existing DNS provider and imports records automatically.
 4. Select **Continue** and choose a [plan](https://www.cloudflare.com/plans/#compare-features).
 
-For a detailed walkthrough with additional context for each step, refer to [Onboard a domain](/fundamentals/manage-domains/add-site/).
-
 </TabItem> <TabItem label="API">
 
 <APIRequest
@@ -65,11 +63,20 @@ If Cloudflare is unable to identify your domain as a registered domain, make sur
 Cloudflare requires your apex domain to be one level below a valid TLD defined in the [Public Suffix List (PSL)](https://github.com/publicsuffix/list/blob/master/public_suffix_list.dat). Enterprise customers can onboard lower-level subdomains using [Subdomain setup](/dns/zone-setups/subdomain-setup/).
 :::
 
+<Details header="DNS records quick scan">
+
+<Render file="dns-scan-intro" product="dns" />
+
+:::note
+
+<Render file="dns-scan-note" product="dns" />
+:::
+
+</Details>
+
 ## 2. Review your DNS records
 
 Your DNS records must be accurate for your domain to work properly. If you don't know what DNS records are, consider the video below for a quick explanation.
-
-<Render file="dns-nxdomain-warning" product="dns" />
 
 <Stream
 	id="daf305d98363ee7d53843758dac91782"
@@ -77,12 +84,7 @@ Your DNS records must be accurate for your domain to work properly. If you don't
 	thumbnail="https://imagedelivery.net/xDOJvHcv1KwTQn6S-BGFIw/7e8cdb06-7280-4139-8f13-256e03027f00/public"
 />
 
-<Render file="dns-scan-intro" product="dns" /> <br />
-
-:::note
-
-<Render file="dns-scan-note" product="dns" />
-:::
+<Render file="dns-nxdomain-warning" product="dns" />
 
 ### Common records
 
