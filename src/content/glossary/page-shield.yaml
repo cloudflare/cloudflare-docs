@@ -1,6 +1,0 @@
----
-productName: Page Shield
-entries:
-  - term: client-side resource
-    general_definition: |-
-      a file with JavaScript code loaded by your visitors' browser, or a connection made by one of the loaded scripts.

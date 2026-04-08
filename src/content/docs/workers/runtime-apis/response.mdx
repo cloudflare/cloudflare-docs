@@ -148,7 +148,7 @@ Using any other type of `ReadableStream` as the body of a response will result i
 The Workers implementation of the `Response` interface includes several extensions to the web standard `Response` API. These differences are intentional and provide additional functionality specific to the Workers runtime.
 
 :::note[TypeScript users]
-Workers type definitions (from `@cloudflare/workers-types` or generated via [`wrangler types`](/workers/wrangler/commands/#types)) define a `Response` type that includes Workers-specific properties like `cf` and `webSocket`. This type is not directly compatible with the standard `Response` type from `lib.dom.d.ts`. If you are working with code that uses both Workers types and standard web types, you may need to use type assertions.
+Workers type definitions (from `@cloudflare/workers-types` or generated via [`wrangler types`](/workers/wrangler/commands/general/#types)) define a `Response` type that includes Workers-specific properties like `cf` and `webSocket`. This type is not directly compatible with the standard `Response` type from `lib.dom.d.ts`. If you are working with code that uses both Workers types and standard web types, you may need to use type assertions.
 :::
 
 ### The `cf` property

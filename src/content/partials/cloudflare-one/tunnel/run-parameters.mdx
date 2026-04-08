@@ -165,6 +165,24 @@ For locally-managed tunnels only.
 
 Specifies the path to a <a href={props.configurationFileURL}>configuration file</a> in YAML format.
 
+### `dns-resolver-addrs`
+
+:::note
+Requires `cloudflared` version 2025.7.0 or later.
+:::
+
+| Syntax                                                                    | Environment Variable        |
+| ------------------------------------------------------------------------- | --------------------------- |
+| `cloudflared tunnel run --dns-resolver-addrs <IP:PORT> <UUID or NAME>`    | `TUNNEL_DNS_RESOLVER_ADDRS` |
+
+Specifies custom DNS resolver addresses for `cloudflared` to use instead of the host machine's default resolvers. Each address must be in `ip:port` format — providing an IP address without a port will cause `cloudflared` to fail to start. You can specify multiple resolvers by repeating the flag. For example,
+
+```sh
+cloudflared tunnel run --dns-resolver-addrs 1.1.1.1:53 --dns-resolver-addrs 1.0.0.1:53 <UUID or NAME>
+```
+
+When multiple resolvers are specified, `cloudflared` randomly selects one for each DNS request. A maximum of 10 resolver addresses are allowed.
+
 ### `edge-bind-address`
 
 | Syntax                                                           | Environment Variable       |

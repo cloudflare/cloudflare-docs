@@ -16,7 +16,7 @@ This tutorial demonstrates how to secure access to Amazon S3 buckets with Cloudf
 
 ```mermaid
 flowchart TB
-    cf1[/Agentless and WARP </br>Zero Trust users/]--Access policy-->cf2{{Cloudflare}}
+    cf1[/Cloudflare One Client or clientless users/]--Access policy-->cf2{{Cloudflare}}
     cf2--Cloudflare Tunnel-->vpc1
 
     subgraph VPC
@@ -127,7 +127,7 @@ This method is only available on Enterprise plans.
 
 ```mermaid
 flowchart TB
-    cf1[/WARP users/]--Egress policy-->cf2{{Cloudflare}}
+    cf1[/Cloudflare One Client users/]--Egress policy-->cf2{{Cloudflare}}
     cf2--Egress with dedicated IP-->i1[Internet]
     i1-->s3_1
 

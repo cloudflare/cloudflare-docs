@@ -37,6 +37,18 @@ export default () => {
 						context.codeBlock.props.title ??= "Swift";
 						break;
 					}
+					case "toml": {
+						context.codeBlock.props.title ??= "TOML";
+						break;
+					}
+					case "yaml": {
+						context.codeBlock.props.title ??= "YAML";
+						break;
+					}
+					case "jsonc": {
+						context.codeBlock.props.title ??= "JSONC";
+						break;
+					}
 					default: {
 						return;
 					}

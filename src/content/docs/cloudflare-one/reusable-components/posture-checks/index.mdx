@@ -52,7 +52,7 @@ Because Gateway evaluates network and HTTP policies on every request, it maintai
 ```mermaid
 flowchart LR
 accTitle: Device posture policy enforcement
-A[Device] --schedule--> B[WARP client]--> C((Cloudflare)) --> D[Access policy]
+A[Device] --schedule--> B[Cloudflare One Client]--> C((Cloudflare)) --> D[Access policy]
 C --5 min--> E[Cache] --> F[Gateway policy]
 A --> G[Service provider] --interval--> C
 ```

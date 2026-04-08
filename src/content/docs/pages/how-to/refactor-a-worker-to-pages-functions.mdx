@@ -49,7 +49,7 @@ This step creates the boilerplate to write your Airtable submission Worker. Afte
 
 The following code block shows an example of a Worker that handles Airtable form submission.
 
-The `submitHandler` async function is called if the pathname of the work is `/submit`. This function checks that the request method is a `POST` request and then proceeds to parse and post the form entries to Airtable using your credentials, which you can store using [Wrangler `secret`](/workers/wrangler/commands/#secret).
+The `submitHandler` async function is called if the pathname of the work is `/submit`. This function checks that the request method is a `POST` request and then proceeds to parse and post the form entries to Airtable using your credentials, which you can store using [Wrangler `secret`](/workers/wrangler/commands/general/#secret).
 
 ```js
 export default {

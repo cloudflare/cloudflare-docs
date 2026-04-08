@@ -5,9 +5,13 @@ sidebar:
   order: 6
 ---
 
+import { Tabs, TabItem } from "~/components";
+
 ## Multi-language support
 
 Refer to [supported languages](/cloudflare-challenges/reference/supported-languages/) for more information.
+
+---
 
 ## Favicon customization
 
@@ -18,6 +22,8 @@ You can customize your favicon by using the HTML snippet below.
 ```html title="HTML element"
 <link rel="shortcut icon" href="<FAVICON_LINK>" />
 ```
+
+---
 
 ## Custom Content Security Policy (CSP) and error pages
 
@@ -32,3 +38,174 @@ not cf.response.error_type in {"managed_challenge" "iuam" "legacy_challenge" "co
 ```
 
 This exclusion ensures that your custom header modification logic is only applied to traffic destined for your origin, allowing Cloudflare's Challenge Platform to function without being impacted by conflicting response headers.
+
+---
+
+## Custom Challenge Pages
+
+Before defining a custom Challenge Page in your Cloudflare account, you will need to design and code that page. It can be hosted on your own web server or using a Cloudflare product like [Snippets](/rules/snippets/).
+
+Refer to [Design your custom error page](/rules/custom-errors/edit-error-pages/#1-design-your-custom-error-page) for more information.
+
+### How it works
+
+When a zone has a custom Challenge Page configured, your uploaded HTML is fetched from the Custom Pages Worker (KV-backed). 
+
+Cloudflare replaces the `::CF_WIDGET_BOX::` placeholder token with the full challenge bootstrap `<script>` block.
+
+### Placeholder tokens
+
+The custom error token provides diagnostic information or specific functionality that appears on the error page. Refer to [Error tokens](/rules/custom-errors/reference/error-tokens/) for more details.
+
+- `::CF_WIDGET_BOX::`
+- `::CAPTCHA_BOX::`
+- `::IM_UNDER_ATTACK_BOX::`
+- `::CLIENT_IP::`
+- `::RAY_ID::`
+- `::GEO::`
+
+:::note
+`::CF_WIDGET_BOX::` is always replaced regardless of challenge type — use this for new templates.
+:::
+
+### Requirements
+
+1. `::CF_WIDGET_BOX::` must appear exactly once in the body. This is where the challenge script is injected.
+2. `<head>` tag must be present.
+3. Cloudflare will set `cTplC: 1` in the browser's `window._cf_chl_opt` when a custom template is in use. Do not add your own `window._cf_chl_opt`. Any existing definition will cause conflicts.
+4. Do not block `/cdn-cgi/challenge-platform/` paths via Content Security Policy (CSP). Challenges will not work correctly with this kind of block in place.
+5. The page is served for all three challenge types (managed, interactive, non-interactive) if you use `::CF_WIDGET_BOX::`.
+
+### Templates
+
+<Tabs>
+  <TabItem label="Minimal template">
+    ```html wrap title="Example"
+    <!DOCTYPE html>
+    <html lang="en-US">
+    <head>
+      <title>Example Title</title>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+    </head>
+    <body>
+      ::CF_WIDGET_BOX::
+    </body>
+    </html>
+    ```
+  </TabItem>
+  <TabItem label="Full template">
+    ```html wrap title="Example"
+    <!DOCTYPE html>
+    <html lang="en-US">
+    <head>
+      <title>Security Check — example.com</title>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+      <meta name="robots" content="noindex,nofollow">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+          background: #f8f9fa;
+          color: #1a1a2e;
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 1rem;
+        }
+        .card {
+          background: #ffffff;
+          border-radius: 12px;
+          box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+          padding: 2.5rem 3rem;
+          max-width: 520px;
+          width: 100%;
+          text-align: center;
+        }
+        .logo {
+          width: 64px;
+          height: 64px;
+          margin: 0 auto 1.5rem;
+        }
+        h1 {
+          font-size: 1.4rem;
+          font-weight: 600;
+          margin-bottom: 0.5rem;
+        }
+        .subtitle {
+          font-size: 0.95rem;
+          color: #666;
+          margin-bottom: 2rem;
+          line-height: 1.5;
+        }
+        /* The challenge widget will be injected here — give it space */
+        .challenge-widget {
+          margin: 1.5rem 0;
+          min-height: 65px;        /* Turnstile widget is ~65px tall */
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .meta {
+          margin-top: 2rem;
+          font-size: 0.75rem;
+          color: #aaa;
+          line-height: 1.6;
+        }
+        noscript .noscript-warning {
+          background: #fff3cd;
+          border: 1px solid #ffc107;
+          border-radius: 8px;
+          padding: 1rem;
+          font-size: 0.9rem;
+          color: #856404;
+          margin-bottom: 1rem;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="card">
+        <!-- Your logo / branding -->
+        <svg class="logo" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="32" r="32" fill="#E8F4FD"/>
+          <path d="M32 16a16 16 0 1 1 0 32A16 16 0 0 1 32 16zm0 4a12 12 0 1 0 0 24A12 12 0 0 0 32 20z"
+                fill="#0051C3"/>
+          <circle cx="32" cy="32" r="4" fill="#0051C3"/>
+        </svg>
+        <h1>Verifying you are human</h1>
+        <p class="subtitle">
+          This security check helps us protect example.com from automated traffic.
+          It will only take a moment.
+        </p>
+        <noscript>
+          <div class="noscript-warning">
+            Please enable JavaScript and cookies to continue.
+          </div>
+        </noscript>
+        <!--
+          REQUIRED: One of the following placeholders must appear exactly once.
+          FL2 will replace it with the Cloudflare challenge bootstrap <script>.
+          Use ::CF_WIDGET_BOX:: for all challenge types (recommended).
+          Older alternatives:
+            ::CAPTCHA_BOX::          — managed / interactive challenges
+            ::IM_UNDER_ATTACK_BOX:: — non-interactive / JS challenge
+        -->
+        <div class="challenge-widget">
+          ::CF_WIDGET_BOX::
+        </div>
+        <div class="meta">
+          Performance & security by your company<br>
+          Ray ID: <code>::RAY_ID::</code> •
+          Your IP: <code>::CLIENT_IP::</code> •
+          Country: <code>::GEO::</code>
+        </div>
+      </div>
+    </body>
+    </html>
+  ```
+  </TabItem>
+</Tabs>

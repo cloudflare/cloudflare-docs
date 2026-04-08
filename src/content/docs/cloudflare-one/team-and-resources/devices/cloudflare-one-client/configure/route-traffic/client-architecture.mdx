@@ -18,16 +18,16 @@ In [DNS only mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-cli
 
 The Cloudflare One Client allows organizations to have granular control over the applications an end user device can access. The client forwards DNS and network traffic from the device to Cloudflare's global network, where Zero Trust policies are applied in the cloud. On all operating systems, the WARP daemon maintains three connections between the device and Cloudflare:
 
-| Connection                                                                                                                                    | Protocol | Purpose                                                                                                              |
-| --------------------------------------------------------------------------------------------------------------------------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------- |
+| Connection                                                                                                                                           | Protocol | Purpose                                                                                                              |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------- |
 | WARP tunnel ([via WireGuard or MASQUE](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#device-tunnel-protocol)) | UDP      | Send IP packets to Gateway for network policy enforcement, HTTP policy enforcement, and private network access.      |
-| [DoH](https://www.cloudflare.com/learning/dns/dns-over-tls/)                                                                                  | HTTPS    | Send DNS requests to Gateway for DNS policy enforcement. The DoH connection is maintained inside of the WARP tunnel. |
-| Device orchestration                                                                                                                          | HTTPS    | Perform user registration, check device posture, apply device client profile settings.                               |
+| [DoH](https://www.cloudflare.com/learning/dns/dns-over-tls/)                                                                                         | HTTPS    | Send DNS requests to Gateway for DNS policy enforcement. The DoH connection is maintained inside of the WARP tunnel. |
+| Device orchestration                                                                                                                                 | HTTPS    | Perform user registration, check device posture, apply device client profile settings.                               |
 
 ```mermaid
 flowchart LR
 subgraph Device
-W[WARP client] -.-> D
+W[Cloudflare One Client] -.-> D
 D[DNS proxy]
 W -.-> V[Virtual interface]
 end

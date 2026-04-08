@@ -25,6 +25,10 @@ instructional, straightforward
 
 ```yaml
 pcx_content_type: reference-architecture-diagram
+products:
+  - product-a
+  - product-b
+  - product-c
 ```
 
 For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-properties/#pcx_content_type).
@@ -53,7 +57,19 @@ For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-
 ## Template
 
 ```
-# Cloudflare Reference Architecture Diagram
+---
+title: Cloudflare Reference Architecture Diagram
+pcx_content_type: reference-architecture-diagram
+products:
+  - cloudflare-one
+  - cloudflare-wan
+  - cloudflare-network-firewall
+weight: 1
+meta:
+    title: "Reference Architecture Diagram: An example Cloudflare solution"
+---
+
+## Cloudflare Reference Architecture Diagram
 
 Provide a description as to what the diagram below contains.
 

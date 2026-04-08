@@ -10,7 +10,7 @@ import dsr from "~/assets/images/magic-transit/mtu-mss/dsr.png"
 import tunnel from "~/assets/images/magic-transit/mtu-mss/tcp-mss.png"
 import mss_ipsec from "~/assets/images/magic-transit/mtu-mss/ipsec-mss.png"
 
-{props.productName} has operation requirements that you need to understand to ensure your network functions as intended. Pay particular attention to the maximum transmission unit (MTU) and maximum segment size (MSS) values. Incorrect configuration of these values can cause performance loss or prevent data [packet](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) delivery.
+Because {props.productName} wraps your traffic in additional headers (encapsulation), the effective space available for your original data in each packet is reduced. If you do not account for this overhead, packets may be too large for the network path and will be dropped or fragmented — leading to performance loss or failed connections. This page explains the two key values you need to configure: maximum transmission unit (MTU) and maximum segment size (MSS).
 
 ## MTU and MSS
 

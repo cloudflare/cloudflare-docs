@@ -39,7 +39,7 @@ export class MyDurableObject extends DurableObject {
 
 }
 
-```
+````
 </TypeScriptExample>
 
 
@@ -51,7 +51,7 @@ export class MyDurableObject extends DurableObject {
 
 ```js
 	this.ctx.container.running;
-```
+````
 
 ## Methods
 
@@ -127,17 +127,17 @@ const res = await port.fetch("http://container/set-state", {
 ```
 
 ```js
-const conn = this.ctx.container.getTcpPort(8080).connect('10.0.0.1:8080');
+const conn = this.ctx.container.getTcpPort(8080).connect("10.0.0.1:8080");
 await conn.opened;
 
 try {
-  if (request.body) {
-    await request.body.pipeTo(conn.writable);
-  }
-  return new Response(conn.readable);
+	if (request.body) {
+		await request.body.pipeTo(conn.writable);
+	}
+	return new Response(conn.readable);
 } catch (err) {
-  console.error("Request body piping failed:", err);
-  return new Response("Failed to proxy request body", { status: 502 });
+	console.error("Request body piping failed:", err);
+	return new Response("Failed to proxy request body", { status: 502 });
 }
 ```
 
@@ -180,6 +180,50 @@ class MyContainer extends DurableObject {
 #### Return values
 
 - A promise that resolves when the container exits.
+
+### `interceptOutboundHttp`
+
+`interceptOutboundHttp` routes outbound HTTP requests matching an IP address, IP:port, or CIDR range through a `WorkerEntrypoint`. Can be called before or after starting the container. Open connections pick up the new handler without being dropped.
+
+```js
+const worker = this.ctx.exports.MyWorker({ props: { message: "hello" } });
+await this.ctx.container.interceptOutboundHttp("15.0.0.1:80", worker);
+
+// CIDRs are also supported (IPv4 and IPv6)
+await this.ctx.container.interceptOutboundHttp("123.123.123.123/23", worker);
+```
+
+#### Parameters
+
+- `target` (string): An IP address, IP:port, or CIDR range to match.
+- `worker` (WorkerEntrypoint): A `WorkerEntrypoint` instance to handle matching requests.
+
+#### Return values
+
+- None.
+
+### `interceptAllOutboundHttp`
+
+`interceptAllOutboundHttp` routes all outbound HTTP requests from the container through a `WorkerEntrypoint`, regardless of destination.
+
+await this.ctx.container.interceptAllOutboundHttp(worker);
+```
+
+#### Parameters
+
+- `worker` (WorkerEntrypoint): A `WorkerEntrypoint` instance to handle all outbound HTTP requests.
+
+#### Return values
+
+- None.
+
+#### Parameters
+
+- `worker` (WorkerEntrypoint): A `WorkerEntrypoint` instance to handle all outbound HTTP requests.
+
+#### Return values
+
+- A promise that resolves once the intercept rule is installed.
 
 ## Related resources
 

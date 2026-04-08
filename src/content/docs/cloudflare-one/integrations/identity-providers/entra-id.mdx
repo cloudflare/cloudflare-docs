@@ -229,7 +229,7 @@ To check which users and groups were synchronized, select **Provisioning logs**.
 
 <Render file="access/verify-scim-provisioning" product="cloudflare-one" />
 
-To monitor the exchange of identity details between Cloudflare Access and Microsoft Entra ID, go to [Cloudflare One](https://one.dash.cloudflare.com) > **Insights** > **Logs** > **SCIM provisioning logs** and view the [SCIM activity logs](/cloudflare-one/insights/logs/scim-logs/).
+To monitor the exchange of identity details between Cloudflare Access and Microsoft Entra ID, go to [Cloudflare One](https://one.dash.cloudflare.com) > **Insights** > **Logs** > **SCIM provisioning logs** and view the [SCIM activity logs](/cloudflare-one/insights/logs/dashboard-logs/scim-logs/).
 
 ### Provisioning attributes
 
@@ -283,9 +283,9 @@ For SCIM provisioning, [nested groups are not supported](https://learn.microsoft
 
 Since the SCIM request from Microsoft does not include nested group information, neither Cloudflare nor Microsoft can provide a notification that nested groups are not being synchronized.
 
-## Force user interaction during WARP reauthentication
+## Force user interaction during device client reauthentication
 
-You can require users to re-enter their credentials into Entra ID whenever they [re-authenticate their WARP session](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/). To configure this setting:
+You can require users to re-enter their credentials into Entra ID whenever they [re-authenticate their Cloudflare One Client session](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/). To configure this setting:
 
 1.  Make a `GET` request to the [Identity Providers endpoint](/api/resources/zero_trust/subresources/identity_providers/) and copy the response for the Entra ID identity provider.
 

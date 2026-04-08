@@ -1,0 +1,30 @@
+---
+params:
+  - ruleAction?
+---
+
+{ props.ruleAction ? (
+
+<>
+	Under <strong>Then take action</strong>, select <em>{props.ruleAction}</em>.
+</>
+
+) : (
+
+<>
+	Under <strong>Then take action</strong>, select the desired action:
+	<ul>
+		<li>
+			<em>Allow</em>: Enforces the CSP directives configured in the rule,
+			blocking any other resources from being loaded on your website, and
+			logging any{" "}
+			<a href="/client-side-security/rules/violations/">rule violations</a>.
+		</li>
+		<li>
+			<em>Log</em>: Logs any content security rule violations without blocking
+			any resources not covered by the rule.
+		</li>
+	</ul>
+</>
+
+) }

@@ -62,6 +62,10 @@ tools:
     default: "4.9.1"
     supported: "Any version"
     environment_variable: "YARN_VERSION"
+  - name: Zola
+    default: "0.22.1"
+    supported: "Any version"
+    environment_variable: "ZOLA_VERSION"
 build_environment:
   operating_system: "Ubuntu `22.04.2`"
   architecture: "x86_64"

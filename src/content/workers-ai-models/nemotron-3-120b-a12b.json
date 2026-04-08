@@ -35,6 +35,10 @@
             "value": "true"
         },
         {
+            "property_id": "reasoning",
+            "value": "true"
+        },
+        {
             "property_id": "terms",
             "value": "https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-nemotron-open-model-license/"
         }

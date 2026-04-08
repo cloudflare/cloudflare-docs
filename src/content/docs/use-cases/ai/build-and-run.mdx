@@ -1,0 +1,44 @@
+---
+pcx_content_type: how-to
+title: Build and run AI applications
+description: Build AI applications with serverless compute, edge inference, multi-provider gateways, and stateful coordination.
+sidebar:
+  order: 1
+---
+
+To build and deploy an AI application, you need compute for application logic, a way to run inference, and a gateway to manage costs across providers. Cloudflare Workers hosts your application logic and serves your frontend. Workers AI runs inference at the edge with pay-per-use pricing. AI Gateway adds caching, rate limiting, and observability across OpenAI, Anthropic, and other providers. Durable Objects coordinate stateful workflows and multi-turn conversations.
+
+## Solutions
+
+### Workers
+
+Build and deploy serverless applications on Cloudflare's global network. [Learn more about Workers](/workers/).
+
+- **Streaming responses** - Stream AI responses token-by-token as they generate, without buffering the full reply
+- **Full-stack deployment** - Serve frontend and backend from a single deployment without managing separate infrastructure
+
+### Workers AI
+
+Run inference on Cloudflare's global network via a Workers binding, with pay-per-use pricing. [Learn more about Workers AI](/workers-ai/).
+
+- **Global inference** - Run models at the Cloudflare location nearest to the user, reducing round-trip latency
+- **Pay-per-use pricing** - No GPU reservations or idle costs; pay only for tokens processed
+
+### AI Gateway
+
+Proxy requests to any AI provider with caching, rate limiting, and unified analytics. [Learn more about AI Gateway](/ai-gateway/).
+
+- **Provider flexibility** - Route requests to OpenAI, Anthropic, Workers AI, or any other provider through a single endpoint
+- **Unified observability** - Track request volume, latency, costs, and errors across all providers in one place
+
+### Durable Objects
+
+Stateful objects with strongly consistent storage and coordination. [Learn more about Durable Objects](/durable-objects/).
+
+- **Stateful workflows** - Coordinate multi-step AI pipelines and maintain conversation state across requests
+
+## Get started
+
+1. [Workers AI get started](/workers-ai/get-started/)
+2. [AI Gateway get started](/ai-gateway/get-started/)
+3. [Durable Objects get started](/durable-objects/get-started/)

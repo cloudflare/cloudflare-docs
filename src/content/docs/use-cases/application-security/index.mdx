@@ -1,0 +1,76 @@
+---
+pcx_content_type: overview
+title: Application security
+description: Protect web applications and APIs with Cloudflare Application security (WAF), DDoS protection, bot security, API Shield, and client-side security.
+head:
+  - tag: title
+    content: Application security · Use cases
+sidebar:
+  order: 2
+---
+
+import { CardGrid, DirectoryListing, LinkTitleCard } from "~/components";
+
+Protect your website or application from attacks, bots, and abuse. Cloudflare's application security (also known as Web Application Firewall or WAF) blocks SQL injection, XSS, and OWASP Top 10 vulnerabilities. DDoS Protection mitigates volumetric and application-layer attacks automatically. Bot Security uses machine learning to score every request. API Shield validates API traffic against your OpenAPI specification. Client-side security monitors third-party scripts for malicious behavior.
+
+<DirectoryListing />
+
+## Architecture patterns
+
+### Web application security
+
+Protect a website or web application from common attacks:
+
+- **SSL/TLS** encrypts all traffic between visitors and Cloudflare
+- **Security rules** managed rulesets block SQL injection, XSS, and OWASP Top 10 vulnerabilities
+- **DDoS Protection** mitigates volumetric and application-layer attacks automatically
+- **Bot Security** scores every request and blocks automated threats
+
+### API security
+
+Secure Application Programming Interface (API) endpoints with schema enforcement and authentication:
+
+- **API Shield** validates requests against your OpenAPI specification
+- **Rate Limiting** prevents abuse with per-endpoint request limits
+- **mTLS** authenticates known clients with mutual TLS certificates
+
+### Client-side defense
+
+Protect visitors from threats that execute in the browser:
+
+- **Client-side security** monitors third-party scripts loading on your pages
+- **Turnstile** replaces CAPTCHAs on forms with a privacy-preserving challenge
+- **Content security rules** block requests from known malicious sources
+
+---
+
+## Prerequisites
+
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up).
+- A domain [added to Cloudflare](/fundamentals/manage-domains/add-site/). All solutions in this use case require your domain's DNS records to be proxied through Cloudflare so that traffic passes through Cloudflare's network before reaching your origin.
+
+---
+
+## Related resources
+
+<CardGrid>
+
+<LinkTitleCard title="Security best practices" href="/learning-paths/application-security/" icon="open-book">
+
+Structured learning path for application security.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Security Analytics" href="/waf/analytics/" icon="waf">
+
+Analyze security events and fine-tune your configuration.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Security case studies" href="https://www.cloudflare.com/case-studies/" icon="open-book">
+
+Explore how companies secure their applications with Cloudflare.
+
+</LinkTitleCard>
+
+</CardGrid>

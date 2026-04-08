@@ -1,0 +1,242 @@
+---
+title: Available settings
+pcx_content_type: reference
+sidebar:
+  order: 6
+head:
+  - tag: title
+    content: Cache Response Rules settings
+---
+
+import { Details } from "~/components";
+
+These are the settings that you can configure when creating a Cache Response Rule. Because Cache Response Rules execute after Cloudflare receives the origin response, both request and response fields are available for rule matching.
+
+## Expression fields
+
+### Request fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `http.cookie` | String | Full cookie header value |
+| `http.host` | String | The HTTP Host header |
+| `http.referer` | String | The HTTP Referer header |
+| `http.user_agent` | String | The HTTP User-Agent header |
+| `http.request.method` | String | The HTTP request method |
+| `http.request.uri` | String | The request URI |
+| `http.request.uri.path` | String | The URI path |
+| `http.request.uri.path.basename` | String | The basename of the URI path |
+| `http.request.uri.path.extension` | String | The file extension from the URI path |
+| `http.request.uri.query` | String | The query string |
+| `http.request.uri.args` | Map | Query string arguments as key-value pairs |
+| `http.request.uri.args.names` | Array | Query string argument names |
+| `http.request.uri.args.values` | Array | Query string argument values |
+| `http.request.full_uri` | String | The full request URI including scheme and host |
+| `http.request.headers` | Map | Request headers as key-value pairs |
+| `http.request.headers.names` | Array | Request header names |
+| `http.request.headers.values` | Array | Request header values |
+| `http.request.cookies` | Map | Parsed cookies as key-value pairs |
+| `http.request.accepted_languages` | Array | Parsed Accept-Language header values |
+
+### Response fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `http.response.code` | Integer | The HTTP response status code from the origin |
+| `http.response.headers` | Map | Response headers as key-value pairs |
+| `http.response.headers.names` | Array | Response header names |
+| `http.response.headers.values` | Array | Response header values |
+
+If you select the [Edit expression](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor) option, you can enter any of the above response fields.
+
+## Functions
+
+The following functions are available in this phase:
+
+- all
+- any
+- concat
+- decode_base64
+- ends_with
+- len
+- lookup_json_integer
+- lookup_json_string
+- lower
+- regex_replace
+- remove_bytes
+- remove_query_args
+- split
+- starts_with
+- substring
+- to_string
+- upper
+- url_decode
+- wildcard_replace
+
+For descriptions of each function, refer to [Functions](/ruleset-engine/rules-language/functions/).
+
+## Operators
+
+For the full list of operators, refer to [Operators](/ruleset-engine/rules-language/operators/).
+
+## Available actions
+
+Cache Response Rules support three actions:
+
+| Action | Description |
+| --- | --- |
+| `set_cache_settings` | Strip headers (ETags, Set-Cookie, Last-Modified) from the origin response before caching. |
+| `set_cache_tags` | Add, remove, or set cache tags on the response for targeted purging. |
+| `set_cache_control` | Modify Cache-Control header directives in the origin response. |
+
+---
+
+### Action: set_cache_settings
+
+Configures settings related to caching on the origin response. The following parameters are available:
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `strip_etags` | Boolean | Strip ETag headers from the origin response before caching. |
+| `strip_set_cookie` | Boolean | Strip Set-Cookie headers from the origin response before caching. |
+| `strip_last_modified` | Boolean | Strip Last-Modified headers from the origin response before caching. |
+
+:::note
+
+If `strip_etags` or `strip_last_modified` is `true` after all matching rules are applied, [Smart Edge Revalidation](https://blog.cloudflare.com/introducing-smart-edge-revalidation/) is disabled for the origin response.
+
+:::
+
+<Details header="API information">
+
+API action: `set_cache_settings`.
+
+```json title="API configuration example"
+"action_parameters": {
+  "strip_etags": true,
+  "strip_set_cookie": true,
+  "strip_last_modified": true
+}
+```
+
+Refer to [Create a rule via API](/cache/how-to/cache-response-rules/create-api/) for complete API examples.
+
+</Details>
+
+---
+
+### Action: set_cache_tags
+
+Modifies the cache tags associated with the response. Cache tags can be used for targeted [cache purging](/cache/how-to/purge-cache/purge-by-tags/).
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `operation` | String | **Required.** One of: `add`, `remove`, `set`. |
+| `values` | Array | A list of cache tag strings. Mutually exclusive with `expression`. |
+| `expression` | String | An expression that evaluates to an array of cache tags. Mutually exclusive with `values`. |
+
+<Details header="API information">
+
+API action: `set_cache_tags`.
+
+```json title="API configuration example (static values)"
+"action_parameters": {
+  "operation": "set",
+  "values": ["api-response", "dynamic-content"]
+}
+```
+
+```json title="API configuration example (expression)"
+"action_parameters": {
+  "operation": "add",
+  "expression": "split(http.response.headers[\"Surrogate-Keys\"][0], \",\", 1)"
+}
+```
+
+Refer to [Create a rule via API](/cache/how-to/cache-response-rules/create-api/) for complete API examples.
+
+</Details>
+
+---
+
+### Action: set_cache_control
+
+Modifies Cache-Control header directives in the origin response.
+
+#### Supported directives
+
+**Directives with duration value (seconds):**
+
+- `max-age`
+- `s-maxage`
+- `stale-if-error`
+- `stale-while-revalidate`
+
+**Directives with optional qualifiers (header names):**
+
+- `private`
+- `no-cache`
+
+**Boolean directives:**
+
+- `no-store`
+- `no-transform`
+- `must-revalidate`
+- `proxy-revalidate`
+- `must-understand`
+- `public`
+- `immutable`
+
+#### Directive configuration
+
+The available parameters depend on the directive type.
+
+##### Directives with duration value
+
+Applies to `max-age`, `s-maxage`, `stale-if-error`, and `stale-while-revalidate`.
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `operation` | String | **Required.** `set` or `remove`. |
+| `cloudflare_only` | Boolean | When enabled, this setting only affects how Cloudflare caches your content. Your visitors still receive the original directive. |
+| `value` | Integer | Duration in seconds. **Required when operation is `set`.** |
+
+##### Directives with optional qualifiers
+
+Applies to `private` and `no-cache`.
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `operation` | String | **Required.** `set` or `remove`. |
+| `cloudflare_only` | Boolean | When enabled, this setting only affects how Cloudflare caches your content. Your visitors still receive the original directive. |
+| `qualifiers` | Array | Optional list of header names to qualify the directive. |
+
+##### Boolean directives
+
+Applies to `no-store`, `no-transform`, `must-revalidate`, `proxy-revalidate`, `must-understand`, `public`, and `immutable`.
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `operation` | String | **Required.** `set` or `remove`. |
+| `cloudflare_only` | Boolean | When enabled, this setting only affects how Cloudflare caches your content. Your visitors still receive the original directive. |
+
+<Details header="API information">
+
+API action: `set_cache_control`.
+
+```json title="API configuration example"
+"action_parameters": {
+  "max-age": {
+    "operation": "set",
+    "value": 3600,
+    "cloudflare_only": true
+  },
+  "stale-if-error": {
+    "operation": "remove"
+  }
+}
+```
+
+Refer to [Create a rule via API](/cache/how-to/cache-response-rules/create-api/) for complete API examples.
+
+</Details>

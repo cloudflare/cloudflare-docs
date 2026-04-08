@@ -2,15 +2,24 @@
 pcx_content_type: how-to
 title: Per-hostname
 sidebar:
-  order: 2
+  order: 3
 head:
   - tag: title
     content: Per-hostname authenticated origin pulls
 ---
 
-import { AvailableNotifications, Render, Details } from "~/components";
+import {
+	AvailableNotifications,
+	Render,
+	Details,
+	Tabs,
+	TabItem,
+	DashButton,
+} from "~/components";
 
-When you enable Authenticated Origin Pulls per hostname, all proxied traffic to the specified hostname is authenticated at the origin web server. You can use client certificates from your Private PKI to authenticate connections from Cloudflare.
+When you enable per-hostname Authenticated Origin Pulls (AOP), all proxied traffic to the specified hostname is authenticated at the origin web server using a certificate that you upload. You can use client certificates from your Private PKI to authenticate connections from Cloudflare.
+
+[Global](/ssl/origin-configuration/authenticated-origin-pull/set-up/global/), [zone-level](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/), and per-hostname AOP are independent configurations. Enabling or disabling one does not affect the others. Per-hostname certificates take precedence over zone-level and global certificates for the specified hostname.
 
 ## Before you begin
 
@@ -27,7 +36,25 @@ Refer to the steps below for an example of how to generate a custom certificate 
 
 ## 1. Upload custom certificate
 
-Use the [Upload A Hostname Client Certificate](/api/resources/origin_tls_client_auth/subresources/hostname_certificates/methods/create/) endpoint to upload your custom certificate.
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Go to the **Origin Server** page.
+
+   <DashButton url="/?to=/:account/:zone/ssl-tls/origin" />
+
+2. Select the **Authenticated Origin Pulls** tab.
+3. In the **Per-hostname** section, select **Upload certificate**.
+4. Paste the certificate and private key, then select **Continue**.
+   :::note
+   You must upload a [leaf certificate](/ssl/concepts/#chain-of-trust). If you upload a root CA instead, the upload will fail.
+   :::
+5. Review your certificate details, save the certificate ID for future reference, and select **Continue**.
+6. On the **Associate Hostnames** page, enter the fully qualified domain name that should use this certificate and select **Add** for each one. You can also skip this step and associate hostnames later.
+7. Select **Save** to confirm.
+
+</TabItem> <TabItem label="API">
+
+Use the [Upload a Hostname Client Certificate](/api/resources/origin_tls_client_auth/subresources/hostname_certificates/methods/create/) endpoint to upload your custom certificate.
 
 :::note
 
@@ -36,7 +63,9 @@ You must upload a [leaf certificate](/ssl/concepts/#chain-of-trust). If you uplo
 
 <Render file="aop-per-hostname-upload-cert" product="ssl" />
 
-In the API response, save the certificate `id` since it will be required in step 4.
+In the API response, save the certificate `id` since it will be required in step 3.
+
+</TabItem> </Tabs>
 
 ## 2. Configure origin to accept client certificates
 
@@ -48,9 +77,28 @@ In the API response, save the certificate `id` since it will be required in step
 
 ## 3. Enable Authenticated Origin Pulls for the hostname
 
-Use the Cloudflare API to send a [`PUT`](/api/resources/origin_tls_client_auth/subresources/hostnames/methods/update/) request to enable Authenticated Origin Pulls for specific hostnames.
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+:::note
+For per-hostname AOP, the enablement happens as you associate a hostname. If you had already associated hostnames as you uploaded the certificate, you can skip this step.
+:::
+
+1. Go to the **Origin Server** page.
+
+   <DashButton url="/?to=/:account/:zone/ssl-tls/origin" />
+
+2. Select the **Authenticated Origin Pulls** tab.
+3. In the **Per-hostname** section, find the certificate that should be used and associate the hostname with it.
 
 If you had set up logging on your origin during step 2, test and confirm that Authenticated Origin Pulls is working.
+
+</TabItem> <TabItem label="API">
+
+Use the [Enable or Disable a Hostname for Client Authentication](/api/resources/origin_tls_client_auth/subresources/hostnames/methods/update/) endpoint to enable Authenticated Origin Pulls for specific hostnames.
+
+If you had set up logging on your origin during step 2, test and confirm that Authenticated Origin Pulls is working.
+
+</TabItem> </Tabs>
 
 ## 4. Enforce validation check on your origin
 

@@ -30,6 +30,7 @@ import BgeRerankerBase from "~/components/models/code/Bge-Reranker-Base.astro";
 
 import Render from "~/components/Render.astro";
 import { authorData } from "~/components/models/data";
+import { hasProperty } from "~/util/model-properties";
 import OpenAIResponsesTextGenerationCode from "~/components/models/code/OpenAIResponsesTextGenerationCode.astro";
 import DeepgramAura from "~/components/models/code/DeepgramAura.astro";
 import DeepgramNova from "~/components/models/code/DeepgramNova.astro";
@@ -147,9 +148,7 @@ if (model.name === "@cf/deepgram/flux") {
 
 const description = model.description;
 
-const isBeta = model.properties.find(
-	({ property_id, value }) => property_id === "beta" && value === "true",
-);
+const isBeta = hasProperty(model.properties, "beta");
 
 let hasPlayground = model.task.name === "Text Generation";
 
@@ -246,6 +245,13 @@ const starlightPageProps = {
 	}
 
 	<ModelFeatures model={model} />
+	{
+		(model.name === "@cf/moonshotai/kimi-k2.5" ||
+			model.name === "@cf/nvidia/nemotron-3-120b-a12b" ||
+			model.name === "@cf/zai-org/glm-4.7-flash") && (
+			<Render file="session-affinity-note" product="workers-ai" />
+		)
+	}
 	{
 		model.name === "@cf/deepgram/nova-3" && (
 			<Aside>

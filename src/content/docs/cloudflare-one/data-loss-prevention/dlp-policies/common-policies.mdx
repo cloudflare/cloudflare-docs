@@ -10,11 +10,15 @@ head:
 
 import { GlossaryTooltip, Render } from "~/components";
 
-The following in-line DLP policies are commonly used to secure data in uploaded and downloaded files.
+The following DLP policies are commonly used to secure sensitive data in uploaded and downloaded files. They are built as [Gateway HTTP policies](/cloudflare-one/traffic-policies/http-policies/) using the [DLP Profile](/cloudflare-one/traffic-policies/http-policies/#dlp-profile) selector.
+
+Before using these policies, complete the [prerequisites for scanning HTTP traffic](/cloudflare-one/data-loss-prevention/dlp-policies/#prerequisites).
 
 ## Log uploads/downloads
 
-The **Allow** action functions as an implicit logger, providing visibility into where your sensitive data is going without impacting the end user experience. The following example scans for your enabled Financial Information profile entries when users upload or download data to file sharing apps.
+When you want to monitor where sensitive data is going before enforcing blocks, use the **Allow** action. In a Gateway HTTP policy, all matches — including Allow — are recorded in your [HTTP request logs](/cloudflare-one/data-loss-prevention/dlp-policies/#4-view-dlp-logs). This gives you visibility into sensitive data transfers without disrupting users.
+
+The following example logs any upload or download that matches your enabled [Financial Information](/cloudflare-one/data-loss-prevention/dlp-profiles/predefined-profiles/#financial-information) DLP profile entries when users interact with file sharing applications.
 
 | Selector           | Operator | Value                   | Logic | Action |
 | ------------------ | -------- | ----------------------- | ----- | ------ |
@@ -29,7 +33,9 @@ For more information on what file formats DLP can scan, refer to [Supported file
 
 ## Block uploads/downloads for specific users
 
-You can configure access on a per-user or group basis by adding [identity-based conditions](/cloudflare-one/traffic-policies/identity-selectors/) to your policies. The following example blocks only contractors from uploading/downloading Financial Information to file sharing apps.
+You can configure access on a per-user or group basis by adding [identity-based conditions](/cloudflare-one/traffic-policies/identity-selectors/) to your policies. These selectors match against user attributes from your configured identity provider.
+
+The following example blocks only contractors from uploading/downloading Financial Information to file sharing apps. Users who are not in the _Contractors_ group are not affected by this policy.
 
 | Selector           | Operator | Value                   | Logic | Action |
 | ------------------ | -------- | ----------------------- | ----- | ------ |
@@ -39,7 +45,7 @@ You can configure access on a per-user or group basis by adding [identity-based 
 
 ## Exclude Android applications
 
-Many Android applications (such as Google Drive) use <GlossaryTooltip term="certificate pinning" link="/ssl/reference/certificate-pinning/">certificate pinning</GlossaryTooltip>, which is incompatible with Gateway inspection. If needed, you can create a [Do Not Inspect policy](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) so that the app can continue to function on Android:
+Many Android applications (such as Google Drive) use <GlossaryTooltip term="certificate pinning" link="/ssl/reference/certificate-pinning/">certificate pinning</GlossaryTooltip>, which is incompatible with Gateway TLS decryption. These applications verify they are connecting directly to their own servers and will reject Gateway's inspection certificate. If needed, you can create a [Do Not Inspect policy](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) so that the app can continue to function on Android:
 
 1. Set up an [OS version device posture check](/cloudflare-one/reusable-components/posture-checks/client-checks/os-version/) that checks for the Android operating system.
 
@@ -50,15 +56,15 @@ Many Android applications (such as Google Drive) use <GlossaryTooltip term="cert
    | Application                  | in       | _Google Drive_       | And   | Do Not Inspect |
    | Passed Device Posture Checks | in       | _OS Version Android_ |       |                |
 
-Android users can now use the app, but the app traffic will bypass DLP scanning.
+Android users can now use the app, but the app traffic will bypass Gateway inspection entirely — including DLP scanning, HTTP logging, and antivirus scanning.
 
 ## Exclude specific sites
 
-In your [DLP logs](/cloudflare-one/data-loss-prevention/dlp-policies/#4-view-dlp-logs), you may find that certain sites are a common source of noise. To exempt these sites from DLP scanning:
+In your [DLP logs](/cloudflare-one/data-loss-prevention/dlp-policies/#4-view-dlp-logs), you may find that certain sites routinely trigger DLP detections that do not represent actual data loss (false positives). To exempt these sites from DLP scanning:
 
 1. [Create a list](/cloudflare-one/reusable-components/lists/) of hostnames or URLs.
 
-2. Exclude the list from your DLP policy as shown in the example below:
+2. Exclude the list from your DLP policy using the `not in list` operator, which references the list you created in step 1:
 
    | Selector    | Operator    | Value                   | Logic | Action |
    | ----------- | ----------- | ----------------------- | ----- | ------ |

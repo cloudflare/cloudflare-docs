@@ -33,6 +33,10 @@
         {
             "property_id": "lora",
             "value": "true"
+        },
+        {
+            "property_id": "reasoning",
+            "value": "true"
         }
     ],
     "schema": {

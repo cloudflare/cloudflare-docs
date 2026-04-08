@@ -1,0 +1,28 @@
+---
+pcx_content_type: reference
+title: Admin activity logs
+sidebar:
+  order: 1
+description: Monitor when a member on your account creates, updates, or deletes configurations.
+---
+
+Admin activity logs record configuration changes made by members of your Cloudflare account. Use these logs to monitor when a member creates, updates, or deletes configurations in your Zero Trust organization.
+
+To view admin activity logs, log in to [Cloudflare One](https://one.dash.cloudflare.com/) and go to **Insights** > **Logs** > **Admin activity logs**.
+
+## Explanation of the fields
+
+| Field                 | Description                                                        |
+| --------------------- | ------------------------------------------------------------------ |
+| **Action timestamp**  | Date and time when the change occurred.                            |
+| **Action type**       | Type of action taken (for example, `create`, `update`, `delete`).  |
+| **Action result**     | Whether the action was successful.                                 |
+| **Actor email**       | Email address of the user who performed the action.                |
+| **Actor IP address**  | IP address of the user who performed the action.                   |
+| **Actor type**        | Type of user that initiated the action.                            |
+| **Resource type**     | The type of resource that was changed.                             |
+| **Resource product**  | The Cloudflare product associated with the resource.               |
+
+## Export admin activity logs
+
+Enterprise users can export admin activity logs using [Logpush](/cloudflare-one/insights/logs/logpush/). For a list of all available fields, refer to [Audit Logs V2](/logs/logpush/logpush-job/datasets/account/audit_logs_v2/).

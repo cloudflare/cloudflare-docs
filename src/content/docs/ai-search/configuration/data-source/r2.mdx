@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Render } from "~/components";
+import { Render, Tabs, TabItem } from "~/components";
 
 You can use Cloudflare R2 to store data for indexing. To get started, [configure an R2 bucket](/r2/get-started/) containing your data.
 
@@ -24,7 +24,7 @@ Refer to [Path filtering](/ai-search/configuration/path-filtering/) for pattern 
 
 ## File limits
 
-AI Search has a file size limit of **up to **4 MB**.
+AI Search has a file size limit of **up to 4 MB**.
 
 Files that exceed these limits will not be indexed and will show up in the error logs.
 
@@ -67,3 +67,83 @@ AI Search supports the following plain text file types:
 AI Search uses [Markdown Conversion](/workers-ai/features/markdown-conversion/) to convert rich format files to markdown. The following table lists the supported formats that will be converted to Markdown:
 
 <Render file="markdown-conversion-support" product="workers-ai" />
+
+## Custom metadata
+
+You can attach custom metadata to R2 objects for filtering search results. AI Search reads metadata from S3-compatible custom headers (`x-amz-meta-*`).
+
+Before metadata can be extracted, you must [define a schema](/ai-search/configuration/metadata/#define-a-schema) in your AI Search configuration.
+
+### Set metadata when uploading
+
+<Tabs> <TabItem label="Workers R2 binding">
+
+Use the `customMetadata` option when uploading objects with the [R2 Workers binding](/r2/api/workers/workers-api-usage/):
+
+```js
+await env.MY_BUCKET.put("docs/document.pdf", fileContent, {
+	customMetadata: {
+		category: "documentation",
+		version: "2.5",
+		is_public: "true",
+	},
+});
+```
+
+</TabItem> <TabItem label="AWS SDK">
+
+Use the `Metadata` option with the [AWS SDK for JavaScript](/r2/api/s3/api/):
+
+```js
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+
+const client = new S3Client({
+	region: "auto",
+	endpoint: `https://${accountId}.r2.cloudflarestorage.com`,
+	credentials: {
+		accessKeyId: R2_ACCESS_KEY_ID,
+		secretAccessKey: R2_SECRET_ACCESS_KEY,
+	},
+});
+
+await client.send(
+	new PutObjectCommand({
+		Bucket: "your-bucket",
+		Key: "docs/document.pdf",
+		Body: fileContent,
+		Metadata: {
+			category: "documentation",
+			version: "2.5",
+			is_public: "true",
+		},
+	}),
+);
+```
+
+</TabItem> <TabItem label="Wrangler CLI">
+
+Use the `--header` flag with [Wrangler](/r2/reference/wrangler-commands/) to set `x-amz-meta-*` headers:
+
+```sh
+wrangler r2 object put your-bucket/docs/document.pdf \
+  --file=./document.pdf \
+  --header="x-amz-meta-category:documentation" \
+  --header="x-amz-meta-version:2.5" \
+  --header="x-amz-meta-is_public:true"
+```
+
+</TabItem> </Tabs>
+
+### How metadata extraction works
+
+When a file is fetched from R2 during indexing:
+
+1. All `x-amz-meta-*` headers are read from the object.
+2. The `x-amz-meta-` prefix is stripped (for example, `x-amz-meta-category` becomes `category`).
+3. Field names are matched against your schema (case-insensitive).
+4. Values are cast to the configured data type.
+5. Invalid values (for example, a non-numeric string for a `number` type) are silently ignored.
+
+### Unicode support
+
+Metadata values support Unicode characters through MIME-Word encoding (RFC 2047). Most S3-compatible tools handle this encoding automatically.
