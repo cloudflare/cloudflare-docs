@@ -15,6 +15,7 @@ const EXPLAIN_CODE_STYLES = `
 	background: var(--sl-color-gray-6);
 	border-radius: 0.25rem;
 	overflow: auto;
+	width: 100%;
 }
 
 .loading-skeleton {
@@ -52,6 +53,7 @@ const EXPLAIN_CODE_STYLES = `
 	border: 1px solid var(--sl-color-red);
 	font-size: 0.875rem;
 	color: var(--sl-color-text);
+	width: 100%;
 }
 
 .error-state svg {

@@ -107,8 +107,6 @@ export default () => {
 			}
 
 			.expressive-code .explain-tooltip {
-				--tooltip-bg: var(--ec-frm-inlBtnFg);
-				color: var(--code-background);
 				pointer-events: none;
 				user-select: none;
 				-webkit-user-select: none;
@@ -116,17 +114,33 @@ export default () => {
 				bottom: calc(100% + 0.25rem);
 				left: 50%;
 				transform: translateX(-50%);
-				background-color: var(--tooltip-bg);
 				z-index: 100;
-				padding: 0.125rem 0.75rem;
+				padding: 2px 7px;
+				line-height: 1;
 				border-radius: 0.2rem;
 				opacity: 0;
 				transition-property: opacity, transform;
 				transition-duration: 0.2s;
 				transition-timing-function: ease-in-out;
-				font-size: 0.75rem;
+				font-size: 0.7rem;
 				line-height: 1.65;
 				white-space: nowrap;
+			}
+
+			@media (prefers-color-scheme: light) {
+				.expressive-code .explain-tooltip {
+					color: #4e4e4e;
+					background-color: #e4e4e4;
+					border: 1px solid #c4c4c4;
+				}
+			}
+
+			@media (prefers-color-scheme: dark) {
+				.expressive-code .explain-tooltip {
+					color: #e6e6e6;
+					background-color: #282828;
+					border: 1px solid #4e4f4f;
+				}
 			}
 
 			.expressive-code .explain button:hover .explain-tooltip {
