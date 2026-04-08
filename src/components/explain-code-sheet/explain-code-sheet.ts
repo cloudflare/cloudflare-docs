@@ -98,6 +98,30 @@ const LOADING_HTML = `
 			<div class="skeleton-line w-2-3 mt-6"></div>
 			<div class="skeleton-line"></div>
 			<div class="skeleton-line w-4-5"></div>
+			<div class="skeleton-line"></div>
+			<div class="skeleton-line w-5-6"></div>
+			<div class="skeleton-line w-4-6"></div>
+			<div class="skeleton-line mt-6"></div>
+			<div class="skeleton-line w-3-4"></div>
+			<div class="skeleton-line w-5-6"></div>
+			<div class="skeleton-line w-2-3 mt-6"></div>
+			<div class="skeleton-line"></div>
+			<div class="skeleton-line w-4-5"></div>
+			<div class="skeleton-line"></div>
+			<div class="skeleton-line w-5-6"></div>
+			<div class="skeleton-line w-4-6"></div>
+			<div class="skeleton-line mt-6"></div>
+			<div class="skeleton-line w-3-4"></div>
+			<div class="skeleton-line w-5-6"></div>
+			<div class="skeleton-line w-2-3 mt-6"></div>
+			<div class="skeleton-line"></div>
+			<div class="skeleton-line w-4-5"></div>
+			<div class="skeleton-line"></div>
+			<div class="skeleton-line w-5-6"></div>
+			<div class="skeleton-line w-4-6"></div>
+			<div class="skeleton-line mt-6"></div>
+			<div class="skeleton-line w-3-4"></div>
+			<div class="skeleton-line w-5-6"></div>
 		</div>
 	</div>
 `;
