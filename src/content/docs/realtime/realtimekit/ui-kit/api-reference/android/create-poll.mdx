@@ -1,0 +1,22 @@
+---
+pcx_content_type: reference
+title: RtkCreatePollBottomSheet
+description: API reference for RtkCreatePollBottomSheet component (Android Library)
+---
+
+A component that lets you create a poll.
+
+## Methods
+
+| Method | Parameters                                       | Description                          |
+| ------ | ------------------------------------------------ | ------------------------------------ |
+| `show` | `fragmentManager: FragmentManager, tag: String?` | Display the create poll bottom sheet |
+
+## Usage Examples
+
+### Basic Usage
+
+```kotlin
+val rtkCreatePollBottomSheet = RtkCreatePollBottomSheet()
+rtkCreatePollBottomSheet.show(fragmentManager, "CREATE_POLL_TAG")
+```

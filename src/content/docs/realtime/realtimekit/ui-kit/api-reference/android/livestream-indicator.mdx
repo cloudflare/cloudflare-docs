@@ -1,0 +1,31 @@
+---
+title: RtkLivestreamIndicator
+pcx_content_type: reference
+description: API reference for RtkLivestreamIndicator component (Android Library)
+---
+
+A visual indicator that shows when a livestream is active.
+
+## Methods
+
+| Method    | Parameters                   | Description                                                |
+| --------- | ---------------------------- | ---------------------------------------------------------- |
+| `refresh` | `meeting: RealtimeKitClient` | Update the indicator based on the current livestream state |
+
+## Usage Examples
+
+### Basic Usage
+
+```xml
+<com.cloudflare.realtimekit.ui.view.RtkLivestreamIndicator
+    android:id="@+id/rtk_livestream_indicator"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
+```
+
+### With Methods
+
+```kotlin
+val indicator = findViewById<RtkLivestreamIndicator>(R.id.rtk_livestream_indicator)
+indicator.refresh(meeting)
+```
