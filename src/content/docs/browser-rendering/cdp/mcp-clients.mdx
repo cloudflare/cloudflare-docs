@@ -68,6 +68,26 @@ Add to `.opencode.jsonc`:
 }
 ```
 
+### Cursor
+
+Add to `~/.cursor/mcp.json`:
+
+```json
+{
+	"mcpServers": {
+		"browser-rendering": {
+			"command": "npx",
+			"args": [
+				"-y",
+				"chrome-devtools-mcp@latest",
+				"--wsEndpoint=wss://api.cloudflare.com/client/v4/accounts/<CF_ACCOUNT_ID>/browser-rendering/devtools/browser?keep_alive=600000",
+				"--wsHeaders={\"Authorization\":\"Bearer <CF_API_TOKEN>\"}"
+			]
+		}
+	}
+}
+```
+
 Replace `ACCOUNT_ID` with your Cloudflare account ID and `API_TOKEN` with your Browser Rendering API token. You can obtain these from your Cloudflare dashboard.
 
 For other MCP clients, refer to the [chrome-devtools-mcp documentation](https://github.com/ChromeDevTools/chrome-devtools-mcp/tree/main?tab=readme-ov-file#mcp-client-configuration).
