@@ -1,0 +1,181 @@
+---
+title: "WAF Release - 2026-04-07"
+description: Cloudflare WAF managed rulesets 2026-04-07 release
+date: 2026-04-07
+---
+
+import { RuleID } from "~/components";
+
+This week's release introduces new detections for a critical Remote Code Execution (RCE) vulnerability in MCP Server (CVE-2026-23744), alongside targeted protection for an authentication bypass vulnerability in SolarWinds products (CVE-2025-40552). Additionally, this release includes a new generic detection rule designed to identify and block Cross-Site Scripting (XSS) injection attempts leveraging "OnEvent" handlers within HTTP cookies.
+
+**Key Findings**
+
+- MCP Server (CVE-2026-23744): A vulnerability in the Model Context Protocol (MCP) server implementation where malformed input payloads can trigger a memory corruption state, allowing for arbitrary code execution.
+
+- SolarWinds (CVE-2025-40552): A critical flaw in the authentication module allows unauthenticated attackers to bypass security filters and gain unauthorized access to the management console due to improper identity token validation.
+
+- XSS OnEvents Cookies: This generic rule identifies malicious event handlers (such as onload or onerror) embedded within HTTP cookie values.
+
+**Impact**
+
+Successful exploitation of the MCP Server and SolarWinds vulnerabilities could allow unauthenticated attackers to execute arbitrary code or gain administrative control, leading to a full system takeover. Additionally, the new generic XSS detection prevents attackers from leveraging browser event handlers in cookies to hijack user sessions or execute malicious scripts.
+
+
+<table style="width: 100%">
+  <thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="73ae1cf103da4bacaa2e1a610aa410af" />
+      </td>
+      <td>N/A</td>
+      <td>Log</td>
+      <td>Disabled</td>
+      <td>Generic Rules - Command Execution - 5 - Body</td>
+      <td>This is a new detection.</td>
+   </tr>
+   <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="a88a85b0cc5a4bc2abead6289131ec2f" />
+      </td>
+      <td>N/A</td>
+      <td>Log</td>
+      <td>Disabled</td>
+      <td>Generic Rules - Command Execution - 5 - Header</td>
+      <td>This is a new detection.</td>
+   </tr>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="28518cdc40544979bbd86720551eb9e5" />
+      </td>
+      <td>N/A</td>
+      <td>Log</td>
+      <td>Block</td>
+      <td>Generic Rules - Command Execution - 5 - URI</td>
+      <td>This is a new detection.</td>
+   </tr>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="1177993d53a1467997002b44d46229eb" />
+      </td>
+      <td>N/A</td>
+      <td>Log</td>
+      <td>Block</td>
+      <td>MCP Server - Remote Code Execution - CVE:CVE-2026-23744</td>
+      <td>This is a new detection.</td>
+   </tr> 
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="3d43cdfbc3c14584942f8bc4a864b9c2" />
+      </td>
+      <td>N/A</td>
+      <td>Log</td>
+      <td>Block</td>
+      <td>XSS - OnEvents - Cookies</td>
+      <td>This is a new detection.</td>
+   </tr>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="41153470df2365192b0df74ca78ad04e" />
+      </td>
+			<td>N/A</td>
+      <td>Log</td>
+      <td>Disabled</td>
+      <td>SQLi - Evasion - Body</td>
+      <td>This is a new detection.</td>
+   </tr>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="64d812e6d5844d7c9d7a44a440732d48" />
+      </td>
+      <td>N/A</td>
+      <td>Log</td>
+      <td>Disabled</td>
+      <td>SQLi - Evasion - Headers</td>
+      <td>This is a new detection.</td>
+   </tr>   
+   <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="50de9369ef7c45928a5dfb34e68a99b5" />
+      </td>
+      <td>N/A</td>
+      <td>Log</td>
+      <td>Disabled</td>
+      <td>SQLi - Evasion - URI</td>
+      <td>This is a new detection.</td>
+   </tr>
+   <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="765ffb5c67b94c9589106c843e8143d2" />
+      </td>
+      <td>N/A</td>
+      <td>Log</td>
+      <td>Disabled</td>
+      <td>SQLi - LIKE 3 - Body</td>
+      <td>This is a new detection.</td>
+   </tr>
+   <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="5c3dbd4f115e47c781491fcd70e7fb97" />
+      </td>
+      <td>N/A</td>
+      <td>Log</td>
+      <td>Disabled</td>
+      <td>SQLi - LIKE 3 - URI</td>
+      <td>This is a new detection.</td>
+   </tr>
+   <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="89fa6027a0334949b1cb2e654c538bd9" />
+      </td>
+      <td>N/A</td>
+      <td>Log</td>
+      <td>Disabled</td>
+      <td>SQLi - UNION - 2 - Body</td>
+      <td>This is a new detection.</td>
+   </tr>
+   <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="05946b3458364f1b9d4819d561c439c9" />
+      </td>
+      <td>N/A</td>
+      <td>Log</td>
+      <td>Disabled</td>
+      <td>SQLi - UNION - 2 - URI</td>
+      <td>This is a new detection.</td>
+   </tr>
+   <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="b2fe5c2a39df4609b6d39908cf33ea10" />
+      </td>
+      <td>N/A</td>
+      <td>Log</td>
+      <td>Block</td>
+      <td>SolarWinds - Auth Bypass - CVE:CVE-2025-40552</td>
+      <td>This is a new detection.</td>
+   </tr>                 
+</tbody>
+</table>

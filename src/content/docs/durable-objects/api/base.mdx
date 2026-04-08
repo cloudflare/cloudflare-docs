@@ -175,10 +175,9 @@ export class MyDurableObject extends DurableObject<Env> {
   	reason <Type text="string" />, wasClean <Type text="boolean" />)
   </code>
   : <Type text="void" /> | <Type text="Promise<void>" />- Called by the system
-  when a WebSocket connection is closed. - You **must** call `ws.close(code,
-  reason)` inside this handler to complete the WebSocket close handshake.
-  Failing to reciprocate the close will result in `1006` errors on the client,
-  representing an abnormal closure per the WebSocket specification.
+  when a WebSocket connection is closed.
+  - With the [`web_socket_auto_reply_to_close`](/workers/configuration/compatibility-flags/#websocket-auto-reply-to-close) compatibility flag (enabled by default on compatibility dates on or after `2026-04-07`), the runtime automatically sends a reciprocal Close frame and transitions `readyState` to `CLOSED` before this handler is called. You do not need to call `ws.close()` — but doing so is safe (the call is silently ignored).
+  - On older compatibility dates (before `2026-04-07`), you **must** call `ws.close(code, reason)` inside this handler to complete the WebSocket close handshake. Failing to reciprocate the close will result in `1006` errors on the client, representing an abnormal closure per the WebSocket specification.
   - This method can be `async`.
 
 #### Parameters
@@ -198,7 +197,9 @@ export class MyDurableObject extends DurableObject<Env> {
 ```ts
 export class MyDurableObject extends DurableObject<Env> {
 	async webSocketClose(ws: WebSocket, code: number, reason: string, wasClean: boolean) {
-		// Complete the WebSocket close handshake
+		// With web_socket_auto_reply_to_close (compat date >= 2026-04-07),
+		// the runtime has already completed the close handshake.
+		// On older compat dates, call ws.close(code, reason) here.
 		ws.close(code, reason);
 		console.log(`WebSocket closed: code=${code}, reason=${reason}`);
 	}
