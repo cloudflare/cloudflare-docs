@@ -9,11 +9,11 @@ sidebar:
 import { TabItem, Tabs, Steps, DashButton } from "~/components";
 
 :::caution[Recommendation: Use custom rules instead]
-Cloudflare recommends that you create custom rules instead of IP Access rules to perform IP-based or geography-based blocking (geoblocking).
+Cloudflare recommends that you create [custom rules](/waf/custom-rules/) instead of IP Access rules to perform IP-based or geography-based blocking (geoblocking).
 :::
 
 :::note
-For [Spectrum](/spectrum/) applications configured with the HTTP/HTTPS application type, IP Access rules are the only supported mechanism for filtering traffic by IP address, IP range, country, or ASN. To use them, enable IP Access rules in your [Spectrum app configuration](/spectrum/reference/configuration-options/#ip-access-rules).
+For [Spectrum](/spectrum/) applications configured with the TCP or UDP application type, you can use IP Access rules to filter traffic by IP address, IP range, country, or ASN. To use them, enable IP Access rules in your [Spectrum app configuration](/spectrum/reference/configuration-options/#ip-access-rules). IP Access rules do not apply to HTTP/HTTPS type Spectrum applications — use [custom rules](/waf/custom-rules/) for those instead.
 :::
 
 <Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
