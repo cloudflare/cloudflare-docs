@@ -13,7 +13,6 @@ import {
 	Render,
 	TabItem,
 	Tabs,
-	Badge,
 } from "~/components";
 
 Cloudflare Gateway can perform [SSL/TLS decryption](https://www.cloudflare.com/learning/security/what-is-https-inspection/) to inspect HTTPS traffic for malware and other security risks. TLS decryption is required for HTTP policies to inspect HTTPS traffic. Without it, information contained within HTTPS encryption, such as the full URL, headers, and request body, [will not be visible to Gateway](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect).
@@ -44,7 +43,7 @@ Gateway does not support TLS decryption for applications which use:
 - [ESNI and ECH handshake encryption](#esni-and-ech)
 - [Automatic HTTPS upgrades](#google-chrome-automatic-https-upgrades)
 
-### Inspect on all ports <Badge text="Beta" variant="caution" size="small" />
+### Inspect on all ports
 
 <Render
 	file="gateway/inspect-on-all-ports"

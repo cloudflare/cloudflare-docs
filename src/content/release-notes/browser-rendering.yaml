@@ -3,6 +3,14 @@ link: "/browser-rendering/changelog/"
 productName: Browser Rendering
 productLink: "/browser-rendering/"
 entries:
+  - publish_date: "2026-04-06"
+    title: "Local development: headful mode (experimental)"
+    description: |-
+      * You can now run Chrome in visible (headful) mode during local development by setting `X_BROWSER_HEADFUL=true` before running `wrangler dev` or `vite dev`. This makes it easier to visually debug your browser automation scripts. This feature is experimental and may change without notice.
+  - publish_date: "2026-03-23"
+    title: "@cloudflare/playwright v1.2.0 released"
+    description: |-
+      * Released version 1.2.0 of [`@cloudflare/playwright`](https://github.com/cloudflare/playwright/releases/tag/v1.2.0), now upgraded to [Playwright v1.58.2](https://playwright.dev/docs/release-notes#version-158).
   - publish_date: "2026-03-17"
     title: "Separate bot detection IDs for Browser Rendering methods"
     description: |-

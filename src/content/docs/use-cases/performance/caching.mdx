@@ -1,0 +1,27 @@
+---
+pcx_content_type: how-to
+title: Cache content globally
+description: Reduce origin load and latency by caching static and dynamic content at 300+ Cloudflare edge locations.
+sidebar:
+  order: 1
+---
+
+Every request that reaches your origin server adds latency and costs. Cloudflare Cache serves static and dynamic content globally, reducing round-trip times for visitors and offloading traffic from your origin.
+
+## Solutions
+
+### Cache
+
+Cache content at Cloudflare's global network of edge locations. [Learn more about Cache](/cache/).
+
+- **Global distribution** - Content cached in 300+ edge locations so visitors are served from the location nearest to them
+- **Reduced latency** - Cache hits are served directly from the edge, eliminating round-trips to your origin
+- **Customizable cache rules** - Create rules that change how Cloudflare caches content, or transforms requests
+- **Origin offload** - Regional cache tiers intercept repeated requests before they reach your origin server
+- **Persistent caching** - Long-tail content that would normally expire is kept in durable storage, reducing origin fetches for infrequently accessed assets
+
+## Get started
+
+1. [Configure Cache Rules](/cache/how-to/cache-rules/)
+2. [Enable Tiered Cache](/cache/how-to/tiered-cache/)
+3. [Set up Cache Reserve](/cache/advanced-configuration/cache-reserve/)

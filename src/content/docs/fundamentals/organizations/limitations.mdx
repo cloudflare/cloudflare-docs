@@ -2,15 +2,16 @@
 pcx_content_type: reference
 title: Limitations
 sidebar:
-  hidden: true
+  order: 5
 ---
 
 The following limitations apply during the public beta.
 
-| Limitation | Description |
-| --- | --- |
-| Enterprise accounts only | Only Enterprise accounts can be added to an organization. Free and Pay-as-you-go accounts are not supported. |
-| Account and zone limits | Each organization supports up to 500 accounts and 500 zones. |
-| Roles | Organization Super Administrator is the only role available during the beta. Additional roles will be available in a future release. |
-| Organization deletion | Organizations cannot be deleted. To remove an account from your organization, contact [Cloudflare Support](/support/contacting-cloudflare-support/). |
-| Sub-organizations | Sub-organizations are not available to Enterprise customers during the public beta. |
+| Limitation              | Description                                                                                                                                                                                 |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Organization creation   | You must be a Super Administrator of an Enterprise account to create an organization.                                                                                                       |
+| Adding accounts         | Once you've created an Organization, accounts of any plan type can be added. You must have Super Administrator access to the account, and it cannot already belong to another organization. |
+| Account and zone limits | Each organization supports up to 500 accounts and 500 zones.                                                                                                                                |
+| Roles                   | Organization Super Administrator is the only role available during the beta. Additional roles will be available in a future release.                                                        |
+| Organization deletion   | To delete an Organization, use the [API](/api/resources/accounts/subresources/organizations/methods/delete/). Dashboard support is not yet available.                                       |
+| Account removal         | Self-service account removal is not yet available. To remove an account from your organization, contact [Cloudflare Support](/support/contacting-cloudflare-support/).                      |

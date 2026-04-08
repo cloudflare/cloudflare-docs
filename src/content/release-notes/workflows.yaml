@@ -3,6 +3,14 @@ link: "/workflows/reference/changelog/"
 productName: Workflows
 productLink: "/workflows/"
 entries:
+  - publish_date: "2026-04-01"
+    title: "All wrangler workflows commands now support local development"
+    description: |-
+      All `wrangler workflows` commands now accept a `--local` flag to target a Workflow running in a local `wrangler dev` session. You can now manage the full Workflow lifecycle locally, including listing, triggering, deleting Workflows, and managing instances (list, describe, pause, resume, restart, terminate, and send events).
+
+      All commands also accept `--port` to target a specific `wrangler dev` session (defaults to `8787`).
+
+      More information available in the [changelog](/changelog/post/2026-04-01-wrangler-workflows-local/).
   - publish_date: "2026-03-26"
     title: "JavaScript Workflows steps can now return streamed output"
     description: |-

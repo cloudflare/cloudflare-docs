@@ -7,22 +7,31 @@ sidebar:
 head:
   - tag: title
     content: About the Cloudflare One Client
+tags:
+  - Wireguard
+  - MASQUE
+  - Video
 ---
 
 import { Render, Stream } from "~/components";
 
 ## About the Cloudflare One Client
 
-The Cloudflare One Client (formerly WARP) securely and privately sends traffic from your devices to Cloudflare's global network, where [Cloudflare Gateway](/cloudflare-one/traffic-policies/) can apply advanced web filtering. The Cloudflare One Client also enables you to use [posture checks](/cloudflare-one/reusable-components/posture-checks/) in Access and Gateway policies so that you can check a device's health before it connects to corporate applications.
+The Cloudflare One Client (formerly WARP) securely and privately sends traffic from your devices to Cloudflare's global network, where [Cloudflare Gateway](/cloudflare-one/traffic-policies/) can apply advanced web filtering. The client also reports device health information — such as OS version, disk encryption status, and the presence of specific applications — so that you can enforce [device posture checks](/cloudflare-one/reusable-components/posture-checks/) in your Access and Gateway policies.
 
 ## How the Cloudflare One Client works
 
-The Cloudflare One Client is a device client that builds proxy tunnels using either Wireguard or MASQUE, and builds a DNS proxy using DNS-over-HTTPS. The Cloudflare One Client supports all major operating systems, all common forms of endpoint management tooling, and has a robust series of management parameters and profiles to accurately scope the needs of a diverse user base.
+The Cloudflare One Client creates encrypted connections between your device and Cloudflare's network. It does this in two ways:
+
+- **Proxy tunnel** — Encrypts and routes your device's internet and private network traffic through Cloudflare, using the [WireGuard](https://www.wireguard.com/) or [MASQUE](https://blog.cloudflare.com/zero-trust-warp-with-a-masque) protocol.
+- **DNS proxy** — Sends your device's DNS queries to Cloudflare over an encrypted channel ([DNS-over-HTTPS](https://developers.cloudflare.com/1.1.1.1/encryption/dns-over-https/)), where [Gateway DNS policies](/cloudflare-one/traffic-policies/dns-policies/) can filter them.
+
+The client runs on all major operating systems and can be deployed through common endpoint management tools (such as Intune, JAMF, or JumpCloud).
 
 The Cloudflare One Client consists of:
 
-- Graphical User Interface (GUI): Control panel that allows end users to view the client's [status](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/connectivity-status/) and perform actions such as connecting or disconnecting.
-- WARP daemon (or service): Core background component responsible for establishing secure tunnels (using WireGuard or MASQUE) and handling all client functionality on your device.
+- **Graphical User Interface (GUI):** A control panel that allows end users to view the client's [status](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/connectivity-status/) and perform actions such as connecting or disconnecting.
+- **WARP daemon (or service):** The core background process responsible for establishing the encrypted connections described above and handling all client functionality on your device.
 
 For more information on how the Cloudflare One Client routes traffic, refer to the [client architecture page](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/client-architecture/) and watch the video below.
 
@@ -58,15 +67,20 @@ Deploying the Cloudflare One Client significantly enhances your organization's s
       - [Browser Isolation](/cloudflare-one/traffic-policies/http-policies/#isolate)
       - [Identity-based policies](/cloudflare-one/traffic-policies/network-policies/)
 
-- **Application and device-specific insights**: With the Cloudflare One Client installed on your corporate devices, you can view detailed application and user-level activity on the [Zero Trust Shadow IT Discovery](/cloudflare-one/insights/analytics/shadow-it-discovery/) page, while also monitoring device and network performance with [Digital Experience Monitoring (DEX)](/cloudflare-one/insights/dex/) to proactively detect and resolve issues.
+- **Application and device-specific insights**: View which SaaS applications your users are accessing and review their approval status on the [Shadow IT Discovery](/cloudflare-one/insights/analytics/shadow-it-discovery/) page. Monitor device and network performance with [Digital Experience Monitoring (DEX)](/cloudflare-one/insights/dex/) to detect connectivity or performance issues before users report them.
 
 - **Device posture checks**: The Cloudflare One Client provides advanced Zero Trust protection by making it possible to check for [device posture](/cloudflare-one/reusable-components/posture-checks/). By setting up device posture checks, you can build Access or Gateway policies that check for a device's location, disk encryption status, OS version, and more.
 
-- **Secure private and infrastructure access**: The Cloudflare One Client lets devices connect to [private networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/) over Cloudflare Tunnel and is required for [Access for Infrastructure](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/), enabling secure SSH with short-lived certificates and detailed logging.
+- **Secure private and infrastructure access**: Connect devices to internal networks and applications through [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/) without exposing them to the public internet. The client is also required for [Access for Infrastructure](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/), which provides SSH access using short-lived certificates and detailed audit logging.
 
 ## Client modes
 
-The Cloudflare One Client offers flexible [operating modes](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/) to suit your specific needs. The client can control device traffic as a full proxy, manage only DNS traffic as a DNS proxy, or both. The Cloudflare One Client is the most common method for sending user device traffic through Cloudflare Gateway for filtering and decryption.
+The Cloudflare One Client offers flexible [operating modes](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/) to suit your specific needs:
+
+- **Traffic and DNS mode** (default) — Routes device traffic (by default, all ports and protocols) and DNS queries through Cloudflare for filtering, inspection, and policy enforcement. Traffic exclusions can be configured with [Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/).
+- **DNS-only mode** — Routes only DNS queries through Cloudflare. Use this mode if you only need DNS-level filtering without inspecting web or application traffic.
+
+Other modes (Traffic only, Local proxy, Posture only) are also available. For details, refer to the [operating modes](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/) page.
 
 ## Next steps
 

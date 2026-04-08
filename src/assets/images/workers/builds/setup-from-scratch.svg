@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 310" fill="none">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .step-num { font-size: 11px; font-weight: 700; fill: #fff; }
+    .step-label { font-size: 13px; font-weight: 600; fill: #1a1a1a; }
+    .step-sub { font-size: 12px; fill: #555; }
+    .box { fill: #f8f9fa; stroke: #d0d5dd; stroke-width: 1.5; rx: 8; }
+    .pill { fill: #f6821f; rx: 10; ry: 10; }
+    .arrow { stroke: #d0d5dd; stroke-width: 1.5; fill: none; marker-end: url(#arr); }
+    .connector { stroke: #d0d5dd; stroke-width: 1.5; fill: none; marker-end: url(#arr); }
+  </style>
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#d0d5dd"/>
+    </marker>
+  </defs>
+
+  <!-- All boxes: 246px wide, 80px tall (two-line) or 48px tall (single-line step 6) -->
+  <!-- 16px x-padding, 14px y-padding, pill 52x20, label 8px right of pill, sub 26px below label -->
+
+  <!-- Row 1: Steps 1-3 -->
+  <!-- Step 1 -->
+  <rect class="box" x="10" y="10" width="246" height="80"/>
+  <rect class="pill" x="26" y="24" width="52" height="20"/>
+  <text class="step-num" x="52" y="38" text-anchor="middle">Step 1</text>
+  <text class="step-label" x="86" y="38">Get GitHub IDs</text>
+  <text class="step-sub" x="26" y="64">Account ID &amp; repo ID</text>
+
+  <line class="arrow" x1="256" y1="50" x2="292" y2="50"/>
+
+  <!-- Step 2 -->
+  <rect class="box" x="300" y="10" width="246" height="80"/>
+  <rect class="pill" x="316" y="24" width="52" height="20"/>
+  <text class="step-num" x="342" y="38" text-anchor="middle">Step 2</text>
+  <text class="step-label" x="376" y="38">Create repo connection</text>
+  <text class="step-sub" x="316" y="64">Link GitHub to Cloudflare</text>
+
+  <line class="arrow" x1="546" y1="50" x2="582" y2="50"/>
+
+  <!-- Step 3 -->
+  <rect class="box" x="590" y="10" width="218" height="80"/>
+  <rect class="pill" x="606" y="24" width="52" height="20"/>
+  <text class="step-num" x="632" y="38" text-anchor="middle">Step 3</text>
+  <text class="step-label" x="666" y="38">Get Worker tag</text>
+  <text class="step-sub" x="606" y="64">Find your Worker's UUID</text>
+
+  <!-- Connector row 1 → row 2 -->
+  <path class="connector" d="M 699 90 L 699 112 L 423 112 L 423 128"/>
+
+  <!-- Row 2: Steps 4-5 -->
+  <!-- Step 4 -->
+  <rect class="box" x="180" y="136" width="246" height="80"/>
+  <rect class="pill" x="196" y="150" width="52" height="20"/>
+  <text class="step-num" x="222" y="164" text-anchor="middle">Step 4</text>
+  <text class="step-label" x="256" y="164">Create triggers</text>
+  <text class="step-sub" x="196" y="190">Production &amp; preview</text>
+
+  <line class="arrow" x1="426" y1="176" x2="462" y2="176"/>
+
+  <!-- Step 5 -->
+  <rect class="box" x="470" y="136" width="246" height="80"/>
+  <rect class="pill" x="486" y="150" width="52" height="20"/>
+  <text class="step-num" x="512" y="164" text-anchor="middle">Step 5</text>
+  <text class="step-label" x="546" y="164">Set env variables</text>
+  <text class="step-sub" x="486" y="190">Per-trigger (optional)</text>
+
+  <!-- Connector row 2 → row 3 -->
+  <path class="connector" d="M 593 216 L 593 238 L 423 238 L 423 254"/>
+
+  <!-- Row 3: Step 6 (single line, with proper y-padding) -->
+  <rect class="box" x="300" y="262" width="246" height="42"/>
+  <rect class="pill" x="316" y="273" width="52" height="20"/>
+  <text class="step-num" x="342" y="287" text-anchor="middle">Step 6</text>
+  <text class="step-label" x="376" y="287">Trigger first build</text>
+</svg>

@@ -16,7 +16,7 @@ Here you will find information regarding Email Routing, along with best practice
 
 ### Authenticated Received Chain (ARC)
 
-Email Routing supports [Authenticated Received Chain (ARC)](http://arc-spec.org/). ARC is an email authentication system designed to allow an intermediate email server (such as Email Routing) to preserve email authentication results. Google also supports ARC.
+Email Routing supports [Authenticated Received Chain (ARC)](http://arc-spec.org/). When an email is forwarded, the destination server may not be able to verify the original sender's authentication because the email now comes from Cloudflare's servers rather than the sender's. ARC is an email authentication system that allows an intermediate email server (such as Email Routing) to attach a record of the original authentication results so the destination server can verify the email was legitimate before forwarding. Google also supports ARC.
 
 ### Contact information
 
@@ -28,7 +28,7 @@ The best way to contact us is using our [community forum](https://community.clou
 
 Through this standard, the sender publishes its public key to a domain's DNS once, and then signs the body of each message before it leaves the server. The recipient server reads the message, gets the domain public key from the domain's DNS, and validates the signature to ensure the message was not altered in transit.
 
-Email Routing adds two new signatures to the emails in transit, one on behalf of the Cloudflare domain used for sender rewriting `email.cloudflare.net`, and another one on behalf of the customer's recipient domain.
+Email Routing adds two new signatures to the emails in transit, one on behalf of the Cloudflare domain used for [sender rewriting](#sender-rewriting) (`email.cloudflare.net`), and another one on behalf of the customer's recipient domain.
 
 Below is the DKIM key for `email.cloudflare.net`:
 
@@ -48,7 +48,8 @@ dig TXT cf2024-1._domainkey.example.com +short
 
 ### DMARC enforcing
 
-Email Routing enforces Domain-based Message Authentication, Reporting & Conformance (DMARC). Depending on the sender's DMARC policy, Email Routing will reject emails when there is an authentication failure. Refer to [dmarc.org](https://dmarc.org/) for more information on this protocol.
+Email Routing enforces Domain-based Message Authentication, Reporting & Conformance (DMARC). DMARC allows domain owners to publish a policy that tells receiving servers what to do when an email fails SPF and DKIM checks. Depending on the sender's DMARC policy, Email Routing will reject emails when there is an authentication failure. Refer to [dmarc.org](https://dmarc.org/) for more information on this protocol.
+
 It is recommended that all senders implement the DMARC protocol in order to successfully deliver email to Cloudflare.
 
 ### Mail authentication requirement
@@ -142,17 +143,17 @@ a-h.cloudflare-email.net.
 
 ### Sender rewriting
 
-Email Routing rewrites the SMTP envelope sender (`MAIL FROM`) to the forwarding domain to avoid issues with [SPF](#spf-record). Email Routing uses the [Sender Rewriting Scheme](https://en.wikipedia.org/wiki/Sender_Rewriting_Scheme) to achieve this.
+Every email has two sender addresses: the envelope sender (the `MAIL FROM` address used during the SMTP transaction, which receiving servers check against SPF records) and the header `From:` address (what the recipient sees in their email client). When Email Routing forwards an email, the original sender's SPF record does not authorize Cloudflare's servers to send on their behalf, so SPF checks would fail at the destination.
 
-This has no effect to the end user's experience, though. The message headers will still report the original sender's `From:` address.
+To prevent this, Email Routing rewrites the envelope sender (`MAIL FROM`) to the forwarding domain using the [Sender Rewriting Scheme](https://en.wikipedia.org/wiki/Sender_Rewriting_Scheme). The header `From:` address remains unchanged — recipients still see the original sender's address.
 
 ### SMTP errors
 
-In most cases, Email Routing forwards the upstream SMTP errors back to the sender client in-session.
+In most cases, Email Routing forwards the upstream SMTP errors back to the sender during the same SMTP connection (in-session), rather than generating a separate bounce message later.
 
 ### Realtime Block Lists
 
-Email Routing uses an internal Domain Name System Blocklists (DNSBL) service to check if the sender's IP is present in one or more Realtime Block Lists (RBL) lists. When the system detects an abusive IP, it blocks the email and returns an SMTP error:
+Email Routing checks the sender's IP address against blocklists — databases of IP addresses known to send spam or abusive email. These blocklists, called Realtime Block Lists (RBLs), are queried through a Domain Name System Blocklist (DNSBL) service. When the system detects an abusive IP, it blocks the email and returns an SMTP error:
 
 ```txt
 554 <YOUR_IP_ADDRESS> found on one or more RBLs (abusixip). Refer to https://developers.cloudflare.com/email-routing/postmaster/#spam-and-abusive-traffic/
@@ -168,7 +169,7 @@ In addition to DNSBL, Email Routing uses advanced heuristic and statistical anal
 X-Cf-Spamh-Score: 2
 ```
 
-This header is visible in the forwarded email. The higher the score, 5 being the maximum, the more likely the email is spam. Currently, this system is experimental and passive; we do not act on it and suggest that upstream servers and email clients don't act on it either.
+This header is visible in the forwarded email. The higher the score, 5 being the maximum, the more likely the email is spam. Currently, this system is experimental and passive; we do not act on it and suggest that upstream servers and email clients do not act on it either.
 
 We will update this page with more information as we fine-tune the system.
 
@@ -230,6 +231,6 @@ Due to the nature of email forwarding, restrictive DMARC policies might make for
 
 Email Routing does not support sending or replying from your Cloudflare domain. When you reply to emails forwarded by Email Routing, the reply will be sent from your destination address (like `my-name@gmail.com`), not your custom address (like `info@my-company.com`).
 
-### "`.`" is treated as normal characters for custom addresses
+### "`.`" is treated as a normal character for custom addresses
 
-The `.` character, which perform special actions in email providers like Gmail, is treated as a normal character on custom addresses.
+The `.` character, which performs special actions in email providers like Gmail, is treated as a normal character on custom addresses.

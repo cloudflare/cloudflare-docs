@@ -3,6 +3,9 @@ pcx_content_type: how-to
 title: Managed networks
 sidebar:
   order: 3
+tags:
+  - TLS
+  - PowerShell
 ---
 
 import { Details, Render, TabItem, Tabs } from "~/components";
@@ -24,7 +27,7 @@ import { Details, Render, TabItem, Tabs } from "~/components";
 
 </Details>
 
-The Cloudflare One Client (formerly WARP) allows you to selectively apply specific [device profiles](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/) and device client settings when a device connects to a secure network location, such as an office. The Cloudflare One Client identifies these managed networks by detecting a TLS endpoint you set up on the network.
+The Cloudflare One Client (formerly WARP) allows you to selectively apply specific [device profiles](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/) and device client settings when a device connects to a known network location, such as an office. To detect which network a device is on, the Cloudflare One Client connects to a TLS endpoint that you host on that network and validates its certificate. If the certificate matches, the device is on your managed network and receives the corresponding [device profile](#4-configure-device-profile) (if one has been configured for that network).
 
 On this page, you will learn how to:
 

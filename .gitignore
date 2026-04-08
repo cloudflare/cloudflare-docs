@@ -7,9 +7,16 @@ distllms/
 
 # skills/ is fetched from middlecache via bin/fetch-skills.ts
 skills/
+!.agents/skills/
 
 # dependencies
 node_modules/
+
+# lockfiles from other package managers
+yarn.lock
+pnpm-lock.yaml
+bun.lockb
+bun.lock
 
 # logs
 npm-debug.log*

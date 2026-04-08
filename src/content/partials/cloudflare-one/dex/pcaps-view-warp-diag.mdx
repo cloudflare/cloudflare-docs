@@ -4,24 +4,24 @@
 
 import { Details } from "~/components";
 
-The WARP diagnostics analyzer highlights what Cloudflare determines to be the most important detection events in a `warp-diag` log. You can use the detection report to help parse your [log files](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/diagnostic-logs/#warp-diag-logs) and identify the root cause of client issues. The WARP diagnostic analyzer is only available for logs [collected via the dashboard](#collect-logs-via-the-dashboard).
+The diagnostics analyzer highlights what Cloudflare determines to be the most important detection events in a `warp-diag` log. You can use the detection report to help parse your [log files](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/diagnostic-logs/#warp-diag-logs) and identify the root cause of client issues. The diagnostics analyzer is only available for logs [collected via the dashboard](#collect-logs-via-the-dashboard).
 
-To access the WARP diagnostic analyzer:
+To access the diagnostics analyzer:
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **DEX** > **Remote captures**.
 2. Locate an existing `warp-diag` log from the list or select **Run diagnostics** to generate a new `warp-diag` log.
-3. Select the three dots for the `warp-diag` log that you want to analyze, then select **View WARP Diag**.
+3. Select the three dots for the `warp-diag` log that you want to analyze, then select **View Device Diag**.
 
 	The **Overview** tab will display an [AI-generated summary](/fundamentals/reference/cloudy-ai-agent/) of the results, a list of detection events, and basic device information.
 
 	<Details header="Explanation of the fields">
 	| Field | Description |
 	| ----- | ----------- |
-	| Detection type | A common WARP issue that can appear in the diagnostic logs. |
+	| Detection type | A common Cloudflare One Client issue that can appear in the diagnostic logs. |
 	| Occurences | Number of times an issue was detected in the logs.  |
 	| Severity level | Indicates the impact of the issue on Cloudflare One Client functionality. The severity levels are: <ul> <li> **Critical**: Issue causes complete loss of functionality. </li> <li> **Warning**: Issue causes degraded functionality but core features should still work. </li> <li> **No detection**: Issue was not detected in the logs. </li> </ul> |
 	| Operating system | OS and OS version of the device. |
-	| Cloudflare One Client version | [WARP release version](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/) |
+	| Cloudflare One Client version | [Cloudflare One Client release version](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/) |
 	| Profile ID | [device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/) UUID|
 	| Service mode | [Client mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/) |
 	| Configuration name | Name of the [Zero Trust organization](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/switch-organizations/) that the Cloudflare One Client is connected to. |

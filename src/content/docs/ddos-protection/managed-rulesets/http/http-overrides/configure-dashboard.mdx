@@ -84,4 +84,14 @@ If you cannot deploy any additional overrides, consider editing an existing over
 4. Select **Save**.
 
 </Steps>
-<Render file="managed-rulesets/delete-override" product="ddos-protection" params={{ one: "select your account and domain", two: "Security > DDoS" }} />
+<Render
+	file="managed-rulesets/delete-override"
+	product="ddos-protection"
+	params={{
+		selectAccountOrDomain: "select your account and domain",
+		dashButtonUrl: "/?to=/:account/:zone/security/security-rules",
+		newDashPage: "Security rules",
+		newDashTab: "DDoS protection",
+		oldDashNav: "Security > DDoS",
+	}}
+/>

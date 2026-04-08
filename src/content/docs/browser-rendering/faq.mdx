@@ -84,6 +84,12 @@ Not yet. Local development currently has the following limitation(s):
 
 - Requests larger than 1 MB are not supported.
 
+You can also run Chrome in visible (headful) mode during local development to visually debug your automation scripts (experimental). Set the `X_BROWSER_HEADFUL` environment variable before starting your dev server:
+
+```sh
+X_BROWSER_HEADFUL=true npx wrangler dev
+```
+
 <Render file="remote-binding-note" product="workers" />
 
 ### How do I render authenticated pages using the REST API?

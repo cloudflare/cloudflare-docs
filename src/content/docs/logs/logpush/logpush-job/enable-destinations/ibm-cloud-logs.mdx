@@ -101,14 +101,12 @@ Response:
   "errors": [],
   "messages": [],
   "result": {
-    "dataset": "http_requests",
-    "destination_conf": "ibmcl://<INSTANCE_ID>.ingress.<REGION>.logs.cloud.ibm.com/logs/v1/singles?ibm_api_key=<IBM_API_KEY>",
-    "enabled": true,
-    "error_message": null,
     "id": <JOB_ID>,
+    "dataset": "http_requests",
     "kind": "",
-    "last_complete": null,
-    "last_error": null,
+    "max_upload_bytes": 2000000,
+    "enabled": true,
+    "name": "<DOMAIN_NAME>",
     "output_options": {
       "output_type": "ndjson",
       "timestamp_format": "rfc3339",
@@ -118,54 +116,13 @@ Response:
       "record_suffix": "}}",
       "record_delimiter": ","
     },
-    "max_upload_bytes": 2000000,
-    "name": "<DOMAIN_NAME>"
-  },
-  "success": true
-}
-```
-
-### 2. Enable (update) a job
-
-To enable a job, make a `PUT` request to the Logpush jobs endpoint. You will use the job ID returned from the previous step in the URL and send `{"enabled": true}` in the request body.
-
-Example request using cURL:
-
-<APIRequest
-	method="PUT"
-	path="/zones/{zone_id}/logpush/jobs/{job_id}"
-	json={{
-		enabled: true,
-	}}
-/>
-
-Response:
-
-```json
-{
-  "errors": [],
-  "messages": [],
-  "result": {
-    "dataset": "http_requests",
     "destination_conf": "ibmcl://<INSTANCE_ID>.ingress.<REGION>.logs.cloud.ibm.com/logs/v1/singles?ibm_api_key=<IBM_API_KEY>",
-    "enabled": true,
-    "error_message": null,
-    "id": <JOB_ID>,
-    "kind": "",
     "last_complete": null,
     "last_error": null,
-    "output_options": {
-      "output_type": "ndjson",
-      "timestamp_format": "rfc3339",
-      "batch_prefix": "[",
-      "batch_suffix": "]",
-      "record_prefix": "{\"applicationName\":\"ibm-platform-log\",\"subsystemName\":\"internet-svcs:logpush\",\"text\":{",
-      "record_suffix": "}}",
-      "record_delimiter": ","
-    },
-    "max_upload_bytes": 2000000,
-    "name": "<DOMAIN_NAME>"
+    "error_message": null
   },
   "success": true
 }
 ```
+
+Refer to [Manage Logpush with cURL](/logs/logpush/examples/example-logpush-curl/) to update a job (including enabling and disabling).

@@ -7,9 +7,9 @@ sidebar:
 
 import { GlossaryTooltip, Render } from "~/components";
 
-Every instance of Turnstile belongs to a Turnstile widget. It is configured on a per-widget level. Every widget has a mode, a label, a <GlossaryTooltip term="sitekey">sitekey</GlossaryTooltip>, and a <GlossaryTooltip term="secret key">secret key</GlossaryTooltip>.
+A Turnstile widget defines how Turnstile behaves on your webpage. Each widget has a mode, a label, a <GlossaryTooltip term="sitekey">sitekey</GlossaryTooltip>, and a <GlossaryTooltip term="secret key">secret key</GlossaryTooltip>. You can create multiple widgets with different configurations.
 
-Turnstile is hosted under `challenges.cloudflare.com`. Your application will connect to this origin.
+Turnstile is hosted under `challenges.cloudflare.com`. Your application will connect to this origin. If your site uses a [Content Security Policy](/turnstile/reference/content-security-policy/), you must allow connections to this domain.
 
 ## Widget components
 
@@ -46,10 +46,8 @@ Invisible mode is similar to Non-Interactive mode where visitors will never inte
 Invisible mode is ideal for users who want to prioritize visitor and visual experience on their website.
 
 :::note[Link to Cloudflare's Turnstile Privacy Policy]
-<Render
-	file="privacy-policy"
-	product="turnstile"
-/>
+
+<Render file="privacy-policy" product="turnstile" />
 :::
 
 ---

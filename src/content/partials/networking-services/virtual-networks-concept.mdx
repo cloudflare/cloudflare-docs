@@ -1,0 +1,138 @@
+---
+params:
+  - productName
+  - tunnelConfigURL
+  - addRoutesURL
+  - configureRoutesURL
+  - trafficSteeringURL
+  - privateNetworksURL
+  - routesURL
+---
+
+import { Markdown } from "~/components";
+
+A virtual network is a private routing domain within your Cloudflare account. It defines which private resources are reachable from the Cloudflare network and keeps traffic separated between different environments, partners, or applications.
+
+Every Cloudflare account has a default virtual network. You can create additional virtual networks to isolate routing between different parts of your infrastructure.
+
+:::note
+Cloudflare Tunnel and the Cloudflare One Client support multiple virtual networks. Cloudflare WAN connections (IPsec, GRE, CNI) currently use only the default virtual network.
+:::
+
+## When to use virtual networks
+
+- **Environment separation** — Keep production and staging networks isolated. Traffic destined for `10.0.0.1` in production routes to a different destination than `10.0.0.1` in staging.
+- **Partner isolation** — Connect multiple partners to your Cloudflare account without allowing them to reach each other. Each partner gets its own virtual network.
+- **Overlapping IP space** — When different networks use the same IP ranges (common with RFC 1918 addresses), virtual networks let you route to the correct destination based on context, not just IP address.
+- **Private application connectivity** — Connect Cloudflare Workers or CDN to backends in your private network. The virtual network tells Cloudflare where to route traffic for private IP addresses.
+
+## How virtual networks work
+
+When traffic enters Cloudflare destined for a private IP address, Cloudflare looks up the route in the virtual network routing table. The virtual network determines:
+
+- Which private destinations are reachable.
+- Which connector (Tunnel or WAN connection) carries the traffic.
+- How overlapping IP addresses are disambiguated.
+
+```mermaid
+flowchart TD
+accTitle: Virtual network routing
+accDescr: Shows how a Cloudflare account contains three virtual networks, each with their own routing table and connectors pointing to separate destinations. The same CIDR can exist in each virtual network as isolated routing domains.
+
+    subgraph account ["Your Cloudflare account"]
+        direction LR
+
+        subgraph vnet_default ["Virtual Network: default"]
+            routes_d("10.0.0.0/8 via Tunnel
+            192.168.1.0/24 via IPsec")
+            routes_d --> tunnel_d(["Tunnel"])
+            routes_d --> ipsec_d(["IPsec"])
+        end
+
+        subgraph vnet_prod ["Virtual Network: production"]
+            routes_p("10.0.0.0/8 via Tunnel")
+            routes_p --> tunnel_p(["Tunnel (prod)"])
+        end
+
+        subgraph vnet_stg ["Virtual Network: staging"]
+            routes_s("10.0.0.0/8 via Tunnel")
+            routes_s --> tunnel_s(["Tunnel (stg)"])
+        end
+    end
+
+    tunnel_d --> dc_legacy("Legacy DC
+    10.0.0.0/8")
+    ipsec_d --> dc_branch("Branch (IPsec)
+    192.168.1.0/24")
+    tunnel_p --> dc_prod("Production DC
+    10.0.0.0/8")
+    tunnel_s --> dc_stg("Staging DC
+    10.0.0.0/8")
+
+    classDef orange fill:#f48120,stroke:#d6710e,color:#fff,rx:8,ry:8
+    classDef blue fill:#4b9fd5,stroke:#3a8bc2,color:#fff,rx:8,ry:8
+    classDef route fill:#f5f5f5,stroke:#ccc,rx:8,ry:8
+    classDef dest fill:#f5f5f5,stroke:#ccc,rx:8,ry:8
+
+    class tunnel_d,tunnel_p,tunnel_s orange
+    class ipsec_d blue
+    class routes_d,routes_p,routes_s route
+    class dc_legacy,dc_branch,dc_prod,dc_stg dest
+
+    style vnet_default stroke:#999,stroke-width:2px,stroke-dasharray: 5 5,fill:#f9f9f9,rx:10,ry:10
+    style vnet_prod stroke:#f48120,stroke-width:2px,fill:#fff7f0,rx:10,ry:10
+    style vnet_stg stroke:#f48120,stroke-width:2px,fill:#fff7f0,rx:10,ry:10
+    style account stroke:#ccc,stroke-width:1px,fill:#ffffff,rx:10,ry:10
+```
+
+The same CIDR (`10.0.0.0/8`) can exist in each virtual network because they are isolated routing domains.
+
+Each virtual network maintains its own routing table. Routes added to one virtual network do not appear in another virtual network routing table. However, if traffic does not match a route in the selected virtual network, Cloudflare may fall back to the default virtual network routing table for WAN routes.
+
+<Markdown text={`You can add entries to a virtual network routing table through static route configuration or routes learned from BGP peering (beta). Static routes are available for all connection types. BGP peering is currently available over CNI and IPsec/GRE tunnels (beta). For more information on how routes are prioritized within a virtual network, refer to [Traffic steering](${props.trafficSteeringURL}).`} inline={false} />
+
+## Virtual networks across Cloudflare
+
+Virtual network support varies by product:
+
+| Product | Virtual network support | Details |
+| --- | --- | --- |
+| Cloudflare Tunnel | Multiple virtual networks | Assign CIDR routes to a virtual network when configuring your tunnel |
+| Cloudflare One Client | Multiple virtual networks | Users land in a virtual network based on policy or client selection |
+| WARP Connector | Not currently supported | — |
+| Cloudflare WAN | Default only | All IPsec, GRE, and CNI connections use the default virtual network |
+
+## The default virtual network
+
+Every account has a `default` virtual network. If you do not specify a virtual network when creating routes or connections, they are assigned to the default.
+
+For most deployments with a single private network, the default virtual network is all you need. Create additional virtual networks only when you need routing isolation.
+
+:::note
+Cloudflare WAN connections (IPsec, GRE, CNI) always use the default virtual network.
+:::
+
+## For network engineers
+
+If you are familiar with enterprise networking concepts, a virtual network is analogous to a VRF (Virtual Routing and Forwarding):
+
+- Each virtual network maintains its own routing table.
+- Routes are isolated between virtual networks.
+- The same IP prefix can exist in multiple virtual networks without conflict.
+- BGP routes learned on a connection populate only that connection virtual network routing table. BGP peering is currently supported for IPsec/GRE tunnels (beta) and CNI (beta).
+
+If you are familiar with cloud networking concepts, a virtual network is analogous to a VPC (Virtual Private Cloud).
+
+## Create and manage virtual networks
+
+<Markdown text={`To create and configure virtual networks, refer to [Virtual networks (Tunnel configuration)](${props.tunnelConfigURL}).`} inline={false} />
+
+<Markdown text={`To configure which routes belong to which virtual network, refer to [Add routes](${props.addRoutesURL}).`} inline={false} />
+
+<Markdown text={`To add static routes or configure BGP peering within the Cloudflare Virtual Network routing table, refer to [Configure routes](${props.configureRoutesURL}).`} inline={false} />
+
+## Related resources
+
+<Markdown text={`- [Private networks](${props.privateNetworksURL}) — Connect your infrastructure to Cloudflare
+- [Routes](${props.routesURL}) — Define IP and hostname routes through your connectors
+- [Traffic steering](${props.trafficSteeringURL}) — Route prioritization, ECMP, and BGP within the Cloudflare Virtual Network`} inline={false} />
