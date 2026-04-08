@@ -53,8 +53,6 @@ Your DNS records must be accurate for your domain to work properly. If you don't
 
 ## 3. Update nameservers
 
-<Render file="minimize-downtime-tip" product="dns" />
-
 <Render file="nameserver-preamble" product="dns" />
 
 If your domain uses [DNSSEC](/dns/dnssec/)[^3], you must turn it off at your registrar before changing nameservers. Changing nameservers while DNSSEC is active can cause your domain to become unreachable. You can [re-enable DNSSEC through Cloudflare](/dns/dnssec/#enable-dnssec) after your domain is active.
@@ -69,11 +67,16 @@ To prevent insecure connections and visitor browser errors, review your [SSL/TLS
 
 If you encounter unexpected results when changing your nameservers, refer to the [DNS Full Setup troubleshooting](/dns/zone-setups/full-setup/troubleshooting/).
 
-## Other setup options
+## Further options
 
+### Other DNS setups
 - To use Cloudflare as a reverse proxy but maintain your DNS provider, refer to [partial setup](/dns/zone-setups/partial-setup/).
 - To use one or more DNS providers, refer to [DNS Zone transfers](/dns/zone-setups/zone-transfers/).
 - Enterprise customers can onboard lower-level subdomains using [Subdomain setup](/dns/zone-setups/subdomain-setup/).
+
+### Minimize downtime
+
+- <Render file="minimize-downtime-tip" product="dns" />
 
 [^1]: The provider you purchased your domain from
 
