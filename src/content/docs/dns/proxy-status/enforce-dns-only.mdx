@@ -72,18 +72,22 @@ Refer to the sections below in case you use other Cloudflare products that rely 
 
 Enforce DNS-only affects the following records:
 
-- Proxied [Load Balancing](/load-balancing/): An **LB** record is visible on the DNS records table but proxy status is managed through the [Load Balancing configurations](/load-balancing/load-balancers/create-load-balancer/).
-- [Workers](/workers/) custom domains: records added to the DNS records table when you set up Workers [custom domains](/workers/configuration/routing/custom-domains/).
+- [Load Balancing](/load-balancing/): proxied LB records visible on the DNS records table but managed through the [Load Balancing configurations](/load-balancing/load-balancers/create-load-balancer/).
+- Proxied DNS records that match a [Worker route](/workers/configuration/routing/routes/).
 
 ### Exceptions
 
 Enforce DNS-only does not affect the following records:
 
-- [Spectrum](/spectrum/) applications: DNS records managed by the Spectrum application.
 - [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) fallback origin: The proxied DNS record you designate as the [fallback origin](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/#1-create-fallback-origin) for custom hostnames.
 - [R2](/r2/) custom domains: Read-only proxied records added to the DNS records table when you set up [R2 custom domains](/r2/buckets/public-buckets/#connect-a-bucket-to-a-custom-domain).
-- [Web3 gateways](/web3/): Read-only proxied records managed by the [Web3 gateway configuration](/web3/reference/gateway-dns-records/)
+- [Spectrum](/spectrum/) applications: DNS records managed by the Spectrum application.
 - [Tunnel](/tunnel/): CNAME records pointing to a tunnel subdomain. Refer to [Tunnel routing](/tunnel/routing/#create-a-dns-record) or [Cloudflare One](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/dns/) for details.
+- [Web3 gateways](/web3/): Read-only proxied records managed by the [Web3 gateway configuration](/web3/reference/gateway-dns-records/).
+- [Workers](/workers/) custom domains: Read-only proxied records added to the DNS records table when you set up Workers [custom domains](/workers/configuration/routing/custom-domains/).
+   :::note[Custom domain or route match]
+	 Proxied records that match a Worker [route](/workers/configuration/routing/routes/) are regular DNS records and will be [affected](#included) by the enforce DNS-only setting.
+   :::
 
 ## Check current status
 
