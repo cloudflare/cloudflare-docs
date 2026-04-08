@@ -13,7 +13,7 @@ The `/json` endpoint extracts structured data from a webpage. You can specify th
 
 :::note[Note]
 
-By default, the `/json` endpoint leverages [Workers AI](/workers-ai/) for data extraction using [`@cf/meta/llama-3.3-70b-instruct-fp8-fast`](/workers-ai/models/llama-3.3-70b-instruct-fp8-fast/). Using this endpoint incurs usage on Workers AI, which you can monitor in the [Workers AI Dashboard](https://dash.cloudflare.com/?to=/:account/ai/workers-ai). To use a different model, refer to [Using a custom model (BYO API Key)](/browser-rendering/rest-api/json-endpoint/#using-a-custom-model-byo-api-key).
+By default, the `/json` endpoint leverages [Workers AI](/workers-ai/) for data extraction using [`@cf/google/gemma-4-26b-a4b-it`](/workers-ai/models/gemma-4-26b-a4b-it/). Using this endpoint incurs usage on Workers AI, which you can monitor in the [Workers AI Dashboard](https://dash.cloudflare.com/?to=/:account/ai/workers-ai). To use a different model, refer to [Using a custom model (BYO API Key)](/browser-rendering/rest-api/json-endpoint/#using-a-custom-model-byo-api-key).
 
 :::
 
@@ -306,7 +306,7 @@ Visit the [Browser Rendering API reference](/api/resources/browser_rendering/sub
 Browser Rendering can use a custom model for which you supply credentials. List the model(s) in the `custom_ai` array:
 
 - `model` should be formed as `<provider>/<model_name>` and the provider must be one of these [supported providers](/ai-gateway/usage/chat-completion/#supported-providers).
-- `authorization` is the bearer token or API key that allows Browser Rendering to call the provider on your behalf.
+- `authorization` is the bearer token or API key that allows Browser Rendering to call the provider on your behalf. For [Workers AI](/workers-ai/) models (using the `workers-ai/` prefix), `authorization` is not required — authentication is handled automatically.
 
 This example uses the `custom_ai` parameter to instruct Browser Rendering to use a Anthropic's Claude Sonnet 4 model. The prompt asks the model to extract the main `<h1>` and `<h2>` headings from the target URL and return them in a structured JSON object.
 
@@ -358,7 +358,7 @@ curl --request POST \
 
 You may specify multiple models to provide automatic failover. Browser Rendering will attempt the models in order until one succeeds. To add failover, list additional models in the `custom_ai` array.
 
-In this example, Browser Rendering first calls Anthropic's Claude Sonnet 4 model. If that request returns an error, it automatically retries with Meta Llama 3.3 70B from [Workers AI](/workers-ai/), then OpenAI's GPT-4o.
+In this example, Browser Rendering first calls Anthropic's Claude Sonnet 4 model. If that request returns an error, it automatically retries with Google Gemma 4 26B from [Workers AI](/workers-ai/), then OpenAI's GPT-4o. Note that the Workers AI model does not require an `authorization` field.
 
 ```
 "custom_ai": [
@@ -367,10 +367,9 @@ In this example, Browser Rendering first calls Anthropic's Claude Sonnet 4 model
     "authorization": "Bearer <ANTHROPIC_API_KEY>"
   },
   {
-    "model": "workers-ai/@cf/meta/llama-3.3-70b-instruct-fp8-fast",
-    "authorization": "Bearer <CLOUDFLARE_AUTH_TOKEN>"
+    "model": "workers-ai/@cf/google/gemma-4-26b-a4b-it"
   },
-{
+  {
     "model": "openai/gpt-4o",
     "authorization": "Bearer <OPENAI_API_KEY>"
   }
