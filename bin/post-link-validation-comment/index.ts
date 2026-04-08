@@ -6,16 +6,16 @@ import * as github from "@actions/github";
 import { COMMENT_MARKER, GITHUB_ACTIONS_BOT_ID } from "./constants";
 
 interface LinkValidationError {
-	file: string;
+	docsPath: string;
 	link: string;
-	position: string | null;
-	error: string;
-	docsUrl: string;
+	position: { line: number; column: number } | null;
+	message: string;
+	documentationUrl: string;
 }
 
 interface LinkValidationReport {
 	errorCount: number;
-	fileCount: number;
+	errorFileCount: number;
 	errors: LinkValidationError[];
 }
 
@@ -51,14 +51,17 @@ async function run(): Promise<void> {
 
 		// Build the comment body
 		const rows = report.errors.map((error) => {
-			const position = error.position ? `\`${error.position}\`` : "-";
-			return `| \`${error.file}\` | \`${error.link}\` | ${position} | ${error.error} |`;
+			const position = error.position
+				? `\`${error.position.line}:${error.position.column}\``
+				: "-";
+			const link = decodeURIComponent(error.link);
+			return `| \`${error.docsPath}\` | \`${link}\` | ${position} | ${error.message} |`;
 		});
 
 		const comment = [
-			`**${COMMENT_MARKER}**`,
+			`## ${COMMENT_MARKER}`,
 			"",
-			`Found **${report.errorCount}** broken link(s) across **${report.fileCount}** file(s).`,
+			`Found **${report.errorCount}** broken link(s) across **${report.errorFileCount}** file(s).`,
 			"",
 			"| File | Link | Position | Error |",
 			"| --- | --- | :---: | --- |",
@@ -98,7 +101,7 @@ async function run(): Promise<void> {
 		}
 
 		core.setFailed(
-			`Found ${report.errorCount} broken link(s) across ${report.fileCount} file(s).`,
+			`Found ${report.errorCount} broken link(s) across ${report.errorFileCount} file(s).`,
 		);
 	} catch (error) {
 		if (error instanceof Error) {

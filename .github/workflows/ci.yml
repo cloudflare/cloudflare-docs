@@ -97,7 +97,7 @@ jobs:
     needs: pre-build
     runs-on: ubuntu-latest
     outputs:
-      has_links_validation_errors: ${{ steps.build_step.outputs.has_links_validation_errors }}
+      link_validation_failed: ${{ steps.build_step.outputs.link_validation_failed }}
     permissions:
       contents: read
       pull-requests: write
@@ -148,7 +148,7 @@ jobs:
           path: dist
 
       - name: Upload link validation report
-        if: steps.build_step.outputs.has_links_validation_errors == 'true'
+        if: steps.build_step.outputs.link_validation_failed == 'true'
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
         with:
           name: link-validation-report
@@ -195,14 +195,14 @@ jobs:
         run: npm run test:postbuild
 
       - name: Download link validation report
-        if: needs.build.outputs.has_links_validation_errors == 'true'
+        if: needs.build.outputs.link_validation_failed == 'true'
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           name: link-validation-report
           path: .starlight-links-validator
 
       - name: Link validation
-        if: needs.build.outputs.has_links_validation_errors == 'true'
+        if: needs.build.outputs.link_validation_failed == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx tsx bin/post-link-validation-comment/index.ts
