@@ -17,6 +17,33 @@ This guide helps you diagnose and resolve common tunnel health issues with {prop
 
 ## Quick diagnostic checklist
 
+Use the following table to match your symptom to the most likely cause and first action:
+
+| Symptom | Most likely cause | First action |
+| :------ | :---------------- | :----------- |
+| Tunnel shows Down, never becomes healthy | Configuration mismatch or firewall blocking IKE | Check IPsec parameters and firewall rules. Refer to [IPsec tunnel establishment failures](#ipsec-tunnel-establishment-failures). |
+| Dashboard shows "100% degraded" for some colos | Normal — this is a state indicator, not packet loss | Check if affected colos carry your traffic. Refer to [Understanding degraded status](#understanding-degraded-status-in-the-dashboard). |
+| Tunnel flaps between healthy and unhealthy | Anti-replay protection or rekey disruption | Disable anti-replay protection on your router. Refer to [IPsec tunnel instability](#ipsec-tunnel-instability-or-packet-drops). |
+| Health checks fail but traffic flows normally | Stateful firewall dropping health check probes | Change health check type from *Reply* to *Request*. Refer to [Tunnel shows Down but traffic is flowing](#tunnel-shows-down-but-traffic-is-flowing). |
+| All tunnels degraded or down in a specific region | Network path issue between that region and your network | Check ISP connectivity. Use traceroute or MTR from your network to Cloudflare endpoints. |
+| All tunnels degraded or down globally | Issue at your network edge | Check your tunnel endpoint router and upstream connectivity. |
+
+### What you can check
+
+- **Dashboard**: Tunnel health status per data center and traffic volume per tunnel (go to **Connector health** page)
+- **API**: Tunnel health status via the <a href={props.tunnelHealthChecksLink}>{props.productName} tunnel health API</a>
+- **Network Analytics**: Traffic volume, packet counts, and protocol distribution through <a href={props.networkAnalyticsLink}>Network Analytics</a>
+- **From your network**: Traceroute and MTR from your tunnel endpoint to Cloudflare tunnel addresses — this tests the path your health check responses take
+
+### What you cannot check (current limitations)
+
+- Per-data center health check probe results (only aggregate state is visible)
+- Correlation between tunnel health events and Cloudflare network incidents
+- Per-packet forwarding decisions (which data center forwarded which packet through which tunnel)
+- Historical health check probe data beyond the dashboard retention period
+
+### Common fixes checklist
+
 If you are experiencing tunnel health issues, check these items first:
 
 1. **Health check type**: If using a stateful firewall (Palo Alto, Checkpoint, Cisco, Fortinet), change health check type from *Reply* to *Request*.
@@ -24,7 +51,7 @@ If you are experiencing tunnel health issues, check these items first:
 3. **MTU settings**: Verify MTU is set correctly (typically `1476` for GRE, `1400-1450` for IPsec).
 4. **IPsec parameters**: Confirm your cryptographic parameters match <a href={props.tunnelsConfigLink}>Cloudflare's supported configuration</a>.
 5. **Health check direction**: {props.productName} defaults to <Markdown text={props.healthCheckDefault} />.
-6. **Cloudflare Network Firewall rules (Less common)**: Ensure ICMP traffic from [Cloudflare IP addresses](https://www.cloudflare.com/ips/) is allowed.
+6. **Cloudflare Network Firewall rules (less common)**: Ensure ICMP traffic from [Cloudflare IP addresses](https://www.cloudflare.com/ips/) is allowed.
 
 ---
 
@@ -43,6 +70,28 @@ The dashboard shows tunnel health as measured from each Cloudflare data center w
 :::note[Probe retry behavior]
 When a health check probe fails, Cloudflare sends two additional probes to confirm the failure. A tunnel is only marked as unhealthy if all three probes fail. This retry behavior provides resilience against random packet loss.
 :::
+
+### Understanding degraded status in the dashboard
+
+The tunnel health dashboard reports health state per data center per tunnel. Each Cloudflare data center independently tracks the health of each tunnel.
+
+A common source of confusion is seeing "100% degraded" in the dashboard and interpreting it as 100% packet loss. It is not.
+
+:::note[100% degraded is a state, not a packet loss percentage]
+Each Cloudflare data center is a single tracking instance for a tunnel. When a tunnel enters the degraded state in a data center, the dashboard reports that data center as "100% degraded" for that tunnel. The actual packet loss that triggered the state change may be very small — even a brief period of intermittent loss that does not noticeably affect applications can trigger the degraded state.
+:::
+
+**How degraded state is triggered:**
+
+When a health check probe fails, Cloudflare sends two additional probes. If some probes succeed and some fail, the tunnel enters degraded state for that data center. A few seconds of intermittent packet loss is enough to trigger this transition.
+
+**What to check:**
+
+Focus on data centers that show traffic in the **Average ingress traffic** column. A data center showing degraded status with zero or minimal traffic is informational — it indicates a path issue between that specific Cloudflare data center and your network, but it does not affect your traffic if no traffic routes through that data center.
+
+**Recovery timing:**
+
+Tunnels remain in degraded state for at least five minutes, even if health checks start succeeding immediately. Recovery from degraded to healthy requires consistently passing health checks over a sustained period and can take up to 30 minutes. For details on how tunnels transition between states, refer to [Recovery behavior](#recovery-behavior) below.
 
 ### Routing priority penalties
 
