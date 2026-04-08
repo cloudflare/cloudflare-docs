@@ -82,8 +82,8 @@ Enforce DNS-only does not affect the following records:
 - [Spectrum](/spectrum/) applications: DNS records managed by the Spectrum application.
 - [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) fallback origin: The proxied DNS record you designate as the [fallback origin](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/#1-create-fallback-origin) for custom hostnames.
 - [R2](/r2/) custom domains: read-only proxied records added to the DNS records table when you set up [R2 custom domains](/r2/buckets/public-buckets/#connect-a-bucket-to-a-custom-domain).
-- [Web3 gateways](/web3/): CNAMEs to `ethereum.cloudflare.com`, `ipfs.cloudflare.com`, or `universal-gateway.ipfs.cloudflare.com`. These are read-only proxied records managed by the [gateway configuration](/web3/reference/gateway-dns-records/).
-- [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/dns/): CNAME records pointing to a tunnel subdomain (**Target** ending in `.cfargotunnel.com`).
+- [Web3 gateways](/web3/): read-only proxied records managed by the Web3 [gateway configuration](/web3/reference/gateway-dns-records/)
+- [Tunnel](/tunnel/): CNAME records pointing to a tunnel subdomain (**Target** ending in `.cfargotunnel.com`).
 
 ## Check current status
 
