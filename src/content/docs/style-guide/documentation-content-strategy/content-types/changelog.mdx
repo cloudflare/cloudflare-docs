@@ -25,6 +25,10 @@ instructional, straightforward
 
 ```yaml
 pcx_content_type: changelog
+products:
+  - product-a
+  - product-b
+  - product-c
 ```
 
 For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-properties/#pcx_content_type).
@@ -52,6 +56,8 @@ For more information about the `ProductChangelog` component, refer to the [style
 ```mdx title="/src/content/docs/dns/changelog.mdx"
 ---
 pcx_content_type: changelog
+products:
+  - dns
 title: Changelog
 ---
 
@@ -72,6 +78,8 @@ Each entry will be its own MDX file, similar to the following.
 ---
 title: Account-level DNS analytics now available via GraphQL Analytics API
 description: Authoritative DNS analytics can now be accessed on the account level via the GraphQL Analytics API.
+products:
+  - dns
 date: 2025-06-19
 ---
 
@@ -118,7 +126,7 @@ Each changelog entries has the following properties:
   - Shown in social media embeds.
 - `date` <Type text="date" /> <MetaInfo text="required" />
   - This should be a date in `YYYY-MM-DD` format. For example, `2025-02-04`.
-- `products` <Type text="Array<String>" /> <MetaInfo text="(default: current location) optional" />
+- `products` <Type text="Array<String>" /> <MetaInfo text="(default: current location) required" />
   - The products list is case-sensitive. Only use lowercase.
   - This should be an array of strings, each referring to the name of a file in the products collection without the file extension.
   - The folder that your entry is in, such as `src/content/changelog/workers/2025-02-13-new-product-feature.mdx`, is inferred as part of this property. If you do not want to associate the entry with additional products, you can omit it from the frontmatter entirely.
