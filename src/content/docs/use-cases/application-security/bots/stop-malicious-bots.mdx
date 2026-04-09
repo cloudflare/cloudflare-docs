@@ -200,29 +200,29 @@ The settings in the following table are part of [Super Bot Fight Mode](/bots/get
 
 If the built-in settings do not cover your needs, create custom rules. Start by creating an exception for verified bots so they are protected before you deploy any blocking rules.
 
-**First, create a verified bot exception:**
+Navigate to custom rules, then create both rules:
 
 <Render file="navigate-to-custom-rules" product="waf" />
 
-1. Enter a descriptive name in **Rule name**.
-2. Under **When incoming requests match**, select **Edit expression** and enter: `(cf.client.bot)`
-3. Under **Then take action**, select _Skip_ from the **Choose action** dropdown. Then select **All remaining custom rules**.
-4. Under **Place at**, select _First_ from the **Select order** dropdown so this rule executes before any blocking rules.
-5. Select **Deploy**.
+**First, create a verified bot exception:**
+
+1. Select **Create rule**.
+2. Enter a descriptive name in **Rule name**.
+3. Under **When incoming requests match**, select **Edit expression** and enter: `(cf.client.bot)`
+4. Under **Then take action**, select _Skip_ from the **Choose action** dropdown. Then select **All remaining custom rules**.
+5. Under **Place at**, select _First_ from the **Select order** dropdown so this rule executes before any blocking rules.
+6. Select **Deploy**.
 
 This ensures verified bots (search engine crawlers, monitoring services) bypass your custom rules.
 
 **Then, create a blocking rule:**
 
-Create a second custom rule that targets requests with missing or suspicious headers. For example, to challenge requests to `/login` with an empty user agent:
-
-<Render file="navigate-to-custom-rules" product="waf" />
-
-1. Enter a descriptive name in **Rule name**.
-2. Under **When incoming requests match**, select **Edit expression** and enter: `(http.request.uri.path eq "/login" and http.user_agent eq "")`
-3. Under **Then take action**, select _Managed Challenge_ from the **Choose action** dropdown.
-4. Under **Place at**, leave the **Select order** dropdown set to _Last_. This places the rule after the verified bot exception.
-5. Select **Deploy**.
+1. Select **Create rule**.
+2. Enter a descriptive name in **Rule name**.
+3. Under **When incoming requests match**, select **Edit expression** and enter: `(http.request.uri.path eq "/login" and http.user_agent eq "")`
+4. Under **Then take action**, select _Managed Challenge_ from the **Choose action** dropdown.
+5. Under **Place at**, leave the **Select order** dropdown set to _Last_. This places the rule after the verified bot exception.
+6. Select **Deploy**.
 
 Start with _Managed Challenge_ to verify the rule targets the right traffic without blocking it outright. After 24-48 hours, review the results in [Security Events](/waf/analytics/security-events/). If the rule matches only bot traffic, edit the rule and change the action to _Block_.
 
