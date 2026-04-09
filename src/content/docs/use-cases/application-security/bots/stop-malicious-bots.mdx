@@ -323,7 +323,7 @@ For details on Skip action configuration, refer to [Configure a rule with the Sk
 
 **Scenario 2: Malicious traffic is still getting through.**
 
-You see bot activity in Security Events that your current rules do not catch. Create a new custom rule that combines multiple signals for more precise targeting. For example, to challenge requests to `/login` with an empty `Accept-Language` header:
+You see bot activity in Security Events that your current rules do not catch. Bots that use real-looking headers or stay under rate limits can evade single-signal rules. Combining multiple signals in one rule narrows the target. For example, to challenge requests to `/login` with an empty `Accept-Language` header:
 
 1. Go to Application Security custom rules.
 2. Select **Create rule**.
