@@ -102,6 +102,7 @@ Each A, AAAA, and CNAME record has a [proxy status](/dns/proxy-status/) toggle:
 <Render file="nameserver-preamble" product="dns" />
 
 :::caution
+
 <Render file="minimize-downtime-tip" product="dns" />
 :::
 
@@ -109,13 +110,9 @@ Each A, AAAA, and CNAME record has a [proxy status](/dns/proxy-status/) toggle:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In the Cloudflare dashboard, go to the zone **Overview** page.
+Go to the **DNS Records** page and locate the your **Cloudflare Nameservers**. If you just completed the onboarding flow, your assigned nameservers were also displayed on the activation screen.
 
-   <DashButton url="/?to=/:account/:zone/" />
-
-2. Locate the nameserver names in **2. Replace with Cloudflare's nameservers**.
-
-   ![Find nameserver names on the Overview page of your domain](~/assets/images/dns/nameserver-names.png)
+<DashButton url="/?to=/:account/:zone/dns/records" />
 
 </TabItem> <TabItem label="API">
 
@@ -124,11 +121,18 @@ Each A, AAAA, and CNAME record has a [proxy status](/dns/proxy-status/) toggle:
 </TabItem> </Tabs>
 
 :::note
-
 Cloudflare automatically assigns nameservers to a domain and these assignments cannot be changed. For more details, refer to [Nameserver assignments](/dns/nameservers/nameserver-options/#assignment-method).
 :::
 
-### 3.2. Turn off DNSSEC
+### 3.2. Log in to your registrar
+
+Log in to the admin account for your domain registrar. If you do not know your provider, use [ICANN Lookup](https://lookup.icann.org/).
+
+:::note
+Depending on your use case, you may have to perform this step on the DNS records management of your domain parent zone, or at a domain reseller, instead. Refer to [Nameservers](/dns/nameservers/update-nameservers/#specific-processes) for details.
+:::
+
+### 3.3. Turn off DNSSEC
 
 If your domain has [DNSSEC](/dns/dnssec/)[^1] active, you must [turn it off](/dns/dnssec/#disable-dnssec) at your registrar before replacing nameservers. Changing nameservers while DNSSEC is active can cause your domain to become unreachable. You can [re-enable DNSSEC through Cloudflare](/dns/dnssec/#enable-dnssec) after your domain is active.
 
@@ -136,13 +140,11 @@ If your domain has [DNSSEC](/dns/dnssec/)[^1] active, you must [turn it off](/dn
 
 <Render file="dnssec-enabled-migration" product="dns" />
 
-### 3.3. Update your registrar
+### 3.4. Update your registrar
 
-1. Log in to the admin account for your domain registrar. If you do not know your provider, use [ICANN Lookup](https://lookup.icann.org/).
+1. Remove your existing authoritative nameservers.
 
-2. Remove your existing authoritative nameservers.
-
-3. Add the nameservers provided by Cloudflare. If their names are not **copied exactly**, your DNS will not resolve correctly.
+2. Add the nameservers provided by Cloudflare. If their names are not **copied exactly**, your DNS will not resolve correctly.
 
 <Details header="Provider-specific instructions">
 	<Render file="ns-update-providers" product="dns" />
@@ -150,11 +152,7 @@ If your domain has [DNSSEC](/dns/dnssec/)[^1] active, you must [turn it off](/dn
 
 To avoid common issues, refer to our [Nameserver replacement checklist](/dns/zone-setups/full-setup/troubleshooting/).
 
-:::note
-Depending on your use case, you may have to perform this step on the DNS records management of your domain parent zone, or at a domain reseller, instead. Refer to [Nameservers](/dns/nameservers/update-nameservers/#specific-processes) for details.
-:::
-
-### 3.4. Verify changes
+### 3.5. Verify changes
 
 Wait up to 24 hours while your registrar updates your nameservers.
 
