@@ -1,0 +1,159 @@
+---
+pcx_content_type: troubleshooting
+title: Known issues
+description: Guides for navigating the Worker Previews beta based on your setup and desired workflow.
+sidebar:
+  order: 5
+  badge:
+    text: Beta
+---
+
+Worker Previews is in beta. This page covers common situations you may encounter and how to navigate them.
+
+---
+
+## Durable Object isolation
+
+### Auto-provisioning may not work on all accounts
+
+Durable Object auto-provisioning (where each preview automatically gets its own isolated DO namespace) is rolling out gradually. On some accounts, previews may still share the production DO namespace even when `ctx.exports` is used.
+
+**How to check:** Compare DO instance IDs between production and your preview. If they are identical, isolation is not active.
+
+```bash
+# Hit a DO endpoint on production
+curl https://my-worker.subdomain.workers.dev/do/my-instance
+
+# Hit the same endpoint on the preview
+curl https://my-feature-my-worker.subdomain.workers.dev/do/my-instance
+```
+
+If both return the same instance ID, the preview is using the production namespace — **preview traffic is reading and writing production DO state**.
+
+**Workaround:** Configure DO isolation manually through the dashboard. Go to **Settings** > **Bindings**, toggle to **Previews**, uncheck "Use production value" for the DO binding, and select the auto-provisioned preview namespace from the dropdown. Then re-run `wrangler preview` to create a new deployment with the updated binding. Refer to [Durable Object isolation](/workers/worker-previews/durable-object-isolation/) for detailed steps.
+
+### `script_name` required in Wrangler configuration file for DO bindings
+
+When configuring DO bindings in the `previews` block of your Wrangler configuration file, you must include `script_name` — even when the DO class is defined in the same Worker. Without it, deployment fails with:
+
+```
+Cannot create binding for class 'ClassName' that is not exported by the script. [code: 10061]
+```
+
+The error message refers to the class not being exported, when the actual requirement is `script_name`. Refer to [Approach 3](/workers/worker-previews/durable-object-isolation/#approach-3-use-a-do-binding-with-wrangler-configuration) for the correct configuration.
+
+:::note
+Using `ctx.exports` ([Approach 1](/workers/worker-previews/durable-object-isolation/#approach-1-use-ctxexports-recommended)) avoids this issue entirely — no `script_name` or binding configuration is needed.
+:::
+
+---
+
+## Preview settings
+
+### Cannot delete individual bindings from Preview Defaults
+
+The `PATCH /preview-settings` API is additive only. If you add a binding to Preview Defaults and later want to remove it, there is currently no API or CLI command to delete a single binding.
+
+**Workaround:** Contact support if you need stale bindings removed from Preview Defaults. A deletion API is planned for a future release.
+
+### Changes via the setup wizard may not persist
+
+The setup wizard in the dashboard (the "Get started" flow in the Settings tab) may not persist all changes to the API. For example, enabling Logpush in the wizard may not actually enable Logpush on the backend.
+
+**Workaround:** After completing the wizard, verify your settings with:
+
+```bash
+npx wrangler preview settings
+```
+
+If a setting is missing, apply it manually:
+
+```bash
+npx wrangler preview settings update
+```
+
+This reads the `previews` block from your Wrangler configuration file and writes it to Preview Defaults.
+
+---
+
+## Dashboard
+
+### Settings page may show wrong configuration after `versions upload` or rollback
+
+The Settings page in the Cloudflare dashboard displays the configuration from the **last uploaded version**, not the **currently deployed version**. This means:
+
+- If you run `wrangler versions upload` without deploying, the Settings page shows the uploaded version's bindings — even though production is still running the previously deployed version.
+- After a rollback, the Settings page shows the configuration of the version you rolled back **from**, not the version that is actually live.
+
+**How to verify what is actually deployed:**
+
+```bash
+# Check which version is currently deployed
+npx wrangler deployments list
+
+# Check the bindings for a specific version
+npx wrangler versions view <VERSION_ID>
+```
+
+The runtime always uses the correct (deployed) bindings. The dashboard display will be updated in a future release to reflect the deployed version.
+
+### Production/Preview toggles may appear on unconfigured Workers
+
+On some accounts, the Production/Preview toggles in the Settings and Bindings tabs appear even on Workers that have not been set up with Worker Previews. The intended behavior is that toggles only appear after completing the setup wizard.
+
+**Impact:** Toggling to "Previews" on an unconfigured Worker shows empty or default values that do not correspond to actual preview configuration.
+
+**Workaround:** Ignore the toggle if you have not completed the setup wizard. Complete the "Get started" flow in the Settings tab first.
+
+---
+
+## Wrangler CLI
+
+### `wrangler preview` from the production branch creates a preview with no warning
+
+Running `wrangler preview` while on your `main` or `master` branch creates a preview named `main` (or `master`).
+
+**Recommendation:** Only run `wrangler preview` from feature branches. If you accidentally create a `main` preview, delete it:
+
+```bash
+npx wrangler preview delete --name main
+```
+
+### `--tag` and `--message` flags are silently ignored
+
+The `--tag` and `--message` flags are accepted by the CLI, and the values are not yet stored. Tags and messages will be supported in a future release.
+
+### Delete confirmation defaults to "yes"
+
+When running `wrangler preview delete`, pressing Enter at the confirmation prompt accepts the deletion. Read the prompt carefully before confirming.
+
+---
+
+## Workers Builds integration
+
+### Build status not visible during preview creation
+
+After pushing to a branch with Workers Builds configured, there is a period (up to ~90 seconds) where the preview detail page in the dashboard shows "No deployments yet" while the build is running. During this time, check build status in the build history tab or your Git provider (GitHub/GitLab).
+
+---
+
+## How previews and production relate
+
+Previews and production are designed as independent pipelines. Here is how they work together:
+
+| Design | How it works |
+| --- | --- |
+| Ship to production after testing in a preview | When you are done testing, run `wrangler deploy` or merge to your production branch. This deploys with production bindings. Refer to [Workflow guides](/workers/worker-previews/workflows/) for step-by-step instructions. |
+| Previews and versions are separate | `wrangler preview` creates a preview deployment. `wrangler versions upload` creates a production version. Each serves a different purpose — refer to [Preview URLs vs Worker Previews](/workers/worker-previews/workflows/#preview-urls-vs-worker-previews). |
+| Previews always serve the latest push | The stable preview URL points to the latest deployment. Previous deployments remain accessible via their per-push URL. For traffic splitting, use [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/) in production. |
+| `wrangler deploy` and `wrangler preview` are independent | Running `wrangler deploy` updates production. Running `wrangler preview` updates the preview. They operate independently, keeping production safe during testing. |
+
+---
+
+## Get help
+
+If you encounter an issue not listed here:
+
+- Check the [Worker Previews concepts](/workers/worker-previews/concepts/) page for expected behavior
+- Visit the [Cloudflare Workers Discord](https://discord.cloudflare.com) for community help
+- File a bug report through the Cloudflare dashboard
