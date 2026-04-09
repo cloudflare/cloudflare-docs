@@ -188,20 +188,11 @@ Application Security [custom rules](/waf/custom-rules/) and [rate limiting rules
 
 Legitimate browsers typically send headers like `User-Agent`, `Accept`, and `Accept-Language`. Many bots omit these headers or send non-browser values. A custom rule targeting requests with empty or suspicious headers catches bots that evade score-based detection.
 
-Before creating custom rules, review the built-in bot settings in **Security** > **Settings** (filter by _Bot traffic_). These settings handle common scenarios without requiring you to write expressions:
+Before creating custom rules, review the built-in bot settings in **Security** > **Settings** (filter by _Bot traffic_). These settings handle common scenarios like blocking AI crawlers, challenging automated traffic, and allowing verified bots without requiring you to write expressions. For the full list of built-in settings, refer to [Challenge bad bots](/waf/custom-rules/use-cases/challenge-bad-bots/).
 
 :::note[Built-in bot settings require a Pro plan or above]
-The settings in the following table are part of [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/). On Free plans, only the Bot Fight Mode toggle is available.
+The built-in bot settings are part of [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/). On Free plans, only the Bot Fight Mode toggle is available.
 :::
-
-| Use case                                            | Setting                        |
-| --------------------------------------------------- | ------------------------------ |
-| Block AI crawlers (GPTBot, ClaudeBot, etc.)         | **Block AI bots**              |
-| Block definitely automated traffic (bot score of 1) | **Definitely automated**       |
-| Challenge likely automated traffic (bot score 2-29) | **Likely automated**           |
-| Allow verified bots (Googlebot, Bingbot, etc.)      | **Verified bots**              |
-| Extend bot protection to static resources           | **Static resource protection** |
-| Allow WordPress loopback requests                   | **Optimize for WordPress**     |
 
 If the built-in settings do not cover your needs, create custom rules. Start by creating an exception for verified bots so they are protected before you deploy any blocking rules.
 
