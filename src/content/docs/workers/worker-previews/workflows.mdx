@@ -32,35 +32,7 @@ The key distinction:
 
 When you are done testing in a preview, you ship to production as a separate step. This separation is by design — your preview testing never affects real users.
 
-```
-                          ┌──────────────────────────────┐
-                          │         Your code             │
-                          └──────────┬────────────────────┘
-                                     │
-                      ┌──────────────┴──────────────┐
-                      │                             │
-               push to feature branch         push to main
-                      │                             │
-                      ▼                             ▼
-              ┌───────────────┐            ┌────────────────┐
-              │   Preview     │            │     Build      │
-              │  (isolated)   │            │                │
-              │               │            └───────┬────────┘
-              │  Own URL      │                    │
-              │  Own bindings │                    ▼
-              │  Own secrets  │            ┌────────────────┐
-              └───────────────┘            │    Version     │
-                                           │  (code + config│
-                                           │   snapshot)    │
-                                           └───────┬────────┘
-                                                   │
-                                                   ▼
-                                           ┌────────────────┐
-                                           │  Deployment    │
-                                           │ (routes traffic │
-                                           │  to version)   │
-                                           └────────────────┘
-```
+![Preview and production pipelines](~/assets/images/workers/worker-previews/preview-production-pipelines.svg)
 
 ---
 
@@ -83,13 +55,7 @@ When you are done testing in a preview, you ship to production as a separate ste
 2. Test against the preview URL (`my-feature-my-worker.subdomain.workers.dev`). Preview traffic uses your [Preview Defaults](/workers/worker-previews/concepts/#what-are-preview-defaults) — separate secrets, separate variables, optionally separate storage.
 3. Merge to your production branch — Workers Builds runs your build command, then runs `wrangler deploy`. Production is updated immediately at 100%.
 
-```
-feature branch push ──→ build ──→ wrangler preview ──→ preview URL (isolated)
-                                                            │
-                                                       test here
-                                                            │
-merge to main ─────────→ build ──→ wrangler deploy ───→ production (100%)
-```
+![Workflow A: deploy on merge](~/assets/images/workers/worker-previews/workflow-a-deploy-on-merge.svg)
 
 **To set this up:**
 
@@ -142,17 +108,7 @@ npx wrangler versions deploy
 npx wrangler versions deploy --version-id <VERSION_ID> --percentage 100
 ```
 
-```
-feature branch push ──→ build ──→ wrangler preview ──→ preview URL (isolated)
-                                                            │
-                                                       test here
-                                                            │
-merge to main ──→ build ──→ wrangler versions upload ──→ version created (0% traffic)
-                                                            │
-                                              manually: wrangler versions deploy
-                                                            │
-                                                   ──→ production (10%, 50%, 100%)
-```
+![Workflow B: gradual rollout](~/assets/images/workers/worker-previews/workflow-b-gradual-rollout.svg)
 
 **How this differs from Workflow A:** Merging to main creates a version without deploying it, giving you control over when and how much traffic to send. You choose when to go live.
 

@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" fill="none">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .label { font-size: 14px; fill: #1a1a1a; font-weight: 600; }
+    .sublabel { font-size: 12px; fill: #6b7280; }
+    .box { stroke: #e5e7eb; stroke-width: 1.5; rx: 8; }
+    .box-preview { fill: #eff6ff; stroke: #3b82f6; }
+    .box-prod { fill: #fff7ed; stroke: #f6821f; }
+    .box-neutral { fill: #f9fafb; stroke: #d1d5db; }
+    .arrow { stroke: #1a1a1a; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+    .arrow-preview { stroke: #3b82f6; }
+    .arrow-prod { stroke: #f6821f; }
+    .branch-label { font-size: 12px; fill: #6b7280; font-style: italic; }
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#1a1a1a"/>
+    </marker>
+    <marker id="arrowhead-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#3b82f6"/>
+    </marker>
+    <marker id="arrowhead-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#f6821f"/>
+    </marker>
+  </defs>
+
+  <!-- Your code box -->
+  <rect x="300" y="20" width="200" height="50" class="box box-neutral"/>
+  <text x="400" y="50" text-anchor="middle" class="label">Your code</text>
+
+  <!-- Vertical line down from code -->
+  <line x1="400" y1="70" x2="400" y2="110" class="arrow" style="marker-end: none;"/>
+
+  <!-- Split point -->
+  <circle cx="400" cy="110" r="4" fill="#1a1a1a"/>
+
+  <!-- Left branch: Preview pipeline -->
+  <line x1="400" y1="110" x2="200" y2="110" stroke="#1a1a1a" stroke-width="2"/>
+  <line x1="200" y1="110" x2="200" y2="160" class="arrow arrow-preview" style="marker-end: url(#arrowhead-blue);"/>
+  <text x="260" y="130" class="branch-label">push to feature branch</text>
+
+  <!-- Right branch: Production pipeline -->
+  <line x1="400" y1="110" x2="600" y2="110" stroke="#1a1a1a" stroke-width="2"/>
+  <line x1="600" y1="110" x2="600" y2="160" class="arrow arrow-prod" style="marker-end: url(#arrowhead-orange);"/>
+  <text x="490" y="130" class="branch-label">push to main</text>
+
+  <!-- Preview box -->
+  <rect x="100" y="160" width="200" height="120" class="box box-preview"/>
+  <text x="200" y="190" text-anchor="middle" class="label" style="fill: #1e40af;">Preview</text>
+  <text x="200" y="210" text-anchor="middle" class="sublabel">Isolated environment</text>
+  <line x1="130" y1="222" x2="270" y2="222" stroke="#dbeafe" stroke-width="1"/>
+  <text x="200" y="242" text-anchor="middle" class="sublabel">Own URL</text>
+  <text x="200" y="258" text-anchor="middle" class="sublabel">Own bindings</text>
+  <text x="200" y="274" text-anchor="middle" class="sublabel">Own secrets</text>
+
+  <!-- Build box -->
+  <rect x="500" y="160" width="200" height="60" class="box box-prod"/>
+  <text x="600" y="190" text-anchor="middle" class="label" style="fill: #c2410c;">Build</text>
+  <text x="600" y="208" text-anchor="middle" class="sublabel">Compiles your code</text>
+
+  <!-- Arrow: Build → Version -->
+  <line x1="600" y1="220" x2="600" y2="270" class="arrow arrow-prod" style="marker-end: url(#arrowhead-orange);"/>
+
+  <!-- Version box -->
+  <rect x="500" y="270" width="200" height="60" class="box box-prod"/>
+  <text x="600" y="300" text-anchor="middle" class="label" style="fill: #c2410c;">Version</text>
+  <text x="600" y="318" text-anchor="middle" class="sublabel">Code + config snapshot</text>
+
+  <!-- Arrow: Version → Deployment -->
+  <line x1="600" y1="330" x2="600" y2="380" class="arrow arrow-prod" style="marker-end: url(#arrowhead-orange);"/>
+
+  <!-- Deployment box -->
+  <rect x="500" y="380" width="200" height="60" class="box box-prod"/>
+  <text x="600" y="410" text-anchor="middle" class="label" style="fill: #c2410c;">Deployment</text>
+  <text x="600" y="428" text-anchor="middle" class="sublabel">Routes traffic to version(s)</text>
+
+  <!-- Pipeline labels -->
+  <text x="200" y="500" text-anchor="middle" class="label" style="fill: #3b82f6; font-size: 13px;">Preview pipeline</text>
+  <text x="200" y="516" text-anchor="middle" class="sublabel">Safe testing, never affects production</text>
+  <text x="600" y="500" text-anchor="middle" class="label" style="fill: #f6821f; font-size: 13px;">Production pipeline</text>
+  <text x="600" y="516" text-anchor="middle" class="sublabel">Serves real users</text>
+</svg>

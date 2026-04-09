@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 280" fill="none">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .label { font-size: 13px; fill: #1a1a1a; font-weight: 600; }
+    .sublabel { font-size: 11px; fill: #6b7280; }
+    .cmd { font-size: 11px; fill: #6b7280; font-family: 'SF Mono', 'Fira Code', monospace; }
+    .box { rx: 8; stroke-width: 1.5; }
+    .box-preview { fill: #eff6ff; stroke: #3b82f6; }
+    .box-prod { fill: #fff7ed; stroke: #f6821f; }
+    .box-action { fill: #f0fdf4; stroke: #22c55e; }
+    .box-trigger { fill: #f9fafb; stroke: #d1d5db; }
+    .arrow { stroke: #9ca3af; stroke-width: 2; fill: none; marker-end: url(#arrow-gray); }
+    .row-label { font-size: 12px; fill: #9ca3af; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+  </style>
+  <defs>
+    <marker id="arrow-gray" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#9ca3af"/>
+    </marker>
+  </defs>
+
+  <!-- Row 1: Feature branch flow (Preview) -->
+  <text x="20" y="62" class="row-label">Feature</text>
+  <text x="20" y="76" class="row-label">branch</text>
+
+  <rect x="100" y="40" width="130" height="50" class="box box-trigger"/>
+  <text x="165" y="62" text-anchor="middle" class="label">git push</text>
+  <text x="165" y="78" text-anchor="middle" class="sublabel">feature branch</text>
+
+  <line x1="230" y1="65" x2="280" y2="65" class="arrow"/>
+
+  <rect x="280" y="40" width="110" height="50" class="box box-trigger"/>
+  <text x="335" y="62" text-anchor="middle" class="label">Build</text>
+  <text x="335" y="78" text-anchor="middle" class="sublabel">compile code</text>
+
+  <line x1="390" y1="65" x2="440" y2="65" class="arrow"/>
+
+  <rect x="440" y="40" width="150" height="50" class="box box-preview"/>
+  <text x="515" y="60" text-anchor="middle" class="label" style="fill: #1e40af;">Preview</text>
+  <text x="515" y="78" text-anchor="middle" class="cmd">wrangler preview</text>
+
+  <line x1="590" y1="65" x2="640" y2="65" class="arrow"/>
+
+  <rect x="640" y="40" width="160" height="50" class="box box-action"/>
+  <text x="720" y="60" text-anchor="middle" class="label" style="fill: #15803d;">Test here</text>
+  <text x="720" y="78" text-anchor="middle" class="sublabel">isolated preview URL</text>
+
+  <!-- Divider -->
+  <line x1="100" y1="130" x2="800" y2="130" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <!-- Row 2: Main branch flow (Production) -->
+  <text x="20" y="192" class="row-label">Main</text>
+  <text x="20" y="206" class="row-label">branch</text>
+
+  <rect x="100" y="170" width="130" height="50" class="box box-trigger"/>
+  <text x="165" y="192" text-anchor="middle" class="label">Merge PR</text>
+  <text x="165" y="208" text-anchor="middle" class="sublabel">to main</text>
+
+  <line x1="230" y1="195" x2="280" y2="195" class="arrow"/>
+
+  <rect x="280" y="170" width="110" height="50" class="box box-trigger"/>
+  <text x="335" y="192" text-anchor="middle" class="label">Build</text>
+  <text x="335" y="208" text-anchor="middle" class="sublabel">compile code</text>
+
+  <line x1="390" y1="195" x2="440" y2="195" class="arrow"/>
+
+  <rect x="440" y="170" width="150" height="50" class="box box-prod"/>
+  <text x="515" y="190" text-anchor="middle" class="label" style="fill: #c2410c;">Deploy</text>
+  <text x="515" y="208" text-anchor="middle" class="cmd">wrangler deploy</text>
+
+  <line x1="590" y1="195" x2="640" y2="195" class="arrow"/>
+
+  <rect x="640" y="170" width="160" height="50" class="box box-prod"/>
+  <text x="720" y="190" text-anchor="middle" class="label" style="fill: #c2410c;">Production</text>
+  <text x="720" y="208" text-anchor="middle" class="sublabel">live at 100%</text>
+
+  <!-- Legend -->
+  <rect x="100" y="250" width="12" height="12" rx="2" fill="#eff6ff" stroke="#3b82f6" stroke-width="1"/>
+  <text x="118" y="261" class="sublabel">Preview pipeline</text>
+  <rect x="250" y="250" width="12" height="12" rx="2" fill="#fff7ed" stroke="#f6821f" stroke-width="1"/>
+  <text x="268" y="261" class="sublabel">Production pipeline</text>
+</svg>
