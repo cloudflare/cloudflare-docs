@@ -10,7 +10,7 @@ Cloudflare Access now supports independent multi-factor authentication (MFA), al
 
 Independent MFA supports the following authenticator types:
 
-- **Authenticator application** — Time-based one-time passwords using apps like Google Authenticator, Microsoft Authenticator, or Authy.
+- **Authenticator application** — Time-based one-time passwords (TOTP) using apps like Google Authenticator, Microsoft Authenticator, or Authy.
 - **Security key** — Hardware security keys such as YubiKeys.
 - **Biometrics** — Built-in device authenticators including macOS Touch ID, Face ID, and Windows Hello.
 
@@ -28,6 +28,6 @@ Settings at lower levels (policy) override settings at higher levels (organizati
 
 ## User enrollment
 
-Users enroll their authenticators through the [App Launcher](/cloudflare-one/access-controls/access-settings/app-launcher/). To help with onboarding, administrators can share a direct enrollment link: `<your-team-name>.cloudflareaccess.com/#/AddMfaDevice`.
+Users enroll their authenticators through the [App Launcher](/cloudflare-one/access-controls/access-settings/app-launcher/). To help with onboarding, administrators can share a direct enrollment link: `<your-team-name>.cloudflareaccess.com/AddMfaDevice`.
 
-For more information, refer to [Enforce MFA](/cloudflare-one/access-controls/policies/mfa-requirements/#enforce-independent-mfa).
+To get started with Independent MFA, refer to [Independent MFA](/content/docs/cloudflare-one/access-controls/access-settings/independent-mfa/).
