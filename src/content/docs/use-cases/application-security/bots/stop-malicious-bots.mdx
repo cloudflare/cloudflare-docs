@@ -200,6 +200,10 @@ The settings in the following table are part of [Super Bot Fight Mode](/bots/get
 
 If the built-in settings do not cover your needs, create custom rules. Start by creating an exception for verified bots so they are protected before you deploy any blocking rules.
 
+:::note[Custom rule availability by plan]
+All Cloudflare plans include custom rules. The number of available rules increases with higher plans. For the full availability breakdown, refer to [Custom rules](/waf/custom-rules/#availability).
+:::
+
 Navigate to custom rules, then create both rules:
 
 <Render file="navigate-to-custom-rules" product="waf" />
@@ -226,10 +230,6 @@ This ensures verified bots (search engine crawlers, monitoring services) bypass 
 7. After 24-48 hours, review the results in [Security Events](/waf/analytics/security-events/). If the rule matches only bot traffic, edit the rule and change the action from _Managed Challenge_ to _Block_.
 
 For additional custom rule options including the visual field builder, refer to [Create a custom rule in the dashboard](/waf/custom-rules/create-dashboard/).
-
-:::note[Custom rule availability by plan]
-All Cloudflare plans include custom rules. The number of available rules increases with higher plans. For the full availability breakdown, refer to [Custom rules](/waf/custom-rules/#availability).
-:::
 
 If your bot traffic is concentrated from countries where you have no real users, you can combine geographic filters with the rules above. Add `ip.src.country` to your expression to restrict the rule to specific regions. For examples, refer to [Block traffic by geographical location](/waf/custom-rules/use-cases/block-by-geographical-location/).
 
