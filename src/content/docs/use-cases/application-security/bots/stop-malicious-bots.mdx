@@ -237,17 +237,20 @@ If your bot traffic is concentrated from countries where you have no real users,
 
 Beyond form endpoints, bots also target checkout flows, API endpoints, and other high-value paths. Rate limiting rules cap the number of requests a single client can make to these paths within a time window.
 
-1. Identify which paths to protect. Prioritize checkout flows, API endpoints, and any path that triggers expensive operations.
-2. Estimate the normal request rate. Consider how many times a legitimate user would hit the endpoint in a one-minute window.
-3. Create a rate limiting rule with a conservative threshold. Start with the Log action to observe what the rule would match without blocking:
-   - **Expression**: `http.request.uri.path eq "/api/checkout" and http.request.method eq "POST"`
-   - **Counting characteristic** (the field used to group requests): IP address
-   - **Rate**: 10 requests per 1 minute
-   - **Action**: Log
-4. Review the results in [Security Events](/waf/analytics/security-events/) after 24-48 hours. Check whether any legitimate traffic would have been blocked.
-5. Once you are confident the threshold is correct, change the action from Log to **Managed Challenge** or **Block**.
+The following example creates a rate limiting rule for a checkout endpoint. Adjust the path, rate, and action for your site.
 
-For step-by-step rule creation, refer to [Create a rate limiting rule in the dashboard](/waf/rate-limiting-rules/create-zone-dashboard/). For additional patterns and thresholds, refer to [Rate limiting best practices](/waf/rate-limiting-rules/best-practices/).
+<Render file="navigate-to-custom-rules" product="waf" />
+
+1. Select **Create rule** > **Rate limiting rules**.
+2. Enter a descriptive name in **Rule name**.
+3. Under **If incoming requests match**, select **Edit expression** and enter: `http.request.uri.path eq "/api/checkout" and http.request.method eq "POST"`
+4. Under **With the same characteristics**, select **IP**.
+5. Under **When rate exceeds**, enter `10` requests per `1 minute`.
+6. Under **Then take action**, select _Log_.
+7. Select **Deploy**.
+8. After 24-48 hours, review the results in [Security Events](/waf/analytics/security-events/). If the rule matches only bot traffic, edit the rule and change the action to _Managed Challenge_ or _Block_.
+
+For additional patterns and thresholds, refer to [Rate limiting best practices](/waf/rate-limiting-rules/best-practices/).
 
 :::note[Security Analytics rate analysis requires an Enterprise plan]
 Enterprise customers can use the **Request rate analysis** tab in Security Analytics to visualize request rate distributions and set thresholds using an interactive slider. On Free, Pro, and Business plans, estimate thresholds based on your expected traffic patterns and use the Log action to validate before enforcing. Refer to [Find an appropriate rate limit](/waf/rate-limiting-rules/find-rate-limit/) for the full methodology.
