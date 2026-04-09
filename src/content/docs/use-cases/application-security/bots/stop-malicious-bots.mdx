@@ -19,7 +19,7 @@ Before you change any bot settings, review your traffic data to understand what 
 [Bot analytics](/bots/bot-analytics/) show you how much of your traffic is automated, which pages bots target, and how Cloudflare scores each request.
 
 :::note[Bot Analytics requires a Business plan or above]
-Bot score distribution data and detailed bot analytics are available on Business and Enterprise plans. Free and Pro plan users can review basic security metrics through **Security** > **Analytics** > **Events** tab. For full bot analytics capabilities, refer to [Bot Analytics](/bots/bot-analytics/).
+Bot score distribution data and detailed bot analytics are available on Business and Enterprise plans. Free and Pro plan users can review basic security metrics through [Security Events](/waf/analytics/security-events/). For full bot analytics capabilities, refer to [Bot Analytics](/bots/bot-analytics/).
 :::
 
 <Tabs syncKey="dashNewNav">
@@ -65,19 +65,25 @@ Bot Fight Mode is available on all Cloudflare plans, including Free. It provides
 - Issues a computational challenge (a background test that bots fail and browsers pass silently) to suspected bots rather than hard-blocking them
 - Applies site-wide with no additional configuration
 
-**What it does not do:**
+**Limitations:**
 
-- Does not distinguish between good bots (such as Googlebot) and bad bots. All automated traffic receives the same challenge.
-- Does not protect specific URL paths more than others. The challenge applies uniformly across your site.
-- Cannot be bypassed with [custom rule](/waf/custom-rules/) Skip actions. If Bot Fight Mode challenges a request you want to allow, your only options are IP Access rules or turning off Bot Fight Mode entirely.
+- Protects entire domains without endpoint restrictions. You cannot target specific paths.
+- Cannot be customized, adjusted, or reconfigured via custom rules.
+- Cannot be bypassed with [custom rule](/waf/custom-rules/) Skip actions. If Bot Fight Mode challenges a request you want to allow, you can turn off Bot Fight Mode or upgrade to [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/) for more granular control.
 
-### Turn on Bot Fight Mode
+### Turn on Bot Fight Mode (Free plan)
 
 <Render file="enable-bfm" product="bots" />
 
-### Upgrade to Super Bot Fight Mode
+### Enable Super Bot Fight Mode (Pro, Business, and Enterprise)
 
-If you need to allow verified bots while still challenging malicious ones, Super Bot Fight Mode provides more granular controls:
+Super Bot Fight Mode provides more granular controls, including verified bot allowlisting and per-category actions.
+
+:::note
+If Bot Fight Mode is currently active on your domain, disable it before enabling Super Bot Fight Mode. Go to **Security** > **Settings**, filter by **Bot traffic**, and turn **Bot fight mode** off.
+:::
+
+Features include:
 
 - **Verified bot allowlisting** — automatically allows known good bots through without challenges
 - **Per-category actions** — configure different responses for definitely automated, likely automated, and verified bot traffic
@@ -86,16 +92,12 @@ If you need to allow verified bots while still challenging malicious ones, Super
 
 For setup instructions, refer to [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/).
 
-:::note[Super Bot Fight Mode requires a Pro plan or above]
-Super Bot Fight Mode is available on Pro, Business, and Enterprise plans. Free plan users can use Bot Fight Mode for baseline protection.
+:::note[Plan availability]
+Super Bot Fight Mode is available on Pro, Business, and Enterprise plans. Free plan users can use Bot Fight Mode for baseline protection. Enterprise customers who need machine learning-based bot scoring and custom allow/block rules can add [Bot Management](/bots/plans/bm-subscription/).
 :::
 
 :::caution
 If your organization uses [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/), set **Definitely Automated** to **Allow** in Super Bot Fight Mode. Otherwise, tunnel connections may fail with a `websocket: bad handshake` error.
-:::
-
-:::note[Enterprise Bot Management]
-For organizations that need machine learning-based bot scoring, behavioral analysis, and custom allow/block rules, Cloudflare Bot Management provides the most granular detection and response capabilities. Bot Management assigns a score from 1 (likely bot) to 99 (likely human) to every request, which you can reference in custom rules. For more information, refer to [Bot Management](/bots/plans/bm-subscription/).
 :::
 
 ## Protect forms from automated abuse
@@ -104,11 +106,11 @@ For organizations that need machine learning-based bot scoring, behavioral analy
 
 ### Turnstile versus rate limiting
 
-**Turnstile** verifies that a visitor is human at the point of form submission. It prevents a single bot from submitting a form even once. Unlike traditional CAPTCHAs, Turnstile does not require visual puzzles. In Managed mode, most visitors pass without any interaction. Turnstile also works on sites that are not proxied through Cloudflare. Use Turnstile when you need to confirm the visitor is a real person before processing their input.
+Turnstile verifies that a visitor is human at the point of form submission. It prevents a single bot from submitting a form even once. Unlike traditional CAPTCHAs, Turnstile does not require visual puzzles. In Managed mode, most visitors pass without any interaction. Turnstile also works on sites that are not proxied through Cloudflare. Use Turnstile when you need to confirm the visitor is a real person before processing their input.
 
-**Rate limiting** caps the number of requests a client can make to an endpoint within a time window. It prevents volumetric abuse, such as the same IP hitting your login endpoint hundreds of times per minute. Use rate limiting when you need to control request volume regardless of whether the client is human.
+Rate limiting caps the number of requests a client can make to an endpoint within a time window. It prevents volumetric abuse, such as the same IP hitting your login endpoint hundreds of times per minute. Use rate limiting when you need to control request volume regardless of whether the client is human.
 
-**Both together** provide the strongest coverage. Turnstile blocks automated submissions at the form level. Rate limiting catches high-volume attacks that bypass or do not encounter the form, such as direct `POST` requests to the endpoint that skip the client-side widget.
+Both together provide the strongest coverage. Turnstile blocks automated submissions at the form level. Rate limiting catches high-volume attacks that bypass or do not encounter the form, such as direct `POST` requests to the endpoint that skip the client-side widget.
 
 ### Add Turnstile to a form
 
@@ -296,7 +298,7 @@ Look for false positives (legitimate traffic that your rules incorrectly challen
 
 [Bot Fight Mode](/bots/get-started/bot-fight-mode/) and [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/) are aggressive by design. False positives are expected, especially in the first few days after turning them on. The key difference between the two is how you handle exceptions:
 
-- **Bot Fight Mode** (Free) cannot be bypassed with custom rule Skip actions. Your options are IP Access rules or turning off Bot Fight Mode entirely.
+- **Bot Fight Mode** (Free) cannot be bypassed with custom rule Skip actions. You can turn off Bot Fight Mode or upgrade to Super Bot Fight Mode for more control.
 - **Super Bot Fight Mode** (Pro and above) can be bypassed with custom rules using the Skip action, giving you more flexibility to create exceptions.
 
 For more information on handling false positives, refer to [False positives](/bots/troubleshooting/false-positives/).
@@ -317,7 +319,7 @@ Internal monitoring tools, health check services, or partner APIs appear in bloc
   5. Under **Then take action**, select _Skip_ > **Skip Super Bot Fight Mode**.
   6. Select **Deploy**.
 
-- If [Bot Fight Mode](/bots/get-started/bot-fight-mode/) (Free) is blocking the traffic, add the tool IP address to your [IP Access Allow list](/waf/tools/ip-access-rules/). Bot Fight Mode does not trigger when an IP Access rule matches the request.
+- If [Bot Fight Mode](/bots/get-started/bot-fight-mode/) (Free) is blocking the traffic, turn off Bot Fight Mode or upgrade to [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/) for granular exception rules.
 
 For details on Skip action configuration, refer to [Configure a rule with the Skip action](/waf/custom-rules/skip/).
 
