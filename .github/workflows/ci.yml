@@ -202,7 +202,6 @@ jobs:
           path: .starlight-links-validator
 
       - name: Link validation
-        if: needs.build.outputs.link_validation_failed == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx tsx bin/post-link-validation-comment/index.ts
