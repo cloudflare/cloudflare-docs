@@ -301,6 +301,26 @@ The `userAgent` parameter does not bypass bot protection. Requests from Browser 
 :::
 
 
+## Local debugging with headful mode (experimental)
+
+When developing locally with `wrangler dev` or `vite dev`, Chrome runs in headless mode by default. To launch Chrome in visible (headful) mode, set the `X_BROWSER_HEADFUL` environment variable:
+
+```sh
+X_BROWSER_HEADFUL=true npx wrangler dev
+```
+
+Or with the [Cloudflare Vite plugin](/workers/vite-plugin/):
+
+```sh
+X_BROWSER_HEADFUL=true npx vite dev
+```
+
+This opens a browser window so you can watch your Playwright automation in real time, making it easier to debug navigation, element selection, and page interactions.
+
+:::note
+When using `@cloudflare/playwright` in headful mode, two Chrome windows may appear. This is expected behavior due to how Playwright handles browser contexts via CDP.
+:::
+
 ## Session management
 
 In order to facilitate browser session management, we have extended the Playwright API with new methods:
