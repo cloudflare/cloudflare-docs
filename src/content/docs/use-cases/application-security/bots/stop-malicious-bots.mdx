@@ -223,8 +223,7 @@ This ensures verified bots (search engine crawlers, monitoring services) bypass 
 4. Under **Then take action**, select _Managed Challenge_ from the **Choose action** dropdown.
 5. Under **Place at**, leave the **Select order** dropdown set to _Last_. This places the rule after the verified bot exception.
 6. Select **Deploy**.
-
-Start with _Managed Challenge_ to verify the rule targets the right traffic without blocking it outright. After 24-48 hours, review the results in [Security Events](/waf/analytics/security-events/). If the rule matches only bot traffic, edit the rule and change the action to _Block_.
+7. After 24-48 hours, review the results in [Security Events](/waf/analytics/security-events/). If the rule matches only bot traffic, edit the rule and change the action from _Managed Challenge_ to _Block_.
 
 For additional custom rule options including the visual field builder, refer to [Create a custom rule in the dashboard](/waf/custom-rules/create-dashboard/).
 
