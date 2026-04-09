@@ -161,7 +161,11 @@ Rules that use counting expressions with response codes (such as counting only `
 
 This pattern uses a counting expression that only counts `POST` requests returning authentication failure codes. Legitimate users who log in successfully on the first attempt never trigger the rule.
 
-Deploy both rules with the **Log** action first. Review the results in [Security Events](/waf/analytics/security-events/) to confirm the thresholds are not catching legitimate users. Then change to the enforcing actions.
+Start with **Managed Challenge** as the action for both rules. Review the results in [Security Events](/waf/analytics/security-events/) to confirm the thresholds are not catching legitimate users. Once confirmed, change to **Block** if needed.
+
+:::note[Log action requires an Enterprise plan]
+Enterprise customers can use the **Log** action to observe which requests a rule matches without taking any action. On Free, Pro, and Business plans, start with **Managed Challenge** as a less aggressive alternative to **Block**.
+:::
 
 For step-by-step rule creation, refer to [Create a rate limiting rule in the dashboard](/waf/rate-limiting-rules/create-zone-dashboard/). For the full tiered credential stuffing example, refer to [Rate limiting best practices](/waf/rate-limiting-rules/best-practices/).
 
@@ -235,14 +239,14 @@ The following example creates a rate limiting rule for a checkout endpoint. Adju
 3. Under **If incoming requests match**, select **Edit expression** and enter: `http.request.uri.path eq "/api/checkout" and http.request.method eq "POST"`
 4. Under **With the same characteristics**, select **IP**.
 5. Under **When rate exceeds**, enter `10` requests per `1 minute`.
-6. Under **Then take action**, select _Log_.
+6. Under **Then take action**, select _Managed Challenge_.
 7. Select **Deploy**.
-8. Review the results in [Security Events](/waf/analytics/security-events/). If the rule matches only bot traffic, edit the rule and change the action to _Managed Challenge_ or _Block_.
+8. Review the results in [Security Events](/waf/analytics/security-events/). If the rule matches only bot traffic, edit the rule and change the action to _Block_ if needed.
 
 For additional patterns and thresholds, refer to [Rate limiting best practices](/waf/rate-limiting-rules/best-practices/).
 
 :::note[Security Analytics rate analysis requires an Enterprise plan]
-Enterprise customers can use the **Request rate analysis** tab in Security Analytics to visualize request rate distributions and set thresholds using an interactive slider. On Free, Pro, and Business plans, estimate thresholds based on your expected traffic patterns and use the Log action to validate before enforcing. Refer to [Find an appropriate rate limit](/waf/rate-limiting-rules/find-rate-limit/) for the full methodology.
+Enterprise customers can use the **Request rate analysis** tab in Security Analytics to visualize request rate distributions and the **Log** action to observe rule matches without blocking traffic. On Free, Pro, and Business plans, estimate thresholds based on your expected traffic patterns and start with **Managed Challenge** before switching to **Block**. Refer to [Find an appropriate rate limit](/waf/rate-limiting-rules/find-rate-limit/) for the full methodology.
 :::
 
 :::note[Enterprise Bot Management: bot score in custom rules]
@@ -327,7 +331,7 @@ You see bot activity in Security Events that your current rules do not catch. Bo
 6. Select **Deploy**.
 7. Review the results in Security Events. If the rule matches only bot traffic, change the action to _Block_.
 
-If bots are staying under your rate limiting thresholds, edit the rate limiting rule and reduce the request count or shorten the time window. Deploy changes with the _Log_ action first.
+If bots are staying under your rate limiting thresholds, edit the rate limiting rule and reduce the request count or shorten the time window. Start with _Managed Challenge_ before switching to _Block_.
 
 :::note
 Custom rules execute before Super Bot Fight Mode in the evaluation order. If a custom rule takes a terminating action (Block, Managed Challenge), the request does not reach Super Bot Fight Mode. Refer to [Security features interoperability](/waf/feature-interoperability/).
