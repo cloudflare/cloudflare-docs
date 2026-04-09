@@ -81,10 +81,10 @@ If Bot Fight Mode is currently active on your domain, disable it before enabling
 
 Features include:
 
-- **Verified bot allowlisting** — automatically allows known good bots through without challenges
-- **Per-category actions** — configure different responses for definitely automated, likely automated, and verified bot traffic
-- **Static resource protection** — extends bot detection to static assets like images and scripts
-- **JavaScript detections** — uses client-side signals for additional bot identification
+- **Verified bot allowlisting** — manage how your domain responds to [verified bots](/bots/concepts/bot/verified-bots/)
+- **Per-category actions** — challenge or block traffic based on bot category (definitely automated, likely automated, verified bot)
+- **Static resource protection** — extend protection to [static resources](/bots/additional-configurations/static-resources/)
+- **JavaScript detections** — enable [JavaScript detections](/cloudflare-challenges/challenge-types/javascript-detections/) for additional signals
 
 For setup instructions, refer to [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/).
 
@@ -102,9 +102,9 @@ If your organization uses [Cloudflare Tunnel](/cloudflare-one/networks/connector
 
 ### Turnstile versus rate limiting
 
-Turnstile verifies that a visitor is human at the point of form submission. It challenges suspected bots before they can submit the form. Unlike traditional CAPTCHAs, Turnstile does not require visual puzzles. In Managed mode, most visitors pass without any interaction. Turnstile also works on sites that are not proxied through Cloudflare. Use Turnstile when you need to confirm the visitor is a real person before processing their input.
+Turnstile challenges suspected bots before they can submit a form, without showing visitors a CAPTCHA. It can be embedded into any website without sending traffic through Cloudflare. Use Turnstile when you need to challenge automated form submissions.
 
-Rate limiting caps the number of requests a client can make to an endpoint within a time window, such as the same IP hitting your login endpoint hundreds of times per minute. Use rate limiting when you need to control request volume regardless of whether the client is human.
+Rate limiting allows you to define rate limits for requests matching an expression and the action to perform when those limits are reached. Use rate limiting to protect endpoints from abuse, such as brute-force attacks on a login page or excessive API calls from a single client.
 
 Both together provide the strongest coverage. Turnstile challenges automated submissions at the form level. Rate limiting catches high-volume attacks that bypass or do not encounter the form, such as direct `POST` requests to the endpoint that skip the client-side widget.
 
