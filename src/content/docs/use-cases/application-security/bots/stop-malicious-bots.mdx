@@ -150,14 +150,14 @@ For complete integration details, refer to [Turnstile get started](/turnstile/ge
 
 ### Limit request volume on form endpoints with rate limiting
 
-For login endpoints, a tiered rate limiting approach works well alongside Turnstile. Create rules that escalate the response based on the volume of failed attempts:
+For login endpoints, a tiered rate limiting approach works well alongside Turnstile. The following example from the [Rate limiting best practices](/waf/rate-limiting-rules/best-practices/) shows rules that escalate the response based on the volume of failed attempts. Adjust the thresholds for your site's traffic patterns.
 
 :::note[Tiered rate limiting rules require a Business plan or above]
 Rules that use counting expressions with response codes (such as counting only `401` and `403` responses) require a Business plan or above. On Free and Pro plans, you can create simpler rate limiting rules with IP-based counting. Refer to [Rate limiting rules](/waf/rate-limiting-rules/) for plan availability details.
 :::
 
-- **Short-window rule**: If a single IP sends more than 4 `POST` requests to `/login` that return `401` or `403` within 1 minute, issue a Managed Challenge.
-- **Long-window rule**: If a single IP accumulates more than 20 failed login attempts within 1 hour, block the IP for 24 hours.
+- **Short-window rule**: 4 `POST` requests to `/login` returning `401` or `403` within 1 minute → Managed Challenge.
+- **Long-window rule**: 20 failed login attempts from one IP within 1 hour → Block for 24 hours.
 
 This pattern uses a counting expression that only counts `POST` requests returning authentication failure codes. Legitimate users who log in successfully on the first attempt never trigger the rule.
 
