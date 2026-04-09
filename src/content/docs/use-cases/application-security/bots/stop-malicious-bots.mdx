@@ -146,24 +146,39 @@ For complete integration details, refer to [Turnstile get started](/turnstile/ge
 
 ### Limit request volume on form endpoints with rate limiting
 
-For login endpoints, a tiered rate limiting approach works well alongside Turnstile. The following example from the [Rate limiting best practices](/waf/rate-limiting-rules/best-practices/) shows rules that escalate the response based on the volume of failed attempts. Adjust the thresholds for your site's traffic patterns.
+For login endpoints, a tiered rate limiting approach works well alongside Turnstile. The following example from the [Rate limiting best practices](/waf/rate-limiting-rules/best-practices/) shows two rules that escalate the response based on the volume of failed attempts. Adjust the thresholds for your site's traffic patterns.
 
 :::note[Tiered rate limiting rules require a Business plan or above]
 Rules that use counting expressions with response codes (such as counting only `401` and `403` responses) require a Business plan or above. On Free and Pro plans, you can create simpler rate limiting rules with IP-based counting. Refer to [Rate limiting rules](/waf/rate-limiting-rules/) for plan availability details.
 :::
 
-- **Short-window rule**: 4 `POST` requests to `/login` returning `401` or `403` within 1 minute → Managed Challenge.
-- **Long-window rule**: 20 failed login attempts from one IP within 1 hour → Block for 24 hours.
+**Short-window rule:** Challenge an IP that sends too many failed login requests in a short window.
 
-This pattern uses a counting expression that only counts `POST` requests returning authentication failure codes. Legitimate users who log in successfully on the first attempt never trigger the rule.
+<Render file="navigate-to-custom-rules" product="waf" />
 
-Review the results in [Security Events](/waf/analytics/security-events/) to confirm the thresholds are not catching legitimate users.
+1. Select **Create rule** > **Rate limiting rules**.
+2. Enter a descriptive name in **Rule name**.
+3. Under **If incoming requests match**, select **Edit expression** and enter: `http.request.uri.path eq "/login" and http.request.method eq "POST"`
+4. Under **With the same characteristics**, select **IP**.
+5. Under **Increment counter when**, select **Edit expression** and enter: `http.request.uri.path eq "/login" and http.request.method eq "POST" and http.response.code in {401 403}`
+6. Under **When rate exceeds**, enter `4` requests per `1 minute`.
+7. Under **Then take action**, select _Managed Challenge_.
+8. Select **Deploy**.
 
-:::note[Log action requires an Enterprise plan]
-The **Log** action records matching requests without taking action, which is useful for validating rules. Log is only available on Enterprise plans. On other plans, the examples above use **Managed Challenge**, which challenges matching requests rather than blocking them outright.
-:::
+**Long-window rule:** Block an IP that accumulates failed login attempts over a longer period.
 
-For step-by-step rule creation, refer to [Create a rate limiting rule in the dashboard](/waf/rate-limiting-rules/create-zone-dashboard/). For the full tiered credential stuffing example, refer to [Rate limiting best practices](/waf/rate-limiting-rules/best-practices/).
+1. Select **Create rule** > **Rate limiting rules**.
+2. Enter a descriptive name in **Rule name**.
+3. Under **If incoming requests match**, select **Edit expression** and enter: `http.request.uri.path eq "/login" and http.request.method eq "POST"`
+4. Under **With the same characteristics**, select **IP**.
+5. Under **Increment counter when**, select **Edit expression** and enter: `http.request.uri.path eq "/login" and http.request.method eq "POST" and http.response.code in {401 403}`
+6. Under **When rate exceeds**, enter `20` requests per `1 hour`.
+7. Under **Then take action**, select _Block_ with a duration of `1 day`.
+8. Select **Deploy**.
+
+This pattern uses a counting expression that only counts `POST` requests returning authentication failure codes. Legitimate users who log in successfully on the first attempt never trigger the rule. Review the results in [Security Events](/waf/analytics/security-events/) to confirm the thresholds are not catching legitimate users.
+
+For the full tiered credential stuffing example with three rules, refer to [Rate limiting best practices](/waf/rate-limiting-rules/best-practices/).
 
 ## Target bot patterns with custom rules and rate limiting
 
