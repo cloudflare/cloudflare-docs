@@ -55,21 +55,17 @@ Cloudflare classifies bot traffic into categories based on bot scores and verifi
 
 [Bot Fight Mode](/bots/get-started/bot-fight-mode/) identifies requests that match known bot patterns and issues a computational challenge. It reduces automated traffic across your entire site without requiring you to write any rules.
 
-### What Bot Fight Mode does and does not do
+### What Bot Fight Mode does
 
-Bot Fight Mode is included with Free plans. It provides broad, baseline protection.
+Bot Fight Mode is included with Free plans. When enabled, it:
 
-**What it does:**
-
-- Identifies requests that match known bot patterns
-- Issues a computational challenge (a background test that bots fail and browsers pass silently) to suspected bots rather than hard-blocking them
-- Applies site-wide with no additional configuration
-
-**Limitations:**
-
-- Protects entire domains without endpoint restrictions. You cannot target specific paths.
-- Cannot be customized, adjusted, or reconfigured via custom rules.
+- Identifies traffic matching patterns of known bots
+- Issues computationally expensive challenges in response to these bots
+- Protects entire domains without endpoint restrictions
+- Cannot be customized, adjusted, or reconfigured via custom rules
 - Cannot be bypassed with [custom rule](/waf/custom-rules/) Skip actions. If Bot Fight Mode challenges a request you want to allow, you can turn off Bot Fight Mode or upgrade to [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/) for more granular control.
+
+For more details, refer to [Bot Fight Mode considerations](/bots/get-started/bot-fight-mode/#considerations).
 
 ### Turn on Bot Fight Mode (Free plan)
 
