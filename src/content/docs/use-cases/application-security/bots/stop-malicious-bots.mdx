@@ -317,7 +317,7 @@ For details on Skip action configuration, refer to [Configure a rule with the Sk
 
 **Scenario 2: Malicious traffic is still getting through.**
 
-You see bot activity in Security Events that your current rules do not catch. Bots that use real-looking headers or stay under rate limits can evade single-signal rules. Combining multiple signals in one rule narrows the target. For example, to challenge requests to `/login` with an empty `Accept-Language` header:
+You see bot activity in Security Events that your current rules do not catch. Bots that use real-looking headers or stay under rate limits can evade single-signal rules. Combining multiple signals in one rule narrows the target. For example, to challenge requests to `/login` that have both an empty user agent and a specific URI path:
 
 1. Go to Application Security custom rules.
 2. Select **Create rule**.
@@ -325,12 +325,14 @@ You see bot activity in Security Events that your current rules do not catch. Bo
 4. Under **When incoming requests match**, select **Edit expression** and enter:
 
    ```txt
-   (http.request.uri.path eq "/login" and len(http.request.headers["accept-language"][0]) eq 0)
+   (http.request.uri.path eq "/login" and http.user_agent eq "" and http.request.method eq "POST")
    ```
 
 5. Under **Then take action**, select _Managed Challenge_.
 6. Select **Deploy**.
 7. Review the results in Security Events. If the rule matches only bot traffic, change the action to _Block_.
+
+For more expression fields and examples, refer to [Custom rules use cases](/waf/custom-rules/use-cases/).
 
 If bots are staying under your rate limiting thresholds, edit the rate limiting rule and reduce the request count or shorten the time window.
 
