@@ -161,7 +161,7 @@ Rules that use counting expressions with response codes (such as counting only `
 
 This pattern uses a counting expression that only counts `POST` requests returning authentication failure codes. Legitimate users who log in successfully on the first attempt never trigger the rule.
 
-Deploy both rules with the **Log** action first. Review the results in [Security Events](/waf/analytics/security-events/) after 24-48 hours to confirm the thresholds are not catching legitimate users. Then change to the enforcing actions.
+Deploy both rules with the **Log** action first. Review the results in [Security Events](/waf/analytics/security-events/) to confirm the thresholds are not catching legitimate users. Then change to the enforcing actions.
 
 For step-by-step rule creation, refer to [Create a rate limiting rule in the dashboard](/waf/rate-limiting-rules/create-zone-dashboard/). For the full tiered credential stuffing example, refer to [Rate limiting best practices](/waf/rate-limiting-rules/best-practices/).
 
@@ -216,7 +216,7 @@ This ensures verified bots (search engine crawlers, monitoring services) bypass 
 4. Under **Then take action**, select _Managed Challenge_ from the **Choose action** dropdown.
 5. Under **Place at**, leave the **Select order** dropdown set to _Last_. This places the rule after the verified bot exception.
 6. Select **Deploy**.
-7. After 24-48 hours, review the results in [Security Events](/waf/analytics/security-events/). If the rule matches only bot traffic, edit the rule and change the action from _Managed Challenge_ to _Block_.
+7. Review the results in [Security Events](/waf/analytics/security-events/). If the rule matches only bot traffic, edit the rule and change the action from _Managed Challenge_ to _Block_.
 
 For additional custom rule options including the visual field builder, refer to [Create a custom rule in the dashboard](/waf/custom-rules/create-dashboard/).
 
@@ -237,7 +237,7 @@ The following example creates a rate limiting rule for a checkout endpoint. Adju
 5. Under **When rate exceeds**, enter `10` requests per `1 minute`.
 6. Under **Then take action**, select _Log_.
 7. Select **Deploy**.
-8. After 24-48 hours, review the results in [Security Events](/waf/analytics/security-events/). If the rule matches only bot traffic, edit the rule and change the action to _Managed Challenge_ or _Block_.
+8. Review the results in [Security Events](/waf/analytics/security-events/). If the rule matches only bot traffic, edit the rule and change the action to _Managed Challenge_ or _Block_.
 
 For additional patterns and thresholds, refer to [Rate limiting best practices](/waf/rate-limiting-rules/best-practices/).
 
@@ -292,7 +292,7 @@ For more information on handling false positives, refer to [False positives](/bo
 
 ### Tune based on what you see
 
-After reviewing Security Events for 24-48 hours, adjust your rules based on what you see.
+After reviewing Security Events, adjust your rules based on what you see.
 
 **Scenario 1: Your monitoring tools or services are being blocked.**
 
@@ -325,7 +325,7 @@ You see bot activity in Security Events that your current rules do not catch. Bo
 
 5. Under **Then take action**, select _Managed Challenge_.
 6. Select **Deploy**.
-7. After 24-48 hours, review the results in Security Events. If the rule matches only bot traffic, change the action to _Block_.
+7. Review the results in Security Events. If the rule matches only bot traffic, change the action to _Block_.
 
 If bots are staying under your rate limiting thresholds, edit the rate limiting rule and reduce the request count or shorten the time window. Deploy changes with the _Log_ action first.
 
