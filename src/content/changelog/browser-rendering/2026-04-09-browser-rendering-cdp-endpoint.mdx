@@ -1,0 +1,50 @@
+---
+title: Browser Rendering adds direct Chrome DevTools Protocol (CDP) access and MCP client support
+description: Connect to Browser Rendering from any environment using the Chrome DevTools Protocol, or use MCP clients like Claude Desktop for AI-powered browser automation.
+products:
+  - browser-rendering
+date: 2026-04-09
+---
+
+[Browser Rendering](/browser-rendering/) now exposes the [Chrome DevTools Protocol (CDP)](/browser-rendering/cdp/), the low-level protocol that powers browser automation. Exposing CDP directly means the growing ecosystem of agent tools and existing CDP automation scripts can use Browser Rendering.
+
+Any CDP-compatible client, including [Puppeteer](/browser-rendering/cdp/puppeteer/) and [Playwright](/browser-rendering/cdp/playwright/), can connect from any language and any environment. If you are already using Browser Rendering with [Cloudflare Workers](/workers/), nothing changes. If you are not, you no longer need to start.
+
+For any existing scripts running on self-hosted Chrome, you can switch to running on Browser Rendering with a one-line change:
+
+```js
+const puppeteer = require("puppeteer-core");
+
+const browser = await puppeteer.connect({
+  browserWSEndpoint:
+    `wss://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/browser-rendering/devtools/browser?keep_alive=600000`,
+  headers: { Authorization: `Bearer ${API_TOKEN}` },
+});
+
+const page = await browser.newPage();
+await page.goto("https://example.com");
+console.log(await page.title());
+await browser.close();
+```
+
+Additionally, MCP clients like Claude Desktop, Cursor, and OpenCode can now use Browser Rendering as their remote browser via the [chrome-devtools-mcp](https://github.com/ChromeDevTools/chrome-devtools-mcp) package.
+
+Here is an example of how to configure Browser Rendering for Claude Desktop:
+
+```json
+{
+  "mcpServers": {
+    "browser-rendering": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "chrome-devtools-mcp@latest",
+        "--wsEndpoint=wss://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-rendering/devtools/browser?keep_alive=600000",
+        "--wsHeaders={\"Authorization\":\"Bearer <API_TOKEN>\"}"
+      ]
+    }
+  }
+}
+```
+
+To get started, refer to the [CDP documentation](/browser-rendering/cdp/).
