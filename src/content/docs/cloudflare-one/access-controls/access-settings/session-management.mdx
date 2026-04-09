@@ -32,10 +32,6 @@ In summary, Access checks sessions from most specific to least specific:
 3. **[Application session](#application-session-duration)** — The default policy session duration for all policies in the application.
 4. **[Global session](#global-session-duration)** — Controls how often the user must log in to the IdP across all applications.
 
-:::note
-If you use [independent MFA](/cloudflare-one/access-controls/access-settings/independent-mfa/), the MFA session duration is managed separately from the sessions listed above. A user can have a valid application session but still be prompted for MFA if their MFA session has expired. For more information, refer to [MFA session duration](/cloudflare-one/access-controls/policies/mfa-requirements/#mfa-session-duration).
-:::
-
 Refer to the [Order of enforcement](#order-of-enforcement) flowchart for a visual representation.
 
 <Render file="access/one-time-pin-warning" product="cloudflare-one" />
@@ -99,6 +95,9 @@ Users who match a policy configured with a _Same as application session timeout_
 ### Cloudflare One Client session duration
 
 When [Device authentication identity](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/#configure-client-sessions-in-access) is enabled for an Access application, the Cloudflare One Client session duration takes precedence over all other session durations (application, policy, and global). As long as the Cloudflare One Client session is valid and the user is running the Cloudflare One Client, the user will not be prompted to re-authenticate with the IdP — even if the global session has expired.
+
+### MFA session duration
+If you use [independent multi-factor authentication (MFA)](/cloudflare-one/access-controls/access-settings/independent-mfa/), the MFA session duration determines how long a user can log in to Cloudflare Access without being prompted for MFA.  The MFA session is independent of the global, policy, and application session durations. When a user logs in to an Access app, Access compares the age of the [`CF_Device` cookie](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/#cf_device) against the configured MFA duration — if the cookie is older, the user must complete an additional MFA step after authenticating with the IdP. MFA session durations do not affect how long a user has access to the application (that is controlled by the [application token](#session-durations)).
 
 ### Order of enforcement
 
