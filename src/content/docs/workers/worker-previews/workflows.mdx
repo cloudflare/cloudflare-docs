@@ -38,7 +38,7 @@ When you are done testing in a preview, you ship to production as a separate ste
 
 ## Choose your workflow
 
-### Workflow A: Workers Builds — deploy on merge (recommended for most users) {#workflow-a}
+### Workflow A: Workers Builds — deploy on merge (recommended for most users)
 
 **Best for:** Teams connected to Git who want automatic builds and deploys.
 
@@ -71,7 +71,7 @@ If your non-production branch deploy command was previously `npx wrangler versio
 
 ---
 
-### Workflow B: Workers Builds — with gradual rollouts {#workflow-b}
+### Workflow B: Workers Builds — with gradual rollouts
 
 **Best for:** Teams connected to Git who want to test in previews AND gradually roll out production deployments.
 
@@ -82,7 +82,7 @@ This workflow combines both capabilities:
 
 Since the non-production branch deploy command accepts a single command, here are two ways to set this up:
 
-#### Option 1: Preview on branches, gradual rollout after merge (recommended) {#workflow-b-option-1}
+#### Option 1: Preview on branches, gradual rollout after merge (recommended)
 
 | Setting | Value |
 | --- | --- |
@@ -112,7 +112,7 @@ npx wrangler versions deploy --version-id <VERSION_ID> --percentage 100
 
 **How this differs from Workflow A:** Merging to main creates a version without deploying it, giving you control over when and how much traffic to send. You choose when to go live.
 
-#### Option 2: Use your CI to run both commands {#workflow-b-option-2}
+#### Option 2: Use your CI to run both commands
 
 If you use an external CI system (GitHub Actions, GitLab CI) alongside or instead of Workers Builds, you can run different commands based on context:
 
@@ -131,7 +131,7 @@ This gives you full control over which command runs when. Refer to [External CI/
 
 ---
 
-### Workflow C: Wrangler from the command line {#workflow-c}
+### Workflow C: Wrangler from the command line
 
 **Best for:** Teams using Wrangler directly from the command line, with or without a Git connection.
 
@@ -307,4 +307,4 @@ When "Use production value" is checked for a binding, the preview shares that re
 - [Workers Builds configuration](/workers/ci-cd/builds/configuration/) — Build settings including deploy commands
 - [Gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/) — Traffic splitting between versions
 - [Rollbacks](/workers/configuration/versions-and-deployments/rollbacks/) — Roll back to a previous version
-- [Known issues](/workers/worker-previews/known-issues/) — Guides for common beta situations
+
