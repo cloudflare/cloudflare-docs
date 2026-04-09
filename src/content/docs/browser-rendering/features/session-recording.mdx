@@ -88,14 +88,17 @@ curl https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-renderin
   -H "Authorization: Bearer <API_TOKEN>"
 ```
 
-A successful response returns the following fields:
+A successful response looks like this:
 
-| Field       | Type   | Description                               |
-| ----------- | ------ | ----------------------------------------- |
-| `sessionId` | string | Unique identifier for the session.        |
-| `startTime` | string | ISO timestamp when the recording started. |
-| `endTime`   | string | ISO timestamp when the recording ended.   |
-| `events`    | object | rrweb events keyed by target ID.          |
+```json
+{
+	"sessionId": "e26d4660-5b78-4761-b82f-c6b5bad5a925",
+	"duration": 4380,
+	"events": {
+		"target-1": []
+	}
+}
+```
 
 ## Replay a recording locally
 
