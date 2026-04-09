@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
-title: Durable Object isolation
-description: Achieve isolated Durable Object storage in Worker Previews so preview traffic never touches production data.
+title: Durable Objects guide
+description: Choose the right approach for Durable Objects based on what you need — preview isolation, gradual rollouts, or targeted cohort-based rollouts.
 sidebar:
   order: 2
   badge:
@@ -10,9 +10,24 @@ sidebar:
 
 import { WranglerConfig } from "~/components";
 
+Durable Objects work across several parts of the Workers platform. This page helps you find the right guide based on what you are trying to do.
+
+## What do you need?
+
+| I want to... | Approach | Guide |
+| --- | --- | --- |
+| **Test preview branches with separate DO storage** | Each preview gets its own isolated DO namespace. Preview traffic reads and writes to preview data only. | [Preview isolation](#preview-isolation) (this page) |
+| **Gradually roll out new code to DO instances** | A percentage-based split assigns each DO instance to a version based on a hash of its ID. You control the percentage, the platform decides which instances. | [Gradual deployments for Durable Objects](/workers/configuration/versions-and-deployments/gradual-deployments/#gradual-deployments-for-durable-objects) |
+| **Choose exactly which DO instances run new code** | Pass a cohort at `.get()` time to route specific instances (for example, your team's instances, free-tier users) to a new version. | [Cohort-based deployments — Durable Objects](/workers/configuration/versions-and-deployments/cohort-based-deployments/#durable-objects) |
+| **Hands-on tutorial comparing gradual and cohort rollouts** | Step-by-step walkthrough deploying new code to specific DO instances, observing version assignment, and completing a rollout. | [Tutorial: Controlled Durable Object rollouts](/workers/configuration/versions-and-deployments/testing-gradual-deployments/) |
+
+---
+
+## Preview isolation
+
 When using [Worker Previews](/workers/worker-previews/), each preview environment can have its own isolated [Durable Object](/durable-objects/) namespace. This means Durable Object instances created by a preview are completely separate from production — different instance IDs, different storage, no shared state.
 
-Without proper configuration, previews will share the production DO namespace, and preview traffic will read and write production Durable Object state. This guide covers three approaches to achieve DO isolation, from the simplest (recommended) to more manual methods.
+By default, previews share the production DO namespace. To get isolation, use one of the three approaches below, from the simplest (recommended) to more manual methods.
 
 ## Approach 1: Use `ctx.exports` (recommended)
 
@@ -261,7 +276,10 @@ When using the `previews.durable_objects.bindings` configuration, you must inclu
 
 ## Related resources
 
-- [Worker Previews overview](/workers/worker-previews/)
-- [`ctx.exports` API reference](/workers/runtime-apis/context/#exports)
-- [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/)
-- [Durable Objects namespace API](/durable-objects/api/namespace/)
+- [Worker Previews overview](/workers/worker-previews/) — Get started with Worker Previews
+- [`ctx.exports` API reference](/workers/runtime-apis/context/#exports) — Access DO namespaces without binding configuration
+- [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/) — Configure migrations for DO classes
+- [Durable Objects namespace API](/durable-objects/api/namespace/) — Namespace methods including `idFromName` and `get`
+- [Gradual deployments for Durable Objects](/workers/configuration/versions-and-deployments/gradual-deployments/#gradual-deployments-for-durable-objects) — Hash-based version assignment for production rollouts
+- [Cohort-based deployments — Durable Objects](/workers/configuration/versions-and-deployments/cohort-based-deployments/#durable-objects) — Choose which DO instances run which version
+- [Tutorial: Controlled Durable Object rollouts](/workers/configuration/versions-and-deployments/testing-gradual-deployments/) — Hands-on comparison of gradual vs cohort-based DO rollouts
