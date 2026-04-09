@@ -6,6 +6,8 @@ sidebar:
 description: Intercept and handle outbound HTTP from containers using Workers.
 ---
 
+import { TabItem, Tabs } from "~/components";
+
 Outbound handlers let you intercept and modify HTTP traffic from a container with trusted code.
 
 Use them to:
@@ -16,9 +18,35 @@ Use them to:
 - Add custom policy on outbound traffic (such as denying specific HTTP requests)
 - [Connect to Workers bindings](/containers/platform-details/workers-connections/) like KV, R2, and Durable Objects
 
+## Block outbound traffic
+
+Use `enableInternet = false` to block public internet access by default:
+
+```js
+import { Container } from "@cloudflare/containers";
+
+export class MyContainer extends Container {
+	enableInternet = false;
+}
+```
+
+When `enableInternet` is `false`, only traffic you explicitly allow later on this page through `allowedHosts` or outbound handlers can leave the container. Only ports `80`, `443`, and DNS are available, and DNS queries use Cloudflare's DNS servers.
+
+:::note
+`enableInternet` takes effect when the container starts. Changes to `outbound` handlers and related outbound policies can affect a live-running container without restarting it.
+:::
+
 ## Block or allow traffic by host
 
 You can filter outbound traffic with the `allowedHosts` and `deniedHosts` properties on the Container class.
+
+:::note
+Export `ContainerProxy` from your Worker entrypoint for outbound interception to work.
+:::
+
+When `allowedHosts` is set, it becomes a deny-by-default allowlist. Any host or IP not in the list is denied, and only matching destinations can reach `outbound` or `outboundByHost` handlers.
+
+`allowedHosts` and `deniedHosts` also support simple glob patterns where `*` matches any sequence of characters.
 
 By default, a Container will allow internet access, and you can set `deniedHosts` to
 disallow specific hosts or IPs:
@@ -99,7 +127,7 @@ MyContainer.outboundByHost = {
 
 Calls to `http://my.worker` from the container invoke the handler, which runs inside the Workers runtime, outside the container sandbox.
 
-`deniedHosts` and `allowedHosts` are evaluated before `outboundByHost`. If you use `allowedHosts`, include the hostname there for the per-host handler to run. `outboundByHost` handlers take precedence over catch-all `outbound` handlers.
+`deniedHosts` and `allowedHosts` are evaluated before any outbound handler. If you use `allowedHosts`, include the hostname there for either `outbound` or `outboundByHost` to run. `outboundByHost` handlers take precedence over catch-all `outbound` handlers.
 
 ## Securely inject credentials
 
@@ -164,17 +192,121 @@ MyContainer.outbound = (req, env, ctx) => {
 
 This is useful for Sandbox-like services that redirect untrusted traffic from a container instance to Workers for filtering and modification.
 
-When `interceptHttps` is enabled, an ephemeral CA file will be created at `/etc/cloudflare/certs/cloudflare-containers-ca.crt` once your container starts.
+When HTTPS interception is active, an ephemeral CA file will be created at `/etc/cloudflare/certs/cloudflare-containers-ca.crt` once your container starts. The CA is only injected when you both set `interceptHttps = true` and define an `outbound` or `outboundByHost` handler.
 
-For HTTPS interception to work, you must trust the CA file — the Container runtime does not append it to the certificate chain by default. For example, on Ubuntu-based distributions, copy it to `/usr/local/share/ca-certificates/` and run `update-ca-certificates`.
+### Trust the CA certificate
+
+For HTTPS interception to work, you must trust the CA file. The CA is ephemeral and only exists at runtime, so do not try to bake it into your image during `docker build`. Instead, copy it into your distro's trust store and refresh the trust store from the container `entrypoint` before your application starts.
+
+If your base image does not already include the trust-store tooling, install the distro's `ca-certificates` package in your image first.
+
+<Tabs>
+	<TabItem label="Debian/Ubuntu">
+
+    ```js
+    import { Container, ContainerProxy } from "@cloudflare/containers";
+    export { ContainerProxy };
+
+    export class MyContainer extends Container {
+    	interceptHttps = true;
+    	entrypoint = [
+    		"sh",
+    		"-lc",
+    		[
+    			"cp /etc/cloudflare/certs/cloudflare-containers-ca.crt /usr/local/share/ca-certificates/cloudflare-containers-ca.crt",
+    			"update-ca-certificates",
+    			"exec node server.js",
+    		].join(" && "),
+    	];
+    }
+    ```
+
+    </TabItem>
+    <TabItem label="Alpine">
+
+    ```js
+    import { Container, ContainerProxy } from "@cloudflare/containers";
+    export { ContainerProxy };
+
+    export class MyContainer extends Container {
+    	interceptHttps = true;
+    	entrypoint = [
+    		"sh",
+    		"-lc",
+    		[
+    			"cp /etc/cloudflare/certs/cloudflare-containers-ca.crt /usr/local/share/ca-certificates/cloudflare-containers-ca.crt",
+    			"update-ca-certificates",
+    			"exec node server.js",
+    		].join(" && "),
+    	];
+    }
+    ```
+
+    </TabItem>
+    <TabItem label="Fedora/RHEL">
+
+    ```js
+    import { Container, ContainerProxy } from "@cloudflare/containers";
+    export { ContainerProxy };
+
+    export class MyContainer extends Container {
+    	interceptHttps = true;
+    	entrypoint = [
+    		"sh",
+    		"-lc",
+    		[
+    			"cp /etc/cloudflare/certs/cloudflare-containers-ca.crt /etc/pki/ca-trust/source/anchors/cloudflare-containers-ca.crt",
+    			"update-ca-trust",
+    			"exec node server.js",
+    		].join(" && "),
+    	];
+    }
+    ```
+
+    </TabItem>
+    <TabItem label="Arch">
+
+    ```js
+    import { Container, ContainerProxy } from "@cloudflare/containers";
+    export { ContainerProxy };
+
+    export class MyContainer extends Container {
+    	interceptHttps = true;
+    	entrypoint = [
+    		"sh",
+    		"-lc",
+    		[
+    			"cp /etc/cloudflare/certs/cloudflare-containers-ca.crt /etc/ca-certificates/trust-source/anchors/cloudflare-containers-ca.crt",
+    			"trust extract-compat",
+    			"exec node server.js",
+    		].join(" && "),
+    	];
+    }
+    ```
+
+    </TabItem>
+
+</Tabs>
+
+Replace `node server.js` with the command that starts your application.
+
+Most runtimes will then trust the CA through the system root store automatically. If your runtime uses its own CA bundle, point it at `/etc/cloudflare/certs/cloudflare-containers-ca.crt` directly, for example with `NODE_EXTRA_CA_CERTS` or `REQUESTS_CA_BUNDLE`.
 
 :::note
 HTTP communication to the outbound handler is encrypted by the networking stack. For traffic that stays within the Cloudflare Developer Platform, plain HTTP is secure.
 :::
 
+## Non-HTTP traffic
+
+Outbound handlers only intercept HTTP and HTTPS traffic. Traffic on ports other than `80` and `443` is never routed through `outbound` or `outboundByHost`.
+
+If you set `enableInternet = false`, that traffic is denied. DNS queries are the one exception, but they only go to Cloudflare's DNS servers. That prevents using arbitrary DNS destinations for data exfiltration.
+
 ## Change policies at runtime
 
 Use `outboundHandlers` to define named handlers, then assign them to specific hosts at runtime using `setOutboundByHost()`. You can also apply a handler globally with `setOutboundHandler()`.
+
+You can also manage runtime policy with `setOutboundByHosts()`, `setAllowedHosts()`, `setDeniedHosts()`, `allowHost()`, `denyHost()`, `removeAllowedHost()`, and `removeDeniedHost()`.
 
 This lets a trusted Worker hold credentials without exposing them to an untrusted container:
 
@@ -211,6 +343,17 @@ async removeAccessToGithub(req, env) {
   await container.removeOutboundByHost("github.com");
 }
 ```
+
+## Handler precedence
+
+Requests are evaluated in this order:
+
+1. `deniedHosts` is checked first. Matching hosts or IPs are denied immediately.
+2. `allowedHosts` is checked next. When it is set, any host or IP not in the list is denied. Matching hosts continue to outbound handlers, or egress to the public internet if no handler is set.
+3. Instance-level rules set with `setOutboundByHost()` are checked before class-level `outboundByHost` rules.
+4. Per-host handlers always take precedence over catch-all handlers, so `outboundByHost` runs before `outbound`.
+5. Instance-level handlers set with `setOutboundHandler()` are checked before the class-level `outbound` handler.
+6. If no handler matches, the request can still egress to the public internet when it matched `allowedHosts` or `enableInternet = true`. Otherwise, it is denied.
 
 ## Low-level API
 
