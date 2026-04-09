@@ -199,24 +199,23 @@ Your preview tests against preview data, and production runs against production 
 
 ## Preview URLs vs Worker Previews
 
-If you have used `wrangler versions upload` before, you have seen **version preview URLs** — URLs like `abc123-my-worker.subdomain.workers.dev` that let you hit a specific version.
+There are two types of URLs you can use to test a Worker before it serves production traffic. Each one exists for a specific purpose:
 
-Version preview URLs and Worker Previews serve different purposes:
+**Worker Previews** (`wrangler preview`) create an isolated environment with its own bindings, secrets, and storage. Use these for feature branch testing. Preview data is completely separate from production data.
+
+**Version preview URLs** (`wrangler versions upload`) let you hit a specific version of your Worker using your production bindings. Use these when you are preparing a [gradual rollout](/workers/configuration/versions-and-deployments/gradual-deployments/) and want to verify the version against real data before sending it traffic.
 
 | | Version preview URLs | Worker Previews |
 | --- | --- | --- |
 | Created by | `wrangler versions upload` | `wrangler preview` |
-| Bindings | **Production** (same KV, R2, DO, secrets) | **Isolated** (separate resources via Preview Defaults) |
-| Safe for destructive testing | Writes to production data | Writes to preview data only |
-| Gradual rollout | Yes | Serves latest push at 100% |
-| Rollback | Yes | Stable URL always points to latest push; per-push URLs remain accessible |
+| Bindings | **Production** — same KV, R2, DO, secrets as your live Worker | **Isolated** — separate resources configured via Preview Defaults |
+| Data | Reads and writes production data | Reads and writes preview data only |
+| Gradual rollout | Yes — deploy this version to a percentage of production traffic | Previews serve the latest push at 100% |
+| Rollback | Yes — route production back to a previous version | Stable URL always points to latest push; per-push URLs remain accessible |
 
-**Our recommendation:**
+**For feature branch testing, use Worker Previews.** They give you full isolation so you can test freely.
 
-- Use **Worker Previews** (`wrangler preview`) when you need a safe, isolated environment to test. This is the right choice for most feature branch testing.
-- Use **version preview URLs** (`wrangler versions upload`) when you specifically want to verify code against production data before gradually rolling it out. This is an advanced workflow for teams using [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/).
-
-If you are not sure which to use, we recommend starting with Worker Previews. They provide full isolation by default.
+**For pre-rollout verification, use version preview URLs.** They let you inspect the exact version that will serve production traffic.
 
 ---
 
