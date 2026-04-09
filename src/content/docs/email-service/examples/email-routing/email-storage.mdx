@@ -14,7 +14,7 @@ Store emails in KV namespace for later processing:
 
 ```typescript
 interface Env {
-	EMAIL: EmailBinding;
+	EMAIL: SendEmail;
 	EMAILS: KVNamespace;
 	SUPPORT_TICKETS: KVNamespace;
 }
@@ -107,7 +107,7 @@ Process emails asynchronously using Cloudflare Queues:
 
 ```typescript
 interface Env {
-	EMAIL: EmailBinding;
+	EMAIL: SendEmail;
 	EMAIL_QUEUE: Queue;
 	EMAIL_STORAGE: KVNamespace;
 	EMAIL_ANALYTICS: AnalyticsEngine;

@@ -7,26 +7,14 @@ sidebar:
 
 Cloudflare Email Service has the following limits to ensure optimal performance and prevent abuse. These limits apply to emails sent via both the [REST API](/email-service/api/send-emails/rest-api/) and the [Workers binding](/email-service/api/send-emails/workers-api/) unless noted otherwise.
 
-## Email sending limits
-
-### Per-account limits
-
-| Account Type                                  | Daily  | Hourly | Monthly |
-| --------------------------------------------- | ------ | ------ | ------- |
-| **Paid account with < 2 months of age**       | 100    | 10     | 10,000  |
-| **Paid account with > 2 months of age**       | 1,000  | 100    | 10,000  |
-| **Paid account with production access limit** | 10,000 | 10,000 | 10,000  |
-
-### Email content limits
+## Email content limits
 
 | Component                    | Limit                | Notes                                |
 | ---------------------------- | -------------------- | ------------------------------------ |
-| **Recipients (to, cc, bcc)** | 100 per email        | Combined across all recipient fields |
+| **Recipients (to, cc, bcc)** | 50 per email         | Combined across all recipient fields |
 | **Subject line**             | 998 characters       | RFC 5322 compliant                   |
-| **Text content**             | 10MB                 | Plain text version                   |
-| **HTML content**             | 10MB                 | HTML version                         |
-| **Attachments**              | 10 files, 25MB total | Per email                            |
-| **Header size**              | 64KB                 | All custom headers combined          |
+| **Total message size**       | 25 MiB               | Including attachments                |
+| **Header size**              | 16 KB                | All custom headers combined          |
 
 ## Workers binding limits
 

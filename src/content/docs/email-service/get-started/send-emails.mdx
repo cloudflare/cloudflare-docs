@@ -30,7 +30,7 @@ You must be using Cloudflare DNS to use Email Service.
 Send an email with a single `curl` command. Replace `{account_id}` with your [Cloudflare account ID](/fundamentals/setup/find-account-and-zone-ids/) and `<API_TOKEN>` with an [API token](/fundamentals/api/get-started/create-token/).
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email-service/send" \
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email/sending/send" \
   --header "Authorization: Bearer <API_TOKEN>" \
   --header "Content-Type: application/json" \
   --data '{
@@ -42,13 +42,17 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email-service/s
   }'
 ```
 
-A successful response includes a `messageId`:
+A successful response includes the delivery status for each recipient:
 
 ```json
 {
   "success": true,
+  "errors": [],
+  "messages": [],
   "result": {
-    "messageId": "<unique-message-id>"
+    "delivered": ["recipient@example.com"],
+    "permanent_bounces": [],
+    "queued": []
   }
 }
 ```

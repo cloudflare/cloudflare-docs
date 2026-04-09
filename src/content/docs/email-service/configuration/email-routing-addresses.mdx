@@ -31,7 +31,7 @@ If you have more than one destination address linked to the same custom address,
 When creating an email rule, you must specify an **Action**:
 
 - _Send to an email_: Emails will be routed to your destination address. This is the default action.
-- _Send to a Worker_: Emails will be processed by the logic in your [Worker](/email-routing/email-workers).
+- _Send to a Worker_: Emails will be processed by the logic in your [Worker](/email-service/api/route-emails/email-handler/).
 - _Drop_: Deletes emails sent to the custom address without routing them. This can be useful if you want to make an email address appear valid for privacy reasons.
 
 :::note
@@ -73,7 +73,7 @@ Email Routing supports subaddressing, also known as plus addressing, as defined 
 
 You can enable subaddressing at **Email** > **Email Routing** > **Settings**.
 
-Once enabled, you can use subaddressing with any of your custom addresses. For example, if you send an email to `user+detail@example.com` it will be captured by the `user@example.com` custom address. The `+detail` part is ignored by Email Routing, but it can be captured next in the processing chain in the logs, a [Worker](/email-routing/email-workers/) or an [Agent application](https://github.com/cloudflare/agents/tree/main/examples/email-agent).
+Once enabled, you can use subaddressing with any of your custom addresses. For example, if you send an email to `user+detail@example.com` it will be captured by the `user@example.com` custom address. The `+detail` part is ignored by Email Routing, but it can be captured next in the processing chain in the logs, a [Worker](/email-service/api/route-emails/email-handler/) or an [Agent application](https://github.com/cloudflare/agents/tree/main/examples/email-agent).
 
 If a custom address `user+detail@example.com` already exists, it will take precedence over `user@example.com`. This prevents breaking existing routing rules for users, and allows certain sub-addresses to be captured by a specific rule.
 

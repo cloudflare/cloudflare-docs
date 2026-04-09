@@ -17,7 +17,7 @@ Add the `email` handler function to your Worker's exported handlers:
 
 ```typescript
 interface Env {
-	EMAIL: EmailBinding;
+	EMAIL: SendEmail;
 }
 
 export default {
@@ -42,11 +42,12 @@ The `message` parameter provides access to the incoming email:
 
 ```typescript
 interface ForwardableEmailMessage {
-	readonly from: string; // Sender email address
-	readonly to: string; // Recipient email address
-	readonly headers: Headers; // Email headers
-	readonly raw: ReadableStream; // Raw email content stream
+	readonly from: string; // Sender email address (envelope MAIL FROM)
+	readonly to: string; // Recipient email address (envelope RCPT TO)
+	readonly headers: Headers; // Email headers (Subject, Message-ID, etc.)
+	readonly raw: ReadableStream; // Raw MIME email content stream
 	readonly rawSize: number; // Size of raw email in bytes
+	readonly canBeForwarded: boolean; // Whether the message can be forwarded
 
 	// Actions
 	setReject(reason: string): void;
@@ -263,7 +264,7 @@ Send automatic replies using the Email Service binding:
 
 ```typescript
 interface Env {
-	EMAIL: EmailBinding;
+	EMAIL: SendEmail;
 }
 
 export default {

@@ -45,18 +45,18 @@ These records authenticate your outbound emails:
 **Purpose**: Authorizes Cloudflare to send emails on behalf of your domain.
 
 ```dns
-TXT yourdomain.com "v=spf1 include:_spf.cloudflare.com ~all"
+TXT yourdomain.com "v=spf1 include:_spf.email.cloudflare.net ~all"
 ```
 
 **Configuration:**
 
 - **Type**: TXT
 - **Name**: `@` (root domain)
-- **Value**: `v=spf1 include:_spf.cloudflare.com ~all`
+- **Value**: `v=spf1 include:_spf.email.cloudflare.net ~all`
 - **TTL**: Auto
 
 :::note[Existing SPF Records]
-If you have existing SPF records, merge them: `v=spf1 include:_spf.cloudflare.com include:_spf.google.com ~all`
+If you have existing SPF records, merge them: `v=spf1 include:_spf.email.cloudflare.net include:_spf.google.com ~all`
 :::
 
 </TabItem>
@@ -141,7 +141,7 @@ TXT yourdomain.com "v=spf1 include:_spf.mx.cloudflare.net ~all"
 - **TTL**: Auto
 
 :::note[Different from Sending SPF]
-Email Routing uses `_spf.mx.cloudflare.net` while Email Sending uses `_spf.cloudflare.com`. Both can coexist in the same SPF record.
+Email Routing uses `_spf.mx.cloudflare.net` while Email Sending uses `_spf.email.cloudflare.net`. Both can coexist in the same SPF record.
 :::
 
 </TabItem>
@@ -189,7 +189,7 @@ Verify your domain configuration to ensure proper setup:
 
 2. Check **Domain Status**:
    - **DNS Records**: All required records configured
-   - **Sending SPF**: Properly configured and verified (`_spf.cloudflare.com`)
+   - **Sending SPF**: Properly configured and verified (`_spf.email.cloudflare.net`)
    - **Routing SPF**: Properly configured and verified (`_spf.mx.cloudflare.net`)
    - **Sending DKIM**: Keys generated and DNS records added
    - **Routing DKIM**: Keys generated and DNS records added (separate selector)
@@ -326,7 +326,7 @@ Configure multiple domains for different purposes:
 
 ```ts
 interface Env {
-	EMAIL: EmailBinding;
+	EMAIL: SendEmail;
 }
 
 export default {
@@ -401,7 +401,7 @@ async function checkDomainHealth(domain: string): Promise<boolean> {
 		const hasSpf = spfData.Answer?.some(
 			(record) =>
 				record.data.includes("v=spf1") &&
-				record.data.includes("_spf.cloudflare.com"),
+				record.data.includes("_spf.email.cloudflare.net"),
 		);
 
 		if (!hasSpf) {

@@ -14,7 +14,7 @@ For the full OpenAPI specification, refer to the [Email Sending API reference](h
 ## Endpoint
 
 ```txt
-POST https://api.cloudflare.com/client/v4/accounts/{account_id}/email-service/send
+POST https://api.cloudflare.com/client/v4/accounts/{account_id}/email/sending/send
 ```
 
 ## Authentication
@@ -31,7 +31,7 @@ Authorization: Bearer <API_TOKEN>
 <TabItem label="Simple email">
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email-service/send" \
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email/sending/send" \
   --header "Authorization: Bearer <API_TOKEN>" \
   --header "Content-Type: application/json" \
   --data '{
@@ -47,12 +47,12 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email-service/s
 <TabItem label="Multiple recipients">
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email-service/send" \
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email/sending/send" \
   --header "Authorization: Bearer <API_TOKEN>" \
   --header "Content-Type: application/json" \
   --data '{
     "to": ["user1@example.com", "user2@example.com"],
-    "from": { "email": "newsletter@yourdomain.com", "name": "Newsletter Team" },
+    "from": { "address": "newsletter@yourdomain.com", "name": "Newsletter Team" },
     "subject": "Monthly Newsletter",
     "html": "<h1>This month'\''s updates</h1>",
     "text": "This month'\''s updates"
@@ -63,7 +63,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email-service/s
 <TabItem label="With CC and BCC">
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email-service/send" \
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email/sending/send" \
   --header "Authorization: Bearer <API_TOKEN>" \
   --header "Content-Type: application/json" \
   --data '{
@@ -71,7 +71,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email-service/s
     "cc": ["manager@company.com"],
     "bcc": ["archive@company.com"],
     "from": "orders@yourdomain.com",
-    "replyTo": "support@yourdomain.com",
+    "reply_to": "support@yourdomain.com",
     "subject": "Order Confirmation #12345",
     "html": "<h1>Your order is confirmed</h1>",
     "text": "Your order is confirmed"
@@ -86,7 +86,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email-service/s
 Send files by including base64-encoded content in the `attachments` array:
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email-service/send" \
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email/sending/send" \
   --header "Authorization: Bearer <API_TOKEN>" \
   --header "Content-Type: application/json" \
   --data '{
@@ -110,7 +110,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email-service/s
 Set custom headers for threading, list management, or tracking. Refer to the [email headers reference](/email-service/reference/headers/) for the full list of allowed headers.
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email-service/send" \
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email/sending/send" \
   --header "Authorization: Bearer <API_TOKEN>" \
   --header "Content-Type: application/json" \
   --data '{
@@ -126,23 +126,48 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email-service/s
   }'
 ```
 
+## Response
+
+A successful response returns the delivery status for each recipient:
+
+```json
+{
+  "success": true,
+  "errors": [],
+  "messages": [],
+  "result": {
+    "delivered": ["recipient@example.com"],
+    "permanent_bounces": [],
+    "queued": []
+  }
+}
+```
+
+- `delivered` - Email addresses to which the message was delivered immediately.
+- `permanent_bounces` - Email addresses that permanently bounced.
+- `queued` - Email addresses for which delivery was queued for later.
+
 ## Error handling
 
-The REST API returns standard Cloudflare API responses. A failed request returns an `errors` array:
+The REST API returns standard Cloudflare API error responses. A failed request returns an `errors` array with numeric error codes:
 
 ```json
 {
   "success": false,
   "errors": [
     {
-      "code": "E_SENDER_NOT_VERIFIED",
+      "code": 1000,
       "message": "Sender domain not verified"
     }
-  ]
+  ],
+  "messages": [],
+  "result": null
 }
 ```
 
-Refer to the [error codes table](/email-service/api/send-emails/workers-api/#error-codes) for the full list of error codes and their causes.
+:::note[Workers binding vs REST API errors]
+The REST API returns standard Cloudflare API numeric error codes, while the [Workers binding](/email-service/api/send-emails/workers-api/) throws errors with string codes (for example, `E_SENDER_NOT_VERIFIED`). Refer to the [Workers API error codes table](/email-service/api/send-emails/workers-api/#error-codes) for the string error codes.
+:::
 
 ## Next steps
 

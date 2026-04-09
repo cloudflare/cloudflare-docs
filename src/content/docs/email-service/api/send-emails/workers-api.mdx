@@ -34,12 +34,12 @@ Send a single email using the `send()` method on your email binding.
 ### Interface
 
 ```typescript
-interface EmailBinding {
-	send(message: EmailMessage): Promise<EmailResponse>;
-	sendBatch(messages: EmailMessage[]): Promise<BatchEmailResponse>;
+interface SendEmail {
+	send(message: EmailMessage | EmailMessageBuilder): Promise<EmailSendResult>;
 }
 
-interface EmailMessage {
+// Structured email builder (recommended)
+interface EmailMessageBuilder {
 	to: string | string[]; // Max 50 recipients
 	from: string | { email: string; name: string };
 	subject: string;
@@ -53,35 +53,19 @@ interface EmailMessage {
 }
 
 interface Attachment {
-	content: string; // Base64 encoded content
+	content: string | ArrayBuffer; // Base64 string or binary content
 	filename: string;
 	type: string; // MIME type
 	disposition: "attachment" | "inline";
 	contentId?: string; // For inline attachments
 }
 
-interface EmailResponse {
+interface EmailSendResult {
 	messageId: string; // Unique email ID
-	success: boolean; // Indicates if email was accepted
 }
 
-interface BatchEmailResponse {
-	results: (EmailResponse | EmailError)[];
-}
-
-interface EmailError {
-	success: false;
-	error: {
-		code: string; // Error code (e.g., "E_VALIDATION_ERROR")
-		message: string; // Human readable error message
-	};
-}
-
-// Error thrown for single sends and binding-level batch errors
-class EmailSendError extends Error {
-	code: string;
-	message: string;
-}
+// Errors are thrown as standard Error objects with a `code` property
+// try { await env.EMAIL.send(...) } catch (e) { console.log(e.code, e.message) }
 ```
 
 ### Basic usage
@@ -91,22 +75,8 @@ class EmailSendError extends Error {
 
 ```typescript
 interface Env {
-	EMAIL: EmailBinding;
+	EMAIL: SendEmail;
 }
-
-export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
-		const response = await env.EMAIL.send({
-			to: "user@example.com",
-			from: "welcome@yourdomain.com",
-			subject: "Welcome to our service!",
-			html: "<h1>Welcome!</h1><p>Thanks for signing up.</p>",
-			text: "Welcome! Thanks for signing up.",
-		});
-
-		return new Response(`Email sent: ${response.messageId}`);
-	},
-};
 ```
 
 </TabItem>
@@ -192,68 +162,6 @@ const response = await env.EMAIL.send({
 </TabItem>
 </Tabs>
 
-## sendBatch() method
-
-Send multiple emails in a single request using the `sendBatch()` method:
-
-<Tabs>
-<TabItem label="Different recipients">
-
-```typescript
-// Send personalized emails to different recipients
-const emails = [
-	{
-		to: "alice@example.com",
-		from: "newsletter@yourdomain.com",
-		subject: "Personal update for Alice",
-		html: "<h1>Hi Alice!</h1><p>Your personalized content here.</p>",
-	},
-	{
-		to: "bob@example.com",
-		from: "newsletter@yourdomain.com",
-		subject: "Personal update for Bob",
-		html: "<h1>Hi Bob!</h1><p>Your personalized content here.</p>",
-	},
-];
-
-const batchResponse = await env.EMAIL.sendBatch(emails);
-batchResponse.results.forEach((result, index) => {
-	if (result.success) {
-		console.log(`Email ${index} sent successfully: ${result.messageId}`);
-	} else {
-		console.error(
-			`Email ${index} failed: ${result.error.code} - ${result.error.message}`,
-		);
-	}
-});
-```
-
-</TabItem>
-<TabItem label="Template with data">
-
-```typescript
-// Send template emails with different data
-const subscribers = [
-  { email: "user1@example.com", name: "Alice", plan: "Pro" },
-  { email: "user2@example.com", name: "Bob", plan: "Business" },
-  { email: "user3@example.com", name: "Carol", plan: "Enterprise" }
-];
-
-const emails = subscribers.map(subscriber => ({
-  to: subscriber.email,
-  from: "updates@yourdomain.com",
-  subject: `Your ${subscriber.plan} plan update`,
-  html: `<h1>Hi ${subscriber.name}!</h1><p>Here's your ${subscriber.plan} plan update.</p>`,
-  text: `Hi ${subscriber.name}! Here's your ${subscriber.plan} plan update.`,
-}));
-
-const batchResponse = await env.EMAIL.sendBatch(emails);
-console.log(`Batch completed: ${batchResponse.results.length} emails processed`);
-```
-
-</TabItem>
-</Tabs>
-
 ## Error handling
 
 Handle email sending errors gracefully:
@@ -279,7 +187,7 @@ export default {
 				}),
 			);
 		} catch (error) {
-			// Error is EmailSendError with code and message
+			// Error has .code and .message properties
 			console.error("Email sending failed:", error.code, error.message);
 
 			// Handle specific error types
@@ -317,74 +225,6 @@ export default {
 ```
 
 </TabItem>
-<TabItem label="Batch send errors">
-
-```typescript
-export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
-		const emails = [
-			{
-				to: "user1@example.com",
-				from: "noreply@yourdomain.com",
-				subject: "Test Email 1",
-				text: "This is test email 1.",
-			},
-			{
-				to: "user2@example.com",
-				from: "noreply@yourdomain.com",
-				subject: "Test Email 2",
-				text: "This is test email 2.",
-			},
-		];
-
-		try {
-			const batchResponse = await env.EMAIL.sendBatch(emails);
-
-			let successCount = 0;
-			let errorCount = 0;
-			const errors = [];
-
-			batchResponse.results.forEach((result, index) => {
-				if (result.success) {
-					successCount++;
-				} else {
-					errorCount++;
-					errors.push({
-						index,
-						code: result.error.code,
-						message: result.error.message,
-					});
-				}
-			});
-
-			return new Response(
-				JSON.stringify({
-					success: true,
-					summary: {
-						total: emails.length,
-						successful: successCount,
-						failed: errorCount,
-					},
-					errors: errors,
-				}),
-			);
-		} catch (error) {
-			// This indicates a binding-level error (e.g., E_BATCH_TOO_LARGE)
-			console.error("Batch sending failed:", error.code, error.message);
-
-			return new Response(
-				JSON.stringify({
-					success: false,
-					error: error.message,
-				}),
-				{ status: 400 },
-			);
-		}
-	},
-};
-```
-
-</TabItem>
 </Tabs>
 
 ## Error codes
@@ -397,16 +237,13 @@ The following error codes may be returned when sending emails:
 | `E_FIELD_MISSING`               | Required field is missing               | Missing `to`, `from`, or `subject` fields                     |
 | `E_TOO_MANY_RECIPIENTS`         | Too many recipients in to/cc/bcc arrays | Combined recipients exceed 50 limit                           |
 | `E_SENDER_NOT_VERIFIED`         | Sender domain not verified              | Attempting to send from unverified domain                     |
-| `E_RECIPIENT_SUPPRESSED`        | Recipient is on suppression list        | Email address has bounced or unsubscribed                     |
+| `E_RECIPIENT_NOT_ALLOWED`       | Recipient not in allowed list           | Recipient address not in `allowed_destination_addresses`      |
+| `E_RECIPIENT_SUPPRESSED`        | Recipient is on suppression list        | Email address has bounced or reported your emails as spam     |
 | `E_SENDER_DOMAIN_NOT_AVAILABLE` | Domain not available for sending        | Domain not onboarded to Email Service                         |
-| `E_BATCH_TOO_LARGE`             | Batch contains too many emails          | Batch size exceeds maximum allowed                            |
-| `E_CONTENT_TOO_LARGE`           | Email content exceeds size limit        | Total content size > 25MB                                     |
-| `E_SUBJECT_TOO_LONG`            | Subject line too long                   | Subject exceeds maximum character limit                       |
+| `E_CONTENT_TOO_LARGE`           | Email content exceeds size limit        | Total message size exceeds the maximum                        |
 | `E_DELIVERY_FAILED`             | Could not deliver the email             | SMTP delivery failure, recipient server rejection             |
-| `E_RATE_LIMIT_EXCEEDED`         | Rate limit exceeded                     | Hourly sending limit reached                                  |
+| `E_RATE_LIMIT_EXCEEDED`         | Rate limit exceeded                     | Sending rate limit reached                                    |
 | `E_DAILY_LIMIT_EXCEEDED`        | Daily limit exceeded                    | Daily sending quota reached                                   |
-| `E_MONTHLY_LIMIT_EXCEEDED`      | Monthly limit exceeded                  | Monthly sending quota reached                                 |
-| `E_BINDING_UNAVAILABLE`         | Email binding not available             | Email service binding is not configured or available          |
 | `E_INTERNAL_SERVER_ERROR`       | Internal service error                  | Email Service temporarily unavailable                         |
 | `E_HEADER_NOT_ALLOWED`          | Header not allowed                      | Header is platform-controlled or not on the [whitelist](/email-service/reference/headers/) |
 | `E_HEADER_USE_API_FIELD`        | Must use API field                      | Header like `From` must be set via the dedicated API field    |
