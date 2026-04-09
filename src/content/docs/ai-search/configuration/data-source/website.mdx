@@ -47,6 +47,117 @@ For example, to index only blog posts while excluding drafts:
 
 Refer to [Path filtering](/ai-search/configuration/path-filtering/) for pattern syntax, filtering behavior, and more examples.
 
+## Content selectors
+
+Content selectors let you control which parts of a crawled page are indexed. Each entry pairs a URL glob pattern with a CSS selector. When a page URL matches a glob pattern, only the elements matching the corresponding CSS selector — and their descendants — are extracted and converted to Markdown for indexing.
+
+The list is ordered and the **first matching path wins**. If a page URL matches multiple glob patterns, only the selector from the first match is applied. Order your entries from most specific to least specific.
+
+### Default behavior
+
+Without content selectors, AI Search applies a default processing pipeline that removes elements such as `<header>`, `<footer>`, and `<head>` before converting the remaining content to Markdown. For more details on how HTML is processed, refer to [How HTML is processed](/workers-ai/features/markdown-conversion/how-it-works/#html).
+
+### Configure content selectors in the dashboard
+
+<Steps>
+
+1. Go to the [AI Search](https://dash.cloudflare.com/?to=/:account/ai/ai-search) page in the Cloudflare dashboard.
+
+   <DashButton url="/?to=/:account/ai/ai-search" />
+
+2. Select your AI Search instance, or select **Create** to create a new one with a **Website** data source.
+3. Under the data source settings, locate the **Content selectors** section.
+4. Select **Add selector**.
+5. In the **Path** field, enter a glob pattern to match page URLs. For example, `**/blog/**`.
+6. In the **Selector** field, enter a CSS selector to extract content from matching pages. For example, `article .post-body`.
+7. To add more entries, select **Add selector** again. Entries are evaluated in order from top to bottom.
+
+</Steps>
+
+### Configure content selectors via the API
+
+Content selectors are configured in the `source_params.web_crawler.parse_options.content_selector` field when creating or updating an AI Search instance. The field accepts an array of objects, each with a `path` and `selector` property.
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai-search/instances" \
+  -H "Authorization: Bearer {api_token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "id": "my-ai-search",
+    "source": "https://example.com",
+    "type": "web-crawler",
+    "source_params": {
+      "web_crawler": {
+        "parse_options": {
+          "content_selector": [
+            {
+              "path": "**/blog/**",
+              "selector": "article .post-body"
+            },
+            {
+              "path": "**/docs/**",
+              "selector": "main .content"
+            }
+          ]
+        }
+      }
+    }
+  }'
+```
+
+| Field      | Type   | Description                                                                                                                                                                                                                |
+| ---------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `path`     | string | Glob pattern to match against the full page URL. Uses the same glob syntax as [path filtering](/ai-search/configuration/path-filtering/) — `*` matches within a segment, `**` crosses directories. Maximum 200 characters. |
+| `selector` | string | CSS selector to extract content from pages matching the path pattern. Supports standard CSS selectors including element, class, ID, and attribute selectors. Maximum 200 characters.                                       |
+
+### Examples
+
+#### Extract main content from blog pages
+
+To index only the article body on blog pages and ignore navigation, sidebars, and footers:
+
+| Path         | Selector             |
+| ------------ | -------------------- |
+| `**/blog/**` | `article .post-body` |
+
+#### Target documentation content
+
+To index the main content area of a documentation site:
+
+| Path         | Selector        |
+| ------------ | --------------- |
+| `**/docs/**` | `main .content` |
+
+#### Different selectors for different sections
+
+You can define multiple entries to apply different selectors to different parts of your site. The first matching path wins, so place more specific patterns first:
+
+| Path                  | Selector             |
+| --------------------- | -------------------- |
+| `**/blog/releases/**` | `.release-notes`     |
+| `**/blog/**`          | `article .post-body` |
+| `**/docs/**`          | `main .content`      |
+
+In this example, a page at `https://example.com/blog/releases/v2` matches the first pattern and uses the `.release-notes` selector. A page at `https://example.com/blog/my-post` skips the first pattern and matches the second.
+
+:::caution
+If a CSS selector does not match any elements on a page, the resulting Markdown is empty and AI Search marks the item as errored. Verify that your selectors match the expected elements before applying them to a broad set of pages.
+:::
+
+### Interaction with other features
+
+- **Path filtering**: [Path filtering](/ai-search/configuration/path-filtering/) takes priority over content selectors. Pages excluded by path filters are never crawled, so content selectors do not apply to them.
+- **Browser Rendering**: Content selectors apply to the HTML that AI Search receives. For sites that render content with JavaScript, turn on [Browser Rendering](#rendering-mode) so that selectors can target the fully rendered DOM.
+- **Automatic re-indexing**: Updating content selectors triggers a new [sync job](/ai-search/configuration/indexing/) immediately, so changes are applied to all indexed pages.
+
+### Limits
+
+| Limit                            | Value          |
+| -------------------------------- | -------------- |
+| Maximum content selector entries | 10             |
+| Maximum path pattern length      | 200 characters |
+| Maximum selector length          | 200 characters |
+
 ## Best practices for robots.txt and sitemap
 
 Configure your `robots.txt` and sitemap to help AI Search crawl your site efficiently.

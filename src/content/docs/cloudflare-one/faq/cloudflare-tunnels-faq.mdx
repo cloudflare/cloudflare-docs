@@ -35,6 +35,8 @@ The best experience with Cloudflare Tunnel is using Full Setup because Cloudflar
 
 You can still use Tunnel with Partial Setup. You will need to create a new DNS record with your current DNS provider for each new hostname connected through Cloudflare Tunnel. The DNS record should be of type CNAME or ALIAS if it is on the root of the domain. The name of the record should be the subdomain it corresponds to (e.g. `example.com` or `tunnel.example.com`) and the value of the record should be `subdomain.domain.tld.cdn.cloudflare.net`. (e.g. `example.com.cdn.cloudflare.net` or `tunnel.example.com.cdn.cloudflare.net`)
 
+For a complete walkthrough of using Access with a partial CNAME setup, refer to [Publish a self-hosted application to the Internet](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/#partial-cname-setup).
+
 ## How can origin servers be secured when using Tunnel?
 
 Tunnel can expose web applications to the Internet that sit behind a NAT or firewall. Thus, you can keep your web server otherwise completely locked down. To double check that your origin web server is not responding to requests outside Cloudflare while Tunnel is running you can run netcat in the command line:

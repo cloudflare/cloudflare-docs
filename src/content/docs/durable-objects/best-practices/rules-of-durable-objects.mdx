@@ -1185,7 +1185,8 @@ export class ChatRoom extends DurableObject<Env> {
     	reason: string,
     	wasClean: boolean
     ) {
-    	// Calling close() completes the WebSocket handshake
+    	// With web_socket_auto_reply_to_close (compat date >= 2026-04-07), the runtime
+    	// auto-replies to Close frames. Calling close() is safe but no longer required.
     	ws.close(code, reason);
     	console.log(`WebSocket closed: ${code} ${reason}`);
     }
@@ -1204,7 +1205,7 @@ With the Hibernation API, your Durable Object can go to sleep when there is no a
 Best practices:
 
 - The [WebSocket Hibernation API](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api) exposes `webSocketError`, `webSocketMessage`, and `webSocketClose` handlers for their respective WebSocket events.
-- When implementing `webSocketClose`, you **must** reciprocate the close by calling `ws.close()` to avoid swallowing the WebSocket close frame. Failing to do so results in `1006` errors, representing an abnormal close per the WebSocket specification.
+- With the [`web_socket_auto_reply_to_close`](/workers/configuration/compatibility-flags/#websocket-auto-reply-to-close) compatibility flag (enabled by default on compatibility dates on or after `2026-04-07`), the runtime automatically completes the close handshake. Calling `ws.close()` in `webSocketClose` is still safe but no longer required. On older compatibility dates, you **must** call `ws.close()` to avoid `1006` abnormal closure errors.
 
 Refer to [WebSockets](/durable-objects/best-practices/websockets/) for more details.
 
@@ -1275,7 +1276,8 @@ export class ChatRoom extends DurableObject<Env> {
 	}
 
 	async webSocketClose(ws: WebSocket, code: number, reason: string) {
-		// Calling close() completes the WebSocket handshake
+		// With web_socket_auto_reply_to_close (compat date >= 2026-04-07), the runtime
+		// auto-replies to Close frames. Calling close() is safe but no longer required.
 		ws.close(code, reason);
 		const state = ws.deserializeAttachment() as ConnectionState;
 		this.broadcast(`${state.username} left the chat`);

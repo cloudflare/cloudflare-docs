@@ -631,7 +631,9 @@ If you are configuring BGP peering for a tunnel (GRE or IPsec) you must be aware
 - Your CPE may advertise up to 5,000 prefixes on one BGP session.
 - MD5 authentication is optional. You can use a maximum of 80 characters. Supported characters include ``a-zA-Z0-9'!@#$%^&*()+[]{}<>/.,;:_-~`= \\|``
   :::caution
-	MD5 authentication is not a security measure nor is it a valid security mechanism. The MD5 key is not treated as a secret value. This is only supported for preventing misconfiguration, not for defending against malicious attacks.
+	MD5 authentication is not a valid security mechanism. The MD5 key is not treated as a secret value. This is only supported for preventing misconfiguration, not for defending against malicious attacks.
+
+	When MD5 is enabled, you cannot use Telnet to test BGP connectivity (Telnet does not support TCP MD5 authentication).
   :::
 
 
@@ -642,5 +644,3 @@ If you are configuring BGP peering for a tunnel (GRE or IPsec) you must be aware
   </>
 )
 }
-
-

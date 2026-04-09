@@ -114,6 +114,13 @@ For the full list, refer to the [Domain Connect Specification](https://github.co
 - **TXT Conflict Matching Mode**: Is not supported and will be ignored.
 - **TXT Conflict Matching Prefix**: Is not supported and will be ignored.
 
+#### Custom record types
+
+The following record types are described in the [extensions/exclusions](https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc#extensionsexclusions) section of the Domain Connect Specification. Below are the details specific to Cloudflare.
+
+- **APEXCNAME**: This custom record type is not supported and will cause the onboarding to fail. You can use a standard CNAME record instead, as Cloudflare automatically applies [CNAME flattening](/dns/cname-flattening/) at the zone apex.
+- **REDIR301** and **REDIR302**: When applied, these records are converted to zone-specific [bulk redirect](/rules/url-forwarding/bulk-redirects/) rules. If a zone has existing bulk redirects before applying the template, they will be replaced.
+
 ## Template updates
 
 Since September, 2024, template updates are picked up by an automation.
