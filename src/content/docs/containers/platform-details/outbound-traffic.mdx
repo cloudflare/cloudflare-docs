@@ -18,9 +18,9 @@ Use them to:
 
 ## Block or allow traffic by host
 
-You can filter outbound traffic with the `allowHosts` and `denyHosts` properties on the Container class.
+You can filter outbound traffic with the `allowedHosts` and `deniedHosts` properties on the Container class.
 
-By default, a Container will allow internet access, and you can set `denyHosts` to
+By default, a Container will allow internet access, and you can set `deniedHosts` to
 disallow specific hosts or IPs:
 
 ```js
@@ -30,7 +30,7 @@ export { ContainerProxy };
 export class MyContainer extends Container {
 	// Make sure the container trusts /etc/cloudflare/certs/cloudflare-containers-ca.crt
 	interceptHttps = true;
-	denyHosts = ["some-nefarious-website.com", "141.101.64.0/18"];
+	deniedHosts = ["some-nefarious-website.com", "141.101.64.0/18"];
 }
 ```
 
@@ -44,11 +44,11 @@ export class MyContainer extends Container {
 	// Make sure the container trusts /etc/cloudflare/certs/cloudflare-containers-ca.crt
 	interceptHttps = true;
 
-	// default internet access to off unless overridden by 'allowHosts' or outbound proxy
+	// default internet access to off unless overridden by 'allowedHosts' or outbound proxy
 	enableInternet = false;
 
 	// overrides enableInternet = false
-	allowHosts = ["allowed.com"];
+	allowedHosts = ["allowed.com"];
 }
 ```
 
@@ -99,15 +99,17 @@ MyContainer.outboundByHost = {
 
 Calls to `http://my.worker` from the container invoke the handler, which runs inside the Workers runtime, outside the container sandbox.
 
-The `outboundByHost` configuration takes precedence over the `allowHosts` and `denyHosts` lists
-as well as catch-all `outbound` handlers.
+`deniedHosts` and `allowedHosts` are evaluated before `outboundByHost`. If you use `allowedHosts`, include the hostname there for the per-host handler to run. `outboundByHost` handlers take precedence over catch-all `outbound` handlers.
 
 ## Securely inject credentials
 
 Because outbound handlers run in the Workers runtime — outside the container sandbox — they can hold secrets that the container itself never sees. The container makes a plain HTTP request, and the handler attaches the credential before forwarding it to the upstream service.
 
 ```js
-export class MyContainer extends Container {}
+export class MyContainer extends Container {
+	// Make sure the container trusts /etc/cloudflare/certs/cloudflare-containers-ca.crt
+	interceptHttps = true;
+}
 
 MyContainer.outboundByHost = {
 	"github.com": (request, env, ctx) => {
@@ -127,7 +129,10 @@ This is especially useful for agentic workloads where you cannot fully trust the
 Here, `ctx.containerId` looks up a per-instance key from KV:
 
 ```js
-export class MyContainer extends Container {}
+export class MyContainer extends Container {
+	// Make sure the container trusts /etc/cloudflare/certs/cloudflare-containers-ca.crt
+	interceptHttps = true;
+}
 
 MyContainer.outboundByHost = {
 	"my-internal-vcs.dev": async (request, env, ctx) => {

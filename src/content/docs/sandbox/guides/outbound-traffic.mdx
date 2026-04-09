@@ -20,9 +20,9 @@ Use them to:
 
 ## Block or allow traffic by host
 
-You can filter outbound traffic with the `allowHosts` and `denyHosts` properties on the Sandbox class.
+You can filter outbound traffic with the `allowedHosts` and `deniedHosts` properties on the Sandbox class.
 
-By default, a Sandbox allows internet access, and you can set `denyHosts` to disallow specific hosts or IPs:
+By default, a Sandbox allows internet access, and you can set `deniedHosts` to disallow specific hosts or IPs:
 
 <TypeScriptExample>
 
@@ -31,7 +31,7 @@ import { Sandbox, ContainerProxy } from "@cloudflare/sandbox";
 export { ContainerProxy };
 
 export class MySandbox extends Sandbox {
-	denyHosts = ["some-nefarious-website.com", "141.101.64.0/18"];
+	deniedHosts = ["some-nefarious-website.com", "141.101.64.0/18"];
 }
 ```
 
@@ -46,11 +46,11 @@ import { Sandbox, ContainerProxy } from "@cloudflare/sandbox";
 export { ContainerProxy };
 
 export class MySandbox extends Sandbox {
-	// default internet access to off unless overridden by 'allowHosts' or outbound proxy
+	// default internet access to off unless overridden by 'allowedHosts' or outbound proxy
 	enableInternet = false;
 
 	// overrides enableInternet = false
-	allowHosts = ["allowed.com"];
+	allowedHosts = ["allowed.com"];
 }
 ```
 
@@ -115,7 +115,7 @@ MySandbox.outboundByHost = {
 
 Calls to `http://my.worker` from the sandbox invoke the handler, which runs inside the Workers runtime, outside the sandbox.
 
-The `outboundByHost` configuration takes precedence over the `allowHosts` and `denyHosts` lists as well as catch-all `outbound` handlers.
+`deniedHosts` and `allowedHosts` are evaluated before `outboundByHost`. If you use `allowedHosts`, include the hostname there for the per-host handler to run. `outboundByHost` handlers take precedence over catch-all `outbound` handlers.
 
 ## Securely inject credentials
 
