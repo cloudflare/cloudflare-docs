@@ -120,12 +120,12 @@ Add the Turnstile script and widget container to your form HTML:
 
 <form action="/submit" method="POST">
 	<!-- Your existing form fields -->
-	<div class="cf-turnstile" data-sitekey="<YOUR_SITE_KEY>"></div>
+	<div class="cf-turnstile" data-sitekey="<YOUR-SITE-KEY>"></div>
 	<button type="submit">Submit</button>
 </form>
 ```
 
-Replace `<YOUR_SITE_KEY>` with the site key from the previous step. The widget renders inside the `div` and produces a token when the visitor passes the challenge.
+Replace `<YOUR-SITE-KEY>` with the site key from the previous step. The widget renders inside the `div` and produces a token when the visitor passes the challenge.
 
 **3. Validate the token on your server**
 
@@ -135,12 +135,12 @@ Before processing the form submission, send the token to the Turnstile siteverif
 curl https://challenges.cloudflare.com/turnstile/v0/siteverify \
   --header "Content-Type: application/json" \
   --data '{
-  "secret": "<YOUR_SECRET_KEY>",
-  "response": "<TURNSTILE_RESPONSE_TOKEN>"
+  "secret": "<YOUR-SECRET-KEY>",
+  "response": "<TURNSTILE-RESPONSE-TOKEN>"
 }'
 ```
 
-Replace `<YOUR_SECRET_KEY>` with your secret key and `<TURNSTILE_RESPONSE_TOKEN>` with the `cf-turnstile-response` value from the form submission. The endpoint returns a JSON object with a `success` field. Only process the form submission if `success` is `true`.
+Replace `<YOUR-SECRET-KEY>` with your secret key and `<TURNSTILE-RESPONSE-TOKEN>` with the `cf-turnstile-response` value from the form submission. The endpoint returns a JSON object with a `success` field. Only process the form submission if `success` is `true`.
 
 For complete integration details, refer to [Turnstile get started](/turnstile/get-started/).
 
