@@ -19,16 +19,16 @@ The Model Context Protocol (MCP) is an open protocol that enables AI assistants 
 ## Prerequisites
 
 - Node.js v20.19 or newer
-- An MCP-compatible AI client (for example, Claude Desktop, Cursor, OpenCode)
+- An MCP-compatible AI client (for example, Claude Desktop, Claude Code, Cursor, OpenCode)
 - A Browser Rendering API token with `Browser Rendering - Edit` permissions
 
 ## Configure your MCP client
 
 Add the following configuration to your MCP client settings file (the exact location depends on your client):
 
-### Claude Desktop
+### Claude Desktop and Claude Code
 
-Add to `claude_desktop_config.json`:
+Add to `claude_desktop_config.json` (Claude Desktop) or `~/.claude.json` (Claude Code):
 
 ```json
 {
@@ -80,8 +80,8 @@ Add to `~/.cursor/mcp.json`:
 			"args": [
 				"-y",
 				"chrome-devtools-mcp@latest",
-				"--wsEndpoint=wss://api.cloudflare.com/client/v4/accounts/<CF_ACCOUNT_ID>/browser-rendering/devtools/browser?keep_alive=600000",
-				"--wsHeaders={\"Authorization\":\"Bearer <CF_API_TOKEN>\"}"
+				"--wsEndpoint=wss://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-rendering/devtools/browser?keep_alive=600000",
+				"--wsHeaders={\"Authorization\":\"Bearer <API_TOKEN>\"}"
 			]
 		}
 	}
@@ -125,5 +125,9 @@ The `--wsEndpoint` parameter creates a new browser session automatically when th
 
 - [chrome-devtools-mcp repository](https://github.com/ChromeDevTools/chrome-devtools-mcp) - Official MCP server for Chrome DevTools
 - [Model Context Protocol documentation](https://modelcontextprotocol.io/) - Learn more about MCP
+- [Claude Desktop MCP setup](https://modelcontextprotocol.io/docs/develop/connect-local-servers) - Configure MCP servers in Claude Desktop
+- [Claude Code MCP setup](https://docs.anthropic.com/en/docs/claude-code/mcp) - Configure MCP servers in Claude Code
+- [Cursor MCP setup](https://cursor.com/docs/mcp) - Configure MCP servers in Cursor
+- [OpenCode MCP setup](https://opencode.ai/docs/mcp-servers/) - Configure MCP servers in OpenCode
 
 <Render file="faq" product="browser-rendering" />
