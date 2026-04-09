@@ -39,9 +39,19 @@ let [client, server] = Object.values(new WebSocketPair());
 
 
 
-* <code>accept()</code>
+* <code>accept(options?)</code>
 
   * Accepts the WebSocket connection and begins terminating requests for the WebSocket on Cloudflare's global network. This effectively enables the Workers runtime to begin responding to and handling WebSocket requests.
+
+#### Parameters
+
+
+
+* `options` object optional
+
+  * An optional configuration object with the following properties:
+
+    * `allowHalfOpen` boolean optional — When `true`, the runtime will not automatically send a reciprocal Close frame when a Close frame is received from the peer. Instead, `readyState` remains `CLOSING` until you explicitly call `close()`. This is useful for [WebSocket proxying](#close-behavior) where you need to coordinate the close across both sides of the proxy. Defaults to `false`.
 
 
 
@@ -115,12 +125,29 @@ let [client, server] = Object.values(new WebSocketPair());
 
 ***
 
+## Properties
+
+### readyState
+
+* `readyState` number
+
+  * Returns the current state of the WebSocket connection. Possible values:
+
+    | Constant | Value | Description |
+    | --- | --- | --- |
+    | `WebSocket.CONNECTING` | `0` | The connection is not yet open. |
+    | `WebSocket.OPEN` | `1` | The connection is open and ready to communicate. |
+    | `WebSocket.CLOSING` | `2` | The connection is in the process of closing. |
+    | `WebSocket.CLOSED` | `3` | The connection is closed. |
+
+***
+
 ## Events
 
 
 
 * <code>close</code>
-  * An event indicating the WebSocket has closed.
+  * An event indicating the WebSocket has closed. The `CloseEvent` includes `code` (number), `reason` (string), and `wasClean` (boolean) properties.
 
 * <code>error</code>
   * An event indicating there was an error with the WebSocket.
@@ -144,6 +171,50 @@ WebSocket messages received by a Worker have a size limit of 32 MiB (33,554,432 
 * `type` string - Defaults to `message`.
 
 
+
+***
+
+## Close behavior
+
+With the [`web_socket_auto_reply_to_close`](/workers/configuration/compatibility-flags/#websocket-auto-reply-to-close) compatibility flag (enabled by default on compatibility dates on or after `2026-04-07`), the Workers runtime automatically sends a reciprocal Close frame when it receives a Close frame from the peer. The `readyState` transitions to `CLOSED` before the `close` event fires. This matches the [WebSocket specification](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/close_event) and standard browser behavior.
+
+If you still call `close()` inside the `close` event handler, the call is silently ignored. Existing code that manually replies to Close frames will continue to work without changes.
+
+```js
+server.addEventListener("close", (event) => {
+  // readyState is already CLOSED — no need to call server.close().
+  console.log(server.readyState); // WebSocket.CLOSED
+  console.log(event.code);        // 1000
+  console.log(event.wasClean);    // true
+});
+```
+
+### Half-open mode for proxying
+
+The automatic close behavior can interfere with WebSocket proxying, where a Worker sits between a client and a backend and needs to coordinate the close on both sides independently. To support this, pass `{ allowHalfOpen: true }` to `accept()`:
+
+```js
+server.accept({ allowHalfOpen: true });
+
+server.addEventListener("close", (event) => {
+  // readyState is still CLOSING here, giving you time
+  // to coordinate the close on the other side.
+  console.log(server.readyState); // WebSocket.CLOSING
+
+  // Manually close when ready.
+  server.close(event.code, "done");
+});
+```
+
+:::note
+
+WebSockets created with `new WebSocket(url)` always auto-reply to Close frames after this flag takes effect. There is no way to pass `allowHalfOpen` because these WebSockets are automatically accepted. If you need half-open behavior for a client WebSocket, use `fetch()` with the `Upgrade: websocket` header instead, then call `resp.webSocket.accept({ allowHalfOpen: true })`.
+
+:::
+
+### Prior behavior
+
+On compatibility dates before `2026-04-07` (or with the `web_socket_manual_reply_to_close` flag), receiving a Close frame leaves the WebSocket in `CLOSING` state, and your code must call `close()` to complete the handshake. Failing to do so can result in `1006` abnormal closure errors on the client.
 
 ***
 

@@ -79,6 +79,22 @@ await page.setUserAgent(
 The `userAgent` parameter does not bypass bot protection. Requests from Browser Rendering will always be identified as a bot.
 :::
 
+## Local debugging with headful mode (experimental)
+
+When developing locally with `wrangler dev` or `vite dev`, Chrome runs in headless mode by default. To launch Chrome in visible (headful) mode, set the `X_BROWSER_HEADFUL` environment variable:
+
+```sh
+X_BROWSER_HEADFUL=true npx wrangler dev
+```
+
+Or with the [Cloudflare Vite plugin](/workers/vite-plugin/):
+
+```sh
+X_BROWSER_HEADFUL=true npx vite dev
+```
+
+This opens a browser window so you can watch your Puppeteer automation in real time, making it easier to debug navigation, element selection, and page interactions.
+
 ## Element selection
 
 Puppeteer provides multiple methods for selecting elements on a page. While CSS selectors work as expected, XPath selectors are not supported due to security constraints in the Workers runtime.

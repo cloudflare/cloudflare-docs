@@ -1,0 +1,116 @@
+---
+pcx_content_type: how-to
+title: Webhooks
+description: Configure CASB webhooks to send posture finding instances from Cloudflare One to external HTTPS endpoints.
+sidebar:
+  order: 2
+---
+
+:::note[Availability]
+Requires Cloudflare CASB.
+
+To send a live finding instance to a webhook, you must be able to view posture finding instance details in Cloudflare One.
+:::
+
+Use CASB webhooks to send posture finding instances from Cloudflare One to external systems such as chat platforms, ticketing systems, SIEMs, SOAR tools, and custom automation services.
+
+After you configure a webhook destination, you can test delivery from the **Webhooks** page and send posture finding instances directly from the finding details workflow.
+
+## Prerequisites
+
+- You have access to Cloudflare One.
+- You have a public HTTPS endpoint that can receive `POST` requests.
+- You have any authentication values required by your destination, such as a bearer token, Basic auth credentials, static headers, or an HMAC signing secret.
+
+## Create a webhook
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Webhooks**.
+2. Select **Create webhook**.
+3. Enter a **Name** for the webhook.
+4. Enter the **Destination URL** for the system that will receive webhook requests.
+5. Choose an **Authentication method**.
+6. Enter the required credentials, headers, or signing secret.
+7. (Optional) Select **Test delivery** to validate the destination before saving.
+8. Select **Save**.
+
+Cloudflare only accepts destination URLs that use `https://` and are publicly reachable. URLs that resolve to localhost, loopback, private, or other reserved addresses are rejected.
+
+## Authentication methods
+
+CASB webhooks support the following authentication methods:
+
+- **None**: Use this option if your destination does not require authentication.
+- **Basic Auth**: Use this option when your destination expects HTTP Basic authentication.
+- **Bearer Auth**: Use this option when your destination expects a bearer token.
+- **Static Headers**: Use this option when your destination requires one or more fixed custom headers. Header names must be unique.
+- **HMAC-Signing**: Use this option when your destination validates signed requests. You must provide a signing secret.
+
+## Test delivery
+
+Use **Test delivery** to send a test request to the configured destination before saving a new webhook or after updating an existing webhook.
+
+A successful test indicates that Cloudflare reached the destination URL and that the destination returned a response.
+
+Test delivery does not send a live finding instance from your environment.
+
+## Edit, turn off, or delete a webhook
+
+To update an existing webhook:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Webhooks**.
+2. Select the webhook you want to update.
+3. Modify the webhook configuration.
+4. Select **Save**.
+
+To turn a webhook off or on, use the status toggle on the **Webhooks** page.
+
+To delete a webhook, open the webhook menu and select **Delete**.
+
+When you edit an existing webhook, Cloudflare does not display saved header values or signing secrets. To replace a stored value, enter a new value and save the webhook again.
+
+## Send a posture finding instance to a webhook
+
+After you configure one or more webhook destinations, you can send posture finding instances directly from the findings workflow.
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Cloud & SaaS findings** > **Posture Findings**.
+2. Choose **SaaS** or **Cloud**.
+3. Choose the finding you want to review, then select **Manage**.
+4. Select an instance.
+5. In the instance details panel, select **Send webhook**.
+6. Choose the webhook destination or destinations you want to use.
+7. Select **Send webhooks**.
+
+Cloudflare queues webhook sends in the background. A success message means that Cloudflare accepted the request for delivery.
+
+For more information on finding workflows, refer to [Manage findings](/cloudflare-one/cloud-and-saas-findings/manage-findings/).
+
+## Payload format
+
+CASB sends a JSON payload that describes the posture finding instance.
+
+Webhook payloads include event metadata, finding details, asset details, and any additional metadata associated with the finding instance. The exact contents vary by integration and finding type.
+
+Webhook payloads include a top-level `id`, `type`, `metadata`, and `data` object.
+
+Depending on the finding, the `metadata` object can include event details such as the actor, destination, send time, and payload version.
+
+The `data` object can include finding details, asset details, and additional metadata associated with the finding instance.
+
+If your downstream system expects a custom schema, send the webhook to an intermediary service or workflow engine that transforms the payload before forwarding it to the final destination.
+
+## Limitations
+
+- CASB webhooks support posture finding instances only.
+- CASB webhooks do not send content findings.
+- Test delivery sends a test request, but does not send a live finding instance.
+
+## Troubleshooting
+
+If a webhook test or delivery fails:
+
+- Verify that the destination URL uses `https://`.
+- Verify that the destination is publicly reachable.
+- Confirm that your authentication values, headers, and signing secret are correct.
+- If the dashboard reports success but the destination does not process the event immediately, remember that finding instance sends are queued in the background.
+
+For more information, refer to [CASB troubleshooting](/cloudflare-one/integrations/cloud-and-saas/troubleshooting/casb/).

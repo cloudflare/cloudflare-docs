@@ -3,11 +3,16 @@ title: CASB
 pcx_content_type: troubleshooting
 sidebar:
   order: 1
+tags:
+  - Microsoft
+  - Google
+  - GitHub
+  - Debugging
 ---
 
 Use this guide to troubleshoot common issues with Cloud Access Security Broker (CASB).
 
-This guide covers troubleshooting steps for the Microsoft 365, Google Workspace, and GitHub integrations. For other integrations, refer to the integration's documentation.
+This guide covers troubleshooting steps for CASB integrations and webhooks. For integration-specific issues, refer to the integration's documentation.
 
 ## Integration fails to connect or returns an error
 
@@ -43,7 +48,7 @@ CASB integrations do not provide real-time updates. Scans are performed periodic
 
 To trigger a new scan:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Cloud & SaaS**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Cloud & SaaS integrations**.
 2. Find your integration and select **Configure**.
 3. Go to **CASB**.
 4. Turn off **Findings scanning**.
@@ -63,6 +68,22 @@ The remediation failure may be due to the permissions for the Cloudflare app bei
 
 As a workaround, remediate the finding directly within the SaaS application (for example, change the file's sharing settings in Google Drive). CASB will clear the finding from the dashboard after the next successful scan.
 
+## Webhook test or delivery fails
+
+If Cloudflare cannot deliver a test request or a posture finding instance to your destination, follow these steps.
+
+### Check destination requirements
+
+Verify that the destination URL uses `https://` and is publicly reachable. Cloudflare rejects destinations that resolve to localhost, loopback, private, or other reserved addresses.
+
+### Check authentication settings
+
+Ensure that the webhook's authentication method matches what your receiver expects. Re-enter any bearer token, Basic auth credentials, static headers, or signing secret if needed.
+
+### Understand delivery timing
+
+Test delivery sends a test request immediately, but posture finding instance sends are queued in the background. A success message means that Cloudflare accepted the request for delivery.
+
 ## CASB is generating false positives
 
 CASB may incorrectly flag items, such as flagging internally-shared files as public or archived Google Workspace users as inactive.
@@ -75,6 +96,6 @@ Carefully examine the evidence provided in the finding. An object's status in th
 
 If you confirm the finding is a false positive, report the behavior to Cloudflare Support. Provide the finding ID and as much detail as possible. This helps the Support team refine the detection logic for all customers.
 
-### Suppress the finding
+### Ignore or hide the finding
 
-While Cloudflare investigates the issue, you can use the **Suppress** action on the finding to remove it from your active list and reduce noise.
+While Cloudflare investigates the issue, you can use **Move to ignore** on the finding or **Move to hidden** on an individual instance to remove it from your active list and reduce noise.

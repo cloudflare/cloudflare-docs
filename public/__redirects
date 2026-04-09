@@ -424,6 +424,7 @@
 /containers/scaling-and-routing/ /containers/platform-details/scaling-and-routing/ 301
 /containers/architecture/ /containers/platform-details/architecture/ 301
 /containers/durable-object-methods/ /containers/platform-details/durable-object-methods/ 301
+/containers/container-package/ /containers/container-class/ 301
 /containers/platform-details/ /containers/platform-details/architecture/ 301
 # D1
 /d1/client-api/ /d1/worker-api/ 301

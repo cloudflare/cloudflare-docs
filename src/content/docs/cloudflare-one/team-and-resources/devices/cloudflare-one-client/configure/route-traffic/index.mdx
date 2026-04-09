@@ -3,6 +3,8 @@ pcx_content_type: concept
 title: Route traffic
 sidebar:
   order: 6
+tags:
+  - DNS
 ---
 
 import { GlossaryTooltip } from "~/components";
@@ -13,12 +15,12 @@ Cloudflare recommends Enterprise users configure [Gateway resolver policies](/cl
 
 Additionally, there are three options you can configure to exclude traffic from the Cloudflare One Client:
 
-- [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/): Use Local Domain Fallback to instruct the Cloudflare One Client to proxy DNS requests for a specified domain to a resolver that is not Cloudflare Gateway. This is useful when you have private hostnames that would not otherwise resolve on the public Internet.
+- [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/): Send DNS requests for specific domains to a resolver other than Cloudflare Gateway. Use this when you have private hostnames that do not resolve on the public Internet (for example, internal corporate domains).
   :::caution
   Gateway will not encrypt, monitor, or apply DNS policies to DNS queries to domain names entered in Local Domain Fallback.
   :::
-- [Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) Exclude mode: Use Exclude mode to instruct the Cloudflare One Client to ignore traffic to a specified set of IP addresses or domains. Any traffic that is destined to an IP address or domain defined in the Split Tunnels Exclude configuration will be ignored by the Cloudflare One Client and handled by the local machine. Use this mode when you want the majority of your traffic encrypted and processed by Gateway, but need to exclude certain routes due to app compatibility, or if you need the Cloudflare One Client to run alongside a VPN.
-- [Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) Include mode: Use Include mode to instruct the Cloudflare One Client to only handle traffic to a specified set of IP addresses or domains. Any traffic that is not included by an IP address or domain defined in the Split Tunnel Include configuration will be ignored by the Cloudflare One Client and handled by the local machine. Use this mode when you only want specific traffic processed by Gateway, such as when using Tunnels for a specific resource.
+- [Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) Exclude mode: Exclude specific IP addresses or domains from the WARP tunnel. Excluded traffic bypasses the Cloudflare One Client and is handled by the local machine. Use this mode when you want most traffic to go through Gateway, but need to exclude certain routes for app compatibility or to run alongside a [third-party VPN](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/vpn/).
+- [Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) Include mode: Only route traffic to specific IP addresses or domains through the WARP tunnel. All other traffic bypasses the Cloudflare One Client. Use this mode when you only want specific traffic processed by Gateway, such as traffic to resources behind [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/).
   :::caution
   Gateway will not encrypt, manage, or monitor traffic excluded from the Cloudflare One Client by a Split Tunnel configuration.
   :::
@@ -68,7 +70,7 @@ flowchart TD
 
 #### Terms mentioned
 
-#### On-ramps (how traffic gets onto Cloudflare)
+##### On-ramps (how traffic gets onto Cloudflare)
 
 - <GlossaryTooltip term="on-ramp">On-ramp</GlossaryTooltip>: Learn more about
   [On-ramps](/learning-paths/secure-internet-traffic/connect-devices-networks/choose-on-ramp/).
@@ -76,7 +78,7 @@ flowchart TD
 - [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/)
 - [Cloudflare WAN](/cloudflare-wan/)
 
-#### Routing features (how queries are handled)
+##### Routing features (how queries are handled)
 
 - [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/)
 - [Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/)

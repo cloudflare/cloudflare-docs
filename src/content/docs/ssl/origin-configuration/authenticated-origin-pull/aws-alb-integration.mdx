@@ -62,7 +62,7 @@ curl --verbose https://<your-application-load-balancer>
 
 ## 3. Configure Cloudflare
 
-1. [Upload the certificate](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate) you created in [Step 1](#1-generate-a-custom-certificate) to Cloudflare. You should use the leaf certificate, not the root CA.
+1. [Upload the certificate](/api/resources/origin_tls_client_auth/subresources/hostname_certificates/methods/create/) you created in [Step 1](#1-generate-a-custom-certificate) to Cloudflare. You should use the leaf certificate, not the root CA.
 
 <Render file="aop-per-hostname-upload-cert" product="ssl" />
 
@@ -79,19 +79,6 @@ curl --verbose https://<your-application-load-balancer>
 				hostname: "<YOUR_HOSTNAME>",
 			},
 		],
-	}}
-/>
-
-3. [Enable the Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/#3-enable-authenticated-origin-pulls-globally) feature on your zone.
-
-<APIRequest
-	path="/zones/{zone_id}/settings/{setting_id}"
-	method="PATCH"
-	json={{
-		value: "on",
-	}}
-	parameters={{
-		setting_id: "tls_client_auth",
 	}}
 />
 

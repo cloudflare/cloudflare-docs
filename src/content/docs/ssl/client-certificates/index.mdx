@@ -5,17 +5,16 @@ sidebar:
   order: 6
 head: []
 description: Use Cloudflare public key infrastructure (PKI) to create client certificates and enforce mutual Transport Layer Security (mTLS) encryption.
-
 ---
 
 import { GlossaryDefinition, Render, DirectoryListing } from "~/components";
 
-Use Cloudflare's public key infrastructure (PKI) to create client certificates, or [bring your own CA for mTLS](/ssl/client-certificates/byo-ca/).
+Use Cloudflare's public key infrastructure (PKI) to create client certificates, or [bring your own CA (BYOCA)](/ssl/client-certificates/byo-ca/) for mTLS.
 
 <GlossaryDefinition term="mTLS (mutual TLS)" />
 
 :::note[mTLS at Cloudflare]
-For a broader overview, refer to the [mTLS at Cloudflare learning path](/learning-paths/mtls/concepts/).
+This documentation is focused on the SSL/TLS product. For a broader overview, refer to the [mTLS at Cloudflare learning path](/learning-paths/mtls/concepts/).
 :::
 
 ---
@@ -24,12 +23,12 @@ For a broader overview, refer to the [mTLS at Cloudflare learning path](/learnin
 
 Client certificates issued from a given CA are installed on client devices that should be granted access. Then, for any host that has [mTLS enabled](/ssl/client-certificates/enable-mtls/), Cloudflare - acting as the server in this case - requires a certificate from the client trying to access the hostname.
 
-If a certificate is presented, Cloudflare validates the client certificate against CAs set at account level. This means that these certificates can be used for validation across multiple zones/domains (`example.com`), as long as the zones are under the same Cloudflare account and mTLS has been enabled for the requested hosts (`host.example.com`).
+If a certificate is presented, Cloudflare validates the client certificate against CAs set at account level. This means that these certificates can be used for validation across multiple zones/domains (`example.com`, `example.net`, `anotherdomain.test`, etc), as long as the zones are under the same Cloudflare account and mTLS has been enabled for the requested hosts (`host.example.com`, `name.example.net`, `secure.anotherdomain.test`).
 
 The account-level CAs can be:
 
-- The Cloudflare-managed CA: This is the default option. Certificates and hostname associations are listed on your [dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/client-certificates/).
-- [BYOCA](/ssl/client-certificates/byo-ca/) certificates: This is an API-only option, available on Enterprise accounts. Certificates and hostname associations are **not** listed on your dashboard.
+- The Cloudflare-managed CA: This is the default option. Certificates and hostname associations are listed on the **Cloudflare-issued** tab of the [Client Certificates dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/client-certificates/).
+- [BYOCA](/ssl/client-certificates/byo-ca/) certificates: Available on Enterprise accounts. Certificates and hostname associations are listed on the **BYOCA** tab of the [Client Certificates dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/client-certificates/).
 
 Cloudflare then stores the validation result in a field called [`cf.tls_client_auth.cert_verified`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_verified/):
 
@@ -51,7 +50,7 @@ Apart from the mTLS Workers binding, any of the above implementations can use yo
 
 ### mTLS and Workers
 
-Use the [mTLS Workers binding](/workers/runtime-apis/bindings/mtls/) when you need your worker to present a client certificate to an external service. To authenticate requests from a client to your worker instead, refer to [SSL/TLS > Client certificates](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/client-certificates/) and the regular [mTLS for application security](/learning-paths/mtls/mtls-app-security/) implementation.
+Use the [mTLS Workers binding](/workers/runtime-apis/bindings/mtls/) when you need your worker to present a client certificate to an external service. To authenticate requests from a client to your worker instead, refer to the regular [mTLS for application security](/learning-paths/mtls/mtls-app-security/) implementation.
 
 ```mermaid
 flowchart LR
