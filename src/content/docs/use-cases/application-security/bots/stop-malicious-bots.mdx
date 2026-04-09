@@ -305,50 +305,48 @@ For more information on handling false positives, refer to [False positives](/bo
 
 After reviewing Security Events for 24-48 hours, you will likely need to adjust your rules. Here are three common scenarios and how to address each one.
 
-**Scenario 1: Verified bots are being challenged.**
-
-Search engine crawlers like Googlebot or Bingbot appear in your challenged or blocked events. Create a custom rule with a Skip action that allows verified bots through:
-
-- **Expression**: `(cf.bot_management.verified_bot)` (Pro and above) or `(cf.client.bot)` (all plans)
-- **Action**: Skip > All remaining custom rules
-
-Place this rule at the top of your custom rule list so it executes first. On Free plans where Bot Fight Mode cannot be bypassed with Skip actions, add the bot IP ranges to your IP Access Allow list instead.
-
-**Scenario 2: Your monitoring tools or services are being blocked.**
+**Scenario 1: Your monitoring tools or services are being blocked.**
 
 Internal monitoring tools, health check services, or partner APIs appear in blocked events. The fix depends on which feature is blocking them:
 
-- If **Super Bot Fight Mode** (Pro and above) is blocking the traffic, create a custom rule with a Skip action matching the tool IP address or user agent. For example: `(ip.src eq 192.0.2.1)` with action **Skip** > **Skip Super Bot Fight Mode**.
-- If **Bot Fight Mode** (Free) is blocking the traffic, add the tool IP address to your IP Access Allow list. Bot Fight Mode does not trigger when an IP Access rule matches the request.
+- If [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/) (Pro and above) is blocking the traffic, create a custom rule with a Skip action matching the tool IP address or user agent:
+  1. Go to Application Security custom rules.
+  2. Select **Create rule**.
+  3. Enter a descriptive name.
+  4. Under **When incoming requests match**, select **Edit expression** and enter: `(ip.src eq 192.0.2.1)` (replace with your tool's IP address).
+  5. Under **Then take action**, select _Skip_ > **Skip Super Bot Fight Mode**.
+  6. Select **Deploy**.
+
+- If [Bot Fight Mode](/bots/get-started/bot-fight-mode/) (Free) is blocking the traffic, add the tool IP address to your [IP Access Allow list](/waf/tools/ip-access-rules/). Bot Fight Mode does not trigger when an IP Access rule matches the request.
 
 For details on Skip action configuration, refer to [Configure a rule with the Skip action](/waf/custom-rules/skip/).
 
-**Scenario 3: Malicious traffic is still getting through.**
+**Scenario 2: Malicious traffic is still getting through.**
 
-You see bot activity in your logs that your current rules do not catch. Tighten your defenses:
+You see bot activity in Security Events that your current rules do not catch. Create a new custom rule that combines multiple signals for more precise targeting. For example, to challenge requests to `/login` with an empty `Accept-Language` header:
 
-- **Add more header-based rules.** Target additional suspicious patterns, such as requests with empty `Accept-Language` headers or non-browser `User-Agent` values.
-- **Lower your rate limiting thresholds.** If bots are staying under your current limits, reduce the request count or shorten the time window. Deploy changes with the **Log** action first.
-- **Add path-specific rules.** Create custom rules with stricter conditions on your most targeted paths.
-- **Combine signals.** Use multiple fields in a single expression for more precise targeting. For example, challenge requests to `/login` with an empty `Accept-Language` header:
+1. Go to Application Security custom rules.
+2. Select **Create rule**.
+3. Enter a descriptive name.
+4. Under **When incoming requests match**, select **Edit expression** and enter:
 
-  ```txt
-  (http.request.uri.path eq "/login" and len(http.request.headers["accept-language"][0]) eq 0)
-  ```
+   ```txt
+   (http.request.uri.path eq "/login" and len(http.request.headers["accept-language"][0]) eq 0)
+   ```
 
-Custom rules execute before Super Bot Fight Mode in the evaluation order. A custom rule that takes a terminating action (Block, Managed Challenge) prevents the request from reaching Super Bot Fight Mode. Keep this in mind when troubleshooting why a rule does not appear to trigger. For details on rule execution order, refer to [Security features interoperability](/waf/feature-interoperability/).
+5. Under **Then take action**, select _Managed Challenge_.
+6. Select **Deploy**.
+7. After 24-48 hours, review the results in Security Events. If the rule matches only bot traffic, change the action to _Block_.
 
-:::note[Enterprise Bot Management: bot score-based tuning]
-Enterprise customers with [Bot Management](/bots/plans/bm-subscription/) can tune rules using the `cf.bot_management.score` field for more granular control. For example, lower the bot score threshold from 30 to 50, or combine bot score with other signals in a single expression. Refer to [Bot Management variables](/bots/reference/bot-management-variables/) for available fields.
+If bots are staying under your rate limiting thresholds, edit the rate limiting rule and reduce the request count or shorten the time window. Deploy changes with the _Log_ action first.
+
+:::note
+Custom rules execute before Super Bot Fight Mode in the evaluation order. If a custom rule takes a terminating action (Block, Managed Challenge), the request does not reach Super Bot Fight Mode. Refer to [Security features interoperability](/waf/feature-interoperability/).
 :::
 
-### Set up alerts
-
-:::note[Bot traffic alerts require Enterprise Bot Management]
-Bot Detection Alerts and Custom Bot Detection Alerts require [Bot Management](/bots/plans/bm-subscription/) (Enterprise add-on). These alerts notify you when Cloudflare detects abnormal spikes in bot traffic. For setup instructions, refer to [Notifications](/notifications/).
+:::note[Enterprise Bot Management]
+Enterprise customers with [Bot Management](/bots/plans/bm-subscription/) can tune rules using the `cf.bot_management.score` field for more granular control. Refer to [Bot Management variables](/bots/reference/bot-management-variables/) for available fields.
 :::
-
-On Free, Pro, and Business plans, monitor bot activity by reviewing [Security Events](/waf/analytics/security-events/) regularly. You can also configure general [notification alerts](/notifications/) for security events such as firewall rule matches.
 
 ## Related resources
 
