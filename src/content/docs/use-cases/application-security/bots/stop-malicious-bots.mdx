@@ -160,7 +160,7 @@ Rules that use counting expressions with response codes (such as counting only `
 2. Enter a descriptive name in **Rule name**.
 3. Under **If incoming requests match**, select **Edit expression** and enter: `http.request.uri.path eq "/login" and http.request.method eq "POST"`
 4. Under **With the same characteristics**, select **IP**.
-5. Under **Increment counter when**, select **Edit expression** and enter: `http.request.uri.path eq "/login" and http.request.method eq "POST" and http.response.code in {401 403}`
+5. Enable **Use custom counting expression** and enter: `http.request.uri.path eq "/login" and http.request.method eq "POST" and http.response.code in {401 403}`
 6. Under **When rate exceeds**, enter `4` requests per `1 minute`.
 7. Under **Then take action**, select _Managed Challenge_.
 8. Select **Deploy**.
@@ -171,7 +171,7 @@ Rules that use counting expressions with response codes (such as counting only `
 2. Enter a descriptive name in **Rule name**.
 3. Under **If incoming requests match**, select **Edit expression** and enter: `http.request.uri.path eq "/login" and http.request.method eq "POST"`
 4. Under **With the same characteristics**, select **IP**.
-5. Under **Increment counter when**, select **Edit expression** and enter: `http.request.uri.path eq "/login" and http.request.method eq "POST" and http.response.code in {401 403}`
+5. Enable **Use custom counting expression** and enter: `http.request.uri.path eq "/login" and http.request.method eq "POST" and http.response.code in {401 403}`
 6. Under **When rate exceeds**, enter `20` requests per `1 hour`.
 7. Under **Then take action**, select _Block_ with a duration of `1 day`.
 8. Select **Deploy**.
