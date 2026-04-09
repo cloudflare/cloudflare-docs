@@ -40,7 +40,7 @@ Review the following:
 
 - **Bot score distribution chart**: Scores closer to 1 indicate automated traffic. Scores closer to 99 indicate human traffic.
 - **Top requested paths**: Which endpoints receive the most bot traffic. Login pages, API endpoints, and checkout flows are common targets.
-- **Traffic patterns**: Sudden spikes in low-score traffic, specific user agents appearing at high volume, or geographic concentration of requests all indicate bot activity worth investigating.
+- **Traffic patterns**: Sudden spikes in low-score traffic, specific user agents appearing at high volume, or geographic concentration of requests can indicate bot activity worth investigating.
 
 ### Understand bot categories
 
@@ -57,7 +57,7 @@ Cloudflare classifies bot traffic into categories based on bot scores and verifi
 
 ### What Bot Fight Mode does and does not do
 
-Bot Fight Mode is available on all Cloudflare plans, including Free. It provides broad, baseline protection.
+Bot Fight Mode is included with Free plans. It provides broad, baseline protection.
 
 **What it does:**
 
@@ -108,7 +108,7 @@ If your organization uses [Cloudflare Tunnel](/cloudflare-one/networks/connector
 
 Turnstile verifies that a visitor is human at the point of form submission. It challenges suspected bots before they can submit the form. Unlike traditional CAPTCHAs, Turnstile does not require visual puzzles. In Managed mode, most visitors pass without any interaction. Turnstile also works on sites that are not proxied through Cloudflare. Use Turnstile when you need to confirm the visitor is a real person before processing their input.
 
-Rate limiting caps the number of requests a client can make to an endpoint within a time window. It prevents volumetric abuse, such as the same IP hitting your login endpoint hundreds of times per minute. Use rate limiting when you need to control request volume regardless of whether the client is human.
+Rate limiting caps the number of requests a client can make to an endpoint within a time window, such as the same IP hitting your login endpoint hundreds of times per minute. Use rate limiting when you need to control request volume regardless of whether the client is human.
 
 Both together provide the strongest coverage. Turnstile challenges automated submissions at the form level. Rate limiting catches high-volume attacks that bypass or do not encounter the form, such as direct `POST` requests to the endpoint that skip the client-side widget.
 
@@ -259,7 +259,7 @@ Enterprise customers can use the **Request rate analysis** tab in Security Analy
 :::
 
 :::note[Enterprise Bot Management: bot score in custom rules]
-Enterprise customers with [Bot Management](/bots/plans/bm-subscription/) can reference the `cf.bot_management.score` field in custom rule expressions for granular control over bot traffic. Bot Management assigns a score from 1 (likely automated) to 99 (likely human) to every request. Refer to [Bot scores](/bots/concepts/bot-score/) and [Bot Management variables](/bots/reference/bot-management-variables/) for details.
+Enterprise customers with [Bot Management](/bots/plans/bm-subscription/) can reference the `cf.bot_management.score` field in custom rule expressions for granular control over bot traffic. Bot Management assigns a score from 1 to 99 to each request, where lower scores indicate more automated behavior. Refer to [Bot scores](/bots/concepts/bot-score/) and [Bot Management variables](/bots/reference/bot-management-variables/) for details.
 :::
 
 ## Verify and tune your rules
