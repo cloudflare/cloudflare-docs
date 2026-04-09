@@ -243,6 +243,10 @@ Beyond form endpoints, bots also target checkout flows, API endpoints, and other
 
 The following example creates a rate limiting rule for a checkout endpoint. Adjust the path, rate, and action for your site.
 
+:::note[Rate limiting periods vary by plan]
+Free plans support a 10-second counting period only. Pro plans support periods up to 1 minute. Business plans support periods up to 10 minutes. The example below uses a 1-minute period (Pro and above). Refer to [Rate limiting rules availability](/waf/rate-limiting-rules/#availability) for full plan details.
+:::
+
 <Render file="navigate-to-custom-rules" product="waf" />
 
 1. Select **Create rule** > **Rate limiting rules**.
