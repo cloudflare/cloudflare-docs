@@ -6,7 +6,7 @@ sidebar:
   label: Block bots (Free, Pro, Business)
 ---
 
-import { Tabs, TabItem, Render } from "~/components";
+import { Tabs, TabItem, Render, DashButton } from "~/components";
 
 The right defense against malicious bot traffic depends on what you are seeing on your site and what plan you are on. This guide covers a layered approach using [Cloudflare Bots](/bots/), [Cloudflare Application Security](/waf/) (also known as Web Application Firewall or WAF), and [Turnstile](/turnstile/), from baseline protection to targeted custom rules. The core workflow uses features on Free, Pro, and Business plans, with callouts for Enterprise options. Most settings in this guide are configured per domain. [Select a domain](https://dash.cloudflare.com/) in the Cloudflare dashboard before following the steps below.
 
@@ -25,7 +25,11 @@ Bot score distribution data and detailed bot analytics are available on Business
 <Tabs syncKey="dashNewNav">
 <TabItem label="New dashboard" icon="rocket">
 
-1. In the Cloudflare dashboard, go to **Security** > **Analytics** > **Bot analysis**.
+1. In the Cloudflare dashboard, go to the **Analytics** page.
+
+   <DashButton url="/?to=/:account/:zone/security/analytics" />
+
+2. Select the **Bot analysis** tab.
 
 </TabItem>
 <TabItem label="Old dashboard">
@@ -103,7 +107,7 @@ Adding Turnstile involves three steps: create a widget, add the client-side snip
 
 **1. Create a Turnstile widget**
 
-Turnstile is configured at the account level. In the account dashboard, go to **Application security** > **Turnstile**.
+Turnstile is configured at the account level.
 
 <Render file="create-widget-dashboard" product="turnstile" />
 
@@ -269,7 +273,10 @@ Security Events displays requests that Cloudflare security products acted on or 
 <Tabs syncKey="dashNewNav">
 <TabItem label="New dashboard" icon="rocket">
 
-1. In the Cloudflare dashboard, go to **Security** > **Analytics**.
+1. In the Cloudflare dashboard, go to the **Analytics** page.
+
+   <DashButton url="/?to=/:account/:zone/security/analytics" />
+
 2. Select the **Events** tab.
 
 </TabItem>
@@ -304,8 +311,11 @@ After reviewing Security Events, adjust your rules based on what you see.
 Internal monitoring tools, health check services, or partner APIs appear in blocked events. The fix depends on which feature is blocking them:
 
 - If [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/) (Pro and above) is blocking the traffic, create a custom rule with a Skip action matching the tool IP address or user agent:
-  1. Go to Application Security custom rules.
-  2. Select **Create rule**.
+  1. Go to the **Security rules** page.
+
+     <DashButton url="/?to=/:account/:zone/security/security-rules" />
+
+  2. Select **Create rule** > **Custom rules**.
   3. Enter a descriptive name.
   4. Under **When incoming requests match**, select **Edit expression** and enter: `(ip.src eq 192.0.2.1)` (replace with your tool's IP address).
   5. Under **Then take action**, select _Skip_. Then select **All Super Bot Fight Mode rules**.
@@ -319,18 +329,19 @@ For details on Skip action configuration, refer to [Configure a rule with the Sk
 
 You see bot activity in Security Events that your current rules do not catch. Bots that stay under rate limits or evade single-signal rules require combining multiple signals. For example, to challenge POST requests to `/login` that are not from verified bots:
 
-1. Go to Application Security custom rules.
-2. Select **Create rule**.
-3. Enter a descriptive name.
-4. Under **When incoming requests match**, select **Edit expression** and enter:
+<Render file="navigate-to-custom-rules" product="waf" />
+
+1. Select **Create rule**.
+2. Enter a descriptive name.
+3. Under **When incoming requests match**, select **Edit expression** and enter:
 
    ```txt
    (http.request.uri.path eq "/login" and http.request.method eq "POST" and not cf.client.bot)
    ```
 
-5. Under **Then take action**, select _Managed Challenge_.
-6. Select **Deploy**.
-7. Review the results in Security Events. If the rule matches only bot traffic, change the action to _Block_.
+4. Under **Then take action**, select _Managed Challenge_.
+5. Select **Deploy**.
+6. Review the results in Security Events. If the rule matches only bot traffic, change the action to _Block_.
 
 For more expression fields and examples, refer to [Custom rules use cases](/waf/custom-rules/use-cases/).
 
