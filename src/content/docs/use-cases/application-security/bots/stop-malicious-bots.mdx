@@ -295,6 +295,8 @@ Look for false positives (legitimate traffic that your rules incorrectly challen
 - User agents matching legitimate browsers but receiving challenges
 - High volumes of challenged requests from countries where you have real users
 
+For rules using the Managed Challenge action, check the [challenge solve rate (CSR)](/cloudflare-challenges/reference/challenge-solve-rate/). A low CSR indicates the rule is effectively filtering automated traffic rather than legitimate users.
+
 [Bot Fight Mode](/bots/get-started/bot-fight-mode/) and [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/) are aggressive by design. False positives are expected, especially in the first few days after turning them on. The key difference between the two is how you handle exceptions:
 
 - **Bot Fight Mode** (Free) cannot be bypassed with custom rule Skip actions. You can turn off Bot Fight Mode or upgrade to Super Bot Fight Mode for more control.
