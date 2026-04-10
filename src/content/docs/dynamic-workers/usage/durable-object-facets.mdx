@@ -27,6 +27,8 @@ A facet-based setup has three layers:
 
 The supervisor's database and the facet's database are stored together as part of the same overall Durable Object. The dynamic code cannot read the supervisor's database — it only has access to its own.
 
+![Diagram showing the facet architecture: a request flows through the Worker entry point into a Durable Object instance containing a Supervisor with its own SQLite DB, which creates an isolated Facet with a separate SQLite DB via ctx.facets.get() and forwards requests to it via facet.fetch()](~/assets/images/dynamic-workers/facet-architecture.svg)
+
 ## Configure your Worker
 
 Your Worker needs two things: a Durable Object class with a SQLite storage backend, and a Worker Loader binding.
@@ -65,11 +67,18 @@ const AGENT_CODE = `
 
   export class App extends DurableObject {
     fetch(request) {
-      let counter = this.ctx.storage.kv.get("counter") || 0;
-      ++counter;
-      this.ctx.storage.kv.put("counter", counter);
+      this.ctx.storage.sql.exec(
+        "CREATE TABLE IF NOT EXISTS counters (id TEXT PRIMARY KEY, value INTEGER)"
+      );
+      this.ctx.storage.sql.exec(
+        "INSERT INTO counters (id, value) VALUES ('default', 1) " +
+        "ON CONFLICT(id) DO UPDATE SET value = value + 1"
+      );
+      const row = this.ctx.storage.sql.exec(
+        "SELECT value FROM counters WHERE id = 'default'"
+      ).one();
 
-      return new Response("You have made " + counter + " requests.\\n");
+      return new Response("You have made " + row.value + " requests.\\n");
     }
   }
 `;
