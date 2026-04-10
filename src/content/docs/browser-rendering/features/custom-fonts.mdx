@@ -21,7 +21,7 @@ How you add a custom font depends on how you are using Browser Rendering:
 
 Use `addStyleTag` to inject a `@font-face` rule into the page before capturing your screenshot or PDF. You can load the font file from a CDN URL or embed it as a Base64-encoded string.
 
-The examples below use [Puppeteer](/browser-rendering/puppeteer/) with [Workers Bindings](/browser-rendering/puppeteer/#workers-bindings). If you are connecting via [CDP](/browser-rendering/cdp/), the only difference is how you connect to the browser. Once connected, `page.addStyleTag()` works the same way. Refer to [CDP connection example](#cdp-connection-example) for details.
+The examples below use [Puppeteer](/browser-rendering/puppeteer/) with [Workers Bindings](/browser-rendering/puppeteer/#use-puppeteer-in-a-worker). If you are connecting via [CDP](/browser-rendering/cdp/), the only difference is how you connect to the browser. Once connected, `page.addStyleTag()` works the same way. Refer to [CDP connection example](#cdp-connection-example) for details.
 
 ### From a CDN URL
 
