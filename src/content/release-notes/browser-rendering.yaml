@@ -3,7 +3,7 @@ link: "/browser-rendering/changelog/"
 productName: Browser Rendering
 productLink: "/browser-rendering/"
 entries:
-  - publish_date: "2026-04-09"
+  - publish_date: "2026-04-10"
     title: "Chrome DevTools Protocol (CDP) and MCP client support"
     description: |-
       * Browser Rendering now exposes the [Chrome DevTools Protocol (CDP)](/browser-rendering/cdp/) as an endpoint. Any CDP-compatible client, including [Puppeteer](/browser-rendering/cdp/puppeteer/) and [Playwright](/browser-rendering/cdp/playwright/), can connect from any environment, whether that is [Cloudflare Workers](/workers/), your local machine, or a cloud environment. [MCP clients](/browser-rendering/cdp/mcp-clients/) like Claude Desktop, Claude Code, Cursor, and OpenCode can also use Browser Rendering as their remote browser.
