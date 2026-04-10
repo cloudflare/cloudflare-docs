@@ -11,7 +11,7 @@ description: Learn about the expression syntax used to build Gateway DNS, HTTP, 
 
 import { Render } from "~/components";
 
-Gateway policies use a wirefilter-based expression language to match traffic against selectors (criteria). This syntax is similar to, but distinct from, the [Rules language](/ruleset-engine/rules-language/) used by WAF, Page Rules, and other application security products.
+Gateway policies use a wirefilter-based expression language to match traffic against selectors (criteria). This syntax is similar to, but distinct from, the [Rules language](/ruleset-engine/rules-language/) used by WAF, Rules, and other Cloudflare products. Refer to [Gateway versus Ruleset Engine](#gateway-versus-ruleset-engine) for details on the differences.
 
 :::caution[Important]
 
@@ -71,7 +71,7 @@ You can also use symbols instead of words:
 - `&&` instead of `and`
 - `||` instead of `or`
 
-## Working with arrays
+## Array handling
 
 Some Gateway fields return arrays (multiple values). Use the `any()` function to match if any element in the array meets the condition:
 
@@ -89,7 +89,7 @@ any(http.request.domains[*] == "example.com")
 
 The `[*]` notation indicates that the function should evaluate all elements in the array.
 
-## Working with lists
+## List handling
 
 You can reference [lists](/cloudflare-one/reusable-components/lists/) in your expressions using the list UUID:
 
@@ -105,7 +105,7 @@ To find a list's UUID, go to **My Team** > **Lists** in Zero Trust and select th
 
 ## Common field patterns
 
-Each Gateway policy type has its own set of available fields. The table below shows the field prefixes used by each policy type:
+Each Gateway policy type has its own set of available fields. The following table shows the field prefixes used by each policy type:
 
 | Policy type | Field prefix | Example fields |
 | --- | --- | --- |
@@ -149,7 +149,7 @@ net.dst.ip in {10.0.0.0/8}
 http.request.host == "internal.example.com" and identity.email matches ".*@company.com"
 ```
 
-## Gateway vs Ruleset Engine
+## Gateway versus Ruleset Engine
 
 If you are familiar with [Cloudflare Rules language](/ruleset-engine/rules-language/), note that Gateway uses a different set of fields. The following table summarizes the key differences:
 
@@ -157,8 +157,8 @@ If you are familiar with [Cloudflare Rules language](/ruleset-engine/rules-langu
 | --- | --- | --- |
 | **Products** | WAF, Transform Rules, Cache Rules, Configuration Rules | DNS, HTTP, Network, Egress, Resolver policies |
 | **Field examples** | `http.request.uri.path`, `cf.bot_management.score`, `ip.src` | `dns.fqdn`, `http.request.host`, `identity.email` |
-| **Identity fields** | Not available | Available (`identity.email`, `identity.groups`, etc.) |
-| **DNS fields** | Not available | Available (`dns.fqdn`, `dns.content_category`, etc.) |
+| **Identity fields** | Not available | Available (for example, `identity.email`, `identity.groups`) |
+| **DNS fields** | Not available | Available (for example, `dns.fqdn`, `dns.content_category`) |
 | **Documentation** | [Rules language](/ruleset-engine/rules-language/) | [Traffic policies](/cloudflare-one/traffic-policies/) |
 
 :::note
