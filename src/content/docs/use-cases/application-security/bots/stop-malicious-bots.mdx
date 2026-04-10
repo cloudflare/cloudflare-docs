@@ -2,6 +2,10 @@
 pcx_content_type: solution-guide
 title: Stop malicious bots while allowing legitimate traffic (Free, Pro, and Business)
 description: Block malicious bots while allowing legitimate traffic using Bot Fight Mode, Turnstile, custom rules, and rate limiting on Free, Pro, and Business plans.
+products:
+  - waf
+  - bots
+  - turnstile
 sidebar:
   label: Block bots (Free, Pro, Business)
 ---
@@ -95,7 +99,7 @@ For full details and setup instructions, refer to [Super Bot Fight Mode](/bots/g
 
 ### Turnstile versus rate limiting
 
-Turnstile challenges suspected bots before they can submit a form, without showing visitors a CAPTCHA. It can be embedded into any website without sending traffic through Cloudflare. Use Turnstile when you need to challenge automated form submissions.
+Turnstile challenges suspected bots before they can submit a form (login, signup, contact, or checkout), without showing visitors a CAPTCHA. It can be embedded into any website without sending traffic through Cloudflare. Use Turnstile when you need to challenge automated form submissions.
 
 Rate limiting allows you to define rate limits for requests matching an expression and the action to perform when those limits are reached. Use rate limiting to protect endpoints from abuse, such as brute-force attacks on a login page or excessive API calls from a single client.
 
@@ -105,7 +109,7 @@ Both together provide the strongest coverage. Turnstile challenges automated sub
 
 Adding Turnstile involves three steps: create a widget, add the client-side snippet, and validate the token on your server.
 
-**1. Create a Turnstile widget**
+#### 1. Create a Turnstile widget
 
 Turnstile is configured at the account level.
 
@@ -113,7 +117,7 @@ Turnstile is configured at the account level.
 
 You need both the sitekey and secret key in the following steps.
 
-**2. Add the client-side snippet**
+#### 2. Add the client-side snippet
 
 Add the Turnstile script and widget container to your form HTML:
 
@@ -133,7 +137,7 @@ Add the Turnstile script and widget container to your form HTML:
 
 Replace `<YOUR_SITE_KEY>` with the sitekey from the previous step. The widget renders inside the `div` and produces a token when the visitor passes the challenge.
 
-**3. Validate the token on your server**
+#### 3. Validate the token on your server
 
 Before processing the form submission, send the token to the Turnstile siteverify endpoint to confirm the visitor passed the challenge:
 
@@ -264,7 +268,7 @@ Enterprise customers with [Bot Management](/bots/plans/bm-subscription/) can ref
 
 ## Verify and tune your rules
 
-After you deploy bot protection rules, use the [Security Events](/waf/analytics/security-events/) dashboard in Application Security to verify they are working as intended and tune thresholds based on the results.
+After you deploy bot protection rules, use [Security Events](/waf/analytics/security-events/) to verify they are working as intended and adjust thresholds based on the results.
 
 ### Check Security Events
 
@@ -304,7 +308,7 @@ For rules using the Managed Challenge action, check the [challenge solve rate (C
 
 For more information on handling false positives, refer to [False positives](/bots/troubleshooting/false-positives/).
 
-### Tune based on the results
+### Adjust your rules
 
 After reviewing Security Events, adjust your rules based on the results.
 
