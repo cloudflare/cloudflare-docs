@@ -10,7 +10,7 @@ sidebar:
 
 import { Render, GlossaryTooltip, APIRequest, Tabs, TabItem } from "~/components";
 
-MCP servers often need to call internal applications on behalf of authenticated users. For example, an MCP server that helps employees interact with internal tools needs to forward the user's identity to those downstream services so that each request is authorized with the correct permissions.
+MCP servers often need to call internal applications on behalf of authenticated users. For example, an MCP server that helps employees interact with internal tools needs to forward the user's identity to those downstream services (the internal applications the MCP server connects to) so that each request is authorized with the correct permissions.
 
 The [Linked App Token](/cloudflare-one/access-controls/applications/linked-app-token/) policy selector enables this by allowing an Access policy on one application to accept tokens issued for another. There are two ways to set this up depending on how your MCP server is deployed.
 
@@ -22,70 +22,73 @@ If your MCP server is a [self-hosted Access application](/cloudflare-one/access-
 flowchart LR
 accTitle: Self-hosted MCP server accessing internal applications
     User --> client["MCP client"]
-    client --> mcp["MCP server <br> (self-hosted)"]
-    mcp -- "Cf-Access-Token: JWT" --> app1["Internal API <br> (self-hosted)"]
-    mcp -- "Cf-Access-Token: JWT" --> app2["Company wiki <br> (self-hosted)"]
+    client --> mcp["MCP server <br> (self-hosted app)"]
+    mcp -- "Cf-Access-Token: &lt;JWT&gt;" --> app1["Internal API <br> (self-hosted app)"]
+    mcp -- "Cf-Access-Token: &lt;JWT&gt;" --> app2["Company wiki <br> (self-hosted app)"]
     idp[Identity provider] <--> mcp
 ```
 
 ### Setup
 
-1. Add your MCP server as a [self-hosted Access application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) if you haven't already.
+1. Add your MCP server as a [self-hosted Access application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/).
 
 2. On each downstream application that the MCP server needs to access, create a Linked App Token policy:
 
-<Tabs syncKey="dashPlusAPI">
-<TabItem label="Dashboard">
+		<Tabs syncKey="dashPlusAPI">
+		<TabItem label="Dashboard">
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Applications** and select the downstream application.
-2. [Create a new Access policy](/cloudflare-one/access-controls/policies/policy-management/#create-a-policy).
-3. Set the policy **Action** to _Service Auth_.
-4. For **Selector**, select _Linked App Token_.
-5. For **Value**, select the MCP server application. For example,
+		1. In the [Cloudflare dashboard](https://one.dash.cloudflare.com), go to **Zero Trust** > **Access controls** > **Applications**.
+		3. Select the downstream application (not the MCP server application) and select **Edit**.
+		2. Go to the **Policies** tab and select **Create new policy**.
+		3. Set the policy **Action** to _Service Auth_.
+		4. For **Selector**, select _Linked App Token_.
+		5. For **Value**, select the MCP server application. For example,
 
-	| Action       | Rule type | Selector          | Value |
-	| ------------ | --------- | ----------------- | ---- |
-	| Service Auth | Include   | Linked App Token | `internal-mcp-server`|
+			| Action       | Rule type | Selector          | Value |
+			| ------------ | --------- | ----------------- | ---- |
+			| Service Auth | Include   | Linked App Token | `internal-mcp-server`|
+		6. Save the policy.
+		7. In your downstream application, add the policy to the **Access policies** list.
+		8. Save the application.
 
-</TabItem>
-<TabItem label="API">
+		</TabItem>
+		<TabItem label="API">
 
-1. Get the `uid` of your MCP server application:
+		1. Get the `uid` of your MCP server application:
 
-	<APIRequest path="/accounts/{account_id}/access/apps" method="GET" />
+			<APIRequest path="/accounts/{account_id}/access/apps" method="GET" />
 
-	```json title="Response"
-	{
-		"id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-		"uid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-		"type": "self_hosted",
-		"name": "internal-mcp-server",
-		...
-	}
-	```
+			```json title="Response"
+			{
+				"id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+				"uid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+				"type": "self_hosted",
+				"name": "internal-mcp-server",
+				...
+			}
+			```
 
-2. Create a policy on the downstream application:
+		2. Create a policy on the downstream application:
 
-   <APIRequest
-   	path="/accounts/{account_id}/access/policies"
-   	method="POST"
-   	json={{
-   		name: "Allow requests from MCP server",
-   		decision: "non_identity",
-   		include: [
-   			{
-   				linked_app_token: {
-   					app_uid: "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-   				},
-   			},
-   		],
-   	}}
-   />
+			<APIRequest
+				path="/accounts/{account_id}/access/policies"
+				method="POST"
+				json={{
+					name: "Allow requests from MCP server",
+					decision: "non_identity",
+					include: [
+						{
+							linked_app_token: {
+								app_uid: "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+							},
+						},
+					],
+				}}
+			/>
 
-3. [Add the policy](/cloudflare-one/access-controls/policies/policy-management/#create-a-policy) to the downstream application.
 
-</TabItem>
-</Tabs>
+		</TabItem>
+		</Tabs>
 
 3. In your MCP server code, forward the `Cf-Access-Jwt-Assertion` header from incoming requests as the `Cf-Access-Token` header on outgoing requests to the downstream application:
 
@@ -93,29 +96,22 @@ accTitle: Self-hosted MCP server accessing internal applications
 	Cf-Access-Token: <JWT from Cf-Access-Jwt-Assertion>
 	```
 
-	That's it. Access validates the forwarded token against the Linked App Token rule and propagates the user's identity to the downstream application.
+Access will now validate the JWT token against the Linked App Token rule and propagate the user's identity to the downstream application.
 
 ## SaaS MCP server (Access for SaaS with OAuth)
 
 If your MCP server is registered as an [Access for SaaS OIDC application](/cloudflare-one/access-controls/ai-controls/saas-mcp/) and implements [MCP OAuth](https://modelcontextprotocol.io/specification/2025-03-26/basic/authorization), it receives an OAuth `access_token` from Cloudflare Access. The MCP server forwards this token to downstream self-hosted applications in the `Authorization: Bearer` header.
 
-This approach requires your MCP server to implement the OAuth authorization code flow. Use the self-hosted approach above if you want Cloudflare to handle authentication for you.
+This approach requires your MCP server to implement the OAuth authorization code flow. Use the [self-hosted MCP server approach](#self-hosted-mcp-server-recommended) if you want Cloudflare to handle authentication for you.
 
 ```mermaid
 flowchart LR
 accTitle: SaaS MCP server accessing internal applications
-    subgraph SaaS["Access for SaaS <br> OIDC app"]
-        mcp["MCP server"]
-    end
-
-    subgraph "Access self-hosted app"
-        app1[Internal API]
-    end
-
     User --> client["MCP client"]
-    client --> mcp
-    mcp -- "Authorization: Bearer token" --> app1
-    idp[Identity provider] <--> SaaS
+    client --> mcp["MCP server <br> (Access for SaaS app)"]
+    mcp -- "Authorization: Bearer &lt;token&gt;" --> app1["Internal API <br> (self-hosted app)"]
+    mcp -- "Authorization: Bearer &lt;token&gt;" --> app2["Company wiki <br> (self-hosted app)"]
+    idp[Identity provider] <--> mcp
 ```
 
 ### Setup
