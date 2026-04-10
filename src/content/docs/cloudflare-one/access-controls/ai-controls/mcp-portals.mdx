@@ -123,37 +123,15 @@ Cloudflare Access automatically creates an Access application for each MCP serve
 
 ## Code mode
 
-[Code mode](/agents/api-reference/codemode/) is available by default on all MCP server portals. It reduces context window usage by collapsing all tools in the portal into a single `code` tool. Instead of loading a separate tool definition for each upstream MCP server tool, the connected AI agent writes JavaScript that calls typed `codemode.*` methods. The generated code runs in an isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/) environment, which keeps authentication credentials and environment variables out of the model context.
+[Code mode](/agents/api-reference/codemode/) is turned on by default on all MCP server portals. It reduces context window usage by collapsing all tools in the portal into a single `code` tool. Instead of loading a separate tool definition for each upstream MCP server tool, the connected AI agent writes JavaScript that calls typed `codemode.*` methods. The generated code runs in an isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/) environment, which keeps authentication credentials and environment variables out of the model context.
 
 To use code mode, the MCP client must request it when connecting to the portal URL. Refer to [Connect with code mode](#connect-with-code-mode) for the required query parameter.
 
 Code mode is useful for portals that aggregate many MCP servers or servers that expose a large number of tools. Context window usage stays fixed regardless of how many tools are available through the portal.
 
-To turn off code mode for a portal:
-
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
-
-1. In [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **AI controls**.
-2. Find the portal you want to configure, then select the three dots > **Edit**.
-3. Under **Basic information**, turn off **code mode**.
-
-</TabItem> <TabItem label="API">
-
-Send a `PUT` request to the [Update a MCP Portal](/api/resources/zero_trust/subresources/access/subresources/ai_controls/subresources/mcp/subresources/portals/methods/update/) endpoint with `allow_code_mode` set to `false`:
-
-<APIRequest
-	path="/accounts/{account_id}/access/ai-controls/mcp/portals/{portal_id}"
-	method="PUT"
-	json={{
-		allow_code_mode: false,
-	}}
-/>
-
-</TabItem> </Tabs>
-
 ### Connect with code mode
 
-To use code mode, append the `?codemode=search_and_execute` query string parameter to your portal URL when connecting from an MCP client.
+To use code mode, append the `?codemode=search_and_execute` query string parameter to your portal URL when [connecting](#connect-to-a-portal) from an MCP client.
 
 For example, if your portal URL is `https://<subdomain>.<domain>/mcp`, connect to:
 
@@ -181,6 +159,37 @@ For MCP clients with server configuration files, use the portal URL with the que
 When code mode is active, the portal advertises a single `code` tool to connected MCP clients. The AI agent discovers available tools by inspecting the typed method signatures in the Dynamic Worker environment and composes multiple tool calls into a single code execution.
 
 For more information on building with code mode, refer to the [code mode SDK reference](/agents/api-reference/codemode/).
+
+### Turn off code mode
+
+To turn off code mode for a portal:
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. In [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **AI controls**.
+2. Find the portal you want to configure, then select the three dots > **Edit**.
+3. Under **Basic information**, turn off **Code mode**.
+
+</TabItem> <TabItem label="API">
+
+1. Get your existing MCP portal configuration:
+
+   <APIRequest
+   	path="/accounts/{account_id}/access/ai-controls/mcp/portals/{id}"
+   	method="GET"
+   />
+
+2. Send a `PUT` request to the [Update a MCP Portal](/api/resources/zero_trust/subresources/access/subresources/ai_controls/subresources/mcp/subresources/portals/methods/update/) endpoint with `allow_code_mode` set to `false`. To avoid overwriting your existing configuration, the `PUT` request body should contain all fields returned by the previous `GET` request.
+
+   <APIRequest
+   	path="/accounts/{account_id}/access/ai-controls/mcp/portals/{id}"
+   	method="PUT"
+   	json={{
+   		allow_code_mode: false,
+   	}}
+   />
+
+</TabItem> </Tabs>
 
 ## Route portal traffic through Gateway
 
