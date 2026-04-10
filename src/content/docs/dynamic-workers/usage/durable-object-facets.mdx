@@ -67,18 +67,15 @@ const AGENT_CODE = `
 
   export class App extends DurableObject {
     fetch(request) {
-      this.ctx.storage.sql.exec(
-        "CREATE TABLE IF NOT EXISTS counters (id TEXT PRIMARY KEY, value INTEGER)"
-      );
-      this.ctx.storage.sql.exec(
-        "INSERT INTO counters (id, value) VALUES ('default', 1) " +
-        "ON CONFLICT(id) DO UPDATE SET value = value + 1"
-      );
-      const row = this.ctx.storage.sql.exec(
-        "SELECT value FROM counters WHERE id = 'default'"
-      ).one();
+      // Note: storage.kv provides simple KV storage backed by SQLite,
+			// but you can also use SQL directly via storage.sql. See:
+			// https://developers.cloudflare.com/durable-objects/api/sqlite-storage-api/
 
-      return new Response("You have made " + row.value + " requests.\\n");
+			let counter = this.ctx.storage.kv.get("counter") || 0;
+      ++counter;
+      this.ctx.storage.kv.put("counter", counter);
+
+      return new Response("You have made " + counter + " requests.\\n");
     }
   }
 `;
