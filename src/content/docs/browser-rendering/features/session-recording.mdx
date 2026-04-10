@@ -81,66 +81,25 @@ When connecting to Browser Rendering from any environment using the [CDP endpoin
 wss://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-rendering/devtools/browser?recording=true&keep_alive=600000
 ```
 
-<Tabs>
-  <TabItem label="Puppeteer">
+For example, to enable session recording in an MCP client, add `recording=true` to the `--wsEndpoint` URL in your client configuration:
 
-```js
-const puppeteer = require("puppeteer-core");
-
-const ACCOUNT_ID = process.env.CF_ACCOUNT_ID || "<ACCOUNT_ID>";
-const API_TOKEN = process.env.CF_API_TOKEN || "<API_TOKEN>";
-
-const browserWSEndpoint = `wss://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/browser-rendering/devtools/browser?recording=true&keep_alive=600000`;
-
-async function main() {
-	const browser = await puppeteer.connect({
-		browserWSEndpoint,
-		headers: {
-			Authorization: `Bearer ${API_TOKEN}`,
-		},
-	});
-
-	const page = await browser.newPage();
-	await page.goto("https://example.com");
-	// ... your automation steps ...
-
-	await browser.close();
+```json
+{
+	"mcpServers": {
+		"browser-rendering": {
+			"command": "npx",
+			"args": [
+				"-y",
+				"chrome-devtools-mcp@latest",
+				"--wsEndpoint=wss://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-rendering/devtools/browser?recording=true&keep_alive=600000",
+				"--wsHeaders={\"Authorization\":\"Bearer <API_TOKEN>\"}"
+			]
+		}
+	}
 }
-
-main().catch(console.error);
 ```
 
-  </TabItem>
-  <TabItem label="Playwright">
-
-```js
-const { chromium } = require("playwright-core");
-
-const ACCOUNT_ID = process.env.CF_ACCOUNT_ID || "<ACCOUNT_ID>";
-const API_TOKEN = process.env.CF_API_TOKEN || "<API_TOKEN>";
-
-const browserWSEndpoint = `wss://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/browser-rendering/devtools/browser?recording=true&keep_alive=600000`;
-
-async function main() {
-	const browser = await chromium.connectOverCDP(browserWSEndpoint, {
-		headers: {
-			Authorization: `Bearer ${API_TOKEN}`,
-		},
-	});
-
-	const context = browser.contexts()[0];
-	const page = context.pages()[0] || (await context.newPage());
-	await page.goto("https://example.com");
-	// ... your automation steps ...
-
-	await browser.close();
-}
-
-main().catch(console.error);
-```
-
-  </TabItem>
-</Tabs>
+For other MCP clients and CDP usage with Puppeteer or Playwright, refer to the [CDP documentation](/browser-rendering/cdp/).
 
 :::note
 The recording is only available after the browser session closes. CDP sessions typically use `keep_alive` to stay open between commands. The browser will close automatically when it has been idle for the `keep_alive` duration. You can also close it explicitly with `browser.close()`.
