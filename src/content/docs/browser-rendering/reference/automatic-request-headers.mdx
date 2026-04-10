@@ -15,7 +15,7 @@ The default User-Agent depends on how you access Browser Rendering:
 | --- | --- | --- |
 | [Quick Actions](/browser-rendering/quick-actions/) | `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36` | Yes, using the `userAgent` parameter |
 | [Crawl endpoint](/browser-rendering/quick-actions/crawl-endpoint/) | `CloudflareBrowserRenderingCrawler/1.0` | No |
-| [CDP](/browser-rendering/cdp/)([Puppeteer](/browser-rendering/puppeteer/), [Playwright](/browser-rendering/playwright/)) | The default User-Agent of the underlying Chrome version | Yes, via Puppeteer/Playwright configuration |
+| [CDP](/browser-rendering/cdp/) ([Puppeteer](/browser-rendering/puppeteer/), [Playwright](/browser-rendering/playwright/)) | The default User-Agent of the underlying Chrome version | Yes, via Puppeteer/Playwright configuration |
 
 :::note
 Because the User-Agent is configurable for most methods and the Chrome version may change as Browser Rendering updates its underlying browser engine, destination servers should use the non-configurable headers below to identify Browser Rendering requests rather than relying on the User-Agent string.
