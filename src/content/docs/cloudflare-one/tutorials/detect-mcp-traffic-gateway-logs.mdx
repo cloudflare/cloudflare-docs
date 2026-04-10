@@ -144,10 +144,6 @@ Key insights from the data:
 - **Blocked traffic** (`action` = `block`): Your existing policies are working
 - **User attribution**" This indicates which employees are connecting to MCP servers
 
-:::note
-Sample code for the complete GraphQL query and result processing is available in the [MCP Shield query processing source](https://github.com/janguiano301184/helix-mcp-shield/blob/main/src/services/cloudflare-api.ts). The example includes error handling, retry logic, and pagination for accounts with more than 10,000 results.
-:::
-
 ## 4. Create DLP profiles for MCP JSON-RPC detection
 
 Gateway HTTP policies can match domains and URL paths, but they cannot inspect request bodies. DLP profiles scan `POST` body content for patterns, which is useful for shadow MCP detection, since MCP uses JSON-RPC over HTTP and has several detectable hallmarks.
