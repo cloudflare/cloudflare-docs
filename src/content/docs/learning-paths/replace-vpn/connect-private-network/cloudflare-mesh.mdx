@@ -1,0 +1,30 @@
+---
+title: Connect with Cloudflare Mesh
+pcx_content_type: overview
+sidebar:
+  order: 2
+
+---
+
+[Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) connects your private networks to Cloudflare using the Cloudflare One Client (`warp-cli`) running in headless mode on a Linux server. Every enrolled device and node receives a private Mesh IP and can communicate with any other participant over TCP, UDP, or ICMP.
+
+Mesh supports bidirectional traffic — devices can reach servers, servers can reach devices, and networks can reach other networks. This makes it the recommended approach for replacing a VPN, as it covers both user-to-network and network-to-network connectivity.
+
+## Set up Cloudflare Mesh
+
+To connect your private network using Cloudflare Mesh, refer to [Get started with Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/get-started/).
+
+The setup wizard in the dashboard configures enrollment, device profiles, and connectivity settings automatically. Once a node is online, add [CIDR routes](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/) to make the subnet behind it reachable from any enrolled device.
+
+## When to use Mesh
+
+- Replacing a VPN for remote access to private networks
+- Bidirectional connectivity (VoIP, SIP, Active Directory, SCCM, DevOps pipelines)
+- Site-to-site networking between offices, data centers, or cloud VPCs
+- Client-to-client connectivity (two laptops reaching each other by private IP)
+
+## Best practices
+
+- Enable [high availability](/cloudflare-one/networks/connectors/cloudflare-mesh/high-availability/) for production nodes with CIDR routes.
+- Use [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/) to control which users and devices can reach specific resources.
+- Refer to [Tips and best practices](/cloudflare-one/networks/connectors/cloudflare-mesh/tips/) for cloud VPC configuration and running alongside Cloudflare Tunnel.

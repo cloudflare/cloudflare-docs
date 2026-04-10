@@ -41,7 +41,7 @@ flowchart TB
     dns3 -- Resolved by --> dns4
     dns2 -----> internet(["Internet"])
     dns4 -----> internet
-    dns4 ---> cloudflare["Private network services <br>(Cloudflare Tunnel, Cloudflare WAN, WARP Connector)"]
+    dns4 ---> cloudflare["Private network services <br>(Cloudflare Tunnel, Cloudflare WAN, Cloudflare Mesh)"]
     http1 -- Do Not Inspect --> internet
     http1 -- Inspect --> http2
     http2 --> http3

@@ -29,7 +29,7 @@ The following table provides a high-level comparison of all connectivity options
 | ---- | ---- | ---- | ---- | ---- |
 | [Cloudflare Tunnel](#cloudflare-tunnel) | HTTP/2, QUIC | Off-ramp only | Software daemon (`cloudflared`) on server | Exposing private applications without a public IP |
 | [Cloudflare One Client](#cloudflare-one-client) | MASQUE (default), WireGuard | Bidirectional | Client software on end-user devices | Securing remote workforce devices |
-| [WARP Connector](#warp-connector) | MASQUE, WireGuard | Bidirectional | Software client on Linux host | Connecting sites with IoT or VoIP devices |
+| [Cloudflare Mesh](#cloudflare-mesh) | MASQUE | Bidirectional | Software client on Linux host | Connecting sites with IoT or VoIP devices |
 | [DNS locations](#dns-locations) |  DNS (DoH, DoT, IPv4/IPv6) | On-ramp only | DNS resolver configuration  | Filtering DNS traffic without device agents |
 | [Proxy endpoints](#proxy-endpoints) | HTTP/HTTPS | On-ramp only | Browser PAC file configuration | Filtering web traffic without device agents |
 | [Clientless Web Isolation](#clientless-web-isolation) | HTTP/HTTPS | On-ramp only | Prefixed URL with Access authentication | Secure web access for unmanaged devices |
@@ -61,37 +61,33 @@ For detailed configuration, refer to the [Cloudflare Tunnel documentation](/clou
 
 The Cloudflare One Client is a device agent that securely connects end-user devices to Cloudflare's global network. The Cloudflare One Client encrypts traffic from the device using MASQUE (with post-quantum cryptography) or WireGuard and routes it through Cloudflare, where Gateway policies filter and inspect the traffic.
 
-Use Cloudflare One Client to secure remote workforce devices, replace traditional VPN solutions, enforce DNS filtering and web security policies, implement device posture checks, and enable Peer-to-peer connectivity between enrolled devices.
+Use Cloudflare One Client to secure remote workforce devices, replace traditional VPN solutions, enforce DNS filtering and web security policies, implement device posture checks, and enable [Mesh connectivity](/cloudflare-one/networks/connectors/cloudflare-mesh/) between enrolled devices.
 
 :::note[Important to know]
-Cloudflare One Client is a bidirectional L3 tunnel — it on-ramps device traffic to Cloudflare and can also off-ramp traffic sent to the device's virtual IP address. Any connectivity option that routes traffic through Cloudflare's network (for example, IPsec tunnels, GRE tunnels, CNI, or another device via [Peer-to-peer](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/peer-to-peer/)) can initiate connections towards a Cloudflare One Client-enrolled device.
+Cloudflare One Client is a bidirectional L3 tunnel — it on-ramps device traffic to Cloudflare and can also off-ramp traffic sent to the device's virtual IP address. Any connectivity option that routes traffic through Cloudflare's network (for example, IPsec tunnels, GRE tunnels, CNI, or another device via [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/)) can initiate connections towards a Cloudflare One Client-enrolled device.
 :::
 
 For detailed configuration, refer to the [Cloudflare One Client documentation](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/).
 
 ---
 
-## WARP Connector (beta)
+## Cloudflare Mesh (beta)
 
-WARP Connector is a software client that enables mesh networking for services, containers, and virtual machines (VMs). It acts as a Layer 3 router for a subnet, on-ramping and off-ramping traffic through Cloudflare while preserving source IP addresses end-to-end.
+Cloudflare Mesh connects your services and devices with post-quantum encrypted networking. Every enrolled device and mesh node receives a private [Mesh IP](/cloudflare-one/networks/connectors/cloudflare-mesh/#mesh-ips) and can communicate with any other participant over TCP, UDP, or ICMP — including device-to-device without any infrastructure.
 
-Use WARP Connector to connect sites with IoT devices or IP phones that cannot run WARP, enable VoIP and SIP protocols requiring server-initiated connections, or deploy software-defined site-to-site connectivity from a Linux host.
+Mesh nodes run the Cloudflare One Client (`warp-cli`) in headless mode on Linux servers. They can advertise [CIDR routes](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/) to make subnets behind them reachable, enabling connectivity to devices that cannot run the client (IoT, printers, legacy servers). All traffic preserves source IP addresses end-to-end.
 
-For VPN replacement and Zero Trust Network Access (ZTNA) use cases, Cloudflare Tunnel via `cloudflared` is the [primary recommended on-ramp](/learning-paths/replace-vpn/concepts/). Cloudflare Tunnel requires minimal network infrastructure changes and integrates directly with Cloudflare Access for identity-aware application protection.
-
-Deploy the WARP Connector supplementally when you need bidirectional connectivity for specific use cases like Active Directory Group Policy updates, SCCM, SIP traffic, VoIP traffic, or DevOps pipelines.
+Use Cloudflare Mesh for bidirectional connectivity (VoIP, SIP, AD updates, SCCM, DevOps), site-to-site networking, device-to-device connectivity, or any scenario where source IP preservation is important. For outbound-only access to private services, [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) (`cloudflared`) is simpler to deploy and runs on all platforms.
 
 :::caution[Cloudflare WAN compatibility]
-Accounts on Legacy routing mode do not support WARP Connector when Cloudflare WAN (formerly Magic WAN) is enabled. Your account must be on <a href={props.unifiedRoutingURL}>Cloudflare One Unified Routing</a> for both to work together.
+Accounts on Legacy routing mode do not support Cloudflare Mesh when Cloudflare WAN (formerly Magic WAN) is enabled. Your account must be on <a href={props.unifiedRoutingURL}>Cloudflare One Unified Routing</a> for both to work together.
 :::
 
-:::note[No high availability]
-WARP Connector does not currently support high availability or redundancy configurations. A single WARP Connector instance represents a single point of failure for that subnet.
-
-Plan your deployment accordingly and consider Cloudflare One Appliance or IPsec tunnels if high availability is a requirement.
+:::note
+Cloudflare Mesh supports [high availability](/cloudflare-one/networks/connectors/cloudflare-mesh/high-availability/) with active-passive replicas for nodes with CIDR routes.
 :::
 
-For detailed configuration, refer to the [WARP Connector documentation](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/).
+For detailed configuration, refer to the [Cloudflare Mesh documentation](/cloudflare-one/networks/connectors/cloudflare-mesh/).
 
 ---
 
@@ -281,8 +277,8 @@ The following table maps common requirements to recommended Cloudflare One conne
 | ---- | ---- |
 | Expose a private web application without a public IP | [Cloudflare Tunnel](#cloudflare-tunnel) |
 | Secure end-user devices | [Cloudflare One Client](#cloudflare-one-client) |
-| Replace traditional VPN for remote access | [Cloudflare Tunnel](#cloudflare-tunnel) (primary) + [WARP Connector](#warp-connector) (for bidirectional needs) |
-| Connect a site with IoT devices or VoIP systems | [GRE](#gre-tunnels) or [IPsec tunnels](#ipsec-tunnels) (from existing router/firewall), [Cloudflare One Appliance](#cloudflare-one-appliance) (zero-touch deployment), or [WARP Connector](#warp-connector) (requires a Linux host) |
+| Replace traditional VPN for remote access | [Cloudflare Tunnel](#cloudflare-tunnel) (primary) + [Cloudflare Mesh](#cloudflare-mesh) (for bidirectional needs) |
+| Connect a site with IoT devices or VoIP systems | [GRE](#gre-tunnels) or [IPsec tunnels](#ipsec-tunnels) (from existing router/firewall), [Cloudflare One Appliance](#cloudflare-one-appliance) (zero-touch deployment), or [Cloudflare Mesh](#cloudflare-mesh) (requires a Linux host) |
 | Connect a branch office using existing routers | [GRE](#gre-tunnels) or [IPsec tunnels](#ipsec-tunnels) |
 | Encrypt traffic over the public Internet | [IPsec tunnels](#ipsec-tunnels) |
 | Zero-touch branch office deployment | [Cloudflare One Appliance](#cloudflare-one-appliance) |
@@ -306,24 +302,23 @@ The team driving your Cloudflare One connectivity project influences which optio
 | ---- | ---- | ---- |
 | Security / InfoSec | [Cloudflare Tunnel](#cloudflare-tunnel) + [Cloudflare One Client](#cloudflare-one-client) | Minimal network infrastructure changes required. Security controls are managed within the Cloudflare One dashboard. |
 | Network Operations | [Cloudflare WAN](#ipsec-tunnels) (IPsec/GRE) or [Cloudflare One Appliance](#cloudflare-one-appliance) | Familiar routing and tunnel configuration. Integrates with existing network equipment and workflows. |
-| DevOps / Platform Engineering | [WARP Connector](#warp-connector) or [Cloudflare Tunnel](#cloudflare-tunnel) | Software-defined deployment. Scriptable via API. No hardware dependencies. |
+| DevOps / Platform Engineering | [Cloudflare Mesh](#cloudflare-mesh) or [Cloudflare Tunnel](#cloudflare-tunnel) | Software-defined deployment. Scriptable via API. No hardware dependencies. |
 | Facilities / Branch IT | [Cloudflare One Appliance](#cloudflare-one-appliance) | Zero-touch deployment with centralized management. No on-site networking expertise required. |
 
-### WARP Connector and Cloudflare One Appliance comparison
+### Cloudflare Mesh and Cloudflare One Appliance comparison
 
-WARP Connector and Cloudflare One Appliance both provide site-level Cloudflare One connectivity, but serve different deployment scenarios. The following table compares WARP Connector and Cloudflare One Appliance.
+Cloudflare Mesh and Cloudflare One Appliance both provide site-level connectivity, but serve different deployment scenarios.
 
-**Table 6. WARP Connector and Cloudflare One Appliance comparison**
-| Aspect | WARP Connector | Cloudflare One Appliance |
+| Aspect | Cloudflare Mesh | Cloudflare One Appliance |
 | ---- | ---- | ---- |
-| **Protocol** | MASQUE / WireGuard | IPsec |
+| **Protocol** | MASQUE | IPsec |
 | **Deployment model** | Software on Linux host (can run alongside other workloads) | Dedicated hardware appliance or virtual machine |
 | **Best for** | Cloud VPCs, development environments, smaller deployments with an available Linux host | Enterprise branch offices, data centers, sites requiring high throughput (1 Gbps+) |
 | **Platform support** | Linux only (x86_64, ARM64). Currently in beta. | Hardware appliance (Dell VEP1460) or virtual (VMware ESXi, Proxmox) |
-| **High availability** | Not currently supported | Supported through multiple connectors per site |
+| **High availability** | [Active-passive replicas](/cloudflare-one/networks/connectors/cloudflare-mesh/high-availability/) for nodes with routes | Supported through multiple connectors per site |
 | **Management** | Configured as a device in the Cloudflare One Client settings | Centralized through the Cloudflare WAN dashboard with zero-touch provisioning |
 
-Use WARP Connector when you need lightweight, software-only connectivity for cloud workloads or sites where a Linux host is available. Use Cloudflare One Appliance when you need enterprise-grade throughput, high availability, or integration with existing network infrastructure.
+Use Cloudflare Mesh when you need lightweight, software-only connectivity for cloud workloads or sites where a Linux host is available. Use Cloudflare One Appliance when you need enterprise-grade throughput, high availability, or integration with existing network infrastructure.
 
 ---
 
@@ -338,12 +333,12 @@ Not all Cloudflare One connectivity options work together in the same account. R
 **Table 7. Cloudflare One connectivity compatability**
 | Combination | Compatible | Notes |
 | ---- | ---- | ---- |
-| WARP Connector + Cloudflare WAN | Conditional | Requires <a href={props.unifiedRoutingURL}>Cloudflare One Unified Routing</a>. Accounts on Legacy routing mode cannot use both. |
+| Cloudflare Mesh + Cloudflare WAN | Conditional | Requires <a href={props.unifiedRoutingURL}>Cloudflare One Unified Routing</a>. Accounts on Legacy routing mode cannot use both. |
 | Cloudflare One Client + Cloudflare WAN | Yes | Cloudflare One Client users can access Cloudflare WAN-connected sites. Cloudflare WAN sites can also initiate connections to Cloudflare One Client devices using their virtual IP addresses. |
 | Cloudflare Tunnel + Cloudflare WAN | Yes | Avoid overlapping IP routes. Cloudflare Tunnel takes priority if the same CIDR is configured for both. |
 | GRE + IPsec | Yes | Use for redundancy or migration scenarios. |
 | CNI + GRE or IPsec | Yes | Use Internet-based GRE or IPsec tunnels as backup connectivity alongside CNI. |
-| Cloudflare One Client + Cloudflare Tunnel + WARP Connector | Yes | Common pattern for remote access to private applications. All three work together. |
+| Cloudflare One Client + Cloudflare Tunnel + Cloudflare Mesh | Yes | Common pattern for remote access to private applications. All three work together. |
 | CNI + Cloudflare Tunnel | Conditional | `cloudflared` connects to multiple Cloudflare regions for redundancy. If CNI only advertises one region, the tunnel operates with reduced redundancy. Evaluate whether Cloudflare Tunnel is necessary if CNI already provides private connectivity. |
 
 ### Cloudflare One routing considerations
@@ -364,7 +359,7 @@ When layering Cloudflare One tunnels or using multiple encapsulation methods, ac
 | GRE tunnel | 1,476 bytes | 1,436 bytes or lower |
 | IPsec tunnel | 1,400-1,436 bytes (varies by encryption) | 1,360-1,396 bytes |
 | Cloudflare One Client behind Cloudflare WAN (double encapsulation) | ~1,300 bytes | Configure based on testing |
-| WARP Connector to Cloudflare One Client | ~1,280 bytes | Configure based on testing. Traffic is encapsulated twice: by WARP Connector and again by Cloudflare before delivery to the Cloudflare One Client. |
+| Cloudflare Mesh to Cloudflare One Client | ~1,280 bytes | Configure based on testing. Traffic is encapsulated twice: by Cloudflare Mesh and again by Cloudflare before delivery to the Cloudflare One Client. |
 
 Configure MSS clamping on your edge devices to ensure TCP traffic does not require fragmentation.
 
@@ -376,7 +371,7 @@ Cloudflare One connectivity options handle source IP addresses differently. The 
 | Connectivity option | Source IP behavior |
 | ---- | ---- |
 | Cloudflare Tunnel | Origin sees the `cloudflared` process IP. Use `CF-Connecting-IP` header for HTTP traffic. |
-| WARP Connector | Preserves original source IP end-to-end. |
+| Cloudflare Mesh | Preserves original source IP end-to-end. |
 | GRE and IPsec tunnels | Preserves original source IP within the tunnel. |
 | Cloudflare One Appliance | Preserves original source IP within the tunnel. |
 
@@ -395,12 +390,12 @@ The following table shows traffic direction support for each Cloudflare One conn
 | ---- | ---- | ---- |
 | Cloudflare Tunnel | Yes | No |
 | Cloudflare One Client | Yes | Yes |
-| WARP Connector | Yes | Yes |
+| Cloudflare Mesh | Yes | Yes |
 | GRE and IPsec tunnels | Yes | Yes |
 | Cloudflare One Appliance | Yes | Yes |
 | CNI | Yes | Yes |
 
-If your application requires server-initiated connections (for example, VoIP callbacks, database replication), use a bidirectional connectivity option such as Cloudflare One Client, WARP Connector, Cloudflare WAN (IPsec/GRE), or CNI. Cloudflare Tunnel does not support server-initiated traffic.
+If your application requires server-initiated connections (for example, VoIP callbacks, database replication), use a bidirectional connectivity option such as Cloudflare One Client, Cloudflare Mesh, Cloudflare WAN (IPsec/GRE), or CNI. Cloudflare Tunnel does not support server-initiated traffic.
 
 ---
 
@@ -441,7 +436,7 @@ This pattern serves organizations with primarily cloud-based infrastructure and 
 2. Cloudflare Tunnel provides ingress for external-facing applications.
 3. Employees access cloud resources through the Cloudflare One Client.
 
-**Alternative:** For organizations not using Cloudflare WAN, WARP Connector can provide bidirectional connectivity for cloud VPCs. Note that accounts on Legacy routing mode cannot use WARP Connector and Cloudflare WAN together.
+**Alternative:** For organizations not using Cloudflare WAN, Cloudflare Mesh can provide bidirectional connectivity for cloud VPCs. Note that accounts on Legacy routing mode cannot use Cloudflare Mesh and Cloudflare WAN together.
 
 ### Highly regulated enterprise
 
@@ -468,7 +463,7 @@ This pattern serves organizations with strict compliance requirements that prohi
 - [WAN transformation](/cloudflare-wan/wan-transformation/) - Plan your migration from legacy WAN to Cloudflare One
 - [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/)
 - [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/)
-- [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/)
+- [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/)
 - [Cloudflare WAN](/cloudflare-wan/)
 - <a href={props.onRampsURL}>WAN Connectors on-ramps</a> - Full list of supported on-ramps
 - [Multi-Cloud Networking](/multi-cloud-networking/) - Automate cloud VPC connectivity
