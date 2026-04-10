@@ -7,7 +7,7 @@ head: []
 description: Cloudflare Workers plan and platform limits.
 ---
 
-import { Render, WranglerConfig, DashButton } from "~/components";
+import { Render, WranglerConfig, DashButton, TypeScriptExample } from "~/components";
 
 ## Account plan limits
 
@@ -215,17 +215,21 @@ Once response headers arrive for a connection, it no longer counts toward the si
 
 If you use `fetch()` but do not need the response body, calling `response.body.cancel()` is still good practice to free memory:
 
+<TypeScriptExample filename="src/index.ts">
+
 ```ts
 const response = await fetch(url);
 
 // Only read the response body for successful responses
-if (response.statusCode <= 299) {
+if (response.status <= 299) {
 	// Call response.json(), response.text() or otherwise process the body
 } else {
 	// Explicitly cancel it
 	response.body.cancel();
 }
 ```
+
+</TypeScriptExample>
 
 :::note
 
