@@ -13,7 +13,7 @@ This feature applies to Browser Sessions ([Puppeteer](/browser-rendering/puppete
 
 There are two approaches to reusing sessions:
 
-- **Disconnect and reconnect** (this page): Use `browser.disconnect()` instead of `browser.close()` to keep the browser alive, then reconnect to it on the next request. Best for stateless workloads where any available browser session will do.
+- **Disconnect and reconnect** (covered in this page): Use `browser.disconnect()` instead of `browser.close()` to keep the browser alive, then reconnect to it on the next request. Best for stateless workloads where any available browser session will do.
 - **[Durable Objects](/browser-rendering/how-to/browser-rendering-with-do/)**: Persist a long-running browser inside a Durable Object for stateful session management. Best when you need to maintain state across requests or route specific users to specific browser instances.
 
 ## 1. Create a Worker project
