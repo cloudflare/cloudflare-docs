@@ -3,5 +3,10 @@
 		"deeplink": "/?to=/:account/tunnels",
 		"name": "Tunnels",
 		"parent": ["Networking"]
+	},
+	{
+		"deeplink": "/?to=/:account/workers/browser-rendering/runs",
+		"name": "Browser Rendering Runs",
+		"parent": ["Compute & AI"]
 	}
 ]
