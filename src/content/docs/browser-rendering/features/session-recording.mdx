@@ -73,11 +73,84 @@ export default {
 The recording is finalized when the browser session closes — whether you call `browser.close()` explicitly, the session reaches its idle timeout, or the Worker terminates for any other reason. The recording is not available until after the session ends.
 :::
 
+## Enable with CDP endpoint
+
+When connecting to Browser Rendering from any environment using the [CDP endpoint](/browser-rendering/cdp/), add `recording=true` as a query parameter to the WebSocket URL:
+
+```txt
+wss://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-rendering/devtools/browser?recording=true&keep_alive=600000
+```
+
+<Tabs>
+  <TabItem label="Puppeteer">
+
+```js
+const puppeteer = require("puppeteer-core");
+
+const ACCOUNT_ID = process.env.CF_ACCOUNT_ID || "<ACCOUNT_ID>";
+const API_TOKEN = process.env.CF_API_TOKEN || "<API_TOKEN>";
+
+const browserWSEndpoint = `wss://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/browser-rendering/devtools/browser?recording=true&keep_alive=600000`;
+
+async function main() {
+	const browser = await puppeteer.connect({
+		browserWSEndpoint,
+		headers: {
+			Authorization: `Bearer ${API_TOKEN}`,
+		},
+	});
+
+	const page = await browser.newPage();
+	await page.goto("https://example.com");
+	// ... your automation steps ...
+
+	await browser.close();
+}
+
+main().catch(console.error);
+```
+
+  </TabItem>
+  <TabItem label="Playwright">
+
+```js
+const { chromium } = require("playwright-core");
+
+const ACCOUNT_ID = process.env.CF_ACCOUNT_ID || "<ACCOUNT_ID>";
+const API_TOKEN = process.env.CF_API_TOKEN || "<API_TOKEN>";
+
+const browserWSEndpoint = `wss://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/browser-rendering/devtools/browser?recording=true&keep_alive=600000`;
+
+async function main() {
+	const browser = await chromium.connectOverCDP(browserWSEndpoint, {
+		headers: {
+			Authorization: `Bearer ${API_TOKEN}`,
+		},
+	});
+
+	const context = browser.contexts()[0];
+	const page = context.pages()[0] || (await context.newPage());
+	await page.goto("https://example.com");
+	// ... your automation steps ...
+
+	await browser.close();
+}
+
+main().catch(console.error);
+```
+
+  </TabItem>
+</Tabs>
+
+:::note
+The recording is only available after the browser session closes. CDP sessions typically use `keep_alive` to stay open between commands. The browser will close automatically when it has been idle for the `keep_alive` duration. You can also close it explicitly with `browser.close()`.
+:::
+
 ## View recordings
 
 After a session closes, its recording is available in the Cloudflare dashboard under **Browser Rendering** > **Runs**. Select a session to open the recording viewer, where you can scrub the timeline and inspect DOM state, console output, and browser interactions at each point in time.
 
-<DashButton url="/?to=/:account/workers/browser-rendering/runs" />
+<DashButton url="/?to=/:account/workers/browser-rendering/logs" />
 
 ## Retrieve a recording via API
 
@@ -100,7 +173,7 @@ A successful response looks like this:
 }
 ```
 
-## Replay a recording locally
+## Replay a recording
 
 <Details header="Replaying recordings with rrweb-player">
 
@@ -111,7 +184,7 @@ The `events` values in the API response are standard rrweb event arrays. You can
 ## Limits
 
 - Recording is opt-in. It is not enabled by default.
-- Session recording is only available with Workers Bindings via `launch()`. It is not available with the REST API.
+- Session recording is available with Workers Bindings via `launch()` and the [CDP endpoint](/browser-rendering/cdp/). It is not available with the REST API.
 - The minimum recording duration is 1 second. Sessions shorter than 1 second will not produce a viewable recording.
 - The maximum recording duration is 2 hours.
 
