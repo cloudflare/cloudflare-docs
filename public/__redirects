@@ -280,6 +280,7 @@
 /bots/concepts/bot/verified-bots/web-bot-auth/ /bots/reference/bot-verification/web-bot-auth/ 301
 /bots/concepts/bot/verified-bots/overview/ /bots/concepts/bot/verified-bots/ 301
 /bots/frequently-asked-questions/ /bots/ 301
+
 /browser-rendering/get-started/browser-rendering-with-DO/ /browser-rendering/how-to/browser-rendering-with-do/ 301
 /browser-rendering/get-started/reuse-sessions/ /browser-rendering/features/reuse-sessions/ 301
 /browser-rendering/get-started/screenshots/ /browser-rendering/how-to/deploy-worker/ 301
@@ -296,6 +297,10 @@
 /browser-rendering/platform/pricing/ /browser-rendering/pricing/ 301
 /browser-rendering/platform/browser-close-reasons/ /browser-rendering/reference/browser-close-reasons/ 301
 /browser-rendering/platform/stagehand/ /browser-rendering/stagehand/ 301
+/browser-rendering/workers-bindings/reuse-sessions/ /browser-rendering/features/reuse-sessions/ 301
+/browser-rendering/workers-bindings/browser-rendering-with-do/ /browser-rendering/how-to/browser-rendering-with-do/ 301
+/browser-rendering/workers-bindings/screenshots/ /browser-rendering/how-to/deploy-worker/ 301
+/browser-rendering/workers-bindings/ /browser-rendering/get-started/#browser-sessions 301
 
 # byoip
 /byoip/about/dynamic-advertisement/ /byoip/concepts/dynamic-advertisement/ 301
@@ -2461,10 +2466,6 @@
 /changelog-next/* /changelog/post/:splat 301
 /browser-rendering/rest-api/* /browser-rendering/quick-actions/:splat 301
 /browser-rendering/quick-actions-rest-api/* /browser-rendering/quick-actions/:splat 301
-/browser-rendering/workers-bindings/reuse-sessions/* /browser-rendering/features/reuse-sessions/:splat 301
-/browser-rendering/workers-bindings/browser-rendering-with-do/* /browser-rendering/how-to/browser-rendering-with-do/:splat 301
-/browser-rendering/workers-bindings/screenshots/* /browser-rendering/how-to/deploy-worker/:splat 301
-/browser-rendering/workers-bindings/* /browser-rendering/get-started/#browser-sessions 301
 /*/sitemap.xml /sitemap-index.xml 301
 /api-security/* /api-shield/:splat 301
 /api-shield/products/* /api-shield/security/:splat 301
