@@ -1,8 +1,20 @@
 import "../components/explain-code-sheet/explain-code-sheet";
 
 function getCodeBlockPosition(button: HTMLElement): number {
-	const codeBlocks = document.querySelectorAll(".expressive-code");
-	const currentBlock = button.closest(".expressive-code");
+	const wrapperSelector = ".explain";
+	const codeSelector = "pre code";
+	const codeBlocks = document.querySelectorAll(codeSelector);
+	const wrapper = button.closest(wrapperSelector);
+
+	let currentBlock = wrapper?.previousElementSibling;
+	while (currentBlock) {
+		if (currentBlock.tagName === "PRE") {
+			currentBlock = currentBlock.querySelector(codeSelector);
+			console.log(currentBlock);
+			break;
+		}
+		currentBlock = currentBlock.previousElementSibling;
+	}
 	if (!currentBlock) return 1;
 	return Array.from(codeBlocks).indexOf(currentBlock) + 1;
 }
