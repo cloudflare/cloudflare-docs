@@ -72,7 +72,7 @@ entries:
     description: |-
       * [Playwright](/browser-rendering/playwright/) support in Browser Rendering is now GA. We've upgraded to [Playwright v1.55](https://playwright.dev/docs/release-notes#version-155).
       * Added support for [Stagehand](/browser-rendering/stagehand/), an open source browser automation framework, powered by [Workers AI](/workers-ai). Stagehand enables developers to build more reliably and flexibly by combining code with natural-language instructions.
-      * Increased [limits](/browser-rendering/limits/#workers-paid) for paid plans on both the [REST API](https://developers.cloudflare.com/browser-rendering/quick-actions/) and [Browser Sessions](/browser-rendering/#integration-methods).
+      * Increased [limits](/browser-rendering/limits/#workers-paid) for paid plans on both the [REST API](/browser-rendering/quick-actions/) and [Browser Sessions](/browser-rendering/#integration-methods).
   - publish_date: "2025-09-22"
     title: Added `excludeExternalLinks` parameter to `/links` REST endpoint
     description: |-
