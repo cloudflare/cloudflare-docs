@@ -1,6 +1,7 @@
 ---
 pcx_content_type: concept
 title: WebMCP
+description: Use WebMCP to let AI agents discover and execute structured tools exposed by websites, replacing fragile screenshot-analyze-click loops with direct function calls.
 sidebar:
   order: 4
   badge: Beta
@@ -16,9 +17,9 @@ import { Render, CURL, Example } from "~/components";
 
 #### 1. Start a Lab session and open DevTools
 
-WebMCP is currently available in Chrome beta, so it requires a Lab session. Lab sessions run in a separate pool from the standard Browser Rendering pool, using Chrome beta with experimental features enabled. Your production workloads on the [standard pool](/browser-rendering/#key-features) remain on a stable version of Chrome.
+WebMCP is currently available in Chrome beta, so it requires a lab session. Browser Run has an experimental pool with browser instances running Chrome beta so you can test emerging browser features before they reach stable Chrome. Your production workloads on the [standard pool](/browser-rendering/#key-features) remain on a stable version of Chrome.
 
-Use the REST API to acquire a lab browser session (replace `$ACCOUNT_ID` with your Cloudflare account ID and `$CLOUDFLARE_API_TOKEN` with your API token):
+Use the [CDP endpoint](/browser-rendering/cdp/) to acquire a lab browser session (replace `$ACCOUNT_ID` with your Cloudflare account ID and `$CLOUDFLARE_API_TOKEN` with your API token):
 
 <CURL
 	method="POST"
@@ -52,7 +53,7 @@ Copy the `devtoolsFrontendUrl` value and open it in your browser to see a live v
 
 You can now interact with the page as you would in a regular browser.
 
-1. Navigate to some of the sites listed in the [WebMCP documentation](https://github.com/GoogleChromeLabs/webmcp-tools/?tab=readme-ov-file#demos). The following instructions are based on the [L'Atelier Hotel Chain](https://github.com/GoogleChromeLabs/webmcp-tools/tree/main/demos/hotel-chain) demo.
+1. Go to one of the sites listed in the [WebMCP documentation](https://github.com/GoogleChromeLabs/webmcp-tools/?tab=readme-ov-file#demos). The following instructions are based on the [L'Atelier Hotel Chain](https://github.com/GoogleChromeLabs/webmcp-tools/tree/main/demos/hotel-chain) demo.
 2. Open the [hotel chain demo URL](https://googlechromelabs.github.io/webmcp-tools/demos/hotel-chain/) and then, in the **Console** tab, run the following JavaScript statement to list the available tools:
 
    ```js
@@ -81,7 +82,7 @@ You should get a result similar to the following:
 ]
 ```
 
-The list of tools will change depending on the website you are visiting or even the page or actions you perform until that moment.
+The list of tools changes depending on the website you are visiting and the actions you have performed on the page.
 
 For instance, on the hotel chain website, after executing the `search_location` tool:
 
@@ -92,7 +93,7 @@ await navigator.modelContextTesting.executeTool(
 );
 ```
 
-It will redirect to a page with the search results, and a new tool `filter_search_results` will be available.
+The page redirects to the search results, and a new tool `filter_search_results` becomes available.
 
 You can call it to filter by amenities. For example, if you want to eat a good croissant in the morning:
 
@@ -103,7 +104,7 @@ await navigator.modelContextTesting.executeTool(
 );
 ```
 
-You will get a list of filtered results, where you can pick the best option for your needs. Once you click on a hotel, you can use the `start_booking` tool:
+You will get a list of filtered results, where you can pick the best option for your needs. Once you select a hotel, you can use the `start_booking` tool:
 
 ```js
 await navigator.modelContextTesting.executeTool(
@@ -125,15 +126,15 @@ await navigator.modelContextTesting.executeTool(
 );
 ```
 
-Note that `complete_booking` requires human confirmation. The tool will wait until you click the **Confirm Reservation** button in the browser. This is an example of human-in-the-loop (HITL): WebMCP tools can pause execution and wait for user interaction before completing sensitive actions.
+Note that the `complete_booking` tool requires human confirmation. The tool waits until you select the **Confirm Reservation** button in the browser. This is an example of human-in-the-loop (HITL): WebMCP tools can pause execution and wait for user interaction before completing sensitive actions.
 
-After you click the **Confirm Reservation** button, you will get a confirmation message and the booking will be complete.
+After you select **Confirm Reservation**, you will get a confirmation message and the booking is complete.
 
 ### Using an AI Agent
 
 #### 1. Configure Chrome DevTools MCP
 
-[Chrome DevTools MCP](https://github.com/anthropics/anthropic-quickstarts/tree/main/mcp-devtools) allows AI agents to control a browser via CDP. Configure your MCP client (such as Claude Desktop, OpenCode, and Cursor) with the following settings. For more details on MCP client configuration, refer to [Using with MCP clients](/browser-rendering/cdp/mcp-clients/).
+[Chrome DevTools MCP](https://github.com/ChromeDevTools/chrome-devtools-mcp) allows AI agents to control a browser via CDP. Configure your MCP client (such as Claude Desktop, Claude Code, Cursor, or OpenCode) with the following settings. For more details on MCP client configuration, refer to [Using with MCP clients](/browser-rendering/cdp/mcp-clients/).
 
 ```json
 {
@@ -158,7 +159,7 @@ To help your agent understand how to work with WebMCP, add the following skill t
 ````markdown
 ---
 name: webmcp
-description: Interact with WebMCP-enabled websites using Browser Rendering lab sessions
+description: Interact with WebMCP-enabled websites using Browser Run lab sessions
 ---
 
 # WebMCP Interaction Skill
@@ -215,7 +216,7 @@ _Agent clicks the hotel, executes `start_booking`, then `complete_booking` with 
 
 #### 4. (Optional) Open DevTools to watch the agent
 
-Some WebMCP tools require human confirmation before completing sensitive actions—for example, `complete_booking` will wait for you to click "Confirm" before finalizing a reservation. To interact with these human-in-the-loop (HITL) prompts, you need to open the browser's live view.
+Some WebMCP tools require human confirmation before completing sensitive actions. For example, `complete_booking` waits for you to select **Confirm** before finalizing a reservation. To interact with these human-in-the-loop (HITL) prompts, you need to open the browser's live view.
 
 Once the agent has started a session, list active sessions to get the session ID:
 
@@ -244,12 +245,12 @@ Open the `devtoolsFrontendUrl` from the response in your browser. From there you
 - Lab sessions use Chrome 146 beta, which may have stability issues.
 - WebMCP APIs (`navigator.modelContext`, `navigator.modelContextTesting`) only work in lab sessions.
 - Lab sessions count against your regular rate limits.
-- The `lab` parameter is not yet supported in `@cloudflare/puppeteer` or `@cloudflare/playwright`. Use manual acquisition and connect with `sessionId`.
+- The `lab` parameter is not yet supported in `@cloudflare/puppeteer` or `@cloudflare/playwright`. Acquire the session manually and connect with `sessionId`.
 
 ## More resources
 
 - [Chrome WebMCP blog post](https://developer.chrome.com/blog/webmcp-epp)
 - [WebMCP specification](https://github.com/webmachinelearning/webmcp)
-- [Browser Rendering documentation](/browser-rendering/)
+- [Browser Run documentation](/browser-rendering/)
 
 <Render file="faq" product="browser-rendering" />
