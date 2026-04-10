@@ -90,7 +90,7 @@ Format your permissions as a JSON array:
 
 ```json
 [
-	{ "key": "zone_dns", "type": "edit" },
+	{ "key": "dns", "type": "edit" },
 	{ "key": "analytics", "type": "read" }
 ]
 ```
@@ -100,7 +100,7 @@ Format your permissions as a JSON array:
 Use a URL encoder to convert the JSON string:
 
 ```text
-%5B%7B%22key%22%3A%22zone_dns%22%2C%22type%22%3A%22edit%22%7D%2C%7B%22key%22%3A%22analytics%22%2C%22type%22%3A%22read%22%7D%5D
+%5B%7B%22key%22%3A%22dns%22%2C%22type%22%3A%22edit%22%7D%2C%7B%22key%22%3A%22analytics%22%2C%22type%22%3A%22read%22%7D%5D
 ```
 
 ### 4. Build the complete URL
@@ -130,19 +130,28 @@ Use this table to find permission keys for your custom templates.
 | `account_settings`   | Account configuration | Account management       |
 | `billing`            | Billing information   | Cost tracking, invoicing |
 | `workers_scripts`    | Workers scripts       | Serverless functions     |
-| `workers_kv`         | Workers KV storage    | Data storage             |
+| `workers_kv_storage` | Workers KV storage    | Data storage             |
 | `workers_routes`     | Workers routes        | Traffic routing          |
+| `workers_r2`         | R2 storage            | Object storage           |
+| `d1`                 | D1 database           | SQL databases            |
+| `queues`             | Queues                | Message queuing          |
+| `page`               | Cloudflare Pages      | Page deployments         |
+| `stream`             | Stream                | Video streaming          |
+| `images`             | Images                | Image optimization       |
+| `logs`               | Logs                  | Log management           |
 
 ### Zone permissions
 
-| Permission key      | Description     | Common use cases       |
-| ------------------- | --------------- | ---------------------- |
-| `zone_dns`          | DNS records     | Domain management      |
-| `zone`              | Zone management | Domain configuration   |
-| `analytics`         | Zone analytics  | Performance monitoring |
-| `firewall_services` | Firewall rules  | Security management    |
-| `page_rules`        | Page rules      | Traffic control        |
-| `cache_purge`       | Cache purging   | Content updates        |
+| Permission key         | Description          | Common use cases       |
+| ---------------------- | -------------------- | ---------------------- |
+| `dns`                  | DNS records          | Domain management      |
+| `zone`                 | Zone management      | Domain configuration   |
+| `zone_settings`        | Zone settings        | Zone configuration     |
+| `analytics`            | Zone analytics       | Performance monitoring |
+| `firewall_services`    | Firewall rules       | Security management    |
+| `page_rules`           | Page rules           | Traffic control        |
+| `cache`                | Cache purging        | Content updates        |
+| `ssl_and_certificates` | SSL/TLS certificates | Certificate management |
 
 ### Access permissions
 
@@ -152,6 +161,7 @@ Use this table to find permission keys for your custom templates.
 | `access_acct`        | Access organizations | Identity management       |
 | `access_audit_log`   | Access audit logs    | Compliance, security      |
 | `access_custom_page` | Custom pages         | Branding, user experience |
+| `teams`              | Zero Trust           | Gateway, CASB, DLP        |
 
 ## Common permission templates
 
@@ -163,17 +173,17 @@ Create tokens for DNS record management.
 
 #### User token
 
-| Use case       | Template URL                                                                                                                                                                                 |
-| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| DNS read-only  | `https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22zone_dns%22%2C%22type%22%3A%22read%22%7D%5D&accountId=%2A&zoneId=all&name=DNS%20Read%20Token`       |
-| DNS read/write | `https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22zone_dns%22%2C%22type%22%3A%22edit%22%7D%5D&accountId=%2A&zoneId=all&name=DNS%20Management%20Token` |
+| Use case       | Template URL                                                                                                                                                                            |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| DNS read-only  | `https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22dns%22%2C%22type%22%3A%22read%22%7D%5D&accountId=%2A&zoneId=all&name=DNS%20Read%20Token`       |
+| DNS read/write | `https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22dns%22%2C%22type%22%3A%22edit%22%7D%5D&accountId=%2A&zoneId=all&name=DNS%20Management%20Token` |
 
 #### Account token
 
-| Use case       | Template URL                                                                                                                                                              |
-| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| DNS read-only  | `https://dash.cloudflare.com/?to=/:account/api-tokens&permissionGroupKeys=%5B%7B%22key%22%3A%22zone_dns%22%2C%22type%22%3A%22read%22%7D%5D&name=DNS%20Read%20Token`       |
-| DNS read/write | `https://dash.cloudflare.com/?to=/:account/api-tokens&permissionGroupKeys=%5B%7B%22key%22%3A%22zone_dns%22%2C%22type%22%3A%22edit%22%7D%5D&name=DNS%20Management%20Token` |
+| Use case       | Template URL                                                                                                                                                         |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| DNS read-only  | `https://dash.cloudflare.com/?to=/:account/api-tokens&permissionGroupKeys=%5B%7B%22key%22%3A%22dns%22%2C%22type%22%3A%22read%22%7D%5D&name=DNS%20Read%20Token`       |
+| DNS read/write | `https://dash.cloudflare.com/?to=/:account/api-tokens&permissionGroupKeys=%5B%7B%22key%22%3A%22dns%22%2C%22type%22%3A%22edit%22%7D%5D&name=DNS%20Management%20Token` |
 
 ### Workers development
 
@@ -181,17 +191,17 @@ Create tokens for Workers, KV storage, and related services.
 
 #### User token
 
-| Use case             | Template URL                                                                                                                                                                                                                                                                                                                                 |
-| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Workers scripts only | `https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22workers_scripts%22%2C%22type%22%3A%22edit%22%7D%5D&accountId=%2A&zoneId=all&name=Workers%20Scripts%20Token`                                                                                                                                         |
-| Workers full access  | `https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22workers_scripts%22%2C%22type%22%3A%22edit%22%7D%2C%7B%22key%22%3A%22workers_kv%22%2C%22type%22%3A%22edit%22%7D%2C%7B%22key%22%3A%22workers_routes%22%2C%22type%22%3A%22edit%22%7D%5D&accountId=%2A&zoneId=all&name=Workers%20Full%20Access%20Token` |
+| Use case             | Template URL                                                                                                                                                                                                                                                                                                                                         |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Workers scripts only | `https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22workers_scripts%22%2C%22type%22%3A%22edit%22%7D%5D&accountId=%2A&zoneId=all&name=Workers%20Scripts%20Token`                                                                                                                                                 |
+| Workers full access  | `https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22workers_scripts%22%2C%22type%22%3A%22edit%22%7D%2C%7B%22key%22%3A%22workers_kv_storage%22%2C%22type%22%3A%22edit%22%7D%2C%7B%22key%22%3A%22workers_routes%22%2C%22type%22%3A%22edit%22%7D%5D&accountId=%2A&zoneId=all&name=Workers%20Full%20Access%20Token` |
 
 #### Account token
 
-| Use case             | Template URL                                                                                                                                                                                                                                                                                                              |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Workers scripts only | `https://dash.cloudflare.com/?to=/:account/api-tokens&permissionGroupKeys=%5B%7B%22key%22%3A%22workers_scripts%22%2C%22type%22%3A%22edit%22%7D%5D&name=Workers%20Scripts%20Token`                                                                                                                                         |
-| Workers full access  | `https://dash.cloudflare.com/?to=/:account/api-tokens&permissionGroupKeys=%5B%7B%22key%22%3A%22workers_scripts%22%2C%22type%22%3A%22edit%22%7D%2C%7B%22key%22%3A%22workers_kv%22%2C%22type%22%3A%22edit%22%7D%2C%7B%22key%22%3A%22workers_routes%22%2C%22type%22%3A%22edit%22%7D%5D&name=Workers%20Full%20Access%20Token` |
+| Use case             | Template URL                                                                                                                                                                                                                                                                                                                      |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Workers scripts only | `https://dash.cloudflare.com/?to=/:account/api-tokens&permissionGroupKeys=%5B%7B%22key%22%3A%22workers_scripts%22%2C%22type%22%3A%22edit%22%7D%5D&name=Workers%20Scripts%20Token`                                                                                                                                                 |
+| Workers full access  | `https://dash.cloudflare.com/?to=/:account/api-tokens&permissionGroupKeys=%5B%7B%22key%22%3A%22workers_scripts%22%2C%22type%22%3A%22edit%22%7D%2C%7B%22key%22%3A%22workers_kv_storage%22%2C%22type%22%3A%22edit%22%7D%2C%7B%22key%22%3A%22workers_routes%22%2C%22type%22%3A%22edit%22%7D%5D&name=Workers%20Full%20Access%20Token` |
 
 ### Analytics and monitoring
 
