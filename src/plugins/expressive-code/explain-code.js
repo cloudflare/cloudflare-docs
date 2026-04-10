@@ -157,14 +157,12 @@ export default () => {
 					context.renderData.blockAst
 				);
 
+				// Expressive Code frames plugin is required for explain button to work correctly. Ignore if it's not present.
 				if (
 					blockAst.tagName !== "figure" ||
 					!Array.isArray(blockAst.properties?.className) ||
 					!blockAst.properties.className.includes("frame")
 				) {
-					console.warn(
-						"Expressive Code frames plugin is required for explain button to work correctly",
-					);
 					return;
 				}
 
