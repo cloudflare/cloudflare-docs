@@ -215,7 +215,7 @@ Navigate to custom rules, then create both rules:
 5. Under **Place at**, select _First_ from the **Select order** dropdown so this rule executes before any blocking rules.
 6. Select **Deploy**.
 
-This ensures verified bots (search engine crawlers, monitoring services) bypass your custom rules.
+This ensures verified bots (search engine crawlers, monitoring services) bypass your custom rules. If you have internal APIs, partner integrations, or monitoring tools that send automated traffic, create additional Skip rules for their IP addresses or user agents before deploying blocking rules. Review your expected automated traffic in [Security Events](/waf/analytics/security-events/) to identify what to allowlist.
 
 **Then, create a blocking rule:**
 
