@@ -1,0 +1,77 @@
+---
+pcx_content_type: how-to
+title: Human in the Loop
+description: Temporarily hand off browser control to a human operator for authentication, sensitive actions, or tasks that are difficult to fully automate.
+sidebar:
+  order: 3
+  badge: Beta
+---
+
+Some browser automation workflows require manual intervention. A login page may need multi-factor authentication, a form may require sensitive credentials you do not want to pass to an automation script, or a task may be too complex to fully automate. Human in the Loop lets you pause an automation script and hand off control to a human operator through [Live View](/browser-rendering/features/live-view/), then resume the script once the human is done.
+
+## How it works
+
+Human in the Loop builds on [Live View](/browser-rendering/features/live-view/) and the [CDP](/browser-rendering/cdp/) endpoints:
+
+1. Your automation script navigates to a page that needs human input
+2. The script retrieves the Live View URL via `Cloudflare.getLiveView` and shares it with a human operator (for example, by logging it, sending it via Slack, or displaying it in a UI)
+3. The human operator opens the Live View URL and completes the required action (logging in, solving a CAPTCHA, entering sensitive data, etc.)
+4. The automation script detects that the human is done (for example, by waiting for a navigation event or polling for a page element) and resumes
+
+## Example: login with human assistance
+
+This example uses [Puppeteer](/browser-rendering/puppeteer/) connected to Browser Run via the [CDP](/browser-rendering/cdp/) endpoints. The script navigates to a login page, shares a Live View URL for a human to enter credentials, then continues the automation after login completes.
+
+```js
+import puppeteer from "puppeteer-core";
+
+const ACCOUNT_ID = "your-account-id";
+const API_TOKEN = "your-api-token";
+
+// Create a browser session via CDP
+const response = await fetch(
+  `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/browser-rendering/devtools/browser?keep_alive=600000`,
+  {
+    method: "POST",
+    headers: { Authorization: `Bearer ${API_TOKEN}` },
+  }
+);
+const { webSocketDebuggerUrl } = await response.json();
+
+// Connect Puppeteer to the session
+const browser = await puppeteer.connect({
+  browserWSEndpoint: webSocketDebuggerUrl,
+  headers: { Authorization: `Bearer ${API_TOKEN}` },
+});
+
+const page = await browser.newPage();
+await page.goto("https://example.com/login");
+
+// Get the Live View URL so a human can interact with the session
+const cdp = await page.createCDPSession();
+const { devtoolsFrontendUrl: liveUrl } = await cdp.send(
+  "Cloudflare.getLiveView"
+);
+
+// Share the Live View URL with the human operator
+console.log(`Human input needed. Open this URL: ${liveUrl}`);
+
+// Wait for the human to complete login
+await page.waitForNavigation({ waitUntil: "networkidle0", timeout: 300000 });
+
+// Login complete, continue automation
+const cookies = await page.cookies();
+console.log("Login complete. Continuing automation...");
+
+await page.goto("https://example.com/dashboard");
+const content = await page.content();
+
+browser.disconnect();
+```
+
+## Use cases
+
+- **Authentication flows**: Login pages with MFA, SSO, or CAPTCHA that cannot be bypassed programmatically
+- **Sensitive data entry**: Forms requiring credentials or personal information you do not want to pass to an automation script
+- **Complex interactions**: One-off tasks that are too difficult or not worth fully automating, such as configuring a dashboard or approving a workflow
+- **Verification steps**: Confirming an order, reviewing generated content, or approving an action before the script proceeds
