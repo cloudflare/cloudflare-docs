@@ -5,36 +5,33 @@ sidebar:
   order: 5
 ---
 
-Query rewriting is an optional step in the AI Search pipeline that improves retrieval quality by transforming the original user query into a more effective search query.
-
-Instead of embedding the raw user input directly, AI Search can use a large language model (LLM) to rewrite the query based on a system prompt. The rewritten query is then used to perform the vector search.
+Query rewriting is an optional step in the AI Search pipeline that improves retrieval quality for follow-up queries. It applies to both [Search](/ai-search/api/search/workers-binding/#search) and [Chat Completions](/ai-search/api/search/workers-binding/#chatcompletions) requests.
 
 ## Why use query rewriting?
 
-The wording of a user’s question may not match how your documents are written. Query rewriting helps bridge this gap by:
+The wording of a user's question may not match how your documents are written. Query rewriting helps bridge this gap by:
 
 - Rephrasing informal or vague queries into precise, information-dense terms
 - Adding synonyms or related keywords
 - Removing filler words or irrelevant details
-- Incorporating domain-specific terminology
+- Resolving follow-up queries that reference previous messages (for example, "tell me more about that" becomes a specific query based on conversation history)
 
-This leads to more relevant vector matches which improves the accuracy of the final generated response.
-
-## Example
-
-**Original query:** `how do i make this work when my api call keeps failing?`
-
-**Rewritten query:** `API call failure troubleshooting authentication headers rate limiting network timeout 500 error`
-
-In this example, the original query is conversational and vague. The rewritten version extracts the core problem (API call failure) and expands it with relevant technical terms and likely causes. These terms are much more likely to appear in documentation or logs, improving semantic matching during vector search.
+This leads to more relevant search matches which improves the accuracy of results and generated responses.
 
 ## How it works
 
-If query rewriting is enabled, AI Search performs the following:
+Query rewriting requires the `messages` format and does not apply when using the `query` format. The first message is always used as-is. For follow-up queries, AI Search sends the conversation history, the latest user message, and the [query rewrite system prompt](/ai-search/configuration/system-prompt/) to the configured LLM. The rewritten query is then embedded and used to perform the search.
 
-1. Sends the **original user query** and the **query rewrite system prompt** to the configured LLM
-2. Receives the **rewritten query** from the model
-3. Embeds the rewritten query using the selected embedding model
-4. Performs vector search in your AI Search's Vectorize index
+## Example
 
-For details on how to guide model behavior during this step, see the [system prompt](/ai-search/configuration/system-prompt/) documentation.
+**First message:** `What is Cloudflare Workers?`
+(used as-is, no rewriting)
+
+**Follow-up message:** `How do I deploy one?`
+**Rewritten query:** `deploy Cloudflare Worker getting started`
+
+The follow-up "How do I deploy one?" is vague on its own. Query rewriting uses the conversation context to understand "one" refers to a Cloudflare Worker. How the query is rewritten depends on your [query rewrite system prompt](/ai-search/configuration/system-prompt/#query-rewriting-system-prompt).
+
+## Considerations
+
+Enabling query rewriting adds an extra LLM call to the query pipeline, which may increase latency.

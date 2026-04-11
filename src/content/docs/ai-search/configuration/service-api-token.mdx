@@ -11,13 +11,13 @@ A service API token grants AI Search permission to access [R2](/r2/) buckets in 
 
 You need a service API token when you create an AI Search instance with `type: "r2"`. The token authorizes AI Search to read objects from your R2 bucket for indexing.
 
-## Option 1: Create via the dashboard
+## Create via the dashboard or Wrangler
 
-The simplest way to get a service API token is to create an AI Search instance through the [dashboard](/ai-search/get-started/dashboard/) at least once. Cloudflare creates and registers a service token for you automatically during the setup flow.
+The simplest way to get a service API token is to create an R2-backed AI Search instance through the [dashboard](/ai-search/get-started/dashboard/) or [Wrangler CLI](/ai-search/get-started/wrangler/) at least once. Cloudflare creates and registers a service token for you automatically during the setup flow.
 
 Once created, the token is saved to your account and reused across all AI Search instances. You do not need to create a new token for each instance.
 
-## Option 2: Create via the API
+## Create via the API
 
 If you need to create a service API token programmatically, follow these steps.
 

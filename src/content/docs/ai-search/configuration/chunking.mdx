@@ -25,7 +25,7 @@ AI Search exposes two parameters to help you control chunking behavior:
   - Minimum: `0%`
   - Maximum: `30%`
 
-These settings apply during the indexing step, before your data is embedded and stored in Vectorize.
+These settings apply during the indexing step, before your data is embedded and stored in your search index.
 
 ## Choosing chunk size and overlap
 
@@ -33,6 +33,6 @@ Chunking affects both how your content is retrieved and how much context is pass
 
 ### Additional considerations:
 
-- **Vector index size:** Smaller chunk sizes produce more chunks and more total vectors. Refer to the [Vectorize limits](/vectorize/platform/limits/) to ensure your configuration stays within the maximum allowed vectors per index.
-- **Generation model context window:** Generation models have a limited context window that must fit all retrieved chunks (`topK` × `chunk size`), the user query, and the model’s output. Be careful with large chunks or high topK values to avoid context overflows.
-- **Cost and performance:** Larger chunks and higher topK settings result in more tokens passed to the model, which can increase latency and cost. You can monitor this usage in [AI Gateway](/ai-gateway/).
+- **Index size:** Smaller chunk sizes produce more chunks and more total vectors. Refer to the [AI Search limits](/ai-search/platform/limits-pricing/) to ensure your configuration stays within instance limits.
+- **Generation model context window:** Generation models have a limited context window that must fit all retrieved chunks (`max_num_results` × `chunk size`), the user query, and the model's output. Be careful with large chunks or high `max_num_results` values to avoid context overflows.
+- **Cost and performance:** Larger chunks and higher `max_num_results` settings result in more tokens passed to the model, which can increase latency and cost. You can monitor this usage in [AI Gateway](/ai-gateway/).

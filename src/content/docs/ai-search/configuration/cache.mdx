@@ -5,9 +5,9 @@ sidebar:
   order: 6
 ---
 
-Similarity-based caching in AI Search lets you serve responses from Cloudflare’s cache for queries that are similar to previous requests, rather than creating new, unique responses for every request. This speeds up response times and cuts costs by reusing answers for questions that are close in meaning.
+Similarity-based caching in AI Search lets you serve responses from Cloudflare's cache for queries that are similar to previous requests, rather than creating new, unique responses for every request. This speeds up response times and cuts costs by reusing answers for questions that are close in meaning.
 
-## How It Works
+## How it works
 
 Unlike with basic caching, which creates a new response with every request, this is what happens when a request is received using similarity-based caching:
 
@@ -27,24 +27,40 @@ Consider these behaviors when using similarity caching:
 
 ## How similarity matching works
 
-AI Search’s similarity cache uses **MinHash and Locality-Sensitive Hashing (LSH)** to find and reuse responses for prompts that are worded similarly.
+AI Search's similarity cache uses **MinHash and Locality-Sensitive Hashing (LSH)** to find and reuse responses for prompts that are worded similarly.
 
-Here’s how it works when a new prompt comes in:
+Here's how it works when a new prompt comes in:
 
-1. The prompt is split into small overlapping chunks of words (called shingles), like “what’s the” or “the weather.”
-2. These shingles are turned into a “fingerprint” using MinHash. The more overlap two prompts have, the more similar their fingerprints will be.
+1. The prompt is split into small overlapping chunks of words (called shingles), like "what's the" or "the weather."
+2. These shingles are turned into a "fingerprint" using MinHash. The more overlap two prompts have, the more similar their fingerprints will be.
 3. Fingerprints are placed into LSH buckets, which help AI Search quickly find similar prompts without comparing every single one.
 4. If a past prompt in the same bucket is similar enough (based on your configured threshold), AI Search reuses its cached response.
 
-## Choosing a threshold
+## Choose a threshold
 
-The similarity threshold decides how close two prompts need to be to reuse a cached response. Here are the available thresholds:
+The similarity threshold decides how close two prompts need to be to reuse a cached response. You can set the threshold at the instance level or override it per request.
 
-| Threshold        | Description                 | Example Match                                                                   |
-| ---------------- | --------------------------- | ------------------------------------------------------------------------------- |
-| Exact            | Near-identical matches only | "What’s the weather like today?" matches with "What is the weather like today?" |
-| Strong (default) | High semantic similarity    | "What’s the weather like today?" matches with "How’s the weather today?"        |
-| Broad            | Moderate match, more hits   | "What’s the weather like today?" matches with "Tell me today’s weather"         |
-| Loose            | Low similarity, max reuse   | "What’s the weather like today?" matches with "Give me the forecast"            |
+| Threshold | API value                | Description                 | Example match                                                                   |
+| --------- | ------------------------ | --------------------------- | ------------------------------------------------------------------------------- |
+| Exact     | `super_strict_match`     | Near-identical matches only | "What's the weather like today?" matches with "What is the weather like today?" |
+| Strong    | `close_enough` (default) | High semantic similarity    | "What's the weather like today?" matches with "How's the weather today?"        |
+| Broad     | `flexible_friend`        | Moderate match, more hits   | "What's the weather like today?" matches with "Tell me today's weather"         |
+| Loose     | `anything_goes`          | Low similarity, max reuse   | "What's the weather like today?" matches with "Give me the forecast"            |
 
-Test these values to see which works best with your [RAG application](/ai-search/).
+## Per-request cache override
+
+You can override the instance-level cache setting on a per-request basis using the `cache` parameter in `ai_search_options`:
+
+```ts
+const instance = env.AI_SEARCH.get("my-instance");
+
+const results = await instance.search({
+	messages: [{ role: "user", content: "What is Cloudflare?" }],
+	ai_search_options: {
+		cache: {
+			enabled: true,
+			cache_threshold: "flexible_friend",
+		},
+	},
+});
+```

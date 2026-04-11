@@ -29,15 +29,9 @@ When configuring your AI Search instance, you can provide your own system prompt
 
 You can view the effective system prompt used for any AI Search's model call through AI Gateway logs, where model inputs and outputs are recorded.
 
-:::note
-The default system prompt can change and evolve over time to improve performance and quality.
-:::
-
 ### Configure via API
 
-When you make a `/ai-search` request using the [Workers Binding](/ai-search/api/search/workers-binding/) or [REST API](/ai-search/api/search/rest-api/), you can set the system prompt programmatically.
-
-For example:
+When you make a `/chat/completions` request using the [Workers binding](/ai-search/api/search/workers-binding/) or [REST API](/ai-search/api/search/rest-api/), you can set the system prompt programmatically.
 
 ```ts
 const instance = env.AI_SEARCH.get("my-instance");
@@ -51,21 +45,9 @@ const response = await instance.chatCompletions({
 });
 ```
 
-import { DashButton } from "~/components";
-
-### Configure via Dashboard
-
-The system prompt for your AI Search can be set after it has been created:
-
-1. Go to **AI Search** in the Cloudflare dashboard.
-   <DashButton url="/?to=/:account/ai/ai-search" />
-2. Select an existing AI Search instance.
-3. Go to the **Settings** tab.
-4. Go to **Query rewrite** or **Generation**, and edit the **System prompt**.
-
 ## Generation system prompt
 
-If you are using the AI Search API endpoint, you can use the system prompt to influence how the LLM responds to the final user query using the retrieved results. At this step, the model receives:
+If you are using the Chat Completions endpoint, you can use the system prompt to influence how the LLM responds to the final user query using the retrieved results. At this step, the model receives:
 
 - The user's original query
 - Retrieved document chunks (with metadata)
@@ -75,7 +57,7 @@ The model uses these inputs to generate a context-aware response.
 
 ### Example
 
-```
+```text
 You are a helpful AI assistant specialized in answering questions using retrieved documents.
 Your task is to provide accurate, relevant answers based on the matched content provided.
 For each query, you will receive:

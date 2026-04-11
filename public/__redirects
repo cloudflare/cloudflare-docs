@@ -259,6 +259,7 @@
 /ai-search/instances-api/ /ai-search/api/instances/ 301
 /ai-search/how-to/migrate-from-autorag-api/ /ai-search/api/migration/rest-api/ 301
 /ai-search/autorag-filter-format/ /ai-search/api/migration/autorag-filter-format/ 301
+/ai-search/how-to/multitenancy/ /ai-search/how-to/per-tenant-search/ 301
 
 # bots
 /bots/about/plans/ /bots/plans/ 301

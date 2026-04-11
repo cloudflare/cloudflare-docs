@@ -5,9 +5,7 @@ sidebar:
   order: 4
 ---
 
-import { DashButton } from "~/components";
-
-Reranking can help improve the quality of AI Search results by reordering retrieved documents based on semantic relevance to the user’s query. It applies a secondary model after retrieval to "rerank" the top results before they are outputted.
+Reranking can help improve the quality of AI Search results by reordering retrieved documents based on semantic relevance to the user's query. It applies a secondary model after retrieval to rerank the top results before they are returned.
 
 ## How it works
 
@@ -15,7 +13,7 @@ By default, reranking is **disabled** for all AI Search instances. You can enabl
 
 When enabled, AI Search will:
 
-1. Retrieve a set of relevant results from your index, constrained by your `max_num_of_results` and `score_threshold` parameters.
+1. Retrieve a set of relevant results from your index, constrained by your `max_num_results` and `score_threshold` parameters.
 2. Pass those results through a [reranking model](/ai-search/configuration/models/supported-models/).
 3. Return the reranked results, which the text generation model can use for answer generation.
 
@@ -23,16 +21,7 @@ Reranking helps improve accuracy, especially for large or noisy datasets where v
 
 ## Configuration
 
-You can configure reranking in several ways:
-
-### Configure via API
-
-When you make a `/search` or `/ai-search` request using the [Workers Binding](/ai-search/api/search/workers-binding/) or [REST API](/ai-search/api/search/rest-api/), you can:
-
-- Enable or disable reranking per request
-- Specify the reranking model
-
-For example:
+When you make a `/search` or `/chat/completions` request using the [Workers binding](/ai-search/api/search/workers-binding/) or [REST API](/ai-search/api/search/rest-api/), you can enable or disable reranking per request and specify the reranking model.
 
 ```ts
 const instance = env.AI_SEARCH.get("my-instance");
@@ -47,33 +36,6 @@ const results = await instance.search({
 	},
 });
 ```
-
-### Configure in dashboard for new AI Search
-
-When creating a new RAG in the dashboard:
-
-1. Go to **AI Search** in the Cloudflare dashboard.
-
-   <DashButton url="/?to=/:account/ai/ai-search" />
-
-2. Select **Create** > **Get started**.
-3. In the **Retrieval configuration** step, open the **Reranking** dropdown.
-4. Toggle **Reranking** on.
-5. Select the reranking model.
-6. Complete your setup.
-
-### Configure in dashboard for existing AI Search
-
-To update reranking for an existing instance:
-
-1. Go to **AI Search** in the Cloudflare dashboard.
-
-   <DashButton url="/?to=/:account/ai/ai-search" />
-
-2. Select an existing AI Search instance.
-3. Go to the **Settings** tab.
-4. Under **Reranking**, toggle reranking on.
-5. Select the reranking model.
 
 ### Considerations
 
