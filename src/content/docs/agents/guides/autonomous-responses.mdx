@@ -15,11 +15,11 @@ In a typical chat flow, the user sends a message and the agent responds. But age
 
 The key primitives:
 
-| Primitive          | Role                                                                               |
-| ------------------ | ---------------------------------------------------------------------------------- |
-| `saveMessages`     | Inject a message and trigger the LLM — the server-side equivalent of `sendMessage` |
-| `persistMessages`  | Store messages without triggering a response — for injecting context silently       |
-| `onChatResponse`   | React when any response completes, including ones you did not initiate              |
+| Primitive           | Role                                                                               |
+| ------------------- | ---------------------------------------------------------------------------------- |
+| `saveMessages`      | Inject a message and trigger the LLM — the server-side equivalent of `sendMessage` |
+| `persistMessages`   | Store messages without triggering a response — for injecting context silently      |
+| `onChatResponse`    | React when any response completes, including ones you did not initiate             |
 | `isServerStreaming` | Client-side flag: `true` when a server-initiated stream is active                  |
 
 ### `saveMessages` vs `persistMessages`
@@ -117,8 +117,6 @@ The function form of `saveMessages` — `saveMessages((messages) => [...])` — 
 
 When you control the trigger, a simple loop is the clearest pattern:
 
-<TypeScriptExample>
-
 ```ts
 async processQueue() {
 	for (const task of this.taskQueue) {
@@ -143,13 +141,9 @@ async processQueue() {
 }
 ```
 
-</TypeScriptExample>
-
 No special hooks needed — `saveMessages` returns after the full turn completes.
 
 ### Email-triggered
-
-<TypeScriptExample>
 
 ```ts
 async onEmail(email: AgentEmail) {
@@ -179,11 +173,7 @@ async onEmail(email: AgentEmail) {
 }
 ```
 
-</TypeScriptExample>
-
 ### Webhook-triggered
-
-<TypeScriptExample>
 
 ```ts
 async onRequest(request: Request): Promise<Response> {
@@ -222,13 +212,9 @@ async onRequest(request: Request): Promise<Response> {
 }
 ```
 
-</TypeScriptExample>
-
 ### Injecting context without triggering a response
 
 Use `persistMessages` to add messages that the LLM will see on its next turn, without starting a turn now:
-
-<TypeScriptExample>
 
 ```ts
 async addBackgroundContext(data: string) {
@@ -247,8 +233,6 @@ async addBackgroundContext(data: string) {
 	// Message is stored and broadcast to clients, but no LLM call happens.
 }
 ```
-
-</TypeScriptExample>
 
 ## Reacting to responses you did not initiate
 
@@ -278,8 +262,6 @@ export class ChatAgent extends AIChatAgent {
 
 ### Analytics
 
-<TypeScriptExample>
-
 ```ts
 protected async onChatResponse(result: ChatResponseResult) {
 	try {
@@ -297,13 +279,9 @@ protected async onChatResponse(result: ChatResponseResult) {
 }
 ```
 
-</TypeScriptExample>
-
 ### Chained reasoning
 
 An agent can inspect its own response and decide whether to continue. This works for user-initiated messages too — you cannot predict what the user will ask, but you can react to what the agent said.
-
-<TypeScriptExample>
 
 ```ts
 protected async onChatResponse(result: ChatResponseResult) {
@@ -328,15 +306,11 @@ protected async onChatResponse(result: ChatResponseResult) {
 }
 ```
 
-</TypeScriptExample>
-
 When `saveMessages` is called from inside `onChatResponse`, the inner turn runs to completion and `saveMessages` returns. After the current `onChatResponse` call returns, the framework fires `onChatResponse` again for the inner response. This continues until no more work is queued. The framework never nests `onChatResponse` calls — results are drained sequentially.
 
 ### Reactive queue processing
 
 When queue items can be added by external events (user messages, webhooks) at any time, `onChatResponse` lets you drain the queue after every response regardless of who triggered it:
-
-<TypeScriptExample>
 
 ```ts
 protected async onChatResponse(result: ChatResponseResult) {
@@ -355,8 +329,6 @@ protected async onChatResponse(result: ChatResponseResult) {
 }
 ```
 
-</TypeScriptExample>
-
 ### `ChatResponseResult` fields
 
 | Field          | Type                                  | Description                             |
@@ -371,11 +343,11 @@ protected async onChatResponse(result: ChatResponseResult) {
 
 When the server triggers a stream via `saveMessages`, the AI SDK's `status` stays `"ready"` because the client did not initiate the request. The `useAgentChat` hook provides two additional flags to handle this:
 
-| Flag                | What it tracks                                                                                           |
-| ------------------- | -------------------------------------------------------------------------------------------------------- |
+| Flag                | What it tracks                                                                                            |
+| ------------------- | --------------------------------------------------------------------------------------------------------- |
 | `status`            | AI SDK lifecycle: `"submitted"`, `"streaming"`, `"ready"`, `"error"` — only for client-initiated requests |
-| `isServerStreaming`  | `true` when a server-initiated stream is active                                                          |
-| `isStreaming`        | `true` when either client or server streaming is active — use this for a universal indicator             |
+| `isServerStreaming` | `true` when a server-initiated stream is active                                                           |
+| `isStreaming`       | `true` when either client or server streaming is active — use this for a universal indicator              |
 
 Use `isStreaming` for most UI concerns (disabling the send button, showing a loading indicator). Use `isServerStreaming` only when you need to distinguish between user-initiated and server-initiated streams (for example, to show a different indicator like "Agent is working in the background...").
 
@@ -395,9 +367,7 @@ function Chat() {
 			))}
 
 			{isServerStreaming && <div>Agent is working in the background...</div>}
-			{!isServerStreaming && isStreaming && (
-				<div>Agent is responding...</div>
-			)}
+			{!isServerStreaming && isStreaming && <div>Agent is responding...</div>}
 
 			<form
 				onSubmit={(e) => {
@@ -433,7 +403,7 @@ The `messageConcurrency` setting on `AIChatAgent` controls how overlapping user 
 | ------------------ | --------------------------------------------------------------------------------------------- |
 | `schedule()`       | Schedule a callback that calls `saveMessages` — see the cron example above                    |
 | `queue()`          | Queue a method that calls `saveMessages` for deferred processing                              |
-| `runWorkflow()`    | Start a Workflow; use `AgentWorkflow.agent` RPC to call a method that triggers `saveMessages`  |
+| `runWorkflow()`    | Start a Workflow; use `AgentWorkflow.agent` RPC to call a method that triggers `saveMessages` |
 | `onEmail()`        | Convert email content to a chat message and call `saveMessages`                               |
 | `onRequest()`      | Handle webhooks and call `saveMessages`                                                       |
 | `this.broadcast()` | Broadcast custom state from `onChatResponse`                                                  |
