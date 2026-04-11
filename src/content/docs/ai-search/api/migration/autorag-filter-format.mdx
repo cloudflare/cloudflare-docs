@@ -60,7 +60,11 @@ To filter for all files within a folder and its subfolders, use a compound filte
 For example, consider this file structure:
 
 <FileTree>
-	- customer-a - profile.md - contracts - property - contract-1.pdf
+- customer-a
+  - profile.md
+  - contracts
+    - property
+      - contract-1.pdf
 </FileTree>
 
 Using `{ type: "eq", key: "folder", value: "customer-a/" }` only matches files directly in that folder (like `profile.md`), not files in subfolders.

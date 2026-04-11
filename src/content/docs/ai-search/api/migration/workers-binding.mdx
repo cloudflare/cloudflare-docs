@@ -7,20 +7,37 @@ sidebar:
 
 import { WranglerConfig } from "~/components";
 
-This guide explains how to migrate from the legacy `env.AI.autorag()` Workers binding to the new [namespace binding](/ai-search/api/).
+The [`env.AI.autorag()` binding](/ai-search/api/migration/workers-binding-legacy/) is the legacy API for AI Search. It will continue to work, but all new features and improvements are only available through the new AI Search bindings.
 
 ## What changed
 
-|                     | `env.AI.autorag()` (legacy)         | Namespace binding                                                                |
-| ------------------- | ----------------------------------- | -------------------------------------------------------------------------------- |
-| **Wrangler config** | `"ai": \{ "binding": "AI" \}`       | `"ai_search_namespaces": [\{ "binding": "AI_SEARCH", "namespace": "default" \}]` |
-| **Access pattern**  | `env.AI.autorag("name")`            | `env.AI_SEARCH.get("name")`                                                      |
-| **Search params**   | `\{ query: "..." \}`                | `\{ messages: [\{ role: "user", content: "..." \}] \}`                           |
-| **Response shape**  | `data[]` with `file_id`, `filename` | `chunks[]` with `id`, `text`, `item`                                             |
+|                     | Legacy                   | New                                              |
+| ------------------- | ------------------------ | ------------------------------------------------ |
+| **Wrangler config** | `ai` binding             | `ai_search` or `ai_search_namespaces` binding    |
+| **Access pattern**  | `env.AI.autorag("name")` | `env.MY_INSTANCE` or `env.AI_SEARCH.get("name")` |
+| **Search format**   | `query` string           | `messages` array or `query` string               |
+| **Response format** | `data` array             | `chunks` array                                   |
+
+## Choose your binding
+
+**Instance binding** binds directly to a single instance. This is the simplest migration path from `env.AI.autorag()`.
+
+**Namespace binding** gives you access to all instances within a namespace. Use this if you need dynamic instance management, cross-instance search, or the Items API.
+
+For more details on the difference, refer to [Namespaces](/ai-search/concepts/namespaces/). For the full API reference, refer to the [Search](/ai-search/api/search/workers-binding/), [Instances](/ai-search/api/instances/workers-binding/), and [Items](/ai-search/api/items/workers-binding/) Workers binding pages.
+
+## Requirements
+
+The new bindings require the following minimum package versions for TypeScript types and local development support.
+
+| Package                     | Minimum version |
+| --------------------------- | --------------- |
+| `@cloudflare/workers-types` | `4.20260304.0`  |
+| `wrangler`                  | `4.68.1`        |
 
 ## Step 1: Update Wrangler configuration
 
-Replace the `ai` binding with an `ai_search_namespaces` entry:
+### Instance binding
 
 **Before:**
 
@@ -38,6 +55,35 @@ binding = "AI"
 <WranglerConfig>
 
 ```toml
+compatibility_date = "2026-03-27"
+
+[[ai_search]]
+binding = "MY_INSTANCE"
+instance_name = "my-instance"
+```
+
+</WranglerConfig>
+
+### Namespace binding
+
+**Before:**
+
+<WranglerConfig>
+
+```toml
+[ai]
+binding = "AI"
+```
+
+</WranglerConfig>
+
+**After:**
+
+<WranglerConfig>
+
+```toml
+compatibility_date = "2026-03-27"
+
 [[ai_search_namespaces]]
 binding = "AI_SEARCH"
 namespace = "default"
@@ -46,6 +92,26 @@ namespace = "default"
 </WranglerConfig>
 
 ## Step 2: Update the type definition
+
+### Instance binding
+
+**Before:**
+
+```ts
+export interface Env {
+	AI: Ai;
+}
+```
+
+**After:**
+
+```ts
+export interface Env {
+	MY_INSTANCE: AiSearchInstance;
+}
+```
+
+### Namespace binding
 
 **Before:**
 
@@ -65,11 +131,31 @@ export interface Env {
 
 ## Step 3: Update search calls
 
+### Instance binding
+
 **Before:**
 
 ```ts
 const result = await env.AI.autorag("my-instance").search({
-	query: "How does caching work?",
+	query: "What is Cloudflare?",
+});
+```
+
+**After:**
+
+```ts
+const result = await env.MY_INSTANCE.search({
+	messages: [{ role: "user", content: "What is Cloudflare?" }],
+});
+```
+
+### Namespace binding
+
+**Before:**
+
+```ts
+const result = await env.AI.autorag("my-instance").search({
+	query: "What is Cloudflare?",
 });
 ```
 
@@ -77,33 +163,13 @@ const result = await env.AI.autorag("my-instance").search({
 
 ```ts
 const result = await env.AI_SEARCH.get("my-instance").search({
-	messages: [{ role: "user", content: "How does caching work?" }],
+	messages: [{ role: "user", content: "What is Cloudflare?" }],
 });
 ```
 
 ## Step 4: Update response handling
 
-The response shape changed. Update any code that reads from the response:
-
-**Before:**
-
-```ts
-for (const item of result.data) {
-	console.log(item.filename, item.score);
-	for (const content of item.content) {
-		console.log(content.text);
-	}
-}
-```
-
-**After:**
-
-```ts
-for (const chunk of result.chunks) {
-	console.log(chunk.item.key, chunk.score);
-	console.log(chunk.text);
-}
-```
+The response shape changed from a `data` array to a `chunks` array.
 
 ### Field mapping
 
@@ -116,8 +182,90 @@ for (const chunk of result.chunks) {
 | `data[].content[].text`           | `chunks[].text`           |
 | `data[].attributes.modified_date` | `chunks[].item.timestamp` |
 
-## Backwards compatibility
+## Streaming behavior changes
 
-The `env.AI.autorag()` binding is deprecated but will continue to work indefinitely. Existing code does not need to be migrated immediately.
+In the legacy binding, streaming with `env.AI.autorag().aiSearch({ stream: true })` only returned the streamed response without the retrieved chunks.
+
+The new binding sends the retrieved chunks first as a `chunks` event, followed by the streamed response. This allows you to display source chunks immediately while streaming the generated response.
+
+## Filter format changes
+
+The new binding uses Vectorize-style metadata filtering. Filters are now passed inside `ai_search_options.retrieval.filters`.
+
+| Old format | New format          |
+| ---------- | ------------------- |
+| `eq`       | `$eq` (or implicit) |
+| `ne`       | `$ne`               |
+| `gt`       | `$gt`               |
+| `gte`      | `$gte`              |
+| `lt`       | `$lt`               |
+| `lte`      | `$lte`              |
+|            | `$in` (new)         |
+|            | `$nin` (new)        |
+
+### Examples
+
+#### Simple filter
+
+**Before:**
+
+```ts
+const result = await env.AI.autorag("my-instance").search({
+	query: "What is Cloudflare?",
+	filters: {
+		type: "eq",
+		key: "folder",
+		value: "customer-a/",
+	},
+});
+```
+
+**After:**
+
+```ts
+const result = await env.MY_INSTANCE.search({
+	messages: [{ role: "user", content: "What is Cloudflare?" }],
+	ai_search_options: {
+		retrieval: {
+			filters: { folder: "customer-a/" },
+		},
+	},
+});
+```
+
+#### Compound filter (AND)
+
+**Before:**
+
+```ts
+const result = await env.AI.autorag("my-instance").search({
+	query: "What is Cloudflare?",
+	filters: {
+		type: "and",
+		filters: [
+			{ type: "eq", key: "folder", value: "customer-a/" },
+			{ type: "gte", key: "timestamp", value: "1735689600000" },
+		],
+	},
+});
+```
+
+**After:**
+
+```ts
+const result = await env.MY_INSTANCE.search({
+	messages: [{ role: "user", content: "What is Cloudflare?" }],
+	ai_search_options: {
+		retrieval: {
+			filters: {
+				folder: "customer-a/",
+				timestamp: { $gte: 1735689600 },
+			},
+		},
+	},
+});
+```
+
+## Backwards compatibility
 
 For the legacy API reference, refer to [Workers binding (legacy)](/ai-search/api/migration/workers-binding-legacy/).

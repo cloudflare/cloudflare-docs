@@ -5,9 +5,13 @@ sidebar:
   order: 1
 ---
 
-import { Render, MetaInfo, Type } from "~/components";
+import { Render } from "~/components";
 
 [Workers](/workers/) provides a serverless execution environment that allows you to create new applications or augment existing ones. Use a [Workers binding](/workers/runtime-apis/bindings/) to upload, list, and manage documents in your AI Search instances from a Cloudflare Worker. Access the Items API through the `items` property on an instance handle.
+
+:::note
+The previous `env.AI.autorag()` binding is no longer recommended for use. Refer to [Workers binding migration](/ai-search/api/migration/workers-binding/) for details.
+:::
 
 ## Configure the binding
 
@@ -20,7 +24,7 @@ await instance.items.upload("guide.pdf", pdfArrayBuffer);
 
 ## `items.upload()`
 
-Uploads a document for indexing. Returns immediately. The document is queued for processing. Supports PDF, TXT, MD, HTML, and other text-based formats.
+Uploads a document for indexing. Returns immediately. The document is queued for processing.
 
 ```ts
 const instance = env.AI_SEARCH.get("my-instance");
@@ -56,28 +60,18 @@ await instance.items.upload("guide.pdf", pdfBuffer, {
 
 ### Parameters
 
-`name` <Type text="string" /> <MetaInfo text="required" />
-
-The filename for the uploaded document. Used as the item key.
-
-`content` <Type text="ReadableStream | ArrayBuffer | string" /> <MetaInfo text="required" />
-
-The document content. Pass a string for plain text or markdown, an `ArrayBuffer` for binary files like PDFs, or a `ReadableStream` for streaming uploads.
-
-`options` <Type text="object" /> <MetaInfo text="optional" />
-
-- `metadata` <Type text="Record&lt;string, string&gt;" /> <MetaInfo text="optional" />
-  - Custom metadata key-value pairs to attach to the item. Use for filtering in search queries. Maximum 5 fields per instance.
+| Parameter          | Type                                   | Required | Description                                                                                                                                                                |
+| ------------------ | -------------------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `name`             | string                                 | Yes      | The filename for the uploaded document. Used as the item key.                                                                                                              |
+| `content`          | ReadableStream, ArrayBuffer, or string | Yes      | The document content. Maximum file size is 4 MB. Pass a string for plain text or markdown, an `ArrayBuffer` for binary files, or a `ReadableStream` for streaming uploads. |
+| `options.metadata` | Record&lt;string, string&gt;           | No       | Custom metadata key-value pairs to attach to the item. Use for filtering in search queries. Maximum 5 fields per instance.                                                 |
 
 ### Response
 
-Returns an `AiSearchItemInfo` object:
-
-| Field    | Type   | Description                                                                  |
-| -------- | ------ | ---------------------------------------------------------------------------- |
-| `id`     | string | The unique item identifier.                                                  |
-| `key`    | string | The filename or key of the item.                                             |
-| `status` | string | The processing status: `queued`, `running`, `completed`, `error`, `skipped`. |
+| Field | Type   | Description                      |
+| ----- | ------ | -------------------------------- |
+| `id`  | string | The unique item identifier.      |
+| `key` | string | The filename or key of the item. |
 
 ## `items.uploadAndPoll()`
 
@@ -88,29 +82,32 @@ const item = await instance.items.uploadAndPoll("guide.pdf", pdfBuffer, {
 	pollIntervalMs: 2000,
 	timeoutMs: 60_000,
 });
-
-if (item.status === "completed") {
-	console.log("Document indexed successfully");
-} else {
-	console.log(`Document status: ${item.status}`);
-}
 ```
 
 ### Parameters
 
-Same as [`items.upload()`](#parameters) with additional polling options:
+Same as [`items.upload()`](#parameters), with additional polling options:
 
-`options.pollIntervalMs` <Type text="number" /> <MetaInfo text="optional" />
-
-How often to check the item status, in milliseconds. Defaults to `1000` (1 second).
-
-`options.timeoutMs` <Type text="number" /> <MetaInfo text="optional" />
-
-Maximum time to wait for processing to complete, in milliseconds. Defaults to `30000` (30 seconds).
+| Parameter                | Type   | Required | Description                                                                            |
+| ------------------------ | ------ | -------- | -------------------------------------------------------------------------------------- |
+| `options.pollIntervalMs` | number | No       | How often to check the item status, in milliseconds. Defaults to `1000`.               |
+| `options.timeoutMs`      | number | No       | Maximum time to wait for processing to complete, in milliseconds. Defaults to `30000`. |
 
 ### Response
 
-Same as [`items.upload()`](#response), but the `status` field reflects the final processing state (typically `completed` or `error`).
+Returns the full item object after polling completes:
+
+| Field          | Type   | Description                                                                              |
+| -------------- | ------ | ---------------------------------------------------------------------------------------- |
+| `id`           | string | The unique item identifier.                                                              |
+| `key`          | string | The filename or key of the item.                                                         |
+| `status`       | string | The processing status: `queued`, `running`, `completed`, `error`, `skipped`, `outdated`. |
+| `chunks_count` | number | Number of chunks created from the document.                                              |
+| `file_size`    | number | Size of the uploaded file in bytes.                                                      |
+| `metadata`     | object | Item metadata including `filename`, `folder`, and `timestamp`.                           |
+| `source_id`    | string | The source identifier (for example, `builtin` for uploaded files).                       |
+| `created_at`   | string | Timestamp of when the item was created.                                                  |
+| `last_seen_at` | string | Timestamp of when the item was last seen during indexing.                                |
 
 ## `items.list()`
 
@@ -123,29 +120,39 @@ const { result: items, result_info } = await instance.items.list({
 });
 
 for (const item of items) {
-	console.log(`${item.key} - ${item.status}`);
 }
 ```
 
 ### Parameters
 
-`page` <Type text="number" /> <MetaInfo text="optional" />
-
-The page number to return. Defaults to `1`.
-
-`per_page` <Type text="number" /> <MetaInfo text="optional" />
-
-The number of items per page. Defaults to `25`.
+| Parameter  | Type   | Required | Description                                                                                       |
+| ---------- | ------ | -------- | ------------------------------------------------------------------------------------------------- |
+| `page`     | number | No       | The page number to return. Defaults to `1`.                                                       |
+| `per_page` | number | No       | The number of items per page. Defaults to `20`. Maximum `50`.                                     |
+| `status`   | string | No       | Filter by processing status: `queued`, `running`, `completed`, `error`, `skipped`, or `outdated`. |
+| `sort_by`  | string | No       | Sort order for items: `status` (default) or `modified_at`.                                        |
+| `search`   | string | No       | Search items by text content.                                                                     |
+| `source`   | string | No       | Filter by source identifier (for example, `builtin` for uploaded files).                          |
 
 ### Response
 
-| Field                     | Type   | Description                                                  |
-| ------------------------- | ------ | ------------------------------------------------------------ |
-| `result`                  | array  | Array of item objects with `id`, `key`, and `status` fields. |
-| `result_info`             | object | Pagination metadata.                                         |
-| `result_info.total_count` | number | Total number of items in the instance.                       |
-| `result_info.page`        | number | The current page number.                                     |
-| `result_info.per_page`    | number | Items per page.                                              |
+| Field                     | Type   | Description                                                                              |
+| ------------------------- | ------ | ---------------------------------------------------------------------------------------- |
+| `result`                  | array  | Array of item objects.                                                                   |
+| `result[].id`             | string | The unique item identifier.                                                              |
+| `result[].key`            | string | The filename or key of the item.                                                         |
+| `result[].status`         | string | The processing status: `queued`, `running`, `completed`, `error`, `skipped`, `outdated`. |
+| `result[].chunks_count`   | number | Number of chunks created from the document.                                              |
+| `result[].file_size`      | number | Size of the uploaded file in bytes.                                                      |
+| `result[].metadata`       | object | Item metadata including `filename`, `folder`, and `timestamp`.                           |
+| `result[].source_id`      | string | The source identifier (for example, `builtin` for uploaded files).                       |
+| `result[].created_at`     | string | Timestamp of when the item was created.                                                  |
+| `result[].last_seen_at`   | string | Timestamp of when the item was last seen during indexing.                                |
+| `result_info`             | object | Pagination metadata.                                                                     |
+| `result_info.count`       | number | Number of items in the current page.                                                     |
+| `result_info.total_count` | number | Total number of items in the instance.                                                   |
+| `result_info.page`        | number | The current page number.                                                                 |
+| `result_info.per_page`    | number | Items per page.                                                                          |
 
 ## `items.delete()`
 
@@ -175,16 +182,27 @@ Returns the status and metadata of a specific item.
 
 ```ts
 const itemInfo = await instance.items.get("item-id-123").info();
-console.log(itemInfo.key, itemInfo.status);
 ```
+
+#### Parameters
+
+| Parameter | Type   | Required | Description                        |
+| --------- | ------ | -------- | ---------------------------------- |
+| `itemId`  | string | Yes      | The unique identifier of the item. |
 
 #### Response
 
-| Field    | Type   | Description                                                                  |
-| -------- | ------ | ---------------------------------------------------------------------------- |
-| `id`     | string | The unique item identifier.                                                  |
-| `key`    | string | The filename or key of the item.                                             |
-| `status` | string | The processing status: `queued`, `running`, `completed`, `error`, `skipped`. |
+| Field          | Type   | Description                                                                              |
+| -------------- | ------ | ---------------------------------------------------------------------------------------- |
+| `id`           | string | The unique item identifier.                                                              |
+| `key`          | string | The filename or key of the item.                                                         |
+| `status`       | string | The processing status: `queued`, `running`, `completed`, `error`, `skipped`, `outdated`. |
+| `chunks_count` | number | Number of chunks created from the document.                                              |
+| `file_size`    | number | Size of the uploaded file in bytes.                                                      |
+| `metadata`     | object | Item metadata including `filename`, `folder`, and `timestamp`.                           |
+| `source_id`    | string | The source identifier (for example, `builtin` for uploaded files).                       |
+| `created_at`   | string | Timestamp of when the item was created.                                                  |
+| `last_seen_at` | string | Timestamp of when the item was last seen during indexing.                                |
 
 ### `items.get().download()`
 
@@ -192,12 +210,13 @@ Downloads the original source file for an item.
 
 ```ts
 const file = await instance.items.get("item-id-123").download();
-
-console.log(file.filename);
-console.log(file.contentType);
-console.log(file.size);
-// file.body is a ReadableStream
 ```
+
+#### Parameters
+
+| Parameter | Type   | Required | Description                        |
+| --------- | ------ | -------- | ---------------------------------- |
+| `itemId`  | string | Yes      | The unique identifier of the item. |
 
 #### Response
 

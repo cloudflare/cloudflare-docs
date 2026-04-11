@@ -9,6 +9,10 @@ import { Render, MetaInfo, Type } from "~/components";
 
 [Workers](/workers/) provides a serverless execution environment that allows you to create new applications or augment existing ones. Use a [Workers binding](/workers/runtime-apis/bindings/) to create, list, update, and delete AI Search instances from a Cloudflare Worker. You can also check instance configuration and monitor indexing progress.
 
+:::note
+The previous `env.AI.autorag()` binding is no longer recommended for use. Refer to [Workers binding migration](/ai-search/api/migration/workers-binding/) for details.
+:::
+
 ## Configure the binding
 
 <Render file="binding-config" product="ai-search" />
@@ -40,11 +44,17 @@ Returns all instances within the namespace.
 
 ```ts
 const { result, result_info } = await env.AI_SEARCH.list();
-
-for (const instance of result) {
-	console.log(`${instance.id} (${instance.type}) - ${instance.status}`);
-}
 ```
+
+#### Parameters
+
+| Parameter            | Type   | Required | Description                                                        |
+| -------------------- | ------ | -------- | ------------------------------------------------------------------ |
+| `page`               | number | No       | The page number to return. Defaults to `1`.                        |
+| `per_page`           | number | No       | The number of instances per page. Defaults to `20`. Maximum `100`. |
+| `search`             | string | No       | Search instances by ID.                                            |
+| `order_by`           | string | No       | Sort column. Valid value: `created_at`. Defaults to `created_at`.  |
+| `order_by_direction` | string | No       | Sort direction. Valid values: `asc`, `desc`. Defaults to `desc`.   |
 
 #### Response
 
@@ -150,18 +160,28 @@ const updated = await env.AI_SEARCH.get("my-instance").update({
 
 #### Parameters
 
-Accepts a partial version of the [create parameters](#parameters). Only the fields you include are updated. Common fields to update:
+Accepts a partial version of the [create parameters](#parameters). Only the fields you include are updated.
 
-| Field             | Type    | Description                                                  |
-| ----------------- | ------- | ------------------------------------------------------------ |
-| `ai_search_model` | string  | The text-generation model.                                   |
-| `embedding_model` | string  | The embedding model.                                         |
-| `index_method`    | object  | Indexing methods: `\{ vector: boolean, keyword: boolean \}`. |
-| `reranking`       | boolean | Turn on or off reranking.                                    |
-| `reranking_model` | string  | The reranking model.                                         |
-| `rewrite_query`   | boolean | Turn on or off query rewriting.                              |
-| `source`          | string  | Update the data source location.                             |
-| `cache`           | boolean | Turn on or off response caching.                             |
+| Field               | Type    | Description                                                            |
+| ------------------- | ------- | ---------------------------------------------------------------------- |
+| `ai_search_model`   | string  | The text-generation model.                                             |
+| `embedding_model`   | string  | The embedding model.                                                   |
+| `index_method`      | object  | Indexing methods: `\{ vector: boolean, keyword: boolean \}`.           |
+| `fusion_method`     | string  | How vector and keyword scores are combined (`rrf` or `max`).           |
+| `indexing_options`  | object  | Indexing configuration including `keyword_tokenizer`.                  |
+| `retrieval_options` | object  | Retrieval configuration including `keyword_match_mode` and `boost_by`. |
+| `reranking`         | boolean | Turn on or off reranking.                                              |
+| `reranking_model`   | string  | The reranking model.                                                   |
+| `rewrite_query`     | boolean | Turn on or off query rewriting.                                        |
+| `rewrite_model`     | string  | The query rewriting model.                                             |
+| `source`            | string  | Update the data source location.                                       |
+| `cache`             | boolean | Turn on or off response caching.                                       |
+| `chunk_size`        | number  | Token size of each chunk.                                              |
+| `chunk_overlap`     | number  | Token overlap between chunks.                                          |
+| `score_threshold`   | number  | Minimum score threshold for results.                                   |
+| `max_num_results`   | number  | Maximum number of results per query.                                   |
+| `custom_metadata`   | array   | Custom metadata field definitions.                                     |
+| `sync_interval`     | number  | Seconds between automatic data source syncs.                           |
 
 #### Response
 

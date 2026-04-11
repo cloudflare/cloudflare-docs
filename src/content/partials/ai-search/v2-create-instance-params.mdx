@@ -6,7 +6,7 @@ import { MetaInfo, Type } from "~/components";
 
 `id` <Type text="string" /> <MetaInfo text="required" />
 
-The unique identifier for the AI Search instance. Must be 1-32 characters and match the pattern `^[a-z0-9_]+(?:-[a-z0-9_]+)*$`.
+The unique identifier for the AI Search instance. Must be 1-64 characters and match the pattern `^[a-z0-9_]+(?:-[a-z0-9_]+)*$`.
 
 `type` <Type text="string" /> <MetaInfo text="optional" />
 
@@ -73,6 +73,33 @@ Configures which indexing methods are enabled for the instance. Determines wheth
 
 Set both to `true` for hybrid search.
 
+`fusion_method` <Type text="string" /> <MetaInfo text="optional" />
+
+Controls how vector and keyword scores are combined when using hybrid search. Valid values: `rrf` (Reciprocal Rank Fusion), `max` (takes the maximum score). Defaults to `rrf`.
+
+`indexing_options` <Type text="object" /> <MetaInfo text="optional" />
+
+Configuration for how content is indexed.
+
+- `keyword_tokenizer` <Type text="string" /> <MetaInfo text="optional" />
+  - The tokenizer used for keyword search indexing. Valid values: `porter` (stemming-based), `trigram` (character n-gram). Defaults to `porter`.
+
+`retrieval_options` <Type text="object" /> <MetaInfo text="optional" />
+
+Default retrieval configuration for the instance. These defaults can be overridden per-request using `ai_search_options`.
+
+- `keyword_match_mode` <Type text="string" /> <MetaInfo text="optional" />
+  - Controls how keyword (BM25) matching selects candidate documents. `and` requires all terms to match. `or` requires any term to match. Defaults to `and`.
+
+- `boost_by` <Type text="array" /> <MetaInfo text="optional" />
+  - Default boost fields applied to all search queries. Maximum 3 items. Each item has:
+    - `field` <Type text="string" /> <MetaInfo text="required" /> - The metadata field name to boost by. Maximum 64 characters.
+    - `direction` <Type text="string" /> <MetaInfo text="optional" /> - The boost direction. Valid values: `asc`, `desc`, `exists`, `not_exists`.
+
+`sync_interval` <Type text="number" /> <MetaInfo text="optional" />
+
+Seconds between automatic data source syncs. Valid values: `3600`, `7200`, `14400`, `21600`, `43200`, `86400`. Defaults to `21600` (6 hours).
+
 `token_id` <Type text="string" /> <MetaInfo text="optional" />
 
 The UUID of the [service API token](/ai-search/configuration/service-api-token/) to use for this instance. Only required if you have never created an AI Search instance before. Refer to the [API get started guide](/ai-search/get-started/api/) for how to create and register a service token.
@@ -92,6 +119,10 @@ The text-generation model to use for generating responses.
 `rewrite_query` <Type text="boolean" /> <MetaInfo text="optional" />
 
 Enable query rewriting to improve retrieval accuracy. Defaults to `false`.
+
+`rewrite_model` <Type text="string" /> <MetaInfo text="optional" />
+
+The model to use for query rewriting.
 
 `reranking` <Type text="boolean" /> <MetaInfo text="optional" />
 
@@ -123,7 +154,7 @@ Enable response caching. Defaults to `true`.
 
 `cache_threshold` <Type text="string" /> <MetaInfo text="optional" />
 
-The cache matching threshold. Valid value: `super_strict_match`.
+The cache matching threshold. Valid values: `super_strict_match`, `close_enough`, `flexible_friend`, `anything_goes`. Defaults to `close_enough`.
 
 `custom_metadata` <Type text="array" /> <MetaInfo text="optional" />
 
@@ -133,7 +164,7 @@ Custom metadata fields to extract and index from documents.
   - The name of the metadata field.
 
 - `data_type` <Type text="string" /> <MetaInfo text="required" />
-  - The data type of the field. Valid value: `text`.
+  - The data type of the field. Valid values: `text`, `number`, `boolean`, `datetime`.
 
 `enable` <Type text="boolean" /> <MetaInfo text="optional" />
 

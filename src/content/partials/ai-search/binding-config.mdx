@@ -49,7 +49,3 @@ instance_name = "my-instance"
 | `instance_name` | string | Yes      | The name of the AI Search instance. Must exist in the default namespace at deploy time.                  |
 
 With the namespace binding, call `env.AI_SEARCH.get("my-instance")` to get an instance handle. With the instance binding, `env.MY_SEARCH` is the instance handle directly.
-
-:::note
-If you are using the legacy `env.AI.autorag()` binding, refer to the [API Migration guide](/ai-search/api/migration/) for how to upgrade.
-:::

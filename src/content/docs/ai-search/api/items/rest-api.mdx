@@ -17,27 +17,27 @@ Use the AI Search REST API to upload, list, and manage individual documents with
 
 Manage individual documents within an AI Search instance.
 
-| Description      | Method   | Endpoint                                                                   |
-| ---------------- | -------- | -------------------------------------------------------------------------- |
-| List items       | `GET`    | `/accounts/{account_id}/ai-search/instances/{id}/items`                    |
-| Upload an item   | `POST`   | `/accounts/{account_id}/ai-search/instances/{id}/items`                    |
-| Get item info    | `GET`    | `/accounts/{account_id}/ai-search/instances/{id}/items/{item_id}`          |
-| Delete an item   | `DELETE` | `/accounts/{account_id}/ai-search/instances/{id}/items/{item_id}`          |
-| Download an item | `GET`    | `/accounts/{account_id}/ai-search/instances/{id}/items/{item_id}/download` |
+| Description                                                                                              | Method   | Endpoint                                                                   |
+| -------------------------------------------------------------------------------------------------------- | -------- | -------------------------------------------------------------------------- |
+| [List items](/api/resources/ai_search/subresources/instances/subresources/items/methods/list/)           | `GET`    | `/accounts/{account_id}/ai-search/instances/{id}/items`                    |
+| [Upload an item](/api/resources/ai_search/subresources/instances/subresources/items/methods/upload/)     | `POST`   | `/accounts/{account_id}/ai-search/instances/{id}/items`                    |
+| [Get item info](/api/resources/ai_search/subresources/instances/subresources/items/methods/get/)         | `GET`    | `/accounts/{account_id}/ai-search/instances/{id}/items/{item_id}`          |
+| [Delete an item](/api/resources/ai_search/subresources/instances/subresources/items/methods/delete/)     | `DELETE` | `/accounts/{account_id}/ai-search/instances/{id}/items/{item_id}`          |
+| [Download an item](/api/resources/ai_search/subresources/instances/subresources/items/methods/download/) | `GET`    | `/accounts/{account_id}/ai-search/instances/{id}/items/{item_id}/download` |
 
 ### Example: Upload a document
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-search/instances/$INSTANCE_ID/items" \
-  -H "Authorization: Bearer $API_TOKEN" \
-  -F "file=@guide.pdf"
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/<INSTANCE_NAME>/items" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -F "file=@/path/to/your/file.pdf"
 ```
 
 ### Example: List items
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-search/instances/$INSTANCE_ID/items" \
-  -H "Authorization: Bearer $API_TOKEN"
+curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/<INSTANCE_NAME>/items" \
+  -H "Authorization: Bearer <API_TOKEN>"
 ```
 
 ## API reference
