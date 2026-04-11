@@ -1,0 +1,80 @@
+---
+title: Rule phase interactions
+pcx_content_type: troubleshooting
+description: Understand how request rewrites, IP Access rules, custom rules, and managed rules interact across WAF phases.
+sidebar:
+  order: 4
+---
+
+Cloudflare evaluates request processing features in phases. A rule that appears correct in isolation can behave differently when another product has already modified or terminated the request.
+
+## Custom rules see the rewritten URL
+
+Cloudflare applies [URL Rewrite Rules](/rules/transform/url-rewrite/) before [WAF custom rules](/waf/custom-rules/).
+
+If a Transform Rule rewrites `/public-login` to `/internal/login`, later WAF phases will evaluate the rewritten path.
+
+### What this means
+
+- A custom rule matching `/public-login` may not fire after the rewrite.
+- A custom rule matching `/internal/login` may fire even though the visitor requested `/public-login`.
+
+### Resolution
+
+When troubleshooting a custom rule, check whether a rewrite rule already changed the URL before WAF evaluation.
+
+For more information, refer to [Rules execution order](/rules/transform/request-header-modification/#execution-order) and [WAF phases](/waf/reference/phases/).
+
+## IP Access rules can bypass custom rules
+
+[IP Access rules](/waf/tools/ip-access-rules/) run before WAF custom rules.
+
+If an IP Access rule with an **Allow** action matches a request, Cloudflare will not evaluate later custom rules for that request.
+
+### What this means
+
+- A custom rule may appear to "not fire" for a specific IP even though the expression is correct.
+- Allowlisting a source too early can also prevent other WAF logic from running.
+
+### Resolution
+
+If a request is unexpectedly bypassing a custom rule, check for matching IP Access rules first.
+
+## Skip and Allow do not behave the same way
+
+In the custom rules phase, **Allow** and **Skip** solve different problems.
+
+- **Allow** stops evaluation in the custom rules phase.
+- **Skip** can instruct Cloudflare to skip later products or components, such as managed rules.
+
+### What this means
+
+- An **Allow** action in a custom rule does not automatically prevent a later managed rule from blocking the request.
+- A **Skip** action can be used to suppress later managed rule evaluation for matching traffic.
+
+### Resolution
+
+If a request still hits a managed rule after matching a custom rule, use a [WAF exception](/waf/managed-rules/waf-exceptions/) or a custom rule with a **Skip** action instead of **Allow**.
+
+## Page Rules do not use the same request view as modern rules
+
+[Page Rules](/rules/page-rules/) are legacy behavior and do not line up exactly with modern Rules products.
+
+In mixed configurations, you may see:
+
+- A rewrite affecting custom rules and managed rules
+- Different results between a Page Rule and a modern rule that appear to target the same path
+
+### Resolution
+
+When possible, migrate older Page Rules behavior to the current Rules products so the request is evaluated in one model.
+
+## Recommended troubleshooting workflow
+
+When a WAF decision looks wrong:
+
+1. Check for earlier request rewrites.
+2. Check for matching IP Access rules.
+3. Confirm whether the request was expected to stop in the custom rules phase or skip later phases.
+4. Review whether a managed rule still ran after a custom rule match.
+5. Use [Trace](/waf/tools/trace/) when available to confirm the actual phase-by-phase result.
