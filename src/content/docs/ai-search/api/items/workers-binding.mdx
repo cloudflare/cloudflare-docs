@@ -10,7 +10,7 @@ import { Render } from "~/components";
 [Workers](/workers/) provides a serverless execution environment that allows you to create new applications or augment existing ones. Use a [Workers binding](/workers/runtime-apis/bindings/) to upload, list, and manage documents in your AI Search instances from a Cloudflare Worker. Access the Items API through the `items` property on an instance handle.
 
 :::note
-The previous `env.AI.autorag()` binding is no longer recommended for use. Refer to [Workers binding migration](/ai-search/api/migration/workers-binding/) for details.
+The Items API uploads files to an instance's built-in storage. For more details, refer to [Built-in storage](/ai-search/configuration/data-source/built-in-storage/).
 :::
 
 ## Configure the binding

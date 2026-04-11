@@ -9,10 +9,6 @@ import { Render, MetaInfo, Type } from "~/components";
 
 [Workers](/workers/) provides a serverless execution environment that allows you to create new applications or augment existing ones. Use a [Workers binding](/workers/runtime-apis/bindings/) to create, list, update, and delete AI Search instances from a Cloudflare Worker. You can also check instance configuration and monitor indexing progress.
 
-:::note
-The previous `env.AI.autorag()` binding is no longer recommended for use. Refer to [Workers binding migration](/ai-search/api/migration/workers-binding/) for details.
-:::
-
 ## Configure the binding
 
 <Render file="binding-config" product="ai-search" />
@@ -78,7 +74,7 @@ Creates a new instance and returns a handle to it. You can create instances back
 
 **Create an empty instance for file uploads:**
 
-AI Search instances come with managed storage that you can upload documents to directly.
+AI Search instances come with [built-in storage](/ai-search/configuration/data-source/built-in-storage/) that you can upload documents to directly.
 
 ```ts
 const instance = await env.AI_SEARCH.create({
