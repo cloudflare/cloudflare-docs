@@ -3,7 +3,7 @@ pcx_content_type: how-to
 title: Live View
 description: View and interact with remote Browser Run sessions in real time using the hosted DevTools UI or native Chrome DevTools.
 sidebar:
-  order: 2
+  order: 1
   badge: Beta
 ---
 
@@ -11,7 +11,7 @@ import { CURL, DashButton, Tabs, TabItem } from "~/components";
 
 Live View lets you see and interact with a remote Browser Run session in real time. This is useful for debugging automation scripts, monitoring what a browser is doing, or manually stepping in when a task requires human intervention (see [Human in the Loop](/browser-rendering/features/human-in-the-loop/)).
 
-Live View is available for any browser session created through the [CDP](/browser-rendering/cdp/) endpoints.
+Live View is available for any [Browser Session](/browser-rendering/#integration-methods), including sessions created with [Puppeteer](/browser-rendering/puppeteer/), [Playwright](/browser-rendering/playwright/), or the [CDP](/browser-rendering/cdp/) endpoints.
 
 ## How to access Live View
 
@@ -39,7 +39,7 @@ The hosted UI supports three viewing modes, controlled by the `mode` parameter i
 
 Because Browser Run speaks standard CDP, you can connect Chrome's built-in DevTools directly to a remote session. Replace the `https://live.browser.run/ui/inspector?wss=` prefix in the `devtoolsFrontendUrl` with the `devtools://` protocol:
 
-```
+```txt
 devtools://devtools/bundled/inspector.html?wss=live.browser.run/api/devtools/browser/SESSION_ID/page/TARGET_ID?jwt=...
 ```
 

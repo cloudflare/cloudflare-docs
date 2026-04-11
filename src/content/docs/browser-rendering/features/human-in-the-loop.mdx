@@ -3,20 +3,22 @@ pcx_content_type: how-to
 title: Human in the Loop
 description: Temporarily hand off browser control to a human operator for authentication, sensitive actions, or tasks that are difficult to fully automate.
 sidebar:
-  order: 3
+  order: 2
   badge: Beta
 ---
 
-Some browser automation workflows require manual intervention. A login page may need multi-factor authentication, a form may require sensitive credentials you do not want to pass to an automation script, or a task may be too complex to fully automate. Human in the Loop lets you pause an automation script and hand off control to a human operator through [Live View](/browser-rendering/features/live-view/), then resume the script once the human is done.
+Some browser automation workflows require manual intervention. A login page may need multi-factor authentication, a form may require sensitive credentials you do not want to pass to an automation script, or a task may be too complex to fully automate. Human in the Loop lets a human step into a live browser session through [Live View](/browser-rendering/features/live-view/) to handle what automation cannot, then hand control back to the script.
 
 ## How it works
 
-Human in the Loop builds on [Live View](/browser-rendering/features/live-view/) and the [CDP](/browser-rendering/cdp/) endpoints:
+Human in the Loop works with any [Browser Session](/browser-rendering/#integration-methods) and uses [Live View](/browser-rendering/features/live-view/) to give humans access:
 
-1. Your automation script navigates to a page that needs human input
-2. The script retrieves the Live View URL via `Cloudflare.getLiveView` and shares it with a human operator (for example, by logging it, sending it via Slack, or displaying it in a UI)
-3. The human operator opens the Live View URL and completes the required action (logging in, solving a CAPTCHA, entering sensitive data, etc.)
-4. The automation script detects that the human is done (for example, by waiting for a navigation event or polling for a page element) and resumes
+1. Your automation script navigates to a page that needs human input.
+2. The script retrieves the Live View URL via `Cloudflare.getLiveView` and shares it with a human operator (for example, by logging it, sending it via Slack, or displaying it in a UI).
+3. The human operator opens the Live View URL and completes the required action (logging in, solving a CAPTCHA, entering sensitive data, etc.).
+4. The automation script detects that the human is done (for example, by waiting for a navigation event or polling for a page element) and resumes.
+
+A more structured handoff flow where the agent can signal that it needs help and notify a human is coming soon.
 
 ## Example: login with human assistance
 
