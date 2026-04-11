@@ -57,6 +57,20 @@ In rare cases, the DNS resolver in the client requesting the URL might fail to r
 
 Reload the page after a short wait to note if the problem disappears. This issue is unrelated to Cloudflare, but using [Cloudflare's DNS resolver](/1.1.1.1/setup/) may help. Contact your hosting provider for additional help with your current DNS resolver.
 
+### Newly created record still does not resolve
+
+If you recently created a DNS record and resolvers still return `NXDOMAIN` or no answer, the previous negative response may still be cached.
+
+For new records, many resolvers use the zone's negative caching TTL rather than the new record's TTL. This negative cache duration is typically taken from the `MINIMUM` field in the zone's `SOA` record, as described in [RFC 2308](https://datatracker.ietf.org/doc/html/rfc2308).
+
+This means:
+
+- Lowering the TTL on the new record does not clear an existing negative cache entry.
+- Flushing your local DNS cache only affects your own device.
+- Different recursive resolvers may recover at different times depending on when they cached the negative answer.
+
+To confirm, query the zone's `SOA` record and check the negative caching value. Then wait for that interval to expire before testing again.
+
 ### Account recovery
 
 If you are locked out of the Cloudflare account that contains your DNS configuration, refer to [Account recovery](/fundamentals/user-profiles/account-recovery/).
