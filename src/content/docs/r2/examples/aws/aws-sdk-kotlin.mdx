@@ -51,6 +51,8 @@ fun main() = runBlocking {
     r2Client.listObjects { bucket = bucketName }.contents?.forEach {
         println("* ${it.key} (size: ${it.size} bytes, modified: ${it.lastModified})")
     }
+
+    r2Client.close()
 }
 ```
 
