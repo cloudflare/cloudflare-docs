@@ -1,5 +1,5 @@
 ---
-title: API
+title: REST API
 pcx_content_type: get-started
 sidebar:
   order: 2
@@ -43,6 +43,8 @@ Instead of uploading files manually, you can connect a website or R2 bucket as a
 
 **Website:**
 
+Automatically crawl and index a [website](/ai-search/configuration/data-source/website/) that you own.
+
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances" \
   -H "Authorization: Bearer <API_TOKEN>" \
@@ -56,7 +58,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-sear
 
 **R2 bucket:**
 
-Connecting an R2 bucket requires a [service API token](/ai-search/configuration/service-api-token/). If you have never created an R2-backed instance before, you need to pass the `token_id` field in the create request. Refer to the [service API token configuration](/ai-search/configuration/service-api-token/) for setup instructions.
+Index documents stored in an [R2 bucket](/ai-search/configuration/data-source/r2/). Connecting an R2 bucket requires a [service API token](/ai-search/configuration/service-api-token/). If you have never created an R2-backed instance before, you need to pass the `token_id` field in the create request. Refer to the [service API token configuration](/ai-search/configuration/service-api-token/) for setup instructions.
 
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances" \
@@ -72,19 +74,28 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-sear
 
 ## 3. Add content
 
-If you did not connect a data source, upload files using the [Items API](/ai-search/api/items/rest-api/). Skip this step if you connected a website or R2 bucket.
+If you did not connect a data source, upload files using the [Items API](/api/resources/ai_search/subresources/items/methods/upload/). Skip this step if you connected a website or R2 bucket.
 
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/my-instance/items" \
   -H "Authorization: Bearer <API_TOKEN>" \
-  -F "file=@guide.pdf"
+  -F "file=@/path/to/your/file.pdf"
 ```
 
 AI Search indexes uploaded files automatically.
 
+## 4. Check indexing status
+
+Check if your content has finished indexing.
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/my-instance/stats" \
+  -H "Authorization: Bearer <API_TOKEN>"
+```
+
 ## Try it out
 
-Once your content is indexed, you can run your first query.
+Once indexing is complete, run your first query.
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/my-instance/search" \

@@ -73,21 +73,21 @@ You can declare multiple namespace bindings in the same Worker. Each binding map
 
 ```toml
 [[ai_search_namespaces]]
-binding = "PROD_DOCS"
-namespace = "production"
+binding = "BLOG_SEARCH"
+namespace = "blog"
 
 [[ai_search_namespaces]]
-binding = "STAGING_DOCS"
-namespace = "staging"
+binding = "SUPPORT_SEARCH"
+namespace = "support"
 ```
 
 </WranglerConfig>
 
 Common reasons to use multiple namespaces:
 
-- **Environment separation**: Keep production and staging instances isolated. A binding scoped to `staging` cannot access instances in `production`.
 - **Domain separation**: Separate instances by product area, for example `blog`, `support`, and `docs`.
 - **Tenant isolation**: Assign each tenant their own namespace so that instance names do not collide across tenants.
+- **Agent isolation**: Give each agent its own namespace for independent context management.
 
 ## Namespaces and instance uniqueness
 
@@ -97,4 +97,4 @@ An instance name must be unique within a namespace. The combination of account I
 UNIQUE(account_id, namespace, instance_name)
 ```
 
-This means you can have an instance named `docs` in both the `production` and `staging` namespaces without conflict.
+This means you can have an instance named `docs` in both the `blog` and `support` namespaces without conflict.

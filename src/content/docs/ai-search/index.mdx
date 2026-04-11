@@ -22,13 +22,19 @@ import {
 	Feature,
 } from "~/components";
 
-<Description>Add natural language search to your applications.</Description>
+<Description>
+	The search primitive for your applications and agents.
+</Description>
 
 <Plan type="all" />
 
-AI Search is a managed search service. Connect a website, an R2 bucket, or upload your own documents, and your application gets a natural language search API.
+AI Search lets you add search to any application or agent without building retrieval infrastructure. Create an instance, give it your data, and search it with natural language.
 
-AI Search indexes your content automatically and keeps it up to date. Users ask questions in plain English and get answers grounded in your content. Use it for documentation search, knowledge bases, support chatbots, or any application where users need to find information. Access it from a [Workers binding](/ai-search/api/search/workers-binding/), the [REST API](/ai-search/api/search/rest-api/), or as an [MCP server](/ai-search/api/search/mcp/).
+You can use AI Search for:
+
+- Documentation and knowledge base search
+- AI agent tool use and memory
+- Per-tenant or per-agent file search
 
 <div>
 	<LinkButton href="/ai-search/get-started">Get started</LinkButton>
@@ -58,15 +64,15 @@ Define custom metadata fields and filter search results by category, version, la
 
 </Feature>
 
-<Feature header="Built-in MCP and UI snippets" href="/ai-search/configuration/public-endpoint/" cta="Get started">
+<Feature header="Hybrid search" href="/ai-search/configuration/retrieval-configuration/" cta="Configure retrieval">
 
-Every instance includes a built-in MCP endpoint for AI agents and embeddable search and chat components for your website.
+Combine semantic and keyword matching in the same query for more accurate results.
 
 </Feature>
 
-<Feature header="Similarity caching" href="/ai-search/configuration/cache/" cta="Use caching">
+<Feature header="MCP and UI snippets" href="/ai-search/api/search/mcp/" cta="Connect agents">
 
-Cache repeated queries and results to improve latency and reduce compute on repeated requests.
+Every instance includes a built-in MCP endpoint for AI agents and embeddable search components for your website.
 
 </Feature>
 

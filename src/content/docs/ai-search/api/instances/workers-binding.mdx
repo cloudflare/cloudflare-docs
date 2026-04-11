@@ -68,6 +68,8 @@ Creates a new instance and returns a handle to it. You can create instances back
 
 **Create an empty instance for file uploads:**
 
+AI Search instances come with managed storage that you can upload documents to directly.
+
 ```ts
 const instance = await env.AI_SEARCH.create({
 	id: "knowledge-base",
@@ -98,9 +100,6 @@ const instance = await env.AI_SEARCH.create({
 	id: "internal-docs",
 	type: "r2",
 	source: "my-docs-bucket",
-	source_params: {
-		include_items: ["/docs/**"],
-	},
 });
 ```
 
@@ -110,13 +109,7 @@ const instance = await env.AI_SEARCH.create({
 
 #### Response
 
-Returns an `AiSearchInstance` handle. The handle is immediately usable for calling methods like `search()`, `info()`, `stats()`, and `items.upload()`. Use `info()` to verify the instance was created:
-
-```ts
-const instance = await env.AI_SEARCH.create({ id: "my-docs" });
-const info = await instance.info();
-console.log(info.id, info.status);
-```
+Returns an `AiSearchInstance` handle that is immediately usable for calling methods like `search()`, `info()`, `stats()`, and `items.upload()`. Call `info()` on the handle to get the instance configuration.
 
 ### `delete()`
 
@@ -153,8 +146,6 @@ const updated = await env.AI_SEARCH.get("my-instance").update({
 	ai_search_model: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
 	reranking: true,
 });
-
-console.log(updated.id, updated.modified_at);
 ```
 
 #### Parameters
@@ -182,31 +173,39 @@ Returns the current configuration and metadata for the instance.
 
 ```ts
 const info = await env.AI_SEARCH.get("my-instance").info();
-
-console.log(info.id);
-console.log(info.type);
-console.log(info.source);
-console.log(info.namespace);
-console.log(info.created_at);
 ```
 
 #### Response
 
-| Field             | Type    | Description                                            |
-| ----------------- | ------- | ------------------------------------------------------ |
-| `id`              | string  | The instance identifier.                               |
-| `type`            | string  | The data source type (`r2`, `web-crawler`, or `null`). |
-| `source`          | string  | The data source location.                              |
-| `namespace`       | string  | The namespace the instance belongs to.                 |
-| `status`          | string  | The instance status (`active`, `waiting`, `indexing`). |
-| `enable`          | boolean | Whether the instance is enabled.                       |
-| `created_at`      | string  | ISO 8601 timestamp of when the instance was created.   |
-| `modified_at`     | string  | ISO 8601 timestamp of the last modification.           |
-| `ai_search_model` | string  | The text-generation model.                             |
-| `embedding_model` | string  | The embedding model.                                   |
-| `reranking`       | boolean | Whether reranking is enabled.                          |
-| `rewrite_query`   | boolean | Whether query rewriting is enabled.                    |
-| `cache`           | boolean | Whether response caching is enabled.                   |
+| Field               | Type    | Description                                                            |
+| ------------------- | ------- | ---------------------------------------------------------------------- |
+| `id`                | string  | The instance identifier.                                               |
+| `type`              | string  | The data source type (`r2`, `web-crawler`, or `null`).                 |
+| `source`            | string  | The data source location.                                              |
+| `namespace`         | string  | The namespace the instance belongs to.                                 |
+| `status`            | string  | The instance status (`active`, `waiting`, `indexing`).                 |
+| `enable`            | boolean | Whether the instance is enabled.                                       |
+| `created_at`        | string  | Timestamp of when the instance was created.                            |
+| `modified_at`       | string  | Timestamp of the last modification.                                    |
+| `ai_search_model`   | string  | The text-generation model.                                             |
+| `embedding_model`   | string  | The embedding model.                                                   |
+| `reranking`         | boolean | Whether reranking is enabled.                                          |
+| `reranking_model`   | string  | The reranking model.                                                   |
+| `rewrite_query`     | boolean | Whether query rewriting is enabled.                                    |
+| `rewrite_model`     | string  | The query rewriting model.                                             |
+| `cache`             | boolean | Whether response caching is enabled.                                   |
+| `cache_threshold`   | string  | The similarity threshold for cache hits.                               |
+| `index_method`      | object  | Which indexing methods are enabled (`vector`, `keyword`).              |
+| `fusion_method`     | string  | How vector and keyword scores are combined (`rrf` or `max`).           |
+| `indexing_options`  | object  | Indexing configuration including `keyword_tokenizer`.                  |
+| `retrieval_options` | object  | Retrieval configuration including `keyword_match_mode` and `boost_by`. |
+| `chunk_size`        | number  | Token size of each chunk.                                              |
+| `chunk_overlap`     | number  | Token overlap between chunks.                                          |
+| `score_threshold`   | number  | Minimum score threshold for results.                                   |
+| `max_num_results`   | number  | Maximum number of results per query.                                   |
+| `sync_interval`     | number  | Seconds between automatic data source syncs.                           |
+| `custom_metadata`   | array   | Custom metadata field definitions.                                     |
+| `last_activity`     | string  | Timestamp of the last indexing activity.                               |
 
 ### `stats()`
 
@@ -214,22 +213,26 @@ Returns the current indexing progress for the instance. Use this to poll for com
 
 ```ts
 const stats = await env.AI_SEARCH.get("my-instance").stats();
-
-console.log(stats.queued);
-console.log(stats.running);
-console.log(stats.completed);
-console.log(stats.error);
-console.log(stats.skipped);
-console.log(stats.last_activity);
 ```
 
 #### Response
 
-| Field           | Type   | Description                                       |
-| --------------- | ------ | ------------------------------------------------- |
-| `queued`        | number | Items waiting to be processed.                    |
-| `running`       | number | Items currently being processed.                  |
-| `completed`     | number | Items successfully indexed.                       |
-| `error`         | number | Items that failed to index.                       |
-| `skipped`       | number | Items skipped during indexing.                    |
-| `last_activity` | string | ISO 8601 timestamp of the last indexing activity. |
+| Field                           | Type   | Description                                       |
+| ------------------------------- | ------ | ------------------------------------------------- |
+| `queued`                        | number | Items waiting to be processed.                    |
+| `running`                       | number | Items currently being processed.                  |
+| `completed`                     | number | Items successfully indexed.                       |
+| `error`                         | number | Items that failed to index.                       |
+| `skipped`                       | number | Items skipped during indexing.                    |
+| `outdated`                      | number | Items that need re-indexing.                      |
+| `last_activity`                 | string | ISO 8601 timestamp of the last indexing activity. |
+| `file_embed_errors`             | object | Map of file IDs to embedding error details.       |
+| `engine.vectorize.vectorsCount` | number | Total number of vectors stored.                   |
+| `engine.vectorize.dimensions`   | number | Dimensions of the vector embeddings.              |
+| `engine.r2.payloadSizeBytes`    | number | Total size of stored payloads in bytes.           |
+| `engine.r2.metadataSizeBytes`   | number | Total size of stored metadata in bytes.           |
+| `engine.r2.objectCount`         | number | Total number of objects in storage.               |
+
+## Local development
+
+Local development is supported by proxying requests to your deployed AI Search instance. When running in local mode with `wrangler dev`, your Worker forwards queries to the configured remote AI Search instance and returns results as if they were served locally.

@@ -5,15 +5,13 @@ sidebar:
   order: 2
 ---
 
+import { Render } from "~/components";
+
 Use the AI Search REST API to upload, list, and manage individual documents within an instance.
 
 ## Authentication
 
-All requests require an API token with AI Search edit permissions. Include the token in the `Authorization` header:
-
-```txt
-Authorization: Bearer <API_TOKEN>
-```
+<Render file="rest-api-auth" product="ai-search" />
 
 ## Items endpoints
 

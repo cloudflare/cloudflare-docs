@@ -5,25 +5,13 @@ sidebar:
   order: 2
 ---
 
-Use the AI Search REST API to programmatically manage instances and indexing jobs.
+import { Render } from "~/components";
+
+Use the AI Search REST API to manage instances and indexing jobs over HTTP.
 
 ## Authentication
 
-All requests require an API token with AI Search edit permissions. Include the token in the `Authorization` header:
-
-```txt
-Authorization: Bearer <API_TOKEN>
-```
-
-### Create an API token
-
-1. In the Cloudflare dashboard, go to **My Profile** > **API Tokens**.
-2. Select **Create Token**.
-3. Select **Create Custom Token**.
-4. Enter a **Token name**, for example `AI Search Manager`.
-5. Under **Permissions**, select **Account** > **AI Search** > **Edit**.
-6. Select **Continue to summary**, then select **Create Token**.
-7. Copy and save the token value.
+<Render file="rest-api-auth" product="ai-search" />
 
 ## Instance endpoints
 

@@ -1,41 +1,38 @@
 ---
-pcx_content_type: concept
+pcx_content_type: reference
 title: REST API
 sidebar:
   order: 2
 ---
 
 import { LinkCard } from "@astrojs/starlight/components";
-import { Render, MetaInfo, Type, DashButton } from "~/components";
+import { Render } from "~/components";
 
-This guide explains how to use the AI Search REST API to query your AI Search instance.
+Use the AI Search REST API to query your AI Search instances over HTTP.
 
 :::note
 The previous [AutoRAG API endpoints](/api/resources/autorag/) are no longer recommended for use. Refer to [Migrate from AutoRAG REST API](/ai-search/api/migration/rest-api/) for details.
 :::
 
-## Prerequisite: Get AI Search API token
+## Authentication
 
-You need an API token with `AI Search` `Run` permissions to use the REST API. To create a new token:
+<Render file="rest-api-auth" product="ai-search" />
 
-1. Log in to the Cloudflare dashboard, and go to API tokens for your profile.
-   <DashButton url="/?to=/:account/api-tokens" />
-2. Select **Create Token**.
-3. Select **Create Custom Token**.
-4. Enter a name for your token.
-5. Under **Permissions**, select **AI Search** and **Run**.
-6. Under **Account Resources**, select the account you want to use.
-7. Select **Continue to summary**, then select **Create Token**.
-8. Copy and save your API token for future use.
+## Instance-level
 
-## Chat Completions
+Search and chat with a specific instance.
 
-This endpoint searches for relevant results from your data source and generates a response using the model and the retrieved context:
+| Description                                                                                   | Method | Endpoint                                                           |
+| --------------------------------------------------------------------------------------------- | ------ | ------------------------------------------------------------------ |
+| [Search](/api/resources/ai_search/subresources/instances/methods/search/)                     | `POST` | `/accounts/{account_id}/ai-search/instances/{id}/search`           |
+| [Chat completions](/api/resources/ai_search/subresources/instances/methods/chat_completions/) | `POST` | `/accounts/{account_id}/ai-search/instances/{id}/chat/completions` |
+
+### Example: Search
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai-search/instances/{AI_SEARCH_NAME}/chat/completions \
-  -H 'Content-Type: application/json' \
-  -H "Authorization: Bearer {API_TOKEN}" \
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/<INSTANCE_NAME>/search" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -H "Content-Type: application/json" \
   -d '{
     "messages": [
       {
@@ -46,29 +43,12 @@ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai-search/instan
   }'
 ```
 
-:::note
-
-- `ACCOUNT_ID`: Find this by going to [Workers & Pages](/fundamentals/account/find-account-and-zone-ids/#find-account-id-workers-and-pages) in the Cloudflare dashboard.
-- `AI_SEARCH_NAME`: The name of your AI Search instance.
-- `API_TOKEN`: The API token you created in the [prerequisite step](#prerequisite-get-ai-search-api-token).
-  :::
-
-### Parameters
-
-<Render file="chat-completions-api-params" product="ai-search" />
-
-### Response
-
-<Render file="chat-completions-response" product="ai-search" />
-
-## Search
-
-This endpoint searches for results from your data source and returns the relevant chunks without generating a response:
+### Example: Chat completions
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai-search/instances/{AI_SEARCH_NAME}/search \
-  -H 'Content-Type: application/json' \
-  -H "Authorization: Bearer {API_TOKEN}" \
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/<INSTANCE_NAME>/chat/completions" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -H "Content-Type: application/json" \
   -d '{
     "messages": [
       {
@@ -79,20 +59,56 @@ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai-search/instan
   }'
 ```
 
-:::note
+## Namespace-level
 
-- `ACCOUNT_ID`: Find this by going to [Workers & Pages](/fundamentals/account/find-account-and-zone-ids/#find-account-id-workers-and-pages) in the Cloudflare dashboard.
-- `AI_SEARCH_NAME`: The name of your AI Search instance.
-- `API_TOKEN`: The API token you created in the [prerequisite step](#prerequisite-get-ai-search-api-token).
-  :::
+Search and chat across multiple instances in a single call. Pass `instance_ids` in `ai_search_options` to specify which instances to query. Each chunk in the response includes an `instance_id` field identifying which instance it came from.
 
-### Parameters
+| Description                                                                                    | Method | Endpoint                                                              |
+| ---------------------------------------------------------------------------------------------- | ------ | --------------------------------------------------------------------- |
+| [Search](/api/resources/ai_search/subresources/namespaces/methods/search/)                     | `POST` | `/accounts/{account_id}/ai-search/namespaces/{name}/search`           |
+| [Chat completions](/api/resources/ai_search/subresources/namespaces/methods/chat_completions/) | `POST` | `/accounts/{account_id}/ai-search/namespaces/{name}/chat/completions` |
 
-<Render file="search-api-params" product="ai-search" />
+### Example: Namespace-wide search
 
-### Response
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/<NAMESPACE>/search" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is Cloudflare?"
+      }
+    ],
+    "ai_search_options": {
+      "instance_ids": ["product-docs", "customer-abc123"]
+    }
+  }'
+```
 
-<Render file="search-response" product="ai-search" />
+### Example: Namespace-wide chat completions
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/<NAMESPACE>/chat/completions" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is Cloudflare?"
+      }
+    ],
+    "ai_search_options": {
+      "instance_ids": ["product-docs", "customer-abc123"]
+    }
+  }'
+```
+
+## API reference
+
+For complete API specifications including all parameters and response fields, refer to the [AI Search API reference](/api/resources/ai_search/).
 
 ## Related resources
 
