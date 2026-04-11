@@ -5,24 +5,26 @@ sidebar:
   order: 4
 ---
 
-AI Search supports three search modes: vector, keyword, and hybrid.
+AI Search supports three search modes: vector, keyword, and hybrid. By default, new instances use vector search only. You can enable keyword or hybrid search when creating or updating an instance.
 
 ## Vector search
 
-Vector search embeds your query and finds chunks that are semantically similar, even when the exact words differ. This is the default search mode and works well for natural language queries.
+Vector search converts your query into a vector embedding and finds chunks with similar meaning, even when the exact words differ. It knows that "deployment guide" and "how to ship my app" mean similar things.
 
 ## Keyword search
 
-Keyword search matches chunks that contain your query terms exactly. Enable keyword search when your content contains specific terms that benefit from exact matching, like error codes, product names, or configuration keys. Refer to [Keyword search configuration](/ai-search/configuration/indexing/keyword-search/) for setup.
+Keyword search matches chunks that contain your query terms exactly using BM25 full-text search. When you search "Go errors help," BM25 finds documents that actually contain "Go" as a distinct term. Refer to [Keyword search](/ai-search/configuration/indexing/keyword-search/) for setup.
 
 ## Hybrid search
 
-Hybrid search runs vector and keyword search in parallel and merges the results. This gives you the strengths of both approaches. Refer to [Hybrid search configuration](/ai-search/configuration/indexing/hybrid-search/) for setup.
+Hybrid search runs vector and keyword search in parallel and merges the results using a fusion method. Vector search understands intent, keyword search matches specific terms. Together, a query like "Go errors help" finds Go-specific documents that are also semantically relevant to error handling. Refer to [Hybrid search](/ai-search/configuration/indexing/hybrid-search/) for setup.
+
+![Hybrid search](~/assets/images/ai-search/hybrid-search.png)
 
 ## When to use each mode
 
-| Mode    | Best for                                                       |
-| ------- | -------------------------------------------------------------- |
-| Vector  | Natural language queries, paraphrasing, conceptual similarity  |
-| Keyword | Error codes, product SKUs, function names, exact term matching |
-| Hybrid  | Content that benefits from both semantic and exact matching    |
+| Mode    | Default | Best for                                                       |
+| ------- | ------- | -------------------------------------------------------------- |
+| Vector  | Yes     | Natural language queries, paraphrasing, conceptual similarity  |
+| Keyword | No      | Error codes, product SKUs, function names, exact term matching |
+| Hybrid  | No      | Content that benefits from both semantic and exact matching    |

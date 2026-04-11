@@ -31,7 +31,7 @@ You can customize how your AI Search instance indexes your data, retrieves resul
 | Configuration                                                            | Editable after creation | Description                                                   |
 | ------------------------------------------------------------------------ | ----------------------- | ------------------------------------------------------------- |
 | [Result filtering](/ai-search/configuration/retrieval/result-filtering/) | yes                     | Match threshold and maximum number of results                 |
-| [Metadata](/ai-search/configuration/retrieval/metadata/)                 | no                      | Custom metadata fields for filtering                          |
+| [Metadata](/ai-search/configuration/retrieval/metadata/)                 | yes                     | Custom metadata fields for filtering                          |
 | [Relevance boosting](/ai-search/configuration/retrieval/boosting/)       | yes                     | Bias results by metadata characteristics                      |
 | [Reranking](/ai-search/configuration/retrieval/reranking/)               | yes                     | Reorder results by semantic relevance using a reranking model |
 | [Query rewriting](/ai-search/configuration/retrieval/query-rewriting/)   | yes                     | Rewrite follow-up queries using conversation context          |
@@ -42,8 +42,9 @@ You can customize how your AI Search instance indexes your data, retrieves resul
 
 ## Models
 
-| Configuration                                                         | Editable after creation | Description                               |
-| --------------------------------------------------------------------- | ----------------------- | ----------------------------------------- |
-| [Embedding model](/ai-search/configuration/models/)                   | no                      | Model used to generate vector embeddings  |
-| [Generation model](/ai-search/configuration/models/)                  | yes                     | Model used to generate the final response |
-| [Supported models](/ai-search/configuration/models/supported-models/) | n/a                     | List of available models                  |
+| Configuration                                             | Editable after creation | Description                                         |
+| --------------------------------------------------------- | ----------------------- | --------------------------------------------------- |
+| [Embedding model](/ai-search/configuration/models/)       | no                      | Model used to generate vector embeddings            |
+| [Generation model](/ai-search/configuration/models/)      | yes                     | Model used to generate the final response           |
+| [Query rewriting model](/ai-search/configuration/models/) | yes                     | Model used for query rewriting                      |
+| [Reranking model](/ai-search/configuration/models/)       | yes                     | Model used to reorder results by semantic relevance |
