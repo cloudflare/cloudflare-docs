@@ -38,9 +38,7 @@ For example:
 const instance = env.AI_SEARCH.get("my-instance");
 
 const results = await instance.search({
-	messages: [
-		{ role: "user", content: "How do I train a llama to deliver coffee?" },
-	],
+	messages: [{ role: "user", content: "What is Cloudflare?" }],
 	ai_search_options: {
 		reranking: {
 			enabled: true,

@@ -4,9 +4,7 @@
 
 import { WranglerConfig } from "~/components";
 
-To use AI Search with Workers, you must create an AI Search [binding](/workers/runtime-apis/bindings/). Bindings allow your Workers to interact with resources, like AI Search, on the Cloudflare Developer Platform. You create bindings by updating your [Wrangler configuration](/workers/wrangler/configuration/).
-
-AI Search provides two types of bindings:
+To use AI Search with Workers, you must create an AI Search binding. You create bindings by updating your [Wrangler configuration](/workers/wrangler/configuration/). AI Search provides two types of bindings:
 
 ### Namespace binding
 
@@ -15,9 +13,11 @@ Access all instances within a [namespace](/ai-search/concepts/namespaces/). You 
 <WranglerConfig>
 
 ```toml
+compatibility_date = "2026-03-27"
+
 [[ai_search_namespaces]]
 binding = "AI_SEARCH"
-namespace = "default"
+namespace = "my-namespace"
 ```
 
 </WranglerConfig>
@@ -29,11 +29,13 @@ namespace = "default"
 
 ### Instance binding
 
-Bind directly to a single instance in the default namespace. Use this when you know which instance you need at deploy time.
+Bind directly to a single instance in the `default` namespace. Use this when you know which instance you need at deploy time.
 
 <WranglerConfig>
 
 ```toml
+compatibility_date = "2026-03-27"
+
 [[ai_search]]
 binding = "MY_SEARCH"
 instance_name = "my-instance"
@@ -47,3 +49,7 @@ instance_name = "my-instance"
 | `instance_name` | string | Yes      | The name of the AI Search instance. Must exist in the default namespace at deploy time.                  |
 
 With the namespace binding, call `env.AI_SEARCH.get("my-instance")` to get an instance handle. With the instance binding, `env.MY_SEARCH` is the instance handle directly.
+
+:::note
+If you are using the legacy `env.AI.autorag()` binding, refer to the [API Migration guide](/ai-search/api/migration/) for how to upgrade.
+:::

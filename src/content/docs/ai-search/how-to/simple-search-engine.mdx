@@ -24,9 +24,7 @@ export interface Env {
 export default {
 	async fetch(request, env): Promise<Response> {
 		const url = new URL(request.url);
-		const userQuery =
-			url.searchParams.get("query") ??
-			"How do I train a llama to deliver coffee?";
+		const userQuery = url.searchParams.get("query") ?? "What is Cloudflare?";
 
 		const searchResult = await env.AI_SEARCH.get("my-instance").search({
 			messages: [{ role: "user", content: userQuery }],

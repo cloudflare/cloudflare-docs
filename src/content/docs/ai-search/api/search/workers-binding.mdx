@@ -7,7 +7,7 @@ sidebar:
 
 import { Render, MetaInfo, Type } from "~/components";
 
-[Workers](/workers/) provides a serverless execution environment that allows you to create new applications or augment existing ones. Use a Workers binding to search and chat with your AI Search instances from a Cloudflare Worker.
+[Workers](/workers/) provides a serverless execution environment that allows you to create new applications or augment existing ones. Use a [Workers binding](/workers/runtime-apis/bindings/) to search and chat with your AI Search instances from a Cloudflare Worker.
 
 ## Configure the binding
 
@@ -43,7 +43,7 @@ const instance = env.AI_SEARCH.get("my-instance");
 const response = await instance.chatCompletions({
 	messages: [
 		{ role: "system", content: "You are a helpful documentation assistant." },
-		{ role: "user", content: "Explain the rules of hooks" },
+		{ role: "user", content: "What is Cloudflare?" },
 	],
 	model: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
 	ai_search_options: {
@@ -65,7 +65,7 @@ Set `stream: true` to receive responses as Server-Sent Events (SSE) as they are 
 const instance = env.AI_SEARCH.get("my-instance");
 
 const stream = await instance.chatCompletions({
-	messages: [{ role: "user", content: "How does Suspense work?" }],
+	messages: [{ role: "user", content: "What is Cloudflare?" }],
 	stream: true,
 });
 

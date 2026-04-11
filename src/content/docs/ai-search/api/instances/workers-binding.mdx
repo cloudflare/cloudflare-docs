@@ -7,7 +7,7 @@ sidebar:
 
 import { Render, MetaInfo, Type } from "~/components";
 
-[Workers](/workers/) provides a serverless execution environment that allows you to create new applications or augment existing ones. Use a Workers binding to create, list, update, and delete AI Search instances from a Cloudflare Worker. You can also check instance configuration and monitor indexing progress.
+[Workers](/workers/) provides a serverless execution environment that allows you to create new applications or augment existing ones. Use a [Workers binding](/workers/runtime-apis/bindings/) to create, list, update, and delete AI Search instances from a Cloudflare Worker. You can also check instance configuration and monitor indexing progress.
 
 ## Configure the binding
 
@@ -24,15 +24,15 @@ Returns a handle to a specific instance. This is **synchronous** and does not ma
 ```ts
 const instance = env.AI_SEARCH.get("my-instance");
 const results = await instance.search({
-	messages: [{ role: "user", content: "What is Workers KV?" }],
+	messages: [{ role: "user", content: "What is Cloudflare?" }],
 });
 ```
 
 #### Parameters
 
-`name` <Type text="string" /> <MetaInfo text="required" />
-
-The name of the instance to get a handle to.
+| Parameter | Type   | Required | Description                                  |
+| --------- | ------ | -------- | -------------------------------------------- |
+| `name`    | string | Yes      | The name of the instance to get a handle to. |
 
 ### `list()`
 
@@ -66,32 +66,6 @@ for (const instance of result) {
 
 Creates a new instance and returns a handle to it. You can create instances backed by a data source or create empty instances for use with the [Items API](/ai-search/api/items/workers-binding/).
 
-**Create a web-crawler instance:**
-
-```ts
-const instance = await env.AI_SEARCH.create({
-	id: "react-docs",
-	type: "web-crawler",
-	source: "react.dev",
-});
-
-const stats = await instance.stats();
-console.log(`Queued: ${stats.queued}, Completed: ${stats.completed}`);
-```
-
-**Create an R2-backed instance:**
-
-```ts
-const instance = await env.AI_SEARCH.create({
-	id: "internal-docs",
-	type: "r2",
-	source: "my-docs-bucket",
-	source_params: {
-		include_items: ["/docs/**"],
-	},
-});
-```
-
 **Create an empty instance for file uploads:**
 
 ```ts
@@ -103,7 +77,32 @@ const instance = await env.AI_SEARCH.create({
 await instance.items.upload("guide.pdf", pdfArrayBuffer);
 ```
 
-After creating an instance with a data source, indexing runs automatically. For empty instances, use the [Items API](/ai-search/api/items/workers-binding/) to upload content.
+**Create a web-crawler instance:**
+
+Automatically crawl and index a website that you own. For more configuration options, refer to [Website data source](/ai-search/configuration/data-source/website/).
+
+```ts
+const instance = await env.AI_SEARCH.create({
+	id: "my-docs",
+	type: "web-crawler",
+	source: "developers.cloudflare.com",
+});
+```
+
+**Create an R2-backed instance:**
+
+Index documents stored in an [R2](/r2/) bucket. For more configuration options, refer to [R2 data source](/ai-search/configuration/data-source/r2/).
+
+```ts
+const instance = await env.AI_SEARCH.create({
+	id: "internal-docs",
+	type: "r2",
+	source: "my-docs-bucket",
+	source_params: {
+		include_items: ["/docs/**"],
+	},
+});
+```
 
 #### Parameters
 
@@ -129,9 +128,9 @@ await env.AI_SEARCH.delete("old-docs");
 
 #### Parameters
 
-`name` <Type text="string" /> <MetaInfo text="required" />
-
-The name of the instance to delete.
+| Parameter | Type   | Required | Description                         |
+| --------- | ------ | -------- | ----------------------------------- |
+| `name`    | string | Yes      | The name of the instance to delete. |
 
 #### Response
 

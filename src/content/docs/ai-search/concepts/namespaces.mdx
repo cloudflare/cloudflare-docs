@@ -7,7 +7,7 @@ sidebar:
 
 import { WranglerConfig } from "~/components";
 
-Every AI Search instance belongs to a **namespace**. A namespace is a logical grouping of instances within your account. Instance names must be unique within a namespace.
+Every AI Search instance belongs to a **namespace**. A namespace is a logical grouping of instances within your account.
 
 ## Requirements
 
@@ -27,12 +27,12 @@ When you add an `ai_search_namespaces` binding to your Wrangler configuration, y
 ```toml
 [[ai_search_namespaces]]
 binding = "AI_SEARCH"
-namespace = "default"
+namespace = "my-namespace"
 ```
 
 </WranglerConfig>
 
-At runtime, `env.AI_SEARCH` is the namespace handle. Use `env.AI_SEARCH.get("instance-name")` to get a handle to a specific instance:
+At runtime, `env.AI_SEARCH` is the namespace handle. Use `env.AI_SEARCH.get("my-instance")` to get a handle to a specific instance:
 
 ```ts
 const instance = env.AI_SEARCH.get("my-instance");

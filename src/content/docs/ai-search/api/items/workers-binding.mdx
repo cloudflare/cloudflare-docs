@@ -7,7 +7,7 @@ sidebar:
 
 import { Render, MetaInfo, Type } from "~/components";
 
-[Workers](/workers/) provides a serverless execution environment that allows you to create new applications or augment existing ones. Use a Workers binding to upload, list, and manage documents in your AI Search instances from a Cloudflare Worker. Access the Items API through the `items` property on an instance handle.
+[Workers](/workers/) provides a serverless execution environment that allows you to create new applications or augment existing ones. Use a [Workers binding](/workers/runtime-apis/bindings/) to upload, list, and manage documents in your AI Search instances from a Cloudflare Worker. Access the Items API through the `items` property on an instance handle.
 
 ## Configure the binding
 
@@ -157,9 +157,9 @@ await instance.items.delete("item-id-123");
 
 ### Parameters
 
-`itemId` <Type text="string" /> <MetaInfo text="required" />
-
-The unique identifier of the item to delete.
+| Parameter | Type   | Required | Description                                  |
+| --------- | ------ | -------- | -------------------------------------------- |
+| `itemId`  | string | Yes      | The unique identifier of the item to delete. |
 
 ### Response
 

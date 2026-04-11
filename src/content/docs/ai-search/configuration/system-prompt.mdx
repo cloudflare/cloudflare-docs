@@ -45,7 +45,7 @@ const instance = env.AI_SEARCH.get("my-instance");
 const response = await instance.chatCompletions({
 	messages: [
 		{ role: "system", content: "You are a helpful assistant." },
-		{ role: "user", content: "How do I train a llama to deliver coffee?" },
+		{ role: "user", content: "What is Cloudflare?" },
 	],
 	model: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
 });
