@@ -35,12 +35,22 @@
  */
 
 /**
+ * Extract the element name from the start of a JSX string.
+ * e.g., "<code>" → "code", "<GlossaryTooltip term="x">" → "GlossaryTooltip"
+ */
+function getElementName(value) {
+	const match = value.trim().match(/^<([a-zA-Z][a-zA-Z0-9]*)/);
+	return match ? match[1] : null;
+}
+
+/**
  * Collapse a multi-line JSX element value onto a single line.
  *
  * Handles:
  * - {" "} spacer expressions inserted by prettier
  * - Newlines with surrounding whitespace from indentation
  * - Multiple consecutive spaces from collapsing
+ * - Trailing content after the closing tag (e.g., in list items)
  *
  * Preserves:
  * - Attribute values (strings in the opening tag)
@@ -49,6 +59,9 @@
 function collapseInlineJsx(value) {
 	// Remove {" "} spacers — these are prettier artifacts for preserving spaces
 	let result = value.replace(/\{" "\}/g, " ");
+
+	const elementName = getElementName(result);
+	if (!elementName) return result;
 
 	// Find the end of the opening tag by tracking string context.
 	// We need to skip over attribute values that may contain '>' characters.
@@ -73,14 +86,16 @@ function collapseInlineJsx(value) {
 
 	if (openTagEnd === -1) return result;
 
-	// Find the closing tag at the end of the value
-	const closeTagMatch = result.match(/<\/[a-zA-Z][a-zA-Z0-9]*>\s*$/);
-	if (!closeTagMatch) return result;
+	// Find the matching closing tag — it may not be at the very end of the
+	// value if there is trailing content (e.g., in a list item where the
+	// description text follows the </code> within the same JSX node).
+	const closeTag = `</${elementName}>`;
+	const closeTagIndex = result.indexOf(closeTag, openTagEnd);
+	if (closeTagIndex === -1) return result;
 
-	const closeTagStart = closeTagMatch.index;
 	const openTag = result.substring(0, openTagEnd + 1);
-	const content = result.substring(openTagEnd + 1, closeTagStart);
-	const closeTag = closeTagMatch[0].trim();
+	const content = result.substring(openTagEnd + 1, closeTagIndex);
+	const trailing = result.substring(closeTagIndex + closeTag.length);
 
 	// Collapse whitespace in the content between tags
 	const collapsed = content
@@ -88,7 +103,7 @@ function collapseInlineJsx(value) {
 		.replace(/\s{2,}/g, " ") // multiple spaces → single space
 		.trim();
 
-	return openTag + collapsed + closeTag;
+	return openTag + collapsed + closeTag + trailing;
 }
 
 /**
