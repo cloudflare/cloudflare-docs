@@ -13,7 +13,7 @@ You can connect a [Cloudflare R2](/r2/) bucket as a data source for your AI Sear
 
 You can connect an R2 bucket when creating a new instance through the [dashboard](/ai-search/get-started/dashboard/), the [REST API](/ai-search/get-started/api/), or [Wrangler](/ai-search/get-started/wrangler/). R2 is an optional data source that you can add alongside [built-in storage](/ai-search/configuration/data-source/built-in-storage/).
 
-If you have never created an R2-backed instance before, we recommend using the dashboard or Wrangler CLI, which will create and register a [service API token](/ai-search/configuration/service-api-token/) for you automatically. If you are using the REST API or Workers binding, you will need to create a service API token and pass the `token_id` in the create request. Refer to [Service API token](/ai-search/configuration/service-api-token/) for setup instructions.
+If you have never created an R2-backed instance before, we recommend using the dashboard or Wrangler CLI, which will create and register a [service API token](/ai-search/configuration/indexing/service-api-token/) for you automatically. If you are using the REST API or Workers binding, you will need to create a service API token and pass the `token_id` in the create request. Refer to [Service API token](/ai-search/configuration/indexing/service-api-token/) for setup instructions.
 
 To get started, [configure an R2 bucket](/r2/get-started/) containing your data. Files that are unsupported or exceed the size limit will be skipped during indexing and logged as errors.
 
@@ -26,7 +26,7 @@ For example, to index only documentation while excluding drafts:
 - **Include:** `/docs/**`
 - **Exclude:** `/docs/drafts/**`
 
-Refer to [Path filtering](/ai-search/configuration/path-filtering/) for pattern syntax, filtering behavior, and more examples.
+Refer to [Path filtering](/ai-search/configuration/indexing/path-filtering/) for pattern syntax, filtering behavior, and more examples.
 
 For supported file types and size limits, refer to [Data source](/ai-search/configuration/data-source/#supported-file-types).
 
@@ -34,7 +34,7 @@ For supported file types and size limits, refer to [Data source](/ai-search/conf
 
 You can attach custom metadata to R2 objects for filtering search results. AI Search reads metadata from S3-compatible custom headers (`x-amz-meta-*`).
 
-Before metadata can be extracted, you must [define a schema](/ai-search/configuration/metadata/#define-a-schema) in your AI Search configuration.
+Before metadata can be extracted, you must [define a schema](/ai-search/configuration/retrieval/metadata/#define-a-schema) in your AI Search configuration.
 
 ### Set metadata when uploading
 

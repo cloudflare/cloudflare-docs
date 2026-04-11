@@ -260,6 +260,22 @@
 /ai-search/how-to/migrate-from-autorag-api/ /ai-search/api/migration/rest-api/ 301
 /ai-search/autorag-filter-format/ /ai-search/api/migration/autorag-filter-format/ 301
 /ai-search/how-to/multitenancy/ /ai-search/how-to/per-tenant-search/ 301
+/ai-search/configuration/path-filtering/ /ai-search/configuration/indexing/path-filtering/ 301
+/ai-search/configuration/chunking/ /ai-search/configuration/indexing/chunking/ 301
+/ai-search/configuration/indexing/ /ai-search/configuration/indexing/syncing/ 301
+/ai-search/configuration/keyword-search/ /ai-search/configuration/indexing/keyword-search/ 301
+/ai-search/configuration/service-api-token/ /ai-search/configuration/indexing/service-api-token/ 301
+/ai-search/configuration/retrieval-configuration/ /ai-search/configuration/retrieval/result-filtering/ 301
+/ai-search/configuration/retrieval/retrieval-configuration/ /ai-search/configuration/retrieval/result-filtering/ 301
+/ai-search/configuration/hybrid-search/ /ai-search/configuration/indexing/hybrid-search/ 301
+/ai-search/configuration/metadata/ /ai-search/configuration/retrieval/metadata/ 301
+/ai-search/configuration/boosting/ /ai-search/configuration/retrieval/boosting/ 301
+/ai-search/configuration/reranking/ /ai-search/configuration/retrieval/reranking/ 301
+/ai-search/configuration/query-rewriting/ /ai-search/configuration/retrieval/query-rewriting/ 301
+/ai-search/configuration/system-prompt/ /ai-search/configuration/retrieval/system-prompt/ 301
+/ai-search/configuration/cache/ /ai-search/configuration/retrieval/cache/ 301
+/ai-search/configuration/public-endpoint/ /ai-search/configuration/retrieval/public-endpoint/ 301
+/ai-search/configuration/embed-search-snippets/ /ai-search/configuration/retrieval/embed-search-snippets/ 301
 
 # bots
 /bots/about/plans/ /bots/plans/ 301

@@ -20,7 +20,7 @@ Here is what happens during indexing:
 
 1. **Data ingestion:** AI Search reads from your connected data source or receives files uploaded through the [Items API](/ai-search/api/items/workers-binding/).
 2. **Markdown conversion:** AI Search uses [Workers AI's Markdown Conversion](/workers-ai/features/markdown-conversion/) to convert [supported data types](/ai-search/configuration/data-source/) into structured Markdown. This ensures consistency across diverse file types. For images, Workers AI is used to perform object detection followed by vision-to-language transformation to convert images into Markdown text.
-3. **Chunking:** The extracted text is [chunked](/ai-search/configuration/chunking/) into smaller pieces to improve retrieval granularity.
+3. **Chunking:** The extracted text is [chunked](/ai-search/configuration/indexing/chunking/) into smaller pieces to improve retrieval granularity.
 4. **Embedding:** Each chunk is embedded using Workers AI's embedding model to transform the content into vectors.
 5. **Keyword indexing:** When keyword search is enabled, each chunk is also indexed for BM25 keyword matching.
 6. **Storage:** The vectors, keyword index, and content are stored and ready for search.
@@ -36,13 +36,13 @@ Once indexing is complete, AI Search is ready to respond to end-user queries in 
 Here is how the querying pipeline works:
 
 1. **Receive query from AI Search API:** The query workflow begins when you send a request to either the AI Search's [Chat Completions](/ai-search/api/search/rest-api/#chat-completions) or [Search](/ai-search/api/search/rest-api/#search) endpoints.
-2. **Query rewriting (optional):** AI Search provides the option to [rewrite the input query](/ai-search/configuration/query-rewriting/) using one of Workers AI's LLMs to improve retrieval quality by transforming the original query into a more effective search query.
+2. **Query rewriting (optional):** AI Search provides the option to [rewrite the input query](/ai-search/configuration/retrieval/query-rewriting/) using one of Workers AI's LLMs to improve retrieval quality by transforming the original query into a more effective search query.
 3. **Embedding the query:** The rewritten (or original) query is transformed into a vector using the same embedding model used to embed your data.
 4. **Vector search:** The query vector is matched against stored vectors to find semantically similar content.
 5. **Keyword search (optional):** When hybrid search is enabled, a BM25 keyword search runs in parallel with vector search.
 6. **Fusion (optional):** When using hybrid search, vector and keyword results are combined using the configured fusion method.
-7. **Reranking (optional):** A cross-encoder model re-scores results by evaluating the query and document together. Refer to [Reranking](/ai-search/configuration/reranking/) for details.
+7. **Reranking (optional):** A cross-encoder model re-scores results by evaluating the query and document together. Refer to [Reranking](/ai-search/configuration/retrieval/reranking/) for details.
 8. **Content retrieval:** The most relevant chunks and their source content are returned. If you are using the Search endpoint, the content is returned at this point.
-9. **Response generation:** If you are using the Chat Completions endpoint, a text-generation model generates a response using the retrieved content. Refer to [System prompt](/ai-search/configuration/system-prompt/) for details.
+9. **Response generation:** If you are using the Chat Completions endpoint, a text-generation model generates a response using the retrieved content. Refer to [System prompt](/ai-search/configuration/retrieval/system-prompt/) for details.
 
 ![Querying](~/assets/images/ai-search/querying.png)

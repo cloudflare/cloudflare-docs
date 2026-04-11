@@ -58,7 +58,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-sear
 
 **R2 bucket:**
 
-Index documents stored in an [R2 bucket](/ai-search/configuration/data-source/r2/). Connecting an R2 bucket requires a [service API token](/ai-search/configuration/service-api-token/). If you have never created an R2-backed instance before, you need to pass the `token_id` field in the create request. Refer to the [service API token configuration](/ai-search/configuration/service-api-token/) for setup instructions.
+Index documents stored in an [R2 bucket](/ai-search/configuration/data-source/r2/). Connecting an R2 bucket requires a [service API token](/ai-search/configuration/indexing/service-api-token/). If you have never created an R2-backed instance before, you need to pass the `token_id` field in the create request. Refer to the [service API token configuration](/ai-search/configuration/indexing/service-api-token/) for setup instructions.
 
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances" \

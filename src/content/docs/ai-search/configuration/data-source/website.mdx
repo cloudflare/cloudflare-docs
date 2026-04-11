@@ -38,7 +38,7 @@ AI Search supports `.gz` compressed sitemaps. Both `robots.txt` and sitemaps can
 
 ### Sync and updates
 
-During scheduled or manual [sync jobs](/ai-search/configuration/indexing/), the crawler will check for changes to the `<lastmod>` attribute in your sitemap. If it has been changed to a date occurring after the last sync date, then the page will be crawled, the updated version is stored, and automatically reindexed so that your search results always reflect the latest content.
+During scheduled or manual [sync jobs](/ai-search/configuration/indexing/syncing/), the crawler will check for changes to the `<lastmod>` attribute in your sitemap. If it has been changed to a date occurring after the last sync date, then the page will be crawled, the updated version is stored, and automatically reindexed so that your search results always reflect the latest content.
 
 If the `<lastmod>` attribute is not defined, AI Search uses the `<changefreq>` attribute to determine how often to re-crawl the URL. If neither `<lastmod>` nor `<changefreq>` is defined, AI Search automatically crawls each link once a day.
 
@@ -67,7 +67,7 @@ For example, to index only blog posts while excluding drafts:
 - **Include:** `**/blog/**`
 - **Exclude:** `**/blog/drafts/**`
 
-Refer to [Path filtering](/ai-search/configuration/path-filtering/) for pattern syntax, filtering behavior, and more examples.
+Refer to [Path filtering](/ai-search/configuration/indexing/path-filtering/) for pattern syntax, filtering behavior, and more examples.
 
 For supported file types and size limits, refer to [Data source](/ai-search/configuration/data-source/#supported-file-types).
 
@@ -135,7 +135,7 @@ Service tokens bypass user authentication, so ensure your Access policies are co
 
 You can attach custom metadata to web pages using HTML `<meta>` tags. AI Search extracts metadata from the `<head>` section of each crawled page.
 
-Before custom metadata can be extracted, you must [define a schema](/ai-search/configuration/metadata/#define-a-schema) in your AI Search configuration.
+Before custom metadata can be extracted, you must [define a schema](/ai-search/configuration/retrieval/metadata/#define-a-schema) in your AI Search configuration.
 
 ### Add metadata to web pages
 

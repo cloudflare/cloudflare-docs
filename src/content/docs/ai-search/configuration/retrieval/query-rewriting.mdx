@@ -20,7 +20,7 @@ This leads to more relevant search matches which improves the accuracy of result
 
 ## How it works
 
-Query rewriting requires the `messages` format and does not apply when using the `query` format. The first message is always used as-is. For follow-up queries, AI Search sends the conversation history, the latest user message, and the [query rewrite system prompt](/ai-search/configuration/system-prompt/) to the configured LLM. The rewritten query is then embedded and used to perform the search.
+Query rewriting requires the `messages` format and does not apply when using the `query` format. The first message is always used as-is. For follow-up queries, AI Search sends the conversation history, the latest user message, and the [query rewrite system prompt](/ai-search/configuration/retrieval/system-prompt/) to the configured LLM. The rewritten query is then embedded and used to perform the search.
 
 ## Example
 
@@ -30,7 +30,7 @@ Query rewriting requires the `messages` format and does not apply when using the
 **Follow-up message:** `How do I deploy one?`
 **Rewritten query:** `deploy Cloudflare Worker getting started`
 
-The follow-up "How do I deploy one?" is vague on its own. Query rewriting uses the conversation context to understand "one" refers to a Cloudflare Worker. How the query is rewritten depends on your [query rewrite system prompt](/ai-search/configuration/system-prompt/#query-rewriting-system-prompt).
+The follow-up "How do I deploy one?" is vague on its own. Query rewriting uses the conversation context to understand "one" refers to a Cloudflare Worker. How the query is rewritten depends on your [query rewrite system prompt](/ai-search/configuration/retrieval/system-prompt/#query-rewriting-system-prompt).
 
 ## Considerations
 

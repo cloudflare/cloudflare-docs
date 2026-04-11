@@ -1,0 +1,49 @@
+---
+pcx_content_type: concept
+title: Result filtering
+sidebar:
+  order: 5
+---
+
+Result filtering controls how many results are returned and the minimum score required. To filter results by metadata attributes like folder or category, refer to [Metadata](/ai-search/configuration/retrieval/metadata/).
+
+## Match threshold
+
+The `match_threshold` sets the minimum similarity score that a document chunk must meet to be included in the results. Threshold values range from `0` to `1`.
+
+- A higher threshold means stricter filtering, returning only highly similar matches.
+- A lower threshold allows broader matches, increasing recall but possibly reducing precision.
+
+## Maximum number of results
+
+The `max_num_results` setting controls the number of top-matching chunks returned after filtering by similarity score. The maximum allowed value is 50.
+
+- Use a higher value if you want to synthesize across multiple documents. However, providing more input to the model can increase latency and cost.
+- Use a lower value if you prefer concise answers with minimal context.
+
+## How they work together
+
+1. Your query is embedded using the configured embedding model.
+2. The search index is queried with `max_num_results` controlling the number of results.
+3. Results are filtered using the `match_threshold`.
+4. The filtered results are passed into the generation step as context.
+
+If no results meet the threshold, AI Search will not generate a response.
+
+## Per-request override
+
+These values can be configured at the instance level or overridden per request:
+
+```ts
+const instance = env.AI_SEARCH.get("my-instance");
+
+const results = await instance.search({
+	messages: [{ role: "user", content: "What is Cloudflare?" }],
+	ai_search_options: {
+		retrieval: {
+			match_threshold: 0.5,
+			max_num_results: 10,
+		},
+	},
+});
+```

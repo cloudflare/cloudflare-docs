@@ -1,0 +1,28 @@
+---
+pcx_content_type: concept
+title: Search modes
+sidebar:
+  order: 4
+---
+
+AI Search supports three search modes: vector, keyword, and hybrid.
+
+## Vector search
+
+Vector search embeds your query and finds chunks that are semantically similar, even when the exact words differ. This is the default search mode and works well for natural language queries.
+
+## Keyword search
+
+Keyword search matches chunks that contain your query terms exactly. Enable keyword search when your content contains specific terms that benefit from exact matching, like error codes, product names, or configuration keys. Refer to [Keyword search configuration](/ai-search/configuration/indexing/keyword-search/) for setup.
+
+## Hybrid search
+
+Hybrid search runs vector and keyword search in parallel and merges the results. This gives you the strengths of both approaches. Refer to [Hybrid search configuration](/ai-search/configuration/indexing/hybrid-search/) for setup.
+
+## When to use each mode
+
+| Mode    | Best for                                                       |
+| ------- | -------------------------------------------------------------- |
+| Vector  | Natural language queries, paraphrasing, conceptual similarity  |
+| Keyword | Error codes, product SKUs, function names, exact term matching |
+| Hybrid  | Content that benefits from both semantic and exact matching    |
