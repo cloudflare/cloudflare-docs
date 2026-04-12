@@ -243,9 +243,9 @@
 /api-shield/security/sequence-mitigation/configure/ /api-shield/security/sequence-mitigation/api/ 301
 /api-shield/frequently-asked-questions/ /api-shield/ 301
 /autorag/usage/recipes/ /ai-search/how-to/ 301
-/autorag/configuration/metadata-filtering/ /ai-search/configuration/metadata/ 301
+/autorag/configuration/metadata-filtering/ /ai-search/configuration/retrieval/metadata/ 301
 /ai-search/tutorial/ /ai-search/how-to/ 301
-/ai-search/tutorial/brower-rendering-autorag-tutorial/ /ai-search/how-to/brower-rendering-autorag-tutorial/ 301
+/ai-search/tutorial/brower-rendering-autorag-tutorial/ /ai-search/how-to/ 301
 /ai-search/autorag-api/ /api/resources/ai_search/ 301
 /ai-search/usage/workers-binding/ /ai-search/api/search/workers-binding/ 301
 /ai-search/usage/workers-binding-legacy/ /ai-search/api/migration/workers-binding-legacy/ 301
