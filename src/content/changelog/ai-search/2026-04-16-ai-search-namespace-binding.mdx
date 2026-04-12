@@ -1,53 +1,69 @@
 ---
-title: AI Search namespace binding
-description: Access AI Search instances with the new ai_search_namespaces binding for namespace isolation, dynamic instance management, and file uploads.
+title: New AI Search bindings, built-in storage, and cross-instance search
+description: Access AI Search from Workers with two new bindings, upload files directly to built-in storage, and search across multiple instances in a single call.
 products:
   - ai-search
 date: 2026-04-16
 ---
 
-The new `ai_search_namespaces` [Workers binding](/ai-search/api/search/workers-binding/) provides first-class access to [AI Search](/ai-search/) from your Worker. The binding follows the same pattern as `kv_namespaces` and `r2_buckets`, and supports dynamic instance management at runtime.
+[AI Search](/ai-search/) now ships with two new Workers bindings, built-in storage for every new instance, and cross-instance search.
 
-## What is new
+## New Workers bindings
 
-- **Namespace isolation**: Group instances into [namespaces](/ai-search/concepts/namespaces/) for environment or tenant separation
-- **Dynamic instance management**: Create, update, and delete instances at runtime without redeploying
-- **Items API**: Upload and manage individual documents through the [Items API](/ai-search/api/items/workers-binding/)
-- **Streaming**: Stream chat completion responses as Server-Sent Events
-- **Messages-based API**: Uses a `messages` array format consistent with chat completion APIs
+AI Search introduces two new Workers bindings for accessing AI Search from a [Cloudflare Worker](/workers/).
 
-## Example
-
-Add the binding to your Wrangler configuration and start querying:
+The `ai_search_namespaces` binding gives your Worker access to all instances within a [namespace](/ai-search/concepts/namespaces/). You can create, update, and delete instances at runtime without redeploying:
 
 ```ts
 // wrangler.jsonc
 // "ai_search_namespaces": [{ "binding": "AI_SEARCH", "namespace": "default" }]
 
-export type Env = {
-	AI_SEARCH: AiSearchNamespace;
-};
+// create a new instance at runtime
+const instance = await env.AI_SEARCH.create({ id: "my-instance" });
 
-export default {
-	async fetch(request, env): Promise<Response> {
-		const results = await env.AI_SEARCH.get("my-instance").search({
-			messages: [{ role: "user", content: "How do I configure caching?" }],
-		});
+// upload a file to built-in storage
+await instance.items.upload("guide.md", content);
 
-		return Response.json(results);
-	},
-} satisfies ExportedHandler<Env>;
+// search the instance
+const results = await env.AI_SEARCH.get("my-instance").search({
+	messages: [{ role: "user", content: "What is Cloudflare?" }],
+});
 ```
 
-## Requirements
+The `ai_search` binding binds directly to a single instance in the default namespace. Use this when you know which instance you need at deploy time:
 
-| Package                     | Minimum version |
-| --------------------------- | --------------- |
-| `@cloudflare/workers-types` | `4.20260304.0`  |
-| `wrangler`                  | `4.68.1`        |
+```ts
+// wrangler.jsonc
+// "ai_search": [{ "binding": "MY_SEARCH", "instance_name": "my-instance" }]
 
-## Backwards compatibility
+const results = await env.MY_SEARCH.search({
+	messages: [{ role: "user", content: "What is Cloudflare?" }],
+});
+```
 
-The previous `env.AI.autorag()` binding is deprecated but will continue to work indefinitely. Existing code does not need to be migrated.
+Refer to [Namespaces](/ai-search/concepts/namespaces/) for details on the difference between the two bindings.
 
-For full documentation, refer to the [Workers binding guide](/ai-search/api/search/workers-binding/).
+## Built-in storage
+
+New AI Search instances come with built-in storage and a built-in vector index, powered by [R2](/r2/) and [Vectorize](/vectorize/). You can upload files directly to an instance and they are indexed automatically. No need to set up an R2 bucket or Vectorize index yourself.
+
+Upload files using the [Items API](/ai-search/api/items/workers-binding/) or the **Items** tab in the dashboard. You can also connect an external data source like a website or R2 bucket alongside built-in storage.
+
+Refer to [Built-in storage](/ai-search/configuration/data-source/built-in-storage/) for details.
+
+## Cross-instance search
+
+You can now search across multiple instances in a single call using the namespace binding. Pass an array of instance IDs and get one ranked list back. Each chunk in the response includes an `instance_id` field identifying which instance it came from.
+
+```ts
+const results = await env.AI_SEARCH.search({
+	messages: [{ role: "user", content: "What is Cloudflare?" }],
+	ai_search_options: {
+		instance_ids: ["product-docs", "customer-abc123"],
+	},
+});
+```
+
+This is useful when you need to search across different data sources. For example, a support agent can search shared product docs and per-customer history in one call.
+
+Refer to [Namespace-level search](/ai-search/api/search/workers-binding/#namespace-level) for details.

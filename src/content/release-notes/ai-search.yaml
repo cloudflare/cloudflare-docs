@@ -4,9 +4,25 @@ productName: AI Search
 productLink: "/ai-search/"
 entries:
   - publish_date: "2026-04-16"
-    title: AI Search namespace binding
+    title: Hybrid search
     description: |-
-      The new `ai_search_namespaces` [Workers binding](/ai-search/api/search/workers-binding/) provides first-class access to AI Search from your Worker. Group instances into [namespaces](/ai-search/concepts/namespaces/) for isolation, create and manage instances at runtime, and upload documents through the [Items API](/ai-search/api/items/workers-binding/). The previous `env.AI.autorag()` binding continues to work.
+      AI Search now supports [hybrid search](/ai-search/configuration/indexing/hybrid-search/), combining vector and BM25 keyword search in a single query. Configure the tokenizer, keyword match mode, and fusion method per instance. Refer to [Search modes](/ai-search/concepts/search-modes/) for an overview.
+  - publish_date: "2026-04-16"
+    title: Built-in storage
+    description: |-
+      New AI Search instances come with [built-in storage](/ai-search/configuration/data-source/built-in-storage/) and a vector index. Upload files directly to an instance using the Items API or the dashboard without setting up external infrastructure.
+  - publish_date: "2026-04-16"
+    title: Relevance boosting
+    description: |-
+      Boost search results by metadata fields like timestamp or priority using [relevance boosting](/ai-search/configuration/retrieval/boosting/). Configure up to 3 boost fields per instance or per request.
+  - publish_date: "2026-04-16"
+    title: Cross-instance search
+    description: |-
+      Search across multiple AI Search instances in a single call using [namespace-level search](/ai-search/api/search/workers-binding/#namespace-level). Results are merged and ranked, with each chunk identifying which instance it came from.
+  - publish_date: "2026-04-16"
+    title: New AI Search Workers bindings
+    description: |-
+      Two new [Workers bindings](/ai-search/api/search/workers-binding/) for AI Search. The `ai_search_namespaces` binding gives access to all instances within a [namespace](/ai-search/concepts/namespaces/) and supports dynamic instance management at runtime. The `ai_search` binding binds directly to a single instance for simpler use cases.
   - publish_date: "2026-04-01"
     title: Wrangler CLI support for AI Search
     description: |-
