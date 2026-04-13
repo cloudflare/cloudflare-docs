@@ -11,6 +11,8 @@ tags:
   - Private networks
 ---
 
+import { DashButton} from "~/components";
+
 Create a secure connection between two devices so they can communicate directly through Cloudflare's network, without needing to be on the same physical network. This is useful when you need to remotely access a specific device, for example connecting to a home computer from a laptop at a coffee shop.
 
 To explore other connection scenarios, refer to [Replace your VPN](/cloudflare-one/setup/replace-vpn/).
@@ -34,9 +36,12 @@ For more details, refer to [Connect client devices](/cloudflare-one/networks/con
 
 Enrollment permissions control which users can connect devices to your account. In this step, you set an enrollment email and download the Cloudflare One Client. The email you provide becomes the first allowed login for your organization, and anyone with that email address can enroll a device.
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com), go to **Mesh**.
+1. In the Cloudflare dashboard, go to **Networking** > **Mesh**.
+
+   <DashButton url="/?to=/:account/mesh" />
+
 2. Select **Add a node**, then follow the wizard. The wizard configures enrollment permissions and Mesh connectivity automatically.
-3. Download the Cloudflare One Client on your first device from the [download page](https://developers.cloudflare.com/cloudflare-one/team-and-resources/devices/warp/download-warp/).
+3. Download the Cloudflare One Client on your first device from the [downloads page](/cloudflare-one/team-and-resources/devices/warp/download-warp/).
 4. Open the client, enter your team name, and sign in with your email.
 
 ## Step 2: Enroll your second device
@@ -53,7 +58,10 @@ Both devices are now connected through Cloudflare's network using their assigned
 
 To view your device's assigned Mesh IP:
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com), go to **Mesh**.
+1. In the Cloudflare dashboard, go to **Networking** > **Mesh**.
+
+   <DashButton url="/?to=/:account/mesh" />
+
 2. Your connected devices appear with their Mesh IPs.
 
 To test connectivity, `ping` the Mesh IP of one device from the other.
