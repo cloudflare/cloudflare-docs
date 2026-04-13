@@ -21,6 +21,7 @@ To ensure security and accuracy, every write operation requires **explicit user 
 
 
 ### Visualize data with Generative UI
+
 Understanding your traffic and security trends is now as easy as asking a question. Agent Lee now features **Generative UI**, allowing it to render inline charts and structured data visualizations directly within the chat interface using your actual account telemetry.
 
 **Example requests:**
