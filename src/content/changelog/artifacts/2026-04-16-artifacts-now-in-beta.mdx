@@ -8,4 +8,26 @@ date: 2026-04-16
 
 [Artifacts](/artifacts/) is now in beta. It provides a versioned filesystem for storing and exchanging file trees across Workers, the REST API, and git-compatible clients.
 
-Use Artifacts to publish build outputs, sync repositories, and move files between tools without inventing a new packaging format. For more information, refer to [Get started](/artifacts/get-started/) and [API](/artifacts/api/).
+Use Artifacts to publish build outputs, sync repositories, and move files between tools without inventing a new packaging format.
+
+You can use the Workers binding to create a repo and read back its remote URL:
+
+```ts
+const created = await env.ARTIFACTS.create("starter-repo");
+const remote = (await created.repo.info())?.remote;
+```
+
+You can use the REST API to create a namespace, then create a repo inside it:
+
+```bash
+curl "$ARTIFACTS_BASE_URL/v1/api/namespaces" --header "Authorization: Bearer $ARTIFACTS_JWT" --header "Content-Type: application/json" --data '{"name":"starter-namespace"}'
+curl "$ARTIFACTS_BASE_URL/v1/api/namespaces/starter-namespace/repos" --header "Authorization: Bearer $ARTIFACTS_JWT" --header "Content-Type: application/json" --data '{"name":"starter-repo"}'
+```
+
+Any git client that speaks smart HTTP can use the returned remote URL:
+
+```bash
+git clone "$ARTIFACTS_AUTH_REMOTE"
+```
+
+For more information, refer to [Get started](/artifacts/get-started/), [Workers binding](/artifacts/api/workers-binding/), and [Git protocol](/artifacts/api/git-protocol/).
