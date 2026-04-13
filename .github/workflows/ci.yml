@@ -202,9 +202,7 @@ jobs:
           path: .starlight-links-validator
 
       - name: Link validation
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx tsx bin/post-link-validation-comment/index.ts
+        run: npx tsx bin/check-link-validation/index.ts
 
   notify:
     name: Notify
@@ -243,6 +241,20 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx tsx bin/post-pr-ci-failure-comment/index.ts
+
+      - name: Download link validation report
+        if: needs.build.outputs.link_validation_failed == 'true' && github.event.pull_request.head.repo.full_name == github.repository
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          name: link-validation-report
+          path: .starlight-links-validator
+
+      - name: Post link validation comment
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx tsx bin/post-link-validation-comment/index.ts
 
   publish-preview:
     name: Deploy Preview
