@@ -1,6 +1,6 @@
 ---
 title: REST API
-description: Create a repo and token over HTTP.
+description: Create an Artifact repo over HTTP.
 pcx_content_type: get-started
 sidebar:
   order: 2
@@ -11,17 +11,17 @@ head:
 
 import { LinkCard } from "~/components";
 
-Create and inspect your first Artifact repo with the REST API.
+Create an Artifact namespace and repo with the REST API, then use a regular git client to push and pull content.
 
-In this guide, you will create a repo inside a namespace, fetch its metadata, retrieve its authenticated remote URL, and mint a read-only token for external tooling.
+In this guide, you will create a namespace, create a repo inside it, read back the repo remote URL, and use that remote with `git push` and `git clone`.
 
 ## Prerequisites
 
 You need:
 
 - A Cloudflare account with access to Artifacts.
-- An Artifacts namespace. This guide uses `default`.
 - A control-plane JWT for the Artifacts API.
+- A local `git` client.
 
 ## 1. Export your environment variables
 
@@ -29,7 +29,7 @@ Set the variables used in the examples:
 
 ```sh
 export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.dev"
-export ARTIFACTS_NAMESPACE="default"
+export ARTIFACTS_NAMESPACE="starter-namespace"
 export ARTIFACTS_REPO="starter-repo"
 export ARTIFACTS_JWT="<YOUR_ARTIFACTS_JWT>"
 ```
@@ -40,15 +40,35 @@ Artifacts uses Bearer authentication for control-plane requests:
 Authorization: Bearer $ARTIFACTS_JWT
 ```
 
-## 2. Create a repo
+## 2. Create a namespace
 
-Create a repo in your namespace:
+Create a namespace for your repos:
 
 ```bash
-curl -X POST "$ARTIFACTS_BASE_URL/v1/api/namespaces/$ARTIFACTS_NAMESPACE/repos" \
-  -H "Authorization: Bearer $ARTIFACTS_JWT" \
-  -H "Content-Type: application/json" \
-  -d "{\"name\":\"$ARTIFACTS_REPO\",\"source\":\"rest-api-get-started\"}"
+curl "$ARTIFACTS_BASE_URL/v1/api/namespaces" \
+--header "Authorization: Bearer $ARTIFACTS_JWT" \
+--header "Content-Type: application/json" \
+--data "{\"name\":\"$ARTIFACTS_NAMESPACE\"}"
+```
+
+The response resembles the following:
+
+```json
+{
+	"name": "starter-namespace",
+	"createdAt": "<ISO_TIMESTAMP>"
+}
+```
+
+## 3. Create a repo
+
+Create a repo inside that namespace:
+
+```bash
+curl "$ARTIFACTS_BASE_URL/v1/api/namespaces/$ARTIFACTS_NAMESPACE/repos" \
+--header "Authorization: Bearer $ARTIFACTS_JWT" \
+--header "Content-Type: application/json" \
+--data "{\"name\":\"$ARTIFACTS_REPO\"}"
 ```
 
 The response resembles the following:
@@ -57,122 +77,82 @@ The response resembles the following:
 {
 	"id": "repo_123",
 	"name": "starter-repo",
-	"remote": "https://<ACCOUNT_SUBDOMAIN>.artifacts.cloudflare.dev/git/default/starter-repo.git",
+	"remote": "https://<ACCOUNT_SUBDOMAIN>.artifacts.cloudflare.dev/git/starter-namespace/starter-repo.git",
 	"token": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000",
 	"expiresAt": "<ISO_TIMESTAMP>"
 }
 ```
 
-The initial response includes an authenticated remote URL and a short-lived write token. You can use those values immediately with external tooling.
+Copy the `remote` and `token` values into local shell variables:
 
-## 3. Inspect the repo and remote URL
+```sh
+export ARTIFACTS_REMOTE="<PASTE_REMOTE_FROM_RESPONSE>"
+export ARTIFACTS_TOKEN="<PASTE_TOKEN_FROM_RESPONSE>"
+```
 
-Fetch the repo metadata:
+## 4. Get the repo URL again
+
+Fetch the repo metadata when you need to recover the remote URL later:
 
 ```bash
 curl "$ARTIFACTS_BASE_URL/v1/api/namespaces/$ARTIFACTS_NAMESPACE/repos/$ARTIFACTS_REPO" \
-  -H "Authorization: Bearer $ARTIFACTS_JWT"
+--header "Authorization: Bearer $ARTIFACTS_JWT"
 ```
-
-Example response:
 
 ```json
 {
 	"id": "repo_123",
 	"name": "starter-repo",
 	"createdAt": "<ISO_TIMESTAMP>",
-	"source": "rest-api-get-started",
+	"source": null,
 	"readOnly": false,
-	"remote": "https://<ACCOUNT_SUBDOMAIN>.artifacts.cloudflare.dev/git/default/starter-repo.git"
+	"remote": "https://<ACCOUNT_SUBDOMAIN>.artifacts.cloudflare.dev/git/starter-namespace/starter-repo.git"
 }
 ```
 
-If you only need the remote URL, call the dedicated endpoint:
+## 5. Push your first commit with git
 
-```bash
-curl "$ARTIFACTS_BASE_URL/v1/api/namespaces/$ARTIFACTS_NAMESPACE/repos/$ARTIFACTS_REPO/remote" \
-  -H "Authorization: Bearer $ARTIFACTS_JWT"
-```
-
-```json
-{
-	"remote": "https://<ACCOUNT_SUBDOMAIN>.artifacts.cloudflare.dev/git/default/starter-repo.git"
-}
-```
-
-## 4. Create and validate a token
-
-Create a read-only token for the repo:
-
-```bash
-curl -X POST "$ARTIFACTS_BASE_URL/v1/api/namespaces/$ARTIFACTS_NAMESPACE/tokens" \
-  -H "Authorization: Bearer $ARTIFACTS_JWT" \
-  -H "Content-Type: application/json" \
-  -d "{\"repo\":\"$ARTIFACTS_REPO\",\"scope\":\"r\",\"ttl\":3600}"
-```
-
-Example response:
-
-```json
-{
-	"id": "tok_123",
-	"plaintext": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000",
-	"scope": "r",
-	"expiresAt": "<ISO_TIMESTAMP>"
-}
-```
-
-Validate the token before handing it to another tool:
+Create a local repository and push it to the Artifacts remote:
 
 ```sh
-export ARTIFACTS_TOKEN="<PASTE_TOKEN_FROM_PREVIOUS_RESPONSE>"
+mkdir artifacts-demo
+cd artifacts-demo
+git init -b main
+printf '# Artifacts demo\n' > README.md
+git add README.md
+git commit -m "Initial commit"
+git remote add origin "$ARTIFACTS_REMOTE"
+git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" push -u origin main
 ```
 
-```bash
-curl -X POST "$ARTIFACTS_BASE_URL/v1/api/namespaces/$ARTIFACTS_NAMESPACE/tokens/validate" \
-  -H "Authorization: Bearer $ARTIFACTS_JWT" \
-  -H "Content-Type: application/json" \
-  -d "{\"repo\":\"$ARTIFACTS_REPO\",\"token\":\"$ARTIFACTS_TOKEN\"}"
+## 6. Pull the repo with a regular git client
+
+Clone the same repo into a second directory:
+
+```sh
+cd ..
+git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" clone "$ARTIFACTS_REMOTE" artifacts-clone
+git -C artifacts-clone log --oneline -1
 ```
 
-```json
-{
-	"valid": true,
-	"scope": "r"
-}
-```
-
-## 5. Delete the repo when you are done
-
-Remove the repo to clean up your test data:
-
-```bash
-curl -X DELETE "$ARTIFACTS_BASE_URL/v1/api/namespaces/$ARTIFACTS_NAMESPACE/repos/$ARTIFACTS_REPO" \
-  -H "Authorization: Bearer $ARTIFACTS_JWT"
-```
-
-```json
-{
-	"deleted": "starter-repo"
-}
-```
+You should see the commit you pushed in the previous step.
 
 ## Next steps
 
 <LinkCard
 	title="REST API reference"
 	href="/artifacts/api/rest-api/"
-	description="Review the full set of repo, token, and remote URL endpoints."
+	description="Review every repo and token endpoint with request and response examples."
 />
 
 <LinkCard
-	title="Workers binding"
-	href="/artifacts/api/workers-binding/"
-	description="Call the same operations from a Worker by using the Artifacts service binding."
+	title="Workers get started"
+	href="/artifacts/get-started/workers/"
+	description="Create the same repos through a Worker instead of calling the REST API directly."
 />
 
 <LinkCard
 	title="Git support"
 	href="/artifacts/api/git-support/"
-	description="Use the remote URLs returned by the API with git-compatible tools."
+	description="Understand how Artifacts remotes map onto git-compatible workflows."
 />
