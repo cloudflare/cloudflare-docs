@@ -94,6 +94,67 @@ async function handleRequest(request) {
 }
 ```
 
+#### Cause 3: Awaiting a Promise created by a different request context
+
+When multiple concurrent requests reach a Worker, they share the same JavaScript isolate and run on a single-threaded event loop. Each request has its own **request context**, and Promises are owned by the context that created them.
+
+If request B `await`s a Promise that was created by request A (for example, a Promise stored in global scope as part of a lazy-initialization pattern), the Workers runtime may cancel request B when request A's context ends. This produces the following warning in your logs:
+
+```
+Warning: A promise was resolved or rejected from a different request context
+than the one it was created in. However, the creating request has already been
+completed or canceled. Continuations for that request are unlikely to run safely
+and have been canceled.
+```
+
+This is a common pitfall when using promise-based once-initialization helpers — such as a JavaScript `OnceCell` or `getOrInit` pattern — to lazily initialize global state:
+
+```js null {5,10}
+import { OnceCell } from "some-library";
+
+// ❌ Problematic: the Promise stored here is owned by the first request that
+// calls initialize(). Any concurrent request that awaits it will be cancelled
+// if the first request finishes first.
+const state = new OnceCell();
+
+export default {
+  async fetch(request, env) {
+    const value = await state.getOrInit(() => expensiveSetup(env));
+    return new Response(value);
+  },
+};
+```
+
+To fix this, use a synchronous check-then-set pattern so that each concurrent request initializes the value independently, without awaiting a Promise owned by another request:
+
+```js null {4,8,9}
+let cachedValue = null;
+
+async function getOrInit(env) {
+  // Fast path: already initialized, return synchronously.
+  if (cachedValue !== null) return cachedValue;
+
+  // Slow path: initialize independently. If two requests race, the loser
+  // simply discards its result — this is safe and avoids cross-request awaiting.
+  const value = await expensiveSetup(env);
+  cachedValue ??= value;
+  return cachedValue;
+}
+
+export default {
+  async fetch(request, env) {
+    const value = await getOrInit(env);
+    return new Response(value);
+  },
+};
+```
+
+:::note
+
+The `no_handle_cross_request_promise_resolution` [compatibility flag](/workers/configuration/compatibility-flags/) suppresses the cancellation and allows cross-request promise continuations to run. However, this only masks the symptom — the underlying issue is that continuations running in the wrong request context may behave incorrectly or encounter unexpected errors. The check-then-set pattern above is the recommended fix.
+
+:::
+
 ### "Illegal invocation" errors
 
 The error message `TypeError: Illegal invocation: function called with incorrect this reference` can be a source of confusion.
