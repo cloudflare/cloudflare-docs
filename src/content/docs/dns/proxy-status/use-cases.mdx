@@ -1,13 +1,13 @@
 ---
 pcx_content_type: reference
-title: Common scenarios
+title: Use cases
 sidebar:
   order: 1
 ---
 
 import { GlossaryTooltip, Details } from "~/components";
 
-This page lists common scenarios where DNS records should be <GlossaryTooltip term="proxy status">proxied</GlossaryTooltip> or set to **DNS-only**. For background on how proxy status works, refer to [Proxy status](/dns/proxy-status/).
+This page lists common scenarios where DNS records should be <GlossaryTooltip term="proxy status">proxied</GlossaryTooltip> or set to **DNS Only**, and describes expected behaviors when traffic is proxied. For background on how proxy status works, refer to [Proxy status](/dns/proxy-status/).
 
 ## Records to proxy
 
@@ -18,6 +18,28 @@ Proxy all `A`, `AAAA`, and `CNAME` records that serve HTTP or HTTPS web traffic.
 - API endpoints that accept HTTP/HTTPS requests and do not require origin IP validation
 
 Proxied records benefit from [DDoS protection](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/), [caching](/cache/), [WAF](/waf/), and other Cloudflare security and performance features.
+
+## Expected behaviors when proxying
+
+When traffic is proxied through Cloudflare, the following behaviors apply. These are not limitations — they are how Cloudflare's reverse proxy works by design. Your origin configuration may need to account for them.
+
+### Source IP changes
+
+Your origin server sees Cloudflare IP addresses as the source of all requests instead of the end-user's IP address. Applications that rely on the source IP for authentication, rate limiting, or geolocation will not function as expected without additional configuration.
+
+Cloudflare includes the original visitor IP address in the [`CF-Connecting-IP`](/fundamentals/reference/http-headers/) and `X-Forwarded-For` request headers. Configure your origin server to read the visitor IP from these headers. For more information, refer to [Restoring original visitor IPs](/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/).
+
+### Client certificate (mTLS) validation at origin
+
+When a record is proxied, TLS terminates at Cloudflare's edge. Cloudflare establishes a separate TLS connection to your origin server. This means the origin never receives the end-user's client certificate during the TLS handshake. If your origin requires client certificates for authentication, connections will be rejected.
+
+To validate client certificates at Cloudflare's edge instead, refer to [Client certificates (mTLS)](/ssl/client-certificates/). To verify that traffic reaching your origin comes from Cloudflare, refer to [Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/). To forward client certificate details to your origin via HTTP headers, refer to [Forward a client certificate](/ssl/client-certificates/forward-a-client-certificate/).
+
+### Header modifications
+
+Cloudflare adds and modifies HTTP request headers when proxying traffic, including headers for [visitor IP identification](/fundamentals/reference/http-headers/), diagnostics, and connection management. Applications that expect a fixed number of headers or parse headers by position instead of by name may experience errors.
+
+For a full list of headers that Cloudflare adds or modifies, refer to [HTTP request headers](/fundamentals/reference/http-headers/).
 
 ## Records to keep DNS-only
 
