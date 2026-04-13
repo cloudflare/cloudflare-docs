@@ -81,7 +81,7 @@ The setup wizard [configures your account for Mesh networking](#what-the-wizard-
 
 6. Select **View node details** to complete the setup wizard.
 
-If you installed the node, it should appear as **Online** on the Mesh overview page along with its assigned **Mesh IP**. You can verify the connection from the server by running `warp-cli status` — the output shows `Status update: Connected` when the node is successfully connected.
+If you installed the node, it should appear as **Online** on the Mesh overview page along with its assigned **Mesh IP**. If the node does not come online, refer to [Troubleshooting](#troubleshooting).
 
 ## 2. Connect a client device
 
@@ -121,6 +121,17 @@ If your account already has a Cloudflare One deployment, the setup wizard will n
 - [ ] **Mesh connectivity** — In your device profile settings, enable [Allow all Cloudflare One traffic to reach enrolled devices](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#allow-all-cloudflare-one-traffic-to-reach-enrolled-devices).
 - [ ] **Unique device IPs** — Enable [Assign a unique IP address to each device](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#assign-a-unique-ip-address-to-each-device) so that each participant gets a routable Mesh IP.
 - [ ] **Traffic proxying** — Enable the [Gateway proxy](/cloudflare-one/traffic-policies/proxy/) for TCP, UDP, and ICMP so that Mesh traffic can flow between devices.
+
+## Troubleshooting
+
+- **Node shows as Offline** — On the server, run `warp-cli status`. If the output does not show `Status update: Connected`:
+    - Run `warp-cli connect`.
+    - If your private network uses a firewall to restrict Internet traffic, ensure that it allows the [WARP ports and IPs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/firewall/).
+    - Review your [WARP daemon logs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/diagnostic-logs/) for information about why the connection is failing.
+- **Client device cannot reach Mesh IPs** — Verify that your Split Tunnel configuration routes the Mesh IP range (`100.96.0.0/12`) through Cloudflare. For details, refer to [Connect client devices](/cloudflare-one/networks/connectors/cloudflare-mesh/client-devices/).
+- **Windows firewall blocks Mesh traffic** — Windows Firewall blocks inbound traffic from `100.96.0.0/12` by default. Add a firewall rule that allows incoming requests from this range for your desired protocols and ports.
+
+For general client issues, refer to [Troubleshoot the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/).
 
 ## Next steps
 
