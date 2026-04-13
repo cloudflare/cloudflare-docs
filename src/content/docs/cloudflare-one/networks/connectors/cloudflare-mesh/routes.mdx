@@ -12,7 +12,7 @@ head:
     content: Configure routes for Cloudflare Mesh
 ---
 
-import { DashButton, Tabs, TabItem } from "~/components";
+import { DashButton, Tabs, TabItem, APIRequest } from "~/components";
 
 By default, a Mesh node is reachable only by its own [Mesh IP](/cloudflare-one/networks/connectors/cloudflare-mesh/#mesh-ips). To make other devices on the subnet behind the node reachable — servers, databases, printers, IoT devices that cannot run the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) — add **CIDR routes**.
 
@@ -34,34 +34,75 @@ flowchart LR
   node --> db
   node --> printer
 ```
+## Manage routes
 
-## Add a route
+Use CIDR routes to forward traffic from your mesh node to devices on your local network.
+
+### Add a route
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Networking** > **Mesh**.
+1. In the Cloudflare dashboard, go to **Networking** > **Mesh**.
 
    <DashButton url="/?to=/:account/mesh" />
 
 2. Select your Mesh node.
 3. Go to the **Routes** tab.
-4. Select **Add a route**.
+4. Select **Add route**.
 5. Enter the private CIDR you want to route through this node (for example, `10.0.0.0/24`).
-6. Optionally add a description.
-7. Select **Save**.
+6. (Optionally) add a description for the route.
+7. Select **Add route**.
 
 </TabItem> <TabItem label="API">
 
-```sh
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/teamnet/routes" \
-  -H "Authorization: Bearer {api_token}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "network": "10.0.0.0/24",
-    "tunnel_id": "{mesh_node_id}",
-    "comment": "Staging subnet"
-  }'
-```
+<APIRequest
+  path="/accounts/{account_id}/teamnet/routes"
+  method="POST"
+  json={{
+    network: "10.0.0.0/24",
+    tunnel_id: "{mesh_node_id}",
+    comment: "Staging subnet",
+  }}
+/>
+
+</TabItem> </Tabs>
+
+### Edit a route
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Go to **Networking** > **Mesh** > select your node > **Routes** tab.
+2. Select the edit icon next to the route you want to modify.
+3. Update the CIDR or description.
+4. Select **Save**.
+
+</TabItem> <TabItem label="API">
+
+<APIRequest
+  path="/accounts/{account_id}/teamnet/routes/{route_id}"
+  method="PATCH"
+  json={{
+    network: "10.0.0.0/24",
+    comment: "Updated description",
+  }}
+/>
+
+</TabItem> </Tabs>
+
+### Delete a route
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Go to **Networking** > **Mesh** > select your node > **Routes** tab.
+2. Select the delete icon next to the route.
+3. Confirm deletion.
+
+</TabItem> <TabItem label="API">
+
+<APIRequest
+  path="/accounts/{account_id}/teamnet/routes/{route_id}"
+  method="DELETE"
+/>
 
 </TabItem> </Tabs>
 
@@ -142,57 +183,19 @@ For this to work:
 
 For production site-to-site deployments, consider enabling [high availability](/cloudflare-one/networks/connectors/cloudflare-mesh/high-availability/) on each node. HA provides failover for the CIDR routes advertised by a node — if the active replica goes down, Cloudflare promotes a standby so traffic to the subnet continues to flow.
 
-## Edit a route
-
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
-
-1. Go to **Networking** > **Mesh** > select your node > **Routes** tab.
-2. Select the edit icon next to the route you want to modify.
-3. Update the CIDR or description.
-4. Select **Save**.
-
-</TabItem> <TabItem label="API">
-
-```sh
-curl -X PATCH "https://api.cloudflare.com/client/v4/accounts/{account_id}/teamnet/routes/{route_id}" \
-  -H "Authorization: Bearer {api_token}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "network": "10.0.0.0/24",
-    "comment": "Updated description"
-  }'
-```
-
-</TabItem> </Tabs>
-
-## Delete a route
-
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
-
-1. Go to **Networking** > **Mesh** > select your node > **Routes** tab.
-2. Select the delete icon next to the route.
-3. Confirm deletion.
-
-</TabItem> <TabItem label="API">
-
-```sh
-curl -X DELETE "https://api.cloudflare.com/client/v4/accounts/{account_id}/teamnet/routes/{route_id}" \
-  -H "Authorization: Bearer {api_token}"
-```
-
-</TabItem> </Tabs>
-
 ## DNS filtering
 
 To filter DNS queries from the subnet using [Cloudflare Gateway](/cloudflare-one/traffic-policies/dns-policies/):
 
-1. **Point your router's DNS to the Gateway resolver IPs:**
+1. **Configure DNS on your router**: Point your router's DNS to the Gateway resolver IPs:
    - `172.64.36.1`
    - `172.64.36.2`
 
-2. **Add an IP route** on your router that routes these Gateway resolver IPs to the Mesh node's local IP, so DNS traffic reaches Cloudflare through the node.
+2. **Add IP routes to your router**: On your router, add static routes pointing the Gateway resolver IPs to your Mesh node's local IP. This allows DNS traffic to reach Cloudflare through the node.
+   - **Destination**: `172.64.36.1` → **Next hop**: `10.0.0.1` (local Mesh node)
+   - **Destination**: `172.64.36.2` → **Next hop**: `10.0.0.1`
 
-3. **Ensure the following IPs route through the Mesh node** in your [Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) configuration:
+3. **Configure Split Tunnels**: Ensure the following IPs route through the Mesh node in your [Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) configuration:
    - The subnet's internal DNS resolver IP
    - Gateway initial resolved IP range: `100.80.0.0/16` (IPv4) and `2606:4700:0cf1:4000::/64` (IPv6)
 
