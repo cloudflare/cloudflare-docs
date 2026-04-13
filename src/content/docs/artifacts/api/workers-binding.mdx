@@ -1,11 +1,517 @@
 ---
 title: Workers binding
-description: Reference the Artifacts binding available inside Cloudflare Workers.
+description: Call Artifacts from a Worker service binding.
 pcx_content_type: reference
 sidebar:
   order: 1
+head:
+  - tag: title
+    content: Workers binding · Artifacts
 ---
 
-Use the Workers binding to create, inspect, and version Artifacts directly from a Worker.
+import {
+	LinkCard,
+	MetaInfo,
+	Type,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
 
-This reference will document the available binding methods, parameters, and return values.
+Use the Artifacts Workers binding to create, inspect, import, fork, and delete repos without making raw HTTP calls from your Worker.
+
+The binding is a Worker-to-Worker RPC surface. It returns repo handles for repo-scoped operations such as token management and forking.
+
+## Configure the binding
+
+Add the Artifacts binding to `wrangler.jsonc`:
+
+<WranglerConfig>
+
+```jsonc title="wrangler.jsonc"
+{
+	"services": [
+		{
+			"binding": "ARTIFACTS",
+			"service": "artifacts",
+			"entrypoint": "ArtifactsBinding",
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+Your Worker environment looks like this:
+
+```ts
+import type { Service } from "cloudflare:workers";
+import type { ArtifactsBinding } from "artifacts";
+
+export interface Env {
+	ARTIFACTS: Service<ArtifactsBinding>;
+}
+```
+
+## Shared types
+
+These are the core public types used by the binding.
+
+```ts
+export type NamespaceName = string;
+export type RepoName = string;
+export type Scope = "read" | "write";
+export type ArtifactToken = string;
+export type Cursor = string;
+
+export interface RemoteRepoInfo {
+	id: string;
+	name: RepoName;
+	createdAt: string;
+	source: string | null;
+	readOnly: boolean;
+	remote: string;
+}
+
+export interface CreateRepoResponse {
+	id: string;
+	name: RepoName;
+	remote: string;
+	token: ArtifactToken;
+	expiresAt: string;
+}
+
+export interface ListReposResponse {
+	repos: Array<{
+		id: string;
+		name: RepoName;
+		createdAt: string;
+		source: string | null;
+		readOnly: boolean;
+	}>;
+	total: number;
+	cursor?: Cursor;
+}
+
+export interface CreateTokenResponse {
+	id: string;
+	plaintext: ArtifactToken;
+	scope: Scope;
+	expiresAt: string;
+}
+
+export interface ValidateTokenResponse {
+	valid: boolean;
+	scope?: Scope;
+}
+
+export interface TokenInfo {
+	id: string;
+	scope: Scope;
+	createdAt: string;
+	expiresAt: string;
+}
+```
+
+## Binding surface
+
+```ts
+export interface ArtifactsRepoHandle {
+	info(): Promise<RemoteRepoInfo | null>;
+	createToken(scope?: Scope, ttl?: number): Promise<CreateTokenResponse>;
+	validateToken(token: ArtifactToken): Promise<ValidateTokenResponse>;
+	listTokens(): Promise<{ tokens: TokenInfo[]; total: number }>;
+	revokeToken(tokenOrId: string): Promise<boolean>;
+	fork(target: {
+		name: RepoName;
+		namespace?: NamespaceName;
+		readOnly?: boolean;
+	}): Promise<CreateRepoResponse & { repo: ArtifactsRepoHandle }>;
+}
+
+export interface ArtifactsBinding {
+	create(
+		name: RepoName,
+		opts?: { readOnly?: boolean },
+	): Promise<CreateRepoResponse & { repo: ArtifactsRepoHandle }>;
+
+	get(name: RepoName): Promise<ArtifactsRepoHandle | null>;
+
+	list(opts?: { limit?: number; cursor?: Cursor }): Promise<ListReposResponse>;
+
+	delete(name: RepoName): Promise<boolean>;
+
+	import(
+		name: RepoName,
+		source: {
+			url: string;
+			branch?: string;
+			headers?: Record<string, string>;
+			readOnly?: boolean;
+		},
+	): Promise<CreateRepoResponse & { repo: ArtifactsRepoHandle }>;
+}
+```
+
+## Namespace methods
+
+### `create(name, opts?)`
+
+- `name` <Type text="RepoName" /> <MetaInfo text="required" />
+- `opts.readOnly` <Type text="boolean" /> <MetaInfo text="optional" />
+- Returns <Type text="Promise<CreateRepoResponse & { repo: ArtifactsRepoHandle } >" />
+
+<TypeScriptExample>
+
+```ts
+import type { Service } from "cloudflare:workers";
+import type { ArtifactsBinding } from "artifacts";
+
+async function createRepo(artifacts: Service<ArtifactsBinding>) {
+	// Create the repo and capture the initial write token.
+	const created = await artifacts.create("starter-repo");
+
+	return {
+		name: created.name,
+		remote: created.remote,
+		initialToken: created.token,
+	};
+}
+```
+
+</TypeScriptExample>
+
+### `get(name)`
+
+- `name` <Type text="RepoName" /> <MetaInfo text="required" />
+- Returns <Type text="Promise<ArtifactsRepoHandle | null>" />
+
+<TypeScriptExample>
+
+```ts
+import type { Service } from "cloudflare:workers";
+import type { ArtifactsBinding } from "artifacts";
+
+async function getRepoHandle(artifacts: Service<ArtifactsBinding>) {
+	// Resolve the handle once, then reuse it for repo-scoped methods.
+	const repo = await artifacts.get("starter-repo");
+
+	if (!repo) {
+		return null;
+	}
+
+	return repo;
+}
+```
+
+</TypeScriptExample>
+
+### `list(opts?)`
+
+- `opts.limit` <Type text="number" /> <MetaInfo text="optional" />
+- `opts.cursor` <Type text="Cursor" /> <MetaInfo text="optional" />
+- Returns <Type text="Promise<ListReposResponse>" />
+
+<TypeScriptExample>
+
+```ts
+import type { Service } from "cloudflare:workers";
+import type { ArtifactsBinding } from "artifacts";
+
+async function listRepos(artifacts: Service<ArtifactsBinding>) {
+	// Request a small page when you only need recent repo names.
+	const page = await artifacts.list({ limit: 10 });
+
+	return page.repos.map((repo) => repo.name);
+}
+```
+
+</TypeScriptExample>
+
+### `delete(name)`
+
+- `name` <Type text="RepoName" /> <MetaInfo text="required" />
+- Returns <Type text="Promise<boolean>" />
+
+<TypeScriptExample>
+
+```ts
+import type { Service } from "cloudflare:workers";
+import type { ArtifactsBinding } from "artifacts";
+
+async function deleteRepo(artifacts: Service<ArtifactsBinding>) {
+	// Delete returns true when the repo was removed.
+	return artifacts.delete("starter-repo");
+}
+```
+
+</TypeScriptExample>
+
+### `import(name, source)`
+
+- `name` <Type text="RepoName" /> <MetaInfo text="required" />
+- `source.url` <Type text="string" /> <MetaInfo text="required" />
+- `source.branch` <Type text="string" /> <MetaInfo text="optional" />
+- `source.headers` <Type text="Record<string, string>" /> <MetaInfo text="optional" />
+- `source.readOnly` <Type text="boolean" /> <MetaInfo text="optional" />
+- Returns <Type text="Promise<CreateRepoResponse & { repo: ArtifactsRepoHandle } >" />
+
+<TypeScriptExample>
+
+```ts
+import type { Service } from "cloudflare:workers";
+import type { ArtifactsBinding } from "artifacts";
+
+async function importRepo(artifacts: Service<ArtifactsBinding>) {
+	// Import a public GitHub repo into Artifacts.
+	const imported = await artifacts.import("react-mirror", {
+		url: "facebook/react",
+		branch: "main",
+	});
+
+	return imported.remote;
+}
+```
+
+</TypeScriptExample>
+
+## Repo handle methods
+
+Use `await artifacts.get(name)` or the `repo` returned by `create()`, `import()`, or `fork()` to access repo-scoped methods.
+
+### `info()`
+
+- Returns <Type text="Promise<RemoteRepoInfo | null>" />
+
+Use `info()` when you need repo metadata, including the authenticated remote URL. The binding does not expose a separate `.remote()` method.
+
+<TypeScriptExample>
+
+```ts
+import type { Service } from "cloudflare:workers";
+import type { ArtifactsBinding } from "artifacts";
+
+async function getRemoteUrl(artifacts: Service<ArtifactsBinding>) {
+	const repo = await artifacts.get("starter-repo");
+	if (!repo) {
+		return null;
+	}
+
+	// Read the remote URL from repo metadata.
+	const info = await repo.info();
+	return info?.remote ?? null;
+}
+```
+
+</TypeScriptExample>
+
+### `createToken(scope?, ttl?)`
+
+- `scope` <Type text='"read" | "write"' /> <MetaInfo text='optional (default: "write")' />
+- `ttl` <Type text="number" /> <MetaInfo text="optional (seconds)" />
+- Returns <Type text="Promise<CreateTokenResponse>" />
+
+<TypeScriptExample>
+
+```ts
+import type { Service } from "cloudflare:workers";
+import type { ArtifactsBinding } from "artifacts";
+
+async function mintReadToken(artifacts: Service<ArtifactsBinding>) {
+	const repo = await artifacts.get("starter-repo");
+	if (!repo) {
+		throw new Error("Repo not found");
+	}
+
+	// Create a short-lived read token for another tool.
+	return repo.createToken("read", 3600);
+}
+```
+
+</TypeScriptExample>
+
+### `validateToken(token)`
+
+- `token` <Type text="ArtifactToken" /> <MetaInfo text="required" />
+- Returns <Type text="Promise<ValidateTokenResponse>" />
+
+<TypeScriptExample>
+
+```ts
+import type { Service } from "cloudflare:workers";
+import type { ArtifactsBinding } from "artifacts";
+
+async function validateToken(
+	artifacts: Service<ArtifactsBinding>,
+	token: string,
+) {
+	const repo = await artifacts.get("starter-repo");
+	if (!repo) {
+		throw new Error("Repo not found");
+	}
+
+	// Check whether the presented token is still valid.
+	return repo.validateToken(token);
+}
+```
+
+</TypeScriptExample>
+
+### `listTokens()`
+
+- Returns <Type text="Promise<{ tokens: TokenInfo[]; total: number } >" />
+
+<TypeScriptExample>
+
+```ts
+import type { Service } from "cloudflare:workers";
+import type { ArtifactsBinding } from "artifacts";
+
+async function listRepoTokens(artifacts: Service<ArtifactsBinding>) {
+	const repo = await artifacts.get("starter-repo");
+	if (!repo) {
+		throw new Error("Repo not found");
+	}
+
+	// Inspect active tokens for cleanup or auditing.
+	const result = await repo.listTokens();
+	return result.tokens;
+}
+```
+
+</TypeScriptExample>
+
+### `revokeToken(tokenOrId)`
+
+- `tokenOrId` <Type text="string" /> <MetaInfo text="required" />
+- Returns <Type text="Promise<boolean>" />
+
+<TypeScriptExample>
+
+```ts
+import type { Service } from "cloudflare:workers";
+import type { ArtifactsBinding } from "artifacts";
+
+async function revokeToken(
+	artifacts: Service<ArtifactsBinding>,
+	tokenId: string,
+) {
+	const repo = await artifacts.get("starter-repo");
+	if (!repo) {
+		throw new Error("Repo not found");
+	}
+
+	// Revoke by token ID or plaintext token value.
+	return repo.revokeToken(tokenId);
+}
+```
+
+</TypeScriptExample>
+
+### `fork(target)`
+
+- `target.name` <Type text="RepoName" /> <MetaInfo text="required" />
+- `target.namespace` <Type text="NamespaceName" /> <MetaInfo text="optional" />
+- `target.readOnly` <Type text="boolean" /> <MetaInfo text="optional" />
+- Returns <Type text="Promise<CreateRepoResponse & { repo: ArtifactsRepoHandle } >" />
+
+<TypeScriptExample>
+
+```ts
+import type { Service } from "cloudflare:workers";
+import type { ArtifactsBinding } from "artifacts";
+
+async function forkRepo(artifacts: Service<ArtifactsBinding>) {
+	const repo = await artifacts.get("starter-repo");
+	if (!repo) {
+		throw new Error("Repo not found");
+	}
+
+	// Fork into a new repo and keep the returned handle.
+	const forked = await repo.fork({
+		name: "starter-repo-copy",
+	});
+
+	return forked.remote;
+}
+```
+
+</TypeScriptExample>
+
+## Worker example
+
+This example combines the binding methods in one Worker route.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import type { Service } from "cloudflare:workers";
+import type { ArtifactsBinding } from "artifacts";
+
+interface Env {
+	ARTIFACTS: Service<ArtifactsBinding>;
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const url = new URL(request.url);
+
+		if (request.method === "POST" && url.pathname === "/repos") {
+			// Create a repo and return its initial remote.
+			const created = await env.ARTIFACTS.create("starter-repo");
+			return Response.json({
+				name: created.name,
+				remote: created.remote,
+			});
+		}
+
+		if (request.method === "GET" && url.pathname === "/repos/starter-repo") {
+			const repo = await env.ARTIFACTS.get("starter-repo");
+			if (!repo) {
+				return Response.json({ error: "Repo not found" }, { status: 404 });
+			}
+
+			// Fetch the current repo metadata, including its remote URL.
+			const info = await repo.info();
+			return Response.json(info);
+		}
+
+		if (request.method === "POST" && url.pathname === "/tokens") {
+			const repo = await env.ARTIFACTS.get("starter-repo");
+			if (!repo) {
+				return Response.json({ error: "Repo not found" }, { status: 404 });
+			}
+
+			// Mint a short-lived read token for external tooling.
+			const token = await repo.createToken("read", 3600);
+			return Response.json(token);
+		}
+
+		return Response.json(
+			{ message: "Use POST /repos, GET /repos/starter-repo, or POST /tokens." },
+			{ status: 404 },
+		);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+## Next steps
+
+<LinkCard
+	title="REST API"
+	href="/artifacts/api/rest-api/"
+	description="Compare the binding methods with the underlying HTTP routes."
+/>
+
+<LinkCard
+	title="Get started with Workers"
+	href="/artifacts/get-started/workers/"
+	description="Use the binding in a full Worker project from local development through deploy."
+/>
+
+<LinkCard
+	title="Authenticated remote URLs"
+	href="/artifacts/api/authenticated-remote-urls/"
+	description="Use repo remotes and tokens with external git-compatible clients."
+/>
