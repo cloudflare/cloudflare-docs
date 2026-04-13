@@ -50,69 +50,10 @@ If this warning is still present after 24 hours, refer to [Troubleshooting](/dns
 
 For enhanced security, we recommend rolling your origin IP addresses at your hosting provider after your zone has been activated. This action prevents your origin IPs from being leaked during onboarding.
 
-## Email delivery
-
-Cloudflare does not proxy SMTP traffic on port 25. If you proxy an `A` or `AAAA` record that your `MX` record resolves to, mail servers will attempt to deliver email to Cloudflare's IP addresses instead of your mail server. This causes email delivery to fail.
-
-To avoid this issue:
-
-- Keep any record used for email (for example, `mail.example.com`) set to **DNS-only**.
-- Use a dedicated hostname for email that is separate from your proxied web traffic hostname.
-- If your `MX` record points to the same hostname as your website, Cloudflare creates a `dc-#####` record to route email traffic directly to your origin. Refer to [Email issues](/dns/troubleshooting/email-issues/#dc-subdomain) for details.
-
-:::note
-You can proxy SMTP traffic if you have [Cloudflare Spectrum](/spectrum/) configured for [SMTP](/spectrum/reference/configuration-options/#smtp).
-:::
-
-## Domain verification
-
-Third-party services often require `CNAME` or `TXT` records to verify domain ownership. When you proxy a verification `CNAME` record, DNS queries return Cloudflare IP addresses instead of the expected verification target. The third-party service cannot match the response and verification fails.
-
-Common services that require DNS-only verification records include:
-
-- Google Workspace
-- AWS Certificate Manager (`acm-validations.aws`)
-- Squarespace (`verify.squarespace.com`)
-- Amazon Amplify
-
-Keep domain verification records set to **DNS-only** until verification completes. Some services require the record to stay DNS-only permanently.
-
-## SaaS platform hosting
-
-When your site is hosted on a SaaS platform (for example, [Wix](/dns/manage-dns-records/reference/vendor-specific-records/#wix), Squarespace, Webflow), the platform serves your site from its own infrastructure. Proxying the DNS record pointing to a SaaS platform causes one or more of the following issues:
-
-- **SSL errors**: Both Cloudflare and the SaaS platform attempt to terminate SSL, which causes certificate mismatches or handshake failures.
-- **Redirect loops**: Both services may try to redirect HTTP to HTTPS, which creates an infinite redirect loop.
-- **Broken pages or assets**: The platform may reject requests that do not come directly from the expected DNS resolution.
-
-If your SaaS platform does not explicitly support Cloudflare's proxy, set the record to **DNS-only**. Refer to [vendor-specific DNS records](/dns/manage-dns-records/reference/vendor-specific-records/) for platform-specific guidance.
-
-:::note
-Some SaaS platforms are integrated with Cloudflare through [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/). For example, Shopify uses [Orange-to-Orange (O2O) routing](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/shopify/), which allows proxied records to work correctly.
-:::
-
-## FTP and non-HTTP protocols
-
-Cloudflare's proxy only handles HTTP and HTTPS traffic (ports 80 and 443 by default, plus [other supported ports](/fundamentals/reference/network-ports/)). Records used for FTP, SSH, RDP, game servers, or other non-HTTP protocols must be DNS-only. Proxying these records routes the traffic to Cloudflare, which then drops or mishandles the non-HTTP connection.
-
-To proxy non-HTTP protocols, use [Cloudflare Spectrum](/spectrum/).
-
-## Conflicting CDN or proxy providers
-
-Proxying a CNAME record that points to another CDN or proxy provider (for example, AWS CloudFront, Akamai, Fastly) can cause:
-
-- **SSL negotiation failures**: Both proxies attempt to terminate TLS, which creates certificate chain errors.
-- **Routing loops**: Each proxy may forward requests back to the other.
-- **Connectivity errors**: The upstream CDN may reject requests from Cloudflare's IP addresses.
-
-Cloudflare automatically [prevents proxying](#proxy-eligibility) for some known targets. For targets that are not automatically blocked, set the record to **DNS-only** if you experience connectivity issues.
-
 ## Windows authentication
 
 Because Microsoft Integrated Windows Authentication, NTLM, and Kerberos violate HTTP/1.1 specifications, they are not compatible with proxied DNS records.
 
-## API and webhook origin validation
+---
 
-Some third-party services validate the origin IP address of incoming API calls or webhook deliveries. When you proxy the DNS record for an endpoint that sends outbound API requests or receives webhooks, the remote service sees Cloudflare's IP addresses instead of your server's IP address. This causes the validation to fail and the service to reject the request.
-
-If a third-party service requires IP-based validation and does not accept [Cloudflare's IP ranges](https://www.cloudflare.com/ips/), set the record for that service to **DNS-only**.
+For guidance on when to proxy records and when use DNS only, refer to [Common scenarios](/dns/proxy-status/common-scenarios/).

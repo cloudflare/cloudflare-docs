@@ -142,22 +142,6 @@ In addition to potentially exposing your origin IP addresses to bad actors and [
 
 ### When to use DNS-only
 
-Certain DNS records must remain DNS-only because the services they support are not compatible with Cloudflare's HTTP proxy. Proxying these records will cause the associated service to fail.
+Certain DNS records should be DNS-only because the services they support are not compatible with Cloudflare's HTTP proxy. Common examples include email records, domain verification records, SaaS-hosted websites, and non-HTTP services.
 
-The following are common scenarios where records should stay DNS-only:
-
-- **Email records**: `MX` records cannot be proxied. If an `A` or `AAAA` record is used exclusively for email (for example, `mail.example.com`), it should also be DNS-only. Proxying a record that handles email traffic prevents mail delivery because Cloudflare does not proxy SMTP traffic on port 25 by default. Refer to [Email issues](/dns/troubleshooting/email-issues/) for details.
-
-- **Domain verification records**: Many third-party services require `CNAME` or `TXT` records for domain ownership verification (for example, Google Workspace, AWS Certificate Manager, Squarespace). These records must be DNS-only so the provider can query the expected value. Proxying a verification record returns Cloudflare IP addresses instead, which causes verification to fail.
-
-- **SaaS-hosted websites**: If your site is hosted on a platform like [Wix](/dns/manage-dns-records/reference/vendor-specific-records/#wix), the DNS records pointing to that platform should typically be DNS-only. These platforms serve your site from their own infrastructure and do not expect traffic to pass through another proxy. Proxying the record can cause SSL errors, redirect loops, or broken pages.
-
-  :::note
-  Shopify is an exception. When you proxy a CNAME record pointing to Shopify, Cloudflare uses [Orange-to-Orange (O2O)](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/shopify/) routing to maintain compatibility.
-  :::
-
-- **Non-HTTP services**: Records used for FTP, SSH, custom TCP/UDP applications, or game servers should be DNS-only. Cloudflare's proxy only handles HTTP and HTTPS traffic. To proxy non-HTTP protocols, use [Cloudflare Spectrum](/spectrum/).
-
-- **Records pointing to other CDN or proxy providers**: If a CNAME record points to another CDN (for example, AWS CloudFront, Akamai), proxying it through Cloudflare can cause conflicts between the two proxies. This may result in SSL negotiation failures, routing loops, or connectivity errors. Cloudflare [blocks proxying](/dns/proxy-status/limitations/#proxy-eligibility) for some known targets to prevent this.
-
-For a complete list of limitations, refer to [Proxying limitations](/dns/proxy-status/limitations/).
+For a detailed list of scenarios, refer to [Common scenarios](/dns/proxy-status/common-scenarios/). For hard constraints on proxying, refer to [Proxying limitations](/dns/proxy-status/limitations/).
