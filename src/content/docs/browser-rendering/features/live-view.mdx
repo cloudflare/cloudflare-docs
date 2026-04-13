@@ -31,8 +31,8 @@ The hosted UI supports two viewing modes, controlled by the `mode` parameter in 
 
 | Mode | URL pattern | Description |
 | --- | --- | --- |
-| Tab | `https://live.browser.run/ui/view?mode=tab&wss=...` | DevTools inspector panel (Elements, Console, Network, etc.) |
-| Inspector | `https://live.browser.run/ui/view?mode=devtools&wss=...` | Standalone inspector view |
+| Tab | `https://live.browser.run/ui/view?mode=tab&wss=...` | Standalone page view |
+| Inspector | `https://live.browser.run/ui/view?mode=devtools&wss=...` | DevTools inspector panel (Elements, Console, Network, etc.) |
 
 ### Native Chrome DevTools (Chrome only)
 
@@ -42,7 +42,7 @@ Because Browser Run speaks standard CDP, you can connect Chrome's built-in DevTo
 devtools://devtools/bundled/inspector.html?wss=live.browser.run/api/devtools/browser/SESSION_ID/page/TARGET_ID?jwt=...
 ```
 
-Paste this URL into Chrome's address bar to open native DevTools connected to the remote browser session. This gives you the familiar local DevTools UI and loads slightly faster since the assets are already bundled in Chrome. However, the `devtools://` protocol only works in Chrome and only supports the inspector viewing mode.
+Paste this URL into Chrome's address bar to connect native DevTools to the remote browser session. You will get the same DevTools interface you use for local debugging. The `devtools://` protocol is Chrome-only and limited to inspector viewing mode.
 
 :::caution[URL validity]
 The `devtoolsFrontendUrl` is valid for five minutes from when it was generated. If you do not open the URL within this timeframe, list the targets again to get a fresh URL. Once the DevTools connection is established, it remains active as long as the browser session is alive.
