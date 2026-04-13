@@ -25,6 +25,10 @@ entries:
     title: "WebMCP support"
     description: |-
       * Browser Run now supports [WebMCP](/browser-rendering/features/webmcp/) (Web Model Context Protocol), which allows websites to declare structured tools that AI agents can discover and execute. WebMCP-enabled browsers are available through the experimental lab browser pool.
+  - publish_date: "2026-04-13"
+    title: "@cloudflare/puppeteer v1.1.0 released"
+    description: |-
+      * Released version 1.1.0 of [`@cloudflare/puppeteer`](https://github.com/cloudflare/puppeteer/releases/tag/v1.1.0), which replaces the internal chunked protocol with plain CDP. This fixes a compatibility issue when using the latest compatibility dates.
   - publish_date: "2026-04-10"
     title: "Chrome DevTools Protocol (CDP) and MCP client support"
     description: |-

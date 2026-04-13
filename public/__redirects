@@ -425,12 +425,15 @@
 # Constellation
 /constellation/ /workers-ai/ 301
 # Containers
+/containers/beta-info/ /containers/faq/ 301
 /containers/image-management/ /containers/platform-details/image-management/ 301
 /containers/scaling-and-routing/ /containers/platform-details/scaling-and-routing/ 301
 /containers/architecture/ /containers/platform-details/architecture/ 301
 /containers/durable-object-methods/ /containers/platform-details/durable-object-methods/ 301
 /containers/container-package/ /containers/container-class/ 301
 /containers/platform-details/ /containers/platform-details/architecture/ 301
+# Sandbox
+/sandbox/platform/beta-info/ /sandbox/platform/ 301
 # D1
 /d1/client-api/ /d1/worker-api/ 301
 /d1/build-with-d1/d1-client-api/ /d1/worker-api/ 301
@@ -2675,4 +2678,3 @@
 /changelog/2024-* /changelog/post/2024-:splat 301
 /changelog/2025-* /changelog/post/2025-:splat 301
 /changelog/2026-* /changelog/post/2026-:splat 301
-

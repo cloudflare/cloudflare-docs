@@ -79,7 +79,7 @@ Durable Objects will occasionally shut down and objects are restarted, which wil
 
 When a Durable Object is shut down, the object instance is automatically restarted and new requests are routed to the new instance. In-flight requests are handled as follows:
 
-- **HTTP requests**: In-flight requests are allowed to finish for up to 30 seconds. However, if a request attempts to access a Durable Object's storage during this grace period, it will be stopped immediately to maintain Durable Objects global uniqueness property.
+- **HTTP & RPC requests**: In-flight requests are allowed to finish if they do not access a Durable Object's storage.  If a request attempts to access a Durable Object's storage, it will be stopped immediately and return an error to maintain Durable Objects global uniqueness property. When the Worker runtime system is being updated, in-flight requests have up to 30 seconds to complete.
 - **WebSocket connections**: WebSocket requests are terminated automatically during shutdown. This is so that the new instance can take over the connection as soon as possible.
 - **Other invocations (email, cron)**: Other invocations are treated similarly to HTTP requests.
 

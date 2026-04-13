@@ -2,6 +2,7 @@
 dist/
 distmd/
 distllms/
+
 # generated types
 .astro/
 
@@ -30,6 +31,7 @@ pnpm-debug.log*
 
 # macOS-specific files
 .DS_Store
+
 /test-results/
 /playwright-report/
 /blob-report/
@@ -50,4 +52,4 @@ CLAUDE.md
 .cursor/
 .github/prompts/
 .github/agents/
-agents/
+/agents/
