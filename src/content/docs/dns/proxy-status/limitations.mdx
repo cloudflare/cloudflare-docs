@@ -8,11 +8,13 @@ sidebar:
 
 import { Render, GlossaryTooltip, Details } from "~/components";
 
-This page describes expected limitations when <GlossaryTooltip term="proxy status">proxying DNS records</GlossaryTooltip>. For further information about proxying, refer to [How Cloudflare works](/fundamentals/concepts/how-cloudflare-works/).
+This page describes expected limitations when <GlossaryTooltip term="proxy status">proxying DNS records</GlossaryTooltip>. For further information about proxying, refer to [How Cloudflare DNS works](/fundamentals/concepts/how-cloudflare-works/).
+
+For guidance on when to proxy records and when to use DNS only, refer to [Common scenarios](/dns/proxy-status/common-scenarios/).
 
 ## Proxy eligibility
 
-Only A, AAAA, and CNAME DNS records that serve HTTP or HTTPS traffic can be proxied. Other record types cannot be proxied.
+Only A, AAAA, and CNAME records that serve HTTP or HTTPS traffic can be proxied. Other DNS record types cannot be proxied.
 
 If you encounter a [CNAME record](/dns/manage-dns-records/reference/dns-record-types/#cname) that you cannot proxy — usually associated with another CDN provider — a proxied version of that record will cause connectivity errors. Cloudflare is purposely preventing that record from being proxied to protect you from a misconfiguration.
 
@@ -87,7 +89,3 @@ For the full list of connection and request limits, refer to [Connection limits]
 ## Connection timeouts
 
 Cloudflare enforces a default [Proxy Read Timeout](/fundamentals/reference/connection-limits/) of 120 seconds between Cloudflare and your origin server. If your origin does not send an HTTP response within this window, Cloudflare returns a [524 error](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-524/). Long-running operations such as large database queries or file processing may exceed this limit. Enterprise customers can increase this timeout up to 6,000 seconds.
-
----
-
-For guidance on when to proxy records and when to use DNS-only, refer to [Common scenarios](/dns/proxy-status/common-scenarios/).
