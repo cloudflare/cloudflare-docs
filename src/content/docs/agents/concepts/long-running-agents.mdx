@@ -115,7 +115,7 @@ A hibernated agent can be woken by any of these sources:
 | **WebSocket connection** | A client connects, triggering `onConnect()`                                                                                                                            | A team member opens the dashboard       |
 | **RPC call**             | Another Worker or agent calls a method via [service binding](/workers/runtime-apis/bindings/service-bindings/) or [`@callable`](/agents/api-reference/callable-methods/) | A coordinator agent delegates a task    |
 | **Scheduled alarm**      | A stored schedule fires, triggering your callback                                                                                                                      | Daily standup reminder at 9am           |
-| **Email**                | An inbound email triggers `email()`                                                                                                                                    | A team member replies to a status email |
+| **Email**                | An inbound email triggers `onEmail()`                                                                                                                                  | A team member replies to a status email |
 
 The pattern extends naturally to any event source that can reach a Worker — anything from telephony webhooks to chat platform bots. An external signal arrives, the platform wakes the agent, and the agent handles it.
 
@@ -653,7 +653,7 @@ Long-running agents on Cloudflare are not long-running processes. They are durab
 | **`keepAlive()` / `keepAliveWhile()`** | Prevent eviction during active work           |
 | **`runFiber()` / `stash()`**           | Checkpoint and recover long tasks             |
 | **`unstable_chatRecovery`**            | Recover interrupted LLM streams               |
-| **`onRequest()` / `email()` / RPC**    | Wake on external events                       |
+| **`onRequest()` / `onEmail()` / RPC**  | Wake on external events                       |
 | **`runWorkflow()`**                    | Delegate heavyweight multi-step work          |
 | **`subAgent()`**                       | Delegate specialized work to child agents     |
 | **Structured plans in state**          | Enable recovery, visibility, and re-planning  |
