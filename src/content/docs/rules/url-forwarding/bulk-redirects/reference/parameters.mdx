@@ -70,10 +70,9 @@ For example, when both **Subpath matching** and **Preserve path suffix** are ena
 
 ## Status code
 
-API field: `status_code` <Type text="Integer" /> <MetaInfo text="default: 301" />
+API field: `status_code` <Type text="Integer" /> <MetaInfo text="default: 301" /><br/>
+API values: `301`, `302`, `307`, or `308`.
 
-The HTTP status code returned to the client when redirecting.
-
-The value must be one of the following: `301`, `302`, `307`, or `308`.
+The HTTP status code returned to the client when redirecting:
 
 <Render file="redirects-status-codes" product="rules" />
