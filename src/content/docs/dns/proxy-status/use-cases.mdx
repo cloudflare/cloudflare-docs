@@ -11,7 +11,7 @@ This page lists common scenarios where DNS records should be <GlossaryTooltip te
 
 ## Records to proxy
 
-Proxy all `A`, `AAAA`, and `CNAME` records that serve HTTP or HTTPS web traffic. This includes records for:
+Proxy all A, AAAA, and CNAME records that serve HTTP or HTTPS web traffic. This includes records for:
 
 - Your website or web application (for example, `example.com`, `www.example.com`)
 - Subdomains that serve web content (for example, `blog.example.com`, `app.example.com`)
@@ -19,23 +19,25 @@ Proxy all `A`, `AAAA`, and `CNAME` records that serve HTTP or HTTPS web traffic.
 
 Proxied records benefit from [DDoS protection](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/), [caching](/cache/), [WAF](/waf/), and other Cloudflare security and performance features.
 
-## Expected behaviors when proxying
+### Expected behaviors and additional configuration
 
-When traffic is proxied through Cloudflare, the following behaviors apply. These are not limitations — they are how Cloudflare's reverse proxy works by design. Your origin configuration may need to account for them.
+When traffic is proxied through Cloudflare, the following behaviors apply. Depending on your origin configuration, you may need to consider the following:
 
-### Source IP changes
+#### Source IP changes
 
 Your origin server sees Cloudflare IP addresses as the source of all requests instead of the end-user's IP address. Applications that rely on the source IP for authentication, rate limiting, or geolocation will not function as expected without additional configuration.
 
 Cloudflare includes the original visitor IP address in the [`CF-Connecting-IP`](/fundamentals/reference/http-headers/) and `X-Forwarded-For` request headers. Configure your origin server to read the visitor IP from these headers. For more information, refer to [Restoring original visitor IPs](/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/).
 
-### Client certificate (mTLS) validation at origin
+#### Client certificate (mTLS) validation at origin
 
-When a record is proxied, TLS terminates at Cloudflare's edge. Cloudflare establishes a separate TLS connection to your origin server. This means the origin never receives the end-user's client certificate during the TLS handshake. If your origin requires client certificates for authentication, connections will be rejected.
+When a record is proxied, TLS terminates at Cloudflare's global network. Cloudflare establishes a separate TLS connection to your origin server. This means the origin never receives the end-user's client certificate during the TLS handshake. You can achieve mTLS through the following:
 
-To validate client certificates at Cloudflare's edge instead, refer to [Client certificates (mTLS)](/ssl/client-certificates/). To verify that traffic reaching your origin comes from Cloudflare, refer to [Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/). To forward client certificate details to your origin via HTTP headers, refer to [Forward a client certificate](/ssl/client-certificates/forward-a-client-certificate/).
+- [Client certificates (mTLS)](/ssl/client-certificates/): validate client certificates between your end-users and Cloudflare.
+- [Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/): Verify that traffic reaching your origin comes from Cloudflare.
+- [Forward a client certificate](/ssl/client-certificates/forward-a-client-certificate/): Forward client certificate details to your origin via HTTP headers.
 
-### Header modifications
+#### Header modifications
 
 Cloudflare adds and modifies HTTP request headers when proxying traffic, including headers for [visitor IP identification](/fundamentals/reference/http-headers/), diagnostics, and connection management. Applications that expect a fixed number of headers or parse headers by position instead of by name may experience errors.
 
@@ -47,11 +49,11 @@ The following records should be set to DNS-only because the services they suppor
 
 ### Email
 
-`MX` records cannot be proxied. If an `A` or `AAAA` record is used exclusively for email (for example, `mail.example.com`), it should also be set to DNS-only.
+MX records cannot be proxied. If an A or AAAA record is used exclusively for email (for example, `mail.example.com`), it should also be set to DNS-only.
 
 Cloudflare does not proxy SMTP traffic on port 25 by default. Proxying a record that handles email traffic causes mail servers to connect to Cloudflare's IP addresses instead of your mail server. This prevents email delivery.
 
-Use a dedicated hostname for email that is separate from your proxied web traffic hostname. If your `MX` record points to the same hostname as your website, Cloudflare creates a `dc-#####` record to route email traffic directly to your origin. Refer to [Email issues](/dns/troubleshooting/email-issues/) for details.
+Use a dedicated hostname for email that is separate from your proxied web traffic hostname. If your MX record points to the same hostname as your website, Cloudflare creates a `dc-#####` record to route email traffic directly to your origin. Refer to [Email issues](/dns/troubleshooting/email-issues/) for details.
 
 :::note
 You can proxy SMTP traffic if you have [Cloudflare Spectrum](/spectrum/) configured for [SMTP](/spectrum/reference/configuration-options/#smtp).
@@ -59,7 +61,7 @@ You can proxy SMTP traffic if you have [Cloudflare Spectrum](/spectrum/) configu
 
 ### Domain verification
 
-Third-party services often require `CNAME` or `TXT` records to verify domain ownership. Proxying a verification `CNAME` record returns Cloudflare IP addresses instead of the expected verification target. The third-party service cannot match the response and verification fails.
+Third-party services often require CNAME or TXT records to verify domain ownership. Proxying a verification CNAME record returns Cloudflare IP addresses instead of the expected verification target. The third-party service cannot match the response and verification fails.
 
 Common services that require DNS-only verification records:
 
@@ -68,7 +70,7 @@ Common services that require DNS-only verification records:
 - Squarespace (`verify.squarespace.com`)
 - Amazon Amplify
 
-Set domain verification records to **DNS-only** until verification completes. Some services require the record to be DNS-only permanently.
+Set domain verification records to **DNS Only** until verification completes. Some services require the record to be DNS-only permanently.
 
 ### SaaS-hosted websites
 
@@ -81,7 +83,7 @@ If your site is hosted on a SaaS platform (for example, [Wix](/dns/manage-dns-re
 If your SaaS platform does not explicitly support Cloudflare's proxy, set the record to **DNS-only**. Refer to [vendor-specific DNS records](/dns/manage-dns-records/reference/vendor-specific-records/) for platform-specific guidance.
 
 :::note
-Some SaaS platforms are integrated with Cloudflare through [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/). For example, Shopify uses [Orange-to-Orange (O2O) routing](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/shopify/), which allows proxied records to work correctly.
+Some SaaS platforms are integrated with Cloudflare through [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/). For example, Shopify uses [O2O](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/shopify/), which allows proxied records to work correctly.
 :::
 
 ### Non-HTTP services
@@ -92,7 +94,7 @@ To proxy non-HTTP protocols, use [Cloudflare Spectrum](/spectrum/).
 
 ### Other CDN or proxy providers
 
-If a `CNAME` record points to another CDN or proxy provider (for example, AWS CloudFront, Akamai, Fastly), proxying it through Cloudflare can cause conflicts between the two proxies:
+If a CNAME record points to another CDN or proxy provider (for example, AWS CloudFront, Akamai, Fastly), proxying it through Cloudflare can cause conflicts between the two proxies:
 
 - **SSL negotiation failures**: Both proxies attempt to terminate TLS, which creates certificate chain errors.
 - **Routing loops**: Each proxy forwards requests back to the other.
