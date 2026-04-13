@@ -14,15 +14,13 @@ head:
 
 import { DashButton, Details, Tabs, TabItem } from "~/components";
 
-This guide walks you through setting up Cloudflare Mesh so your devices and servers can reach each other by private IP.
+Set up Cloudflare Mesh so your devices and servers can reach each other by private IP.
 
-**Time to complete:** Under 10 minutes.
-
-**What you will need:**
+## Prerequisites
 
 - A Cloudflare account ([sign up free](https://dash.cloudflare.com/sign-up)).
 - A laptop or phone to connect as a client device.
-- Optionally, a Linux server if you want to deploy a Mesh node.
+- (Optional) A Linux server to deploy a Mesh node.
 
 :::note[No Linux server? No problem.]
 Client-to-client connectivity works without any Mesh nodes. Two enrolled laptops can reach each other directly by Mesh IP. Mesh nodes are for running the client in headless mode on a server — either to make that server reachable by Mesh IP, or to [route traffic to a private subnet](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/) behind it. You still need to complete the setup wizard below to configure your account — you can skip the install step and connect the node later.
@@ -114,7 +112,7 @@ Replace `<MESH-IP>` with the Mesh IP of a node or another device (visible on the
 
 ## What the wizard configures
 
-When you create your first Mesh node, the setup wizard automatically provisions several Cloudflare One settings so you don't have to configure them manually:
+When you create your first Mesh node, the setup wizard automatically provisions several Cloudflare One settings so you do not have to configure them manually:
 
 | Setting                                                                                                                                                              | What it does                                                                                                                                                                                    |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
