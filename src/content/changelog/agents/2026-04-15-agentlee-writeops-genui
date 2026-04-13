@@ -9,6 +9,7 @@ date: 2026-04-15
 We are excited to announce two major capability upgrades for **Agent Lee**, the AI co-pilot built directly into the Cloudflare dashboard. Agent Lee is designed to understand your specific account configuration, and with this release, it moves from a passive advisor to an active assistant that can help you manage your infrastructure and visualize your data through natural language.
 
 ### Take action with Write Operations
+
 Agent Lee can now perform changes on your behalf across your Cloudflare account. Whether you need to update DNS records, modify SSL/TLS settings, or configure Workers routes, you can simply ask. 
 
 To ensure security and accuracy, every write operation requires **explicit user approval**. Before any change is committed, Agent Lee will present a summary of the proposed action in plain language. No action is taken until you click **Confirm**, and this approval requirement is enforced at the infrastructure level to prevent unauthorized changes.
