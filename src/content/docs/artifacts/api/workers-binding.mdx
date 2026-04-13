@@ -50,107 +50,9 @@ export interface Env {
 
 Wrangler generates the `Artifacts` type from the Artifacts binding definition. You do not import it manually.
 
-## Shared types
-
-These are the core public types used by the binding.
-
-```ts
-export type NamespaceName = string;
-export type RepoName = string;
-export type Scope = "read" | "write";
-export type ArtifactToken = string;
-export type Cursor = string;
-
-export interface RemoteRepoInfo {
-	id: string;
-	name: RepoName;
-	createdAt: string;
-	source: string | null;
-	readOnly: boolean;
-	remote: string;
-}
-
-export interface CreateRepoResponse {
-	id: string;
-	name: RepoName;
-	remote: string;
-	token: ArtifactToken;
-	expiresAt: string;
-}
-
-export interface ListReposResponse {
-	repos: Array<{
-		id: string;
-		name: RepoName;
-		createdAt: string;
-		source: string | null;
-		readOnly: boolean;
-	}>;
-	total: number;
-	cursor?: Cursor;
-}
-
-export interface CreateTokenResponse {
-	id: string;
-	plaintext: ArtifactToken;
-	scope: Scope;
-	expiresAt: string;
-}
-
-export interface ValidateTokenResponse {
-	valid: boolean;
-	scope?: Scope;
-}
-
-export interface TokenInfo {
-	id: string;
-	scope: Scope;
-	createdAt: string;
-	expiresAt: string;
-}
-```
-
-## Binding surface
-
-```ts
-export interface ArtifactsRepoHandle {
-	info(): Promise<RemoteRepoInfo | null>;
-	createToken(scope?: Scope, ttl?: number): Promise<CreateTokenResponse>;
-	validateToken(token: ArtifactToken): Promise<ValidateTokenResponse>;
-	listTokens(): Promise<{ tokens: TokenInfo[]; total: number }>;
-	revokeToken(tokenOrId: string): Promise<boolean>;
-	fork(target: {
-		name: RepoName;
-		namespace?: NamespaceName;
-		readOnly?: boolean;
-	}): Promise<CreateRepoResponse & { repo: ArtifactsRepoHandle }>;
-}
-
-export interface ArtifactsBinding {
-	create(
-		name: RepoName,
-		opts?: { readOnly?: boolean },
-	): Promise<CreateRepoResponse & { repo: ArtifactsRepoHandle }>;
-
-	get(name: RepoName): Promise<ArtifactsRepoHandle | null>;
-
-	list(opts?: { limit?: number; cursor?: Cursor }): Promise<ListReposResponse>;
-
-	delete(name: RepoName): Promise<boolean>;
-
-	import(
-		name: RepoName,
-		source: {
-			url: string;
-			branch?: string;
-			headers?: Record<string, string>;
-			readOnly?: boolean;
-		},
-	): Promise<CreateRepoResponse & { repo: ArtifactsRepoHandle }>;
-}
-```
-
 ## Namespace methods
+
+Use namespace methods on `env.ARTIFACTS` to create, list, import, or delete repos.
 
 ### `create(name, opts?)`
 
@@ -453,6 +355,66 @@ export default {
 ```
 
 </TypeScriptExample>
+
+## Shared types
+
+These are the core response and helper types used in the examples on this page.
+
+```ts
+export type NamespaceName = string;
+export type RepoName = string;
+export type Scope = "read" | "write";
+export type ArtifactToken = string;
+export type Cursor = string;
+
+export interface RemoteRepoInfo {
+	id: string;
+	name: RepoName;
+	createdAt: string;
+	source: string | null;
+	readOnly: boolean;
+	remote: string;
+}
+
+export interface CreateRepoResponse {
+	id: string;
+	name: RepoName;
+	remote: string;
+	token: ArtifactToken;
+	expiresAt: string;
+}
+
+export interface ListReposResponse {
+	repos: Array<{
+		id: string;
+		name: RepoName;
+		createdAt: string;
+		source: string | null;
+		readOnly: boolean;
+	}>;
+	total: number;
+	cursor?: Cursor;
+}
+
+export interface CreateTokenResponse {
+	id: string;
+	plaintext: ArtifactToken;
+	scope: Scope;
+	expiresAt: string;
+}
+
+export interface ValidateTokenResponse {
+	valid: boolean;
+	scope?: Scope;
+}
+
+export interface TokenInfo {
+	id: string;
+	scope: Scope;
+	createdAt: string;
+	expiresAt: string;
+}
+```
 
 ## Next steps
 

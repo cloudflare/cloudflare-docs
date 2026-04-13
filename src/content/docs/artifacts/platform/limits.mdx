@@ -6,4 +6,18 @@ sidebar:
   order: 2
 ---
 
-This page will document the current limits for Artifact size, version count, requests, and related operational constraints.
+## Proposed limits during beta
+
+:::note
+Artifacts is in beta. These limits will increase as the beta progresses.
+:::
+
+| Limit                   | Value                                  | Notes                                                                                                                                                                                                      |
+| ----------------------- | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Storage per account     | 1 TB (paid)                            | Proposed beta limit. I did not find an account storage quota enforced in the current worker repo.                                                                                                          |
+| New repo creation rate  | 2,000 / 10 seconds                     | Verified in `apps/worker/src/middleware/rate-limit.ts` for control-plane requests. The worker also applies the same `2,000 / 10 seconds` limit to git protocol requests.                                   |
+| Repo name length        | No explicit max in current worker repo | Verified against `SAFE_NAME` in `apps/worker/src/lib/validation.ts`. Names must start with an alphanumeric character and then use alphanumerics, `.`, `_`, or `-`.                                         |
+| Total namespaces        | No explicit max in current worker repo | I did not find a namespace count cap enforced in the current worker repo.                                                                                                                                  |
+| Repos per namespace     | No explicit max in current worker repo | I did not find a per-namespace repo cap enforced in the current worker repo. The namespace registry code comments describe large metadata capacity, but not a product limit.                               |
+| Storage per repo        | 10 GB                                  | Proposed beta limit. I did not find a repo storage quota enforced in the current worker repo.                                                                                                              |
+| Repo size (import/push) | 65 MB (proposed)                       | I did not find a repo-wide import or push cap enforced in the current worker repo. The snapshot code currently enforces a `50 MB` max object size, which is related but not the same as a repo-wide limit. |
