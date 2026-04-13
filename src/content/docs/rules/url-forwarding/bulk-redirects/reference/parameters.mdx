@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { Type, MetaInfo } from "~/components";
+import { Type, MetaInfo, Render } from "~/components";
 
 A URL redirect has a source URL, a target URL, a status code, and some additional parameters that affect its URL matching behavior and runtime behavior.
 
@@ -74,9 +74,6 @@ API field: `status_code` <Type text="Integer" /> <MetaInfo text="default: 301" /
 
 The HTTP status code returned to the client when redirecting.
 
-The value must be one of the following:
+The value must be one of the following: `301`, `302`, `307`, or `308`.
 
-- `301` (Moved permanently)
-- `302` (Found, also known as Moved temporarily)
-- `307` (Temporary redirect)
-- `308` (Permanent redirect)
+<Render file="redirects-status-codes" product="rules" />
