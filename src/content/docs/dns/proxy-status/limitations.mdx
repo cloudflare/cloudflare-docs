@@ -55,19 +55,3 @@ For enhanced security, we recommend rolling your origin IP addresses at your hos
 ## Windows authentication
 
 Because Microsoft Integrated Windows Authentication, NTLM, and Kerberos violate HTTP/1.1 specifications, they are not compatible with proxied DNS records. NTLM authenticates at the TCP connection level (Layer 4), and Cloudflare does not guarantee that consecutive requests from the same client reuse the same TCP connection to the origin. This can cause repeated authentication prompts or authentication loops.
-
-## Request and response size limits
-
-Cloudflare enforces size limits on proxied requests. These limits vary by plan and cannot be bypassed while traffic is proxied.
-
-| Limit type                 | Free / Pro | Business | Enterprise       |
-| -------------------------- | ---------- | -------- | ---------------- |
-| Maximum upload size (body) | 100 MB     | 200 MB   | 500 MB (default) |
-| URL length                 | 16 KB      | 16 KB    | 16 KB            |
-| Total header size          | 128 KB     | 128 KB   | 128 KB           |
-
-For the full list of connection and request limits, refer to [Connection limits](/fundamentals/reference/connection-limits/).
-
-## Connection timeouts
-
-Cloudflare enforces a default [Proxy Read Timeout](/fundamentals/reference/connection-limits/) of 120 seconds between Cloudflare and your origin server. If your origin does not send an HTTP response within this window, Cloudflare returns a [524 error](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-524/). Long-running operations such as large database queries or file processing may exceed this limit. Enterprise customers can increase this timeout up to 6,000 seconds.
