@@ -1,6 +1,6 @@
 ---
 title: Workers binding
-description: Call Artifacts from a Worker service binding.
+description: Call Artifacts from a Worker binding.
 pcx_content_type: reference
 sidebar:
   order: 1
@@ -29,11 +29,10 @@ Add the Artifacts binding to `wrangler.jsonc`:
 
 ```jsonc title="wrangler.jsonc"
 {
-	"services": [
+	"artifacts": [
 		{
 			"binding": "ARTIFACTS",
-			"service": "artifacts",
-			"entrypoint": "ArtifactsBinding",
+			"namespace": "default",
 		},
 	],
 }
@@ -41,16 +40,15 @@ Add the Artifacts binding to `wrangler.jsonc`:
 
 </WranglerConfig>
 
-Your Worker environment looks like this:
+After you run `npx wrangler types`, your Worker environment looks like this:
 
 ```ts
-import type { Service } from "cloudflare:workers";
-import type { ArtifactsBinding } from "artifacts";
-
 export interface Env {
-	ARTIFACTS: Service<ArtifactsBinding>;
+	ARTIFACTS: Artifacts;
 }
 ```
+
+Wrangler generates the `Artifacts` type from the Artifacts binding definition. You do not import it manually.
 
 ## Shared types
 
@@ -160,13 +158,10 @@ export interface ArtifactsBinding {
 - `opts.readOnly` <Type text="boolean" /> <MetaInfo text="optional" />
 - Returns <Type text="Promise<CreateRepoResponse & { repo: ArtifactsRepoHandle } >" />
 
-<TypeScriptExample>
+<TypeScriptExample typescriptFirst={true}>
 
 ```ts
-import type { Service } from "cloudflare:workers";
-import type { ArtifactsBinding } from "artifacts";
-
-async function createRepo(artifacts: Service<ArtifactsBinding>) {
+async function createRepo(artifacts: Artifacts) {
 	// Create the repo and capture the initial write token.
 	const created = await artifacts.create("starter-repo");
 
@@ -185,13 +180,10 @@ async function createRepo(artifacts: Service<ArtifactsBinding>) {
 - `name` <Type text="RepoName" /> <MetaInfo text="required" />
 - Returns <Type text="Promise<ArtifactsRepoHandle | null>" />
 
-<TypeScriptExample>
+<TypeScriptExample typescriptFirst={true}>
 
 ```ts
-import type { Service } from "cloudflare:workers";
-import type { ArtifactsBinding } from "artifacts";
-
-async function getRepoHandle(artifacts: Service<ArtifactsBinding>) {
+async function getRepoHandle(artifacts: Artifacts) {
 	// Resolve the handle once, then reuse it for repo-scoped methods.
 	const repo = await artifacts.get("starter-repo");
 
@@ -211,13 +203,10 @@ async function getRepoHandle(artifacts: Service<ArtifactsBinding>) {
 - `opts.cursor` <Type text="Cursor" /> <MetaInfo text="optional" />
 - Returns <Type text="Promise<ListReposResponse>" />
 
-<TypeScriptExample>
+<TypeScriptExample typescriptFirst={true}>
 
 ```ts
-import type { Service } from "cloudflare:workers";
-import type { ArtifactsBinding } from "artifacts";
-
-async function listRepos(artifacts: Service<ArtifactsBinding>) {
+async function listRepos(artifacts: Artifacts) {
 	// Request a small page when you only need recent repo names.
 	const page = await artifacts.list({ limit: 10 });
 
@@ -232,13 +221,10 @@ async function listRepos(artifacts: Service<ArtifactsBinding>) {
 - `name` <Type text="RepoName" /> <MetaInfo text="required" />
 - Returns <Type text="Promise<boolean>" />
 
-<TypeScriptExample>
+<TypeScriptExample typescriptFirst={true}>
 
 ```ts
-import type { Service } from "cloudflare:workers";
-import type { ArtifactsBinding } from "artifacts";
-
-async function deleteRepo(artifacts: Service<ArtifactsBinding>) {
+async function deleteRepo(artifacts: Artifacts) {
 	// Delete returns true when the repo was removed.
 	return artifacts.delete("starter-repo");
 }
@@ -255,13 +241,10 @@ async function deleteRepo(artifacts: Service<ArtifactsBinding>) {
 - `source.readOnly` <Type text="boolean" /> <MetaInfo text="optional" />
 - Returns <Type text="Promise<CreateRepoResponse & { repo: ArtifactsRepoHandle } >" />
 
-<TypeScriptExample>
+<TypeScriptExample typescriptFirst={true}>
 
 ```ts
-import type { Service } from "cloudflare:workers";
-import type { ArtifactsBinding } from "artifacts";
-
-async function importRepo(artifacts: Service<ArtifactsBinding>) {
+async function importRepo(artifacts: Artifacts) {
 	// Import a public GitHub repo into Artifacts.
 	const imported = await artifacts.import("react-mirror", {
 		url: "facebook/react",
@@ -284,13 +267,10 @@ Use `await artifacts.get(name)` or the `repo` returned by `create()`, `import()`
 
 Use `info()` when you need repo metadata, including the authenticated remote URL. The binding does not expose a separate `.remote()` method.
 
-<TypeScriptExample>
+<TypeScriptExample typescriptFirst={true}>
 
 ```ts
-import type { Service } from "cloudflare:workers";
-import type { ArtifactsBinding } from "artifacts";
-
-async function getRemoteUrl(artifacts: Service<ArtifactsBinding>) {
+async function getRemoteUrl(artifacts: Artifacts) {
 	const repo = await artifacts.get("starter-repo");
 	if (!repo) {
 		return null;
@@ -310,13 +290,10 @@ async function getRemoteUrl(artifacts: Service<ArtifactsBinding>) {
 - `ttl` <Type text="number" /> <MetaInfo text="optional (seconds)" />
 - Returns <Type text="Promise<CreateTokenResponse>" />
 
-<TypeScriptExample>
+<TypeScriptExample typescriptFirst={true}>
 
 ```ts
-import type { Service } from "cloudflare:workers";
-import type { ArtifactsBinding } from "artifacts";
-
-async function mintReadToken(artifacts: Service<ArtifactsBinding>) {
+async function mintReadToken(artifacts: Artifacts) {
 	const repo = await artifacts.get("starter-repo");
 	if (!repo) {
 		throw new Error("Repo not found");
@@ -334,16 +311,10 @@ async function mintReadToken(artifacts: Service<ArtifactsBinding>) {
 - `token` <Type text="ArtifactToken" /> <MetaInfo text="required" />
 - Returns <Type text="Promise<ValidateTokenResponse>" />
 
-<TypeScriptExample>
+<TypeScriptExample typescriptFirst={true}>
 
 ```ts
-import type { Service } from "cloudflare:workers";
-import type { ArtifactsBinding } from "artifacts";
-
-async function validateToken(
-	artifacts: Service<ArtifactsBinding>,
-	token: string,
-) {
+async function validateToken(artifacts: Artifacts, token: string) {
 	const repo = await artifacts.get("starter-repo");
 	if (!repo) {
 		throw new Error("Repo not found");
@@ -360,13 +331,10 @@ async function validateToken(
 
 - Returns <Type text="Promise<{ tokens: TokenInfo[]; total: number } >" />
 
-<TypeScriptExample>
+<TypeScriptExample typescriptFirst={true}>
 
 ```ts
-import type { Service } from "cloudflare:workers";
-import type { ArtifactsBinding } from "artifacts";
-
-async function listRepoTokens(artifacts: Service<ArtifactsBinding>) {
+async function listRepoTokens(artifacts: Artifacts) {
 	const repo = await artifacts.get("starter-repo");
 	if (!repo) {
 		throw new Error("Repo not found");
@@ -385,16 +353,10 @@ async function listRepoTokens(artifacts: Service<ArtifactsBinding>) {
 - `tokenOrId` <Type text="string" /> <MetaInfo text="required" />
 - Returns <Type text="Promise<boolean>" />
 
-<TypeScriptExample>
+<TypeScriptExample typescriptFirst={true}>
 
 ```ts
-import type { Service } from "cloudflare:workers";
-import type { ArtifactsBinding } from "artifacts";
-
-async function revokeToken(
-	artifacts: Service<ArtifactsBinding>,
-	tokenId: string,
-) {
+async function revokeToken(artifacts: Artifacts, tokenId: string) {
 	const repo = await artifacts.get("starter-repo");
 	if (!repo) {
 		throw new Error("Repo not found");
@@ -414,13 +376,10 @@ async function revokeToken(
 - `target.readOnly` <Type text="boolean" /> <MetaInfo text="optional" />
 - Returns <Type text="Promise<CreateRepoResponse & { repo: ArtifactsRepoHandle } >" />
 
-<TypeScriptExample>
+<TypeScriptExample typescriptFirst={true}>
 
 ```ts
-import type { Service } from "cloudflare:workers";
-import type { ArtifactsBinding } from "artifacts";
-
-async function forkRepo(artifacts: Service<ArtifactsBinding>) {
+async function forkRepo(artifacts: Artifacts) {
 	const repo = await artifacts.get("starter-repo");
 	if (!repo) {
 		throw new Error("Repo not found");
@@ -441,14 +400,11 @@ async function forkRepo(artifacts: Service<ArtifactsBinding>) {
 
 This example combines the binding methods in one Worker route.
 
-<TypeScriptExample filename="src/index.ts">
+<TypeScriptExample filename="src/index.ts" typescriptFirst={true}>
 
 ```ts
-import type { Service } from "cloudflare:workers";
-import type { ArtifactsBinding } from "artifacts";
-
 interface Env {
-	ARTIFACTS: Service<ArtifactsBinding>;
+	ARTIFACTS: Artifacts;
 }
 
 export default {
@@ -511,7 +467,7 @@ export default {
 />
 
 <LinkCard
-	title="Authenticated remote URLs"
-	href="/artifacts/api/authenticated-remote-urls/"
-	description="Use repo remotes and tokens with external git-compatible clients."
+	title="Git protocol"
+	href="/artifacts/api/git-protocol/"
+	description="Use repo remotes and tokens with standard git-over-HTTPS clients."
 />

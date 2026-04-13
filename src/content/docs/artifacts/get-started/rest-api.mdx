@@ -88,6 +88,8 @@ Copy the `remote` and `token` values into local shell variables:
 ```sh
 export ARTIFACTS_REMOTE="<PASTE_REMOTE_FROM_RESPONSE>"
 export ARTIFACTS_TOKEN="<PASTE_TOKEN_FROM_RESPONSE>"
+export ARTIFACTS_TOKEN_SECRET="${ARTIFACTS_TOKEN%%\?expires=*}"
+export ARTIFACTS_AUTH_REMOTE="https://x:${ARTIFACTS_TOKEN_SECRET}@${ARTIFACTS_REMOTE#https://}"
 ```
 
 ## 4. Get the repo URL again
@@ -121,6 +123,15 @@ git init -b main
 printf '# Artifacts demo\n' > README.md
 git add README.md
 git commit -m "Initial commit"
+git remote add origin "$ARTIFACTS_AUTH_REMOTE"
+git push -u origin main
+```
+
+This uses the recommended HTTPS remote form. The `x` username is ignored, and the token secret is used as the Basic auth password.
+
+If you prefer to keep the remote URL unchanged, use an HTTP header instead:
+
+```sh
 git remote add origin "$ARTIFACTS_REMOTE"
 git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" push -u origin main
 ```
@@ -131,11 +142,17 @@ Clone the same repo into a second directory:
 
 ```sh
 cd ..
-git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" clone "$ARTIFACTS_REMOTE" artifacts-clone
+git clone "$ARTIFACTS_AUTH_REMOTE" artifacts-clone
 git -C artifacts-clone log --oneline -1
 ```
 
 You should see the commit you pushed in the previous step.
+
+You can also clone with a header instead:
+
+```sh
+git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" clone "$ARTIFACTS_REMOTE" artifacts-clone
+```
 
 ## Next steps
 
@@ -152,7 +169,7 @@ You should see the commit you pushed in the previous step.
 />
 
 <LinkCard
-	title="Git support"
-	href="/artifacts/api/git-support/"
-	description="Understand how Artifacts remotes map onto git-compatible workflows."
+	title="Git protocol"
+	href="/artifacts/api/git-protocol/"
+	description="Understand how Artifacts remotes map onto standard git-over-HTTPS workflows."
 />

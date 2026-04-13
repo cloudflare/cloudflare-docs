@@ -1,0 +1,57 @@
+---
+title: Git protocol
+description: Use Artifacts with standard git-over-HTTPS clients.
+pcx_content_type: reference
+sidebar:
+  order: 3
+---
+
+Artifacts exposes a standard git smart HTTP remote at `/git/:namespace/:repo.git`.
+
+Use the returned repo `remote` with a regular git client for `clone`, `fetch`, `pull`, and `push`.
+
+## Authentication methods
+
+Git routes accept repo access tokens in two forms:
+
+- HTTP Basic auth inside the remote URL. This is the recommended option for simple `git clone` and `git push` commands.
+- `Authorization: Bearer` passed with `http.extraHeader`.
+
+Repo tokens are issued in the control-plane response format `art_v1_<40 hex>?expires=<unix_seconds>`.
+
+## Recommended: HTTPS remote URL
+
+For the URL form, use the token secret in the password slot. Artifacts ignores the Basic auth username.
+
+```sh
+export ARTIFACTS_TOKEN_SECRET="${ARTIFACTS_TOKEN%%\?expires=*}"
+export ARTIFACTS_AUTH_REMOTE="https://x:${ARTIFACTS_TOKEN_SECRET}@${ARTIFACTS_REMOTE#https://}"
+```
+
+```sh
+git clone "$ARTIFACTS_AUTH_REMOTE" artifacts-clone
+```
+
+```sh
+git remote add origin "$ARTIFACTS_AUTH_REMOTE"
+git push -u origin main
+```
+
+Use any non-empty username in the URL. The token goes in the password slot, so `x` is just a placeholder.
+
+## Alternative: `http.extraHeader`
+
+If you want to use the full token string returned by the API, pass it as a Bearer token:
+
+```sh
+git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" clone "$ARTIFACTS_REMOTE" artifacts-clone
+```
+
+```sh
+git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" push "$ARTIFACTS_REMOTE" main
+```
+
+## Scope requirements
+
+- `git clone`, `git fetch`, and `git pull` accept `read` or `write` tokens.
+- `git push` requires a `write` token.

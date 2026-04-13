@@ -63,7 +63,7 @@ You also need:
 
 ## 2. Add the Artifacts binding
 
-Open `wrangler.jsonc` and add the Artifacts service binding:
+Open `wrangler.jsonc` and add the Artifacts binding:
 
 <WranglerConfig>
 
@@ -73,11 +73,10 @@ Open `wrangler.jsonc` and add the Artifacts service binding:
 	"name": "artifacts-worker",
 	"main": "src/index.ts",
 	"compatibility_date": "$today",
-	"services": [
+	"artifacts": [
 		{
 			"binding": "ARTIFACTS",
-			"service": "artifacts",
-			"entrypoint": "ArtifactsBinding",
+			"namespace": "default",
 		},
 	],
 }
@@ -91,18 +90,17 @@ If you are using TypeScript, regenerate your local binding types:
 
 <PackageManagers type="exec" pkg="wrangler" args="types" />
 
+Wrangler adds an `Artifacts` type to your generated `worker-configuration.d.ts` file.
+
 ## 3. Write your Worker
 
 Replace `src/index.ts` with the following code:
 
-<TypeScriptExample filename="src/index.ts">
+<TypeScriptExample filename="src/index.ts" typescriptFirst={true}>
 
 ```ts
-import type { Service } from "cloudflare:workers";
-import type { ArtifactsBinding } from "artifacts";
-
 interface Env {
-	ARTIFACTS: Service<ArtifactsBinding>;
+	ARTIFACTS: Artifacts;
 }
 
 export default {
@@ -171,6 +169,8 @@ Copy the `remote` and `token` values into local shell variables:
 ```sh
 export ARTIFACTS_REMOTE="<PASTE_REMOTE_FROM_RESPONSE>"
 export ARTIFACTS_TOKEN="<PASTE_TOKEN_FROM_RESPONSE>"
+export ARTIFACTS_TOKEN_SECRET="${ARTIFACTS_TOKEN%%\?expires=*}"
+export ARTIFACTS_AUTH_REMOTE="https://x:${ARTIFACTS_TOKEN_SECRET}@${ARTIFACTS_REMOTE#https://}"
 ```
 
 ## 5. Push your first commit with git
@@ -184,11 +184,18 @@ git init -b main
 printf '# Artifacts demo\n' > README.md
 git add README.md
 git commit -m "Initial commit"
+git remote add origin "$ARTIFACTS_AUTH_REMOTE"
+git push -u origin main
+```
+
+This uses the recommended HTTPS remote form. The `x` username is ignored, and the token secret is used as the Basic auth password.
+
+If you prefer to keep the remote URL unchanged, use an HTTP header instead:
+
+```sh
 git remote add origin "$ARTIFACTS_REMOTE"
 git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" push -u origin main
 ```
-
-This uses the remote URL returned by Artifacts and passes the token as an HTTP authorization header for the push.
 
 ## 6. Pull the repo with a regular git client
 
@@ -196,11 +203,17 @@ Clone the same repo into a second directory:
 
 ```sh
 cd ..
-git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" clone "$ARTIFACTS_REMOTE" artifacts-clone
+git clone "$ARTIFACTS_AUTH_REMOTE" artifacts-clone
 git -C artifacts-clone log --oneline -1
 ```
 
 You should see the commit you pushed in the previous step.
+
+You can also clone with a header instead:
+
+```sh
+git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" clone "$ARTIFACTS_REMOTE" artifacts-clone
+```
 
 ## 7. Deploy your Worker
 
@@ -225,7 +238,7 @@ Wrangler prints your `workers.dev` URL. Use the same `curl` request against that
 />
 
 <LinkCard
-	title="Authenticated remote URLs"
-	href="/artifacts/api/authenticated-remote-urls/"
-	description="Learn more about using Artifacts remotes and tokens with external tooling."
+	title="Git protocol"
+	href="/artifacts/api/git-protocol/"
+	description="Use standard git-over-HTTPS remotes with either URL-based auth or `http.extraHeader`."
 />
