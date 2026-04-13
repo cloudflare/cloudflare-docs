@@ -42,8 +42,7 @@ jobs:
       pull-requests: write
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-        with:
-          ref: ${{ github.event.pull_request.base.sha }} # Explicit: must be the base branch, not the PR head (pull_request_target)
+        # Do not set `ref` — must check out the base branch, not the PR head (pull_request_target)
       - uses: ./.github/actions/assign-pr
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
