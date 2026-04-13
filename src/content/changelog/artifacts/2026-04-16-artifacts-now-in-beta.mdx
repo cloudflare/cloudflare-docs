@@ -20,8 +20,8 @@ const remote = (await created.repo.info())?.remote;
 You can use the REST API to create a namespace, then create a repo inside it:
 
 ```bash
-curl "$ARTIFACTS_BASE_URL/v1/api/namespaces" --header "Authorization: Bearer $ARTIFACTS_JWT" --header "Content-Type: application/json" --data '{"name":"starter-namespace"}'
-curl "$ARTIFACTS_BASE_URL/v1/api/namespaces/starter-namespace/repos" --header "Authorization: Bearer $ARTIFACTS_JWT" --header "Content-Type: application/json" --data '{"name":"starter-repo"}'
+curl "https://api.cloudflare.com/client/v4/accounts/${ARTIFACTS_ACCOUNT_ID}/artifacts/namespaces" --header "Authorization: Bearer $ARTIFACTS_JWT" --header "Content-Type: application/json" --data '{"name":"starter-namespace"}'
+curl "https://api.cloudflare.com/client/v4/accounts/${ARTIFACTS_ACCOUNT_ID}/artifacts/namespaces/starter-namespace/repos" --header "Authorization: Bearer $ARTIFACTS_JWT" --header "Content-Type: application/json" --data '{"name":"starter-repo"}'
 ```
 
 Any git client that speaks smart HTTP can use the returned remote URL:

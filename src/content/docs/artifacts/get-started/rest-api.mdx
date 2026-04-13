@@ -28,7 +28,8 @@ You need:
 Set the variables used in the examples:
 
 ```sh
-export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.dev"
+export ARTIFACTS_ACCOUNT_ID="<YOUR_ACCOUNT_ID>"
+export ARTIFACTS_BASE_URL="https://api.cloudflare.com/client/v4/accounts/${ARTIFACTS_ACCOUNT_ID}/artifacts"
 export ARTIFACTS_NAMESPACE="starter-namespace"
 export ARTIFACTS_REPO="starter-repo"
 export ARTIFACTS_JWT="<YOUR_ARTIFACTS_JWT>"
@@ -45,7 +46,7 @@ Authorization: Bearer $ARTIFACTS_JWT
 Create a namespace for your repos:
 
 ```bash
-curl "$ARTIFACTS_BASE_URL/v1/api/namespaces" \
+curl "$ARTIFACTS_BASE_URL/namespaces" \
 --header "Authorization: Bearer $ARTIFACTS_JWT" \
 --header "Content-Type: application/json" \
 --data "{\"name\":\"$ARTIFACTS_NAMESPACE\"}"
@@ -65,7 +66,7 @@ The response resembles the following:
 Create a repo inside that namespace:
 
 ```bash
-curl "$ARTIFACTS_BASE_URL/v1/api/namespaces/$ARTIFACTS_NAMESPACE/repos" \
+curl "$ARTIFACTS_BASE_URL/namespaces/$ARTIFACTS_NAMESPACE/repos" \
 --header "Authorization: Bearer $ARTIFACTS_JWT" \
 --header "Content-Type: application/json" \
 --data "{\"name\":\"$ARTIFACTS_REPO\"}"
@@ -77,7 +78,7 @@ The response resembles the following:
 {
 	"id": "repo_123",
 	"name": "starter-repo",
-	"remote": "https://<ACCOUNT_SUBDOMAIN>.artifacts.cloudflare.dev/git/starter-namespace/starter-repo.git",
+	"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.dev/git/starter-namespace/starter-repo.git",
 	"token": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000",
 	"expiresAt": "<ISO_TIMESTAMP>"
 }
@@ -97,7 +98,7 @@ export ARTIFACTS_AUTH_REMOTE="https://x:${ARTIFACTS_TOKEN_SECRET}@${ARTIFACTS_RE
 Fetch the repo metadata when you need to recover the remote URL later:
 
 ```bash
-curl "$ARTIFACTS_BASE_URL/v1/api/namespaces/$ARTIFACTS_NAMESPACE/repos/$ARTIFACTS_REPO" \
+curl "$ARTIFACTS_BASE_URL/namespaces/$ARTIFACTS_NAMESPACE/repos/$ARTIFACTS_REPO" \
 --header "Authorization: Bearer $ARTIFACTS_JWT"
 ```
 
@@ -108,7 +109,7 @@ curl "$ARTIFACTS_BASE_URL/v1/api/namespaces/$ARTIFACTS_NAMESPACE/repos/$ARTIFACT
 	"createdAt": "<ISO_TIMESTAMP>",
 	"source": null,
 	"readOnly": false,
-	"remote": "https://<ACCOUNT_SUBDOMAIN>.artifacts.cloudflare.dev/git/starter-namespace/starter-repo.git"
+	"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.dev/git/starter-namespace/starter-repo.git"
 }
 ```
 
