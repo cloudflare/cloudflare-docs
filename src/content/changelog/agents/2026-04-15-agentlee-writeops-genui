@@ -33,6 +33,7 @@ Understanding your traffic and security trends is now as easy as asking a questi
 ---
 
 ### Availability
+
 These features are currently available in **Beta** for all users on the **Free plan**. To get started, log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select **Ask AI** in the upper right corner.
 
 To learn more about how to interact with your account using AI, refer to the [Agent Lee documentation](https://developers.cloudflare.com/agent-lee/).
