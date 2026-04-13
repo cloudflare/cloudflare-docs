@@ -267,7 +267,7 @@ Response type:
 
 ```ts
 export interface ImportRepoRequest {
-	url: string;
+	url: string; // full GitHub URL
 	branch?: string;
 	readOnly?: boolean;
 }
@@ -275,12 +275,14 @@ export interface ImportRepoRequest {
 export type ImportRepoResponse = CreateRepoResponse;
 ```
 
+The REST API currently requires `url` to be a full GitHub URL, for example `https://github.com/facebook/react`.
+
 ```bash
 curl "$ARTIFACTS_BASE_URL/namespaces/$ARTIFACTS_NAMESPACE/repos/react-mirror/import" \
 --header "Authorization: Bearer $ARTIFACTS_JWT" \
 --header "Content-Type: application/json" \
 --data '{
-  "url": "facebook/react",
+  "url": "https://github.com/facebook/react",
   "branch": "main"
 }'
 ```

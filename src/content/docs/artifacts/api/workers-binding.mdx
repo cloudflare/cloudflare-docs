@@ -241,6 +241,8 @@ async function deleteRepo(artifacts: Artifacts) {
 - `source.readOnly` <Type text="boolean" /> <MetaInfo text="optional" />
 - Returns <Type text="Promise<CreateRepoResponse & { repo: ArtifactsRepoHandle } >" />
 
+The Workers binding accepts either `owner/repo` shorthand or a full GitHub URL for `source.url`.
+
 <TypeScriptExample typescriptFirst={true}>
 
 ```ts
