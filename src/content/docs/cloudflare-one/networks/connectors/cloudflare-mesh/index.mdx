@@ -13,7 +13,7 @@ head:
     content: Cloudflare Mesh - Private networking
 ---
 
-import { DashButton, Render, Details } from "~/components";
+import { Details } from "~/components";
 
 Cloudflare Mesh connects your services and devices with post-quantum encrypted networking. Route traffic privately between servers, laptops, and phones without VPNs or bastion hosts.
 
@@ -61,7 +61,7 @@ All traffic passes through Cloudflare, so [Gateway network policies](/cloudflare
 
 ## Mesh IPs
 
-Every participant is assigned a private IP from the `100.96.0.0/12` range. In other parts of the Cloudflare One documentation, these are called [device IPs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/) — they are the same thing.
+Every participant is assigned a private IP from the `100.96.0.0/12` range. In other parts of the Cloudflare One documentation, these addresses are referred to as [device IPs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/).
 
 This range uses [CGNAT address space](https://datatracker.ietf.org/doc/html/rfc6598) to avoid conflicts with RFC 1918 private ranges (`10.x`, `172.16.x`, `192.168.x`). If the default range conflicts with your network, you can [configure a custom subnet](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/).
 
@@ -83,7 +83,7 @@ Both Cloudflare Mesh and [Cloudflare Tunnel](/cloudflare-one/networks/connectors
 
 Use Mesh when devices need to reach each other by private IP. Use Tunnel when you want to publish services by hostname or proxy traffic to specific IP ranges through `cloudflared`.
 
-<Details header="Coming from another mesh product?">
+<Details header="Coming from another mesh networking product?">
 
 If you have used Tailscale, WireGuard, or a similar product, here is how concepts map to Cloudflare Mesh:
 
@@ -95,23 +95,17 @@ If you have used Tailscale, WireGuard, or a similar product, here is how concept
 | MagicDNS / custom DNS  | [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/) + [Gateway resolver policies](/cloudflare-one/traffic-policies/resolver-policies/) |
 | ACLs / access rules    | [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/) + [device posture](/cloudflare-one/reusable-components/posture-checks/)                                                              |
 | Exit node              | Attach a public CIDR to a Mesh node and traffic to those IPs exits through that node. For broader Internet filtering, use [Gateway egress policies](/cloudflare-one/traffic-policies/egress-policies/).             |
-| Admin console          | [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/mesh) — **Networking** > **Mesh**                                                                                                                  |
+| Admin console          | [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/mesh) under **Networking** > **Mesh**                                                                                                              |
 
 Key differences:
 
-- Configuration is managed entirely through the Cloudflare dashboard or API — no command-line administration required.
+- You manage configuration entirely through the Cloudflare dashboard or API — no command-line administration needed.
 - Gateway policies, device posture, and identity checks are built into the platform.
 - Traffic routes through the nearest Cloudflare data center, not directly between devices.
 
 </Details>
 
-## Where to find Mesh
-
-Cloudflare Mesh is in the [Cloudflare dashboard](https://dash.cloudflare.com/) at **Networking** > **Mesh**.
-
-<DashButton url="/?to=/:account/mesh" />
-
-## Get started
+## Next steps
 
 1. [**Create your first Mesh node**](/cloudflare-one/networks/connectors/cloudflare-mesh/get-started/) — The dashboard wizard handles provisioning. Install the client on a Linux server with two commands.
 2. [**Connect client devices**](/cloudflare-one/networks/connectors/cloudflare-mesh/client-devices/) — Install the Cloudflare One Client on laptops and phones. They can reach each other and any Mesh node by Mesh IP.
