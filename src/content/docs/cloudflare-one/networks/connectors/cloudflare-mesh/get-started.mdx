@@ -79,6 +79,10 @@ ping <MESH-IP>
 
 Replace `<MESH-IP>` with the Mesh IP of a node or another device (visible on the Mesh overview page). You can also SSH, connect to a database, or call an API — any TCP, UDP, or ICMP traffic works.
 
+## Logs
+
+Traffic from Mesh nodes appears in [Gateway activity logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/) with the identity `warp_connector@<your-team-name>.cloudflareaccess.com`. Client device traffic appears in Gateway activity logs under the enrolled user's identity.
+
 ## What the wizard configures
 
 When you create your first Mesh node, the setup wizard automatically provisions several Cloudflare One settings so you do not have to configure them manually:

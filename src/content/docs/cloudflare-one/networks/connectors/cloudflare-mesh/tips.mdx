@@ -105,7 +105,3 @@ If source devices send packets near the maximum size (1,460 bytes or more), the 
 - Set the MTU on source devices (servers, cameras, IoT devices) to **1,280 bytes** to ensure packets fit after encapsulation.
 - For TCP-only traffic, apply MSS clamping on your router with a value of **1,240 bytes** (1,280 MTU - 20 byte IP header - 20 byte TCP header).
 - Modern applications using [Path MTU Discovery (PMTUD)](https://www.cloudflare.com/learning/network-layer/what-is-mtu/) typically handle this automatically.
-
-## Gateway activity logs
-
-Traffic from Mesh nodes appears in [Gateway activity logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/) with the identity `warp_connector@<your-team-name>.cloudflareaccess.com`. Client device traffic appears under the enrolled user's identity.
