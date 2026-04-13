@@ -70,7 +70,7 @@ export default {
 </Tabs>
 
 :::note
-The recording is finalized when the browser session closes — whether you call `browser.close()` explicitly, the session reaches its idle timeout, or the Worker terminates for any other reason. The recording is not available until after the session ends.
+The recording is finalized when the browser session closes, whether you call `browser.close()` explicitly, the session reaches its idle timeout, or the Worker terminates for any other reason. The recording is not available until after the session ends.
 :::
 
 ## Enable with CDP endpoint
@@ -120,7 +120,7 @@ curl https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-renderin
   -H "Authorization: Bearer <API_TOKEN>"
 ```
 
-A successful response looks like this:
+A successful response looks similar to the following:
 
 ```json
 {
