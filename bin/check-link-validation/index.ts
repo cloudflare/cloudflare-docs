@@ -22,7 +22,6 @@ async function run(): Promise<void> {
 	} catch {
 		core.setFailed(`Could not read report at ${reportPath}`);
 		process.exit();
-		return;
 	}
 
 	core.setFailed(
