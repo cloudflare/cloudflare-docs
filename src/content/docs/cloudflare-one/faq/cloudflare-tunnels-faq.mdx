@@ -6,6 +6,9 @@ sidebar:
   order: 4
 head: []
 description: Review frequently asked questions about tunnels in Cloudflare Zero Trust.
+tags:
+  - WebSockets
+  - DNS
 ---
 
 import { Render } from "~/components";
@@ -31,6 +34,8 @@ Cloudflare offers two modes of setup: [Full Setup](/dns/zone-setups/full-setup/)
 The best experience with Cloudflare Tunnel is using Full Setup because Cloudflare manages DNS for the domain and can automatically configure DNS records for newly started Tunnels.
 
 You can still use Tunnel with Partial Setup. You will need to create a new DNS record with your current DNS provider for each new hostname connected through Cloudflare Tunnel. The DNS record should be of type CNAME or ALIAS if it is on the root of the domain. The name of the record should be the subdomain it corresponds to (e.g. `example.com` or `tunnel.example.com`) and the value of the record should be `subdomain.domain.tld.cdn.cloudflare.net`. (e.g. `example.com.cdn.cloudflare.net` or `tunnel.example.com.cdn.cloudflare.net`)
+
+For a complete walkthrough of using Access with a partial CNAME setup, refer to [Publish a self-hosted application to the Internet](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/#partial-cname-setup).
 
 ## How can origin servers be secured when using Tunnel?
 

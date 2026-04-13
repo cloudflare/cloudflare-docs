@@ -52,4 +52,18 @@ const browser = await puppeteer.launch(env.MYBROWSER);
 
 Run `npx wrangler dev` to test your Worker locally.
 
+### Headful mode (experimental)
+
+By default, local development runs Chrome in headless mode. To launch Chrome in visible (headful) mode for debugging, set the `X_BROWSER_HEADFUL` environment variable:
+
+```sh
+X_BROWSER_HEADFUL=true npx wrangler dev
+```
+
+This opens a browser window on screen so you can watch navigations, interactions, and rendering in real time. Headful mode is for local development only and does not affect deployed Workers. This feature is experimental and may change without notice.
+
+:::note
+When using [`@cloudflare/playwright`](/browser-rendering/playwright/), two Chrome windows may appear. This is expected behavior due to how Playwright handles browser contexts via CDP.
+:::
+
 <Render file="remote-binding-note" product="workers" />

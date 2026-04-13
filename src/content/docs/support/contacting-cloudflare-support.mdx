@@ -22,6 +22,7 @@ Cloudflare Support _cannot_ perform the following actions:
 
 **Do not share** any sensitive information, such as passwords, credit
 card numbers, private keys, or API keys with Cloudflare Support.
+
 :::
 
 Before notifying Cloudflare of an issue with your site, refer to the [Cloudflare Status Page](https://www.cloudflarestatus.com/). If reporting issues with your site, ensure to provide adequate details in the support case _(refer to [Getting help with an issue](#getting-help-with-an-issue) for more information)_.
@@ -36,52 +37,88 @@ As a Cloudflare customer, you can contact Cloudflare for support via the communi
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | -------- | ----------- | ----------- |
 | [Community](https://community.cloudflare.com/)<br/>Join the community to ask basic troubleshooting questions and to view the latest resources (such as tips for resolving common issues and configuration guidance). | Yes        | Yes      | Recommended | Recommended |
 | [Discord](https://discord.cloudflare.com/)<br/>Join the Discord community to ask basic troubleshooting questions (mainly focused on the Developer Platform).                                                         | Yes        | Yes      | Recommended | Recommended |
-| [Support case](#getting-help-with-an-issue)<br/>Use to troubleshoot specific issues or errors. Response times depend on your plan.                                                                                   | Yes        | Yes      | Yes         | No\*        |
+| [Support case](#getting-help-with-an-issue)<br/>Use to troubleshoot specific issues or errors. Response times depend on your plan.                                                                                   | Yes        | Yes      | Yes         | No[^1]        |
 | **Chat**<br/>Use to troubleshoot specific issues or errors. Response times depend on your plan.                                                                                                                      | Yes        | Yes      | No          | No          |
 | **Emergency Phone** <br/>Use phone support to reach out during emergencies such as site outages or DDoS attacks.                                                                                                     | Yes        | No       | No          | No          |
 
+[^1]: Customers on Free plans are encouraged to utilize our Cloudflare Community and will only receive standard case support for billing, account, and registrar issues.
+
 ---
 
-:::note
+## Emergency Phone Support
 
-Customers on Free plans are encouraged to utilize our Cloudflare Community and will only receive standard case support for billing, account, and registrar issues.
-
+:::note[Availability]
+Available for Enterprise plans only.
 :::
 
-## Verifying your identity on phone calls
+In case of an emergency, Enterprise customers can reach Cloudflare Support directly via our global emergency phone line.
 
-_(For Enterprise Emergency Phone Support)_
+For account security, you must verify your identity and account ownership before discussing account settings and sensitive details with Cloudflare Support. There are two verification options:
 
-For account security, you must verify your identity and account ownership in the Cloudflare dashboard before discussing account settings and sensitive details with Cloudflare Support. There are two verification options:
-
-- a single-use token that automatically refreshes every thirty (30) seconds, or
+- a single-use token generated in the Dashboard that automatically refreshes every thirty (30) seconds
 - an [authenticator app token](/fundamentals/user-profiles/2fa/#configure-totp-mobile-application-authentication) on your mobile device.
 
-### Authenticating your account
+In both cases, you will also need your **Unique Customer ID** (refer to [Finding your Unique Customer ID](#finding-your-unique-customer-id) for more information).
+
+### Single-use token (no setup required)
+
+1. In the Cloudflare dashboard, go to the **Support** page and select the account you are calling about.
+
+<LinkButton
+	href="https://dash.cloudflare.com/?to=/:account/support"
+	icon="external"
+>
+	Go to Support
+</LinkButton>
+
+2. Click on the **Emergency hotline** tile.
+
+3. Click **Get a single-use token**. A pop-up window will appear with your **Unique Customer ID** and **One Time Passcode**. The code automatically refreshes every 30 seconds.
+
+![](~/assets/images/support/Emergency_Phone_Support.png)
+
+### Authenticator app (one-time setup)
 
 1. In the Cloudflare dashboard, go to the **Support** page and select the account you are calling about.
 
 <LinkButton href="https://dash.cloudflare.com/?to=/:account/support" icon="external">Go to Support</LinkButton>
 
-2. Click on the **Technical Support** tile and then the **Emergency Phone Line** tile.
+2. Click on the **Emergency hotline** tile.
 
-3. To authenticate using a single-use token, click on the **Get a single-use token** button. A pop-up window will appear with your Unique Customer Id and One Time Passcode. The code automatically refreshes every 30 seconds.
+3. Click **Configure authenticator app** and follow the [configuration instructions](/fundamentals/user-profiles/2fa/#configure-totp-mobile-application-authentication).
 
-![](~/assets/images/support/Emergency_Phone_Support.png)
+4. After configuration, the token code will appear in your mobile authentication app when you need it.
 
-4. To authenticate using an authenticator app, click **Configure authenticator app** and follow the [configuration instructions](/fundamentals/user-profiles/2fa/#configure-totp-mobile-application-authentication) on the following screen. After configuration, the token code will appear in your mobile authentication application.
+### Finding your Unique Customer ID
 
-5. When calling the emergency phone line, you can authenticate automatically by entering your ID and Code when requested.
+Your Unique Customer ID is required when calling the emergency phone line, regardless of which verification method you use.
+
+1. In the Cloudflare dashboard, go to the **Support** page and select the account you are calling about.
+
+<LinkButton href="https://dash.cloudflare.com/?to=/:account/support" icon="external">Go to Support</LinkButton>
+
+2. Click on the **Emergency hotline** tile.
+
+3. Click **Get a single-use token**. Your **Unique Customer ID** will appear in the pop-up window.
 
 ---
 
-## Getting help with an issue
+## Submit a support case
+
+:::note[Availability]
+Available for all paid plans. Free users can only submit cases for billing, account, and registrar issues.
+:::
 
 To submit a support case, follow these steps:
 
 1. In the Cloudflare dashboard, go to the **Support** page and select the account you require assistance for.
 
-<LinkButton href="https://dash.cloudflare.com/?to=/:account/support" icon="external">Go to Support</LinkButton>
+<LinkButton
+	href="https://dash.cloudflare.com/?to=/:account/support"
+	icon="external"
+>
+	Go to Support
+</LinkButton>
 
 2. Click on the **Technical Support** tile, or for billing issues click **Billing** and then click **Create a Case** at the bottom of the following screen.
 
@@ -107,11 +144,10 @@ To submit a support case, follow these steps:
     - Output from [test tools](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/) such as MTR, traceroute, dig/nslookup, and cURL
       \- Priority level, impact to service / production
       \- Any collaborators whom you wish to be cc'd on the case
-7. Click **Submit Case**
 
-\*\* Available to certain plan types only. Refer to chart above for details.
+7. Click **Submit Case**.
 
-### Accepted file formats in cases and chats
+### Accepted attachment file formats
 
 You can only upload the following file types in a case or a chat:
 
@@ -147,23 +183,29 @@ When sending Cloudflare Support packet captures, please do the following:
 
 1. In the Cloudflare dashboard, go to the **Support** page.
 
-<LinkButton href="https://dash.cloudflare.com/?to=/:account/support" icon="external">Go to Support</LinkButton>
+<LinkButton
+	href="https://dash.cloudflare.com/?to=/:account/support"
+	icon="external"
+>
+	Go to Support
+</LinkButton>
 
-2. Click on **Get help**
+2. Click on the **My Cases** tile.
 
-3. Select the account you require assistance for
-
-4. Click on the **Technical Support** tile followed by **View My Cases**.
-
-5. You will be redirected to the portal where you can see your own cases and cases you are CC'd on.
+3. You will be redirected to the portal where you can see your own cases and cases you are CC'd on.
 
 ### Add participants to open support tickets
 
-1. In the Cloudflare dashboard, go to the **Support** page and select the account you require assistance for.
+1. In the Cloudflare dashboard, go to the **Support** page.
 
-<LinkButton href="https://dash.cloudflare.com/?to=/:account/support" icon="external">Go to Support</LinkButton>
+<LinkButton
+	href="https://dash.cloudflare.com/?to=/:account/support"
+	icon="external"
+>
+	Go to Support
+</LinkButton>
 
-2. Click on the **Technical Support** tile followed by **View My Cases**.
+2. Click on the **My Cases** tile.
 
 3. You will be redirected to the portal where you can see your own cases and cases you are CC'd on.
 
@@ -175,15 +217,22 @@ When sending Cloudflare Support packet captures, please do the following:
 
 ## Live chat support
 
-Available for Business and Enterprise plans only. Use **live chat** for quick questions that do not require deep technical investigation:
+:::note[Availability]
+Available for Business and Enterprise plans only.
+:::
 
-1. In the Cloudflare dashboard, go to the **Support** page and select the account you require assistance for.
+Use **live chat** for quick questions that do not require deep technical investigation:
 
-<LinkButton href="https://dash.cloudflare.com/?to=/:account/support" icon="external">Go to Support</LinkButton>
+1. In the Cloudflare dashboard, go to the **Support** page.
 
-2. Select **Technical Support** tile > **Chat with an agent**.
-	* **Business plans**: Complete the support form and select **Start Live Chat**. The widget will open automatically, pre-filled with your details.
-	* **Enterprise plans**: The chat widget will open immediately. Enter a brief description of your problem to begin.
+<LinkButton
+	href="https://dash.cloudflare.com/?to=/:account/support"
+	icon="external"
+>
+	Go to Support
+</LinkButton>
+
+2. Click on the **Chat with a human** tile. The chat widget will open immediately. Enter a brief description of your problem to begin.
 
 3. Wait for an agent to join the conversation. Response times may vary based on current chat volume.
 
@@ -213,7 +262,7 @@ Below are definitions of the priority levels Cloudflare assigns to cases and the
 - P2 High - High Business Impact: Significant but localized service or security disruption. While not a full outage, this issue affects business operations and requires urgent resolution.
   - _Example_: A recurring or persistent issue is affecting a portion of your users, such as degraded performance, intermittent outages, or limited accessibility.
   - _Example_: A past, confirmed security attack has resulted in measurable impact, requiring investigation and mitigation to prevent recurrence.
-- P3 Normal -  Moderate Business Impact: Limited service impact or suspected security concerns. The issue does not pose an immediate risk but requires attention for continued reliability.
+- P3 Normal - Moderate Business Impact: Limited service impact or suspected security concerns. The issue does not pose an immediate risk but requires attention for continued reliability.
   - _Example_: Your service is operational, but you are experiencing minor disruptions, such as performance fluctuations, unexpected behavior, or non-critical bugs.
   - _Example_: A suspected security threat has been detected but is currently mitigated (e.g., an attack that Cloudflare successfully blocked).
 - P4 Low - Low Business Impact: General inquiries and non-urgent requests. The issue does not impact your service availability or business operations.
@@ -236,7 +285,7 @@ Below are definitions of the priority levels Cloudflare assigns to cases and the
 
 ### SLOs for other plans
 
-- PAYGO and Free customers - No SLAs are offered, but customers are responded to in the order in which their request is received. For a quicker answer, we highly recommend searching or posting on our [Community forums](https://community.cloudflare.com/).
+- Pay-as-you-go and Free customers - No SLAs are offered, but customers are responded to in the order in which their request is received. For a quicker answer, we highly recommend searching or posting on our [Community forums](https://community.cloudflare.com/).
 
 ## Supported languages
 

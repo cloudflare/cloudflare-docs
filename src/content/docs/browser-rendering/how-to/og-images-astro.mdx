@@ -22,7 +22,7 @@ In this tutorial, you will:
 
 ## Prerequisites
 
-- A Cloudflare account with [Browser Rendering enabled](/browser-rendering/get-started/#rest-api)
+- A Cloudflare account with [Browser Rendering enabled](/browser-rendering/get-started/#quick-actions)
 - An Astro site deployed on [Cloudflare Workers](/workers/framework-guides/web-apps/astro/)
 - Basic familiarity with Astro and Cloudflare Workers
 
@@ -122,7 +122,7 @@ Update the `BASE_URL` in the script below to match your deployed site URL.
 
 ## 2. Generate OG images at build time
 
-Generate all OG images during the Astro build process using the Cloudflare Browser Rendering REST API.
+Generate all OG images during the Astro build process using Cloudflare Browser Rendering Quick Actions.
 
 Create `scripts/generate-social-cards.ts`:
 
@@ -167,7 +167,7 @@ function readPosts(): Post[] {
 }
 
 /**
- * Capture a screenshot using Cloudflare Browser Rendering REST API
+ * Capture a screenshot using Cloudflare Browser Rendering Quick Actions
  */
 async function captureScreenshot(
 	accountId: string,
