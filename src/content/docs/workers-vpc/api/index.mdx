@@ -20,15 +20,14 @@ Workers VPC is currently in beta. Features and APIs may change before general av
 
 ### VPC Service
 
-A VPC Service binding routes requests to a specific pre-registered host and port. The host and port configured in the VPC Service always determine the connection target — the URL passed to `fetch()` does not control routing. The `Host` header and SNI value for HTTPS requests are derived from the URL provided to `fetch()`.
+A VPC Service binding routes requests to a specific pre-registered host and port. The [VPC Service configuration](/workers-vpc/configuration/vpc-services/#vpc-service-configuration) always determines the connection target, even if a different URL or host is present in the `fetch()` call.
+
+- The **host** provided in `fetch()` does not control routing. It only populates the `Host` header and, when using `https`, the Server Name Indication (SNI) value.
+- The **port** provided in `fetch()` is ignored — the port specified in the VPC Service configuration is always used.
 
 ### VPC Network
 
-A VPC Network binding grants access to any service reachable through the bound tunnel or [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/). The URL passed to `fetch()` determines the actual destination — hostname or IP address and port.
-
-## Required roles
-
-To bind a VPC Service or VPC Network in a Worker, your user needs `Connectivity Directory Bind` (or `Connectivity Directory Admin`). For role definitions, refer to [Roles](/fundamentals/manage-members/roles/#account-scoped-roles).
+A VPC Network binding grants access to any service reachable through the bound tunnel or Cloudflare Mesh. The URL passed to `fetch()` determines the actual destination — hostname or IP address and port.
 
 ## fetch()
 
@@ -123,6 +122,10 @@ export default {
 	},
 };
 ```
+
+## Required roles
+
+To bind a VPC Service or VPC Network in a Worker, your user needs `Connectivity Directory Bind` (or `Connectivity Directory Admin`). For role definitions, refer to [Roles](/fundamentals/manage-members/roles/#account-scoped-roles).
 
 ## Next steps
 
