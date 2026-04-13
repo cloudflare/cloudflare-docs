@@ -12,32 +12,29 @@ head:
     content: Get started with Cloudflare Mesh
 ---
 
-import { DashButton, Details, Tabs, TabItem } from "~/components";
+import { DashButton, Details, Tabs, TabItem, Render } from "~/components";
 
 Set up Cloudflare Mesh so your devices and servers can reach each other by private IP.
 
 ## Prerequisites
 
-- A Cloudflare account ([sign up free](https://dash.cloudflare.com/sign-up)).
-- A laptop or phone to connect as a client device.
-- (Optional) A Linux server to deploy a Mesh node.
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up)
+- A laptop or phone to connect as a client device
+- (Optional) A Linux server to deploy a Mesh node
 
-:::note[No Linux server? No problem.]
-Client-to-client connectivity works without any Mesh nodes. Two enrolled laptops can reach each other directly by Mesh IP. Mesh nodes are for running the client in headless mode on a server — either to make that server reachable by Mesh IP, or to [route traffic to a private subnet](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/) behind it. You still need to complete the setup wizard below to configure your account — you can skip the install step and connect the node later.
-:::
+	<Details header="Linux server requirements">
 
-<Details header="Supported Linux distributions for Mesh nodes">
+	<Render file="warp/system-requirements/linux" product="cloudflare-one" />
 
-| Distribution                      | Architectures       |
-| --------------------------------- | ------------------- |
-| Debian / Ubuntu (`.deb`)          | amd64, arm64, armhf |
-| RedHat / CentOS / Fedora (`.rpm`) | x86_64, aarch64     |
+	</Details>
 
-</Details>
+	:::note[Mesh nodes are optional]
+	Client-to-client connectivity works without any Mesh nodes. Two enrolled laptops can reach each other directly by Mesh IP. Mesh nodes are for running the client in headless mode on a server — either to make that server reachable by its Mesh IP, or to [route traffic to a private subnet](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/) behind it. You still need to complete the setup wizard to configure your account — you can skip the Mesh node installation step and connect the node later.
+	:::
 
 ## 1. Run the setup wizard
 
-The setup wizard creates a Mesh node and automatically configures your account for Mesh networking (enrollment permissions, device profile, and connectivity settings). This is a one-time setup.
+The setup wizard [configures your account for Mesh networking](#what-the-wizard-configures) and optionally guides you through creating a Mesh node. This is a one-time setup.
 
 1. Open the [Cloudflare dashboard](https://dash.cloudflare.com/) and go to **Networking** > **Mesh**.
 
@@ -45,62 +42,56 @@ The setup wizard creates a Mesh node and automatically configures your account f
 
 2. Select **Add a node**.
 3. Enter a name for your node (for example, `web-server` or `staging-db`).
-4. Select **Create**.
+4. Select **Create node**.
+5. (Optional) If you have a Linux server, run the install commands shown in the dashboard to bring the node online. If you do not have a server ready, select **I'll connect later** — you can install the node at any time from the node detail page.
 
-After creation, the dashboard shows install commands with a token specific to your node.
+   <Details header="Installation commands">
 
-## 2. Install the node (optional)
+   <Tabs>
+   <TabItem label="Debian / Ubuntu">
 
-If you have a Linux server, run the install commands shown in the dashboard to bring the node online. If you do not have a server ready, select **I'll connect later** — you can install the node at any time from the node detail page.
+   ```sh
+   curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor -o /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
+   echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
+   sudo apt-get update && sudo apt-get install -y cloudflare-warp
+   ```
 
-<Tabs>
-<TabItem label="Debian / Ubuntu">
+   ```sh
+   sudo warp-cli connector new <TOKEN> && sudo warp-cli connect
+   ```
 
-```sh
-# Add the Cloudflare package repository
-curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor -o /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
-sudo apt-get update && sudo apt-get install -y cloudflare-warp
-```
+   </TabItem>
+   <TabItem label="RedHat / CentOS">
 
-```sh
-# Register and connect using your node token
-sudo warp-cli connector new <TOKEN> && sudo warp-cli connect
-```
+   ```sh
+   sudo rpm -ivh https://pkg.cloudflareclient.com/cloudflare-release-el8.rpm
+   sudo yum install -y cloudflare-warp
+   ```
 
-</TabItem>
-<TabItem label="RedHat / CentOS">
+   ```sh
+   sudo warp-cli connector new <TOKEN> && sudo warp-cli connect
+   ```
 
-```sh
-# Add the Cloudflare package repository
-sudo rpm -ivh https://pkg.cloudflareclient.com/cloudflare-release-el8.rpm
-sudo yum install -y cloudflare-warp
-```
+   </TabItem>
+   </Tabs>
 
-```sh
-# Register and connect using your node token
-sudo warp-cli connector new <TOKEN> && sudo warp-cli connect
-```
+   Replace `<TOKEN>` with the token shown in the dashboard.
 
-</TabItem>
-</Tabs>
+   </Details>
 
-Replace `<TOKEN>` with the token shown in the dashboard.
+6. Select **View node details** to complete the setup wizard.
 
-If you installed the node, it should appear as **Online** on the Mesh overview page within a few seconds. You can verify the connection from the server by running `warp-cli status` — the output shows `Status update: Connected` when the node is successfully connected. Find the node's Mesh IP on the Mesh overview page in the dashboard.
+If you installed the node, it should appear as **Online** on the Mesh overview page along with its assigned **Mesh IP**. You can verify the connection from the server by running `warp-cli status` — the output shows `Status update: Connected` when the node is successfully connected.
 
-## 3. Connect a client device
+## 2. Connect a client device
 
 Connect a laptop or phone to your Mesh network:
 
-1. Download and install the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) on your device ([Windows](https://developers.cloudflare.com/cloudflare-one/team-and-resources/devices/warp/download-warp/#windows), [macOS](https://developers.cloudflare.com/cloudflare-one/team-and-resources/devices/warp/download-warp/#macos), [Linux](https://developers.cloudflare.com/cloudflare-one/team-and-resources/devices/warp/download-warp/#linux), [iOS](https://developers.cloudflare.com/cloudflare-one/team-and-resources/devices/warp/download-warp/#ios), [Android](https://developers.cloudflare.com/cloudflare-one/team-and-resources/devices/warp/download-warp/#android)).
-2. Open the app and select **Cloudflare Zero Trust** when prompted for a connection type.
-3. Enter your team name and tap **Done**.
-4. Authenticate — by default, a one-time PIN is sent to your email. Enter the code and the client connects automatically.
+<Render file="warp/enroll-desktop" product="cloudflare-one" />
 
 Once you see a **Connected** status, your device is on the mesh and receives its own Mesh IP.
 
-## 4. Test connectivity
+## 3. Test connectivity
 
 From your client device, verify you can reach a Mesh node or another enrolled device:
 
@@ -116,23 +107,24 @@ When you create your first Mesh node, the setup wizard automatically provisions 
 
 | Setting                                                                                                                                                              | What it does                                                                                                                                                                                    |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Device enrollment](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/device-enrollment/)                                                  | Allows devices to enroll into your Cloudflare One account. Uses email-based one-time PIN by default.                                                                                            |
-| [Device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/)                                            | Creates a profile configured for Mesh networking using **Include mode**, so only Mesh traffic routes through Cloudflare. This prevents disrupting existing network connectivity on your server. |
-| [Mesh connectivity](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#allow-all-cloudflare-one-traffic-to-reach-enrolled-devices) | Enables device-to-device connectivity and the required [traffic proxying](/cloudflare-one/traffic-policies/proxy/) (TCP, UDP, ICMP) for Mesh communication.                                     |
+| [Device enrollment policy](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/device-enrollment/)                                                  | Allows devices to enroll into your Cloudflare One account using email-based [one-time PIN](/cloudflare-one/integrations/identity-providers/one-time-pin/). Only created if you do not already have an existing device enrollment policy in your account.                                                                                         |
+| [Device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/)                                          | Creates a profile configured with [Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) in **Include mode**, so only Mesh traffic routes through Cloudflare. This prevents disrupting existing network connectivity on your server. Only created if you do not already have an active Mesh node (formerly WARP Connector) in your account. |
+| [Allow all Cloudflare One traffic to reach enrolled devices](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#allow-all-cloudflare-one-traffic-to-reach-enrolled-devices) and [Assign a unique IP address to each device](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#assign-a-unique-ip-address-to-each-device) | Enables device-to-device connectivity for Mesh networking. |
+| [Gateway proxy](/cloudflare-one/traffic-policies/proxy/) | Enables the TCP, UDP, and ICMP traffic proxy for Mesh communication.                                     |
 
 ### Existing Cloudflare One accounts
 
-If your account already has a Cloudflare One deployment, the wizard will not overwrite your existing configuration. Verify the following settings are enabled for Mesh to work:
+If your account already has a Cloudflare One deployment, the setup wizard will not overwrite your existing configuration. Verify the following settings are enabled for Mesh to work:
 
-1. **Device enrollment** — At least one [enrollment rule](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/device-enrollment/) must exist so that devices and nodes can register with your account.
-2. **Device profile for Mesh nodes** — Your Mesh nodes need a [device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) that uses **Include mode** with the Mesh IP range (`100.96.0.0/12`) included. If your nodes use Exclude mode instead, remove `100.64.0.0/10` (the default CGNAT exclusion) from the exclude list.
-3. **Mesh connectivity** — In your device profile settings, enable [Allow all Cloudflare One traffic to reach enrolled devices](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#allow-all-cloudflare-one-traffic-to-reach-enrolled-devices).
-4. **Unique device IPs** — Enable [Assign a unique IP address to each device](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#assign-a-unique-ip-address-to-each-device) so that each participant gets a routable Mesh IP.
-5. **Traffic proxying** — Enable [Proxy](/cloudflare-one/traffic-policies/proxy/) for TCP, UDP, and ICMP so that Mesh traffic can flow between devices.
+- [ ] **Device enrollment** — At least one [enrollment rule](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/device-enrollment/) must exist so that devices and nodes can register with your account.
+- [ ] **Device profile for Mesh nodes** — Your Mesh nodes need a [device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) that uses **Include mode** with the Mesh IP range (`100.96.0.0/12`) included. If your nodes use Exclude mode instead, remove `100.64.0.0/10` (the default CGNAT exclusion) from the exclude list.
+- [ ] **Mesh connectivity** — In your device profile settings, enable [Allow all Cloudflare One traffic to reach enrolled devices](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#allow-all-cloudflare-one-traffic-to-reach-enrolled-devices).
+- [ ] **Unique device IPs** — Enable [Assign a unique IP address to each device](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#assign-a-unique-ip-address-to-each-device) so that each participant gets a routable Mesh IP.
+- [ ] **Traffic proxying** — Enable the [Gateway proxy](/cloudflare-one/traffic-policies/proxy/) for TCP, UDP, and ICMP so that Mesh traffic can flow between devices.
 
 ## Next steps
 
-- [**Connect client devices**](/cloudflare-one/networks/connectors/cloudflare-mesh/client-devices/) — Platform-specific install details, Split Tunnel configuration, and firewall considerations.
+- [**Connect client devices**](/cloudflare-one/networks/connectors/cloudflare-mesh/client-devices/) — Platform-specific installation details, Split Tunnel configuration, and firewall considerations.
 - [**Add routes**](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/) — Make an entire subnet behind your node reachable (databases, printers, other servers).
 - [**Enable high availability**](/cloudflare-one/networks/connectors/cloudflare-mesh/high-availability/) — Run multiple replicas for production resilience.
 - [**Tips and best practices**](/cloudflare-one/networks/connectors/cloudflare-mesh/tips/) — Cloud VPC configuration, updating the client, running alongside cloudflared.
