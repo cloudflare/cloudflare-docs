@@ -18,17 +18,9 @@ This page covers two authentication methods:
 - [**cloudflared**](#use-cloudflared) — authenticates under your user identity. Use for interactive development where you can complete a browser login.
 - [**Service tokens**](#use-service-tokens) — authenticates with a static credential pair. Use for headless or automated workflows where no browser is available.
 
-:::note
-Cloudflare Access also supports Managed OAuth to protected resources, which you can use to grant authorization to coding agents.
-:::
-
 ## Use cloudflared
 
 With `cloudflared`, your agent authenticates under your user identity. On first use, `cloudflared` opens a browser window for an interactive login. After that, the session persists for the [session duration](/cloudflare-one/access-controls/access-settings/session-management/) configured for the application. After the session expires, the next request requires a new browser login.
-
-:::caution
-`cloudflared` authentication relies on WebSockets, which may close unexpectedly during long-running sessions. If your agent requires persistent, unattended access, [service tokens](#use-service-tokens) are more reliable.
-:::
 
 ### Prerequisites
 
@@ -46,10 +38,10 @@ If this is the first request in a session, `cloudflared` opens a browser for the
 
 ### Use a reusable token
 
-Some agents make HTTP requests using their own client libraries instead of calling `cloudflared` directly. In this case, fetch a reusable token and pass it as a header:
+Some agents make HTTP requests using their own client libraries instead of calling `cloudflared` directly. In this case, log in to get a token and pass it as a header:
 
 ```bash
-CF_TOKEN=$(cloudflared access token -app=https://example.com)
+CF_TOKEN=$(cloudflared access login https://example.com)
 curl --header "cf-access-token: $CF_TOKEN" https://example.com/api/endpoint
 ```
 
@@ -91,8 +83,7 @@ Coding agents read project-level instruction files (commonly named `AGENTS.md`) 
 A resource is protected by Cloudflare Access if any of the following are true:
 
 - The response is a 302 redirect to a URL containing `cloudflareaccess.com`
-- The response is a 403 with a `Cf-Access-Error` header
-- The response includes a `WWW-Authenticate: Bearer` challenge header referencing a Cloudflare Access policy
+- The response includes a `WWW-Authenticate: Cloudflare-Access resource_metadata="..."` header
 
 Cloudflare Access is an identity-aware security tool that protects private
 resources over the Internet. It requires an authentication event before
@@ -115,7 +106,7 @@ over managing tokens directly.
 2. If you are already running a long-lived program and need a reusable token
    for a standard HTTP client:
    ```
-   CF_TOKEN=$(cloudflared access token -app=https://example.com)
+   CF_TOKEN=$(cloudflared access login https://example.com)
    curl --header "cf-access-token: $CF_TOKEN" https://example.com/api/endpoint
    ```
 
