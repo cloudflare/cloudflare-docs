@@ -42,25 +42,25 @@ identity.email == "user@company.com"
 
 Gateway supports the following operators:
 
-| Operator | Name | Example |
-| --- | --- | --- |
-| `==` | Equals | `dns.fqdn == "example.com"` |
-| `!=` | Does not equal | `http.request.host != "blocked.com"` |
-| `in` | Value is in set | `net.dst.port in {80 443}` |
+| Operator  | Name                       | Example                                          |
+| --------- | -------------------------- | ------------------------------------------------ |
+| `==`      | Equals                     | `dns.fqdn == "example.com"`                      |
+| `!=`      | Does not equal             | `http.request.host != "blocked.com"`             |
+| `in`      | Value is in set            | `net.dst.port in {80 443}`                       |
 | `matches` | Matches regular expression | `http.request.host matches ".*\\.example\\.com"` |
-| `>` | Greater than | `http.upload.file.size > 10` |
-| `>=` | Greater than or equal to | `http.download.file.size >= 100` |
-| `<` | Less than | `http.upload.file.size < 50` |
-| `<=` | Less than or equal to | `http.download.file.size <= 200` |
+| `>`       | Greater than               | `http.upload.file.size > 10`                     |
+| `>=`      | Greater than or equal to   | `http.download.file.size >= 100`                 |
+| `<`       | Less than                  | `http.upload.file.size < 50`                     |
+| `<=`      | Less than or equal to      | `http.download.file.size <= 200`                 |
 
 ### Logical operators
 
 Combine multiple conditions using logical operators:
 
-| Operator | Name | Example |
-| --- | --- | --- |
-| `and` | Logical AND | `dns.fqdn == "example.com" and identity.email == "admin@company.com"` |
-| `or` | Logical OR | `net.dst.port == 80 or net.dst.port == 443` |
+| Operator | Name        | Example                                                               |
+| -------- | ----------- | --------------------------------------------------------------------- |
+| `and`    | Logical AND | `dns.fqdn == "example.com" and identity.email == "admin@company.com"` |
+| `or`     | Logical OR  | `net.dst.port == 80 or net.dst.port == 443`                           |
 
 You can also use symbols instead of words:
 
@@ -103,13 +103,13 @@ To find a list's UUID, go to **My Team** > **Lists** in Zero Trust and select th
 
 Each Gateway policy type has its own set of available fields. The following table shows the field prefixes used by each policy type:
 
-| Policy type | Field prefix | Example fields |
-| --- | --- | --- |
-| DNS | `dns.` | `dns.fqdn`, `dns.content_category`, `dns.src_ip` |
-| HTTP | `http.` | `http.request.host`, `http.request.uri`, `http.request.domains` |
-| Network | `net.` | `net.dst.ip`, `net.dst.port`, `net.src.ip` |
-| Identity | `identity.` | `identity.email`, `identity.groups`, `identity.name` |
-| Device posture | `device_posture.` | `device_posture.checks.passed` |
+| Policy type    | Field prefix      | Example fields                                                  |
+| -------------- | ----------------- | --------------------------------------------------------------- |
+| DNS            | `dns.`            | `dns.fqdn`, `dns.content_category`, `dns.src_ip`                |
+| HTTP           | `http.`           | `http.request.host`, `http.request.uri`, `http.request.domains` |
+| Network        | `net.`            | `net.dst.ip`, `net.dst.port`, `net.src.ip`                      |
+| Identity       | `identity.`       | `identity.email`, `identity.groups`, `identity.name`            |
+| Device posture | `device_posture.` | `device_posture.checks.passed`                                  |
 
 For a complete list of available fields for each policy type, refer to the selectors documentation linked at the top of this page.
 
@@ -149,13 +149,13 @@ http.request.host == "internal.example.com" and identity.email matches ".*@compa
 
 The following table summarizes the key differences between the Rules language](/ruleset-engine/rules-language/) (supported by the Ruleset Engine) and Gateway policy expressions:
 
-| | Ruleset Engine | Gateway |
-| --- | --- | --- |
-| **Products** | WAF, Transform Rules, Cache Rules, Configuration Rules | DNS, HTTP, Network, Egress, Resolver policies |
-| **Field examples** | `http.request.uri.path`, `cf.bot_management.score`, `ip.src` | `dns.fqdn`, `http.request.host`, `identity.email` |
-| **Identity fields** | Not available | Available (for example, `identity.email`, `identity.groups`) |
-| **DNS fields** | Not available | Available (for example, `dns.fqdn`, `dns.content_category`) |
-| **Documentation** | [Rules language](/ruleset-engine/rules-language/) | [Traffic policies](/cloudflare-one/traffic-policies/) |
+|                     | Ruleset Engine                                               | Gateway                                                      |
+| ------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| **Products**        | WAF, Transform Rules, Cache Rules, Configuration Rules       | DNS, HTTP, Network, Egress, Resolver policies                |
+| **Field examples**  | `http.request.uri.path`, `cf.bot_management.score`, `ip.src` | `dns.fqdn`, `http.request.host`, `identity.email`            |
+| **Identity fields** | Not available                                                | Available (for example, `identity.email`, `identity.groups`) |
+| **DNS fields**      | Not available                                                | Available (for example, `dns.fqdn`, `dns.content_category`)  |
+| **Documentation**   | [Rules language](/ruleset-engine/rules-language/)            | [Traffic policies](/cloudflare-one/traffic-policies/)        |
 
 :::note
 
