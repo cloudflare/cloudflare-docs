@@ -19,7 +19,7 @@ An IT adminstrator, you want to identify shadow MCP traffic to can prevent unaut
 ## Prerequisites
 
 - A Cloudflare account with a [Zero Trust organization](/cloudflare-one/setup/)
-- [Gateway](/cloudflare-one/policies/gateway/) with HTTP filtering enabled and actively proxying user traffic
+- [Gateway](/cloudflare-one/traffic-policies/) with HTTP filtering enabled and actively proxying user traffic
 - An [API token](/fundamentals/api/get-started/create-token/) with the following permissions:
   - Account-level `Zero Trust: Read`
   - Account-level `DLP: Write`
@@ -355,8 +355,8 @@ Replace the `portalDomains` array with the actual domains of your approved MCP S
 ## Related resources
 
 - [Zero Trust documentation](/cloudflare-one/)
-- [Gateway policies](/cloudflare-one/policies/gateway/)
-- [DLP profiles](/cloudflare-one/policies/data-loss-prevention/)
+- [Gateway policies](/cloudflare-one/traffic-policies/)
+- [DLP profiles](/cloudflare-one/data-loss-prevention/)
 - [GraphQL Analytics API](/analytics/graphql-api/)
 - [Rules language and wirefilter expressions](/ruleset-engine/rules-language/)
 - [Pages Functions](/pages/functions/)
