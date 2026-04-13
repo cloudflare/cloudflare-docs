@@ -14,7 +14,7 @@ Some browser automation workflows require manual intervention. A login page may 
 Human in the Loop works with any [Browser Session](/browser-rendering/#integration-methods) and uses [Live View](/browser-rendering/features/live-view/) to give humans access:
 
 1. Your automation script navigates to a page that needs human input.
-2. The script retrieves the Live View URL via `Cloudflare.getLiveView` and shares it with a human operator (for example, by logging it, sending it via Slack, or displaying it in a UI).
+2. The script retrieves the [Live View](/browser-rendering/features/live-view/) URL from the session's target list and shares it with a human operator (for example, by sending it via Slack, email, or displaying it in a UI).
 3. The human operator opens the Live View URL and completes the required action (logging in, solving a CAPTCHA, entering sensitive data, etc.).
 4. The automation script detects that the human is done (for example, by waiting for a navigation event or polling for a page element) and resumes.
 
@@ -32,13 +32,14 @@ const API_TOKEN = "your-api-token";
 
 // Create a browser session via CDP
 const response = await fetch(
-  `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/browser-rendering/devtools/browser?keep_alive=600000`,
+  `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/browser-rendering/devtools/browser?keep_alive=600000&includeTargets=true`,
   {
     method: "POST",
     headers: { Authorization: `Bearer ${API_TOKEN}` },
   }
 );
-const { webSocketDebuggerUrl } = await response.json();
+const { webSocketDebuggerUrl, targets } = await response.json();
+const liveUrl = targets[0].devtoolsFrontendUrl;
 
 // Connect Puppeteer to the session
 const browser = await puppeteer.connect({
@@ -49,16 +50,10 @@ const browser = await puppeteer.connect({
 const page = await browser.newPage();
 await page.goto("https://example.com/login");
 
-// Get the Live View URL so a human can interact with the session
-const cdp = await page.createCDPSession();
-const { devtoolsFrontendUrl: liveUrl } = await cdp.send(
-  "Cloudflare.getLiveView"
-);
-
-// Share the Live View URL with the human operator
+// Share the Live View URL with the human operator (for example, send it via Slack, email, or display it in a UI)
 console.log(`Human input needed. Open this URL: ${liveUrl}`);
 
-// Wait for the human to complete login
+// Wait for the human to complete login (5 minute timeout — the script will continue after this period)
 await page.waitForNavigation({ waitUntil: "networkidle0", timeout: 300000 });
 
 // Login complete, continue automation
@@ -77,3 +72,7 @@ browser.disconnect();
 - **Sensitive data entry**: Forms requiring credentials or personal information you do not want to pass to an automation script
 - **Complex interactions**: One-off tasks that are too difficult or not worth fully automating, such as configuring a dashboard or approving a workflow
 - **Verification steps**: Confirming an order, reviewing generated content, or approving an action before the script proceeds
+
+:::note[Bot detection]
+Browser Rendering requests are [always identified as bot traffic](/browser-rendering/faq/#will-browser-rendering-be-detected-by-bot-management). Even with a human controlling the session, some third-party services may still block the request.
+:::

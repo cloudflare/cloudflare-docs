@@ -7,7 +7,7 @@ sidebar:
   badge: Beta
 ---
 
-import { CURL, DashButton, Tabs, TabItem } from "~/components";
+import { CURL, DashButton } from "~/components";
 
 Live View lets you see and interact with a remote Browser Run session in real time. This is useful for debugging automation scripts, monitoring what a browser is doing, or manually stepping in when a task requires human intervention (see [Human in the Loop](/browser-rendering/features/human-in-the-loop/)).
 
@@ -27,13 +27,12 @@ In the Cloudflare dashboard, go to the **Browser Run** page and select the **Liv
 
 When you create a session or list targets through the [CDP](/browser-rendering/cdp/) endpoints, the API response includes a `devtoolsFrontendUrl` for each target (tab). Open this URL in any browser to load the DevTools UI hosted at `live.browser.run`, which streams the remote session to your browser.
 
-The hosted UI supports three viewing modes, controlled by the `mode` parameter in the URL:
+The hosted UI supports two viewing modes, controlled by the `mode` parameter in the URL:
 
 | Mode | URL pattern | Description |
 | --- | --- | --- |
 | Tab | `https://live.browser.run/ui/view?mode=tab&wss=...` | DevTools inspector panel (Elements, Console, Network, etc.) |
-| Full | `https://live.browser.run/ui/view?mode=full&wss=...` | Full browser chrome with address bar and tab strip |
-| Inspector | `https://live.browser.run/ui/inspector?wss=...` | Standalone inspector view |
+| Inspector | `https://live.browser.run/ui/view?mode=devtools&wss=...` | Standalone inspector view |
 
 ### Native Chrome DevTools (Chrome only)
 
@@ -43,15 +42,7 @@ Because Browser Run speaks standard CDP, you can connect Chrome's built-in DevTo
 devtools://devtools/bundled/inspector.html?wss=live.browser.run/api/devtools/browser/SESSION_ID/page/TARGET_ID?jwt=...
 ```
 
-Paste this URL into Chrome's address bar to open native DevTools connected to the remote browser session.
-
-**Pros:**
-- Familiar UI: the exact same DevTools you use daily for local development, rather than a hosted version wrapped inside a webpage
-- Slightly faster to load: DevTools assets (HTML, JS, CSS) are already bundled locally in Chrome
-
-**Cons:**
-- Chrome only: the `devtools://` protocol URL only works in Chrome. The hosted `live.browser.run` version works in other browsers, though the DevTools UI has not been heavily tested outside Chrome.
-- Inspector tab only: does not work for the full or tab viewing modes
+Paste this URL into Chrome's address bar to open native DevTools connected to the remote browser session. This gives you the familiar local DevTools UI and loads slightly faster since the assets are already bundled in Chrome. However, the `devtools://` protocol only works in Chrome and only supports the inspector viewing mode.
 
 :::caution[URL validity]
 The `devtoolsFrontendUrl` is valid for five minutes from when it was generated. If you do not open the URL within this timeframe, list the targets again to get a fresh URL. Once the DevTools connection is established, it remains active as long as the browser session is alive.
@@ -132,29 +123,3 @@ If you have a running session and want to connect to it:
 ```
 
 3. Copy the `devtoolsFrontendUrl` and open it in your browser.
-
-## Get the Live View URL programmatically
-
-You can retrieve the Live View URL from within a Puppeteer or Playwright script using a CDP command. This is useful when you need to share the URL with someone, for example sending it via email, Slack, or displaying it in a UI.
-
-<Tabs> <TabItem label="Puppeteer">
-
-```js
-const cdp = await page.createCDPSession();
-const { devtoolsFrontendUrl } = await cdp.send("Cloudflare.getLiveView");
-
-console.log(`Live View: ${devtoolsFrontendUrl}`);
-```
-
-</TabItem> <TabItem label="Playwright">
-
-```js
-const cdp = await page.context().newCDPSession(page);
-const { devtoolsFrontendUrl } = await cdp.send("Cloudflare.getLiveView");
-
-console.log(`Live View: ${devtoolsFrontendUrl}`);
-```
-
-</TabItem> </Tabs>
-
-You can also get the Live View URL from the HTTP API by listing targets for a session, as shown in [View an existing session](#view-an-existing-session). Each target in the response includes a `devtoolsFrontendUrl`.
