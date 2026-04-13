@@ -6,6 +6,9 @@ import { WranglerConfig } from "~/components";
 
 To use AI Search with Workers, you must create an AI Search binding. You create bindings by updating your [Wrangler configuration](/workers/wrangler/configuration/). AI Search provides two types of bindings:
 
+- Namespace binding
+- Instance binding
+
 ### Namespace binding
 
 Access all instances within a [namespace](/ai-search/concepts/namespaces/). You can get, create, list, and delete instances at runtime.
@@ -48,4 +51,5 @@ instance_name = "my-instance"
 | `binding`       | string | Yes      | The variable name available on `env`. For example, `"MY_SEARCH"` makes it accessible as `env.MY_SEARCH`. |
 | `instance_name` | string | Yes      | The name of the AI Search instance. Must exist in the default namespace at deploy time.                  |
 
-With the namespace binding, call `env.AI_SEARCH.get("my-instance")` to get an instance handle. With the instance binding, `env.MY_SEARCH` is the instance handle directly.
+- With the namespace binding, call `env.AI_SEARCH.get("my-instance")` to get an instance handle.
+- With the instance binding, `env.MY_SEARCH` is the instance handle directly.

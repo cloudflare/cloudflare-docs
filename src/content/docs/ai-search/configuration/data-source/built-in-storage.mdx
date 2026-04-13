@@ -5,17 +5,21 @@ sidebar:
   order: 1
 ---
 
+import {DashButton} from '~/components';
+
 Every new AI Search instance comes with built-in storage and a built-in vector index, powered by [R2](/r2/) and [Vectorize](/vectorize/). You can upload files directly to an instance without setting up either service yourself.
 
 ## Instances created before April 16, 2026
 
-Instances created before **April 16, 2026** use R2 and Vectorize provisioned on your account. These instances do not include built-in storage and do not support the Items API. You can see which of your instances have built-in storage on the dashboard under **Compute & AI** > **AI Search**.
+Instances created before **April 16, 2026** use R2 and Vectorize provisioned on your account. These instances do not include built-in storage and do not support the Items API. You can see which of your instances have built-in storage on the dashboard under **AI** > **AI Search**.
+
+<DashButton url="/?to=/:account/ai/ai-search" />
 
 All instances will be migrated to managed infrastructure. Migration details are coming soon.
 
 ## Upload and manage files
 
-Upload files to an instance using the [Items API](/ai-search/api/items/workers-binding/) (Workers binding or REST API) or the **Items** tab in the dashboard (**Compute & AI** > **AI Search** > your instance > **Items**). You can also list, view, and delete uploaded files through the Items API or the dashboard.
+Upload files to an instance using the [Items API](/ai-search/api/items/workers-binding/) (Workers binding or REST API) or the **Items** tab in the dashboard (**AI** > **AI Search** > your instance > **Items**). You can also list, view, and delete uploaded files through the Items API or the dashboard.
 
 For supported file types, refer to [Supported file types](/ai-search/configuration/data-source/#supported-file-types).
 

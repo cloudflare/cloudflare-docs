@@ -5,6 +5,8 @@ sidebar:
   order: 10
 ---
 
+import { DashButton } from "~/components";
+
 A service API token grants AI Search permission to access [R2](/r2/) buckets in your account. This token is only required if you connect an R2 bucket as a data source. If you use a website or upload files directly through the [Items API](/ai-search/api/items/workers-binding/), you do not need a service API token.
 
 ## When you need a service API token
@@ -26,6 +28,9 @@ If you need to create a service API token programmatically, follow these steps.
 You need an [API token](/fundamentals/api/get-started/create-token/) with permission to create other tokens.
 
 1. In the Cloudflare dashboard, go to **My Profile** > **API Tokens**.
+
+   <DashButton url="/profile/api-tokens" />
+
 2. Select **Create Token**.
 3. Select **Create Custom Token**.
 4. Enter a **Token name**, for example `Token Creator`.
@@ -129,7 +134,10 @@ Do not delete your service API token. If you revoke or delete the token, any R2-
 
 To create a new service API token from the dashboard:
 
-1. Go to an existing AI Search instance in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/ai/ai-search).
+1. Go to an existing AI Search instance in the Cloudflare dashboard.
+
+   <DashButton url="/?to=/:account/ai/ai-search" />
+
 2. Select **Settings**.
 3. Under **General**, find **Service API Token** and select the edit icon.
 4. Select **Create a new token**.

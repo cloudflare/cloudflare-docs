@@ -6,7 +6,7 @@ sidebar:
 description: Create AI Search instances programmatically using the REST API.
 ---
 
-import { LinkCard } from "@astrojs/starlight/components";
+import { LinkCard, DashButton } from "~/components";
 
 This guide walks you through creating an AI Search instance using the REST API.
 
@@ -15,6 +15,9 @@ This guide walks you through creating an AI Search instance using the REST API.
 You need an API token with **AI Search:Edit** and **AI Search:Run** permissions.
 
 1. In the Cloudflare dashboard, go to **My Profile** > **API Tokens**.
+
+   <DashButton url="/profile/api-tokens" />
+
 2. Select **Create Token**.
 3. Select **Create Custom Token**.
 4. Enter a **Token name**, for example `AI Search Manager`.

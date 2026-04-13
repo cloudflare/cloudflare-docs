@@ -6,18 +6,18 @@ sidebar:
 description: Create and configure AI Search using the Cloudflare dashboard.
 ---
 
-import { LinkCard } from "@astrojs/starlight/components";
-import { DashButton, Steps } from "~/components";
+import { DashButton, Steps, LinkCard } from "~/components";
 
 This guide walks you through creating an AI Search instance using the Cloudflare dashboard.
 
 ## Create an AI Search instance
 
-<DashButton url="/?to=/:account/ai/ai-search" buttonName="AI Search" />
-
 <Steps>
 
-1. Go to **Compute & AI** > **AI Search**.
+1. Go to **AI Search** in the Cloudflare dashboard.
+
+   <DashButton url="/?to=/:account/ai/ai-search" />
+
 2. Select **Create Instance**.
 3. Name your AI Search instance.
 4. Optionally connect a [data source](/ai-search/configuration/data-source/) such as a website you own or an R2 bucket. You can skip this step and upload files later.
@@ -32,7 +32,10 @@ If you did not connect a data source, you can upload files directly from the das
 
 <Steps>
 
-1. Go to **Compute & AI** > **AI Search**.
+1. Go to **AI Search** in the Cloudflare dashboard.
+
+   <DashButton url="/?to=/:account/ai/ai-search" />
+
 2. Select your instance.
 3. Select the **Items** tab.
 4. Upload your files. AI Search indexes them automatically.

@@ -20,7 +20,7 @@ The new API also includes endpoints for [instance management](/ai-search/api/ins
 
 ## Chat completions
 
-How to migrate from the AutoRAG `/ai-search` endpoint to the new `/chat/completions` endpoint.
+How to migrate from the AutoRAG `/ai-search` endpoint to the new `/chat/completions` endpoint:
 
 **Before (AutoRAG API):**
 
@@ -37,7 +37,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/autorag
 
 The new API uses the `messages` array format.
 
-```bash
+```bash ins="ai-search/instances" ins="/chat/completions" ins='"messages"' ins='"content"' ins='"role"'
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/<INSTANCE_NAME>/chat/completions" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer <API_TOKEN>" \
@@ -53,7 +53,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-sear
 
 ## Search
 
-How to migrate from the AutoRAG `/search` endpoint to the new `/search` endpoint.
+How to migrate from the AutoRAG `/search` endpoint to the new `/search` endpoint:
 
 **Before (AutoRAG API):**
 
@@ -70,7 +70,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/autorag
 
 The new API uses the `messages` array format. The `query` string format is also supported.
 
-```bash
+```bash ins="ai-search/instances" ins='"messages"' ins='"content"' ins='"role"'
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/<INSTANCE_NAME>/search" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer <API_TOKEN>" \

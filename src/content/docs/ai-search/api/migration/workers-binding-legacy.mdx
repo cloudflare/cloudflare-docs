@@ -9,7 +9,7 @@ import { Render, MetaInfo, Type } from "~/components";
 
 The `env.AI.autorag()` binding is the legacy API for AI Search. It will continue to work, but new projects should use the new AI Search bindings instead. For a step-by-step upgrade guide, refer to [Workers binding migration](/ai-search/api/migration/workers-binding/).
 
-## `aiSearch()`
+### `aiSearch()`
 
 This method searches for relevant results from your data source and generates a response using your default model and the retrieved context:
 
@@ -30,11 +30,11 @@ const answer = await env.AI.autorag("my-autorag").aiSearch({
 });
 ```
 
-### Parameters
+#### Parameters
 
 <Render file="ai-search-api-params" product="ai-search" />
 
-### Response
+#### Response
 
 This is the response structure without `stream` enabled.
 
@@ -82,7 +82,7 @@ This is the response structure without `stream` enabled.
 }
 ```
 
-## `search()`
+### `search()`
 
 This method searches for results from your corpus and returns the relevant results:
 
@@ -101,11 +101,11 @@ const answer = await env.AI.autorag("my-autorag").search({
 });
 ```
 
-### Parameters
+#### Parameters
 
 <Render file="search-api-params" product="ai-search" />
 
-### Response
+#### Response
 
 ```json
 {

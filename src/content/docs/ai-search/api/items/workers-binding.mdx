@@ -22,7 +22,9 @@ const instance = env.AI_SEARCH.get("my-instance");
 await instance.items.upload("guide.pdf", pdfArrayBuffer);
 ```
 
-## `items.upload()`
+## Methods
+
+### `items.upload()`
 
 Uploads a document for indexing. Returns immediately. The document is queued for processing.
 
@@ -44,7 +46,7 @@ await instance.items.upload("guide.pdf", pdfBuffer);
 await instance.items.upload("doc.txt", request.body);
 ```
 
-### Upload with metadata
+#### Upload with metadata
 
 Attach custom metadata to a document for filtering in search queries:
 
@@ -58,7 +60,7 @@ await instance.items.upload("guide.pdf", pdfBuffer, {
 });
 ```
 
-### Parameters
+#### Parameters
 
 | Parameter          | Type                                   | Required | Description                                                                                                                                                                |
 | ------------------ | -------------------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -66,14 +68,14 @@ await instance.items.upload("guide.pdf", pdfBuffer, {
 | `content`          | ReadableStream, ArrayBuffer, or string | Yes      | The document content. Maximum file size is 4 MB. Pass a string for plain text or markdown, an `ArrayBuffer` for binary files, or a `ReadableStream` for streaming uploads. |
 | `options.metadata` | Record&lt;string, string&gt;           | No       | Custom metadata key-value pairs to attach to the item. Use for filtering in search queries. Maximum 5 fields per instance.                                                 |
 
-### Response
+#### Response
 
 | Field | Type   | Description                      |
 | ----- | ------ | -------------------------------- |
 | `id`  | string | The unique item identifier.      |
 | `key` | string | The filename or key of the item. |
 
-## `items.uploadAndPoll()`
+### `items.uploadAndPoll()`
 
 Uploads a document and polls until processing completes or the timeout is reached. Use this when you need to search the document immediately after upload.
 
@@ -84,7 +86,7 @@ const item = await instance.items.uploadAndPoll("guide.pdf", pdfBuffer, {
 });
 ```
 
-### Parameters
+#### Parameters
 
 Same as [`items.upload()`](#parameters), with additional polling options:
 
@@ -93,7 +95,7 @@ Same as [`items.upload()`](#parameters), with additional polling options:
 | `options.pollIntervalMs` | number | No       | How often to check the item status, in milliseconds. Defaults to `1000`.               |
 | `options.timeoutMs`      | number | No       | Maximum time to wait for processing to complete, in milliseconds. Defaults to `30000`. |
 
-### Response
+#### Response
 
 Returns the full item object after polling completes:
 
@@ -109,7 +111,7 @@ Returns the full item object after polling completes:
 | `created_at`   | string | Timestamp of when the item was created.                                                  |
 | `last_seen_at` | string | Timestamp of when the item was last seen during indexing.                                |
 
-## `items.list()`
+### `items.list()`
 
 Returns a paginated list of items in the instance.
 
@@ -123,7 +125,7 @@ for (const item of items) {
 }
 ```
 
-### Parameters
+#### Parameters
 
 | Parameter  | Type   | Required | Description                                                                                       |
 | ---------- | ------ | -------- | ------------------------------------------------------------------------------------------------- |
@@ -134,7 +136,7 @@ for (const item of items) {
 | `search`   | string | No       | Search items by text content.                                                                     |
 | `source`   | string | No       | Filter by source identifier (for example, `builtin` for uploaded files).                          |
 
-### Response
+#### Response
 
 | Field                     | Type   | Description                                                                              |
 | ------------------------- | ------ | ---------------------------------------------------------------------------------------- |
@@ -154,7 +156,7 @@ for (const item of items) {
 | `result_info.page`        | number | The current page number.                                                                 |
 | `result_info.per_page`    | number | Items per page.                                                                          |
 
-## `items.delete()`
+### `items.delete()`
 
 Deletes an item and its indexed chunks.
 
@@ -162,21 +164,21 @@ Deletes an item and its indexed chunks.
 await instance.items.delete("item-id-123");
 ```
 
-### Parameters
+#### Parameters
 
 | Parameter | Type   | Required | Description                                  |
 | --------- | ------ | -------- | -------------------------------------------- |
 | `itemId`  | string | Yes      | The unique identifier of the item to delete. |
 
-### Response
+#### Response
 
 Returns `void`. Throws an error if the item does not exist.
 
-## `items.get()`
+### `items.get()`
 
 Returns a handle to a specific item for retrieving its status or downloading the original file.
 
-### `items.get().info()`
+#### `items.get().info()`
 
 Returns the status and metadata of a specific item.
 
@@ -184,13 +186,13 @@ Returns the status and metadata of a specific item.
 const itemInfo = await instance.items.get("item-id-123").info();
 ```
 
-#### Parameters
+##### Parameters
 
 | Parameter | Type   | Required | Description                        |
 | --------- | ------ | -------- | ---------------------------------- |
 | `itemId`  | string | Yes      | The unique identifier of the item. |
 
-#### Response
+##### Response
 
 | Field          | Type   | Description                                                                              |
 | -------------- | ------ | ---------------------------------------------------------------------------------------- |
@@ -204,7 +206,7 @@ const itemInfo = await instance.items.get("item-id-123").info();
 | `created_at`   | string | Timestamp of when the item was created.                                                  |
 | `last_seen_at` | string | Timestamp of when the item was last seen during indexing.                                |
 
-### `items.get().download()`
+#### `items.get().download()`
 
 Downloads the original source file for an item.
 
@@ -212,13 +214,13 @@ Downloads the original source file for an item.
 const file = await instance.items.get("item-id-123").download();
 ```
 
-#### Parameters
+##### Parameters
 
 | Parameter | Type   | Required | Description                        |
 | --------- | ------ | -------- | ---------------------------------- |
 | `itemId`  | string | Yes      | The unique identifier of the item. |
 
-#### Response
+##### Response
 
 | Field         | Type           | Description                                                 |
 | ------------- | -------------- | ----------------------------------------------------------- |
