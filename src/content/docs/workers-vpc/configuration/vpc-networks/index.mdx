@@ -1,0 +1,120 @@
+---
+title: VPC Networks
+pcx_content_type: concept
+sidebar:
+  order: 2
+---
+
+import { WranglerConfig } from "~/components";
+
+VPC Networks allow your Workers to access any service in your private network through a Cloudflare Tunnel without pre-registering individual hosts or ports. A single VPC Network binding grants tunnel-wide access to your private network.
+
+A VPC Network connects your Worker to an entire Cloudflare Tunnel. At runtime, your Worker can make requests to any service accessible through that tunnel using any hostname or IP address. This differs from VPC Services, which require you to create a separate service binding for each target host and port combination.
+
+:::note
+
+Workers VPC is currently in beta. Features and APIs may change before general availability. While in beta, Workers VPC is available for free to all Workers plans.
+
+:::
+
+## When to use VPC Networks
+
+Use VPC Networks when:
+
+- You need to access many services through the same tunnel
+- Your internal hostnames or IP addresses change frequently
+- You need tunnel-wide access without pre-registering individual services
+- You want dynamic hostname or IP resolution
+
+Use VPC Services when:
+
+- You have a fixed set of known targets
+- You want fine-grained per-service configuration
+- You need explicit service cataloging and access control
+
+## Bind to a tunnel
+
+Reference a specific Cloudflare Tunnel directly by its UUID:
+
+<WranglerConfig>
+```jsonc
+{
+  "vpc_networks": [
+    {
+      "binding": "MY_VPC",
+      "tunnel_id": "550e8400-e29b-41d4-a716-446655440000",
+      "remote": true
+    }
+  ]
+}
+```
+</WranglerConfig>
+
+The `remote` flag must be set to `true` to enable remote bindings during local development.
+
+## Bind to Cloudflare Mesh
+
+[Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) enables private networking between your services, devices, and Workers through Cloudflare's global network. When you bind a Worker to Cloudflare Mesh using `network_id: "cf1:network"`, your Worker can reach any private service accessible through your account's Mesh nodes and Cloudflare Tunnels — without specifying a particular tunnel UUID.
+
+Use Cloudflare Mesh when:
+
+- Your Workers need to reach private services across multiple tunnels or Mesh nodes
+- You want to access your entire private network from a Worker without managing individual tunnel bindings
+- Your private network topology may change (new tunnels, new nodes) and you do not want to update Worker configuration each time
+
+:::note
+
+Your account must have at least one active [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) or [Mesh node](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) that can reach the target services.
+
+:::
+
+Bind to Cloudflare Mesh using `network_id: "cf1:network"`:
+
+<WranglerConfig>
+```jsonc
+{
+  "vpc_networks": [
+    {
+      "binding": "MY_VPC",
+      "network_id": "cf1:network",
+      "remote": true
+    }
+  ]
+}
+```
+</WranglerConfig>
+
+## Runtime usage
+
+Access any service in your network at runtime:
+
+```typescript
+export default {
+	async fetch(request: Request, env: Env) {
+		// Access any hostname or IP in your network
+		const response = await env.MY_VPC.fetch("http://internal-api.local/data");
+
+		// Or access by IP address
+		const dbResponse = await env.MY_VPC.fetch("http://10.0.5.42:5432");
+
+		return response;
+	},
+};
+```
+
+When a VPC Network cannot establish a connection to your target service, `fetch()` throws an exception.
+
+## VPC Networks vs VPC Services
+
+| Feature              | VPC Networks                                                           | VPC Services              |
+| -------------------- | ---------------------------------------------------------------------- | ------------------------- |
+| Scope                | Tunnel-wide access                                                     | Specific host + port      |
+| Configuration        | `tunnel_id` or `cf1:network`                                           | `service_id`              |
+| Service registration | Not required                                                           | Required for each target  |
+| Use when             | Dynamic discovery, tunnel-wide access, entire private network via Mesh | Fixed, cataloged services |
+
+## Next steps
+
+- Set up [Cloudflare Tunnel](/workers-vpc/configuration/tunnel/)
+- View [examples](/workers-vpc/examples/)
+- Learn about the [Network Binding API](/workers-vpc/api/)
