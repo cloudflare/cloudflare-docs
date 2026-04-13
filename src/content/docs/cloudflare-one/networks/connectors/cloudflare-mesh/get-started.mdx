@@ -3,7 +3,6 @@ pcx_content_type: how-to
 title: Get started
 tags:
   - Private networks
-  - Mesh
 sidebar:
   order: 2
 head:
@@ -29,10 +28,10 @@ Client-to-client connectivity works without any Mesh nodes. Two enrolled laptops
 
 <Details header="Supported Linux distributions for Mesh nodes">
 
-| Distribution | Architectures |
-|---|---|
-| Debian / Ubuntu (`.deb`) | amd64, arm64, armhf |
-| RedHat / CentOS / Fedora (`.rpm`) | x86_64, aarch64 |
+| Distribution                      | Architectures       |
+| --------------------------------- | ------------------- |
+| Debian / Ubuntu (`.deb`)          | amd64, arm64, armhf |
+| RedHat / CentOS / Fedora (`.rpm`) | x86_64, aarch64     |
 
 </Details>
 
@@ -115,11 +114,11 @@ Replace `<MESH-IP>` with the Mesh IP of a node or another device (visible on the
 
 When you create your first Mesh node, the setup wizard automatically provisions several Cloudflare One settings so you don't have to configure them manually:
 
-| Setting | What it does |
-|---|---|
-| [Device enrollment](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/device-enrollment/) | Allows devices to enroll into your Cloudflare One account. Uses email-based one-time PIN by default. |
-| [Device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) | Creates a profile configured for Mesh networking using **Include mode**, so only Mesh traffic routes through Cloudflare. This prevents disrupting existing network connectivity on your server. |
-| [Mesh connectivity](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#allow-all-cloudflare-one-traffic-to-reach-enrolled-devices) | Enables device-to-device connectivity and the required [traffic proxying](/cloudflare-one/traffic-policies/proxy/) (TCP, UDP, ICMP) for Mesh communication. |
+| Setting                                                                                                                                                              | What it does                                                                                                                                                                                    |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Device enrollment](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/device-enrollment/)                                                  | Allows devices to enroll into your Cloudflare One account. Uses email-based one-time PIN by default.                                                                                            |
+| [Device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/)                                            | Creates a profile configured for Mesh networking using **Include mode**, so only Mesh traffic routes through Cloudflare. This prevents disrupting existing network connectivity on your server. |
+| [Mesh connectivity](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#allow-all-cloudflare-one-traffic-to-reach-enrolled-devices) | Enables device-to-device connectivity and the required [traffic proxying](/cloudflare-one/traffic-policies/proxy/) (TCP, UDP, ICMP) for Mesh communication.                                     |
 
 ### Existing Cloudflare One accounts
 

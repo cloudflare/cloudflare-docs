@@ -3,7 +3,6 @@ pcx_content_type: how-to
 title: Routes
 tags:
   - Private networks
-  - Mesh
 sidebar:
   order: 4
 head:
@@ -130,10 +129,12 @@ For this to work:
 3. Each site's router needs static routes pointing remote subnets to the local Mesh node:
 
 **Site A router:**
+
 - **Destination**: `192.168.1.0/24` → **Next hop**: `10.0.0.1` (local Mesh node)
 - **Destination**: `100.96.0.0/12` → **Next hop**: `10.0.0.1`
 
 **Site B router:**
+
 - **Destination**: `10.0.0.0/24` → **Next hop**: `192.168.1.1` (local Mesh node)
 - **Destination**: `100.96.0.0/12` → **Next hop**: `192.168.1.1`
 

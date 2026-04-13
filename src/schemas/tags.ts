@@ -149,7 +149,6 @@ const use_cases: Array<Tag> = [
 	{ label: "LLM", variants: ["llms"] },
 	{ label: "Localization" },
 	{ label: "Logging" },
-	{ label: "Mesh", variants: ["Cloudflare Mesh"] },
 	{ label: "Middleware" },
 	{ label: "Migration" },
 	{ label: "MCP" },

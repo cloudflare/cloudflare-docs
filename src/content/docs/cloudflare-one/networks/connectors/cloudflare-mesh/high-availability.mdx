@@ -3,7 +3,6 @@ pcx_content_type: how-to
 title: High availability
 tags:
   - Private networks
-  - Mesh
 sidebar:
   order: 5
 head:
@@ -143,33 +142,33 @@ The response includes each replica with its `ha_status` (`active` or `passive`),
 
 ```json
 {
-  "success": true,
-  "result": [
-    {
-      "id": "bf69f118-238e-11f1-b113-ee02f3be4a5b",
-      "conns": [
-        {
-          "colo_name": "lhr16",
-          "origin_ip": "34.105.147.200",
-          "opened_at": "2026-03-19T12:25:47.400Z"
-        }
-      ],
-      "run_at": "2026-03-19T12:25:47.400Z",
-      "ha_status": "active"
-    },
-    {
-      "id": "e07272a6-21fc-11f1-8997-e28f01ba3991",
-      "conns": [
-        {
-          "colo_name": "lhr14",
-          "origin_ip": "35.246.81.139",
-          "opened_at": "2026-03-19T02:38:37.203Z"
-        }
-      ],
-      "run_at": "2026-03-19T02:38:37.203Z",
-      "ha_status": "passive"
-    }
-  ]
+	"success": true,
+	"result": [
+		{
+			"id": "bf69f118-238e-11f1-b113-ee02f3be4a5b",
+			"conns": [
+				{
+					"colo_name": "lhr16",
+					"origin_ip": "34.105.147.200",
+					"opened_at": "2026-03-19T12:25:47.400Z"
+				}
+			],
+			"run_at": "2026-03-19T12:25:47.400Z",
+			"ha_status": "active"
+		},
+		{
+			"id": "e07272a6-21fc-11f1-8997-e28f01ba3991",
+			"conns": [
+				{
+					"colo_name": "lhr14",
+					"origin_ip": "35.246.81.139",
+					"opened_at": "2026-03-19T02:38:37.203Z"
+				}
+			],
+			"run_at": "2026-03-19T02:38:37.203Z",
+			"ha_status": "passive"
+		}
+	]
 }
 ```
 
