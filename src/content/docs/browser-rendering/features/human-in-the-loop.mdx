@@ -14,7 +14,7 @@ Some browser automation workflows require manual intervention. A login page may 
 Human in the Loop works with any [Browser Session](/browser-rendering/#integration-methods) and uses [Live View](/browser-rendering/features/live-view/) to give humans access:
 
 1. Your automation script navigates to a page that needs human input.
-2. The script retrieves the [Live View](/browser-rendering/features/live-view/) URL from the session's target list and shares it with a human operator (for example, by sending it via Slack, email, or displaying it in a UI).
+2. The script retrieves the [Live View](/browser-rendering/features/live-view/) URL from the session's target list and shares it with a human operator (for example, by sending it via Slack, email, or displaying it in a user interface).
 3. The human operator opens the Live View URL and completes the required action (logging in, solving a CAPTCHA, entering sensitive data, etc.).
 4. The automation script detects that the human is done (for example, by waiting for a navigation event or polling for a page element) and resumes.
 
