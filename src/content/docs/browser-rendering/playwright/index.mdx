@@ -249,7 +249,7 @@ await env.KV.put('storageState', JSON.stringify(updatedStorageState));
 
 ### Keep Alive
 
-If users omit the `browser.close()` statement, the browser instance will stay open, ready to be connected to again and [re-used](/browser-rendering/workers-bindings/reuse-sessions/) but it will, by default, close automatically after 1 minute of inactivity. Users can optionally extend this idle time up to 10 minutes, by using the `keep_alive` option, set in milliseconds:
+If users omit the `browser.close()` statement, the browser instance will stay open, ready to be connected to again and [re-used](/browser-rendering/features/reuse-sessions/) but it will, by default, close automatically after 1 minute of inactivity. Users can optionally extend this idle time up to 10 minutes, by using the `keep_alive` option, set in milliseconds:
 
 ```js
 const browser = await playwright.launch(env.MYBROWSER, { keep_alive: 600000 });
@@ -300,6 +300,26 @@ const context = await browser.newContext({
 The `userAgent` parameter does not bypass bot protection. Requests from Browser Rendering will always be identified as a bot.
 :::
 
+
+## Local debugging with headful mode (experimental)
+
+When developing locally with `wrangler dev` or `vite dev`, Chrome runs in headless mode by default. To launch Chrome in visible (headful) mode, set the `X_BROWSER_HEADFUL` environment variable:
+
+```sh
+X_BROWSER_HEADFUL=true npx wrangler dev
+```
+
+Or with the [Cloudflare Vite plugin](/workers/vite-plugin/):
+
+```sh
+X_BROWSER_HEADFUL=true npx vite dev
+```
+
+This opens a browser window so you can watch your Playwright automation in real time, making it easier to debug navigation, element selection, and page interactions.
+
+:::note
+When using `@cloudflare/playwright` in headful mode, two Chrome windows may appear. This is expected behavior due to how Playwright handles browser contexts via CDP.
+:::
 
 ## Session management
 

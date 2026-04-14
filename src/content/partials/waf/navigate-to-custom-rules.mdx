@@ -1,0 +1,24 @@
+---
+{}
+---
+
+{/* Consumed by:
+  - /waf/custom-rules/create-dashboard/
+  - /use-cases/application-security/bots/stop-malicious-bots/
+*/}
+
+import { Tabs, TabItem, DashButton } from "~/components";
+
+<Tabs syncKey="dashNewNav">
+    <TabItem label="New dashboard" icon="rocket">
+        1. In the Cloudflare dashboard, go to **Security** > **Security rules**.
+
+            <DashButton url="/?to=/:account/:zone/security/security-rules" />
+        2. Select **Create rule** > **Custom rules**.
+    </TabItem>
+    <TabItem label="Old dashboard">
+        1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
+        2. Go to **Security** > **WAF** > **Custom rules**.
+        3. Select **Create rule**.
+    </TabItem>
+</Tabs>

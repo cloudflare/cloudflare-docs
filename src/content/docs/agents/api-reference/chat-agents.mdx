@@ -277,12 +277,12 @@ export class ChatAgent extends AIChatAgent {
 
 Controls whether `AIChatAgent` waits for MCP server connections to settle before calling `onChatMessage`. This ensures `this.mcp.getAITools()` returns the full set of tools, especially after Durable Object hibernation when connections are being restored in the background.
 
-| Value                  | Behavior                                      |
-| ---------------------- | --------------------------------------------- |
+| Value                 | Behavior                                      |
+| --------------------- | --------------------------------------------- |
 | `{ timeout: 10_000 }` | Wait up to 10 seconds (default)               |
 | `{ timeout: N }`      | Wait up to `N` milliseconds                   |
-| `true`                 | Wait indefinitely until all connections ready  |
-| `false`                | Do not wait (old behavior before 0.2.0)        |
+| `true`                | Wait indefinitely until all connections ready |
+| `false`               | Do not wait (old behavior before 0.2.0)       |
 
 <TypeScriptExample>
 
@@ -303,21 +303,181 @@ export class ChatAgent extends AIChatAgent {
 
 For lower-level control, call `this.mcp.waitForConnections()` directly inside your `onChatMessage` instead.
 
-### `persistMessages` and `saveMessages`
+### `messageConcurrency`
 
-For advanced cases, you can manually persist messages:
+Controls how overlapping user submissions behave when a chat turn is already active or queued.
 
 <TypeScriptExample>
 
 ```ts
-// Persist messages without triggering a new response
-await this.persistMessages(messages);
-
-// Persist messages AND trigger onChatMessage (e.g., programmatic messages)
-await this.saveMessages(messages);
+export class ChatAgent extends AIChatAgent {
+	messageConcurrency = "queue";
+}
 ```
 
 </TypeScriptExample>
+
+| Strategy                                        | Behavior                                                                                                                            |
+| ----------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `"queue"` (default)                             | Queue every submission and process in order                                                                                         |
+| `"latest"`                                      | Keep only the latest overlapping submission; superseded submissions still persist their user messages but do not start a model turn |
+| `"merge"`                                       | Queue overlapping submissions, then collapse their trailing user messages into one combined turn before the latest queued turn runs |
+| `"drop"`                                        | Ignore overlapping submissions entirely                                                                                             |
+| `{ strategy: "debounce", debounceMs?: number }` | Trailing-edge latest with a quiet window (default 750ms)                                                                            |
+
+This setting only applies to `sendMessage()` submissions. Regenerations, tool continuations, approvals, clears, and programmatic `saveMessages()` calls keep their existing serialized behavior.
+
+### `persistMessages` and `saveMessages`
+
+`persistMessages` stores messages in SQLite and broadcasts the update to all connected clients, but does **not** trigger a model turn. Use it when you want to inject messages into the conversation without starting a new response.
+
+`saveMessages` persists messages **and** triggers `onChatMessage()` for a new response. It waits for any active chat turn to finish before starting, so scheduled or programmatic messages never overlap an in-flight stream.
+
+<TypeScriptExample>
+
+```ts
+// Store messages without triggering a response
+await this.persistMessages(messages);
+
+// Store messages AND trigger onChatMessage
+const { requestId, status } = await this.saveMessages(messages);
+```
+
+</TypeScriptExample>
+
+`saveMessages` accepts either an array of messages or a function that derives the next message list from the latest persisted `this.messages`. Use the function form to avoid stale baselines when multiple calls queue up:
+
+<TypeScriptExample>
+
+```ts
+await this.saveMessages((messages) => [
+	...messages,
+	{
+		id: crypto.randomUUID(),
+		role: "user",
+		parts: [{ type: "text", text: "Summarize the latest data" }],
+		createdAt: new Date(),
+	},
+]);
+```
+
+</TypeScriptExample>
+
+`saveMessages` returns `{ requestId, status }` where `status` is `"completed"` if the turn ran, or `"skipped"` if the chat was cleared before it started.
+
+### `onChatResponse`
+
+Called after a chat turn completes and the assistant message has been persisted. The turn lock is released before this hook runs, so it is safe to call `saveMessages` from inside. Fires for all turn completion paths: WebSocket chat requests, `saveMessages`, and auto-continuation.
+
+<TypeScriptExample>
+
+```ts
+import type { ChatResponseResult } from "@cloudflare/ai-chat";
+
+export class ChatAgent extends AIChatAgent {
+	protected async onChatResponse(result: ChatResponseResult) {
+		if (result.status === "completed") {
+			console.log("Turn completed:", result.requestId);
+		}
+		if (result.status === "error") {
+			console.error("Turn failed:", result.error);
+		}
+	}
+}
+```
+
+</TypeScriptExample>
+
+The `ChatResponseResult` contains:
+
+| Field          | Type                                  | Description                                                       |
+| -------------- | ------------------------------------- | ----------------------------------------------------------------- |
+| `message`      | `UIMessage`                           | The finalized assistant message from this turn                    |
+| `requestId`    | `string`                              | The request ID associated with this turn                          |
+| `continuation` | `boolean`                             | Whether this turn was a continuation of a previous assistant turn |
+| `status`       | `"completed" \| "error" \| "aborted"` | How the turn ended                                                |
+| `error`        | `string \| undefined`                 | Error message when `status` is `"error"`                          |
+
+:::note
+Responses triggered from inside `onChatResponse` (for example, via `saveMessages`) do not fire `onChatResponse` recursively.
+:::
+
+### `sanitizeMessageForPersistence`
+
+Override this method to apply custom transformations to messages before they are persisted to storage. This hook runs **after** the built-in sanitization (OpenAI metadata stripping, Anthropic provider-executed tool payload truncation, empty reasoning part filtering).
+
+<TypeScriptExample>
+
+```ts
+export class ChatAgent extends AIChatAgent {
+	protected sanitizeMessageForPersistence(message: UIMessage): UIMessage {
+		return {
+			...message,
+			parts: message.parts.map((part) => {
+				if (
+					"output" in part &&
+					typeof part.output === "string" &&
+					part.output.length > 1000
+				) {
+					return { ...part, output: "[redacted]" };
+				}
+				return part;
+			}),
+		};
+	}
+}
+```
+
+</TypeScriptExample>
+
+### Turn lifecycle helpers
+
+These methods help you coordinate programmatic turns and wait for pending interactions.
+
+#### `hasPendingInteraction()`
+
+Returns `true` when an assistant message is waiting on a client tool result or approval.
+
+<TypeScriptExample>
+
+```ts
+if (this.hasPendingInteraction()) {
+	console.log("Waiting for user to approve or provide tool output");
+}
+```
+
+</TypeScriptExample>
+
+#### `waitUntilStable()`
+
+Waits until the conversation is fully stable — no active stream, no pending client-tool interactions, and no queued continuation turns. Returns `true` when stable, or `false` if the timeout expires before a pending interaction resolves.
+
+<TypeScriptExample>
+
+```ts
+const stable = await this.waitUntilStable({ timeout: 30_000 });
+if (stable) {
+	console.log("All turns complete, safe to proceed");
+}
+```
+
+</TypeScriptExample>
+
+This is especially useful with `saveMessages` for server-driven flows:
+
+<TypeScriptExample>
+
+```ts
+await this.saveMessages((messages) => [...messages, syntheticUserMessage]);
+await this.waitUntilStable({ timeout: 60_000 });
+// The assistant has finished responding
+```
+
+</TypeScriptExample>
+
+#### `resetTurnState()`
+
+Aborts the active turn and invalidates queued continuations. The built-in `CF_AGENT_CHAT_CLEAR` handler calls this automatically, but you can call it manually if needed.
 
 ### Lifecycle hooks
 

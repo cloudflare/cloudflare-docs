@@ -101,7 +101,51 @@ Add the Durable Object binding and migration:
 - `new_sqlite_classes` enables SQLite storage for state persistence
 - `nodejs_compat` flag is required for the agents package
 
-## 4. Export the Agent class
+## 4. Configure TypeScript and Vite
+
+If you use `@callable()` decorators (as in the example above), you need two build configurations.
+
+**tsconfig.json** — extend `agents/tsconfig` (or set `"target": "ES2021"` manually):
+
+```json
+{
+	"extends": "agents/tsconfig"
+}
+```
+
+If you have an existing `tsconfig.json` with custom settings, you can extend and override:
+
+```json
+{
+	"extends": "agents/tsconfig",
+	"compilerOptions": {
+		"paths": { "~/*": ["./src/*"] }
+	}
+}
+```
+
+**vite.config.ts** — add the `agents()` plugin (handles TC39 decorator transforms for Vite 8):
+
+<TypeScriptExample>
+
+```ts
+import agents from "agents/vite";
+
+export default defineConfig({
+	plugins: [
+		agents(),
+		// ... your existing plugins
+	],
+});
+```
+
+</TypeScriptExample>
+
+If your project does not use Vite, the `tsconfig.json` change alone is sufficient — your bundler must support TC39 decorators (stage 3, version `2023-11`).
+
+For more details, refer to the [TypeScript configuration](/agents/api-reference/configuration/#typescript-configuration) and [Vite configuration](/agents/api-reference/configuration/#vite-configuration) reference.
+
+## 5. Export the Agent class
 
 Your agent class must be exported from your main entry point. Update your `src/index.ts`:
 
@@ -119,7 +163,7 @@ export default {
 
 </TypeScriptExample>
 
-## 5. Wire up routing
+## 6. Wire up routing
 
 Choose the approach that matches your project structure:
 
@@ -212,7 +256,7 @@ Configure assets in the Wrangler configuration file:
 
 </WranglerConfig>
 
-## 6. Generate TypeScript types
+## 7. Generate TypeScript types
 
 Do not hand-write your `Env` interface. Run [`wrangler types`](/workers/wrangler/commands/general/#types) to generate a type definition file that matches your Wrangler configuration. This catches mismatches between your config and code at compile time instead of at deploy time.
 
@@ -226,7 +270,7 @@ This creates a type definition file with all your bindings typed, including your
 
 Refer to [Configuration](/agents/api-reference/configuration/#generating-types) for more details on type generation.
 
-## 7. Connect from the frontend
+## 8. Connect from the frontend
 
 ### React
 

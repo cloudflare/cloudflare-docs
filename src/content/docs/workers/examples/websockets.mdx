@@ -329,6 +329,8 @@ async function websocket(url) {
 
 	// Call accept() to indicate that you'll be handling the socket here
 	// in JavaScript, as opposed to returning it on to a client.
+	// You can pass { allowHalfOpen: true } if you need to coordinate
+	// the close handshake manually (for example, when proxying).
 	ws.accept();
 
 	// Now you can send and receive messages like before.
@@ -338,6 +340,14 @@ async function websocket(url) {
 	});
 }
 ```
+
+## WebSocket close behavior
+
+With the [`web_socket_auto_reply_to_close`](/workers/configuration/compatibility-flags/#websocket-auto-reply-to-close) compatibility flag (enabled by default on compatibility dates on or after `2026-04-07`), the Workers runtime automatically replies to incoming Close frames and transitions `readyState` to `CLOSED` before firing the `close` event. You do not need to call `close()` in your `close` event handler, but doing so is safe (the call is silently ignored).
+
+If you need half-open behavior (for example, for WebSocket proxying), pass `{ allowHalfOpen: true }` to `accept()`. Note that `new WebSocket(url)` always auto-replies after this flag takes effect. To get half-open behavior for a client WebSocket, use the `fetch()`-based pattern shown above and call `ws.accept({ allowHalfOpen: true })`.
+
+For more details, refer to [WebSocket close behavior](/workers/runtime-apis/websockets/#close-behavior).
 
 ## WebSocket compression
 

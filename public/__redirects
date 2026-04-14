@@ -280,13 +280,14 @@
 /bots/concepts/bot/verified-bots/web-bot-auth/ /bots/reference/bot-verification/web-bot-auth/ 301
 /bots/concepts/bot/verified-bots/overview/ /bots/concepts/bot/verified-bots/ 301
 /bots/frequently-asked-questions/ /bots/ 301
-/browser-rendering/get-started/browser-rendering-with-DO/ /browser-rendering/workers-bindings/browser-rendering-with-do/ 301
-/browser-rendering/get-started/reuse-sessions/ /browser-rendering/workers-bindings/reuse-sessions/ 301
-/browser-rendering/get-started/screenshots/ /browser-rendering/workers-bindings/screenshots/ 301
-/browser-rendering/workers-binding-api/ /browser-rendering/workers-bindings/ 301
-/browser-rendering/workers-binding-api/screenshots/ /browser-rendering/workers-bindings/screenshots/ 301
-/browser-rendering/workers-binding-api/browser-rendering-with-do/ /browser-rendering/workers-bindings/browser-rendering-with-do/ 301
-/browser-rendering/workers-binding-api/reuse-sessions/ /browser-rendering/workers-bindings/reuse-sessions/ 301
+
+/browser-rendering/get-started/browser-rendering-with-DO/ /browser-rendering/how-to/browser-rendering-with-do/ 301
+/browser-rendering/get-started/reuse-sessions/ /browser-rendering/features/reuse-sessions/ 301
+/browser-rendering/get-started/screenshots/ /browser-rendering/how-to/deploy-worker/ 301
+/browser-rendering/workers-binding-api/ /browser-rendering/get-started/#browser-sessions 301
+/browser-rendering/workers-binding-api/screenshots/ /browser-rendering/how-to/deploy-worker/ 301
+/browser-rendering/workers-binding-api/browser-rendering-with-do/ /browser-rendering/how-to/browser-rendering-with-do/ 301
+/browser-rendering/workers-binding-api/reuse-sessions/ /browser-rendering/features/reuse-sessions/ 301
 /browser-rendering/platform/ /browser-rendering/ 301
 /browser-rendering/platform/puppeteer/ /browser-rendering/puppeteer/ 301
 /browser-rendering/platform/playwright/ /browser-rendering/playwright/ 301
@@ -296,6 +297,10 @@
 /browser-rendering/platform/pricing/ /browser-rendering/pricing/ 301
 /browser-rendering/platform/browser-close-reasons/ /browser-rendering/reference/browser-close-reasons/ 301
 /browser-rendering/platform/stagehand/ /browser-rendering/stagehand/ 301
+/browser-rendering/workers-bindings/reuse-sessions/ /browser-rendering/features/reuse-sessions/ 301
+/browser-rendering/workers-bindings/browser-rendering-with-do/ /browser-rendering/how-to/browser-rendering-with-do/ 301
+/browser-rendering/workers-bindings/screenshots/ /browser-rendering/how-to/deploy-worker/ 301
+/browser-rendering/workers-bindings/ /browser-rendering/get-started/#browser-sessions 301
 
 # byoip
 /byoip/about/dynamic-advertisement/ /byoip/concepts/dynamic-advertisement/ 301
@@ -420,11 +425,15 @@
 # Constellation
 /constellation/ /workers-ai/ 301
 # Containers
+/containers/beta-info/ /containers/faq/ 301
 /containers/image-management/ /containers/platform-details/image-management/ 301
 /containers/scaling-and-routing/ /containers/platform-details/scaling-and-routing/ 301
 /containers/architecture/ /containers/platform-details/architecture/ 301
 /containers/durable-object-methods/ /containers/platform-details/durable-object-methods/ 301
+/containers/container-package/ /containers/container-class/ 301
 /containers/platform-details/ /containers/platform-details/architecture/ 301
+# Sandbox
+/sandbox/platform/beta-info/ /sandbox/platform/ 301
 # D1
 /d1/client-api/ /d1/worker-api/ 301
 /d1/build-with-d1/d1-client-api/ /d1/worker-api/ 301
@@ -2458,7 +2467,8 @@
 /*/index.html.md /:splat/index.md 301
 /1.1.1.1/other-ways-to-use-1.1.1.1/* /1.1.1.1/additional-options/:splat 301
 /changelog-next/* /changelog/post/:splat 301
-/browser-rendering/quick-actions-rest-api/* /browser-rendering/rest-api/:splat 301
+/browser-rendering/rest-api/* /browser-rendering/quick-actions/:splat 301
+/browser-rendering/quick-actions-rest-api/* /browser-rendering/quick-actions/:splat 301
 /*/sitemap.xml /sitemap-index.xml 301
 /api-security/* /api-shield/:splat 301
 /api-shield/products/* /api-shield/security/:splat 301
@@ -2668,4 +2678,3 @@
 /changelog/2024-* /changelog/post/2024-:splat 301
 /changelog/2025-* /changelog/post/2025-:splat 301
 /changelog/2026-* /changelog/post/2026-:splat 301
-
