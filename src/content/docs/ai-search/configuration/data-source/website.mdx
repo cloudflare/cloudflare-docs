@@ -251,7 +251,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai-search/insta
 
 | Field      | Type   | Description                                                                                                                                                                                                                |
 | ---------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `path`     | string | Glob pattern to match against the full page URL. Uses the same glob syntax as [path filtering](/ai-search/configuration/path-filtering/) — `*` matches within a segment, `**` crosses directories. Maximum 200 characters. |
+| `path`     | string | Glob pattern to match against the full page URL. Uses the same glob syntax as [path filtering](/ai-search/configuration/indexing/path-filtering/) — `*` matches within a segment, `**` crosses directories. Maximum 200 characters. |
 | `selector` | string | CSS selector to extract content from pages matching the path pattern. Supports standard CSS selectors including element, class, ID, and attribute selectors. Maximum 200 characters.                                       |
 
 ### Examples
@@ -290,7 +290,7 @@ If a CSS selector does not match any elements on a page, the resulting Markdown 
 
 ### Interaction with other features
 
-- **Path filtering**: [Path filtering](/ai-search/configuration/path-filtering/) takes priority over content selectors. Pages excluded by path filters are never crawled, so content selectors do not apply to them.
+- **Path filtering**: [Path filtering](/ai-search/configuration/indexing/path-filtering/) takes priority over content selectors. Pages excluded by path filters are never crawled, so content selectors do not apply to them.
 - **Browser Rendering**: Content selectors apply to the HTML that AI Search receives. For sites that render content with JavaScript, turn on [Browser Rendering](#rendering-mode) so that selectors can target the fully rendered DOM.
 - **Automatic re-indexing**: Updating content selectors triggers a new [sync job](/ai-search/configuration/indexing/) immediately, so changes are applied to all indexed pages.
 
