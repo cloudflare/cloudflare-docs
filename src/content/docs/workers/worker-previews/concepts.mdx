@@ -98,6 +98,16 @@ For Durable Objects specifically, refer to [Durable Object isolation](/workers/w
 
 Preview Defaults are the template for every preview environment. They are stored server-side on your Worker and include bindings, variables, secrets, observability settings, and runtime configuration. When you create or update a preview, it takes a **snapshot** of the current Preview Defaults at that moment.
 
+There are three ways to view and edit Preview Defaults. They all read and write the same server-side configuration:
+
+| Interface | What it's called | How it works |
+| --- | --- | --- |
+| **Dashboard** | **Settings** > **Bindings** > **Previews** toggle (and **Variables and Secrets** > **Previews** toggle) | Edits Preview Defaults directly. Changes take effect immediately. |
+| **Wrangler** | `previews` block in `wrangler.jsonc` | A local representation of Preview Defaults. Does nothing until you run `wrangler preview settings update` to push it to the API. |
+| **API** | `preview_defaults` field on the Worker object | The underlying server-side storage. Dashboard and Wrangler both read/write this. |
+
+If you edit Preview Defaults in the dashboard, those changes are visible via `wrangler preview settings` and the API. If you edit the `previews` block locally and push it with `wrangler preview settings update`, those changes show up in the dashboard. They are the same thing accessed different ways.
+
 ### How they work
 
 1. You configure Preview Defaults — which KV namespace previews should use, which secrets, which variables, etc.
