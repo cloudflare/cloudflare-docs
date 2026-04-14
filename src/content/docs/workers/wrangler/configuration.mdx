@@ -1127,6 +1127,9 @@ To bind Workflows to your Worker, assign an array of the below object to the `wo
 - `script_name` <Type text="string" /> <MetaInfo text="optional" />
   - The name of the Worker script where the Workflow class is defined. Only required if the Workflow is defined in a different Worker than the one the binding is configured on.
 
+- `schedule` <Type text="string | string[]" /> <MetaInfo text="optional" />
+  - A cron expression, or array of cron expressions, that automatically triggers new Workflow instances on the given schedule. For example, `"0 9 * * 1"` triggers every Monday at 9am UTC. Cannot be set on a Workflow that references an external `script_name`.
+
 Example:
 
 <WranglerConfig>
@@ -1138,6 +1141,8 @@ Example:
 			"binding": "<BINDING_NAME>",
 			"name": "<WORKFLOW_NAME>",
 			"class_name": "<CLASS_NAME>",
+			// optional: trigger on a cron schedule
+			"schedule": "0 9 * * 1",
 		},
 	],
 }

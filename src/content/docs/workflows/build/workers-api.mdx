@@ -211,6 +211,49 @@ steps = 25_000
 
 Note that Workflows on Workers Free have a limit of 1,024 steps. Refer to [Workflow limits](/workflows/reference/limits/) for more information.
 
+## Workflow schedules
+
+You can automatically trigger new Workflow instances on a cron schedule by setting the `schedule` property in your Wrangler configuration. It accepts a single cron expression or an array of cron expressions.
+
+<WranglerConfig>
+
+```jsonc
+{
+	"workflows": [
+		{
+			"name": "my-workflow",
+			"binding": "MY_WORKFLOW",
+			"class_name": "MyWorkflow",
+			// trigger every day at 9am UTC
+			"schedule": "0 9 * * *",
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+To trigger on multiple schedules, provide an array:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"workflows": [
+		{
+			"name": "my-workflow",
+			"binding": "MY_WORKFLOW",
+			"class_name": "MyWorkflow",
+			"schedule": ["0 9 * * 1", "0 17 * * 5"],
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+The `schedule` property cannot be set on a Workflow that references an external `script_name`. Configure the schedule on the Worker that defines the Workflow.
+
 ## NonRetryableError
 
 - <code>throw new NonRetryableError(message: <Type text="string" />, name <Type text="string" /> <MetaInfo text="optional" />)</code>: <Type text="NonRetryableError" />
