@@ -132,10 +132,17 @@ curl -X POST https://gateway.ai.cloudflare.com/v1/$CLOUDFLARE_ACCOUNT_ID/{gatewa
 
 ### Supported providers
 
-Unified Billing supports the following AI providers:
+#### Provider-native endpoints
+
+Unified Billing supports the following providers through their [provider-native endpoints](/ai-gateway/usage/providers/):
 
 - [OpenAI](/ai-gateway/usage/providers/openai/)
 - [Anthropic](/ai-gateway/usage/providers/anthropic/)
 - [Google AI Studio](/ai-gateway/usage/providers/google-ai-studio/)
+- [Google Vertex AI](/ai-gateway/usage/providers/vertex/)
 - [xAI](/ai-gateway/usage/providers/grok/)
 - [Groq](/ai-gateway/usage/providers/groq/)
+
+#### Workers AI binding
+
+When calling models through the [Workers AI binding](/ai-gateway/integrations/worker-binding-methods/#call-third-party-models) (`env.AI.run()`), Unified Billing is supported for all available third-party models. Browse the full list in the [model catalog](https://developers.cloudflare.com/ai/models/).
