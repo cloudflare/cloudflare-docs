@@ -78,6 +78,8 @@ npx wrangler versions deploy <VERSION_ID>@<PERCENTAGE> <OLD_VERSION_ID>@<PERCENT
 
 You might want to keep your deploy command as `npx wrangler deploy` (auto-deploy to 100% on merge) and only use gradual rollouts occasionally. This does not work with Builds because:
 
+![Why you cannot mix wrangler deploy with gradual rollouts in Builds](~/assets/images/workers/worker-previews/cannot-mix-deploy-gradual.svg)
+
 1. **You cannot `wrangler versions upload` from a feature branch** — it would create a production version using preview resources, not production bindings.
 2. **Merging a PR triggers Builds** — Builds runs your deploy command (`wrangler deploy`), which deploys to 100% immediately. There is no way to intercept this and do a gradual rollout instead.
 3. **Merging locally and running `wrangler versions upload` before pushing** creates a race condition — when you push the merge, Builds will still run `wrangler deploy` on top of your gradual rollout.

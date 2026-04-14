@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 520" fill="none">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .label { font-size: 13px; fill: #1a1a1a; font-weight: 600; }
+    .sublabel { font-size: 11px; fill: #6b7280; }
+    .cmd { font-size: 11px; fill: #6b7280; font-family: 'SF Mono', 'Fira Code', monospace; }
+    .heading { font-size: 14px; fill: #1a1a1a; font-weight: 600; }
+    .box { rx: 8; stroke-width: 1.5; }
+    .box-preview { fill: #eff6ff; stroke: #3b82f6; }
+    .box-prod { fill: #fff7ed; stroke: #f6821f; }
+    .box-neutral { fill: #f9fafb; stroke: #d1d5db; }
+    .box-bad { fill: #fef2f2; stroke: #ef4444; }
+    .arrow { stroke: #9ca3af; stroke-width: 2; fill: none; marker-end: url(#arr); }
+    .arrow-orange { stroke: #f6821f; stroke-width: 2; fill: none; marker-end: url(#arr-orange); }
+    .arrow-red { stroke: #ef4444; stroke-width: 2; fill: none; marker-end: url(#arr-red); }
+    .row-label { font-size: 11px; fill: #9ca3af; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    .scenario { font-size: 12px; fill: #1a1a1a; font-weight: 600; }
+  </style>
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#9ca3af"/>
+    </marker>
+    <marker id="arr-orange" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#f6821f"/>
+    </marker>
+    <marker id="arr-red" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#ef4444"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="410" y="24" text-anchor="middle" class="heading">Why you cannot mix wrangler deploy with gradual rollouts in Builds</text>
+  <text x="410" y="42" text-anchor="middle" class="sublabel">Deploy command is set to: npx wrangler deploy</text>
+
+  <!-- ================================ -->
+  <!-- SCENARIO 1: versions upload from feature branch -->
+  <!-- ================================ -->
+  <text x="30" y="72" class="scenario">Attempt 1: Run versions upload from a feature branch</text>
+
+  <rect x="30" y="84" width="170" height="46" class="box box-preview"/>
+  <text x="115" y="104" text-anchor="middle" class="cmd">feature branch</text>
+  <text x="115" y="118" text-anchor="middle" class="sublabel">preview bindings active</text>
+
+  <line x1="208" y1="107" x2="248" y2="107" class="arrow-red"/>
+
+  <rect x="256" y="84" width="220" height="46" class="box box-prod"/>
+  <text x="366" y="104" text-anchor="middle" class="cmd">wrangler versions upload</text>
+  <text x="366" y="118" text-anchor="middle" class="sublabel">creates a production version</text>
+
+  <line x1="484" y1="107" x2="524" y2="107" class="arrow-red"/>
+
+  <rect x="532" y="84" width="258" height="46" class="box box-bad"/>
+  <text x="661" y="102" text-anchor="middle" class="label" style="fill: #dc2626;">Wrong bindings</text>
+  <text x="661" y="118" text-anchor="middle" class="sublabel">Prod version built with preview resources</text>
+
+  <!-- Divider -->
+  <line x1="30" y1="150" x2="790" y2="150" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <!-- ================================ -->
+  <!-- SCENARIO 2: Merge PR, Builds auto-deploys -->
+  <!-- ================================ -->
+  <text x="30" y="178" class="scenario">Attempt 2: Merge PR and hope to intercept for gradual rollout</text>
+
+  <rect x="30" y="190" width="130" height="46" class="box box-neutral"/>
+  <text x="95" y="210" text-anchor="middle" class="cmd">merge PR</text>
+  <text x="95" y="224" text-anchor="middle" class="sublabel">to main</text>
+
+  <line x1="168" y1="213" x2="198" y2="213" class="arrow-orange"/>
+
+  <rect x="206" y="190" width="170" height="46" class="box box-neutral"/>
+  <text x="291" y="210" text-anchor="middle" class="label">Builds triggers</text>
+  <text x="291" y="224" text-anchor="middle" class="sublabel">automatically on push</text>
+
+  <line x1="384" y1="213" x2="414" y2="213" class="arrow-orange"/>
+
+  <rect x="422" y="190" width="180" height="46" class="box box-prod"/>
+  <text x="512" y="210" text-anchor="middle" class="cmd">wrangler deploy</text>
+  <text x="512" y="224" text-anchor="middle" class="sublabel">your deploy command</text>
+
+  <line x1="610" y1="213" x2="640" y2="213" class="arrow-red"/>
+
+  <rect x="648" y="190" width="142" height="46" class="box box-bad"/>
+  <text x="719" y="208" text-anchor="middle" class="label" style="fill: #dc2626;">100% deployed</text>
+  <text x="719" y="224" text-anchor="middle" class="sublabel">No way to intercept</text>
+
+  <!-- Divider -->
+  <line x1="30" y1="256" x2="790" y2="256" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <!-- ================================ -->
+  <!-- SCENARIO 3: Local merge + versions upload, then push -->
+  <!-- ================================ -->
+  <text x="30" y="284" class="scenario">Attempt 3: Merge locally, versions upload, then push</text>
+
+  <!-- Row 1: local steps -->
+  <text x="30" y="306" class="row-label">Local</text>
+
+  <rect x="80" y="296" width="120" height="40" class="box box-neutral"/>
+  <text x="140" y="313" text-anchor="middle" class="cmd">git merge</text>
+  <text x="140" y="326" text-anchor="middle" class="sublabel">on main locally</text>
+
+  <line x1="208" y1="316" x2="228" y2="316" class="arrow"/>
+
+  <rect x="236" y="296" width="190" height="40" class="box box-prod"/>
+  <text x="331" y="313" text-anchor="middle" class="cmd">wrangler versions upload</text>
+  <text x="331" y="326" text-anchor="middle" class="sublabel">gradual rollout started</text>
+
+  <line x1="434" y1="316" x2="454" y2="316" class="arrow"/>
+
+  <rect x="462" y="296" width="120" height="40" class="box box-neutral"/>
+  <text x="522" y="313" text-anchor="middle" class="cmd">git push</text>
+  <text x="522" y="326" text-anchor="middle" class="sublabel">to origin/main</text>
+
+  <!-- Row 2: what Builds does -->
+  <text x="30" y="366" class="row-label">Builds</text>
+
+  <!-- Arrow from git push down to Builds -->
+  <line x1="522" y1="336" x2="522" y2="352" stroke="#f6821f" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+  <rect x="462" y="356" width="120" height="40" class="box box-neutral"/>
+  <text x="522" y="373" text-anchor="middle" class="label">Builds triggers</text>
+  <text x="522" y="386" text-anchor="middle" class="sublabel">sees push to main</text>
+
+  <line x1="590" y1="376" x2="620" y2="376" class="arrow-orange"/>
+
+  <rect x="628" y="356" width="162" height="40" class="box box-prod"/>
+  <text x="709" y="373" text-anchor="middle" class="cmd">wrangler deploy</text>
+  <text x="709" y="386" text-anchor="middle" class="sublabel">your deploy command</text>
+
+  <!-- Arrow from deploy down to result -->
+  <line x1="709" y1="396" x2="709" y2="418" class="arrow-red"/>
+
+  <rect x="570" y="424" width="220" height="46" class="box box-bad"/>
+  <text x="680" y="442" text-anchor="middle" class="label" style="fill: #dc2626;">Overwrites your rollout</text>
+  <text x="680" y="458" text-anchor="middle" class="sublabel">Deploys to 100% on top of your 10/90 split</text>
+
+  <!-- Bottom summary -->
+  <line x1="30" y1="488" x2="790" y2="488" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="410" y="510" text-anchor="middle" class="sublabel">All three attempts fail. Set your deploy command to <tspan class="cmd" style="fill: #c2410c;">npx wrangler versions upload</tspan> to control rollouts manually.</text>
+</svg>
