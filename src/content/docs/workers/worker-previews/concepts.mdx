@@ -65,32 +65,30 @@ A preview is an isolated copy of your Worker tied to a Git branch. It has:
 
 A preview persists across code pushes. Every time you run `wrangler preview` on the same branch, it updates the preview with your latest code. The URL stays the same.
 
-## What is isolated?
+## What happens if I just run `wrangler preview` right now?
 
-"Isolated" means your preview can have its own resources that are separate from production. This is the key difference from just hitting your production Worker with test requests — in a preview, you can point at a test database, a separate KV namespace, or an isolated Durable Object namespace.
+Previews are **not automatically isolated**. What happens depends on whether you configured [Preview Defaults](#what-are-preview-defaults) first:
 
-By default, most bindings share production resources unless you configure them otherwise:
+**If you skip configuration entirely** (no dashboard wizard, no `previews` block, no API call): Preview Defaults are empty (`{}`). Every binding, variable, and secret is missing. Your Worker errors at runtime when it tries to access `env.DB`, `env.CACHE`, `env.MY_SECRET`, etc. This is a **loud failure** — you notice immediately.
 
-| Resource | Default in a preview | How to isolate |
-| --- | --- | --- |
-| **Environment variables** | Not inherited from production. Empty unless you set them in Preview Defaults. | Set values in the `previews.vars` block of your Wrangler configuration file or in the dashboard |
-| **Secrets** | Not inherited from production. Empty unless you set them in Preview Defaults. | `wrangler preview secret put` or set in the dashboard |
-| **Durable Objects** | **Not isolated.** Shares production namespace unless you use `ctx.exports`. | Use [`ctx.exports`](/workers/worker-previews/durable-object-isolation/#use-ctxexports) — the only path that auto-isolates |
-| **KV namespaces** | Shares production | Uncheck "Use production value" in the dashboard, select a different namespace |
-| **R2 buckets** | Shares production | Configure a separate bucket in Preview Defaults |
-| **D1 databases** | Shares production | Configure a separate database in Preview Defaults |
-
-:::caution[What happens if you skip configuration]
-The behavior depends on how you set up your preview:
-
-**If you skip configuration entirely** (no dashboard wizard, no `previews` block, no API call — just run `wrangler preview`): Preview Defaults are empty (`{}`). All bindings, variables, and secrets are missing. Your Worker will error at runtime when it tries to access `env.DB`, `env.CACHE`, `env.MY_SECRET`, etc. This is a **loud failure** — you will notice immediately.
-
-**If you go through the dashboard wizard but leave "Use production value" checked** (the default for storage bindings): Variables and secrets are still empty (loud failure), but KV, R2, D1, and Durable Objects **point at production resources**. Your preview will silently read and write to your production data. This is the **dangerous case** — the loud errors from missing vars may mask the silent problem of production data access from storage bindings.
-
-Always configure Preview Defaults before creating your first preview. For storage bindings, uncheck "Use production value" and select separate resources if you need isolation.
-:::
+**If you go through the dashboard wizard but leave "Use production value" checked** (the default for storage bindings): Variables and secrets are still empty (loud failure), but KV, R2, D1, and Durable Objects **point at production resources**. Your preview silently reads and writes to your production data. This is the **dangerous case** — the loud errors from missing vars may mask the silent problem of production data access from storage bindings.
 
 ![What happens when you skip Preview Defaults configuration](~/assets/images/workers/worker-previews/skip-preview-defaults.svg)
+
+Always [configure Preview Defaults](#what-are-preview-defaults) before creating your first preview.
+
+### Isolation defaults per resource type
+
+The table below shows what each resource type does in a preview by default, and what you need to do to isolate it. "Default" here means what happens after you go through the dashboard setup wizard without changing anything.
+
+| Resource | Default behavior | What to do for isolation |
+| --- | --- | --- |
+| **Environment variables** | Empty. Not inherited from production. | Set values in the `previews.vars` block or in the dashboard under **Variables and Secrets** > **Previews**. |
+| **Secrets** | Empty. Not inherited from production. | `wrangler preview secret put` or set in the dashboard under **Variables and Secrets** > **Previews**. |
+| **KV namespaces** | Points at production ("Use production value" is checked by default). | Uncheck "Use production value" in the dashboard, select a separate namespace. |
+| **R2 buckets** | Points at production ("Use production value" is checked by default). | Uncheck "Use production value", configure a separate bucket in Preview Defaults. |
+| **D1 databases** | Points at production ("Use production value" is checked by default). | Uncheck "Use production value", configure a separate database in Preview Defaults. |
+| **Durable Objects** | **Not isolated.** Shares production namespace regardless of binding config. | Use [`ctx.exports`](/workers/worker-previews/durable-object-isolation/#use-ctxexports) — the only path that auto-isolates. |
 
 For Durable Objects specifically, refer to [Durable Object isolation](/workers/worker-previews/durable-object-isolation/) for a step-by-step guide.
 
