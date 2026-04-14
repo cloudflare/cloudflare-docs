@@ -90,13 +90,13 @@ If you have a running session and want to connect to it:
 
 1. List your active sessions:
 
-<CURL
-	url="https://api.cloudflare.com/client/v4/accounts/ACCOUNT_ID/browser-rendering/devtools/session"
-	method="GET"
-	headers={{
-		Authorization: "Bearer {api_token}",
-	}}
-/>
+   <CURL
+     url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/browser-rendering/devtools/session"
+     method="GET"
+     headers={{
+       Authorization: "Bearer $CLOUDFLARE_API_TOKEN",
+     }}
+   />
 
 2. Using the session ID, list the targets in that session:
 
