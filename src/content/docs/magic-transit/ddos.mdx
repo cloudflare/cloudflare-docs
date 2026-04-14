@@ -2,19 +2,20 @@
 title: DDoS protection
 pcx_content_type: concept
 sidebar:
-  order: 8
+  order: 3
 head:
   - tag: title
     content: Cloudflare DDoS protection
 
 ---
 
-Cloudflare DDoS protection automatically detects and mitigates Distributed Denial of Service (DDoS) attacks using its [Autonomous Edge](/ddos-protection/about/components/#autonomous-edge). With Magic Transit, you have access to additional [Advanced DDoS mitigation systems](/ddos-protection/advanced-ddos-systems/overview/), such as:
+Cloudflare [DDoS protection](/ddos-protection/) automatically detects and mitigates Distributed Denial of Service (DDoS) attacks using its [Autonomous Edge](/ddos-protection/about/components/#autonomous-edge). With Magic Transit, you have access to additional [Advanced DDoS mitigation systems](/ddos-protection/advanced-ddos-systems/overview/), such as:
 
-- [Advanced TCP protection](/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/)
-- [Advanced DNS protection](/ddos-protection/advanced-ddos-systems/overview/advanced-dns-protection/)
+- [Advanced TCP Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/)
+- [Advanced DNS Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-dns-protection/)
+- [Programmable Flow Protection](/ddos-protection/advanced-ddos-systems/overview/programmable-flow-protection/)
 
-Refer to [Cloudflare DDoS documentation](/ddos-protection/) for more information.
+For more information, refer to [Cloudflare DDoS Protection](/ddos-protection/).
 
 ---
 
@@ -26,3 +27,5 @@ Magic Transit executes mitigation systems in the following order:
 2. [Advanced TCP Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/)
 3. [Advanced DNS Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-dns-protection/)
 4. [Cloudflare Network Firewall](/cloudflare-network-firewall/)
+
+[Programmable Flow Protection](/ddos-protection/advanced-ddos-systems/overview/programmable-flow-protection/) runs within the Advanced DDoS Protection layer for UDP-based protocols.

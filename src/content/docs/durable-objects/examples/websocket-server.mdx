@@ -96,7 +96,7 @@ export class WebSocketServer extends DurableObject {
             this.handleWebSocketMessage(server, event.data);
         });
 
-        // If the client closes the connection, the runtime will close the connection too.
+        // When the client closes the connection, clean up the server side.
         server.addEventListener('close', () => {
             this.handleConnectionClose(server);
         });
@@ -130,6 +130,8 @@ export class WebSocketServer extends DurableObject {
 
     async handleConnectionClose(ws: WebSocket) {
         this.sessions.delete(ws);
+        // With web_socket_auto_reply_to_close (compat date >= 2026-04-07), the runtime
+        // auto-replies to Close frames. Calling close() is safe but no longer required.
         ws.close(1000, 'Durable Object is closing WebSocket');
     }
 }
@@ -201,7 +203,7 @@ class WebSocketServer(DurableObject):
 		message_proxy = create_proxy(on_message)
 		server.addEventListener('message', message_proxy)
 
-		# If the client closes the connection, the runtime will close the connection too.
+		# When the client closes the connection, clean up the server side.
 		async def on_close(event):
 			await self.handleConnectionClose(id)
 			# Clean up proxies
@@ -236,6 +238,8 @@ class WebSocketServer(DurableObject):
 	async def handleConnectionClose(self, session_id):
 		session = self.sessions.pop(session_id, None)
 		if session:
+			# With web_socket_auto_reply_to_close (compat date >= 2026-04-07), the runtime
+			# auto-replies to Close frames. Calling close() is safe but no longer required.
 			session.ws.close(1000, 'Durable Object is closing WebSocket')
 ```
 

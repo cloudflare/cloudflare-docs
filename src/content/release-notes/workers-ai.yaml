@@ -3,6 +3,10 @@ link: "/workers-ai/changelog/"
 productName: Workers AI
 productLink: "/workers-ai/"
 entries:
+  - publish_date: "2026-04-04"
+    title: Google Gemma 4 26B A4B now available on Workers AI
+    description: |-
+      - [`@cf/google/gemma-4-26b-a4b-it`](/workers-ai/models/gemma-4-26b-a4b-it/) now available on Workers AI. A Mixture-of-Experts model with 26B total parameters and 4B active, featuring a 256K context window, vision, built-in thinking mode, and function calling. Read [changelog](/changelog/post/2026-04-04-gemma-4-26b-a4b-workers-ai/) to get started.
   - publish_date: "2026-03-19"
     title: Moonshot AI Kimi K2.5 now available on Workers AI
     description: |-

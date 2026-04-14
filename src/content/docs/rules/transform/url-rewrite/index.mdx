@@ -34,7 +34,7 @@ You cannot rewrite the hostname using a URL rewrite rule. To rewrite the hostnam
 URL Rewrite Rules can perform static or dynamic rewrites:
 
 - **Static rewrite**: Replaces a given part of a request URL (path or query string) with a static string.
-- **Dynamic rewrite**: Supports more advanced scenarios where you use a rewrite expression to define the resulting path or query string.
+- **Dynamic rewrite**: Supports more advanced scenarios where you use a [rewrite expression](/ruleset-engine/rules-language/) (a formula based on request properties) to define the resulting path or query string.
 
 Create URL Rewrite Rules [in the dashboard](/rules/transform/url-rewrite/create-dashboard/), [via Cloudflare API](/rules/transform/url-rewrite/create-api/), or [using Terraform](/terraform/additional-configurations/transform-rules/#create-a-url-rewrite-rule).
 
@@ -52,4 +52,4 @@ When using Cloudflare Images, you can use URL Rewrite Rules to serve images from
 
 - URL rewrite rules run in order, and later rules can overwrite changes done by previous rules.
 
-- The values of request and response fields are immutable within each [phase](/ruleset-engine/about/phases/), such as the `http_request_transform` phase where URL rewrite rules are defined. This means that later URL rewrite rules will not match based on changes done by previous URL rewrite rules. Refer to [Field values during rule evaluation](/ruleset-engine/about/rules/#field-values-during-rule-evaluation) for more information.
+- The values of request and response fields are immutable within each [phase](/ruleset-engine/about/phases/), such as the `http_request_transform` phase where URL rewrite rules are defined. This means that later URL rewrite rules will still use the original field values when evaluating their filter expressions, not the values changed by previous rules. Refer to [Field values during rule evaluation](/ruleset-engine/about/rules/#field-values-during-rule-evaluation) for more information.

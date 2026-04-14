@@ -1,0 +1,12 @@
+id: yjbGmA
+name: Client-side security
+
+entry:
+  title: Client-side security
+  url: /client-side-security/
+  group: Application security
+
+meta:
+  title: Client-side security docs
+  description: Provide client-side protection for your website visitors
+  author: "@cloudflare"

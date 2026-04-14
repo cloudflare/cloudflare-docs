@@ -1,0 +1,23 @@
+---
+title: Observability
+pcx_content_type: navigation
+sidebar:
+  order: 4
+---
+
+import { DirectoryListing } from "~/components";
+
+Privacy Proxy provides two methods for accessing metrics and monitoring your proxy deployment. We recommend getting started with GraphQL as the default method for observability.
+
+<DirectoryListing />
+
+## Data privacy
+
+Regardless of whether you use the GraphQL Analytics API or OpenTelemetry, Privacy Proxy observability data does not include:
+
+- User IP addresses
+- Request content or headers (beyond what is needed for metrics)
+- Destination URLs or hostnames (aggregated only)
+- Authentication tokens or credentials
+
+Both methods export only operational metrics that help you monitor service health without compromising user privacy.

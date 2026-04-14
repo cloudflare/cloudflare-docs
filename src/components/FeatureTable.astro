@@ -31,28 +31,60 @@ const markdown = (content: any) => {
 };
 ---
 
-<table>
+<table class="not-content w-full text-left text-[var(--sl-color-text)]">
 	<thead>
 		<tr>
-			<th></th>
-			{hasFree && <th>Free</th>}
-			{hasPro && <th>Pro</th>}
-			{hasBiz && <th>Business</th>}
-			{hasEnt && <th>Enterprise</th>}
-			{hasEntPlus && <th>{plan.ent_plus}</th>}
+			<th class="border-b border-[color:var(--color-table-fill)] bg-[var(--color-table-base)] px-4 py-3 text-[0.8125rem] font-semibold"></th>
+			{hasFree && <th class="border-b border-[color:var(--color-table-fill)] bg-[var(--color-table-base)] px-4 py-3 text-[0.8125rem] font-semibold">Free</th>}
+			{hasPro && <th class="border-b border-[color:var(--color-table-fill)] bg-[var(--color-table-base)] px-4 py-3 text-[0.8125rem] font-semibold">Pro</th>}
+			{hasBiz && <th class="border-b border-[color:var(--color-table-fill)] bg-[var(--color-table-base)] px-4 py-3 text-[0.8125rem] font-semibold">Business</th>}
+			{hasEnt && <th class="border-b border-[color:var(--color-table-fill)] bg-[var(--color-table-base)] px-4 py-3 text-[0.8125rem] font-semibold">Enterprise</th>}
+			{hasEntPlus && <th class="border-b border-[color:var(--color-table-fill)] bg-[var(--color-table-base)] px-4 py-3 text-[0.8125rem] font-semibold">{plan.ent_plus}</th>}
 		</tr>
 	</thead>
 	<tbody>
 		{
-			features.map((feature) => {
+			features.map((feature, i) => {
+				const isLast = i === features.length - 1;
+				const cellBorder = isLast
+					? ""
+					: "border-b border-[color:var(--color-table-fill)]";
 				return (
 					<tr>
-						<th set:html={markdown(feature.title)} />
-						{hasFree && <td set:html={markdown(feature.free)} />}
-						{hasPro && <td set:html={markdown(feature.pro)} />}
-						{hasBiz && <td set:html={markdown(feature.biz)} />}
-						{hasEnt && <td set:html={markdown(feature.ent)} />}
-						{hasEntPlus && <td set:html={markdown(feature.ent_plus)} />}
+						<th
+							class={`${cellBorder} px-4 py-3 text-[0.8125rem] font-semibold`}
+							set:html={markdown(feature.title)}
+						/>
+						{hasFree && (
+							<td
+								class={`${cellBorder} px-4 py-3`}
+								set:html={markdown(feature.free)}
+							/>
+						)}
+						{hasPro && (
+							<td
+								class={`${cellBorder} px-4 py-3`}
+								set:html={markdown(feature.pro)}
+							/>
+						)}
+						{hasBiz && (
+							<td
+								class={`${cellBorder} px-4 py-3`}
+								set:html={markdown(feature.biz)}
+							/>
+						)}
+						{hasEnt && (
+							<td
+								class={`${cellBorder} px-4 py-3`}
+								set:html={markdown(feature.ent)}
+							/>
+						)}
+						{hasEntPlus && (
+							<td
+								class={`${cellBorder} px-4 py-3`}
+								set:html={markdown(feature.ent_plus)}
+							/>
+						)}
 					</tr>
 				);
 			})

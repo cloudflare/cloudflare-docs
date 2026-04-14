@@ -25,6 +25,6 @@ The preferred method for enabling DNS-over-HTTPS on user devices is the [Cloudfl
 
 ### Servers, routers, and IoT devices
 
-For scenarios where installing a client on every device is not possible (such as servers, routers, or IoT devices), we recommend using the [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/).
+For scenarios where installing a client on every device is not possible (such as servers, routers, or IoT devices), we recommend using the [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-mesh/).
 
-Instead of running `cloudflared proxy-dns` on a machine, you can install the WARP Connector on a single Linux host within your private network. This connector will act as a gateway, securely routing all DNS and network traffic from your [entire subnet](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/site-to-internet/) to Cloudflare for [filtering and logging](/cloudflare-one/traffic-policies/).
+Instead of running `cloudflared proxy-dns` on a machine, you can install the WARP Connector on a single Linux host within your private network. This connector will act as a gateway, securely routing all DNS and network traffic from your [entire subnet](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/) to Cloudflare for [filtering and logging](/cloudflare-one/traffic-policies/).

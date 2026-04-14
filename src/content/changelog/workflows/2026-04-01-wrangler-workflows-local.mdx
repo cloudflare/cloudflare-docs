@@ -1,0 +1,24 @@
+---
+title: All Wrangler commands for Workflows now support local development
+description: Use wrangler workflows commands with the --local flag to manage Workflows running in a local wrangler dev session.
+products:
+  - workflows
+  - workers
+date: 2026-04-01 12:00:00 UTC
+---
+
+All `wrangler workflows` commands now accept a `--local` flag to target a Workflow running in a local `wrangler dev` session instead of the production API.
+
+You can now manage the full Workflow lifecycle locally, including triggering Workflows, listing instances, pausing, resuming, restarting, terminating, and sending events:
+
+```sh
+npx wrangler workflows list --local
+npx wrangler workflows trigger my-workflow --local
+npx wrangler workflows instances list my-workflow --local
+npx wrangler workflows instances pause my-workflow <INSTANCE_ID> --local
+npx wrangler workflows instances send-event my-workflow <INSTANCE_ID> --type my-event --local
+```
+
+All commands also accept `--port` to target a specific `wrangler dev` session (defaults to `8787`).
+
+For more information, refer to [Workflows local development](/workflows/build/local-development/).

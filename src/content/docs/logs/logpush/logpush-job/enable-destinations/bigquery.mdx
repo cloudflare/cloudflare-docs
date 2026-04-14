@@ -1,17 +1,154 @@
 ---
-title: Enable BigQuery
+title: Enable Google BigQuery
 pcx_content_type: how-to
 sidebar:
   order: 62
 head:
   - tag: title
-    content: Enable Logpush to BigQuery
-
+    content: Enable Logpush to Google BigQuery
 ---
 
-Configure Logpush to send batches of Cloudflare logs to BigQuery.
+import { Render, APIRequest } from "~/components";
 
-BigQuery supports loading up to 1,500 jobs per table per day (including failures) with up to 10 million files in each load. That means you can load into BigQuery once per minute and include up to 10 million files in a load. For more information, refer to BigQuery's quotas for load jobs.
+Cloudflare Logpush supports pushing logs directly to Google BigQuery (using Legacy Streaming API) via the Cloudflare API.
+
+## Create and get access to a BigQuery table
+
+Cloudflare uses Google Application Credentials provided in Logpush job `destination_conf` to gain write access to your table. The provided service account needs a write permission for the table.
+
+To enable Logpush to BigQuery:
+
+1. Go to Google Cloud Console for your account.
+2. Go to **IAM & Admin** > **Service Accounts**, and create a new service account.
+3. Add **BigQuery Data Editor** role under Permissions. At minimum, it requires `bigquery.tables.updateData` permission.
+4. Add a key under Keys.
+   1. Click **Add key**.
+   2. Click **Create new key**.
+   3. Select Key type **JSON**.
+   4. Click **Create**.
+   5. Save the Application Credentials JSON file. You will need to use this when setting up a new Logpush job.
+5. In BigQuery, create a dataset and table. Refer to [instructions from BigQuery](https://cloud.google.com/bigquery/docs/tables). For example, using `schema.json` and `bq` command:
+
+```bash
+gcloud auth activate-service-account --key-file=${KEY_FILE}
+
+PROJECT_ID=<PROJECT_ID>
+DATASET_ID=<DATASET_ID>
+TABLE_ID=<TABLE_ID>
+
+bq mk --table "${PROJECT_ID}:${DATASET_ID}.${TABLE_ID}" schema.json
+```
+
+## Manage via API
+
+To set up a BigQuery Logpush job:
+
+1. Create a job with the appropriate endpoint URL and authentication parameters.
+2. Enable the job to begin pushing logs.
+
+:::note
+Unlike configuring Logpush jobs for AWS S3, GCS, or Azure, there is no ownership challenge when configuring Logpush to BigQuery.
+:::
+
+<Render file="enable-read-permissions" product="logs" />
+
+### 1. Create a job
+
+To create a job, make a `POST` request to the Logpush jobs endpoint with the following fields:
+
+- **name** (optional) - Use your domain name as the job name.
+- **destination_conf** - A log destination consisting of a reference to BigQuery table and credentials in the string format below.
+  - **\<PROJECT_ID>**, **\<DATASET_ID>**, **\<TABLE_ID>**: Project ID, Dataset ID, and table ID of the designated BigQuery table.
+  - **\<ENCODED_VALUE>**: The encoded value of Application Credentials JSON as `credentials`, either base64-encoded with `base64:` prefix, or URL-encoded  with `url:` prefix.
+
+```bash
+"bq://projects/<PROJECT_ID>/datasets/<DATASET_ID>/tables/<TABLE_ID>?credentials=<ENCODED_VALUE>"
+```
+
+- **dataset** - The category of logs you want to receive. Refer to [Datasets](/logs/logpush/logpush-job/datasets/) for the full list of supported datasets.
+- **output_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Log Output Options](/logs/logpush/logpush-job/log-output-options/). For timestamp, Cloudflare recommends using `timestamps=rfc3339`.
+  - When including custom formatting options, such as `output_type`, or any prefix / suffix / delimiter / template options, make sure to set `stringify_object` true, too, otherwise fields with `object` type may not be serialized in the format compatible to BigQuery Legacy Streaming API.
+
+Example request using cURL:
+
+<APIRequest
+	path="/zones/{zone_id}/logpush/jobs"
+	method="POST"
+	json={{
+		name: "<DOMAIN_NAME>",
+		destination_conf:
+      "bq://projects/<PROJECT_ID>/datasets/<DATASET_ID>/tables/<TABLE_ID>?credentials=<ENCODED_VALUE>",
+		output_options: {
+			field_names: [
+				"ClientIP",
+				"ClientRequestHost",
+				"ClientRequestMethod",
+				"ClientRequestURI",
+				"EdgeEndTimestamp",
+				"EdgeResponseBytes",
+				"EdgeResponseStatus",
+				"EdgeStartTimestamp",
+				"RayID",
+			],
+			timestamp_format: "rfc3339",
+		},
+    max_upload_bytes: 5000000,
+		max_upload_records: 50000,
+		dataset: "http_requests",
+    enabled: true,
+	}}
+/>
+
+Response:
+
+```json
+{
+  "errors": [],
+  "messages": [],
+  "result": {
+    "id": <JOB_ID>,
+    "dataset": "http_requests",
+    "kind": "",
+    "max_upload_bytes": 5000000,
+    "max_upload_records": 50000,
+    "enabled": true,
+    "name": "<DOMAIN_NAME>",
+    "output_options": {
+      "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp", "EdgeResponseBytes", "EdgeResponseStatus" ,"EdgeStartTimestamp", "RayID"],
+      "timestamp_format": "rfc3339"
+    },
+    "destination_conf": "bq://projects/<PROJECT_ID>/datasets/<DATASET_ID>/tables/<TABLE_ID>?credentials=<ENCODED_VALUE>",
+    "last_complete": null,
+    "last_error": null,
+    "error_message": null
+  },
+  "success": true
+}
+```
+
+This will make a test upload with an empty content to verify that Logpush can upload, and you may see a row with empty data.
+
+Refer to [Manage Logpush with cURL](/logs/logpush/examples/example-logpush-curl/) to update a job (including enabling and disabling).
+
+## Limitations
+
+Note the following default quota and limits, as described in the [BigQuery documentation](https://docs.cloud.google.com/bigquery/quotas#streaming_inserts).
+
+The following limits apply to BigQuery streaming inserts:
+
+- Maximum HTTP request size (uncompressed, may include headers): 10 MB
+- Maximum row size: 10 MB
+- Maximum rows per request size: 50,000 rows.
+
+These are default quota / limit, and you should adjust the Logpush jobs to match the limit, and/or request Google to increase them when needed.
+
+## Google Cloud Storage integration 
+
+Cloudflare Logpush supports pushing logs to [Google Cloud Storage](/logs/logpush/logpush-job/enable-destinations/google-cloud-storage/).
+
+BigQuery supports loading up to 1,500 jobs per table per day (including failures) with up to 10 million files in each load.
+That means you can load into BigQuery once per minute and include up to 10 million files in a load.
+For more information, refer to BigQuery's quotas for load jobs.
 
 Logpush delivers batches of logs as soon as possible, which means you could receive more than one batch of files per minute. Ensure your BigQuery job is configured to ingest files on a given time interval, like every minute, as opposed to when files are received. Ingesting files into BigQuery as each Logpush file is received could exhaust your BigQuery quota quickly.
 

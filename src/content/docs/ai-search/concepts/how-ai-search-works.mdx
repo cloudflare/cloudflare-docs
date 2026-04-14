@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-AI Search is Cloudflare’s managed search service. You can connect your data such as websites or unstructured content, and it automatically creates a continuously updating index that you can query with natural language in your applications or AI agents. 
+AI Search is Cloudflare’s managed search service. You can connect your data such as websites or unstructured content, and it automatically creates a continuously updating index that you can query with natural language in your applications or AI agents.
 
 AI Search consists of two core processes:
 
@@ -34,7 +34,7 @@ Once indexing is complete, AI Search is ready to respond to end-user queries in 
 
 Here is how the querying pipeline works:
 
-1. **Receive query from AI Search API:** The query workflow begins when you send a request to either the AI Search’s [AI Search](/ai-search/usage/rest-api/#ai-search) or [Search](/ai-search/usage/rest-api/#search) endpoints.
+1. **Receive query from AI Search API:** The query workflow begins when you send a request to either the AI Search’s [Chat Completions](/ai-search/usage/rest-api/#chat-completions) or [Search](/ai-search/usage/rest-api/#search) endpoints.
 2. **Query rewriting (optional):** AI Search provides the option to [rewrite the input query](/ai-search/configuration/query-rewriting/) using one of Workers AI’s LLMs to improve retrieval quality by transforming the original query into a more effective search query.
 3. **Embedding the query:** The rewritten (or original) query is transformed into a vector via the same embedding model used to embed your data so that it can be compared against your vectorized data to find the most relevant matches.
 4. **Querying Vectorize index:** The query vector is [queried](/vectorize/best-practices/query-vectors/) against stored vectors in the associated Vectorize database for your AI Search.

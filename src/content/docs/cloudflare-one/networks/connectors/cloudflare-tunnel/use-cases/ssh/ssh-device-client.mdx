@@ -258,7 +258,7 @@ If you cannot connect, verify the following:
 
    The query should resolve using [WARP's DNS proxy](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/client-architecture/#dns-traffic) and return a Gateway <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip>. If the query fails to resolve or returns a different IP, check your [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/) configuration and [Gateway resolver policies](/cloudflare-one/traffic-policies/resolver-policies/).
 
-2. **Check Gateway logs** - Review your [Gateway network logs](/cloudflare-one/insights/logs/gateway-logs/) to see if the connection is being blocked by a policy.
+2. **Check Gateway logs** - Review your [Gateway network logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/) to see if the connection is being blocked by a policy.
 
 3. **Verify tunnel status** - Confirm that your tunnel is healthy and connected by checking [tunnel status](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/).
 

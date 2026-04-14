@@ -1,0 +1,33 @@
+---
+{}
+---
+
+import { Tabs, TabItem } from "~/components";
+
+<Tabs>
+<TabItem label="Debian / Ubuntu">
+
+```sh
+curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor -o /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
+sudo apt-get update && sudo apt-get install -y cloudflare-warp
+```
+
+```sh
+sudo warp-cli connector new <TOKEN> && sudo warp-cli connect
+```
+
+</TabItem>
+<TabItem label="RedHat / CentOS">
+
+```sh
+sudo rpm -ivh https://pkg.cloudflareclient.com/cloudflare-release-el8.rpm
+sudo yum install -y cloudflare-warp
+```
+
+```sh
+sudo warp-cli connector new <TOKEN> && sudo warp-cli connect
+```
+
+</TabItem>
+</Tabs>

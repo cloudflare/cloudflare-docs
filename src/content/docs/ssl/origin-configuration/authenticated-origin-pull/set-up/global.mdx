@@ -1,0 +1,61 @@
+---
+pcx_content_type: how-to
+title: Global
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Global authenticated origin pulls
+---
+
+import { Render, Tabs, TabItem, DashButton } from "~/components";
+
+When you enable global Authenticated Origin Pulls (AOP), Cloudflare uses a Cloudflare-provided client certificate for all proxied traffic to your zone. This certificate is shared across all Cloudflare accounts and guarantees that the request is coming from the Cloudflare network.
+
+Global, [zone-level](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/), and [per-hostname](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/) AOP are independent configurations. Enabling or disabling one does not affect the others.
+
+## Before you begin
+
+- Make sure your zone is using an [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/) of **Full** or higher.
+
+- Consider your security and certificate needs:
+
+   - The Cloudflare-provided certificate is not exclusive to your account. It only guarantees that a request is coming from the Cloudflare network. If you need stricter security, set up [zone-level](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/) or [per-hostname](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/) AOP with your own certificate instead.
+
+   - Global AOP is applied to all proxied hostnames on your zone, including [custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/) configured on a Cloudflare for SaaS zone. If you need a different AOP certificate for different custom hostnames, use [per-hostname AOP](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/).
+
+## 1. Download the Cloudflare certificate
+
+[Download the Cloudflare authenticated origin pull certificate (.PEM)](/ssl/static/authenticated_origin_pull_ca.pem) and upload it to your origin server. This certificate is **not** the same as the [Cloudflare Origin CA certificate](/ssl/origin-configuration/origin-ca/).
+
+## 2. Configure origin to accept client certificates
+
+<Render
+	file="aop-configure-origin"
+	product="ssl"
+	params={{
+		one: "Rename the downloaded .PEM file and upload it to `/path/to/origin-pull-ca.pem` before applying the settings.",
+		two: " Rename the downloaded .PEM file and upload it to `/etc/nginx/certs/cloudflare.crt` before applying the settings.",
+	}}
+/>
+
+## 3. Enable global Authenticated Origin Pulls
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Go to the **Origin Server** page.
+
+   <DashButton url="/?to=/:account/:zone/ssl-tls/origin" />
+
+2. Select the **Authenticated Origin Pulls** tab.
+3. In the **Global** section, switch the toggle to **On**.
+
+</TabItem> <TabItem label="API">
+
+To enable or disable global Authenticated Origin Pulls with the API, use the [Edit zone setting endpoint](/api/resources/zones/subresources/settings/methods/edit/) with `tls_client_auth` as the setting name in the URI path, and the `value` parameter set to your desired setting (`"on"` or `"off"`).
+
+</TabItem> </Tabs>
+
+## 4. Enforce validation check on your origin
+
+<Render file="aop-enforce-validation" product="ssl" />

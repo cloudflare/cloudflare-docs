@@ -140,7 +140,7 @@ Any uncaught exceptions that propagate to the top level, or any steps that reach
 
 If you want to avoid this, you can catch exceptions emitted by a `step`. This can be useful if you need to trigger clean-up tasks or have conditional logic that triggers additional steps.
 
-To allow the Workflow to continue its execution, surround the intended steps that are allowed to fail with a `try-catch` block.
+To allow the Workflow to continue its execution, surround the intended steps that are allowed to fail with a `try...catch` block.
 
 ```ts
 ...

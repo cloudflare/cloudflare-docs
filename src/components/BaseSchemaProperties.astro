@@ -16,12 +16,6 @@ const fullSchema = baseSchema({
 // Override properties that JSON schema isn't going to understand because they're Astro-specific
 const shape = {
 	...fullSchema.shape,
-	preview_image: z
-		.string()
-		.optional()
-		.describe(
-			"A `src` path to the image that you want to use as a custom preview image for social sharing.",
-		),
 	products: z
 		.array(z.string())
 		.default([])
@@ -46,11 +40,6 @@ function isObject(val: unknown): val is Record<string, unknown> {
 // Extract the type from a JSON Schema property
 function getPropertyType(property: unknown): string {
 	if (!isObject(property)) return "unknown";
-
-	// Handle preview_image specially since it's a function
-	if (property.type === undefined || Object.keys(property).length === 0) {
-		return "string";
-	}
 
 	// Handle oneOf (used for nullable types)
 	if (property.oneOf && Array.isArray(property.oneOf)) {

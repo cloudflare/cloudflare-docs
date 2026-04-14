@@ -18,16 +18,16 @@ To turn on AV scanning:
 1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Traffic policies** > **Traffic settings**.
 2. In **Policy settings**, turn on **Scan files for malware**.
 3. Choose whether to scan files for malicious payloads during uploads, downloads, or both. You can also block requests containing [non-scannable files](#non-scannable-files).
-4. (Optional) Turn on **Display AV block notification for WARP Client** to send [block notifications](#cloudflare-one-client-block-notifications) to users connected to Gateway with the WARP Client when AV inspection blocks a file.
+4. (Optional) Turn on **Display AV block notification for Cloudflare One Client** to send [block notifications](#cloudflare-one-client-block-notifications) to users connected to Gateway with the Cloudflare One Client when AV inspection blocks a file.
 
-When a request is blocked due to the presence of malware, Gateway will log the match as a Block decision in your [HTTP logs](/cloudflare-one/insights/logs/gateway-logs/#http-logs).
+When a request is blocked due to the presence of malware, Gateway will log the match as a Block decision in your [HTTP logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/#http-logs).
 
 ### Cloudflare One Client block notifications
 
 <Render
 	file="gateway/client-notifications"
 	product="cloudflare-one"
-	params={{ toggleName: "**Display AV block notification for WARP Client**" }}
+	params={{ toggleName: "**Display AV block notification for Cloudflare One Client**" }}
 />
 
 ## File scan criteria

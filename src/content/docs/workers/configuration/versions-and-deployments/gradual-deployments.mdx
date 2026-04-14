@@ -5,7 +5,7 @@ head: []
 description: Incrementally deploy code changes to your Workers with gradual deployments.
 ---
 
-import { Example, DashButton } from "~/components";
+import { Example, DashButton, PackageManagers } from "~/components";
 
 Gradual Deployments give you the ability to incrementally deploy new [versions](/workers/configuration/versions-and-deployments/#versions) of Workers by splitting traffic across versions.
 
@@ -38,9 +38,7 @@ Minimum required Wrangler version: 3.40.0. Versions before 3.73.0 require you to
 
 Create a new `"Hello World"` Worker using the [`create-cloudflare` CLI (C3)](/pages/get-started/c3/) and deploy it.
 
-```sh
-npm create cloudflare@latest <NAME> -- --type=hello-world
-```
+<PackageManagers type="create" pkg="cloudflare@latest" args="<NAME> -- --type=hello-world" />
 
 Answer `yes` or `no` to using TypeScript. Answer `yes` to deploying your application. This is the first version of your Worker.
 
@@ -48,9 +46,7 @@ Answer `yes` or `no` to using TypeScript. Answer `yes` to deploying your applica
 
 To create a new version of the Worker, edit the Worker code by changing the `Response` content to your desired text and upload the Worker by using the [`wrangler versions upload`](/workers/wrangler/commands/general/#versions-upload) command.
 
-```sh
-npx wrangler versions upload
-```
+<PackageManagers type="exec" pkg="wrangler" args="versions upload" />
 
 This will create a new version of the Worker that is not automatically deployed.
 
@@ -59,9 +55,7 @@ This will create a new version of the Worker that is not automatically deployed.
 Use the [`wrangler versions deploy`](/workers/wrangler/commands/general/#versions-deploy) command to
 create a new deployment that splits traffic between two versions of the Worker. Follow the interactive prompts to create a deployment with the versions uploaded in [step #1](/workers/configuration/versions-and-deployments/gradual-deployments/#1-create-and-deploy-a-new-worker) and [step #2](/workers/configuration/versions-and-deployments/gradual-deployments/#2-create-a-new-version-of-the-worker). Select your desired percentages for each version.
 
-```sh
-npx wrangler versions deploy
-```
+<PackageManagers type="exec" pkg="wrangler" args="versions deploy" />
 
 #### 4. Test the split deployment
 
@@ -82,9 +76,7 @@ You can test also target a specific version using [version overrides](#version-o
 
 Run `wrangler versions deploy` again and follow the interactive prompts. Select the version uploaded in [step 2](/workers/configuration/versions-and-deployments/gradual-deployments/#2-create-a-new-version-of-the-worker) and set it to 100% deployment.
 
-```sh
-npx wrangler versions deploy
-```
+<PackageManagers type="exec" pkg="wrangler" args="versions deploy" />
 
 ### Via the Cloudflare dashboard
 
@@ -240,11 +232,11 @@ You should ensure that API changes between your Durable Object and its Worker ar
 
 ### Migrations
 
-Versions of Worker bundles containing new Durable Object migrations cannot be uploaded. This is because Durable Object migrations are atomic operations. Durable Object migrations can be deployed with the following command:
+Versions of Worker bundles containing new Durable Object migrations cannot be uploaded. This is because Durable Object migrations are atomic operations. Once a migration is deployed, rollbacks cannot take place to any version prior to the one that included the migration.
 
-```sh
-npx wrangler versions deploy
-```
+Durable Object migrations can be deployed with the following command:
+
+<PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
 To limit the blast radius of Durable Object migration deployments, migrations should be deployed independently of other code changes.
 

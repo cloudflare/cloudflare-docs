@@ -1,11 +1,17 @@
 /*
 	Access-Control-Allow-Origin: *
 
+/
+	Link: </api/>; rel="service-doc"
+
 /_astro/*
 	Cache-Control: public, max-age=604800, immutable
 
+/*/llms.txt:
+  Content-Type: text/plain; charset=utf-8
+
 /*/llms-full.txt:
-  Content-Type: text/markdown; charset=utf-8
+  Content-Type: text/plain; charset=utf-8
 
 /*/index.md:
   Content-Type: text/markdown; charset=utf-8

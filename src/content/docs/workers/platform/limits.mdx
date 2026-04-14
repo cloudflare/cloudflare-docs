@@ -7,7 +7,7 @@ head: []
 description: Cloudflare Workers plan and platform limits.
 ---
 
-import { Render, WranglerConfig, DashButton } from "~/components";
+import { Render, WranglerConfig, DashButton, TypeScriptExample } from "~/components";
 
 ## Account plan limits
 
@@ -200,7 +200,7 @@ Using global [`fetch()`](/workers/runtime-apis/fetch/) to call another Worker on
 
 ## Simultaneous open connections
 
-Each Worker invocation can open up to six simultaneous connections. The following API calls count toward this limit:
+Each Worker invocation can have up to six connections simultaneously waiting for response headers. The following API calls count toward this limit while the initial connection is being established and the server has not yet responded:
 
 - `fetch()` method of the [Fetch API](/workers/runtime-apis/fetch/)
 - `get()`, `put()`, `list()`, and `delete()` methods of [Workers KV namespace objects](/kv/api/)
@@ -211,15 +211,17 @@ Each Worker invocation can open up to six simultaneous connections. The followin
 
 Outbound WebSocket connections also count toward this limit.
 
-Once six connections are open, the runtime queues additional attempts until an existing connection closes. The runtime may close stalled connections (those not actively reading or writing) with a `Response closed due to connection limit` exception.
+Once response headers arrive for a connection, it no longer counts toward the six-connection limit. This means a Worker can have many connections open simultaneously, as long as no more than six are in the initial "waiting for headers" phase at the same time. If a seventh connection is attempted while six are already waiting for headers, it is queued until one of the existing connections receives its response headers.
 
-If you use `fetch()` but do not need the response body, call `response.body.cancel()` to free the connection:
+If you use `fetch()` but do not need the response body, calling `response.body.cancel()` is still good practice to free memory:
+
+<TypeScriptExample filename="src/index.ts">
 
 ```ts
 const response = await fetch(url);
 
 // Only read the response body for successful responses
-if (response.statusCode <= 299) {
+if (response.status <= 299) {
 	// Call response.json(), response.text() or otherwise process the body
 } else {
 	// Explicitly cancel it
@@ -227,7 +229,7 @@ if (response.statusCode <= 299) {
 }
 ```
 
-If the system detects a deadlock (pending connection attempts with no in-progress reads or writes), it cancels the least-recently-used connection to unblock the Worker.
+</TypeScriptExample>
 
 :::note
 
