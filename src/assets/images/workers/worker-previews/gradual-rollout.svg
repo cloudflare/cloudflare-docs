@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 160" fill="none">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .label { font-size: 13px; fill: #1a1a1a; font-weight: 600; }
+    .sublabel { font-size: 11px; fill: #6b7280; }
+    .cmd { font-size: 11px; fill: #6b7280; font-family: 'SF Mono', 'Fira Code', monospace; }
+    .box { rx: 8; stroke-width: 1.5; }
+    .box-prod { fill: #fff7ed; stroke: #f6821f; }
+    .box-manual { fill: #faf5ff; stroke: #a855f7; }
+    .box-trigger { fill: #f9fafb; stroke: #d1d5db; }
+    .arrow { stroke: #9ca3af; stroke-width: 2; fill: none; marker-end: url(#arr); }
+  </style>
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#9ca3af"/>
+    </marker>
+  </defs>
+
+  <!-- Step 1: versions upload -->
+  <rect x="10" y="20" width="160" height="50" class="box box-prod"/>
+  <text x="90" y="42" text-anchor="middle" class="cmd">versions upload</text>
+  <text x="90" y="58" text-anchor="middle" class="sublabel">uploads version</text>
+
+  <line x1="170" y1="45" x2="200" y2="45" class="arrow"/>
+
+  <!-- Step 2: versions deploy -->
+  <rect x="208" y="20" width="160" height="50" class="box box-manual"/>
+  <text x="288" y="42" text-anchor="middle" class="cmd">versions deploy</text>
+  <text x="288" y="58" text-anchor="middle" class="sublabel">starts traffic split</text>
+
+  <line x1="368" y1="45" x2="398" y2="45" class="arrow"/>
+
+  <!-- Step 3: 10/90 -->
+  <rect x="406" y="20" width="120" height="50" class="box box-prod"/>
+  <text x="466" y="42" text-anchor="middle" class="label" style="fill: #c2410c;">10% new</text>
+  <text x="466" y="58" text-anchor="middle" class="sublabel">90% old</text>
+
+  <line x1="526" y1="45" x2="556" y2="45" class="arrow"/>
+
+  <!-- Step 4: 50/50 -->
+  <rect x="564" y="20" width="100" height="50" class="box box-prod"/>
+  <text x="614" y="42" text-anchor="middle" class="label" style="fill: #c2410c;">50%</text>
+  <text x="614" y="58" text-anchor="middle" class="sublabel">monitor</text>
+
+  <line x1="664" y1="45" x2="694" y2="45" class="arrow"/>
+
+  <!-- Step 5: 100% -->
+  <rect x="702" y="20" width="100" height="50" class="box box-prod"/>
+  <text x="752" y="42" text-anchor="middle" class="label" style="fill: #c2410c;">100%</text>
+  <text x="752" y="58" text-anchor="middle" class="sublabel">fully live</text>
+
+  <!-- Subtitles -->
+  <text x="90" y="96" text-anchor="middle" class="sublabel">Nothing changes yet.</text>
+  <text x="90" y="110" text-anchor="middle" class="sublabel">Version is saved.</text>
+
+  <text x="288" y="96" text-anchor="middle" class="sublabel">You choose the %.</text>
+  <text x="288" y="110" text-anchor="middle" class="sublabel">Old version gets the rest.</text>
+
+  <text x="560" y="96" text-anchor="middle" class="sublabel">Increase when healthy.</text>
+  <text x="560" y="110" text-anchor="middle" class="sublabel">Rollback if not.</text>
+
+  <text x="752" y="96" text-anchor="middle" class="sublabel">Promote when ready.</text>
+
+  <!-- Legend -->
+  <rect x="290" y="140" width="10" height="10" rx="2" fill="#fff7ed" stroke="#f6821f" stroke-width="1"/>
+  <text x="306" y="149" class="sublabel">Production traffic</text>
+  <rect x="430" y="140" width="10" height="10" rx="2" fill="#faf5ff" stroke="#a855f7" stroke-width="1"/>
+  <text x="446" y="149" class="sublabel">You decide when</text>
+</svg>

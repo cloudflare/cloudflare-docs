@@ -1,44 +1,22 @@
 ---
 pcx_content_type: how-to
-title: Durable Objects guide
-description: Choose the right approach for Durable Objects based on what you need — preview isolation, gradual rollouts, or targeted cohort-based rollouts.
+title: Durable Object isolation
+description: Isolate Durable Object storage in Worker Previews so preview traffic never touches production data.
 sidebar:
-  order: 2
-  badge:
-    text: Beta
+  order: 5
 ---
 
 import { WranglerConfig } from "~/components";
 
-Durable Objects work across several parts of the Workers deployment system — previews, gradual rollouts, and cohort-based rollouts. Each serves a different stage of your workflow. This guide covers all three so you can choose the right approach and understand how they connect.
-
-## What do you need?
-
-| I want to... | What to use |
-| --- | --- |
-| **Test a feature branch with separate DO storage** | [Preview isolation](#preview-isolation) — each preview gets its own DO namespace |
-| **Roll out new code to production DO instances gradually** | [Gradual rollouts](#gradual-rollouts-for-durable-objects) — percentage-based split across all instances |
-| **Choose exactly which DO instances run new code** | [Cohort-based rollouts](#cohort-based-rollouts-for-durable-objects) — target specific instances by user, plan, or any attribute |
-
-These three approaches cover different stages:
-
-1. **Preview isolation** — test your code on a branch, with DO storage that is completely separate from production.
-2. **Gradual rollouts** — ship to production incrementally. The platform assigns each DO instance to a version based on a hash of its ID.
-3. **Cohort-based rollouts** — ship to production with full control. You decide which instances get the new version by passing a cohort at `.get()` time.
-
-You can use all three together: test in a preview, then deploy to production using either gradual or cohort-based rollouts depending on how much control you need.
-
----
-
-## Preview isolation
-
 When using [Worker Previews](/workers/worker-previews/), each preview environment can have its own isolated [Durable Object](/durable-objects/) namespace. Durable Object instances created by a preview are completely separate from production — different instance IDs, different storage, no shared state.
 
-By default, previews share the production DO namespace. Use one of the three approaches below to get isolation.
+By default, previews share the production DO namespace. Use one of the approaches below to get isolation.
 
-### Approach 1: Use `ctx.exports` (recommended)
+## Approach 1: Use `ctx.exports` (recommended)
 
-The simplest way to get isolated Durable Objects in previews. With [`ctx.exports`](/workers/runtime-apis/context/#exports), the runtime automatically resolves the correct namespace for each environment — production namespace in production, auto-provisioned isolated namespace in previews. No binding configuration needed.
+`ctx.exports` uses a different namespace resolution path than manual DO bindings. Instead of going through the binding system and name-based environment lookups, the runtime resolves the DO namespace directly from the execution context. The platform knows "this code is running in a preview" and auto-provisions a separate namespace named `{previewSlug}_{ClassName}`.
+
+This is the only path where auto-isolation works without deploying a separate Worker. Manual DO bindings with `script_name` pointing at the same Worker [cannot isolate](#approach-3-use-a-do-binding-with-wrangler-configuration-no-auto-isolation) because preview scripts use a resolution path that falls through to the production namespace.
 
 **Prerequisites:**
 
@@ -159,7 +137,7 @@ Preview-owned namespaces include a `preview` property in the response:
 }
 ```
 
-### Approach 2: Use a DO binding with the dashboard
+## Approach 2: Use a DO binding with the dashboard
 
 If you are using a traditional DO binding (`env.MY_DO`) instead of `ctx.exports`, configure DO isolation through the Cloudflare dashboard:
 
@@ -174,9 +152,15 @@ If you are using a traditional DO binding (`env.MY_DO`) instead of `ctx.exports`
 The preview namespace only appears in the dropdown after you have created at least one preview for the Worker. The platform auto-provisions the namespace on preview creation.
 :::
 
-### Approach 3: Use a DO binding with Wrangler configuration
+## Approach 3: Use a DO binding with Wrangler configuration (no auto-isolation)
 
-Configure DO isolation in your Wrangler configuration file by adding a `previews` block with `durable_objects.bindings`. You must include `script_name` pointing to the Worker that owns the DO class:
+:::caution
+This approach does **not** isolate Durable Objects. When `script_name` points to the same Worker (self-referencing), the namespace resolves through a name-based environment lookup. Preview scripts have `kind='preview'` which is excluded from this lookup path, so it falls through to the production namespace. The result: your preview and production share the same DO instances and storage, even with an explicit `previews` block configured.
+
+Use [`ctx.exports`](#approach-1-use-ctxexports-recommended) for auto-isolation, or [Approach 2](#approach-2-use-a-do-binding-with-the-dashboard) to manually select an auto-provisioned namespace.
+:::
+
+You can configure a DO binding for previews in your Wrangler configuration file by adding a `previews` block with `durable_objects.bindings`. You must include `script_name` pointing to the Worker that owns the DO class:
 
 <WranglerConfig>
 
@@ -222,120 +206,17 @@ npx wrangler preview settings update
 npx wrangler preview
 ```
 
-:::note
-When using `script_name` pointing to the same Worker (self-referencing), the preview shares the production DO namespace by default. True isolation requires the auto-provisioning behavior, which is handled automatically when using `ctx.exports` (Approach 1) or when selecting an auto-provisioned namespace in the dashboard (Approach 2).
-:::
-
-### Preview isolation comparison
+## Comparison
 
 | | `ctx.exports` | Dashboard binding | Wrangler config binding |
 | --- | --- | --- | --- |
-| Binding configuration required | No | Yes | Yes |
-| Auto-isolation | Yes | Manual selection | No (self-ref shares production) |
-| `script_name` required | No | No | Yes |
-| Works with RPC methods | Yes | Yes | Yes |
-| Recommended for new projects | Yes | - | - |
+| **How namespace resolves** | Runtime context — knows it's a preview, auto-provisions | You manually select the auto-provisioned namespace | Name-based environment lookup — falls through to production for self-refs |
+| **Auto-isolation** | Yes | No — manual selection required | No — self-ref shares production |
+| **Binding configuration** | None needed | Yes | Yes, with `script_name` |
+| **Works with RPC methods** | Yes | Yes | Yes |
+| **Recommended** | Yes | Fallback if `ctx.exports` is not available | Not recommended for isolation |
 
----
 
-## Gradual rollouts for Durable Objects
-
-Once you have tested your code in a preview, you can ship to production using [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/). For Durable Objects, gradual deployments work slightly differently than for stateless Workers.
-
-To provide [global uniqueness](/durable-objects/platform/known-issues/#global-uniqueness), only one version of each Durable Object can run at a time. When you create a gradual deployment, each DO instance is assigned a version based on a **hash of its ID** and the percentages you configured. This assignment is deterministic and sticky — the same instance always gets the same version for a given deployment.
-
-**Example:** You have 3 DO instances (`foo`, `bar`, `baz`) and are rolling out from Version A to Version B:
-
-| Deployment config | `foo` | `bar` | `baz` |
-| --- | --- | --- | --- |
-| Version A: 100% | A | A | A |
-| Version B: 20%, Version A: 80% | B | A | A |
-| Version B: 50%, Version A: 50% | B | B | A |
-| Version B: 100% | B | B | B |
-
-The platform decides which instances get which version — you control the percentages. Instances assigned to Version B stay on Version B as you increase the percentage (they do not revert).
-
-**How to create a gradual deployment:**
-
-```bash
-# Upload a new version
-npx wrangler versions upload
-
-# Split traffic 50/50
-npx wrangler versions deploy VERSION_B_ID@50% VERSION_A_ID@50% -y
-
-# When ready, complete the rollout
-npx wrangler versions deploy VERSION_B_ID@100% -y
-```
-
-**Key behaviors:**
-
-- The Worker handling an HTTP request can be on a different version than the Durable Object it calls. Ensure API changes between your Worker and its DOs are forwards and backwards compatible.
-- Versions containing new DO migrations cannot be gradually deployed — migrations are atomic. Deploy migrations with `wrangler deploy` separately from code changes.
-- Each DO instance is only [reset](/durable-objects/observability/troubleshooting/#durable-object-reset-because-its-code-was-updated) when it is assigned a different version.
-
-For the full walkthrough, refer to [Gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/#gradual-deployments-for-durable-objects).
-
-**When gradual rollouts are the right choice:** You want to roll out to a percentage of DO instances and are comfortable with the platform deciding which instances get the new version. This works well when all instances are equivalent and you do not need to target specific users or tiers.
-
-**When you need more control:** If you want to choose exactly which instances run the new version — for example, rolling out to your team first, or to free-tier users before paid users — use [cohort-based rollouts](#cohort-based-rollouts-for-durable-objects).
-
----
-
-## Cohort-based rollouts for Durable Objects
-
-[Cohort-based deployments](/workers/configuration/versions-and-deployments/cohort-based-deployments/) extend gradual deployments by letting you choose exactly which DO instances run which version. Instead of a hash deciding, your Worker code resolves a cohort and passes it at `.get()` time.
-
-This works for **per-entity instances** — where each user, tenant, or resource has their own Durable Object. Your Worker already knows which instance to call; you just add the cohort based on what you know about the user.
-
-**Example:** Roll out Version C to your team's instances first, while everyone else stays on Version B:
-
-```ts
-const TEST_USERS = new Set(["alice", "bob"]);
-
-export default {
-  async fetch(request: Request, env: Env) {
-    const userId = getUserId(request);
-    const id = env.USER_DO.idFromName(userId);
-
-    // Pass a cohort for users you want on the new version
-    const stub = TEST_USERS.has(userId)
-      ? env.USER_DO.get(id, { version: { cohort: "team" } })
-      : env.USER_DO.get(id);
-
-    return stub.fetch(request);
-  },
-};
-```
-
-**Deploy with the cohort:**
-
-```bash
-npx wrangler versions deploy \
-  VERSION_B_ID@100% \
-  --cohort team=VERSION_C_ID@100% \
-  --message "Team testing Version C" -y
-```
-
-Every instance without a cohort stays on Version B. Only `alice` and `bob` get Version C. When you are confident, expand to more users or deploy to everyone.
-
-**Key behaviors:**
-
-- The cohort is set at `.get()` time, so it must be resolved from information available outside the DO (the incoming request, a KV lookup, a D1 query — anything your Worker can access before calling `.get()`).
-- Cohort assignment is sticky while the instance is in memory. If the instance is [evicted](/durable-objects/concepts/durable-object-lifecycle/) due to inactivity, the next request sets the cohort again.
-- For **shared instances** (chat rooms, game lobbies) where multiple users hit the same DO, cohorts are not the right fit. The version is locked by whichever request wakes the instance first. Use [gradual rollouts](#gradual-rollouts-for-durable-objects) instead.
-
-| | Gradual rollouts | Cohort-based rollouts |
-| --- | --- | --- |
-| Who decides the version | Hash of DO ID | Your Worker code via `.get()` |
-| You choose which instances get new code | No | Yes |
-| Sticky while in memory | Yes (hash is deterministic) | Yes (locked until eviction) |
-| Persists across evictions | Yes (hash is deterministic) | Next request sets the cohort again |
-| Best for | "Roll out to ~50% of instances" | "Roll out to these specific instances" |
-
-For the full reference including Transform Rules, the gateway entrypoint pattern, and service bindings, refer to [Cohort-based deployments — Durable Objects](/workers/configuration/versions-and-deployments/cohort-based-deployments/#durable-objects).
-
-For a hands-on tutorial comparing gradual and cohort-based rollouts side by side, refer to [Tutorial: Controlled Durable Object rollouts](/workers/configuration/versions-and-deployments/testing-gradual-deployments/).
 
 ---
 
@@ -366,6 +247,3 @@ When using the `previews.durable_objects.bindings` configuration, you must inclu
 - [`ctx.exports` API reference](/workers/runtime-apis/context/#exports) — Access DO namespaces without binding configuration
 - [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/) — Configure migrations for DO classes
 - [Durable Objects namespace API](/durable-objects/api/namespace/) — Namespace methods including `idFromName` and `get`
-- [Gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/#gradual-deployments-for-durable-objects) — Full reference for hash-based DO rollouts
-- [Cohort-based deployments](/workers/configuration/versions-and-deployments/cohort-based-deployments/#durable-objects) — Full reference for targeted DO rollouts
-- [Tutorial: Controlled Durable Object rollouts](/workers/configuration/versions-and-deployments/testing-gradual-deployments/) — Hands-on comparison of gradual vs cohort-based rollouts

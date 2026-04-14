@@ -1,0 +1,106 @@
+---
+pcx_content_type: how-to
+title: Without Workers Builds (no git connection)
+description: Use Worker Previews with the Wrangler CLI — run wrangler preview and wrangler deploy manually.
+sidebar:
+  order: 2
+---
+
+Your Worker is not connected to a Git repository via Workers Builds. You run `wrangler preview` and `wrangler deploy` from the command line.
+
+:::note
+If you have been using `wrangler versions upload` to test your Worker, that generates [version URLs](/workers/configuration/previews/) which use production bindings. `wrangler preview` replaces that workflow with full isolation. See [how to switch](/workers/worker-previews/workflows/#switching-from-wrangler-versions-upload).
+:::
+
+![Without Workers Builds](~/assets/images/workers/worker-previews/lifecycle-without-builds.svg)
+
+---
+
+## The basic workflow
+
+1. On a feature branch, create an isolated preview:
+
+```bash
+git checkout -b my-feature
+npx wrangler preview
+```
+
+2. Test against the preview URL.
+
+3. When ready, merge and deploy to production:
+
+```bash
+git checkout main
+git merge my-feature
+npx wrangler deploy
+```
+
+`wrangler deploy` ships to production at 100%. It uses production bindings because you are on main.
+
+---
+
+## With gradual rollouts
+
+If you want to control the rollout instead of deploying to 100% immediately:
+
+```bash
+git checkout main
+git merge my-feature
+
+# Upload a version without deploying it
+npx wrangler versions upload
+
+# Start a gradual rollout
+npx wrangler versions deploy
+# Interactive prompt: choose versions and traffic percentages
+```
+
+For the full gradual rollout and rollback guide, see [Gradual rollouts and rollbacks](/workers/worker-previews/rollouts-and-rollbacks/).
+
+---
+
+For how preview isolation works (same code, different bindings), see [How isolation works](/workers/worker-previews/workflows/#how-isolation-works).
+
+---
+
+## Common scenarios
+
+### "I tested in a preview. How do I ship to production?"
+
+Merge to main, checkout main, then run `wrangler deploy`:
+
+```bash
+git checkout main
+git merge my-feature
+npx wrangler deploy
+```
+
+The code is the same as what you tested. The difference is it now runs with production bindings instead of preview bindings.
+
+### "How do I know my preview is isolated from production?"
+
+```bash
+npx wrangler preview settings
+```
+
+This shows all bindings and variables that apply to previews. Verify that bindings point to separate resources. Refer to the [isolation table](/workers/worker-previews/concepts/#what-is-isolated) for defaults per binding type.
+
+For Durable Objects, verify by comparing instance IDs:
+
+```bash
+# Production
+curl https://my-worker.subdomain.workers.dev/do/my-instance
+
+# Preview
+curl https://my-feature-my-worker.subdomain.workers.dev/do/my-instance
+
+# Different IDs = isolated
+```
+
+### "I have an existing Worker with bindings. How do I set up previews?"
+
+1. [Configure preview bindings and settings](/workers/worker-previews/#1-configure-preview-bindings-and-settings).
+2. Go to **Settings** > **Bindings** and toggle to **Previews**.
+3. For each binding, decide whether to keep "Use production value" checked or uncheck it and select a separate resource.
+4. Set preview-specific variables and secrets using the [`previews` block](/workers/worker-previews/#configure-preview-variables-and-secrets) in your Wrangler configuration file or `wrangler preview secret put`.
+5. Run `wrangler preview` to create your first preview.

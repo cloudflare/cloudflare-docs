@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 130" fill="none">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .label { font-size: 13px; fill: #1a1a1a; font-weight: 600; }
+    .sublabel { font-size: 11px; fill: #6b7280; }
+    .cmd { font-size: 11px; fill: #6b7280; font-family: 'SF Mono', 'Fira Code', monospace; }
+    .box { rx: 8; stroke-width: 1.5; }
+    .box-prod { fill: #fff7ed; stroke: #f6821f; }
+    .box-bad { fill: #fef2f2; stroke: #ef4444; }
+    .box-good { fill: #f0fdf4; stroke: #22c55e; }
+    .arrow { stroke: #9ca3af; stroke-width: 2; fill: none; marker-end: url(#arr); }
+  </style>
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#9ca3af"/>
+    </marker>
+  </defs>
+
+  <!-- Current state: problem -->
+  <rect x="20" y="20" width="170" height="56" class="box box-bad"/>
+  <text x="105" y="44" text-anchor="middle" class="label" style="fill: #dc2626;">Problem detected</text>
+  <text x="105" y="60" text-anchor="middle" class="sublabel">any active split or 100%</text>
+
+  <line x1="190" y1="48" x2="240" y2="48" class="arrow"/>
+
+  <!-- Action: versions deploy -->
+  <rect x="248" y="20" width="210" height="56" class="box box-prod"/>
+  <text x="353" y="42" text-anchor="middle" class="cmd">wrangler versions deploy</text>
+  <text x="353" y="60" text-anchor="middle" class="sublabel">→ old version at 100%</text>
+
+  <line x1="458" y1="48" x2="508" y2="48" class="arrow"/>
+
+  <!-- Result: restored -->
+  <rect x="516" y="20" width="180" height="56" class="box box-good"/>
+  <text x="606" y="44" text-anchor="middle" class="label" style="fill: #15803d;">Restored</text>
+  <text x="606" y="60" text-anchor="middle" class="sublabel">previous version at 100%</text>
+
+  <!-- Subtitle -->
+  <text x="360" y="106" text-anchor="middle" class="sublabel">Rollback works from any state — 10/90, 50/50, or 100%. One command.</text>
+</svg>

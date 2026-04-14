@@ -4,64 +4,193 @@ title: Worker Previews
 description: Create isolated preview environments for your Worker with their own URLs, bindings, and resources.
 sidebar:
   order: 7
-  badge:
-    text: Beta
+  group:
+    badge:
+      text: Beta
 ---
 
-import { WranglerConfig } from "~/components";
+import { Tabs, TabItem } from "~/components";
 
 Worker Previews let you create fully isolated preview environments for your Worker. Each preview gets its own URL, bindings, variables, secrets, and — for [Durable Objects](/durable-objects/) — its own isolated storage namespace. Preview traffic never touches your production data when configured correctly.
 
 :::note
-Worker Previews is currently in private beta. You need a pre-release version of Wrangler to use this feature.
+If you have been using `wrangler versions upload` to generate [version URLs](/workers/configuration/previews/) for testing, those use production bindings and are not isolated. Worker Previews replaces that workflow — see [how to switch](/workers/worker-previews/workflows/#switching-from-wrangler-versions-upload). For new Workers, `wrangler versions upload` no longer generates a URL. This cannot be enabled. Use `wrangler preview` for preview URLs. See [why](/workers/worker-previews/concepts/#previews-vs-version-urls).
 :::
 
-## Prerequisites
 
-- A [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages)
-- [Node.js](https://nodejs.org/) v18 or later
-- A Worker project with a Git repository initialized (`git init`)
+## 1. Configure preview bindings and settings
 
-## 1. Install the pre-release Wrangler
-
-Worker Previews requires a pre-release build of Wrangler. Install it in your project:
-
-```bash
-npm install https://pkg.pr.new/wrangler@12983
-```
-
-Verify the installation:
-
-```bash
-npx wrangler --version
-```
-
-You should see a version like `4.79.0` or later with `introducing-wrangler-preview` in the output.
-
-## 2. Deploy your Worker to production
-
-Before creating previews, your Worker must be deployed to production at least once:
-
-```bash
-npx wrangler deploy
-```
-
-This establishes the production baseline — bindings, variables, and resources that previews will inherit from.
-
-## 3. Enable Worker Previews in the dashboard
-
-1. Open the [Cloudflare dashboard](https://dash.cloudflare.com/) and navigate to your Worker.
-2. Go to the **Settings** tab.
-3. Look for the **Get started** banner at the top of the Settings page.
-4. Click **Get started** and complete the setup wizard.
-
-The wizard configures **Preview Defaults** — base settings (observability, logpush) that all previews inherit. Workers with no existing variables, secrets, or bindings will see a simplified wizard with only observability settings.
+Before creating a preview, configure what resources and settings your previews should use. This is what makes previews isolated from production.
 
 :::note
-The "Get started" banner appears on the **Settings** tab, not the **Previews** tab. If you land on the Previews tab first and see "No Previews yet," navigate to Settings to complete setup.
+If your Worker has no bindings, there are no resources to isolate — you can skip straight to [creating a preview](#2-create-your-first-preview). You should still review preview variables, secrets, and runtime settings if your Worker uses them.
 :::
 
-## 4. Create your first preview
+<Tabs>
+<TabItem label="Dashboard">
+
+1. Open the [Cloudflare dashboard](https://dash.cloudflare.com/) and navigate to your Worker.
+2. Go to **Settings** > **Bindings** and toggle to **Previews**. For each binding, decide whether to use the production resource or select a separate one for previews.
+3. Go to **Settings** > **Variables and Secrets** and toggle to **Previews**. Add any preview-specific variables or secrets.
+4. Review **Settings** > **Runtime** for compatibility date and flags.
+5. Review **Settings** > **Observability** for preview log and trace settings.
+
+For **Durable Objects**, use [`ctx.exports`](/workers/worker-previews/durable-object-isolation/#approach-1-use-ctxexports-recommended) instead of manual DO bindings. `ctx.exports` resolves the DO namespace from the runtime context — the platform knows "this code is running in a preview" and auto-provisions an isolated namespace. Manual DO bindings with `script_name` pointing at the same Worker cannot isolate because preview scripts use a different resolution path that falls through to the production namespace. `ctx.exports` is the only path where auto-isolation works without deploying a separate Worker. See [Durable Object isolation](/workers/worker-previews/durable-object-isolation/) for details.
+
+</TabItem>
+<TabItem label="Wrangler">
+
+1. Add a `previews` block to your Wrangler configuration file:
+
+```jsonc
+// wrangler.jsonc
+{
+	"name": "my-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-04-14",
+	"vars": {
+		"ENVIRONMENT": "production"
+	},
+	"previews": {
+		"vars": {
+			"ENVIRONMENT": "preview"
+		}
+	}
+}
+```
+
+2. Push the config to the API:
+
+```bash
+npx wrangler preview settings update
+```
+
+3. Add any preview-specific secrets:
+
+```bash
+npx wrangler preview secret put MY_API_KEY
+```
+
+#### Full example with bindings
+
+For Workers with KV, D1, R2, and Durable Objects, the `previews` block can override each binding to point at a separate resource. Only include bindings that should differ from production — anything you omit uses Preview Defaults or falls back to "Use production value."
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "my-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+
+	// --- Production ---
+	"vars": {
+		"ENVIRONMENT": "production",
+		"API_URL": "https://api.example.com"
+	},
+	"kv_namespaces": [
+		{ "binding": "CACHE", "id": "production-kv-namespace-id" }
+	],
+	"d1_databases": [
+		{ "binding": "DB", "database_name": "my-app-db", "database_id": "production-d1-id" }
+	],
+	"r2_buckets": [
+		{ "binding": "MEDIA", "bucket_name": "my-app-media" }
+	],
+	"durable_objects": {
+		"bindings": [
+			{ "name": "USER_SESSION", "class_name": "UserSession" }
+		]
+	},
+	"migrations": [
+		{ "tag": "v1", "new_classes": ["UserSession"] }
+	],
+
+	// --- Preview overrides ---
+	"previews": {
+		"vars": {
+			"ENVIRONMENT": "preview",
+			"API_URL": "https://staging-api.example.com"
+		},
+		"kv_namespaces": [
+			{ "binding": "CACHE", "id": "preview-kv-namespace-id" }
+		],
+		"d1_databases": [
+			{ "binding": "DB", "database_name": "my-app-db-preview", "database_id": "preview-d1-id" }
+		],
+		"r2_buckets": [
+			{ "binding": "MEDIA", "bucket_name": "my-app-media-preview" }
+		]
+		// Durable Objects: use ctx.exports for automatic isolation.
+		// No DO binding needed in the previews block.
+		// See: /workers/worker-previews/durable-object-isolation/
+	}
+}
+```
+
+</WranglerConfig>
+
+:::note
+Bindings in the `previews` block require resource IDs — you must create the preview resources first (for example, `wrangler kv namespace create`, `wrangler d1 create`, or `wrangler r2 bucket create`). Auto-provisioning (omitting IDs) is supported for `wrangler deploy` but is not yet available for `wrangler preview`.
+:::
+
+</TabItem>
+<TabItem label="API">
+
+**Required permissions:** Your [API token](/fundamentals/api/get-started/create-token/) needs the **Workers Scripts: Edit** permission.
+
+First, get your Worker ID (also called script ID):
+
+```bash
+# List your Workers to find the Worker ID
+curl -s "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/scripts" \
+  -H "Authorization: Bearer $API_TOKEN" | jq '.result[] | {id, name: .id}'
+```
+
+Then set `preview_defaults` on your Worker. This is the template that every new preview inherits — bindings, variables, compatibility settings, and observability config.
+
+```bash
+curl -X PATCH \
+  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/workers/$WORKER_ID" \
+  -H "Authorization: Bearer $API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "preview_defaults": {
+      "bindings": [
+        { "type": "kv_namespace", "name": "MY_KV", "namespace_id": "preview-kv-id" },
+        { "type": "plain_text", "name": "ENVIRONMENT", "text": "preview" }
+      ],
+      "compatibility_date": "2025-05-25",
+      "observability": { "enabled": true, "head_sampling_rate": 1 }
+    }
+  }'
+```
+
+When you create a preview or deployment, the API merges your request body on top of `preview_defaults`. Fields you provide override the defaults. Fields you omit fall back to `preview_defaults`. Pass `?ignore_defaults=true` to skip the merge entirely.
+
+</TabItem>
+</Tabs>
+
+## 2. Create your first preview
+
+<Tabs>
+<TabItem label="With Workers Builds">
+
+If your Worker is connected to a Git repository via [Workers Builds](/workers/ci-cd/builds/), set the **preview command** (labeled "Non-production branch deploy command" in the dashboard) to `npx wrangler preview` in **Settings** > **Build**.
+
+Then push to a feature branch:
+
+```bash
+git checkout -b my-feature
+git push origin my-feature
+```
+
+Builds will automatically run `wrangler preview`. Once the build completes, your preview is live. Check the **Previews** tab in the dashboard or your Git provider for the preview URL.
+
+For the full Builds workflow, see [Workflows: With Workers Builds](/workers/worker-previews/workflows/with-builds/).
+
+</TabItem>
+<TabItem label="Without Workers Builds">
 
 Create a Git branch and run `wrangler preview`:
 
@@ -76,92 +205,50 @@ Wrangler will output:
 Preview: my-feature (new)
   https://my-feature-my-worker.example.workers.dev
 
-Deployment: abc12345-...
+Per-commit URL: abc12345-...
   https://abc12345-my-worker.example.workers.dev
 ```
 
-You now have two URLs:
+For the full CLI workflow, see [Workflows: Without Workers Builds](/workers/worker-previews/workflows/without-builds/).
 
-- **Stable URL** (`my-feature-my-worker...`) — always points to the latest deployment in this preview.
-- **Deployment URL** (`abc12345-my-worker...`) — an immutable URL for this specific deployment.
+</TabItem>
+<TabItem label="API">
 
-Running `wrangler preview` again on the same branch adds a new deployment to the existing preview — it does not create a new preview. The stable URL always points to the latest deployment.
-
-### Custom preview names
-
-Use `--name` to create a preview with a name independent of your branch:
+Create a preview, then deploy code to it:
 
 ```bash
-npx wrangler preview --name staging
+# 1. Create a preview
+curl -X POST \
+  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/workers/$WORKER_ID/previews" \
+  -H "Authorization: Bearer $API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{ "name": "my-feature" }'
+
+# 2. Deploy code to the preview (multipart — modules + metadata)
+curl -X POST \
+  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/workers/$WORKER_ID/previews/my-feature/deployments" \
+  -H "Authorization: Bearer $API_TOKEN" \
+  -F 'metadata={"main_module": "index.js"};type=application/json' \
+  -F 'index.js=@dist/index.js;type=application/javascript+module'
 ```
 
-Custom-named previews are fully independent — deleting the branch does not affect them, and they can be managed by name regardless of which branch you are on.
+The preview URL is returned in the response. Deployments inherit settings from `preview_defaults` unless you override them in the request body.
 
-## 5. Configure preview variables and secrets
+</TabItem>
+</Tabs>
 
-### Environment variables
+You get two URLs per preview:
 
-Add a `previews` block to your Wrangler configuration file to set preview-specific variables:
+- **Stable URL** (`my-feature-my-worker...`) — always points to the latest push to this preview.
+- **Per-commit URL** (`abc12345-my-worker...`) — an immutable URL for this specific commit.
 
-<WranglerConfig>
-
-```jsonc
-{
-	"name": "my-worker",
-	"main": "src/index.ts",
-	"compatibility_date": "$today",
-	"vars": {
-		"ENVIRONMENT": "production"
-	},
-	"previews": {
-		"vars": {
-			"ENVIRONMENT": "preview"
-		}
-	}
-}
-```
-
-</WranglerConfig>
-
-Apply the changes and create a preview:
-
-```bash
-npx wrangler preview settings update
-npx wrangler preview
-```
-
-### Secrets
-
-Preview secrets are managed separately from production secrets. Adding a preview secret does not affect production:
-
-```bash
-# Add a secret to Preview Defaults (inherited by all previews)
-npx wrangler preview secret put MY_API_KEY
-
-# List preview secrets
-npx wrangler preview secret list
-
-# Verify production is untouched
-npx wrangler secret list
-```
-
-### Bindings via the dashboard
-
-For bindings like KV, R2, or D1, you can configure preview-specific values in the dashboard:
-
-1. Go to your Worker's **Settings** > **Bindings**.
-2. Toggle to **Previews** (instead of Production) at the top of the page.
-3. For each binding, you will see a **Use production value** checkbox.
-   - **Checked** (default): The preview uses the same resource as production.
-   - **Unchecked**: You can select a different resource (for example, a separate KV namespace for testing).
-4. Save your changes.
-5. Re-run `wrangler preview` to create a new deployment that uses the updated bindings.
+Pushing again (or running `wrangler preview` again) updates the existing preview — it does not create a new one. The stable URL always points to the latest push.
 
 :::caution
-If "Use production value" is checked, preview traffic will read and write to your production resources. Uncheck it and select a separate resource if you need isolation for that binding.
+If "Use production value" is checked for a binding in the dashboard, preview traffic will read and write to your production resources. Uncheck it and select a separate resource if you need isolation for that binding.
 :::
 
-## 6. Test your preview
+## 3. Test your preview
 
 Verify your preview is working by sending requests to the preview URL:
 
@@ -177,9 +264,15 @@ If your Worker returns the `ENVIRONMENT` variable, the preview should return `"p
 
 For Durable Object isolation testing, refer to [Durable Object isolation](/workers/worker-previews/durable-object-isolation/).
 
-## 7. View preview settings
+## 4. View preview settings
 
-To see all the settings that will be applied to previews:
+<Tabs>
+<TabItem label="Dashboard">
+
+Navigate to your Worker in the [Cloudflare dashboard](https://dash.cloudflare.com/). Go to the **Previews** tab to see all active previews and their settings.
+
+</TabItem>
+<TabItem label="Wrangler">
 
 ```bash
 npx wrangler preview settings
@@ -187,43 +280,162 @@ npx wrangler preview settings
 
 This shows the merged result of Preview Defaults (from the API) and the `previews` block in your Wrangler configuration file.
 
-## 8. Delete a preview
-
-When you are done testing, delete the preview:
+</TabItem>
+<TabItem label="API">
 
 ```bash
-npx wrangler preview delete
+# View preview_defaults on the parent Worker
+curl -s "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/workers/$WORKER_ID" \
+  -H "Authorization: Bearer $API_TOKEN" | jq '.result.preview_defaults'
+
+# List all previews
+curl -s "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/workers/$WORKER_ID/previews" \
+  -H "Authorization: Bearer $API_TOKEN" | jq '.result'
+
+# View a specific preview
+curl -s "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/workers/$WORKER_ID/previews/my-feature" \
+  -H "Authorization: Bearer $API_TOKEN" | jq '.result'
 ```
 
-You will be prompted to confirm. This deletes the preview and all its deployments.
+</TabItem>
+</Tabs>
 
-To delete a named preview from any branch:
+## 5. Delete a preview
+
+When you are done testing, delete the preview. This deletes the preview and all its deployments.
+
+<Tabs>
+<TabItem label="Dashboard">
+
+1. Navigate to your Worker in the [Cloudflare dashboard](https://dash.cloudflare.com/).
+2. Go to the **Previews** tab.
+3. Select the preview you want to delete.
+4. Go to **Settings** > **General** > **Delete**.
+
+</TabItem>
+<TabItem label="Wrangler">
 
 ```bash
+# Delete the preview for the current branch
+npx wrangler preview delete
+
+# Delete a named preview from any branch
 npx wrangler preview delete --name staging
 ```
 
+</TabItem>
+<TabItem label="API">
+
+```bash
+curl -X DELETE \
+  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/workers/$WORKER_ID/previews/my-feature" \
+  -H "Authorization: Bearer $API_TOKEN"
+```
+
+</TabItem>
+</Tabs>
+
 :::note
-Previews have an **Auto-deletion** setting in the dashboard. When enabled, the preview is automatically deleted when the tracking branch is deleted in the repository.
+**Git-connected Workers (Workers Builds):** Previews have an **Auto-deletion** setting in the dashboard. When enabled, the preview is automatically deleted when the tracking branch is deleted in the repository. This is on by default for previews created by Builds.
+
+**No git connection:** Auto-deletion does not apply. You are responsible for deleting previews you no longer need using `wrangler preview delete` or the dashboard.
 :::
 
 ## CLI reference
 
-| Command | Description |
+### `wrangler preview`
+
+Create or update a preview. If a preview already exists for the current branch (or the name you specify), it adds a new deployment to that preview. If no preview exists, it creates one.
+
+```bash
+npx wrangler preview [--name NAME]
+```
+
+Use `--name` to set a custom preview name instead of the current Git branch name. Useful for previews that are not tied to a specific branch.
+
+**Examples:**
+
+```bash
+# Create/update a preview for the current branch
+npx wrangler preview
+
+# Create/update a named preview
+npx wrangler preview --name staging
+```
+
+### `wrangler preview settings`
+
+View the current Preview Defaults — the merged result of settings stored on the API and the `previews` block in your Wrangler configuration file.
+
+```bash
+npx wrangler preview settings
+```
+
+### `wrangler preview settings update`
+
+Push the `previews` block from your Wrangler configuration file to the API as Preview Defaults. New previews created after this will inherit the updated settings.
+
+```bash
+npx wrangler preview settings update
+```
+
+### `wrangler preview secret put`
+
+Add or update a secret in Preview Defaults. All previews inherit this secret. Production secrets are not affected.
+
+```bash
+npx wrangler preview secret put SECRET_NAME
+```
+
+You will be prompted to enter the secret value.
+
+### `wrangler preview secret list`
+
+List all secrets stored in Preview Defaults.
+
+```bash
+npx wrangler preview secret list
+```
+
+### `wrangler preview secret delete`
+
+Remove a secret from Preview Defaults.
+
+```bash
+npx wrangler preview secret delete SECRET_NAME
+```
+
+### `wrangler preview delete`
+
+Delete a preview and all of its deployments.
+
+```bash
+npx wrangler preview delete [--name NAME]
+```
+
+| Flag | Description |
 | --- | --- |
-| `wrangler preview` | Create or update a preview for the current branch |
-| `wrangler preview --name NAME` | Create or update a preview with a custom name |
-| `wrangler preview settings` | View current Preview Defaults |
-| `wrangler preview settings update` | Update Preview Defaults from Wrangler configuration file |
-| `wrangler preview secret put NAME` | Add a secret to Preview Defaults |
-| `wrangler preview secret list` | List preview secrets |
-| `wrangler preview secret delete NAME` | Delete a preview secret |
-| `wrangler preview delete` | Delete the preview for the current branch |
-| `wrangler preview delete --name NAME` | Delete a named preview |
+| `--name` | Delete a specific named preview instead of the preview for the current branch. |
+
+**Examples:**
+
+```bash
+# Delete the preview for the current branch
+npx wrangler preview delete
+
+# Delete a named preview from any branch
+npx wrangler preview delete --name staging
+```
+
+## API reference
+
+{/* TODO: add link to REST API reference once published */}
 
 ## Next steps
 
 - [Concepts](/workers/worker-previews/concepts/) — How previews relate to versions, deployments, and bindings
-- [Workflow guides](/workers/worker-previews/workflows/) — Choose the right workflow for your setup (Workers Builds, Wrangler, gradual rollouts)
+- [Workflow guides](/workers/worker-previews/workflows/) — Choose the right workflow for your setup (Workers Builds or Wrangler CLI)
+- [Gradual rollouts and rollbacks](/workers/worker-previews/rollouts-and-rollbacks/) — How rollouts and rollbacks work alongside previews
+- [Custom domains](/workers/worker-previews/custom-domains/) — Serve previews on your own domain
 - [Durable Object isolation](/workers/worker-previews/durable-object-isolation/) — Isolated DO storage in previews
 

@@ -1,0 +1,126 @@
+---
+pcx_content_type: how-to
+title: With Workers Builds (git-connected)
+description: Use Worker Previews with Workers Builds — automatic previews on feature branches, automatic deploys on merge.
+sidebar:
+  order: 1
+---
+
+Your Worker is connected to a Git repository via [Workers Builds](/workers/ci-cd/builds/). Builds runs the right command based on the branch — feature branches create previews, the production branch deploys to production.
+
+![With Workers Builds](~/assets/images/workers/worker-previews/lifecycle-with-builds.svg)
+
+---
+
+## Deploy on merge
+
+The simplest setup. Feature branches get previews. Merging to main deploys to production at 100%.
+
+**Your build settings:**
+
+| Setting | Value |
+| --- | --- |
+| Deploy command | `npx wrangler deploy` |
+| Preview command | `npx wrangler preview` |
+
+**How it works:**
+
+1. Push to a feature branch — Builds runs `wrangler preview`. A preview is created with isolated bindings.
+2. Test against the preview URL (`my-feature-my-worker.subdomain.workers.dev`).
+3. Merge to main — Builds runs `wrangler deploy`. Production is updated at 100%.
+
+**To set this up:**
+
+1. Navigate to your Worker in the Cloudflare dashboard.
+2. Go to **Settings** > **Build**.
+3. Set the **Preview command** (labeled "Non-production branch deploy command" in the dashboard) to `npx wrangler preview`.
+4. If you have not already, [configure preview bindings and settings](/workers/worker-previews/#1-configure-preview-bindings-and-settings).
+5. Push to a feature branch. A preview will be created automatically.
+
+:::note[What if you change the preview command back to `wrangler versions upload`?]
+If you switch the preview command from `npx wrangler preview` to `npx wrangler versions upload`:
+
+- **Existing Workers** (created before Worker Previews): `wrangler versions upload` will still generate a version URL and Builds will write it back to your Git provider. These URLs use [production bindings](/workers/worker-previews/concepts/#previews-vs-version-urls).
+- **New Workers** (created after Worker Previews): `wrangler versions upload` will **not** generate a URL. Version URLs are disabled for new Workers and cannot be enabled. Use `wrangler preview` for preview URLs.
+:::
+
+---
+
+## Deploy on merge with gradual rollouts
+
+There are two ways to set this up. The tradeoff is whether every merge automatically creates a version you have to manually roll out, or whether you keep automatic deploys and only use gradual rollouts when you choose to.
+
+### Option 1: Every merge creates a version (you always control rollout)
+
+| Setting | Value |
+| --- | --- |
+| Deploy command | `npx wrangler versions upload` |
+| Preview command | `npx wrangler preview` |
+
+**How it works:**
+
+1. Push to a feature branch — Builds runs `wrangler preview`. Preview is created with isolated bindings.
+2. Test against the preview URL.
+3. Merge to main — Builds runs `wrangler versions upload`. A version is created. **No traffic changes.**
+4. You control the rollout via Wrangler, the dashboard, or the [API](/api/resources/workers/subresources/scripts/subresources/deployments/methods/create/):
+
+```bash
+# Interactive — prompts you to pick versions and percentages
+npx wrangler versions deploy
+
+# Non-interactive — specify directly
+npx wrangler versions deploy <VERSION_ID>@<PERCENTAGE> <OLD_VERSION_ID>@<PERCENTAGE> -y
+```
+
+**The tradeoff:** Every merge to main creates a version that sits at 0% traffic until you roll it out. If you merge frequently, versions will pile up and each one requires a manual `versions deploy` step.
+
+### Option 2: Keep automatic deploys, gradual rollout only when needed
+
+| Setting | Value |
+| --- | --- |
+| Deploy command | `npx wrangler deploy` |
+| Preview command | `npx wrangler preview` |
+
+This is the same as [deploy on merge](#deploy-on-merge) — merging to main deploys to 100% automatically. When you want a gradual rollout for a specific change, skip the merge and run `wrangler versions upload` from the CLI instead:
+
+```bash
+git checkout main
+git merge my-feature
+
+# Instead of letting Builds auto-deploy, upload a version manually
+npx wrangler versions upload
+
+# Then control the rollout
+npx wrangler versions deploy
+```
+
+**The tradeoff:** Most merges deploy immediately. You only use gradual rollouts for changes where you want extra control. But you have to remember to run `wrangler versions upload` manually instead of merging through the normal flow.
+
+For the full gradual rollout and rollback guide, see [Gradual rollouts and rollbacks](/workers/worker-previews/rollouts-and-rollbacks/).
+
+---
+
+For how preview isolation works (same code, different bindings), see [How isolation works](/workers/worker-previews/workflows/#how-isolation-works).
+
+---
+
+## Common scenarios
+
+### "I tested in a preview. How do I ship to production?"
+
+Merge your PR. Builds runs your deploy command on main — either `wrangler deploy` (deploys to 100%) or `wrangler versions upload` (creates a version for gradual rollout), depending on your build settings.
+
+The code is the same as what you tested. The difference is it now runs with production bindings instead of preview bindings.
+
+### "A preview build failed. Where do I see it?"
+
+1. Go to your Worker in the Cloudflare dashboard.
+2. Navigate to the **Previews** tab.
+3. Click on the preview (branch) that failed.
+4. Check the **Deployments** list inside the preview — failed builds will show there.
+
+Alternatively, check your Git provider (GitHub/GitLab) for build status checks on the branch.
+
+### "My preview command was `wrangler versions upload`. What changes?"
+
+Changing from `wrangler versions upload` to `wrangler preview` means non-production branches will create isolated previews instead of production versions. Your deploy command is unchanged. See [Switching from `wrangler versions upload`](/workers/worker-previews/workflows/#switching-from-wrangler-versions-upload) for the full walkthrough.

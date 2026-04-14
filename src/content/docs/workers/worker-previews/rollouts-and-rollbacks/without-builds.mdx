@@ -1,0 +1,84 @@
+---
+pcx_content_type: how-to
+title: Without Workers Builds (no git connection)
+description: Gradual rollouts and rollbacks using the Wrangler CLI without Workers Builds.
+sidebar:
+  order: 2
+---
+
+Your Worker is not connected to a Git repository via Workers Builds. You run all commands from the command line.
+
+## The lifecycle
+
+![Lifecycle without Workers Builds](~/assets/images/workers/worker-previews/lifecycle-without-builds.svg)
+
+1. On a feature branch, run `wrangler preview`. Preview is created with isolated bindings.
+2. Test against the preview URL.
+3. Merge to main, checkout main.
+4. Run `wrangler versions upload` to create a version. No traffic changes.
+5. Run `wrangler versions deploy` to start the rollout.
+
+:::note
+Why merge first? Because `wrangler versions upload` uses your production bindings, secrets, and variables. Running it from main ensures you are deploying the merged code with production configuration.
+:::
+
+---
+
+## Gradual rollouts
+
+![Gradual rollout](~/assets/images/workers/worker-previews/gradual-rollout.svg)
+
+```bash
+git checkout main
+git merge my-feature
+
+# Upload a version without deploying it
+npx wrangler versions upload
+
+# Start the rollout
+npx wrangler versions deploy
+# Interactive prompt: pick versions and percentages
+# Example: 10% new, 90% old
+```
+
+Monitor error rates and metrics. If healthy, increase:
+
+```bash
+# Promote to 100%
+npx wrangler versions deploy --version-id <NEW_VERSION_ID> --percentage 100
+```
+
+---
+
+## Rollbacks
+
+A rollback routes 100% of production traffic back to a previous version. Works from any state — 10/90, 50/50, or 100%.
+
+![Rollback](~/assets/images/workers/worker-previews/rollback.svg)
+
+```bash
+# List recent versions
+npx wrangler versions list
+
+# Route 100% to the previous version
+npx wrangler versions deploy --version-id <PREVIOUS_VERSION_ID> --percentage 100
+```
+
+Or from the dashboard: go to your Worker's **Deployments** tab and click **Rollback** on a previous version.
+
+---
+
+## Rollbacks do not affect previews
+
+Your preview environments continue running their own code against their own bindings, regardless of what happens in production. You can roll back production while your team keeps testing on their branches.
+
+---
+
+## If you do not need gradual rollouts
+
+Skip `wrangler versions upload` and `wrangler versions deploy` entirely. Just deploy to 100%:
+
+```bash
+npx wrangler preview        # test on isolated preview
+npx wrangler deploy          # deploy to 100% (after merge to main)
+```

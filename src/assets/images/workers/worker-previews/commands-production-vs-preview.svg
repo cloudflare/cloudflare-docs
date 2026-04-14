@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 300" fill="none">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .cmd { font-size: 12px; fill: #1a1a1a; font-family: 'SF Mono', 'Fira Code', monospace; font-weight: 600; }
+    .sublabel { font-size: 11px; fill: #6b7280; }
+    .box { rx: 8; stroke-width: 1.5; }
+    .box-preview { fill: #eff6ff; stroke: #3b82f6; }
+    .box-prod { fill: #fff7ed; stroke: #f6821f; }
+    .section-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+  </style>
+
+  <!-- Preview section -->
+  <text x="410" y="24" text-anchor="middle" class="section-label" style="fill: #3b82f6;">Preview</text>
+
+  <rect x="260" y="40" width="300" height="48" class="box box-preview"/>
+  <text x="410" y="69" text-anchor="middle" class="cmd">wrangler preview</text>
+
+  <text x="410" y="112" text-anchor="middle" class="sublabel">Isolated bindings, secrets, and data stores. Never affects production.</text>
+
+  <!-- Divider -->
+  <line x1="30" y1="136" x2="790" y2="136" stroke="#e5e7eb" stroke-width="1.5"/>
+
+  <!-- Production section -->
+  <text x="410" y="164" text-anchor="middle" class="section-label" style="fill: #f6821f;">Production</text>
+
+  <rect x="30" y="180" width="240" height="48" class="box box-prod"/>
+  <text x="150" y="209" text-anchor="middle" class="cmd">wrangler deploy</text>
+
+  <rect x="290" y="180" width="240" height="48" class="box box-prod"/>
+  <text x="410" y="209" text-anchor="middle" class="cmd">wrangler versions upload</text>
+
+  <rect x="550" y="180" width="240" height="48" class="box box-prod"/>
+  <text x="670" y="209" text-anchor="middle" class="cmd">wrangler versions deploy</text>
+
+  <!-- Per-command subtitles -->
+  <text x="150" y="246" text-anchor="middle" class="sublabel">Deploys to 100%</text>
+  <text x="150" y="260" text-anchor="middle" class="sublabel">immediately</text>
+
+  <text x="410" y="246" text-anchor="middle" class="sublabel">Uploads a version</text>
+  <text x="410" y="260" text-anchor="middle" class="sublabel">without deployment</text>
+
+  <text x="670" y="246" text-anchor="middle" class="sublabel">Routes traffic to</text>
+  <text x="670" y="260" text-anchor="middle" class="sublabel">version(s) at %</text>
+
+  <!-- Legend -->
+  <rect x="310" y="284" width="10" height="10" rx="2" fill="#eff6ff" stroke="#3b82f6" stroke-width="1"/>
+  <text x="326" y="293" class="sublabel">Preview</text>
+  <rect x="410" y="284" width="10" height="10" rx="2" fill="#fff7ed" stroke="#f6821f" stroke-width="1"/>
+  <text x="426" y="293" class="sublabel">Production</text>
+</svg>

@@ -3,9 +3,7 @@ pcx_content_type: how-to
 title: Custom domains
 description: Serve Worker Previews on your own custom domains instead of just workers.dev URLs.
 sidebar:
-  order: 3
-  badge:
-    text: Beta
+  order: 4
 ---
 
 import { WranglerConfig } from "~/components";
@@ -28,7 +26,7 @@ Both `workers.dev` and custom domains support preview traffic, each with a `prev
 | Custom domains | Domains API | `true` | `false` |
 
 - **workers.dev** is a setting on the Worker itself. Not enabled by default — you explicitly enable it through the Worker settings.
-- **Custom domains** are separate resources created through the [Domains API](/api/resources/workers/subresources/domains/methods/update/). When created, `production_enabled` defaults to `true` and `previews_enabled` defaults to `false`.
+- **Custom domains** are separate resources created through the [Domains API](/api/resources/workers/subresources/domains/methods/update/). When created, `enabled` defaults to `true` and `previews_enabled` defaults to `false`.
 
 When you set `previews_enabled` to `true` on a custom domain (for example, `app.example.com`), each preview automatically gets a subdomain. A preview called `new-checkout` becomes accessible at `new-checkout.app.example.com`. A wildcard DNS record and wildcard SSL certificate are created automatically behind the scenes.
 
@@ -54,7 +52,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/domains 
     "zone_id": "{zone_id}",
     "hostname": "app.example.com",
     "service": "my-worker",
-    "production_enabled": true,
+    "enabled": true,
     "previews_enabled": true
   }'
 ```
@@ -66,7 +64,7 @@ This enables both production and preview traffic on `app.example.com`. After thi
 
 ### Using Wrangler configuration
 
-Add `production_enabled` and `previews_enabled` to your custom domain route in your Wrangler configuration file:
+Add `enabled` and `previews_enabled` to your custom domain route in your Wrangler configuration file:
 
 <WranglerConfig>
 
@@ -79,7 +77,7 @@ Add `production_enabled` and `previews_enabled` to your custom domain route in y
 		{
 			"pattern": "app.example.com",
 			"custom_domain": true,
-			"production_enabled": true,
+			"enabled": true,
 			"previews_enabled": true
 		}
 	]
@@ -104,7 +102,7 @@ The preview name in the subdomain matches the preview name from `wrangler previe
 
 You can control which traffic types a custom domain serves by combining the two flags:
 
-| `production_enabled` | `previews_enabled` | Result |
+| `enabled` | `previews_enabled` | Result |
 | --- | --- | --- |
 | `true` | `false` | `app.example.com` serves production only (default) |
 | `true` | `true` | `app.example.com` serves production, `*.app.example.com` serves previews |
@@ -142,7 +140,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/domains 
     "zone_id": "{zone_id}",
     "hostname": "app.example.com",
     "service": "my-worker",
-    "production_enabled": true,
+    "enabled": true,
     "previews_enabled": false
   }'
 ```

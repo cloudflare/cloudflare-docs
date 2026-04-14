@@ -1,0 +1,71 @@
+---
+pcx_content_type: how-to
+title: With Workers Builds (git-connected)
+description: Gradual rollouts and rollbacks for git-connected Workers using Workers Builds.
+sidebar:
+  order: 1
+---
+
+Your Worker is connected to a Git repository via [Workers Builds](/workers/ci-cd/builds/). Builds creates a version on merge to main. You control when and how to roll it out.
+
+## The lifecycle
+
+![Lifecycle with Workers Builds](~/assets/images/workers/worker-previews/lifecycle-with-builds.svg)
+
+1. Push to a feature branch — Builds runs `wrangler preview`. Preview is created with isolated bindings.
+2. Test against the preview URL.
+3. Merge to main — Builds runs `wrangler versions upload`. A version is created. No traffic changes.
+4. You run `wrangler versions deploy` to start the rollout.
+
+**Your build settings:**
+
+| Setting | Value |
+| --- | --- |
+| Deploy command | `npx wrangler versions upload` |
+| Preview command | `npx wrangler preview` |
+
+---
+
+## Gradual rollouts
+
+![Gradual rollout](~/assets/images/workers/worker-previews/gradual-rollout.svg)
+
+After a merge to main, Builds runs `wrangler versions upload`. The version is created with 0% traffic. You then control the rollout:
+
+```bash
+# Start the rollout at your chosen percentage
+npx wrangler versions deploy
+# Interactive prompt: pick versions and percentages
+# Example: 10% new, 90% old
+```
+
+Monitor error rates and metrics. If healthy, increase:
+
+```bash
+# Promote to 100%
+npx wrangler versions deploy --version-id <NEW_VERSION_ID> --percentage 100
+```
+
+---
+
+## Rollbacks
+
+A rollback routes 100% of production traffic back to a previous version. Works from any state — 10/90, 50/50, or 100%.
+
+![Rollback](~/assets/images/workers/worker-previews/rollback.svg)
+
+```bash
+# List recent versions
+npx wrangler versions list
+
+# Route 100% to the previous version
+npx wrangler versions deploy --version-id <PREVIOUS_VERSION_ID> --percentage 100
+```
+
+Or from the dashboard: go to your Worker's **Deployments** tab and click **Rollback** on a previous version.
+
+---
+
+## Rollbacks do not affect previews
+
+Your preview environments continue running their own code against their own bindings, regardless of what happens in production. You can roll back production while your team keeps testing on their branches.

@@ -1,0 +1,21 @@
+---
+pcx_content_type: navigation
+title: Gradual rollouts and rollbacks
+description: How gradual rollouts and rollbacks work alongside Worker Previews.
+sidebar:
+  order: 6
+---
+
+import { DirectoryListing } from "~/components";
+
+Gradual rollouts and rollbacks are **production operations**. They work with versions and deployments, not with previews. Previews and production rollouts are fully independent — changing a rollout percentage does not affect any preview, and vice versa.
+
+| | Previews | Gradual rollouts / Rollbacks |
+| --- | --- | --- |
+| **Pipeline** | Preview (isolated) | Production |
+| **Command** | `wrangler preview` | `wrangler versions upload` + `wrangler versions deploy` |
+| **Bindings** | Preview Defaults | Production bindings |
+| **Traffic** | All preview traffic → latest push | Split across versions by % |
+| **Affect each other** | No | No |
+
+<DirectoryListing />
