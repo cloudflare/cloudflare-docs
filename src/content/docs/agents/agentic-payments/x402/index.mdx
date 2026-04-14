@@ -45,8 +45,8 @@ x402 uses payment **schemes** to define how a payment is constructed and settled
 
 | Scheme                                                                                    | Networks                                 | Description                                                                                                                       |
 | ----------------------------------------------------------------------------------------- | ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| [`exact`](https://github.com/coinbase/x402/blob/main/specs/schemes/exact/scheme_exact.md) | EVM, Solana, Aptos, Stellar, Hedera, Sui | Transfers a fixed token amount — typically [ERC-20](https://eips.ethereum.org/EIPS/eip-20) USDC on EVM — to the merchant address. |
-| [`upto`](https://github.com/coinbase/x402/blob/main/specs/schemes/upto/scheme_upto.md)    | EVM                                      | Authorizes a maximum amount; the actual charge is determined at settlement time based on resource consumption.                    |
+| [`exact`](https://github.com/x402-foundation/x402/blob/main/specs/schemes/exact/scheme_exact.md) | EVM, Solana, Aptos, Stellar, Hedera, Sui | Transfers a fixed token amount — typically [ERC-20](https://eips.ethereum.org/EIPS/eip-20) USDC on EVM — to the merchant address. |
+| [`upto`](https://github.com/x402-foundation/x402/blob/main/specs/schemes/upto/scheme_upto.md)    | EVM                                      | Authorizes a maximum amount; the actual charge is determined at settlement time based on resource consumption.                    |
 
 Supported networks include Base, Ethereum, Polygon, Optimism, Arbitrum, Avalanche, Solana, Aptos, Stellar, and Sui. Use `base-sepolia` for testing with free test USDC from the [Circle Faucet](https://faucet.circle.com/).
 
@@ -92,6 +92,6 @@ Supported networks include Base, Ethereum, Polygon, Optimism, Arbitrum, Avalanch
 ## Related
 
 - [x402.org](https://x402.org) — Protocol specification
-- [x402 GitHub](https://github.com/coinbase/x402) — Open source SDK
+- [x402 GitHub](https://github.com/x402-foundation/x402) — Open source SDK
 - [x402 examples](https://github.com/cloudflare/agents/tree/main/examples) — Complete working code
 - [Pay Per Crawl](/ai-crawl-control/features/pay-per-crawl/) — Cloudflare-native monetization

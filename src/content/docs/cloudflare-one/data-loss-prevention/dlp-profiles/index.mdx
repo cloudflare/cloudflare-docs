@@ -8,7 +8,9 @@ sidebar:
 
 import { Render } from "~/components";
 
-A DLP profile is a collection of regular expressions and [detection entries](/cloudflare-one/data-loss-prevention/detection-entries/) that define the data patterns you want to detect. Cloudflare DLP provides predefined profiles for common detections, or you can build custom DLP profiles specific to your data, organization, and risk tolerance.
+A DLP profile defines what sensitive data looks like so that DLP can detect it in your traffic. Each profile contains one or more [detection entries](/cloudflare-one/data-loss-prevention/detection-entries/) — patterns such as uploaded datasets, document fingerprints, and AI prompt topic classifiers that match specific types of data.
+
+Cloudflare DLP provides [predefined profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/predefined-profiles/) for common sensitive data types such as credit card numbers and national identifiers. You can also build custom DLP profiles specific to your data, organization, and risk tolerance.
 
 ## Configure a predefined profile
 

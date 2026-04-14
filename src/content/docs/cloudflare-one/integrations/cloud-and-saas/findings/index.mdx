@@ -29,7 +29,7 @@ To view details about the posture findings that CASB found:
 
 Cloud & SaaS findings will display details about your posture finding, including the finding type, [severity level](#severity-levels), number of instances, associated integration, current status, and date detected. For more information on each instance of the finding, select **Manage**.
 
-To manage the finding's visibility, you can update the finding's [severity level](#severity-levels) or [hide the finding](#hide-findings) from view. Additionally, some findings provide a remediation guide to resolve the issue or support [creating a Gateway HTTP policy](#resolve-finding-with-a-gateway-policy) to block the traffic.
+To manage the finding's visibility, you can update the finding's [severity level](#severity-levels) or [hide the finding](#hide-findings) from view. You can also [send a posture finding instance to a webhook](#send-webhook). Some findings also provide a remediation guide to resolve the issue or support [creating a Gateway HTTP policy](#resolve-finding-with-a-gateway-policy) to block the traffic.
 
 ### Severity levels
 
@@ -109,6 +109,24 @@ The finding's status will change from **Active** to **Ignored**. CASB will conti
 4. In the three-dot menu, select **Move to hidden**.
 
 The instance will be moved from **Active** to **Hidden** within the finding. If the finding occurs again for the same user, CASB will report the new instance quietly in the **Hidden** tab. You can move hidden instances back to the **Active** tab at any time.
+
+## Send webhook
+
+After you configure one or more [CASB webhooks](/cloudflare-one/integrations/cloud-and-saas/webhooks/), you can send posture finding instances to external systems such as chat platforms, ticketing systems, SIEMs, SOAR tools, and custom automation services.
+
+CASB webhooks currently support posture finding instances only.
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Cloud & SaaS findings** > **Posture Findings**.
+2. Choose **SaaS** or **Cloud**.
+3. Choose the finding you want to review, then select **Manage**.
+4. In **Active Instances**, select an instance.
+5. In the instance details panel, select **Send webhook**.
+6. Choose the webhook destination or destinations you want to use.
+7. Select **Send webhooks**.
+
+Cloudflare queues webhook sends in the background. A success message means that Cloudflare accepted the request for delivery.
+
+To validate a destination before sending a live finding instance, use **Test delivery** from the [Webhooks](/cloudflare-one/integrations/cloud-and-saas/webhooks/) page.
 
 ## Remediate findings
 

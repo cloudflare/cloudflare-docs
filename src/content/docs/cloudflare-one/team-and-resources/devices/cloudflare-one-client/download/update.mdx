@@ -12,9 +12,12 @@ This guide covers best practices for updating the Cloudflare One Client (formerl
 
 ## When to update the Cloudflare One Client
 
-Cloudflare recommends deploying the latest [stable release](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/) to get new bug fixes, performance improvements, and features. If you run into issues that require troubleshooting or support tickets, one of the first requested actions by our support team will be to update your clients to the latest version.
+There are two update strategies:
 
-We also recognize that there is a cost associated for a business to go through an update cycle, potentially related to change management, QA version testing, and other critical activities for software updates. Customers with limited software update cycles may choose to deploy only the latest [LTS (Long-term Support) release](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/lts-releases/) rather than deploy each stable release. This strategy reduces deployment churn while still addressing security bug fixes in a timely manner.
+- **Always deploy the latest stable release** (recommended) — You get the newest bug fixes, performance improvements, and features.
+- **Deploy only LTS releases** — If your organization has limited update cycles due to change management, QA testing, or other constraints, you can skip intermediate stable releases and deploy only the latest [LTS (Long-Term Support) release](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/lts-releases/). This strategy reduces deployment churn while still addressing security bug fixes in a timely manner.
+
+If you run into issues that require troubleshooting or support tickets, one of the first requested actions by our support team will be to update your clients to the latest version.
 
 <Render file="warp/support-lifecycle" product="cloudflare-one" />
 
@@ -28,7 +31,7 @@ To get notified of new releases, subscribe to the [Cloudflare One Client changel
 
 #### Managed devices
 
-JAMF, Intune, and other MDM tools perform software updates by installing a new binary file. If you deployed the Cloudflare One Client using a [device management tool](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/), the update procedure will look exactly the same as your initial installation. To update the Cloudflare One Client, simply push the [latest binary file](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/) with the same deployment parameters. End users will not be signed out of their client, and they will not have to manually engage with the update.
+JAMF, Intune, and other MDM tools perform software updates by installing a new binary file. If you deployed the Cloudflare One Client using a [device management tool](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/), the update procedure will look exactly the same as your initial installation. To update the Cloudflare One Client, push the [latest binary file](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/) with the same deployment parameters. End users will not be signed out of their client, and they will not have to manually engage with the update.
 
 #### Unmanaged devices
 

@@ -12,9 +12,9 @@ head:
 
 import { FeatureTable, GlossaryTooltip, Render, Card } from "~/components";
 
-Cloudflare Snippets provide a powerful and flexible way to customize the behavior of your website or application using short pieces of JavaScript code. With Snippets, you can modify HTTP response headers, implement <GlossaryTooltip term="JSON web token (JWT)" prepend="JSON web token (JWT) is ">JWT</GlossaryTooltip> validation, perform complex <GlossaryTooltip term="redirect">redirects</GlossaryTooltip>, and much more.
+Cloudflare Snippets allow you to run short pieces of JavaScript code on Cloudflare's network to customize how requests and responses are handled for your website or application. With Snippets, you can modify HTTP response headers, implement <GlossaryTooltip term="JSON web token (JWT)" prepend="JSON web token (JWT) is ">JWT</GlossaryTooltip> validation, perform complex <GlossaryTooltip term="redirect">redirects</GlossaryTooltip>, and more.
 
-For code samples addressing common use cases, please refer to the [Examples](/rules/snippets/examples/) section.
+For code samples addressing common use cases, refer to the [Examples](/rules/snippets/examples/) section.
 
 <Render
 	file="rules-requirements"
@@ -26,8 +26,8 @@ For code samples addressing common use cases, please refer to the [Examples](/ru
 
 To create and deploy a snippet, you need to define the following elements:
 
-- **Code snippet**: JavaScript code to be executed during the request-handling process.
 - **Snippet rule**: A [filter expression](/ruleset-engine/rules-language/expressions/) that determines which requests the Snippet will be applied to. Each snippet can only be associated with one snippet rule.
+- **Code snippet**: JavaScript code that runs on the Cloudflare network when a request matches the associated snippet rule.
 
 For more information, refer to [How Snippets work](/rules/snippets/how-it-works/) and [Create a snippet in the dashboard](/rules/snippets/create-dashboard/).
 
@@ -49,7 +49,7 @@ Currently, [Version Management](/version-management/) does not support Snippets.
 
 ## Limits
 
-Cloudflare Snippets are designed for fast, lightweight edge logic. The following limits apply:
+Cloudflare Snippets are designed for fast, lightweight logic that runs on the Cloudflare network. The following limits apply:
 
 | Description                | All plans |
 | -------------------------- | --------- |

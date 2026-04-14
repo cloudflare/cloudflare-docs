@@ -6,13 +6,15 @@ sidebar:
 
 ---
 
-import { Details, DashButton } from "~/components"
+import { Details, DashButton } from "~/components";
 
 :::note
 You must have a Cloudforce One subscription to access Cloudforce One on the dashboard.
 :::
 
-Cloudforce One is an actionable, cloud-native Threat Intelligence Platform (TIP) that transforms global telemetry into instant security posture. By integrating visualization, automation, and human-in-the-loop analysis, Cloudforce One allows SOC teams to go from data management to active threat hunting.
+Cloudforce One is Cloudflare's Threat Intelligence Platform (TIP). It collects and correlates threat data from Cloudflare telemetry, then surfaces that data as visualizations, automated rules, and analyst-reviewed intelligence.
+
+Security Operations Center ([SOC](https://www.cloudflare.com/en-gb/learning/security/glossary/what-is-a-security-operations-center-soc/)) teams use Cloudforce One to investigate threats, track adversaries, and take action — such as pushing firewall rules or exporting indicators.
 
 ## Access Cloudforce One
 
@@ -26,40 +28,40 @@ To access Cloudforce One:
 
    <DashButton url="/?to=/:account/security-center/threat-intelligence" />
 
-You can also use Cloudforce One via [REST API](https://developers.cloudflare.com/api/resources/cloudforce_one/subresources/requests/subresources/assets/).
+You can also use Cloudforce One via the [REST API](/api/resources/cloudforce_one/subresources/requests/subresources/assets/).
 
-Cloudforce One Threat Intelligence displays the following information:
+The Threat Intelligence page contains four sections:
 
-- **Threat Events** to analyze threat intelligence data.
-- **Priority Intelligence Requirements** to review and manage Cloudforce One Priority Intelligence Requirements (PIRs). PIRs are a structured approach to identifying intelligence gaps.
-- **Requests for Information** to submit specific queries and requests directly into Cloudforce One's analysis queue.
-- **Reports** to get the latest Cloudforce One Threat reports.
+- **Threat Events** — View and analyze threat intelligence data collected across the Cloudflare network.
+- **Priority Intelligence Requirements (PIRs)** — Define the intelligence topics your organization needs to track. PIRs help you identify gaps in your threat coverage.
+- **Requests for Information (RFIs)** — Submit specific queries to the Cloudforce One analysis team.
+- **Reports** — Read the latest threat reports published by Cloudforce One.
 
 ## Analyze threat events
 
-Threat events allow you to protect your assets and respond to emerging threats.
+Threat events represent Cloudflare telemetry and threat actor activity observed on the Cloudflare network. Use threat events to investigate threats targeting your organization or your industry.
 
-To access and analyze threat intelligence data on the Cloudflare dashboard, go to the **Threat intelligence** page.
+To access threat events, go to the **Threat intelligence** page in the Cloudflare dashboard.
 
-   <DashButton url="/?to=/:account/security-center/threat-intelligence" />
+<DashButton url="/?to=/:account/security-center/threat-intelligence" />
 
 You can also access threat events via the [API](/api/resources/cloudforce_one/subresources/threat_events/).
 
-Cloudforce One customers have access to the following existing datasets:
+Cloudforce One customers have access to the following datasets:
 
-- APTs (default)
-- DDoS attacks 
+- Advanced Persistent Threats (APTs) — the default dataset
+- [DDoS](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/) attacks
 - Cybercrime
 - Compromised devices
-- Residential Proxies
-- WAF attacks 
+- Residential proxies
+- [WAF](/waf/) attacks
 
 ### Identify the adversary
 
-The Cloudflare dashboard presents you with dynamic visualizations that include:
+The Cloudflare dashboard provides visualizations that include:
 
-- Sankey diagrams: Diagrams that allow you to trace attack flows from origin infrastructure to targets.
-- Industry distribution: Identify if campaigns are targeting your specific sector (for example, finance or retail).
+- **Sankey diagrams** — Flow diagrams that visualize the distribution of attacks across origins and targets. Use these to trace attack flows from origin infrastructure to targets.
+- **Industry distribution** — Identify whether campaigns are targeting your specific sector (for example, finance or retail).
 
 ### Search for indicators
 
@@ -67,14 +69,14 @@ Search across global datasets for specific indicators, including:
 
 - IP addresses and domains
 - File hashes
-- [JA3 fingerprints](/bots/additional-configurations/ja3-ja4-fingerprint/)
-- Threat insights: Correlate threat insights by linking events to specific campaigns or industry aliases (for example, APT28).
+- [JA3 fingerprints](/bots/additional-configurations/ja3-ja4-fingerprint/) — TLS client fingerprints used to profile specific SSL/TLS clients across different destinations
+- Threat insights — Link events to specific campaigns or threat actor names (for example, APT28).
 
 ### Receive alerts
 
-- Threat events saved views: Save custom filters for recurring investigations.
-- Automated rules: Generate security rules directly from threat data and push them to your Cloudflare [WAF](/waf/) or Firewall.
-- [STIX2 exports](https://www.cloudflare.com/en-gb/learning/security/what-is-stix-and-taxii/): Export intelligence for seamless integration with third-party SIEM/SOAR platforms.
+- **Saved views** — Save custom filters for recurring threat event investigations.
+- **Automated rules** — Generate security rules from threat data and push them to your Cloudflare [WAF](/waf/) or firewall.
+- **[STIX2](https://www.cloudflare.com/en-gb/learning/security/what-is-stix-and-taxii/) exports** — Export threat intelligence in STIX2 format for integration with third-party [SIEM](https://www.cloudflare.com/en-gb/learning/security/what-is-siem/) (Security Information and Event Management) or SOAR (Security Orchestration, Automation, and Response) platforms.
 
 ## Use Cloudy to analyze threat events
 
@@ -104,31 +106,31 @@ To submit RFIs (Request for Information):
 
 <Details header="List of RFI types">
 
-The Cloudflare dashboard presents the following request types when you want to configure a Cloudforce One Requests for Information:
+The following request types are available when you submit a Request for Information:
 
-- **Binary Analysis - IOCs**: Conduct high level malware analysis to produce [indicators](https://www.cloudflare.com/en-gb/learning/security/what-are-indicators-of-compromise/) such as a call-back domain or IP address.
+- **Binary Analysis - IOCs**: Conduct high-level malware analysis to produce [indicators of compromise (IOCs)](https://www.cloudflare.com/en-gb/learning/security/what-are-indicators-of-compromise/) such as a callback domain (a domain the malware communicates with) or IP address.
 
-- **Binary Analysis - Report**: A thorough analysis of a malware sample to produce an attribution assessment and extract the configuration of the sample for further analysis. Useful for customers that are investigating a problem or trying to develop detection logic in an [EDR](https://en.wikipedia.org/wiki/Endpoint_detection_and_response) or network sensor.
+- **Binary Analysis - Report**: A detailed analysis of a malware sample. The report includes an attribution assessment (identifying the likely threat actor) and extracts the configuration of the sample for further analysis. Use this type when you are investigating an incident or developing detection logic in an Endpoint Detection and Response ([EDR](https://en.wikipedia.org/wiki/Endpoint_detection_and_response)) tool or network sensor.
 
-- **DDoS Attack**: Confirm if an attack is happening against a specific website to share any available indicators and potential attribution.
+- **DDoS Attack**: Confirm whether a [DDoS attack](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/) is occurring against a specific website. The response includes any available indicators and potential attribution.
 
-- **Indicator Analysis - IOCs**: Conduct DNS lookups, origin pivots, and account pivots to provide indicators such as DNS resolutions, origin IPs, and subdomains. Analysis can include account registration patterns and victimology.
+- **Indicator Analysis - IOCs**: Conduct DNS lookups, origin pivots, and account pivots to provide indicators such as DNS resolutions, origin IPs, and subdomains. Analysis can include account registration patterns and victimology (identifying who was targeted).
 
-- **Indicator Analysis - Report**: A thorough analysis of indicators written in a formal, structured format. In addition to listing [Indicator of compromise (IOCs)](https://www.cloudflare.com/en-gb/learning/security/what-are-indicators-of-compromise/), the report explains how IOCs function within the attack chain, and adds context by linking IOCs to specific campaigns and/or threat actors and their TTPs.
+- **Indicator Analysis - Report**: A detailed analysis of indicators written in a formal, structured format. In addition to listing [IOCs](https://www.cloudflare.com/en-gb/learning/security/what-are-indicators-of-compromise/), the report explains how IOCs function within the attack chain and links them to specific campaigns, threat actors, and their TTPs (Tactics, Techniques, and Procedures).
 
-- **Passive DNS Resolution**: Research the pair of an IP address to the domain it resolved to during a specified period of time.
+- **Passive DNS Resolution**: Search the historical pairing of an IP address to the domain it resolved to during a specified time period.
 
-- **Strategic Threat Research**: Strategic Threat Research goes beyond simple indicators to analyze broader, long-term trends, threat actors, and industries — often supplemented by open-source intelligence to inform high-level management and planning rather than providing immediately actionable intelligence.
+- **Strategic Threat Research**: Analysis of broader, long-term trends across threat actors and industries. This type is supplemented by open-source intelligence and is intended to inform management and planning rather than to produce immediately actionable indicators.
 
-- **Threat Detection Signature - IOCs**: Develop a rule such as Yara that will detect a sample, behavior, or network observable such as an IP address, domain, file hash, or attribute of a file or HTTP request.
+- **Threat Detection Signature - IOCs**: Develop a detection rule — such as a [YARA](https://virustotal.github.io/yara/) rule — that identifies a sample, behavior, or network observable (for example, an IP address, domain, file hash, or HTTP request attribute).
 
-- **Threat Detection Signature - Report**: A thorough analysis report that investigates the details of a threat detection alert or report for the benefit of customers that are trying to prioritize their response effort or to attribute activity to a threat actor.
+- **Threat Detection Signature - Report**: A detailed analysis that investigates a threat detection alert. Use this type when you need to prioritize your response effort or attribute activity to a threat actor.
 
-- **Traffic Analysis - IOCs**: Review HTTP telemetry of IOCs in question and provide relevant, sanitized traffic which can include victim country and in some cases victim ASNs. Identify malicious files/payloads, and unusual file paths or request patterns.
+- **Traffic Analysis - IOCs**: Review HTTP telemetry for the IOCs in question. The response provides relevant, sanitized traffic that can include the victim country and, in some cases, victim Autonomous System Numbers (ASNs). This also identifies malicious files, payloads, and unusual file paths or request patterns.
 
-- **Traffic Analysis - Report**: Report that analyzes HTTP telemetry to identify patterns, anomalies, and data pointing to malicious behavior. Provides context for observed network behaviors and maps them to known TTPs of specific threat groups.
+- **Traffic Analysis - Report**: Analysis of HTTP telemetry to identify patterns, anomalies, and indicators of malicious behavior. The report provides context for observed network behaviors and maps them to known TTPs of specific threat groups.
 
-- **Vulnerability**: Investigation to attribute vulnerability exploitation to a threat actor or investigation of IPs, domains, or threat actor groups exploiting the vulnerability. Response can include relevant, sanitized traffic demonstrating exploitation and identification of victim countries and industries.
+- **Vulnerability**: Investigation to attribute vulnerability exploitation to a threat actor, or to identify IPs, domains, or threat actor groups exploiting a specific vulnerability. The response can include relevant, sanitized traffic demonstrating exploitation and identification of victim countries and industries.
 
 </Details>
 
@@ -155,21 +157,21 @@ To download an attachment, select **Download** on the attachment.
 
 ## Receive help for an incident
 
-Cloudforce One allows you to receive help to improve your security posture or recover from a past incident. This allows you to easily report security incidents directly within the Cloudflare dashboard.
+Use Cloudforce One to report security incidents or request security services through the Cloudflare dashboard.
 
 1. In the Cloudflare dashboard, go to the **Threat Intelligence** page.
 
    <DashButton url="/?to=/:account/security-center/threat-intelligence" />
 
-2. Go to **Incident response services** then complete the following instructions:
+2. Go to **Incident response services**, then complete the following steps:
 
-- **Choose service**: 
-   - Select among **Receive post-incident support**, **Request penetration tests**, **Conduct table-top exercises**, **Ask for general security advice**. 
-   - Once you have chosen your desired service, select **Next**.
-- **Provide request details**: 
-   - Fill in the information needed based on the service you previously selected. Once you entered all the information, select **Next**.
-   - Review and submit your request. Then, select **Submit**.
-- Once you submit your request, Cloudforce One will reply to you as soon as possible.
+- **Choose service**:
+  - Select from **Receive post-incident support**, **Request penetration tests**, **Conduct table-top exercises**, or **Ask for general security advice**.
+  - Select **Next**.
+- **Provide request details**:
+  - Fill in the required information for the service you selected. Select **Next**.
+  - Review your request, then select **Submit**.
+- After you submit your request, the Cloudforce One team will respond.
 
 ## Request help for active attack
 

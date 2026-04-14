@@ -19,7 +19,7 @@ Our version is open sourced and can be found in [Cloudflare's fork of Puppeteer]
 <PackageManagers pkg="@cloudflare/puppeteer" dev />
 
 :::note
-The current version is [`@cloudflare/puppeteer` v1.0.4](https://github.com/cloudflare/puppeteer/releases/tag/v1.0.4), based on [Puppeteer v22.13.1](https://pptr.dev/chromium-support).
+The current version is [`@cloudflare/puppeteer` v1.1.0](https://github.com/cloudflare/puppeteer/releases/tag/v1.1.0), based on [Puppeteer v22.13.1](https://pptr.dev/chromium-support).
 :::
 
 ## Use Puppeteer in a Worker
@@ -53,7 +53,7 @@ This script [launches](https://pptr.dev/api/puppeteer.puppeteernode.launch) the 
 
 ### Keep Alive
 
-If users omit the `browser.close()` statement, it will stay open, ready to be connected to again and [re-used](/browser-rendering/workers-bindings/reuse-sessions/) but it will, by default, close automatically after 1 minute of inactivity. Users can optionally extend this idle time up to 10 minutes, by using the `keep_alive` option, set in milliseconds:
+If users omit the `browser.close()` statement, it will stay open, ready to be connected to again and [re-used](/browser-rendering/features/reuse-sessions/) but it will, by default, close automatically after 1 minute of inactivity. Users can optionally extend this idle time up to 10 minutes, by using the `keep_alive` option, set in milliseconds:
 
 ```js
 const browser = await puppeteer.launch(env.MYBROWSER, { keep_alive: 600000 });
@@ -78,6 +78,22 @@ await page.setUserAgent(
 :::note
 The `userAgent` parameter does not bypass bot protection. Requests from Browser Rendering will always be identified as a bot.
 :::
+
+## Local debugging with headful mode (experimental)
+
+When developing locally with `wrangler dev` or `vite dev`, Chrome runs in headless mode by default. To launch Chrome in visible (headful) mode, set the `X_BROWSER_HEADFUL` environment variable:
+
+```sh
+X_BROWSER_HEADFUL=true npx wrangler dev
+```
+
+Or with the [Cloudflare Vite plugin](/workers/vite-plugin/):
+
+```sh
+X_BROWSER_HEADFUL=true npx vite dev
+```
+
+This opens a browser window so you can watch your Puppeteer automation in real time, making it easier to debug navigation, element selection, and page interactions.
 
 ## Element selection
 

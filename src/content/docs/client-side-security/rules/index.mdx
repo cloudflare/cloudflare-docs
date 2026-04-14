@@ -16,9 +16,12 @@ import { GlossaryTooltip } from "~/components";
 Only available to customers with Client-Side Security Advanced.
 :::
 
-Content security rules (previously known as policies) define the resources allowed on your applications through <GlossaryTooltip term="content security policy (CSP)">Content Security Policy (CSP)</GlossaryTooltip> directives. These rules can log violations and also enforce an allowlist of resources, effectively blocking resources not included in the policies. These two types of content security rules are called log rules and allow rules, respectively.
+Content security rules (previously known as policies) define which resources your application is allowed to load. They work through <GlossaryTooltip term="content security policy (CSP)">Content Security Policy (CSP)</GlossaryTooltip> directives that Cloudflare adds to your HTTP responses. There are two types of content security rules:
 
-Create [allow rules](#rule-actions) to define a positive security model, also known as positive blocking. According to this model, you define what is allowed and reject everything else. Such an approach helps you reduce the attack surface for unwanted third-party scripts in your application.
+- **Log rules** report resources that fall outside your allowlist without blocking them.
+- **Allow rules** block any resource not explicitly listed.
+
+Create [allow rules](#rule-actions) to define an allowlist-based security model. You specify exactly which resources are permitted and everything else is rejected. This approach reduces the attack surface for unwanted third-party scripts in your application.
 
 A content security rule can control both client-side resources monitored by Cloudflare, such as scripts and their connections, and other types of resources. Refer to [Supported CSP directives](/client-side-security/rules/csp-directives/) for details.
 
@@ -30,8 +33,8 @@ Third-party service providers may require specific CSP directives. Refer to your
 
 A content security rule can perform one of the following actions:
 
-- **Log**: Cloudflare will log any resources not covered by the rule, without blocking any resources. Use this action to validate a new content security rule before deploying it. Resources not covered by the rule will be reported as [rule violations](/client-side-security/rules/violations/).
-- **Allow**: Cloudflare will block any resources not explicitly allowed by the content security rule. Switch to the _Allow_ action after validating a new rule with the _Log_ action, so that your content security rule does not block essential application resources, which would affect your application's end users. Rules with the _Allow_ action will log [rule violations](/client-side-security/rules/violations/) for any blocked resources.
+- **Log**: Cloudflare reports any resources not covered by the rule as [rule violations](/client-side-security/rules/violations/) without blocking them. Use this action to validate a new content security rule before deploying it.
+- **Allow**: Cloudflare blocks any resources not explicitly allowed by the rule and logs them as [rule violations](/client-side-security/rules/violations/). Switch to this action after validating a rule with the _Log_ action to avoid blocking essential application resources.
 
 For details on the CSP directives Cloudflare creates for each type of rule action, refer to [How client-side security works](/client-side-security/how-it-works/#headers-related-to-content-security-rules). For more information on the CSP directives supported by content security rules, refer to [Supported CSP directives](/client-side-security/rules/csp-directives/).
 

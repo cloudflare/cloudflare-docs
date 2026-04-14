@@ -26,7 +26,7 @@ It is important to understand a few Page Rules behaviors.
 
 Page Rules require a [proxied](/dns/proxy-status/) DNS record for your page rule to work. Page Rules will not apply to hostnames that do not exist in DNS or are not being directed to Cloudflare.
 
-Depending on the record type, you can use different values for the target as a placeholder. Either one of these achieves the same outcome and you only need to create one:
+If you are creating a Page Rule for a hostname that does not have a real origin server, you still need a proxied DNS record. You can use a reserved IP address or domain as a placeholder. The record only needs to exist so that Cloudflare proxies traffic for that hostname. Create one of the following:
 
 ```
 www.example.com  A      192.0.2.1
@@ -34,7 +34,7 @@ www.example.com  AAAA   2001:DB8::1
 www.example.com  CNAME  domain.example
 ```
 
-Cloudflare recommends only using reserved IP addresses or domain names to avoid sending traffic to foreign infrastructure.
+Cloudflare recommends using only reserved IP addresses or domain names for placeholder records to avoid accidentally routing traffic to infrastructure you do not own.
 
 For more information on reserved IP addresses or top level domains, please refer to these RFCs:
 

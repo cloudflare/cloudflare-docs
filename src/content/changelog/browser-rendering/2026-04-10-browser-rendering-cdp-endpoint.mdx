@@ -1,0 +1,50 @@
+---
+title: Browser Rendering adds Chrome DevTools Protocol (CDP) and MCP client support
+description: Connect to Browser Rendering from any environment using the Chrome DevTools Protocol, or use MCP clients for AI-powered browser automation.
+products:
+  - browser-rendering
+date: 2026-04-10
+---
+
+[Browser Rendering](/browser-rendering/) now exposes the [Chrome DevTools Protocol (CDP)](/browser-rendering/cdp/), the low-level protocol that powers browser automation. The growing ecosystem of CDP-based agent tools, along with existing CDP automation scripts, can now use Browser Rendering directly.
+
+Any CDP-compatible client, including [Puppeteer](/browser-rendering/cdp/puppeteer/) and [Playwright](/browser-rendering/cdp/playwright/), can connect from any environment, whether that is [Cloudflare Workers](/workers/), your local machine, or a cloud environment. All you need is your Cloudflare API key.
+
+For any existing CDP script, switching to Browser Rendering is a one-line change:
+
+```js
+const puppeteer = require("puppeteer-core");
+
+const browser = await puppeteer.connect({
+  browserWSEndpoint:
+    `wss://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/browser-rendering/devtools/browser?keep_alive=600000`,
+  headers: { Authorization: `Bearer ${API_TOKEN}` },
+});
+
+const page = await browser.newPage();
+await page.goto("https://example.com");
+console.log(await page.title());
+await browser.close();
+```
+
+Additionally, MCP clients like Claude Desktop, Claude Code, Cursor, and OpenCode can now use Browser Rendering as their remote browser via the [chrome-devtools-mcp](https://github.com/ChromeDevTools/chrome-devtools-mcp) package.
+
+Here is an example of how to configure Browser Rendering for Claude Desktop:
+
+```json
+{
+  "mcpServers": {
+    "browser-rendering": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "chrome-devtools-mcp@latest",
+        "--wsEndpoint=wss://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-rendering/devtools/browser?keep_alive=600000",
+        "--wsHeaders={\"Authorization\":\"Bearer <API_TOKEN>\"}"
+      ]
+    }
+  }
+}
+```
+
+To get started, refer to the [CDP documentation](/browser-rendering/cdp/).
