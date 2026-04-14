@@ -1,0 +1,106 @@
+name: Codex
+vendor: OpenAI
+slug: codex
+icon: codex
+description: "Lightweight terminal agent from OpenAI. Reads and writes files, executes commands, and browses the web in a sandboxed environment."
+capabilities:
+  ide: false
+  terminal: true
+  standalone: true
+  cloud: true
+  extension: true
+  mcp: true
+  skills: true
+  open_source: true
+features:
+  - File read/write operations
+  - Command execution
+  - Web browsing
+  - Sandboxed environment
+
+quick_start:
+  - title: Install Codex
+    description: Install the Codex CLI globally.
+    command: "npm install -g @openai/codex"
+  - title: Connect Cloudflare MCP server
+    description: Add the Cloudflare API MCP server to your Codex configuration.
+    command: "codex mcp add cloudflare -- npx mcp-remote https://mcp.cloudflare.com/mcp"
+  - title: Install Cloudflare Skills
+    description: Add Cloudflare slash commands and contextual prompts.
+    command: "npx skills add https://github.com/cloudflare/skills"
+  - title: Start building
+    description: Launch Codex in your project directory.
+    command: "codex"
+
+mcp_config: |
+  codex mcp add cloudflare -- npx mcp-remote https://mcp.cloudflare.com/mcp
+  codex mcp add cloudflare-docs -- npx mcp-remote https://docs.mcp.cloudflare.com/mcp
+  codex mcp add cloudflare-observability -- npx mcp-remote https://observability.mcp.cloudflare.com/mcp
+
+skills_install:
+  method: npx_skills
+  command: "npx skills add https://github.com/cloudflare/skills"
+  directory: "~/.codex/skills/"
+  docs_url: "https://developers.openai.com/codex/skills/"
+
+example_prompts:
+  - "Create a Cloudflare Workers API with CRUD endpoints."
+  - "Add a D1 database to this project and set up migrations."
+  - "Configure R2 storage for file uploads with pre-signed URLs."
+  - "Build a Workers application that uses Workers AI for text generation."
+  - "Deploy this application to Cloudflare Workers."
+  - "Set up KV namespace for caching API responses."
+  - "Add a cron trigger to my Worker that runs every hour."
+  - "Check the deployment logs and fix any errors."
+
+workflows:
+  - title: Deploy a new Workers app
+    steps:
+      - "Ask Codex to create a new Workers project"
+      - "Codex scaffolds the project with npm create cloudflare@latest"
+      - "Codex configures wrangler.jsonc with your settings"
+      - "Codex deploys with npx wrangler deploy"
+  - title: Add storage to your Worker
+    steps:
+      - "Ask Codex to add R2 or KV to your project"
+      - "Codex creates the storage resource via Wrangler"
+      - "Codex updates wrangler.jsonc with the binding"
+      - "Codex writes the code to interact with storage"
+  - title: Debug a deployment
+    steps:
+      - "Ask Codex to check your deployment status"
+      - "Codex fetches logs via the observability MCP server or Wrangler CLI"
+      - "Codex analyzes errors and proposes fixes"
+      - "Codex applies changes and redeploys"
+
+tips:
+  - "Codex runs in a sandboxed environment — it can safely execute Wrangler commands without affecting your system."
+  - "Connect the docs MCP server so Codex can look up Workers API documentation inline."
+  - "Codex supports web browsing, which is useful for checking deployed Worker endpoints."
+
+faq:
+  - question: "How do I connect Codex to my Cloudflare account?"
+    answer: "Add the Cloudflare API MCP server with `codex mcp add cloudflare -- npx mcp-remote https://mcp.cloudflare.com/mcp`. Authorize via OAuth when prompted."
+  - question: "Can Codex run Wrangler commands?"
+    answer: "Yes. Codex can execute terminal commands including npx wrangler deploy, wrangler d1 create, and other Wrangler CLI operations."
+  - question: "Is Codex open source?"
+    answer: "Yes. Codex is open source and available on GitHub at github.com/openai/codex."
+
+troubleshooting:
+  - issue: "Codex cannot find Wrangler"
+    solution: "Ensure Wrangler is installed globally with `npm install -g wrangler` or use npx wrangler commands."
+  - issue: "MCP server authentication fails"
+    solution: "Remove and re-add the MCP server. Complete the OAuth flow in your browser when prompted."
+  - issue: "Sandbox restrictions prevent deployment"
+    solution: "Codex runs in a sandbox by default. Ensure network access is enabled for Cloudflare API endpoints."
+
+related_agents:
+  - claude-code
+  - opencode
+  - cursor
+
+links:
+  skills: "https://github.com/cloudflare/skills"
+  mcp_server: "https://github.com/cloudflare/mcp"
+  docs: "https://developers.openai.com/codex/"
+  website: "https://openai.com/codex"

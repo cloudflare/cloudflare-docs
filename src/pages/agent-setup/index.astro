@@ -1,0 +1,105 @@
+---
+import { getCollection } from "astro:content";
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import type { StarlightPageProps } from "@astrojs/starlight/props";
+import { AgentCatalog } from "~/components/agent-setup/AgentCatalog";
+import { AgentComparison } from "~/components/agent-setup/AgentComparison";
+import type { AgentData } from "~/components/agent-setup/types";
+
+import "~/styles/agent-setup.css";
+
+const agentEntries = await getCollection("agent-setup");
+const agents: AgentData[] = agentEntries
+	.map((entry) => entry.data as AgentData)
+	.sort((a, b) => a.name.localeCompare(b.name));
+
+const props = {
+	frontmatter: {
+		title: "Agent Setup",
+		description:
+			"Build on Cloudflare with your favorite AI agent. Connect MCP servers, install skills, and deploy from your editor or terminal.",
+		template: "splash",
+	},
+	hideBreadcrumbs: true,
+} as StarlightPageProps;
+---
+
+<StarlightPage {...props}>
+	<div class="agent-setup-hero">
+		<h1>Agent Setup</h1>
+		<p>
+			Build on Cloudflare with your favorite AI agent. Connect MCP servers,
+			install skills, and start deploying — all from your editor or terminal.
+		</p>
+	</div>
+
+	<AgentCatalog agents={agents} client:load />
+
+	<div class="agent-setup-section" style="margin-top: 4rem;">
+		<div class="agent-setup-section-header">
+			<h2>Compare agents</h2>
+			<p>Find the right agent for your Cloudflare workflow</p>
+		</div>
+		<AgentComparison agents={agents} client:load />
+	</div>
+
+	<div class="agent-setup-section" style="margin-top: 4rem;">
+		<div class="agent-setup-section-header">
+			<h2>Why use agents with Cloudflare?</h2>
+			<p>
+				Cloudflare provides first-class integrations for AI coding agents
+			</p>
+		</div>
+
+		<div class="agent-setup-features">
+			<div class="agent-setup-feature">
+				<h3>15+ MCP servers</h3>
+				<p>
+					Native API access, documentation search, observability, browser
+					rendering, and more — all through the Model Context Protocol.
+				</p>
+			</div>
+			<div class="agent-setup-feature">
+				<h3>Cloudflare Skills</h3>
+				<p>
+					Slash commands and contextual prompts that teach your agent about
+					Workers, D1, R2, AI, and the rest of the Cloudflare platform.
+				</p>
+			</div>
+			<div class="agent-setup-feature">
+				<h3>Full API control</h3>
+				<p>
+					The Cloudflare API MCP server exposes over 2,500 endpoints through
+					just two tools using Codemode — about 1,000 tokens total.
+				</p>
+			</div>
+			<div class="agent-setup-feature">
+				<h3>Deploy in seconds</h3>
+				<p>
+					Agents can scaffold, configure, and deploy Workers applications
+					with a single prompt. Zero cold starts, global by default.
+				</p>
+			</div>
+			<div class="agent-setup-feature">
+				<h3>Built-in observability</h3>
+				<p>
+					Connect the observability MCP server and agents can check logs,
+					analyze errors, and fix issues automatically.
+				</p>
+			</div>
+			<div class="agent-setup-feature">
+				<h3>Documentation at hand</h3>
+				<p>
+					The docs MCP server gives agents real-time access to Cloudflare
+					documentation. Workers also serves prompt.txt for LLM context.
+				</p>
+			</div>
+		</div>
+	</div>
+</StarlightPage>
+
+<style>
+	:root {
+		--sl-content-width: 1200px !important;
+	}
+</style>

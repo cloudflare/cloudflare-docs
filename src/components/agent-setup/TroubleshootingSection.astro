@@ -1,0 +1,33 @@
+---
+interface TroubleshootingItem {
+	issue: string;
+	solution: string;
+}
+
+interface Props {
+	items: TroubleshootingItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<div>
+	{
+		items.map((item) => (
+			<div class="agent-setup-troubleshooting-item">
+				<div class="agent-setup-troubleshooting-issue">
+					<div class="agent-setup-troubleshooting-label" style={{ color: "var(--color-cl1-red-4)" }}>
+						Issue
+					</div>
+					{item.issue}
+				</div>
+				<div class="agent-setup-troubleshooting-solution">
+					<div class="agent-setup-troubleshooting-label" style={{ color: "var(--color-cl1-green-4)" }}>
+						Solution
+					</div>
+					{item.solution}
+				</div>
+			</div>
+		))
+	}
+</div>

@@ -1,0 +1,203 @@
+---
+import type { GetStaticPaths, MarkdownHeading } from "astro";
+import { getCollection } from "astro:content";
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import type { StarlightPageProps } from "@astrojs/starlight/props";
+import type { AgentData } from "~/components/agent-setup/types";
+import { CapabilityBadges } from "~/components/agent-setup/CapabilityBadge";
+
+import QuickStartSteps from "~/components/agent-setup/QuickStartSteps.astro";
+import ExamplePrompts from "~/components/agent-setup/ExamplePrompts.astro";
+import WorkflowSection from "~/components/agent-setup/WorkflowSection.astro";
+import FAQSection from "~/components/agent-setup/FAQSection.astro";
+import TroubleshootingSection from "~/components/agent-setup/TroubleshootingSection.astro";
+import RelatedAgents from "~/components/agent-setup/RelatedAgents.astro";
+
+import "~/styles/agent-setup.css";
+
+export const getStaticPaths = (async () => {
+	const entries = await getCollection("agent-setup");
+	const allAgents = entries.map((e) => e.data as AgentData);
+
+	return entries.map((entry) => ({
+		params: { agent: (entry.data as AgentData).slug },
+		props: {
+			agent: entry.data as AgentData,
+			allAgents,
+		},
+	}));
+}) satisfies GetStaticPaths;
+
+const { agent, allAgents } = Astro.props;
+
+const headings: MarkdownHeading[] = [
+	{ depth: 2, slug: "quick-start", text: "Quick start" },
+	{ depth: 2, slug: "cloudflare-mcp-servers", text: "Cloudflare MCP servers" },
+	{ depth: 2, slug: "cloudflare-skills", text: "Cloudflare Skills" },
+	{ depth: 2, slug: "example-prompts", text: "Example prompts" },
+	{ depth: 2, slug: "common-workflows", text: "Common workflows" },
+	{ depth: 2, slug: "tips", text: "Tips" },
+	{ depth: 2, slug: "faq", text: "FAQ" },
+	{ depth: 2, slug: "troubleshooting", text: "Troubleshooting" },
+	{ depth: 2, slug: "related-agents", text: "Related agents" },
+];
+
+const starlightPageProps = {
+	frontmatter: {
+		title: `${agent.name} + Cloudflare`,
+		description: agent.description,
+		template: "splash",
+	},
+	headings,
+	hideTitle: true,
+	hideBreadcrumbs: true,
+} as StarlightPageProps;
+
+const externalLinks = [
+	agent.links.skills && { label: "Skills", href: agent.links.skills },
+	agent.links.mcp_server && { label: "MCP Server", href: agent.links.mcp_server },
+	agent.links.cli && { label: "CLI", href: agent.links.cli },
+	agent.links.docs && { label: `${agent.name} Docs`, href: agent.links.docs },
+].filter(Boolean) as { label: string; href: string }[];
+---
+
+<StarlightPage {...starlightPageProps}>
+	<!-- Header -->
+	<div class="mb-6 flex items-center gap-4">
+		<span class="agent-setup-icon-wrap" style="width: 48px; height: 48px; border-radius: 12px;">
+			<img
+				src={`/icons/agents/${agent.icon}/light.svg`}
+				alt={`${agent.name} icon`}
+				width="48"
+				height="48"
+				class="agent-icon-light"
+				style="border-radius: 12px;"
+			/>
+			<img
+				src={`/icons/agents/${agent.icon}/dark.svg`}
+				alt={`${agent.name} icon`}
+				width="48"
+				height="48"
+				class="agent-icon-dark"
+				style="border-radius: 12px;"
+			/>
+		</span>
+		<div>
+			<h1 id="_top" class="-mt-1! mb-0! text-3xl! font-bold! leading-none!">
+				{agent.name} + Cloudflare
+			</h1>
+			<span class="text-sm" style={{ color: "var(--color-cl1-gray-5)" }}>
+				{agent.vendor}
+			</span>
+		</div>
+	</div>
+
+	<p class="mb-4 text-base" style={{ lineHeight: 1.6 }}>{agent.description}</p>
+
+	<div class="mb-4">
+		<CapabilityBadges capabilities={agent.capabilities} client:load />
+	</div>
+
+	{
+		externalLinks.length > 0 && (
+			<div class="agent-setup-links">
+				{externalLinks.map((link) => (
+					<a
+						href={link.href}
+						class="agent-setup-link"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						{link.label} &nearr;
+					</a>
+				))}
+			</div>
+		)
+	}
+
+	<!-- Quick start -->
+	<div class="agent-setup-section">
+		<h2 id="quick-start">Quick start</h2>
+		<QuickStartSteps steps={agent.quick_start} />
+	</div>
+
+	<!-- MCP servers -->
+	<div class="agent-setup-section">
+		<h2 id="cloudflare-mcp-servers">Cloudflare MCP servers</h2>
+		<p class="mb-4 text-sm" style={{ color: "var(--color-cl1-gray-4)" }}>
+			Connect Cloudflare's MCP servers for native API access, documentation search, and observability.
+			Refer to the <a href="/agents/model-context-protocol/mcp-servers-for-cloudflare/">full catalog of Cloudflare MCP servers</a> for more options.
+		</p>
+		<div class="agent-setup-step-command" style="white-space: pre-wrap;">
+			<code>{agent.mcp_config.trim()}</code>
+		</div>
+	</div>
+
+	<!-- Skills -->
+	<div class="agent-setup-section">
+		<h2 id="cloudflare-skills">Cloudflare Skills</h2>
+		<p class="mb-4 text-sm" style={{ color: "var(--color-cl1-gray-4)" }}>
+			Install <a href="https://github.com/cloudflare/skills">Cloudflare Skills</a> for slash commands and contextual prompts when building on Cloudflare.
+		</p>
+		{
+			agent.skills_install.command && (
+				<div class="agent-setup-step-command">
+					<code>{agent.skills_install.command}</code>
+				</div>
+			)
+		}
+		{
+			agent.skills_install.directory && (
+				<p class="mt-3 text-xs" style={{ color: "var(--color-cl1-gray-5)" }}>
+					Skills directory: <code>{agent.skills_install.directory}</code>
+					{agent.skills_install.docs_url && (
+						<span>
+							{" · "}
+							<a href={agent.skills_install.docs_url} target="_blank" rel="noopener noreferrer">
+								Documentation &nearr;
+							</a>
+						</span>
+					)}
+				</p>
+			)
+		}
+	</div>
+
+	<!-- Example prompts -->
+	<div class="agent-setup-section">
+		<h2 id="example-prompts">Example prompts</h2>
+		<ExamplePrompts prompts={agent.example_prompts} />
+	</div>
+
+	<!-- Workflows -->
+	<div class="agent-setup-section">
+		<h2 id="common-workflows">Common workflows</h2>
+		<WorkflowSection workflows={agent.workflows} />
+	</div>
+
+	<!-- Tips -->
+	<div class="agent-setup-section">
+		<h2 id="tips">Tips</h2>
+		<ul class="agent-setup-tips">
+			{agent.tips.map((tip) => <li>{tip}</li>)}
+		</ul>
+	</div>
+
+	<!-- FAQ -->
+	<div class="agent-setup-section">
+		<h2 id="faq">FAQ</h2>
+		<FAQSection items={agent.faq} />
+	</div>
+
+	<!-- Troubleshooting -->
+	<div class="agent-setup-section">
+		<h2 id="troubleshooting">Troubleshooting</h2>
+		<TroubleshootingSection items={agent.troubleshooting} />
+	</div>
+
+	<!-- Related agents -->
+	<div class="agent-setup-section">
+		<h2 id="related-agents">Related agents</h2>
+		<RelatedAgents slugs={agent.related_agents} allAgents={allAgents} />
+	</div>
+</StarlightPage>

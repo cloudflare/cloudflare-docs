@@ -1,0 +1,15 @@
+---
+interface Props {
+	prompts: string[];
+}
+
+const { prompts } = Astro.props;
+---
+
+<div class="agent-setup-prompts">
+	{
+		prompts.map((prompt) => (
+			<span class="agent-setup-prompt">&ldquo;{prompt}&rdquo;</span>
+		))
+	}
+</div>

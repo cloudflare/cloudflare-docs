@@ -26,6 +26,7 @@ import {
 	fieldsSchema,
 	partialsSchema,
 	streamSchema,
+	agentSetupSchema,
 } from "~/schemas";
 
 function contentLoader(name: string) {
@@ -124,6 +125,10 @@ export const collections = {
 	"granular-control-applications": defineCollection(
 		granularControlApplicationsCollectionConfig,
 	),
+	"agent-setup": defineCollection({
+		loader: dataLoader("agent-setup"),
+		schema: agentSetupSchema,
+	}),
 	skills: defineCollection({
 		loader: skillsLoader({ base: "./skills" }),
 	}),

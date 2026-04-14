@@ -1,0 +1,41 @@
+---
+interface Step {
+	title: string;
+	description: string;
+	command?: string;
+	link?: string;
+}
+
+interface Props {
+	steps: Step[];
+}
+
+const { steps } = Astro.props;
+---
+
+<div class="agent-setup-steps">
+	{
+		steps.map((step, i) => (
+			<div class="agent-setup-step">
+				<div class="agent-setup-step-number">{i + 1}</div>
+				<div class="agent-setup-step-title">{step.title}</div>
+				<div class="agent-setup-step-description">{step.description}</div>
+				{step.command && (
+					<div class="agent-setup-step-command">
+						<code>{step.command}</code>
+					</div>
+				)}
+				{step.link && !step.command && (
+					<a
+						href={step.link}
+						class="agent-setup-link"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						{step.link} &rarr;
+					</a>
+				)}
+			</div>
+		))
+	}
+</div>

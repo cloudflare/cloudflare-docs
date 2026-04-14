@@ -1,0 +1,112 @@
+name: Windsurf
+vendor: Codeium
+slug: windsurf
+icon: windsurf
+description: "Agentic IDE with Cascade. Maintains context across actions with Flows for multi-step tasks and deep codebase search."
+capabilities:
+  ide: true
+  terminal: false
+  standalone: true
+  cloud: false
+  extension: false
+  mcp: true
+  skills: false
+  open_source: false
+features:
+  - Cascade context engine
+  - Flows automation
+  - Deep codebase search
+  - Command suggestions
+
+quick_start:
+  - title: Download Windsurf
+    description: Download and install Windsurf from the official website.
+    link: "https://windsurf.com"
+  - title: Configure Cloudflare MCP server
+    description: Add the Cloudflare API MCP server to your Windsurf MCP configuration.
+    command: '{"mcpServers": {"cloudflare": {"url": "https://mcp.cloudflare.com/mcp"}}}'
+  - title: Add Cloudflare context
+    description: Use the @-mention command to include Cloudflare documentation in your Windsurf Chat context.
+  - title: Start building
+    description: Open Cascade and describe your Cloudflare Workers application.
+
+mcp_config: |
+  Edit your mcp_config.json (Windsurf MCP config file):
+  {
+    "mcpServers": {
+      "cloudflare": {
+        "url": "https://mcp.cloudflare.com/mcp"
+      },
+      "cloudflare-docs": {
+        "url": "https://docs.mcp.cloudflare.com/mcp"
+      },
+      "cloudflare-observability": {
+        "url": "https://observability.mcp.cloudflare.com/mcp"
+      }
+    }
+  }
+
+skills_install:
+  method: manual_copy
+  docs_url: "https://docs.windsurf.com"
+
+example_prompts:
+  - "Create a Workers REST API with authentication middleware."
+  - "Add a D1 database with a schema for an e-commerce product catalog."
+  - "Set up R2 storage for serving static assets."
+  - "Build a real-time notification system using Durable Objects and WebSockets."
+  - "Deploy this application to Cloudflare Workers."
+  - "Add rate limiting and bot protection to my API endpoints."
+  - "Create a Cloudflare Workers cron trigger for data processing."
+  - "Set up environment variables for staging and production."
+
+workflows:
+  - title: Cascade deployment workflow
+    steps:
+      - "Open Cascade in Windsurf"
+      - "Describe your Workers application requirements"
+      - "Cascade generates the project structure and configuration"
+      - "Run npx wrangler deploy in the integrated terminal"
+  - title: Multi-step Flows
+    steps:
+      - "Ask Cascade to create a complete Workers application"
+      - "Cascade breaks it into a Flow of steps"
+      - "Each step builds on the previous context"
+      - "Cascade maintains state across the entire Flow"
+  - title: Debug with Cascade
+    steps:
+      - "Ask Cascade to check your deployment logs"
+      - "Cascade uses the observability MCP server to fetch data"
+      - "Cascade provides context-aware fix suggestions"
+      - "Apply fixes and redeploy"
+
+tips:
+  - "Windsurf's Cascade maintains context across actions — start with project setup and Cascade will remember your configuration in subsequent requests."
+  - "Use @-mention to include your wrangler.jsonc in Cascade prompts for Workers-aware suggestions."
+  - "Windsurf's deep codebase search is useful for large Workers monorepos with multiple services."
+
+faq:
+  - question: "How do I configure MCP servers in Windsurf?"
+    answer: "Edit the `mcp_config.json` file referenced in Windsurf's documentation. Add the Cloudflare MCP server URL and restart Windsurf."
+  - question: "Can Cascade deploy to Cloudflare?"
+    answer: "Cascade can generate deployment commands and configuration. Run the actual deployment through the integrated terminal with `npx wrangler deploy`."
+  - question: "Does Windsurf support Cloudflare Skills?"
+    answer: "Windsurf does not currently support the Agent Skills standard. Use MCP servers and @-mention documentation files for Cloudflare context."
+
+troubleshooting:
+  - issue: "MCP server not connecting"
+    solution: "Verify your mcp_config.json configuration. Restart Windsurf after making changes. Ensure the MCP server URL ends with /mcp."
+  - issue: "Cascade loses context about Workers"
+    solution: "Use @-mention to include wrangler.jsonc and key configuration files in your Cascade prompt. The Flows feature helps maintain context across multi-step tasks."
+  - issue: "Wrangler not found in terminal"
+    solution: "Install Wrangler globally with `npm install -g wrangler` and restart Windsurf to refresh the terminal PATH."
+
+related_agents:
+  - cursor
+  - github-copilot
+  - claude-code
+
+links:
+  mcp_server: "https://github.com/cloudflare/mcp"
+  docs: "https://docs.windsurf.com"
+  website: "https://windsurf.com"

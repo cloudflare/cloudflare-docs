@@ -1,0 +1,122 @@
+name: OpenCode
+vendor: Anomaly
+slug: opencode
+icon: opencode
+description: "Open-source terminal agent with a rich TUI. Works with 75+ LLMs, provider-agnostic architecture, and built-in agent support."
+capabilities:
+  ide: false
+  terminal: true
+  standalone: true
+  cloud: false
+  extension: true
+  mcp: true
+  skills: true
+  open_source: true
+features:
+  - 75+ model support
+  - Rich terminal TUI
+  - Built-in agents (build/plan)
+  - LSP integration
+
+quick_start:
+  - title: Install OpenCode
+    description: Install OpenCode via npm, Homebrew, or download the binary.
+    command: "npm install -g opencode-ai"
+  - title: Connect Cloudflare MCP server
+    description: Add the Cloudflare API MCP server to your OpenCode configuration.
+    command: "opencode mcp add cloudflare https://mcp.cloudflare.com/mcp"
+  - title: Install Cloudflare Skills
+    description: Add Cloudflare skills for contextual prompts and slash commands.
+    command: "npx skills add https://github.com/cloudflare/skills"
+  - title: Start building
+    description: Launch OpenCode in your project directory.
+    command: "opencode"
+
+mcp_config: |
+  Add to .opencode.jsonc in your project:
+  {
+    "mcp": {
+      "cloudflare": {
+        "type": "remote",
+        "url": "https://mcp.cloudflare.com/mcp"
+      },
+      "cloudflare-docs": {
+        "type": "remote",
+        "url": "https://docs.mcp.cloudflare.com/mcp"
+      },
+      "cloudflare-observability": {
+        "type": "remote",
+        "url": "https://observability.mcp.cloudflare.com/mcp"
+      }
+    }
+  }
+
+skills_install:
+  method: npx_skills
+  command: "npx skills add https://github.com/cloudflare/skills"
+  directory: "~/.config/opencode/skills/"
+  docs_url: "https://opencode.ai/docs/skills/"
+
+example_prompts:
+  - "Create a Cloudflare Workers REST API with TypeScript."
+  - "Add a D1 database and write a migration for user accounts."
+  - "Set up R2 object storage for file uploads."
+  - "Build a Workers AI chatbot with streaming responses."
+  - "Deploy this project to Cloudflare Workers."
+  - "Add a cron trigger that processes queued messages every 5 minutes."
+  - "Create a Durable Object for managing WebSocket connections."
+  - "Check my Worker logs for errors and help me debug."
+
+workflows:
+  - title: Deploy a Workers app
+    steps:
+      - "Ask OpenCode to scaffold a new Workers project"
+      - "OpenCode runs npm create cloudflare@latest"
+      - "OpenCode configures wrangler.jsonc with your bindings"
+      - "OpenCode deploys with npx wrangler deploy"
+      - "OpenCode verifies the deployment URL"
+  - title: Add AI capabilities
+    steps:
+      - "Ask OpenCode to add Workers AI to your project"
+      - "OpenCode adds the AI binding to wrangler.jsonc"
+      - "OpenCode writes the inference code with streaming support"
+      - "OpenCode tests locally and deploys"
+  - title: Debug with observability
+    steps:
+      - "Connect the observability MCP server"
+      - "Ask OpenCode to check your Worker's logs"
+      - "OpenCode analyzes errors, exceptions, and performance"
+      - "OpenCode suggests and applies fixes"
+
+tips:
+  - "OpenCode supports 75+ LLMs — you can use Cloudflare Workers AI as your model provider for a fully Cloudflare-native workflow."
+  - "The built-in plan agent is useful for breaking down complex Workers projects into steps before coding."
+  - "Configure MCP servers in .opencode.jsonc at the project level for project-specific Cloudflare connections."
+  - "Use the LSP integration to get real-time type checking for Workers APIs as you code."
+
+faq:
+  - question: "How do I connect OpenCode to Cloudflare?"
+    answer: 'Add MCP servers to your `.opencode.jsonc` file with `"type": "remote"` and the server URL. For example: `{"mcp": {"cloudflare": {"type": "remote", "url": "https://mcp.cloudflare.com/mcp"}}}`.'
+  - question: "Can I use Workers AI as the model provider in OpenCode?"
+    answer: "Yes. OpenCode supports 75+ model providers, including Cloudflare Workers AI. Configure your model in .opencode.jsonc."
+  - question: "Is OpenCode open source?"
+    answer: "Yes. OpenCode is fully open source and available at github.com/anomalyco/opencode."
+
+troubleshooting:
+  - issue: "MCP server connection fails"
+    solution: 'Verify the MCP configuration in .opencode.jsonc uses `"type": "remote"` with the correct URL. Run `opencode mcp list` to check connected servers.'
+  - issue: "OpenCode cannot find Wrangler"
+    solution: "Install Wrangler globally with `npm install -g wrangler` or ensure npx is available in your PATH."
+  - issue: "Skills are not loading"
+    solution: "Verify skills are installed in `~/.config/opencode/skills/`. Re-run `npx skills add https://github.com/cloudflare/skills`."
+
+related_agents:
+  - claude-code
+  - codex
+  - cursor
+
+links:
+  skills: "https://github.com/cloudflare/skills"
+  mcp_server: "https://github.com/cloudflare/mcp"
+  docs: "https://opencode.ai/docs"
+  website: "https://opencode.ai"

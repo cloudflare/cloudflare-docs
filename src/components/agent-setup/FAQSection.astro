@@ -1,0 +1,23 @@
+---
+interface FAQItem {
+	question: string;
+	answer: string;
+}
+
+interface Props {
+	items: FAQItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<div>
+	{
+		items.map((item) => (
+			<details class="agent-setup-faq-item">
+				<summary>{item.question}</summary>
+				<div class="agent-setup-faq-answer">{item.answer}</div>
+			</details>
+		))
+	}
+</div>

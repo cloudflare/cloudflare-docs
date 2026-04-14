@@ -1,0 +1,123 @@
+name: Cursor
+vendor: Cursor
+slug: cursor
+icon: cursor
+description: "AI-first code editor built on VS Code. Composer mode for multi-file edits and background agents that work autonomously."
+capabilities:
+  ide: true
+  terminal: true
+  standalone: true
+  cloud: true
+  extension: false
+  mcp: true
+  skills: false
+  open_source: false
+features:
+  - Multi-file Composer
+  - Background agents
+  - Codebase indexing
+  - Terminal integration
+
+quick_start:
+  - title: Download Cursor
+    description: Download and install Cursor from the official website.
+    link: "https://cursor.sh"
+  - title: Configure Cloudflare MCP server
+    description: "Add the Cloudflare API MCP server to your Cursor configuration."
+    command: '{"mcpServers": {"cloudflare": {"url": "https://mcp.cloudflare.com/mcp"}}}'
+  - title: Install Cloudflare Skills
+    description: Install from the Cursor Marketplace or add via Settings > Rules > Remote Rule (GitHub) with cloudflare/skills.
+    command: "cloudflare/skills"
+  - title: Start building
+    description: "Open Composer with Cmd+I and describe what you want to build on Cloudflare."
+
+mcp_config: |
+  Add to .cursor/mcp.json in your project or ~/.cursor/mcp.json globally:
+  {
+    "mcpServers": {
+      "cloudflare": {
+        "url": "https://mcp.cloudflare.com/mcp"
+      },
+      "cloudflare-docs": {
+        "url": "https://docs.mcp.cloudflare.com/mcp"
+      },
+      "cloudflare-observability": {
+        "url": "https://observability.mcp.cloudflare.com/mcp"
+      }
+    }
+  }
+
+skills_install:
+  method: cursor_marketplace
+  command: "cloudflare/skills"
+  directory: "~/.cursor/skills/"
+  docs_url: "https://cursor.com/docs/context/skills"
+
+example_prompts:
+  - "Create a new Workers project with TypeScript and deploy it."
+  - "Add a D1 database with a schema for a blog with posts and comments."
+  - "Configure R2 for image storage with upload and download endpoints."
+  - "Build a Workers application using Workers AI for content moderation."
+  - "Set up private networking between my API Worker and database."
+  - "Add WebSocket support to my Worker with proper health checks."
+  - "Deploy this monorepo to Cloudflare Workers with a custom Dockerfile."
+  - "Create separate staging and production environments for my Worker."
+
+workflows:
+  - title: Composer deployment workflow
+    steps:
+      - "Open Composer with Cmd+I"
+      - "Describe your Workers application and deployment needs"
+      - "Cursor generates the project structure and wrangler.jsonc"
+      - "Run npx wrangler deploy in the integrated terminal"
+  - title: Add a D1 database
+    steps:
+      - "Ask Composer to add a D1 database to your project"
+      - "Cursor creates the database via the MCP server or Wrangler CLI"
+      - "Cursor adds the D1 binding to wrangler.jsonc"
+      - "Cursor writes migration files and applies them"
+  - title: Debug with Composer
+    steps:
+      - "Ask Composer to check your deployment logs"
+      - "Cursor uses the observability MCP server to fetch logs"
+      - "Composer analyzes errors and suggests fixes inline"
+      - "Apply fixes and redeploy from the terminal"
+  - title: MCP-powered development
+    steps:
+      - "Configure the Cloudflare MCP servers in .cursor/mcp.json"
+      - "Ask Cursor to manage your Workers resources via MCP"
+      - "Cursor uses native Cloudflare API access for deployments"
+      - "Monitor deployment status through MCP responses"
+
+tips:
+  - "Configure the Cloudflare MCP server in .cursor/mcp.json for native API access without leaving the IDE."
+  - "Use Composer (Cmd+I) for multi-file edits — it works well for scaffolding Workers projects."
+  - "Index your Cloudflare project codebase so Cursor has full context of your Workers configuration."
+  - "Add wrangler.jsonc to your project context with @wrangler.jsonc in Composer prompts."
+
+faq:
+  - question: "How do I give Cursor access to Cloudflare?"
+    answer: 'Add the Cloudflare MCP server to `.cursor/mcp.json`: `{"mcpServers": {"cloudflare": {"url": "https://mcp.cloudflare.com/mcp"}}}`. Restart Cursor after making changes.'
+  - question: "Can Cursor deploy to Cloudflare without leaving the IDE?"
+    answer: "Yes. With the MCP server configured, ask Composer to deploy your project. Cursor handles authentication, deployment, and shows you the deployment URL."
+  - question: "How do I install Cloudflare Skills in Cursor?"
+    answer: "Install from the Cursor Marketplace, or add manually via Settings > Rules > Add Rule > Remote Rule (GitHub) with `cloudflare/skills`."
+
+troubleshooting:
+  - issue: "MCP server not connecting in Cursor"
+    solution: "Verify your .cursor/mcp.json configuration is valid JSON. Restart Cursor after making changes to the MCP config."
+  - issue: "Wrangler CLI not found in Cursor terminal"
+    solution: "Install Wrangler globally with `npm install -g wrangler` and restart Cursor to refresh the PATH."
+  - issue: "Composer does not understand Workers APIs"
+    solution: "Add the Cloudflare docs MCP server and Workers documentation to your project context. Use @-mentions to reference wrangler.jsonc."
+
+related_agents:
+  - windsurf
+  - github-copilot
+  - claude-code
+
+links:
+  skills: "https://github.com/cloudflare/skills"
+  mcp_server: "https://github.com/cloudflare/mcp"
+  docs: "https://docs.cursor.com"
+  website: "https://cursor.sh"

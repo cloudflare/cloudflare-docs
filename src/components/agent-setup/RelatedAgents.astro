@@ -1,0 +1,51 @@
+---
+import type { AgentData } from "./types";
+
+interface Props {
+	slugs: string[];
+	allAgents: AgentData[];
+}
+
+const { slugs, allAgents } = Astro.props;
+const related = slugs
+	.map((slug) => allAgents.find((a) => a.slug === slug))
+	.filter(Boolean) as AgentData[];
+---
+
+<div class="agent-setup-related">
+	{
+		related.map((agent) => (
+			<a
+				href={`/agent-setup/${agent.slug}/`}
+				class="agent-setup-card"
+				style="text-decoration: none;"
+			>
+				<div class="agent-setup-card-header">
+					<span class="agent-setup-icon-wrap" style="width: 36px; height: 36px;">
+						<img
+							src={`/icons/agents/${agent.icon}/light.svg`}
+							alt={`${agent.name} icon`}
+							width="36"
+							height="36"
+							class="agent-icon-light"
+						/>
+						<img
+							src={`/icons/agents/${agent.icon}/dark.svg`}
+							alt={`${agent.name} icon`}
+							width="36"
+							height="36"
+							class="agent-icon-dark"
+						/>
+					</span>
+					<div>
+						<div class="agent-setup-card-title">{agent.name}</div>
+						<div class="agent-setup-card-vendor">{agent.vendor}</div>
+					</div>
+				</div>
+				<div class="agent-setup-card-body">
+					<p class="agent-setup-card-description">{agent.description}</p>
+				</div>
+			</a>
+		))
+	}
+</div>
