@@ -457,6 +457,55 @@ You can safely call `this.destroy()` from within a scheduled task callback. The 
 
 :::
 
+### `static options`
+
+Configure agent behavior by overriding `static options` on your class. All fields are optional — defaults are applied at runtime.
+
+```ts
+export class MyAgent extends Agent {
+	static options = {
+		hibernate: true,
+		sendIdentityOnConnect: false,
+		retry: { maxAttempts: 5, baseDelayMs: 200, maxDelayMs: 5000 },
+	};
+}
+```
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `hibernate` | `boolean` | `true` | Whether the agent hibernates when inactive. WebSocket connections stay open while the DO sleeps |
+| `sendIdentityOnConnect` | `boolean` | `true` | Send identity (agent name, instance name) to clients on WebSocket connect. Set to `false` to hide sensitive instance names |
+| `hungScheduleTimeoutSeconds` | `number` | `30` | Timeout before a running interval schedule is considered hung and force-reset. Increase for long-running callbacks |
+| `keepAliveIntervalMs` | `number` | `30000` | Interval in milliseconds for `keepAlive()` alarm heartbeats. Lower values mean faster recovery but more frequent alarms |
+| `retry` | `RetryOptions` | `{ maxAttempts: 3, baseDelayMs: 100, maxDelayMs: 3000 }` | Default retry options for `schedule()`, `queue()`, and `this.retry()`. Per-task options override these defaults |
+
+### `this.keepAlive()` and `this.keepAliveWhile()`
+
+Durable Objects are evicted after a period of inactivity (typically 70–140 seconds with no incoming requests, WebSocket messages, or alarms). During long-running operations — streaming LLM responses, waiting on external APIs, running multi-step computations — the agent can be evicted mid-flight.
+
+`keepAlive()` creates an alarm heartbeat that prevents eviction. `keepAliveWhile()` wraps an async function and guarantees cleanup.
+
+```ts
+class MyAgent extends Agent {
+	async handleLongTask() {
+		// Option 1: manual dispose
+		const dispose = await this.keepAlive();
+		try {
+			await longRunningComputation();
+		} finally {
+			dispose();
+		}
+
+		// Option 2: automatic cleanup (recommended)
+		const result = await this.keepAliveWhile(async () => {
+			return await longRunningComputation();
+		});
+	}
+}
+```
+
+`AIChatAgent` uses `keepAliveWhile` internally to keep the agent alive during streaming LLM responses. For more details, refer to [Schedule tasks — Keeping the agent alive](/agents/api-reference/schedule-tasks/#keeping-the-agent-alive).
+
 ### Routing
 
 The `Agent` class re-exports the [addressing helpers](#addressing) as `getAgentByName` and `routeAgentRequest`.

@@ -33,14 +33,14 @@ Browser Rendering enables developers to programmatically control and interact wi
 
 Programmatically load and fully render dynamic webpages or raw HTML and capture specific outputs such as:
 
-- [Markdown](/browser-rendering/rest-api/markdown-endpoint/)
-- [Screenshots](/browser-rendering/rest-api/screenshot-endpoint/)
-- [PDFs](/browser-rendering/rest-api/pdf-endpoint/)
-- [Snapshots](/browser-rendering/rest-api/snapshot/)
-- [Links](/browser-rendering/rest-api/links-endpoint/)
-- [HTML elements](/browser-rendering/rest-api/scrape-endpoint/)
-- [Structured data](/browser-rendering/rest-api/json-endpoint/)
-- [Crawled web content](/browser-rendering/rest-api/crawl-endpoint/)
+- [Markdown](/browser-rendering/quick-actions/markdown-endpoint/)
+- [Screenshots](/browser-rendering/quick-actions/screenshot-endpoint/)
+- [PDFs](/browser-rendering/quick-actions/pdf-endpoint/)
+- [Snapshots](/browser-rendering/quick-actions/snapshot/)
+- [Links](/browser-rendering/quick-actions/links-endpoint/)
+- [HTML elements](/browser-rendering/quick-actions/scrape-endpoint/)
+- [Structured data](/browser-rendering/quick-actions/json-endpoint/)
+- [Crawled web content](/browser-rendering/quick-actions/crawl-endpoint/)
 
 ## Integration methods
 
@@ -50,8 +50,8 @@ Programmatically load and fully render dynamic webpages or raw HTML and capture 
 
 - **Scale to thousands of browsers**: Instant access to a global pool of browsers with low cold-start time, ideal for high-volume screenshot generation, data extraction, or automation at scale
 - **Global by default**: Browser sessions run on Cloudflare's edge network, opening close to your users for better speed and availability worldwide
-- **Easy to integrate**: [REST APIs](/browser-rendering/rest-api/) for common actions, while [Puppeteer](/browser-rendering/puppeteer/) and [Playwright](/browser-rendering/playwright/) provide familiar automation libraries for complex workflows
-- **Session management**: [Reuse browser sessions](/browser-rendering/workers-bindings/reuse-sessions/) across requests to improve performance and reduce cold-start overhead
+- **Easy to integrate**: [Quick Actions](/browser-rendering/quick-actions/) for common tasks, [Puppeteer](/browser-rendering/puppeteer/) and [Playwright](/browser-rendering/playwright/) for complex workflows, and [CDP](/browser-rendering/cdp/) for direct browser control from any environment
+- **Session management**: [Reuse browser sessions](/browser-rendering/features/reuse-sessions/) across requests to improve performance and reduce cold-start overhead
 - **Flexible pricing**: Pay only for browser time used with generous free tier ([view pricing](/browser-rendering/pricing/))
 
 ## Related products
@@ -64,7 +64,7 @@ Build serverless applications and deploy instantly across the globe for exceptio
 
 <RelatedProduct header="Durable Objects" href="/durable-objects/" product="durable-objects">
 
-A globally distributed coordination API with strongly consistent storage. Using Durable Objects to [persist browser sessions](/browser-rendering/workers-bindings/browser-rendering-with-do/) improves performance by eliminating the time that it takes to spin up a new browser session.
+A globally distributed coordination API with strongly consistent storage. Using Durable Objects to [persist browser sessions](/browser-rendering/how-to/browser-rendering-with-do/) improves performance by eliminating the time that it takes to spin up a new browser session.
 
 </RelatedProduct>
 
@@ -83,7 +83,7 @@ Build AI-powered agents that autonomously navigate websites and perform tasks us
 	href="/browser-rendering/get-started/"
 	icon="open-book"
 >
-	Choose between REST API and Workers Bindings, then deploy your first project.
+	Choose an integration method and deploy your first project.
 </LinkTitleCard>
 
 <LinkTitleCard

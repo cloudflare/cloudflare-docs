@@ -3,11 +3,13 @@ pcx_content_type: how-to
 title: Client sessions
 sidebar:
   order: 12
+tags:
+  - Microsoft Entra ID
 ---
 
 import { Render, Badge } from "~/components";
 
-Cloudflare Zero Trust enforces Cloudflare One Client (formerly WARP) reauthentication on a per-application basis, unlike legacy VPNs which treat it as a global setting. You can configure device client session timeouts for your [Access applications](#configure-warp-sessions-in-access) or as part of your [Gateway policies](#configure-warp-sessions-in-gateway).
+Client sessions control how often users must re-authenticate with your identity provider (IdP) while using the Cloudflare One Client (formerly WARP). Unlike legacy VPNs, which enforce a single global session timeout, Cloudflare One allows you to set session timeouts per application or per policy. You can configure session timeouts for your [Access applications](#configure-warp-sessions-in-access) or as part of your [Gateway policies](#configure-warp-sessions-in-gateway).
 
 <Render file="warp/warp-sessions-intro" product="cloudflare-one" />
 

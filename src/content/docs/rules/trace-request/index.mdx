@@ -17,9 +17,9 @@ import {
 
 <Plan type="all" />
 
-Cloudflare Trace <ProductAvailabilityText product="trace-request" /> follows an HTTP/S request through Cloudflare's reverse proxy to your origin. Use this tool to understand how different Cloudflare configurations interact with an HTTP/S request for one of your hostnames. If the hostname you are testing is not [proxied by Cloudflare](/dns/proxy-status/), Cloudflare Trace will still return all the configurations that Cloudflare would have applied to the request.
+Cloudflare Trace <ProductAvailabilityText product="trace-request" /> simulates an HTTP/S request through Cloudflare's network to your origin server. Use this tool to understand how your Cloudflare configurations (such as rules, caching, and security settings) would affect a specific request. If the hostname you are testing is not [proxied by Cloudflare](/dns/proxy-status/), Cloudflare Trace will still return all the configurations that Cloudflare would have applied to the request.
 
-You can define specific request properties to simulate different conditions for an HTTP/S request. Inactive rules configured in Cloudflare products will not be evaluated.
+You can define specific request properties to simulate different conditions for an HTTP/S request. Rules that are turned off in Cloudflare products will not be evaluated.
 
 Cloudflare Trace is available to users with an Administrator or Super Administrator role.
 

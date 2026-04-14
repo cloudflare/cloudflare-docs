@@ -8,7 +8,7 @@ sidebar:
 
 import { Render } from "~/components";
 
-The Cloudflare One Client (formerly WARP) can run alongside most legacy third-party VPNs. Because the Cloudflare One Client and third-party VPN client both enforce firewall, routing, and DNS rules on your local device, the two products will compete with each other for control over IP and DNS traffic. To ensure compatibility make sure that:
+The Cloudflare One Client (formerly WARP) can run alongside most legacy third-party VPNs. However, both the Cloudflare One Client and your VPN try to control the same things on the device: which traffic goes where (routing), which DNS server answers queries, and which firewall rules apply. To prevent conflicts, you must split these responsibilities between the two products:
 
 - IP traffic is split tunneled between the Cloudflare One Client and the VPN. All VPN traffic must bypass the Cloudflare One Client and vice versa.
 - The VPN bypasses/allows/excludes all domains, IPs, and ports listed in [Cloudflare One Client with firewall](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/firewall/).
@@ -18,7 +18,7 @@ For the most stable and consistent connection, we recommend connecting your [pri
 
 ## Traffic and DNS mode
 
-In [Traffic and DNS mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/#traffic-and-dns-mode-default) mode, the Cloudflare One Client must be allowed to capture and route all DNS traffic on the device. You can use [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/) to send DNS requests to a server behind your third-party VPN or firewall, but the request must first go through the client's local DNS proxy. Refer to [client architecture](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/client-architecture/) for more information about this requirement.
+In [Traffic and DNS mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/#traffic-and-dns-mode-default), the Cloudflare One Client must be allowed to capture and route all DNS traffic on the device. You can use [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/) to send DNS requests to a server behind your third-party VPN or firewall, but the request must first go through the client's local DNS proxy. Refer to [client architecture](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/client-architecture/) for more information about this requirement.
 
 If you cannot disable DNS on your VPN, switch to [Traffic only mode](#secure-web-gateway-without-dns-filtering) mode to disable DNS in the Cloudflare One Client.
 
@@ -43,7 +43,7 @@ You can now [test](#test-the-configuration) if WARP runs alongside the VPN.
 
 ## Traffic only mode
 
-In [Traffic only mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/#traffic-only-mode) mode, the Cloudflare One Client does not perform any DNS functions on the device. Therefore, all you need to do is split tunnel your IP traffic.
+In [Traffic only mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/#traffic-only-mode), the Cloudflare One Client only controls IP routing — it does not manage DNS. This is the simpler option when your VPN must retain DNS control, because you only need to split tunnel IP traffic.
 
 ### 1. Configure the VPN
 

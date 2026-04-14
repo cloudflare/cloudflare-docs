@@ -18,6 +18,7 @@ params:
   - legacyHCs
   - tunnelHCsPage
   - sourceIPsURL?
+  - virtualNetworksURL?
 ---
 
 import { AnchorHeading, Aside, DashButton, Markdown, Render } from "~/components";
@@ -33,6 +34,11 @@ The {props.virtualNetworkName} is a virtual network overlay, private to your acc
 
 The {props.virtualNetworkName} supports routing the {props.productName} traffic through anycast tunnels using <a href={props.greIpsecReferenceURL}>GRE and Internet Protocol Security (IPsec)</a> or [CNI with Dataplane v2](/network-interconnect/). You can add entries to the {props.routingTableName} through static route configuration or through routes learned through BGP peering (beta).{ props.magicWord !== "Magic Transit" && (<> Traffic can also be routed automatically according to tracked flow state.</>)}
 
+{props.virtualNetworksURL && (
+<Aside>
+<Markdown text={`For a conceptual overview of virtual networks, including how they work across Cloudflare products, refer to [Virtual networks](${props.virtualNetworksURL}). Cloudflare WAN connections (IPsec, GRE, CNI) currently use only the default virtual network.`} inline={false} />
+</Aside>
+)}
 
 ### Allowed IP ranges
 

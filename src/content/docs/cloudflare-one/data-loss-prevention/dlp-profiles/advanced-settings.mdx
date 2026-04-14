@@ -5,8 +5,6 @@ sidebar:
   order: 4
 ---
 
-import { Badge } from "~/components";
-
 This page lists the profile settings available when configuring a [predefined](/cloudflare-one/data-loss-prevention/dlp-profiles/predefined-profiles/) or [custom](/cloudflare-one/data-loss-prevention/dlp-profiles/#build-a-custom-profile) DLP profile. You can configure profile settings when you create a custom profile or [edit profile settings](#edit-profile-settings) for an existing predefined or custom profile.
 
 ## Edit profile settings
@@ -24,7 +22,7 @@ The following advanced detection settings are available for predefined and custo
 
 ### Match count
 
-Match count refers to the number of times that any enabled entry in the profile can be detected before an action is triggered, such as blocking or logging. For example, if you select a match count of 10, the scanned file or HTTP body must contain 11 or more matching strings. Detections do not have to be unique.
+Match count sets a minimum threshold for detections. DLP does not trigger an action (such as blocking or logging) until the number of detections exceeds the match count. For example, if you set a match count of 10, the scanned file or HTTP body must contain 11 or more matching strings before the action triggers. Detections do not have to be unique.
 
 ### Optical Character Recognition (OCR)
 
@@ -32,15 +30,15 @@ Optical Character Recognition (OCR) analyzes and interprets text within image fi
 
 OCR supports scanning `.jpg`/`.jpeg` and `.png` files between 4 KB and 1 MB in size. Text is encoded in UTF-8 format, including support for non-Latin characters.
 
-### AI context analysis <Badge text="Beta" variant="caution" size="small" /> {/* ai-context-analysis */}
+### AI context analysis {/* ai-context-analysis */}
 
 :::note
 AI context analysis only supports Gateway HTTP and HTTPS traffic.
 :::
 
-AI context analysis uses a pretrained model to analyze and adjust the confidence in a detection based on its surrounding context. DLP will log any matches that are above your confidence threshold.
+AI context analysis uses a pretrained model to analyze surrounding context and adjust the confidence level of a detection. For example, a number that matches a credit card pattern may receive a lower confidence score if it appears in a context where credit card numbers are unlikely. DLP will log any matches that are above your confidence threshold.
 
-DLP redacts any matched text, then submits the context as an AI text embedding vector to [Cloudflare Workers AI](/workers-ai/). Vectors are stored in user-specific private namespaces for up to six months, along with hit count and the [false positive/negative report](/cloudflare-one/data-loss-prevention/dlp-policies/logging-options/#report-false-and-true-positives-to-ai-context-analysis).
+DLP redacts any matched text, then converts the surrounding context into a vector embedding and submits it to [Cloudflare Workers AI](/workers-ai/). Vector embeddings (not raw text) are stored in user-specific private namespaces for up to six months, along with hit count and the [false positive/negative report](/cloudflare-one/data-loss-prevention/dlp-policies/logging-options/#report-false-and-true-positives-to-ai-context-analysis).
 
 To use AI context analysis:
 
@@ -52,11 +50,15 @@ AI context analysis results will appear in the payload section of your [DLP logs
 
 ### Confidence thresholds
 
-Confidence thresholds indicate how confident Cloudflare DLP is in a DLP detection. DLP determines the confidence by inspecting the content for proximity keywords around the detection.
+Confidence thresholds indicate how confident Cloudflare DLP is in a detection. DLP determines the confidence level by inspecting the content for proximity keywords — related terms that appear near the detected data. For example, the word "SSN" appearing near a 9-digit number increases confidence that the number is a Social Security number.
+
+When you set a confidence threshold on a profile, DLP only triggers on detections at that level or higher:
+
+- **Low** (default) — Based on regular expressions with few proximity keywords. This is the most inclusive setting, with high tolerance for false positives
+- **Medium** — Applies additional validations, to filter out low confidence detections. This setting has a medium tolerance for false positives.
+- **High** — Applies rigorous contextual validation for minimal false positives (has a higher likelihood of accuracy).
 
 Confidence threshold is set on the DLP profile. When you select a confidence threshold in Cloudflare One, you will see which DLP entries will be affected by the confidence threshold. Entries that do not reflect a confidence threshold in Cloudflare One are not yet supported or are not applicable.
-
-DLP confidence detections consist of Low, Medium, and High confidence thresholds. DLP will default to Low confidence detections, which are based on regular expressions, require few keywords, and will trigger more often. Medium and High confidence detections require more keywords, will trigger less often, and have a higher likelihood of accuracy.
 
 To change the confidence threshold of a DLP profile:
 
@@ -64,8 +66,6 @@ To change the confidence threshold of a DLP profile:
 2. Select the profile, then select **Edit**.
 3. In **Settings** > **Confidence threshold**, choose a new confidence threshold from the dropdown menu.
 4. Select **Save profile**.
-
-Setting the confidence to Low will also consider Medium and High confidence detections as matches. Setting the confidence to Medium or High will filter out lower confidence detections.
 
 #### Gateway detections
 
