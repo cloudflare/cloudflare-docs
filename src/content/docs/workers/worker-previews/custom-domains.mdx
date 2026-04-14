@@ -16,15 +16,14 @@ This lets you test zone-level features (WAF rules, cache rules, etc.) that are t
 
 ## How it works
 
-Both `workers.dev` and custom domains support preview traffic, each with a `previews_enabled` flag:
+Both `workers.dev` and custom domains support preview traffic:
 
-| Domain type | Configured via | Production default | Previews default |
-| --- | --- | --- | --- |
-| `workers.dev` | Worker settings API | Not enabled | Not enabled |
-| Custom domains | Domains API | `true` | `false` |
+- **workers.dev** — Worker Previews work on workers.dev automatically. When you run `wrangler preview`, the preview URL is created on `workers.dev` without any additional configuration. The URL format is `{preview-name}-{worker}.{subdomain}.workers.dev` (hyphen-separated, single label).
+- **Custom domains** — require `previews_enabled: true` on the domain. When enabled, each preview gets a **subdomain**: `{preview-name}.app.example.com` (dot-separated). A wildcard DNS record and wildcard SSL certificate are created automatically. Custom domains are configured through the [Domains API](/api/resources/workers/subresources/domains/methods/update/). When created, `enabled` defaults to `true` and `previews_enabled` defaults to `false`.
 
-- **workers.dev** is a setting on the Worker itself. Not enabled by default — you explicitly enable it through the Worker settings.
-- **Custom domains** are separate resources created through the [Domains API](/api/resources/workers/subresources/domains/methods/update/). When created, `enabled` defaults to `true` and `previews_enabled` defaults to `false`.
+:::note
+The URL format is different between workers.dev and custom domains. On workers.dev, the preview name is a prefix joined by a hyphen: `my-feature-my-worker.sub.workers.dev`. On custom domains, the preview name is a subdomain joined by a dot: `my-feature.app.example.com`.
+:::
 
 When you set `previews_enabled` to `true` on a custom domain (for example, `app.example.com`), each preview automatically gets a subdomain. A preview called `new-checkout` becomes accessible at `new-checkout.app.example.com`. A wildcard DNS record and wildcard SSL certificate are created automatically behind the scenes.
 

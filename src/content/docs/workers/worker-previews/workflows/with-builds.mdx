@@ -74,27 +74,17 @@ npx wrangler versions deploy <VERSION_ID>@<PERCENTAGE> <OLD_VERSION_ID>@<PERCENT
 
 **The tradeoff:** Every merge to main creates a version that sits at 0% traffic until you roll it out. If you merge frequently, versions will pile up and each one requires a manual `versions deploy` step.
 
-### Option 2: Keep automatic deploys, gradual rollout only when needed
+### Why you cannot mix `wrangler deploy` with gradual rollouts in Builds
 
-| Setting | Value |
-| --- | --- |
-| Deploy command | `npx wrangler deploy` |
-| Preview command | `npx wrangler preview` |
+You might want to keep your deploy command as `npx wrangler deploy` (auto-deploy to 100% on merge) and only use gradual rollouts occasionally. This does not work with Builds because:
 
-This is the same as [deploy on merge](#deploy-on-merge) — merging to main deploys to 100% automatically. When you want a gradual rollout for a specific change, skip the merge and run `wrangler versions upload` from the CLI instead:
+1. **You cannot `wrangler versions upload` from a feature branch** — it would create a production version using preview resources, not production bindings.
+2. **Merging a PR triggers Builds** — Builds runs your deploy command (`wrangler deploy`), which deploys to 100% immediately. There is no way to intercept this and do a gradual rollout instead.
+3. **Merging locally and running `wrangler versions upload` before pushing** creates a race condition — when you push the merge, Builds will still run `wrangler deploy` on top of your gradual rollout.
 
-```bash
-git checkout main
-git merge my-feature
+If you need gradual rollouts with Builds, use [Option 1](#option-1-every-merge-creates-a-version-you-always-control-rollout) — set your deploy command to `npx wrangler versions upload` so every merge creates a version without deploying it. You then control the rollout manually.
 
-# Instead of letting Builds auto-deploy, upload a version manually
-npx wrangler versions upload
-
-# Then control the rollout
-npx wrangler versions deploy
-```
-
-**The tradeoff:** Most merges deploy immediately. You only use gradual rollouts for changes where you want extra control. But you have to remember to run `wrangler versions upload` manually instead of merging through the normal flow.
+If you only need gradual rollouts occasionally and are not using Builds, see [Without Workers Builds — gradual rollouts](/workers/worker-previews/workflows/without-builds/#with-gradual-rollouts).
 
 For the full gradual rollout and rollback guide, see [Gradual rollouts and rollbacks](/workers/worker-previews/rollouts-and-rollbacks/).
 
