@@ -11,17 +11,15 @@ description: >-
   for feedback, logging, URLs, and universal requests.
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, WranglerConfig } from "~/components";
 
-import { WranglerConfig } from "~/components";
+The Workers AI binding (`env.AI`) lets you call AI models and access AI Gateway features directly from your Worker.
 
-The Workers AI binding (`env.AI`) lets you call AI models and access AI Gateway features directly from your Worker. This page covers everything you can do with the binding.
+For a step-by-step setup guide, refer to [Get started with Workers AI](/ai-gateway/integrations/aig-workers-ai-binding/).
 
-For a step-by-step tutorial on setting up a Worker with AI Gateway, refer to [Get started with Workers AI](/ai-gateway/integrations/aig-workers-ai-binding/).
+## Configuration
 
-## 1. Add an AI Binding to your Worker
-
-To connect your Worker to Workers AI, add the following to your [Wrangler configuration file](/workers/wrangler/configuration/):
+Add an AI binding to your [Wrangler configuration file](/workers/wrangler/configuration/):
 
 <WranglerConfig>
 
@@ -35,15 +33,17 @@ To connect your Worker to Workers AI, add the following to your [Wrangler config
 
 </WranglerConfig>
 
-This configuration sets up the AI binding accessible in your Worker code as `env.AI`.
+The binding is accessible in your Worker code as `env.AI`.
 
 <Render file="wrangler-typegen" product="workers" />
 
-## 2. Basic Usage with Workers AI + Gateway
+## `env.AI.run()`
 
-To perform an inference task using Workers AI and an AI Gateway, you can use the following code:
+Runs an inference request through AI Gateway. Accepts Workers AI models (`@cf/` prefix) and third-party models (`{author}/{model}` format).
 
-```typescript title="src/index.ts"
+**Workers AI model:**
+
+```typescript
 const resp = await env.AI.run(
 	"@cf/meta/llama-3.1-8b-instruct",
 	{
@@ -57,9 +57,9 @@ const resp = await env.AI.run(
 );
 ```
 
-You can also call third-party models using the same `env.AI.run()` method. Use the `{author}/{model}` format for the model ID:
+**Third-party model:**
 
-```typescript title="src/index.ts"
+```typescript
 const resp = await env.AI.run(
 	"openai/gpt-4.1-mini",
 	{
@@ -73,17 +73,17 @@ const resp = await env.AI.run(
 );
 ```
 
-Third-party models use [Unified Billing](/ai-gateway/features/unified-billing/). Cloudflare manages the provider credentials and deducts credits from your account for each request. You do not need to supply your own API keys.
+Third-party models require an AI Gateway and use [Unified Billing](/ai-gateway/features/unified-billing/). Cloudflare manages the provider credentials and deducts credits from your account. You do not need to supply your own API keys.
 
 :::note
-[BYOK (Bring Your Own Keys)](/ai-gateway/configuration/bring-your-own-keys/) is not supported for third-party models called through the Workers AI binding. If you need to use your own provider keys, use the [AI Gateway REST API](/ai-gateway/usage/providers/) or the [chat completions endpoint](/ai-gateway/usage/chat-completion/) instead.
+[BYOK (Bring Your Own Keys)](/ai-gateway/configuration/bring-your-own-keys/) is not supported for third-party models called through the Workers AI binding. To use your own provider keys, use the [AI Gateway REST API](/ai-gateway/usage/providers/) or the [chat completions endpoint](/ai-gateway/usage/chat-completion/) instead.
 :::
 
-Browse the full list of available models in the [model catalog](https://developers.cloudflare.com/ai/models/).
+Browse available models in the [model catalog](https://developers.cloudflare.com/ai/models/).
 
 ### Gateway options
 
-The `gateway` option accepts the following parameters:
+The third argument to `env.AI.run()` accepts a `gateway` object with the following parameters:
 
 | Parameter    | Type      | Default    | Description                                                                                      |
 | ------------ | --------- | ---------- | ------------------------------------------------------------------------------------------------ |
@@ -94,28 +94,30 @@ The `gateway` option accepts the following parameters:
 | `collectLog` | `boolean` | —          | Whether to [collect logs](/ai-gateway/observability/logging/) for this request.                  |
 | `metadata`   | `object`  | —          | [Custom metadata](/ai-gateway/observability/custom-metadata/) to attach to the log entry.        |
 
-Additionally, you can access the latest request log ID with:
+## `env.AI.aiGatewayLogId`
+
+Returns the log ID from the most recent `env.AI.run()` request.
 
 ```typescript
 const myLogId = env.AI.aiGatewayLogId;
 ```
 
-## 3. Access the Gateway Binding
+## `env.AI.gateway()`
 
-You can access your AI Gateway binding using the following code:
+Returns a gateway instance for accessing AI Gateway methods directly.
 
 ```typescript
 const gateway = env.AI.gateway("my-gateway");
 ```
 
-Once you have the gateway instance, you can use the following methods:
+The gateway instance exposes the following methods.
 
-### 3.1. `patchLog`: Send Feedback
+### `patchLog()`
 
-The `patchLog` method allows you to send feedback, score, and metadata for a specific log ID. All object properties are optional, so you can include any combination of the parameters:
+Sends feedback, score, and metadata for a specific log entry. All properties in the second argument are optional.
 
 ```typescript
-gateway.patchLog("my-log-id", {
+await gateway.patchLog("my-log-id", {
 	feedback: 1,
 	score: 100,
 	metadata: {
@@ -124,41 +126,35 @@ gateway.patchLog("my-log-id", {
 });
 ```
 
-- **Returns**: `Promise<void>` (Make sure to `await` the request.)
-- **Example Use Case**: Update a log entry with user feedback or additional metadata.
+**Returns:** `Promise<void>`
 
-### 3.2. `getLog`: Read Log Details
+### `getLog()`
 
-The `getLog` method retrieves details of a specific log ID. It returns an object of type `Promise<AiGatewayLog>`. If this type is missing, ensure you have run [`wrangler types`](/workers/languages/typescript/#generate-types).
+Retrieves details of a specific log entry. If the `AiGatewayLog` type is missing, run [`wrangler types`](/workers/languages/typescript/#generate-types).
 
 ```typescript
 const log = await gateway.getLog("my-log-id");
 ```
 
-- **Returns**: `Promise<AiGatewayLog>`
-- **Example Use Case**: Retrieve log information for debugging or analytics.
+**Returns:** `Promise<AiGatewayLog>`
 
-### 3.3. `getUrl`: Get Gateway URLs
+### `getUrl()`
 
-The `getUrl` method allows you to retrieve the base URL for your AI Gateway, optionally specifying a provider to get the provider-specific endpoint.
+Returns the base URL for your AI Gateway. Pass an optional provider name to get the provider-specific endpoint.
 
 ```typescript
-// Get the base gateway URL
 const baseUrl = await gateway.getUrl();
-// Output: https://gateway.ai.cloudflare.com/v1/my-account-id/my-gateway/
+// https://gateway.ai.cloudflare.com/v1/my-account-id/my-gateway/
 
-// Get a provider-specific URL
 const openaiUrl = await gateway.getUrl("openai");
-// Output: https://gateway.ai.cloudflare.com/v1/my-account-id/my-gateway/openai
+// https://gateway.ai.cloudflare.com/v1/my-account-id/my-gateway/openai
 ```
 
-- **Parameters**: Optional `provider` (string or `AIGatewayProviders` enum)
-- **Returns**: `Promise<string>`
-- **Example Use Case**: Dynamically construct URLs for direct API calls or debugging configurations.
+**Parameters:** Optional `provider` (string or `AIGatewayProviders` enum)
 
-#### SDK Integration Examples
+**Returns:** `Promise<string>`
 
-The `getUrl` method is particularly useful for integrating with popular AI SDKs:
+#### SDK integration examples
 
 **OpenAI SDK:**
 
@@ -191,11 +187,9 @@ const anthropic = createAnthropic({
 });
 ```
 
-### 3.4. `run`: Universal Requests
+### `run()`
 
-The `run` method allows you to execute universal requests. Users can pass either a single universal request object or an array of them. This method supports all AI Gateway providers.
-
-Refer to the [Universal endpoint documentation](/ai-gateway/usage/universal/) for details about the available inputs.
+Executes a [universal request](/ai-gateway/usage/universal/) to any supported provider. Accepts a single request object or an array.
 
 ```typescript
 const resp = await gateway.run({
@@ -210,5 +204,4 @@ const resp = await gateway.run({
 });
 ```
 
-- **Returns**: `Promise<Response>`
-- **Example Use Case**: Perform a [universal request](/ai-gateway/usage/universal/) to any supported provider.
+**Returns:** `Promise<Response>`
