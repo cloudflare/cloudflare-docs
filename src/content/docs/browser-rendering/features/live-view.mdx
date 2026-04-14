@@ -100,13 +100,14 @@ If you have a running session and want to connect to it:
 
 2. Using the session ID, list the targets in that session:
 
-<CURL
-	url="https://api.cloudflare.com/client/v4/accounts/ACCOUNT_ID/browser-rendering/devtools/browser/SESSION_ID/json/list"
-	method="GET"
-	headers={{
-		Authorization: "Bearer {api_token}",
-	}}
-/>
+   <CURL
+     url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/browser-rendering/devtools/browser/$SESSION_ID/json/list"
+     method="GET"
+     headers={{
+       Authorization: "Bearer $CLOUDFLARE_API_TOKEN",
+     }}
+   />
+
 
    ```json output {8}
    [
