@@ -3,14 +3,13 @@ title: Choose a connection method
 pcx_content_type: overview
 sidebar:
   order: 1
-
 ---
 
 There are [multiple ways](/reference-architecture/architectures/sase/#connecting-networks) to onramp traffic from your private networks to Cloudflare. This page covers the two software-based methods commonly used for VPN replacement: Cloudflare Mesh and Cloudflare Tunnel. Both involve installing lightweight software on a host machine in your network to create a secure connection to Cloudflare's global network.
 
 ## Cloudflare Mesh
 
-[Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) runs the Cloudflare One Client (`warp-cli`) in headless mode on a Linux server. It operates as a Layer 3 proxy, supports bidirectional traffic (TCP, UDP, ICMP), and assigns a private Mesh IP to every participant. Use Mesh when you need:
+[Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) (formerly WARP Connector) runs the Cloudflare One Client (`warp-cli`) in headless mode on a Linux server. It operates as a Layer 3 proxy, supports bidirectional traffic (TCP, UDP, ICMP), and assigns a private Mesh IP to every participant. Use Mesh when you need:
 
 - User-to-network access (replacing a VPN)
 - Network-to-network / site-to-site connectivity
@@ -28,17 +27,17 @@ There are [multiple ways](/reference-architecture/architectures/sase/#connecting
 
 ## Comparison table
 
-|                                | Cloudflare Mesh                  | Cloudflare Tunnel              |
-| ------------------------------ | -------------------------------- | ------------------------------ |
-| Bidirectional traffic          | ✅                                | ❌                              |
-| High availability              | ✅ (active-passive)               | ✅ (active-active replicas)     |
-| Source IP of request           | Virtual IP of requesting device  | `cloudflared` host machine     |
-| Host machine                   | Linux (amd64, arm64)             | Linux, macOS, Windows          |
-| IPv4                           | ✅                                | ✅                              |
-| IPv6                           | ❌                                | ✅                              |
-| OSI layer                      | L3                               | L4                             |
-| Protocol                       | MASQUE                           | QUIC or HTTP/2                 |
-| Protocols proxied              | TCP, UDP, ICMP                   | HTTP/S, TCP, SSH, RDP, SMB     |
+|                       | Cloudflare Mesh                 | Cloudflare Tunnel           |
+| --------------------- | ------------------------------- | --------------------------- |
+| Bidirectional traffic | ✅                              | ❌                          |
+| High availability     | ✅ (active-passive)             | ✅ (active-active replicas) |
+| Source IP of request  | Virtual IP of requesting device | `cloudflared` host machine  |
+| Host machine          | Linux (amd64, arm64)            | Linux, macOS, Windows       |
+| IPv4                  | ✅                              | ✅                          |
+| IPv6                  | ❌                              | ✅                          |
+| OSI layer             | L3                              | L4                          |
+| Protocol              | MASQUE                          | QUIC or HTTP/2              |
+| Protocols proxied     | TCP, UDP, ICMP                  | HTTP/S, TCP, SSH, RDP, SMB  |
 
 ## Recommendation
 

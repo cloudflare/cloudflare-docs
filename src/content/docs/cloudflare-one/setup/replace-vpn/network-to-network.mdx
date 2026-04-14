@@ -12,7 +12,7 @@ tags:
   - Private networks
 ---
 
-import { DashButton} from "~/components";
+import { DashButton } from "~/components";
 
 Connect two separate private networks so devices on each network can send and receive traffic in both directions through Cloudflare. This is useful when you need to link office locations, data centers, or cloud environments. For example, employees in one office could access a file server, printer, or internal application in another office.
 
@@ -20,7 +20,7 @@ To explore other connection scenarios, refer to [Replace your VPN](/cloudflare-o
 
 ## How it works
 
-[Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) lets you deploy mesh nodes — lightweight network connectors that you install on a single Linux device in each network. That device handles traffic for the entire network: it sends outbound traffic to Cloudflare and receives inbound traffic back, then passes it to the right device on the network. Because of this, other devices on the network do not need to install any software.
+[Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) (formerly WARP Connector) lets you deploy mesh nodes — lightweight network connectors that you install on a single Linux device in each network. That device handles traffic for the entire network: it sends outbound traffic to Cloudflare and receives inbound traffic back, then passes it to the right device on the network. Because of this, other devices on the network do not need to install any software.
 
 ## Prerequisites
 
