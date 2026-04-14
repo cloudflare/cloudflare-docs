@@ -78,7 +78,7 @@ npx wrangler preview secret put MY_API_KEY
 npx wrangler preview settings update
 ```
 
-See [why this step is required](#wrangler-users-your-local-config-is-not-read-automatically).
+See [why this step is required](#settings-update-required).
 
 #### Full example with bindings
 
@@ -184,6 +184,8 @@ When you create a preview or deployment, the API merges your request body on top
 
 </TabItem>
 </Tabs>
+
+<div id="settings-update-required"></div>
 
 :::caution[Wrangler users: your local config is not read automatically]
 If you configured previews via Wrangler (the `previews` block in `wrangler.jsonc`), you **must** run `wrangler preview settings update` to push your config to the API before moving on to step 2. Unlike other Wrangler commands, `wrangler preview` does not read the `previews` block from your local config file. It reads [Preview Defaults](/workers/worker-previews/concepts/#what-are-preview-defaults) from the API. If you skip this step, your preview will use whatever was previously stored on the API — which may be empty or point at production resources. This does not apply if you configured previews through the dashboard or API, where changes take effect immediately.
