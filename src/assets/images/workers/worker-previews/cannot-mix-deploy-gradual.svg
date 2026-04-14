@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 520" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 530" fill="none">
   <style>
     text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
     .label { font-size: 13px; fill: #1a1a1a; font-weight: 600; }
@@ -129,11 +129,12 @@
   <!-- Arrow from deploy down to result -->
   <line x1="709" y1="396" x2="709" y2="418" class="arrow-red"/>
 
-  <rect x="570" y="424" width="220" height="46" class="box box-bad"/>
-  <text x="680" y="442" text-anchor="middle" class="label" style="fill: #dc2626;">Overwrites your rollout</text>
-  <text x="680" y="458" text-anchor="middle" class="sublabel">Deploys to 100% on top of your 10/90 split</text>
+  <rect x="520" y="424" width="270" height="52" class="box box-bad"/>
+  <text x="655" y="444" text-anchor="middle" class="label" style="fill: #dc2626;">Overwrites your rollout</text>
+  <text x="655" y="462" text-anchor="middle" class="sublabel">Deploys to 100% on top of</text>
+  <text x="655" y="474" text-anchor="middle" class="sublabel">your 10/90 split</text>
 
   <!-- Bottom summary -->
-  <line x1="30" y1="488" x2="790" y2="488" stroke="#e5e7eb" stroke-width="1"/>
-  <text x="410" y="510" text-anchor="middle" class="sublabel">All three attempts fail. Set your deploy command to <tspan class="cmd" style="fill: #c2410c;">npx wrangler versions upload</tspan> to control rollouts manually.</text>
+  <line x1="30" y1="494" x2="790" y2="494" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="410" y="518" text-anchor="middle" class="sublabel">All three attempts fail. Set your deploy command to <tspan class="cmd" style="fill: #c2410c;">npx wrangler versions upload</tspan> to control rollouts manually.</text>
 </svg>
