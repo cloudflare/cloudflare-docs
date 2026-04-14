@@ -6,7 +6,7 @@ sidebar:
   order: 2
 ---
 
-import { WranglerConfig } from "~/components";
+import { Tabs, TabItem } from "~/components";
 
 ## Production commands vs preview command
 
@@ -19,8 +19,8 @@ There are two pipelines for your Worker — production and preview. Each has its
 | Command | What it does |
 | --- | --- |
 | `wrangler deploy` | Creates a version and deploys it to 100% of production traffic immediately |
-| `wrangler versions upload` | Creates a version without deploying it. Used for [gradual rollouts](/workers/worker-previews/rollouts-and-rollbacks/) |
-| `wrangler versions deploy` | Routes production traffic to specific version(s) at chosen percentages |
+| `wrangler versions upload` | Creates a version without deploying it. Use this when you want to [gradually roll out](/workers/worker-previews/rollouts-and-rollbacks/) instead of deploying to 100% immediately. |
+| `wrangler versions deploy` | The second step after `wrangler versions upload`. Routes production traffic to the uploaded version at a percentage you choose (for example, 10% new, 90% old). |
 
 **Preview command** creates an isolated environment that is completely separate from production:
 
@@ -73,21 +73,73 @@ For Durable Objects specifically, refer to [Durable Object isolation](/workers/w
 
 ## What are Preview Defaults?
 
-Preview Defaults are a set of settings stored on your Worker that every new preview inherits automatically. Think of them as the template for what a preview environment looks like — which bindings to use, which variables to set, which observability settings to apply.
+Preview Defaults are the template for every preview environment. They are stored server-side on your Worker and include bindings, variables, secrets, observability settings, and runtime configuration. When you create or update a preview, it takes a **snapshot** of the current Preview Defaults at that moment.
 
-You configure Preview Defaults once, and every `wrangler preview` after that picks them up without any extra configuration.
+### How they work
 
-You can set Preview Defaults through:
+1. You configure Preview Defaults — which KV namespace previews should use, which secrets, which variables, etc.
+2. Every time you run `wrangler preview` (or Builds creates a preview), the preview takes a **snapshot** of the current Preview Defaults.
+3. Changing Preview Defaults after a preview was created does **not** retroactively update that preview. To pick up the new defaults, push to the preview again.
 
-- **The dashboard:** Settings > Bindings, toggled to Previews
-- **Wrangler:** `wrangler preview settings update` (reads the `previews` block from your Wrangler configuration file)
-- **Wrangler:** `wrangler preview secret put` (for secrets)
+**Example:** Your Preview Defaults have a KV binding `CACHE` and a variable `ENVIRONMENT: "preview"`. Alice creates a preview on her `auth-refactor` branch — it gets both.
 
-If your Wrangler configuration file has a `previews` block, those values take precedence over what is stored in Preview Defaults. The merge order is:
+A week later, you add a D1 binding `DB` to Preview Defaults for a new feature. Bob creates a preview on his `payments` branch — it gets `CACHE`, `ENVIRONMENT`, and `DB`.
 
-1. **Wrangler configuration file** (`previews` block) — wins if set
-2. **Preview Defaults** (stored on the API) — used if Wrangler config does not override
-3. **Production settings** — used for any binding with "Use production value" checked
+Alice's preview still only has `CACHE` and `ENVIRONMENT`. It used the defaults as they were when she last pushed. To pick up `DB`, Alice runs `wrangler preview` again on her branch.
+
+### How to configure Preview Defaults
+
+<Tabs>
+<TabItem label="Dashboard">
+
+Changes take effect immediately — the next preview created will use the updated defaults.
+
+1. Go to **Settings** > **Bindings** and toggle to **Previews**.
+2. Go to **Settings** > **Variables and Secrets** and toggle to **Previews**.
+3. Review **Settings** > **Runtime** and **Settings** > **Observability**.
+
+</TabItem>
+<TabItem label="Wrangler">
+
+Add a `previews` block to your Wrangler configuration file, then push it to the API:
+
+```bash
+npx wrangler preview settings update
+```
+
+You need to run this command **every time you change the `previews` block** in your config file. The local config is not automatically synced — `wrangler preview settings update` is what pushes your local changes to the API where Preview Defaults are stored.
+
+</TabItem>
+<TabItem label="API">
+
+```bash
+curl -X PATCH \
+  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/workers/$WORKER_ID" \
+  -H "Authorization: Bearer $API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "preview_defaults": {
+      "bindings": [...],
+      "compatibility_date": "2025-05-25",
+      "observability": { "enabled": true }
+    }
+  }'
+```
+
+Changes take effect immediately for the next preview created.
+
+</TabItem>
+</Tabs>
+
+### What Preview Defaults include
+
+| Setting | Example |
+| --- | --- |
+| **Bindings** | KV namespaces, R2 buckets, D1 databases, Durable Objects, service bindings |
+| **Variables** | Environment variables (`ENVIRONMENT: "preview"`) |
+| **Secrets** | API keys, tokens (managed via `wrangler preview secret put` or the dashboard) |
+| **Observability** | Log sampling rate, Logpush, Tail Workers |
+| **Runtime** | Compatibility date, compatibility flags |
 
 ## How preview URLs work
 

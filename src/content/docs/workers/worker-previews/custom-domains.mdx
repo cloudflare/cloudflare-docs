@@ -6,7 +6,7 @@ sidebar:
   order: 4
 ---
 
-import { WranglerConfig } from "~/components";
+
 
 By default, Worker Previews are only accessible on `workers.dev` URLs (for example, `my-feature-my-worker.subdomain.workers.dev`). With custom domain support, you can serve preview traffic on your own domain — so a preview called `new-checkout` becomes accessible at `new-checkout.app.example.com`.
 
@@ -66,12 +66,12 @@ This enables both production and preview traffic on `app.example.com`. After thi
 
 Add `enabled` and `previews_enabled` to your custom domain route in your Wrangler configuration file:
 
-<WranglerConfig>
-
 ```jsonc
+// wrangler.jsonc
 {
 	"name": "my-worker",
 	"main": "src/index.ts",
+	// Set this to today's date
 	"compatibility_date": "$today",
 	"routes": [
 		{
@@ -83,8 +83,6 @@ Add `enabled` and `previews_enabled` to your custom domain route in your Wrangle
 	]
 }
 ```
-
-</WranglerConfig>
 
 ## Preview URL structure
 

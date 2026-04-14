@@ -23,7 +23,7 @@ If you have been using `wrangler versions upload` to generate [version URLs](/wo
 Before creating a preview, configure what resources and settings your previews should use. This is what makes previews isolated from production.
 
 :::note
-If your Worker has no bindings, there are no resources to isolate — you can skip straight to [creating a preview](#2-create-your-first-preview). You should still review preview variables, secrets, and runtime settings if your Worker uses them.
+If your Worker has no bindings, there are no resources to isolate. But if your Worker uses variables or secrets, you still need to configure them here — they are **not** inherited from production. Previews without configured vars/secrets will have them empty.
 :::
 
 <Tabs>
@@ -47,7 +47,8 @@ For **Durable Objects**, use [`ctx.exports`](/workers/worker-previews/durable-ob
 {
 	"name": "my-worker",
 	"main": "src/index.ts",
-	"compatibility_date": "2026-04-14",
+	// Set this to today's date
+	"compatibility_date": "$today",
 	"vars": {
 		"ENVIRONMENT": "production"
 	},
@@ -59,28 +60,28 @@ For **Durable Objects**, use [`ctx.exports`](/workers/worker-previews/durable-ob
 }
 ```
 
+Secrets are managed separately from the config file. Add preview-specific secrets with [`wrangler preview secret put`](#wrangler-preview-secret-put):
+
+```bash
+npx wrangler preview secret put MY_API_KEY
+```
+
 2. Push the config to the API:
 
 ```bash
 npx wrangler preview settings update
 ```
 
-3. Add any preview-specific secrets:
-
-```bash
-npx wrangler preview secret put MY_API_KEY
-```
-
 #### Full example with bindings
 
 For Workers with KV, D1, R2, and Durable Objects, the `previews` block can override each binding to point at a separate resource. Only include bindings that should differ from production — anything you omit uses Preview Defaults or falls back to "Use production value."
 
-<WranglerConfig>
-
 ```jsonc
+// wrangler.jsonc
 {
 	"name": "my-worker",
 	"main": "src/index.ts",
+	// Set this to today's date
 	"compatibility_date": "$today",
 
 	// --- Production ---
@@ -128,7 +129,12 @@ For Workers with KV, D1, R2, and Durable Objects, the `previews` block can overr
 }
 ```
 
-</WranglerConfig>
+Secrets are managed separately from the config file. Add preview-specific secrets with [`wrangler preview secret put`](#wrangler-preview-secret-put):
+
+```bash
+npx wrangler preview secret put STRIPE_SECRET_KEY
+npx wrangler preview secret put DATABASE_TOKEN
+```
 
 :::note
 Bindings in the `previews` block require resource IDs — you must create the preview resources first (for example, `wrangler kv namespace create`, `wrangler d1 create`, or `wrangler r2 bucket create`). Auto-provisioning (omitting IDs) is supported for `wrangler deploy` but is not yet available for `wrangler preview`.

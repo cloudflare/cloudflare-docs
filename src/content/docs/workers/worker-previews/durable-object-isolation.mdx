@@ -6,7 +6,7 @@ sidebar:
   order: 5
 ---
 
-import { WranglerConfig } from "~/components";
+
 
 When using [Worker Previews](/workers/worker-previews/), each preview environment can have its own isolated [Durable Object](/durable-objects/) namespace. Durable Object instances created by a preview are completely separate from production — different instance IDs, different storage, no shared state.
 
@@ -79,12 +79,12 @@ export default {
 
 Your Wrangler configuration file only needs the migration — no `durable_objects.bindings` section and no `previews` block:
 
-<WranglerConfig>
-
 ```jsonc
+// wrangler.jsonc
 {
 	"name": "my-worker",
 	"main": "src/index.ts",
+	// Set this to today's date
 	"compatibility_date": "$today",
 	"migrations": [
 		{
@@ -94,8 +94,6 @@ Your Wrangler configuration file only needs the migration — no `durable_object
 	]
 }
 ```
-
-</WranglerConfig>
 
 **Step 4 — Deploy and create a preview:**
 
@@ -162,12 +160,12 @@ Use [`ctx.exports`](#approach-1-use-ctxexports-recommended) for auto-isolation, 
 
 You can configure a DO binding for previews in your Wrangler configuration file by adding a `previews` block with `durable_objects.bindings`. You must include `script_name` pointing to the Worker that owns the DO class:
 
-<WranglerConfig>
-
 ```jsonc
+// wrangler.jsonc
 {
 	"name": "my-worker",
 	"main": "src/index.ts",
+	// Set this to today's date
 	"compatibility_date": "$today",
 	"durable_objects": {
 		"bindings": [
@@ -196,8 +194,6 @@ You can configure a DO binding for previews in your Wrangler configuration file 
 	}
 }
 ```
-
-</WranglerConfig>
 
 After updating your Wrangler configuration file, apply the change:
 
