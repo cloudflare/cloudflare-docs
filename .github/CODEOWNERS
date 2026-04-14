@@ -168,7 +168,7 @@ package.json @cloudflare/content-engineering
 
 # Docs team areas
 
-/src/content/docs/style-guide/ @dcpena @cloudflare/pcx-technical-writing @cloudflare/product-owners
+/src/content/docs/style-guide/ @dcpena @caley-b @cloudflare/pcx-technical-writing @cloudflare/product-owners
 
 # Google tag gateway
 /src/content/docs/google-tag-gateway/ @ToriLindsay @kathayl @simonabadoiu @jonnyparris @cloudflare/pcx-technical-writing @cloudflare/product-owners
