@@ -4,6 +4,8 @@
 
 import { Tabs, TabItem} from "~/components";
 
+<a id="format"></a>
+
 ### `format` | `f`
 
 Specifies the output format for the image.
@@ -11,7 +13,7 @@ Specifies the output format for the image.
 Accepts the following values:
 
 - `auto` — Automatically serves the most efficient format that the requesting browser supports. When you serve a [hosted image](/images/optimization/hosted-images/create-variants/), this is the default `format` option.
-- `avif` — Transcodes the image to AVIF if possible (with WebP as a fallback).
+- `avif` — Transcodes the image to AVIF, if possible. AVIF encoding can be an order of magnitude slower than encoding to other formats. If the image is too large to be quickly encoded to AVIF, then Cloudflare will fall back to WebP or JPEG.
 - `webp` — Transcodes the image to Google WebP format. Use `quality=100` to return the WebP lossless format.
 - `jpeg` — Transcodes the image in interlaced progressive JPEG format, in which data is compressed in multiple passes of progressively higher detail.
 - `baseline-jpeg` — Transcode the image in baseline sequential JPEG format. It should be used in cases when target devices do not support progressive JPEG or other modern file formats.
