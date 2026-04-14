@@ -7,7 +7,7 @@ sidebar:
 
 import { WranglerConfig } from "~/components";
 
-VPC Networks allow your Workers to access any service in your private network without pre-registering individual hosts or ports. You can bind to a specific [Cloudflare Tunnel](/workers-vpc/configuration/tunnel/) to reach any service behind that tunnel, or bind to Cloudflare Mesh to reach any service behind any of your tunnels and Mesh nodes.
+VPC Networks allow your Workers to access any service in your private network without pre-registering individual hosts or ports. You can bind to a specific [Cloudflare Tunnel](/workers-vpc/configuration/tunnel/) to reach any service behind that tunnel, or bind to [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) to reach any Mesh node, client device, or IP route in your account.
 
 At runtime, the URL you pass to `fetch()` determines the destination — any hostname or IP address reachable through the bound tunnel or Mesh network. This differs from [VPC Services](/workers-vpc/configuration/vpc-services/), which require you to create a separate binding for each target host and port combination.
 
@@ -39,7 +39,7 @@ The `remote` flag must be set to `true` to enable remote bindings during local d
 
 ## Bind to Cloudflare Mesh
 
-Cloudflare Mesh connects your services, devices, and Workers through Cloudflare's global network. When you bind a Worker to Cloudflare Mesh using `network_id: "cf1:network"`, your Worker can reach any private service accessible through your account's Mesh nodes and Cloudflare Tunnels — without specifying a particular tunnel UUID.
+[Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) connects your services, devices, and Workers through Cloudflare's global network. When you bind a Worker to Cloudflare Mesh using `network_id: "cf1:network"`, your Worker can reach any Mesh node, client device, or IP route in your account — without specifying a particular tunnel UUID.
 
 Use Cloudflare Mesh when:
 

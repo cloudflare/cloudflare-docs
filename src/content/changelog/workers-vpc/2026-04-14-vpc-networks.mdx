@@ -8,7 +8,7 @@ import { WranglerConfig } from "~/components";
 
 [VPC Network](/workers-vpc/configuration/vpc-networks/) bindings now give your Workers access to any service in your private network without pre-registering individual hosts or ports. This complements existing [VPC Service](/workers-vpc/configuration/vpc-services/) bindings, which scope each binding to a specific host and port.
 
-You can bind to a Cloudflare Tunnel by `tunnel_id` to access any service on the network where that tunnel is running, or bind to your Cloudflare Mesh network using `cf1:network` to reach any service accessible through any of your Mesh nodes and tunnels:
+You can bind to a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) by `tunnel_id` to reach any service on the network where that tunnel is running, or bind to your [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) network using `cf1:network` to reach any Mesh node, client device, or subnet route in your account:
 
 <WranglerConfig>
 ```jsonc

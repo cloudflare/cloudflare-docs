@@ -90,6 +90,12 @@ Split Tunnels is the only supported method of running both connectors on the sam
 
 To route traffic between Cloudflare Mesh and [Cloudflare WAN](/cloudflare-wan/) (for example, reaching a Mesh node from a WAN-connected site or vice versa), your account must be on [Unified Routing mode (beta)](/cloudflare-wan/reference/traffic-steering/#unified-routing-mode-beta). Unified Routing uses a single routing fabric for all connection types (Cloudflare One Client, Cloudflare Tunnel, IPsec, GRE, CNI). Without it, Mesh and WAN connections cannot exchange traffic.
 
+## Connect Workers to Mesh
+
+Cloudflare Workers can connect to your Mesh network using [VPC Network bindings](/workers-vpc/configuration/vpc-networks/). Bind to `cf1:network` to reach any Mesh node, client device, or subnet route in your account — without specifying a particular tunnel UUID.
+
+For setup instructions and examples, refer to [Connect Workers to Cloudflare Mesh](/workers-vpc/examples/connect-to-cloudflare-mesh/).
+
 ## Source IPs for Cloudflare services
 
 When Cloudflare services (such as [Load Balancing](/load-balancing/) health checks or [Workers](/workers/)) send traffic to your private network through a Mesh node, the traffic originates from the Cloudflare source IP range (default `100.64.0.0/12`). You may need to [configure Cloudflare source IPs](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/manually/how-to/configure-cloudflare-source-ips/) to avoid IP conflicts.
