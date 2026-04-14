@@ -205,17 +205,7 @@ In this example, DNSSEC is misconfigured if a proper DNS response is received wh
 
 After [disabling DNSSEC](/dns/dnssec/#disable-dnssec), DNSKEY records may still appear in DNS queries or zone transfers. This is expected behavior and **not a misconfiguration or error**. Refer to [DNSSEC states](/dns/dnssec/dnssec-states/) and [RFC 8078](https://www.rfc-editor.org/rfc/rfc8078.html#section-4) for details.
 
-However, some security vendors or audit tools may flag these DNSKEY records as problematic, reporting "DNSKEY record found but no DS record found" with a security outcome of "Provably Insecure." This occurs because the chain of trust is broken (no DS record at the registrar), even though the zone itself functions normally.
-
-If you need to satisfy security audit requirements, you can remove the DNSKEY records using the API.
-
-### Understand DNSKEY record persistence
-
-When DNSSEC is disabled:
-
-1. The `DS` record is removed from the registrar (parent zone), breaking the chain of trust.
-2. `RRSIG` records are no longer generated for new DNS responses.
-3. `DNSKEY` records may remain in the zone configuration until explicitly removed. You can remove remaining DNSKEY records via API.
+However, some security vendors or audit tools may flag these DNSKEY records as problematic, reporting "DNSKEY record found but no DS record found" with a security outcome of "Provably Insecure.". You can remove the DNSKEY records using the API.
 
 ### How to remove remaining DNSKEY records
 
