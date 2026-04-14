@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { WranglerConfig } from "~/components";
+import { Tabs, TabItem, WranglerConfig, Render } from "~/components";
 
 VPC Networks allow your Workers to access any service in your private network without pre-registering individual hosts or ports. You can bind to a specific [Cloudflare Tunnel](/workers-vpc/configuration/tunnel/) to reach any service behind that tunnel, or bind to [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) to reach any Mesh node, client device, or IP route in your account.
 
@@ -17,7 +17,11 @@ Workers VPC is currently in beta. Features and APIs may change before general av
 
 :::
 
-## Bind to a tunnel
+## Binding types
+
+VPC Network bindings support three ways to connect your Worker to a private network:
+
+### Bind to a tunnel
 
 Reference a specific Cloudflare Tunnel directly by its UUID:
 
@@ -37,7 +41,7 @@ Reference a specific Cloudflare Tunnel directly by its UUID:
 
 The `remote` flag must be set to `true` to enable remote bindings during local development.
 
-## Bind to Cloudflare Mesh
+### Bind to Cloudflare Mesh
 
 [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) (formerly WARP Connector) connects your services, devices, and Workers through Cloudflare's global network. When you bind a Worker to Cloudflare Mesh using `network_id: "cf1:network"`, your Worker can reach any Mesh node, client device, or IP route in your account — without specifying a particular tunnel UUID.
 
@@ -68,6 +72,107 @@ Bind to Cloudflare Mesh using `network_id: "cf1:network"`:
 }
 ```
 </WranglerConfig>
+
+### Bind to an explicit VPC Network
+
+You can create an explicit VPC Network that associates a tunnel with optional custom DNS resolver IPs. Bind your Worker to it using the network's UUID:
+
+<WranglerConfig>
+```jsonc
+{
+  "vpc_networks": [
+    {
+      "binding": "MY_VPC",
+      "network_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "remote": true
+    }
+  ]
+}
+```
+</WranglerConfig>
+
+Explicit VPC Networks are useful when you need:
+
+- **Custom DNS resolver IPs** — override the default DNS resolver used by the tunnel. For example, point to an internal DNS server, use split-horizon DNS, or integrate with service discovery tools like Consul or CoreDNS.
+- **Named network references** — create a named network entity that can be managed independently of your Worker configuration. Update the network's tunnel or DNS settings without modifying Worker bindings.
+- **Multiple networks with different resolvers** — bind different Workers to different networks, each with their own DNS configuration.
+
+:::note
+
+`tunnel_id` and `network_id` are mutually exclusive in a binding configuration. Use `tunnel_id` to bind directly to a tunnel, or `network_id` to bind to Cloudflare Mesh (`cf1:network`) or an explicit VPC Network (UUID).
+
+:::
+
+## Create a VPC Network
+
+<Tabs>
+<TabItem label="Wrangler CLI">
+
+```sh
+npx wrangler vpc network create my-network \
+  --tunnel-id 550e8400-e29b-41d4-a716-446655440000
+```
+
+To specify custom DNS resolver IPs:
+
+```sh
+npx wrangler vpc network create my-network \
+  --tunnel-id 550e8400-e29b-41d4-a716-446655440000 \
+  --resolver-ips 10.0.0.1,10.0.0.2
+```
+
+For the full list of options, refer to [Wrangler VPC commands](/workers/wrangler/commands/vpc/).
+
+</TabItem>
+<TabItem label="Dashboard">
+
+1. Go to the [Workers VPC dashboard](https://dash.cloudflare.com/?to=/:account/workers/vpc) and select the **Networks** tab.
+2. Select **Create** and choose **Create VPC Network**.
+3. Enter a **Network name** (lowercase alphanumeric and hyphens, 1-63 characters).
+4. Select a **Tunnel** from the dropdown.
+5. Optionally, configure **DNS Resolver IPs** — enter comma-separated IP addresses, or leave empty to use the tunnel's default DNS resolver.
+6. Select **Create network**.
+
+</TabItem>
+<TabItem label="API">
+
+Use the [Connectivity Directory Networks API](/api/resources/connectivity/subresources/directory/subresources/networks/) to create a network:
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/connectivity/directory/networks" \
+  -H "Authorization: Bearer {api_token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "my-network",
+    "tunnel_id": "550e8400-e29b-41d4-a716-446655440000"
+  }'
+```
+
+To specify custom DNS resolver IPs, include the `resolver_ips` field:
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/connectivity/directory/networks" \
+  -H "Authorization: Bearer {api_token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "my-network",
+    "tunnel_id": "550e8400-e29b-41d4-a716-446655440000",
+    "resolver_ips": ["10.0.0.1", "10.0.0.2"]
+  }'
+```
+
+</TabItem>
+</Tabs>
+
+## Manage VPC Networks
+
+You can list, update, and delete VPC Networks with [Wrangler VPC commands](/workers/wrangler/commands/vpc/) or the [Connectivity Directory Networks API](/api/resources/connectivity/subresources/directory/subresources/networks/).
+
+:::caution
+
+You cannot delete a VPC Network that has active Worker bindings. The API returns a `400 Bad Request` error with a list of bound Workers. Remove the bindings from all Workers before deleting the network.
+
+:::
 
 ## Runtime usage
 
@@ -101,9 +206,14 @@ The following table summarizes the differences:
 | Feature              | VPC Networks                                                                  | VPC Services              |
 | -------------------- | ----------------------------------------------------------------------------- | ------------------------- |
 | Scope                | Entire tunnel or full Mesh network                                            | Specific host + port      |
-| Configuration        | `tunnel_id` (single tunnel) or `cf1:network` (all tunnels and Mesh nodes)     | `service_id`              |
+| Configuration        | `tunnel_id`, `network_id` (UUID), or `cf1:network`                            | `service_id`              |
 | Service registration | Not required                                                                  | Required for each target  |
+| Custom DNS resolvers | Supported (explicit networks only)                                            | Supported per service     |
 | Use when             | Dynamic discovery, network-wide access, reaching services across your account | Fixed, cataloged services |
+
+## Required roles
+
+<Render file="required-roles" product="workers-vpc" />
 
 ## Next steps
 
@@ -111,3 +221,4 @@ The following table summarizes the differences:
 - [Set up Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/get-started/)
 - Try the [Connect Workers to Cloudflare Mesh](/workers-vpc/examples/connect-to-cloudflare-mesh/) example
 - Learn about the [Workers Binding API](/workers-vpc/api/)
+- Manage VPC Networks with [Wrangler commands](/workers/wrangler/commands/vpc/)

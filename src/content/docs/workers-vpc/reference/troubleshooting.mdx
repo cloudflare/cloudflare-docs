@@ -77,8 +77,28 @@ Workers VPC may return errors at runtime when connecting to private services thr
 | `Error: ProxyError: dns_error`  | Cloudflare Tunnel may be configured with `http2` protocol (`TUNNEL_TRANSPORT_PROTOCOL:http2`), which works for Cloudflare Zero Trust [(see note)](/workers-vpc/configuration/tunnel/#create-and-run-tunnel-cloudflared) traffic but prevents DNS resolution from Workers VPC. | Workers VPC requires Cloudflare Tunnel to connect using the [QUIC transport protocol](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#protocol). Ensure outbound UDP traffic on port 7844 is allowed through your firewall.                            |
 | Requests not staying within VPC | Worker requests using `.fetch()` with a public hostname are routing out of the VPC to the hostname configured for the VPC Service.                                                                                                                                            | Ensure your Worker code and the VPC Service use the internal VPC hostname for backend services, not a public hostname.                                                                                                                                                                         |
 
+## Network CRUD errors
+
+Errors that may occur when creating, updating, or deleting VPC Networks.
+
+| Error                                                | Details                                                                                                           | Recommended fixes                                                                                         |
+| ---------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `400 Bad Request` when deleting a network             | The network has active Worker bindings and cannot be deleted. The response body contains a list of bound Workers. | Remove the `vpc_networks` binding from all listed Workers and redeploy them before retrying the deletion. |
+| `404 Not Found` when binding to a network            | The `network_id` UUID in your Wrangler configuration does not match any network in your account.                  | Run `npx wrangler vpc network list` to confirm the network exists and the UUID is correct.                |
+| `422 Unprocessable Entity` when creating or updating | The `name` field is invalid (for example, contains uppercase letters, spaces, or exceeds 63 characters).          | Use a name consisting of lowercase alphanumeric characters and hyphens, 1-63 characters.                  |
+
+## Custom DNS resolver errors
+
+Errors that may occur when using custom DNS resolver IPs with VPC Networks.
+
+| Error                                               | Details                                                                                 | Recommended fixes                                                                                                                                                                       |
+| --------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Error: ProxyError: dns_error` with custom resolver | DNS resolution failed using the configured custom resolver IP.                          | Verify that the resolver IP is reachable from within the tunnel's network, and that your `cloudflared` version is 2025.7.0 or later.                                                    |
+| Private hostnames not resolving                     | The custom DNS resolver is configured but cannot resolve internal hostnames.            | Confirm the resolver IP addresses a DNS server that has records for your private hostnames. Check that firewall rules allow UDP/TCP traffic on port 53 from the tunnel to the resolver. |
+| Resolver IPs not taking effect                      | The network was updated with new resolver IPs, but traffic still uses the old resolver. | Allow up to 60 seconds for the change to propagate globally. If the issue persists, redeploy any bound Workers to pick up the updated network configuration.                            |
+
 ## Permission errors
 
-If you cannot view, create, or bind VPC Services and Tunnels in the dashboard or via Wrangler, ensure your user has the required roles.
+If you cannot view, create, or bind VPC Services, VPC Networks, and Tunnels in the dashboard or via Wrangler, ensure your user has the required roles.
 
 <Render file="required-roles" product="workers-vpc" />

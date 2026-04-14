@@ -1,0 +1,193 @@
+---
+{}
+---
+
+import { Render, AnchorHeading, Type, MetaInfo } from "~/components";
+
+Manage VPC Services and VPC Networks from the command line.
+
+<AnchorHeading
+	title="`vpc network create`"
+	slug="vpc-network-create"
+	depth={3}
+/>
+
+Create a new VPC Network.
+
+```txt
+wrangler vpc network create <NAME> --tunnel-id <TUNNEL_ID> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - A name for the network. Must be unique within your account. Lowercase alphanumeric characters and hyphens, 1-63 characters.
+- `--tunnel-id` <Type text="string" /> <MetaInfo text="required" />
+  - The UUID of the Cloudflare Tunnel to associate with this network.
+- `--resolver-ips` <Type text="string" /> <MetaInfo text="optional" />
+  - Comma-separated DNS resolver IP addresses. When omitted, the network uses the tunnel's default DNS resolver.
+
+```sh
+npx wrangler vpc network create my-network \
+  --tunnel-id 550e8400-e29b-41d4-a716-446655440000
+```
+
+```sh output
+Creating VPC network "my-network"
+Created VPC network.
+Network ID: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+Name: my-network
+Tunnel ID: 550e8400-e29b-41d4-a716-446655440000
+Resolver IPs: default
+```
+
+To specify custom DNS resolver IPs:
+
+```sh
+npx wrangler vpc network create my-network \
+  --tunnel-id 550e8400-e29b-41d4-a716-446655440000 \
+  --resolver-ips 10.0.0.1,10.0.0.2
+```
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+---
+
+<AnchorHeading title="`vpc network list`" slug="vpc-network-list" depth={3} />
+
+List all VPC Networks in your account.
+
+```txt
+wrangler vpc network list
+```
+
+```sh
+npx wrangler vpc network list
+```
+
+```sh output
+Listing VPC Networks
+
+Network ID                           Name         Tunnel ID                            Resolver IPs         Created
+a1b2c3d4-e5f6-7890-abcd-ef1234567890 my-network   550e8400-e29b-41d4-a716-446655440000 10.0.0.1, 10.0.0.2   2025-06-15T10:30:00Z
+b2c3d4e5-f6a7-8901-bcde-f12345678901 staging-net  660f9511-f3ac-52e5-c827-557766551111 default              2025-06-10T15:45:00Z
+```
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+---
+
+<AnchorHeading title="`vpc network get`" slug="vpc-network-get" depth={3} />
+
+Display details about a VPC Network, including its name, tunnel ID, resolver IPs, and creation time.
+
+```txt
+wrangler vpc network get <NETWORK_ID>
+```
+
+- `NETWORK_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The UUID of the VPC Network to inspect.
+
+```sh
+npx wrangler vpc network get a1b2c3d4-e5f6-7890-abcd-ef1234567890
+```
+
+```sh output
+Getting VPC network details
+Network ID: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+Name: my-network
+Tunnel ID: 550e8400-e29b-41d4-a716-446655440000
+Resolver IPs: 10.0.0.1, 10.0.0.2
+Created: 2025-06-15T10:30:00Z
+Updated: 2025-06-15T10:30:00Z
+```
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+---
+
+<AnchorHeading
+	title="`vpc network update`"
+	slug="vpc-network-update"
+	depth={3}
+/>
+
+Update a VPC Network's name and/or DNS resolver IPs.
+
+```txt
+wrangler vpc network update <NETWORK_ID> [OPTIONS]
+```
+
+- `NETWORK_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The UUID of the VPC Network to update.
+- `--name` <Type text="string" /> <MetaInfo text="optional" />
+  - A new name for the network.
+- `--resolver-ips` <Type text="string" /> <MetaInfo text="optional" />
+  - Comma-separated DNS resolver IP addresses. Pass an empty string (`""`) to clear custom resolver IPs and revert to the tunnel's default DNS resolver.
+
+```sh
+npx wrangler vpc network update a1b2c3d4-e5f6-7890-abcd-ef1234567890 \
+  --name production-network \
+  --resolver-ips 10.0.0.1
+```
+
+```sh output
+Updating VPC network "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+Updated VPC network.
+Network ID: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+Name: production-network
+Resolver IPs: 10.0.0.1
+```
+
+To clear custom resolver IPs:
+
+```sh
+npx wrangler vpc network update a1b2c3d4-e5f6-7890-abcd-ef1234567890 \
+  --resolver-ips ""
+```
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+---
+
+<AnchorHeading
+	title="`vpc network delete`"
+	slug="vpc-network-delete"
+	depth={3}
+/>
+
+Delete a VPC Network from your account.
+
+```txt
+wrangler vpc network delete <NETWORK_ID> [OPTIONS]
+```
+
+- `NETWORK_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The UUID of the VPC Network to delete.
+- `--force` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Skip the confirmation prompt.
+
+:::caution
+
+You cannot delete a VPC Network that has active Worker bindings. If any Workers are bound to the network, the command will fail with a list of bound Workers. Remove the bindings from all Workers before deleting the network.
+
+:::
+
+```sh
+npx wrangler vpc network delete a1b2c3d4-e5f6-7890-abcd-ef1234567890
+```
+
+```sh output
+Are you sure you want to delete VPC network "a1b2c3d4-e5f6-7890-abcd-ef1234567890"? This action cannot be undone. (y/n)
+Deleting VPC network a1b2c3d4-e5f6-7890-abcd-ef1234567890
+VPC network deleted.
+```
+
+If the network has bound Workers:
+
+```sh output
+Error: Cannot delete VPC network "a1b2c3d4-e5f6-7890-abcd-ef1234567890" because the following Workers are bound to it:
+  - my-worker
+  - staging-api
+Remove the bindings from these Workers before deleting the network.
+```
+
+<Render file="wrangler-commands/global-flags" product="workers" />
