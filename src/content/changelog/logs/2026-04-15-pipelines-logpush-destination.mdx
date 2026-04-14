@@ -4,7 +4,7 @@ description: Send Cloudflare logs to Pipelines for SQL transformation and storag
 products:
   - logs
   - pipelines
-date: 2026-04-03
+date: 2026-04-15
 ---
 
 [Cloudflare Pipelines](/pipelines/) ingests events, transforms them with SQL, and delivers them to [R2](/r2/) as [Iceberg](/r2/data-catalog/) tables or as Parquet and JSON files.
@@ -20,36 +20,36 @@ INSERT INTO http_logs_sink
 SELECT
   ClientIP,
   EdgeResponseStatus,
-  to_timestamp_nanos(EdgeStartTimestamp) AS event_time,
+  to_timestamp_micros(EdgeStartTimestamp) AS event_time,
   upper(ClientRequestMethod) AS method,
   sha256(ClientIP) AS hashed_ip
 FROM http_logs_stream
 WHERE EdgeResponseStatus >= 400;
 ```
 
-Pipelines SQL supports string functions, regex, hashing (SHA-256, MD5), JSON extraction, timestamp conversion, conditional expressions, and more. For the full list, refer to the [Pipelines SQL reference](/pipelines/sql-reference/).
+Pipelines SQL supports string functions, regex, hashing, JSON extraction, timestamp conversion, conditional expressions, and more. For the full list, refer to the [Pipelines SQL reference](/pipelines/sql-reference/).
 
-## Query landed data with R2 SQL
+## Query events with R2 SQL
 
-When you choose **R2 Data Catalog** as the Sink format, Pipelines writes your logs as Apache Iceberg tables in Parquet format. You can then query these tables directly with [R2 SQL](/r2-sql/) — no additional infrastructure required.
+When you choose [**R2 Data Catalog**](/r2/data-catalog/) as the Sink format, Pipelines writes your logs as Apache Iceberg tables in Parquet format. You can then query these tables directly with [R2 SQL](/r2-sql/) with no additional infrastructure required.
 
 ```bash
 npx wrangler r2 sql query --warehouse <WAREHOUSE> \
   --query "SELECT
     date_bin(INTERVAL '1 hour', event_time, '2026-03-30T00:00:00Z') AS hour,
+    json_get_str(RequestHeaders, 'content-type') AS content_type,
     COUNT(*) AS error_count,
     approx_distinct(hashed_ip) AS unique_clients
-  FROM logpush.http_logs
+  FROM logpush.http_requests
   WHERE EdgeResponseStatus >= 500
-  GROUP BY hour
-  ORDER BY hour DESC
+    AND json_contains(RequestHeaders, 'content-type')
+  GROUP BY hour, content_type
+  ORDER BY error_count DESC
   LIMIT 24"
 ```
 
-R2 SQL supports aggregations, approximate percentiles, statistical functions, and regex functions, among others. For the full list of supported functions, refer to the [R2 SQL reference](/r2-sql/sql-reference/).
+R2 SQL supports aggregations, approximate percentiles, statistical functions, regex functions, and JSON functions, among others. For the full list of supported features, refer to the [R2 SQL reference](/r2-sql/sql-reference/).
 
 ## Get started
 
-Configure the Pipelines destination from the Logpush page in the Cloudflare dashboard. The setup wizard creates the Stream, Sink, Pipeline, and authentication token automatically.
-
-For step-by-step instructions, refer to the [Cloudflare Pipelines Logpush Documentation](/logs/logpush/logpush-job/enable-destinations/pipelines/).
+To configure Pipelines as a Logpush destination, refer to [Enable Cloudflare Pipelines](/logs/logpush/logpush-job/enable-destinations/pipelines/).
