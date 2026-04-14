@@ -1,0 +1,355 @@
+{
+	"model_id": "openai/gpt-5.4",
+	"provider_id": "openai",
+	"name": "GPT-5.4",
+	"description": "GPT-5.4 is OpenAI's most capable frontier model for coding, reasoning, and professional workflows. It features configurable reasoning effort, improved document understanding, and supports up to 1,050,000 tokens of context.",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Coding",
+		"Reasoning",
+		"Agentic",
+		"Multimodal",
+		"Long Context"
+	],
+	"context_length": 1050000,
+	"max_output_tokens": 128000,
+	"schema_version": "1.0.0",
+	"pricing": {},
+	"examples": [
+		{
+			"name": "Simple Question",
+			"description": "Basic chat completion request",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "What are the three laws of thermodynamics?"
+					}
+				]
+			},
+			"output": {
+				"text": "The **three laws of thermodynamics** are:\n\n1. **First Law — Conservation of Energy**  \n   Energy cannot be created or destroyed, only transferred or transformed.  \n   In thermodynamics: the change in a system’s internal energy equals heat added to the system minus work done by the system.\n\n2. **Second Law — Entropy Increases**  \n   In any natural process, the total entropy of an isolated system tends to increase.  \n   This means energy tends to spread out, and no heat engine can be 100% efficient.\n\n3. **Third Law — Entropy at Absolute Zero**  \n   As temperature approaches absolute zero (0 K), the entropy of a perfect crystal approaches zero.  \n   It also implies that absolute zero cannot be reached in a finite number of steps.\n\nThere is also a **Zeroth Law of Thermodynamics**:\n\n- If system A is in thermal equilibrium with system B, and B is in thermal equilibrium with C, then A is in thermal equilibrium with C.  \n- This is the basis for the concept of temperature.\n\nIf you want, I can also give you a **simple everyday explanation** of each law."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5.4',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'What are the three laws of thermodynamics?',\n      },\n    ],\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+				}
+			]
+		},
+		{
+			"name": "With System Message",
+			"description": "Using a system message to set context",
+			"input": {
+				"messages": [
+					{
+						"role": "system",
+						"content": "You are a helpful coding assistant specializing in Python."
+					},
+					{
+						"role": "user",
+						"content": "How do I read a JSON file in Python?"
+					}
+				],
+				"temperature": 0.3
+			},
+			"output": {
+				"text": "Use Python’s built-in `json` module:\n\n```python\nimport json\n\nwith open(\"data.json\", \"r\") as file:\n    data = json.load(file)\n\nprint(data)\n```\n\n### Notes\n- `json.load(file)` reads JSON from a file and converts it to Python objects like `dict`, `list`, etc.\n- If your file uses UTF-8, you can be explicit:\n\n```python\nimport json\n\nwith open(\"data.json\", \"r\", encoding=\"utf-8\") as file:\n    data = json.load(file)\n```\n\n### If you have a JSON string instead\nUse `json.loads()`:\n\n```python\nimport json\n\njson_string = '{\"name\": \"Alice\", \"age\": 25}'\ndata = json.loads(json_string)\n\nprint(data[\"name\"])\n```\n\nIf you want, I can also show how to handle errors like invalid JSON or missing files."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5.4',\n  {\n    messages: [\n      {\n        role: 'system',\n        content: 'You are a helpful coding assistant specializing in Python.',\n      },\n      {\n        role: 'user',\n        content: 'How do I read a JSON file in Python?',\n      },\n    ],\n    temperature: 0.3,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+				}
+			]
+		},
+		{
+			"name": "Multi-turn Conversation",
+			"description": "Continuing a conversation with context",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "I need help planning a road trip from San Francisco to Los Angeles."
+					},
+					{
+						"role": "assistant",
+						"content": "I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?"
+					},
+					{
+						"role": "user",
+						"content": "Yes, what are some good places to stop?"
+					}
+				],
+				"max_tokens": 500
+			},
+			"output": {
+				"text": "Here are some great stop options between San Francisco and Los Angeles, depending on whether you want the fastest route or the most scenic one:\n\n### Scenic Route: Highway 1 / Pacific Coast Highway\nThis is much slower than I-5, but far more beautiful.\n\nGood stops:\n- **Santa Cruz** – Beach boardwalk, ocean views, casual food\n- **Monterey** – Cannery Row, Monterey Bay Aquarium, coastal scenery\n- **Carmel-by-the-Sea** – Charming town, boutiques, white-sand beach\n- **Big Sur** – Dramatic cliffs, Bixby Bridge, hiking, viewpoints\n- **San Simeon** – Hearst Castle and elephant seals\n- **Cambria** – Cute seaside town, good overnight stop\n- **Morro Bay** – Iconic Morro Rock, waterfront restaurants\n- **San Luis Obispo** – Fun downtown, good food, relaxed atmosphere\n- **Santa Barbara** – Spanish-style architecture, beaches, wineries\n- **Malibu** – Coastal views before arriving in LA\n\n### Faster Route: I-5\nLess scenic, but quicker.\n\nPossible stops:\n- **Gilroy** – Known for garlic, outlet shopping\n- **Harris Ranch** – Popular food stop\n- **Kettleman City** – Common gas/food break\n- **Bakersfield** – Bigger stop with restaurants and hotels\n- **Grapevine area** – Rest before crossing into LA region\n\n### Best of Both Worlds\nA popular option is:\n- Take **Highway 101 or Highway 1** for part of the trip\n- Stop in **Monterey/Carmel** or **San Luis Obispo**\n- Then continue south via **101** for a balance of scenery and speed\n\nIf you want, I can also suggest:\n1. a **1-day itinerary**\n2. a **2-3 day scenic itinerary**\n3. **food-focused stops**\n4. **must-see nature stops**"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5.4',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'I need help planning a road trip from San Francisco to Los Angeles.',\n      },\n      {\n        role: 'assistant',\n        content:\n          \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n      },\n      {\n        role: 'user',\n        content: 'Yes, what are some good places to stop?',\n      },\n    ],\n    max_tokens: 500,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+				}
+			]
+		},
+		{
+			"name": "Creative Writing",
+			"description": "Higher temperature for creative output",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "Write a short story opening about a detective finding an unusual clue."
+					}
+				],
+				"temperature": 0.8,
+				"max_tokens": 300
+			},
+			"output": {
+				"text": "Detective Mara Voss found the teacup balanced upside down on the victim’s windowsill.\n\nIt was a delicate porcelain thing, painted with tiny blue swallows, and it should have shattered when the glass broke. Instead, it sat perfectly still among the glittering shards, dry as bone despite the rain tapping at the open window.\n\nMara crouched beside it, ignoring the officers moving through the apartment behind her. A dead man on the floor, no signs of struggle, door locked from the inside—already the scene had the sour feel of a puzzle someone else thought they had solved.\n\n“Suicide,” the uniform by the door said.\n\nMara didn’t answer. On the bottom of the teacup, written in neat black ink, were three words:\n\n**I WAS HERE**\n\nNot scratched. Not painted long ago. Written recently, the letters sharp and unfaded, as if whoever had placed the cup there wanted to be noticed—but only by someone patient enough to turn the world upside down.\n\nMara stood slowly, listening to the rain and the hush in the room.\n\nIt wasn’t the message that unsettled her.\n\nIt was the handwriting.\n\nShe had seen it once before, on a note folded into her coat pocket the day her brother disappeared."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5.4',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'Write a short story opening about a detective finding an unusual clue.',\n      },\n    ],\n    temperature: 0.8,\n    max_tokens: 300,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+				}
+			]
+		},
+		{
+			"name": "Streaming Response",
+			"description": "Enable streaming for real-time output",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "Explain the concept of recursion with a simple example."
+					}
+				],
+				"stream": true,
+				"stream_options": {
+					"include_usage": true
+				}
+			},
+			"output": {
+				"text": "Recursion is when a function solves a problem by calling itself on a smaller version of the same problem.\n\nIt usually has two parts:\n\n- **Base case**: the condition where the function stops calling itself\n- **Recursive case**: where the function calls itself with a simpler input\n\n### Simple example: factorial\n\nThe factorial of a number `n` is:\n\n- `1! = 1`\n- `2! = 2 × 1`\n- `3! = 3 × 2 × 1`\n- `4! = 4 × 3 × 2 × 1`\n\nA recursive definition is:\n\n- `factorial(1) = 1` → base case\n- `factorial(n) = n × factorial(n - 1)` → recursive case\n\n### Python example\n\n```python\ndef factorial(n):\n    if n == 1:\n        return 1\n    return n * factorial(n - 1)\n\nprint(factorial(4))\n```\n\n### How it works for `factorial(4)`\n\n- `factorial(4)`  \n  = `4 * factorial(3)`\n- `factorial(3)`  \n  = `3 * factorial(2)`\n- `factorial(2)`  \n  = `2 * factorial(1)`\n- `factorial(1)`  \n  = `1`\n\nNow it returns back up:\n\n- `factorial(2)` = `2 * 1 = 2`\n- `factorial(3)` = `3 * 2 = 6`\n- `factorial(4)` = `4 * 6 = 24`\n\n### In short\n\nRecursion is useful when a problem can be broken into smaller, similar subproblems. The key is making sure there is a base case so it doesn’t continue forever.\n\nIf you want, I can also explain recursion using a countdown example or a visual analogy."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5.4',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'Explain the concept of recursion with a simple example.',\n      },\n    ],\n    stream: true,\n    stream_options: {\n      include_usage: true,\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://platform.openai.com/docs/models",
+	"terms": "https://openai.com/policies/terms-of-use",
+	"cover_image_url": "https://tjzk.replicate.delivery/models_models_featured_image/54613ab5-0227-457a-b575-c34e36d589b8/Screenshot_2026-03-05_at_2.40..png",
+	"metadata": {
+		"Knowledge Cutoff": "August 31, 2025",
+		"Reasoning Levels": "none, low, medium, high, xhigh",
+		"Verbosity Levels": "low, medium, high",
+		"Multimodal Input": "Text, Images"
+	},
+	"created_at": "2026-04-08 21:29:08",
+	"default_example": null,
+	"code_snippets": [],
+	"schema": {
+		"model_id": "openai/gpt-5.4",
+		"version": "1.0.0",
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"messages": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"role": {
+								"type": "string",
+								"enum": [
+									"system",
+									"developer",
+									"user",
+									"assistant",
+									"tool"
+								]
+							},
+							"content": {
+								"anyOf": [
+									{
+										"type": "string"
+									},
+									{
+										"type": "null"
+									},
+									{
+										"type": "array",
+										"items": {}
+									}
+								]
+							}
+						},
+						"required": [
+							"role",
+							"content"
+						],
+						"additionalProperties": {}
+					}
+				},
+				"temperature": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 2
+				},
+				"max_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"max_completion_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"top_p": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"frequency_penalty": {
+					"type": "number",
+					"minimum": -2,
+					"maximum": 2
+				},
+				"presence_penalty": {
+					"type": "number",
+					"minimum": -2,
+					"maximum": 2
+				},
+				"stream": {
+					"type": "boolean"
+				},
+				"stream_options": {
+					"type": "object",
+					"properties": {
+						"include_usage": {
+							"type": "boolean"
+						}
+					},
+					"additionalProperties": false
+				},
+				"tools": {
+					"type": "array",
+					"items": {}
+				},
+				"tool_choice": {},
+				"response_format": {}
+			},
+			"required": [
+				"messages"
+			],
+			"additionalProperties": {}
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"object": {
+					"type": "string"
+				},
+				"created": {
+					"type": "number"
+				},
+				"model": {
+					"type": "string"
+				},
+				"choices": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"index": {
+								"type": "number"
+							},
+							"message": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string"
+									},
+									"content": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "null"
+											}
+										]
+									},
+									"tool_calls": {
+										"type": "array",
+										"items": {}
+									}
+								},
+								"required": [
+									"role"
+								],
+								"additionalProperties": {}
+							},
+							"finish_reason": {
+								"anyOf": [
+									{
+										"type": "string"
+									},
+									{
+										"type": "null"
+									}
+								]
+							}
+						},
+						"required": [
+							"index",
+							"message",
+							"finish_reason"
+						],
+						"additionalProperties": {}
+					}
+				},
+				"usage": {
+					"type": "object",
+					"properties": {
+						"prompt_tokens": {
+							"type": "number"
+						},
+						"completion_tokens": {
+							"type": "number"
+						},
+						"total_tokens": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"prompt_tokens",
+						"completion_tokens",
+						"total_tokens"
+					],
+					"additionalProperties": {}
+				}
+			},
+			"required": [
+				"id",
+				"object",
+				"created",
+				"model",
+				"choices"
+			],
+			"additionalProperties": {}
+		}
+	}
+}

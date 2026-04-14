@@ -1,0 +1,349 @@
+{
+	"model_id": "openai/gpt-4.1",
+	"provider_id": "openai",
+	"name": "GPT-4.1",
+	"description": "OpenAI's flagship GPT model for complex tasks with a million-token context window.",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Coding",
+		"Reasoning"
+	],
+	"context_length": 1047576,
+	"max_output_tokens": 32768,
+	"schema_version": "1.0.0",
+	"pricing": {},
+	"examples": [
+		{
+			"name": "Simple Question",
+			"description": "Basic chat completion request",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "What are the three laws of thermodynamics?"
+					}
+				]
+			},
+			"output": {
+				"text": "Certainly! The **three laws of thermodynamics** can be summarized as follows:\n\n---\n\n### **First Law (Law of Energy Conservation)**\nEnergy cannot be created or destroyed, only transformed from one form to another.  \n**Mathematically:**  \nΔU = Q - W  \n(Where ΔU is the change in internal energy, Q is heat added to the system, W is work done by the system.)\n\n---\n\n### **Second Law**\nThe total entropy of an isolated system always increases over time; natural processes tend to move toward a state of greater disorder or randomness.  \n**Also stated as:** Heat cannot spontaneously flow from a colder body to a hotter body.\n\n---\n\n### **Third Law**\nAs the temperature of a system approaches absolute zero (0 K), the entropy of a perfect crystal approaches zero.\n\n---\n\nThese laws govern all physical and chemical processes involving energy and heat."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-4.1',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'What are the three laws of thermodynamics?',\n      },\n    ],\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+				}
+			]
+		},
+		{
+			"name": "With System Message",
+			"description": "Using a system message to set context",
+			"input": {
+				"messages": [
+					{
+						"role": "system",
+						"content": "You are a helpful coding assistant specializing in Python."
+					},
+					{
+						"role": "user",
+						"content": "How do I read a JSON file in Python?"
+					}
+				],
+				"temperature": 0.3
+			},
+			"output": {
+				"text": "To read a JSON file in Python, you can use the built-in `json` module. Here’s a simple example:\n\n```python\nimport json\n\n# Open the JSON file for reading\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n\n# Now 'data' is a Python dictionary (or list, depending on the JSON structure)\nprint(data)\n```\n\n**Explanation:**\n- `import json`: Imports the JSON module.\n- `open('data.json', 'r')`: Opens the file named `data.json` in read mode.\n- `json.load(file)`: Parses the JSON content and converts it into a Python object (usually a dict or list).\n- `data`: The variable now contains the data from the JSON file.\n\n**Note:**  \nReplace `'data.json'` with the path to your JSON file.\n\nIf you have a JSON string (not a file), use `json.loads()` instead:\n\n```python\nimport json\n\njson_string = '{\"name\": \"Alice\", \"age\": 30}'\ndata = json.loads(json_string)\nprint(data)\n```\n\nLet me know if you need help with writing JSON files or handling more complex cases!"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-4.1',\n  {\n    messages: [\n      {\n        role: 'system',\n        content: 'You are a helpful coding assistant specializing in Python.',\n      },\n      {\n        role: 'user',\n        content: 'How do I read a JSON file in Python?',\n      },\n    ],\n    temperature: 0.3,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+				}
+			]
+		},
+		{
+			"name": "Multi-turn Conversation",
+			"description": "Continuing a conversation with context",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "I need help planning a road trip from San Francisco to Los Angeles."
+					},
+					{
+						"role": "assistant",
+						"content": "I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?"
+					},
+					{
+						"role": "user",
+						"content": "Yes, what are some good places to stop?"
+					}
+				],
+				"max_tokens": 500
+			},
+			"output": {
+				"text": "Absolutely! There are two main ways to drive from San Francisco to Los Angeles:\n\n**1. The Fast Route (I-5):**  \n- Fastest (about 6 hours nonstop), but not very scenic.\n- Best stops:  \n  - **Harris Ranch (Coalinga):** Iconic steakhouse & restaurant with a farm store.  \n  - **Bravo Farms (Kettleman City):** Food, cheese, gifts, and fun for kids.\n\n**2. Scenic Route (Highway 1 / Pacific Coast Highway):**  \n- Takes 8–10+ hours, but very beautiful.  \n- Famous for dramatic coastline, charming towns, and natural wonders.\n- Top stops along Hwy 1:\n\n  **Santa Cruz**  \n  - Classic beach town, boardwalk amusement park, downtown shops.\n\n  **Monterey & Carmel-by-the-Sea**  \n  - Monterey Bay Aquarium  \n  - Cannery Row  \n  - Carmel’s art galleries & beaches.\n\n  **Big Sur**  \n  - Bixby Creek Bridge (iconic photo spot)  \n  - Pfeiffer Beach (purple sand)  \n  - McWay Falls  \n  - Nepenthe Restaurant (stunning views)\n\n  **San Simeon & Cambria**  \n  - Hearst Castle (famous hilltop mansion, need advance tickets)  \n  - Elephant Seal Vista Point (see the giant seals!)\n\n  **Morro Bay**  \n  - Quaint harbor town, see Morro Rock, and fresh seafood.\n\n  **San Luis Obispo (SLO)**  \n  - Downtown shops, Mission SLO, Bubblegum Alley.\n\n  **Pismo Beach**  \n  - Sand dunes, walkable pier, great clam chowder.\n\n  **Santa Barbara**  \n  - Spanish architecture, Stearns Wharf, State Street.  \n  - Beautiful beaches and restaurants.\n\n  **Malibu**  \n  - Zuma Beach, Malibu Pier, scenic ocean views.\n\n**Tips:**  \n- Consider spending a night along the coast, as there’s too much to see for one day. Big Sur and Cambria are popular stopovers.\n- Check for road closures on Highway 1, especially near Big Sur.\n\nIf you let me know your interests (nature, food, history, etc.), I can tailor the stops even more!"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-4.1',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'I need help planning a road trip from San Francisco to Los Angeles.',\n      },\n      {\n        role: 'assistant',\n        content:\n          \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n      },\n      {\n        role: 'user',\n        content: 'Yes, what are some good places to stop?',\n      },\n    ],\n    max_tokens: 500,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+				}
+			]
+		},
+		{
+			"name": "Creative Writing",
+			"description": "Higher temperature for creative output",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "Write a short story opening about a detective finding an unusual clue."
+					}
+				],
+				"temperature": 0.8,
+				"max_tokens": 300
+			},
+			"output": {
+				"text": "Rain rattled the windowpane as Detective Elise Morgan crouched beside the body, her breath fogging in the dim, chilly apartment. The usual chaos of a crime scene pressed in around her—flashbulbs, murmurs, the distant wail of sirens. But her gaze fixed on a single object just beyond the victim’s outstretched hand: a tiny, porcelain teacup, painted bright yellow with a single crack spiraling down from the rim. It was filled to the brim with salt.\n\nElise frowned. There was no other sign of tea—or a teapot, or even a spoon. Just the cup, the salt, and a faint, swirling symbol traced in the spilled grains on the floor. She reached for her notepad, heart skipping in the familiar rhythm of a mystery just beginning."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-4.1',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'Write a short story opening about a detective finding an unusual clue.',\n      },\n    ],\n    temperature: 0.8,\n    max_tokens: 300,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+				}
+			]
+		},
+		{
+			"name": "Streaming Response",
+			"description": "Enable streaming for real-time output",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "Explain the concept of recursion with a simple example."
+					}
+				],
+				"stream": true,
+				"stream_options": {
+					"include_usage": true
+				}
+			},
+			"output": {
+				"text": "**Recursion** is a programming concept where a function calls itself to solve a problem. It's often used to break down complex problems into simpler, smaller sub-problems.\n\n### Simple Example: Factorial Calculation\n\nThe **factorial** of a number `n` (written as `n!`) is the product of all positive integers less than or equal to `n`.\n\n**Mathematical Definition:**\n- `factorial(0) = 1`  *(base case)*\n- `factorial(n) = n * factorial(n-1)`  *(recursive case)*\n\n#### Recursive Function in Python:\n```python\ndef factorial(n):\n    if n == 0:\n        return 1                # base case\n    else:\n        return n * factorial(n-1)   # recursive call\n```\n\n#### How It Works (for n = 3):\n- `factorial(3)`  \n  = 3 × `factorial(2)`  \n  = 3 × (2 × `factorial(1)`)  \n  = 3 × (2 × (1 × `factorial(0)`))  \n  = 3 × 2 × 1 × 1  \n  = 6\n\n**Summary:**  \nRecursion works by solving a problem by calling the same function with a smaller input, until reaching a simple case (base case) that can be solved directly."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-4.1',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'Explain the concept of recursion with a simple example.',\n      },\n    ],\n    stream: true,\n    stream_options: {\n      include_usage: true,\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://openai.com/index/gpt-4-1/",
+	"terms": "https://openai.com/policies/",
+	"cover_image_url": "https://tjzk.replicate.delivery/models_models_featured_image/8dbaab0b-d3e7-4bae-8772-d7e1f879d537/gpt-4.1.webp",
+	"metadata": {
+		"Architecture": "Transformer"
+	},
+	"created_at": "2026-04-13 16:45:21",
+	"default_example": null,
+	"code_snippets": [],
+	"schema": {
+		"model_id": "openai/gpt-4.1",
+		"version": "1.0.0",
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"messages": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"role": {
+								"type": "string",
+								"enum": [
+									"system",
+									"developer",
+									"user",
+									"assistant",
+									"tool"
+								]
+							},
+							"content": {
+								"anyOf": [
+									{
+										"type": "string"
+									},
+									{
+										"type": "null"
+									},
+									{
+										"type": "array",
+										"items": {}
+									}
+								]
+							}
+						},
+						"required": [
+							"role",
+							"content"
+						],
+						"additionalProperties": {}
+					}
+				},
+				"temperature": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 2
+				},
+				"max_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"max_completion_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"top_p": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"frequency_penalty": {
+					"type": "number",
+					"minimum": -2,
+					"maximum": 2
+				},
+				"presence_penalty": {
+					"type": "number",
+					"minimum": -2,
+					"maximum": 2
+				},
+				"stream": {
+					"type": "boolean"
+				},
+				"stream_options": {
+					"type": "object",
+					"properties": {
+						"include_usage": {
+							"type": "boolean"
+						}
+					},
+					"additionalProperties": false
+				},
+				"tools": {
+					"type": "array",
+					"items": {}
+				},
+				"tool_choice": {},
+				"response_format": {}
+			},
+			"required": [
+				"messages"
+			],
+			"additionalProperties": {}
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"object": {
+					"type": "string"
+				},
+				"created": {
+					"type": "number"
+				},
+				"model": {
+					"type": "string"
+				},
+				"choices": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"index": {
+								"type": "number"
+							},
+							"message": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string"
+									},
+									"content": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "null"
+											}
+										]
+									},
+									"tool_calls": {
+										"type": "array",
+										"items": {}
+									}
+								},
+								"required": [
+									"role"
+								],
+								"additionalProperties": {}
+							},
+							"finish_reason": {
+								"anyOf": [
+									{
+										"type": "string"
+									},
+									{
+										"type": "null"
+									}
+								]
+							}
+						},
+						"required": [
+							"index",
+							"message",
+							"finish_reason"
+						],
+						"additionalProperties": {}
+					}
+				},
+				"usage": {
+					"type": "object",
+					"properties": {
+						"prompt_tokens": {
+							"type": "number"
+						},
+						"completion_tokens": {
+							"type": "number"
+						},
+						"total_tokens": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"prompt_tokens",
+						"completion_tokens",
+						"total_tokens"
+					],
+					"additionalProperties": {}
+				}
+			},
+			"required": [
+				"id",
+				"object",
+				"created",
+				"model",
+				"choices"
+			],
+			"additionalProperties": {}
+		}
+	}
+}

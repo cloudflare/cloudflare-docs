@@ -1,0 +1,333 @@
+{
+	"model_id": "moonshotai/kimi-k2.5",
+	"provider_id": "moonshotai",
+	"name": "Kimi K2.5",
+	"description": "Kimi K2.5 is a native multimodal language model from Moonshot AI that understands images and text. It features strong vision understanding, advanced coding capabilities, and supports both thinking and instant response modes.",
+	"task": "Image-Text-to-Text",
+	"tags": [
+		"LLM",
+		"Multimodal",
+		"Vision",
+		"Coding",
+		"Reasoning",
+		"Agentic"
+	],
+	"context_length": 256000,
+	"max_output_tokens": 96000,
+	"schema_version": "1.0.0",
+	"pricing": {},
+	"examples": [
+		{
+			"name": "Simple Question",
+			"description": "Basic chat completion request",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "Explain the difference between TCP and UDP protocols."
+					}
+				]
+			},
+			"output": {
+				"text": "TCP (Transmission Control Protocol) and UDP (User Datagram Protocol) are both transport layer protocols (Layer 4 of the OSI model) that move data across networks, but they serve fundamentally different purposes. The core trade-off is **reliability versus speed**.\n\n## The Essential Difference\n\n**TCP** is like a **certified mail service** with tracking and delivery confirmation—it guarantees your data arrives completely, in order, and without errors, but takes more time and resources to do so.\n\n**UDP** is like a **postcard**—it's fast, lightweight, and requires no setup, but there's no guarantee it will arrive, and multiple postcards might arrive out of order (or not at all).\n\n## Key Technical Differences\n\n| Feature | TCP | UDP |\n|---------|-----|-----|\n| **Connection** | Connection-oriented (requires handshake: SYN → SYN-ACK → ACK) | Connectionless (no handshake; sends data immediately) |\n| **Reliability** | Guaranteed delivery with acknowledgments (ACKs) and retransmission of lost packets | \"Best effort\" delivery; no acknowledgment or retransmission |\n| **Ordering** | Sequences packets and reassembles them in correct order at destination | No sequencing; packets may arrive out of order or duplicated |\n| **Error Checking** | Extensive error detection and correction | Basic checksum only; detects errors but typically discards corrupted packets |\n| **Speed** | Slower due to overhead, handshaking, and congestion control | Fast and minimal latency |\n| **Header Size** | 20-60 bytes (heavy overhead) | 8 bytes (minimal overhead) |\n| **Flow Control** | Yes (prevents overwhelming the receiver) | No |\n| **Congestion Control** | Yes (adjusts transmission rate based on network conditions) | No |\n\n## Real-World Use Cases\n\n**Use TCP when data integrity is critical:**\n- **Web browsing** (HTTP/HTTPS)\n- **Email** (SMTP, IMAP, POP3)\n- **File transfers** (FTP, SSH)\n- **Database queries**\n\n**Use UDP when speed matters more than perfection:**\n- **Live video streaming** (Netflix, Twitch) — occasional pixelation is better than buffering\n- **Online gaming** — player positions update frequently; old data is useless anyway\n- **Voice over IP (VoIP)** — slight audio gaps are better than delayed conversations\n- **DNS lookups** — quick queries where a retry is cheap\n- **IoT sensor data** — frequent small readings where one lost packet doesn't matter\n\n## The Handshake Analogy\n\nWhen your browser loads a webpage using TCP:\n1. **You:** \"Hello, can we talk?\" (SYN)\n2. **Server:** \"Yes, I can talk. Can you hear me?\" (SYN-ACK)\n3. **You:** \"I hear you. Here's the webpage request.\" (ACK + Data)\n4. **Server:** \"Got it. Here is packet 1 of 50...\" (ACK)\n5. **You:** \"Received packet 1. Send packet 2...\" (ACK)\n\nWith UDP, you simply shout the request and hope someone hears it. No setup, no confirmation, but no waiting"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\n  'moonshotai/kimi-k2.5',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'Explain the difference between TCP and UDP protocols.',\n      },\n    ],\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+				}
+			]
+		},
+		{
+			"name": "With System Message",
+			"description": "Using a system message to guide responses",
+			"input": {
+				"messages": [
+					{
+						"role": "system",
+						"content": "You are an expert in Chinese history and culture. Respond with historical context and interesting anecdotes."
+					},
+					{
+						"role": "user",
+						"content": "Tell me about the Silk Road."
+					}
+				],
+				"temperature": 0.7
+			},
+			"output": {
+				"text": "The **Silk Road** was not a single road but a vast, interconnected network of ancient trade routes that linked the East and West for over 1,500 years, fundamentally shaping the development of civilizations across Asia, the Middle East, and Europe.\n\n## **The Basics**\n- **Time Period:** Roughly from the 2nd century BCE (Han Dynasty) to the 15th century CE, though some routes remained active later.\n- **Geography:** Stretched over 4,000 miles, connecting Chang'an (modern Xi'an, China) to the Mediterranean Sea, with branches reaching into India, Central Asia, Persia, Arabia, and the Horn of Africa.\n- **The Name:** The term \"Seidenstraße\" (Silk Road) was actually coined in 1877 by German geographer **Ferdinand von Richthofen**—long after the routes' heyday—referencing China's most famous export.\n\n## **What Traveled Along the Routes**\nWhile silk from China gave the network its name, the exchange was far more diverse:\n\n**Westbound from China:**\n- Silk, porcelain, tea, paper, gunpowder, and spices\n- Iron smelting and printing technologies\n\n**Eastbound to China:**\n- Horses (especially from Ferghana), glassware, gold, silver, woolen textiles\n- Alfalfa, grapes, walnuts, peaches, and new crops\n- Lapis lazuli from Afghanistan and textiles from India\n\n## **Cultural and Intellectual Exchange**\nThe Silk Road was history's first major globalization project, transmitting far more than goods:\n\n- **Religions:** Buddhism traveled from India to China; Nestorian Christianity and Islam spread eastward; Manichaeism and Zoroastrianism found followers across Central Asia.\n- **Science:** Greek, Persian, Indian, and Chinese medical knowledge mixed; astronomy and mathematics flowed between civilizations.\n- **Art:** Greco-Buddhist artistic styles emerged in Gandhara (modern Pakistan/Afghanistan); Chinese paper-making reached Europe via Samarkand.\n- **Disease:** Unfortunately, the plague (Black Death) likely traveled these routes to Europe in the 14th century.\n\n## **Key Historical Moments**\n- **Zhang Qian (138 BCE):** The Han Dynasty envoy whose diplomatic missions to Central Asia officially \"opened\" the routes.\n- **The Pax Mongolica (13th–14th centuries):** Under Mongol rule, the routes reached peak safety and efficiency, allowing merchants like **Marco Polo** to travel from Venice to Kublai Khan's court (his book *The Travels of Marco Polo* fascinated Europe with tales of Asian wealth).\n- **The Tang Dynasty (7th–10th centuries):** A golden age of cosmopolitan trade, with Sogdian merchants from Samarkand acting as the primary middlemen.\n\n## **Decline**\nThe network gradually faded due to:\n- **Maritime competition:** Faster, cheaper sea routes around Africa (discovered by Portuguese explorers in the 15th century) replaced overland caravans.\n- **Political fragmentation:** The collapse of the Mongol Empire made travel dangerous.\n- **Ottoman control:** By the mid-15th century, Ottoman restrictions on trade prompted Europeans to seek alternative sea routes to Asia—ironically sparking the Age of Exploration.\n\n## **"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\n  'moonshotai/kimi-k2.5',\n  {\n    messages: [\n      {\n        role: 'system',\n        content:\n          'You are an expert in Chinese history and culture. Respond with historical context and interesting anecdotes.',\n      },\n      {\n        role: 'user',\n        content: 'Tell me about the Silk Road.',\n      },\n    ],\n    temperature: 0.7,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+				}
+			]
+		},
+		{
+			"name": "Code Generation",
+			"description": "Lower temperature for precise code output",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "Write a Python function to calculate the Fibonacci sequence using memoization."
+					}
+				],
+				"temperature": 0.2,
+				"max_tokens": 500
+			},
+			"output": {
+				"text": ""
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\n  'moonshotai/kimi-k2.5',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'Write a Python function to calculate the Fibonacci sequence using memoization.',\n      },\n    ],\n    temperature: 0.2,\n    max_tokens: 500,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+				}
+			]
+		},
+		{
+			"name": "Multi-turn Conversation",
+			"description": "Continuing a conversation with context",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "I want to learn about neural networks."
+					},
+					{
+						"role": "assistant",
+						"content": "Neural networks are computing systems inspired by biological neural networks. They consist of layers of interconnected nodes. Would you like to start with the basics of perceptrons?"
+					},
+					{
+						"role": "user",
+						"content": "Yes, explain perceptrons first."
+					}
+				],
+				"max_tokens": 800
+			},
+			"output": {
+				"text": "A **perceptron** is the simplest type of artificial neural network—essentially a single neuron. Invented by Frank Rosenblatt in 1957, it was designed to mimic how biological neurons make decisions: receive signals, process them, and fire (or not).\n\n## The Structure\n\nA perceptron takes several inputs, assigns importance to each, and produces a single yes/no output.\n\nHere is its mathematical model:\n\n**Output** = Step Function( $w_1x_1 + w_2x_2 + ... + w_nx_n + b$ )\n\nOr in compact notation:\n**Output** = Step Function( $\\vec{w} \\cdot \\vec{x} + b$ )\n\n## The Components\n\n1. **Inputs ($x_1, x_2...$)**: The data features (e.g., temperature, humidity, wind speed)\n2. **Weights ($w_1, w_2...$)**: Importance factors. A high weight means that input strongly influences the decision.\n3. **Bias ($b$)**: The threshold for activation. Think of it as the perceptron's \"reluctance\" to fire. A negative bias means it needs stronger positive evidence to activate.\n4. **Step Function**: If the weighted sum is ≥ 0, output 1 (fire). Otherwise, output 0 (don't fire).\n\n## Concrete Example: \"Should I Wear a Jacket?\"\n\nImagine a perceptron deciding whether to wear a jacket based on two inputs:\n- $x_1$: Temperature (°C) — let's say normalized to -1 (hot) to 1 (cold)\n- $x_2$: Wind speed (0 to 1)\n\nWeights might be:\n- $w_1 = 0.8$ (temperature matters a lot)\n- $w_2 = 0.3$ (wind matters a bit)\n- $b = -0.2$ (slight preference toward wearing it)\n\n**Scenario**: Cold day (0.7) with moderate wind (0.5)\n- Sum = $(0.8 × 0.7) + (0.3 × 0.5) - 0.2 = 0"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\n  'moonshotai/kimi-k2.5',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'I want to learn about neural networks.',\n      },\n      {\n        role: 'assistant',\n        content:\n          'Neural networks are computing systems inspired by biological neural networks. They consist of layers of interconnected nodes. Would you like to start with the basics of perceptrons?',\n      },\n      {\n        role: 'user',\n        content: 'Yes, explain perceptrons first.',\n      },\n    ],\n    max_tokens: 800,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": null,
+	"terms": "https://platform.moonshot.ai/terms  ",
+	"cover_image_url": "https://tjzk.replicate.delivery/models_models_featured_image/3a15b232-3fd0-49e9-b514-10cf7fdef852/moonshot-kimik25.png",
+	"metadata": {
+		"Architecture": "Mixture-of-Experts",
+		"Activated Parameters": "32 billion",
+		"Total Parameters": "1 trillion",
+		"Training Data": "15 trillion tokens",
+		"Quantization": "INT4",
+		"Thinking Mode": "Yes",
+		"Max Thinking Tokens": "96,000"
+	},
+	"created_at": "2026-04-08 21:32:29",
+	"default_example": null,
+	"code_snippets": [],
+	"schema": {
+		"model_id": "moonshotai/kimi-k2.5",
+		"version": "1.0.0",
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"messages": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"role": {
+								"type": "string",
+								"enum": [
+									"system",
+									"developer",
+									"user",
+									"assistant",
+									"tool"
+								]
+							},
+							"content": {
+								"anyOf": [
+									{
+										"type": "string"
+									},
+									{
+										"type": "null"
+									},
+									{
+										"type": "array",
+										"items": {}
+									}
+								]
+							}
+						},
+						"required": [
+							"role",
+							"content"
+						],
+						"additionalProperties": {}
+					}
+				},
+				"temperature": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 2
+				},
+				"max_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"max_completion_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"top_p": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"frequency_penalty": {
+					"type": "number",
+					"minimum": -2,
+					"maximum": 2
+				},
+				"presence_penalty": {
+					"type": "number",
+					"minimum": -2,
+					"maximum": 2
+				},
+				"stream": {
+					"type": "boolean"
+				},
+				"stream_options": {
+					"type": "object",
+					"properties": {
+						"include_usage": {
+							"type": "boolean"
+						}
+					},
+					"additionalProperties": false
+				},
+				"tools": {
+					"type": "array",
+					"items": {}
+				},
+				"tool_choice": {},
+				"response_format": {}
+			},
+			"required": [
+				"messages"
+			],
+			"additionalProperties": {}
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"object": {
+					"type": "string"
+				},
+				"created": {
+					"type": "number"
+				},
+				"model": {
+					"type": "string"
+				},
+				"choices": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"index": {
+								"type": "number"
+							},
+							"message": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string"
+									},
+									"content": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "null"
+											}
+										]
+									},
+									"tool_calls": {
+										"type": "array",
+										"items": {}
+									}
+								},
+								"required": [
+									"role"
+								],
+								"additionalProperties": {}
+							},
+							"finish_reason": {
+								"anyOf": [
+									{
+										"type": "string"
+									},
+									{
+										"type": "null"
+									}
+								]
+							}
+						},
+						"required": [
+							"index",
+							"message",
+							"finish_reason"
+						],
+						"additionalProperties": {}
+					}
+				},
+				"usage": {
+					"type": "object",
+					"properties": {
+						"prompt_tokens": {
+							"type": "number"
+						},
+						"completion_tokens": {
+							"type": "number"
+						},
+						"total_tokens": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"prompt_tokens",
+						"completion_tokens",
+						"total_tokens"
+					],
+					"additionalProperties": {}
+				}
+			},
+			"required": [
+				"id",
+				"object",
+				"created",
+				"model",
+				"choices"
+			],
+			"additionalProperties": {}
+		}
+	}
+}

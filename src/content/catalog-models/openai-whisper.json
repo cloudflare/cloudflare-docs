@@ -1,0 +1,147 @@
+{
+	"model_id": "openai/whisper",
+	"provider_id": "openai",
+	"name": "Whisper",
+	"description": "Whisper is a general-purpose speech recognition model for multilingual speech recognition, translation, and language identification.",
+	"task": "Automatic Speech Recognition",
+	"tags": [
+		"Speech-to-Text",
+		"Transcription",
+		"Multilingual",
+		"Open Source"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {},
+	"examples": [
+		{
+			"name": "Basic Transcription",
+			"description": "Transcribe an audio file with default settings",
+			"input": {
+				"file": "https://cdn.openai.com/API/docs/audio/alloy.wav"
+			},
+			"output": {
+				"text": "The sun rises in the east and sets in the west. This simple fact has been observed by humans for thousands of years."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/whisper',\n  {\n    file: 'https://cdn.openai.com/API/docs/audio/alloy.wav',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+				}
+			]
+		},
+		{
+			"name": "English Transcription",
+			"description": "Transcribe with English language hint",
+			"input": {
+				"file": "https://cdn.openai.com/API/docs/audio/echo.wav",
+				"language": "en"
+			},
+			"output": {
+				"text": "In the heart of the city, there is a large park where people go to relax and enjoy nature. The park has a beautiful pond with ducks and swans."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/whisper',\n  {\n    file: 'https://cdn.openai.com/API/docs/audio/echo.wav',\n    language: 'en',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+				}
+			]
+		},
+		{
+			"name": "Guided Transcription",
+			"description": "Use a prompt to improve accuracy for domain-specific content",
+			"input": {
+				"file": "https://cdn.openai.com/API/docs/audio/nova.wav",
+				"language": "en",
+				"prompt": "This is a meeting about the Q3 product roadmap and OKR planning."
+			},
+			"output": {
+				"text": "In the kitchen, the aroma of freshly baked bread filled the air. The loaves were golden brown and crusty on the outside and soft and warm on the inside."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/whisper',\n  {\n    file: 'https://cdn.openai.com/API/docs/audio/nova.wav',\n    language: 'en',\n    prompt: 'This is a meeting about the Q3 product roadmap and OKR planning.',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+				}
+			]
+		},
+		{
+			"name": "Spanish Transcription",
+			"description": "Transcribe Spanish audio",
+			"input": {
+				"file": "https://replicate.delivery/xezq/Fig3OHSQej1AK66AOt3iWVz9aNPMR7BcYKWVopb90fjGVzZWA/tmp9g9qwkqp.mp3",
+				"language": "es"
+			},
+			"output": {
+				"text": "Buenos días. El clima de hoy es soleado con una temperatura máxima de 22 grados. Perfecto para dar un paseo por el parque."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/whisper',\n  {\n    file: 'https://replicate.delivery/xezq/Fig3OHSQej1AK66AOt3iWVz9aNPMR7BcYKWVopb90fjGVzZWA/tmp9g9qwkqp.mp3',\n    language: 'es',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://openai.com/research/whisper",
+	"terms": "https://openai.com/policies/",
+	"cover_image_url": "https://tjzk.replicate.delivery/models_models_featured_image/4945a449-3983-4482-8750-faec67fd6820/Screenshot_2025-05-12_at_1.31..png",
+	"metadata": {
+		"Architecture": "Transformer (encoder-decoder)",
+		"Model Size": "large-v3",
+		"License": "MIT"
+	},
+	"created_at": "2026-04-13 16:45:24",
+	"default_example": null,
+	"code_snippets": [],
+	"schema": {
+		"model_id": "openai/whisper",
+		"version": "1.0.0",
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"file": {
+					"description": "The audio file as a data URI (data:audio/...;base64,...). Supported formats: flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm.",
+					"type": "string"
+				},
+				"language": {
+					"description": "The language of the input audio. Supplying the input language in ISO-639-1 format will improve accuracy and latency.",
+					"type": "string"
+				},
+				"prompt": {
+					"description": "An optional text to guide the model's style or continue a previous audio segment. The prompt should match the audio language.",
+					"type": "string"
+				},
+				"temperature": {
+					"description": "The sampling temperature, between 0 and 1. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.",
+					"default": 0,
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				}
+			},
+			"required": [
+				"file",
+				"temperature"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"text": {
+					"description": "The transcribed text.",
+					"type": "string"
+				}
+			},
+			"required": [
+				"text"
+			],
+			"additionalProperties": false
+		}
+	}
+}

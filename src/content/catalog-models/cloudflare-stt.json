@@ -1,0 +1,112 @@
+{
+	"model_id": "cloudflare/stt",
+	"provider_id": "cloudflare",
+	"name": "Cloudflare STT",
+	"description": "Cloudflare's speech-to-text alias that routes to the best available transcription model.",
+	"task": "Automatic Speech Recognition",
+	"tags": [
+		"Speech-to-Text",
+		"Alias"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {},
+	"examples": [
+		{
+			"name": "Basic Transcription",
+			"description": "Transcribe an audio file with default settings",
+			"input": {
+				"audio": "https://cdn.openai.com/API/docs/audio/alloy.wav"
+			},
+			"output": {
+				"text": "The sun rises in the east and sets in the west. This simple fact has been observed by humans for thousands of years."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\n  'cloudflare/stt',\n  {\n    audio: 'https://cdn.openai.com/API/docs/audio/alloy.wav',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+				}
+			]
+		},
+		{
+			"name": "Different Audio Source",
+			"description": "Transcribe a different voice sample",
+			"input": {
+				"audio": "https://cdn.openai.com/API/docs/audio/echo.wav"
+			},
+			"output": {
+				"text": "In the heart of the city, there is a large park where people go to relax and enjoy nature. The park has a beautiful pond with ducks and swans."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\n  'cloudflare/stt',\n  {\n    audio: 'https://cdn.openai.com/API/docs/audio/echo.wav',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+				}
+			]
+		},
+		{
+			"name": "Another Voice",
+			"description": "Transcribe audio from a third speaker",
+			"input": {
+				"audio": "https://cdn.openai.com/API/docs/audio/nova.wav"
+			},
+			"output": {
+				"text": "In the kitchen, the aroma of freshly baked bread filled the air. The loaves were golden brown and crusty on the outside and soft and warm on the inside."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\n  'cloudflare/stt',\n  {\n    audio: 'https://cdn.openai.com/API/docs/audio/nova.wav',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://developers.cloudflare.com/ai-gateway/",
+	"terms": "https://www.cloudflare.com/terms/",
+	"cover_image_url": "https://replicate.delivery/xezq/Kh05Yf9GNgVQbqg8hnSJkD5o8FqUPomHKWQZ3SEUraWiYWNLA/tmprscn6dga.jpeg",
+	"metadata": {
+		"Type": "Alias",
+		"Backing Model": "openai/gpt-4o-transcribe"
+	},
+	"created_at": "2026-04-13 16:47:29",
+	"default_example": null,
+	"code_snippets": [],
+	"schema": {
+		"model_id": "cloudflare/stt",
+		"version": "1.0.0",
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"audio": {
+					"description": "Data URI of the audio file to transcribe.",
+					"type": "string"
+				}
+			},
+			"required": [
+				"audio"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"text": {
+					"description": "The transcribed text",
+					"type": "string"
+				},
+				"model": {
+					"description": "The model that was used for transcription",
+					"type": "string"
+				}
+			},
+			"required": [
+				"text"
+			],
+			"additionalProperties": false
+		}
+	}
+}

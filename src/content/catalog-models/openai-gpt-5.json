@@ -1,0 +1,350 @@
+{
+	"model_id": "openai/gpt-5",
+	"provider_id": "openai",
+	"name": "GPT-5",
+	"description": "OpenAI's model excelling at coding, writing, and reasoning.",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Coding",
+		"Reasoning",
+		"Writing"
+	],
+	"context_length": 128000,
+	"max_output_tokens": 16384,
+	"schema_version": "1.0.0",
+	"pricing": {},
+	"examples": [
+		{
+			"name": "Simple Question",
+			"description": "Basic chat completion request",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "What are the three laws of thermodynamics?"
+					}
+				]
+			},
+			"output": {
+				"text": "Typically stated (in one common form):\n\n- Zeroth Law: If two systems are each in thermal equilibrium with a third, they are in thermal equilibrium with each other. (Defines temperature.)\n- First Law: Energy is conserved; the change in a system’s internal energy equals heat added to the system minus work done by the system (ΔU = Q − W).\n- Second Law: Entropy of an isolated system never decreases; heat flows spontaneously from hot to cold, and no process is 100% efficient.\n- Third Law: As temperature approaches absolute zero, the entropy of a perfect crystalline substance approaches zero, and absolute zero cannot be reached in a finite number of steps.\n\nNote: You asked for “three laws”; some lists include the Zeroth through Third (four statements). If you want only First–Third, take the last three bullets."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'What are the three laws of thermodynamics?',\n      },\n    ],\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+				}
+			]
+		},
+		{
+			"name": "With System Message",
+			"description": "Using a system message to set context",
+			"input": {
+				"messages": [
+					{
+						"role": "system",
+						"content": "You are a helpful coding assistant specializing in Python."
+					},
+					{
+						"role": "user",
+						"content": "How do I read a JSON file in Python?"
+					}
+				],
+				"temperature": 0.3
+			},
+			"output": {
+				"text": "You can read a JSON file in Python using the built-in json module.\n\nBasic example:\n- Suppose you have a file data.json.\n\nReading the whole file into a Python object:\n- import json\n- with open(\"data.json\", \"r\", encoding=\"utf-8\") as f:\n-     data = json.load(f)\n- print(data)  # data is now a dict or list, depending on the JSON\n\nReading line-delimited JSON (one JSON object per line):\n- import json\n- with open(\"data.ndjson\", \"r\", encoding=\"utf-8\") as f:\n-     records = [json.loads(line) for line in f if line.strip()]\n\nHandling errors:\n- import json\n- try:\n-     with open(\"data.json\", \"r\", encoding=\"utf-8\") as f:\n-         data = json.load(f)\n- except FileNotFoundError:\n-     print(\"File not found\")\n- except json.JSONDecodeError as e:\n-     print(f\"Invalid JSON: {e}\")\n\nIf your JSON is in a string (not a file), use json.loads(s) instead of json.load(f)."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5',\n  {\n    messages: [\n      {\n        role: 'system',\n        content: 'You are a helpful coding assistant specializing in Python.',\n      },\n      {\n        role: 'user',\n        content: 'How do I read a JSON file in Python?',\n      },\n    ],\n    temperature: 0.3,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+				}
+			]
+		},
+		{
+			"name": "Multi-turn Conversation",
+			"description": "Continuing a conversation with context",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "I need help planning a road trip from San Francisco to Los Angeles."
+					},
+					{
+						"role": "assistant",
+						"content": "I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?"
+					},
+					{
+						"role": "user",
+						"content": "Yes, what are some good places to stop?"
+					}
+				],
+				"max_tokens": 500
+			},
+			"output": {
+				"text": "Great! There are two classic ways to go: the fast inland route (I-5) and the scenic coastal route (Highway 1/US-101). Here are recommended stops for each, plus a hybrid option.\n\nScenic Coastal Route (Highway 1/US-101, 8–10+ hours driving time)\n- Half Moon Bay: Coastal views, coffee at a beachside café, quick beach walk at Poplar or Mirada.\n- Santa Cruz: West Cliff Drive, Natural Bridges State Beach, Boardwalk (seasonal rides), Verve Coffee.\n- Capitola Village: Colorful seaside town, Capitola Beach, lunch on the Esplanade.\n- Monterey: Cannery Row, Old Fisherman’s Wharf, Monterey Bay Aquarium (plan 2–3 hours if visiting).\n- 17-Mile Drive (Pebble Beach): Coastal pullouts, Lone Cypress (fee to enter).\n- Carmel-by-the-Sea: Fairy-tale cottages, white-sand beach, art galleries, Mission Basilica.\n- Big Sur: Iconic coastline. Key stops:\n  - Bixby Creek Bridge: Photo stop.\n  - Point Lobos State Natural Reserve: World-class coastal hike (timed entry/parking fills early).\n  - Garrapata State Park: Bluff trails and Calla Lily Valley (seasonal).\n  - Pfeiffer Beach: Purple sand, rock formations (narrow access road).\n  - Nepenthe: Cliffside dining/views.\n  - McWay Falls (Julia Pfeiffer Burns SP): Short walk to waterfall overlook.\n  - Ragged Point: Vista point, snacks, last major viewpoint before San Simeon.\n- San Simeon/Cambria: Hearst Castle (tickets/reservations), Moonstone Beach Boardwalk.\n- Morro Bay: Embarcadero, Morro Rock views, sea otters by the marina.\n- San Luis Obispo: Charming downtown, Mission, Bubblegum Alley, Thursday night farmers’ market (seasonal).\n- Pismo Beach/Avila Beach: Pier walks, clam chowder at Splash Café, Avila hot springs.\n- Solvang: Danish-themed town, pastries, windmills.\n- Los Olivos/Santa Ynez Valley: Wine tasting, small-town charm.\n- Santa Barbara: Stearns Wharf, Mission, Funk Zone wineries/breweries, Butterfly Beach.\n- Ventura: Promenade, Surfers Point; Patagonia flagship.\n- Malibu: Zuma Beach, El Matador State Beach, Malibu Farm on the pier.\n\nNotes for Highway 1:\n- Check for closures/landslides in Big Sur before you go; conditions change. If closed, take US-101 between Monterey and San Luis Obispo.\n- Start early; parking at popular stops fills quickly.\n- Fuel up before Big Sur; services are sparse and pricier.\n\nFaster Inland Route (I-5, 5–6 hours driving time)\n- Harris Ranch (Coalinga): Popular steakhouse/EV chargers.\n- Kettleman City: Bravo Farms for snacks; big Tesla Supercharger and coffee.\n- Pyramid Lake (near Santa Clarita): Quick scenic pull-off/stretch.\n- Detour option via CA-99: Downtown Bakersfield for Basque food (e.g., Wool Growers) if you want a sit-down meal.\n\nHybrid Scenic-Fast Route (US-101 most of the way, 6.5–8 hours)\n- Go SF → San Jose → US-101 south. Key stops:\n  - Gilroy: Garlic shops (seasonal festival in summer).\n  - Salinas: National Steinbeck Center.\n  - Paso Robles: Downtown square, wine tasting, Sensorio Field of Light (evenings, tickets needed).\n  - San Luis Obispo, Pismo, then Santa Barbara as above.\n- Optional detour to Morro Bay or Avila from 101 for a coastal break without committing to Highway 1 through Big Sur.\n\nSample 2-day Itinerary (very popular)\n- Day 1: SF → Santa Cruz (coffee/beach) → Monterey/Point Lobos → Big Sur (Bixby, McWay, Pfeiffer Beach) → Overnight in Cambria or San Simeon.\n- Day 2: Hearst Castle → Morro Bay → SLO lunch → Pismo/Avila → Solvang → Santa Barbara for dinner → LA.\n\nFood highlights\n- Santa Cruz: The Penny Ice Creamery; tacos at Taqueria Los Pericos.\n- Monterey/Carmel: Carmel Bakery; lunch at Treehouse Café.\n- Big Sur: Nepenthe or Big Sur Bakery (check hours).\n- Cambria: Moonstone Beach Bar & Grill; Linn’s pies.\n- SLO: High Street Deli; Firestone Grill tri-tip.\n- Pismo: Splash Café clam chowder.\n- Santa Barbara: The Lark; Brophy Bros on the harbor.\n- Malibu: Malibu Seafood; Malibu Farm.\n\nLet me know your timing, interests (hikes, beaches, wineries, kid-friendly, budget), and whether you prefer one long day or an overnight, and I’ll tailor a detailed route with drive times and reservations to consider."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'I need help planning a road trip from San Francisco to Los Angeles.',\n      },\n      {\n        role: 'assistant',\n        content:\n          \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n      },\n      {\n        role: 'user',\n        content: 'Yes, what are some good places to stop?',\n      },\n    ],\n    max_tokens: 500,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+				}
+			]
+		},
+		{
+			"name": "Creative Writing",
+			"description": "Higher temperature for creative output",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "Write a short story opening about a detective finding an unusual clue."
+					}
+				],
+				"temperature": 0.8,
+				"max_tokens": 300
+			},
+			"output": {
+				"text": "The rain had been steady all night, patient as a metronome, taming the city to a hush that made every stray sound feel intentional. Detective Leena Arias knelt beside the alley’s only dry patch—a narrow rectangle beneath a fire escape that dripped faithfully to either side, as if respecting an invisible boundary. The victim lay just beyond that dry island, the concrete around him gone dark with water and the quiet shock of red.\n\nLeena had seen many alleys, many patches of dry luck, and many terrible endings. What she’d never seen was a single white origami crane balanced on the tip of the man’s shoe. It had been folded with immaculate care, the paper unmarred by even a fingerprint’s smudge. It shouldn’t have survived the rain. It shouldn’t have been there at all.\n\nShe stared, then leaned in, letting her breath fog in the cool air. The crane’s wings were motionless, deliberate. A message, that much was obvious. But the real strangeness unfolded when she noticed what lay inside the hollow of the crane’s body, visible through the delicate gap where the final fold didn’t quite close: a sliver of film, the old kind you held up to the light to see a life in frozen frames.\n\nThe officer behind her coughed into his sleeve. “You want me to bag that, Detective?”\n\n“In a minute,” Leena said. She cupped her hand to shield the crane as if it were a candle in a draft and angled her flashlight. The film strip showed three frames. In the first, a child’s hand reached into a ripple of river water; in the second, a reflection broke raggedly away; in the third, the same hand clenched—holding nothing.\n\nLeena looked up at the fire escape, the leaky gutter, the thin blue slice of dawn beyond the building’s teeth. She’d been on the river case six months ago. She’d done things she didn’t say out loud to close it. No one had ever found the missing piece.\n\nBehind her, the city exhaled steam through grates. Somewhere a violinist tuned an A through a cracked window. Leena stood, palm open, and the crane sat light as breath, a careful weight.\n\n“This wasn’t left for us,” she said softly. “It was left for me.”"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'Write a short story opening about a detective finding an unusual clue.',\n      },\n    ],\n    temperature: 0.8,\n    max_tokens: 300,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+				}
+			]
+		},
+		{
+			"name": "Streaming Response",
+			"description": "Enable streaming for real-time output",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "Explain the concept of recursion with a simple example."
+					}
+				],
+				"stream": true,
+				"stream_options": {
+					"include_usage": true
+				}
+			},
+			"output": {
+				"text": "Recursion is when a function solves a problem by calling itself with a smaller or simpler version of the same problem, until it reaches a point where it can stop (a base case).\n\nSimple example: factorial\n- The factorial of a number n (written n!) is the product of all positive integers up to n.\n- Definition:\n  - Base case: 0! = 1\n  - Recursive step: n! = n × (n − 1)! for n > 0\n\nRecursive function idea:\n- To compute 5!, you compute 5 × 4!\n- To compute 4!, you compute 4 × 3!\n- …\n- Eventually you reach 1! = 1 (or 0! = 1), and unwind.\n\nCall chain:\n- 5! = 5 × 4!\n- 4! = 4 × 3!\n- 3! = 3 × 2!\n- 2! = 2 × 1!\n- 1! = 1  ← base case\nThen multiply back: 1 → 2 → 6 → 24 → 120\n\nWhy the base case matters:\n- Without it, the function would call itself forever and never finish.\n\nAnother quick example: sum of a list\n- Base case: sum of an empty list is 0\n- Recursive step: sum([x] + rest) = x + sum(rest)\n\nKey points:\n- Define a clear base case.\n- Make each recursive call move closer to the base case.\n- Useful for problems naturally defined in terms of smaller subproblems (trees, divide-and-conquer, etc.)."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'Explain the concept of recursion with a simple example.',\n      },\n    ],\n    stream: true,\n    stream_options: {\n      include_usage: true,\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://openai.com/",
+	"terms": "https://openai.com/policies/",
+	"cover_image_url": "https://tjzk.replicate.delivery/models_models_featured_image/93d32638-644c-4926-8d07-ad01eec112fb/gpt-5-sm.jpg",
+	"metadata": {
+		"Architecture": "Transformer"
+	},
+	"created_at": "2026-04-13 16:45:20",
+	"default_example": null,
+	"code_snippets": [],
+	"schema": {
+		"model_id": "openai/gpt-5",
+		"version": "1.0.0",
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"messages": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"role": {
+								"type": "string",
+								"enum": [
+									"system",
+									"developer",
+									"user",
+									"assistant",
+									"tool"
+								]
+							},
+							"content": {
+								"anyOf": [
+									{
+										"type": "string"
+									},
+									{
+										"type": "null"
+									},
+									{
+										"type": "array",
+										"items": {}
+									}
+								]
+							}
+						},
+						"required": [
+							"role",
+							"content"
+						],
+						"additionalProperties": {}
+					}
+				},
+				"temperature": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 2
+				},
+				"max_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"max_completion_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"top_p": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"frequency_penalty": {
+					"type": "number",
+					"minimum": -2,
+					"maximum": 2
+				},
+				"presence_penalty": {
+					"type": "number",
+					"minimum": -2,
+					"maximum": 2
+				},
+				"stream": {
+					"type": "boolean"
+				},
+				"stream_options": {
+					"type": "object",
+					"properties": {
+						"include_usage": {
+							"type": "boolean"
+						}
+					},
+					"additionalProperties": false
+				},
+				"tools": {
+					"type": "array",
+					"items": {}
+				},
+				"tool_choice": {},
+				"response_format": {}
+			},
+			"required": [
+				"messages"
+			],
+			"additionalProperties": {}
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"object": {
+					"type": "string"
+				},
+				"created": {
+					"type": "number"
+				},
+				"model": {
+					"type": "string"
+				},
+				"choices": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"index": {
+								"type": "number"
+							},
+							"message": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string"
+									},
+									"content": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "null"
+											}
+										]
+									},
+									"tool_calls": {
+										"type": "array",
+										"items": {}
+									}
+								},
+								"required": [
+									"role"
+								],
+								"additionalProperties": {}
+							},
+							"finish_reason": {
+								"anyOf": [
+									{
+										"type": "string"
+									},
+									{
+										"type": "null"
+									}
+								]
+							}
+						},
+						"required": [
+							"index",
+							"message",
+							"finish_reason"
+						],
+						"additionalProperties": {}
+					}
+				},
+				"usage": {
+					"type": "object",
+					"properties": {
+						"prompt_tokens": {
+							"type": "number"
+						},
+						"completion_tokens": {
+							"type": "number"
+						},
+						"total_tokens": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"prompt_tokens",
+						"completion_tokens",
+						"total_tokens"
+					],
+					"additionalProperties": {}
+				}
+			},
+			"required": [
+				"id",
+				"object",
+				"created",
+				"model",
+				"choices"
+			],
+			"additionalProperties": {}
+		}
+	}
+}

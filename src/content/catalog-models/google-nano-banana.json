@@ -2,17 +2,19 @@
 	"model_id": "google/nano-banana",
 	"provider_id": "google",
 	"name": "Nano Banana",
-	"description": "Google's latest image editing model in Gemini 2.5",
-	"task": "Image Generation",
+	"description": "Nano Banana (Gemini 2.5 Flash Image) is Google's state-of-the-art image generation and editing model designed for fast, conversational, and multi-turn creative workflows. Key features include character and style consistency across multiple prompts, multi-image fusion to blend up to 3 images, conversational editing with natural language, and visual reasoning capabilities. It generates images 2-3x faster than comparable models while maintaining high quality.",
+	"task": "Text-to-Image",
 	"tags": [
-		"image-generation"
+		"Image Generation",
+		"Image Editing",
+		"Conversational",
+		"Multi-Image",
+		"Character Consistency"
 	],
 	"context_length": null,
 	"max_output_tokens": null,
-	"schema_version": "0.0.1",
-	"pricing": {
-		"per_image": 0.01
-	},
+	"schema_version": "1.0.0",
+	"pricing": {},
 	"examples": [
 		{
 			"name": "Cozy Coffee Shop",
@@ -22,33 +24,12 @@
 				"aspect_ratio": "16:9"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/LOB8lf7PV81RfUcAqkPBeuZ9J4DE20XyH1Z6Mk7nRTZtxmSsA/tmpwa9w0ve8.jpeg"
+				"image": "https://replicate.delivery/xezq/MQpUhqkESIIQDlWUxtNcsznZLfUTmhEbCV3vdAZGHGPwwaMLA/tmpgl4gvv5n.jpeg"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
-					"code": "const response = await env.AI.run(\"google/nano-banana\", {\n  \"prompt\": \"A cozy coffee shop interior with warm lighting, plants hanging from the ceiling, and a cat sleeping on a velvet armchair by the window\",\n  \"aspect_ratio\": \"16:9\"\n}, {\n  gateway: { id: \"{GATEWAY_ID}\" }\n});\nconsole.log(response.result);"
-				}
-			]
-		},
-		{
-			"name": "Character Mashup",
-			"description": "Combine two people into a selfie scene",
-			"input": {
-				"prompt": "have the people smile and take a selfie from a phone",
-				"image_input": [
-					"https://replicate.delivery/pbxt/NeRx7gSc6ORMdhCjOzV0Of9VAEDNjQ56RJWVXFTjT53AK5L1/billie.jpeg",
-					"https://replicate.delivery/pbxt/NeRx7dSeZKRgWr0V6ilLhZsk8HSZgV3Z9VsauD7FSYrrvuXD/michael.jpeg"
-				],
-				"output_format": "jpg"
-			},
-			"output": {
-				"image": "https://replicate.delivery/xezq/mbE0pfJqUtTfu0vp7gjG93nkNYNsy78a1onho9oos56fkTjqA/tmpgxxuv701.jpg"
-			},
-			"code_snippets": [
-				{
-					"label": "typescript",
-					"code": "const response = await env.AI.run(\"google/nano-banana\", {\n  \"prompt\": \"have the people smile and take a selfie from a phone\",\n  \"image_input\": [\n    \"https://replicate.delivery/pbxt/NeRx7gSc6ORMdhCjOzV0Of9VAEDNjQ56RJWVXFTjT53AK5L1/billie.jpeg\",\n    \"https://replicate.delivery/pbxt/NeRx7dSeZKRgWr0V6ilLhZsk8HSZgV3Z9VsauD7FSYrrvuXD/michael.jpeg\"\n  ],\n  \"output_format\": \"jpg\"\n}, {\n  gateway: { id: \"{GATEWAY_ID}\" }\n});\nconsole.log(response.result);"
+					"code": "const response = await env.AI.run(\n  'google/nano-banana',\n  {\n    prompt:\n      'A cozy coffee shop interior with warm lighting, plants hanging from the ceiling, and a cat sleeping on a velvet armchair by the window',\n    aspect_ratio: '16:9',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
 		},
@@ -60,12 +41,12 @@
 				"aspect_ratio": "9:16"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/8SFezUxl8nx2HqSyhznw2tdgJ7J9EU39Z6uSxJvZzZf0YTJWA/tmpmru_1vc9.jpeg"
+				"image": "https://replicate.delivery/xezq/IeNNble3XUqhpUZTd3CkYTUf8EgkFU1fl1Jnyive3B26MsGzC/tmp51dpln4i.jpeg"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
-					"code": "const response = await env.AI.run(\"google/nano-banana\", {\n  \"prompt\": \"A vintage travel poster for Tokyo, Japan in the style of 1960s airline advertisements, with Mount Fuji in the background and cherry blossoms framing the scene\",\n  \"aspect_ratio\": \"9:16\"\n}, {\n  gateway: { id: \"{GATEWAY_ID}\" }\n});\nconsole.log(response.result);"
+					"code": "const response = await env.AI.run(\n  'google/nano-banana',\n  {\n    prompt:\n      'A vintage travel poster for Tokyo, Japan in the style of 1960s airline advertisements, with Mount Fuji in the background and cherry blossoms framing the scene',\n    aspect_ratio: '9:16',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
 		},
@@ -77,12 +58,12 @@
 				"aspect_ratio": "1:1"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/1i1kL3iCGgpEGlUdXTCScBfQfHfZ5aZe556DtugeAQxqGbKxC/tmpkqbpjy7j.jpeg"
+				"image": "https://replicate.delivery/xezq/jfh37lJpnDQhaKcAfCrxSCEh7HA7lv5cCWmJW284tYXwh1YWA/tmpw2i437qe.jpeg"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
-					"code": "const response = await env.AI.run(\"google/nano-banana\", {\n  \"prompt\": \"A photorealistic macro shot of dewdrops on a spider web at sunrise, with rainbow light refracting through each droplet\",\n  \"aspect_ratio\": \"1:1\"\n}, {\n  gateway: { id: \"{GATEWAY_ID}\" }\n});\nconsole.log(response.result);"
+					"code": "const response = await env.AI.run(\n  'google/nano-banana',\n  {\n    prompt:\n      'A photorealistic macro shot of dewdrops on a spider web at sunrise, with rainbow light refracting through each droplet',\n    aspect_ratio: '1:1',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
 		},
@@ -94,46 +75,48 @@
 				"aspect_ratio": "1:1"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/NTzWZYEFkf1BaSrYfHUr6vdHiI0PZ60Bke8hbDqUJJ8vxmSsA/tmpy7rr33k9.jpeg"
+				"image": "https://replicate.delivery/xezq/pUAcLnl2KmpoChqQ7emXoyqpV3ZBUcV6tVyovozvl4N8waMLA/tmppjbe5cua.jpeg"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
-					"code": "const response = await env.AI.run(\"google/nano-banana\", {\n  \"prompt\": \"An isometric pixel art scene of a bustling medieval marketplace with merchants, knights, and a dragon perched on the town hall roof\",\n  \"aspect_ratio\": \"1:1\"\n}, {\n  gateway: { id: \"{GATEWAY_ID}\" }\n});\nconsole.log(response.result);"
+					"code": "const response = await env.AI.run(\n  'google/nano-banana',\n  {\n    prompt:\n      'An isometric pixel art scene of a bustling medieval marketplace with merchants, knights, and a dragon perched on the town hall roof',\n    aspect_ratio: '1:1',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
 		},
 		{
-			"name": "Image Editing with Reference",
-			"description": "Transform bedsheets to match a logo style",
+			"name": "High Resolution Landscape",
+			"description": "Generate a high-resolution 4K landscape image",
 			"input": {
-				"prompt": "Make the sheets in the style of the logo. Make the scene natural.",
-				"image_input": [
-					"https://replicate.delivery/pbxt/NbYIclp4A5HWLsJ8lF5KgiYSNaLBBT1jUcYcHYQmN1uy5OnN/tmpcqc07f_q.png",
-					"https://replicate.delivery/pbxt/NbYId45yH8s04sptdtPcGqFIhV7zS5GTcdS3TtNliyTAoYPO/Screenshot%202025-08-26%20at%205.30.12%E2%80%AFPM.png"
-				],
-				"output_format": "jpg"
+				"prompt": "A dramatic mountain landscape at golden hour with snow-capped peaks and a crystal clear alpine lake",
+				"aspect_ratio": "16:9",
+				"image_size": "4K",
+				"output_format": "png"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/eQ2MQYrD6XzheEgCe7OcHlUJAXYc8HaMJmGPmbTOCClZS7dqA/tmp4vqrduzh.jpg"
+				"image": "https://replicate.delivery/xezq/Rh5vNXYjxVJeBqHfy1F11GQY7ppLFzIMeA1XOGFj9DvIErxsA/tmpm17f21_f.png"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
-					"code": "const response = await env.AI.run(\"google/nano-banana\", {\n  \"prompt\": \"Make the sheets in the style of the logo. Make the scene natural.\",\n  \"image_input\": [\n    \"https://replicate.delivery/pbxt/NbYIclp4A5HWLsJ8lF5KgiYSNaLBBT1jUcYcHYQmN1uy5OnN/tmpcqc07f_q.png\",\n    \"https://replicate.delivery/pbxt/NbYId45yH8s04sptdtPcGqFIhV7zS5GTcdS3TtNliyTAoYPO/Screenshot%202025-08-26%20at%205.30.12%E2%80%AFPM.png\"\n  ],\n  \"output_format\": \"jpg\"\n}, {\n  gateway: { id: \"{GATEWAY_ID}\" }\n});\nconsole.log(response.result);"
+					"code": "const response = await env.AI.run(\n  'google/nano-banana',\n  {\n    prompt:\n      'A dramatic mountain landscape at golden hour with snow-capped peaks and a crystal clear alpine lake',\n    aspect_ratio: '16:9',\n    image_size: '4K',\n    output_format: 'png',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
 		}
 	],
 	"supports_async": false,
-	"external_info": "https://gemini.google/about/",
-	"terms": "https://policies.google.com/terms",
-	"cover_image_url": "https://replicate.delivery/xezq/A9Y99OEE5DIHJVfqbvoFVTPwogX0kYZnRhekuvhfckkiTwfYB/tmp4lnpo502.jpeg",
+	"external_info": null,
+	"terms": "https://ai.google.dev/gemini-api/terms",
+	"cover_image_url": "https://tjzk.replicate.delivery/models_models_featured_image/ed879e99-71b5-4689-bed3-e7305e35a28a/this.png",
 	"metadata": {
-		"Architecture": "Diffusion Transformer",
-		"License": "Commercial Use"
+		"Base Model": "Gemini 2.5 Flash Image",
+		"Max Resolution": "4K",
+		"Max Input Images": "3",
+		"Speed": "2-3x faster than comparable models",
+		"Output Formats": "JPG, PNG",
+		"SynthID Watermark": "Yes"
 	},
-	"created_at": "2026-03-20 17:46:49",
+	"created_at": "2026-04-08 21:58:29",
 	"default_example": null,
 	"code_snippets": [],
 	"schema": {
@@ -150,8 +133,7 @@
 					"maxItems": 3,
 					"type": "array",
 					"items": {
-						"type": "string",
-						"format": "uri"
+						"type": "string"
 					}
 				},
 				"aspect_ratio": {
