@@ -53,10 +53,10 @@ The `devtoolsFrontendUrl` is valid for five minutes from when it was generated. 
 1. Create a browser session with `targets=true` to include target URLs in the response:
 
 <CURL
-	url="https://api.cloudflare.com/client/v4/accounts/ACCOUNT_ID/browser-rendering/devtools/browser"
+	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/browser-rendering/devtools/browser"
 	method="POST"
 	headers={{
-		Authorization: "Bearer {api_token}",
+		Authorization: "Bearer $CLOUDFLARE_API_TOKEN",
 	}}
 	query={{
 		keep_alive: "600000",
