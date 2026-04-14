@@ -1,17 +1,49 @@
 ---
 {}
 ---
-import { Tabs, TabItem } from "~/components"
+import { Tabs, TabItem} from "~/components"
+import originalImg from "~/assets/images/images/examples/original.jpg";
+import flipHImg from "~/assets/images/images/examples/flip-h.jpg";
+import flipVImg from "~/assets/images/images/examples/flip-v.jpg";
 
-Flips the image horizontally, vertically, or both. Can be used with the `rotate` parameter to set the orientation of an image.
+### `flip`
 
-Flipping is performed before rotation. For example, if you apply `flip=h,rotate=90,` then the image will be flipped horizontally, then rotated by 90 degrees.
+Flips the image horizontally, vertically, or both.
 
-Available options are:
+Accepts the following values:
 
-- `h`: Flips the image horizontally.
-- `v`: Flips the image vertically.
-- `hv`: Flips the image vertically and horizontally.
+- `h` — Flips the image horizontally.
+- `v` — Flips the image vertically.
+- `hv` — Flips the image both horizontally and vertically.
+
+Flip can be used with the `rotate` parameter to set the orientation of the image. Flip is performed before rotation. For example, if you apply `flip=h,rotate=90`, then the image will be flipped horizontally, then rotated by 90 degrees.
+
+<table style="width:100%; table-layout:fixed; text-align:center; border:none">
+  <tr style="border:none; background:none">
+    <td style="width:33%; border:none; vertical-align:bottom">
+      <img src={originalImg.src} alt="Original image" style="width:100%; height:auto" />
+    </td>
+    <td style="width:33%; border:none; vertical-align:bottom">
+      <img src={flipHImg.src} alt="flip=h output" style="width:100%; height:auto" />
+    </td>
+    <td style="width:33%; border:none; vertical-align:bottom">
+      <img src={flipVImg.src} alt="flip=v output" style="width:100%; height:auto" />
+    </td>
+  </tr>
+  <tr style="border:none; background:none">
+    <td style="border:none;">
+      <strong>Original</strong>
+    </td>
+    <td style="border:none;">
+      
+      <code>flip=h</code>
+    </td>
+    <td style="border:none;">
+      
+      <code>flip=v</code>
+    </td>
+  </tr>
+</table>
 
 <Tabs>
   <TabItem label="URL format">
