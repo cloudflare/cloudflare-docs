@@ -140,7 +140,7 @@ The `events` values in the API response are standard rrweb event arrays. You can
 
 ## Limits
 
-- Recordings are retained for 30 days and automatically deleted after that.
+- Recordings are retained for 30 days after the session ends and automatically deleted.
 - Recording is opt-in. It is not enabled by default.
 - Session recording is available with Browser Sessions via `launch()` and the [CDP endpoint](/browser-rendering/cdp/). It is not available with Quick Actions.
 - The minimum recording duration is 1 second. Sessions shorter than 1 second will not produce a viewable recording.
