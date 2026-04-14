@@ -6,11 +6,20 @@ sidebar:
   order: 1
 ---
 
-This page will document how Artifacts usage is billed, including any charges associated with storage, requests, or data transfer.
+:::note
 
-Current Artifacts pricing is:
+Artifacts is currently available at no charge during the beta, and prices are subject to change. We will provide 30 days notice before enabling billing.
 
-| Usage type                                  | $/unit                     | Included                       |
-| ------------------------------------------- | -------------------------- | ------------------------------ |
-| Operations (e.g. create, push, pull, clone) | $0.15 per 1,000 operations | First 10k included (per month) |
-| Storage                                     | $0.50/GB-mo                | First 1GB included.            |
+:::
+
+Artifacts pricing is billed on two dimensions:
+
+- **Operations**: the number of repo operations, such as `create`, `push`, `pull`, and `clone`.
+- **Storage**: the total amount of stored data, measured in gigabyte-months (`GB-mo`).
+
+### Artifacts pricing
+
+| Unit                          | Included               | Price                                 |
+| ----------------------------- | ---------------------- | ------------------------------------- |
+| Operations (1,000 operations) | First 10,000 per month | $0.15 per additional 1,000 operations |
+| Storage (GB-mo)               | First 1 GB per month   | $0.50 per additional GB-mo            |

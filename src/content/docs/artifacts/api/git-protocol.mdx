@@ -14,12 +14,16 @@ Use the returned repo `remote` with a regular git client for `clone`, `fetch`, `
 
 Git routes accept repo access tokens in two forms:
 
-- HTTP Basic auth inside the remote URL. This is the recommended option for simple `git clone` and `git push` commands.
-- `Authorization: Bearer` passed with `http.extraHeader`.
+| Format                             | Details                                                                                                                               | Example                                                                                                      |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| HTTP Basic auth in the remote URL  | Recommended for simple `git clone` and `git push` commands. Put the token secret in the password slot.                                | `https://x:<token-secret>@<accountId>.artifacts.cloudflare.dev/git/<namespace>/<repo>.git`                   |
+| Bearer token in `http.extraHeader` | Use the full token string returned by the control plane. This works well when you do not want credentials embedded in the remote URL. | `git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" clone "$ARTIFACTS_REMOTE" artifacts-clone` |
+
+### Token format
 
 Repo tokens are issued in the control-plane response format `art_v1_<40 hex>?expires=<unix_seconds>`.
 
-## Recommended: HTTPS remote URL
+## HTTPS remote (recommended)
 
 For the URL form, use the token secret in the password slot. Artifacts ignores the Basic auth username.
 
@@ -37,9 +41,11 @@ git remote add origin "$ARTIFACTS_AUTH_REMOTE"
 git push -u origin main
 ```
 
-Use any non-empty username in the URL. The token goes in the password slot, so `x` is just a placeholder.
+Use any non-empty username in the URL. Artifacts currently accepts that username but does not otherwise use or log it, so `x` is just a placeholder.
 
-## Alternative: `http.extraHeader`
+## Git `extraHeader` parameter
+
+Git's [`http.extraHeader`](https://git-scm.com/docs/git-config#Documentation/git-config.txt-httpextraHeader) setting lets you attach an HTTP header to git requests.
 
 If you want to use the full token string returned by the API, pass it as a Bearer token:
 
@@ -47,11 +53,9 @@ If you want to use the full token string returned by the API, pass it as a Beare
 git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" clone "$ARTIFACTS_REMOTE" artifacts-clone
 ```
 
-```sh
-git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" push "$ARTIFACTS_REMOTE" main
-```
+## Token scopes
 
-## Scope requirements
-
-- `git clone`, `git fetch`, and `git pull` accept `read` or `write` tokens.
-- `git push` requires a `write` token.
+| Scope   | Commands                                         | Notes                                                   |
+| ------- | ------------------------------------------------ | ------------------------------------------------------- |
+| `read`  | `git clone`, `git fetch`, `git pull`             | Use for read-only access.                               |
+| `write` | `git clone`, `git fetch`, `git pull`, `git push` | `git push` mutates the repo and requires a write token. |

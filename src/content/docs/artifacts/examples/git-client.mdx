@@ -6,6 +6,38 @@ sidebar:
   order: 1
 ---
 
-This example will show how a git client can clone, fetch, or push against an Artifact-backed remote.
+Use this pattern when you want to discover a repo over the REST API and then hand the returned HTTPS remote to a standard git client.
 
-Use it as a reference for local development workflows and repository-style synchronization.
+This example assumes the repo already exists and that you have an Artifacts API token with permission to read repo metadata and mint repo tokens.
+
+## Fetch the remote and clone the repo
+
+First, fetch the repo metadata from the REST API. Then mint a read token for that repo and use the returned HTTPS remote with `git clone`.
+
+The example below uses `jq` to extract fields from the JSON responses.
+
+```bash
+export ARTIFACTS_ACCOUNT_ID="<YOUR_ACCOUNT_ID>"
+export ARTIFACTS_NAMESPACE="default"
+export ARTIFACTS_REPO="starter-repo"
+export ARTIFACTS_API_TOKEN="<YOUR_ARTIFACTS_API_TOKEN>"
+export ARTIFACTS_BASE_URL="https://api.cloudflare.com/client/v4/accounts/$ARTIFACTS_ACCOUNT_ID/artifacts"
+
+REPO_JSON=$(curl --silent "$ARTIFACTS_BASE_URL/namespaces/$ARTIFACTS_NAMESPACE/repos/$ARTIFACTS_REPO" \
+  --header "Authorization: Bearer $ARTIFACTS_API_TOKEN")
+
+ARTIFACTS_REMOTE=$(printf '%s' "$REPO_JSON" | jq -r '.remote')
+
+TOKEN_JSON=$(curl --silent "$ARTIFACTS_BASE_URL/namespaces/$ARTIFACTS_NAMESPACE/tokens" \
+  --header "Authorization: Bearer $ARTIFACTS_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data "{\"repo\":\"$ARTIFACTS_REPO\",\"scope\":\"read\",\"ttl\":3600}")
+
+ARTIFACTS_TOKEN=$(printf '%s' "$TOKEN_JSON" | jq -r '.plaintext')
+ARTIFACTS_TOKEN_SECRET="${ARTIFACTS_TOKEN%%\?expires=*}"
+ARTIFACTS_AUTH_REMOTE="https://x:${ARTIFACTS_TOKEN_SECRET}@${ARTIFACTS_REMOTE#https://}"
+
+git clone "$ARTIFACTS_AUTH_REMOTE" artifacts-clone
+```
+
+This flow is useful when another system owns repo discovery or access control, but your local tooling still expects a normal git remote.
