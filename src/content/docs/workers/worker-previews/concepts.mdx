@@ -193,41 +193,48 @@ When a preview is deleted, auto-provisioned Durable Object namespaces associated
 
 ---
 
-## The dashboard: Previews tab vs Deployments tab
+## Dashboard tabs
 
-Your Worker has two main tabs in the Cloudflare dashboard — **Deployments** and **Previews**. They show different pipelines and have different capabilities.
+Your Worker has two main tabs in the Cloudflare dashboard — **Deployments** and **Previews**. They represent different pipelines with different capabilities.
 
 ### Deployments tab
 
-The **Deployments** tab is your production control panel. It shows:
+The **Deployments** tab is your **production control panel**. It shows:
 
-- **Active deployment** — which version(s) are currently serving production traffic and at what percentage.
-- **Version history** — a list of all versions created by `wrangler deploy` or `wrangler versions upload`.
-- **Rollout controls** — if you use gradual rollouts, you can adjust traffic split percentages here.
-- **Rollback** — revert production to a previous version.
+- The **active deployment** — which version(s) are currently serving production traffic and at what percentage
+- **Version history** — all versions created via `wrangler deploy` or `wrangler versions upload`
+- **Rollout controls** — adjust traffic split percentages for gradual rollouts
+- **Rollback** — quickly revert production to a previous version
 
-This tab is only for production. Previews do not appear here.
+This tab is **production-only**. Previews do not appear here.
 
 ### Previews tab
 
-The **Previews** tab shows your isolated testing environments. It lists all active previews, each identified by its branch name (or custom name). From here you can view preview details, manage settings, and delete previews.
+The **Previews** tab is dedicated to your **isolated testing environments**. It lists all active Worker Previews, each identified by its Git branch name (or custom alias).
 
-The Previews tab does not show production versions, traffic percentages, or rollback options — those are production-only concepts.
+From this tab you can:
+
+- View the list of previews with their **stable URL** and **per-push immutable URLs**
+- Click into a preview to see recent pushes, scoped logs and traces, and preview-specific settings
+- Create new previews, push changes, or delete them
+
+**Important:** The Previews tab does **not** show production versions, traffic splits, or rollback options. Gradual rollouts and rollbacks are production-only features that live exclusively in the **Deployments** tab. Previews always serve 100% of their traffic to the latest push and do not create entries in your production version history.
 
 :::note
-If you have not configured Preview Defaults or created any previews yet, the Previews tab will be empty. Follow the [setup steps](/workers/worker-previews/#1-configure-preview-bindings-and-settings) to get started.
+If you have not yet configured **Preview Defaults** or created any previews, the Previews tab will be empty. See the [setup steps](/workers/worker-previews/#1-configure-preview-bindings-and-settings) to get started.
 :::
 
-### Quick comparison
+### Quick comparison: Deployments vs Previews
 
-| | Deployments tab | Previews tab |
+| Aspect | **Deployments** tab | **Previews** tab |
 | --- | --- | --- |
-| **Shows** | Production versions and active deployment | Isolated preview environments by branch/name |
-| **Traffic controls** | Gradual rollout percentages, rollback | None — all preview traffic goes to the latest push |
-| **Rollback** | Yes | No |
+| **Purpose** | Production releases and safety | Isolated testing environments |
+| **Shows** | Active versions, version history, traffic splits | List of previews (by branch/name), stable + per-push URLs |
+| **Gradual rollouts / rollbacks** | Yes | No (always 100% to latest push) |
+| **Creates versions** | Yes | No |
 | **Bindings** | Production bindings | Preview-specific bindings (from Preview Defaults) |
-| **Logs and traces** | Production logs | Per-preview logs |
-| **When to use** | Managing what is live in production | Testing feature branches before shipping |
+| **Logs and traces** | Production-wide | Per-preview (scoped) |
+| **When to use** | Managing what is live in production | Testing feature branches safely before shipping |
 
 ---
 
