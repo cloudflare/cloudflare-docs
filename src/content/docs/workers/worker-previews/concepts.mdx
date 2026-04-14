@@ -193,6 +193,44 @@ When a preview is deleted, auto-provisioned Durable Object namespaces associated
 
 ---
 
+## The dashboard: Previews tab vs Deployments tab
+
+Your Worker has two main tabs in the Cloudflare dashboard — **Deployments** and **Previews**. They show different pipelines and have different capabilities.
+
+### Deployments tab
+
+The **Deployments** tab is your production control panel. It shows:
+
+- **Active deployment** — which version(s) are currently serving production traffic and at what percentage.
+- **Version history** — a list of all versions created by `wrangler deploy` or `wrangler versions upload`.
+- **Rollout controls** — if you use gradual rollouts, you can adjust traffic split percentages here.
+- **Rollback** — revert production to a previous version.
+
+This tab is only for production. Previews do not appear here.
+
+### Previews tab
+
+The **Previews** tab shows your isolated testing environments. It lists all active previews, each identified by its branch name (or custom name). From here you can view preview details, manage settings, and delete previews.
+
+The Previews tab does not show production versions, traffic percentages, or rollback options — those are production-only concepts.
+
+:::note
+If you have not configured Preview Defaults or created any previews yet, the Previews tab will be empty. Follow the [setup steps](/workers/worker-previews/#1-configure-preview-bindings-and-settings) to get started.
+:::
+
+### Quick comparison
+
+| | Deployments tab | Previews tab |
+| --- | --- | --- |
+| **Shows** | Production versions and active deployment | Isolated preview environments by branch/name |
+| **Traffic controls** | Gradual rollout percentages, rollback | None — all preview traffic goes to the latest push |
+| **Rollback** | Yes | No |
+| **Bindings** | Production bindings | Preview-specific bindings (from Preview Defaults) |
+| **Logs and traces** | Production logs | Per-preview logs |
+| **When to use** | Managing what is live in production | Testing feature branches before shipping |
+
+---
+
 ## How Previews compare to other Workers features
 
 ### Previews vs `wrangler deploy`
@@ -218,9 +256,9 @@ Worker Previews (`wrangler preview`) give each branch its own isolated environme
 | **Durable Objects** | Not generated for Workers with DOs | Isolated DO namespace per preview |
 | **Stable URL per branch** | Aliased URLs supported but versioned URL changes on every upload | Yes — tied to the branch name by default |
 
-**For branch testing, use Worker Previews.** They give you full isolation so you can test freely without risking production data.
+**Recommendation: Use Worker Previews for all branch testing.** They give you full isolation so you can test freely without risking production data. Use the **Previews tab** in the dashboard to manage your previews — it shows all active previews, their URLs, and per-preview logs.
 
-Version URLs are not the recommended path for testing. They were designed for inspecting a version before a [gradual rollout](/workers/worker-previews/rollouts-and-rollbacks/), not as a general-purpose preview environment. They have [limitations](/workers/configuration/previews/#limitations) including no isolation, no Durable Object support, no logs, and no stable URL per branch.
+Version URLs (`wrangler versions upload`) remain available for existing Workers that have them enabled, but they are not recommended for testing. They were designed for inspecting a version before a [gradual rollout](/workers/worker-previews/rollouts-and-rollbacks/), not as a general-purpose preview environment. They run against production bindings and have [limitations](/workers/configuration/previews/#limitations) including no isolation, no Durable Object support, no logs, and no stable URL per branch. If you are using Worker Previews, rely on the **Previews tab** for testing — not the version URLs shown in the **Deployments tab**.
 
 ### Availability of version URLs
 
@@ -232,7 +270,19 @@ Version URLs are not the recommended path for testing. They were designed for in
 
 [Gradual rollouts](/workers/worker-previews/rollouts-and-rollbacks/) let you send a percentage of production traffic to a new version (for example, 10% to the new code, 90% to the old code). This is a production deployment strategy — both versions share the same bindings and serve real users.
 
-Previews are not a deployment strategy. They are a separate testing environment. You cannot split traffic between a preview and production, and you cannot promote a preview to production. When you are done testing in a preview, you ship to production with `wrangler deploy` as a separate step.
+Previews are not a deployment strategy. They are a separate testing environment. You cannot split traffic between a preview and production, and you cannot directly promote a preview to production.
+
+### Moving from preview to production
+
+When you are done testing in a preview, you ship to production as a separate step. Nothing from the preview carries over — no data, no state, no side effects. Only the code moves.
+
+| Goal | What to do |
+| --- | --- |
+| **Ship immediately to 100%** | Merge your branch and run `wrangler deploy` (or let Builds run it on merge). |
+| **Gradual rollout** | Merge your branch, then run `wrangler versions upload` followed by `wrangler versions deploy` to send a percentage of production traffic to the new version. See [gradual rollouts](/workers/worker-previews/rollouts-and-rollbacks/). |
+| **Rollback after shipping** | Use `wrangler rollback` or the **Deployments tab** in the dashboard. Rollbacks apply to production deployments only — your previews are unaffected. |
+
+Previews and production rollouts are fully independent. Changing a rollout percentage does not affect any preview, and deleting a preview does not affect production.
 
 ---
 
