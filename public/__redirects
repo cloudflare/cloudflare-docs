@@ -288,26 +288,27 @@
 /bots/concepts/bot/verified-bots/overview/ /bots/concepts/bot/verified-bots/ 301
 /bots/frequently-asked-questions/ /bots/ 301
 
-/browser-rendering/get-started/browser-rendering-with-DO/ /browser-rendering/how-to/browser-rendering-with-do/ 301
-/browser-rendering/get-started/reuse-sessions/ /browser-rendering/features/reuse-sessions/ 301
-/browser-rendering/get-started/screenshots/ /browser-rendering/how-to/deploy-worker/ 301
-/browser-rendering/workers-binding-api/ /browser-rendering/get-started/#browser-sessions 301
-/browser-rendering/workers-binding-api/screenshots/ /browser-rendering/how-to/deploy-worker/ 301
-/browser-rendering/workers-binding-api/browser-rendering-with-do/ /browser-rendering/how-to/browser-rendering-with-do/ 301
-/browser-rendering/workers-binding-api/reuse-sessions/ /browser-rendering/features/reuse-sessions/ 301
-/browser-rendering/platform/ /browser-rendering/ 301
-/browser-rendering/platform/puppeteer/ /browser-rendering/puppeteer/ 301
-/browser-rendering/platform/playwright/ /browser-rendering/playwright/ 301
-/browser-rendering/platform/playwright-mcp/ /browser-rendering/playwright/playwright-mcp/ 301
-/browser-rendering/platform/wrangler/ /browser-rendering/reference/wrangler/ 301
-/browser-rendering/platform/limits/ /browser-rendering/limits/ 301
-/browser-rendering/platform/pricing/ /browser-rendering/pricing/ 301
-/browser-rendering/platform/browser-close-reasons/ /browser-rendering/reference/browser-close-reasons/ 301
-/browser-rendering/platform/stagehand/ /browser-rendering/stagehand/ 301
-/browser-rendering/workers-bindings/reuse-sessions/ /browser-rendering/features/reuse-sessions/ 301
-/browser-rendering/workers-bindings/browser-rendering-with-do/ /browser-rendering/how-to/browser-rendering-with-do/ 301
-/browser-rendering/workers-bindings/screenshots/ /browser-rendering/how-to/deploy-worker/ 301
-/browser-rendering/workers-bindings/ /browser-rendering/get-started/#browser-sessions 301
+/browser-rendering/get-started/browser-rendering-with-DO/ /browser-run/how-to/browser-run-with-do/ 301
+/browser-rendering/get-started/reuse-sessions/ /browser-run/features/reuse-sessions/ 301
+/browser-rendering/get-started/screenshots/ /browser-run/how-to/deploy-worker/ 301
+/browser-rendering/workers-binding-api/ /browser-run/get-started/#browser-sessions 301
+/browser-rendering/workers-binding-api/screenshots/ /browser-run/how-to/deploy-worker/ 301
+/browser-rendering/workers-binding-api/browser-rendering-with-do/ /browser-run/how-to/browser-run-with-do/ 301
+/browser-rendering/workers-binding-api/reuse-sessions/ /browser-run/features/reuse-sessions/ 301
+/browser-rendering/platform/ /browser-run/ 301
+/browser-rendering/platform/puppeteer/ /browser-run/puppeteer/ 301
+/browser-rendering/platform/playwright/ /browser-run/playwright/ 301
+/browser-rendering/platform/playwright-mcp/ /browser-run/playwright/playwright-mcp/ 301
+/browser-rendering/platform/wrangler/ /browser-run/reference/wrangler/ 301
+/browser-rendering/platform/limits/ /browser-run/limits/ 301
+/browser-rendering/platform/pricing/ /browser-run/pricing/ 301
+/browser-rendering/platform/browser-close-reasons/ /browser-run/reference/browser-close-reasons/ 301
+/browser-rendering/platform/stagehand/ /browser-run/stagehand/ 301
+/browser-rendering/workers-bindings/reuse-sessions/ /browser-run/features/reuse-sessions/ 301
+/browser-rendering/workers-bindings/browser-rendering-with-do/ /browser-run/how-to/browser-run-with-do/ 301
+/browser-rendering/workers-bindings/screenshots/ /browser-run/how-to/deploy-worker/ 301
+/browser-rendering/workers-bindings/ /browser-run/get-started/#browser-sessions 301
+/browser-rendering/how-to/browser-rendering-with-do/ /browser-run/how-to/browser-run-with-do/ 301
 
 # byoip
 /byoip/about/dynamic-advertisement/ /byoip/concepts/dynamic-advertisement/ 301
@@ -1298,7 +1299,7 @@
 /queues/configuration/ /queues/configuration/configure-queues/ 301
 /queues/javascript-apis/ /queues/configuration/javascript-apis/ 301
 /queues/pricing/ /queues/platform/pricing/ 301
-/queues/examples/web-crawler-with-browser-rendering/ /queues/tutorials/web-crawler-with-browser-rendering/ 301
+/queues/examples/web-crawler-with-browser-rendering/ /queues/tutorials/web-crawler-with-browser-run/ 301
 /queues/platform/javascript-apis/ /queues/configuration/javascript-apis/ 301
 /queues/platform/configuration/ /queues/configuration/configure-queues/ 301
 /queues/changelog/ /queues/platform/changelog/ 301
@@ -1318,6 +1319,7 @@
 /queues/reference/local-development/ /queues/configuration/local-development/ 301
 /queues/reference/metrics/ /queues/observability/metrics/ 301
 /queues/examples/publish-to-a-queue-over-http/ /queues/examples/publish-to-a-queue-via-http/ 301
+/queues/tutorials/web-crawler-with-browser-rendering/ /queues/tutorials/web-crawler-with-browser-run/ 301
 
 # reference architectures & design guides
 /reference-architecture/sase-reference-architecture/ /reference-architecture/architectures/sase/ 301
@@ -2474,8 +2476,9 @@
 /*/index.html.md /:splat/index.md 301
 /1.1.1.1/other-ways-to-use-1.1.1.1/* /1.1.1.1/additional-options/:splat 301
 /changelog-next/* /changelog/post/:splat 301
-/browser-rendering/rest-api/* /browser-rendering/quick-actions/:splat 301
-/browser-rendering/quick-actions-rest-api/* /browser-rendering/quick-actions/:splat 301
+/browser-rendering/rest-api/* /browser-run/quick-actions/:splat 301
+/browser-rendering/quick-actions-rest-api/* /browser-run/quick-actions/:splat 301
+/browser-rendering/* /browser-run/:splat 301
 /*/sitemap.xml /sitemap-index.xml 301
 /api-security/* /api-shield/:splat 301
 /api-shield/products/* /api-shield/security/:splat 301

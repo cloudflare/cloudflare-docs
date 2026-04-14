@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Session recording
-description: Record and replay Browser Rendering sessions to visually debug browser automation scripts.
+description: Record and replay Browser Run sessions to visually debug browser automation scripts.
 sidebar:
   order: 2
 ---
@@ -77,7 +77,7 @@ The recording is finalized when the browser session closes, whether you call `br
 
 ## Enable with CDP endpoint
 
-When connecting to Browser Rendering from any environment using the [CDP endpoint](/browser-rendering/cdp/), add `recording=true` as a query parameter to the WebSocket URL:
+When connecting to Browser Run from any environment using the [CDP endpoint](/browser-run/cdp/), add `recording=true` as a query parameter to the WebSocket URL:
 
 ```txt
 wss://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-rendering/devtools/browser?recording=true&keep_alive=600000
@@ -101,7 +101,7 @@ For example, to enable session recording in an MCP client, add `recording=true` 
 }
 ```
 
-For other MCP clients and CDP usage with Puppeteer or Playwright, refer to the [CDP documentation](/browser-rendering/cdp/).
+For other MCP clients and CDP usage with Puppeteer or Playwright, refer to the [CDP documentation](/browser-run/cdp/).
 
 :::note
 The recording is only available after the browser session closes. CDP sessions typically use `keep_alive` to stay open between commands. The browser will close automatically when it has been idle for the `keep_alive` duration. You can also close it explicitly with `browser.close()`.
@@ -109,9 +109,9 @@ The recording is only available after the browser session closes. CDP sessions t
 
 ## View recordings
 
-After a session closes, its recording is available in the Cloudflare dashboard under **Browser Rendering** > **Logs**. Select a session to open the recording viewer, where you can scrub through the timeline and replay what happened during the session.
+After a session closes, its recording is available in the Cloudflare dashboard under **Browser Run** > **Runs**. Select a session to open the recording viewer, where you can scrub through the timeline and replay what happened during the session.
 
-<DashButton url="/?to=/:account/workers/browser-rendering/logs" />
+<DashButton url="/?to=/:account/workers/browser-run/logs" />
 
 ## Retrieve a recording via API
 
@@ -142,7 +142,7 @@ The `events` values in the API response are standard rrweb event arrays. You can
 
 - Recordings are retained for 30 days after the session ends and automatically deleted.
 - Recording is opt-in. It is not enabled by default.
-- Session recording is available with Browser Sessions via `launch()` and the [CDP endpoint](/browser-rendering/cdp/). It is not available with Quick Actions.
+- Session recording is available with Browser Sessions via `launch()` and the [CDP endpoint](/browser-run/cdp/). It is not available with Quick Actions.
 - The minimum recording duration is 1 second. Sessions shorter than 1 second will not produce a viewable recording.
 - The maximum recording duration is 2 hours.
 
