@@ -6,15 +6,6 @@ if (diagrams.length === 0) {
 } else {
 	let init = false;
 
-	// Parse a trusted HTML string into a DocumentFragment.
-	// Uses <template> so content is parsed in an inert context
-	// (no script execution, no resource loading).
-	function parseHTML(html: string): DocumentFragment {
-		const tpl = document.createElement("template");
-		tpl.innerHTML = html;
-		return tpl.content;
-	}
-
 	// Full-screen expand dialog (lazy — only created because diagrams exist)
 	let dialog: HTMLDialogElement | null = null;
 
@@ -23,17 +14,15 @@ if (diagrams.length === 0) {
 
 		dialog = document.createElement("dialog");
 		dialog.className = "mermaid-dialog";
-		dialog.appendChild(
-			parseHTML(`
-				<div class="mermaid-dialog-body"></div>
-				<button class="mermaid-dialog-close" aria-label="Close">
-					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-						<line x1="18" y1="6" x2="6" y2="18"></line>
-						<line x1="6" y1="6" x2="18" y2="18"></line>
-					</svg>
-				</button>
-			`),
-		);
+		dialog.innerHTML = `
+			<div class="mermaid-dialog-body"></div>
+			<button class="mermaid-dialog-close" aria-label="Close">
+				<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<line x1="18" y1="6" x2="6" y2="18"></line>
+					<line x1="6" y1="6" x2="18" y2="18"></line>
+				</svg>
+			</button>
+		`;
 		document.body.appendChild(dialog);
 
 		function closeWithAnimation() {
@@ -141,14 +130,12 @@ if (diagrams.length === 0) {
 		const expandBtn = document.createElement("button");
 		expandBtn.className = "mermaid-expand";
 		expandBtn.setAttribute("aria-label", "Expand diagram");
-		expandBtn.appendChild(
-			parseHTML(`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-				<polyline points="15 3 21 3 21 9"></polyline>
-				<polyline points="9 21 3 21 3 15"></polyline>
-				<line x1="21" y1="3" x2="14" y2="10"></line>
-				<line x1="3" y1="21" x2="10" y2="14"></line>
-			</svg>`),
-		);
+		expandBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+			<polyline points="15 3 21 3 21 9"></polyline>
+			<polyline points="9 21 3 21 3 15"></polyline>
+			<line x1="21" y1="3" x2="14" y2="10"></line>
+			<line x1="3" y1="21" x2="10" y2="14"></line>
+		</svg>`;
 		expandBtn.addEventListener("click", () => openDiagram(container));
 		container.appendChild(expandBtn);
 
@@ -174,7 +161,7 @@ if (diagrams.length === 0) {
 
 	async function render() {
 		// Dynamically import mermaid — the ~2.5 MB bundle is only fetched
-		// on the ~2 % of pages that actually contain diagrams.
+		// on the ~2% of pages that actually contain diagrams.
 		const { default: mermaid } = await import("mermaid");
 
 		const isLight =
@@ -250,13 +237,12 @@ if (diagrams.length === 0) {
 					`mermaid-${crypto.randomUUID()}`,
 					def,
 				);
-				const fragment = parseHTML(svg);
+				diagram.innerHTML = svg;
 
-				// Extract title before moving nodes into the DOM
-				const titleElement = fragment.querySelector("svg > title");
+				// Extract title from SVG for annotation
+				const svgElement = diagram.querySelector("svg");
+				const titleElement = svgElement?.querySelector("title");
 				const title = titleElement?.textContent?.trim() || null;
-
-				diagram.replaceChildren(fragment);
 
 				// Wrap diagram with container and annotation
 				wrapDiagram(diagram, title);
