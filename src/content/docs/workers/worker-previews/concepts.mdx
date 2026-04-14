@@ -317,7 +317,7 @@ Worker Previews (`wrangler preview`) give each branch its own isolated environme
 
 Version URLs (`wrangler versions upload`) remain available for existing Workers that have them enabled, but they are not recommended for testing. They run against production bindings and have [limitations](/workers/configuration/previews/#limitations) including no isolation, no Durable Object support, no logs, and no stable URL per branch. If you are using Worker Previews, rely on the **Previews tab** for testing — not the version URLs shown in the **Deployments tab**.
 
-**If you are currently using `wrangler versions upload` for branch testing**, see [Switching from `wrangler versions upload`](/workers/worker-previews/workflows/#switching-from-wrangler-versions-upload) for a step-by-step migration guide. If you also use `versions upload` for [gradual rollouts](/workers/worker-previews/rollouts-and-rollbacks/), you can use both — `wrangler preview` for testing, `wrangler versions upload` for production rollouts.
+`wrangler versions upload` is a production command — it creates a version that can be gradually rolled out to production traffic. If you have been using it for branch testing (because version URLs were the only option before), use `wrangler preview` for that instead. The two commands serve different purposes and can coexist: `wrangler preview` for isolated branch testing, `wrangler versions upload` for [gradual production rollouts](/workers/worker-previews/rollouts-and-rollbacks/).
 
 ### Availability of version URLs
 
