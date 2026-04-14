@@ -19,35 +19,17 @@ import { Render, CURL, Example } from "~/components";
 
 WebMCP is currently available in Chrome beta, so it requires a lab session. Browser Run has an experimental pool with browser instances running Chrome beta so you can test emerging browser features before they reach stable Chrome. Your production workloads on the [standard pool](/browser-rendering/#key-features) remain on a stable version of Chrome.
 
-Use the [CDP endpoint](/browser-rendering/cdp/) to acquire a lab browser session (replace `$ACCOUNT_ID` with your Cloudflare account ID and `$CLOUDFLARE_API_TOKEN` with your API token):
+Use the new `wrangler browser` command to acquire a lab browser session:
 
-<CURL
-	method="POST"
-	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/browser-rendering/devtools/browser?lab=true&targets=true&keep_alive=300000"
-	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
-/>
+```sh
+# make sure you have the latest version of wrangler
+npm i -g wrangler@latest
 
-```json output {7}
-{
-	"sessionId": "abc123...",
-	"webSocketDebuggerUrl": "wss://...",
-	"targets": [
-		{
-			"description": "",
-			"devtoolsFrontendUrl": "https://live.browser.run/ui/inspector?wss=...",
-			"id": "C12345...",
-			"title": "about:blank",
-			"type": "page",
-			"url": "about:blank",
-			"webSocketDebuggerUrl": "wss://..."
-		}
-	]
-}
+# create a lab browser session with 5 minute keep-alive
+wrangler browser create --lab --keepAlive 300  
 ```
 
-The response includes a `sessionId` to identify your session, a `webSocketDebuggerUrl` to connect via CDP, and a `targets` array listing available browser targets. There should be a single target with a `devtoolsFrontendUrl` property.
-
-Copy the `devtoolsFrontendUrl` value and open it in your browser to see a live view of the page.
+It will open a live view of your browser session.
 
 #### 2. Interact with the page
 
@@ -216,29 +198,22 @@ _Agent clicks the hotel, executes `start_booking`, then `complete_booking` with 
 
 #### 4. (Optional) Open DevTools to watch the agent
 
-Some WebMCP tools require human confirmation before completing sensitive actions. For example, `complete_booking` waits for you to select **Confirm** before finalizing a reservation. To interact with these human-in-the-loop (HITL) prompts, you need to open the browser's live view.
+Some WebMCP tools require human confirmation before completing sensitive actions. For example, `complete_booking` waits for you to select **Confirm** before finalizing a reservation.
+To interact with these human-in-the-loop (HITL) prompts, you need to open the browser's live view.
 
 Once the agent has started a session, list active sessions to get the session ID:
 
-<CURL
-	method="GET"
-	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/browser-rendering/devtools/session"
-	headers={{
-		Authorization: `Bearer $CLOUDFLARE_API_TOKEN`,
-	}}
-/>
+```sh
+wrangler browser list
+```
 
-Then, use the session ID from the previous response to get the DevTools URL (replace `$SESSION_ID` in the URL):
+Then, use the session ID from the previous response to open the browser's live view:
 
-<CURL
-	method="GET"
-	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/browser-rendering/devtools/browser/$SESSION_ID/json"
-	headers={{
-		Authorization: `Bearer $CLOUDFLARE_API_TOKEN`,
-	}}
-/>
+```sh
+wrangler browser view $SESSION_ID
+```
 
-Open the `devtoolsFrontendUrl` from the response in your browser. From there you can watch the agent work and confirm any actions that require human approval.
+You can now view the live browser session and interact with it.
 
 ## Limitations
 
