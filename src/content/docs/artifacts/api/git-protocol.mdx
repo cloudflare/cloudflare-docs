@@ -6,11 +6,13 @@ sidebar:
   order: 3
 ---
 
-Artifacts exposes a standard git smart HTTP remote at `https://{accountId}.artifacts.cloudflare.dev/git/{namespace}/{repo}.git`.
+Artifacts exposes Git access for every Artifacts repository.
 
-Use the returned repo `remote` with a regular git client for `clone`, `fetch`, `pull`, and `push`.
+Each repo has a standard Git smart HTTP remote at `https://{accountId}.artifacts.cloudflare.dev/git/{namespace}/{repo}.git`.
 
-## Authentication methods
+Use the returned repo `remote` with a regular Git client for `clone`, `fetch`, `pull`, and `push`.
+
+## Authentication
 
 Git routes accept repo access tokens in two forms:
 
@@ -23,7 +25,7 @@ Git routes accept repo access tokens in two forms:
 
 Repo tokens are issued in the control-plane response format `art_v1_<40 hex>?expires=<unix_seconds>`.
 
-## HTTPS remote (recommended)
+### HTTPS remote (recommended)
 
 For the URL form, use the token secret in the password slot. Artifacts ignores the Basic auth username.
 
@@ -41,9 +43,9 @@ git remote add origin "$ARTIFACTS_AUTH_REMOTE"
 git push -u origin main
 ```
 
-Use any non-empty username in the URL. Artifacts currently accepts that username but does not otherwise use or log it, so `x` is just a placeholder.
+Use any non-empty username in the URL. Artifacts accepts that username but does not otherwise use or log it, so `x` is just a placeholder.
 
-## Git `extraHeader` parameter
+### Git `extraHeader` parameter
 
 Git's [`http.extraHeader`](https://git-scm.com/docs/git-config#Documentation/git-config.txt-httpextraHeader) setting lets you attach an HTTP header to git requests.
 
@@ -52,6 +54,17 @@ If you want to use the full token string returned by the API, pass it as a Beare
 ```sh
 git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" clone "$ARTIFACTS_REMOTE" artifacts-clone
 ```
+
+## Protocol support
+
+Artifacts supports Git protocol v1 and v2 for clone and fetch. Git clients negotiate the protocol automatically.
+
+| Operation                         | Git service        | Protocol support | Notes                                                                                                                      |
+| --------------------------------- | ------------------ | ---------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| Clone and fetch                   | `git-upload-pack`  | v1 and v2        | Protocol v2 supports `ls-refs` and `fetch`. Protocol v1 supports normal fetch flows, including shallow and deepen fetches. |
+| Push                              | `git-receive-pack` | v1               | Push uses the standard v1 receive-pack flow.                                                                               |
+| Push over protocol v2             | `git-receive-pack` | Not supported    | Artifacts does not support v2 receive-pack.                                                                                |
+| Optional protocol v1 capabilities | `git-upload-pack`  | Partial          | Some optional v1 capabilities, such as `filter` and `include-tag`, are not supported.                                      |
 
 ## Token scopes
 
