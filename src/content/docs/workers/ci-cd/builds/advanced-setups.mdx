@@ -12,7 +12,7 @@ import { FileTree } from "~/components";
 
 A monorepo is a single repository that contains multiple applications. This setup can be useful for a few reasons:
 
-- **Simplified dependency management**: Manage dependencies across all your workers and shared packages from a single place using tools like [pnpm workspaces](https://pnpm.io/workspaces) and [syncpack](https://www.npmjs.com/package/syncpack).
+- **Simplified dependency management**: Manage dependencies across all your workers and shared packages from a single place using tools like [pnpm workspaces](https://pnpm.io/workspaces) and [syncpack](https://syncpack.dev/).
 - **Code sharing and reuse**: Easily create and share common logic, types, and utilities between workers by creating shared packages.
 - **Atomic commits**: Changes affecting multiple workers or shared libraries can be committed together, making the history easier to understand and reducing the risk of inconsistencies.
 - **Consistent tooling**: Apply the same build, test, linting, and formatting configurations (e.g., via [Turborepo](https://turborepo.com) in for task orchestration and shared configs in `packages/`) across all projects, ensuring consistent tooling and code quality across Workers.

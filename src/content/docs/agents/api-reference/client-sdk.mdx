@@ -187,6 +187,23 @@ When the WebSocket connection closes — whether due to network issues, server r
 
 Agents can maintain state that syncs bidirectionally with all connected clients.
 
+### Reading current state
+
+Both `useAgent` and `AgentClient` expose a `state` property that reflects the current agent state. It starts as `undefined` until the first state message is received from the server.
+
+<TypeScriptExample>
+
+```ts
+const agent = useAgent({ agent: "GameAgent", name: "game-123" });
+
+// Read the current state at any time
+console.log("Current score:", agent.state?.score);
+```
+
+</TypeScriptExample>
+
+With `useAgent`, state updates trigger a React re-render, so `agent.state` always reflects the latest value in your JSX. With `AgentClient`, the `state` field is updated synchronously on each incoming server broadcast or `setState` call.
+
 ### Receiving state updates
 
 <TypeScriptExample>

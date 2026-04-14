@@ -10,7 +10,7 @@ description: Learn how to modify HTTP request headers with Cloudflare's rules.
 
 import { Render } from "~/components";
 
-Use Request Header Transform Rules to manipulate the headers of HTTP requests sent to your origin server.
+Use Request Header Transform Rules to manipulate the headers of HTTP requests sent to your origin server (the server where your website or application is hosted).
 
 ```mermaid
 flowchart LR
@@ -37,7 +37,7 @@ To modify HTTP headers in the **response** sent to website visitors, refer to [R
 Through Request Header Transform Rules you can:
 
 - Set the value of an HTTP request header to a literal string value, overwriting its previous value or adding a new header to the request.
-- Set the value of an HTTP request header according to an expression, overwriting its previous value or adding a new header to the request.
+- Set the value of an HTTP request header according to an expression (a formula that computes a value based on request properties), overwriting its previous value or adding a new header to the request.
 - Remove an HTTP header from the request.
 
 You can create a request header transform rule [in the dashboard](/rules/transform/request-header-modification/create-dashboard/), [via API](/rules/transform/request-header-modification/create-api/), or [using Terraform](/terraform/additional-configurations/transform-rules/#create-a-request-header-transform-rule).
@@ -56,7 +56,7 @@ You can create a request header transform rule [in the dashboard](/rules/transfo
 
 - You cannot modify the value of any header commonly used to identify the website visitor's IP address or initial protocol, such as `x-forwarded-for`, `true-client-ip`, `x-real-ip`, or `x-forwarded-proto`.
 
-- Although you can remove the `x-forwarded-for` header, it will be added back by Cloudflare's cache service (with a different value), and this header will reach your origin server. If you remove the `x-forwarded-for` header and the request is handled by Cloudflare Workers — which [run before the cache](/workers/reference/how-the-cache-works/) — the `x-forwarded-for` request header will be absent.
+- Although you can remove the `x-forwarded-for` header, Cloudflare's cache service will add it back (with a different value) before the request reaches your origin server. However, if the request is handled by Cloudflare Workers — which [run before the cache](/workers/reference/how-the-cache-works/) — the `x-forwarded-for` request header will be absent because the cache service has not yet re-added it.
 
 - You cannot set or modify the value of `cookie` HTTP request headers, but you can remove these headers. Configuring a rule that removes the `cookie` HTTP request header will remove all `cookie` headers in matching requests.
 
@@ -70,7 +70,7 @@ You can create a request header transform rule [in the dashboard](/rules/transfo
 
 - Request header transform rules run in order, and later rules can overwrite changes done by previous rules.
 
-- The values of request and response fields are immutable within each [phase](/ruleset-engine/about/phases/), such as the `http_request_late_transform` phase where request header transform rules are defined. This means that later request header transform rules will not match based on changes done by previous request header transform rules. Refer to [Field values during rule evaluation](/ruleset-engine/about/rules/#field-values-during-rule-evaluation) for more information.
+- The values of request and response fields are immutable within each [phase](/ruleset-engine/about/phases/), such as the `http_request_late_transform` phase where request header transform rules are defined. This means that later request header transform rules will still use the original field values when evaluating their filter expressions, not the values changed by previous rules. Refer to [Field values during rule evaluation](/ruleset-engine/about/rules/#field-values-during-rule-evaluation) for more information.
 
 ## Execution order
 

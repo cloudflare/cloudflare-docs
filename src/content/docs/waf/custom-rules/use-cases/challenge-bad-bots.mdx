@@ -3,6 +3,8 @@ pcx_content_type: configuration
 title: Challenge bad bots
 ---
 
+import { Render } from "~/components";
+
 Cloudflare's Bot Management feature scores the likelihood that a request originates from a bot.
 
 :::note
@@ -13,14 +15,14 @@ Access to [Bot Management](/bots/plans/bm-subscription/) requires a Cloudflare E
 
 Before creating custom rules for bot protection, review the settings on your [Security Settings](/security/) page under **Bot traffic**. Built-in features auto-update with new bot signatures, do not count toward your custom rule limits, and are simpler to manage.
 
-| Use case | Bot setting |
-| --- | --- |
-| Block AI crawlers (GPTBot, ClaudeBot, etc.) | **Block AI bots** |
-| Block definitely automated traffic (bot score of 1) | **Definitely automated** |
-| Challenge likely automated traffic (bot score 2-29) | **Likely automated** |
-| Allow verified bots (Googlebot, Bingbot, etc.) | **Verified bots** |
-| Extend bot protection to static resources | **Static resource protection** | **Security Settings** > **Bot traffic** |
-| Allow WordPress loopback requests | **Optimize for WordPress** | **Security Settings** > **Bot traffic** |
+| Use case                                            | Bot setting                    |
+| --------------------------------------------------- | ------------------------------ | --------------------------------------- |
+| Block AI crawlers (GPTBot, ClaudeBot, etc.)         | **Block AI bots**              |
+| Block definitely automated traffic (bot score of 1) | **Definitely automated**       |
+| Challenge likely automated traffic (bot score 2-29) | **Likely automated**           |
+| Allow verified bots (Googlebot, Bingbot, etc.)      | **Verified bots**              |
+| Extend bot protection to static resources           | **Static resource protection** | **Security Settings** > **Bot traffic** |
+| Allow WordPress loopback requests                   | **Optimize for WordPress**     | **Security Settings** > **Bot traffic** |
 
 Custom rules are still valuable when you need path-specific protection (different handling for `/api/` vs. `/login/`), custom score thresholds (for example, score below 20 instead of 30), conditional logic combining bot score with other fields, or custom actions not available in the built-in settings.
 
@@ -49,21 +51,7 @@ Custom rules execute before [Super Bot Fight Mode](/bots/get-started/super-bot-f
 
 The following three custom rules provide baseline protection against malicious bots:
 
-**Rule 1:**
-
-- **Expression**: `(cf.bot_management.verified_bot)`
-- **Action**: _Skip:_
-  - _All remaining custom rules_
-
-**Rule 2:**
-
-- **Expression**: `(cf.bot_management.score eq 1)`
-- **Action**: _Block_
-
-**Rule 3:**
-
-- **Expression**: `(cf.bot_management.score gt 1 and cf.bot_management.score lt 30)`
-- **Action**: _Managed Challenge_
+<Render file="bot-score-baseline-rules" product="bots" />
 
 ### Specific protection for browser, API, and mobile traffic
 

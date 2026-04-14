@@ -12,7 +12,7 @@ The following sections describe the available settings in Origin Rules.
 
 ## Host header
 
-Allows you to rewrite the HTTP `Host` header of incoming requests.
+Allows you to rewrite the HTTP `Host` header of incoming requests. The `Host` header tells the destination server which website or application the request is intended for.
 
 A common use case for this functionality is when your content is hosted on a third-party server that only accepts `Host` headers with their own server names. In this situation, you must update the `Host` HTTP header in incoming requests from `Host: example.com` to `Host: thirdpartyserver.example.net`.
 
@@ -44,9 +44,9 @@ Allows you to override the Server Name Indication (SNI) [^1] value of a request.
 
 ## DNS record
 
-Allows you to override the resolved hostname of incoming requests. This functionality is also known as resolve override.
+Allows you to override the resolved hostname of incoming requests, which controls which origin server Cloudflare sends the request to. This functionality is also known as resolve override.
 
-A common use case is when you are serving an application from the URI (for example, `mydomain.com/app`). In this case, the `app` may be hosted on a different server or by a third party. A DNS record override allows you to redirect requests to this endpoint to the server for that third-party application.
+A common use case is when you are serving an application from a specific path (for example, `mydomain.com/app`). In this case, the `app` may be hosted on a different server or by a third party. A DNS record override allows you to redirect requests to this endpoint to the server for that third-party application.
 
 :::note
 

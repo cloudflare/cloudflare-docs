@@ -352,6 +352,20 @@ Tests use Vitest with three workspace projects (`vitest.workspace.ts`):
 
 Run all tests: `npm run test`
 
+## Web components
+
+New web components in this codebase should use the `cfdocs-` prefix for custom element names (e.g., `<cfdocs-sheet>`, `<cfdocs-explain-code>`). This establishes a consistent naming pattern going forward.
+
+### Naming conventions
+
+- **Custom element names**: Use kebab-case with `cfdocs-` prefix (e.g., `cfdocs-sheet`)
+- **Class names**: Use PascalCase with `Element` suffix (e.g., `SheetElement`, `ExplainCodeElement`)
+- **File locations**: Place components in `src/components/{component-name}/` directories
+
+### Existing components
+
+Existing components (`warp-download`, `stream-player`, `rule-id`, `check-box`, `r2-local-uploads-diagram`, `animated-workflow-diagram`, `autoconfig-diagram`) are exempt from the `cfdocs-` prefix requirement and do not need to be renamed.
+
 ## Commit conventions
 
 - Format: `[Product] description` or `type: description`

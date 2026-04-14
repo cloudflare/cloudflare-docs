@@ -1,0 +1,22 @@
+---
+{}
+---
+
+**Rule 1: Skip verified bots**
+
+- **Expression**: `(cf.bot_management.verified_bot)`
+- **Action**: _Skip:_
+  - _All remaining custom rules_
+- Known good bots (Googlebot, Bingbot, monitoring services) bypass all custom rules. Refer to the [verified bots list](/bots/concepts/bot/verified-bots/) and [Radar bots directory](https://radar.cloudflare.com/bots/directory).
+
+**Rule 2: Block definitely automated**
+
+- **Expression**: `(cf.bot_management.score eq 1)`
+- **Action**: _Block_
+- Score 1 traffic is definitively automated. Blocking it carries minimal false positive risk.
+
+**Rule 3: Challenge likely automated**
+
+- **Expression**: `(cf.bot_management.score gt 1 and cf.bot_management.score lt 30)`
+- **Action**: _Managed Challenge_
+- Scores 2-29 indicate likely automated behavior. A challenge lets legitimate users through while stopping bots.

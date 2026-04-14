@@ -8,7 +8,7 @@ date: 2025-04-07
 
 We’re excited to announce Browser Rendering is now available on the [Workers Free plan](https://www.cloudflare.com/plans/developer-platform/), making it even easier to prototype and experiment with web search and headless browser use-cases when building applications on Workers.
 
-The Browser Rendering **[REST API](/browser-rendering/rest-api/) is now Generally Available**, allowing you to control browser instances from outside of Workers applications. We've added three new endpoints to help automate more browser tasks:
+The Browser Rendering **[REST API](/browser-rendering/quick-actions/) is now Generally Available**, allowing you to control browser instances from outside of Workers applications. We've added three new endpoints to help automate more browser tasks:
 
 - **Extract structured data** – Use `/json` to retrieve structured data from a webpage.
 - **Retrieve links** – Use `/links` to pull all links from a webpage.
@@ -26,7 +26,7 @@ curl -X 'POST' 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browse
 
 ```
 
-For the full list of endpoints, check out our [REST API documentation](/browser-rendering/rest-api/). You can also interact with Browser Rendering via the [Cloudflare TypeScript SDK](https://github.com/cloudflare/cloudflare-typescript).
+For the full list of endpoints, check out our [REST API documentation](/browser-rendering/quick-actions/). You can also interact with Browser Rendering via the [Cloudflare TypeScript SDK](https://github.com/cloudflare/cloudflare-typescript).
 
 We also recently landed support for [Playwright](/browser-rendering/playwright/) in Browser Rendering for browser automation from Cloudflare [Workers](/workers/), in addition to [Puppeteer](/browser-rendering/puppeteer/), giving you more flexibility to test across different browser environments.
 

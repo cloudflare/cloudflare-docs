@@ -5,7 +5,7 @@ sidebar:
   order: 5
 ---
 
-import { LinkCard } from "~/components";
+import { TypeScriptExample, LinkCard } from "~/components";
 
 Human-in-the-Loop (HITL) workflows integrate human judgment and oversight into automated processes. These workflows pause at critical points for human review, validation, or decision-making before proceeding.
 
@@ -26,29 +26,185 @@ Human-in-the-Loop (HITL) workflows integrate human judgment and oversight into a
 | AI tool execution   | Confirming tool calls before running |
 | Access control      | Granting permissions, role changes   |
 
-## Patterns for human-in-the-loop
+## Choosing an approach
 
-Cloudflare provides two main patterns for implementing human-in-the-loop:
+The Agents SDK provides five patterns for human-in-the-loop. Choose based on your architecture:
 
-### Workflow approval
+| Use Case | Pattern | Best For |
+| --- | --- | --- |
+| Long-running workflows | Workflow Approval | Multi-step processes, durable approval gates that can wait hours or weeks |
+| AIChatAgent tools | `needsApproval` | Chat-based tool calls with server-side approval before execution |
+| Client-side tools | `onToolCall` | Tools that need browser APIs or user interaction before execution |
+| MCP servers | Elicitation | MCP tools requesting structured user input during execution |
+| Simple confirmations | State + WebSocket | Lightweight approval flows without AI chat or workflows |
+
+### Decision tree
+
+```
+Is this part of a multi-step workflow?
+├── Yes → Use Workflow Approval (waitForApproval)
+└── No → Are you building an MCP server?
+         ├── Yes → Use MCP Elicitation (elicitInput)
+         └── No → Is this an AI chat interaction?
+                  ├── Yes → Does the tool need browser APIs?
+                  │        ├── Yes → Use onToolCall (client-side execution)
+                  │        └── No → Use needsApproval (server-side with approval)
+                  └── No → Use State + WebSocket for simple confirmations
+```
+
+## Pattern 1: Workflow approval
 
 For durable, multi-step processes with approval gates that can wait hours, days, or weeks. Use [Cloudflare Workflows](/workflows/) with the `waitForApproval()` method.
 
 **Key APIs:**
 
 - `waitForApproval(step, { timeout })` — Pause workflow until approved
-- `approveWorkflow(instanceId, options)` — Approve a waiting workflow
-- `rejectWorkflow(instanceId, options)` — Reject a waiting workflow
+- `approveWorkflow(workflowId, { reason?, metadata? })` — Approve a waiting workflow
+- `rejectWorkflow(workflowId, { reason? })` — Reject a waiting workflow
 
 **Best for:** Expense approvals, content publishing pipelines, data export requests
 
-### MCP elicitation
+## Pattern 2: `needsApproval` (AI chat tools)
 
-For MCP servers that need to request additional structured input from users during tool execution. The MCP client renders a form based on your JSON Schema.
+For `AIChatAgent` tools that should pause for user confirmation before executing. Define `needsApproval` on the tool — it can be a boolean or an async predicate based on the tool arguments:
 
-**Key API:**
+<TypeScriptExample>
 
-- `elicitInput(options, context)` — Request structured input from the user
+```ts
+tools: {
+	processPayment: tool({
+		description: "Process a payment",
+		inputSchema: z.object({
+			amount: z.number(),
+			recipient: z.string(),
+		}),
+		needsApproval: async ({ amount }) => amount > 100,
+		execute: async ({ amount, recipient }) => charge(amount, recipient),
+	});
+}
+```
+
+</TypeScriptExample>
+
+On the client, render pending approvals from message parts and call `addToolApprovalResponse`:
+
+<TypeScriptExample>
+
+```ts
+const { messages, addToolApprovalResponse } = useAgentChat({ agent });
+
+{
+	messages.map((msg) =>
+		msg.parts
+			.filter(
+				(part) => part.type === "tool" && part.state === "approval-required",
+			)
+			.map((part) => (
+				<div key={part.toolCallId}>
+					<p>
+						Approve {part.toolName}?
+					</p>
+					<button
+						onClick={() =>
+							addToolApprovalResponse({ id: part.toolCallId, approved: true })
+						}
+					>
+						Approve
+					</button>
+					<button
+						onClick={() =>
+							addToolApprovalResponse({
+								id: part.toolCallId,
+								approved: false,
+							})
+						}
+					>
+						Reject
+					</button>
+				</div>
+			)),
+	);
+}
+```
+
+</TypeScriptExample>
+
+For custom denial messages, use `addToolOutput` with `state: "output-error"` instead of `addToolApprovalResponse`:
+
+<TypeScriptExample>
+
+```ts
+addToolOutput({
+	toolCallId: part.toolCallId,
+	state: "output-error",
+	errorText: "User declined: insufficient budget for this quarter",
+});
+```
+
+</TypeScriptExample>
+
+## Pattern 3: `onToolCall` (client-side execution)
+
+For tools that need browser APIs (geolocation, clipboard, camera) or user interaction before returning a result. Define the tool on the server without `execute`, then handle it on the client:
+
+<TypeScriptExample>
+
+```ts
+const { messages, sendMessage } = useAgentChat({
+	agent,
+	onToolCall: async ({ toolCall, addToolOutput }) => {
+		if (toolCall.toolName === "getLocation") {
+			const pos = await new Promise((resolve, reject) =>
+				navigator.geolocation.getCurrentPosition(resolve, reject),
+			);
+			addToolOutput({
+				toolCallId: toolCall.toolCallId,
+				output: { lat: pos.coords.latitude, lng: pos.coords.longitude },
+			});
+		}
+	},
+});
+```
+
+</TypeScriptExample>
+
+When `autoContinueAfterToolResult` is `true` (the default), the conversation automatically continues after the client provides the tool output.
+
+## Pattern 4: MCP elicitation
+
+For MCP servers that need to request additional structured input from users during tool execution. The MCP client renders a form based on your JSON Schema:
+
+<TypeScriptExample>
+
+```ts
+export class MyMcpAgent extends McpAgent {
+	async init() {
+		this.server.server.setRequestHandler(
+			CallToolRequestSchema,
+			async (request, extra) => {
+				const result = await this.server.server.elicitInput({
+					message: "Please confirm the transfer details",
+					requestedSchema: {
+						type: "object",
+						properties: {
+							confirmed: { type: "boolean", description: "Confirm transfer?" },
+							notes: { type: "string", description: "Optional notes" },
+						},
+						required: ["confirmed"],
+					},
+				});
+
+				if (result.action === "accept" && result.content?.confirmed) {
+					return { content: [{ type: "text", text: "Transfer confirmed" }] };
+				}
+				return { content: [{ type: "text", text: "Transfer cancelled" }] };
+			},
+		);
+	}
+}
+```
+
+</TypeScriptExample>
 
 **Best for:** Interactive tool confirmations, gathering additional parameters mid-execution
 
@@ -65,28 +221,33 @@ In a workflow-based approval:
 5. When approved, the workflow resumes with the approval metadata
 6. If rejected or timed out, the workflow handles the rejection appropriately
 
+## Timeouts and escalation
+
+Set timeouts to prevent workflows from waiting indefinitely:
+
+<TypeScriptExample>
+
+```ts
+const approval = await this.waitForApproval(step, {
+	timeout: "7 days",
+});
+```
+
+</TypeScriptExample>
+
+Use [scheduling](/agents/api-reference/schedule-tasks/) for escalation:
+
+<TypeScriptExample>
+
+```ts
+await this.schedule(86400, "sendApprovalReminder", { workflowId });
+
+await this.schedule(604800, "escalateToManager", { workflowId });
+```
+
+</TypeScriptExample>
+
 ## Best practices
-
-### Long-term state persistence
-
-Human review processes do not operate on predictable timelines. A reviewer might need days or weeks to make a decision, especially for complex cases requiring additional investigation or multiple approvals. Your system needs to maintain perfect state consistency throughout this period, including:
-
-- The original request and context
-- All intermediate decisions and actions
-- Any partial progress or temporary states
-- Review history and feedback
-
-:::note[Tip]
-[Durable Objects](/durable-objects/) provide an ideal solution for managing state in Human-in-the-Loop workflows, offering persistent compute instances that maintain state for hours, weeks, or months.
-:::
-
-### Timeouts and escalation
-
-Set timeouts to prevent workflows from waiting indefinitely. Use [scheduling](/agents/api-reference/schedule-tasks/) to:
-
-- Send reminders after a period of inactivity
-- Escalate to managers or alternative approvers
-- Auto-reject or auto-approve based on business rules
 
 ### Audit trails
 
@@ -97,9 +258,17 @@ Maintain immutable audit logs of all approval decisions using the [SQL API](/age
 - The reason or justification
 - Any relevant metadata
 
+### Long-term state persistence
+
+Human review processes do not operate on predictable timelines. A reviewer might need days or weeks to make a decision. Your system needs to maintain state consistency throughout this period — the original request, intermediate decisions, partial progress, and review history.
+
+:::note[Tip]
+[Durable Objects](/durable-objects/) provide persistent compute instances that maintain state for hours, weeks, or months — ideal for long-lived approval flows.
+:::
+
 ### Continuous improvement
 
-Human reviewers play a crucial role in evaluating and improving LLM performance. Implement a systematic evaluation process where human feedback is collected not just on the final output, but on the LLM's decision-making process:
+Human reviewers play a crucial role in evaluating and improving LLM performance:
 
 - **Decision quality assessment**: Have reviewers evaluate the LLM's reasoning process and decision points.
 - **Edge case identification**: Use human expertise to identify scenarios where performance could be improved.
@@ -107,21 +276,20 @@ Human reviewers play a crucial role in evaluating and improving LLM performance.
 
 ### Error handling and recovery
 
-Robust error handling is essential for maintaining workflow integrity. Your system should gracefully handle:
-
-- Reviewer unavailability
-- System outages
-- Conflicting reviews
-- Timeout expiration
-
-Implement clear escalation paths for exceptional cases and automatic checkpointing that allows workflows to resume from the last stable state after any interruption.
+Your system should gracefully handle reviewer unavailability, system outages, conflicting reviews, and timeout expiration. Implement clear escalation paths for exceptional cases and automatic checkpointing that allows workflows to resume from the last stable state after any interruption.
 
 ## Next steps
 
 <LinkCard
 	title="Human-in-the-loop patterns"
 	href="/agents/guides/human-in-the-loop/"
-	description="Implementation examples for approval flows."
+	description="Full implementation examples with workflows and chat tools."
+/>
+
+<LinkCard
+	title="Chat agents — Tool approval"
+	href="/agents/api-reference/chat-agents/#tool-approval-human-in-the-loop"
+	description="needsApproval and addToolApprovalResponse reference."
 />
 
 <LinkCard

@@ -186,6 +186,8 @@ await this.schedule("0 0 1 * *", "monthlyCleanup", {});
 - Health checks
 - Subscription renewals
 
+Cron schedules are idempotent by default — calling `schedule()` with the same cron expression, callback, and payload multiple times returns the existing schedule instead of creating a duplicate. This makes cron schedules safe to set up in `onStart()`.
+
 ### Interval
 
 Use `scheduleEvery()` to run a task at fixed intervals (in seconds). Unlike cron, intervals support sub-minute precision and arbitrary durations:
@@ -213,6 +215,25 @@ await this.scheduleEvery(90, "syncData", { destination: "warehouse" });
 | Arbitrary intervals | No (must fit cron pattern)            | Yes                    |
 | Fixed schedule      | Yes (for example, "every day at 8am") | No (relative to start) |
 | Overlap prevention  | No                                    | Yes (built-in)         |
+
+**Idempotency:**
+
+`scheduleEvery()` is idempotent on the combination of callback name, interval, and payload — calling it multiple times with the same arguments does not create duplicate schedules. This makes it safe to call in `onStart()`, which runs on every Durable Object wake:
+
+<TypeScriptExample>
+
+```ts
+class MyAgent extends Agent {
+	async onStart() {
+		// Safe to call on every wake — only one schedule is created
+		await this.scheduleEvery(30, "poll", { source: "api" });
+	}
+}
+```
+
+</TypeScriptExample>
+
+A different interval or payload creates a new, independent schedule.
 
 **Overlap prevention:**
 
@@ -669,7 +690,7 @@ async schedule<T>(
   when: Date | string | number,
   callback: keyof this,
   payload?: T,
-  options?: { retry?: RetryOptions }
+  options?: { retry?: RetryOptions; idempotent?: boolean }
 ): Promise<Schedule<T>>
 ```
 
@@ -680,9 +701,29 @@ Schedule a task for future execution.
 - `when` - When to execute: `number` (seconds delay), `Date` (specific time), or `string` (cron expression)
 - `callback` - Name of the method to call
 - `payload` - Data to pass to the callback (must be JSON-serializable)
-- `options.retry` - Optional retry configuration. Refer to [Retries](/agents/api-reference/retries/) for details.
+- `options.retry` - Optional retry configuration. Refer to [Retries](/agents/api-reference/retries/) for details
+- `options.idempotent` - Deduplicate by callback + payload. Defaults to `true` for cron schedules, `false` for delayed and Date-based schedules
 
 **Returns:** A `Schedule` object with the task details
+
+**Idempotency:**
+
+Cron schedules are idempotent by default — calling `schedule("0 * * * *", "tick")` multiple times with the same callback, cron expression, and payload returns the existing schedule instead of creating a duplicate. Set `idempotent: false` to override this.
+
+For delayed and Date-based schedules, set `idempotent: true` to opt in to the same dedup behavior (matched on callback + payload). This is especially useful when calling `schedule()` in `onStart()` to avoid accumulating duplicate rows across Durable Object restarts:
+
+<TypeScriptExample>
+
+```ts
+class MyAgent extends Agent {
+	async onStart() {
+		// Without idempotent: true, this creates a new row on every DO restart
+		await this.schedule(3600, "hourlyCleanup", {}, { idempotent: true });
+	}
+}
+```
+
+</TypeScriptExample>
 
 :::caution
 
@@ -854,6 +895,12 @@ dispose2(); // Now the agent can go idle
 - **Interval jobs:** After execution, rescheduled for `now + intervalSeconds`; skipped if still running
 
 ## Next steps
+
+<LinkCard
+	title="Push notifications"
+	href="/agents/guides/push-notifications/"
+	description="Send browser push notifications using scheduling and web-push."
+/>
 
 <LinkCard
 	title="Queue tasks"

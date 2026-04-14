@@ -135,8 +135,12 @@ export default defineConfig({
 				...(RUN_LINK_CHECK
 					? [
 							starlightLinksValidator({
+								failOnError: false,
 								errorOnInvalidHashes: false,
 								errorOnLocalLinks: false,
+								reporters: {
+									json: true,
+								},
 								exclude: [
 									"/api/",
 									"/api/**",

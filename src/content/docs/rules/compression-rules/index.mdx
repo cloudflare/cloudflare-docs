@@ -11,7 +11,7 @@ Use Compression Rules to customize the compression applied to responses from Clo
 
 Cloudflare [compresses some responses by default](/speed/optimization/content/compression/), based on the content type. With Compression Rules, you can customize the default behavior, which includes defining preferred compression algorithms for particular file types.
 
-When there is a match for a compression rule configured with several compression algorithms, the selected algorithm is the first one supported by the website visitor, according to the received `accept-encoding` HTTP header. If multiple compression rules match, the last rule wins.
+When a compression rule matches and lists several compression algorithms (such as gzip and Brotli), Cloudflare selects the first algorithm from your list that the visitor's browser supports. Cloudflare determines browser support from the `accept-encoding` HTTP request header, which browsers send automatically to indicate which compression formats they can decompress. If multiple compression rules match the same request, the last matching rule takes precedence.
 
 <Render
 	file="rules-requirements"
@@ -48,9 +48,9 @@ The following fields are commonly used in expressions of compression rules:
 
 ## Important remarks
 
-- If there is a match for a compression rule but the client does not support any of the compression algorithms configured in the rule (according to the provided `accept-encoding` request header), the response sent to the client will not be compressed.
+- If a compression rule matches but the visitor's browser does not support any of the compression algorithms configured in the rule (based on the `accept-encoding` request header), the response will not be compressed.
 
-- If there is a match for a compression rule but the response sent from the origin server contains a `cache-control: no-transform` HTTP header, the compression rule will not perform any changes to the response.
+- If a compression rule matches but the origin server's response includes a `cache-control: no-transform` HTTP header, the compression rule will not modify the response. Origin servers use this header to indicate that intermediaries (like Cloudflare) should not alter the response body.
 
 <Render
 	file="troubleshoot-rules-with-trace"

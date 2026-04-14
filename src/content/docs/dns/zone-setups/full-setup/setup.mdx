@@ -11,135 +11,155 @@ description: >-
   If you want to use Cloudflare as your primary DNS provider and manage your DNS records, your domain should be using a full setup.
 ---
 
-import { Render, DashButton, Tabs, TabItem, APIRequest, Details } from "~/components";
+import {
+	Render,
+	DashButton,
+	Tabs,
+	TabItem,
+	APIRequest,
+	Details,
+	Stream,
+} from "~/components";
 
 Cloudflare DNS offers a few different [setup options](/dns/zone-setups/). A primary setup (also known as full) is the most common and the only one available for Free or Pro plans. For details, refer to [About](/dns/zone-setups/full-setup/). For more introductory context, refer to [Concepts](/dns/concepts/).
 
 ## Before you begin
 
-The sections below offer detailed guidance on the different steps to onboard your domain. Before you begin, make sure that you:
+Make sure that you:
 
-- Already own a domain name (such as `example.com` or `cloudflare.com`).
-
-:::note
-If you do not already have a [domain name](https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name/), get one at-cost through [Cloudflare Registrar](https://dash.cloudflare.com/?to=/:account/domains/register).
-
-All domains purchased through Cloudflare Registrar automatically use Cloudflare for authoritative DNS, which means you can skip the rest of this tutorial.
-:::
-
-- Have previously created a [Cloudflare account](/fundamentals/account/create-account/).
-- Disabled [DNSSEC](/dns/concepts/#dnssec) at your registrar (where you bought your domain name).
-
-<Render file="dnssec-providers" product="dns" />
-
-<Render file="dnssec-enabled-migration" product="dns" />
+- Create a Cloudflare account — If you have not already, [sign up for a Cloudflare account](/fundamentals/account/create-account/).
+- Own a domain name — You need a registered domain (for example, `example.com`). If you do not have one, you can [register a domain at-cost through Cloudflare Registrar](https://dash.cloudflare.com/?to=/:account/domains/register). Domains purchased through Cloudflare Registrar automatically use Cloudflare for authoritative DNS, so you can skip the rest of this tutorial.
 
 ## 1. Add your domain to Cloudflare
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-In the Cloudflare dashboard, [add your domain](/fundamentals/manage-domains/add-site/).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+
+   <DashButton url="/?to=/:account/domains/overview" />
+
+2. Select **Onboard a domain**.
+3. Enter your apex domain (for example, `example.com`) and choose how you would like to add your DNS records.
+4. Select **Continue** and choose a [plan](https://www.cloudflare.com/plans/#compare-features).
 
 </TabItem> <TabItem label="API">
 
 <APIRequest
-  path="/zones"
-  method="POST"
-  json={{
-    "name": "<YOUR_DOMAIN>",
-    "account": {
-      "id": "<YOUR_ACCOUNT_ID>"
-    }
-  }}
+	path="/zones"
+	method="POST"
+	json={{
+		name: "<YOUR_DOMAIN>",
+		account: {
+			id: "<YOUR_ACCOUNT_ID>",
+		},
+	}}
 />
 
 </TabItem> </Tabs>
 
+:::note
 If Cloudflare is unable to identify your domain as a registered domain, make sure you are using an existing [top-level domain](https://www.cloudflare.com/learning/dns/top-level-domain/) (`.com`, `.net`, `.biz`, or others).
 
-Cloudflare requires your `apex domain` to be one level below a valid TLD defined in the [Public Suffix List (PSL)](https://github.com/publicsuffix/list/blob/master/public_suffix_list.dat). Enterprise customers can onboard lower-level subdomains using [Subdomain setup](/dns/zone-setups/subdomain-setup/).
+Cloudflare requires your apex domain to be one level below a valid TLD defined in the [Public Suffix List (PSL)](https://github.com/publicsuffix/list/blob/master/public_suffix_list.dat). Enterprise customers can onboard lower-level subdomains using [Subdomain setup](/dns/zone-setups/subdomain-setup/).
+:::
 
-## 2. Review your DNS records
+<Details header="DNS records quick scan">
 
-When you start using Cloudflare's nameservers for authoritative DNS and your zone is in a primary setup (full), Cloudflare will become your primary DNS provider. This means that your DNS records in Cloudflare need to be accurate for your domain to work properly.
-
-<Render file="dns-scan-intro" product="dns" /> <br />
+<Render file="dns-scan-intro" product="dns" />
 
 :::note
 
 <Render file="dns-scan-note" product="dns" />
 :::
 
-<Render file="dns-scan-procedure" product="dns" />
+</Details>
+
+## 2. Review your DNS records
+
+Your DNS records must be accurate for your domain to work properly. If you don't know what DNS records are, consider the video below for a quick explanation.
+
+<Stream
+	id="07e42365d5c40f2a46a6bde2844f370f"
+	title="Review your DNS records"
+	thumbnail="https://imagedelivery.net/xDOJvHcv1KwTQn6S-BGFIw/7e8cdb06-7280-4139-8f13-256e03027f00/public"
+/>
 
 <Render file="dns-nxdomain-warning" product="dns" />
+
+### Common records
+
+<Render file="dns-scan-procedure" product="dns" />
+
+### Proxy status
+
+Each A, AAAA, and CNAME record has a [proxy status](/dns/proxy-status/) toggle:
+
+- **Proxied** (orange cloud): web traffic goes through the Cloudflare network, which provides caching, DDoS protection, and other security features.
+- **DNS only** (gray cloud): Cloudflare returns the DNS record value but does not proxy traffic. Use this for CNAME records that verify your domain for third-party services.
 
 ## 3. Change your nameservers
 
 <Render file="nameserver-preamble" product="dns" />
 
-<Render file="minimize-downtime-tip" product="dns" />
+:::caution
 
-### Get nameserver names
+<Render file="minimize-downtime-tip" product="dns" />
+:::
+
+### 3.1. Get nameserver names
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In the Cloudflare dashboard, go to the zone **Overview** page.
+Your assigned nameservers are displayed as part of the onboarding flow. If you need to find them once again, go the zone **Overview** page.
 
-   <DashButton url="/?to=/:account/:zone/" />
-
-2. Locate the nameserver names in **2. Replace with Cloudflare's nameservers**.
-
-   ![Find nameserver names on the Overview page of your domain](~/assets/images/dns/nameserver-names.png)
-
-<br />
-3. Keep this window open while you perform the next step.
+<DashButton url="/?to=/:account/:zone/" />
 
 </TabItem> <TabItem label="API">
 
-<APIRequest
-  path="/zones/{zone_id}"
-  method="GET"
-/>
+<APIRequest path="/zones/{zone_id}" method="GET" />
 
 </TabItem> </Tabs>
 
 :::note
-
 Cloudflare automatically assigns nameservers to a domain and these assignments cannot be changed. For more details, refer to [Nameserver assignments](/dns/nameservers/nameserver-options/#assignment-method).
 :::
 
-### Update your registrar
+### 3.2. Log in to your registrar
 
-1. Log in to the admin account for your domain registrar. If you do not know your provider, use [ICANN Lookup](https://lookup.icann.org/).
+Log in to the admin account for your domain registrar. If you do not know your provider, use [ICANN Lookup](https://lookup.icann.org/).
 
 :::note
-
 Depending on your use case, you may have to perform this step on the DNS records management of your domain parent zone, or at a domain reseller, instead. Refer to [Nameservers](/dns/nameservers/update-nameservers/#specific-processes) for details.
 :::
 
-2. Remove your existing authoritative nameservers.
+### 3.3. Turn off DNSSEC
 
-3. Add the nameservers provided by Cloudflare. If their names are not **copied exactly**, your DNS will not resolve correctly.
+If your domain has [DNSSEC](/dns/dnssec/)[^1] active, you must [turn it off](/dns/dnssec/#disable-dnssec) at your registrar before replacing nameservers. Changing nameservers while DNSSEC is active can cause your domain to become unreachable. You can [re-enable DNSSEC through Cloudflare](/dns/dnssec/#enable-dnssec) after your domain is active.
+
+<Render file="dnssec-providers" product="dns" />
+
+<Render file="dnssec-enabled-migration" product="dns" />
+
+### 3.4. Update your registrar
+
+1. Remove your existing authoritative nameservers.
+
+2. Add the nameservers provided by Cloudflare. If their names are not **copied exactly**, your DNS will not resolve correctly.
 
 <Details header="Provider-specific instructions">
-<Render file="ns-update-providers" product="dns" />
+	<Render file="ns-update-providers" product="dns" />
 </Details>
-
-:::note
 
 To avoid common issues, refer to our [Nameserver replacement checklist](/dns/zone-setups/full-setup/troubleshooting/).
 
-:::
-
-### Verify changes
+### 3.5. Verify changes
 
 Wait up to 24 hours while your registrar updates your nameservers.
 
 When your domain is **Active**:
 
 - You will receive an email from Cloudflare.
-- Your domain will have a [status](/dns/zone-setups/reference/domain-status/) of **Active** on the **Websites** page of your account.
+- Your domain will have a [status](/dns/zone-setups/reference/domain-status/) of **Active** on the **Domains** page of your account.
 - Online tools such as [https://www.whatsmydns.net/](https://www.whatsmydns.net/) will show your Cloudflare-assigned nameservers (most of these tools use cached query results, so it may take longer for them to show the updated nameservers).
 - CLI commands will show your Cloudflare-assigned nameservers
 
@@ -165,6 +185,6 @@ If you see unexpected results, refer to our [troubleshooting suggestions](/dns/z
 
 ## 4. Re-enable DNSSEC
 
-When you updated your nameservers, you should have also disabled DNSSEC at your registrar.
+If you turned off DNSSEC before updating your nameservers, you can now [re-enable DNSSEC through Cloudflare](/dns/dnssec/) to protect your domain from spoofing.
 
-You should now [enable DNSSEC](/dns/dnssec/) to protect from domain spoofing.
+[^1]: A security feature that protects DNS records from spoofing
