@@ -8,6 +8,21 @@ sidebar:
 
 import { Tabs, TabItem } from "~/components";
 
+## What do you want to do?
+
+| I want to... | Do this | Details |
+| --- | --- | --- |
+| **Test my code on a branch** without affecting production | `wrangler preview` | [Get started](/workers/worker-previews/#2-create-your-first-preview) |
+| **Deploy to production at 100%** immediately | `wrangler deploy` | [Deploy on merge](/workers/worker-previews/workflows/with-builds/#deploy-on-merge) |
+| **Deploy to production gradually** (10%, 50%, 100%) | `wrangler versions upload` then `wrangler versions deploy` | [Gradual rollouts](/workers/worker-previews/rollouts-and-rollbacks/) |
+| **Roll back production** to a previous version | `wrangler versions deploy --version-id <PREV> --percentage 100` | [Rollbacks](/workers/worker-previews/rollouts-and-rollbacks/) |
+| **Configure what resources** my previews use | Set up Preview Defaults | [Configure bindings](/workers/worker-previews/#1-configure-preview-bindings-and-settings) |
+| **Isolate Durable Objects** in previews | Use `ctx.exports` | [DO isolation](/workers/worker-previews/durable-object-isolation/) |
+| **Serve previews on my own domain** | Enable preview custom domains | [Custom domains](/workers/worker-previews/custom-domains/) |
+| **Switch from `wrangler versions upload`** to previews | Change preview command to `wrangler preview` | [How to switch](/workers/worker-previews/workflows/#switching-from-wrangler-versions-upload) |
+
+---
+
 ## Production commands vs preview command
 
 There are two pipelines for your Worker — production and preview. Each has its own commands, and they do not overlap.
