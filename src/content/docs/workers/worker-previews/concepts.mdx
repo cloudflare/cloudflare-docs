@@ -161,7 +161,18 @@ Production and Preview Defaults are configured separately. When you add somethin
 
 If you forget, previews created after the change will be missing the new binding/variable/secret. This can cause runtime errors in your preview that don't happen in production.
 
-{/* TODO: add Observability section — cover head_sampling_rate, Logpush, Tail Workers config for previews, how observability settings are configured per-preview via Preview Defaults */}
+## Observability
+
+Each preview has its own observability settings, configured through [Preview Defaults](#what-are-preview-defaults). Logs, metrics, and traces from a preview are tagged with the preview identity, so you can filter by preview in the dashboard and through the API.
+
+| Feature | How it works for previews |
+| --- | --- |
+| **Workers Logs** | Logs from a preview are filterable by preview name in the dashboard. Configure log sampling via `observability.logs.head_sampling_rate` in Preview Defaults. |
+| **Logpush** | Enable per-preview by setting `logpush: true` in Preview Defaults. Logs are pushed to your configured destination with preview metadata included. |
+| **Tail Workers** | Both buffered and streaming Tail Workers receive preview metadata (`preview.id`, `preview.slug`, `preview.name`) on each trace/event. Configure which Tail Workers receive preview logs via `tail_consumers` in Preview Defaults. |
+| **Metrics** | Invocations, subrequests, and Durable Object analytics are tagged per-preview. Filter by preview in the dashboard or query via the GraphQL Analytics API. |
+
+Observability settings are part of the Preview Defaults [snapshot](#how-they-work) — changing them does not retroactively update existing previews.
 
 ## How preview URLs work
 
