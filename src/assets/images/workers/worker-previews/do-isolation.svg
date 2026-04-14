@@ -1,20 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 330" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 340" fill="none">
   <style>
     text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
     .label { font-size: 13px; fill: #1a1a1a; font-weight: 600; }
     .sublabel { font-size: 11px; fill: #6b7280; }
     .cmd { font-size: 11px; fill: #6b7280; font-family: 'SF Mono', 'Fira Code', monospace; }
     .heading { font-size: 14px; fill: #1a1a1a; font-weight: 600; }
+    .col-header { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; fill: #6b7280; }
     .box { rx: 8; stroke-width: 1.5; }
     .box-preview { fill: #eff6ff; stroke: #3b82f6; }
     .box-prod { fill: #fff7ed; stroke: #f6821f; }
+    .box-neutral { fill: #f9fafb; stroke: #d1d5db; }
     .box-good { fill: #f0fdf4; stroke: #22c55e; }
-    .box-bad { fill: #fef2f2; stroke: #ef4444; }
-    .box-trigger { fill: #f9fafb; stroke: #d1d5db; }
     .arrow { stroke: #9ca3af; stroke-width: 2; fill: none; marker-end: url(#arr); }
     .arrow-green { stroke: #22c55e; stroke-width: 2; fill: none; marker-end: url(#arr-green); }
-    .arrow-red { stroke: #ef4444; stroke-width: 2; fill: none; marker-end: url(#arr-red); }
-    .row-label { font-size: 11px; fill: #9ca3af; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    .arrow-orange { stroke: #f6821f; stroke-width: 2; fill: none; marker-end: url(#arr-orange); }
   </style>
   <defs>
     <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
@@ -23,87 +22,89 @@
     <marker id="arr-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
       <polygon points="0 0, 8 3, 0 6" fill="#22c55e"/>
     </marker>
-    <marker id="arr-red" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-      <polygon points="0 0, 8 3, 0 6" fill="#ef4444"/>
+    <marker id="arr-orange" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#f6821f"/>
     </marker>
   </defs>
 
   <!-- Title -->
-  <text x="410" y="22" text-anchor="middle" class="heading">Durable Object isolation in previews</text>
+  <text x="410" y="24" text-anchor="middle" class="heading">How Durable Object namespace resolution works in previews</text>
 
-  <!-- ctx.exports ROW -->
-  <rect x="16" y="48" width="28" height="16" rx="4" fill="#f0fdf4" stroke="#22c55e" stroke-width="1"/>
-  <text x="30" y="59" text-anchor="middle" class="sublabel" style="fill: #15803d; font-weight: 600; font-size: 9px;">&#x2713;</text>
+  <!-- Column headers -->
+  <text x="130" y="56" text-anchor="middle" class="col-header">Approach</text>
+  <text x="370" y="56" text-anchor="middle" class="col-header">Resolution</text>
+  <text x="660" y="56" text-anchor="middle" class="col-header">Result</text>
 
-  <text x="50" y="60" class="row-label" style="fill: #15803d;">ctx.exports</text>
+  <!-- Header underline -->
+  <line x1="30" y1="64" x2="790" y2="64" stroke="#e5e7eb" stroke-width="1.5"/>
 
-  <rect x="140" y="44" width="140" height="46" class="box box-preview"/>
-  <text x="210" y="62" text-anchor="middle" class="cmd">ctx.exports.Counter</text>
-  <text x="210" y="78" text-anchor="middle" class="sublabel">in preview code</text>
+  <!-- ===================== -->
+  <!-- ROW 1: ctx.exports    -->
+  <!-- ===================== -->
+  <rect x="30" y="80" width="200" height="54" class="box box-preview"/>
+  <text x="130" y="102" text-anchor="middle" class="cmd">ctx.exports.Counter</text>
+  <text x="130" y="118" text-anchor="middle" class="sublabel">No binding config needed</text>
 
-  <line x1="280" y1="67" x2="330" y2="67" class="arrow-green"/>
+  <line x1="238" y1="107" x2="268" y2="107" class="arrow-green"/>
 
-  <rect x="338" y="44" width="170" height="46" class="box box-trigger"/>
-  <text x="423" y="62" text-anchor="middle" class="label">Runtime resolves</text>
-  <text x="423" y="78" text-anchor="middle" class="sublabel">"I'm in a preview"</text>
+  <rect x="276" y="80" width="190" height="54" class="box box-neutral"/>
+  <text x="371" y="100" text-anchor="middle" class="label">Runtime context</text>
+  <text x="371" y="116" text-anchor="middle" class="sublabel">Knows it's a preview</text>
 
-  <line x1="508" y1="67" x2="558" y2="67" class="arrow-green"/>
+  <line x1="474" y1="107" x2="530" y2="107" class="arrow-green"/>
 
-  <rect x="566" y="44" width="220" height="46" class="box box-good"/>
-  <text x="676" y="62" text-anchor="middle" class="label" style="fill: #15803d;">my-feature_Counter</text>
-  <text x="676" y="78" text-anchor="middle" class="sublabel">auto-provisioned, isolated namespace</text>
-
-  <!-- Divider -->
-  <line x1="140" y1="114" x2="786" y2="114" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="6,4"/>
-
-  <!-- env.MY_DO ROW -->
-  <rect x="16" y="136" width="28" height="16" rx="4" fill="#fef2f2" stroke="#ef4444" stroke-width="1"/>
-  <text x="30" y="147" text-anchor="middle" class="sublabel" style="fill: #dc2626; font-weight: 600; font-size: 9px;">&#x2717;</text>
-
-  <text x="50" y="148" class="row-label" style="fill: #dc2626;">env.MY_DO</text>
-
-  <rect x="140" y="132" width="140" height="46" class="box box-preview"/>
-  <text x="210" y="150" text-anchor="middle" class="cmd">env.MY_COUNTER</text>
-  <text x="210" y="166" text-anchor="middle" class="sublabel">in preview code</text>
-
-  <line x1="280" y1="155" x2="330" y2="155" class="arrow-red"/>
-
-  <rect x="338" y="132" width="170" height="46" class="box box-trigger"/>
-  <text x="423" y="150" text-anchor="middle" class="label">Name-based lookup</text>
-  <text x="423" y="166" text-anchor="middle" class="sublabel">ignores preview context</text>
-
-  <line x1="508" y1="155" x2="558" y2="155" class="arrow-red"/>
-
-  <rect x="566" y="132" width="220" height="46" class="box box-bad"/>
-  <text x="676" y="150" text-anchor="middle" class="label" style="fill: #dc2626;">Production namespace</text>
-  <text x="676" y="166" text-anchor="middle" class="sublabel">shared with production — not isolated</text>
+  <rect x="538" y="80" width="246" height="54" class="box box-good"/>
+  <text x="661" y="100" text-anchor="middle" class="label" style="fill: #15803d;">my-feature_Counter</text>
+  <text x="661" y="118" text-anchor="middle" class="sublabel">Isolated preview namespace</text>
 
   <!-- Divider -->
-  <line x1="140" y1="202" x2="786" y2="202" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="6,4"/>
+  <line x1="30" y1="152" x2="790" y2="152" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="6,4"/>
 
-  <!-- Wrangler config ROW -->
-  <rect x="16" y="224" width="28" height="16" rx="4" fill="#fef2f2" stroke="#ef4444" stroke-width="1"/>
-  <text x="30" y="235" text-anchor="middle" class="sublabel" style="fill: #dc2626; font-weight: 600; font-size: 9px;">&#x2717;</text>
+  <!-- ===================== -->
+  <!-- ROW 2: env.MY_DO      -->
+  <!-- ===================== -->
+  <rect x="30" y="168" width="200" height="54" class="box box-preview"/>
+  <text x="130" y="190" text-anchor="middle" class="cmd">env.MY_COUNTER</text>
+  <text x="130" y="206" text-anchor="middle" class="sublabel">Traditional DO binding</text>
 
-  <text x="50" y="236" class="row-label" style="fill: #dc2626;">Wrangler config</text>
+  <line x1="238" y1="195" x2="268" y2="195" class="arrow-orange"/>
 
-  <rect x="140" y="220" width="175" height="46" class="box box-preview"/>
-  <text x="227" y="238" text-anchor="middle" class="cmd">previews.durable_objects</text>
-  <text x="227" y="254" text-anchor="middle" class="sublabel">with script_name (self-ref)</text>
+  <rect x="276" y="168" width="190" height="54" class="box box-neutral"/>
+  <text x="371" y="188" text-anchor="middle" class="label">Name-based lookup</text>
+  <text x="371" y="204" text-anchor="middle" class="sublabel">Ignores preview context</text>
 
-  <line x1="315" y1="243" x2="365" y2="243" class="arrow-red"/>
+  <line x1="474" y1="195" x2="530" y2="195" class="arrow-orange"/>
 
-  <rect x="373" y="220" width="170" height="46" class="box box-trigger"/>
-  <text x="458" y="238" text-anchor="middle" class="label">Falls through</text>
-  <text x="458" y="254" text-anchor="middle" class="sublabel">preview kind excluded</text>
+  <rect x="538" y="168" width="246" height="54" class="box box-prod"/>
+  <text x="661" y="188" text-anchor="middle" class="label" style="fill: #c2410c;">Production namespace</text>
+  <text x="661" y="206" text-anchor="middle" class="sublabel">Shared with production — not isolated</text>
 
-  <line x1="543" y1="243" x2="558" y2="243" class="arrow-red"/>
+  <!-- Divider -->
+  <line x1="30" y1="240" x2="790" y2="240" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="6,4"/>
 
-  <rect x="566" y="220" width="220" height="46" class="box box-bad"/>
-  <text x="676" y="238" text-anchor="middle" class="label" style="fill: #dc2626;">Production namespace</text>
-  <text x="676" y="254" text-anchor="middle" class="sublabel">same result — not isolated</text>
+  <!-- ============================= -->
+  <!-- ROW 3: Wrangler config         -->
+  <!-- ============================= -->
+  <rect x="30" y="256" width="200" height="54" class="box box-preview"/>
+  <text x="130" y="276" text-anchor="middle" class="cmd">previews.durable_objects</text>
+  <text x="130" y="292" text-anchor="middle" class="sublabel">Wrangler config (self-ref)</text>
 
-  <!-- Bottom summary -->
-  <line x1="40" y1="286" x2="786" y2="286" stroke="#e5e7eb" stroke-width="1"/>
-  <text x="410" y="310" text-anchor="middle" class="sublabel">Only <tspan class="cmd" style="fill: #15803d;">ctx.exports</tspan> knows the code is running in a preview. Bindings resolve through a path that ignores preview context.</text>
+  <line x1="238" y1="283" x2="268" y2="283" class="arrow-orange"/>
+
+  <rect x="276" y="256" width="190" height="54" class="box box-neutral"/>
+  <text x="371" y="276" text-anchor="middle" class="label">Falls through</text>
+  <text x="371" y="292" text-anchor="middle" class="sublabel">Preview kind excluded</text>
+
+  <line x1="474" y1="283" x2="530" y2="283" class="arrow-orange"/>
+
+  <rect x="538" y="256" width="246" height="54" class="box box-prod"/>
+  <text x="661" y="276" text-anchor="middle" class="label" style="fill: #c2410c;">Production namespace</text>
+  <text x="661" y="292" text-anchor="middle" class="sublabel">Same result — not isolated</text>
+
+  <!-- Legend -->
+  <line x1="30" y1="324" x2="790" y2="324" stroke="#e5e7eb" stroke-width="1"/>
+  <rect x="230" y="332" width="10" height="10" rx="2" fill="#f0fdf4" stroke="#22c55e" stroke-width="1"/>
+  <text x="246" y="341" class="sublabel">Isolated (preview namespace)</text>
+  <rect x="440" y="332" width="10" height="10" rx="2" fill="#fff7ed" stroke="#f6821f" stroke-width="1"/>
+  <text x="456" y="341" class="sublabel">Not isolated (production namespace)</text>
 </svg>

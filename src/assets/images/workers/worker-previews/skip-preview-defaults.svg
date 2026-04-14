@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 340" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 420" fill="none">
   <style>
     text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
     .label { font-size: 13px; fill: #1a1a1a; font-weight: 600; }
@@ -14,6 +14,7 @@
     .arrow { stroke: #9ca3af; stroke-width: 2; fill: none; marker-end: url(#arr); }
     .arrow-red { stroke: #ef4444; stroke-width: 2; fill: none; marker-end: url(#arr-red); }
     .arrow-amber { stroke: #f59e0b; stroke-width: 2; fill: none; marker-end: url(#arr-amber); }
+    .row-label { font-size: 11px; fill: #9ca3af; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
   </style>
   <defs>
     <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
@@ -30,46 +31,60 @@
   <!-- Title -->
   <text x="410" y="22" text-anchor="middle" class="heading">What happens when you skip Preview Defaults configuration</text>
 
-  <!-- Starting box -->
-  <rect x="290" y="40" width="240" height="48" class="box box-preview"/>
-  <text x="410" y="60" text-anchor="middle" class="cmd">wrangler preview</text>
-  <text x="410" y="74" text-anchor="middle" class="sublabel">no Preview Defaults configured</text>
+  <!-- ==================== -->
+  <!-- PATH 1: Skip entirely -->
+  <!-- ==================== -->
+  <text x="410" y="54" text-anchor="middle" class="label">Path 1: Skip configuration entirely</text>
+  <text x="410" y="70" text-anchor="middle" class="sublabel">No dashboard wizard, no previews block, no API call</text>
 
-  <!-- Split into two paths -->
-  <line x1="350" y1="88" x2="200" y2="130" class="arrow-red"/>
-  <line x1="470" y1="88" x2="620" y2="130" class="arrow-amber"/>
+  <rect x="290" y="82" width="240" height="44" class="box box-preview"/>
+  <text x="410" y="100" text-anchor="middle" class="cmd">wrangler preview</text>
+  <text x="410" y="114" text-anchor="middle" class="sublabel">Preview Defaults are empty ({})</text>
 
-  <!-- LEFT PATH: Vars and secrets -->
-  <text x="200" y="128" text-anchor="middle" class="sublabel" style="fill: #ef4444; font-weight: 600;">Variables &amp; Secrets</text>
+  <!-- Split -->
+  <line x1="350" y1="126" x2="200" y2="154" class="arrow-red"/>
+  <line x1="470" y1="126" x2="620" y2="154" class="arrow-red"/>
 
-  <rect x="85" y="142" width="230" height="56" class="box box-bad"/>
-  <text x="200" y="164" text-anchor="middle" class="label" style="fill: #dc2626;">Empty</text>
-  <text x="200" y="180" text-anchor="middle" class="sublabel">Not inherited from production</text>
+  <!-- Left: vars/secrets -->
+  <text x="200" y="152" text-anchor="middle" class="sublabel" style="fill: #ef4444; font-weight: 600;">Variables and Secrets</text>
+  <rect x="95" y="162" width="210" height="44" class="box box-bad"/>
+  <text x="200" y="180" text-anchor="middle" class="label" style="fill: #dc2626;">Empty — runtime error</text>
+  <text x="200" y="194" text-anchor="middle" class="sublabel">Not inherited from production</text>
 
-  <line x1="200" y1="198" x2="200" y2="230" class="arrow-red"/>
+  <!-- Right: storage -->
+  <text x="620" y="152" text-anchor="middle" class="sublabel" style="fill: #ef4444; font-weight: 600;">KV, R2, D1, Durable Objects</text>
+  <rect x="510" y="162" width="220" height="44" class="box box-bad"/>
+  <text x="620" y="180" text-anchor="middle" class="label" style="fill: #dc2626;">Missing — runtime error</text>
+  <text x="620" y="194" text-anchor="middle" class="sublabel">Bindings not in Preview Defaults</text>
 
-  <rect x="85" y="236" width="230" height="56" class="box box-bad"/>
-  <text x="200" y="256" text-anchor="middle" class="label" style="fill: #dc2626;">Runtime error</text>
-  <text x="200" y="272" text-anchor="middle" class="sublabel">Worker crashes — you notice</text>
+  <!-- Verdict -->
+  <rect x="310" y="218" width="200" height="22" rx="4" fill="#f0fdf4" stroke="#22c55e" stroke-width="1"/>
+  <text x="410" y="233" text-anchor="middle" class="sublabel" style="fill: #15803d; font-weight: 600;">Everything fails loudly — you notice</text>
 
-  <!-- Verdict left -->
-  <rect x="120" y="304" width="160" height="24" rx="4" fill="#f0fdf4" stroke="#22c55e" stroke-width="1"/>
-  <text x="200" y="320" text-anchor="middle" class="sublabel" style="fill: #15803d; font-weight: 600;">Loud failure (safe)</text>
+  <!-- Divider -->
+  <line x1="60" y1="256" x2="760" y2="256" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="6,4"/>
 
-  <!-- RIGHT PATH: Storage bindings -->
-  <text x="620" y="128" text-anchor="middle" class="sublabel" style="fill: #f59e0b; font-weight: 600;">KV, R2, D1, Durable Objects</text>
+  <!-- ============================ -->
+  <!-- PATH 2: Dashboard, leave defaults -->
+  <!-- ============================ -->
+  <text x="410" y="280" text-anchor="middle" class="label">Path 2: Dashboard wizard with "Use production value" left checked</text>
+  <text x="410" y="296" text-anchor="middle" class="sublabel">The default for storage bindings in the dashboard</text>
 
-  <rect x="505" y="142" width="230" height="56" class="box box-warn"/>
-  <text x="620" y="164" text-anchor="middle" class="label" style="fill: #92400e;">Points at production</text>
-  <text x="620" y="180" text-anchor="middle" class="sublabel">Default: "Use production value"</text>
+  <rect x="290" y="308" width="240" height="44" class="box box-preview"/>
+  <text x="410" y="326" text-anchor="middle" class="cmd">wrangler preview</text>
+  <text x="410" y="340" text-anchor="middle" class="sublabel">Preview Defaults have prod resources</text>
 
-  <line x1="620" y1="198" x2="620" y2="230" class="arrow-amber"/>
+  <!-- Split -->
+  <line x1="350" y1="352" x2="200" y2="374" class="arrow-red"/>
+  <line x1="470" y1="352" x2="620" y2="374" class="arrow-amber"/>
 
-  <rect x="505" y="236" width="230" height="56" class="box box-warn"/>
-  <text x="620" y="256" text-anchor="middle" class="label" style="fill: #92400e;">Production data mutated</text>
-  <text x="620" y="272" text-anchor="middle" class="sublabel">Preview reads/writes prod — silently</text>
+  <!-- Left: vars/secrets still empty -->
+  <text x="200" y="372" text-anchor="middle" class="sublabel" style="fill: #ef4444; font-weight: 600;">Variables and Secrets</text>
+  <rect x="95" y="380" width="210" height="26" class="box box-bad"/>
+  <text x="200" y="397" text-anchor="middle" class="sublabel" style="fill: #dc2626; font-weight: 600;">Empty — runtime error (loud)</text>
 
-  <!-- Verdict right -->
-  <rect x="540" y="304" width="160" height="24" rx="4" fill="#fef2f2" stroke="#ef4444" stroke-width="1"/>
-  <text x="620" y="320" text-anchor="middle" class="sublabel" style="fill: #dc2626; font-weight: 600;">Silent failure (dangerous)</text>
+  <!-- Right: storage points at prod -->
+  <text x="620" y="372" text-anchor="middle" class="sublabel" style="fill: #f59e0b; font-weight: 600;">KV, R2, D1, Durable Objects</text>
+  <rect x="505" y="380" width="230" height="26" class="box box-warn"/>
+  <text x="620" y="397" text-anchor="middle" class="sublabel" style="fill: #92400e; font-weight: 600;">Points at production (silent, dangerous)</text>
 </svg>

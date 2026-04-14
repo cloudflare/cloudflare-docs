@@ -66,12 +66,13 @@ By default, most bindings share production resources unless you configure them o
 | **D1 databases** | Shares production | Configure a separate database in Preview Defaults |
 
 :::caution[What happens if you skip configuration]
-If you create a preview without configuring Preview Defaults, two different things happen:
+The behavior depends on how you set up your preview:
 
-- **Variables and secrets** will be **empty**. Your preview will fail with runtime errors if it depends on them.
-- **KV, R2, D1, and Durable Objects** will **point at production**. Your preview will silently read and write to your production data.
+**If you skip configuration entirely** (no dashboard wizard, no `previews` block, no API call — just run `wrangler preview`): Preview Defaults are empty (`{}`). All bindings, variables, and secrets are missing. Your Worker will error at runtime when it tries to access `env.DB`, `env.CACHE`, `env.MY_SECRET`, etc. This is a **loud failure** — you will notice immediately.
 
-These are opposite failure modes. The loud errors from missing vars may mask the silent, dangerous problem of production data access from storage bindings. Always configure Preview Defaults before creating your first preview.
+**If you go through the dashboard wizard but leave "Use production value" checked** (the default for storage bindings): Variables and secrets are still empty (loud failure), but KV, R2, D1, and Durable Objects **point at production resources**. Your preview will silently read and write to your production data. This is the **dangerous case** — the loud errors from missing vars may mask the silent problem of production data access from storage bindings.
+
+Always configure Preview Defaults before creating your first preview. For storage bindings, uncheck "Use production value" and select separate resources if you need isolation.
 :::
 
 ![What happens when you skip Preview Defaults configuration](~/assets/images/workers/worker-previews/skip-preview-defaults.svg)
@@ -88,11 +89,11 @@ Preview Defaults are the template for every preview environment. They are stored
 2. Every time you run `wrangler preview` (or Builds creates a preview), the preview takes a **snapshot** of the current Preview Defaults.
 3. Changing Preview Defaults after a preview was created does **not** retroactively update that preview. To pick up the new defaults, push to the preview again.
 
-**Example:** Your Preview Defaults have a KV binding `CACHE` and a variable `ENVIRONMENT: "preview"`. Alice creates a preview on her `auth-refactor` branch — it gets both.
+**Example:** Your Preview Defaults have a KV binding `CACHE` and a variable `ENVIRONMENT: "preview"`. A teammate creates a preview on a feature branch — it gets both.
 
-A week later, you add a D1 binding `DB` to Preview Defaults for a new feature. Bob creates a preview on his `payments` branch — it gets `CACHE`, `ENVIRONMENT`, and `DB`.
+A week later, you add a D1 binding `DB` to Preview Defaults for a new feature. A second branch creates a preview — it gets `CACHE`, `ENVIRONMENT`, and `DB`.
 
-Alice's preview still only has `CACHE` and `ENVIRONMENT`. It used the defaults as they were when she last pushed. To pick up `DB`, Alice runs `wrangler preview` again on her branch.
+The first branch's preview still only has `CACHE` and `ENVIRONMENT`. It used the Preview Defaults as they were when it was last pushed. To pick up `DB`, run `wrangler preview` again on that branch.
 
 ![Preview Defaults snapshot behavior](~/assets/images/workers/worker-previews/snapshot-behavior.svg)
 
