@@ -94,14 +94,22 @@ let someState = await step.do(
 
 ## Access step context
 
-Workflow step callbacks receive a context object containing the current attempt number (1-indexed). This allows you to access which retry attempt is currently executing.
+Workflow step callbacks receive a [`WorkflowStepContext`](/workflows/build/workers-api/#workflowstepcontext) object containing metadata about the current step, including the current attempt number (1-indexed), the step name, how many times this step has been invoked, and the resolved step configuration.
 
 ```ts
 await step.do("my-step", async (ctx) => {
 	// ctx.attempt is 1 on first try, 2 on first retry, etc.
 	console.log(`Attempt ${ctx.attempt}`);
+	// ctx.step.name is the name passed to step.do()
+	console.log(`Step name: ${ctx.step.name}`);
+	// ctx.step.count is 1-indexed per instance
+	console.log(`Step count: ${ctx.step.count}`);
+	// ctx.config contains the resolved configuration with defaults applied
+	console.log(`Retry limit: ${ctx.config.retries.limit}`);
 });
 ```
+
+The `step.count` property is useful when running the same step in a loop to track how many times a step has been invoked within the same workflow instance.
 
 ## Force a Workflow instance to fail
 

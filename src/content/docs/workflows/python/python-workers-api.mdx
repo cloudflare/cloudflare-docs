@@ -30,7 +30,7 @@ class MyWorkflow(WorkflowEntrypoint):
 
 Dependencies are resolved implicitly by parameter name. If a step function parameter name matches a previously declared step function, its result is injected into the step.
 
-If you define a `ctx` parameter, the step context is injected into that argument.
+If you define a `ctx` parameter, the step context is injected into that argument. The context is a dictionary containing `step` (with `name` and `count`), `attempt`, and `config`.
 
 :::note
 
@@ -156,12 +156,22 @@ from workers import WorkflowEntrypoint
 
 class CtxWorkflow(WorkflowEntrypoint):
     async def run(self, event, step):
-        @step.do()
+        @step.do("my-step")
         async def read_context(ctx):
-            return ctx["attempt"]
+            # ctx["attempt"] is 1 on first try, 2 on first retry, etc.
+            attempt = ctx["attempt"]
+            # ctx["step"]["name"] is the name passed to step.do()
+            step_name = ctx["step"]["name"]
+            # ctx["step"]["count"] is 1-indexed per instance
+            step_count = ctx["step"]["count"]
+            # ctx["config"] contains the resolved configuration
+            retry_limit = ctx["config"]["retries"]["limit"]
+            return attempt
 
         return await read_context()
 ```
+
+The `step.count` property is useful when running the same step in a loop. For the complete type definition, refer to [WorkflowStepContext](/workflows/build/workers-api/#workflowstepcontext).
 
 ### Create an instance via binding
 
