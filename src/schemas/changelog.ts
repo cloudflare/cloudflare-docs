@@ -6,7 +6,12 @@ export const changelogSchema = (_context: SchemaContext) =>
 		title: z.string(),
 		description: z.string(),
 		date: z.coerce.date(),
-		scheduled: z.boolean().default(false),
+		publish_future_dated_entry: z
+			.boolean()
+			.default(false)
+			.describe(
+				"Boolean value to ensure a future-dated entry is always published. Otherwise, the entry will only be published after the date in its frontmatter.",
+			),
 		products: z
 			.array(reference("directory"))
 			.default([])
