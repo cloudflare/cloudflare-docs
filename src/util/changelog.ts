@@ -135,7 +135,7 @@ export async function getChangelogs({
 	// Exclude entries with a date in the future so that changelog posts
 	// merged ahead of time do not appear until their publish date.
 	const now = new Date();
-	entries = entries.filter((e) => e.data.date.getTime() <= now.getTime());
+	entries = entries.filter((e) => e.data.scheduled || e.data.date.getTime() <= now.getTime());
 
 	return entries.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 }
