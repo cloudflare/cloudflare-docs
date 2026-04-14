@@ -87,9 +87,15 @@ function getLabel(label: string): string {
 				<TabItem label="Input">
 					<Code code={JSON.stringify(example.input, null, 4)} lang="json" />
 				</TabItem>
-				<TabItem label="Output">
-					<Code code={JSON.stringify(example.output, null, 4)} lang="json" />
-				</TabItem>
+				{example.output ? (
+					<TabItem label="Output">
+						<Code code={JSON.stringify(example.output, null, 4)} lang="json" />
+					</TabItem>
+				) : (
+					<TabItem label="Output">
+						<p class="text-gray-500 italic">Output unavailable</p>
+					</TabItem>
+				)}
 			</Tabs>
 		)
 	}
@@ -102,9 +108,18 @@ function getLabel(label: string): string {
 					<TabItem label="Input">
 						<Code code={JSON.stringify(example.input, null, 4)} lang="json" />
 					</TabItem>
-					<TabItem label="Output">
-						<Code code={JSON.stringify(example.output, null, 4)} lang="json" />
-					</TabItem>
+					{example.output ? (
+						<TabItem label="Output">
+							<Code
+								code={JSON.stringify(example.output, null, 4)}
+								lang="json"
+							/>
+						</TabItem>
+					) : (
+						<TabItem label="Output">
+							<p class="text-gray-500 italic">Run the example to see output</p>
+						</TabItem>
+					)}
 				</Tabs>
 			</details>
 		)

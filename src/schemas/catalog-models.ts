@@ -14,7 +14,7 @@ export const modelExampleSchema = z.object({
 	name: z.string(),
 	description: z.string().optional(),
 	input: z.record(z.string(), z.unknown()),
-	output: z.record(z.string(), z.unknown()),
+	output: z.record(z.string(), z.unknown()).optional(),
 	code_snippets: codeSnippetSchema.array().optional(),
 });
 
