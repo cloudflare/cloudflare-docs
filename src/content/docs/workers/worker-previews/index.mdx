@@ -17,6 +17,10 @@ Worker Previews let you create fully isolated preview environments for your Work
 If you have been using `wrangler versions upload` to generate [version URLs](/workers/configuration/previews/) for testing, those use production bindings and are not isolated. Worker Previews replaces that workflow — see [how to switch](/workers/worker-previews/workflows/#switching-from-wrangler-versions-upload). For new Workers, `wrangler versions upload` no longer generates a URL. This cannot be enabled. Use `wrangler preview` for preview URLs. See [why](/workers/worker-previews/concepts/#previews-vs-version-urls).
 :::
 
+:::note
+{/* TODO: add minimum Wrangler version once confirmed */}
+Worker Previews requires a recent version of [Wrangler](/workers/wrangler/install-and-update/). If `wrangler preview` returns an unknown command error, update Wrangler: `npm install wrangler@latest`.
+:::
 
 ## 1. Configure preview bindings and settings
 
@@ -71,6 +75,10 @@ npx wrangler preview secret put MY_API_KEY
 ```bash
 npx wrangler preview settings update
 ```
+
+:::caution
+`wrangler preview` does **not** automatically read the `previews` block from your config file. You must run `wrangler preview settings update` first to push your config to the API. If you skip this step and go straight to `wrangler preview`, your preview will use whatever Preview Defaults were previously stored on the API — which may be empty or point at production resources.
+:::
 
 #### Full example with bindings
 
@@ -182,7 +190,7 @@ When you create a preview or deployment, the API merges your request body on top
 <Tabs>
 <TabItem label="With Workers Builds">
 
-If your Worker is connected to a Git repository via [Workers Builds](/workers/ci-cd/builds/), set the **preview command** (labeled "Non-production branch deploy command" in the dashboard) to `npx wrangler preview` in **Settings** > **Build**.
+If your Worker is connected to a Git repository via [Workers Builds](/workers/ci-cd/builds/), set the **preview command** (previously called "Non-production branch deploy command" in the dashboard) to `npx wrangler preview` in **Settings** > **Build**.
 
 Then push to a feature branch:
 

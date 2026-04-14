@@ -60,13 +60,18 @@ By default, most bindings share production resources unless you configure them o
 | --- | --- | --- |
 | **Environment variables** | Not inherited from production. Empty unless you set them in Preview Defaults. | Set values in the `previews.vars` block of your Wrangler configuration file or in the dashboard |
 | **Secrets** | Not inherited from production. Empty unless you set them in Preview Defaults. | `wrangler preview secret put` or set in the dashboard |
-| **Durable Objects** | Auto-provisioned isolated namespace (when using `ctx.exports`) | Use [`ctx.exports`](/workers/worker-previews/durable-object-isolation/) (recommended) or configure manually |
+| **Durable Objects** | **Not isolated.** Shares production namespace unless you use `ctx.exports` or configure manually. | Use [`ctx.exports`](/workers/worker-previews/durable-object-isolation/) (auto-isolates) or [manually select a namespace](/workers/worker-previews/durable-object-isolation/#approach-2-use-a-do-binding-with-the-dashboard) |
 | **KV namespaces** | Shares production | Uncheck "Use production value" in the dashboard, select a different namespace |
 | **R2 buckets** | Shares production | Configure a separate bucket in Preview Defaults |
 | **D1 databases** | Shares production | Configure a separate database in Preview Defaults |
 
-:::caution
-If a binding still points at production, preview traffic will read and write to your production data. Always check your binding configuration before running tests that modify data.
+:::caution[What happens if you skip configuration]
+If you create a preview without configuring Preview Defaults, two different things happen:
+
+- **Variables and secrets** will be **empty**. Your preview will fail with runtime errors if it depends on them.
+- **KV, R2, D1, and Durable Objects** will **point at production**. Your preview will silently read and write to your production data.
+
+These are opposite failure modes. The loud errors from missing vars may mask the silent, dangerous problem of production data access from storage bindings. Always configure Preview Defaults before creating your first preview.
 :::
 
 For Durable Objects specifically, refer to [Durable Object isolation](/workers/worker-previews/durable-object-isolation/) for a step-by-step guide.

@@ -61,6 +61,10 @@ For the full gradual rollout and rollback guide, see [Gradual rollouts and rollb
 
 For how preview isolation works (same code, different bindings), see [How isolation works](/workers/worker-previews/workflows/#how-isolation-works).
 
+:::note
+If you update Preview Defaults (add a new binding, change a variable), existing previews are **not** retroactively updated. They use the defaults as they were when last deployed. To pick up new defaults, run `wrangler preview` again on the branch. See [Preview Defaults snapshot behavior](/workers/worker-previews/concepts/#how-they-work).
+:::
+
 ---
 
 ## Common scenarios

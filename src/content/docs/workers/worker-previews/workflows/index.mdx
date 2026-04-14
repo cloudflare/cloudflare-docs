@@ -44,7 +44,7 @@ If you have been using `wrangler versions upload` to test branches, switch to `w
 | `npx wrangler deploy` to ship | `npx wrangler deploy` to ship | Unchanged. |
 
 1. [Configure preview bindings and settings](/workers/worker-previews/#1-configure-preview-bindings-and-settings) — this is what gives previews isolation.
-2. If git-connected, change the **preview command** (labeled "Non-production branch deploy command" in the dashboard) from `npx wrangler versions upload` to `npx wrangler preview` in **Settings** > **Build**.
+2. If git-connected, change the **preview command** (previously called "Non-production branch deploy command" in the dashboard) from `npx wrangler versions upload` to `npx wrangler preview` in **Settings** > **Build**.
 3. Start using `wrangler preview` instead of `wrangler versions upload` for testing.
 
 For the full comparison, see [Previews vs version URLs](/workers/worker-previews/concepts/#previews-vs-version-urls).
