@@ -3,6 +3,10 @@ link: "/browser-rendering/changelog/"
 productName: Browser Rendering
 productLink: "/browser-rendering/"
 entries:
+  - publish_date: "2026-04-14"
+    title: "Wrangler CLI commands for Browser Rendering"
+    description: |-
+      * Added `wrangler browser` commands to create, manage, and view browser sessions directly from the terminal. Available commands: `create`, `close`, `list`, and `view`. For full usage details, refer to [Wrangler commands](/browser-rendering/reference/wrangler-commands/).
   - publish_date: "2026-04-13"
     title: "@cloudflare/puppeteer v1.1.0 released"
     description: |-
