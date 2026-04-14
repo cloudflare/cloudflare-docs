@@ -1,12 +1,17 @@
 ---
-title: "Live View, Human in the Loop, and Session Recordings"
+title: "Browser Run adds Live View, Human in the Loop, and Session Recordings"
 description: "See what your agent sees in real time with Live View, let humans step in when automation needs help, and replay any session after it ends with Session Recordings."
 products:
   - browser-rendering
 date: 2026-04-15T11:00:00Z
+publish_future_dated_entry: true
 ---
 
-When browser automation fails or behaves unexpectedly, it can be hard to understand what happened. We're shipping three new [Browser Run](/browser-rendering/) features to help: Live View for real-time visibility, Human in the Loop for human intervention, and Session Recordings for replaying sessions after they end.
+When browser automation fails or behaves unexpectedly, it can be hard to understand what happened. We are shipping three new features in [Browser Run](/browser-rendering/) (formerly Browser Rendering) to help:
+
+- **[Live View](/browser-rendering/features/live-view/)** for real-time visibility
+- **[Human in the Loop](/browser-rendering/features/human-in-the-loop/)** for human intervention
+- **[Session Recordings](/browser-rendering/features/session-recording/)** for replaying sessions after they end
 
 ### Live View
 
@@ -16,13 +21,13 @@ When browser automation fails or behaves unexpectedly, it can be hard to underst
 
 When your agent hits a snag like a login page or unexpected edge case, it can hand off to a human instead of failing. With [Human in the Loop](/browser-rendering/features/human-in-the-loop/), a human steps into the live browser session through Live View, resolves the issue, and hands control back to the script.
 
-Today, you can step in by opening the Live View URL for any active session. Next, we're adding a handoff flow where the agent can signal that it needs help, notify a human to step in, then hand control back to the agent once the issue is resolved.
+Today, you can step in by opening the Live View URL for any active session. Next, we are adding a handoff flow where the agent can signal that it needs help, notify a human to step in, then hand control back to the agent once the issue is resolved.
 
-![Browser Run Human in the Loop demo where an AI agent searches Amazon, selects a product, and requests human help when authentication is needed to buy](/images/browser-rendering/live view.gif)
+![Browser Run Human in the Loop demo where an AI agent searches Amazon, selects a product, and requests human help when authentication is needed to buy](/images/browser-rendering/liveview.gif)
 
 ### Session Recordings
 
-[Session Recordings](/browser-rendering/features/session-recording/) records DOM state so you can replay any session after it ends. Enable recordings by passing `recording: true` when launching a browser. After the session closes, view the recording in the Cloudflare dashboard under **Browser Run** > **Runs**, or retrieve via API using the session ID and replay with the [rrweb-player](https://github.com/rrweb-io/rrweb/tree/master/packages/rrweb-player). Next, we're adding the ability to inspect DOM state and console output at any point during the recording.
+[Session Recordings](/browser-rendering/features/session-recording/) records DOM state so you can replay any session after it ends. Enable recordings by passing `recording: true` when launching a browser. After the session closes, view the recording in the Cloudflare dashboard under **Browser Run** > **Runs**, or retrieve via API using the session ID. Next, we are adding the ability to inspect DOM state and console output at any point during the recording.
 
 ![Browser Run session recording showing an automated browser navigating the Sentry Shop and adding a bomber jacket to the cart](/images/browser-rendering/sessionrecording.gif)
 
