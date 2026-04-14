@@ -14,12 +14,12 @@ import { Tabs, TabItem } from "~/components";
 Worker Previews let you create fully isolated preview environments for your Worker. Each preview gets its own URL, bindings, variables, secrets, and — for [Durable Objects](/durable-objects/) — its own isolated storage namespace. Preview traffic never touches your production data when configured correctly.
 
 :::note
-If you have been using `wrangler versions upload` to generate [version URLs](/workers/configuration/previews/) for testing, those use production bindings and are not isolated. Worker Previews replaces that workflow — see [how to switch](/workers/worker-previews/workflows/#switching-from-wrangler-versions-upload). For new Workers, `wrangler versions upload` no longer generates a URL. This cannot be enabled. Use `wrangler preview` for preview URLs. See [why](/workers/worker-previews/concepts/#previews-vs-version-urls).
-:::
-
-:::note
 {/* TODO: add minimum Wrangler version once confirmed */}
 Worker Previews requires a recent version of [Wrangler](/workers/wrangler/install-and-update/). If `wrangler preview` returns an unknown command error, update Wrangler: `npm install wrangler@latest`.
+:::
+
+:::note[Coming from `wrangler versions upload`?]
+If you have been using `wrangler versions upload` to test branches, that generates [version URLs](/workers/configuration/previews/) which use production bindings and are not isolated. Worker Previews replaces that workflow. See [how to switch](/workers/worker-previews/workflows/#switching-from-wrangler-versions-upload).
 :::
 
 Not sure which command to use? See the [quick reference](/workers/worker-previews/concepts/#quick-reference).
@@ -84,9 +84,7 @@ npx wrangler preview secret put MY_API_KEY
 npx wrangler preview settings update
 ```
 
-:::caution
-Remember: `wrangler preview` does not read the `previews` block from your local config. You must run `wrangler preview settings update` first. See the [full explanation above](#wrangler-users-your-local-config-is-not-read-automatically).
-:::
+See [why this step is required](#wrangler-users-your-local-config-is-not-read-automatically).
 
 #### Full example with bindings
 
