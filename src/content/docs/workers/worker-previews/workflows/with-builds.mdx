@@ -37,20 +37,11 @@ The simplest setup. Feature branches get previews. Merging to main deploys to pr
 4. If you have not already, [configure preview bindings and settings](/workers/worker-previews/#1-configure-preview-bindings-and-settings).
 5. Push to a feature branch. A preview will be created automatically.
 
-:::note[What if you change the preview command back to `wrangler versions upload`?]
-If you switch the preview command from `npx wrangler preview` to `npx wrangler versions upload`:
-
-- **Existing Workers** (created before Worker Previews): `wrangler versions upload` will still generate a version URL and Builds will write it back to your Git provider. These URLs use [production bindings](/workers/worker-previews/concepts/#previews-vs-version-urls).
-- **New Workers** (created after Worker Previews): `wrangler versions upload` will **not** generate a URL. Version URLs are disabled for new Workers and cannot be enabled. Use `wrangler preview` for preview URLs.
-:::
-
 ---
 
 ## Deploy on merge with gradual rollouts
 
-There are two ways to set this up. The tradeoff is whether every merge automatically creates a version you have to manually roll out, or whether you keep automatic deploys and only use gradual rollouts when you choose to.
-
-### Option 1: Every merge creates a version (you always control rollout)
+If you want to control the rollout instead of deploying to 100% immediately, set your deploy command to `npx wrangler versions upload`. Every merge to main creates a version without deploying it. You then control the rollout manually.
 
 | Setting | Value |
 | --- | --- |
@@ -62,33 +53,33 @@ There are two ways to set this up. The tradeoff is whether every merge automatic
 1. Push to a feature branch — Builds runs `wrangler preview`. Preview is created with isolated bindings.
 2. Test against the preview URL.
 3. Merge to main — Builds runs `wrangler versions upload`. A version is created. **No traffic changes.**
-4. You control the rollout via Wrangler, the dashboard, or the [API](/api/resources/workers/subresources/scripts/subresources/deployments/methods/create/):
-
-```bash
-# Interactive — prompts you to pick versions and percentages
-npx wrangler versions deploy
-
-# Non-interactive — specify directly
-npx wrangler versions deploy <VERSION_ID>@<PERCENTAGE> <OLD_VERSION_ID>@<PERCENTAGE> -y
-```
+4. You control the rollout via `wrangler versions deploy`, the dashboard, or the API.
 
 **The tradeoff:** Every merge to main creates a version that sits at 0% traffic until you roll it out. If you merge frequently, versions will pile up and each one requires a manual `versions deploy` step.
 
-### Why you cannot mix `wrangler deploy` with gradual rollouts in Builds
+:::caution[You cannot mix `wrangler deploy` with gradual rollouts in Builds]
+You might want to keep `npx wrangler deploy` as your deploy command (auto-deploy to 100% on merge) and only use gradual rollouts occasionally. This does not work — see [why you cannot mix them](/workers/worker-previews/rollouts-and-rollbacks/with-builds/#why-you-cannot-mix-wrangler-deploy-with-gradual-rollouts) for the full explanation and diagram.
+:::
 
-You might want to keep your deploy command as `npx wrangler deploy` (auto-deploy to 100% on merge) and only use gradual rollouts occasionally. This does not work with Builds because:
+For the full gradual rollout and rollback guide, including how to start a rollout, monitor, promote, and roll back, see [Gradual rollouts and rollbacks with Builds](/workers/worker-previews/rollouts-and-rollbacks/with-builds/).
 
-![Why you cannot mix wrangler deploy with gradual rollouts in Builds](~/assets/images/workers/worker-previews/cannot-mix-deploy-gradual.svg)
+---
 
-1. **You cannot `wrangler versions upload` from a feature branch** — it would create a production version using preview resources, not production bindings.
-2. **Merging a PR triggers Builds** — Builds runs your deploy command (`wrangler deploy`), which deploys to 100% immediately. There is no way to intercept this and do a gradual rollout instead.
-3. **Merging locally and running `wrangler versions upload` before pushing** creates a race condition — when you push the merge, Builds will still run `wrangler deploy` on top of your gradual rollout.
+## What Builds posts back to your Git provider
 
-If you need gradual rollouts with Builds, use [Option 1](#option-1-every-merge-creates-a-version-you-always-control-rollout) — set your deploy command to `npx wrangler versions upload` so every merge creates a version without deploying it. You then control the rollout manually.
+When a build completes, Builds can post a comment or status check back to your Git provider (GitHub/GitLab). What gets posted depends on which command ran:
 
-If you only need gradual rollouts occasionally and are not using Builds, see [Without Workers Builds — gradual rollouts](/workers/worker-previews/workflows/without-builds/#with-gradual-rollouts).
+| Command | What Builds posts back |
+| --- | --- |
+| `wrangler preview` | Preview URL posted as a comment/status on the PR. |
+| `wrangler versions upload` (existing Workers) | Version URL posted as a comment/status on the PR. These URLs use production bindings — they are [not isolated](/workers/worker-previews/concepts/#previews-vs-version-urls). |
+| `wrangler versions upload` (new Workers) | **No URL posted.** Version URLs are disabled for new Workers. Use `wrangler preview` for preview URLs. |
+| `wrangler deploy` | **No comment posted.** The deploy succeeds, but Builds does not post a production URL back to the PR. |
 
-For the full gradual rollout and rollback guide, see [Gradual rollouts and rollbacks](/workers/worker-previews/rollouts-and-rollbacks/).
+:::note[What if you change the preview command back to `wrangler versions upload`?]
+- **Existing Workers** (created before Worker Previews): `wrangler versions upload` will still generate a version URL and Builds will post it back to your Git provider. These URLs use [production bindings](/workers/worker-previews/concepts/#previews-vs-version-urls).
+- **New Workers** (created after Worker Previews): `wrangler versions upload` will **not** generate a URL. Version URLs are disabled for new Workers and cannot be enabled. Use `wrangler preview` for preview URLs.
+:::
 
 ---
 

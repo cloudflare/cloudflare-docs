@@ -8,6 +8,15 @@ sidebar:
 
 Your Worker is connected to a Git repository via [Workers Builds](/workers/ci-cd/builds/). Builds creates a version on merge to main. You control when and how to roll it out.
 
+**Your build settings:**
+
+| Setting | Value |
+| --- | --- |
+| Deploy command | `npx wrangler versions upload` |
+| Preview command | `npx wrangler preview` |
+
+For how this fits into the full workflow (preview on branch, deploy on merge), see [Workflows: With Workers Builds](/workers/worker-previews/workflows/with-builds/).
+
 ## The lifecycle
 
 ![Lifecycle with Workers Builds](~/assets/images/workers/worker-previews/lifecycle-with-builds.svg)
@@ -16,13 +25,6 @@ Your Worker is connected to a Git repository via [Workers Builds](/workers/ci-cd
 2. Test against the preview URL.
 3. Merge to main — Builds runs `wrangler versions upload`. A version is created. No traffic changes.
 4. You run `wrangler versions deploy` to start the rollout.
-
-**Your build settings:**
-
-| Setting | Value |
-| --- | --- |
-| Deploy command | `npx wrangler versions upload` |
-| Preview command | `npx wrangler preview` |
 
 ---
 
@@ -45,6 +47,15 @@ Monitor error rates and metrics. If healthy, increase:
 # Promote to 100%
 npx wrangler versions deploy --version-id <NEW_VERSION_ID> --percentage 100
 ```
+
+:::note[What Builds posts back to your Git provider]
+When `wrangler versions upload` runs as the deploy command on merge to main:
+
+- **Existing Workers** (created before Worker Previews): Builds posts a version URL back to your Git provider. This URL uses production bindings — it is not isolated.
+- **New Workers** (created after Worker Previews): **No URL is posted.** Version URLs are disabled for new Workers. The version is still created — it just does not get a URL.
+
+This does not affect your gradual rollout. The version is available for `wrangler versions deploy` regardless of whether a URL was posted.
+:::
 
 ---
 
@@ -69,3 +80,19 @@ Or from the dashboard: go to your Worker's **Deployments** tab and click **Rollb
 ## Rollbacks do not affect previews
 
 Your preview environments continue running their own code against their own bindings, regardless of what happens in production. You can roll back production while your team keeps testing on their branches.
+
+---
+
+## Why you cannot mix `wrangler deploy` with gradual rollouts
+
+You might want to keep your deploy command as `npx wrangler deploy` (auto-deploy to 100% on merge) and only use gradual rollouts occasionally. This does not work with Builds.
+
+![Why you cannot mix wrangler deploy with gradual rollouts in Builds](~/assets/images/workers/worker-previews/cannot-mix-deploy-gradual.svg)
+
+1. **You cannot `wrangler versions upload` from a feature branch** — it would create a production version using preview resources, not production bindings.
+2. **Merging a PR triggers Builds** — Builds runs your deploy command (`wrangler deploy`), which deploys to 100% immediately. There is no way to intercept this and do a gradual rollout instead.
+3. **Merging locally and running `wrangler versions upload` before pushing** creates a race condition — when you push the merge, Builds will still run `wrangler deploy` on top of your gradual rollout.
+
+If you need gradual rollouts with Builds, set your deploy command to `npx wrangler versions upload` so every merge creates a version without deploying it. You then control the rollout manually with `wrangler versions deploy`.
+
+If you only need gradual rollouts occasionally and are not using Builds, see [Without Workers Builds — gradual rollouts](/workers/worker-previews/rollouts-and-rollbacks/without-builds/).
