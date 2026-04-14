@@ -9,49 +9,37 @@ import { Render } from "~/components";
 
 Use these steps to set up Facebook as your identity provider.
 
-1. Go to [developers.facebook.com](https://developers.facebook.com/).
+1. Go to [developers.facebook.com](https://developers.facebook.com/). Create a Developer account if you do not have one. 
 
-2. Select **Create App** at the top-right. The **Create a New App ID** card displays.
+2. Select **Create App** at the top-right. The **Create an app** card displays.
 
-3. Enter the **Display Name** and **Contact Email**.
+3. Enter the **App name** and **App contact email**. Then, select **Next**.
 
-4. Select **Create App ID**. The **Create a New App ID** window displays.
+4. In the **Add use cases** page, select **Authenticate and request data from users with Facebook Login**. Select **Next**.
 
-5. Enter the CAPTCHA code to proceed.
+5. Fill in the necessary information and select **Next** until you reach **Overview**. Then, select **Create app**.
 
-6. Select **Submit**.
+6. In the **My Apps** page, go to **App settings** > **Basic**.
 
-7. On the **Facebook Login** card, select **Set Up**. A Quickstart card displays offering platform choices.
+7. Copy the **App ID** and **App Secret**.
 
-8. Select **Web**. The **Web** tab displays.
+8. In the [Cloudflare dashboard](https:/dash.cloudflare.com), go to **Zero Trust** > **Integrations** > **Identity providers**.
 
-9. Enter your **Site URL**.
+9. Under **Your identity providers**, select **Add an identity provider**.
 
-10. Select **Save**.
+10. Fill in the **App ID** and **App Secret** obtained from Facebook.
 
-11. Select **Continue**. Ignore any JavaScript page that suggests that you install it on your site.
+11. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
 
-12. Select **Settings** > **Basic**.
+12. Select **Save**.
 
-13. Copy the **App ID** and **App Secret**.
+13. Go back to **My Apps** in [developers.facebook.com](https://developers.facebook.com/), and select your app.
 
-    ![Facebook Settings with App ID and App Secret highlighted](~/assets/images/cloudflare-one/identity/facebook/fb6.png)
+14. Under **App customization and requirements**, select **Customize the Authenticate and request data from users with Facebook Login use case**.
 
-14. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Identity providers**.
+15. Select **Settings**, and ensure that **Use Strict Mode for redirect URIs** slider is set to **Yes**.
 
-15. Under **Your identity providers**, select **Add new identity provider**.
-
-16. Fill in the **App ID** and **App Secret** obtained from Facebook.
-
-17. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
-
-18. Select **Save**.
-
-19. On [developers.facebook.com](https://developers.facebook.com/), select **Facebook Login** > **Settings** on the left-hand menu.
-
-20. Ensure that the **Use Strict Mode for Redirect URIs** slider is set to **Yes**.
-
-21. In the **Valid OAuth redirect URIs** field, enter the following URL:
+15. In the **Valid OAuth Redirect URIs** field, enter the following URL:
 
     ```txt
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
@@ -59,7 +47,7 @@ Use these steps to set up Facebook as your identity provider.
 
     <Render file="find-team-name" product="cloudflare-one" />
 
-22. Select **Save Changes**.
+16. Select **Save Changes**.
 
 To test that your connection is working, follow the steps on [SSO Integration](/cloudflare-one/integrations/identity-providers/#test-idps-in-cloudflare-one).
 

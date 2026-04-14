@@ -97,7 +97,7 @@ jobs:
     needs: pre-build
     runs-on: ubuntu-latest
     outputs:
-      link_check_failed: ${{ steps.check_link_result.outputs.failed }}
+      link_validation_failed: ${{ steps.build_step.outputs.link_validation_failed }}
     permissions:
       contents: read
       pull-requests: write
@@ -134,52 +134,25 @@ jobs:
           restore-keys: |
             astro-assets-
 
-      # The starlight-links-validator plugin runs in astro:build:done, which fires
-      # AFTER all pages have been written to dist/. If link validation fails, the
-      # build exits non-zero but dist/ is complete. We use continue-on-error so the
-      # job succeeds (allowing deploy + post-build to run), then check the outcome below.
-      # We capture build output with tee so we can grep it to distinguish link-check
-      # failures from real build failures.
       - name: Build
         id: build_step
-        continue-on-error: true
-        shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUN_LINK_CHECK: true
-        run: |
-          set -o pipefail
-          npm run build 2>&1 | tee /tmp/build-output.log
+        run: npm run build
 
-      # Distinguish between "link check failed" and "real build failure" by grepping
-      # the captured build output for the link validator's specific error message.
-      # The link validator runs in astro:build:done (after all pages are written to
-      # dist/), so its error string can only appear when the build itself completed.
-      # Any other failure — including partial builds with a non-empty dist/ — will
-      # not contain that string and will correctly fail here.
-      - name: Check build result
-        id: check_link_result
-        shell: bash
-        run: |
-          if [ "${{ steps.build_step.outcome }}" = "success" ]; then
-            echo "failed=false" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-
-          # Build failed. Was it only the link validator?
-          if grep -q "Links validation failed" /tmp/build-output.log; then
-            echo "failed=true" >> "$GITHUB_OUTPUT"
-            echo "::warning::Build succeeded but link validation failed. Preview will still be deployed."
-          else
-            echo "::error::Build failed for a reason other than link validation. Check the Build step logs."
-            exit 1
-          fi
-
-      - name: Upload artifact
+      - name: Upload build artifact
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
         with:
           name: dist
           path: dist
+
+      - name: Upload link validation report
+        if: steps.build_step.outputs.link_validation_failed == 'true'
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+        with:
+          name: link-validation-report
+          path: .starlight-links-validator/errors.json
 
   post-build:
     name: Post Build
@@ -221,11 +194,15 @@ jobs:
       - name: Tests (Workers)
         run: npm run test:postbuild
 
+      - name: Download link validation report
+        if: needs.build.outputs.link_validation_failed == 'true'
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          name: link-validation-report
+          path: .starlight-links-validator
+
       - name: Link validation
-        if: needs.build.outputs.link_check_failed == 'true'
-        run: |
-          echo "::error::starlight-links-validator found broken internal links during the build. See the Build job logs for details."
-          exit 1
+        run: npx tsx bin/check-link-validation/index.ts
 
   notify:
     name: Notify
@@ -264,6 +241,20 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx tsx bin/post-pr-ci-failure-comment/index.ts
+
+      - name: Download link validation report
+        if: needs.build.outputs.link_validation_failed == 'true' && github.event.pull_request.head.repo.full_name == github.repository
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          name: link-validation-report
+          path: .starlight-links-validator
+
+      - name: Post link validation comment
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx tsx bin/post-link-validation-comment/index.ts
 
   publish-preview:
     name: Deploy Preview

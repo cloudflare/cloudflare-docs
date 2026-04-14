@@ -9,7 +9,7 @@ import { DashButton } from "~/components";
 :::note[Media Transformations is now GA:]
 
 
-Billing for Media Transformations will begin on November 1st, 2025.
+Billing for Media Transformations began on November 1st, 2025.
 
 
 :::
@@ -145,6 +145,8 @@ Specifies the filename to use in the returned Content-Disposition header. If not
 - Maximum input file size is 100 MB. Maximum duration of input video is 10 minutes.
 - Media Transformations are not compatible with [Bring Your Own IP (BYOIP)](/byoip/).
 - Input video should be an MP4 with H.264 encoded video and AAC or MP3 encoded audio, or animated GIF. Other formats may work but are untested.
+
+When using Media Transformations from a Cloudflare Worker, we recommend using the [bindings](/stream/transform-videos/bindings/). Otherwise, if the Worker is calling Media Transformations on the same zone used as its trigger, apply the `global_fetch_strictly_public` compatibility flag to avoid 404 errors on `/cdn-cgi/media` paths.
 
 ## Pricing
 

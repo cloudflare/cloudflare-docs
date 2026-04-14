@@ -62,7 +62,7 @@ A SASE platform replaces traditional VPN hardware by offering two key services. 
 
 Remote users authenticate and connect to a cloud hosted Zero Trust Network Access (ZTNA) service, which in turn has connectivity into the networks where the private applications reside. Cloudflare's [SASE reference architecture](/reference-architecture/architectures/sase/) describes three methods for connecting Cloudflare to your existing applications and networks:
 
-1. Software connectors ([`cloudflared`](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/) or [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/))
+1. Software connectors ([`cloudflared`](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/) or [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/))
 2. IPsec or GRE tunnels using [Cloudflare WAN](/cloudflare-wan/)
 3. Direct network connections using [Cloudflare Network Interconnect](/network-interconnect/)
 
@@ -132,9 +132,9 @@ Although this phase focuses on using the Cloudflare WAN service and IPsec tunnel
 Cloudflare offers two types of software connectors:
 
 - [`cloudflared`](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/)
-- [WARP connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/)
+- [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/)
 
-As discussed in the introduction, `cloudflared` is the preferred method for Zero Trust Network Access, but only supports inbound connectivity to your networks and application servers, any server initiated connection will not go via the tunnel and instead follow the server's default network path. WARP connector is designed to create tunnels that facilitate both inbound and outbound connectivity, but it doesn't currently have the same level of failover support and ease of configuration. For this guide, we will be discussing using `cloudflared` as it supports the internal DNS use case described.
+As discussed in the introduction, `cloudflared` is the preferred method for Zero Trust Network Access, but only supports inbound connectivity to your networks and application servers, any server initiated connection will not go via the tunnel and instead follow the server's default network path. Cloudflare Mesh is designed to create tunnels that facilitate both inbound and outbound connectivity, but it doesn't currently have the same level of failover support and ease of configuration. For this guide, we will be discussing using `cloudflared` as it supports the internal DNS use case described.
 
 For large remote access use cases, Cloudflare recommends deploying connectors to dedicated hosts. See the [System Requirements documentation](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/system-requirements/) for more deployment recommendations and server sizing. Where to deploy these servers depends on the access they need and the internal firewall rules and segmentation of the network. Some customers start with their first deployment in their DMZ, while others install it deeper in their network and evolve from there.
 

@@ -20,9 +20,9 @@ For every snippet rule in a zone that matches an incoming request, Cloudflare ad
 
 ## 3. Execute snippets code
 
-Once all the rules have been evaluated and the full table has been compiled, the Snippets Internal Worker Service starts processing all the information in the table.
+Once all the rules have been evaluated and the full table has been compiled, Cloudflare starts processing all the snippet IDs in the table.
 
-This Worker receives all the snippet IDs stored in the table that are to be sequentially executed. Each snippet receives the modified request from the previous snippet and applies new modifications to it.
+The snippets are executed sequentially. Each snippet receives the modified request from the previous snippet and applies new modifications to it.
 
 ## 4. Continue with the request execution workflow
 

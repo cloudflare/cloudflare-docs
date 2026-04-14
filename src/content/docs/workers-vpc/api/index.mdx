@@ -1,15 +1,14 @@
 ---
 title: Workers Binding API
 pcx_content_type: reference
+description: API reference for VPC Service and VPC Network bindings in Workers.
 sidebar:
   order: 4
 ---
 
 import { Tabs, TabItem } from "~/components";
 
-VPC Service bindings provide a convenient API for accessing VPC Services from your Worker. Each binding represents a connection to a service in your private network through a Cloudflare Tunnel.
-
-Each request made on the binding will route to the specific service that was configured for the VPC Service, while restricting access to the rest of your private network.
+VPC bindings provide a `fetch()` API for accessing private services from your Worker through Cloudflare Tunnel. Both [VPC Services](/workers-vpc/configuration/vpc-services/) and [VPC Networks](/workers-vpc/configuration/vpc-networks/) expose the same `fetch()` method — the difference is in routing scope.
 
 :::note
 
@@ -17,41 +16,38 @@ Workers VPC is currently in beta. Features and APIs may change before general av
 
 :::
 
-## VPC Service binding
+## Binding types
 
-A VPC Service binding is accessed via the `env` parameter in your Worker's fetch handler. It provides a `fetch()` method for making HTTP requests to your private service.
+### VPC Service
 
-:::note[Required roles]
-To bind a VPC Service in a Worker, your user needs `Connectivity Directory Bind` (or `Connectivity Directory Admin`). For role definitions, refer to [Roles](/fundamentals/manage-members/roles/#account-scoped-roles).
-:::
+A VPC Service binding routes requests to a specific pre-registered host and port. The [VPC Service configuration](/workers-vpc/configuration/vpc-services/#vpc-service-configuration) always determines the connection target, even if a different URL or host is present in the `fetch()` call.
+
+- The **host** provided in `fetch()` does not control routing. It only populates the `Host` header and, when using `https`, the Server Name Indication (SNI) value.
+- The **port** provided in `fetch()` is ignored — the port specified in the VPC Service configuration is always used.
+
+### VPC Network
+
+A VPC Network binding grants access to any service reachable through the bound tunnel or Cloudflare Mesh. The URL passed to `fetch()` determines the actual destination — hostname or IP address and port.
 
 ## fetch()
 
 Makes an HTTP request to the private service through the configured tunnel.
 
 ```js
-const response = await env.VPC_SERVICE_BINDING.fetch(resource, options);
+const response = await env.MY_BINDING.fetch(resource, options);
 ```
-
-:::note
-The [VPC Service configurations](/workers-vpc/configuration/vpc-services/#vpc-service-configuration) will always be used to connect and route requests to your services in external networks, even if a different URL or host is present in the actual `fetch()` operation of the Worker code.
-
-The host provided in the `fetch()` operation is not used to route requests, and instead only populates the `Host` field for a HTTP request that can be parsed by the server and used for Server Name Indication (SNI), when the `https` scheme is specified.
-
-The port provided in the `fetch()` operation is ignored — the port specified in the VPC Service configuration will be used.
-:::
 
 ### Parameters
 
-- `resource` (string | URL | Request) - The URL to fetch. This must be an absolute URL including protocol, host, and path (for example, `http://internal-api/api/users`)
-- `options` (optional RequestInit) - Standard fetch options including:
-  - `method` - HTTP method (GET, POST, PUT, DELETE, etc.)
-  - `headers` - Request headers
-  - `body` - Request body
-  - `signal` - AbortSignal for request cancellation
+- `resource` (string | URL | Request) — The URL to fetch. Must be an absolute URL including protocol, host, and path (for example, `http://internal-api/api/users`).
+- `options` (optional RequestInit) — Standard fetch options including:
+  - `method` — HTTP method (GET, POST, PUT, DELETE, etc.)
+  - `headers` — Request headers
+  - `body` — Request body
+  - `signal` — AbortSignal for request cancellation
 
-:::note[Absolute URLs Required]
-VPC Service fetch requests must use absolute URLs including the protocol (`http`/`https`), host, and path. Relative paths are not supported.
+:::note[Absolute URLs required]
+VPC binding fetch requests must use absolute URLs including the protocol (`http`/`https`), host, and path. Relative paths are not supported.
 :::
 
 ### Return value
@@ -59,6 +55,8 @@ VPC Service fetch requests must use absolute URLs including the protocol (`http`
 Returns a `Promise<Response>` that resolves to a [standard Fetch API Response object](https://developer.mozilla.org/en-US/docs/Web/API/Response).
 
 ### Examples
+
+The following examples apply to both VPC Service and VPC Network bindings.
 
 #### Basic GET request
 
@@ -68,7 +66,7 @@ export default {
 		const privateRequest = new Request(
 			"http://internal-api.company.local/users",
 		);
-		const response = await env.VPC_SERVICE_BINDING.fetch(privateRequest);
+		const response = await env.MY_BINDING.fetch(privateRequest);
 		const users = await response.json();
 
 		return new Response(JSON.stringify(users), {
@@ -98,7 +96,7 @@ export default {
 			},
 		);
 
-		const response = await env.VPC_SERVICE_BINDING.fetch(privateRequest);
+		const response = await env.MY_BINDING.fetch(privateRequest);
 
 		if (!response.ok) {
 			return new Response("Failed to create user", { status: response.status });
@@ -118,14 +116,19 @@ export default {
 export default {
 	async fetch(request, env) {
 		const privateRequest = new Request("https://10.0.1.50/api/data");
-		const response = await env.VPC_SERVICE_BINDING.fetch(privateRequest);
+		const response = await env.MY_BINDING.fetch(privateRequest);
 
 		return response;
 	},
 };
 ```
 
+## Required roles
+
+To bind a VPC Service or VPC Network in a Worker, your user needs `Connectivity Directory Bind` (or `Connectivity Directory Admin`). For role definitions, refer to [Roles](/fundamentals/manage-members/roles/#account-scoped-roles).
+
 ## Next steps
 
-- Configure [service bindings in your Wrangler configuration file](/workers-vpc/configuration/vpc-services/)
+- Configure [VPC Services](/workers-vpc/configuration/vpc-services/)
+- Configure [VPC Networks](/workers-vpc/configuration/vpc-networks/)
 - Refer to [usage examples](/workers-vpc/examples/)

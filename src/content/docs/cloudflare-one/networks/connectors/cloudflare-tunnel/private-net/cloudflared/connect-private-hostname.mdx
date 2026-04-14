@@ -33,12 +33,11 @@ End users can connect to private hostnames using the following traffic on-ramps:
 
 Private hostname routing only works for applications connected with `cloudflared`. Other traffic off-ramps require IP-based routes.
 
-| Connector                                                                                           | Compatibility | Minimum version |
-| --------------------------------------------------------------------------------------------------- | ------------- | --------------- |
-| [cloudflared](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/)       | ✅            | 2025.7.0        |
-| [Peer-to-peer](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/peer-to-peer/)     | ❌            |                 |
-| [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) | ❌            |                 |
-| [Cloudflare WAN](/cloudflare-wan/zero-trust/cloudflare-gateway/)                                    | ❌            |                 |
+| Connector                                                                                  | Compatibility | Minimum version |
+| ------------------------------------------------------------------------------------------ | ------------- | -- |
+| [cloudflared](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/)                        | ✅            | 2025.7.0 |
+| [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) | ❌             | |
+| [Cloudflare WAN](/cloudflare-wan/zero-trust/cloudflare-gateway/)                                                             | ❌             | |
 
 ## Connect a private hostname
 
@@ -67,10 +66,10 @@ Configuration steps vary depending on your [device on-ramp](#device-connectivity
 	send the DNS query to Cloudflare Gateway for resolution.
 </Details>
 
-<Details header="WARP Connector">
+<Details header="Cloudflare Mesh">
 
-1. In your [WARP Connector device profile](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/site-to-site/#3-route-traffic-between-warp-connector-and-cloudflare), ensure that the <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip> listed above route through the WARP tunnel.
-2. Depending on where you installed WARP Connector, you may also need to route those destination IPs through WARP Connector and point your DNS resolver to Cloudflare Gateway. Refer to [Route traffic from subnet to WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/site-to-site/#4-route-traffic-from-subnet-to-warp-connector).
+1. In your [mesh node device profile](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/), ensure that the <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip> listed above route through the tunnel.
+2. Depending on where you installed the mesh node, you may also need to route those destination IPs through the node and point your DNS resolver to Cloudflare Gateway. Refer to [Routes](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/).
 
 </Details>
 

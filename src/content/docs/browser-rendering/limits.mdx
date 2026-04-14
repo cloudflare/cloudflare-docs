@@ -22,14 +22,14 @@ If you are on a Workers Free plan and you want to increase your limits, upgrade 
 | Feature                                                  | Limit           |
 | -------------------------------------------------------- | --------------- |
 | Browser hours                                            | 10 minutes per day |
-| Concurrent browsers per account (Workers Bindings only) [^1]  | 3 per account   |
-| New browser instances (Workers Bindings only) | 3 per minute    |
+| Concurrent browsers per account (Browser Sessions only) [^1]  | 3 per account   |
+| New browser instances (Browser Sessions only) | 3 per minute    |
 | Browser timeout                                          | 60 seconds [^2]  |
-| Total requests (REST API only) [^3]                      | 6 per minute (1 every 10 seconds)   |
+| Total requests (Quick Actions only) [^3]                 | 6 per minute (1 every 10 seconds)   |
 
 ### `/crawl` endpoint limits
 
-The [REST API `/crawl` endpoint](/browser-rendering/rest-api/crawl-endpoint/) has additional limits for Workers Free plan users:
+The [`/crawl` endpoint](/browser-rendering/quick-actions/crawl-endpoint/) has additional limits for Workers Free plan users:
 
 | Feature                                | Limit           |
 | -------------------------------------- | --------------- |
@@ -45,10 +45,10 @@ If you are on a Workers Paid plan and you want to increase your limits beyond th
 | Feature                                                  | Limit           |
 | -------------------------------------------------------- | --------------- |
 | Browser hours                                            | No limit  ([See pricing](/browser-rendering/pricing/))      |
-| Concurrent browsers per account  (Workers Bindings only) [^1] | 30 per account ([See pricing](/browser-rendering/pricing/)) |
-| New browser instances per minute (Workers Bindings only) | 30 per minute   |
+| Concurrent browsers per account (Browser Sessions only) [^1] | 30 per account ([See pricing](/browser-rendering/pricing/)) |
+| New browser instances per minute (Browser Sessions only) | 30 per minute   |
 | Browser timeout                                          | 60 seconds [^2] |
-| Total requests per min (REST API only) [^3]              | 600 per minute (10 per second)  |
+| Total requests per min (Quick Actions only) [^3]         | 600 per minute (10 per second)  |
 
 [^1]: Browsers close upon task completion or sixty seconds of inactivity (if you do not [extend your browser timeout](#can-i-increase-the-browser-timeout)). Therefore, in practice, many workflows do not require a high number of concurrent browsers.
 
@@ -98,7 +98,7 @@ When you make too many requests in a short period of time, Browser Rendering wil
 
 The example below demonstrates how to handle rate limiting gracefully by reading the `Retry-After` value and retrying the request after that delay.
 
-<Tabs syncKey="workersExamples"> <TabItem label="REST API">
+<Tabs syncKey="workersExamples"> <TabItem label="Quick Actions">
 ```js
 const response = await fetch('https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/content', {
     method: 'POST',
@@ -121,7 +121,7 @@ await new Promise(resolve => setTimeout(resolve, retryAfter \* 1000));
 
 ```
 
-</TabItem> <TabItem label="Workers Bindings">
+</TabItem> <TabItem label="Puppeteer">
 
 ```js
 import puppeteer from "@cloudflare/puppeteer";
