@@ -39,7 +39,7 @@ If your Worker has no bindings, there are no resources to isolate. But if your W
 4. Review **Settings** > **Runtime** for compatibility date and flags.
 5. Review **Settings** > **Observability** for preview log and trace settings.
 
-For **Durable Objects**, use [`ctx.exports`](/workers/worker-previews/durable-object-isolation/#approach-1-use-ctxexports-recommended) instead of manual DO bindings. `ctx.exports` resolves the DO namespace from the runtime context — the platform knows "this code is running in a preview" and auto-provisions an isolated namespace. Manual DO bindings with `script_name` pointing at the same Worker cannot isolate because preview scripts use a different resolution path that falls through to the production namespace. `ctx.exports` is the only path where auto-isolation works without deploying a separate Worker. See [Durable Object isolation](/workers/worker-previews/durable-object-isolation/) for details.
+For **Durable Objects**, use [`ctx.exports`](/workers/worker-previews/durable-object-isolation/#use-ctxexports). It is the only path that auto-isolates — the runtime knows "this code is running in a preview" and auto-provisions a separate namespace. Traditional DO bindings (`env.MY_DO`) and DO bindings in the `previews` config block both resolve through a path that ignores preview context and falls through to the production namespace. See [Durable Object isolation](/workers/worker-previews/durable-object-isolation/) for the full guide.
 
 </TabItem>
 <TabItem label="Wrangler">
@@ -79,6 +79,8 @@ npx wrangler preview settings update
 :::caution
 `wrangler preview` does **not** automatically read the `previews` block from your config file. You must run `wrangler preview settings update` first to push your config to the API. If you skip this step and go straight to `wrangler preview`, your preview will use whatever Preview Defaults were previously stored on the API — which may be empty or point at production resources.
 :::
+
+![Wrangler settings update gap](~/assets/images/workers/worker-previews/settings-update-gap.svg)
 
 #### Full example with bindings
 

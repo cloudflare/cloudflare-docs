@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 340" fill="none">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .label { font-size: 13px; fill: #1a1a1a; font-weight: 600; }
+    .sublabel { font-size: 11px; fill: #6b7280; }
+    .cmd { font-size: 11px; fill: #6b7280; font-family: 'SF Mono', 'Fira Code', monospace; }
+    .heading { font-size: 14px; fill: #1a1a1a; font-weight: 600; }
+    .box { rx: 8; stroke-width: 1.5; }
+    .box-preview { fill: #eff6ff; stroke: #3b82f6; }
+    .box-bad { fill: #fef2f2; stroke: #ef4444; }
+    .box-warn { fill: #fffbeb; stroke: #f59e0b; }
+    .box-good { fill: #f0fdf4; stroke: #22c55e; }
+    .box-trigger { fill: #f9fafb; stroke: #d1d5db; }
+    .arrow { stroke: #9ca3af; stroke-width: 2; fill: none; marker-end: url(#arr); }
+    .arrow-red { stroke: #ef4444; stroke-width: 2; fill: none; marker-end: url(#arr-red); }
+    .arrow-amber { stroke: #f59e0b; stroke-width: 2; fill: none; marker-end: url(#arr-amber); }
+  </style>
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#9ca3af"/>
+    </marker>
+    <marker id="arr-red" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#ef4444"/>
+    </marker>
+    <marker id="arr-amber" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#f59e0b"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="410" y="22" text-anchor="middle" class="heading">What happens when you skip Preview Defaults configuration</text>
+
+  <!-- Starting box -->
+  <rect x="290" y="40" width="240" height="48" class="box box-preview"/>
+  <text x="410" y="60" text-anchor="middle" class="cmd">wrangler preview</text>
+  <text x="410" y="74" text-anchor="middle" class="sublabel">no Preview Defaults configured</text>
+
+  <!-- Split into two paths -->
+  <line x1="350" y1="88" x2="200" y2="130" class="arrow-red"/>
+  <line x1="470" y1="88" x2="620" y2="130" class="arrow-amber"/>
+
+  <!-- LEFT PATH: Vars and secrets -->
+  <text x="200" y="128" text-anchor="middle" class="sublabel" style="fill: #ef4444; font-weight: 600;">Variables &amp; Secrets</text>
+
+  <rect x="85" y="142" width="230" height="56" class="box box-bad"/>
+  <text x="200" y="164" text-anchor="middle" class="label" style="fill: #dc2626;">Empty</text>
+  <text x="200" y="180" text-anchor="middle" class="sublabel">Not inherited from production</text>
+
+  <line x1="200" y1="198" x2="200" y2="230" class="arrow-red"/>
+
+  <rect x="85" y="236" width="230" height="56" class="box box-bad"/>
+  <text x="200" y="256" text-anchor="middle" class="label" style="fill: #dc2626;">Runtime error</text>
+  <text x="200" y="272" text-anchor="middle" class="sublabel">Worker crashes — you notice</text>
+
+  <!-- Verdict left -->
+  <rect x="120" y="304" width="160" height="24" rx="4" fill="#f0fdf4" stroke="#22c55e" stroke-width="1"/>
+  <text x="200" y="320" text-anchor="middle" class="sublabel" style="fill: #15803d; font-weight: 600;">Loud failure (safe)</text>
+
+  <!-- RIGHT PATH: Storage bindings -->
+  <text x="620" y="128" text-anchor="middle" class="sublabel" style="fill: #f59e0b; font-weight: 600;">KV, R2, D1, Durable Objects</text>
+
+  <rect x="505" y="142" width="230" height="56" class="box box-warn"/>
+  <text x="620" y="164" text-anchor="middle" class="label" style="fill: #92400e;">Points at production</text>
+  <text x="620" y="180" text-anchor="middle" class="sublabel">Default: "Use production value"</text>
+
+  <line x1="620" y1="198" x2="620" y2="230" class="arrow-amber"/>
+
+  <rect x="505" y="236" width="230" height="56" class="box box-warn"/>
+  <text x="620" y="256" text-anchor="middle" class="label" style="fill: #92400e;">Production data mutated</text>
+  <text x="620" y="272" text-anchor="middle" class="sublabel">Preview reads/writes prod — silently</text>
+
+  <!-- Verdict right -->
+  <rect x="540" y="304" width="160" height="24" rx="4" fill="#fef2f2" stroke="#ef4444" stroke-width="1"/>
+  <text x="620" y="320" text-anchor="middle" class="sublabel" style="fill: #dc2626; font-weight: 600;">Silent failure (dangerous)</text>
+</svg>

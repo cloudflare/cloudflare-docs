@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 360" fill="none">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .label { font-size: 13px; fill: #1a1a1a; font-weight: 600; }
+    .sublabel { font-size: 11px; fill: #6b7280; }
+    .cmd { font-size: 11px; fill: #6b7280; font-family: 'SF Mono', 'Fira Code', monospace; }
+    .heading { font-size: 14px; fill: #1a1a1a; font-weight: 600; }
+    .box { rx: 8; stroke-width: 1.5; }
+    .box-preview { fill: #eff6ff; stroke: #3b82f6; }
+    .box-trigger { fill: #f9fafb; stroke: #d1d5db; }
+    .box-manual { fill: #faf5ff; stroke: #a855f7; }
+    .box-warn { fill: #fffbeb; stroke: #f59e0b; }
+    .box-good { fill: #f0fdf4; stroke: #22c55e; }
+    .arrow { stroke: #9ca3af; stroke-width: 2; fill: none; marker-end: url(#arr); }
+    .arrow-down { stroke: #9ca3af; stroke-width: 1.5; fill: none; stroke-dasharray: 4,3; }
+    .row-label { font-size: 11px; fill: #9ca3af; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    .time-label { font-size: 10px; fill: #9ca3af; font-weight: 600; }
+  </style>
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#9ca3af"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="410" y="22" text-anchor="middle" class="heading">Preview Defaults are snapshotted, not live</text>
+  <text x="410" y="40" text-anchor="middle" class="sublabel">Changing defaults does not retroactively update existing previews</text>
+
+  <!-- Timeline arrow -->
+  <line x1="60" y1="64" x2="780" y2="64" stroke="#d1d5db" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="790" y="68" class="time-label">time</text>
+
+  <!-- Time markers -->
+  <line x1="140" y1="58" x2="140" y2="70" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="140" y="82" text-anchor="middle" class="time-label">Week 1</text>
+
+  <line x1="370" y1="58" x2="370" y2="70" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="370" y="82" text-anchor="middle" class="time-label">Week 2</text>
+
+  <line x1="600" y1="58" x2="600" y2="70" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="600" y="82" text-anchor="middle" class="time-label">Week 3</text>
+
+  <!-- DEFAULTS ROW -->
+  <text x="30" y="118" class="row-label">Defaults</text>
+
+  <!-- Week 1 defaults -->
+  <rect x="90" y="98" width="100" height="40" class="box box-trigger"/>
+  <text x="140" y="115" text-anchor="middle" class="cmd">CACHE</text>
+  <text x="140" y="128" text-anchor="middle" class="cmd">ENVIRONMENT</text>
+
+  <!-- Week 2 defaults change -->
+  <rect x="310" y="98" width="120" height="40" class="box box-manual"/>
+  <text x="370" y="112" text-anchor="middle" class="sublabel" style="fill: #7e22ce; font-weight: 600;">+ add DB binding</text>
+  <text x="370" y="128" text-anchor="middle" class="cmd">CACHE, ENV, DB</text>
+
+  <!-- Defaults unchanged through week 3 -->
+  <line x1="430" y1="118" x2="750" y2="118" stroke="#d1d5db" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- ALICE ROW -->
+  <text x="30" y="186" class="row-label">Alice</text>
+
+  <!-- Alice creates preview week 1 -->
+  <rect x="90" y="166" width="165" height="52" class="box box-preview"/>
+  <text x="172" y="184" text-anchor="middle" class="cmd">wrangler preview</text>
+  <text x="172" y="198" text-anchor="middle" class="sublabel">gets: CACHE, ENVIRONMENT</text>
+
+  <!-- Dashed line showing snapshot -->
+  <line x1="140" y1="138" x2="140" y2="166" class="arrow-down"/>
+
+  <!-- Alice's preview persists but stale -->
+  <line x1="255" y1="192" x2="550" y2="192" stroke="#3b82f6" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Alice's preview in week 3 — stale -->
+  <rect x="550" y="166" width="195" height="52" class="box box-warn"/>
+  <text x="647" y="184" text-anchor="middle" class="label" style="fill: #92400e;">Still missing DB</text>
+  <text x="647" y="198" text-anchor="middle" class="sublabel">Snapshot was taken in week 1</text>
+
+  <!-- BOB ROW -->
+  <text x="30" y="266" class="row-label">Bob</text>
+
+  <!-- Bob creates preview week 2 -->
+  <rect x="310" y="246" width="195" height="52" class="box box-good"/>
+  <text x="407" y="264" text-anchor="middle" class="cmd">wrangler preview</text>
+  <text x="407" y="278" text-anchor="middle" class="sublabel">gets: CACHE, ENV, DB</text>
+
+  <!-- Dashed line showing snapshot -->
+  <line x1="370" y1="138" x2="370" y2="246" class="arrow-down"/>
+
+  <!-- FIX callout -->
+  <line x1="100" y1="320" x2="750" y2="320" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="410" y="344" text-anchor="middle" class="sublabel">To update Alice's preview: run <tspan class="cmd" style="fill: #1e40af;">wrangler preview</tspan> again on her branch. It takes a new snapshot.</text>
+</svg>

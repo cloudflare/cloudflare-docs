@@ -10,13 +10,15 @@ sidebar:
 
 When using [Worker Previews](/workers/worker-previews/), each preview environment can have its own isolated [Durable Object](/durable-objects/) namespace. Durable Object instances created by a preview are completely separate from production — different instance IDs, different storage, no shared state.
 
-**Durable Objects are not automatically isolated.** If you use `env.MY_DO` (traditional bindings), your preview shares the production DO namespace by default. To get isolation, either switch to `ctx.exports` (which auto-isolates) or manually configure a separate namespace in the dashboard.
+**Use `ctx.exports` for Durable Object isolation in previews.** It is the only path that auto-isolates. Traditional DO bindings (`env.MY_DO`) share the production namespace by default, and adding DO bindings to the `previews` block in your Wrangler config [does not fix this](#why-wrangler-config-do-bindings-do-not-isolate).
 
-## Approach 1: Use `ctx.exports` (recommended)
+![Durable Object isolation in previews](~/assets/images/workers/worker-previews/do-isolation.svg)
 
-`ctx.exports` uses a different namespace resolution path than manual DO bindings. Instead of going through the binding system and name-based environment lookups, the runtime resolves the DO namespace directly from the execution context. The platform knows "this code is running in a preview" and auto-provisions a separate namespace named `{previewSlug}_{ClassName}`.
+## Use `ctx.exports`
 
-This is the only path where auto-isolation works without deploying a separate Worker. Manual DO bindings with `script_name` pointing at the same Worker [cannot isolate](#approach-3-use-a-do-binding-with-wrangler-configuration-no-auto-isolation) because preview scripts use a resolution path that falls through to the production namespace.
+`ctx.exports` uses a different namespace resolution path than traditional DO bindings. Instead of going through the binding system and name-based environment lookups, the runtime resolves the DO namespace directly from the execution context. The platform knows "this code is running in a preview" and auto-provisions a separate namespace named `{previewSlug}_{ClassName}`.
+
+This is the only path where auto-isolation works without deploying a separate Worker. Manual DO bindings with `script_name` pointing at the same Worker [cannot isolate](#why-wrangler-config-do-bindings-do-not-isolate) because preview scripts use a resolution path that falls through to the production namespace.
 
 **Prerequisites:**
 
@@ -135,9 +137,17 @@ Preview-owned namespaces include a `preview` property in the response:
 }
 ```
 
-## Approach 2: Use a DO binding with the dashboard
+## Why Wrangler config DO bindings do not isolate
 
-If you are using a traditional DO binding (`env.MY_DO`) instead of `ctx.exports`, configure DO isolation through the Cloudflare dashboard:
+You might expect that adding a `durable_objects` section to the `previews` block in your Wrangler config would give you isolation — but it does not.
+
+When `script_name` points to the same Worker (self-referencing), the namespace resolves through a name-based environment lookup. Preview scripts have `kind='preview'` which is excluded from this lookup path, so it **falls through to the production namespace**. Your preview and production share the same DO instances and storage, even with an explicit `previews` block configured.
+
+This is an architectural limitation, not a misconfiguration. Use [`ctx.exports`](#use-ctxexports) for auto-isolation.
+
+## If you cannot use `ctx.exports`
+
+If your Worker cannot use `ctx.exports` (for example, compatibility date is before `2025-11-17`, or your DO class does not extend the `DurableObject` base class), you can manually select an isolated namespace through the dashboard as a workaround:
 
 1. Navigate to your Worker's **Settings** tab and complete the Previews setup wizard if you have not already.
 2. Go to **Settings** > **Bindings** and toggle to **Previews**.
@@ -150,22 +160,7 @@ If you are using a traditional DO binding (`env.MY_DO`) instead of `ctx.exports`
 The preview namespace only appears in the dropdown after you have created at least one preview for the Worker. The platform auto-provisions the namespace on preview creation.
 :::
 
-## Why Wrangler config DO bindings do not isolate
-
-You might expect that adding a `durable_objects` section to the `previews` block in your Wrangler config would give you isolation — but it does not.
-
-When `script_name` points to the same Worker (self-referencing), the namespace resolves through a name-based environment lookup. Preview scripts have `kind='preview'` which is excluded from this lookup path, so it **falls through to the production namespace**. Your preview and production share the same DO instances and storage, even with an explicit `previews` block configured.
-
-This is an architectural limitation, not a misconfiguration. Use [`ctx.exports`](#approach-1-use-ctxexports-recommended) for auto-isolation, or [Approach 2](#approach-2-use-a-do-binding-with-the-dashboard) to manually select an auto-provisioned namespace.
-
-## Comparison
-
-| | `ctx.exports` (recommended) | Dashboard binding |
-| --- | --- | --- |
-| **How namespace resolves** | Runtime context — knows it's a preview, auto-provisions | You manually select the auto-provisioned namespace |
-| **Auto-isolation** | Yes | No — manual selection required |
-| **Binding configuration** | None needed | Yes |
-| **Works with RPC methods** | Yes | Yes |
+This is a workaround, not a recommended approach. It requires manual configuration for every DO binding, does not auto-isolate, and is easy to misconfigure. Migrate to `ctx.exports` when possible.
 
 
 
@@ -190,7 +185,7 @@ If production and preview return the same DO instance IDs, the preview is using 
 
 ### `Cannot create binding for class not exported by script`
 
-When using the `previews.durable_objects.bindings` configuration, you must include `script_name` in the binding. This is required even when the DO class is defined in the same Worker. Use `ctx.exports` ([Approach 1](#approach-1-use-ctxexports-recommended)) to avoid this entirely.
+When using the `previews.durable_objects.bindings` configuration, you must include `script_name` in the binding. This is required even when the DO class is defined in the same Worker. Use [`ctx.exports`](#use-ctxexports) to avoid this entirely.
 
 ## Related resources
 

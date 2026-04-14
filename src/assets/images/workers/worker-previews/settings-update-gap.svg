@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 310" fill="none">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .label { font-size: 13px; fill: #1a1a1a; font-weight: 600; }
+    .sublabel { font-size: 11px; fill: #6b7280; }
+    .cmd { font-size: 11px; fill: #6b7280; font-family: 'SF Mono', 'Fira Code', monospace; }
+    .heading { font-size: 14px; fill: #1a1a1a; font-weight: 600; }
+    .box { rx: 8; stroke-width: 1.5; }
+    .box-preview { fill: #eff6ff; stroke: #3b82f6; }
+    .box-bad { fill: #fef2f2; stroke: #ef4444; }
+    .box-good { fill: #f0fdf4; stroke: #22c55e; }
+    .box-trigger { fill: #f9fafb; stroke: #d1d5db; }
+    .box-manual { fill: #faf5ff; stroke: #a855f7; }
+    .arrow { stroke: #9ca3af; stroke-width: 2; fill: none; marker-end: url(#arr); }
+    .arrow-red { stroke: #ef4444; stroke-width: 2; fill: none; marker-end: url(#arr-red); }
+    .arrow-green { stroke: #22c55e; stroke-width: 2; fill: none; marker-end: url(#arr-green); }
+    .row-label { font-size: 11px; fill: #9ca3af; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+  </style>
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#9ca3af"/>
+    </marker>
+    <marker id="arr-red" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#ef4444"/>
+    </marker>
+    <marker id="arr-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#22c55e"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="410" y="22" text-anchor="middle" class="heading">Wrangler: editing config does not update Preview Defaults automatically</text>
+  <text x="410" y="38" text-anchor="middle" class="sublabel">This only applies to Wrangler. Dashboard and API changes take effect immediately.</text>
+
+  <!-- WRONG ROW -->
+  <rect x="16" y="58" width="28" height="16" rx="4" fill="#fef2f2" stroke="#ef4444" stroke-width="1"/>
+  <text x="30" y="69" text-anchor="middle" class="sublabel" style="fill: #dc2626; font-weight: 600; font-size: 9px;">✗</text>
+
+  <text x="50" y="70" class="row-label" style="fill: #ef4444;">Wrong</text>
+
+  <rect x="100" y="54" width="190" height="46" class="box box-trigger"/>
+  <text x="195" y="72" text-anchor="middle" class="cmd">edit previews block</text>
+  <text x="195" y="86" text-anchor="middle" class="sublabel">in wrangler.jsonc</text>
+
+  <line x1="290" y1="77" x2="330" y2="77" class="arrow-red"/>
+
+  <rect x="338" y="54" width="190" height="46" class="box box-preview"/>
+  <text x="433" y="72" text-anchor="middle" class="cmd">wrangler preview</text>
+  <text x="433" y="86" text-anchor="middle" class="sublabel">runs immediately</text>
+
+  <line x1="528" y1="77" x2="568" y2="77" class="arrow-red"/>
+
+  <rect x="576" y="54" width="220" height="46" class="box box-bad"/>
+  <text x="686" y="72" text-anchor="middle" class="label" style="fill: #dc2626;">Uses old defaults</text>
+  <text x="686" y="86" text-anchor="middle" class="sublabel">Local config was never pushed to API</text>
+
+  <!-- Divider -->
+  <line x1="100" y1="120" x2="796" y2="120" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <!-- CORRECT ROW -->
+  <rect x="16" y="142" width="28" height="16" rx="4" fill="#f0fdf4" stroke="#22c55e" stroke-width="1"/>
+  <text x="30" y="153" text-anchor="middle" class="sublabel" style="fill: #15803d; font-weight: 600; font-size: 9px;">✓</text>
+
+  <text x="50" y="154" class="row-label" style="fill: #15803d;">Correct</text>
+
+  <rect x="100" y="138" width="150" height="46" class="box box-trigger"/>
+  <text x="175" y="156" text-anchor="middle" class="cmd">edit previews block</text>
+  <text x="175" y="170" text-anchor="middle" class="sublabel">in wrangler.jsonc</text>
+
+  <line x1="250" y1="161" x2="278" y2="161" class="arrow-green"/>
+
+  <rect x="286" y="138" width="200" height="46" class="box box-manual"/>
+  <text x="386" y="156" text-anchor="middle" class="cmd">wrangler preview</text>
+  <text x="386" y="170" text-anchor="middle" class="cmd">settings update</text>
+
+  <line x1="486" y1="161" x2="514" y2="161" class="arrow-green"/>
+
+  <rect x="522" y="138" width="130" height="46" class="box box-preview"/>
+  <text x="587" y="156" text-anchor="middle" class="cmd">wrangler preview</text>
+  <text x="587" y="170" text-anchor="middle" class="sublabel">runs</text>
+
+  <line x1="652" y1="161" x2="680" y2="161" class="arrow-green"/>
+
+  <rect x="688" y="138" width="108" height="46" class="box box-good"/>
+  <text x="742" y="156" text-anchor="middle" class="label" style="fill: #15803d;">Correct</text>
+  <text x="742" y="170" text-anchor="middle" class="sublabel">new defaults</text>
+
+  <!-- Explanation -->
+  <line x1="100" y1="206" x2="796" y2="206" stroke="#e5e7eb" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <text x="410" y="230" text-anchor="middle" class="label">Why?</text>
+  <text x="410" y="250" text-anchor="middle" class="sublabel">Preview Defaults are stored server-side on the Cloudflare API, not in your local config file.</text>
+  <text x="410" y="268" text-anchor="middle" class="sublabel">wrangler preview reads defaults from the API. Your local previews block is not read at runtime.</text>
+  <text x="410" y="286" text-anchor="middle" class="sublabel">wrangler preview settings update is what pushes local config → API.</text>
+
+  <!-- Legend -->
+  <rect x="290" y="300" width="10" height="10" rx="2" fill="#faf5ff" stroke="#a855f7" stroke-width="1"/>
+  <text x="306" y="309" class="sublabel">Required sync step</text>
+  <rect x="430" y="300" width="10" height="10" rx="2" fill="#eff6ff" stroke="#3b82f6" stroke-width="1"/>
+  <text x="446" y="309" class="sublabel">Preview command</text>
+</svg>
