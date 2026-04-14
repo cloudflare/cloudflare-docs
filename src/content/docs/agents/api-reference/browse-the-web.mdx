@@ -18,10 +18,10 @@ Instead of a fixed set of browser actions (click, screenshot, navigate), the LLM
 
 Two tools are provided:
 
-| Tool | Description |
-| --- | --- |
-| `browser_search` | Query the CDP spec to discover commands, events, and types. The spec is fetched dynamically from the browser's CDP endpoint and cached. |
-| `browser_execute` | Run CDP commands against a live browser via a `cdp` helper. Each call opens a fresh browser session, executes the code, and closes it. |
+| Tool              | Description                                                                                                                             |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `browser_search`  | Query the CDP spec to discover commands, events, and types. The spec is fetched dynamically from the browser's CDP endpoint and cached. |
+| `browser_execute` | Run CDP commands against a live browser via a `cdp` helper. Each call opens a fresh browser session, executes the code, and closes it.  |
 
 ## When to use browser tools
 
@@ -55,13 +55,13 @@ Add the Browser Rendering and Worker Loader bindings to your wrangler configurat
 {
 	"compatibility_flags": ["nodejs_compat"],
 	"browser": {
-		"binding": "BROWSER"
+		"binding": "BROWSER",
 	},
 	"worker_loaders": [
 		{
-			"binding": "LOADER"
-		}
-	]
+			"binding": "LOADER",
+		},
+	],
 }
 ```
 
@@ -216,20 +216,20 @@ Inside `browser_execute`, the following functions are available to the sandboxed
 
 Send a CDP command and wait for the response.
 
-| Parameter | Type | Description |
-| --- | --- | --- |
-| `method` | `string` | CDP method, for example `"DOM.getDocument"` or `"Network.enable"` |
-| `params` | `unknown` | Method parameters |
-| `options.timeoutMs` | `number` | Per-command timeout (default: 10 seconds) |
-| `options.sessionId` | `string` | Target session ID (required for page-scoped commands) |
+| Parameter           | Type      | Description                                                       |
+| ------------------- | --------- | ----------------------------------------------------------------- |
+| `method`            | `string`  | CDP method, for example `"DOM.getDocument"` or `"Network.enable"` |
+| `params`            | `unknown` | Method parameters                                                 |
+| `options.timeoutMs` | `number`  | Per-command timeout (default: 10 seconds)                         |
+| `options.sessionId` | `string`  | Target session ID (required for page-scoped commands)             |
 
 ### `cdp.attachToTarget(targetId, options?)`
 
 Attach to a target and get a session ID. Uses `Target.attachToTarget` with `flatten: true`.
 
-| Parameter | Type | Description |
-| --- | --- | --- |
-| `targetId` | `string` | The target to attach to |
+| Parameter           | Type     | Description                    |
+| ------------------- | -------- | ------------------------------ |
+| `targetId`          | `string` | The target to attach to        |
 | `options.timeoutMs` | `number` | Timeout for the attach command |
 
 Returns the `sessionId` string.
@@ -248,13 +248,13 @@ Clear the debug log buffer.
 
 Returns AI SDK tools (`browser_search` and `browser_execute`).
 
-| Option | Type | Default | Description |
-| --- | --- | --- | --- |
-| `browser` | `Fetcher` | — | Browser Rendering binding |
-| `cdpUrl` | `string` | — | Optional override for a custom CDP endpoint |
-| `cdpHeaders` | `Record<string, string>` | — | Headers for CDP URL discovery (for example, Cloudflare Access) |
-| `loader` | `WorkerLoader` | required | Worker Loader binding for sandboxed execution |
-| `timeout` | `number` | `30000` | Execution timeout in milliseconds |
+| Option       | Type                     | Default  | Description                                                    |
+| ------------ | ------------------------ | -------- | -------------------------------------------------------------- |
+| `browser`    | `Fetcher`                | —        | Browser Rendering binding                                      |
+| `cdpUrl`     | `string`                 | —        | Optional override for a custom CDP endpoint                    |
+| `cdpHeaders` | `Record<string, string>` | —        | Headers for CDP URL discovery (for example, Cloudflare Access) |
+| `loader`     | `WorkerLoader`           | required | Worker Loader binding for sandboxed execution                  |
+| `timeout`    | `number`                 | `30000`  | Execution timeout in milliseconds                              |
 
 Either `browser` or `cdpUrl` must be provided. When both are set, `cdpUrl` takes priority.
 
@@ -360,11 +360,11 @@ Add the browser binding to your wrangler configuration:
 ```jsonc
 {
 	"ai": {
-		"binding": "AI"
+		"binding": "AI",
 	},
 	"browser": {
-		"binding": "BROWSER"
-	}
+		"binding": "BROWSER",
+	},
 }
 ```
 

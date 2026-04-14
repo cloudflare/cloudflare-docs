@@ -147,7 +147,7 @@ If a CSS selector does not match any elements on a page, the resulting Markdown 
 ### Interaction with other features
 
 - **Path filtering**: [Path filtering](/ai-search/configuration/path-filtering/) takes priority over content selectors. Pages excluded by path filters are never crawled, so content selectors do not apply to them.
-- **Browser Rendering**: Content selectors apply to the HTML that AI Search receives. For sites that render content with JavaScript, turn on [Browser Rendering](#rendering-mode) so that selectors can target the fully rendered DOM.
+- **Browser Run**: Content selectors apply to the HTML that AI Search receives. For sites that render content with JavaScript, turn on [Browser Run](#rendering-mode) so that selectors can target the fully rendered DOM.
 - **Automatic re-indexing**: Updating content selectors triggers a new [sync job](/ai-search/configuration/indexing/) immediately, so changes are applied to all indexed pages.
 
 ### Limits
@@ -287,7 +287,7 @@ When custom sitemap URLs are configured, AI Search uses those sitemap URLs inste
 You can choose how pages are parsed during crawling:
 
 - **Static sites**: Downloads the raw HTML for each page.
-- **Rendered sites**: Loads pages with a headless browser and downloads the fully rendered version, including dynamic JavaScript content. Note that the [Browser Rendering](/browser-rendering/pricing/) limits and billing apply.
+- **Rendered sites**: Loads pages with a headless browser and downloads the fully rendered version, including dynamic JavaScript content. Note that the [Browser Run](/browser-run/pricing/) limits and billing apply.
 
 ## Extra headers for access protected content
 

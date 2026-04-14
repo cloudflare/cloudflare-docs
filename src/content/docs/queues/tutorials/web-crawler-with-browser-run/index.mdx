@@ -1,23 +1,23 @@
 ---
 reviewed: 2024-08-06
 difficulty: Intermediate
-title: Build a web crawler with Queues and Browser Rendering
-summary: Example of how to use Queues and Browser Rendering to power a web crawler.
+title: Build a web crawler with Queues and Browser Run
+summary: Example of how to use Queues and Browser Run to power a web crawler.
 pcx_content_type: tutorial
-products: [workers, queues, browser-rendering]
+products: [workers, queues, browser-run]
 tags:
   - TypeScript
 sidebar:
   order: 1002
 head:
   - tag: title
-    content: Cloudflare Queues - Queues & Browser Rendering
-description: Example of how to use Queues and Browser Rendering to power a web crawler.
+    content: Cloudflare Queues - Queues & Browser Run
+description: Example of how to use Queues and Browser Run to power a web crawler.
 ---
 
 import { Render, PackageManagers, WranglerConfig } from "~/components";
 
-This tutorial explains how to build and deploy a web crawler with Queues, [Browser Rendering](/browser-rendering/), and [Puppeteer](/browser-rendering/puppeteer/).
+This tutorial explains how to build and deploy a web crawler with Queues, [Browser Run](/browser-run/), and [Puppeteer](/browser-run/puppeteer/).
 
 Puppeteer is a high-level library used to automate interactions with Chrome/Chromium browsers. On each submitted page, the crawler will find the number of links to `cloudflare.com` and take a screenshot of the site, saving results to [Workers KV](/kv/).
 
@@ -96,37 +96,37 @@ Then, in your Wrangler file, add the following with the values generated in the 
 	"kv_namespaces": [
 		{
 			"binding": "CRAWLER_SCREENSHOTS_KV",
-			"id": "<GENERATED_NAMESPACE_ID>"
+			"id": "<GENERATED_NAMESPACE_ID>",
 		},
 		{
 			"binding": "CRAWLER_LINKS_KV",
-			"id": "<GENERATED_NAMESPACE_ID>"
-		}
-	]
+			"id": "<GENERATED_NAMESPACE_ID>",
+		},
+	],
 }
 ```
 
 </WranglerConfig>
 
-## 3. Set up Browser Rendering
+## 3. Set up Browser Run
 
-Now, you need to set up your Worker for Browser Rendering.
+Now, you need to set up your Worker for Browser Run.
 
-In your current directory, install Cloudflare's [fork of Puppeteer](/browser-rendering/puppeteer/) and also [robots-parser](https://www.npmjs.com/package/robots-parser):
+In your current directory, install Cloudflare's [fork of Puppeteer](/browser-run/puppeteer/) and also [robots-parser](https://www.npmjs.com/package/robots-parser):
 
 <PackageManagers pkg="@cloudflare/puppeteer" dev />
 
 <PackageManagers pkg="robots-parser" />
 
-Then, add a Browser Rendering binding. Adding a Browser Rendering binding gives the Worker access to a headless Chromium instance you will control with Puppeteer.
+Then, add a Browser Run binding. Adding a Browser Run binding gives the Worker access to a headless Chromium instance you will control with Puppeteer.
 
 <WranglerConfig>
 
 ```jsonc
 {
 	"browser": {
-		"binding": "CRAWLER_BROWSER"
-	}
+		"binding": "CRAWLER_BROWSER",
+	},
 }
 ```
 
@@ -159,22 +159,22 @@ Then, in your Wrangler file, add the following:
 		"consumers": [
 			{
 				"queue": "queues-web-crawler",
-				"max_batch_timeout": 60
-			}
+				"max_batch_timeout": 60,
+			},
 		],
 		"producers": [
 			{
 				"queue": "queues-web-crawler",
-				"binding": "CRAWLER_QUEUE"
-			}
-		]
-	}
+				"binding": "CRAWLER_QUEUE",
+			},
+		],
+	},
 }
 ```
 
 </WranglerConfig>
 
-Adding the `max_batch_timeout` of 60 seconds to the consumer queue is important because it allows the Queue to collect messages into a batch over a longer period. This helps manage Browser Rendering [rate limits](/browser-rendering/limits/) and can improve efficiency by processing multiple URLs in a single batch with one browser instance.
+Adding the `max_batch_timeout` of 60 seconds to the consumer queue is important because it allows the Queue to collect messages into a batch over a longer period. This helps manage Browser Run [rate limits](/browser-run/limits/) and can improve efficiency by processing multiple URLs in a single batch with one browser instance.
 
 Your final Wrangler file should look similar to the one below.
 
@@ -186,36 +186,34 @@ Your final Wrangler file should look similar to the one below.
 	"name": "web-crawler",
 	"main": "src/index.ts",
 	"compatibility_date": "$today",
-	"compatibility_flags": [
-		"nodejs_compat"
-	],
+	"compatibility_flags": ["nodejs_compat"],
 	"kv_namespaces": [
 		{
 			"binding": "CRAWLER_SCREENSHOTS_KV",
-			"id": "<GENERATED_NAMESPACE_ID>"
+			"id": "<GENERATED_NAMESPACE_ID>",
 		},
 		{
 			"binding": "CRAWLER_LINKS_KV",
-			"id": "<GENERATED_NAMESPACE_ID>"
-		}
+			"id": "<GENERATED_NAMESPACE_ID>",
+		},
 	],
 	"browser": {
-		"binding": "CRAWLER_BROWSER"
+		"binding": "CRAWLER_BROWSER",
 	},
 	"queues": {
 		"consumers": [
 			{
 				"queue": "queues-web-crawler",
-				"max_batch_timeout": 60
-			}
+				"max_batch_timeout": 60,
+			},
 		],
 		"producers": [
 			{
 				"queue": "queues-web-crawler",
-				"binding": "CRAWLER_QUEUE"
-			}
-		]
-	}
+				"binding": "CRAWLER_QUEUE",
+			},
+		],
+	},
 }
 ```
 
@@ -597,5 +595,5 @@ Refer to the [GitHub repository for the complete tutorial](https://github.com/cl
 
 - [How Queues works](/queues/reference/how-queues-works/)
 - [Queues Batching and Retries](/queues/configuration/batching-retries/)
-- [Browser Rendering](/browser-rendering/)
+- [Browser Run](/browser-run/)
 - [Puppeteer Examples](https://github.com/puppeteer/puppeteer/tree/main/examples)

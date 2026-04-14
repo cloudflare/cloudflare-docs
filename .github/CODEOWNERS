@@ -51,9 +51,9 @@ package.json @cloudflare/content-engineering
 /src/content/docs/terraform/ @dcpena @cloudflare/pcx-technical-writing @cloudflare/product-owners
 /src/content/docs/version-management/ @dcpena @cloudflare/pcx-technical-writing @cloudflare/product-owners
 
-# Browser Rendering API
+# Browser Run
 
-/src/content/docs/browser-rendering/ @mchenco @cloudflare/pcx-technical-writing @cloudflare/product-owners @celso @kathayl @ToriLindsay
+/src/content/docs/browser-run/ @mchenco @cloudflare/pcx-technical-writing @cloudflare/product-owners @celso @kathayl @ToriLindsay
 
 # Changelogs
 
