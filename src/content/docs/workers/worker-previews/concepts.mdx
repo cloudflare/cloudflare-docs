@@ -141,6 +141,21 @@ Changes take effect immediately for the next preview created.
 | **Observability** | Log sampling rate, Logpush, Tail Workers |
 | **Runtime** | Compatibility date, compatibility flags |
 
+### Adding new bindings, variables, or secrets
+
+Production and Preview Defaults are configured separately. When you add something new to production, you need to add the preview equivalent to Preview Defaults too.
+
+**Example:** You add a new R2 bucket `UPLOADS` to production. Your previews won't have `UPLOADS` unless you also add it to Preview Defaults — either pointing to a separate preview bucket (for isolation) or checking "Use production value" (to share the production bucket).
+
+| What you changed in production | What you also need to do in Preview Defaults |
+| --- | --- |
+| Added a new binding (KV, R2, D1, etc.) | Add the preview equivalent — either a separate resource or "Use production value" |
+| Added a new variable | Add it to Preview Defaults vars (it won't inherit from production) |
+| Added a new secret | Run `wrangler preview secret put` or add it in the dashboard |
+| Changed compatibility date | Update it in Preview Defaults if you want previews to match |
+
+If you forget, previews created after the change will be missing the new binding/variable/secret. This can cause runtime errors in your preview that don't happen in production.
+
 ## How preview URLs work
 
 Each preview gets two kinds of URLs:
