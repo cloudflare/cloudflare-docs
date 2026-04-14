@@ -51,14 +51,18 @@ Add the Browser Rendering and Worker Loader bindings to your wrangler configurat
 
 <WranglerConfig>
 
-```toml
-[browser]
-binding = "BROWSER"
-
-[[worker_loaders]]
-binding = "LOADER"
-
-compatibility_flags = ["nodejs_compat"]
+```jsonc
+{
+	"compatibility_flags": ["nodejs_compat"],
+	"browser": {
+		"binding": "BROWSER"
+	},
+	"worker_loaders": [
+		{
+			"binding": "LOADER"
+		}
+	]
+}
 ```
 
 </WranglerConfig>
@@ -353,12 +357,15 @@ Add the browser binding to your wrangler configuration:
 
 <WranglerConfig>
 
-```toml
-[ai]
-binding = "AI"
-
-[browser]
-binding = "MYBROWSER"
+```jsonc
+{
+	"ai": {
+		"binding": "AI"
+	},
+	"browser": {
+		"binding": "BROWSER"
+	}
+}
 ```
 
 </WranglerConfig>

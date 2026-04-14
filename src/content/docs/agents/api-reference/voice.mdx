@@ -117,17 +117,26 @@ function VoiceUI() {
 
 <WranglerConfig>
 
-```toml
-[ai]
-binding = "AI"
-
-[[durable_objects.bindings]]
-name = "MyAgent"
-class_name = "MyAgent"
-
-[[migrations]]
-tag = "v1"
-new_sqlite_classes = ["MyAgent"]
+```jsonc
+{
+	"ai": {
+		"binding": "AI"
+	},
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "MyAgent",
+				"class_name": "MyAgent"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["MyAgent"]
+		}
+	]
+}
 ```
 
 </WranglerConfig>

@@ -48,22 +48,30 @@ Update `wrangler.jsonc` to include a Workers AI binding and a Durable Object for
 
 <WranglerConfig>
 
-```toml
-name = "voice-agent"
-compatibility_date = "$today"
-compatibility_flags = ["nodejs_compat"]
-main = "src/server.ts"
-
-[ai]
-binding = "AI"
-
-[[durable_objects.bindings]]
-name = "MyVoiceAgent"
-class_name = "MyVoiceAgent"
-
-[[migrations]]
-tag = "v1"
-new_sqlite_classes = ["MyVoiceAgent"]
+```jsonc
+{
+	"name": "voice-agent",
+	"compatibility_date": "$today",
+	"compatibility_flags": ["nodejs_compat"],
+	"main": "src/server.ts",
+	"ai": {
+		"binding": "AI"
+	},
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "MyVoiceAgent",
+				"class_name": "MyVoiceAgent"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["MyVoiceAgent"]
+		}
+	]
+}
 ```
 
 </WranglerConfig>
