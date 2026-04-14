@@ -2,15 +2,11 @@
 	"model_id": "google/nano-banana-pro",
 	"provider_id": "google",
 	"name": "Nano Banana Pro",
-	"description": "Nano Banana Pro is Google DeepMind's image generation and editing model built on Gemini 3 Pro. It creates detailed visuals with legible text in multiple languages, connects to real-time information from Google Search, and provides studio-quality control. Features include accurate text rendering in multiple languages, context-rich visuals from real-world knowledge, blending of up to 14 images with consistent character resemblance, and professional creative controls for camera angles, lighting, color grading, and depth of field.",
+	"description": "Google's higher-quality image generation model with improved detail and prompt adherence.",
 	"task": "Text-to-Image",
 	"tags": [
 		"Image Generation",
-		"Image Editing",
-		"Multi-Image",
-		"Text Rendering",
-		"4K",
-		"Professional"
+		"High Quality"
 	],
 	"context_length": null,
 	"max_output_tokens": null,
@@ -91,16 +87,11 @@
 		}
 	],
 	"supports_async": false,
-	"external_info": null,
-	"terms": "https://ai.google.dev/gemini-api/terms  ",
+	"external_info": "https://deepmind.google/technologies/imagen/",
+	"terms": "https://ai.google.dev/gemini-api/terms",
 	"cover_image_url": "https://tjzk.replicate.delivery/models_models_featured_image/5ee636db-8712-442f-9644-63980f6786f4/banana2.png",
 	"metadata": {
-		"Base Model": "Gemini 3 Pro",
-		"Max Resolution": "4K",
-		"Max Reference Images": "14",
-		"Max Character Consistency": "5 people",
-		"Output Formats": "JPG, PNG",
-		"SynthID Watermark": "Yes"
+		"Output Format": "JPEG"
 	},
 	"created_at": "2026-04-08 22:01:25",
 	"default_example": null,

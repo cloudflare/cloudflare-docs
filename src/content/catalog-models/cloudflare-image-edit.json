@@ -20,6 +20,9 @@
 				"prompt": "Make the sky more vibrant and colorful with warm sunset tones",
 				"image": "https://replicate.delivery/xezq/IeNNble3XUqhpUZTd3CkYTUf8EgkFU1fl1Jnyive3B26MsGzC/tmp51dpln4i.jpeg"
 			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/cloudflare-image-edit/simple-edit.jpg"
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -33,6 +36,9 @@
 			"input": {
 				"prompt": "Transform this photo into a watercolor painting with soft brushstrokes",
 				"image": "https://replicate.delivery/xezq/IeNNble3XUqhpUZTd3CkYTUf8EgkFU1fl1Jnyive3B26MsGzC/tmp51dpln4i.jpeg"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/cloudflare-image-edit/style-transfer.jpg"
 			},
 			"code_snippets": [
 				{
@@ -48,6 +54,9 @@
 				"prompt": "Shift the color palette to cool blue and purple tones with a moody atmosphere",
 				"image": "https://replicate.delivery/xezq/MQpUhqkESIIQDlWUxtNcsznZLfUTmhEbCV3vdAZGHGPwwaMLA/tmpgl4gvv5n.jpeg"
 			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/cloudflare-image-edit/color-adjustment.jpg"
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -61,6 +70,9 @@
 			"input": {
 				"prompt": "Replace the background with a sunset over the ocean",
 				"image": "https://replicate.delivery/xezq/pUAcLnl2KmpoChqQ7emXoyqpV3ZBUcV6tVyovozvl4N8waMLA/tmppjbe5cua.jpeg"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/cloudflare-image-edit/background-change.jpg"
 			},
 			"code_snippets": [
 				{

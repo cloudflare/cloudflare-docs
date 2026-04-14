@@ -2,14 +2,12 @@
 	"model_id": "bytedance/seedream-4.5",
 	"provider_id": "bytedance",
 	"name": "Seedream 4.5",
-	"description": "Seedream 4.5 is ByteDance's visual generation model with cinematic aesthetics, strong spatial reasoning, and precise instruction following. It delivers production-ready outputs with high consistency across multiple images.",
+	"description": "Seedream 4.5 builds on 4.0 with multi-reference image support, batch generation, and sequential image generation.",
 	"task": "Text-to-Image",
 	"tags": [
 		"Image Generation",
-		"Image-to-Image",
-		"Style Transfer",
-		"High Resolution",
-		"4K"
+		"Multi-Reference",
+		"Batch"
 	],
 	"context_length": null,
 	"max_output_tokens": null,
@@ -122,14 +120,13 @@
 		}
 	],
 	"supports_async": false,
-	"external_info": null,
-	"terms": null,
+	"external_info": "https://github.com/bytedance",
+	"terms": "https://www.bytedance.com/en/legal",
 	"cover_image_url": "https://tjzk.replicate.delivery/models_models_featured_image/2e35026c-1f46-4bbe-a314-e27079e943fa/seedream-45-sm.jpg",
 	"metadata": {
-		"Max Resolution": "4K",
-		"Image-to-Image": "Yes",
-		"Sequential Generation": "Yes",
-		"Multi-Image Input": "Yes"
+		"Max Images": "15",
+		"Multi-Reference": "Yes",
+		"Sequential Generation": "Yes"
 	},
 	"created_at": "2026-04-08 22:06:07",
 	"default_example": null,

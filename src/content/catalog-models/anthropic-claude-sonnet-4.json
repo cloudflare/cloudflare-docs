@@ -2,7 +2,7 @@
 	"model_id": "anthropic/claude-sonnet-4",
 	"provider_id": "anthropic",
 	"name": "Claude Sonnet 4",
-	"description": "Claude Sonnet 4 delivers superior coding and reasoning while responding more precisely to instructions.",
+	"description": "Claude Sonnet 4 delivers superior coding and reasoning while responding more precisely to instructions, a significant upgrade over previous versions.",
 	"task": "Text Generation",
 	"tags": [
 		"LLM",

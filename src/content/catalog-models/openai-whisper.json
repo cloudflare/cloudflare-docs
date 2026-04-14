@@ -2,7 +2,7 @@
 	"model_id": "openai/whisper",
 	"provider_id": "openai",
 	"name": "Whisper",
-	"description": "Whisper is a general-purpose speech recognition model for multilingual speech recognition, translation, and language identification.",
+	"description": "Whisper is a general-purpose speech recognition model trained on a large dataset of diverse audio. It can perform multilingual speech recognition, translation, and language identification.",
 	"task": "Automatic Speech Recognition",
 	"tags": [
 		"Speech-to-Text",

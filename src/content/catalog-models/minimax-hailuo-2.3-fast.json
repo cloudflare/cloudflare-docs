@@ -2,7 +2,7 @@
 	"model_id": "minimax/hailuo-2.3-fast",
 	"provider_id": "minimax",
 	"name": "Hailuo 2.3 Fast",
-	"description": "A lower-latency version of Hailuo 2.3 that preserves core motion quality and visual consistency.",
+	"description": "A lower-latency version of Hailuo 2.3 that preserves core motion quality, visual consistency, and stylization while enabling faster iteration.",
 	"task": "Text-to-Video",
 	"tags": [
 		"Video Generation",

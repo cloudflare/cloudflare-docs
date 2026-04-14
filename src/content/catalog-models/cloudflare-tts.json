@@ -20,7 +20,8 @@
 				"text": "Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do."
 			},
 			"output": {
-				"audio": "https://replicate.delivery/xezq/R2xQJRJLDWJGDRvYSz9zeum7RpJFEpH6A25iH4fprme9cI1sA/tmpexun70rv.mp3"
+				"audio": "https://replicate.delivery/xezq/R2xQJRJLDWJGDRvYSz9zeum7RpJFEpH6A25iH4fprme9cI1sA/tmpexun70rv.mp3",
+				"model": "minimax/speech-2.8-hd"
 			},
 			"code_snippets": [
 				{
@@ -36,7 +37,8 @@
 				"text": "In the beginning, the universe was a singularity of infinite density. Then, in a fraction of a second, it expanded into everything we know today."
 			},
 			"output": {
-				"audio": "https://replicate.delivery/xezq/U9e8IeF9LcpG4E5qee6CesK57HNtT6UYoLU14GO1M41F0hUzC/tmp7m0h3h67.mp3"
+				"audio": "https://replicate.delivery/xezq/U9e8IeF9LcpG4E5qee6CesK57HNtT6UYoLU14GO1M41F0hUzC/tmp7m0h3h67.mp3",
+				"model": "minimax/speech-2.8-hd"
 			},
 			"code_snippets": [
 				{
@@ -52,7 +54,8 @@
 				"text": "Kubernetes orchestrates containerized applications across clusters of machines. It automates deployment, scaling, and management of these applications."
 			},
 			"output": {
-				"audio": "https://replicate.delivery/xezq/0JWI9gdWiBqWOZep1WnmxQXcvXQAHR6cY66kK4jnfEIjOkaWA/tmpeh528ksg.mp3"
+				"audio": "https://replicate.delivery/xezq/0JWI9gdWiBqWOZep1WnmxQXcvXQAHR6cY66kK4jnfEIjOkaWA/tmpeh528ksg.mp3",
+				"model": "minimax/speech-2.8-hd"
 			},
 			"code_snippets": [
 				{
@@ -68,7 +71,8 @@
 				"text": "Your order has been shipped and will arrive by Friday."
 			},
 			"output": {
-				"audio": "https://replicate.delivery/xezq/zbJfFwaWOQUYQabVlVYpIM91g8ZX5b8c0lZ5JTCsiBuSHSNLA/tmpvfksquv6.mp3"
+				"audio": "https://replicate.delivery/xezq/nz3BpNngZHLbOdRBrpEmQNQyvZ9e4X4YMbPmMfJSehKrJE2sA/tmpl4b_pz0c.mp3",
+				"model": "minimax/speech-2.8-hd"
 			},
 			"code_snippets": [
 				{

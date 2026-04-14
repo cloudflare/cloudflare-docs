@@ -2,7 +2,7 @@
 	"model_id": "google/gemini-3-flash",
 	"provider_id": "google",
 	"name": "Gemini 3 Flash",
-	"description": "Gemini 3 Flash is Google's fast multimodal model with frontier intelligence, superior search, and grounding.",
+	"description": "Gemini 3 Flash is Google's fast multimodal model with frontier intelligence, superior search, and grounding capabilities.",
 	"task": "Text Generation",
 	"tags": [
 		"LLM",

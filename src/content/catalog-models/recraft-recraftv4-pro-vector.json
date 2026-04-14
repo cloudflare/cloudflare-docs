@@ -2,7 +2,7 @@
 	"model_id": "recraft/recraftv4-pro-vector",
 	"provider_id": "recraft",
 	"name": "Recraft V4 Pro Vector",
-	"description": "Generate detailed, production-ready SVG vector graphics from text prompts, scalable to any size.",
+	"description": "Generate detailed, production-ready SVG vector graphics from text prompts with fine geometry, scalable to any size for print and design work.",
 	"task": "Text-to-Image",
 	"tags": [
 		"Image Generation",

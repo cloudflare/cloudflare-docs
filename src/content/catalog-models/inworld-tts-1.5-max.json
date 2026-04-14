@@ -223,14 +223,20 @@
 				"bit_rate": {
 					"description": "Bits per second of the audio. Only for compressed audio formats (mp3, opus). The default is 128,000.",
 					"type": "integer",
-					"minimum": -9007199254740991,
-					"maximum": 9007199254740991
+					"minimum": 0
 				},
 				"sample_rate": {
 					"description": "The synthesis sample rate in hertz. Accepts: 8000, 16000, 22050, 24000, 32000, 44100, 48000. The default is 48,000.",
 					"type": "integer",
-					"minimum": -9007199254740991,
-					"maximum": 9007199254740991
+					"enum": [
+						8000,
+						16000,
+						22050,
+						24000,
+						32000,
+						44100,
+						48000
+					]
 				},
 				"speaking_rate": {
 					"description": "Speaking rate/speed, in the range [0.5, 1.5]. The default is 1.0. We recommend using values above 0.8 to ensure high quality.",
@@ -261,11 +267,7 @@
 				}
 			},
 			"required": [
-				"text",
-				"voice_id",
-				"output_format",
-				"temperature",
-				"timestamp_type"
+				"text"
 			],
 			"additionalProperties": false
 		},

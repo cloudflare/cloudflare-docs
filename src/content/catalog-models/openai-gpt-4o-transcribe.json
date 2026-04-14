@@ -2,7 +2,7 @@
 	"model_id": "openai/gpt-4o-transcribe",
 	"provider_id": "openai",
 	"name": "GPT-4o Transcribe",
-	"description": "A speech-to-text model that uses GPT-4o to transcribe audio with improved accuracy and language recognition.",
+	"description": "A speech-to-text model that uses GPT-4o to transcribe audio with improved word error rate and better language recognition compared to original Whisper models.",
 	"task": "Automatic Speech Recognition",
 	"tags": [
 		"Speech-to-Text",
@@ -87,7 +87,11 @@
 	"external_info": "https://openai.com/",
 	"terms": "https://openai.com/policies/",
 	"cover_image_url": "https://tjzk.replicate.delivery/models_models_featured_image/b1aa75b9-0353-401e-a38f-5e129bee9658/4o-transcribe.webp",
-	"metadata": {},
+	"metadata": {
+		"Context Window": "16,000 tokens",
+		"Max Output": "2,000 tokens",
+		"Knowledge Cutoff": "Jun 01, 2024"
+	},
 	"created_at": "2026-04-13 16:45:23",
 	"default_example": null,
 	"code_snippets": [],

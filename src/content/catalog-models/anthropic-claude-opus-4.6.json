@@ -142,7 +142,7 @@
 		}
 	],
 	"supports_async": false,
-	"external_info": "https://docs.anthropic.com/en/docs/about-claude/models",
+	"external_info": "https://www.anthropic.com/claude/opus",
 	"terms": "https://www.anthropic.com/legal/commercial-terms",
 	"cover_image_url": "https://tjzk.replicate.delivery/models_models_cover_image/80b47428-86ad-41e9-839f-34f16440743b/cluade-opus46.jpeg",
 	"metadata": {

@@ -2,7 +2,7 @@
 	"model_id": "anthropic/claude-haiku-4.5",
 	"provider_id": "anthropic",
 	"name": "Claude Haiku 4.5",
-	"description": "Claude Haiku 4.5 delivers similar coding performance at one-third the cost and more than twice the speed.",
+	"description": "Claude Haiku 4.5 delivers similar levels of coding performance at one-third the cost and more than twice the speed of larger models.",
 	"task": "Text Generation",
 	"tags": [
 		"LLM",

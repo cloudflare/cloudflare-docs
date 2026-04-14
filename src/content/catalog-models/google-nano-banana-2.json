@@ -2,15 +2,12 @@
 	"model_id": "google/nano-banana-2",
 	"provider_id": "google",
 	"name": "Nano Banana 2",
-	"description": "Nano Banana 2 is Google's latest image generation model, built on Gemini 3.1 Flash Image. It's the high-efficiency counterpart to Nano Banana Pro — optimized for speed and high-volume use cases while still producing high-fidelity images. Key features include accurate text rendering with multilingual support, editing of existing images, support for up to 14 reference images, and multiple output resolutions from 512px to 4K. It can also connect to Google Search for real-time information grounding.",
+	"description": "Google's second-generation image generation model with improved quality and speed.",
 	"task": "Text-to-Image",
 	"tags": [
 		"Image Generation",
-		"Image Editing",
-		"Multi-Image",
-		"Text Rendering",
-		"4K",
-		"Google Search"
+		"Fast",
+		"High Quality"
 	],
 	"context_length": null,
 	"max_output_tokens": null,
@@ -91,16 +88,11 @@
 		}
 	],
 	"supports_async": false,
-	"external_info": null,
+	"external_info": "https://deepmind.google/technologies/imagen/",
 	"terms": "https://ai.google.dev/gemini-api/terms",
 	"cover_image_url": "https://tjzk.replicate.delivery/models_models_featured_image/80e7a89d-6163-4a92-927c-79ec74379079/nano-banana-2.png",
 	"metadata": {
-		"Base Model": "Gemini 3.1 Flash Image",
-		"Max Resolution": "4K",
-		"Max Reference Images": "14",
-		"Output Formats": "JPG, PNG",
-		"Google Search Integration": "Yes",
-		"Supported Aspect Ratios": "1:1, 2:3, 3:2, 3:4, 4:3, 4:5, 5:4, 9:16, 16:9, 21:9, 1:4, 4:1, 1:8, 8:1"
+		"Output Format": "JPEG"
 	},
 	"created_at": "2026-04-08 22:03:11",
 	"default_example": null,

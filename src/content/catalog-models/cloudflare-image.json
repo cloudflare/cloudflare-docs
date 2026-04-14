@@ -20,7 +20,7 @@
 				"prompt": "A golden retriever puppy playing in autumn leaves"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/KA5OzNkCrOJtIh1oP4zHfZ54ecjD7o58vOe9JKk602BsjhzsA/tmp367jh0go.jpeg"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/cloudflare-image/simple-prompt.jpg"
 			},
 			"code_snippets": [
 				{
@@ -36,7 +36,7 @@
 				"prompt": "A sleek wireless headphone on a minimalist white marble surface with soft studio lighting"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/MuTnfaz3tdXJBKcvAOuL7WqctAFmVqOGOMcR5p0h3zmAZ4MLA/tmpw0jj38k2.jpeg"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/cloudflare-image/product-photo.jpg"
 			},
 			"code_snippets": [
 				{
@@ -54,7 +54,7 @@
 				"height": 768
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/NBNYvHD5hXbYG9dZujSKvguWIJHDsIqiZPLkk4eCO9SFZ4MLA/tmp0m202ugj.jpeg"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/cloudflare-image/widescreen.jpg"
 			},
 			"code_snippets": [
 				{
@@ -71,7 +71,7 @@
 				"quality": "high"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/SzULhJaXKaLFFBSdRpw1gk5hhfbJ2t5NKKCvBMauCCULZ4MLA/tmpeer08c0i.jpeg"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/cloudflare-image/high-quality.jpg"
 			},
 			"code_snippets": [
 				{
@@ -88,7 +88,7 @@
 				"quality": "draft"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/mPBOQ86Rz7KHI9PFeO378bTFG6FhnTrS1FkrbzbkGjsOZ4MLA/tmptejjdcxz.jpeg"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/cloudflare-image/fast-draft.jpg"
 			},
 			"code_snippets": [
 				{

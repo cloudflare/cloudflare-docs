@@ -2,14 +2,12 @@
 	"model_id": "bytedance/seedream-4.0",
 	"provider_id": "bytedance",
 	"name": "Seedream 4.0",
-	"description": "Seedream 4.0 is ByteDance's image creation model combining text-to-image generation and editing in a single architecture. It supports up to 4K resolution, natural-language prompt editing, style transfer, and multi-reference batch workflows.",
+	"description": "Seedream 4.0 is ByteDance's image creation model that combines text-to-image generation and image editing into a single architecture, offering fast, high-resolution output up to 4K.",
 	"task": "Text-to-Image",
 	"tags": [
 		"Image Generation",
 		"Image Editing",
-		"High Resolution",
-		"4K",
-		"Style Transfer"
+		"High Resolution"
 	],
 	"context_length": null,
 	"max_output_tokens": null,
@@ -107,15 +105,12 @@
 		}
 	],
 	"supports_async": false,
-	"external_info": null,
-	"terms": null,
+	"external_info": "https://github.com/bytedance",
+	"terms": "https://www.bytedance.com/en/legal",
 	"cover_image_url": "https://tjzk.replicate.delivery/models_models_featured_image/53dda182-2998-4fde-b235-e1b2a09b0484/seedream4-sm.jpg",
 	"metadata": {
 		"Max Resolution": "4K",
-		"Unified Generation & Editing": "Yes",
-		"Multi-Reference Support": "Yes",
-		"Batch Output": "Yes",
-		"Style Transfer": "Yes"
+		"Editing": "Yes (single-sentence)"
 	},
 	"created_at": "2026-04-08 22:04:50",
 	"default_example": null,

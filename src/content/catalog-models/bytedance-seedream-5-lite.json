@@ -1,14 +1,14 @@
 {
 	"model_id": "bytedance/seedream-5-lite",
 	"provider_id": "bytedance",
-	"name": "Seedream 5.0 Lite",
-	"description": "Seedream 5.0 lite is ByteDance's image generation model with built-in reasoning, example-based editing, and deep domain knowledge. It supports up to 3K resolution and sequential batch generation for storyboards and character sheets.",
+	"name": "Seedream 5 Lite",
+	"description": "Seedream 5 Lite is a lighter, faster version of the Seedream 5 family with multi-reference and batch generation support.",
 	"task": "Text-to-Image",
 	"tags": [
 		"Image Generation",
-		"Image-to-Image",
-		"Reasoning",
-		"Example-Based Editing"
+		"Multi-Reference",
+		"Batch",
+		"Fast"
 	],
 	"context_length": null,
 	"max_output_tokens": null,
@@ -121,14 +121,13 @@
 		}
 	],
 	"supports_async": false,
-	"external_info": null,
-	"terms": null,
+	"external_info": "https://github.com/bytedance",
+	"terms": "https://www.bytedance.com/en/legal",
 	"cover_image_url": "https://tjzk.replicate.delivery/models_models_featured_image/a21f19af-c659-4598-a0f7-093d32011814/replicate-prediction-nmj3175dt.png",
 	"metadata": {
-		"Max Input Images": "14",
-		"Sequential Generation": "Yes",
-		"Output Formats": "PNG, JPEG",
-		"Supported Aspect Ratios": "1:1, 4:3, 3:4, 16:9, 9:16, 3:2, 2:3, 21:9"
+		"Max Images": "15",
+		"Multi-Reference": "Yes",
+		"Output Formats": "JPEG, PNG, WebP"
 	},
 	"created_at": "2026-04-08 22:07:41",
 	"default_example": null,

@@ -1,14 +1,13 @@
 {
 	"model_id": "black-forest-labs/flux-2-klein-9b",
 	"provider_id": "black-forest-labs",
-	"name": "FLUX.2 [klein] 9B",
-	"description": "FLUX.2 klein 9B is Black Forest Labs' distilled 9 billion parameter image generation model with sub-second inference for fast, high-quality text-to-image generation.",
+	"name": "FLUX 2 Klein 9B",
+	"description": "FLUX 2 Klein is Black Forest Labs' 9-billion parameter image generation model optimized for fast inference.",
 	"task": "Text-to-Image",
 	"tags": [
 		"Image Generation",
-		"Diffusion",
-		"Fast Inference",
-		"Distilled Model"
+		"Fast",
+		"Open Source"
 	],
 	"context_length": null,
 	"max_output_tokens": null,
@@ -104,13 +103,13 @@
 		}
 	],
 	"supports_async": false,
-	"external_info": null,
+	"external_info": "https://blackforestlabs.ai/",
 	"terms": "https://blackforestlabs.ai/terms-of-service/",
 	"cover_image_url": "https://replicate.delivery/xezq/KOro9UrHuZZdPNTR7fy0FnwcCeu4zPkRceff9yOUkYulVj9vC/out.jpg",
 	"metadata": {
-		"Parameter Count": "9 billion",
-		"Inference Speed": "Sub-second",
-		"Model Type": "Distilled Diffusion"
+		"Architecture": "Flow matching transformer",
+		"Parameters": "9B",
+		"Max Inference Steps": "4"
 	},
 	"created_at": "2026-04-08 22:09:44",
 	"default_example": null,

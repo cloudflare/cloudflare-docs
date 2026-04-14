@@ -2,7 +2,7 @@
 	"model_id": "minimax/speech-2.8-hd",
 	"provider_id": "minimax",
 	"name": "Speech 2.8 HD",
-	"description": "MiniMax Speech 2.8 HD for studio-grade audio with emotion control, 40+ language support, and voice cloning.",
+	"description": "MiniMax Speech 2.8 HD focuses on studio-grade audio generation with emotion control, multilingual support (40+ languages), and voice cloning.",
 	"task": "Text-to-Speech",
 	"tags": [
 		"TTS",

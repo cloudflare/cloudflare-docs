@@ -2,7 +2,7 @@
 	"model_id": "recraft/recraftv4",
 	"provider_id": "recraft",
 	"name": "Recraft V4",
-	"description": "Recraft V4 generates art-directed images with strong composition, accurate text rendering, and design taste.",
+	"description": "Recraft V4 generates art-directed images with strong composition, accurate text rendering, and design taste built in. Fast and cost-efficient at standard resolution.",
 	"task": "Text-to-Image",
 	"tags": [
 		"Image Generation",

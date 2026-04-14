@@ -2,14 +2,11 @@
 	"model_id": "google/nano-banana",
 	"provider_id": "google",
 	"name": "Nano Banana",
-	"description": "Nano Banana (Gemini 2.5 Flash Image) is Google's state-of-the-art image generation and editing model designed for fast, conversational, and multi-turn creative workflows. Key features include character and style consistency across multiple prompts, multi-image fusion to blend up to 3 images, conversational editing with natural language, and visual reasoning capabilities. It generates images 2-3x faster than comparable models while maintaining high quality.",
+	"description": "Google's fast image generation model producing high-quality images from text prompts.",
 	"task": "Text-to-Image",
 	"tags": [
 		"Image Generation",
-		"Image Editing",
-		"Conversational",
-		"Multi-Image",
-		"Character Consistency"
+		"Fast"
 	],
 	"context_length": null,
 	"max_output_tokens": null,
@@ -105,16 +102,11 @@
 		}
 	],
 	"supports_async": false,
-	"external_info": null,
+	"external_info": "https://deepmind.google/technologies/imagen/",
 	"terms": "https://ai.google.dev/gemini-api/terms",
 	"cover_image_url": "https://tjzk.replicate.delivery/models_models_featured_image/ed879e99-71b5-4689-bed3-e7305e35a28a/this.png",
 	"metadata": {
-		"Base Model": "Gemini 2.5 Flash Image",
-		"Max Resolution": "4K",
-		"Max Input Images": "3",
-		"Speed": "2-3x faster than comparable models",
-		"Output Formats": "JPG, PNG",
-		"SynthID Watermark": "Yes"
+		"Output Format": "JPEG"
 	},
 	"created_at": "2026-04-08 21:58:29",
 	"default_example": null,

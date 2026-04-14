@@ -25,6 +25,9 @@
 				],
 				"max_tokens": 100
 			},
+			"output": {
+				"text": "Paris"
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -48,6 +51,9 @@
 				],
 				"max_tokens": 500,
 				"temperature": 0.7
+			},
+			"output": {
+				"text": "# Pasta Aglio e Olio\n\n**Serves:** 2\n\n**Ingredients:**\n\n- 200 g spaghetti\n- 60 ml extra virgin olive oil\n- 4 garlic cloves, thinly sliced\n- 1/4 tsp dried chili flakes\n- Fresh parsley, chopped\n- Salt to taste\n\n**Method:**\n\n1. Cook spaghetti in salted boiling water until al dente. Reserve 120 ml pasta water before draining.\n2. Heat olive oil in a large pan over medium-low heat.\n3. Add garlic and chili flakes, cook gently 2-3 minutes until garlic is golden (don't burn).\n4. Add drained pasta and 60 ml pasta water, toss well.\n5. Add more pasta water if needed for a silky sauce.\n6. Finish with parsley and serve immediately."
 			},
 			"code_snippets": [
 				{
@@ -77,6 +83,9 @@
 				"max_tokens": 500,
 				"temperature": 0.5
 			},
+			"output": {
+				"text": "UDP is preferred when:\n\n1. **Speed matters more than reliability** - Video streaming, VoIP calls, online gaming\n2. **Real-time data is more important than ordered data** - Late packets in video calls are useless, so retransmission delays are worse than losing them\n3. **Broadcasting/multicasting** - TCP doesn't support sending to multiple recipients efficiently\n4. **Simple request-response queries** - Like DNS, where you can just resend if needed\n5. **Connection overhead is too high** - For small, frequent messages where establishing a connection costs too much\n6. **Loss tolerance is acceptable** - Applications that can tolerate some dropped packets\n\n**Examples:**\n\n- Video/audio calls (Zoom, Skype)\n- Live streaming\n- Online multiplayer games\n- DNS queries\n- SNMP monitoring\n- DHCP\n\n**Rule of thumb:** If your application needs every packet delivered correctly and in order, use TCP. If it needs to be fast and can handle occasional loss, use UDP."
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -96,6 +105,9 @@
 				],
 				"max_tokens": 100,
 				"temperature": 0.9
+			},
+			"output": {
+				"text": "The horizon drinks the dying light,\nWhile waves kiss shore in gold and red,\nThe ocean breathes its endless tide,\nAs day surrenders to its bed."
 			},
 			"code_snippets": [
 				{

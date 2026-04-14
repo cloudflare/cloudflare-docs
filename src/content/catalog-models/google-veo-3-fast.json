@@ -2,14 +2,12 @@
 	"model_id": "google/veo-3-fast",
 	"provider_id": "google",
 	"name": "Veo 3 Fast",
-	"description": "Veo 3 Fast is a faster, cheaper version of Google's Veo 3 video model with native audio generation. Ideal for previews, social media clips, and product shots while maintaining state-of-the-art quality.",
+	"description": "A faster version of Veo 3 optimized for lower latency video generation with audio support.",
 	"task": "Text-to-Video",
 	"tags": [
 		"Video Generation",
-		"Audio Generation",
-		"Fast",
-		"Social Media",
-		"Preview"
+		"Audio",
+		"Fast"
 	],
 	"context_length": null,
 	"max_output_tokens": null,
@@ -98,15 +96,13 @@
 		}
 	],
 	"supports_async": false,
-	"external_info": "https://deepmind.google/models/veo/",
-	"terms": null,
-	"cover_image_url": "https://replicate.delivery/xezq/qNNuYsFnfdRifE3GCBLeG2xD3Xhp37PoRyjHdmeylrPme5VzC/tmp5jporwiu.png",
+	"external_info": "https://deepmind.google/technologies/veo/",
+	"terms": "https://ai.google.dev/gemini-api/terms",
+	"cover_image_url": "https://tjzk.replicate.delivery/models_models_featured_image/9f8c8990-2378-4a72-877e-6a0f09c66f3f/replicate-veo-3-fast.webp",
 	"metadata": {
-		"Max Resolution": "720p",
-		"Frame Rate": "24 FPS",
-		"Max Duration": "6 seconds",
-		"Native Audio": "Yes",
-		"Supported Aspect Ratios": "16:9, 9:16"
+		"Max Duration": "8 seconds",
+		"Audio Generation": "Yes",
+		"Resolutions": "720p, 1080p"
 	},
 	"created_at": "2026-04-08 21:38:24",
 	"default_example": null,

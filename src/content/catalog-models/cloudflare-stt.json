@@ -20,7 +20,8 @@
 				"audio": "https://cdn.openai.com/API/docs/audio/alloy.wav"
 			},
 			"output": {
-				"text": "The sun rises in the east and sets in the west. This simple fact has been observed by humans for thousands of years."
+				"text": "The sun rises in the east and sets in the west. This simple fact has been observed by humans for thousands of years.",
+				"model": "openai/gpt-4o-transcribe"
 			},
 			"code_snippets": [
 				{
@@ -36,7 +37,8 @@
 				"audio": "https://cdn.openai.com/API/docs/audio/echo.wav"
 			},
 			"output": {
-				"text": "In the heart of the city, there is a large park where people go to relax and enjoy nature. The park has a beautiful pond with ducks and swans."
+				"text": "In the heart of the city, there is a large park where people go to relax and enjoy nature. The park has a beautiful pond with ducks and swans.",
+				"model": "openai/gpt-4o-transcribe"
 			},
 			"code_snippets": [
 				{
@@ -52,7 +54,8 @@
 				"audio": "https://cdn.openai.com/API/docs/audio/nova.wav"
 			},
 			"output": {
-				"text": "In the kitchen, the aroma of freshly baked bread filled the air. The loaves were golden brown and crusty on the outside and soft and warm on the inside."
+				"text": "In the kitchen, the aroma of freshly baked bread filled the air. The loaves were golden brown and crusty on the outside and soft and warm on the inside.",
+				"model": "openai/gpt-4o-transcribe"
 			},
 			"code_snippets": [
 				{

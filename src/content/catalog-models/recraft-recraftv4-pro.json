@@ -2,7 +2,7 @@
 	"model_id": "recraft/recraftv4-pro",
 	"provider_id": "recraft",
 	"name": "Recraft V4 Pro",
-	"description": "Recraft V4 Pro generates high-resolution, art-directed images at 2048px+ with strong composition and text rendering.",
+	"description": "Recraft V4 Pro generates high-resolution, art-directed images at 2048px+ with strong composition, text rendering, and design taste. Built for print and production work.",
 	"task": "Text-to-Image",
 	"tags": [
 		"Image Generation",

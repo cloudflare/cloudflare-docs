@@ -20,6 +20,9 @@
 			"input": {
 				"audio_url": "https://cdn.openai.com/API/docs/audio/alloy.wav"
 			},
+			"output": {
+				"text": "The sun rises in the east and sets in the west. This simple fact has been observed by humans for thousands of years."
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -33,6 +36,9 @@
 			"input": {
 				"audio_url": "https://cdn.openai.com/API/docs/audio/echo.wav",
 				"language_code": "en"
+			},
+			"output": {
+				"text": "In the heart of the city, there is a large park where people go to relax and enjoy nature. The park has a beautiful pond with ducks and swans."
 			},
 			"code_snippets": [
 				{
@@ -53,6 +59,9 @@
 					"load balancer"
 				]
 			},
+			"output": {
+				"text": "In the kitchen, the aroma of freshly baked bread filled the air. The loaves were golden brown and crusty on the outside and soft and warm on the inside."
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -66,6 +75,9 @@
 			"input": {
 				"audio_url": "https://cdn.openai.com/API/docs/audio/onyx.wav",
 				"speaker_labels": true
+			},
+			"output": {
+				"text": "The train chugged along the tracks, carrying passengers to their destinations. The rhythmic sound of the wheels on the rails was soothing."
 			},
 			"code_snippets": [
 				{
@@ -129,7 +141,7 @@
 					"description": "Expected number of speakers for speaker diarization.",
 					"type": "integer",
 					"minimum": 1,
-					"maximum": 9007199254740991
+					"maximum": 50
 				},
 				"auto_chapters": {
 					"description": "Enable automatic chapter detection.",
@@ -198,14 +210,12 @@
 				"audio_start_from": {
 					"description": "Timestamp (in milliseconds) to start transcription from.",
 					"type": "integer",
-					"minimum": 0,
-					"maximum": 9007199254740991
+					"minimum": 0
 				},
 				"audio_end_at": {
 					"description": "Timestamp (in milliseconds) to end transcription at.",
 					"type": "integer",
-					"minimum": 0,
-					"maximum": 9007199254740991
+					"minimum": 0
 				},
 				"word_boost": {
 					"description": "Array of words to boost recognition accuracy (legacy - use keyterms_prompt instead).",

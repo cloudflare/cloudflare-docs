@@ -2,18 +2,16 @@
 	"model_id": "moonshotai/kimi-k2.5",
 	"provider_id": "moonshotai",
 	"name": "Kimi K2.5",
-	"description": "Kimi K2.5 is a native multimodal language model from Moonshot AI that understands images and text. It features strong vision understanding, advanced coding capabilities, and supports both thinking and instant response modes.",
-	"task": "Image-Text-to-Text",
+	"description": "Kimi K2.5 is Moonshot AI's language model with strong coding, reasoning, and multilingual capabilities.",
+	"task": "Text Generation",
 	"tags": [
 		"LLM",
-		"Multimodal",
-		"Vision",
 		"Coding",
 		"Reasoning",
-		"Agentic"
+		"Multilingual"
 	],
-	"context_length": 256000,
-	"max_output_tokens": 96000,
+	"context_length": 128000,
+	"max_output_tokens": 8192,
 	"schema_version": "1.0.0",
 	"pricing": {},
 	"examples": [
@@ -119,17 +117,11 @@
 		}
 	],
 	"supports_async": false,
-	"external_info": null,
-	"terms": "https://platform.moonshot.ai/terms  ",
+	"external_info": "https://kimi.moonshot.cn/",
+	"terms": "https://kimi.moonshot.cn/terms",
 	"cover_image_url": "https://tjzk.replicate.delivery/models_models_featured_image/3a15b232-3fd0-49e9-b514-10cf7fdef852/moonshot-kimik25.png",
 	"metadata": {
-		"Architecture": "Mixture-of-Experts",
-		"Activated Parameters": "32 billion",
-		"Total Parameters": "1 trillion",
-		"Training Data": "15 trillion tokens",
-		"Quantization": "INT4",
-		"Thinking Mode": "Yes",
-		"Max Thinking Tokens": "96,000"
+		"Architecture": "Transformer"
 	},
 	"created_at": "2026-04-08 21:32:29",
 	"default_example": null,

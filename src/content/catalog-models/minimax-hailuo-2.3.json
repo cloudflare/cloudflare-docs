@@ -2,7 +2,7 @@
 	"model_id": "minimax/hailuo-2.3",
 	"provider_id": "minimax",
 	"name": "Hailuo 2.3",
-	"description": "A high-fidelity video generation model optimized for realistic human motion, cinematic VFX, and strong prompt adherence.",
+	"description": "A high-fidelity video generation model optimized for realistic human motion, cinematic VFX, expressive characters, and strong prompt and style adherence across text-to-video and image-to-video workflows.",
 	"task": "Text-to-Video",
 	"tags": [
 		"Video Generation",

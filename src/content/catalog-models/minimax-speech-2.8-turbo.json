@@ -2,7 +2,7 @@
 	"model_id": "minimax/speech-2.8-turbo",
 	"provider_id": "minimax",
 	"name": "Speech 2.8 Turbo",
-	"description": "MiniMax Speech 2.8 Turbo for natural, expressive speech with voice cloning, emotion control, and 40+ languages at faster speeds.",
+	"description": "MiniMax Speech 2.8 Turbo turns text into natural, expressive speech with voice cloning, emotion control, and 40+ language support at faster speeds.",
 	"task": "Text-to-Speech",
 	"tags": [
 		"TTS",

@@ -25,6 +25,9 @@
 					}
 				]
 			},
+			"output": {
+				"text": "The **three laws of thermodynamics** are:\n\n1. **First Law: Conservation of Energy**  \n   Energy cannot be created or destroyed, only transferred or changed in form.  \n   - In thermodynamics:  \n     **ΔU = Q − W**  \n     where **ΔU** is change in internal energy, **Q** is heat added to the system, and **W** is work done by the system.\n\n2. **Second Law: Entropy Increases**  \n   In any natural process, the total entropy of an isolated system tends to increase or stay the same; it never decreases.  \n   - This is why heat flows from hot objects to cold objects, not the other way around spontaneously.\n\n3. **Third Law: Absolute Zero Entropy**  \n   As temperature approaches **absolute zero (0 K)**, the entropy of a perfect crystal approaches a minimum value, often taken as **zero**.  \n   - Also, it is impossible to reach absolute zero exactly through a finite number of steps.\n\nIf you'd like, I can also give you a simple everyday example for each law."
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -47,6 +50,9 @@
 					}
 				],
 				"temperature": 0.3
+			},
+			"output": {
+				"text": "Use Python's built-in `json` module.\n\n### Example\n```python\nimport json\n\nwith open(\"data.json\", \"r\") as file:\n    data = json.load(file)\n\nprint(data)\n```\n\n### What it does\n- `open(\"data.json\", \"r\")` opens the file for reading\n- `json.load(file)` parses the JSON file into Python objects:\n  - JSON object → `dict`\n  - JSON array → `list`\n  - strings/numbers/booleans/null → Python equivalents\n\n### If you already have JSON as a string\n```python\nimport json\n\njson_string = '{\"name\": \"Alice\", \"age\": 30}'\ndata = json.loads(json_string)\n\nprint(data[\"name\"])\n```\n\nIf you want, I can also show how to handle errors when the file is missing or the JSON is invalid."
 			},
 			"code_snippets": [
 				{
@@ -75,6 +81,9 @@
 				],
 				"max_tokens": 500
 			},
+			"output": {
+				"text": "Absolutely — if you’re driving from San Francisco to Los Angeles, there are some great stops depending on whether you want a **scenic coastal trip** or a **faster inland route**.\n\n## Best stops on the coastal route (CA-1 / Highway 1)\nThis is the most scenic option, but it takes much longer than the inland drive.\n\n- **Santa Cruz** – beach boardwalk, ocean views, and a fun downtown\n- **Monterey** – famous aquarium and Cannery Row\n- **Carmel-by-the-Sea** – cute village, galleries, and beaches\n- **Big Sur** – dramatic cliffs, Bixby Bridge, and iconic coastline\n- **Morro Bay** – relaxed harbor town with Morro Rock\n- **San Luis Obispo** – good lunch stop, wineries nearby, and Bubblegum Alley\n- **Santa Barbara** – beautiful mission, beaches, and great food\n\n## Good stops if you want to keep it shorter\nIf you take I-5 or mix highway and coast:\n\n- **Pinnacles National Park** – a nice detour for hiking\n- **Paso Robles** – wine country and a good overnight stop\n- **Solvang** – Danish-style town with bakeries and shops\n- **Ventura** – beach town with a laid-back vibe\n- **Malibu** – scenic beaches closer to LA\n\n## My top picks\nIf I had to narrow it down:\n1. **Monterey**\n2. **Big Sur**\n3. **Santa Barbara**\n4. **Solvang**\n5. **Morro Bay**\n\n## Quick question\nDo you want:\n- a **1-day drive with a few stops**, or\n- a **2-3 day road trip itinerary** with overnight stays?\n\nI can map out a full route for either one."
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -94,6 +103,9 @@
 				],
 				"temperature": 0.8,
 				"max_tokens": 300
+			},
+			"output": {
+				"text": "The rain had stopped an hour ago, but the city still looked as though it was holding its breath.\n\nDetective Mara Vale stood in the middle of the empty train platform, her coat damp at the hem, her flashlight angled toward the thing that had brought her here: a single white glove lying neatly beside the yellow safety line.\n\nIt was not the glove itself that unsettled her. It was the way it had been placed.\n\nNo scuffs. No drag marks. No blood. Just a spotless glove, palm up, as if someone had set it down for her to find.\n\nMara crouched, careful not to touch it. The leather was fine, expensive, and impossibly cold. On the inside seam, where the lining had split from age, she saw a row of tiny stitched numbers.\n\nNot a size.\n\nA code.\n\nShe frowned and looked down the platform, where the tunnel mouth yawned black and silent. Three minutes earlier, the station guard had sworn no one had come through here since midnight. Yet the glove was fresh, and inside it—pressed so tightly she almost missed it—was a folded scrap of paper.\n\nMara reached for her notebook.\n\nWhatever she was looking at, it wasn't lost.\n\nIt was left behind on purpose."
 			},
 			"code_snippets": [
 				{
