@@ -76,6 +76,20 @@ This means:
 
 The exact behavior differs per resolver, but to estimate how long you need to wait, query your zone's SOA record and look at the last value (the `MINIMUM` field). You must wait for that interval to pass since the last `NXDOMAIN` query before the new record will consistently resolve.
 
+You can check if a negative cache entry is active by querying for the non-existent (or newly created) hostname:
+
+```sh
+dig +noall +answer +authority mynewrecord.example.com
+```
+
+If the record is still negatively cached, the response will include the zone's SOA record in the authority section with a TTL indicating how many seconds remain before the entry expires:
+
+```txt
+example.com.		256	IN	SOA	...
+```
+
+In this example, the negative cache response will continue for 256 more seconds.
+
 To verify the record resolves correctly, you can purge the cache for public resolvers and query the record. If this works, other resolvers will eventually start resolving as well:
 
 - [Purge 1.1.1.1 cache](https://one.one.one.one/purge-cache/)
