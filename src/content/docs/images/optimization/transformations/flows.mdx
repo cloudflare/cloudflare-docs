@@ -1,0 +1,81 @@
+---
+pcx_content_type: reference
+title: Create transformation flows
+sidebar:
+  order: 4
+---
+import { Description, Render } from "~/components";
+
+<Description>
+	Flows are automated rules that apply image optimization without requiring URL changes or custom code.
+</Description>
+
+When optimizing remote images, you can create flows to define how Cloudflare should handle image requests on your zone.
+
+Each flow matches trigger conditions with a set of actions that Images automatically applies to each qualifying request.
+
+## Types of flows
+
+You can use pre-built flows to handle migrations from other image optimization services (like Fastly) create your own custom flows.
+
+A **provider flow** acts as a translation layer to map image URLs from another image optimization service to the Cloudflare equivalent. Currently, Cloudflare supports flows for Fastly Image Optimizer.
+
+When you set up a provider flow, you can continue serving images using another provider's URL structure and optimization parameters.
+
+**Custom flows** let you define conditions (such as file extension or URL path) and a set of optimization actions to automatically apply. This is well-suited for situations where you want to optimize your images broadly and consistently, such as:
+
+- Automatically converting all images to modern formats like AVIF or WebP across your entire site.
+- Resizing images based on device so that mobile users receive appropriately sized images quickly.
+- Enforcing a consistent size and fit behavior for all images in a particular directory, such as 100x100 images for images where the path contains `/thumbnail`.
+
+## How flows work
+
+Before setting up a flow, make sure that transformations are turned on for your zone. In the Cloudflare dashboard, go to **Images** > **Transformations**.
+
+When an image request is made on your zone, Cloudflare evaluates your configured flows in order. If the request matches a flow's condition, then it is routed through Cloudflare's image processing pipeline. If a request matches more than one flow, then only the first matching flow is applied.
+
+Flows are evaluated after standard HTTP redirect rules in your request lifecycle.
+
+## Setting up a provider flow
+
+Currently, Cloudflare supports flows to handle migrations from Fastly Image Optimizer. To add a provider flow:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Images** > **Transformations** and select the zone where you want to enable the provider flow.
+3. Select the **Automation** tab, then select **Add provider flow**.
+4. Choose **Fastly** as the provider.
+5. Select **Save**.
+
+When you enable the provider flow for Fastly, Cloudflare automatically handles differences in parameter naming and behavior. For example:
+
+- Fastly's `brightness` parameter accepts a range from `-100` to `100`, while Cloudflare's `brightness` works as a multiplier. The value will be scaled accordingly to match the intended result.
+- Fastly's `orient` parameter maps to Cloudflare's `flip` and `rotate` parameters, which handle the same behavior separately.
+
+Your existing URLs will continue to work as-is, and end-users will see no change in the image URLs they receive.
+
+## Setting up a custom flow
+
+### 1. Create a new flow
+
+In the Cloudflare dashboard, go to [**Images** > **Transformations**](https://dash.cloudflare.com/?to=/:account/images/transformations) and select the zone where you want to enable your flow.
+
+Then, select the **Automation** tab, and select **Add custom flow**. This will open a side panel where you can configure your flow.
+
+![Custom flow configuration panel](~/assets/images/images/custom-flow.png)
+
+### 2. Configure the conditions
+
+A custom flow is triggered when an incoming request matches one or more of the following conditions:
+
+- **File extension** — Match requests for all image formats or only specific file extensions, such as `.jpg`, `.png`, or `.gif`.
+- **URL path** — Match requests where the URL path matches a pattern you define, such as `/images/*` or `/assets/thumbnails/*`.
+
+Define the conditions that will trigger this flow to occur. You can combine conditions so that a flow triggers only when all of them are met.
+
+### 3. Configure the actions
+
+Next, define the optimization operations that should be performed when the flow is triggered. Multiple actions can be applied within a single flow.
+
+### 4. Save your flow
+
+Select **Save** on the side panel to add your custom flow, then select **Save** on your list of flows to make your flow live.
