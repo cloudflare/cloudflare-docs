@@ -10,7 +10,7 @@ export const changelogSchema = (_context: SchemaContext) =>
 			.boolean()
 			.default(false)
 			.describe(
-				"Boolean value to ensure a future-dated entry is always published. Otherwise, the entry will only be published after the date in its frontmatter.",
+				"Boolean value to describe whether a future-dated entry is published. If false, the entry will only be published after the date in its frontmatter.",
 			),
 		products: z
 			.array(reference("directory"))
