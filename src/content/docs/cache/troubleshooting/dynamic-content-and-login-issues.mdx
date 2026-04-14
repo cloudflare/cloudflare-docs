@@ -32,7 +32,7 @@ In this configuration, Cloudflare can cache the response and remove the `Set-Coo
 
 Check the response for the login page or other dynamic route.
 
-If you see both of the following, the page is probably cached when it should not be:
+If you see either of the following, the page is probably cached when it should not be:
 
 - `CF-Cache-Status: HIT` or `CF-Cache-Status: EXPIRED`
 - No `Set-Cookie` header in the response, even though your origin usually sets one
@@ -55,7 +55,7 @@ Instead:
 1. Restrict **Eligible for cache** or **Cache Everything** to static paths only.
 2. Add a more specific Cache Rule that bypasses or disables caching for routes such as `/login`, `/account`, `/cart`, `/checkout`, and application API paths.
 3. If the origin must control caching, remove any Edge TTL override that forces the page to be cached.
-4. Verify the fixed response now returns `CF-Cache-Status: DYNAMIC`, `MISS`, or `BYPASS`, and preserves `Set-Cookie`.
+4. Verify the fixed response now returns `CF-Cache-Status: DYNAMIC` or `BYPASS`, and preserves `Set-Cookie`.
 
 For more information on cookie behavior, refer to [Interaction of Set-Cookie response header with Cache](/cache/concepts/cache-behavior/#interaction-of-set-cookie-response-header-with-cache).
 
