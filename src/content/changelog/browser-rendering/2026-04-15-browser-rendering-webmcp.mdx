@@ -3,10 +3,12 @@ title: "WebMCP support now available"
 description: "AI agents can now discover and execute website tools directly using WebMCP, enabling faster and more reliable browser automation."
 products:
   - browser-rendering
-date: 2026-04-15
+date: 2026-04-15T10:00:00Z
 ---
 
-Browser Rendering now supports [WebMCP](/browser-rendering/features/webmcp/) (Web Model Context Protocol), a browser API that lets websites expose structured tools for AI agents to discover and execute directly. Instead of slow screenshot-analyze-click loops, agents can call website functions like `searchFlights()` or `bookTicket()` with typed parameters, making browser automation faster, more reliable, and less fragile.
+Browser Run now supports [WebMCP](/browser-rendering/features/webmcp/) (Web Model Context Protocol), a browser API that lets websites expose structured tools for AI agents to discover and execute directly. Instead of slow screenshot-analyze-click loops, agents can call website functions like `searchFlights()` or `bookTicket()` with typed parameters, making browser automation faster, more reliable, and less fragile.
+
+![Browser Run lab session showing WebMCP tools being discovered and executed in the Chrome DevTools console to book a hotel](/images/browser-rendering/webMCP.gif)
 
 With WebMCP, you can:
 
@@ -14,11 +16,15 @@ With WebMCP, you can:
 - **Execute tools directly** - Call `navigator.modelContextTesting.executeTool()` with typed parameters
 - **Handle human-in-the-loop interactions** - Some tools pause for user confirmation before completing sensitive actions
 
-WebMCP is currently available through Lab sessions, which use Chrome beta with experimental features enabled. To start a WebMCP session, add `lab=true` to your `/devtools/browser` request:
+WebMCP requires Chrome beta features. We have an experimental pool with browser instances running Chrome beta so you can test emerging browser features before they reach stable Chrome. To start a WebMCP session, add `lab=true` to your `/devtools/browser` request:
 
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/devtools/browser?lab=true&keep_alive=300000" \
   -H "Authorization: Bearer {api_token}"
 ```
+
+Combined with the recently launched [CDP endpoint](/changelog/post/2026-04-10-browser-rendering-cdp-endpoint/), AI agents can also use WebMCP. Connect an MCP client to Browser Run via CDP, and your agent can discover and call website tools directly. Here's the same hotel booking demo, this time driven by an AI agent through OpenCode:
+
+![Browser Run Live View showing an AI agent navigating a hotel booking site in real time](/images/browser-rendering/webMCPagent.gif)
 
 For a step-by-step guide, refer to the [WebMCP documentation](/browser-rendering/features/webmcp/).

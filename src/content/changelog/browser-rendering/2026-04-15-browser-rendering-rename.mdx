@@ -1,0 +1,25 @@
+---
+title: "Browser Rendering is now Browser Run"
+description: "We're renaming Browser Rendering to Browser Run and shipping Live View, Human in the Loop, Session Recordings, WebMCP, 4x higher limits, and more."
+products:
+  - browser-rendering
+date: 2026-04-15T12:00:00Z
+---
+
+We're renaming [Browser Rendering](/browser-rendering/) to **Browser Run**. The name Browser Rendering never fully captured what the product does. Browser Run lets you run full browser sessions on Cloudflare's global network, drive them with code or AI, record and replay sessions, crawl pages for content, debug in real time, and let humans intervene when your agent needs help.
+
+Along with the rename, we're shipping several new features:
+
+- **[Live View, Human in the Loop, and Session Recordings](/changelog/post/2026-04-15-br-observability/)** - See what your agent is doing in real time, let humans step in when automation hits a wall, and replay any session after it ends.
+- **[WebMCP](/changelog/post/2026-04-15-browser-rendering-webmcp/)** - Websites can expose structured tools for AI agents to discover and call directly, replacing slow screenshot-analyze-click loops.
+- **4x higher concurrency limits** - Concurrency limits for Workers Paid plans have been significantly increased:
+  - **Concurrent browsers per account**: 30 → **120 per account** (Browser Sessions)
+  - **New browser instances**: 30 per minute → **1 per second** (Browser Sessions)
+
+TO DO: ADD SCREENSHOT FOR LIMIT INCREASE VISUAL
+
+Rate limits across the [limits page](/browser-rendering/limits/) are now expressed in per-second terms, matching how they are enforced. No action is needed to benefit from the higher limits.
+
+For the full story, read [Browser Run: Give your agents a browser](https://blog.cloudflare.com/browser-run-for-ai-agents).
+
+All existing API endpoints, documentation URLs, and code references continue to work. No action is required for the rename.
