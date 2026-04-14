@@ -1,7 +1,7 @@
 ---
-title: Cloudflare Images
+title: Images
 pcx_content_type: overview
-description: Streamline your image infrastructure with Cloudflare Images. Store, transform, and deliver images efficiently using Cloudflare's global network.
+description: Images is a platform for creating scalable and reliable image pipelines, designed to help developers deploy media-rich applications faster.
 sidebar:
   order: 1
 head:
@@ -9,63 +9,94 @@ head:
     content: Overview
 ---
 
-import { CardGrid, Description, Feature, LinkTitleCard, Plan } from "~/components"
+import {
+	CardGrid,
+	Description,
+	Feature,
+	LinkCard,
+	LinkTitleCard,
+	Plan,
+} from "~/components";
 
 <Description>
-
-Store, transform, optimize, and deliver images at scale
+	Create scalable and reliable image pipelines without managing complex insfrastructure.
 </Description>
 
-<Plan type="all" />
+<Plan type="workers-all" />
 
-Cloudflare Images provides an end-to-end solution designed to help you streamline your image infrastructure from a single API and runs on [Cloudflare's global network](https://www.cloudflare.com/network/).
+Images is designed to help developers deploy media-rich applications faster.
 
-There are two different ways to use Images:
+With Images, you can dynamically resize, optimize, and manipulate images at Cloudflare's edge to serve the optimal version for each user in real time — without manually creating or storing multiple copies of the same image for different use cases, browsers, or device breakpoints.
 
-- **Efficiently store and deliver images.** You can upload images into Cloudflare Images and dynamically deliver multiple variants of the same original image.
-- **Optimize images that are stored outside of Images** You can make transformation requests to optimize any publicly available image on the Internet.
+![Use Images to optimize images for delivery](~/assets/images/images/overview.png)
 
-Cloudflare Images is available on both [Free and Paid plans](/images/pricing/). By default, all users have access to the Images Free plan, which includes limited usage of the transformations feature to optimize images in remote sources.
+## Get started with Images
 
-:::note[Image Resizing is now available as transformations]
+There are two distinct ways that you can use Images:
 
-All Image Resizing features are available as transformations with Images. Each unique transformation is billed only once per calendar month.
+<CardGrid>
+	<LinkCard
+		title="Use your own storage"
+		description="Transform, optimize, and deliver remote images that are stored anywhere, including in R2."
+		href="/images/optimization/transformations/overview/"
+	/>
+	<LinkCard
+		title="Use Images to host your assets"
+		description="Streamline your development with our fully managed solution for storage, optimization, and delivery."
+		href="/images/optimization/hosted-images/"
+	/>
+</CardGrid>
 
-If you are using a legacy plan with Image Resizing, visit the [dashboard](https://dash.cloudflare.com/) to switch to an Images plan.
+If you’re new to Images, start here to learn the essentials:
 
-:::
+- Understand how <a href="/images/get-started/introduction">image optimization</a> improves your user experience and website performance.
+- Familiarize yourself with the <a href="/images/get-started/key-concepts">terminology</a>.
+- Browse the various <a href="/images/optimization/features">features for optimizing and manipulating images</a>.
 
-***
+---
 
 ## Features
 
-<Feature header="Storage" href="/images/upload-images/">
-Use Cloudflare’s edge network to store your images.
-
-
+<Feature header="Storage" href="/images/storage/upload-images/methods">
+	Use Cloudflare’s edge network to store your images.
 </Feature>
 
-<Feature header="Direct creator upload" href="/images/upload-images/direct-creator-upload/">
-Accept uploads directly and securely from your users by generating a one-time token.
+<Feature
+	header="Direct creator upload"
+	href="/images/storage/upload-images/direct-creator-upload/"
+	cta=""
+>
+	Accept uploads directly and securely from your users by generating a one-time
+	token.
 </Feature>
 
-<Feature header="Variants" href="/images/transform-images" cta="Create variants by transforming images">
-Add up to 100 variants to specify how images should be resized for various use cases.
+<Feature
+	header="Variants"
+	href="/images/optimization/hosted-images/create-variants/"
+	cta="Create variants by transforming images"
+>
+	Add up to 100 variants to specify how images should be resized for various use
+	cases.
 </Feature>
 
-<Feature header="Signed URLs" href="/images/manage-images/serve-images/serve-private-images" cta="Serve private images">
-Control access to your images by using signed URL tokens.
+<Feature
+	header="Signed URLs"
+	href="/images/optimization/hosted-images/serve-private-images/"
+	cta="Serve private images"
+>
+	Control access to your images by using signed URL tokens.
 </Feature>
 
-***
+---
 
 ## More resources
 
 <CardGrid>
-
-<LinkTitleCard title="Community Forum" href="https://community.cloudflare.com/c/developers/images/63" icon="open-book">
-
-Engage with other users and the Images team on Cloudflare support forum.
-</LinkTitleCard>
-
+	<LinkTitleCard
+		title="Community Forum"
+		href="https://community.cloudflare.com/c/developers/images/63"
+		icon="open-book"
+	>
+		Engage with other users and the Images team on Cloudflare support forum.
+	</LinkTitleCard>
 </CardGrid>
