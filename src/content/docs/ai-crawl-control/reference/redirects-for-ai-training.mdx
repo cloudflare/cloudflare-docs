@@ -1,0 +1,95 @@
+---
+title: Redirects for AI Training
+pcx_content_type: reference
+sidebar:
+  group:
+    hideIndex: false
+---
+
+import {
+	Render,
+} from "~/components";
+
+Redirects for AI Training enforces your existing `<link rel="canonical">` tags as 301 redirects for [verified AI training crawlers](/bots/concepts/bot/#verified-bots). When a verified bot with the [AI Crawler category](/bots/concepts/bot/verified-bots/#categories) requests a page whose canonical tag points to a different same-origin URL, Cloudflare returns a `301 Moved Permanently` to the canonical. All other visitors—browsers, search engines, [AI Assistants](/bots/concepts/bot/verified-bots/#categories)—receive the original page unchanged.
+
+Read the [announcement blog post](https://blog.cloudflare.com/ai-redirects/) for background on why this feature exists.
+
+## How to enable
+
+Redirects for AI Training is available as a toggle in **AI Crawl Control** > **Quick Actions**, alongside [Markdown for Agents](/fundamentals/reference/markdown-for-agents/) and [Managed robots.txt](/bots/additional-configurations/managed-robots-txt/).
+
+<Render file="redirects-for-ai-training" product="fundamentals" />
+
+## How it works
+
+Cloudflare inspects the origin HTML response to verified AI training crawlers and:
+
+1. Stream-parses the `<head>` of the origin response to extract `<link rel="canonical" href="...">`
+2. Resolves relative canonical URLs against the request URL
+3. Validates that the canonical URL is same-origin and differs from the current URL
+4. Returns a `301` redirect to the canonical URL
+
+If no canonical tag is found, the canonical is cross-origin, or the page is self-canonical, the origin response passes through unchanged.
+
+:::note[Interaction with Markdown for Agents]
+Redirects for AI Training operates on the origin HTML response before [Markdown for Agents](/fundamentals/reference/markdown-for-agents/) content conversion runs. If a crawler requests `text/markdown` and the origin returns HTML with a non-self canonical tag, the 301 redirect is issued based on the original HTML. Markdown conversion only applies to responses that are not redirected.
+:::
+
+### Canonical tag parsing
+
+The feature parses the `<link rel="canonical">` tag from the `<head>` section of the origin response:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="canonical" href="https://example.com/current-version">
+</head>
+<body>
+  <!-- Page content -->
+</body>
+</html>
+```
+
+Both absolute and relative URLs are supported:
+
+```html
+<!-- Absolute URL -->
+<link rel="canonical" href="https://example.com/page">
+
+<!-- Relative URL (resolved against request URL) -->
+<link rel="canonical" href="/current-page">
+```
+
+### Interaction with other redirect features
+
+Redirects for AI Training operates at a different layer than [Single Redirects](/rules/url-forwarding/single-redirects/) and [Bulk Redirects](/rules/url-forwarding/bulk-redirects/). Those redirect rules execute before the origin is contacted. Redirects for AI Training executes after the origin responds, because it needs to read the canonical tag from the origin HTML.
+
+If a Single Redirect or Bulk Redirect matches first, the request is redirected before Redirects for AI Training has a chance to evaluate it.
+
+## Availability
+
+Available on Pro, Business, and Enterprise plans at no additional cost.
+
+## Limitations
+
+- Only HTML responses (`content-type: text/html`) from the origin are evaluated. Other content types pass through unchanged.
+- The canonical tag must appear within the first 256 KB of the uncompressed HTML response body.
+- Only same-origin canonical URLs trigger a redirect. Cross-origin canonicals are ignored.
+- Only [verified bots](/bots/concepts/bot/#verified-bots) with the [AI Crawler category](/bots/concepts/bot/verified-bots/#categories) are redirected. [AI Assistants and AI Search bots](/bots/concepts/bot/verified-bots/#categories) are not affected.
+- Self-canonical pages (where the canonical URL matches the request URL) are not redirected.
+- Best-effort loop detection uses the `Referer` header. If a crawler was just redirected from the canonical URL back to the current page, the origin HTML is served instead of redirecting. This handles common two-page canonical misconfigurations (Page A canonical points to Page B, Page B canonical points to Page A).
+
+## Logging
+
+When a redirect is issued, Cloudflare logs the canonical target URL in your HTTP request logs via the `redirects_for_ai_training_target` field. You can use the [GraphQL Analytics API](/ai-crawl-control/reference/graphql-api/) or [Logpush](/logs/about/) to query this data.
+
+## Related
+
+- [Manage AI crawlers](/ai-crawl-control/features/manage-ai-crawlers/) - Set allow or block rules per crawler
+- [Analyze AI traffic](/ai-crawl-control/features/analyze-ai-traffic/) - View request metrics by crawler, operator, and content type
+- [Markdown for Agents](/fundamentals/reference/markdown-for-agents/) - Serve HTML as markdown via content negotiation
+- [Content Signals Policy](https://contentsignals.org/) - Signal post-access content usage preferences in `robots.txt`
+- [Directives](/ai-crawl-control/features/track-robots-txt/) - Monitor `robots.txt` compliance and check Agent Readiness
+- [Single Redirects](/rules/url-forwarding/single-redirects/) - Rule-based URL redirects that execute before origin
+- [Verified bots](/bots/concepts/bot/verified-bots/#categories) - Bot categories including AI Crawler, AI Assistant, and AI Search
