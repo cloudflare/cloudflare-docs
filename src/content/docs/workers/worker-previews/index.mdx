@@ -24,6 +24,12 @@ Worker Previews requires a recent version of [Wrangler](/workers/wrangler/instal
 
 Not sure which command to use? See the [quick reference](/workers/worker-previews/concepts/#quick-reference).
 
+:::caution[Wrangler users: your local config is not read automatically]
+If you configure previews via Wrangler (the `previews` block in `wrangler.jsonc`), you **must** run `wrangler preview settings update` to push your config to the API before running `wrangler preview`. Unlike other Wrangler commands, `wrangler preview` does not read the `previews` block from your local config file. It reads [Preview Defaults](/workers/worker-previews/concepts/#what-are-preview-defaults) from the API. If you skip the push step, your preview will use whatever was previously stored on the API — which may be empty or point at production resources. This does not apply if you configure previews through the dashboard or API, where changes take effect immediately.
+
+![Wrangler settings update gap](~/assets/images/workers/worker-previews/settings-update-gap.svg)
+:::
+
 ## 1. Configure preview bindings and settings
 
 Before creating a preview, configure what resources and settings your previews should use. This is what makes previews isolated from production.
@@ -79,10 +85,8 @@ npx wrangler preview settings update
 ```
 
 :::caution
-`wrangler preview` does **not** automatically read the `previews` block from your config file. You must run `wrangler preview settings update` first to push your config to the API. If you skip this step and go straight to `wrangler preview`, your preview will use whatever Preview Defaults were previously stored on the API — which may be empty or point at production resources.
+Remember: `wrangler preview` does not read the `previews` block from your local config. You must run `wrangler preview settings update` first. See the [full explanation above](#wrangler-users-your-local-config-is-not-read-automatically).
 :::
-
-![Wrangler settings update gap](~/assets/images/workers/worker-previews/settings-update-gap.svg)
 
 #### Full example with bindings
 
