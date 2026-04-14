@@ -9,7 +9,7 @@ import { Tabs, TabItem, Render } from "~/components";
 
 The `/snapshot` endpoint captures both the HTML content and a screenshot of the webpage in one request. It returns the HTML as a text string and the screenshot as a Base64-encoded image.
 
-<Render file="rest-api-token-permissions" product="browser-rendering" />
+<Render file="rest-api-token-permissions" product="browser-run" />
 
 ## Endpoint
 
@@ -18,15 +18,17 @@ https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/snap
 ```
 
 ## Required fields
+
 You must provide either `url` or `html`:
--  `url` (string)
--  `html` (string)
+
+- `url` (string)
+- `html` (string)
 
 ## Common use cases
 
--  Capture both the rendered HTML and a visual screenshot in a single API call
--  Archive pages with visual and structural data together
--  Build monitoring tools that compare visual and DOM differences over time
+- Capture both the rendered HTML and a visual screenshot in a single API call
+- Archive pages with visual and structural data together
+- Build monitoring tools that compare visual and DOM differences over time
 
 ## Basic usage
 
@@ -73,9 +75,7 @@ const client = new Cloudflare({
 const snapshot = await client.browserRendering.snapshot.create({
 	account_id: process.env["CLOUDFLARE_ACCOUNT_ID"],
 	url: "https://example.com/",
-	addScriptTag: [
-        { content: "document.body.innerHTML = \"Snapshot Page\";" }
-    ]
+	addScriptTag: [{ content: 'document.body.innerHTML = "Snapshot Page";' }],
 });
 
 console.log(snapshot.content);
@@ -86,7 +86,7 @@ console.log(snapshot.content);
 ## Advanced usage
 
 :::note[Looking for more parameters?]
-Visit the [Browser Rendering API reference](/api/resources/browser_rendering/subresources/snapshot/methods/create/) for all available parameters, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`.
+Visit the [Browser Run API reference](/api/resources/browser_rendering/subresources/snapshot/methods/create/) for all available parameters, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`.
 :::
 
 ### Create a snapshot from custom HTML
@@ -130,22 +130,10 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 }
 ```
 
-<Render
-  file="improve-blurry-screenshot-resolution"
-  product="browser-rendering"
-/>
+<Render file="improve-blurry-screenshot-resolution" product="browser-run" />
 
-<Render
-  file="javascript-heavy-pages"
-  product="browser-rendering"
-/>
+<Render file="javascript-heavy-pages" product="browser-run" />
 
-<Render
-  file="setting-custom-user-agent"
-  product="browser-rendering"
-/>
+<Render file="setting-custom-user-agent" product="browser-run" />
 
-<Render
-  file="faq"
-  product="browser-rendering"
-/>
+<Render file="faq" product="browser-run" />

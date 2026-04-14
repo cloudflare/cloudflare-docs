@@ -1,4 +1,10 @@
-import { Render, PackageManagers, WranglerConfig, Tabs, TabItem } from "~/components";
+import {
+	Render,
+	PackageManagers,
+	WranglerConfig,
+	Tabs,
+	TabItem,
+} from "~/components";
 
 #### 1. Create a Worker project
 
@@ -24,13 +30,13 @@ Create a new Worker project named `browser-worker` by running:
 
 #### 2. Install Puppeteer
 
-In your `browser-worker` directory, install Cloudflare’s [fork of Puppeteer](/browser-rendering/puppeteer/):
+In your `browser-worker` directory, install Cloudflare’s [fork of Puppeteer](/browser-run/puppeteer/):
 
 <PackageManagers pkg="@cloudflare/puppeteer" dev />
 
 #### 3. Create a KV namespace
 
-Browser Rendering can be used with other developer products. You might need a [relational database](/d1/), an [R2 bucket](/r2/) to archive your crawled pages and assets, a [Durable Object](/durable-objects/) to keep your browser instance alive and share it with multiple requests, or [Queues](/queues/) to handle your jobs asynchronously.
+Browser Run can be used with other developer products. You might need a [relational database](/d1/), an [R2 bucket](/r2/) to archive your crawled pages and assets, a [Durable Object](/durable-objects/) to keep your browser instance alive and share it with multiple requests, or [Queues](/queues/) to handle your jobs asynchronously.
 
 For the purpose of this example, we will use a [KV store](/kv/concepts/kv-namespaces/) to cache your screenshots.
 
@@ -47,19 +53,17 @@ Take note of the IDs for the next step.
 
 Configure your `browser-worker` project's [Wrangler configuration file](/workers/wrangler/configuration/) by adding a browser [binding](/workers/runtime-apis/bindings/) and a [Node.js compatibility flag](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag). Bindings allow your Workers to interact with resources on the Cloudflare developer platform. Your browser `binding` name is set by you, this guide uses the name `MYBROWSER`. Browser bindings allow for communication between a Worker and a headless browser which allows you to do actions such as taking a screenshot, generating a PDF, and more.
 
-Update your [Wrangler configuration file](/workers/wrangler/configuration/) with the Browser Rendering API binding and the KV namespaces you created:
+Update your [Wrangler configuration file](/workers/wrangler/configuration/) with the Browser Run API binding and the KV namespaces you created:
 
 <WranglerConfig>
 
-```jsonc
+```json
 {
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "browser-worker",
 	"main": "src/index.js",
 	"compatibility_date": "$today",
-	"compatibility_flags": [
-		"nodejs_compat"
-	],
+	"compatibility_flags": ["nodejs_compat"],
 	"browser": {
 		"binding": "MYBROWSER"
 	},
@@ -78,6 +82,7 @@ Update your [Wrangler configuration file](/workers/wrangler/configuration/) with
 #### 5. Code
 
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
 Update `src/index.js` with your Worker code:
 
 ```js
@@ -114,6 +119,7 @@ export default {
 ```
 
 </TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
 Update `src/index.ts` with your Worker code:
 
 ```ts
@@ -178,4 +184,6 @@ Run `npx wrangler deploy` to deploy your Worker to the Cloudflare global network
 
 To take your first screenshot, go to the following URL:
 
-`<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/?url=https://example.com`
+```
+<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/?url=https://example.com
+```

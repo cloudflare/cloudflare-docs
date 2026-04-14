@@ -9,7 +9,7 @@ import { Tabs, TabItem, Render } from "~/components";
 
 The `/screenshot` endpoint renders the webpage by processing its HTML and JavaScript, then captures a screenshot of the fully rendered page.
 
-<Render file="rest-api-token-permissions" product="browser-rendering" />
+<Render file="rest-api-token-permissions" product="browser-run" />
 
 ## Endpoint
 
@@ -18,14 +18,16 @@ https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/scre
 ```
 
 ## Required fields
+
 You must provide either `url` or `html`:
--  `url` (string)
--  `html` (string)
+
+- `url` (string)
+- `html` (string)
 
 ## Common use cases
 
--  Generate previews for websites, dashboards, or reports
--  Capture screenshots for automated testing, QA, or visual regression
+- Generate previews for websites, dashboards, or reports
+- Capture screenshots for automated testing, QA, or visual regression
 
 ## Basic usage
 
@@ -60,9 +62,9 @@ const client = new Cloudflare({
 const screenshot = await client.browserRendering.screenshot.create({
 	account_id: process.env["CLOUDFLARE_ACCOUNT_ID"],
 	html: "Hello World!",
-    screenshotOptions: {
-        omitBackground: true,
-    }
+	screenshotOptions: {
+		omitBackground: true,
+	},
 });
 
 console.log(screenshot.status);
@@ -72,27 +74,26 @@ console.log(screenshot.status);
 
 ### Take a screenshot from a URL
 
-<Render
-  file="example-screenshot-from-url"
-  product="browser-rendering"
-/>
+<Render file="example-screenshot-from-url" product="browser-run" />
 
 For more options to control the final screenshot, like `clip`, `captureBeyondViewport`, `fullPage` and others, check the endpoint [reference](/api/resources/browser_rendering/subresources/screenshot/methods/create/).
 
 :::note[Notes for basic usage]
+
 - The `quality` parameter is not compatible with the default `.png` format and will return a 400 error. If you set `quality`, you must also set `type` to `.jpeg` or another supported format.
 - By default, the browser viewport is set to **1920×1080**. You can override the default via request options.
+
 :::
 
 ## Advanced usage
 
 :::note[Looking for more parameters?]
-Visit the [Browser Rendering API reference](/api/resources/browser_rendering/subresources/screenshot/methods/create/) for all available parameters, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`.
+Visit the [Browser Run API reference](/api/resources/browser_rendering/subresources/screenshot/methods/create/) for all available parameters, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`.
 :::
 
 ### Capture a screenshot of an authenticated page
 
-Some webpages require authentication before you can view their content. Browser Rendering supports three authentication methods, which work across all [Quick Actions](/browser-rendering/quick-actions/) endpoints. For a quick reference of all methods, refer to [How do I render authenticated pages using Quick Actions?](/browser-rendering/faq/#how-do-i-render-authenticated-pages-using-quick-actions).
+Some webpages require authentication before you can view their content. Browser Run supports three authentication methods, which work across all [Quick Actions](/browser-run/quick-actions/) endpoints. For a quick reference of all methods, refer to [How do I render authenticated pages using Quick Actions?](/browser-run/faq/#how-do-i-render-authenticated-pages-using-quick-actions).
 
 #### Cookie-based authentication
 
@@ -176,10 +177,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
   --output "advanced-screenshot.png"
 ```
 
-<Render
-  file="improve-blurry-screenshot-resolution"
-  product="browser-rendering"
-/>
+<Render file="example-screenshot-from-url" product="browser-run" />
 
 ### Customize CSS and embed custom JavaScript
 
@@ -227,17 +225,8 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 
 Many more options exist, like setting HTTP credentials using `authenticate`, setting `cookies`, and using `gotoOptions` to control page load behaviour - check the endpoint [reference](/api/resources/browser_rendering/subresources/screenshot/methods/create/) for all available parameters.
 
-<Render
-  file="javascript-heavy-pages"
-  product="browser-rendering"
-/>
+<Render file="javascript-heavy-pages" product="browser-run" />
 
-<Render
-  file="setting-custom-user-agent"
-  product="browser-rendering"
-/>
+<Render file="setting-custom-user-agent" product="browser-run" />
 
-<Render
-  file="faq"
-  product="browser-rendering"
-/>
+<Render file="faq" product="browser-run" />

@@ -7,9 +7,9 @@ sidebar:
 
 import { Tabs, TabItem, Render } from "~/components";
 
-The `/pdf` endpoint instructs the browser to generate a PDF of a webpage or custom HTML using Cloudflare's headless browser rendering service.
+The `/pdf` endpoint instructs the browser to generate a PDF of a webpage or custom HTML using Cloudflare's headless Browser Run service.
 
-<Render file="rest-api-token-permissions" product="browser-rendering" />
+<Render file="rest-api-token-permissions" product="browser-run" />
 
 ## Endpoint
 
@@ -98,7 +98,7 @@ The PDF endpoint accepts request bodies up to 50 MB. Requests larger than this w
 ## Advanced usage
 
 :::note[Looking for more parameters?]
-Visit the [Browser Rendering API reference](/api/resources/browser_rendering/subresources/pdf/methods/create/) for all available parameters, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`.
+Visit the [Browser Run API reference](/api/resources/browser_rendering/subresources/pdf/methods/create/) for all available parameters, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`.
 :::
 
 ### Advanced page load with custom headers and viewport
@@ -201,10 +201,10 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 
 ### Use custom fonts
 
-If your PDF requires a font that is not pre-installed in the Browser Rendering environment, you can load custom fonts using the `addStyleTag` parameter. For instructions and examples, refer to [Use your own custom font](/browser-rendering/features/custom-fonts/#quick-actions).
+If your PDF requires a font that is not pre-installed in the Browser Run environment, you can load custom fonts using the `addStyleTag` parameter. For instructions and examples, refer to [Use your own custom font](/browser-run/features/custom-fonts/#quick-actions).
 
-<Render file="javascript-heavy-pages" product="browser-rendering" />
+<Render file="javascript-heavy-pages" product="browser-run" />
 
-<Render file="setting-custom-user-agent" product="browser-rendering" />
+<Render file="setting-custom-user-agent" product="browser-run" />
 
-<Render file="faq" product="browser-rendering" />
+<Render file="faq" product="browser-run" />

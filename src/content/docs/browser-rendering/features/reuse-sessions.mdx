@@ -5,16 +5,21 @@ sidebar:
   order: 3
 ---
 
-import { Render, PackageManagers, TypeScriptExample, WranglerConfig } from "~/components";
+import {
+	Render,
+	PackageManagers,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
 
 By default, each Browser Sessions request launches a new browser instance. Reusing sessions eliminates cold-start time and improves performance by reconnecting to an existing browser instead of launching a new one.
 
-This feature applies to Browser Sessions ([Puppeteer](/browser-rendering/puppeteer/), [Playwright](/browser-rendering/playwright/), and [CDP](/browser-rendering/cdp/)). [Quick Actions](/browser-rendering/quick-actions/) handle session lifecycle automatically.
+This feature applies to Browser Sessions ([Puppeteer](/browser-run/puppeteer/), [Playwright](/browser-run/playwright/), and [CDP](/browser-run/cdp/)). [Quick Actions](/browser-run/quick-actions/) handle session lifecycle automatically.
 
 There are two approaches to reusing sessions:
 
 - **Disconnect and reconnect** (covered in this page): Use `browser.disconnect()` instead of `browser.close()` to keep the browser alive, then reconnect to it on the next request. Best for stateless workloads where any available browser session will do.
-- **[Durable Objects](/browser-rendering/how-to/browser-rendering-with-do/)**: Persist a long-running browser inside a Durable Object for stateful session management. Best when you need to maintain state across requests or route specific users to specific browser instances.
+- **[Durable Objects](/browser-run/how-to/browser-rendering-with-do/)**: Persist a long-running browser inside a Durable Object for stateful session management. Best when you need to maintain state across requests or route specific users to specific browser instances.
 
 ## 1. Create a Worker project
 
@@ -40,7 +45,7 @@ Create a new Worker project named `browser-worker` by running:
 
 ## 2. Install Puppeteer
 
-In your `browser-worker` directory, install Cloudflare's [fork of Puppeteer](/browser-rendering/puppeteer/):
+In your `browser-worker` directory, install Cloudflare's [fork of Puppeteer](/browser-run/puppeteer/):
 
 <PackageManagers pkg="@cloudflare/puppeteer" dev />
 
@@ -58,12 +63,10 @@ Your Worker configuration must include the `nodejs_compat` compatibility flag an
 	"name": "browser-worker",
 	"main": "src/index.ts",
 	"compatibility_date": "$today",
-	"compatibility_flags": [
-		"nodejs_compat"
-	],
+	"compatibility_flags": ["nodejs_compat"],
 	"browser": {
-		"binding": "MYBROWSER"
-	}
+		"binding": "MYBROWSER",
+	},
 }
 ```
 
@@ -73,7 +76,7 @@ Your Worker configuration must include the `nodejs_compat` compatibility flag an
 
 The script below starts by fetching the current running sessions. If there are any that do not already have a worker connection, it picks a random session ID and attempts to connect (`puppeteer.connect(..)`) to it. If that fails or there were no running sessions to start with, it launches a new browser session (`puppeteer.launch(..)`). Then, it goes to the website and fetches the dom. Once that is done, it disconnects (`browser.disconnect()`), making the connection available to other workers.
 
-Take into account that if the browser is idle, i.e. does not get any command, for more than the current [limit](/browser-rendering/limits/), it will close automatically, so you must have enough requests per minute to keep it alive.
+Take into account that if the browser is idle, i.e. does not get any command, for more than the current [limit](/browser-run/limits/), it will close automatically, so you must have enough requests per minute to keep it alive.
 
 <TypeScriptExample>
 
@@ -154,7 +157,7 @@ export default {
 
 </TypeScriptExample>
 
-Besides `puppeteer.sessions()`, we have added other methods to facilitate [Session Management](/browser-rendering/puppeteer/#session-management).
+Besides `puppeteer.sessions()`, we have added other methods to facilitate [Session Management](/browser-run/puppeteer/#session-management).
 
 ## 5. Test
 
@@ -164,10 +167,14 @@ Run `npx wrangler dev` to test your Worker locally.
 
 To test go to the following URL:
 
-`<LOCAL_HOST_URL>/?url=https://example.com`
+```
+<LOCAL_HOST_URL>/?url=https://example.com
+```
 
 ## 6. Deploy
 
 Run `npx wrangler deploy` to deploy your Worker to the Cloudflare global network and then to go to the following URL:
 
-`<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/?url=https://example.com`
+```
+<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/?url=https://example.com
+```

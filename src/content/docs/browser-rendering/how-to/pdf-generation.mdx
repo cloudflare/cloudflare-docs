@@ -7,16 +7,16 @@ sidebar:
 
 import { Aside, WranglerConfig, PackageManagers, Render } from "~/components";
 
-As seen in the [Deploy a Browser Rendering Worker](/browser-rendering/how-to/deploy-worker/) guide, Browser Rendering can be used to generate screenshots for any given URL. Alongside screenshots, you can also generate full PDF documents for a given webpage, and can also provide the webpage markup and style ourselves.
+As seen in the [Deploy a Browser Run Worker](/browser-run/how-to/deploy-worker/) guide, Browser Run can be used to generate screenshots for any given URL. Alongside screenshots, you can also generate full PDF documents for a given webpage, and can also provide the webpage markup and style ourselves.
 
-You can generate PDFs with Browser Rendering in two ways:
+You can generate PDFs with Browser Run in two ways:
 
-- **[Quick Actions](/browser-rendering/quick-actions/)**: Use the [/pdf endpoint](/browser-rendering/quick-actions/pdf-endpoint/). This is ideal if you do not need to customize rendering behavior.
-- **[Puppeteer](/browser-rendering/puppeteer/) or [Playwright](/browser-rendering/playwright/)**: Use browser automation within Workers for additional control and customization.
+- **[Quick Actions](/browser-run/quick-actions/)**: Use the [/pdf endpoint](/browser-run/quick-actions/pdf-endpoint/). This is ideal if you do not need to customize rendering behavior.
+- **[Puppeteer](/browser-run/puppeteer/) or [Playwright](/browser-run/playwright/)**: Use browser automation within Workers for additional control and customization.
 
 Choose the method that best fits your use case.
 
-The following example shows you how to generate a PDF using [Puppeteer](/browser-rendering/puppeteer/).
+The following example shows you how to generate a PDF using [Puppeteer](/browser-run/puppeteer/).
 
 ## Prerequisites
 
@@ -24,11 +24,11 @@ The following example shows you how to generate a PDF using [Puppeteer](/browser
 
 <PackageManagers type="create" pkg="cloudflare@latest" args="browser-worker" />
 
-2. Install `@cloudflare/puppeteer`, which allows you to control the Browser Rendering instance:
+2. Install `@cloudflare/puppeteer`, which allows you to control the Browser Run instance:
 
 <PackageManagers pkg="@cloudflare/puppeteer" dev />
 
-3. Add your Browser Rendering binding to your new Wrangler configuration:
+3. Add your Browser Run binding to your new Wrangler configuration:
 
 <WranglerConfig>
 
@@ -78,7 +78,7 @@ export default {
 
 ## 1. Define HTML and CSS
 
-Rather than using Browser Rendering to navigate to a user-provided URL, manually generate a webpage, then provide that webpage to the Browser Rendering instance. This allows you to render any design you want.
+Rather than using Browser Run to navigate to a user-provided URL, manually generate a webpage, then provide that webpage to the Browser Run instance. This allows you to render any design you want.
 
 :::note
 You can generate your HTML or CSS using any method you like. This example uses string interpolation, but the method is also fully compatible with web frameworks capable of rendering HTML on Workers such as React, Remix, and Vue.
@@ -160,7 +160,7 @@ await page.setContent(document);
 
 ## 3. Generate and Return PDF
 
-With your Browser Rendering instance now rendering your provided HTML and CSS, you can use the [`page.pdf()`](https://github.com/cloudflare/puppeteer/blob/main/docs/api/puppeteer.page.pdf.md) command to generate a PDF file and return it to the client.
+With your Browser Run instance now rendering your provided HTML and CSS, you can use the [`page.pdf()`](https://github.com/cloudflare/puppeteer/blob/main/docs/api/puppeteer.page.pdf.md) command to generate a PDF file and return it to the client.
 
 ```ts
 let pdf = page.pdf({ printBackground: true });
@@ -275,9 +275,9 @@ With your script now running, you can pass in a `?name` parameter to the local U
 
 ## Custom fonts
 
-If your PDF requires a specific font that is not pre-installed in the Browser Rendering environment, you can load custom fonts using `addStyleTag`. This allows you to inject fonts from a CDN or embed them as Base64 strings before generating your PDF.
+If your PDF requires a specific font that is not pre-installed in the Browser Run environment, you can load custom fonts using `addStyleTag`. This allows you to inject fonts from a CDN or embed them as Base64 strings before generating your PDF.
 
-For detailed instructions and examples, refer to [Use your own custom font](/browser-rendering/features/custom-fonts/).
+For detailed instructions and examples, refer to [Use your own custom font](/browser-run/features/custom-fonts/).
 
 ---
 

@@ -9,7 +9,7 @@ import { Tabs, TabItem, Render } from "~/components";
 
 The `/scrape` endpoint extracts structured data from specific elements on a webpage, returning details such as element dimensions and inner HTML.
 
-<Render file="rest-api-token-permissions" product="browser-rendering" />
+<Render file="rest-api-token-permissions" product="browser-run" />
 
 ## Endpoint
 
@@ -18,14 +18,16 @@ https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/scra
 ```
 
 ## Required fields
+
 You must provide either `url` or `elements`:
--  `url` (string)
--  `elements` (array of objects) — each object must include `selector` (string)
+
+- `url` (string)
+- `elements` (array of objects) — each object must include `selector` (string)
 
 ## Common use cases
 
--  Extract headings, links, prices, or other repeated content with CSS selectors
--  Collect metadata (for example, titles, descriptions, canonical links)
+- Extract headings, links, prices, or other repeated content with CSS selectors
+- Collect metadata (for example, titles, descriptions, canonical links)
 
 ## Basic usage
 
@@ -99,10 +101,7 @@ const client = new Cloudflare({
 
 const scrapes = await client.browserRendering.scrape.create({
 	account_id: process.env["CLOUDFLARE_ACCOUNT_ID"],
-	elements: [
-        { selector: "h1" },
-        { selector: "a" }
-    ]
+	elements: [{ selector: "h1" }, { selector: "a" }],
 });
 
 console.log(scrapes);
@@ -125,20 +124,11 @@ Many more options exist, like setting HTTP credentials using `authenticate`, set
 ## Advanced Usage
 
 :::note[Looking for more parameters?]
-Visit the [Browser Rendering API reference](/api/resources/browser_rendering/subresources/scrape/methods/create/) for all available parameters, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`.
+Visit the [Browser Run API reference](/api/resources/browser_rendering/subresources/scrape/methods/create/) for all available parameters, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`.
 :::
 
-<Render
-  file="javascript-heavy-pages"
-  product="browser-rendering"
-/>
+<Render file="javascript-heavy-pages" product="browser-run" />
 
-<Render
-  file="setting-custom-user-agent"
-  product="browser-rendering"
-/>
+<Render file="setting-custom-user-agent" product="browser-run" />
 
-<Render
-  file="faq"
-  product="browser-rendering"
-/>
+<Render file="faq" product="browser-run" />

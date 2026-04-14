@@ -1,7 +1,7 @@
 ---
 pcx_content_type: tutorial
 title: Generate OG images for Astro sites
-products: [browser-rendering, r2, workers]
+products: [browser-run, r2, workers]
 languages:
   - TypeScript
 difficulty: Intermediate
@@ -12,17 +12,17 @@ sidebar:
 
 import { WranglerConfig } from "~/components";
 
-Open Graph (OG) images are the preview images that appear when you share a link on social media. Instead of manually creating these images for every blog post, you can use Cloudflare Browser Rendering to automatically generate branded social preview images from an Astro template.
+Open Graph (OG) images are the preview images that appear when you share a link on social media. Instead of manually creating these images for every blog post, you can use Cloudflare Browser Run (formerly Browser Rendering) to automatically generate branded social preview images from an Astro template.
 
 In this tutorial, you will:
 
 1. Create an Astro page that renders your OG image design.
-2. Use Browser Rendering to screenshot that page as a PNG.
+2. Use Browser Run to screenshot that page as a PNG.
 3. Serve the generated images to social media crawlers.
 
 ## Prerequisites
 
-- A Cloudflare account with [Browser Rendering enabled](/browser-rendering/get-started/#quick-actions)
+- A Cloudflare account with [Browser Run enabled](/browser-run/get-started/#quick-actions)
 - An Astro site deployed on [Cloudflare Workers](/workers/framework-guides/web-apps/astro/)
 - Basic familiarity with Astro and Cloudflare Workers
 
@@ -122,12 +122,18 @@ Update the `BASE_URL` in the script below to match your deployed site URL.
 
 ## 2. Generate OG images at build time
 
-Generate all OG images during the Astro build process using Cloudflare Browser Rendering Quick Actions.
+Generate all OG images during the Astro build process using Cloudflare Browser Run Quick Actions.
 
 Create `scripts/generate-social-cards.ts`:
 
 ```ts
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "fs";
+import {
+	existsSync,
+	mkdirSync,
+	readdirSync,
+	readFileSync,
+	writeFileSync,
+} from "fs";
 import { join } from "path";
 
 // Configuration
@@ -172,7 +178,7 @@ function readPosts(): Post[] {
 async function captureScreenshot(
 	accountId: string,
 	apiToken: string,
-	pageUrl: string
+	pageUrl: string,
 ): Promise<ArrayBuffer> {
 	const endpoint = `${CF_API}/${accountId}/browser-rendering/screenshot`;
 
@@ -277,7 +283,7 @@ export CF_API_TOKEN=your_api_token
 
 :::note
 
-Browser Rendering has [rate limits](/browser-rendering/limits/) that vary by plan. The script includes a 200ms delay between requests to help stay within these limits. For large sites, you may need to run the script in batches.
+Browser Run has [rate limits](/browser-run/limits/) that vary by plan. The script includes a 200ms delay between requests to help stay within these limits. For large sites, you may need to run the script in batches.
 
 :::
 
@@ -401,7 +407,7 @@ const optimizedUrl = `https://your-domain.com/cdn-cgi/image/width=1200,format=au
 
 ## Next steps
 
-Your Astro site now automatically generates OG images using Browser Rendering. When you share a link on social media, crawlers will fetch the generated image from the static path.
+Your Astro site now automatically generates OG images using Browser Run. When you share a link on social media, crawlers will fetch the generated image from the static path.
 
 From here, you can:
 
@@ -411,6 +417,6 @@ From here, you can:
 
 ## Related resources
 
-- [Browser Rendering documentation](/browser-rendering/)
+- [Browser Run documentation](/browser-run/)
 - [R2 storage](/r2/)
 - [Cloudflare Images](/images/)

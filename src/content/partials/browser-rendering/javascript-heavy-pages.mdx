@@ -1,3 +1,7 @@
+---
+{}
+---
+
 ### Handling JavaScript-heavy pages
 
 For JavaScript-heavy pages or Single Page Applications (SPAs), the default page load behavior may return empty or incomplete results. This happens because the browser considers the page loaded before JavaScript has finished rendering the content.
@@ -6,11 +10,11 @@ The simplest solution is to use the `gotoOptions.waitUntil` parameter set to `ne
 
 ```json
 {
-  "url": "https://example.com",
-  "gotoOptions": {
-    "waitUntil": "networkidle0"
-  }
+	"url": "https://example.com",
+	"gotoOptions": {
+		"waitUntil": "networkidle0"
+	}
 }
 ```
 
-For faster responses, advanced users can use `waitForSelector` to wait for a specific element instead of waiting for all network activity to stop. This requires knowing which CSS selector indicates the content you need has loaded. For more details, refer to [Quick Actions timeouts](/browser-rendering/reference/timeouts/).
+For faster responses, advanced users can use `waitForSelector` to wait for a specific element instead of waiting for all network activity to stop. This requires knowing which CSS selector indicates the content you need has loaded. For more details, refer to [Quick Actions timeouts](/browser-run/reference/timeouts/).

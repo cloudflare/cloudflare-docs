@@ -5,17 +5,17 @@ sidebar:
   order: 5
 ---
 
-This page provides general guidance on configuring `robots.txt` and sitemaps for websites you plan to access with Browser Rendering.
+This page provides general guidance on configuring `robots.txt` and sitemaps for websites you plan to access with Browser Run (formerly Browser Rendering).
 
-## Identifying Browser Rendering requests
+## Identifying Browser Run requests
 
-Requests can be identified by the [automatic headers](/browser-rendering/reference/automatic-request-headers/) that Cloudflare attaches:
+Requests can be identified by the [automatic headers](/browser-run/reference/automatic-request-headers/) that Cloudflare attaches:
 
-- [User-Agent](/browser-rendering/reference/automatic-request-headers/#user-agent) — Each Browser Rendering method has a different default User-Agent, which you can use to write targeted `robots.txt` rules
+- [User-Agent](/browser-run/reference/automatic-request-headers/#user-agent) — Each Browser Run method has a different default User-Agent, which you can use to write targeted `robots.txt` rules
 - `cf-brapi-request-id` — Unique identifier for Quick Actions requests
 - `Signature-agent` — Pointer to Cloudflare's bot verification keys
 
-To allow or block Browser Rendering traffic using WAF rules instead of `robots.txt`, use the [bot detection IDs](/browser-rendering/reference/automatic-request-headers/#bot-detection) on the automatic request headers page.
+To allow or block Browser Run traffic using WAF rules instead of `robots.txt`, use the [bot detection IDs](/browser-run/reference/automatic-request-headers/#bot-detection) on the automatic request headers page.
 
 ## Best practices for robots.txt
 
@@ -58,7 +58,7 @@ The value is in seconds. A `crawl-delay` of 2 means the crawler waits two second
 
 ## Blocking crawlers with robots.txt
 
-If you want to prevent Browser Rendering (or other crawlers) from accessing your site, you can configure your `robots.txt` to restrict access.
+If you want to prevent Browser Run (or other crawlers) from accessing your site, you can configure your `robots.txt` to restrict access.
 
 ### Block all bots from your entire site
 
@@ -69,11 +69,11 @@ User-agent: *
 Disallow: /
 ```
 
-This is the most restrictive configuration and blocks all compliant bots, not just Browser Rendering.
+This is the most restrictive configuration and blocks all compliant bots, not just Browser Run.
 
 ### Block only the /crawl endpoint
 
-The [`/crawl` endpoint](/browser-rendering/quick-actions/crawl-endpoint/) identifies itself with the User-Agent `CloudflareBrowserRenderingCrawler/1.0`. To block the `/crawl` endpoint while allowing all other traffic (including other Browser Rendering [Quick Actions](/browser-rendering/quick-actions/) endpoints, which use a [different User-Agent](/browser-rendering/reference/automatic-request-headers/#user-agent)):
+The [`/crawl` endpoint](/browser-run/quick-actions/crawl-endpoint/) identifies itself with the User-Agent `CloudflareBrowserRenderingCrawler/1.0`. To block the `/crawl` endpoint while allowing all other traffic (including other Browser Run [Quick Actions](/browser-run/quick-actions/) endpoints, which use a [different User-Agent](/browser-run/reference/automatic-request-headers/#user-agent)):
 
 ```txt title="robots.txt"
 User-agent: CloudflareBrowserRenderingCrawler
@@ -85,7 +85,7 @@ Allow: /
 
 ### Block the /crawl endpoint on specific paths
 
-To allow the [`/crawl` endpoint](/browser-rendering/quick-actions/crawl-endpoint/) to access your site but block specific sections:
+To allow the [`/crawl` endpoint](/browser-run/quick-actions/crawl-endpoint/) to access your site but block specific sections:
 
 ```txt title="robots.txt"
 User-agent: CloudflareBrowserRenderingCrawler
@@ -117,15 +117,15 @@ Structure your sitemap to help crawlers process your site efficiently:
 </urlset>
 ```
 
-| Attribute    | Purpose                       | Recommendation                                                                 |
-| ------------ | ----------------------------- | ------------------------------------------------------------------------------ |
-| `<loc>`      | URL of the page               | Required. Use full URLs.                                                       |
-| `<lastmod>`  | Last modification date        | Include to help the crawler identify updated content. Use ISO 8601 format.     |
+| Attribute    | Purpose                       | Recommendation                                                                           |
+| ------------ | ----------------------------- | ---------------------------------------------------------------------------------------- |
+| `<loc>`      | URL of the page               | Required. Use full URLs.                                                                 |
+| `<lastmod>`  | Last modification date        | Include to help the crawler identify updated content. Use ISO 8601 format.               |
 | `<priority>` | Relative importance (0.0-1.0) | Set higher values for important pages. The crawler will process pages in priority order. |
 
 ### Sitemap index files
 
-For large sites with multiple sitemaps, use a sitemap index file. Browser Rendering uses the `depth` parameter to control how many levels of nested sitemaps are crawled:
+For large sites with multiple sitemaps, use a sitemap index file. Browser Run uses the `depth` parameter to control how many levels of nested sitemaps are crawled:
 
 ```xml title="sitemap.xml"
 <?xml version="1.0" encoding="UTF-8"?>
@@ -144,7 +144,7 @@ For large sites with multiple sitemaps, use a sitemap index file. Browser Render
 
 ### Caching headers
 
-Browser Rendering periodically refetches sitemaps to keep content fresh. Serve your sitemap with `Last-Modified` or `ETag` response headers so the crawler can detect whether the sitemap has changed since the last fetch.
+Browser Run periodically refetches sitemaps to keep content fresh. Serve your sitemap with `Last-Modified` or `ETag` response headers so the crawler can detect whether the sitemap has changed since the last fetch.
 
 ### Recommendations
 
@@ -155,5 +155,5 @@ Browser Rendering periodically refetches sitemaps to keep content fresh. Serve y
 
 ## Related resources
 
-- [FAQ: Will Browser Rendering be detected by Bot Management?](/browser-rendering/faq/#will-browser-rendering-be-detected-by-bot-management) — How Browser Rendering interacts with bot protection and how to create a WAF skip rule
-- [Automatic request headers](/browser-rendering/reference/automatic-request-headers/) — User-Agent strings and non-configurable headers used by Browser Rendering
+- [FAQ: Will Browser Run be detected by Bot Management?](/browser-run/faq/#will-browser-rendering-be-detected-by-bot-management) — How Browser Run interacts with bot protection and how to create a WAF skip rule
+- [Automatic request headers](/browser-run/reference/automatic-request-headers/) — User-Agent strings and non-configurable headers used by Browser Run

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Playwright
-description: Learn how to use Playwright with Cloudflare Workers for browser automation. Access Playwright API, manage sessions, and optimize browser rendering.
+description: Learn how to use Playwright with Cloudflare Workers for browser automation. Access Playwright API, manage sessions, and optimize Browser Run.
 sidebar:
   order: 5
 ---
@@ -16,7 +16,7 @@ import {
 
 [Playwright](https://playwright.dev/) is an open-source package developed by Microsoft that can do browser automation tasks; it is commonly used to write frontend tests, create screenshots, or crawl pages.
 
-The Workers team forked a [version of Playwright](https://github.com/cloudflare/playwright) that was modified to be compatible with [Cloudflare Workers](/workers/) and [Browser Rendering](/browser-rendering/).
+The Workers team forked a [version of Playwright](https://github.com/cloudflare/playwright) that was modified to be compatible with [Cloudflare Workers](/workers/) and [Browser Run](/browser-run/).
 
 Our version is open sourced and can be found in [Cloudflare's fork of Playwright](https://github.com/cloudflare/playwright). The npm package can be installed from [npmjs](https://www.npmjs.com/) as [@cloudflare/playwright](https://www.npmjs.com/package/@cloudflare/playwright):
 
@@ -34,7 +34,7 @@ If you want to skip the steps and get started quickly, select **Deploy to Cloudf
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/playwright/tree/main/packages/playwright-cloudflare/examples/todomvc)
 
-Make sure you have the [browser binding](/browser-rendering/reference/wrangler/#bindings) configured in your Wrangler configuration file:
+Make sure you have the [browser binding](/browser-run/reference/wrangler/#bindings) configured in your Wrangler configuration file:
 
 :::note
 To use the latest version of `@cloudflare/playwright`, your Worker configuration must include the `nodejs_compat` compatibility flag and a `compatibility_date` of 2025-09-15 or later. This change is necessary because the library's functionality requires the native `node.fs` API.
@@ -48,14 +48,12 @@ To use the latest version of `@cloudflare/playwright`, your Worker configuration
 	"name": "cloudflare-playwright-example",
 	"main": "src/index.ts",
 	"workers_dev": true,
-	"compatibility_flags": [
-		"nodejs_compat"
-	],
+	"compatibility_flags": ["nodejs_compat"],
 	"compatibility_date": "$today",
 	"upload_source_maps": true,
 	"browser": {
-		"binding": "MYBROWSER"
-	}
+		"binding": "MYBROWSER",
+	},
 }
 ```
 
@@ -194,7 +192,6 @@ export default {
 
 Playwright supports [storage state](https://playwright.dev/docs/api/class-browsercontext#browsercontext-storage-state) to obtain and persist cookies and other storage data. In this example, you will use storage state to persist cookies and other storage data in [Workers KV](/kv).
 
-
 First, ensure you have a KV namespace. You can create a new one with:
 
 ```bash
@@ -212,14 +209,14 @@ Then, add the KV namespace to your Wrangler configuration file:
 	"compatibility_flags": ["nodejs_compat"],
 	"compatibility_date": "$today",
 	"browser": {
-		"binding": "MYBROWSER"
+		"binding": "MYBROWSER",
 	},
 	"kv_namespaces": [
 		{
 			"binding": "KV",
-			"id": "<YOUR-KV-NAMESPACE-ID>"
-		}
-	]
+			"id": "<YOUR-KV-NAMESPACE-ID>",
+		},
+	],
 }
 ```
 
@@ -229,8 +226,12 @@ Now, you can use the storage state to persist cookies and other storage data in 
 
 ```ts title="src/index.ts"
 // gets persisted storage state from KV or undefined if it does not exist
-const storageStateJson = await env.KV.get('storageState');
-const storageState = storageStateJson ? await JSON.parse(storageStateJson) as BrowserContextOptions['storageState'] : undefined;
+const storageStateJson = await env.KV.get("storageState");
+const storageState = storageStateJson
+	? ((await JSON.parse(
+			storageStateJson,
+		)) as BrowserContextOptions["storageState"])
+	: undefined;
 
 await using browser = await launch(env.MYBROWSER);
 // creates a new context with storage state persisted in KV
@@ -244,12 +245,12 @@ await using page = await context.newPage();
 const updatedStorageState = await context.storageState({ indexedDB: true });
 
 // persists updated storage state in KV
-await env.KV.put('storageState', JSON.stringify(updatedStorageState));
+await env.KV.put("storageState", JSON.stringify(updatedStorageState));
 ```
 
 ### Keep Alive
 
-If users omit the `browser.close()` statement, the browser instance will stay open, ready to be connected to again and [re-used](/browser-rendering/features/reuse-sessions/) but it will, by default, close automatically after 1 minute of inactivity. Users can optionally extend this idle time up to 10 minutes, by using the `keep_alive` option, set in milliseconds:
+If users omit the `browser.close()` statement, the browser instance will stay open, ready to be connected to again and [re-used](/browser-run/features/reuse-sessions/) but it will, by default, close automatically after 1 minute of inactivity. Users can optionally extend this idle time up to 10 minutes, by using the `keep_alive` option, set in milliseconds:
 
 ```js
 const browser = await playwright.launch(env.MYBROWSER, { keep_alive: 600000 });
@@ -258,12 +259,12 @@ const browser = await playwright.launch(env.MYBROWSER, { keep_alive: 600000 });
 Using the above, the browser will stay open for up to 10 minutes, even if inactive.
 
 :::note
-This is an inactivity timeout, not a maximum session duration. Sessions can remain open longer than 10 minutes as long as they stay active. To keep a session open beyond the inactivity timeout, send a command at least once within your configured window (for example, every 10 minutes). Refer to [session duration limits](/browser-rendering/limits/#is-there-a-maximum-session-duration) for more information.
+This is an inactivity timeout, not a maximum session duration. Sessions can remain open longer than 10 minutes as long as they stay active. To keep a session open beyond the inactivity timeout, send a command at least once within your configured window (for example, every 10 minutes). Refer to [session duration limits](/browser-run/limits/#is-there-a-maximum-session-duration) for more information.
 :::
 
 ### Session Reuse
 
-The best way to improve the performance of your browser rendering Worker is to reuse sessions by keeping the browser open after you've finished with it, and connecting to that session each time you have a new request. Playwright handles [`browser.close`](https://playwright.dev/docs/api/class-browser#browser-close) differently from Puppeteer. In Playwright, if the browser was obtained using a `connect` session, the session will disconnect. If the browser was obtained using a `launch` session, the session will close.
+The best way to improve the performance of your Browser Run Worker is to reuse sessions by keeping the browser open after you have finished with it, and connecting to that session each time you have a new request. Playwright handles [`browser.close`](https://playwright.dev/docs/api/class-browser#browser-close) differently from Puppeteer. In Playwright, if the browser was obtained using a `connect` session, the session will disconnect. If the browser was obtained using a `launch` session, the session will close.
 
 ```js
 import { env } from "cloudflare:workers";
@@ -291,15 +292,14 @@ To specify a custom user agent in Playwright, set it in the options when creatin
 
 ```js
 const context = await browser.newContext({
-  userAgent:
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+	userAgent:
+		"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
 });
 ```
 
 :::note
-The `userAgent` parameter does not bypass bot protection. Requests from Browser Rendering will always be identified as a bot.
+The `userAgent` parameter does not bypass bot protection. Requests from Browser Run will always be identified as a bot.
 :::
-
 
 ## Local debugging with headful mode (experimental)
 
@@ -369,7 +369,7 @@ Notice that the session `478f4d7d-e943-40f6-a414-837d3736a1dc` has an active wor
 ]
 ```
 
-Session `2be00a21-9fb6-4bb2-9861-8cd48e40e771` was closed explicitly with `browser.close()` by the client, while session `478f4d7d-e943-40f6-a414-837d3736a1dc` was closed due to reaching the maximum idle time (check [limits](/browser-rendering/limits/)).
+Session `2be00a21-9fb6-4bb2-9861-8cd48e40e771` was closed explicitly with `browser.close()` by the client, while session `478f4d7d-e943-40f6-a414-837d3736a1dc` was closed due to reaching the maximum idle time (check [limits](/browser-run/limits/)).
 
 You should also be able to access this information in the dashboard, albeit with a slight delay.
 
@@ -389,9 +389,9 @@ You should also be able to access this information in the dashboard, albeit with
 }
 ```
 
-- `activeSessions` lists the IDs of the current open sessions
-- `maxConcurrentSessions` defines how many browsers can be open at the same time
-- `allowedBrowserAcquisitions` specifies if a new browser session can be opened according to the rate [limits](/browser-rendering/limits/) in place
+- `activeSessions` lists the IDs of the current open sessions.
+- `maxConcurrentSessions` defines how many browsers can be open at the same time.
+- `allowedBrowserAcquisitions` specifies if a new browser session can be opened according to the rate [limits](/browser-run/limits/) in place.
 - `timeUntilNextAllowedBrowserAcquisition` defines the waiting period before a new browser can be launched.
 
 ## Playwright API

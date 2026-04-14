@@ -1,39 +1,42 @@
 ---
 pcx_content_type: configuration
 title: Limits
-description: Learn about the limits associated with Browser Rendering.
+description: Learn about the limits associated with Browser Run.
 sidebar:
   order: 12
 ---
 
 import { Render, Plan, Tabs, TabItem, DashButton } from "~/components";
 
-Browser Run limits are based on your [Cloudflare Workers plan](/workers/platform/pricing/).
+Browser Run (formerly Browser Rendering) limits are based on your [Cloudflare Workers plan](/workers/platform/pricing/).
 
-For pricing information, refer to [Browser Run pricing](/browser-rendering/pricing/).
+For pricing information, refer to [Browser Run pricing](/browser-run/pricing/).
 
 ## Workers Free
 
 :::note[Need higher limits?]
+
 If you are on a Workers Free plan and you want to increase your limits, upgrade to a Workers Paid plan in the **Workers plans** page of the Cloudflare dashboard:
+
 <DashButton url="/?to=/:account/workers/plans" />
+
 :::
 
-| Feature                                                  | Limit           |
-| -------------------------------------------------------- | --------------- |
-| Browser hours                                            | 10 minutes per day |
-| Concurrent browsers per account (Browser Sessions only) [^1]  | 3 per account   |
-| New browser instances (Browser Sessions only) | 1 every 20 seconds    |
-| Browser timeout                                          | 60 seconds [^2]  |
-| Total requests (Quick Actions only) [^3]                 | 1 every 10 seconds   |
+| Feature                                                      | Limit              |
+| ------------------------------------------------------------ | ------------------ |
+| Browser hours                                                | 10 minutes per day |
+| Concurrent browsers per account (Browser Sessions only) [^1] | 3 per account      |
+| New browser instances (Browser Sessions only)                | 1 every 20 seconds |
+| Browser timeout                                              | 60 seconds [^2]    |
+| Total requests (Quick Actions only) [^3]                     | 1 every 10 seconds |
 
 ### `/crawl` endpoint limits
 
-The [`/crawl` endpoint](/browser-rendering/quick-actions/crawl-endpoint/) has additional limits for Workers Free plan users:
+The [`/crawl` endpoint](/browser-run/quick-actions/crawl-endpoint/) has additional limits for Workers Free plan users:
 
-| Feature                                | Limit           |
-| -------------------------------------- | --------------- |
-| Crawl jobs per day | 5 per day |
+| Feature                 | Limit     |
+| ----------------------- | --------- |
+| Crawl jobs per day      | 5 per day |
 | Maximum pages per crawl | 100 pages |
 
 ## Workers Paid
@@ -42,31 +45,31 @@ The [`/crawl` endpoint](/browser-rendering/quick-actions/crawl-endpoint/) has ad
 If you are on a Workers Paid plan and you want to increase your limits beyond those listed here, Cloudflare will grant [requests for higher limits](https://forms.gle/CdueDKvb26mTaepa9) on a case-by-case basis.
 :::
 
-| Feature                                                  | Limit           |
-| -------------------------------------------------------- | --------------- |
-| Browser hours                                            | No limit  ([See pricing](/browser-rendering/pricing/))      |
+| Feature                                                      | Limit                                                        |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Browser hours                                                | No limit ([See pricing](/browser-rendering/pricing/))        |
 | Concurrent browsers per account (Browser Sessions only) [^1] | 120 per account ([See pricing](/browser-rendering/pricing/)) |
-| New browser instances per second (Browser Sessions only) | 1 per second    |
-| Browser timeout                                          | 60 seconds [^2] |
-| Total requests per second (Quick Actions only) [^3]      | 10 per second   |
+| New browser instances per second (Browser Sessions only)     | 1 per second                                                 |
+| Browser timeout                                              | 60 seconds [^2]                                              |
+| Total requests per second (Quick Actions only) [^3]          | 10 per second                                                |
 
 [^1]: Browsers close upon task completion or sixty seconds of inactivity (if you do not [extend your browser timeout](#can-i-increase-the-browser-timeout)). Therefore, in practice, many workflows do not require a high number of concurrent browsers.
 
-[^2]: By default, a browser will time out after 60 seconds of inactivity. You can extend this to up to 10 minutes using the [`keep_alive` option](/browser-rendering/puppeteer/#keep-alive). Call `browser.close()` to release the browser instance immediately.
+[^2]: By default, a browser will time out after 60 seconds of inactivity. You can extend this to up to 10 minutes using the [`keep_alive` option](/browser-run/puppeteer/#keep-alive). Call `browser.close()` to release the browser instance immediately.
 
 [^3]: If you exceed the per-second rate limit, you will receive a `429` response. Refer to [troubleshooting the `429 Too many requests` error](#error-429-too-many-requests).
 
 ## FAQ
 
-<Render file="manage-concurrency-faq" product="browser-rendering" />
+<Render file="manage-concurrency-faq" product="browser-run" />
 
 ### Can I increase the browser timeout?
 
-By default, a browser instance will time out after 60 seconds of inactivity. If you want to keep the browser open longer, you can use the [`keep_alive` option](/browser-rendering/puppeteer/#keep-alive), which allows you to extend the timeout to up to 10 minutes.
+By default, a browser instance will time out after 60 seconds of inactivity. If you want to keep the browser open longer, you can use the [`keep_alive` option](/browser-run/puppeteer/#keep-alive), which allows you to extend the timeout to up to 10 minutes.
 
 ### Is there a maximum session duration?
 
-There is no fixed maximum lifetime for a browser session as long as it remains active. By default, Browser Run closes sessions after one minute of inactivity to prevent unintended usage. You can [increase this inactivity timeout](/browser-rendering/puppeteer/#keep-alive) to up to 10 minutes.
+There is no fixed maximum lifetime for a browser session as long as it remains active. By default, Browser Run closes sessions after one minute of inactivity to prevent unintended usage. You can [increase this inactivity timeout](/browser-run/puppeteer/#keep-alive) to up to 10 minutes.
 
 If you need sessions to remain open longer, keep them active by sending a command at least once within your configured inactivity window (for example, every 10 minutes). Sessions also close when Browser Run rolls out a new release.
 
@@ -82,13 +85,13 @@ To minimize usage:
 
 - Always call `browser.close()` when you are finished with a browser session.
 - Wrap your browser code in a `try/finally` block to ensure `browser.close()` is called even if an error occurs.
-- Use [`puppeteer.history()`](/browser-rendering/puppeteer/#list-recent-sessions) or [`playwright.history()`](/browser-rendering/playwright/#list-recent-sessions) to review recent sessions and identify any that closed due to `BrowserIdle` instead of `NormalClosure`. Sessions that close due to idle timeout indicate the browser was not closed explicitly.
+- Use [`puppeteer.history()`](/browser-run/puppeteer/#list-recent-sessions) or [`playwright.history()`](/browser-run/playwright/#list-recent-sessions) to review recent sessions and identify any that closed due to `BrowserIdle` instead of `NormalClosure`. Sessions that close due to idle timeout indicate the browser was not closed explicitly.
 
 You can monitor your usage and view session close reasons in the Cloudflare dashboard on the **Browser Run** page:
 
 <DashButton url="/?to=/:account/workers/browser-rendering" />
 
-Refer to [Browser close reasons](/browser-rendering/reference/browser-close-reasons/) for more information.
+Refer to [Browser close reasons](/browser-run/reference/browser-close-reasons/) for more information.
 
 ## Troubleshooting
 
@@ -99,6 +102,7 @@ When you make too many requests in a short period of time, Browser Run will resp
 The example below demonstrates how to handle rate limiting gracefully by reading the `Retry-After` value and retrying the request after that delay.
 
 <Tabs syncKey="workersExamples"> <TabItem label="Quick Actions">
+
 ```js
 const response = await fetch('https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/content', {
     method: 'POST',
@@ -118,7 +122,6 @@ await new Promise(resolve => setTimeout(resolve, retryAfter \* 1000));
     const retryResponse = await fetch(/* same request as above */);
 
 }
-
 ```
 
 </TabItem> <TabItem label="Puppeteer">
