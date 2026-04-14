@@ -1,0 +1,269 @@
+---
+title: Third-party models via Workers AI binding
+pcx_content_type: configuration
+tags:
+  - AI
+  - Bindings
+sidebar:
+  order: 2
+description: >-
+  Call models from OpenAI, Anthropic, Google, and other providers directly through
+  the Workers AI binding (env.AI.run()) with AI Gateway features like caching,
+  rate limiting, and observability.
+---
+
+import { WranglerConfig, TypeScriptExample, Details } from "~/components";
+
+The Workers AI binding (`env.AI`) can call models from third-party providers -- OpenAI, Anthropic, Google, and many more -- directly from your Worker. Requests are routed through AI Gateway so you get caching, rate limiting, logging, and observability without any extra setup.
+
+This means you can call models like `openai/gpt-5`, `anthropic/claude-sonnet-4`, or `google/gemini-3-flash` with the same `env.AI.run()` API you already use for Workers AI models, and every request flows through your AI Gateway.
+
+## Prerequisites
+
+- A Cloudflare Worker with an [AI binding](/workers-ai/configuration/bindings/) configured.
+- An [AI Gateway](/ai-gateway/get-started/) created in the same account.
+- [Unified Billing](/ai-gateway/features/unified-billing/) credits loaded on your account.
+
+## Setup
+
+Add an AI binding to your Worker's [Wrangler configuration file](/workers/wrangler/configuration/):
+
+<WranglerConfig>
+
+```jsonc
+{
+	"ai": {
+		"binding": "AI"
+	}
+}
+```
+
+</WranglerConfig>
+
+## Authentication and billing
+
+Third-party models called through the Workers AI binding use [Unified Billing](/ai-gateway/features/unified-billing/). Cloudflare manages the provider credentials and deducts credits from your account for each request. You do not need to supply your own API keys.
+
+:::note
+[BYOK (Bring Your Own Keys)](/ai-gateway/configuration/bring-your-own-keys/) is not supported for third-party models called through the Workers AI binding. The binding does not provide a way to pass provider API keys at request time. If you need to use your own provider keys, call the provider through the [provider-native REST endpoints](/ai-gateway/usage/providers/) or the [gateway binding `run` method](/ai-gateway/integrations/worker-binding-methods/#34-run-universal-requests) instead.
+:::
+
+## Basic usage
+
+Call a third-party model with `env.AI.run()` by passing the model ID in `{provider}/{model}` format and a `gateway` option with your gateway ID:
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const response = await env.AI.run(
+			"openai/gpt-4.1-mini",
+			{
+				messages: [
+					{
+						role: "user",
+						content: "What is Cloudflare?",
+					},
+				],
+			},
+			{
+				gateway: {
+					id: "my-gateway",
+				},
+			},
+		);
+		return Response.json(response);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+The `gateway` option accepts the following parameters:
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | *required* | Name of your [AI Gateway](/ai-gateway/get-started/). Must be in the same account as your Worker. |
+| `skipCache` | `boolean` | `false` | Skip the [cache](/ai-gateway/features/caching/) for this request. |
+| `cacheTtl` | `number` | — | [Cache TTL](/ai-gateway/features/caching/) in seconds. |
+| `cacheKey` | `string` | — | Custom [cache key](/ai-gateway/features/caching/) for this request. |
+| `collectLog` | `boolean` | — | Whether to [collect logs](/ai-gateway/observability/logging/) for this request. |
+| `metadata` | `object` | — | [Custom metadata](/ai-gateway/observability/custom-metadata/) to attach to the log entry. |
+
+## Examples
+
+### Text generation
+
+#### OpenAI
+
+```typescript title="src/index.ts"
+const response = await env.AI.run(
+	"openai/gpt-5",
+	{
+		messages: [
+			{ role: "system", content: "You are a helpful assistant." },
+			{ role: "user", content: "Explain how DNS works in two sentences." },
+		],
+	},
+	{
+		gateway: { id: "my-gateway" },
+	},
+);
+```
+
+#### Anthropic
+
+Anthropic models use the [Anthropic Messages format](https://docs.anthropic.com/en/api/messages). Note that `max_tokens` is required and `system` is a top-level field.
+
+```typescript title="src/index.ts"
+const response = await env.AI.run(
+	"anthropic/claude-sonnet-4",
+	{
+		system: "You are a helpful assistant.",
+		messages: [
+			{ role: "user", content: "Explain how DNS works in two sentences." },
+		],
+		max_tokens: 1024,
+	},
+	{
+		gateway: { id: "my-gateway" },
+	},
+);
+```
+
+#### Google Gemini
+
+```typescript title="src/index.ts"
+const response = await env.AI.run(
+	"google/gemini-3-flash",
+	{
+		messages: [
+			{ role: "user", content: "Explain how DNS works in two sentences." },
+		],
+	},
+	{
+		gateway: { id: "my-gateway" },
+	},
+);
+```
+
+### Streaming
+
+Pass `stream: true` in the input to receive a streaming response:
+
+```typescript title="src/index.ts"
+const response = await env.AI.run(
+	"openai/gpt-4.1-mini",
+	{
+		messages: [
+			{ role: "user", content: "Write a short poem about the Internet." },
+		],
+		stream: true,
+	},
+	{
+		gateway: { id: "my-gateway" },
+	},
+);
+
+return new Response(response, {
+	headers: { "Content-Type": "text/event-stream" },
+});
+```
+
+### Image generation
+
+```typescript title="src/index.ts"
+const response = await env.AI.run(
+	"cloudflare/image",
+	{
+		prompt: "A futuristic city skyline at sunset, digital art",
+	},
+	{
+		gateway: { id: "my-gateway" },
+	},
+);
+```
+
+### Text-to-speech
+
+```typescript title="src/index.ts"
+const response = await env.AI.run(
+	"openai/tts-1",
+	{
+		text: "Hello! Welcome to Cloudflare AI Gateway.",
+		voice: "nova",
+	},
+	{
+		gateway: { id: "my-gateway" },
+	},
+);
+```
+
+### Speech-to-text
+
+```typescript title="src/index.ts"
+const response = await env.AI.run(
+	"cloudflare/stt",
+	{
+		audio: audioArrayBuffer,
+	},
+	{
+		gateway: { id: "my-gateway" },
+	},
+);
+```
+
+### Video generation
+
+```typescript title="src/index.ts"
+const response = await env.AI.run(
+	"cloudflare/video",
+	{
+		prompt: "A golden retriever playing fetch on a sandy beach at sunset",
+	},
+	{
+		gateway: { id: "my-gateway" },
+	},
+);
+```
+
+## Supported models
+
+Model IDs use the `{provider}/{model}` format -- for example, `openai/gpt-5` or `anthropic/claude-sonnet-4`. The provider prefix refers to the model author, not the infrastructure hosting it.
+
+Browse the full list of available models, including supported tasks and input schemas, in the [model catalog](https://developers.cloudflare.com/ai/models/).
+
+Cloudflare also provides task-level aliases that automatically route to the best available model:
+
+- `cloudflare/image` -- Text-to-Image
+- `cloudflare/image-edit` -- Image-to-Image
+- `cloudflare/video` -- Text-to-Video
+- `cloudflare/i2v` -- Image-to-Video
+- `cloudflare/stt` -- Speech-to-Text
+- `cloudflare/tts` -- Text-to-Speech
+
+:::note
+Workers AI models (prefixed with `@cf/` or `@hf/`) are also supported through `env.AI.run()` and route through AI Gateway when you pass the `gateway` option. Refer to [Workers AI provider](/ai-gateway/usage/providers/workersai/) for details.
+:::
+
+## Accessing the log ID
+
+After making a request, you can retrieve the AI Gateway log ID for observability:
+
+```typescript title="src/index.ts"
+const response = await env.AI.run("openai/gpt-4.1-mini", input, {
+	gateway: { id: "my-gateway" },
+});
+
+const logId = env.AI.aiGatewayLogId;
+```
+
+Use the log ID with the [gateway binding methods](/ai-gateway/integrations/worker-binding-methods/) to send feedback, retrieve log details, or update metadata.
+
+## Related resources
+
+- [Workers AI binding tutorial](/ai-gateway/integrations/aig-workers-ai-binding/) -- Step-by-step guide to setting up Workers AI with AI Gateway.
+- [AI Gateway binding methods](/ai-gateway/integrations/worker-binding-methods/) -- `patchLog`, `getLog`, `getUrl`, and `run` methods.
+- [Unified Billing](/ai-gateway/features/unified-billing/) -- Pay for third-party inference with Cloudflare credits.
+- [Caching](/ai-gateway/features/caching/) -- Cache responses to reduce latency and cost.

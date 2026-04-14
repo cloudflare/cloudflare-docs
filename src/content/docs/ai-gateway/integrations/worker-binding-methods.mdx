@@ -52,6 +52,24 @@ const resp = await env.AI.run(
 );
 ```
 
+You can also call third-party models from providers like OpenAI, Anthropic, and Google using the same `env.AI.run()` method. Use the `{provider}/{model}` format for the model ID:
+
+```typescript title="src/index.ts"
+const resp = await env.AI.run(
+	"openai/gpt-4.1-mini",
+	{
+		messages: [{ role: "user", content: "tell me a joke" }],
+	},
+	{
+		gateway: {
+			id: "my-gateway",
+		},
+	},
+);
+```
+
+For the full list of supported third-party models, refer to [Third-party models via Workers AI binding](/ai-gateway/integrations/aig-workers-ai-binding-third-party/).
+
 Additionally, you can access the latest request log ID with:
 
 ```typescript
