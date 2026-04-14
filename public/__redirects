@@ -3,6 +3,9 @@
 # STATIC REDIRECTS
 # ============================================================================
 
+# Solutions (moved from use-cases)
+/use-cases/application-security/bots/stop-malicious-bots/ /solutions/stop-malicious-bots/ 301
+
 # Privacy Proxy
 /privacy-proxy/reference/observability/ /privacy-proxy/reference/metrics/opentelemetry/ 301
 
