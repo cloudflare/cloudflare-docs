@@ -9,11 +9,13 @@ head:
   - tag: title
     content: Overview
 ---
+
 import { Description } from "~/components";
 
 <Description>
 
 An AI co-pilot built into the Cloudflare dashboard. Ask questions about your account, take actions, and run diagnostics, all in plain language.
+
 </Description>
 
 :::note[Beta]
@@ -21,6 +23,7 @@ Agent Lee is currently in beta and only available to accounts on a Free plan. Fe
 :::
 
 With Agent Lee, you can:
+
 - Ask questions about your account configuration and get answers based on your actual data.
 - Make changes to DNS records, zone settings, and security rules, with your approval required before anything executes.
 - Run network diagnostics like DNS lookups and certificate checks.
@@ -41,12 +44,15 @@ Agent Lee answers based on your actual account data, not just documentation. Whe
 You can ask Agent Lee to create, update, or delete resources across your account using natural language. Every write operation requires your explicit approval before it executes, Agent Lee shows you exactly what it plans to do and waits for confirmation.
 
 Example requests:
+
 - "Add an A record for blog.example.com pointing to 192.0.2.10."
 - "Enable Always Use HTTPS on my zone."
 - "Set the SSL mode for example.com to Full (strict)."
 
 ### Network diagnostics
+
 Run diagnostic commands to troubleshoot connectivity and configuration issues:
+
 - **DNS lookups**: Query DNS records for any domain
 - **Certificate checks**: Inspect TLS/SSL certificates
 - **Domain information**: Look up WHOIS and RDAP registration data
@@ -55,11 +61,11 @@ Run diagnostic commands to troubleshoot connectivity and configuration issues:
 
 Agent Lee renders inline charts and data visualizations directly in the chat panel based on your account analytics.
 Example requests:
+
 - "Show me a chart of my traffic over the last 7 days."
 - "What does my error rate look like for the past 24 hours?"
 
 ---
-
 
 ## Data access and privacy
 
@@ -85,13 +91,14 @@ Conversations are stored per user using [Durable Objects](/durable-objects/), is
 
 ### Data usage
 
-Agent Lee does not use your conversations, prompts, or account data to train AI models, and does not share your data with other Cloudflare customers. Refer to the [Cloudflare Privacy Policy](/privacypolicy/) for more details.
+Agent Lee does not use your conversations, prompts, or account data to train AI models, and does not share your data with other Cloudflare customers. Refer to the [Cloudflare Privacy Policy](https://www.cloudflare.com/privacypolicy/) for more details.
 
 ---
 
 ## Limitations
 
 Agent Lee cannot:
+
 - Write Workers scripts or generate application code
 - Replace [Cloudflare Support](https://support.cloudflare.com) for billing issues, account recovery, or outages
 - Access payment methods, billing history, or API tokens
@@ -104,17 +111,16 @@ Agent Lee is entirely optional. If you do not open the Ask AI panel, none of you
 
 ---
 
-
 ## Built on Cloudflare
 
 Agent Lee is built on Cloudflare's own developer platform using the same primitives available to any Cloudflare developer.
 
-| Component | Role |
-|---|---|
-| [Agents SDK](/agents/) | Agent lifecycle, state management, and scheduling |
-| [Durable Objects](/durable-objects/) | Per-user conversation storage and write approval gate |
-| [Workers AI](/workers-ai/) | LLM inference |
-| [Cloudflare MCP server](/agents/api-reference/mcp-agent-api/) | Tool definitions for Cloudflare API operations |
+| Component                                                     | Role                                                  |
+| ------------------------------------------------------------- | ----------------------------------------------------- |
+| [Agents SDK](/agents/)                                        | Agent lifecycle, state management, and scheduling     |
+| [Durable Objects](/durable-objects/)                          | Per-user conversation storage and write approval gate |
+| [Workers AI](/workers-ai/)                                    | LLM inference                                         |
+| [Cloudflare MCP server](/agents/api-reference/mcp-agent-api/) | Tool definitions for Cloudflare API operations        |
 
 ---
 
