@@ -205,12 +205,12 @@ In this example, DNSSEC is misconfigured if a proper DNS response is received wh
 
 After [disabling DNSSEC](/dns/dnssec/#disable-dnssec), DNSKEY records continue to appear in DNS queries and zone transfers. In the `disabled` state, Cloudflare still signs the zone and serves RRSIG, NSEC, and DNSKEY records. This is expected behavior and **not a misconfiguration or error**. Refer to [DNSSEC states](/dns/dnssec/dnssec-states/) and [RFC 8078](https://www.rfc-editor.org/rfc/rfc8078.html#section-4) for details.
 
-However, some security vendors or audit tools may flag these DNSKEY records as problematic, reporting "DNSKEY record found but no DS record found" with a security outcome of "Provably Insecure.". You can remove the DNSKEY records using the API.
+However, some security vendors or audit tools may flag these DNSKEY records as problematic, reporting "DNSKEY record found but no DS record found" with a security outcome of "Provably Insecure". You can remove the DNSKEY records using the API.
 
 ### How to remove remaining DNSKEY records
 
-:::caution
-Only remove DNSKEY records after DNSSEC has been fully disabled and the `DS` record has been removed from your registrar. Removing DNSKEY records while DNSSEC is still enabled will break DNS resolution.
+:::caution[Make sure DNSSEC is fully turned off]
+As a rule of thumb, after removing the DS record from your registrar, wait 1.5 times its [TTL](/dns/manage-dns-records/reference/ttl/) - if the DS TTL is 24 hours, wait 36 hours. Removing DNSKEY records while DNSSEC is still enabled will break DNS resolution.
 :::
 
 Use the [Delete DNSSEC API](/api/resources/dns/subresources/dnssec/methods/delete/) to transition the zone to the `deleted` state. This stops all zone signing and removes all DNSSEC record types (RRSIG, NSEC, DNSKEY, CDS, and CDNSKEY):
@@ -233,4 +233,4 @@ If DNSKEY records still appear, wait for the [time-to-live (TTL)](/dns/manage-dn
 
 ## Next steps
 
-If a problem is discovered with DNSSEC implementation, contact the domain's registrar and confirm the `DS` record matches what the authoritative DNS provider has specified. If Cloudflare is the authoritative DNS provider, follow the instructions for [configuring DNSSEC with Cloudflare](/dns/dnssec/).
+If a problem is discovered with DNSSEC implementation, contact the domain's registrar and confirm the DS record matches what the authoritative DNS provider has specified. If Cloudflare is the authoritative DNS provider, follow the instructions for [configuring DNSSEC with Cloudflare](/dns/dnssec/).
