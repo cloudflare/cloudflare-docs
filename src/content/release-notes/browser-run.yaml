@@ -20,7 +20,7 @@ entries:
   - publish_date: "2026-04-15"
     title: "Session Recordings"
     description: |-
-      * [Session Recordings](/browser-run/features/session-recordings/) captures DOM changes, mouse and keyboard events, and page navigation as structured data so you can replay any browser session after it ends. Enable recordings by passing `recording: true` when launching a browser. After the session closes, access recordings from the **Runs** tab in the Cloudflare dashboard or retrieve them via API.
+      * [Session Recordings](/browser-run/features/session-recording/) captures DOM changes, mouse and keyboard events, and page navigation as structured data so you can replay any browser session after it ends. Enable recordings by passing `recording: true` when launching a browser. After the session closes, access recordings from the **Runs** tab in the Cloudflare dashboard or retrieve them via API.
   - publish_date: "2026-04-15"
     title: "WebMCP support"
     description: |-
