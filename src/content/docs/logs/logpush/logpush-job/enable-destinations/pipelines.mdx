@@ -26,26 +26,19 @@ For a full list of fields available in each dataset, refer to [Datasets](/logs/l
 1. In the Cloudflare dashboard, go to the **Logpush** page at the account or domain (also known as zone) level.
    - For account: <DashButton url="/?to=/:account/logs" />
    - For domain (also known as zone): <DashButton url="/?to=/:account/:zone/analytics/logs" />
-
 2. Select **Create a Logpush job**.
-
 3. Select **Pipelines** as the destination.
-
 4. In the **Dataset** step, select the dataset from the dropdown.
    - A Pipeline name is auto-generated, but you can edit it.
-	 - The name is also used for the Logpush job and appends `_stream` and `_sink` to name the Pipelines [Stream](/pipelines/streams/) and [Sink](/pipelines/sinks/), respectively.
-
-5. In the **Destination** step, configure the R2 Sink:
+5. In the **Destination** step, configure the destination:
    - Select an existing R2 bucket or type a new name to create one during setup.
    - Choose the storage format: Parquet, JSON, or [R2 Data Catalog (Apache Iceberg)](/r2/data-catalog/).
    - If you select R2 Data Catalog, enter a catalog namespace and table name.
-   - Optionally, expand **Delivery settings** to configure compression, roll size, roll interval, path prefix, and time partitioning. For more information about these settings, refer to the [Pipelines Sinks documentation](/pipelines/sinks/).
-
+   - Optionally, expand **Delivery settings** to configure roll size, roll interval, and other destination-specific settings. For more information about these settings, refer to the [Pipelines Sinks documentation](/pipelines/sinks/).
 6. In the **Transform** step, choose how to process logs before they are written to the Sink:
-   - **Pass through** forwards all fields without modification (default).
-   - **Custom SQL** opens a SQL editor where you can filter, transform, and enrich your data. For more information about writing SQL transformations, refer to the [Pipelines SQL reference](/pipelines/sql-reference/).
-
-7. In the **Review** step, verify your configuration and select **Create**. This automatically creates all required resources, including the Stream, Sink, R2 credentials or Data Catalog token, Pipeline, and the Logpush job.
+   - **Simple** forwards all fields without modification (default).
+   - **Custom SQL** opens a SQL editor where you can filter, transform, and enrich your data. Refer to the [Pipelines SQL reference](/pipelines/sql-reference/) for a complete list of SQL functions.
+7. In the **Review** step, verify your configuration and select **Create**. This automatically creates all required resources, including the [Stream](/pipelines/streams/), [Sink](/pipelines/sinks/), R2 credentials or Data Catalog token, [Pipeline](/pipelines/), and the Logpush job.
 
 </Steps>
 
