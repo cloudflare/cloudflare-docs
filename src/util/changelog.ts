@@ -81,7 +81,7 @@ async function getWARPReleases(): Promise<Array<CollectionEntry<"changelog">>> {
 				hidden: false,
 				date: releaseDate,
 				products: [{ id: "cloudflare-one-client", collection: "directory" }],
-				scheduled: false,
+				publish_future_dated_entry: false,
 			},
 			rendered: {
 				html: marked.parse([prefix, releaseNotes].join("\n\n"), {
@@ -131,6 +131,15 @@ export async function getChangelogs({
 	if (filter) {
 		entries = entries.filter((e) => filter(e));
 	}
+
+	// Exclude entries with a date in the future so that changelog posts
+	// merged ahead of time do not appear until their publish date.
+	const now = new Date();
+	entries = entries.filter(
+		(e) =>
+			e.data.publish_future_dated_entry ||
+			e.data.date.getTime() <= now.getTime(),
+	);
 
 	return entries.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 }

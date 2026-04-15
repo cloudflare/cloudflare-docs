@@ -20,7 +20,9 @@ A wildcard URL redirect has the following configuration parameters:
 
 - **Target URL**: Enter the target URL, which can be static (for example, `https://example.com`) or dynamic (for example, `https://example.com/${1}/files/${2}`). Use [wildcard replacement](/ruleset-engine/rules-language/functions/#wildcard_replace) like `${1}`, `${2}`, etc., to define dynamic targets.
 
-- **Status code**: The HTTP status code of the redirect response (_301_ by default). Must be one of the following: _301_ (Moved permanently), _302_ (Found, also known as Moved temporarily), _307_ (Temporary redirect), or _308_ (Permanent redirect).
+- **Status code**: The HTTP status code of the redirect response (_301 - Permanent Redirect_ by default). Must be one of the following:
+
+  <Render file="redirects-status-codes" product="rules" />
 
 - **Preserve query string**: Whether to preserve the query string when redirecting (disabled by default).
 
@@ -32,7 +34,9 @@ A static URL redirect has the following configuration parameters:
 
 - **URL**: A literal string that will be used in the `Location` HTTP header returned in the redirect response.
 
-- **Status code**: The HTTP status code of the redirect response (_301_ by default). Must be one of the following: _301_ (Moved permanently), _302_ (Found, also known as Moved temporarily), _307_ (Temporary redirect), or _308_ (Permanent redirect).
+- **Status code**: The HTTP status code of the redirect response (_301 - Permanent Redirect_ by default). Must be one of the following:
+
+  <Render file="redirects-status-codes" product="rules" />
 
 - **Preserve query string**: Whether to preserve the query string when redirecting (disabled by default).
 
@@ -66,7 +70,9 @@ A dynamic URL redirect has the following configuration parameters:
 
 - **Expression**: An [expression](/ruleset-engine/rules-language/expressions/) that defines the target URL of the redirect. The result of evaluating this expression will be used in the `Location` HTTP header returned in the redirect response. Refer to the [fields](/ruleset-engine/rules-language/fields/reference/) and [functions](/ruleset-engine/rules-language/functions/) you can use in expressions.
 
-- **Status code**: The HTTP status code of the redirect response (_301_ by default). Must be one of the following: _301_ (Moved permanently), _302_ (Found, also known as Moved temporarily), _307_ (Temporary redirect), or _308_ (Permanent redirect).
+- **Status code**: The HTTP status code of the redirect response (_301 - Permanent Redirect_ by default). Must be one of the following:
+
+  <Render file="redirects-status-codes" product="rules" />
 
 - **Preserve query string**: Whether to preserve the query string when redirecting (disabled by default).
 

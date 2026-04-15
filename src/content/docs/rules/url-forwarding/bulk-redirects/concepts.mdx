@@ -12,11 +12,11 @@ import { Example, GlossaryTooltip } from "~/components";
 
 Bulk Redirects involve the following elements:
 
-- **URL redirect**: A simple object with a source URL, a target URL, a status code, and redirect parameters. URL redirects are the list items of Bulk Redirect Lists.
+- **URL redirect**: An entry with a source URL, a target URL, a status code, and redirect parameters. URL redirects are the individual items in Bulk Redirect Lists.
 
-- **Bulk Redirect List**: A list, similar to an IP list, containing one or more URL redirects. To enable all the URL redirects in a Bulk Redirect List, reference the list in a Bulk Redirect Rule. Different Bulk Redirect Rules can reference the same Bulk Redirect List.
+- **Bulk Redirect List**: A named collection containing one or more URL redirects. To activate all the URL redirects in a Bulk Redirect List, reference the list in a Bulk Redirect Rule. Different Bulk Redirect Rules can reference the same Bulk Redirect List.
 
-- **Bulk Redirect Rule**: A rule powered by the Ruleset Engine, similar to a [Transform Rule](/rules/transform/). A Bulk Redirect Rule has an associated Bulk Redirect List.
+- **Bulk Redirect Rule**: A rule powered by the [Ruleset Engine](/ruleset-engine/), which is the system Cloudflare uses to evaluate and execute rules. A Bulk Redirect Rule has an associated Bulk Redirect List.
 
 A Bulk Redirect Rule enables a Bulk Redirect List, which contains one or more URL redirects.
 
@@ -50,7 +50,7 @@ The following Bulk Redirect Rule, named `Rule 2`, enables the URL redirects in t
 
 A URL redirect allows you to configure a source URL, a target URL, a status code, and redirect parameters.
 
-When specifying the source URL, use the available redirect parameters instead of wildcards, which are not supported. For example, the **Include subdomains** parameter allows you to configure a single URL redirect that applies both to subdomains (for example, `https://b.example.com` and `https://a.b.example.com`) and to the apex domain (`https://example.com`). Other parameters allow you to specify how the source URL’s path and query string are handled. For more information, refer to [How Bulk Redirects work](/rules/url-forwarding/bulk-redirects/how-it-works/).
+When specifying the source URL, use the available redirect parameters instead of wildcards, which are not supported. For example, the **Include subdomains** parameter allows you to configure a single URL redirect that applies both to subdomains (for example, `https://b.example.com` and `https://a.b.example.com`) and to the apex domain (the root domain with no subdomain – for example, `https://example.com`). Other parameters allow you to specify how the source URL’s path and query string are handled. For more information, refer to [How Bulk Redirects work](/rules/url-forwarding/bulk-redirects/how-it-works/).
 
 URL redirects are the list items of Bulk Redirect Lists.
 
@@ -76,7 +76,7 @@ Bulk Redirect Rules are rules powered by the Ruleset Engine that enable one or m
 
 When you configure a Bulk Redirect Rule, you associate a Bulk Redirect List to it, which enables all the URL redirects in that list. You can create a rule for each list, or have many Bulk Redirect Rules referencing the same Bulk Redirect List.
 
-A Bulk Redirect Rule, like all rules powered by the Ruleset Engine, has an action and an expression. Besides these two properties, it also has a name, an optional description, an associated Bulk Redirect List, and a key.
+A Bulk Redirect Rule, like all rules powered by the Ruleset Engine, has an action (what happens when the rule triggers) and an [expression](#expression) (the conditions that must be met). Besides these two properties, it also has a name, an optional description, an associated Bulk Redirect List, and a [key](#key).
 
 ### Expression
 
@@ -111,9 +111,9 @@ Refer to the [Fields reference](/ruleset-engine/rules-language/fields/reference/
 
 ### Key
 
-The rule key is used in combination with the Bulk Redirect List associated with the rule to select the URL redirect to apply.
+The rule key specifies which request field Cloudflare uses to look up a matching URL redirect in the associated Bulk Redirect List.
 
-When there is a match for the rule expression, Cloudflare compares the value of the rule key with the source URL of each URL redirect in the associated Bulk Redirect List, searching for a match.
+When there is a match for the rule expression, Cloudflare compares the value of the rule key against the source URL of each URL redirect in the associated Bulk Redirect List, searching for a match.
 
 The key should be either `http.request.full_uri` or `raw.http.request.full_uri`. Use `raw.http.request.full_uri` to compare the URI received by the web server, before normalization, with the source URLs in the Bulk Redirect List.
 

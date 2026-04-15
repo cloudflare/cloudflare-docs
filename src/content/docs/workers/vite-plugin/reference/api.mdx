@@ -81,6 +81,11 @@ It accepts an optional `PluginConfig` parameter.
   You can inspect the `dist` directory and then run `wrangler deploy -c dist/<auxiliary-worker>/wrangler.json` for each.
   :::
 
+- `remoteBindings` <Type text='boolean' /> <MetaInfo text='optional' />
+
+  Whether or not [remote bindings](/workers/development-testing/#remote-bindings) should be enabled. Defaults to `true`.
+
+
 ## `interface AuxiliaryWorkerConfig`
 
 Auxiliary Workers require a `configPath`, a `config` option, or both.

@@ -38,7 +38,7 @@ Cloudflare Browser Isolation runs a headless, Chromium-based browser for your us
 
 ## Network on-ramps
 
-The primary ways to source multi-device or network traffic to Cloudflare Gateway are via Cloudflare WAN (formerly Magic WAN) using GRE or IPsec tunnels, the [WARP Connector](#warp-connector) as a software-defined all-ports traffic proxy, or via upstream DNS for a whole network using [DNS filtering locations](#dns-filtering-locations).
+The primary ways to source multi-device or network traffic to Cloudflare Gateway are via Cloudflare WAN (formerly Magic WAN) using GRE or IPsec tunnels, via [Cloudflare Mesh](#cloudflare-mesh) as a software-defined all-ports traffic proxy, or via upstream DNS for a whole network using [DNS filtering locations](#dns-filtering-locations).
 
 ### Cloudflare WAN
 
@@ -52,13 +52,13 @@ Cloudflare WAN on-ramps traffic via your connections and can send all network an
 
 For more information on how Cloudflare WAN integrates with Zero Trust, refer to [Zero Trust integration](/cloudflare-wan/zero-trust/).
 
-### WARP Connector <Badge text="Beta" variant="caution" size="small" />
+### Cloudflare Mesh <Badge text="Beta" variant="caution" size="small" />
 
-[WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/), a software agent similar to our device client, functions as a virtual device to establish a connection between your network and the Cloudflare global network. You can install WARP Connector on a dedicated Linux server or virtual machine.
+[Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) (formerly WARP Connector), a software agent similar to our device client, functions as a virtual device to establish a connection between your network and the Cloudflare global network. You can install Cloudflare Mesh on a dedicated Linux server or virtual machine.
 
-WARP Connector supports egressing traffic from your private network to the Internet as a gateway. This means it can allow traffic initiated from a network to be on-ramped to Cloudflare for either public or private destinations. You can use WARP Connector to establish a secure egress path for servers or users on a network which may not each be able to run the Cloudflare One Client and still apply Gateway network and HTTP inspection policies. This connection is most analogous to proxy server connectivity or site-to-site VPN.
+Cloudflare Mesh supports egressing traffic from your private network to the Internet as a gateway. This means it can allow traffic initiated from a network to be on-ramped to Cloudflare for either public or private destinations. You can use Cloudflare Mesh to establish a secure egress path for servers or users on a network which may not each be able to run the Cloudflare One Client and still apply Gateway network and HTTP inspection policies. This connection is most analogous to proxy server connectivity or site-to-site VPN.
 
-For more information on setting up Cloudflare Tunnel via WARP Connector, refer to [Set up WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/).
+For more information on setting up Cloudflare Mesh, refer to [Set up Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/).
 
 ### DNS filtering locations
 
@@ -68,6 +68,6 @@ The fastest way to start filtering DNS queries from a location is by changing th
 
 For more information on setting up DNS locations, refer to [Add locations](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/).
 
-|                                | Cloudflare WAN        | WARP Connector        | DNS Locations |
-| ------------------------------ | ----------------------- | --------------------- | ------------- |
-| Gateway policy types supported | Network, HTTP, Egress   | Network, HTTP, Egress | DNS, Resolver |
+|                                | Cloudflare WAN        | Cloudflare Mesh       | DNS Locations |
+| ------------------------------ | --------------------- | --------------------- | ------------- |
+| Gateway policy types supported | Network, HTTP, Egress | Network, HTTP, Egress | DNS, Resolver |

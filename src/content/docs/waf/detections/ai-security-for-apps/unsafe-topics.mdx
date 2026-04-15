@@ -16,17 +16,17 @@ import {
 	GlossaryTooltip,
 } from "~/components";
 
-AI Security for Apps (formerly Firewall for AI) can detect when an LLM prompt touches on unsafe or unwanted subjects. There are two layers of topic detection:
+AI Security for Apps can detect when an LLM prompt touches on unsafe or unwanted subjects. There are two layers of topic detection:
 
-- [Default unsafe topics](#default-unsafe-topics) — A built-in set of safety categories that detect harmful content such as violent crimes, hate speech, and sexual content.
-- [Custom topics](#custom-topics) — Topics you define to match your organization's specific policies, such as "competitors" or "financial advice".
+- [Default unsafe topics](#default-unsafe-topics): A built-in set of safety categories that detect harmful content such as violent crimes, hate speech, and sexual content.
+- [Custom topics](#custom-topics): Topics you define to match your organization's specific policies, such as "competitors" or "financial-advice".
 
 ## Default unsafe topics
 
 When AI Security for Apps is enabled, it automatically evaluates prompts against a set of default unsafe topic categories and populates two fields:
 
-- **LLM Unsafe topic detected** ([`cf.llm.prompt.unsafe_topic_detected`][1]) — `true` if any unsafe topic was found.
-- **LLM Unsafe topic categories** ([`cf.llm.prompt.unsafe_topic_categories`][2]) — An array of the specific categories detected.
+- **LLM Unsafe topic detected** ([`cf.llm.prompt.unsafe_topic_detected`][1]): `true` if any unsafe topic was found.
+- **LLM Unsafe topic categories** ([`cf.llm.prompt.unsafe_topic_categories`][2]): An array of the specific categories detected.
 
 [1]: /ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_detected/
 [2]: /ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_categories/
@@ -52,53 +52,34 @@ When AI Security for Apps is enabled, it automatically evaluates prompts against
 
 </Details>
 
-### Example rules — default unsafe topics
-
-#### Block any prompt with unsafe content
-
-- **When incoming requests match**:
-
-  | Field                     | Operator | Value |
-  | ------------------------- | -------- | ----- |
-  | LLM Unsafe topic detected | equals   | True  |
-
-  Expression when using the editor:<br/>
-  `(cf.llm.prompt.unsafe_topic_detected)`
-
-- **Action**: _Block_
-
-#### Block only specific unsafe categories
-
-- **When incoming requests match**:
-
-  | Field                       | Operator | Value                            |
-  | --------------------------- | -------- | -------------------------------- |
-  | LLM Unsafe topic categories | is in    | `S1: Violent Crimes` `S10: Hate` |
-
-  Expression when using the editor:<br/>
-  `(any(cf.llm.prompt.unsafe_topic_categories[*] in {"S1" "S10"}))`
-
-- **Action**: _Block_
-
 ---
 
 ## Custom topics
 
-Custom topic detection lets you define your own topics and AI Security for Apps will score each prompt against them. You can then use these scores in [custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/) to block, challenge, or log matching requests.
+Custom topic detection lets you define your own topics and AI Security for Apps will score each prompt against them. You can then use these scores in [custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/) to block, challenge, or log requests based on a relevance score that you define.
 
 This capability uses a <GlossaryTooltip term="zero-shot classification model">zero-shot classification model</GlossaryTooltip> that evaluates prompts at runtime. No model training is required.
 
 ### How custom topics work
 
-1. You define a list of up to 20 custom topics via the dashboard or API. Each topic consists of:
-   - A label — Used in rule expressions and analytics
-   - A topic string — The descriptive text the model uses to classify prompts
-2. When a request arrives at a `cf-llm` labeled endpoint, the model evaluates the prompt against all defined topic strings and returns a relevance score for each.
-3. Scores are written to the [`cf.llm.prompt.custom_topic_categories`](/waf/detections/ai-security-for-apps/fields/) map field, keyed by label. You use labels — not topic strings — in rule expressions and analytics.
+1. You define a list of up to 20 custom topics. Each topic consists of:
+   - **Label**: A short, hyphenated identifier used in rule expressions and analytics (for example, `financial-advice`).
+   - **Topic description**: The descriptive text the model uses to classify prompts (for example, `seeking financial advice`).
+2. When a request arrives at a `cf-llm` labeled endpoint, the model evaluates the prompt against all defined topic descriptions and returns a relevance score for each.
+3. Scores are written to the [`cf.llm.prompt.custom_topic_categories`](/waf/detections/ai-security-for-apps/fields/) map field, keyed by label. You use labels (not topic descriptions) in rule expressions and analytics.
 
-Scores follow the same convention as other AI Security for Apps scores, where lower values indicate higher relevance (`1` = highly relevant, `99` = not relevant).
+:::note[Inverted relevance scale]
+Custom topic scores use an inverted scale, where lower values indicate higher relevance (`1` = highly relevant, `99` = not relevant). This is the same convention used by all Application Security scores. When writing rules, use `lt` (less than) to match relevant prompts. For example, `lt 20` matches only highly relevant prompts.
+:::
 
 ### Define custom topics
+
+You can manage custom topics from two places in the dashboard:
+
+1. **Security Settings page**: Go to **Security** > **Settings** and search for the **AI Security for Apps** section. Under **Custom Topics**, select **Manage topics** to add, edit, or remove topics.
+2. **Expression builder sidebar**: When creating or editing a [custom rule](/waf/custom-rules/create-dashboard/), select the **LLM Custom topic** field. Then, select **Manage custom topics** to open a sidebar where you can manage topics without leaving the rule creation page.
+
+Both methods will update the same underlying topic list. Changes made in one are immediately reflected in the other.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -108,11 +89,12 @@ Scores follow the same convention as other AI Security for Apps scores, where lo
 
    <DashButton url="/?to=/:account/:zone/security/settings" />
 
-2. Under **AI Security for Apps**, find the **Custom Topics** section and select **Manage topics**.
-3. Add a topic by providing:
-   - **Label**: A short identifier used in rule expressions (for example, `competitors`).
-   - **Topic**: A descriptive English text string the model uses for classification (for example, `asking about Acme Corp products and pricing`).
-4. Select **Save**.
+   Alternatively, go to the [custom rules creation page](/waf/custom-rules/create-dashboard/), select the **LLM Custom topic** field, and select **Manage custom topics** to open the sidebar.
+
+2. Add a topic by providing:
+   - **Label**: A short, hyphenated identifier (for example, `competitors`).
+   - **Topic Description**: A descriptive English phrase the model uses for classification (for example, `seeking info on competitors`).
+3. Select **Save**.
 
 </Steps>
 
@@ -121,27 +103,36 @@ Scores follow the same convention as other AI Security for Apps scores, where lo
 Update your custom topics list using a `PUT` request:
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/firewall-for-ai/custom_topics" \
---request PUT \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---json '{
-  "topics": [
-    { "label": "competitors", "topic": "competitor products and services" },
-    { "label": "finance", "topic": "financial advice and investment recommendations" },
-    { "label": "hr-internal", "topic": "internal HR policies and employee matters" }
-  ]
-}'
+curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/firewall-for-ai/custom-topics" \
+  --request PUT \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --json '{
+    "topics": [
+      {
+        "label": "competitors",
+        "topic": "seeking info on competitors"
+      },
+      {
+        "label": "financial-advice",
+        "topic": "seeking financial advice"
+      },
+      {
+        "label": "hr-internal",
+        "topic": "asking about internal HR policies"
+      }
+    ]
+  }'
 ```
 
 :::caution
-This request replaces your entire topic list — include all topics you want to keep, not just new topics.
+This request replaces your entire topic list. Include all topics you want to keep, not just new ones.
 :::
 
-To retrieve your current topics use a `GET` request:
+To retrieve your current topics, use a `GET` request:
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/firewall-for-ai/custom_topics" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/firewall-for-ai/custom-topics" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
 </TabItem> </Tabs>
@@ -155,99 +146,56 @@ curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/firewall-for-ai/custom
 | Label length             | 2–20 characters                                    |
 | Label format             | Lowercase letters, numbers, and hyphens (`-`) only |
 
-### Example rules — custom topics
-
-#### Block prompts highly relevant to competitors
-
-- **When incoming requests match**:
-
-  Enter the following expression in the editor:<br/>
-  `(cf.llm.prompt.custom_topic_categories["competitors"] lt 30)`
-
-- **Action**: _Block_
-
-#### Log prompts related to financial advice
-
-- **When incoming requests match**:
-
-  Enter the following expression in the editor:<br/>
-  `(cf.llm.prompt.custom_topic_categories["finance"] lt 40)`
-
-- **Action**: _Log_
-
-#### Combine custom topics with other detections
-
-Example expression:<br/>
-`(cf.llm.prompt.custom_topic_categories["competitors"] lt 30 or cf.llm.prompt.pii_detected)`
-
 :::caution
-If you reference a label that has not been defined, the map lookup returns `nil`. Comparisons against `nil` are almost always `false` — for example, `cf.llm.prompt.custom_topic_categories["missing"] >= 0` evaluates to `false`. Make sure the label in your rule expression exactly matches a label you have defined in your custom topics list.
+If you reference a label in a rule expression that has not been defined, the map lookup returns `nil`. Comparisons against `nil` are almost always `false`. For example, `cf.llm.prompt.custom_topic_categories["missing"] >= 0` evaluates to `false`. Make sure the label in your rule expression exactly matches a label you have defined in your custom topics list.
 :::
-
----
 
 ## Best practices for defining custom topics
 
-The quality of custom topic detection depends on how you write your topic strings. The underlying model is a <GlossaryTooltip term="zero-shot classification model">zero-shot classifier</GlossaryTooltip> — it compares the semantic meaning of the prompt against your topic string.
+The quality of custom topic detection depends on how you write your topic descriptions. The underlying model is a <GlossaryTooltip term="zero-shot classification model">zero-shot classifier</GlossaryTooltip> that compares the semantic meaning of the prompt against your topic description.
 
-### Be specific and avoid vague topics
+The most important thing to do is to describe the user's intent, not just the subject.
 
-Overly broad topics match too many prompts (high false positives). Overly narrow topics miss relevant prompts (high false negatives).
+### Lead with intent
 
-| Quality    | Topic string                                        | Why                                                                                |
-| ---------- | --------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| Good       | `Acme Corp products and pricing`                    | Names a specific competitor — catches prompts discussing that company's offerings. |
-| Good       | `securities trading and investment recommendations` | Targets a well-defined intersection of two concepts.                               |
-| Too narrow | `Acme Corp pricing page URL`                        | So specific that only near-exact mentions will score highly.                       |
-| Too broad  | `technology`                                        | Will match almost any technical prompt.                                            |
-| Too broad  | `bad things`                                        | Semantically vague — the model cannot determine what you consider bad.             |
+The model performs semantic classification, not keyword matching. Topic descriptions that capture what the user is _trying to do_ are significantly more accurate than descriptions that simply name a subject area. A short verb phrase (3–6 words) is usually the best trade-off between precision and coverage.
 
-### Use descriptive phrases instead of single keywords
+Compare how the same two topic descriptions perform against two prompts that both mention finance but with very different intent:
 
-A topic string like `finance` is less effective than `securities trading and investment recommendations`. More descriptive phrases give the model better signal and help prevent false positives.
+| Topic description                          | Prompt: _"Should I invest my savings in index funds?"_ | Prompt: _"Our finance team just finished the Q3 report."_                       |
+| ------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------------------------------- |
+| `financial advice` (noun only)             | Matches                                                | Also matches. The word "finance" appears, even though no advice is being sought |
+| `seeking financial advice` (intent phrase) | Matches                                                | Correctly ignored. Mentions finance but has no advice-seeking intent            |
 
-### Avoid semantically overlapping topics
+#### Example: `competitors`
 
-If you define topics that mean nearly the same thing — for example, `financial advice` and `investment guidance` — both will score similarly on the same prompts, consuming two of your 20-topic budget without adding detection value. Consolidate overlapping concepts into a single topic.
+| Quality | Topic description                    | Why                                                                              |
+| ------- | ------------------------------------ | -------------------------------------------------------------------------------- |
+| Best    | `seeking info on competitors`        | Captures intent. Only fires when users are actively asking about competitors     |
+| Okay    | `Acme Corp, Banana Co, Candy & Sons` | Works for known names but misses unnamed competitors and catches casual mentions |
+| Avoid   | `other companies`                    | Far too vague. Matches nearly any prompt that mentions a business                |
 
-### Think about intent and not just keywords
+#### Example: `financial-advice`
 
-The model performs semantic classification, not keyword matching. A topic string of `Acme Corp products and pricing` will detect requests that discuss that competitor's offerings even if they do not mention the company by name — for example, a prompt like _"How does your pricing compare to the leading alternative?"_ can still score highly.
+| Quality | Topic description            | Why                                                                                               |
+| ------- | ---------------------------- | ------------------------------------------------------------------------------------------------- |
+| Best    | `seeking financial advice`   | Intent-driven. Matches users asking for guidance, ignores passive mentions of finance             |
+| Okay    | `securities and investments` | Reasonable subject scope but fires on news articles and factual mentions, not just advice-seeking |
+| Avoid   | `finance`                    | Extremely broad. Matches almost everything from expense reports to pricing questions              |
 
-This also means you should phrase topics as action-oriented verb phrases that capture what the user is doing, not just the subject they mention. Descriptions that capture intent are significantly more discriminating — especially on borderline or ambiguous text.
+### More best practices
 
-For example, compare these two topic strings against two very different prompts:
-
-| Topic string                  | "I read an article about tax deductions" | "What stocks should I buy to retire in 10 years?" |
-| ----------------------------- | ---------------------------------------- | ------------------------------------------------- |
-| `financial advice`            | Medium relevance (false positive)        | High relevance                                    |
-| `asking for financial advice` | No relevance (correct)                   | High relevance                                    |
-
-The noun-phrase version (`financial advice`) returns a false positive on the passive text because the prompt merely mentions the subject. The verb-phrase version (`asking for financial advice`) correctly ignores passive mentions and only matches when the user is actively seeking advice.
-
-**Recommended phrasing styles:**
-
-| Style                     | Example                             |
-| ------------------------- | ----------------------------------- |
-| Noun phrase               | `investment advice`                 |
-| Verb phrase (recommended) | `asking for investment advice`      |
-| Sentence-like             | `a user seeking financial guidance` |
-
-For most use cases, a 3–6 word verb phrase is the best trade-off between precision and coverage.
-
-### Test and iterate
-
-After defining your topics, send test prompts and review the scores in [Security Analytics](/waf/analytics/security-analytics/). There are two ways to tune detection behavior:
-
-- **Adjust the topic string.** If a topic is matching too broadly, make the topic string more specific. If it is not matching requests you expect it to catch, broaden or rephrase the topic string.
-- **Adjust the score threshold in your rule.** A lower threshold (for example, `lt 20`) is stricter and only matches highly relevant requests. A higher threshold (for example, `lt 50`) is more permissive and catches a wider range of related requests. Start with a moderate threshold and refine based on what you observe in logs.
+- **Be specific.** Overly broad topics cause false positives; overly narrow topics cause false negatives.
+- **Avoid semantic overlap.** If two topics mean nearly the same thing (for example, `seeking financial advice` and `asking for investment guidance`), they will score similarly on the same prompts and waste your 20-topic budget.
+- **Test and iterate.** Send test prompts and review scores in [Security Analytics](/waf/analytics/security-analytics/). You can tune by adjusting the topic description (more or less specific) or the score threshold in your rule (`lt 20` is strict, `lt 50` is permissive).
+- **Do not list multiple values in one topic description.** The model only evaluates against the first item in a comma-separated list. For example, `Toyota, Ford, Audi, BMW` will only match prompts about `Toyota` — the remaining items are ignored. Removing the commas does not improve results. Use a single intent-driven phrase such as `seeking info on competitors`, or create separate topics for each value.
 
 ### Example custom topics
 
-| Label           | Topic string                                                      | Use case                                                          |
-| --------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------- |
-| `competitors`   | `asking about Acme Corp products and pricing`                     | Prevent your chatbot from discussing a specific rival's offerings |
-| `legal-advice`  | `asking for legal counsel or regulatory compliance guidance`      | Block prompts that solicit legal advice from your AI              |
-| `student-data`  | `requesting student personal information or academic records`     | EdTech — prevent discussion of individual student data            |
-| `exec-internal` | `discussing internal executive decisions or leadership changes`   | Prevent discussion of sensitive internal matters                  |
-| `crypto-advice` | `asking for cryptocurrency trading or investment recommendations` | FinTech — block prompts seeking crypto investment tips            |
+| Label              | Topic description                       |
+| ------------------ | --------------------------------------- |
+| `competitors`      | `seeking info on competitors`           |
+| `financial-advice` | `seeking financial advice`              |
+| `legal-advice`     | `asking for legal or regulatory advice` |
+| `sensitive-data`   | `requesting passwords or API keys`      |
+| `job-seeking`      | `asking about job openings or careers`  |

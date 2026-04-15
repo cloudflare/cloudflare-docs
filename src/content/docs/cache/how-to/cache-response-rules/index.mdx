@@ -20,9 +20,7 @@ Cache Response Rules apply to both cached and non-cached (dynamic) responses fro
 Cache Response Rules can be created in the [dashboard](/cache/how-to/cache-response-rules/create-dashboard/), via [API](/cache/how-to/cache-response-rules/create-api/), or [Terraform](/cache/how-to/cache-response-rules/terraform-example/).
 
 :::note
-
 Cache Response Rules require that you [proxy the DNS records](/dns/proxy-status/) of your domain (or subdomain) through Cloudflare.
-
 :::
 
 ## Availability
@@ -61,4 +59,5 @@ In this case, the Cache Response Rule takes precedence. Cloudflare caches the as
 ## Notes
 
 - If you strip last modified then Smart Edge Revalidation will be turned off.
-- Cache Response Rules ignore HTTP Response 1xx as it is treated as informational responses.
+- Cache Response Rules ignore [`1xx` HTTP response status codes](/support/troubleshooting/http-status-codes/1xx-informational/) as they are treated as informational responses.
+- Currently, Cache Response Rules do not work with [Version Management](/version-management/).

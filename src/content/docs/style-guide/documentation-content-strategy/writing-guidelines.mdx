@@ -5,6 +5,8 @@ sidebar:
   order: 5
 ---
 
+import { Render } from "~/components";
+
 Use the following writing guidelines to create product content that is clear and consistent and demonstrates Cloudflare's brand voice and product tone. The tone we use varies based on customer goals while using certain products and features. We emphasize ease-of-use within our products.
 
 ## Use plain language
@@ -40,6 +42,12 @@ Do not list performance statistics in feature descriptions.
 ## Communicate confidently
 
 Use a confident and clear tone that prevents customer doubt. Guide from a place of expertise without talking down to the audience.
+
+---
+
+## Always show the primary answer
+
+<Render file="tab-guidance" product="style-guide" />
 
 ---
 
@@ -119,6 +127,29 @@ Use simple language and formatting, as appropriate for the context. Respect our 
 - Consider providing a glossary for terms readers may not know.
 - Use list formatting as appropriate.
 - Consider using images, illustrations, video, and symbols to help clarify meaning or when a written description is unintuitive.
+
+## Write effective page descriptions
+
+Every page with a `pcx_content_type` must include a `description` in its frontmatter. The description populates the `<meta name="description">` tag, which search engines and AI systems use to decide whether to surface or cite a page.
+
+Apply the same plain language principles to descriptions as you do to body content:
+
+- Write 1-2 self-contained sentences.
+- Name the product or feature.
+- State what the page helps the reader do or understand.
+- Write so the description works as a standalone answer snippet when extracted from the page.
+
+Do not start with generic openers:
+
+| Do not use                  | Why                                             |
+| --------------------------- | ----------------------------------------------- |
+| "This page describes..."    | Wastes space on framing instead of information. |
+| "Learn more about..."       | Does not state what the reader will accomplish. |
+| "This document explains..." | Adds no information beyond the title.           |
+
+For detailed guidance and examples, refer to [Writing a description](/style-guide/frontmatter/#writing-a-description).
+
+---
 
 ## Use consistent terminology
 

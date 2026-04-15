@@ -190,7 +190,9 @@ The WebSocket Hibernation API permits a maximum of 32,768 WebSocket connections 
 
 :::note[`waitUntil` is not necessary]
 
-Disconnected WebSockets are not returned by this method, but `getWebSockets` may still return WebSockets even after `ws.close` has been called. For example, if the server-side WebSocket sends a close, but does not receive one back (and has not detected a disconnect from the client), then the connection is in the CLOSING 'readyState'. The client might send more messages, so the WebSocket is technically not disconnected.
+Disconnected WebSockets are not returned by this method, but `getWebSockets` may still return WebSockets even after `ws.close` has been called. For example, if the server-side WebSocket sends a close, but does not receive one back (and has not detected a disconnect from the client), then the connection is in the `CLOSING` readyState. The client might send more messages, so the WebSocket is technically not disconnected.
+
+With the [`web_socket_auto_reply_to_close`](/workers/configuration/compatibility-flags/#websocket-auto-reply-to-close) compatibility flag (enabled by default on compatibility dates on or after `2026-04-07`), the runtime automatically completes the close handshake, so WebSockets transition from `CLOSING` to `CLOSED` much faster and are less likely to be observed in the `CLOSING` state.
 
 :::
 

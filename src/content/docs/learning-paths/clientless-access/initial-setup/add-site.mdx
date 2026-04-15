@@ -3,12 +3,11 @@ title: Add a site
 pcx_content_type: overview
 sidebar:
   order: 3
-
 ---
 
-import { Render } from "~/components"
+import { Render, Details } from "~/components";
 
-In clientless access deployments, users connect to internal applications via public hostnames. You will need to own a domain, add it to Cloudflare, and configure Cloudflare as the [authoritative DNS provider](/dns/zone-setups/full-setup/setup/#update-your-nameservers) for that domain. Enterprise customers who cannot change their authoritative DNS provider have the option to configure a [CNAME setup](/dns/zone-setups/partial-setup/).
+In clientless access deployments, users connect to internal applications via public hostnames. You will need to own a domain, add it to Cloudflare, and configure Cloudflare as the [authoritative DNS provider](/dns/zone-setups/full-setup/setup/#34-update-your-registrar) for that domain. Enterprise customers who cannot change their authoritative DNS provider have the option to configure a [CNAME setup](/dns/zone-setups/partial-setup/).
 
 You only need to add one domain to Cloudflare, since you can create an infinite number of subdomains to manage all of your private applications.
 
@@ -20,15 +19,22 @@ You only need to add one domain to Cloudflare, since you can create an infinite 
 4. Select a [plan](https://www.cloudflare.com/plans/#compare-features) for this website. Everything you need to do with the domain in Cloudflare Zero Trust is available on the **Free** plan.
 5. Select **Continue**. Cloudflare will scan your website for any configured DNS records.
 
-  :::note
+:::note
 
-  If Cloudflare is unable to identify your domain as a registered domain, make sure you are using an existing [top-level domain](https://www.cloudflare.com/learning/dns/top-level-domain/) (`.com`, `.net`, `.biz`, or others).
+If Cloudflare is unable to identify your domain as a registered domain, make sure you are using an existing [top-level domain](https://www.cloudflare.com/learning/dns/top-level-domain/) (`.com`, `.net`, `.biz`, or others).
 
-  Additionally, Cloudflare requires your `apex domain` to be one level below a valid TLD defined in the [Public Suffix List (PSL)](https://github.com/publicsuffix/list/blob/master/public_suffix_list.dat).
-  :::
+Additionally, Cloudflare requires your `apex domain` to be one level below a valid TLD defined in the [Public Suffix List (PSL)](https://github.com/publicsuffix/list/blob/master/public_suffix_list.dat).
+:::
 
 5. Review your DNS records and select **Continue**.
-6. <Render file="update-nameservers" product="fundamentals" />
+6. Before your domain can begin using Cloudflare for DNS resolution, you need to [add these nameservers](/dns/nameservers/update-nameservers/) at your registrar. Make sure [DNSSEC](/dns/dnssec/) is turned off before proceeding.
+
+   <Details header="Provider-specific instructions">
+   	<Render file="ns-update-providers" product="dns" />
+   </Details>
+
+   If you cannot change your domain nameservers, you can still use Cloudflare on your website by activating Cloudflare through a [certified hosting partner](https://www.cloudflare.com/en-gb/partners/technology-partners/).
+
 7. (Optional) Follow the **Quick Start Guide** to configure security and performance settings.
 
 Registrars can take up to 24 hours to process nameserver changes. Your domain must be in an **Active** status before you can use it for clientless access.

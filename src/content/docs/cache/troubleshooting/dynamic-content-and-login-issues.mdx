@@ -1,0 +1,87 @@
+---
+title: Dynamic content and login issues
+pcx_content_type: troubleshooting
+description: Troubleshoot login failures, missing session cookies, and challenge loops caused by caching dynamic content.
+sidebar:
+  order: 2
+---
+
+Dynamic pages such as login forms, checkout flows, and authenticated application routes can break when they are cached too aggressively.
+
+Common symptoms include:
+
+- Users can load the login page, but the sign-in form fails after submission.
+- Sessions do not persist after a successful sign-in.
+- The origin sends a `Set-Cookie` header, but the browser never stores the cookie.
+- A challenge page appears, but after solving it the user returns to the login page or loses form state.
+
+## Cached login page strips session cookies
+
+One common cause is a [Cache Rule](/cache/how-to/cache-rules/) or legacy Page Rule configured to cache dynamic HTML.
+
+This usually happens when all of the following are true:
+
+- The page is configured as **Eligible for cache** or **Cache Everything**.
+- The response is dynamic HTML such as `/login` or `/account`.
+- The origin sends a `Set-Cookie` header.
+- An [Edge TTL](/cache/how-to/cache-rules/settings/#edge-ttl) or status-code TTL overrides origin cache directives.
+
+In this configuration, Cloudflare can cache the response and remove the `Set-Cookie` header before the response is stored at the edge. As a result, the browser receives the login page but never gets the session cookie required for the next request.
+
+### How to confirm
+
+Check the response for the login page or other dynamic route.
+
+If you see both of the following, the page is probably cached when it should not be:
+
+- `CF-Cache-Status: HIT` or `CF-Cache-Status: EXPIRED`
+- No `Set-Cookie` header in the response, even though your origin usually sets one
+
+You may also see framework-specific failures after form submission, for example:
+
+- A redirect back to the login page
+- A `403` or `500` after sign-in
+- CSRF validation errors
+- Missing server-side session state
+
+This issue is common with frameworks that rely on a session or CSRF cookie on the first page load, including JavaServer Faces, ASP.NET, PHP session handlers, Django, Rails, and Laravel.
+
+### Resolution
+
+Do not cache login pages or other authenticated HTML.
+
+Instead:
+
+1. Restrict **Eligible for cache** or **Cache Everything** to static paths only.
+2. Add a more specific Cache Rule that bypasses or disables caching for routes such as `/login`, `/account`, `/cart`, `/checkout`, and application API paths.
+3. If the origin must control caching, remove any Edge TTL override that forces the page to be cached.
+4. Verify the fixed response now returns `CF-Cache-Status: DYNAMIC`, `MISS`, or `BYPASS`, and preserves `Set-Cookie`.
+
+For more information on cookie behavior, refer to [Interaction of Set-Cookie response header with Cache](/cache/concepts/cache-behavior/#interaction-of-set-cookie-response-header-with-cache).
+
+## Challenge loops on login or form flows
+
+Security challenges can also interrupt dynamic flows.
+
+Two common patterns are:
+
+- A challenge is triggered on the initial `GET` request for the login page. The user solves the challenge, but the application loses the original session or CSRF context.
+- A challenge is triggered on the `POST` request that submits the login form or other sensitive action. The browser may have to repeat the request after the challenge, which can break the original form submission.
+
+### How to confirm
+
+Check whether a [WAF custom rule](/waf/custom-rules/), [managed rule](/waf/managed-rules/), or [rate limiting rule](/waf/rate-limiting-rules/) applies to the login path.
+
+If the issue only affects routes such as `/login`, `/signin`, `/checkout`, or `/api/auth/*`, and the application works when the challenge is disabled for those paths, the challenge is likely interrupting the flow.
+
+### Resolution
+
+Use one of the following approaches:
+
+1. Exclude the login or form submission path from the challenge rule.
+2. Narrow the rule expression so it applies to suspicious traffic only.
+3. If you must protect the route, use a less disruptive control on the page load and apply stronger actions elsewhere in the flow.
+
+When debugging, also verify that rules are not matching Cloudflare-generated paths such as `/cdn-cgi/*`.
+
+For more information on challenge-related behavior, refer to [Rules troubleshooting](/rules/reference/troubleshooting/) and [Cloudflare WAF troubleshooting](/waf/troubleshooting/).

@@ -1,7 +1,7 @@
 ---
-title: WAF Release - Scheduled changes for 2026-04-06
-description: WAF managed ruleset changes scheduled for 2026-04-06
-date: 2026-03-30
+title: WAF Release - Scheduled changes for 2026-04-20
+description: WAF managed ruleset changes scheduled for 2026-04-20
+date: 2026-04-15
 scheduled: true
 ---
 
@@ -21,147 +21,191 @@ import { RuleID } from "~/components";
   </thead>
   <tbody>
     <tr>
-      <td>2026-03-30</td>
-      <td>2026-04-06</td>
+      <td>2026-04-15</td>
+      <td>2026-04-20</td>
       <td>Log</td>
       <td>N/A</td>
       <td>
-        <RuleID id="73ae1cf103da4bacaa2e1a610aa410af" />
+        <RuleID id="ff8df24181aa4573a81be531ee159e2e" />
       </td>
-      <td>Generic Rules - Command Execution - 5 - Body</td>
+      <td>Command Injection - Generic 8 - uri - Beta</td>
       <td>This is a new detection.</td>
-   </tr>
-   <tr>
-      <td>2026-03-30</td>
-      <td>2026-04-06</td>
-      <td>Log</td>
-      <td>N/A</td>
-      <td>
-        <RuleID id="a88a85b0cc5a4bc2abead6289131ec2f" />
-      </td>
-      <td>Generic Rules - Command Execution - 5 - Header</td>
-      <td>This is a new detection.</td>
-   </tr>
+    </tr>  
     <tr>
-      <td>2026-03-30</td>
-      <td>2026-04-06</td>
-      <td>Log</td>
+      <td>2026-04-15</td>
+      <td>2026-04-20</td>
+      <td>Disabled</td>
       <td>N/A</td>
       <td>
-        <RuleID id="28518cdc40544979bbd86720551eb9e5" />
+        <RuleID id="9429b63c137247faadeb8a29a15308cf" />
       </td>
-      <td>Generic Rules - Command Execution - 5 - URI</td>
-      <td>This is a new detection.</td>
-   </tr>
+      <td>Command Injection - Generic 8 - body - Beta</td>
+      <td>This is a new detection. This rule will be merged into the original rule "Command Injection - Generic 8" (ID: <RuleID id="5b3ce84c099040c6a25cee2d413592e2" />)</td>
+    </tr>   
     <tr>
-      <td>2026-03-30</td>
-      <td>2026-04-06</td>
+      <td>2026-04-15</td>
+      <td>2026-04-20</td>
       <td>Log</td>
       <td>N/A</td>
       <td>
-        <RuleID id="1177993d53a1467997002b44d46229eb" />
+        <RuleID id="85aaf5db9e0c4237b87e837e958047ed" />
       </td>
-      <td>MCP Server - Remote Code Execution - CVE:CVE-2026-23744</td>
-      <td>This is a new detection.</td>
-   </tr> 
+      <td>MySQL - SQLi - Executable Comment - Beta</td>
+      <td>This is a new detection. This rule will be merged into the original rule "MySQL - SQLi - Executable Comment" (ID: <RuleID id="8629bb58defe4193ab4d493c7bd2d8fa" />)</td>
+    </tr>
     <tr>
-      <td>2026-03-30</td>
-      <td>2026-04-06</td>
+      <td>2026-04-15</td>
+      <td>2026-04-20</td>
       <td>Log</td>
       <td>N/A</td>
       <td>
-        <RuleID id="3d43cdfbc3c14584942f8bc4a864b9c2" />
+        <RuleID id="d19cd574c4644952881a6f3a582cc559" />
       </td>
-      <td>XSS - OnEvents - Cookies</td>
+      <td>MySQL - SQLi - Executable Comment - Headers</td>
       <td>This is a new detection.</td>
-   </tr>
+    </tr>
     <tr>
-      <td>2026-03-30</td>
-      <td>2026-04-06</td>
+      <td>2026-04-15</td>
+      <td>2026-04-20</td>
       <td>Log</td>
       <td>N/A</td>
       <td>
-        <RuleID id="c9dbce2c1da94b24916e37559712a863" />
+        <RuleID id=" " />
       </td>
-      <td>SQLi - Evasion - Body</td>
+      <td> </td>
       <td>This is a new detection.</td>
-   </tr>
+    </tr>
     <tr>
-      <td>2026-03-30</td>
-      <td>2026-04-06</td>
+      <td>2026-04-15</td>
+      <td>2026-04-20</td>
       <td>Log</td>
       <td>N/A</td>
       <td>
-        <RuleID id="64d812e6d5844d7c9d7a44a440732d48" />
+        <RuleID id="407f9ec8a17348dfba3b9450a16639d3" />
       </td>
-      <td>SQLi - Evasion - Headers</td>
+      <td>MySQL - SQLi - Executable Comment - URI</td>
       <td>This is a new detection.</td>
-   </tr>   
-   <tr>
-      <td>2026-03-30</td>
-      <td>2026-04-06</td>
+    </tr>
+    <tr>
+      <td>2026-04-15</td>
+      <td>2026-04-20</td>
       <td>Log</td>
       <td>N/A</td>
       <td>
-        <RuleID id="50de9369ef7c45928a5dfb34e68a99b5" />
+        <RuleID id="d07e6dbf15664b99b37b0d2544f24211" />
       </td>
-      <td>SQLi - Evasion - URI</td>
+      <td>Magento 2 - Unrestricted file upload - 2</td>
       <td>This is a new detection.</td>
-   </tr>
-   <tr>
-      <td>2026-03-30</td>
-      <td>2026-04-06</td>
+    </tr>
+    <tr>
+      <td>2026-04-15</td>
+      <td>2026-04-20</td>
       <td>Log</td>
       <td>N/A</td>
       <td>
-        <RuleID id="765ffb5c67b94c9589106c843e8143d2" />
+        <RuleID id="26ef21cb197b44fc8a98b7cebf170a17" />
       </td>
-      <td>SQLi - LIKE 3 - Body</td>
+      <td>Apache ActiveMQ - Remote Code Execution - CVE:CVE-2026-34197</td>
       <td>This is a new detection.</td>
-   </tr>
-   <tr>
-      <td>2026-03-30</td>
-      <td>2026-04-06</td>
+    </tr>
+    <tr>
+      <td>2026-04-15</td>
+      <td>2026-04-20</td>
       <td>Log</td>
       <td>N/A</td>
       <td>
-        <RuleID id="5c3dbd4f115e47c781491fcd70e7fb97" />
+        <RuleID id="7a40eed5a8654a50a2598a821dfa64df" />
       </td>
-      <td>SSQLi - LIKE 3 - URI</td>
+      <td>SQLi - Probing - uri - Beta</td>
       <td>This is a new detection.</td>
-   </tr>
-   <tr>
-      <td>2026-03-30</td>
-      <td>2026-04-06</td>
+    </tr>
+    <tr>
+      <td>2026-04-15</td>
+      <td>2026-04-20</td>
       <td>Log</td>
       <td>N/A</td>
       <td>
-        <RuleID id="89fa6027a0334949b1cb2e654c538bd9" />
+        <RuleID id="15c6b2ce033949b2a1a9f9454c62e2e7" />
       </td>
-      <td>SQLi - UNION - 2 - Body</td>
+      <td>SQLi - Probing - header - Beta</td>
       <td>This is a new detection.</td>
-   </tr>
-   <tr>
-      <td>2026-03-30</td>
-      <td>2026-04-06</td>
+    </tr>  
+    <tr>
+      <td>2026-04-15</td>
+      <td>2026-04-20</td>
+      <td>Disabled</td>
+      <td>N/A</td>
+      <td>
+        <RuleID id="fc9d800b7a724181af8d5650aab28ea1" />
+      </td>
+      <td>SQLi - Probing - body - Beta</td>
+      <td>This is a new detection.  This rule will be merged into the original rule "SQLi - Probing" (ID: <RuleID id="2c20b5e8684043f48620ff77b4026c88" />)</td>
+    </tr>
+    <tr>
+      <td>2026-04-15</td>
+      <td>2026-04-20</td>
       <td>Log</td>
       <td>N/A</td>
       <td>
-        <RuleID id="05946b3458364f1b9d4819d561c439c9" />
+        <RuleID id="7f7bc3d28a8e43bf97bd15d68c2ac1a7" />
       </td>
-      <td>SQLi - UNION - 2 - URI</td>
-      <td>This is a new detection.</td>
-   </tr>
-   <tr>
-      <td>2026-03-30</td>
-      <td>2026-04-06</td>
+      <td>SQLi - Sleep Function - Beta</td>
+      <td>This is a new detection. This rule will be merged into the original rule "SQLi - Sleep Function" (ID: <RuleID id="2c333735f7b24566b17cb64ef77e8d54" />)</td>
+    </tr>
+    <tr>
+      <td>2026-04-15</td>
+      <td>2026-04-20</td>
       <td>Log</td>
       <td>N/A</td>
       <td>
-        <RuleID id="b2fe5c2a39df4609b6d39908cf33ea10" />
+        <RuleID id="3872e5638bdf4bf0943a80394dacaeb8" />
       </td>
-      <td>SolarWinds - Auth Bypass - CVE:CVE-2025-40552</td>
+      <td>SQLi - Sleep Function - Headers</td>
       <td>This is a new detection.</td>
-   </tr>                 
+    </tr>
+    <tr>
+      <td>2026-04-15</td>
+      <td>2026-04-20</td>
+      <td>Log</td>
+      <td>N/A</td>
+      <td>
+        <RuleID id="bebce8fadfa94ccab09eb74fed4c9ece" />
+      </td>
+      <td>SQLi - Sleep Function - URI</td>
+      <td>This is a new detection.</td>
+    </tr>
+    <tr>
+      <td>2026-04-15</td>
+      <td>2026-04-20</td>
+      <td>Log</td>
+      <td>N/A</td>
+      <td>
+        <RuleID id="2635275641bf44d4bad6a2e170282f38" />
+      </td>
+      <td>XSS, HTML Injection - Embed Tag - Headers (beta)</td>
+      <td>This is a new detection.</td>
+    </tr>
+    <tr>
+      <td>2026-04-15</td>
+      <td>2026-04-20</td>
+      <td>Log</td>
+      <td>N/A</td>
+      <td>
+        <RuleID id="b3d033ea9f364574b0a2ec4223f4d718" />
+      </td>
+      <td>XSS, HTML Injection - IFrame Tag - Src and Srcdoc Attributes - Headers (beta)</td>
+      <td>This is a new detection.</td>
+    </tr>
+    <tr>
+      <td>2026-04-15</td>
+      <td>2026-04-20</td>
+      <td>Log</td>
+      <td>N/A</td>
+      <td>
+        <RuleID id="76c37816ef5c4997ab2080a36978def1" />
+      </td>
+      <td>XSS, HTML Injection - Link Tag - Headers (beta)</td>
+      <td>This is a new detection.</td>
+    </tr>
 </tbody>
 </table>

@@ -61,13 +61,13 @@ You can configure the DNS resolver for your Cloudflare WAN networks to the share
 
 When you resolve DNS queries from Cloudflare WAN through Gateway, Gateway will log the queries with the private source IP. You can use the private source IP to create <a href={props.gatewayResolverPoliciesURL}>resolver policies</a> for queries intended for <a href={props.gatewayInternalDnsURL}>internal DNS records</a>.
 
-The following diagram illustrates how DNS queries from Cloudflare WAN and WARP Connector flow through Gateway to your internal DNS:
+The following diagram illustrates how DNS queries from Cloudflare WAN and Cloudflare Mesh flow through Gateway to your internal DNS:
 
 <pre class="mermaid">
 	{`
 flowchart LR
 accTitle: DNS query flow
-accDescr: Shows how DNS queries from Cloudflare WAN and WARP Connector flow through Gateway to internal DNS.
+accDescr: Shows how DNS queries from Cloudflare WAN and Cloudflare Mesh flow through Gateway to internal DNS.
  subgraph subGraph0["Data center"]
     direction TB
         InternalDNS(["Internal DNS"])
@@ -76,7 +76,7 @@ accDescr: Shows how DNS queries from Cloudflare WAN and WARP Connector flow thro
   end
     ResolverPolicies -- Retain and use</br>Source Internal IP --> InternalDNS
     CloudflareGatewayDNSResolver -- <br> --> ResolverPolicies
-    WarpConnector["WARP Connector"] -- DHCP/DNS resolver --> IPSecTunnel["IPsec tunnel"]
+    WarpConnector["Cloudflare Mesh"] -- DHCP/DNS resolver --> IPSecTunnel["IPsec tunnel"]
     CloudflareWAN[$Cloudflare WAN] -- DHCP/DNS resolver --> IPSecTunnel
     IPSecTunnel -- Shared IP endpoints --> CloudflareGatewayDNSResolver
     ResolverPolicies@{ shape: proc}
