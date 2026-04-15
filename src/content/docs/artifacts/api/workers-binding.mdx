@@ -19,7 +19,7 @@ import {
 
 Use the Artifacts Workers binding to create, inspect, import, fork, and delete repos without making raw HTTP calls from your Worker.
 
-The binding is a Worker-to-Worker RPC surface. It returns repo handles for repo-scoped operations such as token management and forking.
+Wrangler exposes Artifacts as a first-class binding and returns repo handles for repo-scoped operations such as token management and forking.
 
 ## Configure the binding
 
@@ -29,11 +29,10 @@ Add the Artifacts binding to `wrangler.jsonc`:
 
 ```jsonc title="wrangler.jsonc"
 {
-	"services": [
+	"artifacts": [
 		{
 			"binding": "ARTIFACTS",
-			"service": "artifacts",
-			"entrypoint": "ArtifactsBinding",
+			"namespace": "default",
 		},
 	],
 }
@@ -44,14 +43,12 @@ Add the Artifacts binding to `wrangler.jsonc`:
 After you run `npx wrangler types`, your Worker environment looks like this:
 
 ```ts
-import type { Service } from "cloudflare:workers";
-
 export interface Env {
-	ARTIFACTS: Service<Artifacts>;
+	ARTIFACTS: Artifacts;
 }
 ```
 
-Wrangler generates the `Artifacts` type for consumers. You pass that type through `Service<Artifacts>` in your environment.
+Wrangler generates the `Artifacts` type for consumers and binds it directly in your environment.
 
 ## Namespace methods
 
@@ -314,10 +311,8 @@ This example combines the binding methods in one Worker route.
 <TypeScriptExample filename="src/index.ts" typescriptFirst={true}>
 
 ```ts
-import type { Service } from "cloudflare:workers";
-
 interface Env {
-	ARTIFACTS: Service<Artifacts>;
+	ARTIFACTS: Artifacts;
 }
 
 export default {

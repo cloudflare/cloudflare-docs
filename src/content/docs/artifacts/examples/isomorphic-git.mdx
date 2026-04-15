@@ -27,13 +27,12 @@ Use this as a reference for the end-to-end flow. In a production Worker, look up
 <TypeScriptExample filename="src/index.ts" typescriptFirst={true}>
 
 ```ts
-import type { Service } from "cloudflare:workers";
 import git from "isomorphic-git";
 import http from "isomorphic-git/http/web";
 import { MemoryFS } from "./memory-fs";
 
 export interface Env {
-	ARTIFACTS: Service<Artifacts>;
+	ARTIFACTS: Artifacts;
 }
 
 export default {
@@ -51,7 +50,7 @@ export default {
 
 		await fs.promises.writeFile(
 			`${dir}/README.md`,
-			"# Artifact repo created from a Worker\n",
+			"# Artifacts repo created from a Worker\n",
 		);
 		await fs.promises.writeFile(
 			`${dir}/src/index.ts`,
