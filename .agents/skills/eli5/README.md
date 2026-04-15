@@ -21,16 +21,21 @@ Use ELI5 on documentation that serves a broad or mixed audience — pages where 
 
 ## How it works
 
-The skill runs a multi-step workflow:
+The skill runs a 9-step workflow defined in SKILL.md:
 
-1. **Read and parse** — Detects content type (overview, concept, how-to, reference, tutorial) and analyzes structure
-2. **Identify issues** — Flags undefined jargon, unstated assumptions, missing "why," and unclear logic
-3. **Simplify** — Adds inline definitions, context, and use cases. Targets 1.5-2x expansion, not a full rewrite
-4. **Terminology index** — Compiles all terms that need glossary definitions or cross-links
-5. **Adversarial review** — A separate subagent verifies every net-new claim against the source docs in this repository
-6. **Fix flagged issues** — Corrects any unsourced, misleading, or mechanistically wrong claims before output
+1. **Accept file path** — Takes one or more `.md` or `.mdx` files
+2. **Read and parse** — Detects content type (overview, concept, how-to, reference, tutorial) and asks the user to confirm
+3. **Apply enhancement constraints** — Targets 1.5-2x expansion, not a full rewrite. Preserves all existing content, structure, diagrams, and components
+4. **Ask which sections to simplify** — Offers all sections, specific sections, auto-detect most complex, or custom range
+5. **Analyze selected sections** — Flags undefined jargon, unstated assumptions, missing "why," unclear logic, and context gaps
+6. **Extract terminology** — Compiles a deduplicated list of terms that need glossary definitions or cross-links, with line numbers and suggested actions
+7. **Generate comparison** — Produces a before/after report with original content preserved, issues identified, and simplified versions including plain-language summaries, metaphors, use cases, and pitfalls
+8. **Report** — Presents a summary of improvements, what made the original confusing, and the full terminology index
+9. **Adversarial review** — Launches a fresh subagent to verify every net-new claim against the source docs in this repository. The subagent has no access to the ELI5 skill instructions to eliminate confirmation bias
 
-The adversarial review is a required step. It catches simplified explanations that describe the wrong mechanism — which is worse than the original jargon.
+The adversarial review is a required step that cannot be skipped. It catches simplified explanations that describe the wrong mechanism — which is worse than the original jargon.
+
+All output is presented inline in the conversation. The skill does not write output files.
 
 ## How to invoke
 
@@ -47,31 +52,41 @@ The skill will ask which pages and sections to process before starting.
 ```
 eli5/
 ├── README.md                              # This file
-├── SKILL.md                               # Skill definition — workflow, constraints, output format
+├── SKILL.md                               # Skill definition — full 9-step workflow, constraints, adversarial
+│                                          #   review protocol, output format, quality checklist, anti-patterns
 ├── references/
-│   ├── content-type-guide.md              # Content type detection criteria and strategies
-│   ├── EXAMPLES_REFERENCE.md              # Full before/after examples for each content type
-│   └── pattern-library.md                 # Before/after transformation patterns
+│   ├── content-type-guide.md              # Detection signals and strategies per content type (687 lines)
+│   ├── EXAMPLES_REFERENCE.md              # Detailed before/after examples and output templates (1,834 lines)
+│   └── pattern-library.md                 # Reusable transformation patterns for common clarity issues (634 lines)
 └── recommendations/
     └── internal-dns/
-        └── index.eli5.mdx                 # Example ELI5 output for Internal DNS docs
+        └── index.eli5.mdx                 # Example: proposed page replacement for Internal DNS overview
 ```
 
 ### SKILL.md
 
-The executable specification. Contains the full workflow, content analysis framework, simplification constraints, adversarial review protocol, output format, quality checklist, and anti-patterns. This is the file the agent loads when the skill is invoked.
+The executable specification (439 lines). Contains:
+
+- The full 9-step workflow from file input through adversarial review
+- Content type detection signals and per-type simplification strategies
+- Enhancement constraints (what to add, what not to add, maximum additions per document)
+- The adversarial review prompt template passed to the subagent
+- Decision framework (when to simplify, add content, spell out consequences, or leave alone)
+- Quality checklist (18 items)
+- 8 anti-patterns identified from human review of AI-generated edits
+- Output format template
 
 ### references/
 
-Supporting material referenced by SKILL.md:
+Supporting material referenced by SKILL.md when detailed examples are needed:
 
-- **content-type-guide.md** — Detection signals and simplification strategies for each content type (overview, concept, how-to, reference, tutorial)
-- **EXAMPLES_REFERENCE.md** — Detailed before/after examples and output format templates
-- **pattern-library.md** — Reusable transformation patterns for common clarity issues
+- **content-type-guide.md** — Operational guide for detecting and simplifying different documentation types (overview, concept, how-to, reference, tutorial). Includes detection criteria, simplification strategies, and content-type-specific patterns.
+- **EXAMPLES_REFERENCE.md** — Extended before/after examples, detailed writing patterns, and output format templates. Contains the verbose examples that would make SKILL.md too large.
+- **pattern-library.md** — Reusable before/after patterns for common simplification scenarios (jargon replacement, context addition, metaphor construction).
 
 ### recommendations/
 
-Stores completed ELI5 outputs as `.eli5.mdx` files. These serve as examples and can be used as reference for future runs.
+Contains example ELI5 outputs from prior runs. The `internal-dns/index.eli5.mdx` file is a proposed page replacement for the Internal DNS overview page, showing what a full ELI5 application looks like when edits are applied directly to a page.
 
 ## Key principles
 
