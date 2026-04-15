@@ -16,7 +16,7 @@ The [Session API](/agents/api-reference/sessions/) provides the memory layer for
 
 ## Types of memory
 
-The Session API supports four types of memory, each suited to different kinds of information. The type is determined by the **provider** backing the context block — the Session detects the provider's capabilities automatically via duck-typing.
+The Session API supports four types of memory, each suited to different kinds of information. The type is determined by the **provider** backing the context block — the Session detects the provider's capabilities automatically.
 
 ### Read-only context
 
@@ -88,14 +88,14 @@ The system prompt renders writable blocks with a token usage indicator so the ag
 
 ```txt
 ══════════════════════════════════════════════
-MEMORY (Important facts learned during conversation) [45% — 495/1100 tokens]
+MEMORY (Important facts learned during conversation) [45% — 495/1100 tokens] [writable]
 ══════════════════════════════════════════════
 User prefers dark mode.
 User's project uses React and TypeScript.
 Deployment target is Cloudflare Workers.
 
 ══════════════════════════════════════════════
-TODOS (Task list) [12% — 240/2000 tokens]
+TODOS (Task list) [12% — 240/2000 tokens] [writable]
 ══════════════════════════════════════════════
 - [x] Set up project scaffolding
 - [ ] Add authentication middleware
@@ -110,7 +110,7 @@ When you have a large body of information — a knowledge base, documentation, l
 
 You provide a provider with a `search()` method. How that search works is entirely up to you — full-text search, vector search via [Vectorize](/vectorize/), a call to an external API, or anything else. The Session does not care about the implementation, only that the provider has a `search()` method.
 
-The built-in `AgentSearchProvider` uses Durable Object SQLite with FTS5 as a simple default:
+The built-in `AgentSearchProvider` uses Durable Object SQLite with FTS5 as default:
 
 <TypeScriptExample>
 
@@ -235,7 +235,7 @@ SOUL (Identity) [readonly]
 You are a helpful coding assistant who speaks concisely.
 
 ══════════════════════════════════════════════
-MEMORY (Important facts) [45% — 495/1100 tokens]
+MEMORY (Important facts) [45% — 495/1100 tokens] [writable]
 ══════════════════════════════════════════════
 User prefers dark mode.
 User's project uses React and TypeScript.
