@@ -19,7 +19,7 @@ import {
 } from "~/components";
 
 <Description>
-	Create scalable and reliable image pipelines without managing complex insfrastructure.
+	Create scalable and reliable image pipelines without managing complex infrastructure.
 </Description>
 
 <Plan type="workers-all" />
@@ -30,61 +30,56 @@ With Images, you can dynamically resize, optimize, and manipulate images at Clou
 
 ![Use Images to optimize images for delivery](~/assets/images/images/overview.png)
 
-## Get started with Images
+## Get started
 
-There are two distinct ways that you can use Images:
+Cloudflare offers two integration paths for Images:
 
 <CardGrid>
 	<LinkCard
-		title="Use your own storage"
-		description="Transform, optimize, and deliver remote images that are stored anywhere, including in R2."
+		title="Bring your own storage"
+		description="Transform and deliver images that are stored on any origin, including S3-compatible buckets like R2."
 		href="/images/optimization/transformations/overview/"
 	/>
 	<LinkCard
 		title="Use Images to host your assets"
-		description="Streamline your development with our fully managed solution for storage, optimization, and delivery."
+		description="Upload directly to Images for a fully managed solution to handle storage, optimization, and delivery."
 		href="/images/optimization/hosted-images/"
 	/>
 </CardGrid>
 
 If you’re new to Images, start here to learn the essentials:
 
-- Understand how <a href="/images/get-started/introduction">image optimization</a> improves your user experience and website performance.
-- Familiarize yourself with the <a href="/images/get-started/key-concepts">terminology</a>.
-- Browse the various <a href="/images/optimization/features">features for optimizing and manipulating images</a>.
+- Understand how [image optimization](/images/get-started/introduction/) improves your user experience and website performance.
+- Familiarize yourself with the [terminology](/images/get-started/key-concepts/) used through our documentation.
+- Read about the [limits and supported formats](/images/optimization/features/) for image inputs and outputs.
 
 ---
 
 ## Features
 
-<Feature header="Storage" href="/images/storage/upload-images/methods">
-	Use Cloudflare’s edge network to store your images.
-</Feature>
-
 <Feature
-	header="Direct creator upload"
-	href="/images/storage/upload-images/direct-creator-upload/"
-	cta=""
+	header="Optimization"
+	href="/images/optimization/features/"
+	cta="Use optimization"
 >
-	Accept uploads directly and securely from your users by generating a one-time
-	token.
+	Browse the various features for compressing, cropping, resizing, and manipulating images.
 </Feature>
 
 <Feature
-	header="Variants"
+	header="Storage"
+	href="/images/storage/upload-images/methods"
+	cta="Use Images API"
+>
+	Learn how Images can streamline uploads in your image pipeline.
+</Feature>
+
+<Feature
+	header="Predefined variants"
 	href="/images/optimization/hosted-images/create-variants/"
-	cta="Create variants by transforming images"
+	cta="Use variants"
 >
-	Add up to 100 variants to specify how images should be resized for various use
-	cases.
-</Feature>
-
-<Feature
-	header="Signed URLs"
-	href="/images/optimization/hosted-images/serve-private-images/"
-	cta="Serve private images"
->
-	Control access to your images by using signed URL tokens.
+	Create predefined variants to specify how a hosted image should be resized on
+	request.
 </Feature>
 
 ---
@@ -93,10 +88,35 @@ If you’re new to Images, start here to learn the essentials:
 
 <CardGrid>
 	<LinkTitleCard
-		title="Community Forum"
+	title="Pricing"
+	href="/images/pricing/"
+	icon="pen"
+	>
+	Learn about Images pricing.
+	</LinkTitleCard>
+
+	<LinkTitleCard
+		title="Community"
 		href="https://community.cloudflare.com/c/developers/images/63"
 		icon="open-book"
 	>
-		Engage with other users and the Images team on Cloudflare support forum.
+		Engage with other users and the Images team on Community forum.
+	</LinkTitleCard>
+
+	<LinkTitleCard
+		title="Discord"
+		href="https://discord.cloudflare.com"
+		icon="discord"
+	>
+		Ask questions, show what you're building, and discuss the platform with other developers.
+	</LinkTitleCard>
+
+	<LinkTitleCard
+		title="@CloudflareDev"
+		href="https://x.com/cloudflaredev"
+		icon="x.com"
+	>
+		Follow @CloudflareDev on Twitter to learn about product announcements from the Developer Platform.
 	</LinkTitleCard>
 </CardGrid>
+
