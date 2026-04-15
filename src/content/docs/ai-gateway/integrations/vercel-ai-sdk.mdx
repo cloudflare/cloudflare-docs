@@ -5,11 +5,7 @@ sidebar:
   order: 2
 ---
 
-import {
-  Details,
-  Tabs,
-  TabItem
-} from "~/components";
+import { Details, Tabs, TabItem } from "~/components";
 import CodeSnippets from "~/components/ai-gateway/code-examples.astro";
 
 The [Vercel AI SDK](https://sdk.vercel.ai/) is a TypeScript library for building AI applications. The SDK supports many different AI providers, tools for streaming completions, and more.
@@ -21,11 +17,11 @@ To use Cloudflare AI Gateway with Vercel AI SDK, you will need to use the `ai-ga
 npm install ai-gateway-provider
 ```
 
-## Examples 
+## Examples
 
 <CodeSnippets forceClient="aisdk" />
 
-### Workers AI binding with third-party models
+### AI binding with third-party models
 
 If you are already using the [`workers-ai-provider`](https://www.npmjs.com/package/workers-ai-provider) package, you can route requests through AI Gateway to call third-party models without needing separate provider SDKs. Pass a `gateway` option with your gateway ID to `createWorkersAI`:
 
@@ -50,7 +46,7 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
-This works with any [supported provider and model](/ai-gateway/providers/) available through AI Gateway.
+This works with any [supported provider and model](/ai-gateway/usage/providers/) available through AI Gateway.
 
 ### Fallback Providers
 
@@ -58,10 +54,7 @@ To specify model or provider fallbacks to handle request failures and ensure rel
 
 ```js title=""
 const { text } = await generateText({
-  model: aigateway([
-		openai.chat("gpt-5.1"), anthropic("claude-sonnet-4-5")
-  ]),
-  prompt: 'Write a vegetarian lasagna recipe for 4 people.',
+	model: aigateway([openai.chat("gpt-5.1"), anthropic("claude-sonnet-4-5")]),
+	prompt: "Write a vegetarian lasagna recipe for 4 people.",
 });
 ```
-

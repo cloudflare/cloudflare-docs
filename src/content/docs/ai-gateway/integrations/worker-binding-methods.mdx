@@ -7,14 +7,14 @@ tags:
   - AI
   - Bindings
 description: >-
-  Reference for the Workers AI binding with AI Gateway. Call Workers AI and
+  Reference for the AI binding with AI Gateway. Call Workers AI and
   third-party models with env.AI.run(), access log IDs, and use gateway methods
   for feedback, logging, URLs, and universal requests.
 ---
 
 import { Render, WranglerConfig } from "~/components";
 
-The Workers AI binding (`env.AI`) lets you call AI models and access AI Gateway features directly from your Worker.
+The AI binding (`env.AI`) lets you call AI models and access AI Gateway features directly from your Worker.
 
 For a step-by-step setup guide, refer to [Set up Workers AI with AI Gateway](/ai-gateway/integrations/aig-workers-ai-binding/).
 
@@ -77,7 +77,7 @@ const resp = await env.AI.run(
 Third-party models require an AI Gateway and use [Unified Billing](/ai-gateway/features/unified-billing/). Cloudflare manages the provider credentials and deducts credits from your account. You do not need to supply your own API keys.
 
 :::note
-[BYOK (Bring Your Own Keys)](/ai-gateway/configuration/bring-your-own-keys/) is not supported for third-party models called through the Workers AI binding. To use your own provider keys, use the [AI Gateway REST API](/ai-gateway/usage/providers/) or the [chat completions endpoint](/ai-gateway/usage/chat-completion/) instead.
+[BYOK (Bring Your Own Keys)](/ai-gateway/configuration/bring-your-own-keys/) is not supported for third-party models called through the AI binding. To use your own provider keys, use the [AI Gateway REST API](/ai-gateway/usage/providers/) or the [chat completions endpoint](/ai-gateway/usage/chat-completion/) instead.
 :::
 
 Browse available models in the [model catalog](https://developers.cloudflare.com/ai/models/).
