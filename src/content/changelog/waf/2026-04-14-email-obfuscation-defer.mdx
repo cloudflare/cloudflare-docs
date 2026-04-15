@@ -8,6 +8,6 @@ date: 2026-04-14
 
 The decode script injected by [Email Address Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/) now loads with the `defer` attribute. This means the script no longer blocks page rendering — it downloads in parallel with HTML parsing and executes after the document is fully parsed, before the `DOMContentLoaded` event.
 
-This improves page loading performance, particularly Largest Contentful Paint (LCP), for all zones with Email Address Obfuscation on. No action is required.
+This improves page loading performance, contributing to better Core Web Vitals, for all zones with Email Address Obfuscation on. No action is required.
 
 If you have custom JavaScript that depends on email addresses being decoded at a specific point during page load, note that the decode script now executes after HTML parsing completes rather than inline during parsing.
