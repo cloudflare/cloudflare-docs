@@ -1,18 +1,19 @@
 ---
-title: Hybrid search and relevance boosting
+title: AI Search now has hybrid search and relevance boosting
 description: Combine vector and keyword search in a single query, and boost results by metadata fields like timestamp or priority.
 products:
   - ai-search
 date: 2026-04-16T12:00:00Z
+publish_future_dated_entry: true
 ---
 
 [AI Search](/ai-search/) now supports hybrid search and relevance boosting, giving you more control over how results are found and ranked.
 
 ## Hybrid search
 
-Hybrid search combines vector (semantic) search with BM25 keyword search in a single query. Vector search understands intent, but it can lose specifics. In a query like "ERR_CONNECTION_REFUSED timeout," vector search captures the broad concept of connection failures but might not surface the page that contains that exact error string. Keyword search fills that gap by matching exact terms in your query.
+Hybrid search combines vector (semantic) search with BM25 keyword search in a single query. Vector search finds chunks with similar meaning, even when the exact words differ. Keyword search matches chunks that contain your query terms exactly. When you enable hybrid search, both run in parallel and the results are fused into a single ranked list.
 
-When you enable hybrid search, both run in parallel and the results are fused into a single ranked list. You can configure the tokenizer (`porter` for natural language, `trigram` for code), keyword match mode (`and` for precision, `or` for recall), and fusion method (`rrf` or `max`) per instance:
+You can configure the tokenizer (`porter` for natural language, `trigram` for code), keyword match mode (`and` for precision, `or` for recall), and fusion method (`rrf` or `max`) per instance:
 
 ```ts
 const instance = await env.AI_SEARCH.create({
