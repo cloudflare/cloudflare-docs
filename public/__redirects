@@ -442,6 +442,7 @@
 /containers/platform-details/ /containers/platform-details/architecture/ 301
 # Sandbox
 /sandbox/platform/beta-info/ /sandbox/platform/ 301
+/sandbox/guides/openai-agents-sdk/ /sandbox/tutorials/openai-agents/ 301
 # D1
 /d1/client-api/ /d1/worker-api/ 301
 /d1/build-with-d1/d1-client-api/ /d1/worker-api/ 301
