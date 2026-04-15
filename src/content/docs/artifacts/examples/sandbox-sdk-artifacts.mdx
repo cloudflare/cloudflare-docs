@@ -8,7 +8,9 @@ sidebar:
 
 import { TypeScriptExample, WranglerConfig } from "~/components";
 
-Use this pattern when you want a sandbox and an Artifacts repo to share the same stable ID.
+This example shows how to pair a Sandbox SDK sandbox with an Artifacts repo that uses the same ID.
+
+Your Worker creates or reuses both resources, then passes an authenticated Git remote into the sandbox through an environment variable. This gives code running inside the sandbox a repo it can clone, fetch, pull, or push without extra setup.
 
 - Calls `getSandbox(env.Sandbox, "my-sandbox")` to create or reuse the sandbox from the minimal Sandbox SDK example.
 - Looks up an Artifacts repo with the same ID. If the repo does not exist, it creates one. If the repo exists, it reuses the remote and mints a fresh write token.
