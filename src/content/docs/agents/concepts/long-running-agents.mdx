@@ -520,11 +520,13 @@ export class ProjectManager extends Agent<ProjectState> {
 
 Sub-agents are independent Durable Objects. They have their own state, their own schedules, and their own lifecycle. The parent does not need to stay alive while the sub-agent works — it can start the work, hibernate, and be woken by a callback or scheduled check.
 
+For the full `subAgent()` API — typed RPC stubs, abort, delete, storage isolation, and limitations — refer to [Sub-agents](/agents/api-reference/sub-agents/). For AI-specific sub-agent streaming (running full LLM turns through a child agent), refer to [Think: Sub-agent RPC](/agents/api-reference/think/#sub-agent-rpc-and-programmatic-turns).
+
 ## Recovering interrupted LLM streams
 
 The patterns above handle the project manager's coordination work — scheduling, delegating, polling. But the project manager also uses an LLM directly: generating plans, summarizing progress, drafting status emails. Those LLM calls stream tokens over a connection that cannot be resumed if the agent is evicted mid-response.
 
-For chat-oriented agents built on `AIChatAgent`, this is an even sharper problem — the user is watching the response stream in real time and sees it stop mid-sentence. `unstable_chatRecovery` wraps each chat turn in a `runFiber`, providing automatic `keepAlive` during streaming and a recovery hook when the agent restarts:
+For chat-oriented agents built on `AIChatAgent`, this is an even sharper problem — the user is watching the response stream in real time and sees it stop mid-sentence. `chatRecovery` wraps each chat turn in a `runFiber`, providing automatic `keepAlive` during streaming and a recovery hook when the agent restarts:
 
 ```ts
 import { AIChatAgent } from "@cloudflare/ai-chat";
@@ -534,7 +536,7 @@ import type {
 } from "@cloudflare/ai-chat";
 
 class ProjectChat extends AIChatAgent<Env> {
-  override unstable_chatRecovery = true;
+  override chatRecovery = true;
 
   override async onChatRecovery(
     ctx: ChatRecoveryContext
@@ -653,7 +655,7 @@ Long-running agents on Cloudflare are not long-running processes. They are durab
 | **`schedule()` / `scheduleEvery()`**   | Wake the agent at future times                |
 | **`keepAlive()` / `keepAliveWhile()`** | Prevent eviction during active work           |
 | **`runFiber()` / `stash()`**           | Checkpoint and recover long tasks             |
-| **`unstable_chatRecovery`**            | Recover interrupted LLM streams               |
+| **`chatRecovery`**            | Recover interrupted LLM streams               |
 | **`onRequest()` / `onEmail()` / RPC**  | Wake on external events                       |
 | **`runWorkflow()`**                    | Delegate heavyweight multi-step work          |
 | **`subAgent()`**                       | Delegate specialized work to child agents     |

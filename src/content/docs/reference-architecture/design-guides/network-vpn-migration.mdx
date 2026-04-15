@@ -132,7 +132,7 @@ Although this phase focuses on using the Cloudflare WAN service and IPsec tunnel
 Cloudflare offers two types of software connectors:
 
 - [`cloudflared`](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/)
-- [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/)
+- [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) (formerly WARP Connector)
 
 As discussed in the introduction, `cloudflared` is the preferred method for Zero Trust Network Access, but only supports inbound connectivity to your networks and application servers, any server initiated connection will not go via the tunnel and instead follow the server's default network path. Cloudflare Mesh is designed to create tunnels that facilitate both inbound and outbound connectivity, but it doesn't currently have the same level of failover support and ease of configuration. For this guide, we will be discussing using `cloudflared` as it supports the internal DNS use case described.
 
