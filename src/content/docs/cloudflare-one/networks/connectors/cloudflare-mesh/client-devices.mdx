@@ -1,0 +1,82 @@
+---
+pcx_content_type: how-to
+title: Connect client devices
+products:
+  - mesh
+tags:
+  - Private networks
+sidebar:
+  order: 3
+head:
+  - tag: title
+    content: Connect client devices to Cloudflare Mesh
+---
+
+import { Details, Render } from "~/components";
+
+Client devices — laptops, phones, and desktops — join your Mesh network by installing the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) and enrolling. Each device receives a [Mesh IP](/cloudflare-one/networks/connectors/cloudflare-mesh/#mesh-ips) and can immediately communicate with every other enrolled device and Mesh node.
+
+## Prerequisites
+
+- [Device enrollment permissions](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/device-enrollment/) are configured for your account. The Mesh [setup wizard](/cloudflare-one/networks/connectors/cloudflare-mesh/get-started/) handles this automatically.
+
+## 1. Enroll the Cloudflare One Client
+
+Connect a laptop or phone to your Mesh network:
+
+### Windows, macOS, and Linux
+
+<Render file="warp/enroll-desktop" product="cloudflare-one" />
+
+### iOS and Android
+
+<Render file="warp/enroll-ios-android" product="cloudflare-one" />
+
+After enrollment, the device receives a Mesh IP and connects to your Mesh network.
+
+## 2. Verify connectivity
+
+Test that the device can reach a Mesh node or another client device:
+
+```sh
+ping <MESH-IP>
+```
+
+Replace `<MESH-IP>` with the Mesh IP of a node (visible on the [Mesh overview page](https://dash.cloudflare.com/?to=/:account/mesh)) or another enrolled device. Any TCP, UDP, or ICMP traffic works — you can SSH, connect to databases, call APIs, or run any protocol over Mesh IPs.
+
+## What devices can reach
+
+Once connected, a client device can:
+
+- **Other client devices** — Reach any enrolled device by its Mesh IP. No Mesh nodes involved.
+- **Mesh nodes** — Reach any online node by its Mesh IP. SSH, database connections, API calls all work.
+- **Subnets behind nodes** — Access hosts on private networks that a node advertises via [CIDR routes](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/) (for example, printers, databases, or servers that cannot run the client).
+
+All traffic is subject to your [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/), so you can control which users and devices can reach specific resources.
+
+## Split Tunnel configuration
+
+For client devices to reach Mesh IPs, the Mesh IP range must route through Cloudflare. How you configure this depends on your [Split Tunnel mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/).
+
+### Exclude mode (default)
+
+In Exclude mode, the CGNAT range (`100.64.0.0/10`) is excluded from Cloudflare by default. Remove the CGNAT range from your exclude list so that Mesh IP traffic routes through Cloudflare.
+
+If you used the [Mesh setup wizard](/cloudflare-one/networks/connectors/cloudflare-mesh/get-started/#1-run-the-setup-wizard), the wizard creates a device profile in **Include mode** for Mesh nodes. However, your client devices may still use the default profile with Exclude mode. Verify that `100.96.0.0/12` (or your custom device IP range) is not in the exclude list.
+
+Depending on your Cloudflare networking configuration, you may need to remove additional IPs from your exclude list. For a list of IPs to check, refer to [Reserved IP addresses](/cloudflare-one/networks/routes/reserved-ips/).
+
+### Include mode
+
+In Include mode, add the following to your include list:
+
+- `100.96.0.0/12` — Mesh IPs (device IPs)
+- `100.80.0.0/16` and `2606:4700:0cf1:4000::/64` — Hostname routing (if used)
+- Any CIDR routes you have [configured for your Mesh nodes](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/)
+
+## Firewall considerations
+
+Some operating systems block inbound traffic from the Mesh IP range by default:
+
+- **Windows** — Windows Firewall blocks inbound traffic from `100.96.0.0/12`. Add a firewall rule that allows incoming requests from `100.96.0.0/12` for your desired protocols and ports.
+- **macOS / Linux** — Most configurations allow this traffic by default. If you have custom firewall rules, ensure `100.96.0.0/12` is permitted.

@@ -7,7 +7,7 @@ sidebar:
   order: 2
 ---
 
-import { DashButton } from '~/components/';
+import { DashButton } from "~/components/";
 
 In web browsers such as Safari or Chrome, there are several commonly observable DNS errors:
 
@@ -49,13 +49,69 @@ DNS resolution failures occur if [DNSSEC is not disabled](/dns/dnssec/#disable-d
 
 If you manage DNS records via the Cloudflare dashboard and your domain stops pointing to Cloudflare's nameservers, DNS resolution will stop functioning.
 
-This can occur if your domain registrar switches the nameservers for your domain to point to their default nameservers. To confirm if this is the problem, [check whether your domain uses Cloudflare's nameservers](/dns/zone-setups/full-setup/setup/#verify-changes).
+This can occur if your domain registrar switches the nameservers for your domain to point to their default nameservers. To confirm if this is the problem, [check whether your domain uses Cloudflare's nameservers](/dns/zone-setups/full-setup/setup/#35-verify-changes).
 
 ### Unresolved IP address
 
 In rare cases, the DNS resolver in the client requesting the URL might fail to resolve a DNS record to a valid IP address.
 
 Reload the page after a short wait to note if the problem disappears. This issue is unrelated to Cloudflare, but using [Cloudflare's DNS resolver](/1.1.1.1/setup/) may help. Contact your hosting provider for additional help with your current DNS resolver.
+
+### Newly created record still does not resolve
+
+If you recently created a DNS record and resolvers still return `NXDOMAIN` (Non-Existent Domain) or no answer, it is likely because a negative response is currently stored in the resolver's cache.
+
+When a resolver is queried for a hostname that has no DNS records yet, it caches the empty response so it does not have to ask the authoritative nameserver again immediately. This is known as negative caching.
+
+For newly created records:
+
+- The resolver might not have cached the new record yet. Instead, it is using a prior `NXDOMAIN` cache entry that says "this record does not exist," which was generated if the hostname was queried before you created the record.
+- The duration of this negative cache is determined by the `MINIMUM` field in your zone's SOA record (per [RFC 2308](https://datatracker.ietf.org/doc/html/rfc2308)), not the TTL of the record you just created. Different resolvers may cache for varying durations.
+
+This means:
+
+- Lowering the TTL on your new record will not speed up resolution if a negative cache entry already exists; the resolver will only see your new TTL after the old negative entry expires.
+- Flushing your local DNS cache only affects your specific device; the upstream recursive resolver (for example, your ISP or a public provider) still holds the negative result.
+- Propagation appears uneven because different resolvers may have queried the name at different times, apply different negative cache TTLs, or have no negative cache entry at all.
+
+The exact behavior differs per resolver, but to estimate how long you need to wait, query your zone's SOA record and look at the last value (the `MINIMUM` field). You must wait for that interval to pass since the last `NXDOMAIN` query before the new record will consistently resolve.
+
+You can check if a negative cache entry is active by querying for the non-existent (or newly created) hostname:
+
+```sh
+dig +noall +answer +authority mynewrecord.example.com
+```
+
+If the record is still negatively cached, the response will include the zone's SOA record in the authority section with a TTL indicating how many seconds remain before the entry expires:
+
+```txt
+example.com.		256	IN	SOA	...
+```
+
+In this example, the negative cache response will continue for 256 more seconds.
+
+To verify the record resolves correctly, you can purge the cache for public resolvers and query the record. If this works, other resolvers will eventually start resolving as well:
+
+- [Purge 1.1.1.1 cache](https://one.one.one.one/purge-cache/)
+- [Purge 8.8.8.8 cache](https://dns.google/cache)
+- [Query 8.8.8.8](https://dns.google/)
+- [Query and refresh OpenDNS cache](https://cachecheck.opendns.com/)
+
+#### Further debugging
+
+To verify the record was correctly created, query Cloudflare's authoritative nameservers directly:
+
+```sh
+# Find the authoritative nameservers for your zone
+dig @1.1.1.1 example.com NS +short
+```
+
+```sh
+# Query the authoritative nameserver for your new record
+dig @hera.ns.cloudflare.com mynewrecord.example.com A
+```
+
+Querying the authoritative nameserver directly bypasses resolver caching. If the record is returned, resolvers will eventually start returning it as well. If the record does not appear, verify the record exists in the Cloudflare dashboard and that the hostname matches exactly.
 
 ### Account recovery
 

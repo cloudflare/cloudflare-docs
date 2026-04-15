@@ -78,6 +78,14 @@ Domains with certain WHOIS statuses cannot be transferred:
 - `redemptionPeriod` — the domain has expired and passed the grace period. You must restore and renew it at your current registrar before it can be transferred.
 - `pendingDelete` — the domain is scheduled for deletion by the registry and cannot be transferred or recovered. After deletion, the domain becomes available for anyone to register.
 
+Other common WHOIS or RDAP statuses include:
+
+- `clientTransferProhibited` — the domain is locked at the registrar.
+- `serverTransferProhibited` — the registry has applied a transfer restriction.
+- `addPeriod` — the domain is within the post-registration lock window.
+- `pendingTransfer` — the domain is already in an active transfer.
+- `clientDeleteProhibited` or `serverDeleteProhibited` — deletion is restricted.
+
 ## WHOIS privacy is blocking the transfer
 
 Most domains can be transferred with WHOIS privacy enabled. However, some registrars may prohibit transfer requests if you have WHOIS privacy services enabled. If your transfer is failing, check with your current registrar to confirm WHOIS privacy is not blocking it.
@@ -110,6 +118,16 @@ Cloudflare may send a verification email to your registrant contact email addres
 Verification is triggered when your registrant contact email differs from your verified Cloudflare account email.
 
 Some TLDs — including `.mx`, `.nz`, and `.ca` — may send verification through a third-party service. In these cases, the verification email will come from `noreply@emailverification.info` rather than Cloudflare. Check your spam folder if you do not receive it.
+
+For these TLDs, if verification is not completed in time, the registry may temporarily replace your nameservers with `ns1.emailverification.info` and related hostnames until the registrant email is verified.
+
+## `.uk` transfer uses an IPS tag, not an auth code
+
+`.uk`, `.co.uk`, and `.org.uk` domains do not use the standard auth-code transfer flow.
+
+Instead, the losing registrar changes the domain's IPS tag to the gaining registrar. If you are transferring a `.uk` family domain to Cloudflare and cannot find an auth-code field, this behavior is expected.
+
+If the transfer does not proceed, contact the current registrar and confirm that they have updated the IPS tag correctly.
 
 ## Restart your transfer
 

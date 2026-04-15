@@ -433,7 +433,7 @@ Number of bytes returned by the origin server.
 
 Type: `int`
 
-Upstream response time, measured from the first datacenter that receives a request. Includes time taken by Argo Smart Routing and Tiered Cache, plus time to connect and receive a response from origin servers. This field replaces OriginResponseTime.
+Upstream time to first byte, measured from the first datacenter that receives a request. Includes time taken by Argo Smart Routing and Tiered Cache, plus time to connect and receive the first byte of response from origin servers. This field replaces OriginResponseTime.
 
 ## OriginResponseHTTPExpires
 

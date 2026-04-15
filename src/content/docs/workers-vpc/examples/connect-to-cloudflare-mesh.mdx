@@ -1,0 +1,88 @@
+---
+title: Connect Workers to Cloudflare Mesh
+pcx_content_type: example
+---
+
+import { WranglerConfig } from "~/components";
+
+This example demonstrates how to use a VPC Network binding with [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) (formerly WARP Connector) to connect to any private service in your account from a Worker — without pre-registering individual hosts or specifying a tunnel UUID.
+
+When you bind to [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) using `network_id: "cf1:network"`, your Worker can reach any Mesh node, client device, or subnet route in your account.
+
+## Prerequisites
+
+- A [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) node connected to your private network
+- Private services running behind your Mesh node (for example, an internal API, database, or web application)
+
+## 1. Configure your Worker
+
+Bind your Worker to Cloudflare Mesh using `network_id: "cf1:network"` in your Wrangler configuration:
+
+<WranglerConfig>
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "mesh-gateway",
+	"main": "src/index.js",
+	"compatibility_date": "$today",
+	"vpc_networks": [
+		{
+			"binding": "MESH",
+			"network_id": "cf1:network",
+			"remote": true
+		}
+	]
+}
+```
+</WranglerConfig>
+
+With this single binding, your Worker can reach any service across all tunnels and Mesh nodes in your account.
+
+## 2. Implement the Worker
+
+Use the VPC Network binding to access services by private IP address. Cloudflare Mesh currently supports IP-based routing only.
+
+```js title="index.js"
+// Replace with the Mesh IP and port of your private service
+const NODE_IP = "10.0.1.50";
+const NODE_PORT = 8080;
+
+export default {
+	async fetch(request, env, ctx) {
+		try {
+			const response = await env.MESH.fetch(
+				`http://${NODE_IP}:${NODE_PORT}/api/data`,
+			);
+			return response;
+		} catch (error) {
+			// fetch() throws if the VPC Network cannot connect to the target
+			return new Response("Service unavailable", { status: 503 });
+		}
+	},
+};
+```
+
+Unlike [VPC Services](/workers-vpc/configuration/vpc-services/), the URL you pass to `fetch()` determines the actual destination. You can reach any IP and port accessible through your Mesh network without creating separate bindings for each service.
+
+## 3. Deploy and test
+
+Deploy your Worker and verify it can reach your private services:
+
+```bash
+npx wrangler deploy
+```
+
+```bash
+# Test accessing the internal user API
+curl https://mesh-gateway.workers.dev/api/users
+
+# Test accessing metrics by private IP
+curl https://mesh-gateway.workers.dev/api/metrics
+```
+
+## Next steps
+
+- Learn more about [VPC Networks](/workers-vpc/configuration/vpc-networks/) configuration options
+- Refer to the [Workers Binding API](/workers-vpc/api/) reference
+- [Set up Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/get-started/) for your account
+- Explore [other examples](/workers-vpc/examples/)

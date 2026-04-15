@@ -1,0 +1,47 @@
+---
+pcx_content_type: reference
+title: RtkControlBarButton
+description: API reference for RtkControlBarButton component (Android Library)
+---
+
+A skeleton component used for composing custom controlbar buttons.
+
+## Properties
+
+| Property              | Type                   | Required | Default  | Description                           |
+| --------------------- | ---------------------- | -------- | -------- | ------------------------------------- |
+| `rtk_cbb_icon`        | `reference`            | ❌       | -        | Drawable resource for the button icon |
+| `rtk_cbb_variant`     | `button \| horizontal` | ❌       | `button` | Layout variant                        |
+| `rtk_cbb_showText`    | `boolean`              | ❌       | `true`   | Whether to show the label text        |
+| `rtk_cbb_iconSize`    | `dimension`            | ❌       | -        | Size of the icon                      |
+| `rtk_cbb_iconPadding` | `dimension`            | ❌       | -        | Padding between icon and label        |
+
+## Methods
+
+| Method               | Parameters                      | Description                            |
+| -------------------- | ------------------------------- | -------------------------------------- |
+| `applyDesignTokens`  | `designTokens: RtkDesignTokens` | Apply custom design tokens for theming |
+| `setIconDrawable`    | `drawable: Drawable?`           | Set the button icon                    |
+| `setIconTint`        | `color: Int`                    | Set the icon tint color                |
+| `setText`            | `text: String?`                 | Set the button label text              |
+| `setProcessingState` | `processing: Boolean`           | Show or hide a loading spinner         |
+
+## Usage Examples
+
+### Basic Usage
+
+```xml
+<com.cloudflare.realtimekit.ui.view.controlbarbuttons.RtkControlBarButton
+    android:id="@+id/rtk_control_bar_button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:rtk_cbb_showText="true"
+    app:rtk_cbb_variant="button" />
+```
+
+### With Methods
+
+```kotlin
+val buttonView = findViewById<RtkControlBarButton>(R.id.rtk_control_bar_button)
+buttonView.setOnClickListener { }
+```

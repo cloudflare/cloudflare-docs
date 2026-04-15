@@ -73,7 +73,7 @@ Most Workers consume very little CPU time. The average Worker uses approximately
 
 #### Error: exceeded CPU time limit {/* exceeded-cpu */}
 
-When a Worker exceeds its CPU time limit, Cloudflare returns **Error 1102** to the client with the message `Worker exceeded resource limits`. In the dashboard, this appears as `Exceeded CPU Time Limits` under **Metrics** > **Errors** > **Invocation Statuses**. In analytics and Logpush, the invocation outcome is `exceededCpu`.
+When a Worker exceeds its CPU time limit, Cloudflare returns [Error 1102](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1102/#error-1102-worker-exceeded-resource-limits) to the client with the message `Worker exceeded resource limits`. In the dashboard, this appears as `Exceeded CPU Time Limits` under **Metrics** > **Errors** > **Invocation Statuses**. In analytics and Logpush, the invocation outcome is `exceededCpu`.
 
 To resolve a CPU time limit error:
 
@@ -121,7 +121,7 @@ When an isolate exceeds 128 MB, the Workers runtime lets in-flight requests comp
 
 #### Error: exceeded memory limit {/* exceeded-memory */}
 
-When a Worker exceeds its memory limit, Cloudflare returns **Error 1102** to the client with the message `Worker exceeded resource limits`. In the dashboard, this appears as `Exceeded Memory` under **Metrics** > **Errors** > **Invocation Statuses**. In analytics and Logpush, the invocation outcome is `exceededMemory`.
+When a Worker exceeds its memory limit, Cloudflare returns [Error 1102](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1102/#error-1102-worker-exceeded-resource-limits) to the client with the message `Worker exceeded resource limits`. In the dashboard, this appears as `Exceeded Memory` under **Metrics** > **Errors** > **Invocation Statuses**. In analytics and Logpush, the invocation outcome is `exceededMemory`.
 
 You may also see the runtime error `Memory limit would be exceeded before EOF` when attempting to buffer a response body that exceeds the limit.
 
