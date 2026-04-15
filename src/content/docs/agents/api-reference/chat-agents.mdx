@@ -1245,6 +1245,12 @@ export class ChatAgent extends AIChatAgent {
 
 ### Subagent delegation
 
+:::note
+
+This section covers **in-process** subagents using the AI SDK's `ToolLoopAgent`. For **Durable Object sub-agents** with their own isolated storage and typed RPC, refer to [Sub-agents](/agents/api-reference/sub-agents/). For streaming full LLM turns through a child agent, refer to [Think: Sub-agent RPC](/agents/api-reference/think/#sub-agent-rpc-and-programmatic-turns).
+
+:::
+
 Tools can delegate work to focused sub-calls with their own context. Use [`ToolLoopAgent`](https://ai-sdk.dev/docs/reference/ai-sdk-core/tool-loop-agent) to define a reusable agent, then call it from a tool's `execute`:
 
 <TypeScriptExample>
