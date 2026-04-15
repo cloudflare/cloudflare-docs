@@ -6,21 +6,21 @@ sidebar:
   order: 4
 ---
 
-ArtifactFS mounts a git repo as a local filesystem without waiting for a full clone.
+ArtifactFS mounts a Git repository as a local filesystem without waiting for a full clone.
 
-It uses a blobless clone, a Filesystem in Userspace (FUSE) driver, and background hydration to make large repos visible almost immediately.
+It exposes the full tree quickly, then hydrates file contents on demand and in the background as tools read them. This reduces startup time for large repositories.
 
-ArtifactFS works with [Artifacts git remotes](/artifacts/api/git-protocol/) and other git repositories.
+ArtifactFS works with [Artifacts Git remotes](/artifacts/api/git-protocol/) and other Git repositories.
 
-## Choose ArtifactFS
+## When to use
 
-Use ArtifactFS for large, multi-gigabyte repos in sandboxes, containers, and virtual machines when startup time matters more than clone completeness.
+Use ArtifactFS when startup time matters more than a complete local clone. It is most useful for large, multi-gigabyte repos in sandboxes, containers, and virtual machines.
 
-As a rule of thumb, for smaller repos below about `1 GB`, we recommend a regular `git clone`. It is simpler and usually fast enough without a FUSE mount.
+For smaller repos below about `1 GB`, use a regular `git clone`. It is simpler and usually fast enough without a FUSE mount.
 
 ArtifactFS becomes more useful as repos get larger or contain very large object counts.
 
-## Understand how it works
+## How it works
 
 ArtifactFS starts with a blobless clone. It fetches commits, trees, and refs, but does not download file contents up front.
 
@@ -28,7 +28,7 @@ The daemon then mounts the repo through FUSE and exposes the full tree almost im
 
 Reads only block when a requested blob is not hydrated yet. Once hydrated, ArtifactFS serves that file from its local blob cache.
 
-## Review hydration heuristics
+## File hydration algorithm
 
 ArtifactFS prioritizes files that unblock agents first. That includes package and dependency manifests such as `package.json`, `go.mod`, `go.sum`, `Cargo.toml`, `pyproject.toml`, and `pnpm-lock.yaml`.
 
@@ -38,7 +38,7 @@ Large binary assets such as images, archives, videos, and PDFs are deprioritized
 
 These heuristics are intentionally simple. They focus on getting likely-to-be-read text and code in front of agents before large binary blobs.
 
-## Try a repo
+## Example
 
 The following example installs ArtifactFS, registers a public repo, starts the daemon, and reads files from the mounted working tree.
 
