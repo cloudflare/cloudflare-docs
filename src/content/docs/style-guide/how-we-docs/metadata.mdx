@@ -26,14 +26,15 @@ You cannot answer these questions without some level of rollup reporting, which 
 
 At Cloudflare, we track the following information about different pages:
 
-| Value                        | Description                                                                                                                                   | Examples                                        |
-| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
-| **Product**                  | The top-level subfolder of the page, or explicitly specified via `products` property in the page's frontmatter.                               | `dns`, `bots`                                   |
-| **Product Group**            | The primary area that each product falls into.                                                                                                | `Application Performance`, `Developer Platform` |
-| **Tags**                     | Specific [attributes](/style-guide/frontmatter/tags/) related to a page's content or purpose.                                                 | `AI`, `JavaScript`, `Headers`                   |
-| **Content type**             | The primary purpose of the page, which corresponds to our listed [content types](/style-guide/documentation-content-strategy/content-types/). | `how-to`, `faq`                                 |
-| **Last modified**            | How many days ago was this page last updated?                                                                                                 | `63`                                            |
-| **Last reviewed** (optional) | How many days ago was this page last reviewed?                                                                                                | `100`                                           |
+| Value                        | Description                                                                                                                                   | Examples                                                                          |
+| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| **Description**              | A 1-2 sentence summary that populates the `<meta name="description">` tag. Required for all pages with a `pcx_content_type`.                  | Refer to [frontmatter guidance](/style-guide/frontmatter/#writing-a-description). |
+| **Product**                  | The top-level subfolder of the page.                                                                                                          | `dns`, `bots`                                                                     |
+| **Product Group**            | The primary area that each product falls into.                                                                                                | `Application Performance`, `Developer Platform`                                   |
+| **Tags**                     | Specific [attributes](/style-guide/frontmatter/tags/) related to a page's content or purpose.                                                 | `AI`, `JavaScript`, `Headers`                                                     |
+| **Content type**             | The primary purpose of the page, which corresponds to our listed [content types](/style-guide/documentation-content-strategy/content-types/). | `how-to`, `faq`                                                                   |
+| **Last modified**            | How many days ago was this page last updated?                                                                                                 | `63`                                                                              |
+| **Last reviewed** (optional) | How many days ago was this page last reviewed?                                                                                                | `100`                                                                             |
 
 Of all of these values, there is a bit of nuance to our **Last reviewed** metadata. **Last reviewed** differs from **Last modified** because a review is more thorough than an update. A review implies that all contents of the page have been vetted for accuracy.
 
@@ -112,6 +113,18 @@ We get two primary benefits from structuring our content this way.
 First, our metadata is easily consumable by anyone who crawls our pages. We started using these values for our Algolia search configuration and internal reporting, but have since expanded to sharing this data with other teams that consume our content for AI systems too.
 
 Additionally, this decisions means that our GitHub repo is always the source of truth. We do not have to keep a spreadsheet or mapping updated elsewhere, the source of truth is always in our repo and - by extension - a lot more likely to be accurate than if we maintained multiple sources of truth.
+
+---
+
+## Description and AI retrievability
+
+The `description` frontmatter field populates the `<meta name="description">` tag in the HTML head. This is the single most important metadata field for AI retrievability. Search engines, AI crawlers, and `llms.txt` frontmatter blocks consume this value when deciding whether to cite a page.
+
+Every page with a `pcx_content_type` must include a `description`. A strong description names the product, states what the page helps the reader do, and works as a standalone answer snippet when extracted from the page.
+
+For writing guidance and examples, refer to [Writing a description](/style-guide/frontmatter/#writing-a-description).
+
+For more on how we make content available to AI systems, refer to [AI consumability](/style-guide/how-we-docs/ai-consumability/).
 
 ---
 

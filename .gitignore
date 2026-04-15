@@ -53,3 +53,6 @@ CLAUDE.md
 .github/prompts/
 .github/agents/
 /agents/
+
+# certain versions of opencode mistakenly commit package-lock.json
+.opencode/package-lock.json

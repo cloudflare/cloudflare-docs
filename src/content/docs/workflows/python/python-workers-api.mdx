@@ -21,7 +21,6 @@ class MyWorkflow(WorkflowEntrypoint):
 
 ## WorkflowStep
 
-{/* prettier-ignore */}
 - <code>step.do(name=None, *, concurrent=False, config=None)</code> — a decorator that allows you to define a step in a workflow.
   - `name` — an optional name for the step. If omitted, the function name (`func.__name__`) is used.
   - `concurrent` — an optional boolean that indicates whether dependencies for this step can run concurrently.
@@ -57,7 +56,6 @@ Note that the decorator doesn't make the call to the step, it just returns a cal
 When returning state from a step, you must make sure that the returned value is serializable. Since steps run through an FFI layer, the returned value gets type translated via [FFI.](https://pyodide.org/en/stable/usage/api/python-api/ffi.html#pyodide.ffi.to_js)
 Refer to [Pyodide's documentation](https://pyodide.org/en/stable/usage/type-conversions.html#type-translations-pyproxy-to-js) regarding type conversions for more information.
 
-{/* prettier-ignore */}
 - <code>step.sleep(name, duration)</code>
   - `name` — the name of the step.
   - `duration` — the duration to sleep until, in either seconds or as a `WorkflowDuration` compatible string.
@@ -67,7 +65,6 @@ async def run(self, event, step):
     await step.sleep("my-sleep-step", "10 seconds")
 ```
 
-{/* prettier-ignore */}
 - <code>step.sleep_until(name, timestamp)</code>
   - `name` — the name of the step.
   - `timestamp` — a `datetime.datetime` object or seconds from the Unix epoch to sleep the workflow instance until.
@@ -79,7 +76,6 @@ async def run(self, event, step):
     await step.sleep_until("my-sleep-step", datetime.datetime.now() + datetime.timedelta(seconds=10))
 ```
 
-{/* prettier-ignore */}
 - <code>step.wait_for_event(name, event_type, timeout="24 hours")</code>
   - `name` — the name of the step.
   - `event_type` — the type of event to wait for.
