@@ -168,7 +168,7 @@ Both Think and [`AIChatAgent`](/agents/api-reference/chat-agents/) extend `Agent
 | `configureSession()`    | identity                         | Add context blocks, compaction, search, skills — refer to [Sessions](/agents/api-reference/sessions/) |
 | `messageConcurrency`    | `"queue"`                        | How overlapping submits behave — refer to [Message concurrency](#message-concurrency)                 |
 | `waitForMcpConnections` | `false`                          | Wait for MCP servers before inference                                                                 |
-| `chatRecovery` | `false`                          | Wrap turns in `runFiber` for durable execution                                                        |
+| `chatRecovery`          | `false`                          | Wrap turns in `runFiber` for durable execution                                                        |
 
 ## Dynamic configuration
 
@@ -504,7 +504,7 @@ createExecuteTool({
 
 ### Browser tools
 
-Give your agent access to the Chrome DevTools Protocol (CDP) for web page inspection, scraping, screenshots, and debugging. Requires `@cloudflare/codemode` and a Browser Rendering binding.
+Give your agent access to the Chrome DevTools Protocol (CDP) for web page inspection, scraping, screenshots, and debugging. Requires `@cloudflare/codemode` and a Browser Run binding.
 
 <TypeScriptExample>
 

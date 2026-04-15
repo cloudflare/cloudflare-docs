@@ -47,7 +47,7 @@ npm install agents @cloudflare/codemode ai zod
 
 ### 1. Configure bindings
 
-Add the Browser Rendering and Worker Loader bindings to your wrangler configuration:
+Add the Browser Run (formerly Browser Rendering) and Worker Loader bindings to your wrangler configuration:
 
 <WranglerConfig>
 
@@ -82,7 +82,7 @@ const browserTools = createBrowserTools({
 
 </TypeScriptExample>
 
-To connect to a custom CDP endpoint instead of the Browser Rendering binding, pass `cdpUrl`.
+To connect to a custom CDP endpoint instead of the Browser Run binding, pass `cdpUrl`.
 
 ### 3. Use with streamText
 
@@ -250,7 +250,7 @@ Returns AI SDK tools (`browser_search` and `browser_execute`).
 
 | Option       | Type                     | Default  | Description                                                    |
 | ------------ | ------------------------ | -------- | -------------------------------------------------------------- |
-| `browser`    | `Fetcher`                | —        | Browser Rendering binding                                      |
+| `browser`    | `Fetcher`                | —        | Browser Run binding                                            |
 | `cdpUrl`     | `string`                 | —        | Optional override for a custom CDP endpoint                    |
 | `cdpHeaders` | `Record<string, string>` | —        | Headers for CDP URL discovery (for example, Cloudflare Access) |
 | `loader`     | `WorkerLoader`           | required | Worker Loader binding for sandboxed execution                  |
@@ -282,7 +282,7 @@ session.close();
 
 ## Local development
 
-Recent Wrangler releases support Browser Rendering in local development. `npx wrangler dev` provisions the browser automatically, so the same `browser: env.BROWSER` setup works locally and when deployed.
+Recent Wrangler releases support Browser Run in local development. `npx wrangler dev` provisions the browser automatically, so the same `browser: env.BROWSER` setup works locally and when deployed.
 
 Use `cdpUrl` only when you intentionally want to connect to some other CDP-compatible browser endpoint, such as a tunnel or a manually managed Chrome instance.
 
@@ -305,7 +305,7 @@ Use `cdpUrl` only when you intentionally want to connect to some other CDP-compa
 
 ## Using Puppeteer directly
 
-If you prefer to control the browser programmatically without LLM-generated code, you can use Puppeteer with the [Browser Rendering](/browser-rendering/) API directly.
+If you prefer to control the browser programmatically without LLM-generated code, you can use Puppeteer with the [Browser Run](/browser-run/) API directly.
 
 <PackageManagers pkg="@cloudflare/puppeteer" dev />
 
