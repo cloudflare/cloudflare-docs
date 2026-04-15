@@ -168,7 +168,7 @@ Both Think and [`AIChatAgent`](/agents/api-reference/chat-agents/) extend `Agent
 | `configureSession()`    | identity                         | Add context blocks, compaction, search, skills — refer to [Sessions](/agents/api-reference/sessions/) |
 | `messageConcurrency`    | `"queue"`                        | How overlapping submits behave — refer to [Message concurrency](#message-concurrency)                 |
 | `waitForMcpConnections` | `false`                          | Wait for MCP servers before inference                                                                 |
-| `chatRecovery`          | `false`                          | Wrap turns in `runFiber` for durable execution                                                        |
+| `chatRecovery`          | `true`                           | Wrap turns in `runFiber` for durable execution                                                        |
 
 ## Dynamic configuration
 
