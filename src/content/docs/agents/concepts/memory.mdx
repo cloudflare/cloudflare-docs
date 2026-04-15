@@ -8,7 +8,7 @@ sidebar:
   order: 8
 ---
 
-import { TypeScriptExample, LinkCard } from "~/components";
+import { TypeScriptExample, LinkCard, WranglerConfig } from "~/components";
 
 Agents need memory to be useful over time. Without it, every conversation starts from zero. The agent forgets who the user is, what it learned, and what it was doing. Memory is what turns a stateless LLM call into a persistent, context-aware agent.
 
@@ -263,6 +263,8 @@ The `prefix` option scopes the provider to a subdirectory in the bucket. Skill k
 
 Add an R2 bucket binding to your Wrangler configuration:
 
+<WranglerConfig>
+
 ```jsonc
 {
   "r2_buckets": [
@@ -273,6 +275,8 @@ Add an R2 bucket binding to your Wrangler configuration:
   ]
 }
 ```
+
+</WranglerConfig>
 
 Skills are regular R2 objects. Upload them through any R2 interface (the Wrangler CLI, the dashboard, or the Workers API):
 
