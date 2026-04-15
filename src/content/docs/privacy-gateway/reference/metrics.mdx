@@ -656,9 +656,9 @@ The `gatewayStatusCode` dimension indicates the HTTP status code returned by the
 
 </Details>
 
-<Details header="Proxy status codes">
+<Details header="Proxy status codes" id="proxy-status-codes">
 
-The `proxyStatus` dimension tells you why the relay failed to deliver a request to the gateway. When a request succeeds, this field is `null`. Because the relay always forwards requests to the gateway, every error listed here describes a problem reaching the gateway — for example, `dns_error` means the relay could not resolve the gateway's hostname.
+The `proxyStatus` dimension classifies the reason a request did not succeed at the proxy layer. When a request succeeds, this field is `null`. Errors may describe problems reaching or communicating with the gateway (for example, `dns_error`), relay-side policy decisions (for example, `http_request_denied`), or internal relay failures (for example, `proxy_internal_error`).
 
 - `dns_error` — DNS error when resolving the gateway hostname.
 - `dns_timeout` — Timeout while resolving the gateway hostname.
