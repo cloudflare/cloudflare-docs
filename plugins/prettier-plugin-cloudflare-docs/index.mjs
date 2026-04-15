@@ -40,26 +40,68 @@ const PRESERVE_PREFIX = "<!--MDXPRESERVE:";
 const PRESERVE_SUFFIX = "-->";
 
 /**
+ * Find fenced code blocks that contain any preserve element, and return
+ * their ranges. These entire blocks should be preserved verbatim to prevent
+ * prettier's embedded MDX formatter from reformatting the content inside.
+ */
+function findCodeBlocksWithPreserveElements(text, preserveElements) {
+	const ranges = [];
+	const fenceRegex = /^(`{3,}|~{3,})[^\n]*\n[\s\S]*?\n\1/gm;
+	let m;
+	while ((m = fenceRegex.exec(text)) !== null) {
+		const blockText = m[0];
+		const containsPreserveElement = preserveElements.some((el) =>
+			new RegExp(`<${el}[\\s>]`).test(blockText),
+		);
+		if (containsPreserveElement) {
+			ranges.push({
+				start: m.index,
+				end: m.index + blockText.length,
+				text: blockText,
+			});
+		}
+	}
+	return ranges;
+}
+
+/**
  * Replace preserve element regions with same-length HTML comment
  * placeholders. The placeholder is padded with dashes so that byte
  * offsets of all subsequent AST nodes remain valid.
+ *
+ * Fenced code blocks that contain preserve elements are also replaced
+ * as complete units — this prevents prettier's embedded MDX formatter
+ * from reformatting their content.
  *
  * When preserve elements are nested (e.g., <Steps> inside <Tabs>),
  * only the outermost match is replaced — the inner content is captured
  * verbatim as part of the outer region.
  */
 function extractPreserveRegions(text, preserveElements) {
-	// Find all matches across all preserve elements
-	const allMatches = [];
+	// Find fenced code blocks that contain preserve elements — treat
+	// the whole block as a preserve region to prevent embedded formatting
+	const codeBlockMatches = findCodeBlocksWithPreserveElements(
+		text,
+		preserveElements,
+	);
+
+	// Find all preserve element matches in the text
+	const allMatches = [...codeBlockMatches];
 	for (const el of preserveElements) {
 		const regex = new RegExp(`<${el}[\\s>][\\s\\S]*?</${el}>`, "g");
 		let m;
 		while ((m = regex.exec(text)) !== null) {
-			allMatches.push({
-				start: m.index,
-				end: m.index + m[0].length,
-				text: m[0],
-			});
+			// Skip matches that are already inside a code block we're preserving
+			const insideCodeBlock = codeBlockMatches.some(
+				(r) => m.index >= r.start && m.index + m[0].length <= r.end,
+			);
+			if (!insideCodeBlock) {
+				allMatches.push({
+					start: m.index,
+					end: m.index + m[0].length,
+					text: m[0],
+				});
+			}
 		}
 	}
 
@@ -104,6 +146,11 @@ function extractPreserveRegions(text, preserveElements) {
  * A single node may contain multiple placeholders (e.g., when the MDX
  * parser merges sibling elements into one node), so we replace all
  * occurrences within each node's value.
+ *
+ * For fenced code blocks (type "code"), we also suppress embedded language
+ * formatting by clearing the lang temporarily — prettier's embedded formatter
+ * would otherwise re-format the restored content. We store the original lang
+ * in a custom property and reset it so the printer outputs the correct fence.
  */
 function restorePreserveNodes(ast, regions) {
 	const globalRegex = /<!--MDXPRESERVE:(\d+)-*-->/g;
