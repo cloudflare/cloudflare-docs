@@ -31,7 +31,7 @@ You can deploy NLWeb on your website directly through the AI Search dashboard:
 
    <DashButton url="/?to=/:account/ai/ai-search" />
 
-3. Select **Create**.
+3. Select **Create AI Search**.
 4. Select **Website** as a data source.
 5. Follow the instructions to create an AI Search instance.
 6. Go to the **Settings** for the instance
@@ -60,18 +60,7 @@ These endpoints give both people and agents structured access to your content.
 
 ## Using It on Your Website
 
-To integrate NLWeb search directly into your site you can:
-
-1. Find your deployed Worker in the [Cloudflare dashboard](https://dash.cloudflare.com/):
-
-   - Go to **AI** > **AI Search**.
-   - Select **Connect**, then go to the **NLWeb** tab.
-   - Select **Go to Worker**.
-
-2. Add a [custom domain](/workers/configuration/routing/custom-domains/) to your Worker (for example, ask.example.com)
-3. Use the `/ask` endpoint on your custom domain to power the search (for example, ask.example.com/ask)
-
-You can also use the embeddable snippet to add a search UI directly into your website. For example:
+You can use the embeddable snippet to add a search UI directly into your website. For example:
 
 ```html
 <!-- Add css on head -->

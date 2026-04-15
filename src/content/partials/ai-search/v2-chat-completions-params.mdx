@@ -14,19 +14,19 @@ An array of message objects representing the conversation. Each message has a `r
 - `content` <Type text="string" /> <MetaInfo text="required" />
   - The content of the message.
 
-***
+---
 
 `model` <Type text="string" /> <MetaInfo text="optional" />
 
 The text-generation model used to generate responses. Defaults to the generation model configured in the AI Search instance settings. For a list of supported models, refer to [Supported models](/ai-search/configuration/models/supported-models/).
 
-***
+---
 
 `stream` <Type text="boolean" /> <MetaInfo text="optional" />
 
 Returns a stream of results as they are generated. When enabled, returns a `Response` object with a readable stream. Defaults to `false`.
 
-***
+---
 
 `ai_search_options` <Type text="object" /> <MetaInfo text="optional" />
 
@@ -43,7 +43,7 @@ Configuration options for the search and generation operation.
     - The maximum number of results to return. Must be between `1` and `50`. Defaults to `10`.
 
   - `filters` <Type text="object" /> <MetaInfo text="optional" />
-    - Filter search results based on metadata. Supports comparison filters (`eq`, `ne`, `gt`, `gte`, `lt`, `lte`) and compound filters (`and`, `or`). For more details, refer to [Metadata filtering](/ai-search/configuration/retrieval/metadata/).
+    - Filter search results based on metadata. Supports comparison filters (`eq`, `ne`, `gt`, `gte`, `lt`, `lte`) and compound filters (`and`, `or`). For more details, refer to [Metadata filtering](/ai-search/configuration/indexing/metadata/).
 
   - `context_expansion` <Type text="integer" /> <MetaInfo text="optional" />
     - The number of surrounding chunks to include for additional context. Must be between `0` and `3`. Defaults to `0`.

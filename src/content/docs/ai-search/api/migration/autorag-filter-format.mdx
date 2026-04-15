@@ -7,7 +7,7 @@ sidebar:
 
 import { FileTree } from "~/components";
 
-This page documents the filter format used by the legacy AutoRAG REST API. For the new AI Search REST API filter syntax, refer to [Metadata filtering](/ai-search/configuration/retrieval/metadata/).
+This page documents the filter format used by the legacy AutoRAG REST API. For the new AI Search REST API filter syntax, refer to [Metadata filtering](/ai-search/configuration/indexing/metadata/).
 
 ## Comparison filter
 
@@ -60,11 +60,7 @@ To filter for all files within a folder and its subfolders, use a compound filte
 For example, consider this file structure:
 
 <FileTree>
-	- customer-a
-		- profile.md
-		- contracts
-			- property
-				- contract-1.pdf
+	- customer-a - profile.md - contracts - property - contract-1.pdf
 </FileTree>
 
 Using `{ type: "eq", key: "folder", value: "customer-a/" }` only matches files directly in that folder (like `profile.md`), not files in subfolders.
@@ -88,5 +84,5 @@ This filter matches all paths starting with `customer-a/` by using:
 
 ## Related
 
-- [Metadata filtering](/ai-search/configuration/retrieval/metadata/) - New AI Search REST API filter format
+- [Metadata filtering](/ai-search/configuration/indexing/metadata/) - New AI Search REST API filter format
 - [Migrate from AutoRAG Search API](/ai-search/api/migration/rest-api/) - Migration guide with before/after examples

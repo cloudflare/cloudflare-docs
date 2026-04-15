@@ -5,22 +5,33 @@ sidebar:
   order: 4
 ---
 
-## Pricing
+Instances created after **April 16, 2026** include [built-in storage](/ai-search/configuration/data-source/built-in-storage/), a [built-in vector index](/ai-search/configuration/indexing/vector-search/#built-in-vector-index), and web crawling. You can see which of your instances have built-in storage on the dashboard under **AI** > **AI Search**. Select your instance and check the **Overview** tab to see if it includes built-in storage and built-in vector database.
 
-AI Search is available on the [Workers Free and Workers Paid](/workers/platform/pricing/) tiers.
+## New instances
 
-New instances come with managed infrastructure that handles storage, vector index, and web crawling for you. During the open beta, these AI Search instances are free within the following limits:
+If your instance was created after **April 16, 2026**, it includes built-in storage, a built-in vector index, and web crawling. During the open beta, AI Search is free within the limits below. [Workers AI](/workers-ai/platform/pricing/) and [AI Gateway](/ai-gateway/reference/pricing/) usage is billed separately.
 
-| Limit                     | Workers Free | Workers Paid |
-| ------------------------- | ------------ | ------------ |
-| Queries per month         | 20,000       | Unlimited    |
-| Max pages crawled per day | 500          | Unlimited    |
+Pricing details will be communicated at least 30 days before any billing begins.
 
-[Workers AI](/workers-ai/platform/pricing/) and [AI Gateway](/ai-gateway/reference/pricing/) usage is billed separately.
+The following limits apply based on your [Workers plan](/workers/platform/pricing/):
 
-### Instances created before April 16, 2026
+| Limit                           | Workers Free             | Workers Paid                 |
+| ------------------------------- | ------------------------ | ---------------------------- |
+| AI Search instances per account | 100                      | 5,000                        |
+| Files per instance              | 100,000                  | 1M or 500K for hybrid search |
+| Max file size                   | 4 MB                     | 4 MB                         |
+| Queries per month               | 20,000                   | Unlimited                    |
+| Maximum pages crawled per day   | 500                      | Unlimited                    |
+| Max custom metadata fields      | 5 per AI Search instance | 5 per AI Search instance     |
+| Max text metadata value length  | 500 characters           | 500 characters               |
 
-Instances created before **April 16, 2026** do not come with managed infrastructure. You can check if your instance has built-in storage on the dashboard under **AI** > **AI Search**. If your instance does not indicate built-in storage, it is billed separately for the following services:
+:::note[Need a higher limit?]
+To request an adjustment to a limit, complete the [Limit Increase Request Form](https://forms.gle/wnizxrEUW33Y15CT8). If the limit can be increased, Cloudflare will contact you with next steps.
+:::
+
+## Previous instances
+
+If your instance was created before **April 16, 2026**, it provisions and runs on top of Cloudflare services in your account. AI Search is free to enable. You are billed for the underlying services it provisions on your account:
 
 | Service                                          | Description                                                 |
 | ------------------------------------------------ | ----------------------------------------------------------- |
@@ -30,21 +41,16 @@ Instances created before **April 16, 2026** do not come with managed infrastruct
 | [AI Gateway](/ai-gateway/reference/pricing/)     | Monitors and controls model usage                           |
 | [Browser Rendering](/browser-rendering/pricing/) | Loads dynamic JavaScript content during website crawling    |
 
+The following limits apply to these instances:
+
+| Limit                               | Value                    |
+| ----------------------------------- | ------------------------ |
+| Max AI Search instances per account | 100                      |
+| Max files per AI Search             | 1,000,000                |
+| Max file size                       | 4 MB                     |
+| Max custom metadata fields          | 5 per AI Search instance |
+| Max text metadata value length      | 500 characters           |
+
 All instances will be migrated to managed infrastructure. Migration details are coming soon.
 
 For more information about how each service is used, refer to [How AI Search works](/ai-search/concepts/how-ai-search-works/).
-
-## Limits
-
-| Limit                                                | Workers Free   | Workers Paid   |
-| ---------------------------------------------------- | -------------- | -------------- |
-| AI Search instances per account                      | 100            | 5,000          |
-| Files per instance                                   | 100,000        | 1,000,000      |
-| Files per instance (hybrid search or keyword search) | 100,000        | 500,000        |
-| Max file size                                        | 4 MB           | 4 MB           |
-| Max custom metadata fields                           | 5              | 5              |
-| Max text metadata value length                       | 500 characters | 500 characters |
-
-:::note[Need a higher limit?]
-To request an adjustment to a limit, complete the [Limit Increase Request Form](https://forms.gle/wnizxrEUW33Y15CT8). If the limit can be increased, Cloudflare will contact you with next steps.
-:::

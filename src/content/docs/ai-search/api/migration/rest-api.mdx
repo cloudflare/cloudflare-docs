@@ -96,6 +96,8 @@ The new AI Search REST API uses Vectorize-style metadata filtering, which differ
 
 ### Operator mapping
 
+The filter operators have been renamed to use a `$` prefix:
+
 | AutoRAG API | AI Search API       |
 | ----------- | ------------------- |
 | `eq`        | `$eq` (or implicit) |
@@ -110,6 +112,8 @@ The new AI Search REST API uses Vectorize-style metadata filtering, which differ
 ### Examples
 
 #### Simple filter
+
+Filter by a single metadata field using implicit equality:
 
 **Before (AutoRAG API):**
 
@@ -136,6 +140,8 @@ The new AI Search REST API uses Vectorize-style metadata filtering, which differ
 ```
 
 #### Compound filter (AND)
+
+Combine multiple conditions where all must match:
 
 **Before (AutoRAG API):**
 

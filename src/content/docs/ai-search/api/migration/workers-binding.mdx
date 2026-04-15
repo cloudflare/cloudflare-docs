@@ -11,6 +11,8 @@ The [`env.AI.autorag()` binding](/ai-search/api/migration/workers-binding-legacy
 
 ## What changed
 
+Here is a summary of the key differences between the legacy and new bindings:
+
 |                     | Legacy                   | New                                              |
 | ------------------- | ------------------------ | ------------------------------------------------ |
 | **Wrangler config** | `ai` binding             | `ai_search` or `ai_search_namespaces` binding    |
@@ -18,18 +20,39 @@ The [`env.AI.autorag()` binding](/ai-search/api/migration/workers-binding-legacy
 | **Search format**   | `query` string           | `messages` array or `query` string               |
 | **Response format** | `data` array             | `chunks` array                                   |
 
-## Choose your binding
+## AI Search bindings
 
-**Instance binding** binds directly to a single instance. This is the simplest migration path from `env.AI.autorag()`.
+AI Search provides two new bindings:
 
-**Namespace binding** gives you access to all instances within a namespace. Use this if you need dynamic instance management, cross-instance search, or the Items API.
+**Instance binding (`ai_search`)** binds directly to a single instance. This is the simplest migration path from `env.AI.autorag()`.
+
+```jsonc
+// wrangler.jsonc
+{
+	"ai_search": [
+		{
+			"binding": "MY_SEARCH",
+			"instance_name": "my-instance",
+		},
+	],
+}
+```
+
+**Namespace binding (`ai_search_namespaces`)** gives you access to all instances within a namespace. Use this if you need dynamic instance management, cross-instance search, or the Items API.
+
+```jsonc
+// wrangler.jsonc
+{
+	"ai_search_namespaces": [
+		{
+			"binding": "AI_SEARCH",
+			"namespace": "default",
+		},
+	],
+}
+```
 
 For more details on the difference, refer to [Namespaces](/ai-search/concepts/namespaces/).
-
-For the full API reference, refer to the following Workers Binding pages:
-- [Search](/ai-search/api/search/workers-binding/)
-- [Instances](/ai-search/api/instances/workers-binding/)
-- [Items](/ai-search/api/items/workers-binding/)
 
 ## Requirements
 
@@ -42,7 +65,7 @@ The new bindings require the following minimum package versions for TypeScript t
 
 ## Step 1: Update Wrangler configuration
 
-### Instance binding
+Existing instances are in the default namespace. For a simple upgrade path, use the instance binding. For the namespace binding, refer to [AI Search bindings](#ai-search-bindings).
 
 **Before:**
 
@@ -69,36 +92,9 @@ instance_name = "my-instance"
 
 </WranglerConfig>
 
-### Namespace binding
-
-**Before:**
-
-<WranglerConfig>
-
-```toml
-[ai]
-binding = "AI"
-```
-
-</WranglerConfig>
-
-**After:**
-
-<WranglerConfig>
-
-```toml
-compatibility_date = "2026-03-27"
-
-[[ai_search_namespaces]]
-binding = "AI_SEARCH"
-namespace = "default"
-```
-
-</WranglerConfig>
-
 ## Step 2: Update the type definition
 
-### Instance binding
+Update the `Env` interface to use the new binding type.
 
 **Before:**
 
@@ -116,27 +112,9 @@ export interface Env {
 }
 ```
 
-### Namespace binding
-
-**Before:**
-
-```ts
-export interface Env {
-	AI: Ai;
-}
-```
-
-**After:**
-
-```ts
-export interface Env {
-	AI_SEARCH: AiSearchNamespace;
-}
-```
-
 ## Step 3: Update search calls
 
-### Instance binding
+Replace `env.AI.autorag()` calls with the new binding.
 
 **Before:**
 
@@ -150,24 +128,6 @@ const result = await env.AI.autorag("my-instance").search({
 
 ```ts
 const result = await env.MY_INSTANCE.search({
-	messages: [{ role: "user", content: "What is Cloudflare?" }],
-});
-```
-
-### Namespace binding
-
-**Before:**
-
-```ts
-const result = await env.AI.autorag("my-instance").search({
-	query: "What is Cloudflare?",
-});
-```
-
-**After:**
-
-```ts
-const result = await env.AI_SEARCH.get("my-instance").search({
 	messages: [{ role: "user", content: "What is Cloudflare?" }],
 });
 ```
@@ -212,6 +172,8 @@ The new binding uses Vectorize-style metadata filtering. Filters are now passed 
 
 #### Simple filter
 
+Filter by a single metadata field using implicit equality:
+
 **Before:**
 
 ```ts
@@ -239,6 +201,8 @@ const result = await env.MY_INSTANCE.search({
 ```
 
 #### Compound filter (AND)
+
+Combine multiple conditions where all must match:
 
 **Before:**
 
@@ -272,5 +236,7 @@ const result = await env.MY_INSTANCE.search({
 ```
 
 ## Backwards compatibility
+
+The `env.AI.autorag()` binding will continue to work indefinitely. You do not need to migrate immediately.
 
 For the legacy API reference, refer to [Workers binding (legacy)](/ai-search/api/migration/workers-binding-legacy/).

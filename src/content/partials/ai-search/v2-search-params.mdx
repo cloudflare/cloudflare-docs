@@ -14,13 +14,13 @@ An array of message objects representing the conversation. Each message has a `r
 - `content` <Type text="string" /> <MetaInfo text="required" />
   - The content of the message.
 
-***
+---
 
 `query` <Type text="string" /> <MetaInfo text="optional" />
 
 A simple text query string. Alternative to `messages`. Provide either `query` or `messages`, not both.
 
-***
+---
 
 `ai_search_options` <Type text="object" /> <MetaInfo text="optional" />
 
@@ -37,7 +37,7 @@ Configuration options for the search operation.
     - The maximum number of results to return. Must be between `1` and `50`. Defaults to `10`.
 
   - `filters` <Type text="object" /> <MetaInfo text="optional" />
-    - Filter search results based on metadata. Supports comparison filters (`eq`, `ne`, `gt`, `gte`, `lt`, `lte`) and compound filters (`and`, `or`). For more details, refer to [Metadata filtering](/ai-search/configuration/retrieval/metadata/).
+    - Filter search results based on metadata. Supports comparison filters (`eq`, `ne`, `gt`, `gte`, `lt`, `lte`) and compound filters (`and`, `or`). For more details, refer to [Metadata filtering](/ai-search/configuration/indexing/metadata/).
 
   - `context_expansion` <Type text="integer" /> <MetaInfo text="optional" />
     - The number of surrounding chunks to include for additional context. Must be between `0` and `3`. Defaults to `0`.

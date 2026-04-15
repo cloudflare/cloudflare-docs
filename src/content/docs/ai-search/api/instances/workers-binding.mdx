@@ -15,7 +15,7 @@ import { Render, MetaInfo, Type } from "~/components";
 
 ## Namespace methods
 
-The namespace handle (`env.AI_SEARCH`) exposes methods for working with instances within a [namespace](/ai-search/concepts/namespaces/).
+The following methods are only available when using the `ai_search_namespaces` binding. The namespace handle (`env.AI_SEARCH`) exposes methods for working with instances within a [namespace](/ai-search/concepts/namespaces/).
 
 ### `get()`
 
@@ -40,6 +40,11 @@ Returns all instances within the namespace.
 
 ```ts
 const { result, result_info } = await env.AI_SEARCH.list();
+
+for (const instance of result) {
+	console.log(`${instance.id} (${instance.type}) - ${instance.status}`);
+}
+// result_info.total_count contains the total number of instances
 ```
 
 #### Parameters
@@ -141,7 +146,9 @@ Deleting an instance permanently removes all indexed data, including embeddings,
 
 ## Instance methods
 
-An instance handle returned by `get()` or `create()` provides methods for managing the instance configuration and monitoring indexing progress.
+The following methods are available on both the `ai_search_namespaces` and `ai_search` bindings. With the namespace binding, call methods on the handle returned by `get()`. With the instance binding, call methods directly on the binding (for example, `env.MY_SEARCH.info()`).
+
+The examples below use the namespace binding.
 
 ### `update()`
 
@@ -251,4 +258,17 @@ const stats = await env.AI_SEARCH.get("my-instance").stats();
 
 ## Local development
 
-Local development is supported by proxying requests to your deployed AI Search instance. When running in local mode with `wrangler dev`, your Worker forwards queries to the configured remote AI Search instance and returns results as if they were served locally.
+Local development is supported by proxying requests to your deployed AI Search instance. Add `remote: true` to your binding configuration to enable local development with `wrangler dev`.
+
+```jsonc
+// wrangler.jsonc
+{
+	"ai_search": [
+		{
+			"binding": "MY_SEARCH",
+			"instance_name": "my-instance",
+			"remote": true,
+		},
+	],
+}
+```

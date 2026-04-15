@@ -17,9 +17,11 @@ The previous `env.AI.autorag()` binding is no longer recommended for use. Refer 
 
 <Render file="binding-config" product="ai-search" />
 
-## Instance-level
+## Instance methods
 
-Search and chat with a specific instance using `env.AI_SEARCH.get("my-instance")`.
+The following methods are available on both the `ai_search_namespaces` and `ai_search` bindings. With the namespace binding, call methods on the handle returned by `get()`. With the instance binding, call methods directly on the binding (for example, `env.MY_SEARCH.search()`).
+
+The examples below use the namespace binding.
 
 ### `search()`
 
@@ -116,18 +118,20 @@ When `stream: true`, the method returns a `ReadableStream` of Server-Sent Events
 event: chunks
 data: [{"id":"chunk-001","type":"text","score":0.85,"text":"...","item":{"key":"about-cloudflare.md","timestamp":1775925540000},"scoring_details":{"vector_score":0.85}}]
 
-data: {"id":"id-123","created":1775925714,"model":"@cf/meta/llama-3.3-70b-instruct-fp8-fast","object":"chat.completion.chunk","choices":[{"index":0,"delta":{"content":"Cloudflare "}}]}
+data: {"id":"id-1776072781845","created":1776072781,"model":"@cf/meta/llama-3.3-70b-instruct-fp8-fast","object":"chat.completion.chunk","choices":[{"index":0,"delta":{"content":" document"}}]}
 
-data: {"id":"id-123","created":1775925714,"model":"@cf/meta/llama-3.3-70b-instruct-fp8-fast","object":"chat.completion.chunk","choices":[{"index":0,"delta":{"content":"is a global "}}]}
+data: {"id":"id-1776072781845","created":1776072781,"model":"@cf/meta/llama-3.3-70b-instruct-fp8-fast","object":"chat.completion.chunk","choices":[{"index":0,"delta":{"content":" you provided doesn"}}]}
 
-data: {"id":"id-123","created":1775925714,"model":"@cf/meta/llama-3.3-70b-instruct-fp8-fast","object":"chat.completion.chunk","choices":[{"index":0,"delta":{"content":"cloud platform..."}}]}
+data: {"id":"id-1776072781845","created":1776072781,"model":"@cf/meta/llama-3.3-70b-instruct-fp8-fast","object":"chat.completion.chunk","choices":[{"index":0,"delta":{"content":"'t contain"}}]}
+
+data: {"id":"id-1776072781845","created":1776072781,"model":"@cf/meta/llama-3.3-70b-instruct-fp8-fast","object":"chat.completion.chunk","choices":[{"index":0,"delta":{"content":" information"}}]}
 
 data: [DONE]
 ```
 
-## Namespace-level
+## Namespace methods
 
-Search and chat across multiple instances in a single call using the namespace handle directly (`env.AI_SEARCH`).
+The following methods are only available when using the `ai_search_namespaces` binding. Search and chat across multiple instances in a single call using the namespace handle directly (`env.AI_SEARCH`).
 
 ### `search()`
 
@@ -195,4 +199,17 @@ Same as [instance-level chat completions](#response-non-streaming), with additio
 
 ## Local development
 
-Local development is supported by proxying requests to your deployed AI Search instance. When running in local mode with `wrangler dev`, your Worker forwards queries to the configured remote AI Search instance and returns results as if they were served locally.
+Local development is supported by proxying requests to your deployed AI Search instance. Add `remote: true` to your binding configuration to enable local development with `wrangler dev`.
+
+```jsonc
+// wrangler.jsonc
+{
+	"ai_search": [
+		{
+			"binding": "MY_SEARCH",
+			"instance_name": "my-instance",
+			"remote": true,
+		},
+	],
+}
+```

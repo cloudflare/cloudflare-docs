@@ -271,7 +271,8 @@
 /ai-search/configuration/retrieval-configuration/ /ai-search/configuration/retrieval/result-filtering/ 301
 /ai-search/configuration/retrieval/retrieval-configuration/ /ai-search/configuration/retrieval/result-filtering/ 301
 /ai-search/configuration/hybrid-search/ /ai-search/configuration/indexing/hybrid-search/ 301
-/ai-search/configuration/metadata/ /ai-search/configuration/retrieval/metadata/ 301
+/ai-search/configuration/metadata/ /ai-search/configuration/indexing/metadata/ 301
+/ai-search/configuration/retrieval/metadata/ /ai-search/configuration/indexing/metadata/ 301
 /ai-search/configuration/boosting/ /ai-search/configuration/retrieval/boosting/ 301
 /ai-search/configuration/reranking/ /ai-search/configuration/retrieval/reranking/ 301
 /ai-search/configuration/query-rewriting/ /ai-search/configuration/retrieval/query-rewriting/ 301

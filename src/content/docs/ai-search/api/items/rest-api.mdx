@@ -17,19 +17,32 @@ The Items API uploads files to an instance's built-in storage. For more details,
 
 <Render file="rest-api-auth" product="ai-search" />
 
-## Items endpoints
+## API paths
 
-Manage individual documents within an AI Search instance.
+AI Search APIs are available at two base paths:
 
-| Description                                                                                              | Method   | Endpoint                                                                   |
-| -------------------------------------------------------------------------------------------------------- | -------- | -------------------------------------------------------------------------- |
-| [List items](/api/resources/ai_search/subresources/instances/subresources/items/methods/list/)           | `GET`    | `/accounts/{account_id}/ai-search/instances/{id}/items`                    |
-| [Upload an item](/api/resources/ai_search/subresources/instances/subresources/items/methods/upload/)     | `POST`   | `/accounts/{account_id}/ai-search/instances/{id}/items`                    |
-| [Get item info](/api/resources/ai_search/subresources/instances/subresources/items/methods/get/)         | `GET`    | `/accounts/{account_id}/ai-search/instances/{id}/items/{item_id}`          |
-| [Delete an item](/api/resources/ai_search/subresources/instances/subresources/items/methods/delete/)     | `DELETE` | `/accounts/{account_id}/ai-search/instances/{id}/items/{item_id}`          |
-| [Download an item](/api/resources/ai_search/subresources/instances/subresources/items/methods/download/) | `GET`    | `/accounts/{account_id}/ai-search/instances/{id}/items/{item_id}/download` |
+| Path                                                                      | Description                                                                 |
+| ------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| `/accounts/{account_id}/ai-search/instances/{id}/`                        | Operates on a specific instance                                             |
+| `/accounts/{account_id}/ai-search/namespaces/{namespace}/instances/{id}/` | Operates on instances within a [namespace](/ai-search/concepts/namespaces/) |
+
+The available operations are the same for both paths. For the namespace-scoped API, refer to the [Namespace API reference](/api/resources/ai_search/subresources/namespaces/).
+
+## Items
+
+Upload, list, get, delete, and download items within an instance. For the full specification, refer to the [Items API reference](/api/resources/ai_search/subresources/instances/subresources/items/).
+
+| Operation                                                                                        | Method   | Description                    |
+| ------------------------------------------------------------------------------------------------ | -------- | ------------------------------ |
+| [Upload](/api/resources/ai_search/subresources/instances/subresources/items/methods/upload/)     | `POST`   | Upload a document for indexing |
+| [List](/api/resources/ai_search/subresources/instances/subresources/items/methods/list/)         | `GET`    | List all items in an instance  |
+| [Get](/api/resources/ai_search/subresources/instances/subresources/items/methods/get/)           | `GET`    | Get item info by ID            |
+| [Delete](/api/resources/ai_search/subresources/instances/subresources/items/methods/delete/)     | `DELETE` | Delete an item                 |
+| [Download](/api/resources/ai_search/subresources/instances/subresources/items/methods/download/) | `GET`    | Download the original file     |
 
 ### Example: Upload a document
+
+Upload a file to an instance:
 
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/<INSTANCE_NAME>/items" \
@@ -39,11 +52,9 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-sear
 
 ### Example: List items
 
+List all items in an instance:
+
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/<INSTANCE_NAME>/items" \
   -H "Authorization: Bearer <API_TOKEN>"
 ```
-
-## API reference
-
-For complete API specifications including all parameters and response fields, refer to the [AI Search API reference](/api/resources/ai_search/).

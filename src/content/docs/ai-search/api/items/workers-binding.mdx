@@ -17,20 +17,21 @@ The Items API uploads files to an instance's built-in storage. For more details,
 
 <Render file="binding-config" product="ai-search" />
 
+## Methods
+
+The Items API methods are available on both the `ai_search_namespaces` and `ai_search` bindings. With the namespace binding, call methods on the handle returned by `get()`. With the instance binding, call methods directly on the binding (for example, `env.MY_SEARCH.items.upload()`).
+
+The examples below use the namespace binding.
+
 ```ts
 const instance = env.AI_SEARCH.get("my-instance");
-await instance.items.upload("guide.pdf", pdfArrayBuffer);
 ```
-
-## Methods
 
 ### `items.upload()`
 
 Uploads a document for indexing. Returns immediately. The document is queued for processing.
 
 ```ts
-const instance = env.AI_SEARCH.get("my-instance");
-
 // Upload from a string
 await instance.items.upload(
 	"faq.md",
@@ -48,7 +49,7 @@ await instance.items.upload("doc.txt", request.body);
 
 #### Upload with metadata
 
-Attach custom metadata to a document for filtering in search queries:
+Attach [custom metadata](/ai-search/configuration/indexing/metadata/) to a document for filtering in search queries. Custom metadata fields must be defined on the instance first using the [update()](/ai-search/api/instances/workers-binding/#update) method or at creation time.
 
 ```ts
 await instance.items.upload("guide.pdf", pdfBuffer, {
@@ -80,9 +81,16 @@ await instance.items.upload("guide.pdf", pdfBuffer, {
 Uploads a document and polls until processing completes or the timeout is reached. Use this when you need to search the document immediately after upload.
 
 ```ts
-const item = await instance.items.uploadAndPoll("guide.pdf", pdfBuffer, {
-	pollIntervalMs: 2000,
-	timeoutMs: 60_000,
+// Wait for a specific document to finish indexing before searching
+const item = await instance.items.uploadAndPoll(
+	"handbook.txt",
+	handbookContent,
+);
+console.log(`handbook.txt status: ${item.status}`); // "completed"
+
+// Now search across all uploaded documents
+const results = await instance.search({
+	messages: [{ role: "user", content: "password reset policy" }],
 });
 ```
 
@@ -116,13 +124,12 @@ Returns the full item object after polling completes:
 Returns a paginated list of items in the instance.
 
 ```ts
-const { result: items, result_info } = await instance.items.list({
-	page: 1,
-	per_page: 50,
-});
+const { result, result_info } = await instance.items.list();
 
-for (const item of items) {
+for (const item of result) {
+	console.log(`${item.key} (${item.status})`);
 }
+// result_info.total_count contains the total number of items
 ```
 
 #### Parameters
@@ -212,6 +219,7 @@ Downloads the original source file for an item.
 
 ```ts
 const file = await instance.items.get("item-id-123").download();
+// file.body is a ReadableStream
 ```
 
 ##### Parameters

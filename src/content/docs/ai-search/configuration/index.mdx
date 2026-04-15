@@ -19,11 +19,13 @@ You can customize how your AI Search instance indexes your data, retrieves resul
 
 | Configuration                                                             | Editable after creation | Description                                                     |
 | ------------------------------------------------------------------------- | ----------------------- | --------------------------------------------------------------- |
+| [Vector search](/ai-search/configuration/indexing/vector-search/)         | yes                     | Vector search and the built-in vector index                     |
 | [Path filtering](/ai-search/configuration/indexing/path-filtering/)       | yes                     | Include or exclude specific paths from indexing                 |
 | [Chunking](/ai-search/configuration/indexing/chunking/)                   | yes                     | Number of tokens per chunk and overlap between chunks           |
 | [Syncing](/ai-search/configuration/indexing/syncing/)                     | yes                     | Sync jobs and indexing controls                                 |
 | [Keyword search](/ai-search/configuration/indexing/keyword-search/)       | yes                     | Enable keyword (BM25) search for exact term matching            |
 | [Hybrid search](/ai-search/configuration/indexing/hybrid-search/)         | yes                     | Combine vector and keyword search with configurable fusion      |
+| [Metadata](/ai-search/configuration/indexing/metadata/)                   | yes                     | Custom metadata fields for filtering                            |
 | [Service API token](/ai-search/configuration/indexing/service-api-token/) | yes                     | API token that grants AI Search permission to access R2 buckets |
 
 ## Retrieval
@@ -31,7 +33,6 @@ You can customize how your AI Search instance indexes your data, retrieves resul
 | Configuration                                                            | Editable after creation | Description                                                   |
 | ------------------------------------------------------------------------ | ----------------------- | ------------------------------------------------------------- |
 | [Result filtering](/ai-search/configuration/retrieval/result-filtering/) | yes                     | Match threshold and maximum number of results                 |
-| [Metadata](/ai-search/configuration/retrieval/metadata/)                 | yes                     | Custom metadata fields for filtering                          |
 | [Relevance boosting](/ai-search/configuration/retrieval/boosting/)       | yes                     | Bias results by metadata characteristics                      |
 | [Reranking](/ai-search/configuration/retrieval/reranking/)               | yes                     | Reorder results by semantic relevance using a reranking model |
 | [Query rewriting](/ai-search/configuration/retrieval/query-rewriting/)   | yes                     | Rewrite follow-up queries using conversation context          |

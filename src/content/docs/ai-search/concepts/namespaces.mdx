@@ -91,10 +91,4 @@ namespace = "support"
 
 ## Namespaces and instance uniqueness
 
-An instance name must be unique within a namespace. The combination of account ID, namespace, and instance name forms the unique identifier:
-
-```
-UNIQUE(account_id, namespace, instance_name)
-```
-
-This means you can have an instance named `docs` in both the `blog` and `support` namespaces without conflict.
+An instance name must be unique within a namespace. This means you can have an instance named `docs` in both the `blog` and `support` namespaces without conflict.
