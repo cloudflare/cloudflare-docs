@@ -17,9 +17,11 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-Use the Artifacts Workers binding to create, inspect, import, fork, and delete repos without making raw HTTP calls from your Worker.
+Use the Artifacts Workers binding to create, inspect, fork, and delete repos without making raw HTTP calls from your Worker.
 
 Wrangler exposes Artifacts as a first-class binding and returns repo handles for repo-scoped operations such as token management and forking.
+
+Use the [REST API](/artifacts/api/rest-api/) when you need to import a repo from another remote.
 
 ## Configure the binding
 
@@ -50,14 +52,18 @@ export interface Env {
 
 Wrangler generates the `Artifacts` type for consumers and binds it directly in your environment.
 
+If you authenticate with `wrangler login`, Wrangler requests `artifacts:write` by default.
+
 ## Namespace methods
 
-Use namespace methods on `env.ARTIFACTS` to create, list, import, or delete repos.
+Use namespace methods on `env.ARTIFACTS` to create, list, inspect, or delete repos.
 
 ### `create(name, opts?)`
 
 - `name` <Type text="RepoName" /> <MetaInfo text="required" />
 - `opts.readOnly` <Type text="boolean" /> <MetaInfo text="optional" />
+- `opts.description` <Type text="string" /> <MetaInfo text="optional" />
+- `opts.setDefaultBranch` <Type text="string" /> <MetaInfo text="optional" />
 - Returns <Type text="Promise<ArtifactsCreateRepoResult & { repo: ArtifactsRepo } >" />
 
 <TypeScriptExample typescriptFirst={true}>
@@ -65,10 +71,13 @@ Use namespace methods on `env.ARTIFACTS` to create, list, import, or delete repo
 ```ts
 async function createRepo(artifacts: Artifacts) {
 	const created = await artifacts.create("starter-repo", {
+		description: "Repository for automation experiments",
 		readOnly: false,
+		setDefaultBranch: "main",
 	});
 
 	return {
+		defaultBranch: created.defaultBranch,
 		name: created.name,
 		remote: created.remote,
 		initialToken: created.token,
@@ -81,19 +90,19 @@ async function createRepo(artifacts: Artifacts) {
 ### `get(name)`
 
 - `name` <Type text="RepoName" /> <MetaInfo text="required" />
-- Returns <Type text="Promise<ArtifactsGetRepoResult>" />
+- Returns <Type text="Promise<ArtifactsRepo | null>" />
 
 <TypeScriptExample typescriptFirst={true}>
 
 ```ts
 async function getRepoHandle(artifacts: Artifacts) {
-	const repoResult = await artifacts.get("starter-repo");
+	const repo = await artifacts.get("starter-repo");
 
-	if (repoResult.status !== "ready") {
+	if (!repo) {
 		return null;
 	}
 
-	return repoResult.repo;
+	return repo;
 }
 ```
 
@@ -135,35 +144,11 @@ async function deleteRepo(artifacts: Artifacts) {
 
 </TypeScriptExample>
 
-### `import(name, source)`
-
-- `name` <Type text="RepoName" /> <MetaInfo text="required" />
-- `source.url` <Type text="string" /> <MetaInfo text="required" />
-- `source.branch` <Type text="string" /> <MetaInfo text="optional" />
-- `source.headers` <Type text="Record<string, string>" /> <MetaInfo text="optional" />
-- `source.readOnly` <Type text="boolean" /> <MetaInfo text="optional" />
-- Returns <Type text="Promise<ArtifactsCreateRepoResult & { repo: ArtifactsRepo } >" />
-
-Pass a full HTTPS Git remote URL for `source.url`.
-
-<TypeScriptExample typescriptFirst={true}>
-
-```ts
-async function importRepo(artifacts: Artifacts) {
-	const imported = await artifacts.import("react-mirror", {
-		url: "https://github.com/facebook/react",
-		branch: "main",
-	});
-
-	return imported.remote;
-}
-```
-
-</TypeScriptExample>
-
 ## Repo handle methods
 
-Use the `repo` returned by `create()`, `import()`, or `fork()`, or first check that `await artifacts.get(name)` returned `status: "ready"`.
+Use the `repo` returned by `create()`, or first check that `await artifacts.get(name)` returned a repo handle.
+
+These examples match the current runtime binding surface. If your generated types show `import()` or a discriminated union for `get()`, those types are ahead of the current runtime.
 
 ### `info()`
 
@@ -175,12 +160,11 @@ Use `info()` when you need repo metadata, including the remote URL.
 
 ```ts
 async function getRemoteUrl(artifacts: Artifacts) {
-	const repoResult = await artifacts.get("starter-repo");
-	if (repoResult.status !== "ready") {
+	const repo = await artifacts.get("starter-repo");
+	if (!repo) {
 		return null;
 	}
 
-	const repo = repoResult.repo;
 	const info = await repo.info();
 	return info?.remote ?? null;
 }
@@ -198,12 +182,11 @@ async function getRemoteUrl(artifacts: Artifacts) {
 
 ```ts
 async function mintReadToken(artifacts: Artifacts) {
-	const repoResult = await artifacts.get("starter-repo");
-	if (repoResult.status !== "ready") {
+	const repo = await artifacts.get("starter-repo");
+	if (!repo) {
 		throw new Error("Repo not found");
 	}
 
-	const repo = repoResult.repo;
 	return repo.createToken("read", 3600);
 }
 ```
@@ -219,12 +202,11 @@ async function mintReadToken(artifacts: Artifacts) {
 
 ```ts
 async function validateToken(artifacts: Artifacts, token: string) {
-	const repoResult = await artifacts.get("starter-repo");
-	if (repoResult.status !== "ready") {
+	const repo = await artifacts.get("starter-repo");
+	if (!repo) {
 		throw new Error("Repo not found");
 	}
 
-	const repo = repoResult.repo;
 	return repo.validateToken(token);
 }
 ```
@@ -239,12 +221,11 @@ async function validateToken(artifacts: Artifacts, token: string) {
 
 ```ts
 async function listRepoTokens(artifacts: Artifacts) {
-	const repoResult = await artifacts.get("starter-repo");
-	if (repoResult.status !== "ready") {
+	const repo = await artifacts.get("starter-repo");
+	if (!repo) {
 		throw new Error("Repo not found");
 	}
 
-	const repo = repoResult.repo;
 	const result = await repo.listTokens();
 	return {
 		total: result.total,
@@ -264,37 +245,37 @@ async function listRepoTokens(artifacts: Artifacts) {
 
 ```ts
 async function revokeToken(artifacts: Artifacts, tokenOrId: string) {
-	const repoResult = await artifacts.get("starter-repo");
-	if (repoResult.status !== "ready") {
+	const repo = await artifacts.get("starter-repo");
+	if (!repo) {
 		throw new Error("Repo not found");
 	}
 
-	const repo = repoResult.repo;
 	return repo.revokeToken(tokenOrId);
 }
 ```
 
 </TypeScriptExample>
 
-### `fork(target)`
+### `fork(name, opts?)`
 
-- `target.name` <Type text="RepoName" /> <MetaInfo text="required" />
-- `target.namespace` <Type text="NamespaceName" /> <MetaInfo text="optional" />
-- `target.readOnly` <Type text="boolean" /> <MetaInfo text="optional" />
-- Returns <Type text="Promise<ArtifactsCreateRepoResult & { repo: ArtifactsRepo } >" />
+- `name` <Type text="RepoName" /> <MetaInfo text="required" />
+- `opts.description` <Type text="string" /> <MetaInfo text="optional" />
+- `opts.readOnly` <Type text="boolean" /> <MetaInfo text="optional" />
+- `opts.defaultBranchOnly` <Type text="boolean" /> <MetaInfo text="optional" />
+- Returns <Type text="Promise<ArtifactsCreateRepoResult>" />
 
 <TypeScriptExample typescriptFirst={true}>
 
 ```ts
 async function forkRepo(artifacts: Artifacts) {
-	const repoResult = await artifacts.get("starter-repo");
-	if (repoResult.status !== "ready") {
+	const repo = await artifacts.get("starter-repo");
+	if (!repo) {
 		throw new Error("Repo not found");
 	}
 
-	const repo = repoResult.repo;
-	const forked = await repo.fork({
-		name: "starter-repo-copy",
+	const forked = await repo.fork("starter-repo-copy", {
+		description: "Fork for testing",
+		defaultBranchOnly: true,
 		readOnly: false,
 	});
 
@@ -328,33 +309,20 @@ export default {
 		}
 
 		if (request.method === "GET" && url.pathname === "/repos/starter-repo") {
-			const repoResult = await env.ARTIFACTS.get("starter-repo");
-			if (repoResult.status === "not_found") {
+			const repo = await env.ARTIFACTS.get("starter-repo");
+			if (!repo) {
 				return Response.json({ error: "Repo not found" }, { status: 404 });
 			}
-
-			if (
-				repoResult.status === "importing" ||
-				repoResult.status === "forking"
-			) {
-				return Response.json(
-					{ status: repoResult.status, retryAfter: repoResult.retryAfter },
-					{ status: 202 },
-				);
-			}
-
-			const repo = repoResult.repo;
 			const info = await repo.info();
 			return Response.json(info);
 		}
 
 		if (request.method === "POST" && url.pathname === "/tokens") {
-			const repoResult = await env.ARTIFACTS.get("starter-repo");
-			if (repoResult.status !== "ready") {
+			const repo = await env.ARTIFACTS.get("starter-repo");
+			if (!repo) {
 				return Response.json({ error: "Repo not found" }, { status: 404 });
 			}
 
-			const repo = repoResult.repo;
 			const token = await repo.createToken("read", 3600);
 			return Response.json(token);
 		}
@@ -372,6 +340,8 @@ export default {
 ## Shared types
 
 These are the core response and helper types used in the examples on this page.
+
+They match the current runtime binding surface.
 
 ```ts
 export type NamespaceName = string;
@@ -434,12 +404,6 @@ export interface ArtifactsTokenListResult {
 	total: number;
 }
 
-export type ArtifactsGetRepoResult =
-	| { status: "ready"; repo: ArtifactsRepo }
-	| { status: "not_found" }
-	| { status: "importing"; retryAfter: number }
-	| { status: "forking"; retryAfter: number };
-
 export interface ArtifactsRepo {
 	info(): Promise<ArtifactsRepoInfo | null>;
 	createToken(
@@ -449,11 +413,28 @@ export interface ArtifactsRepo {
 	validateToken(token: string): Promise<ArtifactsTokenValidation>;
 	listTokens(): Promise<ArtifactsTokenListResult>;
 	revokeToken(tokenOrId: string): Promise<boolean>;
-	fork(target: {
-		name: string;
-		namespace?: string;
-		readOnly?: boolean;
-	}): Promise<ArtifactsCreateRepoResult & { repo: ArtifactsRepo }>;
+	fork(
+		name: string,
+		opts?: {
+			description?: string;
+			readOnly?: boolean;
+			defaultBranchOnly?: boolean;
+		},
+	): Promise<ArtifactsCreateRepoResult>;
+}
+
+export interface Artifacts {
+	create(
+		name: string,
+		opts?: {
+			readOnly?: boolean;
+			description?: string;
+			setDefaultBranch?: string;
+		},
+	): Promise<ArtifactsCreateRepoResult & { repo: ArtifactsRepo }>;
+	get(name: string): Promise<ArtifactsRepo | null>;
+	list(opts?: { limit?: number; cursor?: string }): Promise<ArtifactsRepoListResult>;
+	delete(name: string): Promise<boolean>;
 }
 ```
 

@@ -1,11 +1,39 @@
 ---
 title: How Artifacts works
-description: Understand the Artifacts data model and versioned filesystem behavior.
+description: Understand the distributed architecture behind Artifacts.
 pcx_content_type: concept
 sidebar:
   order: 1
 ---
 
-Artifacts provides a versioned filesystem abstraction for storing and exchanging file trees.
+Artifacts is built on [Durable Objects](/durable-objects/). Each repository maps to its own isolated unit of stateful compute.
 
-This page will describe how Artifacts stores versions, addresses filesystem content, and exposes the same underlying data through Workers, the REST API, and git-compatible interfaces.
+Each repository runs its own Git server and keeps persistent internal state on top of SQLite-backed Durable Object storage. A front-end Worker handles authentication and routing, then dispatches requests to the Durable Object for that repository.
+
+![Artifacts architecture showing a Worker routing Git and HTTP requests to one Durable Object per repo, with metrics, token cache, and snapshots.](~/assets/images/artifacts/artifacts_diagram_architecture.png)
+
+## Stateful and isolated by repository
+
+Each repository in Artifacts is isolated from every other repository. Repository history, writes, and in-memory state do not need to be shared across unrelated workloads.
+
+[Durable Objects](/durable-objects/concepts/what-are-durable-objects/) fit this model because they combine stateful compute with durable local storage. Artifacts uses that foundation so repository operations run against a consistent, repo-local view of refs, objects, and metadata.
+
+Persistent internal state lives on top of [SQLite-backed Durable Object storage](/durable-objects/api/sqlite-storage-api/). This keeps compute and storage together inside the same repository runtime instead of treating Git as a stateless layer in front of external storage.
+
+## Replicated and loaded on demand
+
+Artifacts repositories are replicated across multiple Cloudflare data centers by default. Repository snapshots are also written to object storage by default, so durable state does not depend on a single active in-memory instance.
+
+A repository does not need to stay active everywhere at all times. Artifacts can load repositories quickly and on the fly when an agent, Worker, or Git client needs access.
+
+This separates active execution from durable storage. Repository state remains available even when a repository is not currently loaded in memory.
+
+## Addressable globally
+
+Every repository has a unique identity and is addressable globally. Agents can access repositories they are authorized to use no matter where those agents are running.
+
+Each repository is globally addressable and is not tied to a single machine or location. The entry Worker routes each request to the correct repository runtime, while Artifacts handles placement and loading behind the scenes.
+
+## Learn more
+
+For more implementation details, refer to the announcement blog, [Artifacts: Versioned storage that speaks Git](https://blog.cloudflare.com/artifacts-git-for-agents-beta/). For background on the underlying model, refer to [Durable Objects: Easy, Fast, Correct — Choose three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/) and [Zero-latency SQLite storage in every Durable Object](https://blog.cloudflare.com/sqlite-in-durable-objects/).

@@ -21,11 +21,19 @@ Artifacts REST routes use this base path:
 https://artifacts.cloudflare.dev/v1/api/namespaces/{namespace}
 ```
 
-Requests use Bearer authentication:
+Some edge deployments also expose this base path:
+
+```txt
+https://artifacts.cloudflare.dev/edge/v1/api/namespaces/{namespace}
+```
+
+Requests to `/v1/api/...` use Bearer authentication:
 
 ```txt
 Authorization: Bearer <GATEWAY_JWT>
 ```
+
+If you are calling `/edge/v1/...`, use the gateway auth required by that edge deployment.
 
 The following examples assume:
 
@@ -309,14 +317,18 @@ Route: `POST /repos/:name/fork`
 Request body:
 
 - `name` <Type text="RepoName" /> <MetaInfo text="required" />
+- `description` <Type text="string" /> <MetaInfo text="optional" />
 - `read_only` <Type text="boolean" /> <MetaInfo text="optional" />
+- `default_branch_only` <Type text="boolean" /> <MetaInfo text="optional" />
 
 Response type:
 
 ```ts
 export interface ForkRepoRequest {
 	name: RepoName;
+	description?: string;
 	read_only?: boolean;
+	default_branch_only?: boolean;
 }
 
 export interface ForkRepoResult extends CreateRepoResult {
@@ -328,12 +340,14 @@ export type ForkRepoResponse = ApiEnvelope<ForkRepoResult>;
 
 ```bash
 curl --request POST "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO/fork" \
-  --header "Authorization: Bearer $ARTIFACTS_JWT" \
-  --header "Content-Type: application/json" \
-  --data '{
-    "name": "starter-repo-copy",
-    "read_only": false
-  }'
+	--header "Authorization: Bearer $ARTIFACTS_JWT" \
+	--header "Content-Type: application/json" \
+	--data '{
+	  "name": "starter-repo-copy",
+	  "description": "Fork for testing",
+	  "read_only": false,
+	  "default_branch_only": true
+	}'
 ```
 
 ```json
@@ -362,6 +376,7 @@ Request body:
 
 - `url` <Type text="string" /> <MetaInfo text="required" />
 - `branch` <Type text="string" /> <MetaInfo text="optional" />
+- `depth` <Type text="number" /> <MetaInfo text="optional" />
 - `read_only` <Type text="boolean" /> <MetaInfo text="optional" />
 
 Response type:
@@ -370,6 +385,7 @@ Response type:
 export interface ImportRepoRequest {
 	url: string;
 	branch?: string;
+	depth?: number;
 	read_only?: boolean;
 }
 
@@ -381,11 +397,12 @@ Pass a full HTTPS Git remote URL, for example `https://github.com/facebook/react
 ```bash
 curl --request POST "$ARTIFACTS_BASE_URL/repos/react-mirror/import" \
   --header "Authorization: Bearer $ARTIFACTS_JWT" \
-  --header "Content-Type: application/json" \
-  --data '{
-    "url": "https://github.com/facebook/react",
-    "branch": "main"
-  }'
+	--header "Content-Type: application/json" \
+	--data '{
+	  "url": "https://github.com/facebook/react",
+	  "branch": "main",
+	  "depth": 100
+	}'
 ```
 
 ```json

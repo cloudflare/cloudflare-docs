@@ -1,11 +1,96 @@
 ---
 title: Best practices for Artifacts
-description: Follow recommended patterns for storing, organizing, and consuming Artifacts.
+description: Use repo, token, and namespace patterns effectively.
 pcx_content_type: concept
 sidebar:
   order: 2
 ---
 
-Use consistent naming, version promotion, and lifecycle conventions so Artifact producers and consumers can share file trees safely.
+import { TypeScriptExample } from "~/components";
 
-This page will document recommended patterns for structuring repositories, limiting large writes, handling retention, and integrating Artifacts into deployment or agent workflows.
+Artifacts works best when you isolate work, scope access narrowly, and partition storage deliberately.
+
+Use these patterns to structure repos for agents, automation, and shared systems.
+
+## Organize repos for isolation
+
+### Create a repo per agent, session, or application
+
+Create one repo for each unit of autonomous work. If you have `10,000` agents, create `10,000` repos.
+
+This keeps each agent's changes, failures, and cleanup lifecycle separate. It also avoids turning one shared repo into a hot spot for conflicts, large diffs, and accidental overwrites.
+
+Use this pattern when you need to:
+
+- isolate one agent's work from another agent's work
+- hand off a repo to a single session or user application
+- review, merge, archive, or delete work independently
+
+Use branches only when collaborators share the same lifecycle and need to work on the same repository. Do not use one shared repo as a queue for many autonomous agents.
+
+### Fork from a stable baseline
+
+Start new repos from a trusted baseline when agents need the same starter files, prompts, or application structure. Forking from a reviewed repo is safer than copying files into every new repo by hand.
+
+This keeps your starting point consistent and makes downstream diffs easier to review. It also lets you merge back only the results you want.
+
+## Scope access narrowly
+
+### Mint least-privilege repo tokens
+
+Artifacts tokens are repo-scoped. Prefer `read` tokens for cloning, indexing, review, and retrieval.
+
+Use `write` tokens only for the agent or system that must push changes. Give tokens short lifetimes, and re-issue a fresh token for each agent session.
+
+This example uses the [Workers binding](/artifacts/api/workers-binding/) to mint a short-lived read token for a repo:
+
+<TypeScriptExample filename="src/index.ts" typescriptFirst={true}>
+
+```ts
+interface Env {
+	ARTIFACTS: Artifacts;
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const url = new URL(request.url);
+		const repoName = url.searchParams.get("repo") ?? "starter-repo";
+
+		const repo = await env.ARTIFACTS.get(repoName);
+		if (!repo) {
+			return Response.json({ error: "Repo not found" }, { status: 404 });
+		}
+
+		const token = await repo.createToken("read", 900);
+
+		return Response.json({
+			repo: repoName,
+			scope: token.scope,
+			expiresAt: token.expiresAt,
+			token: token.plaintext,
+		});
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+Use the same pattern for `write` tokens only after your Worker authorizes a session that must push changes.
+
+Do not issue one long-lived write token to every agent. Mint the narrowest token you can, for the shortest time you can.
+
+## Partition namespaces deliberately
+
+### Separate environments, teams, and high-rate workloads
+
+Use namespaces to separate operating boundaries. Repo separation isolates units of work, while namespace separation isolates ownership, environments, and traffic patterns.
+
+Do not keep every repo in one default namespace once usage grows. Split namespaces when you need clearer ownership or more room to scale within the [request rate limits](/artifacts/platform/limits/) for each namespace.
+
+| Use case | Example namespaces | Why |
+| --- | --- | --- |
+| Environments | `staging`, `prod` | Keep test traffic and production traffic separate. |
+| Team boundaries | `sales`, `finance`, `devtools` | Keep ownership, access, and cleanup policies distinct. |
+| Traffic isolation | `agents-batch`, `agents-realtime` | Prevent one workload from consuming the limits of another workload. |
+
+When one namespace becomes hot, shard new repos into additional namespaces instead of continuing to grow a single shared namespace.

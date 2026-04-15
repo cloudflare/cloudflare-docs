@@ -89,6 +89,8 @@ Open `wrangler.jsonc` and add the Artifacts binding:
 
 This exposes Artifacts as `env.ARTIFACTS` inside your Worker.
 
+If you authenticate with `wrangler login`, Wrangler requests `artifacts:write` by default.
+
 If you are using TypeScript, regenerate your local binding types:
 
 <PackageManagers type="exec" pkg="wrangler" args="types" />
