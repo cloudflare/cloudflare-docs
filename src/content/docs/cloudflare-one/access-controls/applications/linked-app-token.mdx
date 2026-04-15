@@ -12,8 +12,8 @@ The **Linked App Token** policy selector allows an Access policy on one applicat
 
 Linked App Token supports two flows:
 
-- **Self-hosted to self-hosted** — A self-hosted application forwards its Access JWT to another self-hosted application. This is the simplest setup and requires no additional OAuth configuration.
-- **SaaS to self-hosted** — An Access for SaaS application (such as an MCP server using OAuth) sends its OAuth access token to a self-hosted application.
+- [**Self-hosted to self-hosted**](#self-hosted-to-self-hosted) — A self-hosted application forwards its Access JWT to another self-hosted application. This is the simplest setup and requires no additional OAuth configuration.
+- [**SaaS to self-hosted**](#saas-to-self-hosted) — An Access for SaaS application (such as an [MCP server using OAuth](/cloudflare-one/access-controls/ai-controls/saas-mcp/#access-for-saas-application)) sends its OAuth access token to a self-hosted application.
 
 ## Self-hosted to self-hosted
 
@@ -23,13 +23,13 @@ In this flow, Application A is a [self-hosted Access application](/cloudflare-on
 flowchart LR
 accTitle: Self-hosted to self-hosted linked app token flow
     User --> appA["Application A <br> (self-hosted)"]
-    appA -- "Cf-Access-Token: JWT" --> appB["Application B <br> (self-hosted)"]
+    appA -- "Cf-Access-Token: &lt;JWT&gt;" --> appB["Application B <br> (self-hosted)"]
     idp[Identity provider] <--> appA
 ```
 
 ### Prerequisites
 
-- Two [self-hosted Access applications](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/).
+- Two [self-hosted Access applications](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/)
 
 ### 1. Create a Linked App Token policy
 
@@ -38,19 +38,22 @@ Create a policy on Application B (the downstream application that will receive f
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Applications** and select Application B.
-2. [Create a new Access policy](/cloudflare-one/access-controls/policies/policy-management/#create-a-policy).
-3. Set the policy **Action** to _Service Auth_.
-4. For **Selector**, select _Linked App Token_.
-5. For **Value**, select Application A. For example,
+1. In the [Cloudflare dashboard](https://one.dash.cloudflare.com), go to **Zero Trust** > **Access controls** > **Applications**.
+2. Select Application B.
+3. Go to the **Policies** tab and select **Create new policy**.
+4. Set the policy **Action** to _Service Auth_.
+	:::note
+	The Linked App Token selector only works with the [Service Auth](/cloudflare-one/access-controls/policies/#service-auth) action, similar to service token rules.
+	:::
+5. For **Selector**, select _Linked App Token_.
+6. For **Value**, select Application A. For example,
 
-	| Action       | Rule type | Selector          | Value |
-	| ------------ | --------- | ----------------- | ---- |
-	| Service Auth | Include   | Linked App Token | `application-a`|
-
-:::note
-The Linked App Token selector only works with the [Service Auth](/cloudflare-one/access-controls/policies/#service-auth) action, similar to service token rules.
-:::
+			| Action       | Rule type | Selector          | Value |
+			| ------------ | --------- | ----------------- | ---- |
+			| Service Auth | Include   | Linked App Token | `application-a`|
+7. Save the policy.
+8. In Application B, add the policy to the **Access policies** list.
+9. Save the application.
 
 </TabItem>
 <TabItem label="API">
@@ -91,8 +94,6 @@ The Linked App Token selector only works with the [Service Auth](/cloudflare-one
 	The `linked_app_token` rule type only works with [`non_identity` decisions](/cloudflare-one/access-controls/policies/#service-auth), similar to service token rules.
 	:::
 
-3. [Add the policy](/cloudflare-one/access-controls/policies/policy-management/#create-a-policy) to Application B.
-
 </TabItem>
 </Tabs>
 
@@ -110,26 +111,16 @@ When Access receives the request to Application B, it will:
 2. Validate that the token was issued for Application A (matching the `app_uid` in the Linked App Token rule).
 3. If valid, allow the request. The user's identity from the token is propagated to the upstream headers and audit log.
 
-This is all the configuration needed — no OAuth setup, no additional secrets. Application A just needs to copy the JWT it received from Access and pass it along.
-
 ## SaaS to self-hosted
 
-In this flow, an [Access for SaaS application](/cloudflare-one/access-controls/applications/http-apps/saas-apps/) (for example, an MCP server that implements [OAuth](https://modelcontextprotocol.io/specification/2025-03-26/basic/authorization)) needs to make requests to a self-hosted Access application. The SaaS app obtains an OAuth access token from Cloudflare Access and sends it to the self-hosted application in the `Authorization: Bearer` header.
+In this example an [Access for SaaS application](/cloudflare-one/access-controls/applications/http-apps/saas-apps/) (for example, an MCP server that implements [OAuth](https://modelcontextprotocol.io/specification/2025-03-26/basic/authorization)) needs to make requests to a self-hosted Access application. The SaaS app obtains an OAuth access token from Cloudflare Access and sends it to the self-hosted application in the `Authorization: Bearer` header.
 
 ```mermaid
 flowchart LR
 accTitle: SaaS to self-hosted linked app token flow
-    subgraph SaaS["Access for SaaS <br> OIDC app"]
-        mcp["Application A"]
-    end
-
-    subgraph "Access self-hosted app"
-        app1["Application B"]
-    end
-
-    User --> SaaS
-    SaaS -- "Authorization: Bearer token" --> app1
-    idp[Identity provider] <--> SaaS
+    User --> appA["Application A <br> (Access for SaaS)"]
+    appA -- "Authorization: Bearer &lt;token&gt;" --> appB["Application B <br> (self-hosted)"]
+    idp[Identity provider] <--> appA
 ```
 
 ### Prerequisites
@@ -139,24 +130,28 @@ accTitle: SaaS to self-hosted linked app token flow
 
 ### 1. Create a Linked App Token policy
 
-Create a policy on the self-hosted application:
+Create a policy on the self-hosted application (Application B):
 
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Applications** and select the self-hosted application.
-2. [Create a new Access policy](/cloudflare-one/access-controls/policies/policy-management/#create-a-policy).
-3. Set the policy **Action** to _Service Auth_.
-4. For **Selector**, select _Linked App Token_.
-5. For **Value**, select the SaaS application. For example,
 
-	| Action       | Rule type | Selector          | Value |
-	| ------------ | --------- | ----------------- | ---- |
-	| Service Auth | Include   | Linked App Token | `my-saas-app`|
+1. In the [Cloudflare dashboard](https://one.dash.cloudflare.com), go to **Zero Trust** > **Access controls** > **Applications**.
+2. Select the self-hosted app (Application B).
+3. Go to the **Policies** tab and select **Create new policy**.
+4. Set the policy **Action** to _Service Auth_.
+	:::note
+	The Linked App Token selector only works with the [Service Auth](/cloudflare-one/access-controls/policies/#service-auth) action, similar to service token rules.
+	:::
+5. For **Selector**, select _Linked App Token_.
+6. For **Value**, select the Access for SaaS app (Application A). For example,
 
-:::note
-The Linked App Token selector only works with the [Service Auth](/cloudflare-one/access-controls/policies/#service-auth) action, similar to service token rules.
-:::
+			| Action       | Rule type | Selector          | Value |
+			| ------------ | --------- | ----------------- | ---- |
+			| Service Auth | Include   | Linked App Token | `application-a`|
+7. Save the policy.
+8. In Application B, add the policy to the **Access policies** list.
+9. Save the application.
 
 </TabItem>
 <TabItem label="API">
@@ -196,8 +191,6 @@ The Linked App Token selector only works with the [Service Auth](/cloudflare-one
 	:::note
 	The `linked_app_token` rule type only works with [`non_identity` decisions](/cloudflare-one/access-controls/policies/#service-auth), similar to service token rules.
 	:::
-
-3. [Add the policy](/cloudflare-one/access-controls/policies/policy-management/#create-a-policy) to the self-hosted application.
 
 </TabItem>
 </Tabs>

@@ -1,11 +1,11 @@
 ---
 pcx_content_type: how-to
-title: Secure MCP servers with Access for SaaS
+title: Secure MCP servers
 tags:
   - MCP
 sidebar:
   order: 2
-  label: Secure MCP servers with Access for SaaS
+  label: Secure MCP servers
 ---
 
 import {
@@ -21,27 +21,27 @@ You can secure [Model Context Protocol (MCP) servers](https://www.cloudflare.com
 
 | Approach | Best for | Auth handled by |
 | --- | --- | --- |
-| **Self-hosted application** | MCP servers where you want Access to handle all authentication and authorization | Cloudflare Access (managed OAuth) |
-| **Access for SaaS (OIDC)** | MCP servers that implement their own OAuth flow and need Cloudflare as the identity/token provider | Your MCP server code, with Access as the OIDC provider |
+| [Self-hosted application](#self-hosted-application-recommended) | MCP servers where you want Access to handle all authentication and authorization | Cloudflare Access |
+| [Access for SaaS (OIDC)](#access-for-saas-application) | MCP servers that implement their own OAuth flow and need Cloudflare as the identity/token provider | Your MCP server code, with Access as the OIDC provider |
 
-### Self-hosted approach (recommended)
+## Self-hosted application (recommended)
 
-If you deploy your MCP server behind a [self-hosted Access application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/), Cloudflare Access handles the full OAuth flow automatically — your MCP server does not need to implement any authorization logic. Access authenticates users, issues JWTs, and enforces policies before requests reach your server.
+If you create a [self-hosted Access application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) for your MCP server, Cloudflare Access handles the full OAuth flow automatically — your MCP server does not need to implement any authorization logic. Access authenticates users, issues JWTs, and enforces policies before requests reach your server.
 
 To allow the MCP server to make authenticated requests to other self-hosted applications on behalf of the user, use a [Linked App Token](/cloudflare-one/access-controls/ai-controls/linked-apps/) policy. The MCP server forwards the `Cf-Access-Jwt-Assertion` header it receives from Access as a `Cf-Access-Token` header to the downstream application.
 
-### Access for SaaS approach
+## Access for SaaS application
 
 If your MCP server needs to act as its own OAuth client — for example, because it runs outside of Cloudflare or needs to manage tokens directly — you can register it as an Access for SaaS OIDC application. In this setup, the MCP server implements the OAuth authorization code flow against Cloudflare Access and receives an `access_token` that it can use to call downstream services.
 
-The rest of this guide walks through the Access for SaaS approach. It deploys a remote <GlossaryTooltip term="MCP server">MCP server</GlossaryTooltip> on [Cloudflare Workers](/workers/) that uses Cloudflare Access as an OAuth Single Sign-On (SSO) provider. When users connect to the MCP server using an <GlossaryTooltip term="MCP client">MCP client</GlossaryTooltip>, they will be prompted to log in to your [identity provider](/cloudflare-one/integrations/identity-providers/) and are only granted access if they pass your [Access policies](/cloudflare-one/access-controls/policies/#selectors).
+The following guide walks through the Access for SaaS approach. It deploys a remote <GlossaryTooltip term="MCP server">MCP server</GlossaryTooltip> on [Cloudflare Workers](/workers/) that uses Cloudflare Access as an OAuth Single Sign-On (SSO) provider. When users connect to the MCP server using an <GlossaryTooltip term="MCP client">MCP client</GlossaryTooltip>, they will be prompted to log in to your [identity provider](/cloudflare-one/integrations/identity-providers/) and are only granted access if they pass your [Access policies](/cloudflare-one/access-controls/policies/#selectors).
 
-## Prerequisites
+### Prerequisites
 
 - Create a [Zero Trust organization](/cloudflare-one/setup/#2-create-a-zero-trust-organization).
 - Configure [One-time PIN](/cloudflare-one/integrations/identity-providers/one-time-pin/) or connect a third-party [identity provider](/cloudflare-one/integrations/identity-providers/).
 
-## 1. Deploy an example MCP server
+### 1. Deploy an example MCP server
 
 To deploy our [example MCP server](https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-cf-access) to your Cloudflare account:
 
@@ -134,7 +134,7 @@ The Worker will be deployed to your `*.workers.dev` subdomain at `mcp-server-cf-
 </TabItem>
 </Tabs>
 
-## 2. Create an Access for SaaS app
+### 2. Create an Access for SaaS app
 
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
@@ -197,7 +197,7 @@ The Worker will be deployed to your `*.workers.dev` subdomain at `mcp-server-cf-
 </TabItem>
 </Tabs>
 
-## 3. Configure your MCP server
+### 3. Configure your MCP server
 
 Your MCP server needs to perform an OAuth 2.0 authorization flow to get an `access_token` from the SaaS app created in [Step 1](#1-create-an-access-for-saas-app). When setting up the OAuth client on your MCP server, you will need to paste in the OAuth endpoints and credentials from the Access for SaaS app.
 
@@ -273,7 +273,7 @@ To add OAuth endpoints and credentials to our [example MCP server](#1-deploy-an-
 </TabItem>
 </Tabs>
 
-## 4. Test the connection
+### 4. Test the connection
 
 You can now connect to your MCP server at `https://mcp-server-cf-access.<YOUR_SUBDOMAIN>.workers.dev/mcp` using [Workers AI Playground](https://playground.ai.cloudflare.com/), [MCP inspector](https://github.com/modelcontextprotocol/inspector), or [other MCP clients](/agents/guides/remote-mcp-server/#connect-your-mcp-server-to-claude-and-other-mcp-clients) that support remote MCP servers.
 
