@@ -84,18 +84,19 @@ async function createRepo(artifacts: Artifacts) {
 ### `get(name)`
 
 - `name` <Type text="RepoName" /> <MetaInfo text="required" />
-- Returns <Type text="Promise<ArtifactsRepo | null>" />
+- Returns <Type text="Promise<ArtifactsGetRepoResult>" />
 
 <TypeScriptExample typescriptFirst={true}>
 
 ```ts
 async function getRepoHandle(artifacts: Artifacts) {
-	const repo = await artifacts.get("starter-repo");
-	if (!repo) {
+	const repoResult = await artifacts.get("starter-repo");
+
+	if (repoResult.status !== "ready") {
 		return null;
 	}
 
-	return repo;
+	return repoResult.repo;
 }
 ```
 
@@ -165,7 +166,7 @@ async function importRepo(artifacts: Artifacts) {
 
 ## Repo handle methods
 
-Use `await artifacts.get(name)` or the `repo` returned by `create()`, `import()`, or `fork()` to access repo-scoped methods.
+Use the `repo` returned by `create()`, `import()`, or `fork()`, or first check that `await artifacts.get(name)` returned `status: "ready"`.
 
 ### `info()`
 
@@ -177,11 +178,12 @@ Use `info()` when you need repo metadata, including the remote URL.
 
 ```ts
 async function getRemoteUrl(artifacts: Artifacts) {
-	const repo = await artifacts.get("starter-repo");
-	if (!repo) {
+	const repoResult = await artifacts.get("starter-repo");
+	if (repoResult.status !== "ready") {
 		return null;
 	}
 
+	const repo = repoResult.repo;
 	const info = await repo.info();
 	return info?.remote ?? null;
 }
@@ -199,11 +201,12 @@ async function getRemoteUrl(artifacts: Artifacts) {
 
 ```ts
 async function mintReadToken(artifacts: Artifacts) {
-	const repo = await artifacts.get("starter-repo");
-	if (!repo) {
+	const repoResult = await artifacts.get("starter-repo");
+	if (repoResult.status !== "ready") {
 		throw new Error("Repo not found");
 	}
 
+	const repo = repoResult.repo;
 	return repo.createToken("read", 3600);
 }
 ```
@@ -219,11 +222,12 @@ async function mintReadToken(artifacts: Artifacts) {
 
 ```ts
 async function validateToken(artifacts: Artifacts, token: string) {
-	const repo = await artifacts.get("starter-repo");
-	if (!repo) {
+	const repoResult = await artifacts.get("starter-repo");
+	if (repoResult.status !== "ready") {
 		throw new Error("Repo not found");
 	}
 
+	const repo = repoResult.repo;
 	return repo.validateToken(token);
 }
 ```
@@ -238,11 +242,12 @@ async function validateToken(artifacts: Artifacts, token: string) {
 
 ```ts
 async function listRepoTokens(artifacts: Artifacts) {
-	const repo = await artifacts.get("starter-repo");
-	if (!repo) {
+	const repoResult = await artifacts.get("starter-repo");
+	if (repoResult.status !== "ready") {
 		throw new Error("Repo not found");
 	}
 
+	const repo = repoResult.repo;
 	const result = await repo.listTokens();
 	return {
 		total: result.total,
@@ -262,11 +267,12 @@ async function listRepoTokens(artifacts: Artifacts) {
 
 ```ts
 async function revokeToken(artifacts: Artifacts, tokenOrId: string) {
-	const repo = await artifacts.get("starter-repo");
-	if (!repo) {
+	const repoResult = await artifacts.get("starter-repo");
+	if (repoResult.status !== "ready") {
 		throw new Error("Repo not found");
 	}
 
+	const repo = repoResult.repo;
 	return repo.revokeToken(tokenOrId);
 }
 ```
@@ -284,11 +290,12 @@ async function revokeToken(artifacts: Artifacts, tokenOrId: string) {
 
 ```ts
 async function forkRepo(artifacts: Artifacts) {
-	const repo = await artifacts.get("starter-repo");
-	if (!repo) {
+	const repoResult = await artifacts.get("starter-repo");
+	if (repoResult.status !== "ready") {
 		throw new Error("Repo not found");
 	}
 
+	const repo = repoResult.repo;
 	const forked = await repo.fork({
 		name: "starter-repo-copy",
 		readOnly: false,
@@ -326,21 +333,33 @@ export default {
 		}
 
 		if (request.method === "GET" && url.pathname === "/repos/starter-repo") {
-			const repo = await env.ARTIFACTS.get("starter-repo");
-			if (!repo) {
+			const repoResult = await env.ARTIFACTS.get("starter-repo");
+			if (repoResult.status === "not_found") {
 				return Response.json({ error: "Repo not found" }, { status: 404 });
 			}
 
+			if (
+				repoResult.status === "importing" ||
+				repoResult.status === "forking"
+			) {
+				return Response.json(
+					{ status: repoResult.status, retryAfter: repoResult.retryAfter },
+					{ status: 202 },
+				);
+			}
+
+			const repo = repoResult.repo;
 			const info = await repo.info();
 			return Response.json(info);
 		}
 
 		if (request.method === "POST" && url.pathname === "/tokens") {
-			const repo = await env.ARTIFACTS.get("starter-repo");
-			if (!repo) {
+			const repoResult = await env.ARTIFACTS.get("starter-repo");
+			if (repoResult.status !== "ready") {
 				return Response.json({ error: "Repo not found" }, { status: 404 });
 			}
 
+			const repo = repoResult.repo;
 			const token = await repo.createToken("read", 3600);
 			return Response.json(token);
 		}
@@ -398,18 +417,18 @@ export interface ArtifactsRepoListResult {
 export interface ArtifactsCreateTokenResult {
 	id: string;
 	plaintext: string;
-	scope: Scope;
+	scope: string;
 	expiresAt: string;
 }
 
 export interface ArtifactsTokenValidation {
 	valid: boolean;
-	scope?: Scope;
+	scope?: string;
 }
 
 export interface ArtifactsTokenInfo {
 	id: string;
-	scope: Scope;
+	scope: string;
 	state: "active" | "expired" | "revoked";
 	createdAt: string;
 	expiresAt: string;
@@ -418,6 +437,28 @@ export interface ArtifactsTokenInfo {
 export interface ArtifactsTokenListResult {
 	tokens: ArtifactsTokenInfo[];
 	total: number;
+}
+
+export type ArtifactsGetRepoResult =
+	| { status: "ready"; repo: ArtifactsRepo }
+	| { status: "not_found" }
+	| { status: "importing"; retryAfter: number }
+	| { status: "forking"; retryAfter: number };
+
+export interface ArtifactsRepo {
+	info(): Promise<ArtifactsRepoInfo | null>;
+	createToken(
+		scope?: "write" | "read",
+		ttl?: number,
+	): Promise<ArtifactsCreateTokenResult>;
+	validateToken(token: string): Promise<ArtifactsTokenValidation>;
+	listTokens(): Promise<ArtifactsTokenListResult>;
+	revokeToken(tokenOrId: string): Promise<boolean>;
+	fork(target: {
+		name: string;
+		namespace?: string;
+		readOnly?: boolean;
+	}): Promise<ArtifactsCreateRepoResult & { repo: ArtifactsRepo }>;
 }
 ```
 

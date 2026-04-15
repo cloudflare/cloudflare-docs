@@ -35,27 +35,31 @@ cd repo-per-sandbox
 The template keeps one Artifacts repo per sandbox ID:
 
 ```ts
-const existingRepo = await env.ARTIFACTS.get(sandboxId);
+const repoResult = await env.ARTIFACTS.get(sandboxId);
 
 let defaultBranch: string;
 let remote: string;
 let token: string;
 
-if (existingRepo) {
-	const info = await existingRepo.info();
+if (repoResult.status === "ready") {
+	const info = await repoResult.repo.info();
 	if (!info) {
 		throw new Error("Repo metadata not found");
 	}
 
 	defaultBranch = info.defaultBranch;
 	remote = info.remote;
-	token = (await existingRepo.createToken("write", 3600)).plaintext;
-} else {
+	token = (await repoResult.repo.createToken("write", 3600)).plaintext;
+} else if (repoResult.status === "not_found") {
 	const created = await env.ARTIFACTS.create(sandboxId);
 
 	defaultBranch = created.defaultBranch;
 	remote = created.remote;
 	token = created.token;
+} else {
+	throw new Error(
+		`Repo is ${repoResult.status}. Retry after ${repoResult.retryAfter}s.`,
+	);
 }
 ```
 

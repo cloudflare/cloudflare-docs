@@ -19,13 +19,13 @@ Versioned storage that speaks Git.
 
 </Description>
 
-Artifacts is in beta. Artifacts stores versioned file trees behind a Git-compatible interface, so the same repository can be addressed from [Workers](/workers/), the REST API, and Git clients.
+:::note
 
-Use Artifacts to persist repositories, build outputs, checkpoints, generated assets, and other file-based state. Instead of inventing a custom storage layer for files plus history, you work with commits, branches, diffs, clones, and pushes.
+Artifacts in currently in private beta. Read the [announcement blog](https://blog.cloudflare.com/artifacts-git-for-agents-beta) to learn more about how Artifacts works.
 
-This model fits agent workflows well because agents already know Git. You can give an agent a repository URL, let it work independently, and have it commit its output back to Artifacts with the same tools it already uses elsewhere.
+:::
 
-Artifacts is also designed for large fleets of isolated repos. You can create one repo per agent, per user, per branch, or per task, scale that pattern to millions of repositories, and keep each unit of work separate until you are ready to compare or merge changes.
+Give your agents, developers, and automations a home for code and data. Artifacts is Git-compatible storage built for scale: create tens of millions of repos, fork from any remote, and hand off a URL to any Git client.
 
 Use Artifacts when you need to:
 
@@ -33,6 +33,9 @@ Use Artifacts when you need to:
 - hand off work to Git-aware tools, agents, and automation
 - isolate work in separate repos or branches for safer parallel execution
 - fork from a shared baseline and diff or merge the results later
+
+Artifacts stores versioned file trees behind a Git-compatible interface, so the same repository can be addressed from [Workers](/workers/), the REST API, and Git clients. Agents already know Git, which means you can give an agent a repository URL, let it work independently, and have it commit its output back to Artifacts with the same tools it already uses elsewhere. You can create one repo per agent, per user, per branch, or per task, scale that pattern to millions of repositories, and keep each unit of work separate until you are ready to compare or merge changes.
+
 
 <CardGrid>
 
