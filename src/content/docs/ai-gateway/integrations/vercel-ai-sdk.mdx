@@ -21,7 +21,34 @@ npm install ai-gateway-provider
 
 <CodeSnippets forceClient="aisdk" />
 
-### Fallback Providers
+### Workers AI binding with third-party models
+
+If you are already using the [`workers-ai-provider`](https://www.npmjs.com/package/workers-ai-provider) package, you can route requests through AI Gateway to call third-party models without needing separate provider SDKs. Pass a `gateway` option with your gateway ID to `createWorkersAI`:
+
+```ts
+import { createWorkersAI } from "workers-ai-provider";
+import { streamText } from "ai";
+
+export default {
+	async fetch(request, env) {
+		const workersai = createWorkersAI({
+			binding: env.AI,
+			gateway: { id: "my-gateway" },
+		});
+
+		const result = streamText({
+			model: workersai("openai/gpt-4o"),
+			messages: [{ role: "user", content: "Write a short story" }],
+		});
+
+		return result.toTextStreamResponse();
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+This works with any [supported provider and model](/ai-gateway/providers/) available through AI Gateway.
+
+### Fallback providers
 
 To specify model or provider fallbacks to handle request failures and ensure reliability, you can pass an array of models to the `model` option.
 
