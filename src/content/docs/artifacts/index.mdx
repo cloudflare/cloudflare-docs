@@ -15,11 +15,24 @@ import { CardGrid, Description, LinkTitleCard } from "~/components";
 
 <Description>
 
-Store versioned filesystem artifacts that can be addressed through Workers, the REST API, and git-compatible workflows.
+Versioned storage that speaks Git.
 
 </Description>
 
-Artifacts is in beta. Use Artifacts to persist file trees such as repositories, build outputs, checkpoints, and generated assets behind a versioned interface that works across Cloudflare developer tools.
+Artifacts is in beta. Artifacts stores versioned file trees behind a Git-compatible interface, so the same repository can be addressed from [Workers](/workers/), the REST API, and Git clients.
+
+Use Artifacts to persist repositories, build outputs, checkpoints, generated assets, and other file-based state. Instead of inventing a custom storage layer for files plus history, you work with commits, branches, diffs, clones, and pushes.
+
+This model fits agent workflows well because agents already know Git. You can give an agent a repository URL, let it work independently, and have it commit its output back to Artifacts with the same tools it already uses elsewhere.
+
+Artifacts is also designed for large fleets of isolated repos. You can create one repo per agent, per user, per branch, or per task, scale that pattern to millions of repositories, and keep each unit of work separate until you are ready to compare or merge changes.
+
+Use Artifacts when you need to:
+
+- store versioned file trees instead of raw blobs
+- hand off work to Git-aware tools, agents, and automation
+- isolate work in separate repos or branches for safer parallel execution
+- fork from a shared baseline and diff or merge the results later
 
 <CardGrid>
 
