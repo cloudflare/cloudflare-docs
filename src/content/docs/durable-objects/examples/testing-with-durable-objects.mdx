@@ -176,7 +176,6 @@ import { env } from "cloudflare:workers";
 import { describe, it, expect, beforeEach } from "vitest";
 
 describe("Counter Durable Object", () => {
-	// Each test gets isolated storage automatically
 	it("should increment the counter", async () => {
 		const id = env.COUNTER.idFromName("test-counter");
 		const stub = env.COUNTER.get(id);
