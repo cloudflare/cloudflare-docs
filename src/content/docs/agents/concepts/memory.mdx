@@ -12,11 +12,51 @@ import { TypeScriptExample, LinkCard } from "~/components";
 
 Agents need memory to be useful over time. Without it, every conversation starts from zero — the agent forgets who the user is, what it learned, and what it was doing. Memory is what turns a stateless LLM call into a persistent, context-aware agent.
 
-The [Session API](/agents/api-reference/sessions/) provides the memory layer for agents built on the Cloudflare Agents SDK. It manages persistent context blocks that are injected into the system prompt, and generates AI-controllable tools so the agent can read, write, search, and load its own memory during a conversation.
+The [Session API](/agents/api-reference/sessions/) provides the memory layer for agents built on the Cloudflare Agents SDK. It manages two kinds of memory: **conversation history** (the messages and tool calls that make up a session) and **context memory** (persistent blocks injected into the system prompt that the agent can read, write, search, and load).
 
-## Types of memory
+## Conversation history
 
-The Session API supports four types of memory, each suited to different kinds of information. The type is determined by the **provider** backing the context block — the Session detects the provider's capabilities automatically.
+The most fundamental type of memory is the conversation itself — the messages between the user and the agent, the tool calls the agent made, and the results it received. The Session stores all of this in a tree-structured message history backed by SQLite.
+
+<TypeScriptExample>
+
+```ts
+import { Session } from "agents/experimental/memory/session";
+
+// Append messages as the conversation progresses
+await session.appendMessage({
+  id: `user-${crypto.randomUUID()}`,
+  role: "user",
+  parts: [{ type: "text", text: "What's the status of the deployment?" }]
+});
+
+// Read the full conversation history
+const history = session.getHistory();
+```
+
+</TypeScriptExample>
+
+Conversation history persists across Durable Object hibernation and eviction. When the agent wakes up, the full history is available in SQLite — it does not need to be replayed or reconstructed.
+
+Messages are stored in a tree structure via `parent_id`, which enables branching conversations. When you `appendMessage` with a `parentId` that already has children, you create a branch — useful for features like response regeneration. `getHistory(leafId)` walks any chosen path through the tree.
+
+The Session also provides full-text search across the conversation history:
+
+<TypeScriptExample>
+
+```ts
+const results = session.search("deployment Friday", { limit: 10 });
+```
+
+</TypeScriptExample>
+
+As conversations grow long, [compaction](#compaction) summarizes older messages to keep the context window manageable without losing the underlying data.
+
+## Context memory
+
+Context memory is persistent information injected into the system prompt — separate from the conversation history. It gives the agent access to identity, instructions, learned facts, knowledge bases, and reference material across every turn.
+
+The Session API supports four types of context memory, each suited to different kinds of information. The type is determined by the **provider** backing the context block — the Session detects the provider's capabilities automatically.
 
 ### Read-only context
 
@@ -421,9 +461,13 @@ await session.refreshSystemPrompt();
 
 ### Compaction
 
-Long conversations eventually exceed the LLM's context window. Compaction addresses this by summarizing older messages — but it never deletes the originals.
+Long conversations eventually exceed the LLM's context window. Compaction addresses this at two levels: **macro-compaction** summarizes ranges of older messages, and **micro-compaction** truncates individual messages that are too large.
 
-Compaction uses **overlays**: a summary is stored in a separate table, keyed by the message range it covers. When `getHistory()` is called, overlays are applied transparently at read time — the compacted range is replaced by a synthetic summary message. The underlying messages remain in SQLite, preserving the full conversation for audit, search, and branching.
+#### Macro-compaction
+
+Macro-compaction summarizes older messages — but it never deletes the originals.
+
+It uses **overlays**: a summary is stored in a separate table, keyed by the message range it covers. When `getHistory()` is called, overlays are applied transparently at read time — the compacted range is replaced by a synthetic summary message. The underlying messages remain in SQLite, preserving the full conversation for audit, search, and branching.
 
 ```txt
 Messages:  [1] [2] [3] [4] [5] [6] [7] [8] [9] [10]
@@ -459,6 +503,26 @@ const session = Session.create(this)
 </TypeScriptExample>
 
 Auto-compaction triggers after `appendMessage()` when the estimated token count exceeds the threshold. Compaction failure is non-fatal — the message is already saved.
+
+#### Micro-compaction
+
+Micro-compaction works at the individual message level rather than across ranges. It handles two problems:
+
+**Read-time truncation** — `truncateOlderMessages()` shortens tool outputs and long text in older messages before sending them to the LLM. Recent messages (last 4 by default) are kept intact. This operates on a copy — stored messages are not mutated.
+
+<TypeScriptExample>
+
+```ts
+import { truncateOlderMessages } from "agents/experimental/memory/utils";
+
+const history = session.getHistory();
+const truncated = truncateOlderMessages(history);
+// Pass truncated history to the LLM
+```
+
+</TypeScriptExample>
+
+**Row size enforcement** — when a message is persisted (typically an assistant message with large tool outputs), it is checked against the SQLite row size limit. Oversized tool outputs are replaced with a preview and a note suggesting the tool be re-run. This prevents individual messages from exceeding storage limits while preserving the conversation flow.
 
 ## Related
 
