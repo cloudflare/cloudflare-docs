@@ -86,7 +86,6 @@ function extractPreserveRegions(text, preserveElements) {
 		// they don't need protection and can't fit a same-length placeholder.
 		if (m.text.length < minLen) continue;
 
-		const idx = regions.length;
 		regions.push(m.text);
 
 		const padLen = m.text.length - tag.length - PRESERVE_SUFFIX.length;
