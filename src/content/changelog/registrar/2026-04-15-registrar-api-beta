@@ -21,8 +21,8 @@ Because the Registrar API is part of the Cloudflare API, it can also be used in 
 If you are using Cloudflare MCP or other agent-driven workflows, prompts can be as simple as:
 
 - `Search for domain ideas for a coffee shop based in Evergreen, Colorado.`
-- `Check whether evergreenbean.com is available and show me the current price.`
-- `Register evergreenbean.com`
+- `Check whether example.com is available and show me the current price.`
+- `Register example.com`
 
 For supported operations, extension availability, and workflow details, refer to:
 
