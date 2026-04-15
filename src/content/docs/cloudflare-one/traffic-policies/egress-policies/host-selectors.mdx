@@ -96,13 +96,12 @@ To configure your Zero Trust organization to use Host selectors with Egress poli
     </array>
     ```
 
-{/* prettier-ignore-start */}
-
-2. <Render file="gateway/egress-selector-split-tunnels" product="cloudflare-one"/>
+2.  <Render
+    	file="gateway/egress-selector-split-tunnels"
+    	product="cloudflare-one"
+    />
 
 The Cloudflare One Client must be set to _Traffic and DNS mode_ for traffic affected by these selectors to route correctly.
-
-{/* prettier-ignore-end */}
 
 ## Known issues
 

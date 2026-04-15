@@ -14,19 +14,15 @@ export default {
 				parser: "astro",
 			},
 		},
-		// Custom plugin to control how prettier handles specific MDX components.
-		// mdxInlineElements: forces prettier to treat a component as inline
-		//   (keeps it on a single line, prevents child wrapping).
-		// mdxPreserveElements: makes prettier ignore a component completely
-		//   (content is output verbatim, no formatting applied).
+		// Custom plugin that prevents prettier from reformatting specific
+		// MDX components. Listed elements are preserved verbatim.
 		// May become unnecessary once prettier adds MDX v3 support:
 		// https://github.com/prettier/prettier/issues/12209
 		{
 			files: "*.mdx",
 			options: {
 				parser: "mdx-cloudflare-docs",
-				mdxInlineElements: "code,GlossaryTooltip",
-				mdxPreserveElements: "Steps",
+				mdxPreserveElements: "code,GlossaryTooltip,Steps,Tabs,TabItem,FileTree",
 			},
 		},
 	],

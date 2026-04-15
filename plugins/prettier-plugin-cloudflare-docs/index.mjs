@@ -4,21 +4,14 @@
  * Custom prettier plugin for the cloudflare-docs repository.
  * Prevents prettier from reformatting specific JSX elements in MDX files.
  *
- * Two types of protection are available:
+ * Elements listed in `mdxPreserveElements` are replaced with same-length
+ * HTML comment placeholders before parsing, so prettier never sees their
+ * content. After parsing, the original content is restored in the AST
+ * and the printer outputs it verbatim.
  *
- * 1. Inline elements (mdxInlineElements): Elements like <code> and
- *    <GlossaryTooltip> that render inline HTML. Prettier wraps their
- *    children onto new lines, causing MDX v2+ to inject <p> tags —
- *    producing broken HTML like <code><p>...</p></code>. These elements
- *    are kept on a single line and any existing multi-line formatting
- *    is collapsed.
- *
- * 2. Preserve elements (mdxPreserveElements): Block elements like <Steps>
- *    whose markdown content (ordered lists, code blocks, tables) is
- *    destroyed by prettier's JSX formatter. These are replaced with
- *    same-length HTML comment placeholders so that AST positions remain
- *    valid, then the original content is restored in the AST before the
- *    printer outputs it.
+ * When preserve elements are nested (e.g., <Steps> inside <Tabs>),
+ * only the outermost match is replaced — the inner content is captured
+ * verbatim as part of the outer region.
  *
  * Configuration (.prettierrc.mjs):
  *
@@ -26,65 +19,12 @@
  *     files: "*.mdx",
  *     options: {
  *       parser: "mdx-cloudflare-docs",
- *       mdxInlineElements: "code,GlossaryTooltip",
- *       mdxPreserveElements: "Steps",
+ *       mdxPreserveElements: "code,GlossaryTooltip,Steps,Tabs,TabItem,FileTree",
  *     },
  *   }],
  */
 
-// -- Inline element helpers --------------------------------------------------
-
-function getElementName(value) {
-	const match = value.trim().match(/^<([a-zA-Z][a-zA-Z0-9]*)/);
-	return match ? match[1] : null;
-}
-
-/**
- * Collapse a multi-line inline JSX element onto a single line.
- * Handles {" "} spacers, newlines, and trailing content after the closing tag.
- */
-function collapseInlineJsx(value) {
-	let result = value.replace(/\{" "\}/g, " ");
-
-	const elementName = getElementName(result);
-	if (!elementName) return result;
-
-	let inString = false;
-	let stringChar = "";
-	let openTagEnd = -1;
-
-	for (let i = 0; i < result.length; i++) {
-		const ch = result[i];
-		if (inString) {
-			if (ch === stringChar && result[i - 1] !== "\\") inString = false;
-		} else if (ch === '"' || ch === "'") {
-			inString = true;
-			stringChar = ch;
-		} else if (ch === ">") {
-			openTagEnd = i;
-			break;
-		}
-	}
-
-	if (openTagEnd === -1) return result;
-
-	const closeTag = `</${elementName}>`;
-	const closeTagIndex = result.indexOf(closeTag, openTagEnd);
-	if (closeTagIndex === -1) return result;
-
-	const openTag = result.substring(0, openTagEnd + 1);
-	const content = result.substring(openTagEnd + 1, closeTagIndex);
-	const trailing = result.substring(closeTagIndex + closeTag.length);
-
-	const collapsed = content
-		.replace(/\n\s*/g, " ")
-		.replace(/\s{2,}/g, " ")
-		.trim();
-
-	return openTag + collapsed + closeTag + trailing;
-}
-
-// -- Shared helpers ----------------------------------------------------------
+// -- Helpers -----------------------------------------------------------------
 
 function parseElementList(value) {
 	if (!value || typeof value !== "string") return [];
@@ -94,73 +34,88 @@ function parseElementList(value) {
 		.filter(Boolean);
 }
 
-function matchesElement(value, elements) {
-	const trimmed = value.trim();
-	for (const el of elements) {
-		if (trimmed.startsWith(`<${el}>`) || trimmed.startsWith(`<${el} `)) {
-			return true;
-		}
-	}
-	return false;
-}
-
 // -- Preserve element helpers ------------------------------------------------
 
 const PRESERVE_PREFIX = "<!--MDXPRESERVE:";
 const PRESERVE_SUFFIX = "-->";
-const PRESERVE_REGEX = /<!--MDXPRESERVE:(\d+)-*-->/;
 
 /**
  * Replace preserve element regions with same-length HTML comment
  * placeholders. The placeholder is padded with dashes so that byte
  * offsets of all subsequent AST nodes remain valid.
+ *
+ * When preserve elements are nested (e.g., <Steps> inside <Tabs>),
+ * only the outermost match is replaced — the inner content is captured
+ * verbatim as part of the outer region.
  */
 function extractPreserveRegions(text, preserveElements) {
-	const regions = [];
-	let processed = text;
-
+	// Find all matches across all preserve elements
+	const allMatches = [];
 	for (const el of preserveElements) {
 		const regex = new RegExp(`<${el}[\\s>][\\s\\S]*?</${el}>`, "g");
-		processed = processed.replace(regex, (match) => {
-			const idx = regions.length;
-			regions.push(match);
+		let m;
+		while ((m = regex.exec(text)) !== null) {
+			allMatches.push({
+				start: m.index,
+				end: m.index + m[0].length,
+				text: m[0],
+			});
+		}
+	}
 
-			const tag = `${PRESERVE_PREFIX}${idx}`;
-			const padLen = match.length - tag.length - PRESERVE_SUFFIX.length;
-			return tag + "-".repeat(Math.max(0, padLen)) + PRESERVE_SUFFIX;
-		});
+	// Sort by start position, outermost (longest) first at same position
+	allMatches.sort((a, b) => a.start - b.start || b.end - a.end);
+
+	// Keep only outermost matches (skip any nested inside an accepted region)
+	const accepted = [];
+	for (const m of allMatches) {
+		const isNested = accepted.some((a) => m.start >= a.start && m.end <= a.end);
+		if (!isNested) {
+			accepted.push(m);
+		}
+	}
+
+	// Replace in reverse order so earlier offsets stay valid
+	const regions = [];
+	let processed = text;
+	for (const m of accepted.reverse()) {
+		const tag = `${PRESERVE_PREFIX}${regions.length}`;
+		const minLen = tag.length + PRESERVE_SUFFIX.length;
+
+		// Skip elements shorter than the minimum placeholder length —
+		// they don't need protection and can't fit a same-length placeholder.
+		if (m.text.length < minLen) continue;
+
+		const idx = regions.length;
+		regions.push(m.text);
+
+		const padLen = m.text.length - tag.length - PRESERVE_SUFFIX.length;
+		const placeholder = tag + "-".repeat(padLen) + PRESERVE_SUFFIX;
+		processed =
+			processed.substring(0, m.start) +
+			placeholder +
+			processed.substring(m.end);
 	}
 
 	return { processed, regions };
 }
 
 /**
- * Walk the AST and restore placeholder nodes with original content.
+ * Walk the AST and restore placeholders with original content.
+ * A single node may contain multiple placeholders (e.g., when the MDX
+ * parser merges sibling elements into one node), so we replace all
+ * occurrences within each node's value.
  */
 function restorePreserveNodes(ast, regions) {
-	function walk(node) {
-		if (node.value) {
-			const match = node.value.match(PRESERVE_REGEX);
-			if (match) {
-				node.type = "html";
-				node.value = regions[parseInt(match[1])];
-				return;
-			}
-		}
-		if (node.children) {
-			node.children.forEach(walk);
-		}
-	}
-	walk(ast);
-}
+	const globalRegex = /<!--MDXPRESERVE:(\d+)-*-->/g;
 
-// -- AST transform for inline elements ---------------------------------------
-
-function transformInlineElements(ast, inlineElements) {
 	function walk(node) {
-		if (node.type === "jsx" && matchesElement(node.value, inlineElements)) {
+		if (node.value && globalRegex.test(node.value)) {
+			globalRegex.lastIndex = 0;
 			node.type = "html";
-			node.value = collapseInlineJsx(node.value);
+			node.value = node.value.replace(globalRegex, (_, idx) => {
+				return regions[parseInt(idx)];
+			});
 		}
 		if (node.children) {
 			node.children.forEach(walk);
@@ -174,33 +129,23 @@ function transformInlineElements(ast, inlineElements) {
 /** @type {import("prettier").Plugin} */
 export default {
 	options: {
-		mdxInlineElements: {
-			type: "string",
-			category: "MDX",
-			default: "",
-			description:
-				"Comma-separated list of inline JSX element names that should be " +
-				"kept on a single line (e.g., code, GlossaryTooltip).",
-		},
 		mdxPreserveElements: {
 			type: "string",
 			category: "MDX",
 			default: "",
 			description:
-				"Comma-separated list of block JSX element names whose content " +
-				"should be preserved verbatim (e.g., Steps).",
+				"Comma-separated list of JSX element names whose content " +
+				"should be preserved verbatim by prettier.",
 		},
 	},
 
 	parsers: {
 		"mdx-cloudflare-docs": {
 			async parse(text, options) {
-				const inlineElements = parseElementList(options.mdxInlineElements);
 				const preserveElements = parseElementList(options.mdxPreserveElements);
 
 				// Replace preserve regions with same-length HTML comment
-				// placeholders. This keeps byte offsets valid for the mdast
-				// printer, which uses originalText + positions for some nodes.
+				// placeholders so prettier never sees their content.
 				const { processed, regions } = extractPreserveRegions(
 					text,
 					preserveElements,
@@ -210,14 +155,9 @@ export default {
 				const { parsers } = await import("prettier/plugins/markdown");
 				const ast = await parsers.mdx.parse(processed, options);
 
-				// Restore placeholder nodes with original content.
-				// Nodes stay as `html` type so the printer outputs node.value
-				// verbatim (the printer uses node.value for html nodes, not
-				// originalText slicing).
+				// Restore placeholders with original content. Nodes are set
+				// to `html` type so the printer outputs node.value verbatim.
 				restorePreserveNodes(ast, regions);
-
-				// Handle inline elements
-				transformInlineElements(ast, inlineElements);
 
 				return ast;
 			},
