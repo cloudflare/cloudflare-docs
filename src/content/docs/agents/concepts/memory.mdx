@@ -1,7 +1,7 @@
 ---
 title: Memory
 pcx_content_type: concept
-description: How agents store and recall information — read-only context, writable short-form memory, searchable knowledge, and on-demand skills.
+description: How agents store and recall information, including read-only context, writable short-form memory, searchable knowledge, and on-demand skills.
 tags:
   - AI
 sidebar:
@@ -10,13 +10,13 @@ sidebar:
 
 import { TypeScriptExample, LinkCard } from "~/components";
 
-Agents need memory to be useful over time. Without it, every conversation starts from zero — the agent forgets who the user is, what it learned, and what it was doing. Memory is what turns a stateless LLM call into a persistent, context-aware agent.
+Agents need memory to be useful over time. Without it, every conversation starts from zero. The agent forgets who the user is, what it learned, and what it was doing. Memory is what turns a stateless LLM call into a persistent, context-aware agent.
 
 The [Session API](/agents/api-reference/sessions/) provides the memory layer for agents built on the Cloudflare Agents SDK. It manages two kinds of memory: **conversation history** (the messages and tool calls that make up a session) and **context memory** (persistent blocks injected into the system prompt that the agent can read, write, search, and load).
 
 ## Conversation history
 
-The most fundamental type of memory is the conversation itself — the messages between the user and the agent, the tool calls the agent made, and the results it received. The Session stores all of this in a tree-structured message history backed by a Session Provider, defaulting to SQLite.
+The most fundamental type of memory is the conversation itself: the messages between the user and the agent, the tool calls the agent made, and the results it received. The Session stores all of this in a tree-structured message history backed by a Session Provider, defaulting to SQLite.
 
 <TypeScriptExample>
 
@@ -36,9 +36,9 @@ const history = session.getHistory();
 
 </TypeScriptExample>
 
-Conversation history persists across Durable Object hibernation and eviction. When the agent wakes up, the full history is available in SQLite — it does not need to be replayed or reconstructed.
+Conversation history persists across Durable Object hibernation and eviction. When the agent wakes up, the full history is available in SQLite. It does not need to be replayed or reconstructed.
 
-Messages are stored in a tree structure via `parent_id`, which enables branching conversations. When you `appendMessage` with a `parentId` that already has children, you create a branch — useful for features like response regeneration. `getHistory(leafId)` walks any chosen path through the tree.
+Messages are stored in a tree structure via `parent_id`, which enables branching conversations. When you `appendMessage` with a `parentId` that already has children, you create a branch, useful for features like response regeneration. `getHistory(leafId)` walks any chosen path through the tree.
 
 The Session also provides full-text search across the conversation history:
 
@@ -54,13 +54,13 @@ As conversations grow long, [compaction](#compaction) summarizes older messages 
 
 ## Context memory
 
-Context memory is persistent information injected into the system prompt — separate from the conversation history. It gives the agent access to identity, instructions, learned facts, knowledge bases, and reference material across every turn.
+Context memory is persistent information injected into the system prompt, separate from the conversation history. It gives the agent access to identity, instructions, learned facts, knowledge bases, and reference material across every turn.
 
-The Session API supports four types of context memory, each suited to different kinds of information. The type is determined by the **provider** backing the context block — the Session detects the provider's capabilities automatically.
+The Session API supports four types of context memory, each suited to different kinds of information. The type is determined by the **provider** backing the context block. The Session detects the provider's capabilities automatically.
 
 ### Read-only context
 
-This is your traditional system prompt — the agent's identity, personality, and instructions. You might write it directly in your codebase, load it from a `SOUL.md` file in R2, or fetch it from an API. The content is injected into the system prompt and the agent cannot modify it.
+This is your traditional system prompt: the agent's identity, personality, and instructions. You might write it directly in your codebase, load it from a `SOUL.md` file in R2, or fetch it from an API. The content is injected into the system prompt and the agent cannot modify it.
 
 A coding assistant might have a soul that defines its personality and constraints:
 
@@ -100,11 +100,11 @@ const session = Session.create(this)
 
 </TypeScriptExample>
 
-Read-only blocks are defined by providing an object with only a `get()` method. No tools are generated — the content appears in the system prompt and the agent has no way to change it.
+Read-only blocks are defined by providing an object with only a `get()` method. No tools are generated. The content appears in the system prompt and the agent has no way to change it.
 
 ### Writable short-form context
 
-Think of this as a scratchpad the agent maintains for itself — a place to jot down things it needs to remember. Like how Claude Code keeps a todo list of tasks to work through, or how a customer support agent might track what it has learned about the user during the conversation.
+Think of this as a scratchpad the agent maintains for itself, a place to jot down things it needs to remember. Like how Claude Code keeps a todo list of tasks to work through, or how a customer support agent might track what it has learned about the user during the conversation.
 
 <TypeScriptExample>
 
@@ -115,14 +115,14 @@ const session = Session.create(this)
     maxTokens: 1100
   })
   .withContext("todos", {
-    description: "Task list — track what needs to be done and what is complete",
+    description: "Task list, track what needs to be done and what is complete",
     maxTokens: 2000
   });
 ```
 
 </TypeScriptExample>
 
-When you omit the `provider` option in the builder, the Session auto-wires to a SQLite-backed writable provider. The agent gets a `set_context` tool that lets it replace or append content to these blocks. Token limits are enforced — the agent cannot write more than the `maxTokens` budget allows.
+When you omit the `provider` option in the builder, the Session auto-wires to a SQLite-backed writable provider. The agent gets a `set_context` tool that lets it replace or append content to these blocks. Token limits are enforced, so the agent cannot write more than the `maxTokens` budget allows.
 
 The system prompt renders writable blocks with a token usage indicator so the agent knows how much space it has left:
 
@@ -146,9 +146,9 @@ The content persists across messages and survives hibernation. It is always visi
 
 ### Searchable context
 
-When you have a large body of information — a knowledge base, documentation, logs, accumulated notes — you do not want to stuff it all into the system prompt. Searchable context keeps a summary in the system prompt (for example, "42 entries indexed") and lets the agent retrieve specific entries when it needs them.
+When you have a large body of information (a knowledge base, documentation, logs, accumulated notes) you do not want to stuff it all into the system prompt. Searchable context keeps a summary in the system prompt (for example, "42 entries indexed") and lets the agent retrieve specific entries when it needs them.
 
-You provide a provider with a `search()` method. How that search works is entirely up to you — full-text search, vector search via [Vectorize](/vectorize/), a call to an external API, or anything else. The Session does not care about the implementation, only that the provider has a `search()` method.
+You provide a provider with a `search()` method. How that search works is entirely up to you: full-text search, vector search via [Vectorize](/vectorize/), a call to an external API, or anything else. The Session does not care about the implementation, only that the provider has a `search()` method.
 
 The built-in `AgentSearchProvider` uses Durable Object SQLite with FTS5 as default:
 
@@ -159,7 +159,7 @@ import { AgentSearchProvider } from "agents/experimental/memory/session";
 
 const session = Session.create(this)
   .withContext("knowledge", {
-    description: "Searchable knowledge base — search for relevant information before answering",
+    description: "Searchable knowledge base, search for relevant information before answering",
     provider: new AgentSearchProvider(this)
   });
 ```
@@ -177,7 +177,7 @@ const session = Session.create(this)
     provider: {
       get: async () => "Product documentation and FAQs",
       search: async (query) => {
-        // Use Vectorize, an external API — whatever you need
+        // Use Vectorize, an external API, whatever you need
         const results = await env.VECTORIZE_INDEX.query(
           await generateEmbedding(query), { topK: 5 }
         );
@@ -192,23 +192,23 @@ const session = Session.create(this)
 
 </TypeScriptExample>
 
-The agent gets a `search_context` tool for querying and a `set_context` tool for indexing new entries. It decides what to search for — you decide how the search works.
+The agent gets a `search_context` tool for querying and a `set_context` tool for indexing new entries. It decides what to search for, and you decide how the search works.
 
 This is the right choice when the agent needs to find specific pieces of information from a large collection, rather than loading entire documents.
 
 ### Loadable context (Skills)
 
-Skills are large pieces of context — complete documents, reference guides, runbooks, templates — that the agent can discover and load on demand. Think of them as reference material on a shelf — the agent sees a list of titles and descriptions, picks what is relevant to the current task, loads it, uses it, and unloads it when done.
+Skills are large pieces of context (complete documents, reference guides, runbooks, templates) that the agent can discover and load on demand. Think of them as reference material on a shelf: the agent sees a list of titles and descriptions, picks what is relevant to the current task, loads it, uses it, and unloads it when done.
 
 Unlike searchable context where the agent retrieves small chunks from a larger collection, skills are designed to be loaded whole. When an agent loads a skill, it gets the entire document in its context window.
 
 Skills are backed by the `SkillProvider` interface. A skill provider has three methods:
 
-- **`get()`** — Returns a metadata listing (titles and descriptions) that appears in the system prompt
-- **`load(key)`** — Fetches the full content of a specific skill
-- **`set(key, content, description?)`** — Writes or updates a skill entry (optional)
+- **`get()`** returns a metadata listing (titles and descriptions) that appears in the system prompt
+- **`load(key)`** fetches the full content of a specific skill
+- **`set(key, content, description?)`** writes or updates a skill entry (optional)
 
-The system prompt shows available skills as a listing. The `[loadable]` tag tells the LLM that these entries are not inline — it needs to use a tool to access the full content:
+The system prompt shows available skills as a listing. The `[loadable]` tag tells the LLM that these entries are not inline. It needs to use a tool to access the full content:
 
 ```txt
 ══════════════════════════════════════════════
@@ -219,7 +219,7 @@ SKILLS [loadable]
 - deploy-checklist: Production deployment checklist
 ```
 
-The agent sees the titles, decides which skill is relevant to the current task, and uses `load_context` to pull the full content into its working context. When it is done, it uses `unload_context` to free the space. When the skill provider implements `set()`, the agent can also write back — updating existing skills or creating new ones.
+The agent sees the titles, decides which skill is relevant to the current task, and uses `load_context` to pull the full content into its working context. When it is done, it uses `unload_context` to free the space. When the skill provider implements `set()`, the agent can also write back, updating existing skills or creating new ones.
 
 ```txt
 Agent sees: "- deploy-checklist: Production deployment checklist"
@@ -259,7 +259,7 @@ const session = Session.create(this)
 
 </TypeScriptExample>
 
-The `prefix` option scopes the provider to a subdirectory in the bucket. Skill keys in the metadata listing are shown without the prefix — so `skills/api-ref` becomes `api-ref` in the system prompt.
+The `prefix` option scopes the provider to a subdirectory in the bucket. Skill keys in the metadata listing are shown without the prefix, so `skills/api-ref` becomes `api-ref` in the system prompt.
 
 Add an R2 bucket binding to your Wrangler configuration:
 
@@ -274,7 +274,7 @@ Add an R2 bucket binding to your Wrangler configuration:
 }
 ```
 
-Skills are regular R2 objects. Upload them through any R2 interface — the Wrangler CLI, the dashboard, or the Workers API:
+Skills are regular R2 objects. Upload them through any R2 interface (the Wrangler CLI, the dashboard, or the Workers API):
 
 ```sh
 # Upload a skill from a file
@@ -425,14 +425,14 @@ The tags (`[readonly]`, `[writable]`, `[searchable]`, `[loadable]`) tell the LLM
 
 ### Prompt caching
 
-LLM providers (Anthropic, OpenAI, and others) cache the system prompt prefix. When consecutive requests share the same system prompt, the provider can skip re-processing that prefix — reducing both latency and cost. Breaking the cache (by changing the system prompt) throws away this benefit.
+LLM providers (Anthropic, OpenAI, and others) cache the system prompt prefix. When consecutive requests share the same system prompt, the provider can skip re-processing that prefix, reducing both latency and cost. Breaking the cache (by changing the system prompt) throws away this benefit.
 
 The Session API is designed to work with prompt caching:
 
 - **`freezeSystemPrompt()`** renders the system prompt from all context blocks on the first call, then returns the cached value on subsequent calls. The prompt does not change between turns, even when the agent writes to memory via `set_context`.
 - **`withCachedPrompt()`** persists the frozen prompt to storage, so it survives Durable Object hibernation and eviction. When the agent wakes up, it loads the same prompt without re-fetching from all providers.
 
-When the agent uses `set_context` to update a writable block, the underlying provider is updated immediately (the data is saved), but the frozen system prompt is **not** re-rendered. The LLM sees the update on its next turn only if you explicitly call `refreshSystemPrompt()` — which you typically do between conversation turns, not mid-turn.
+When the agent uses `set_context` to update a writable block, the underlying provider is updated immediately (the data is saved), but the frozen system prompt is **not** re-rendered. The LLM sees the update on its next turn only if you explicitly call `refreshSystemPrompt()`, which you typically do between conversation turns, not mid-turn.
 
 This means the system prompt stays stable throughout a multi-step tool-use turn, preserving the provider's prefix cache across every step.
 
@@ -451,9 +451,9 @@ const system = await session.freezeSystemPrompt(); // Same value every call
 const tools = await session.tools();
 
 // ... agent calls set_context to update memory ...
-// The frozen prompt is NOT changed — prefix cache stays warm
+// The frozen prompt is NOT changed, prefix cache stays warm
 
-// Between turns (optional — if you want the agent to see its own updates):
+// Between turns (optional, if you want the agent to see its own updates):
 await session.refreshSystemPrompt();
 ```
 
@@ -465,9 +465,9 @@ Long conversations eventually exceed the LLM's context window. Compaction addres
 
 #### Macro-compaction
 
-Macro-compaction summarizes older messages — but it never deletes the originals.
+Macro-compaction summarizes older messages, but it never deletes the originals.
 
-It uses **overlays**: a summary is stored in a separate table, keyed by the message range it covers. When `getHistory()` is called, overlays are applied transparently at read time — the compacted range is replaced by a synthetic summary message. The underlying messages remain in SQLite, preserving the full conversation for audit, search, and branching.
+It uses **overlays**: a summary is stored in a separate table, keyed by the message range it covers. When `getHistory()` is called, overlays are applied transparently at read time. The compacted range is replaced by a synthetic summary message. The underlying messages remain in SQLite, preserving the full conversation for audit, search, and branching.
 
 ```txt
 Messages:  [1] [2] [3] [4] [5] [6] [7] [8] [9] [10]
@@ -478,10 +478,10 @@ Overlay:   [1] [2] [SUMMARY of 3-7]           [8] [9] [10]
 
 The key points:
 
-- **Non-destructive** — original messages are never deleted. The full conversation is always available in the database.
-- **Iterative** — when the conversation grows again and triggers another compaction, the existing summary is passed to the LLM to update, not replaced from scratch.
-- **Boundary-aware** — compaction boundaries are shifted to avoid splitting tool call / tool result pairs.
-- **Configurable** — `protectHead` preserves the first N messages (usually the system context), and `tailTokenBudget` keeps the most recent messages intact.
+- **Non-destructive**, original messages are never deleted. The full conversation is always available in the database.
+- **Iterative**, when the conversation grows again and triggers another compaction, the existing summary is passed to the LLM to update, not replaced from scratch.
+- **Boundary-aware**, compaction boundaries are shifted to avoid splitting tool call / tool result pairs.
+- **Configurable**, `protectHead` preserves the first N messages (usually the system context), and `tailTokenBudget` keeps the most recent messages intact.
 
 <TypeScriptExample>
 
@@ -502,13 +502,13 @@ const session = Session.create(this)
 
 </TypeScriptExample>
 
-Auto-compaction triggers after `appendMessage()` when the estimated token count exceeds the threshold. Compaction failure is non-fatal — the message is already saved.
+Auto-compaction triggers after `appendMessage()` when the estimated token count exceeds the threshold. Compaction failure is non-fatal, the message is already saved.
 
 #### Micro-compaction
 
 Micro-compaction works at the individual message level rather than across ranges. It handles two problems:
 
-**Read-time truncation** — `truncateOlderMessages()` shortens tool outputs and long text in older messages before sending them to the LLM. Recent messages (last 4 by default) are kept intact. This operates on a copy — stored messages are not mutated.
+**Read-time truncation**: `truncateOlderMessages()` shortens tool outputs and long text in older messages before sending them to the LLM. Recent messages (last 4 by default) are kept intact. This operates on a copy, stored messages are not mutated.
 
 <TypeScriptExample>
 
@@ -522,14 +522,14 @@ const truncated = truncateOlderMessages(history);
 
 </TypeScriptExample>
 
-**Row size enforcement** — when a message is persisted (typically an assistant message with large tool outputs), it is checked against the SQLite row size limit. Oversized tool outputs are replaced with a preview and a note suggesting the tool be re-run. This prevents individual messages from exceeding storage limits while preserving the conversation flow.
+**Row size enforcement**: when a message is persisted (typically an assistant message with large tool outputs), it is checked against the SQLite row size limit. Oversized tool outputs are replaced with a preview and a note suggesting the tool be re-run. This prevents individual messages from exceeding storage limits while preserving the conversation flow.
 
 ## Related
 
 <LinkCard
   title="Session API reference"
   href="/agents/api-reference/sessions/"
-  description="Full API reference for Session — messages, context blocks, compaction, search, tools, and custom providers."
+  description="Full API reference for Session, covering messages, context blocks, compaction, search, tools, and custom providers."
 />
 
 <LinkCard
