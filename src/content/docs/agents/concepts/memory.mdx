@@ -16,7 +16,7 @@ The [Session API](/agents/api-reference/sessions/) provides the memory layer for
 
 ## Conversation history
 
-The most fundamental type of memory is the conversation itself — the messages between the user and the agent, the tool calls the agent made, and the results it received. The Session stores all of this in a tree-structured message history backed by SQLite.
+The most fundamental type of memory is the conversation itself — the messages between the user and the agent, the tool calls the agent made, and the results it received. The Session stores all of this in a tree-structured message history backed by a Session Provider, defaulting to SQLite.
 
 <TypeScriptExample>
 
