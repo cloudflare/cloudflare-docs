@@ -2684,6 +2684,9 @@
 # Agents x402 (moved under agentic-payments)
 /agents/x402/* /agents/agentic-payments/x402/:splat 301
 
+# Realtime Agents (removed)
+/realtime/agents/* /realtime/ 301
+
 # Changelog (individual entry route moved to /post/)
 /changelog/2024-* /changelog/post/2024-:splat 301
 /changelog/2025-* /changelog/post/2025-:splat 301
