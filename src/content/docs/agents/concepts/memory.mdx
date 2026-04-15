@@ -20,7 +20,9 @@ The Session API supports four types of memory, each suited to different kinds of
 
 ### Read-only context
 
-A read-only block provides static information the agent should always have — its identity, instructions, personality, or any fixed reference material. The agent can see this content in its system prompt but cannot modify it.
+This is your traditional system prompt — the agent's identity, personality, and instructions. You might write it directly in your codebase, load it from a `SOUL.md` file in R2, or fetch it from an API. The content is injected into the system prompt and the agent cannot modify it.
+
+A coding assistant might have a soul that defines its personality and constraints:
 
 <TypeScriptExample>
 
@@ -30,20 +32,39 @@ import { Session } from "agents/experimental/memory/session";
 const session = Session.create(this)
   .withContext("soul", {
     provider: {
-      get: async () => "You are a helpful coding assistant who speaks concisely."
+      get: async () =>
+        "You are a senior TypeScript engineer. You write concise, " +
+        "well-tested code. You prefer composition over inheritance. " +
+        "When you are unsure, you say so rather than guessing."
     }
   });
 ```
 
 </TypeScriptExample>
 
-Read-only blocks are defined by providing an object with only a `get()` method. No tools are generated for read-only blocks — the content appears in the system prompt and that is it.
+Or load it from R2 so you can update the agent's personality without redeploying:
 
-**Use for:** Agent identity, static instructions, configuration that should not change mid-conversation.
+<TypeScriptExample>
+
+```ts
+const session = Session.create(this)
+  .withContext("soul", {
+    provider: {
+      get: async () => {
+        const obj = await env.CONFIG_BUCKET.get("soul.md");
+        return obj ? obj.text() : "You are a helpful assistant.";
+      }
+    }
+  });
+```
+
+</TypeScriptExample>
+
+Read-only blocks are defined by providing an object with only a `get()` method. No tools are generated — the content appears in the system prompt and the agent has no way to change it.
 
 ### Writable short-form context
 
-A writable block is a small section of the system prompt that the agent can update during a conversation. Think of it as a scratchpad — the agent writes short notes to itself that persist across messages and survive hibernation.
+Think of this as a scratchpad the agent maintains for itself — a place to jot down things it needs to remember. Like how Claude Code keeps a todo list of tasks to work through, or how a customer support agent might track what it has learned about the user during the conversation.
 
 <TypeScriptExample>
 
@@ -54,16 +75,16 @@ const session = Session.create(this)
     maxTokens: 1100
   })
   .withContext("todos", {
-    description: "Task list",
+    description: "Task list — track what needs to be done and what is complete",
     maxTokens: 2000
   });
 ```
 
 </TypeScriptExample>
 
-When you omit the `provider` option in the builder, the Session auto-wires to a SQLite-backed writable provider. The agent gets a `set_context` tool that lets it replace or append content to these blocks. Token limits are enforced — the agent cannot exceed the `maxTokens` budget.
+When you omit the `provider` option in the builder, the Session auto-wires to a SQLite-backed writable provider. The agent gets a `set_context` tool that lets it replace or append content to these blocks. Token limits are enforced — the agent cannot write more than the `maxTokens` budget allows.
 
-The system prompt renders writable blocks with a token usage indicator:
+The system prompt renders writable blocks with a token usage indicator so the agent knows how much space it has left:
 
 ```txt
 ══════════════════════════════════════════════
@@ -72,13 +93,22 @@ MEMORY (Important facts learned during conversation) [45% — 495/1100 tokens]
 User prefers dark mode.
 User's project uses React and TypeScript.
 Deployment target is Cloudflare Workers.
+
+══════════════════════════════════════════════
+TODOS (Task list) [12% — 240/2000 tokens]
+══════════════════════════════════════════════
+- [x] Set up project scaffolding
+- [ ] Add authentication middleware
+- [ ] Write integration tests
 ```
 
-**Use for:** Learned facts, user preferences, working notes, to-do lists — anything the agent should remember and update over the course of a conversation.
+The content persists across messages and survives hibernation. It is always visible in the system prompt, so the agent sees it on every turn without needing to fetch anything.
 
 ### Searchable context
 
-A searchable block stores a collection of keyed entries indexed with full-text search (FTS5). Instead of putting everything into the system prompt (which would waste context window space), the system prompt shows only a summary (for example, "42 entries indexed"), and the agent searches when it needs specific information.
+When you have a large body of information — a knowledge base, documentation, logs, accumulated notes — you do not want to stuff it all into the system prompt. Searchable context stores entries in an FTS5 full-text search index. The system prompt shows only a summary (for example, "42 entries indexed"), and the agent retrieves specific entries when it needs them.
+
+You provide a provider with a `search()` method. The built-in `AgentSearchProvider` uses Durable Object SQLite:
 
 <TypeScriptExample>
 
@@ -87,20 +117,33 @@ import { AgentSearchProvider } from "agents/experimental/memory/session";
 
 const session = Session.create(this)
   .withContext("knowledge", {
-    description: "Searchable knowledge base",
+    description: "Searchable knowledge base — search for relevant information before answering",
     provider: new AgentSearchProvider(this)
   });
 ```
 
 </TypeScriptExample>
 
-The agent gets a `search_context` tool for querying and a `set_context` tool for indexing new entries. Each entry has a key and content — the agent decides what to index and how to name it.
+The agent gets a `search_context` tool for querying and a `set_context` tool for indexing new entries. It decides what to index and how to search — you just provide the storage.
 
-**Use for:** Large knowledge bases, accumulated notes across many sessions, reference material that would be too large to fit in the system prompt.
+This is the right choice when the agent needs to find specific pieces of information from a large collection, rather than loading entire documents.
 
-### On-demand documents (Skills)
+### Loadable context (Skills)
 
-A skill block stores a collection of documents where only the metadata (titles and descriptions) appears in the system prompt. The agent loads full content into its context on demand and can unload it to free space.
+Skills are large pieces of context — complete documents, reference guides, runbooks, templates — that the agent can discover and load on demand. Unlike searchable context where the agent retrieves small chunks from a larger collection, skills are designed to be loaded whole. When an agent loads a skill, it gets the entire document in its context window.
+
+The system prompt shows a listing of available skills with their descriptions:
+
+```txt
+══════════════════════════════════════════════
+SKILLS [loadable]
+══════════════════════════════════════════════
+- api-ref: API Reference documentation
+- style-guide: Company style guide
+- deploy-checklist: Production deployment checklist
+```
+
+The agent sees the titles, decides which skill is relevant to the current task, and uses `load_context` to pull the full content into its working context. When it is done, it uses `unload_context` to free the space.
 
 <TypeScriptExample>
 
@@ -115,20 +158,7 @@ const session = Session.create(this)
 
 </TypeScriptExample>
 
-The system prompt shows available skills as a listing:
-
-```txt
-══════════════════════════════════════════════
-SKILLS [loadable]
-══════════════════════════════════════════════
-- api-ref: API Reference documentation
-- style-guide: Company style guide
-- deploy-checklist: Production deployment checklist
-```
-
-The agent uses `load_context` to fetch full content and `unload_context` to free the space when done. Skills are covered in depth in the [Skills](#skills) section below.
-
-**Use for:** Reference documentation, instructions, templates, or any large content the agent only needs sometimes.
+Skills are covered in depth in the [Skills](#skills) section below.
 
 ## How agents interact with memory
 
