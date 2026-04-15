@@ -10,7 +10,7 @@ tags:
 
 import SubtractIPCalculator from "~/components/SubtractIPCalculator.tsx";
 
-Cloudflare reserves several IPv4 and IPv6 ranges for internal routing and service functionality. These ranges are drawn from the CGNAT address space (`100.64.0.0/10`). To avoid routing conflicts, your Cloudflare Tunnel, WARP Connector, or WAN routes should not include subsets of these reserved ranges. Broader routes that contain a reserved range, such as `0.0.0.0/0`, are unaffected because longest-prefix match ensures the reserved ranges still take priority.
+Cloudflare reserves several IPv4 and IPv6 ranges for internal routing and service functionality. These ranges are drawn from the CGNAT address space (`100.64.0.0/10`). To avoid routing conflicts, your Cloudflare Tunnel, Cloudflare Mesh, or WAN routes should not include subsets of these reserved ranges. Broader routes that contain a reserved range, such as `0.0.0.0/0`, are unaffected because longest-prefix match ensures the reserved ranges still take priority.
 
 When planning your private network addressing and configuring [Split Tunnel](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) entries, use the tables below to identify which IP ranges Cloudflare has reserved and whether they can be reconfigured.
 
@@ -56,10 +56,9 @@ Initial resolved IPs are assigned from the `100.80.0.0/16` (IPv4) or `2606:4700:
 
 ## Device IPs
 
-Device IPs are virtual addresses assigned to each Cloudflare One Client registration. These IPs identify and route traffic to specific devices for the following features:
+Device IPs (also called **Mesh IPs** in [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/)) are virtual addresses assigned to each Cloudflare One Client registration and each mesh node. These IPs identify and route traffic to specific devices for the following features:
 
-- [Peer-to-peer connectivity (Peer-to-peer)](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/peer-to-peer/) — allows devices to communicate directly with each other over Cloudflare's network.
-- [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) — routes traffic between your private network and WARP devices.
+- [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) — mesh nodes and client devices communicate using their Mesh IPs for device-to-device, site-to-site, and mesh connectivity.
 - [Cloudflare WAN](/cloudflare-one/networks/connectors/cloudflare-wan/) — on-ramps traffic from WAN tunnels to Cloudflare One Client devices.
 
 The default IPv4 range is `100.96.0.0/12`. If this range conflicts with services on your private network, you can configure custom IPv4 subnets drawn from RFC 1918 or CGNAT address space. If your account uses [Cloudflare WAN](/cloudflare-wan/), custom subnets require [Unified Routing (beta)](/cloudflare-one/networks/connectors/cloudflare-wan/reference/traffic-steering/#unified-routing-mode-beta). For configuration instructions, refer to [Device IPs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/).

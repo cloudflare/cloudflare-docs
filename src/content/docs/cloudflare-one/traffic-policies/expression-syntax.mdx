@@ -61,11 +61,7 @@ Combine multiple conditions using logical operators:
 | -------- | ----------- | --------------------------------------------------------------------- |
 | `and`    | Logical AND | `dns.fqdn == "example.com" and identity.email == "admin@company.com"` |
 | `or`     | Logical OR  | `net.dst.port == 80 or net.dst.port == 443`                           |
-
-You can also use symbols instead of words:
-
-- `&&` instead of `and`
-- `||` instead of `or`
+| `not`    | Logical NOT | `not(identity.email == "guest@company.com")`                          |
 
 ## Array handling
 

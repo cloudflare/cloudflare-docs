@@ -49,6 +49,10 @@ entries:
     general_definition: |-
       Cloudflare Gateway is a modern next-generation firewall between your user, device, or network and the public Internet. It includes DNS filtering to inspect and apply policies to all Internet-bound DNS queries.
 
+  - term: Cloudflare Mesh
+    general_definition: |-
+      connects private networks, servers, and devices through Cloudflare for bidirectional, site-to-site, and mesh connectivity. Every participant receives a private Mesh IP address and can reach any other participant directly.
+
   - term: Cloudflare One
     general_definition: |-
       the name for Cloudflare's Secure Access Service Edge (SASE) platform, which includes Zero Trust and network services.
@@ -63,7 +67,7 @@ entries:
 
   - term: Cloudflare Tunnel
     general_definition: |-
-      Cloudflare Tunnel uses software agents (`cloudflared` or WARP Connector) to establish a secure connection between a private network and Cloudflare.
+      Cloudflare Tunnel uses a software agent (`cloudflared`) to establish a secure connection between a private network and Cloudflare.
 
   - term: Cloudflare Zero Trust
     general_definition: |-
@@ -81,11 +85,11 @@ entries:
 
   - term: device profile
     general_definition: |-
-      a collection of WARP client settings applied to a specific set of devices in your organization.
+      a collection of Cloudflare One Client settings applied to a specific set of devices in your organization.
 
   - term: device registration
     general_definition: |-
-      an individual session of the WARP client on a physical device, with associated configuration including a unique public key, device profile, and virtual IP addresses (one IPv4 and one IPv6).
+      an individual session of the Cloudflare One Client on a physical device, with associated configuration including a unique public key, device profile, and virtual IP addresses (one IPv4 and one IPv6).
 
   - term: DNS filtering
     general_definition: |-
@@ -93,19 +97,23 @@ entries:
     associated_products:
       - DNS
 
-  - term: DoH subdomain
-    general_definition: |-
-      a unique DoH subdomain for each DNS location in Cloudflare One used in WARP client settings.
-
   - term: DNS location
     general_definition: |-
       DNS locations are a collection of DNS endpoints which can be mapped to physical entities such as offices, homes, or data centers.
     associated_products:
       - DNS
 
+  - term: DoH subdomain
+    general_definition: |-
+      a unique DoH subdomain for each DNS location in Cloudflare One used in Cloudflare One Client settings.
+
   - term: fleet
     general_definition: |-
-      a fleet is a collection of user devices. All devices in a fleet have WARP installed and are connected to a [Zero Trust Organization](/cloudflare-one/setup/#create-a-zero-trust-organization).
+      a fleet is a collection of user devices. All devices in a fleet have the Cloudflare One Client installed and are connected to a [Zero Trust Organization](/cloudflare-one/setup/#create-a-zero-trust-organization).
+
+  - term: Hops
+    general_definition: |-
+      Hops refer to the stops an email makes as it travels from the sender to the recipient.
 
   - term: identity provider
     general_definition: |-
@@ -125,7 +133,7 @@ entries:
 
   - term: managed network
     general_definition: |-
-      a network location, such as an office, that is associated with a specific WARP client device profile.
+      a network location, such as an office, that is associated with a specific Cloudflare One Client device profile.
 
   - term: MCP client
     general_definition: |-
@@ -147,6 +155,10 @@ entries:
     general_definition: |-
       a Mobile Device Management (MDM) file is a configuration file that allows organizations to manage the software, settings, and certificates installed on their devices.
 
+  - term: Mesh IP
+    general_definition: |-
+      a private IP address assigned to each device and node enrolled in Cloudflare Mesh from the `100.96.0.0/12` CGNAT range. Mesh IPs are the same as Cloudflare One Client device IPs.
+
   - term: MFA
     general_definition: |-
       Multi-factor authentication (MFA) checks multiple aspects of a user's identity, not only their username and password, before allowing them access to an application.
@@ -161,7 +173,7 @@ entries:
 
   - term: on-ramp
     general_definition: |-
-      refers to a way of connecting a business network to Cloudflare. Examples of on-ramps, or ways to connect to Cloudflare, are Anycast GRE tunnels, Anycast IPsec tunnels, Cloudflare Network Interconnect (CNI), Cloudflare Tunnel, and WARP.
+      refers to a way of connecting a business network to Cloudflare. Examples of on-ramps, or ways to connect to Cloudflare, are Anycast GRE tunnels, Anycast IPsec tunnels, Cloudflare Network Interconnect (CNI), Cloudflare Tunnel, and the Cloudflare One Client.
 
   - term: PAC file
     general_definition: |-
@@ -171,13 +183,17 @@ entries:
     general_definition: |-
       a set of rules that regulate network activity, such as login access and website reachability.
 
-  - term: remotely-managed tunnel
+  - term: Quarantine policies
     general_definition: |-
-      a Cloudflare Tunnel whose configuration is stored on Cloudflare rather than on your local machine. You can manage the tunnel in the dashboard or by using the API.
+      Policies that block specific types of emails (usually malicious and suspicious emails), preventing emails from reaching the end-user or the next mail service provider. Emails that are quarantined are reviewed by administrators and potentially released if falsely flagged.
 
   - term: RDP
     general_definition: |-
       Remote Desktop Protocol (RDP) allows remote desktop connections to a computer, often used on Windows and Mac operating systems.
+
+  - term: remotely-managed tunnel
+    general_definition: |-
+      a Cloudflare Tunnel whose configuration is stored on Cloudflare rather than on your local machine. You can manage the tunnel in the dashboard or by using the API.
 
   - term: Rule group
     general_definition: |-
@@ -287,20 +303,12 @@ entries:
 
   - term: WARP CGNAT IP
     general_definition: |-
-      a unique, virtual IP address assigned to each WARP device from the `100.96.0.0/12` range.
+      a unique, virtual IP address assigned to each Cloudflare One Client device from the `100.96.0.0/12` range.
 
   - term: WARP Connector
     general_definition: |-
-      an extension of the WARP client used to establish site-to-site, bidirectional, and mesh networking connectivity. WARP Connector software installs on a Linux server within a private network, which then becomes a gateway for other local networks that need to on-ramp traffic to Cloudflare.
+      the previous name for Cloudflare Mesh, a networking product that connects private networks, servers, and devices through Cloudflare for bidirectional, site-to-site, and mesh connectivity.
 
   - term: Zero Trust Security
     general_definition: |-
       Zero Trust Security is an IT security model that requires strict identity verification for every person and device accessing resources on a network.
-
-  - term: Hops
-    general_definition: |-
-      Hops refer to the stops an email makes as it travels from the sender to the recipient.
-
-  - term: Quarantine policies
-    general_definition: |-
-      Policies that block specific types of emails (usually malicious and suspicious emails), preventing emails from reaching the end-user or the next mail service provider. Emails that are quarantined are reviewed by administrators and potentially released if falsely flagged.

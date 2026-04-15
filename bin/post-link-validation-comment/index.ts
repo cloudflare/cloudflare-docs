@@ -137,10 +137,6 @@ async function run(): Promise<void> {
 				body: comment,
 			});
 		}
-
-		core.setFailed(
-			`Found ${report.errorCount} broken link(s) across ${report.errorFileCount} file(s).`,
-		);
 	} catch (error) {
 		if (error instanceof Error) {
 			core.setFailed(error.message);

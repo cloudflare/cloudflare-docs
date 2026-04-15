@@ -25,6 +25,10 @@ entries:
     title: "WebMCP support"
     description: |-
       * Browser Run now supports [WebMCP](/browser-rendering/features/webmcp/) (Web Model Context Protocol), which allows websites to declare structured tools that AI agents can discover and execute. WebMCP-enabled browsers are available through the experimental lab browser pool.
+  - publish_date: "2026-04-14"
+    title: "Wrangler CLI commands for Browser Rendering"
+    description: |-
+      * Added `wrangler browser` commands to create, manage, and view browser sessions directly from the terminal. Available commands: `create`, `close`, `list`, and `view`. For full usage details, refer to [Wrangler commands](/browser-rendering/reference/wrangler-commands/).
   - publish_date: "2026-04-13"
     title: "@cloudflare/puppeteer v1.1.0 released"
     description: |-

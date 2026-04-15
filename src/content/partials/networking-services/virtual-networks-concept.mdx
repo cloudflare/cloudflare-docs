@@ -69,20 +69,15 @@ accDescr: Shows how a Cloudflare account contains three virtual networks, each w
     tunnel_s --> dc_stg("Staging DC
     10.0.0.0/8")
 
-    classDef orange fill:#f48120,stroke:#d6710e,color:#fff,rx:8,ry:8
-    classDef blue fill:#4b9fd5,stroke:#3a8bc2,color:#fff,rx:8,ry:8
-    classDef route fill:#f5f5f5,stroke:#ccc,rx:8,ry:8
-    classDef dest fill:#f5f5f5,stroke:#ccc,rx:8,ry:8
+    classDef orange fill:#f48120,stroke:#d6710e,color:#fff
+    classDef blue fill:#4b9fd5,stroke:#3a8bc2,color:#fff
 
     class tunnel_d,tunnel_p,tunnel_s orange
     class ipsec_d blue
-    class routes_d,routes_p,routes_s route
-    class dc_legacy,dc_branch,dc_prod,dc_stg dest
 
-    style vnet_default stroke:#999,stroke-width:2px,stroke-dasharray: 5 5,fill:#f9f9f9,rx:10,ry:10
-    style vnet_prod stroke:#f48120,stroke-width:2px,fill:#fff7f0,rx:10,ry:10
-    style vnet_stg stroke:#f48120,stroke-width:2px,fill:#fff7f0,rx:10,ry:10
-    style account stroke:#ccc,stroke-width:1px,fill:#ffffff,rx:10,ry:10
+    style vnet_default stroke:#999,stroke-width:2px,stroke-dasharray: 5 5
+    style vnet_prod stroke:#f48120,stroke-width:2px
+    style vnet_stg stroke:#f48120,stroke-width:2px
 ```
 
 The same CIDR (`10.0.0.0/8`) can exist in each virtual network because they are isolated routing domains.
@@ -99,7 +94,7 @@ Virtual network support varies by product:
 | --- | --- | --- |
 | Cloudflare Tunnel | Multiple virtual networks | Assign CIDR routes to a virtual network when configuring your tunnel |
 | Cloudflare One Client | Multiple virtual networks | Users land in a virtual network based on policy or client selection |
-| WARP Connector | Not currently supported | — |
+| Cloudflare Mesh | Not currently supported | — |
 | Cloudflare WAN | Default only | All IPsec, GRE, and CNI connections use the default virtual network |
 
 ## The default virtual network
