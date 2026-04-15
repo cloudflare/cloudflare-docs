@@ -6,7 +6,7 @@ sidebar:
   label: Linked App Token
 ---
 
-import { Render, GlossaryTooltip, APIRequest, Tabs, TabItem } from "~/components";
+import { Render } from "~/components";
 
 The **Linked App Token** policy selector allows an Access policy on one application to accept tokens issued for another application. This is useful when one application needs to make authenticated requests to another on behalf of a user — for example, an MCP server calling internal APIs, or a microservice forwarding user identity to a downstream service.
 
@@ -35,67 +35,18 @@ accTitle: Self-hosted to self-hosted linked app token flow
 
 Create a policy on Application B (the downstream application that will receive forwarded requests):
 
-<Tabs syncKey="dashPlusAPI">
-<TabItem label="Dashboard">
-
-1. In the [Cloudflare dashboard](https://one.dash.cloudflare.com), go to **Zero Trust** > **Access controls** > **Applications**.
-2. Select Application B.
-3. Go to the **Policies** tab and select **Create new policy**.
-4. Set the policy **Action** to _Service Auth_.
-	:::note
-	The Linked App Token selector only works with the [Service Auth](/cloudflare-one/access-controls/policies/#service-auth) action, similar to service token rules.
-	:::
-5. For **Selector**, select _Linked App Token_.
-6. For **Value**, select Application A. For example,
-
-			| Action       | Rule type | Selector          | Value |
-			| ------------ | --------- | ----------------- | ---- |
-			| Service Auth | Include   | Linked App Token | `application-a`|
-7. Save the policy.
-8. In Application B, add the policy to the **Access policies** list.
-9. Save the application.
-
-</TabItem>
-<TabItem label="API">
-
-1. Get the `uid` of Application A:
-
-	<APIRequest path="/accounts/{account_id}/access/apps" method="GET" />
-
-	```json title="Response"
-	{
-		"id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-		"uid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-		"type": "self_hosted",
-		"name": "application-a",
-		...
-	}
-	```
-
-2. Create the following Access policy on Application B, replacing the `app_uid` value with the `uid` of Application A:
-
-   <APIRequest
-   	path="/accounts/{account_id}/access/policies"
-   	method="POST"
-   	json={{
-   		name: "Allow requests from Application A",
-   		decision: "non_identity",
-   		include: [
-   			{
-   				linked_app_token: {
-   					app_uid: "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-   				},
-   			},
-   		],
-   	}}
-   />
-
-	:::note
-	The `linked_app_token` rule type only works with [`non_identity` decisions](/cloudflare-one/access-controls/policies/#service-auth), similar to service token rules.
-	:::
-
-</TabItem>
-</Tabs>
+<Render
+	file="access/create-linked-app-token-policy"
+	product="cloudflare-one"
+	params={{
+		sourceAppLabel: "Application A",
+		downstreamAppLabel: "Application B",
+		exampleValue: "application-a",
+		policyName: "Allow requests from Application A",
+		exampleName: "application-a",
+		appType: "self_hosted",
+	}}
+/>
 
 ### 2. Forward the Access JWT
 
@@ -132,68 +83,18 @@ accTitle: SaaS to self-hosted linked app token flow
 
 Create a policy on the self-hosted application (Application B):
 
-<Tabs syncKey="dashPlusAPI">
-<TabItem label="Dashboard">
-
-
-1. In the [Cloudflare dashboard](https://one.dash.cloudflare.com), go to **Zero Trust** > **Access controls** > **Applications**.
-2. Select the self-hosted app (Application B).
-3. Go to the **Policies** tab and select **Create new policy**.
-4. Set the policy **Action** to _Service Auth_.
-	:::note
-	The Linked App Token selector only works with the [Service Auth](/cloudflare-one/access-controls/policies/#service-auth) action, similar to service token rules.
-	:::
-5. For **Selector**, select _Linked App Token_.
-6. For **Value**, select the Access for SaaS app (Application A). For example,
-
-			| Action       | Rule type | Selector          | Value |
-			| ------------ | --------- | ----------------- | ---- |
-			| Service Auth | Include   | Linked App Token | `application-a`|
-7. Save the policy.
-8. In Application B, add the policy to the **Access policies** list.
-9. Save the application.
-
-</TabItem>
-<TabItem label="API">
-
-1. Get the `uid` of the SaaS application:
-
-	<APIRequest path="/accounts/{account_id}/access/apps" method="GET" />
-
-	```json title="Response"
-	{
-		"id": "3537a672-e4d8-4d89-aab9-26cb622918a1",
-		"uid": "3537a672-e4d8-4d89-aab9-26cb622918a1",
-		"type": "saas",
-		"name": "my-saas-app",
-		...
-	}
-	```
-
-2. Create the following Access policy, replacing the `app_uid` value with the `uid` of your SaaS application:
-
-   <APIRequest
-   	path="/accounts/{account_id}/access/policies"
-   	method="POST"
-   	json={{
-   		name: "Allow requests from SaaS app",
-   		decision: "non_identity",
-   		include: [
-   			{
-   				linked_app_token: {
-   					app_uid: "3537a672-e4d8-4d89-aab9-26cb622918a1",
-   				},
-   			},
-   		],
-   	}}
-   />
-
-	:::note
-	The `linked_app_token` rule type only works with [`non_identity` decisions](/cloudflare-one/access-controls/policies/#service-auth), similar to service token rules.
-	:::
-
-</TabItem>
-</Tabs>
+<Render
+	file="access/create-linked-app-token-policy"
+	product="cloudflare-one"
+	params={{
+		sourceAppLabel: "the Access for SaaS app (Application A)",
+		downstreamAppLabel: "the self-hosted app (Application B)",
+		exampleValue: "application-a",
+		policyName: "Allow requests from SaaS app",
+		exampleName: "my-saas-app",
+		appType: "saas",
+	}}
+/>
 
 ### 2. Configure token forwarding
 
@@ -212,5 +113,7 @@ The end-to-end flow is:
 
 ## Known limitations
 
-- The Linked App Token policy can only be added to [self-hosted applications](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/). It cannot be added to SaaS or other application types.
-- This feature works best with applications that rely on the [Cloudflare Access JWT](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/) for authentication and identity. If the downstream application implements its own authentication layer after Cloudflare Access, requests that pass Access validation may still be rejected by the application itself.
+<Render
+	file="access/linked-app-token-known-limitations"
+	product="cloudflare-one"
+/>

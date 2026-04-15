@@ -8,7 +8,7 @@ sidebar:
   label: MCP access to self-hosted apps
 ---
 
-import { Render, GlossaryTooltip, APIRequest, Tabs, TabItem } from "~/components";
+import { Render } from "~/components";
 
 MCP servers often need to call internal applications on behalf of authenticated users. For example, an MCP server that helps employees interact with internal tools needs to forward the user's identity to those downstream services (the internal applications the MCP server connects to) so that each request is authorized with the correct permissions.
 
@@ -37,69 +37,26 @@ accTitle: Self-hosted MCP server accessing internal applications
 
 On each self-hosted application that the MCP server needs to access (for example, the `Internal API` and `Company wiki` apps), create a Linked App Token policy:
 
-		<Tabs syncKey="dashPlusAPI">
-		<TabItem label="Dashboard">
-
-		1. In the [Cloudflare dashboard](https://one.dash.cloudflare.com), go to **Zero Trust** > **Access controls** > **Applications**.
-		2. Select the downstream application (not the MCP server application) and select **Edit**.
-		3. Go to the **Policies** tab and select **Create new policy**.
-		4. Set the policy **Action** to _Service Auth_.
-		5. For **Selector**, select _Linked App Token_.
-		6. For **Value**, select the MCP server application. For example,
-
-			| Action       | Rule type | Selector          | Value |
-			| ------------ | --------- | ----------------- | ---- |
-			| Service Auth | Include   | Linked App Token | `mcp-server-app`|
-		7. Save the policy.
-		8. In your downstream application, add the policy to the **Access policies** list.
-		9. Save the application.
-
-		</TabItem>
-		<TabItem label="API">
-
-		1. Get the `uid` of your MCP server application:
-
-			<APIRequest path="/accounts/{account_id}/access/apps" method="GET" />
-
-			```json title="Response"
-			{
-				"id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-				"uid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-				"type": "self_hosted",
-				"name": "mcp-server-app",
-				...
-			}
-			```
-
-		2. Create a policy on the downstream application, replacing the `app_uid` value with the `uid` of the MCP server application:
-
-			<APIRequest
-				path="/accounts/{account_id}/access/policies"
-				method="POST"
-				json={{
-					name: "Allow requests from MCP server",
-					decision: "non_identity",
-					include: [
-						{
-							linked_app_token: {
-								app_uid: "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-							},
-						},
-					],
-				}}
-			/>
-
-
-		</TabItem>
-		</Tabs>
+<Render
+	file="access/create-linked-app-token-policy"
+	product="cloudflare-one"
+	params={{
+		sourceAppLabel: "the MCP server application",
+		downstreamAppLabel: "the downstream application",
+		exampleValue: "mcp-server-app",
+		policyName: "Allow requests from MCP server",
+		exampleName: "mcp-server-app",
+		appType: "self_hosted",
+	}}
+/>
 
 ### 2. Configure your MCP server
 
 In your MCP server code, forward the `Cf-Access-Jwt-Assertion` header from incoming requests as the `Cf-Access-Token` header on outgoing requests to the downstream application:
 
-	```txt
-	Cf-Access-Token: <JWT from Cf-Access-Jwt-Assertion>
-	```
+```txt
+Cf-Access-Token: <JWT from Cf-Access-Jwt-Assertion>
+```
 
 Access will now validate the JWT token against the Linked App Token rule and propagate the user's identity to the downstream application.
 
@@ -128,71 +85,30 @@ accTitle: SaaS MCP server accessing internal applications
 
 On each self-hosted application that the MCP server needs to access (for example, the `Internal API` and `Company wiki` apps), create a Linked App Token policy:
 
-		<Tabs syncKey="dashPlusAPI">
-		<TabItem label="Dashboard">
-
-		1. In the [Cloudflare dashboard](https://one.dash.cloudflare.com), go to **Zero Trust** > **Access controls** > **Applications**.
-		2. Select the downstream application (not the MCP server application) and select **Edit**.
-		3. Go to the **Policies** tab and select **Create new policy**.
-		4. Set the policy **Action** to _Service Auth_.
-		5. For **Selector**, select _Linked App Token_.
-		6. For **Value**, select the MCP server application. For example,
-
-			| Action       | Rule type | Selector          | Value |
-			| ------------ | --------- | ----------------- | ---- |
-			| Service Auth | Include   | Linked App Token | `mcp-server-app`|
-		7. Save the policy.
-		8. In your downstream application, add the policy to the **Access policies** list.
-		9. Save the application.
-
-		</TabItem>
-		<TabItem label="API">
-
-		1. Get the `uid` of your MCP server application:
-
-			<APIRequest path="/accounts/{account_id}/access/apps" method="GET" />
-
-			```json title="Response"
-			{
-				"id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-				"uid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-				"type": "saas",
-				"name": "mcp-server-app",
-				...
-			}
-			```
-
-		2. Create a policy on the downstream application, replacing the `app_uid` value with the `uid` of the MCP server application.
-
-			<APIRequest
-				path="/accounts/{account_id}/access/policies"
-				method="POST"
-				json={{
-					name: "Allow requests from MCP server",
-					decision: "non_identity",
-					include: [
-						{
-							linked_app_token: {
-								app_uid: "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-							},
-						},
-					],
-				}}
-			/>
-
-
-		</TabItem>
-		</Tabs>
+<Render
+	file="access/create-linked-app-token-policy"
+	product="cloudflare-one"
+	params={{
+		sourceAppLabel: "the MCP server application",
+		downstreamAppLabel: "the downstream application",
+		exampleValue: "mcp-server-app",
+		policyName: "Allow requests from MCP server",
+		exampleName: "mcp-server-app",
+		appType: "saas",
+	}}
+/>
 
 ### 2. Configure your MCP server
 
 Configure the MCP server to forward the `access_token` in outgoing requests:
 
-	```txt
-	Authorization: Bearer ACCESS_TOKEN
-	```
+```txt
+Authorization: Bearer ACCESS_TOKEN
+```
 
 ## Known limitations
 
-- The Linked App Token policy can only be added to [self-hosted applications](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/). It cannot be added to SaaS or other application types.
-- This feature works best with applications that rely on the [Cloudflare Access JWT](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/) for authentication and identity. If the downstream application has its own authentication layer after Access, requests that pass Access validation may still be rejected by the application itself.
+<Render
+	file="access/linked-app-token-known-limitations"
+	product="cloudflare-one"
+/>
