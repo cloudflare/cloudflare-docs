@@ -22,7 +22,8 @@ export default {
 			files: "*.mdx",
 			options: {
 				parser: "mdx-cloudflare-docs",
-				mdxPreserveElements: "code,GlossaryTooltip,Steps,Tabs,TabItem,FileTree",
+				mdxPreserveElements:
+					"code,GlossaryTooltip,Steps,Tabs,TabItem,FileTree,WranglerConfig",
 			},
 		},
 	],
