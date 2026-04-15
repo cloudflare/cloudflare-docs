@@ -23,34 +23,35 @@ Add the Sandbox and Artifacts bindings to `wrangler.jsonc`:
 	"main": "src/index.ts",
 	"compatibility_date": "$today",
 	"compatibility_flags": ["nodejs_compat"],
+	"services": [
+		{
+			"binding": "ARTIFACTS",
+			"service": "artifacts",
+			"entrypoint": "ArtifactsBinding",
+		},
+	],
 	"containers": [
 		{
 			"class_name": "Sandbox",
 			"image": "./Dockerfile",
 			"instance_type": "lite",
-			"max_instances": 1
-		}
+			"max_instances": 1,
+		},
 	],
 	"durable_objects": {
 		"bindings": [
 			{
 				"name": "Sandbox",
-				"class_name": "Sandbox"
-			}
-		]
+				"class_name": "Sandbox",
+			},
+		],
 	},
 	"migrations": [
 		{
 			"tag": "v1",
-			"new_sqlite_classes": ["Sandbox"]
-		}
+			"new_sqlite_classes": ["Sandbox"],
+		},
 	],
-	"artifacts": [
-		{
-			"binding": "ARTIFACTS",
-			"namespace": "default"
-		}
-	]
 }
 ```
 
@@ -61,13 +62,14 @@ Then create or reuse the sandbox and repo:
 <TypeScriptExample filename="src/index.ts" typescriptFirst={true}>
 
 ```ts
+import type { Service } from "cloudflare:workers";
 import { getSandbox } from "@cloudflare/sandbox";
 
 export { Sandbox } from "@cloudflare/sandbox";
 
 interface Env {
 	Sandbox: DurableObjectNamespace<Sandbox>;
-	ARTIFACTS: Artifacts;
+	ARTIFACTS: Service<Artifacts>;
 }
 
 function toAuthenticatedRemote(remote: string, token: string) {

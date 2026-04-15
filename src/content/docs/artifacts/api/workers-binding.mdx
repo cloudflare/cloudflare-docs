@@ -29,10 +29,11 @@ Add the Artifacts binding to `wrangler.jsonc`:
 
 ```jsonc title="wrangler.jsonc"
 {
-	"artifacts": [
+	"services": [
 		{
 			"binding": "ARTIFACTS",
-			"namespace": "default",
+			"service": "artifacts",
+			"entrypoint": "ArtifactsBinding",
 		},
 	],
 }
@@ -43,12 +44,14 @@ Add the Artifacts binding to `wrangler.jsonc`:
 After you run `npx wrangler types`, your Worker environment looks like this:
 
 ```ts
+import type { Service } from "cloudflare:workers";
+
 export interface Env {
-	ARTIFACTS: Artifacts;
+	ARTIFACTS: Service<Artifacts>;
 }
 ```
 
-Wrangler generates the `Artifacts` type from the Artifacts binding definition. You do not import it manually.
+Wrangler generates the `Artifacts` type for consumers. You pass that type through `Service<Artifacts>` in your environment.
 
 ## Namespace methods
 
@@ -58,14 +61,15 @@ Use namespace methods on `env.ARTIFACTS` to create, list, import, or delete repo
 
 - `name` <Type text="RepoName" /> <MetaInfo text="required" />
 - `opts.readOnly` <Type text="boolean" /> <MetaInfo text="optional" />
-- Returns <Type text="Promise<CreateRepoResponse & { repo: ArtifactsRepoHandle } >" />
+- Returns <Type text="Promise<ArtifactsCreateRepoResult & { repo: ArtifactsRepo } >" />
 
 <TypeScriptExample typescriptFirst={true}>
 
 ```ts
 async function createRepo(artifacts: Artifacts) {
-	// Create the repo and capture the initial write token.
-	const created = await artifacts.create("starter-repo");
+	const created = await artifacts.create("starter-repo", {
+		readOnly: false,
+	});
 
 	return {
 		name: created.name,
@@ -80,15 +84,13 @@ async function createRepo(artifacts: Artifacts) {
 ### `get(name)`
 
 - `name` <Type text="RepoName" /> <MetaInfo text="required" />
-- Returns <Type text="Promise<ArtifactsRepoHandle | null>" />
+- Returns <Type text="Promise<ArtifactsRepo | null>" />
 
 <TypeScriptExample typescriptFirst={true}>
 
 ```ts
 async function getRepoHandle(artifacts: Artifacts) {
-	// Resolve the handle once, then reuse it for repo-scoped methods.
 	const repo = await artifacts.get("starter-repo");
-
 	if (!repo) {
 		return null;
 	}
@@ -103,16 +105,18 @@ async function getRepoHandle(artifacts: Artifacts) {
 
 - `opts.limit` <Type text="number" /> <MetaInfo text="optional" />
 - `opts.cursor` <Type text="Cursor" /> <MetaInfo text="optional" />
-- Returns <Type text="Promise<ListReposResponse>" />
+- Returns <Type text="Promise<ArtifactsRepoListResult>" />
 
 <TypeScriptExample typescriptFirst={true}>
 
 ```ts
 async function listRepos(artifacts: Artifacts) {
-	// Request a small page when you only need recent repo names.
 	const page = await artifacts.list({ limit: 10 });
 
-	return page.repos.map((repo) => repo.name);
+	return {
+		names: page.repos.map((repo) => repo.name),
+		nextCursor: page.cursor ?? null,
+	};
 }
 ```
 
@@ -127,7 +131,6 @@ async function listRepos(artifacts: Artifacts) {
 
 ```ts
 async function deleteRepo(artifacts: Artifacts) {
-	// Delete returns true when the repo was removed.
 	return artifacts.delete("starter-repo");
 }
 ```
@@ -141,17 +144,16 @@ async function deleteRepo(artifacts: Artifacts) {
 - `source.branch` <Type text="string" /> <MetaInfo text="optional" />
 - `source.headers` <Type text="Record<string, string>" /> <MetaInfo text="optional" />
 - `source.readOnly` <Type text="boolean" /> <MetaInfo text="optional" />
-- Returns <Type text="Promise<CreateRepoResponse & { repo: ArtifactsRepoHandle } >" />
+- Returns <Type text="Promise<ArtifactsCreateRepoResult & { repo: ArtifactsRepo } >" />
 
-The Workers binding accepts either `owner/repo` shorthand or a full GitHub URL for `source.url`.
+Pass a full HTTPS Git remote URL for `source.url`.
 
 <TypeScriptExample typescriptFirst={true}>
 
 ```ts
 async function importRepo(artifacts: Artifacts) {
-	// Import a public GitHub repo into Artifacts.
 	const imported = await artifacts.import("react-mirror", {
-		url: "facebook/react",
+		url: "https://github.com/facebook/react",
 		branch: "main",
 	});
 
@@ -167,9 +169,9 @@ Use `await artifacts.get(name)` or the `repo` returned by `create()`, `import()`
 
 ### `info()`
 
-- Returns <Type text="Promise<RemoteRepoInfo | null>" />
+- Returns <Type text="Promise<ArtifactsRepoInfo | null>" />
 
-Use `info()` when you need repo metadata, including the authenticated remote URL. The binding does not expose a separate `.remote()` method.
+Use `info()` when you need repo metadata, including the remote URL.
 
 <TypeScriptExample typescriptFirst={true}>
 
@@ -180,7 +182,6 @@ async function getRemoteUrl(artifacts: Artifacts) {
 		return null;
 	}
 
-	// Read the remote URL from repo metadata.
 	const info = await repo.info();
 	return info?.remote ?? null;
 }
@@ -192,7 +193,7 @@ async function getRemoteUrl(artifacts: Artifacts) {
 
 - `scope` <Type text='"read" | "write"' /> <MetaInfo text='optional (default: "write")' />
 - `ttl` <Type text="number" /> <MetaInfo text="optional (seconds)" />
-- Returns <Type text="Promise<CreateTokenResponse>" />
+- Returns <Type text="Promise<ArtifactsCreateTokenResult>" />
 
 <TypeScriptExample typescriptFirst={true}>
 
@@ -203,7 +204,6 @@ async function mintReadToken(artifacts: Artifacts) {
 		throw new Error("Repo not found");
 	}
 
-	// Create a short-lived read token for another tool.
 	return repo.createToken("read", 3600);
 }
 ```
@@ -213,7 +213,7 @@ async function mintReadToken(artifacts: Artifacts) {
 ### `validateToken(token)`
 
 - `token` <Type text="ArtifactToken" /> <MetaInfo text="required" />
-- Returns <Type text="Promise<ValidateTokenResponse>" />
+- Returns <Type text="Promise<ArtifactsTokenValidation>" />
 
 <TypeScriptExample typescriptFirst={true}>
 
@@ -224,7 +224,6 @@ async function validateToken(artifacts: Artifacts, token: string) {
 		throw new Error("Repo not found");
 	}
 
-	// Check whether the presented token is still valid.
 	return repo.validateToken(token);
 }
 ```
@@ -233,7 +232,7 @@ async function validateToken(artifacts: Artifacts, token: string) {
 
 ### `listTokens()`
 
-- Returns <Type text="Promise<{ tokens: TokenInfo[]; total: number } >" />
+- Returns <Type text="Promise<ArtifactsTokenListResult>" />
 
 <TypeScriptExample typescriptFirst={true}>
 
@@ -244,9 +243,11 @@ async function listRepoTokens(artifacts: Artifacts) {
 		throw new Error("Repo not found");
 	}
 
-	// Inspect active tokens for cleanup or auditing.
 	const result = await repo.listTokens();
-	return result.tokens;
+	return {
+		total: result.total,
+		tokens: result.tokens,
+	};
 }
 ```
 
@@ -260,14 +261,13 @@ async function listRepoTokens(artifacts: Artifacts) {
 <TypeScriptExample typescriptFirst={true}>
 
 ```ts
-async function revokeToken(artifacts: Artifacts, tokenId: string) {
+async function revokeToken(artifacts: Artifacts, tokenOrId: string) {
 	const repo = await artifacts.get("starter-repo");
 	if (!repo) {
 		throw new Error("Repo not found");
 	}
 
-	// Revoke by token ID or plaintext token value.
-	return repo.revokeToken(tokenId);
+	return repo.revokeToken(tokenOrId);
 }
 ```
 
@@ -278,7 +278,7 @@ async function revokeToken(artifacts: Artifacts, tokenId: string) {
 - `target.name` <Type text="RepoName" /> <MetaInfo text="required" />
 - `target.namespace` <Type text="NamespaceName" /> <MetaInfo text="optional" />
 - `target.readOnly` <Type text="boolean" /> <MetaInfo text="optional" />
-- Returns <Type text="Promise<CreateRepoResponse & { repo: ArtifactsRepoHandle } >" />
+- Returns <Type text="Promise<ArtifactsCreateRepoResult & { repo: ArtifactsRepo } >" />
 
 <TypeScriptExample typescriptFirst={true}>
 
@@ -289,9 +289,9 @@ async function forkRepo(artifacts: Artifacts) {
 		throw new Error("Repo not found");
 	}
 
-	// Fork into a new repo and keep the returned handle.
 	const forked = await repo.fork({
 		name: "starter-repo-copy",
+		readOnly: false,
 	});
 
 	return forked.remote;
@@ -307,8 +307,10 @@ This example combines the binding methods in one Worker route.
 <TypeScriptExample filename="src/index.ts" typescriptFirst={true}>
 
 ```ts
+import type { Service } from "cloudflare:workers";
+
 interface Env {
-	ARTIFACTS: Artifacts;
+	ARTIFACTS: Service<Artifacts>;
 }
 
 export default {
@@ -316,7 +318,6 @@ export default {
 		const url = new URL(request.url);
 
 		if (request.method === "POST" && url.pathname === "/repos") {
-			// Create a repo and return its initial remote.
 			const created = await env.ARTIFACTS.create("starter-repo");
 			return Response.json({
 				name: created.name,
@@ -330,7 +331,6 @@ export default {
 				return Response.json({ error: "Repo not found" }, { status: 404 });
 			}
 
-			// Fetch the current repo metadata, including its remote URL.
 			const info = await repo.info();
 			return Response.json(info);
 		}
@@ -341,7 +341,6 @@ export default {
 				return Response.json({ error: "Repo not found" }, { status: 404 });
 			}
 
-			// Mint a short-lived read token for external tooling.
 			const token = await repo.createToken("read", 3600);
 			return Response.json(token);
 		}
@@ -367,52 +366,58 @@ export type Scope = "read" | "write";
 export type ArtifactToken = string;
 export type Cursor = string;
 
-export interface RemoteRepoInfo {
+export interface ArtifactsRepoInfo {
 	id: string;
-	name: RepoName;
+	name: string;
+	description: string | null;
+	defaultBranch: string;
 	createdAt: string;
+	updatedAt: string;
+	lastPushAt: string | null;
 	source: string | null;
 	readOnly: boolean;
 	remote: string;
 }
 
-export interface CreateRepoResponse {
+export interface ArtifactsCreateRepoResult {
 	id: string;
-	name: RepoName;
+	name: string;
+	description: string | null;
+	defaultBranch: string;
 	remote: string;
-	token: ArtifactToken;
+	token: string;
 	expiresAt: string;
 }
 
-export interface ListReposResponse {
-	repos: Array<{
-		id: string;
-		name: RepoName;
-		createdAt: string;
-		source: string | null;
-		readOnly: boolean;
-	}>;
+export interface ArtifactsRepoListResult {
+	repos: Array<Omit<ArtifactsRepoInfo, "remote">>;
 	total: number;
-	cursor?: Cursor;
+	cursor?: string;
 }
 
-export interface CreateTokenResponse {
+export interface ArtifactsCreateTokenResult {
 	id: string;
-	plaintext: ArtifactToken;
+	plaintext: string;
 	scope: Scope;
 	expiresAt: string;
 }
 
-export interface ValidateTokenResponse {
+export interface ArtifactsTokenValidation {
 	valid: boolean;
 	scope?: Scope;
 }
 
-export interface TokenInfo {
+export interface ArtifactsTokenInfo {
 	id: string;
 	scope: Scope;
+	state: "active" | "expired" | "revoked";
 	createdAt: string;
 	expiresAt: string;
+}
+
+export interface ArtifactsTokenListResult {
+	tokens: ArtifactsTokenInfo[];
+	total: number;
 }
 ```
 

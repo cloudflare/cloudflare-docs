@@ -27,12 +27,13 @@ Use this as a reference for the end-to-end flow. In a production Worker, look up
 <TypeScriptExample filename="src/index.ts" typescriptFirst={true}>
 
 ```ts
+import type { Service } from "cloudflare:workers";
 import git from "isomorphic-git";
 import http from "isomorphic-git/http/web";
 import { MemoryFS } from "./memory-fs";
 
 export interface Env {
-	ARTIFACTS: Artifacts;
+	ARTIFACTS: Service<Artifacts>;
 }
 
 export default {
@@ -89,7 +90,7 @@ export default {
 			refs: push.refs,
 		});
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>

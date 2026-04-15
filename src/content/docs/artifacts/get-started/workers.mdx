@@ -13,6 +13,8 @@ import {
 	LinkCard,
 	PackageManagers,
 	Render,
+	Tabs,
+	TabItem,
 	TypeScriptExample,
 	WranglerConfig,
 	Steps,
@@ -73,10 +75,11 @@ Open `wrangler.jsonc` and add the Artifacts binding:
 	"name": "artifacts-worker",
 	"main": "src/index.ts",
 	"compatibility_date": "$today",
-	"artifacts": [
+	"services": [
 		{
 			"binding": "ARTIFACTS",
-			"namespace": "default",
+			"service": "artifacts",
+			"entrypoint": "ArtifactsBinding",
 		},
 	],
 }
@@ -99,8 +102,10 @@ Replace `src/index.ts` with the following code:
 <TypeScriptExample filename="src/index.ts" typescriptFirst={true}>
 
 ```ts
+import type { Service } from "cloudflare:workers";
+
 interface Env {
-	ARTIFACTS: Artifacts;
+	ARTIFACTS: Service<Artifacts>;
 }
 
 export default {
@@ -166,12 +171,33 @@ The response resembles the following:
 
 Copy the `remote` and `token` values into local shell variables:
 
-```sh
-export ARTIFACTS_REMOTE="<PASTE_REMOTE_FROM_RESPONSE>"
-export ARTIFACTS_TOKEN="<PASTE_TOKEN_FROM_RESPONSE>"
-export ARTIFACTS_TOKEN_SECRET="${ARTIFACTS_TOKEN%%\?expires=*}"
-export ARTIFACTS_AUTH_REMOTE="https://x:${ARTIFACTS_TOKEN_SECRET}@${ARTIFACTS_REMOTE#https://}"
-```
+<Tabs>
+	<TabItem label="Manual">
+
+    ```sh
+    export ARTIFACTS_REMOTE="<PASTE_REMOTE_FROM_RESPONSE>"
+    export ARTIFACTS_TOKEN="<PASTE_TOKEN_FROM_RESPONSE>"
+    export ARTIFACTS_TOKEN_SECRET="${ARTIFACTS_TOKEN%%\?expires=*}"
+    export ARTIFACTS_AUTH_REMOTE="https://x:${ARTIFACTS_TOKEN_SECRET}@${ARTIFACTS_REMOTE#https://}"
+    ```
+
+    </TabItem>
+    <TabItem label="jq">
+
+    ```bash
+    RESPONSE=$(curl --silent http://localhost:8787/repos \
+      --header "Content-Type: application/json" \
+      --data '{"name":"starter-repo"}')
+
+    export ARTIFACTS_REMOTE=$(printf '%s' "$RESPONSE" | jq -r '.remote')
+    export ARTIFACTS_TOKEN=$(printf '%s' "$RESPONSE" | jq -r '.token')
+    export ARTIFACTS_TOKEN_SECRET="${ARTIFACTS_TOKEN%%\?expires=*}"
+    export ARTIFACTS_AUTH_REMOTE="https://x:${ARTIFACTS_TOKEN_SECRET}@${ARTIFACTS_REMOTE#https://}"
+    ```
+
+    </TabItem>
+
+</Tabs>
 
 ## 5. Push your first commit with git
 

@@ -15,47 +15,89 @@ Use the Artifacts REST API to manage repos, remotes, forks, imports, and tokens 
 
 ## Base URL and authentication
 
-Artifacts uses the standard Cloudflare v4 API.
-
-Base URL:
+Artifacts REST routes use this base path:
 
 ```txt
-https://api.cloudflare.com/client/v4/accounts/{accountId}/artifacts
+https://artifacts.cloudflare.dev/v1/api/namespaces/{namespace}
 ```
-
-The route examples on this page are relative to that base URL.
 
 Requests use Bearer authentication:
 
 ```txt
-Authorization: Bearer <ARTIFACTS_JWT>
+Authorization: Bearer <GATEWAY_JWT>
 ```
 
 The following examples assume:
 
 ```sh
-export ARTIFACTS_ACCOUNT_ID="<YOUR_ACCOUNT_ID>"
-export ARTIFACTS_BASE_URL="https://api.cloudflare.com/client/v4/accounts/${ARTIFACTS_ACCOUNT_ID}/artifacts"
 export ARTIFACTS_NAMESPACE="default"
 export ARTIFACTS_REPO="starter-repo"
-export ARTIFACTS_JWT="<YOUR_ARTIFACTS_JWT>"
+export ARTIFACTS_JWT="<YOUR_GATEWAY_JWT>"
+export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.dev/v1/api/namespaces/$ARTIFACTS_NAMESPACE"
 ```
+
+All responses use the standard Cloudflare v4 envelope.
 
 ## Shared types
 
 ```ts
 export type NamespaceName = string;
 export type RepoName = string;
+export type BranchName = string;
 export type Scope = "read" | "write";
+export type TokenState = "active" | "expired" | "revoked";
 export type ArtifactToken = string;
 export type Cursor = string;
+export type RepoSortField =
+	| "created_at"
+	| "updated_at"
+	| "last_push_at"
+	| "name";
+export type SortDirection = "asc" | "desc";
+
+export interface ApiError {
+	code: number;
+	message: string;
+	documentation_url?: string;
+	source?: {
+		pointer?: string;
+	};
+}
+
+export interface CursorResultInfo {
+	cursor: string;
+	per_page: number;
+	count: number;
+}
+
+export interface OffsetResultInfo {
+	page: number;
+	per_page: number;
+	total_pages: number;
+	count: number;
+	total_count: number;
+}
+
+export type ResultInfo = CursorResultInfo | OffsetResultInfo;
+
+export interface ApiEnvelope<T> {
+	result: T | null;
+	success: boolean;
+	errors: ApiError[];
+	messages: ApiError[];
+	result_info?: ResultInfo;
+}
 
 export interface RepoInfo {
 	id: string;
 	name: RepoName;
-	createdAt: string;
+	description: string | null;
+	default_branch: string;
+	created_at: string;
+	updated_at: string;
+	last_push_at: string | null;
 	source: string | null;
-	readOnly: boolean;
+	read_only: boolean;
 }
 
 export interface RemoteRepoInfo extends RepoInfo {
@@ -65,8 +107,9 @@ export interface RemoteRepoInfo extends RepoInfo {
 export interface TokenInfo {
 	id: string;
 	scope: Scope;
-	createdAt: string;
-	expiresAt: string;
+	state: TokenState;
+	created_at: string;
+	expires_at: string;
 }
 ```
 
@@ -74,57 +117,78 @@ export interface TokenInfo {
 
 ### Create a repo
 
-Route: `POST /namespaces/:namespace/repos`
+Route: `POST /repos`
 
 Request body:
 
 - `name` <Type text="RepoName" /> <MetaInfo text="required" />
-- `readOnly` <Type text="boolean" /> <MetaInfo text="optional" />
+- `description` <Type text="string" /> <MetaInfo text="optional" />
+- `default_branch` <Type text="BranchName" /> <MetaInfo text="optional" />
+- `read_only` <Type text="boolean" /> <MetaInfo text="optional" />
 
 Response type:
 
 ```ts
 export interface CreateRepoRequest {
 	name: RepoName;
-	readOnly?: boolean;
+	description?: string;
+	default_branch?: BranchName;
+	read_only?: boolean;
 }
 
-export interface CreateRepoResponse {
+export interface CreateRepoResult {
 	id: string;
 	name: RepoName;
+	description: string | null;
+	default_branch: string;
 	remote: string;
 	token: ArtifactToken;
-	expiresAt: string;
+	expires_at: string;
 }
+
+export type CreateRepoResponse = ApiEnvelope<CreateRepoResult>;
 ```
 
 ```bash
-curl "$ARTIFACTS_BASE_URL/namespaces/$ARTIFACTS_NAMESPACE/repos" \
---header "Authorization: Bearer $ARTIFACTS_JWT" \
---header "Content-Type: application/json" \
---data '{
-  "name": "starter-repo"
-}'
+curl --request POST "$ARTIFACTS_BASE_URL/repos" \
+  --header "Authorization: Bearer $ARTIFACTS_JWT" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "name": "starter-repo",
+    "description": "Repository for automation experiments",
+    "default_branch": "main",
+    "read_only": false
+  }'
 ```
 
 ```json
 {
-	"id": "repo_123",
-	"name": "starter-repo",
-	"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.dev/git/default/starter-repo.git",
-	"token": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000",
-	"expiresAt": "<ISO_TIMESTAMP>"
+	"result": {
+		"id": "repo_123",
+		"name": "starter-repo",
+		"description": "Repository for automation experiments",
+		"default_branch": "main",
+		"remote": "https://<ACCOUNT>.artifacts.cloudflare.dev/git/default/starter-repo.git",
+		"token": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000",
+		"expires_at": "2026-04-08T12:00:00.000Z"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
 ### List repos
 
-Route: `GET /namespaces/:namespace/repos?limit=&cursor=`
+Route: `GET /repos?limit=&cursor=&search=&sort=&direction=`
 
 Query parameters:
 
 - `limit` <Type text="number" /> <MetaInfo text="optional (default: 50, max: 200)" />
 - `cursor` <Type text="Cursor" /> <MetaInfo text="optional" />
+- `search` <Type text="string" /> <MetaInfo text="optional" />
+- `sort` <Type text='"created_at" | "updated_at" | "last_push_at" | "name"' /> <MetaInfo text='optional (default: "created_at")' />
+- `direction` <Type text='"asc" | "desc"' /> <MetaInfo text='optional (default: "desc")' />
 
 Response type:
 
@@ -132,168 +196,212 @@ Response type:
 export interface ListReposQuery {
 	limit?: number;
 	cursor?: Cursor;
+	search?: string;
+	sort?: RepoSortField;
+	direction?: SortDirection;
 }
 
-export interface ListReposResponse {
-	repos: RepoInfo[];
-	total: number;
-	cursor?: Cursor;
-}
+export type ListReposResponse = ApiEnvelope<RepoInfo[]>;
 ```
 
 ```bash
-curl "$ARTIFACTS_BASE_URL/namespaces/$ARTIFACTS_NAMESPACE/repos?limit=20" \
---header "Authorization: Bearer $ARTIFACTS_JWT"
+curl "$ARTIFACTS_BASE_URL/repos?limit=20&sort=updated_at&direction=desc" \
+  --header "Authorization: Bearer $ARTIFACTS_JWT"
 ```
 
 ```json
 {
-	"repos": [
+	"result": [
 		{
 			"id": "repo_123",
 			"name": "starter-repo",
-			"createdAt": "<ISO_TIMESTAMP>",
+			"description": "Repository for automation experiments",
+			"default_branch": "main",
+			"created_at": "2026-04-07T12:00:00.000Z",
+			"updated_at": "2026-04-07T12:30:00.000Z",
+			"last_push_at": "2026-04-07T12:30:00.000Z",
 			"source": null,
-			"readOnly": false
+			"read_only": false
 		}
 	],
-	"total": 1
+	"success": true,
+	"errors": [],
+	"messages": [],
+	"result_info": {
+		"cursor": "next-cursor",
+		"per_page": 20,
+		"count": 1
+	}
 }
 ```
 
 ### Get a repo
 
-Route: `GET /namespaces/:namespace/repos/:name`
+Route: `GET /repos/:name`
 
 Response type:
 
 ```ts
-export type GetRepoResponse = RemoteRepoInfo;
+export type GetRepoResponse = ApiEnvelope<RemoteRepoInfo>;
 ```
 
 ```bash
-curl "$ARTIFACTS_BASE_URL/namespaces/$ARTIFACTS_NAMESPACE/repos/$ARTIFACTS_REPO" \
---header "Authorization: Bearer $ARTIFACTS_JWT"
+curl "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO" \
+  --header "Authorization: Bearer $ARTIFACTS_JWT"
 ```
 
 ```json
 {
-	"id": "repo_123",
-	"name": "starter-repo",
-	"createdAt": "<ISO_TIMESTAMP>",
-	"source": null,
-	"readOnly": false,
-	"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.dev/git/default/starter-repo.git"
+	"result": {
+		"id": "repo_123",
+		"name": "starter-repo",
+		"description": "Repository for automation experiments",
+		"default_branch": "main",
+		"created_at": "2026-04-07T12:00:00.000Z",
+		"updated_at": "2026-04-07T12:30:00.000Z",
+		"last_push_at": "2026-04-07T12:30:00.000Z",
+		"source": null,
+		"read_only": false,
+		"remote": "https://<ACCOUNT>.artifacts.cloudflare.dev/git/default/starter-repo.git"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
 ### Delete a repo
 
-Route: `DELETE /namespaces/:namespace/repos/:name`
+Route: `DELETE /repos/:name`
+
+This route returns `202 Accepted`.
 
 Response type:
 
 ```ts
-export interface DeleteRepoResponse {
-	deleted: RepoName;
+export interface DeleteRepoResult {
+	id: string;
 }
+
+export type DeleteRepoResponse = ApiEnvelope<DeleteRepoResult>;
 ```
 
 ```bash
-curl --request DELETE \
-"$ARTIFACTS_BASE_URL/namespaces/$ARTIFACTS_NAMESPACE/repos/$ARTIFACTS_REPO" \
---header "Authorization: Bearer $ARTIFACTS_JWT"
+curl --request DELETE "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO" \
+  --header "Authorization: Bearer $ARTIFACTS_JWT"
 ```
 
 ```json
 {
-	"deleted": "starter-repo"
+	"result": {
+		"id": "repo_123"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
 ### Fork a repo
 
-Route: `POST /namespaces/:namespace/repos/:name/fork`
+Route: `POST /repos/:name/fork`
 
 Request body:
 
 - `name` <Type text="RepoName" /> <MetaInfo text="required" />
-- `readOnly` <Type text="boolean" /> <MetaInfo text="optional" />
+- `read_only` <Type text="boolean" /> <MetaInfo text="optional" />
 
 Response type:
 
 ```ts
 export interface ForkRepoRequest {
 	name: RepoName;
-	readOnly?: boolean;
+	read_only?: boolean;
 }
 
-export interface ForkRepoResponse extends CreateRepoResponse {
+export interface ForkRepoResult extends CreateRepoResult {
 	objects: number;
 }
+
+export type ForkRepoResponse = ApiEnvelope<ForkRepoResult>;
 ```
 
 ```bash
-curl "$ARTIFACTS_BASE_URL/namespaces/$ARTIFACTS_NAMESPACE/repos/$ARTIFACTS_REPO/fork" \
---header "Authorization: Bearer $ARTIFACTS_JWT" \
---header "Content-Type: application/json" \
---data '{
-  "name": "starter-repo-copy"
-}'
+curl --request POST "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO/fork" \
+  --header "Authorization: Bearer $ARTIFACTS_JWT" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "name": "starter-repo-copy",
+    "read_only": false
+  }'
 ```
 
 ```json
 {
-	"id": "repo_456",
-	"name": "starter-repo-copy",
-	"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.dev/git/default/starter-repo-copy.git",
-	"token": "art_v1_89abcdef0123456789abcdef0123456789abcdef?expires=1760003600",
-	"expiresAt": "<ISO_TIMESTAMP>",
-	"objects": 128
+	"result": {
+		"id": "repo_456",
+		"name": "starter-repo-copy",
+		"description": "Repository for automation experiments",
+		"default_branch": "main",
+		"remote": "https://<ACCOUNT>.artifacts.cloudflare.dev/git/default/starter-repo-copy.git",
+		"token": "art_v1_89abcdef0123456789abcdef0123456789abcdef?expires=1760003600",
+		"expires_at": "2026-04-08T13:00:00.000Z",
+		"objects": 128
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
-### Import a GitHub repository
+### Import a public HTTPS remote
 
-Route: `POST /namespaces/:namespace/repos/:name/import`
+Route: `POST /repos/:name/import`
 
 Request body:
 
 - `url` <Type text="string" /> <MetaInfo text="required" />
 - `branch` <Type text="string" /> <MetaInfo text="optional" />
-- `readOnly` <Type text="boolean" /> <MetaInfo text="optional" />
+- `read_only` <Type text="boolean" /> <MetaInfo text="optional" />
 
 Response type:
 
 ```ts
 export interface ImportRepoRequest {
-	url: string; // full GitHub URL
+	url: string;
 	branch?: string;
-	readOnly?: boolean;
+	read_only?: boolean;
 }
 
-export type ImportRepoResponse = CreateRepoResponse;
+export type ImportRepoResponse = ApiEnvelope<CreateRepoResult>;
 ```
 
-The REST API currently requires `url` to be a full GitHub URL, for example `https://github.com/facebook/react`.
+Pass a full HTTPS Git remote URL, for example `https://github.com/facebook/react` or `https://gitlab.com/group/project.git`.
 
 ```bash
-curl "$ARTIFACTS_BASE_URL/namespaces/$ARTIFACTS_NAMESPACE/repos/react-mirror/import" \
---header "Authorization: Bearer $ARTIFACTS_JWT" \
---header "Content-Type: application/json" \
---data '{
-  "url": "https://github.com/facebook/react",
-  "branch": "main"
-}'
+curl --request POST "$ARTIFACTS_BASE_URL/repos/react-mirror/import" \
+  --header "Authorization: Bearer $ARTIFACTS_JWT" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "url": "https://github.com/facebook/react",
+    "branch": "main"
+  }'
 ```
 
 ```json
 {
-	"id": "repo_789",
-	"name": "react-mirror",
-	"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.dev/git/default/react-mirror.git",
-	"token": "art_v1_fedcba9876543210fedcba9876543210fedcba98?expires=1760007200",
-	"expiresAt": "<ISO_TIMESTAMP>"
+	"result": {
+		"id": "repo_789",
+		"name": "react-mirror",
+		"description": null,
+		"default_branch": "main",
+		"remote": "https://<ACCOUNT>.artifacts.cloudflare.dev/git/default/react-mirror.git",
+		"token": "art_v1_fedcba9876543210fedcba9876543210fedcba98?expires=1760007200",
+		"expires_at": "2026-04-08T14:00:00.000Z"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -301,37 +409,58 @@ curl "$ARTIFACTS_BASE_URL/namespaces/$ARTIFACTS_NAMESPACE/repos/react-mirror/imp
 
 ### List tokens for a repo
 
-Route: `GET /namespaces/:namespace/repos/:name/tokens`
+Route: `GET /repos/:name/tokens?state=&per_page=&page=`
+
+Query parameters:
+
+- `state` <Type text='"active" | "expired" | "revoked" | "all"' /> <MetaInfo text='optional (default: "active")' />
+- `per_page` <Type text="number" /> <MetaInfo text="optional (default: 30, max: 100)" />
+- `page` <Type text="number" /> <MetaInfo text="optional (default: 1)" />
 
 Response type:
 
 ```ts
-export interface ListTokensResponse {
-	tokens: TokenInfo[];
+export interface ListTokensQuery {
+	state?: TokenState | "all";
+	per_page?: number;
+	page?: number;
 }
+
+export type ListTokensResponse = ApiEnvelope<TokenInfo[]>;
 ```
 
 ```bash
-curl "$ARTIFACTS_BASE_URL/namespaces/$ARTIFACTS_NAMESPACE/repos/$ARTIFACTS_REPO/tokens" \
---header "Authorization: Bearer $ARTIFACTS_JWT"
+curl "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO/tokens?state=all&per_page=30&page=1" \
+  --header "Authorization: Bearer $ARTIFACTS_JWT"
 ```
 
 ```json
 {
-	"tokens": [
+	"result": [
 		{
 			"id": "tok_123",
 			"scope": "read",
-			"createdAt": "<ISO_TIMESTAMP>",
-			"expiresAt": "<ISO_TIMESTAMP>"
+			"state": "active",
+			"created_at": "2026-04-07T12:00:00.000Z",
+			"expires_at": "2026-04-07T13:00:00.000Z"
 		}
-	]
+	],
+	"success": true,
+	"errors": [],
+	"messages": [],
+	"result_info": {
+		"page": 1,
+		"per_page": 30,
+		"total_pages": 1,
+		"count": 1,
+		"total_count": 1
+	}
 }
 ```
 
 ### Create a token
 
-Route: `POST /namespaces/:namespace/tokens`
+Route: `POST /tokens`
 
 Request body:
 
@@ -348,128 +477,83 @@ export interface CreateTokenRequest {
 	ttl?: number;
 }
 
-export interface CreateTokenResponse {
+export interface CreateTokenResult {
 	id: string;
 	plaintext: ArtifactToken;
 	scope: Scope;
-	expiresAt: string;
+	expires_at: string;
 }
+
+export type CreateTokenResponse = ApiEnvelope<CreateTokenResult>;
 ```
 
 ```bash
-curl "$ARTIFACTS_BASE_URL/namespaces/$ARTIFACTS_NAMESPACE/tokens" \
---header "Authorization: Bearer $ARTIFACTS_JWT" \
---header "Content-Type: application/json" \
---data '{
-  "repo": "starter-repo",
-  "scope": "read",
-  "ttl": 3600
-}'
+curl --request POST "$ARTIFACTS_BASE_URL/tokens" \
+  --header "Authorization: Bearer $ARTIFACTS_JWT" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "repo": "starter-repo",
+    "scope": "read",
+    "ttl": 3600
+  }'
 ```
 
 ```json
 {
-	"id": "tok_123",
-	"plaintext": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000",
-	"scope": "read",
-	"expiresAt": "<ISO_TIMESTAMP>"
-}
-```
-
-### Validate a token
-
-Route: `POST /namespaces/:namespace/tokens/validate`
-
-Request body:
-
-- `repo` <Type text="RepoName" /> <MetaInfo text="required" />
-- `token` <Type text="ArtifactToken" /> <MetaInfo text="required" />
-
-Response type:
-
-```ts
-export interface ValidateTokenRequest {
-	token: ArtifactToken;
-	repo: RepoName;
-}
-
-export interface ValidateTokenResponse {
-	valid: boolean;
-	scope?: Scope;
-}
-```
-
-```bash
-curl "$ARTIFACTS_BASE_URL/namespaces/$ARTIFACTS_NAMESPACE/tokens/validate" \
---header "Authorization: Bearer $ARTIFACTS_JWT" \
---header "Content-Type: application/json" \
---data '{
-  "repo": "starter-repo",
-  "token": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000"
-}'
-```
-
-```json
-{
-	"valid": true,
-	"scope": "read"
+	"result": {
+		"id": "tok_123",
+		"plaintext": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000",
+		"scope": "read",
+		"expires_at": "2026-04-07T13:00:00.000Z"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
 ### Revoke a token
 
-Route: `POST /namespaces/:namespace/tokens/revoke`
-
-Request body:
-
-- `token` <Type text="ArtifactToken" /> <MetaInfo text="optional" />
-- `id` <Type text="string" /> <MetaInfo text="optional" />
-
-Provide either `token` or `id`.
+Route: `DELETE /tokens/:id`
 
 Response type:
 
 ```ts
-export interface RevokeTokenRequest {
-	token?: ArtifactToken;
-	id?: string;
+export interface RevokeTokenResult {
+	id: string;
 }
 
-export interface RevokeTokenResponse {
-	revoked: true;
-}
+export type RevokeTokenResponse = ApiEnvelope<RevokeTokenResult>;
 ```
 
 ```bash
-curl "$ARTIFACTS_BASE_URL/namespaces/$ARTIFACTS_NAMESPACE/tokens/revoke" \
---header "Authorization: Bearer $ARTIFACTS_JWT" \
---header "Content-Type: application/json" \
---data '{
-  "id": "tok_123"
-}'
+curl --request DELETE "$ARTIFACTS_BASE_URL/tokens/tok_123" \
+  --header "Authorization: Bearer $ARTIFACTS_JWT"
 ```
 
 ```json
 {
-	"revoked": true
+	"result": {
+		"id": "tok_123"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
 ## Errors
 
-The API can return application errors and authentication errors.
+Application errors also use the v4 envelope:
 
 ```ts
 export interface ApiError {
-	error: string;
-}
-
-export interface AuthError {
-	success: false;
-	errors: Array<{
-		code: 10000;
-		message: string;
-	}>;
+	code: number;
+	message: string;
+	documentation_url?: string;
+	source?: {
+		pointer?: string;
+	};
 }
 ```
 
@@ -478,7 +562,7 @@ export interface AuthError {
 <LinkCard
 	title="Workers binding"
 	href="/artifacts/api/workers-binding/"
-	description="Call the same Artifacts operations from a Worker through the Wrangler Artifacts binding."
+	description="Call the same Artifacts operations from a Worker through the Artifacts binding."
 />
 
 <LinkCard
