@@ -15,7 +15,7 @@ banner:
 
 import { Details } from "~/components";
 
-Depending on the setup ([Cloudflare as Primary](#cloudflare-as-primary) or [Cloudflare as Secondary](#cloudflare-as-secondary)), you need to configure slightly different Cloudflare IP addresses at your other DNS provider.
+Depending on your setup ([Cloudflare as Primary](#cloudflare-as-primary) or [Cloudflare as Secondary](#cloudflare-as-secondary)), you need to configure slightly different Cloudflare IP addresses at your other DNS provider.
 
 ## Source IP addresses
 
@@ -52,7 +52,7 @@ If you are using Cloudflare for Primary DNS — meaning that you are setting up 
 
 ### Allow range
 
-Allow the [source IP addresses](#source-ip-addresses) listed above at your secondary DNS servers.
+Cloudflare's NOTIFY messages originate from the [source IP addresses](#source-ip-addresses) listed above. Allow them at your secondary DNS servers.
 
 ### Transfer IP
 
@@ -68,7 +68,7 @@ If you are using Cloudflare for Secondary DNS — meaning that you are setting u
 
 ### Allow range
 
-Allow the [source IP addresses](#source-ip-addresses) listed above at your primary DNS servers.
+Cloudflare's AXFR/IXFR zone transfer requests originate from the [source IP addresses](#source-ip-addresses) listed above. Allow them at your primary DNS servers.
 
 ### Notify IPs
 
