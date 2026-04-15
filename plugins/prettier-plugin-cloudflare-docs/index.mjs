@@ -197,11 +197,6 @@ function extractPreserveRegions(text, preserveElements) {
  * A single node may contain multiple placeholders (e.g., when the MDX
  * parser merges sibling elements into one node), so we replace all
  * occurrences within each node's value.
- *
- * For fenced code blocks (type "code"), we also suppress embedded language
- * formatting by clearing the lang temporarily — prettier's embedded formatter
- * would otherwise re-format the restored content. We store the original lang
- * in a custom property and reset it so the printer outputs the correct fence.
  */
 function restorePreserveNodes(ast, regions) {
 	const globalRegex = /<!--MDXPRESERVE:(\d+)-*-->/g;
