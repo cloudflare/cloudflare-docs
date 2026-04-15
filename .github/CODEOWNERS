@@ -7,6 +7,7 @@
 /.github/ @cloudflare/content-engineering @kodster28 @mvvmm @colbywhite @ahaywood @MohamedH1998
 /.github/CODEOWNERS @cloudflare/pcx-technical-writing @cloudflare/product-owners @kodster28
 /.github/actions/assign-pr/index.js @cloudflare/pcx-technical-writing @cloudflare/product-owners @kodster28
+/.github/labeler.yml @cloudflare/pcx-technical-writing
 /src/components/ @cloudflare/content-engineering @kodster28
 *.js @cloudflare/content-engineering @kodster28
 *.ts @cloudflare/content-engineering @kodster28
