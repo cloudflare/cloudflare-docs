@@ -106,9 +106,11 @@ The content persists across messages and survives hibernation. It is always visi
 
 ### Searchable context
 
-When you have a large body of information — a knowledge base, documentation, logs, accumulated notes — you do not want to stuff it all into the system prompt. Searchable context stores entries in an FTS5 full-text search index. The system prompt shows only a summary (for example, "42 entries indexed"), and the agent retrieves specific entries when it needs them.
+When you have a large body of information — a knowledge base, documentation, logs, accumulated notes — you do not want to stuff it all into the system prompt. Searchable context keeps a summary in the system prompt (for example, "42 entries indexed") and lets the agent retrieve specific entries when it needs them.
 
-You provide a provider with a `search()` method. The built-in `AgentSearchProvider` uses Durable Object SQLite:
+You provide a provider with a `search()` method. How that search works is entirely up to you — full-text search, vector search via [Vectorize](/vectorize/), a call to an external API, or anything else. The Session does not care about the implementation, only that the provider has a `search()` method.
+
+The built-in `AgentSearchProvider` uses Durable Object SQLite with FTS5 as a simple default:
 
 <TypeScriptExample>
 
@@ -124,7 +126,33 @@ const session = Session.create(this)
 
 </TypeScriptExample>
 
-The agent gets a `search_context` tool for querying and a `set_context` tool for indexing new entries. It decides what to index and how to search — you just provide the storage.
+But you can implement your own provider backed by any search mechanism:
+
+<TypeScriptExample>
+
+```ts
+const session = Session.create(this)
+  .withContext("knowledge", {
+    description: "Searchable knowledge base",
+    provider: {
+      get: async () => "Product documentation and FAQs",
+      search: async (query) => {
+        // Use Vectorize, Algolia, Elasticsearch — whatever you need
+        const results = await env.VECTORIZE_INDEX.query(
+          await generateEmbedding(query), { topK: 5 }
+        );
+        return results.matches.map(m => m.metadata.text).join("\n\n");
+      },
+      set: async (key, content) => {
+        // Index new content
+      }
+    }
+  });
+```
+
+</TypeScriptExample>
+
+The agent gets a `search_context` tool for querying and a `set_context` tool for indexing new entries. It decides what to search for — you decide how the search works.
 
 This is the right choice when the agent needs to find specific pieces of information from a large collection, rather than loading entire documents.
 
