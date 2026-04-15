@@ -3,13 +3,23 @@ title: Privacy Proxy metrics now available via GraphQL Analytics API
 description: Privacy Proxy metrics are now queryable through the GraphQL Analytics API, the new default method for accessing observability data. Four nodes cover requests, ingress connections, egress connections, and authentication.
 products:
   - privacy-proxy
-date: 2026-04-10
+date: 2026-04-15
 ---
 
-Privacy Proxy metrics are now queryable through Cloudflare's [GraphQL Analytics API](/analytics/graphql-api/), the new default method for accessing Privacy Proxy observability data. All metrics are available through a single endpoint:
+Privacy Proxy metrics are now queryable through Cloudflare's [GraphQL Analytics API](/privacy-proxy/reference/metrics/graphql/), the new default method for accessing Privacy Proxy observability data. All metrics are available through a single endpoint:
 
-```txt
-POST https://api.cloudflare.com/client/v4/graphql
+```bash
+curl https://api.cloudflare.com/client/v4/graphql \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "query": "{ viewer { accounts(filter: { accountTag: $accountTag }) { privacyProxyRequestMetricsAdaptiveGroups(filter: { date_geq: $startDate, date_leq: $endDate }, limit: 10000, orderBy: [date_ASC]) { count dimensions { date } } } } }",
+    "variables": {
+      "accountTag": "<YOUR_ACCOUNT_TAG>",
+      "startDate": "2026-04-04",
+      "endDate": "2026-04-06"
+    }
+  }'
 ```
 
 ### Available nodes
@@ -21,7 +31,7 @@ Four GraphQL nodes are now live, providing aggregate metrics across all key dime
 - **`privacyProxyEgressConnMetricsAdaptiveGroups`** — Proxy-to-origin connection counts, bytes transferred, and latency percentiles.
 - **`privacyProxyAuthMetricsAdaptiveGroups`** — Authentication attempt counts by method and result.
 
-All nodes support filtering by time, data center, and endpoint, with additional node-specific dimensions such as transport protocol, TLS version, and authentication method.
+All nodes support filtering by time, data center (`coloCode`), and endpoint, with additional node-specific dimensions such as transport protocol and authentication method.
 
 ### What this means for existing OpenTelemetry users
 
