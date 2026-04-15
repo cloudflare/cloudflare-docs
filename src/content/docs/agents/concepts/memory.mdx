@@ -137,7 +137,7 @@ const session = Session.create(this)
     provider: {
       get: async () => "Product documentation and FAQs",
       search: async (query) => {
-        // Use Vectorize, Algolia, Elasticsearch — whatever you need
+        // Use Vectorize, an external API — whatever you need
         const results = await env.VECTORIZE_INDEX.query(
           await generateEmbedding(query), { topK: 5 }
         );
