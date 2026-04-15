@@ -18,7 +18,7 @@ Cloudflare Access supports two methods of enforcing multi-factor authentication 
 
 ## Identity provider-based MFA
 
-You can require that users log in with specific MFA methods provided by their identity provider. For example, you can create rules that only allow users to reach a given application if they authenticate with a physical hard key through their IdP.
+You can require that users log in with specific MFA methods provided by their identity provider. For example, you can create rules that only allow users to reach a given application if they authenticate with a security key through their IdP.
 
 IdP-based MFA enforcement is only available with the following identity providers:
 
@@ -57,7 +57,7 @@ If the user fails to present the required MFA method, Cloudflare Access rejects 
 
 When users authenticate with their identity provider, the IdP shares their username with Cloudflare Access. Access writes that value into the <GlossaryTooltip term="JSON web token">JSON Web Token (JWT)</GlossaryTooltip> generated for the user.
 
-Certain identity providers also share the MFA method presented by the user. Access can add these values into the JWT. For example, if the user authenticated with their password and a physical hard key, the IdP can send a confirmation to Cloudflare Access. Access then stores that method in the JWT issued to the user.
+Certain identity providers also share the MFA method presented by the user. Access can add these values into the JWT. For example, if the user authenticated with their password and a security key, the IdP can send a confirmation to Cloudflare Access. Access then stores that method in the JWT issued to the user.
 
 Cloudflare Access follows [RFC 8176](https://tools.ietf.org/html/rfc8176), Authentication Method Reference Values, to define authentication methods.
 
