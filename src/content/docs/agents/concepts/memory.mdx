@@ -1,0 +1,302 @@
+---
+title: Memory
+pcx_content_type: concept
+description: How agents store and recall information — read-only context, writable short-form memory, searchable knowledge, and on-demand documents.
+tags:
+  - AI
+sidebar:
+  order: 8
+---
+
+import { TypeScriptExample, LinkCard } from "~/components";
+
+Agents need memory to be useful over time. Without it, every conversation starts from zero — the agent forgets who the user is, what it learned, and what it was doing. Memory is what turns a stateless LLM call into a persistent, context-aware agent.
+
+The [Session API](/agents/api-reference/sessions/) provides the memory layer for agents built on the Cloudflare Agents SDK. It manages persistent context blocks that are injected into the system prompt, and generates AI-controllable tools so the agent can read, write, search, and load its own memory during a conversation.
+
+## Types of memory
+
+The Session API supports four types of memory, each suited to different kinds of information. The type is determined by the **provider** backing the context block — the Session detects the provider's capabilities automatically via duck-typing.
+
+### Read-only context
+
+A read-only block provides static information the agent should always have — its identity, instructions, personality, or any fixed reference material. The agent can see this content in its system prompt but cannot modify it.
+
+<TypeScriptExample>
+
+```ts
+import { Session } from "agents/experimental/memory/session";
+
+const session = Session.create(this)
+  .withContext("soul", {
+    provider: {
+      get: async () => "You are a helpful coding assistant who speaks concisely."
+    }
+  });
+```
+
+</TypeScriptExample>
+
+Read-only blocks are defined by providing an object with only a `get()` method. No tools are generated for read-only blocks — the content appears in the system prompt and that is it.
+
+**Use for:** Agent identity, static instructions, configuration that should not change mid-conversation.
+
+### Writable short-form context
+
+A writable block is a small section of the system prompt that the agent can update during a conversation. Think of it as a scratchpad — the agent writes short notes to itself that persist across messages and survive hibernation.
+
+<TypeScriptExample>
+
+```ts
+const session = Session.create(this)
+  .withContext("memory", {
+    description: "Important facts learned during conversation",
+    maxTokens: 1100
+  })
+  .withContext("todos", {
+    description: "Task list",
+    maxTokens: 2000
+  });
+```
+
+</TypeScriptExample>
+
+When you omit the `provider` option in the builder, the Session auto-wires to a SQLite-backed writable provider. The agent gets a `set_context` tool that lets it replace or append content to these blocks. Token limits are enforced — the agent cannot exceed the `maxTokens` budget.
+
+The system prompt renders writable blocks with a token usage indicator:
+
+```txt
+══════════════════════════════════════════════
+MEMORY (Important facts learned during conversation) [45% — 495/1100 tokens]
+══════════════════════════════════════════════
+User prefers dark mode.
+User's project uses React and TypeScript.
+Deployment target is Cloudflare Workers.
+```
+
+**Use for:** Learned facts, user preferences, working notes, to-do lists — anything the agent should remember and update over the course of a conversation.
+
+### Searchable context
+
+A searchable block stores a collection of keyed entries indexed with full-text search (FTS5). Instead of putting everything into the system prompt (which would waste context window space), the system prompt shows only a summary (for example, "42 entries indexed"), and the agent searches when it needs specific information.
+
+<TypeScriptExample>
+
+```ts
+import { AgentSearchProvider } from "agents/experimental/memory/session";
+
+const session = Session.create(this)
+  .withContext("knowledge", {
+    description: "Searchable knowledge base",
+    provider: new AgentSearchProvider(this)
+  });
+```
+
+</TypeScriptExample>
+
+The agent gets a `search_context` tool for querying and a `set_context` tool for indexing new entries. Each entry has a key and content — the agent decides what to index and how to name it.
+
+**Use for:** Large knowledge bases, accumulated notes across many sessions, reference material that would be too large to fit in the system prompt.
+
+### On-demand documents (Skills)
+
+A skill block stores a collection of documents where only the metadata (titles and descriptions) appears in the system prompt. The agent loads full content into its context on demand and can unload it to free space.
+
+<TypeScriptExample>
+
+```ts
+import { R2SkillProvider } from "agents/experimental/memory/session";
+
+const session = Session.create(this)
+  .withContext("skills", {
+    provider: new R2SkillProvider(env.SKILLS_BUCKET, { prefix: "skills/" })
+  });
+```
+
+</TypeScriptExample>
+
+The system prompt shows available skills as a listing:
+
+```txt
+══════════════════════════════════════════════
+SKILLS [loadable]
+══════════════════════════════════════════════
+- api-ref: API Reference documentation
+- style-guide: Company style guide
+- deploy-checklist: Production deployment checklist
+```
+
+The agent uses `load_context` to fetch full content and `unload_context` to free the space when done. This is covered in detail in the [Skills](/agents/concepts/skills/) concept page.
+
+**Use for:** Reference documentation, instructions, templates, or any large content the agent only needs sometimes.
+
+## How agents interact with memory
+
+The Session automatically generates tools based on the provider types of your context blocks. You pass these tools to your LLM alongside your own application-specific tools:
+
+<TypeScriptExample>
+
+```ts
+const sessionTools = await session.tools();
+const allTools = { ...sessionTools, ...myApplicationTools };
+
+const result = streamText({
+  model: myModel,
+  system: await session.freezeSystemPrompt(),
+  messages: await convertToModelMessages(session.getHistory()),
+  tools: allTools
+});
+```
+
+</TypeScriptExample>
+
+### Generated tools
+
+The Session generates tools dynamically based on what provider types are present:
+
+| Tool | Generated when | What it does |
+| ---- | -------------- | ------------ |
+| **`set_context`** | Any writable, skill, or search block exists | Writes content to a named block. For writable blocks, replaces or appends. For skill/search blocks, writes a keyed entry. |
+| **`load_context`** | Any skill block exists | Loads full content of a document by key into the agent's context. |
+| **`unload_context`** | Any skill block exists | Frees context space by removing a previously loaded document. The document remains available for re-loading. |
+| **`search_context`** | Any search block exists | Full-text search within a searchable block. Returns the top results ranked by relevance. |
+| **`session_search`** | Using `SessionManager` | Searches across all sessions (cross-conversation search). |
+
+The tools include descriptions and parameter schemas that tell the LLM which blocks are available and what they are for. The agent decides when and how to use them based on the conversation.
+
+For the full tool signatures and all Session methods, refer to the [Session API reference](/agents/api-reference/sessions/).
+
+## The system prompt
+
+Context blocks are assembled into a structured system prompt with clear headers and metadata. Each block gets a labeled section with tags indicating its type and capacity:
+
+```txt
+══════════════════════════════════════════════
+SOUL (Identity) [readonly]
+══════════════════════════════════════════════
+You are a helpful coding assistant who speaks concisely.
+
+══════════════════════════════════════════════
+MEMORY (Important facts) [45% — 495/1100 tokens]
+══════════════════════════════════════════════
+User prefers dark mode.
+User's project uses React and TypeScript.
+
+══════════════════════════════════════════════
+KNOWLEDGE (Searchable knowledge base) [searchable]
+══════════════════════════════════════════════
+12 entries indexed.
+
+══════════════════════════════════════════════
+SKILLS [loadable]
+══════════════════════════════════════════════
+- api-ref: API Reference documentation
+- style-guide: Company style guide
+```
+
+The tags (`[readonly]`, `[writable]`, `[searchable]`, `[loadable]`) tell the LLM what kind of interaction is possible with each block. Token budgets show the agent how much space remains in writable blocks, helping it manage its own memory.
+
+## Gotchas
+
+### Prompt caching
+
+LLM providers (Anthropic, OpenAI, and others) cache the system prompt prefix. When consecutive requests share the same system prompt, the provider can skip re-processing that prefix — reducing both latency and cost. Breaking the cache (by changing the system prompt) throws away this benefit.
+
+The Session API is designed to work with prompt caching:
+
+- **`freezeSystemPrompt()`** renders the system prompt from all context blocks on the first call, then returns the cached value on subsequent calls. The prompt does not change between turns, even when the agent writes to memory via `set_context`.
+- **`withCachedPrompt()`** persists the frozen prompt to storage, so it survives Durable Object hibernation and eviction. When the agent wakes up, it loads the same prompt without re-fetching from all providers.
+
+When the agent uses `set_context` to update a writable block, the underlying provider is updated immediately (the data is saved), but the frozen system prompt is **not** re-rendered. The LLM sees the update on its next turn only if you explicitly call `refreshSystemPrompt()` — which you typically do between conversation turns, not mid-turn.
+
+This means the system prompt stays stable throughout a multi-step tool-use turn, preserving the provider's prefix cache across every step.
+
+<TypeScriptExample>
+
+```ts
+const session = Session.create(this)
+  .withContext("soul", {
+    provider: { get: async () => "You are a helpful assistant." }
+  })
+  .withContext("memory", { description: "Learned facts", maxTokens: 1100 })
+  .withCachedPrompt(); // Persist the frozen prompt across hibernation
+
+// During a conversation turn:
+const system = await session.freezeSystemPrompt(); // Same value every call
+const tools = await session.tools();
+
+// ... agent calls set_context to update memory ...
+// The frozen prompt is NOT changed — prefix cache stays warm
+
+// Between turns (optional — if you want the agent to see its own updates):
+await session.refreshSystemPrompt();
+```
+
+</TypeScriptExample>
+
+### Compaction
+
+Long conversations eventually exceed the LLM's context window. Compaction addresses this by summarizing older messages — but it never deletes the originals.
+
+Compaction uses **overlays**: a summary is stored in a separate table, keyed by the message range it covers. When `getHistory()` is called, overlays are applied transparently at read time — the compacted range is replaced by a synthetic summary message. The underlying messages remain in SQLite, preserving the full conversation for audit, search, and branching.
+
+```txt
+Messages:  [1] [2] [3] [4] [5] [6] [7] [8] [9] [10]
+                    ↓ compaction ↓
+Overlay:   [1] [2] [SUMMARY of 3-7]           [8] [9] [10]
+                                                ↑ tail protected
+```
+
+The key points:
+
+- **Non-destructive** — original messages are never deleted. The full conversation is always available in the database.
+- **Iterative** — when the conversation grows again and triggers another compaction, the existing summary is passed to the LLM to update, not replaced from scratch.
+- **Boundary-aware** — compaction boundaries are shifted to avoid splitting tool call / tool result pairs.
+- **Configurable** — `protectHead` preserves the first N messages (usually the system context), and `tailTokenBudget` keeps the most recent messages intact.
+
+<TypeScriptExample>
+
+```ts
+import { createCompactFunction } from "agents/experimental/memory/utils/compaction-helpers";
+
+const session = Session.create(this)
+  .withContext("memory", { maxTokens: 1100 })
+  .onCompaction(createCompactFunction({
+    summarize: (prompt) =>
+      generateText({ model: myModel, prompt }).then(r => r.text),
+    protectHead: 3,
+    tailTokenBudget: 20000,
+    minTailMessages: 2
+  }))
+  .compactAfter(100_000); // Auto-compact when token estimate exceeds threshold
+```
+
+</TypeScriptExample>
+
+Auto-compaction triggers after `appendMessage()` when the estimated token count exceeds the threshold. Compaction failure is non-fatal — the message is already saved.
+
+## Related
+
+<LinkCard
+  title="Session API reference"
+  href="/agents/api-reference/sessions/"
+  description="Full API reference for Session — messages, context blocks, compaction, search, tools, and custom providers."
+/>
+
+<LinkCard
+  title="Skills"
+  href="/agents/concepts/skills/"
+  description="On-demand documents the agent loads into context when needed."
+/>
+
+<LinkCard
+  title="Store and sync state"
+  href="/agents/api-reference/store-and-sync-state/"
+  description="setState() for simpler key-value persistence and real-time sync."
+/>
+
+<LinkCard
+  title="Think"
+  href="/agents/api-reference/think/"
+  description="Opinionated chat agent with built-in Session integration via configureSession()."
+/>

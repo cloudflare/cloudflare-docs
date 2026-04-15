@@ -1,0 +1,231 @@
+---
+title: Skills
+pcx_content_type: concept
+description: On-demand documents and instructions that agents load into their context window when needed — like reference material on a shelf.
+tags:
+  - AI
+sidebar:
+  order: 9
+---
+
+import { TypeScriptExample, LinkCard } from "~/components";
+
+Skills are on-demand documents that an agent can load into its context window when it needs them. Think of them as reference material on a shelf — the agent sees a list of titles and descriptions, picks what is relevant to the current task, loads it, uses it, and unloads it when done.
+
+This solves a fundamental problem: an agent might need access to a large body of reference material (API docs, style guides, runbooks, templates), but stuffing it all into the system prompt would waste context window space and degrade performance. Skills let the agent be selective — it carries the index in its head and fetches the full content on demand.
+
+## How skills work
+
+Skills are backed by the `SkillProvider` interface, one of the four [memory types](/agents/concepts/memory/) supported by the Session API. A skill provider has three methods:
+
+- **`get()`** — Returns a metadata listing (titles and descriptions) that appears in the system prompt
+- **`load(key)`** — Fetches the full content of a specific skill
+- **`set(key, content, description?)`** — Writes or updates a skill entry (optional)
+
+The Session renders the metadata listing in the system prompt so the LLM knows what is available:
+
+```txt
+══════════════════════════════════════════════
+SKILLS [loadable]
+══════════════════════════════════════════════
+- api-ref: API Reference documentation
+- style-guide: Company style guide
+- deploy-checklist: Production deployment checklist
+- error-codes: Error code reference with troubleshooting steps
+```
+
+The `[loadable]` tag tells the LLM that these entries are not inline — it needs to use a tool to access the full content.
+
+## Using skills with the Session API
+
+### R2-backed skills
+
+The built-in `R2SkillProvider` stores skills in a Cloudflare R2 bucket. Each skill is an R2 object with optional custom metadata for descriptions.
+
+<TypeScriptExample>
+
+```ts
+import { Session, R2SkillProvider } from "agents/experimental/memory/session";
+
+const session = Session.create(this)
+  .withContext("soul", {
+    provider: {
+      get: async () => [
+        "You are a helpful assistant with access to skills.",
+        "When a user asks you to do something, check the SKILLS section",
+        "for a relevant skill and use load_context to load it.",
+      ].join("\n")
+    }
+  })
+  .withContext("memory", {
+    description: "Learned facts",
+    maxTokens: 1100
+  })
+  .withContext("skills", {
+    provider: new R2SkillProvider(env.SKILLS_BUCKET, { prefix: "skills/" })
+  })
+  .withCachedPrompt();
+```
+
+</TypeScriptExample>
+
+The `prefix` option scopes the provider to a subdirectory in the bucket. Skill keys in the metadata listing are shown without the prefix — so `skills/api-ref` becomes `api-ref` in the system prompt.
+
+### Wrangler configuration
+
+Add an R2 bucket binding to your Wrangler configuration:
+
+```jsonc
+{
+  "r2_buckets": [
+    {
+      "binding": "SKILLS_BUCKET",
+      "bucket_name": "my-agent-skills"
+    }
+  ]
+}
+```
+
+### Uploading skills
+
+Skills are regular R2 objects. Upload them through any R2 interface — the Wrangler CLI, the dashboard, or the Workers API:
+
+```sh
+# Upload a skill with a description
+echo "Your API reference content here..." | wrangler r2 object put my-agent-skills/skills/api-ref --content-type text/plain
+
+# Upload from a file
+wrangler r2 object put my-agent-skills/skills/style-guide --file ./docs/style-guide.md --content-type text/markdown
+```
+
+To add descriptions (shown in the metadata listing), set custom metadata on the R2 object:
+
+<TypeScriptExample>
+
+```ts
+await env.SKILLS_BUCKET.put("skills/api-ref", content, {
+  customMetadata: { description: "API Reference documentation" }
+});
+```
+
+</TypeScriptExample>
+
+## How the agent uses skills
+
+When the Session detects a skill provider, it generates three tools automatically:
+
+### load_context
+
+Loads the full content of a skill by key. The agent calls this when it needs the content of a specific skill to answer a question or complete a task.
+
+```txt
+Agent sees: "- deploy-checklist: Production deployment checklist"
+User asks: "Walk me through a production deployment"
+Agent calls: load_context({ block: "skills", key: "deploy-checklist" })
+→ Full checklist content is loaded into the agent's working context
+```
+
+### unload_context
+
+Frees context space by removing a previously loaded skill. The skill remains in R2 and available for re-loading — unloading only removes it from the current conversation context.
+
+This is important for agents that work with many skills across a long conversation. Without unloading, loaded skills accumulate and consume context window space.
+
+### set_context
+
+When the skill provider implements `set()`, the agent can also write back — updating existing skills or creating new ones. This enables agents that maintain their own reference material.
+
+## Custom skill providers
+
+The `R2SkillProvider` is one implementation. You can back skills with any storage by implementing the `SkillProvider` interface:
+
+<TypeScriptExample>
+
+```ts
+import type { SkillProvider } from "agents/experimental/memory/session";
+
+class DatabaseSkillProvider implements SkillProvider {
+  private db: D1Database;
+
+  constructor(db: D1Database) {
+    this.db = db;
+  }
+
+  async get(): Promise<string | null> {
+    const rows = await this.db
+      .prepare("SELECT key, description FROM skills ORDER BY key")
+      .all();
+    if (rows.results.length === 0) return null;
+    return rows.results
+      .map(r => `- ${r.key}${r.description ? `: ${r.description}` : ""}`)
+      .join("\n");
+  }
+
+  async load(key: string): Promise<string | null> {
+    const row = await this.db
+      .prepare("SELECT content FROM skills WHERE key = ?")
+      .bind(key)
+      .first();
+    return row ? (row.content as string) : null;
+  }
+
+  async set(key: string, content: string, description?: string): Promise<void> {
+    await this.db
+      .prepare(
+        "INSERT INTO skills (key, content, description) VALUES (?, ?, ?) " +
+        "ON CONFLICT(key) DO UPDATE SET content = ?, description = ?"
+      )
+      .bind(key, content, description ?? null, content, description ?? null)
+      .run();
+  }
+}
+```
+
+</TypeScriptExample>
+
+Use it like any other provider:
+
+<TypeScriptExample>
+
+```ts
+const session = Session.create(this)
+  .withContext("skills", {
+    provider: new DatabaseSkillProvider(env.DB)
+  });
+```
+
+</TypeScriptExample>
+
+The Session detects the `load()` method via duck-typing and generates the appropriate tools automatically.
+
+## Skills vs other memory types
+
+| Aspect | Skills (SkillProvider) | Writable context | Searchable context |
+| ------ | --------------------- | ---------------- | ------------------ |
+| **In system prompt** | Metadata listing only | Full content | Summary count |
+| **Access pattern** | Load by key | Always visible | Search by query |
+| **Best for** | Large documents, reference material | Short notes, preferences | Large collections of small entries |
+| **Context cost** | Low (until loaded) | Proportional to content | Low (until searched) |
+| **Agent writes?** | Optional (if `set` implemented) | Yes (via `set_context`) | Yes (via `set_context`) |
+
+The key distinction: skills are **lazy**. They cost nearly nothing in the system prompt until the agent decides it needs one. This makes them ideal for large reference material where only a subset is relevant to any given conversation.
+
+## Related
+
+<LinkCard
+  title="Memory"
+  href="/agents/concepts/memory/"
+  description="Overview of all memory types — read-only, writable, searchable, and on-demand."
+/>
+
+<LinkCard
+  title="Session API reference"
+  href="/agents/api-reference/sessions/"
+  description="Full API reference including SkillProvider, R2SkillProvider, and generated tools."
+/>
+
+<LinkCard
+  title="Think"
+  href="/agents/api-reference/think/"
+  description="Opinionated chat agent with configureSession() for adding skills."
+/>
