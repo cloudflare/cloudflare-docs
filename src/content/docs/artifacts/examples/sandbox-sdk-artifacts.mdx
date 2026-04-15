@@ -1,11 +1,116 @@
 ---
 title: Sandbox SDK + Artifacts
-description: Example Artifacts integration with Sandbox SDK.
+description: Connect a sandbox to an Artifacts repo.
 pcx_content_type: example
 sidebar:
   order: 3
 ---
 
-This example will show how Sandbox SDK workloads can read from and write to Artifacts during isolated execution.
+import { TypeScriptExample, WranglerConfig } from "~/components";
 
-Use it as a reference for build, analysis, and agent workflows that need shared versioned storage.
+Use this pattern when you want a sandbox and an Artifacts repo to share the same stable ID.
+
+- Calls `getSandbox(env.Sandbox, "my-sandbox")` to create or reuse the sandbox from the minimal Sandbox SDK example.
+- Looks up an Artifacts repo with the same ID. If the repo does not exist, it creates one. If the repo exists, it reuses the remote and mints a fresh write token.
+- Converts the token into an authenticated Git remote in the form `https://x:<token-secret>@...` and stores it in `ARTIFACTS_GIT_REMOTE` inside the sandbox.
+
+Add the Sandbox and Artifacts bindings to `wrangler.jsonc`:
+
+<WranglerConfig>
+
+```jsonc title="wrangler.jsonc"
+{
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"compatibility_flags": ["nodejs_compat"],
+	"containers": [
+		{
+			"class_name": "Sandbox",
+			"image": "./Dockerfile",
+			"instance_type": "lite",
+			"max_instances": 1
+		}
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "Sandbox",
+				"class_name": "Sandbox"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["Sandbox"]
+		}
+	],
+	"artifacts": [
+		{
+			"binding": "ARTIFACTS",
+			"namespace": "default"
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+Then create or reuse the sandbox and repo:
+
+<TypeScriptExample filename="src/index.ts" typescriptFirst={true}>
+
+```ts
+import { getSandbox } from "@cloudflare/sandbox";
+
+export { Sandbox } from "@cloudflare/sandbox";
+
+interface Env {
+	Sandbox: DurableObjectNamespace<Sandbox>;
+	ARTIFACTS: Artifacts;
+}
+
+function toAuthenticatedRemote(remote: string, token: string) {
+	const tokenSecret = token.split("?expires=")[0];
+	return `https://x:${tokenSecret}@${remote.slice("https://".length)}`;
+}
+
+export default {
+	async fetch(_request: Request, env: Env): Promise<Response> {
+		const sandboxId = "my-sandbox";
+		const sandbox = getSandbox(env.Sandbox, sandboxId);
+
+		const existingRepo = await env.ARTIFACTS.get(sandboxId);
+
+		let remote: string;
+		let token: string;
+
+		if (existingRepo) {
+			const info = await existingRepo.info();
+			if (!info) {
+				throw new Error("Repo metadata not found");
+			}
+
+			remote = info.remote;
+			token = (await existingRepo.createToken("write", 3600)).plaintext;
+		} else {
+			const created = await env.ARTIFACTS.create(sandboxId);
+			remote = created.remote;
+			token = created.token;
+		}
+
+		await sandbox.setEnvVars({
+			ARTIFACTS_GIT_REMOTE: toAuthenticatedRemote(remote, token),
+		});
+
+		return Response.json({
+			sandboxId,
+			repo: sandboxId,
+			message:
+				"Sandbox can read ARTIFACTS_GIT_REMOTE for git clone, fetch, pull, or push.",
+		});
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
