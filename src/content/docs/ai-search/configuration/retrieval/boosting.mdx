@@ -31,6 +31,8 @@ You can boost by the built-in `timestamp` field or by any field defined in your 
 
 ### Directions
 
+The direction controls how the field value affects the ranking of each result:
+
 | Direction    | Effect                                                       |
 | ------------ | ------------------------------------------------------------ |
 | `desc`       | Higher field values score higher (for example, most recent). |
@@ -101,6 +103,8 @@ const results = await instance.search({
 ```
 
 ## Common patterns
+
+Here are some common ways to use relevance boosting:
 
 | Pattern                          | Configuration                                                                                   |
 | -------------------------------- | ----------------------------------------------------------------------------------------------- |

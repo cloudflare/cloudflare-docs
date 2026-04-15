@@ -42,7 +42,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-sear
 
 ### Connect a data source (optional)
 
-Instead of uploading files manually, you can connect a website or R2 bucket as a data source. AI Search indexes the content automatically.
+You can create an instance that is connected to a website or R2 bucket as a data source. AI Search indexes the content automatically.
 
 **Website:**
 
@@ -77,7 +77,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-sear
 
 ## 3. Add content
 
-If you did not connect a data source, upload files using the [Items API](/api/resources/ai_search/subresources/items/methods/upload/). Skip this step if you connected a website or R2 bucket.
+If you did not create an instance that is connected to a data source, upload files using the [Items API](/api/resources/ai_search/subresources/items/methods/upload/). You can skip this step if you connected a website or R2 bucket.
 
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/my-instance/items" \
