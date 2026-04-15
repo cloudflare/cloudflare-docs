@@ -90,7 +90,7 @@ entries:
   - publish_date: "2025-12-04"
     title: Added guidance on allowlisting Browser Rendering in Bot Management
     description: |-
-      * Added [FAQ guidance](/browser-run/faq/#how-do-i-allowlist-browser-rendering) on how to create a WAF skip rule to allowlist Browser Rendering requests when using Bot Management on your zone.
+      * Added [FAQ guidance](/browser-run/faq/#can-i-allowlist-browser-run-on-my-own-website) on how to create a WAF skip rule to allowlist Browser Rendering requests when using Bot Management on your zone.
   - publish_date: "2025-12-03"
     title: Improved AI JSON response parsing and debugging
     description: |-
