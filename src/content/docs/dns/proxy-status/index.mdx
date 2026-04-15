@@ -10,7 +10,7 @@ import { Render, Example, Details, GlossaryTooltip } from "~/components";
 
 While your [DNS records](/dns/manage-dns-records/) contain information about your domain, the proxy status controls whether HTTP/HTTPS traffic for that record routes through Cloudflare's network or goes directly to your origin server.
 
-When a record is **proxied**, Cloudflare sits between your visitors and your server — optimizing, caching, and protecting traffic along the way. When a record is **DNS-only**, Cloudflare responds with your server's actual IP address and does not route HTTP/HTTPS traffic through its network.
+When a record is **Proxied**, Cloudflare sits between your visitors and your server — optimizing, caching, and protecting traffic along the way. When a record is **DNS-only**, Cloudflare responds with your server's actual IP address and does not route HTTP/HTTPS traffic through its network.
 
 Only [records used for IP address resolution](/dns/manage-dns-records/reference/dns-record-types/#ip-address-resolution) — A, AAAA, and CNAME records — can be proxied. Other record types (such as MX or TXT) are always DNS-only.
 
@@ -138,6 +138,6 @@ Both HTTP/2 and HTTP/3 configurations also require that you have an SSL/TLS cert
 
 When an A, AAAA, or CNAME record is **DNS-only** — shown as a gray cloud icon in the dashboard, also known as "gray-clouded" — DNS queries for these will resolve to the record's actual origin IP address, as described in the [example](#example).
 
-DNS-only is the correct setting for records that do not serve web traffic, such as records used for email routing or third-party domain verification. However, leaving web-serving records as DNS-only means your origin IP addresses are visible to anyone who queries the record, potentially exposing your server to bad actors and [DDoS attacks](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/). Cloudflare also cannot [optimize, cache, and protect](/fundamentals/concepts/how-cloudflare-works/) those requests or provide HTTP/HTTPS analytics on them.
+**DNS-only** is only recommended for records that do not serve web traffic, such as records used for email routing or third-party domain verification. For records that serve web traffic, **DNS-only** means your origin IP addresses are visible to anyone who queries the record, potentially exposing your server to bad actors and [DDoS attacks](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/). Cloudflare also cannot [optimize, cache, and protect](/fundamentals/concepts/how-cloudflare-works/) those requests or provide HTTP/HTTPS analytics on them.
 
 <Render file="mix-proxied-and-unproxied" product="dns" />
