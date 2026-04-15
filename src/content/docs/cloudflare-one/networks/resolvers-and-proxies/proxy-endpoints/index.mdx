@@ -326,15 +326,7 @@ Chromium-based browsers (such as Google Chrome, Microsoft Edge, and Brave) rely 
 
 <Details header="Mozilla Firefox">
 
-Firefox uses its own proxy settings by default. To configure Firefox to use your PAC file:
-
-1. In Firefox, go to **Settings** and scroll to **Network Settings**.
-2. Select **Settings**.
-3. Select **Automatic proxy configuration URL**.
-4. Enter the URL where your PAC file is hosted, for example `https://pac.cloudflare-gateway.com/<account-id>/<slug>`.
-5. Select **OK**. HTTP traffic from Firefox is now filtered by Gateway.
-
-For more information, refer to [Configure Firefox separately](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/configure-pac-file-on-device/#configure-firefox-separately).
+Firefox uses its own proxy settings and does not inherit the operating system proxy configuration by default. You must configure Firefox separately. For step-by-step instructions, refer to [Configure Firefox separately](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/configure-pac-file-on-device/#configure-firefox-separately).
 
 </Details>
 

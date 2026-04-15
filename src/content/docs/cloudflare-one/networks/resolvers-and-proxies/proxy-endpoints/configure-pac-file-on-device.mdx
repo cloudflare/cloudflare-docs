@@ -4,6 +4,8 @@ title: Configure a PAC file on your device
 description: Configure your operating system or browser to use a Proxy Auto-Configuration (PAC) file with Cloudflare Gateway. Includes steps for Windows, macOS, Linux, iOS, Android, ChromeOS, and enterprise deployment.
 sidebar:
   order: 3
+tags:
+  - JavaScript
 ---
 
 import { Details, Tabs, TabItem } from "~/components";
@@ -30,7 +32,7 @@ Configure your operating system to use the PAC file. This applies the proxy to a
 
 For more information, refer to [Use a proxy server in Windows](https://support.microsoft.com/windows/use-a-proxy-server-in-windows-03096c53-0554-4ffe-b6ab-8b1deee8dae1).
 
-1. Open the **Settings** app and select **Network & internet** &gt; **Proxy**.
+1. Open the **Settings** app and select **Network & internet** > **Proxy**.
 2. Next to **Use setup script**, select **Set up**.
 3. In the **Edit setup script** dialog, turn on **Use setup script**.
 4. In the **Script address** field, enter your PAC file URL.
@@ -63,7 +65,7 @@ Steps vary depending on your desktop environment.
 
 <Details header="GNOME (Ubuntu, Fedora)">
 
-1. Open **Settings** &gt; **Network**.
+1. Open **Settings** > **Network**.
 2. Select the gear icon next to your active connection.
 3. Select the **Proxy** tab.
 4. Set the method to **Automatic**.
@@ -73,7 +75,7 @@ Steps vary depending on your desktop environment.
 
 <Details header="KDE Plasma">
 
-1. Open **System Settings** &gt; **Network Settings** &gt; **Proxy**.
+1. Open **System Settings** > **Network Settings** > **Proxy**.
 2. Select **Use proxy auto configuration URL**.
 3. In the URL field, enter your PAC file URL.
 4. Select **Apply**.
@@ -90,7 +92,7 @@ Most Linux command-line tools (such as `curl` and `wget`) do not natively suppor
 
 iOS does not have a global proxy setting. You must configure the proxy for each Wi-Fi network. Cellular connections do not support PAC files without MDM.
 
-1. Open **Settings** &gt; **Wi-Fi**.
+1. Open **Settings** > **Wi-Fi**.
 2. Tap the info button next to your connected network.
 3. Scroll to **HTTP Proxy** and tap **Configure Proxy**.
 4. Select **Automatic**.
@@ -108,7 +110,7 @@ Android does not have a global proxy setting. You must configure the proxy for e
 
 On stock Android (Pixel) and most Android devices:
 
-1. Open **Settings** &gt; **Network & internet** &gt; **Internet** (or **Wi-Fi**).
+1. Open **Settings** > **Network & internet** > **Internet** (or **Wi-Fi**).
 2. Tap the gear icon next to your connected network.
 3. Select **Advanced options** (or tap the edit icon).
 4. Under **Proxy**, select **Proxy Auto-Config**.
@@ -166,7 +168,7 @@ For enterprise environments, you can deploy PAC file configurations to managed d
 You can deploy the PAC file URL through Group Policy by configuring the Internet Settings preference:
 
 1. Open **Group Policy Management** and create or edit a Group Policy Object.
-2. Go to **User Configuration** &gt; **Preferences** &gt; **Windows Settings** &gt; **Registry**.
+2. Go to **User Configuration** > **Preferences** > **Windows Settings** > **Registry**.
 3. Add a registry item with the following values:
    - **Hive**: `HKEY_CURRENT_USER`
    - **Key path**: `Software\Microsoft\Windows\CurrentVersion\Internet Settings`
@@ -197,7 +199,7 @@ For detailed payload settings, refer to the [Network Proxy Configuration setting
 
 For managed ChromeOS devices and Chrome browsers:
 
-1. In the [Google Admin console](https://admin.google.com/), go to **Devices** &gt; **Networks**.
+1. In the [Google Admin console](https://admin.google.com/), go to **Devices** > **Networks**.
 2. Select the organizational unit for your managed devices.
 3. Add or edit a network configuration (Wi-Fi or Ethernet).
 4. Under **Proxy settings**, select **Automatic proxy configuration**.
@@ -210,7 +212,7 @@ For more information, refer to [Set up networks for managed devices](https://sup
 
 To deploy proxy settings to managed Chrome browsers on any operating system:
 
-1. In the [Google Admin console](https://admin.google.com/), go to **Devices** &gt; **Chrome** &gt; **Settings**.
+1. In the [Google Admin console](https://admin.google.com/), go to **Devices** > **Chrome** > **Settings**.
 2. Select the organizational unit for your managed browsers.
 3. Search for **Proxy** and configure the **Proxy mode** to **Use a .pac proxy auto-config file**.
 4. Enter your PAC file URL.
