@@ -7,14 +7,7 @@ sidebar:
   order: 2
 ---
 
-import {
-	Steps,
-	Tabs,
-	TabItem,
-	WranglerConfig,
-	PackageManagers,
-} from "~/components";
-import DomainSetup from "~/content/partials/email-service/_domain-setup-routing.mdx";
+import { Steps, Tabs, TabItem, WranglerConfig, PackageManagers, DashButton, Render } from "~/components";
 
 Route incoming emails sent to your domain to existing mailboxes, Workers for processing, or other destinations.
 
@@ -22,20 +15,28 @@ Route incoming emails sent to your domain to existing mailboxes, Workers for pro
 You must be using Cloudflare DNS to use Email Service.
 :::
 
-<DomainSetup />
+## Prerequisites
+
+<Render file="prereqs" product="workers" />
+
+## Set up your domain
+
+<Render file="domain-setup-routing" product="email-service" />
 
 ## Route your first email
 
 You can route your first email by setting up forwarding rules in the dashboard, or by processing emails with Workers.
 
 <Tabs>
-<TabItem label="Forward to email">
+<TabItem label="Workflow with dashboard">
 
 The simplest way to route emails is forwarding them to existing email addresses.
 
 ### Create a forwarding rule
 
-1. Go to **Compute & AI** > **Email Service** > **Email Routing**.
+1. In the Cloudflare dashboard, go to **Email Routing**.
+
+   <DashButton url="/?to=/:account/email-service/routing" />
 
 2. Select the domain you want to create an email address for.
 
@@ -61,7 +62,7 @@ Verify that your routing rule is working:
 3. If you do not see the email right away, check your spam folder.
 
 </TabItem>
-<TabItem label="Process with Workers">
+<TabItem label="Workflow with Workers">
 
 Use Workers to process emails with custom logic before forwarding or responding.
 
@@ -176,7 +177,9 @@ Use Workers to process emails with custom logic before forwarding or responding.
 
 ### Configure routing to Worker
 
-1. Go to **Compute & AI** > **Email Service** > **Email Routing**.
+1. In the Cloudflare dashboard, go to **Email Routing**.
+
+   <DashButton url="/?to=/:account/email-service/routing" />
 
 2. Select the domain you want to configure routing for.
 
@@ -211,7 +214,3 @@ Now that you can route emails, explore advanced features:
 - **[Send outbound emails](/email-service/get-started/send-emails/)** - Send emails from your applications
 - **[API reference](/email-service/api/route-emails/)** - Complete routing API documentation
 - **[Examples](/email-service/examples/)** - Real-world routing patterns
-
----
-
-_Having issues?_ Contact support.

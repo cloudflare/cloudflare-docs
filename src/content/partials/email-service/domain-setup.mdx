@@ -1,20 +1,27 @@
+---
+{}
+
+---
+
+import { DashButton } from "~/components";
+
 ## Set up your domain
 
 Before using Cloudflare Email Service, you need to configure your domain for email sending and routing.
 
 ### Onboard your domain
 
-1. Log in to the [Cloudflare Dashboard](https://dash.cloudflare.com).
+1. In the Cloudflare dashboard, go to **Email Sending**.
 
-2. Navigate to **Compute & AI** > **Email Service** > **Email Sending**.
+   <DashButton url="/?to=/:account/email-service/sending" />
 
-3. Select **Onboard Domain**.
+2. Select **Onboard Domain**.
 
-4. Choose a domain from your Cloudflare account.
+3. Choose a domain from your Cloudflare account.
 
-5. Select **Continue** to proceed with DNS configuration.
+4. Select **Continue** to proceed with DNS configuration.
 
-6. Press **Add records and onboard**. This will add the following DNS records to your domain:
+5. Select **Add records and onboard**. This will add the following DNS records to your domain:
    - TXT records for SPF to authorize sending emails.
    - CNAME records for DKIM to provide authentication for emails sent from your domain.
    - MX records to route emails to Email Service.

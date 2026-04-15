@@ -5,6 +5,8 @@ sidebar:
   order: 1
 ---
 
+import {DashButton} from "~/components";
+
 In Email routing, an email rule is a pair of a custom email address and a destination address, or a custom email address and an associated Worker. You can route emails to either:
 
 - Verified email addresses
@@ -16,6 +18,9 @@ This allows you to route emails to your preferred inbox, or apply logic with Wor
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Go to **Email** > **Email Routing** > **Routes**.
+
+   <DashButton url="/?to=/:account/email-service/routing" />
+
 3. Select **Create address**.
 4. In **Custom address**, enter the custom email address you want to use (for example, `my-new-email`).
 5. In the **Action** drop-down menu, choose what this email rule should do. Refer to [Email rule actions](#email-rule-actions) for more information.
@@ -42,16 +47,22 @@ To prevent spamming unintended recipients, all email rules are automatically dis
 
 ### Disable an email rule
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **Email** > **Email Routing** > **Routes**.
+1. In the Cloudflare dashboard, go to **Email Routing**.
+
+   <DashButton url="/?to=/:account/email-service/routing" />
+
+2. Select **Routes**.
 3. In **Custom addresses**, identify the email rule you want to pause, and toggle the status button to **Disabled**.
 
 Your email rule is now disabled. It will not forward emails to a destination address or Worker. To forward emails again, toggle the email rule status button to **Active**.
 
 ### Edit custom addresses
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **Email** > **Email Routing** > **Routes**.
+1. In the Cloudflare dashboard, go to **Email Routing**.
+
+   <DashButton url="/?to=/:account/email-service/routing" />
+
+2. Select **Routes**.
 3. In **Custom addresses**, identify the email rule you want to edit, and select **Edit**.
 4. Make the appropriate changes to this custom address.
 
@@ -61,8 +72,11 @@ When you enable this feature, Email Routing will catch variations of email addre
 
 To enable Catch-all addresses:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **Email** > **Email Routing** > **Routes**.
+1. In the Cloudflare dashboard, go to **Email Routing**.
+
+   <DashButton url="/?to=/:account/email-service/routing" />
+
+2. Select **Routes**.
 3. Enable **Catch-all address**, so it shows as **Active**.
 4. In the **Action** drop-down menu, select what to do with these emails. Refer to [Email rule actions](#email-rule-actions) for more information.
 5. Select **Save**.

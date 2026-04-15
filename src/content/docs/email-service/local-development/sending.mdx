@@ -6,7 +6,7 @@ sidebar:
   order: 1
 ---
 
-import { WranglerConfig } from "~/components";
+import { WranglerConfig, Render } from "~/components";
 
 Test email sending functionality locally using `wrangler dev` to simulate email delivery and verify your sending logic before deploying.
 
@@ -16,8 +16,7 @@ If you are using the [REST API](/email-service/api/send-emails/rest-api/) instea
 
 ## Prerequisites
 
-- [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/install-and-update/) installed
-- Node.js and npm installed
+<Render file="prereqs" product="workers" />
 
 ## Configuration
 

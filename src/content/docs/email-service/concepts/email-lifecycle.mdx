@@ -36,7 +36,7 @@ flowchart LR
    - **SPF (Sender Policy Framework)**: Verifies that the sending IP address is authorized to send emails for the domain by checking DNS TXT records. This prevents domain spoofing and improves deliverability.
    - **DKIM (DomainKeys Identified Mail)**: Validates the email's cryptographic signature to ensure message integrity and authenticate the sender domain. This builds trust with recipient servers.
    - **DMARC (Domain-based Message Authentication)**: Applies domain owner policies for handling emails that fail SPF or DKIM checks, helping prevent phishing and brand impersonation while providing feedback reports.
-   
+
    These authentication mechanisms work together to establish sender legitimacy and protect against email fraud. Senders with low reputation scores may experience throttling or delayed processing.
 
 4. **Suppression list check:** The system checks the recipient against global suppression lists that include bounces, complaints, and unsubscribes. Recipients found on these lists are blocked from receiving the email.

@@ -27,13 +27,13 @@ allowed_sender_addresses = ["noreply@yourdomain.com", "support@yourdomain.com"]
 
 </WranglerConfig>
 
-## send() method
+## `send()` method
 
 Send a single email using the `send()` method on your email binding.
 
 ### Interface
 
-```typescript
+```ts
 interface SendEmail {
 	send(message: EmailMessage | EmailMessageBuilder): Promise<EmailSendResult>;
 }
@@ -73,7 +73,7 @@ interface EmailSendResult {
 <Tabs>
 <TabItem label="Simple email">
 
-```typescript
+```ts
 interface Env {
 	EMAIL: SendEmail;
 }
@@ -82,7 +82,7 @@ interface Env {
 </TabItem>
 <TabItem label="Multiple recipients">
 
-```typescript
+```ts
 // Send to multiple recipients (max 50)
 const response = await env.EMAIL.send({
 	to: ["user1@example.com", "user2@example.com", "user3@example.com"],
@@ -96,7 +96,7 @@ const response = await env.EMAIL.send({
 </TabItem>
 <TabItem label="With CC and BCC">
 
-```typescript
+```ts
 const response = await env.EMAIL.send({
 	to: "customer@example.com",
 	cc: ["manager@company.com"],
@@ -117,7 +117,7 @@ const response = await env.EMAIL.send({
 <Tabs>
 <TabItem label="PDF attachment">
 
-```typescript
+```ts
 const response = await env.EMAIL.send({
 	to: "customer@example.com",
 	from: "invoices@yourdomain.com",
@@ -137,7 +137,7 @@ const response = await env.EMAIL.send({
 </TabItem>
 <TabItem label="Inline image">
 
-```typescript
+```ts
 const response = await env.EMAIL.send({
 	to: "user@example.com",
 	from: "marketing@yourdomain.com",
@@ -169,7 +169,7 @@ Handle email sending errors gracefully:
 <Tabs>
 <TabItem label="Single send errors">
 
-```typescript
+```ts
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
 		try {
@@ -253,11 +253,11 @@ The following error codes may be returned when sending emails:
 | `E_HEADERS_TOO_LARGE`           | Headers payload too large               | Total custom headers exceed 16 KB limit                       |
 | `E_HEADERS_TOO_MANY`            | Too many headers                        | More than 20 whitelisted (non-X) custom headers               |
 
-## Legacy EmailMessage API
+## Legacy `EmailMessage` API
 
-The existing EmailMessage API remains supported for backward compatibility:
+The existing `EmailMessage` API remains supported for backward compatibility:
 
-```typescript
+```ts
 import { EmailMessage } from "cloudflare:email";
 import { createMimeMessage } from "mimetext";
 
@@ -286,7 +286,7 @@ export default {
 
 ---
 
-**Next steps:**
+## Next steps
 
 - See the [REST API](/email-service/api/send-emails/rest-api/) for sending emails without Workers
 - See [practical examples](/email-service/examples/) of email sending patterns

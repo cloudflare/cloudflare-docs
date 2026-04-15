@@ -7,7 +7,7 @@ sidebar:
 
 import { Tabs, TabItem } from "~/components";
 
-The REST API allows you to send emails from any application using standard HTTP requests. Use it from any backend, serverless function, or CI/CD pipeline — no Cloudflare Workers binding required.
+The REST API allows you to send emails from any application using standard HTTP requests. Use it from any backend, serverless function, or CI/CD pipeline — no Cloudflare Workers binding is required.
 
 For the full OpenAPI specification, refer to the [Email Sending API reference](https://developers.cloudflare.com/api/resources/email_sending/methods/send).
 
@@ -143,9 +143,9 @@ A successful response returns the delivery status for each recipient:
 }
 ```
 
-- `delivered` - Email addresses to which the message was delivered immediately.
-- `permanent_bounces` - Email addresses that permanently bounced.
-- `queued` - Email addresses for which delivery was queued for later.
+- `delivered` - Email addresses to which the message was delivered immediately
+- `permanent_bounces` - Email addresses that permanently bounced
+- `queued` - Email addresses for which delivery was queued for later
 
 ## Error handling
 

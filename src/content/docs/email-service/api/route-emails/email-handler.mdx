@@ -15,7 +15,7 @@ Process incoming emails using the `email()` handler in your Cloudflare Workers. 
 
 Add the `email` handler function to your Worker's exported handlers:
 
-```typescript
+```ts
 interface Env {
 	EMAIL: SendEmail;
 }
@@ -36,11 +36,11 @@ export default {
 | `env`     | `object`                  | Worker environment bindings (KV, EMAIL, etc.) |
 | `ctx`     | `object`                  | Execution context with `waitUntil` function   |
 
-## ForwardableEmailMessage interface
+## `ForwardableEmailMessage` interface
 
 The `message` parameter provides access to the incoming email:
 
-```typescript
+```ts
 interface ForwardableEmailMessage {
 	readonly from: string; // Sender email address (envelope MAIL FROM)
 	readonly to: string; // Recipient email address (envelope RCPT TO)
@@ -61,7 +61,7 @@ interface ForwardableEmailMessage {
 <Tabs>
 <TabItem label="Basic properties">
 
-```typescript
+```ts
 export default {
 	async email(message, env, ctx): Promise<void> {
 		// Access email metadata
@@ -84,7 +84,7 @@ export default {
 </TabItem>
 <TabItem label="Reading content">
 
-```typescript
+```ts
 export default {
 	async email(message, env, ctx): Promise<void> {
 		// Read raw email content
@@ -115,7 +115,7 @@ export default {
 </TabItem>
 <TabItem label="Parse email content">
 
-```typescript
+```ts
 // Helper function to parse email content
 async function parseEmailContent(
 	message,
@@ -177,7 +177,7 @@ Forward incoming emails to verified destination addresses:
 <Tabs>
 <TabItem label="Simple forwarding">
 
-```typescript
+```ts
 export default {
 	async email(message, env, ctx): Promise<void> {
 		// Forward to a single address
@@ -189,7 +189,7 @@ export default {
 </TabItem>
 <TabItem label="Conditional forwarding">
 
-```typescript
+```ts
 export default {
 	async email(message, env, ctx): Promise<void> {
 		const recipient = message.to;
@@ -213,7 +213,7 @@ export default {
 </TabItem>
 <TabItem label="Multiple forwarding">
 
-```typescript
+```ts
 export default {
 	async email(message, env, ctx): Promise<void> {
 		const subject = message.headers.get("subject") || "";
@@ -239,7 +239,7 @@ export default {
 
 Add custom headers when forwarding:
 
-```typescript
+```ts
 export default {
 	async email(message, env, ctx): Promise<void> {
 		// Create custom headers
@@ -262,7 +262,7 @@ Send automatic replies using the Email Service binding:
 <Tabs>
 <TabItem label="Simple auto-reply">
 
-```typescript
+```ts
 interface Env {
 	EMAIL: SendEmail;
 }
@@ -293,7 +293,7 @@ export default {
 </TabItem>
 <TabItem label="Smart auto-reply">
 
-```typescript
+```ts
 export default {
 	async email(message, env, ctx): Promise<void> {
 		const sender = message.from;
@@ -357,7 +357,7 @@ Reject emails with a permanent SMTP error:
 <Tabs>
 <TabItem label="Simple rejection">
 
-```typescript
+```ts
 export default {
 	async email(message, env, ctx): Promise<void> {
 		const sender = message.from;
@@ -380,7 +380,7 @@ export default {
 </TabItem>
 <TabItem label="Content-based rejection">
 
-```typescript
+```ts
 export default {
 	async email(message, env, ctx): Promise<void> {
 		const subject = message.headers.get("subject") || "";
@@ -416,7 +416,7 @@ export default {
 
 Handle errors gracefully in email processing:
 
-```typescript
+```ts
 export default {
 	async email(message, env, ctx): Promise<void> {
 		try {

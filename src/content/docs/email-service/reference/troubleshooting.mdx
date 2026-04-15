@@ -8,6 +8,8 @@ head:
     content: Troubleshooting email authentication (SPF, DKIM, DMARC)
 ---
 
+import {DashButton} from '~/components';
+
 Email authentication is critical for successful email delivery. This guide helps you troubleshoot common SPF, DKIM, and DMARC issues with Email Service.
 
 ## SPF (Sender Policy Framework) issues
@@ -16,22 +18,26 @@ Email authentication is critical for successful email delivery. This guide helps
 
 Having multiple SPF records on your domain is not allowed and will prevent Email Service from working properly. If your domain has multiple SPF records:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **DNS** > **Records**.
-3. Look for multiple TXT records starting with `v=spf1`.
-4. Delete the incorrect SPF record.
-5. Ensure you have only one SPF record that includes: `v=spf1 include:_spf.email.cloudflare.net ~all`
+1. Log in to the Cloudflare dashboard, select your account and domain, then go to **DNS** > **Records**.
+
+   <DashButton url="/?to=/:account/:zone/dns/records" />
+
+2. Look for multiple TXT records starting with `v=spf1`.
+3. Delete the incorrect SPF record.
+4. Ensure you have only one SPF record that includes: `v=spf1 include:_spf.email.cloudflare.net ~all`
 
 ### Missing SPF record
 
 If emails are being rejected due to SPF failures:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **DNS** > **Records**.
-3. Add a TXT record with the following content:
+1. Log in to the Cloudflare dashboard, select your account and domain, then go to **DNS** > **Records**.
+
+   <DashButton url="/?to=/:account/:zone/dns/records" />
+
+2. Add a TXT record with the following content:
    - **Name**: `@` (or your root domain)
    - **Content**: `v=spf1 include:_spf.email.cloudflare.net ~all`
-4. If you already have an SPF record, modify it to include `include:_spf.email.cloudflare.net`
+3. If you already have an SPF record, modify it to include `include:_spf.email.cloudflare.net`
 
 ### SPF record syntax errors
 
@@ -115,6 +121,9 @@ If DKIM validation is failing:
 While not required, DMARC significantly improves email deliverability:
 
 1. Go to **DNS** > **Records** in the Cloudflare dashboard.
+
+   <DashButton url="/?to=/:account/:zone/dns/records" />
+
 2. Add a TXT record:
    - **Name**: `_dmarc`
    - **Content**: `v=DMARC1; p=quarantine; rua=mailto:dmarc@example.com`
@@ -157,38 +166,38 @@ Example result:
 
 If emails are going to spam folders:
 
-1. **Check authentication**: Ensure SPF, DKIM, and DMARC are properly configured
-2. **Domain reputation**: New domains may have lower reputation initially
-3. **Content quality**: Avoid spam trigger words and excessive HTML formatting
-4. **Sender reputation**: Monitor bounce rates and complaint rates
-5. **List hygiene**: Remove bounced and invalid email addresses
+1. Check authentication: Ensure SPF, DKIM, and DMARC are properly configured
+2. Domain reputation: New domains may have lower reputation initially
+3. Content quality: Avoid spam trigger words and excessive HTML formatting
+4. Sender reputation: Monitor bounce rates and complaint rates
+5. List hygiene: Remove bounced and invalid email addresses
 
 ### High bounce rates
 
 To reduce bounce rates:
 
-1. **Validate email addresses**: Use real-time validation
-2. **Maintain clean lists**: Remove hard bounces immediately
-3. **Monitor feedback loops**: Subscribe to ISP feedback loops
-4. **Gradual warm-up**: For new domains, start with small volumes
+1. Validate email addresses: Use real-time validation
+2. Maintain clean lists: Remove hard bounces immediately
+3. Monitor feedback loops: Subscribe to ISP feedback loops
+4. Gradual warm-up: For new domains, start with small volumes
 
 ### ISP-specific issues
 
 Different ISPs have specific requirements:
 
-- **Gmail**: Requires strong domain reputation and authentication
-- **Outlook/Hotmail**: Sensitive to content and sender reputation
-- **Yahoo**: Strict DMARC enforcement
-- **Corporate**: Often have strict filtering rules
+- Gmail: Requires strong domain reputation and authentication
+- Outlook/Hotmail: Sensitive to content and sender reputation
+- Yahoo: Strict DMARC enforcement
+- Corporate: Often have strict filtering rules
 
 ## Testing tools
 
 Use these tools to validate your email authentication setup:
 
-1. **MX Toolbox**: Check SPF, DKIM, and DMARC records
-2. **DMARC Analyzer**: Validate DMARC policy and alignment
-3. **Mail Tester**: Test email deliverability and authentication
-4. **Google Admin Toolbox**: Google's email authentication checker
+1. MX Toolbox: Check SPF, DKIM, and DMARC records
+2. DMARC Analyzer: Validate DMARC policy and alignment
+3. Mail Tester: Test email deliverability and authentication
+4. Google Admin Toolbox: Google's email authentication checker
 
 ## Getting help
 

@@ -15,7 +15,6 @@ import {
 	TabItem,
 	WranglerConfig,
 } from "~/components";
-import DomainSetup from "~/content/partials/email-service/_domain-setup-sending.mdx";
 
 Send emails from your applications using Cloudflare Email Service. You can use the **REST API** from any platform or the **Workers binding** for applications built on Cloudflare Workers.
 
@@ -23,14 +22,20 @@ Send emails from your applications using Cloudflare Email Service. You can use t
 You must be using Cloudflare DNS to use Email Service.
 :::
 
-<DomainSetup />
+## Prerequisites
+
+<Render file="prereqs" product="workers" />
+
+## Set up your domain
+
+<Render file="domain-setup-sending" product="email-service" />
 
 ## Send your first email with the REST API
 
-Send an email with a single `curl` command. Replace `{account_id}` with your [Cloudflare account ID](/fundamentals/account/find-account-and-zone-ids/) and `<API_TOKEN>` with an [API token](/fundamentals/api/get-started/create-token/).
+Send an email with a single `curl` command. Replace `<ACCOUNT_ID>` with your [Cloudflare account ID](/fundamentals/account/find-account-and-zone-ids/) and `<API_TOKEN>` with an [API token](/fundamentals/api/get-started/create-token/).
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email/sending/send" \
+curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/email/sending/send" \
   --header "Authorization: Bearer <API_TOKEN>" \
   --header "Content-Type: application/json" \
   --data '{
@@ -108,7 +113,7 @@ If you are building on Cloudflare Workers, you can use the Workers binding for n
     } satisfies ExportedHandler<Env>;
     ```
 
-4.  You can use `npx wrangler dev` to develop your Worker project and send emails. This runs your code locally while connecting to Cloudflare Email Service (using [remote bindings](https://developers.cloudflare.com/workers/development-testing/#remote-bindings)).
+4.  You can use `npx wrangler dev` to develop your Worker project and send emails. This runs your code locally while connecting to Cloudflare Email Service (using [remote bindings](/workers/development-testing/#remote-bindings)).
 
         ```sh
         npx wrangler dev
@@ -140,7 +145,3 @@ Now that you can send emails, explore advanced features:
 - **[Route incoming emails](/email-service/get-started/route-emails/)** - Process emails sent to your domain
 - **[API reference](/email-service/api/send-emails/)** - Complete API documentation
 - **[Examples](/email-service/examples/)** - Real-world implementation patterns
-
----
-
-_Having issues?_ Contact support.

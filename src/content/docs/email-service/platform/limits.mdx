@@ -5,6 +5,8 @@ sidebar:
   order: 1
 ---
 
+import {Render} from "~/components";
+
 Cloudflare Email Service has the following limits to ensure optimal performance and prevent abuse. These limits apply to emails sent via both the [REST API](/email-service/api/send-emails/rest-api/) and the [Workers binding](/email-service/api/send-emails/workers-api/) unless noted otherwise.
 
 ## Email content limits
@@ -26,4 +28,4 @@ The following limits apply only when sending emails via the [Workers binding](/e
 | **Subrequests** | 50 per request   | Includes email send operations |
 | **Memory**      | 128MB            | Standard Workers memory limit  |
 
-_Need higher limits?_ Contact [Cloudflare Support](https://dash.cloudflare.com/support) or your account team.
+<Render file="limits_increase" product="workers" />
