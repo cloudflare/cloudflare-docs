@@ -52,7 +52,6 @@ flowchart LR
 
 7. **Final status and metrics:** Based on the server response, the system assigns emails one of these final statuses:
    - **Delivered**: The email was successfully accepted by the recipient server
-   - **Bounced**: The email permanently failed delivery (hard bounce) or exceeded the maximum retry attempts (soft bounce)
----
+   - **Delivery failed**: The email permanently failed delivery (hard bounce) or exceeded the maximum retry attempts (soft bounce). This status appears as `deliveryFailed` when querying the [GraphQL Analytics API](/email-service/observability/metrics-analytics/).
 
 Understanding the email lifecycle helps you build robust email applications that handle all possible outcomes and provide excellent user experiences through proper status tracking and error handling.

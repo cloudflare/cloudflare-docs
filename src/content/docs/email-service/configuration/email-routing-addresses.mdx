@@ -66,6 +66,17 @@ Your email rule is now disabled. It will not forward emails to a destination add
 3. In **Custom addresses**, identify the email rule you want to edit, and select **Edit**.
 4. Make the appropriate changes to this custom address.
 
+### Delete a custom address
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+2. Go to **Email** > **Email Routing** > **Routes**.
+3. In **Custom addresses**, identify the email rule you want to delete.
+4. Select **Delete** and confirm the action.
+
+:::warning
+Deleting a custom address will permanently remove the routing rule. Emails sent to this address will no longer be routed. If you want to temporarily stop routing without deleting the rule, refer to [Disable an email rule](#disable-an-email-rule).
+:::
+
 ## Catch-all address
 
 When you enable this feature, Email Routing will catch variations of email addresses to make them valid for the specified domain. For example, if you created an email rule for `info@example.com` and a sender accidentally types `ifno@example.com`, the email will still be correctly handled if you have **Catch-all addresses** enabled.

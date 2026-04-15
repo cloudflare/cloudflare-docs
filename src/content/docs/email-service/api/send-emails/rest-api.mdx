@@ -149,21 +149,33 @@ A successful response returns the delivery status for each recipient:
 
 ## Error handling
 
-The REST API returns standard Cloudflare API error responses. A failed request returns an `errors` array with numeric error codes:
+The REST API returns standard Cloudflare API error responses. A failed request returns an `errors` array with numeric error codes and machine-readable messages:
 
 ```json
 {
   "success": false,
   "errors": [
     {
-      "code": 1000,
-      "message": "Sender domain not verified"
+      "code": 10001,
+      "message": "email.sending.error.invalid_request_schema"
     }
   ],
   "messages": [],
   "result": null
 }
 ```
+
+Common REST API error codes:
+
+| HTTP Status | Code | Message | Description |
+| ----------- | ---- | ------- | ----------- |
+| 400 | 10001 | `email.sending.error.invalid_request_schema` | Invalid request format |
+| 400 | 10200 | `email.sending.error.email.invalid` | Invalid email content |
+| 400 | 10201 | `email.sending.error.email.no_content_length` | Missing content length |
+| 400 | 10202 | `email.sending.error.email.too_big` | Email exceeds size limit |
+| 403 | 10203 | `email.sending.error.email.sending_disabled` | Sending disabled for this zone/account |
+| 429 | 10004 | `email.sending.error.throttled` | Rate limit exceeded |
+| 500 | 10002 | `email.sending.error.internal_server` | Internal server error |
 
 :::note[Workers binding vs REST API errors]
 The REST API returns standard Cloudflare API numeric error codes, while the [Workers binding](/email-service/api/send-emails/workers-api/) throws errors with string codes (for example, `E_SENDER_NOT_VERIFIED`). Refer to the [Workers API error codes table](/email-service/api/send-emails/workers-api/#error-codes) for the string error codes.

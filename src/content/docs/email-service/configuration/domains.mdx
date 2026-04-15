@@ -338,6 +338,7 @@ export default {
 				from: "contact@company.com",
 				to: "client@example.com",
 				subject: "Corporate Communication",
+				text: "Thank you for your business.",
 			});
 		}
 
@@ -346,6 +347,7 @@ export default {
 				from: "updates@product.company.com",
 				to: "user@example.com",
 				subject: "Product Update",
+				text: "We have a new product update for you.",
 			});
 		}
 	},
@@ -368,6 +370,39 @@ Removing a domain will:
 - Disable email routing for that domain
 - Require reconfiguration if re-added
   :::
+
+### DNS record management
+
+When you remove a domain from Email Service, you have two options for handling the DNS records:
+
+**Option 1: Remove all records**
+
+This removes all Email Service DNS records from your domain:
+
+- All SPF, DKIM, and MX records for Email Service are deleted
+- Your domain will no longer receive or send emails through Email Service
+- If you want to use Email Service again in the future, you will need to onboard the domain and add all records from scratch
+
+**Option 2: Keep records**
+
+This keeps the DNS records in place but disables Email Service:
+
+- DNS records remain in your domain configuration
+- Email Service stops processing emails for the domain
+- You can re-enable Email Service by onboarding the domain again
+- DNS records that were automatically added will remain locked to prevent accidental deletion
+
+To modify locked records after removal:
+
+1. Go to your domain's **DNS** > **Records**.
+2. Find the locked Email Service records.
+3. Select the record and choose **Edit**.
+4. Toggle **Unlock record** to enable editing.
+5. Make your changes and save.
+
+:::note
+Keeping records is useful if you plan to re-enable Email Service later. Removing records is recommended if you are migrating to a different email provider.
+:::
 
 ### Transfer domain ownership
 

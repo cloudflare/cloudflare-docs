@@ -73,7 +73,7 @@ async function handleSignup(request: Request, env: Env): Promise<Response> {
 
 	// Generate verification token (expires in 1 hour)
 	const verificationToken = crypto.randomUUID();
-	await env.VERIFICATION_TOKENS.put(verificationToken, userId, {
+	await env.VERIFICATION_TOKENS.put(verificationToken, email, {
 		expirationTtl: 3600,
 	});
 
@@ -124,13 +124,13 @@ async function handleVerification(
 	}
 
 	// Verify token
-	const userId = await env.VERIFICATION_TOKENS.get(token);
-	if (!userId) {
+	const userEmail = await env.VERIFICATION_TOKENS.get(token);
+	if (!userEmail) {
 		return new Response("Invalid or expired token", { status: 400 });
 	}
 
 	// Get and update user
-	const userData = await env.USERS.get(`user:${userId}`);
+	const userData = await env.USERS.get(userEmail);
 	if (!userData) {
 		return new Response("User not found", { status: 404 });
 	}
