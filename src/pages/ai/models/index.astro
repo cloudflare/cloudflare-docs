@@ -8,10 +8,10 @@ const models = await getResolvedModels();
 ---
 
 <StarlightPage frontmatter={{ title: "Models", tableOfContents: false }}>
-	<Aside type="tip" title="Not finding what you need?">
+	<Aside type="tip" title="Can't find what you're looking for?">
 		View all models available through AI Gateway, including third-party
 		providers like Anthropic, OpenAI, and more.
-		<a href="/ai-gateway/legacy-models/">Browse all supported models</a>.
+		<a href="/ai-gateway/legacy-models/">Browse all legacy models</a>.
 	</Aside>
 	<ModelCatalog models={models} client:load />
 </StarlightPage>
