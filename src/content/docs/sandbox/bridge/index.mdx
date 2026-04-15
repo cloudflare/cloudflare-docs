@@ -27,7 +27,7 @@ Key [Sandbox SDK methods](/sandbox/api/) map to individual HTTP endpoints. The b
 
 Deploy the bridge Worker to your Cloudflare account:
 
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/sandbox-sdk/bridge/worker)
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/sandbox-sdk/tree/main/bridge/worker)
 
 The button deploys the Worker and generates a `SANDBOX_API_KEY` secret for authentication. When deployment finishes, note your Worker URL and API key — every example on this page uses them.
 
@@ -301,6 +301,7 @@ The bridge source code and examples are available on GitHub:
 
 - [Bridge source](https://github.com/cloudflare/sandbox-sdk/tree/main/bridge) — Worker, Dockerfile, deploy script, and OpenAPI schema.
 - [Workspace chat example](https://github.com/cloudflare/sandbox-sdk/tree/main/bridge/examples/workspace-chat) — Full-stack chat application with a file browser sidebar.
+- [Basic example](https://github.com/cloudflare/sandbox-sdk/tree/main/bridge/examples/basic) — One-shot Python coding agent using the OpenAI Agents SDK.
 
 ## Related resources
 
@@ -308,3 +309,4 @@ The bridge source code and examples are available on GitHub:
 - [Getting started](/sandbox/get-started/) — Build your first sandbox application directly on Workers.
 - [Architecture](/sandbox/concepts/architecture/) — How the Sandbox SDK layers Workers, Durable Objects, and Containers.
 - [API reference](/sandbox/api/) — Complete Sandbox SDK method reference.
+- [OpenAI Agents SDK tutorial](/sandbox/tutorials/openai-agents/) — Build a Python coding agent with the bridge.
