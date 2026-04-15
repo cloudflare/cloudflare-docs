@@ -2064,7 +2064,8 @@
 /workers/tutorials/store-data-with-fauna/ https://fauna.com/blog/the-future-of-fauna 301
 /workers/tutorials/live-cursors-with-nextjs-rpc-do/ /resources/ 301
 /workers/tutorials/automated-analytics-reporting/ /resources/ 301
-/workers/ai/ /cloudflare-agent/ 301
+/workers/ai/ /agent-lee/ 301
+/cloudflare-agent/ /agent-lee/ 301
 
 # workers ai
 /workers-ai/models/llm/ /workers-ai/models/#text-generation 301
