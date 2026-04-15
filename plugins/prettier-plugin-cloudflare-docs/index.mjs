@@ -85,22 +85,73 @@ function extractPreserveRegions(text, preserveElements) {
 		preserveElements,
 	);
 
-	// Find all preserve element matches in the text
+	// Find all preserve element matches in the text using depth tracking
+	// to correctly handle nested same-name elements (e.g., <Tabs> inside <Tabs>).
 	const allMatches = [...codeBlockMatches];
 	for (const el of preserveElements) {
-		const regex = new RegExp(`<${el}[\\s>][\\s\\S]*?</${el}>`, "g");
-		let m;
-		while ((m = regex.exec(text)) !== null) {
-			// Skip matches that are already inside a code block we're preserving
+		const openPattern = `<${el}`;
+		const closePattern = `</${el}>`;
+		let pos = 0;
+
+		while (pos < text.length) {
+			const openIdx = text.indexOf(openPattern, pos);
+			if (openIdx === -1) break;
+
+			// Verify it's a real opening tag (followed by > or whitespace)
+			const afterOpen = text[openIdx + openPattern.length];
+			if (
+				afterOpen !== ">" &&
+				afterOpen !== " " &&
+				afterOpen !== "\n" &&
+				afterOpen !== "\t"
+			) {
+				pos = openIdx + openPattern.length;
+				continue;
+			}
+
+			// Skip if inside an already-matched code block
 			const insideCodeBlock = codeBlockMatches.some(
-				(r) => m.index >= r.start && m.index + m[0].length <= r.end,
+				(r) => openIdx >= r.start && openIdx < r.end,
 			);
-			if (!insideCodeBlock) {
-				allMatches.push({
-					start: m.index,
-					end: m.index + m[0].length,
-					text: m[0],
-				});
+			if (insideCodeBlock) {
+				pos = openIdx + openPattern.length;
+				continue;
+			}
+
+			// Track nesting depth to find the matching closing tag
+			let depth = 1;
+			let searchPos = openIdx + openPattern.length;
+			while (searchPos < text.length && depth > 0) {
+				const nextOpen = text.indexOf(openPattern, searchPos);
+				const nextClose = text.indexOf(closePattern, searchPos);
+
+				if (nextClose === -1) break;
+
+				if (nextOpen !== -1 && nextOpen < nextClose) {
+					const a = text[nextOpen + openPattern.length];
+					if (a === ">" || a === " " || a === "\n" || a === "\t") {
+						depth++;
+					}
+					searchPos = nextOpen + openPattern.length;
+				} else {
+					depth--;
+					if (depth === 0) {
+						const end = nextClose + closePattern.length;
+						allMatches.push({
+							start: openIdx,
+							end,
+							text: text.substring(openIdx, end),
+						});
+						pos = end;
+					} else {
+						searchPos = nextClose + closePattern.length;
+					}
+				}
+			}
+
+			if (depth !== 0) {
+				// Unmatched opening tag — skip
+				pos = openIdx + openPattern.length;
 			}
 		}
 	}
