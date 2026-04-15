@@ -25,14 +25,14 @@ npm create cloudflare@latest -- browser-worker
 npm i @cloudflare/puppeteer
 ```
 
-2. Install `zod` so we can define our output format and `zod-to-json-schema` so we can convert it into a JSON schema format:
+3. Install `zod` so we can define our output format and `zod-to-json-schema` so we can convert it into a JSON schema format:
 
 ```sh
 npm i zod
 npm i zod-to-json-schema
 ```
 
-3. Activate the nodejs compatibility flag and add your Browser Run binding to your new Wrangler configuration:
+4. Activate the nodejs compatibility flag and add your Browser Run binding to your new Wrangler configuration:
 
 <WranglerConfig>
 ```jsonc
@@ -54,7 +54,7 @@ npm i zod-to-json-schema
 ```
 </WranglerConfig>
 
-4. In order to use [Workers AI](/workers-ai/), you need to get your [Account ID and API token](/workers-ai/get-started/rest-api/#1-get-api-token-and-account-id).
+5. In order to use [Workers AI](/workers-ai/), you need to get your [Account ID and API token](/workers-ai/get-started/rest-api/#1-get-api-token-and-account-id).
 
    Once you have those, create a [`.dev.vars`](/workers/configuration/environment-variables/#add-environment-variables-via-wrangler) file and set them there:
 
