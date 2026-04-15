@@ -19,7 +19,15 @@ Artifacts pricing is billed on two dimensions:
 
 ### Artifacts pricing
 
-| Unit                          | Included               | Price                                 |
-| ----------------------------- | ---------------------- | ------------------------------------- |
-| Operations (1,000 operations) | First 10,000 per month | $0.15 per additional 1,000 operations |
-| Storage (GB-mo)               | First 1 GB per month   | $0.50 per additional GB-mo            |
+| Unit                          | Workers Free | Workers Paid |
+| ----------------------------- | ------------ | ------------ |
+| Operations (1,000 operations) | coming soon  | First 10,000 per month + $0.15 per additional 1,000 operations |
+| Storage (GB-mo)               | coming soon  | First 1 GB per month + $0.50 per additional GB-mo |
+
+### Storage usage
+
+Storage is billed using gigabyte-month (`GB-mo`) as the billing metric, identical to [Durable Objects SQL storage](/durable-objects/platform/pricing/#sqlite-storage-backend). A `GB-mo` is calculated by averaging the peak storage per day over a billing period of 30 days.
+
+- Storage is calculated across all repositories.
+- Replicas do not add storage charges. Storage is replicated by default, and you do not need to manage repository availability or uptime.
+- Repos remain stored until you explicitly delete them.

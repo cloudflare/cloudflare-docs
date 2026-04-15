@@ -114,7 +114,11 @@ type Entry =
 	  };
 
 class MemoryStats {
-	constructor(private entry: Entry) {}
+	entry: Entry;
+
+	constructor(entry: Entry) {
+		this.entry = entry;
+	}
 
 	get size() {
 		return this.entry.kind === "file" ? this.entry.data.byteLength : 0;
@@ -146,9 +150,9 @@ class MemoryStats {
 }
 
 export class MemoryFS {
-	private encoder = new TextEncoder();
-	private decoder = new TextDecoder();
-	private entries = new Map<string, Entry>([
+	encoder = new TextEncoder();
+	decoder = new TextDecoder();
+	entries = new Map<string, Entry>([
 		["/", { kind: "dir", children: new Set(), mtimeMs: Date.now() }],
 	]);
 
@@ -163,7 +167,7 @@ export class MemoryFS {
 		lstat: this.lstat.bind(this),
 	};
 
-	private normalize(input: string) {
+	normalize(input: string) {
 		const segments: string[] = [];
 
 		for (const part of input.split("/")) {
@@ -182,7 +186,7 @@ export class MemoryFS {
 		return `/${segments.join("/")}` || "/";
 	}
 
-	private parent(path: string) {
+	parent(path: string) {
 		const normalized = this.normalize(path);
 		if (normalized === "/") {
 			return "/";
@@ -193,15 +197,15 @@ export class MemoryFS {
 		return parts.length ? `/${parts.join("/")}` : "/";
 	}
 
-	private basename(path: string) {
+	basename(path: string) {
 		return this.normalize(path).split("/").filter(Boolean).pop() ?? "";
 	}
 
-	private getEntry(path: string) {
+	getEntry(path: string) {
 		return this.entries.get(this.normalize(path));
 	}
 
-	private requireEntry(path: string) {
+	requireEntry(path: string) {
 		const entry = this.getEntry(path);
 		if (!entry) {
 			throw new Error(`ENOENT: ${path}`);
@@ -210,7 +214,7 @@ export class MemoryFS {
 		return entry;
 	}
 
-	private requireDir(path: string) {
+	requireDir(path: string) {
 		const entry = this.requireEntry(path);
 		if (entry.kind !== "dir") {
 			throw new Error(`ENOTDIR: ${path}`);
