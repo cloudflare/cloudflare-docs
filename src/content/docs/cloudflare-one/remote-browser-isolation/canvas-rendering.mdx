@@ -6,18 +6,18 @@ sidebar: {}
 
 import { Details } from "~/components";
 
-Canvas rendering is a Browser Isolation capability that optimizes performance for web applications using the HTML5 Canvas API. It sends vector draw commands to the client instead of rasterized bitmaps, reducing bandwidth consumption and improving frame rates for productivity applications.
+Canvas rendering is a Browser Isolation capability that optimizes performance for web applications using the HTML5 Canvas API (a browser feature that allows web applications to draw graphics directly on the page). It sends vector draw commands to the client instead of rasterized bitmaps (pixel images), reducing bandwidth consumption and improving frame rates for productivity applications.
 
 ## How it works
 
-Browser Isolation uses Network Vector Rendering (NVR) to deliver efficient vector commands rather than rendered pixels. However, HTML5 Canvas content previously required server-side rasterization, sending large bitmaps for every frame.
+Browser Isolation uses Network Vector Rendering (NVR) to send lightweight drawing instructions to the user's browser, rather than streaming rendered pixels or video of the page. However, HTML5 Canvas content previously required server-side rasterization (converting draw commands into pixel images), sending large bitmaps for every frame.
 
 Canvas rendering extends NVR to Canvas-based applications by:
 
 1. Capturing draw commands made to the HTML5 Canvas element.
 2. Converting and sending those commands to the client as NVR instructions.
-3. Rendering the Canvas content on the client onto an offscreen texture.
-4. Compositing the texture into the final document output.
+3. Rendering the Canvas content on the client onto an offscreen texture (a hidden drawing surface used for intermediate rendering).
+4. Compositing (layering) the texture into the final document output.
 
 ## Supported applications
 
