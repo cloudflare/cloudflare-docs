@@ -19,7 +19,8 @@
 /billing/sales-tax/ /billing/understand/sales-tax/ 301
 /billing/troubleshoot-failed-payments/ /billing/troubleshoot/troubleshoot-failed-payments/ 301
 /billing/troubleshoot-invoices/ /billing/troubleshoot/troubleshoot-invoices/ 301
-/billing/resolve-zone-cannot-be-ugpraded/ /billing/troubleshoot/resolve-zone-cannot-be-ugpraded/ 301
+/billing/resolve-zone-cannot-be-ugpraded/ /billing/troubleshoot/resolve-zone-cannot-be-upgraded/ 301
+/billing/troubleshoot/resolve-zone-cannot-be-ugpraded/ /billing/troubleshoot/resolve-zone-cannot-be-upgraded/ 301
 /billing/resolve-you-cannot-modify-this-subscription/ /billing/troubleshoot/resolve-you-cannot-modify-this-subscription/ 301
 /billing/resolve-cannot-remove-payment-method/ /billing/troubleshoot/resolve-cannot-remove-payment-method/ 301
 
