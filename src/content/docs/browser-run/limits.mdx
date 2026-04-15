@@ -45,13 +45,13 @@ The [`/crawl` endpoint](/browser-run/quick-actions/crawl-endpoint/) has addition
 If you are on a Workers Paid plan and you want to increase your limits beyond those listed here, Cloudflare will grant [requests for higher limits](https://forms.gle/CdueDKvb26mTaepa9) on a case-by-case basis.
 :::
 
-| Feature                                                      | Limit                                                        |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| Browser hours                                                | No limit ([See pricing](/browser-rendering/pricing/))        |
-| Concurrent browsers per account (Browser Sessions only) [^1] | 120 per account ([See pricing](/browser-rendering/pricing/)) |
-| New browser instances per second (Browser Sessions only)     | 1 per second                                                 |
-| Browser timeout                                              | 60 seconds [^2]                                              |
-| Total requests per second (Quick Actions only) [^3]          | 10 per second                                                |
+| Feature                                                      | Limit                                                  |
+| ------------------------------------------------------------ | ------------------------------------------------------ |
+| Browser hours                                                | No limit ([See pricing](/browser-run/pricing/))        |
+| Concurrent browsers per account (Browser Sessions only) [^1] | 120 per account ([See pricing](/browser-run/pricing/)) |
+| New browser instances per second (Browser Sessions only)     | 1 per second                                           |
+| Browser timeout                                              | 60 seconds [^2]                                        |
+| Total requests per second (Quick Actions only) [^3]          | 10 per second                                          |
 
 [^1]: Browsers close upon task completion or sixty seconds of inactivity (if you do not [extend your browser timeout](#can-i-increase-the-browser-timeout)). Therefore, in practice, many workflows do not require a high number of concurrent browsers.
 
