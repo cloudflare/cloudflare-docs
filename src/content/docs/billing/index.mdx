@@ -11,7 +11,7 @@ description: Manage billing and subscriptions for your account.
 
 import { CardGrid, LinkTitleCard } from "~/components";
 
-Cloudflare bills on a 30-day cycle for each domain on your account. Plans and add-on services are billed separately, and some products use [usage-based billing](/billing/understand/usage-based-billing/). You can pay with Visa, Mastercard, American Express, Discover, PayPal, Link, or UnionPay.
+Cloudflare bills on a 30-day cycle for each domain on your account. Plans and add-on services are billed separately, and some products use [usage-based billing](/billing/understand/usage-based-billing/). You can pay with Visa, Mastercard, American Express, Discover, PayPal, Apple Pay, Google Pay, Stripe Link, or UnionPay.
 
 ## Get started
 
@@ -31,9 +31,17 @@ Change your payment method, billing address, or billing email address.
 
 ## Manage
 
-Change plans, view invoices, and manage subscriptions.
+Change plans, view invoices, monitor usage, and manage subscriptions.
 
 <CardGrid>
+
+<LinkTitleCard title="Monitor billable usage" href="/billing/manage/billable-usage/">
+Track daily usage-based costs across your account with the billable usage dashboard.
+</LinkTitleCard>
+
+<LinkTitleCard title="Budget alerts" href="/billing/manage/budget-alerts/">
+Get notified by email when your usage-based spend crosses a dollar threshold.
+</LinkTitleCard>
 
 <LinkTitleCard title="Change domain plan" href="/billing/manage/change-plan/">
 Upgrade or downgrade the plan associated with a specific Cloudflare domain.
