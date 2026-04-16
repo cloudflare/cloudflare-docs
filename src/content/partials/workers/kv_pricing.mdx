@@ -23,4 +23,6 @@ operations of that type will fail with an error.
 Workers KV pricing for read, write and delete operations is on a per-key basis. Bulk read operations
 are billed by the amount of keys read in a bulk read operation.
 
+All keys read are billed whether values are served from Cloudflare's Cache (a hot read) or fetched from central storage (a cold read). KV caches data to improve read latency, but both cached and uncached reads count toward your billable read usage.
+
 :::
