@@ -406,15 +406,21 @@ Cloudflare Notifications can alert you when security event volume exceeds a thre
 
 2. Select **Add**.
 
-3. Search for and select a security-related notification type. [VERIFY: confirm exact notification type name for security event volume alerts]
+3. Filter by **WAF** and select **Security Events Alert**.
 
-4. Configure the notification threshold and delivery method (email, webhook, or PagerDuty).
+4. Define a name for the notification and the delivery method (email, webhook, or PagerDuty).
 
-5. Select **Save**.
+5. Next, configure the domains for which you want to receive notifications. You can also filter events by a targeted action (for example, **Block** or **Skip**).
+
+6. Select **Create**.
 
 </Steps>
 
-For the full list of available notification types, refer to [Notifications](/notifications/).
+For the full list of available notification types, refer to [Available notifications](/notifications/notification-available/).
+
+:::note
+Enterprise customers have access to the [Advanced Security Events Alert](/waf/reference/alerts/) notification type, which includes an additional filter for the app security services the alert should monitor.
+:::
 
 ## Related resources
 
