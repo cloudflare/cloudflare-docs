@@ -236,23 +236,19 @@ query GatewayResponseErrors(
     accounts(filter: { accountTag: $accountTag }) {
       ohttpRelayRequestMetricsAdaptiveGroups(
         filter: {
-          datetime_geq: $start
-          datetime_leq: $end
+          datetimeMinute_geq: $start
+          datetimeMinute_leq: $end
           gatewayStatusCode_geq: 500
           gatewayStatusCode_leq: 599
         }
         limit: 10000
         orderBy: [datetimeMinute_ASC]
       ) {
-        sum {
-          requests
-        }
+        count
         dimensions {
           datetimeMinute
-          datetimeFiveMinutes
-          datetimeHour
           gatewayStatusCode
-          colo
+          coloCode
         }
       }
     }
