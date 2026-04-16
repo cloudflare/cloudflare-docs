@@ -10,9 +10,9 @@ import { TabItem, Tabs, GlossaryTooltip } from "~/components";
 
 Redirects for AI Training enforces your existing <GlossaryTooltip term="canonical URL">`<link rel="canonical">`</GlossaryTooltip> tags as 301 redirects for [verified AI training crawlers](/bots/concepts/bot/#verified-bots). When a verified bot with the [AI Crawler category](/bots/concepts/bot/verified-bots/#categories) requests a page whose canonical tag points to a different same-origin URL, Cloudflare returns a `301 Moved Permanently` to the canonical. All other visitors—browsers, search engines, [AI Assistants](/bots/concepts/bot/verified-bots/#categories)—receive the original page unchanged.
 
-Read the [announcement blog post](https://blog.cloudflare.com/ai-redirects/) for background on why this feature exists.
+To learn more about why this feature can be useful, refer to the [announcement blog post](https://blog.cloudflare.com/ai-redirects/).
 
-## How to enable
+## Enable Redirects for AI Training
 
 Redirects for AI Training is available as a toggle in **AI Crawl Control** > **Quick Actions**, alongside [Markdown for Agents](/fundamentals/reference/markdown-for-agents/) and [Managed robots.txt](/bots/additional-configurations/managed-robots-txt/).
 
