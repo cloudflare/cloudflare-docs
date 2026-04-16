@@ -137,7 +137,7 @@ Legitimate API clients send predictable request patterns: specific HTTP methods,
 
 API clients typically include a `Content-Type` header and may include an `Authorization` header or a custom API key header. Requests to your API paths that lack these headers are not from your expected clients.
 
-The following Application Security custom rule blocks requests to `/api/` paths that are missing a `Content-Type` header. Adjust the path and header checks to match your API.
+The following custom security rule blocks requests to `/api/` paths that are missing a `Content-Type` header. Adjust the path and header checks to match your API.
 
 <Render file="navigate-to-custom-rules" product="waf" />
 
