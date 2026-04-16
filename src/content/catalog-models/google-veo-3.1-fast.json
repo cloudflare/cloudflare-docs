@@ -31,7 +31,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/veo-3.1-fast',\n  {\n    prompt: 'A butterfly landing on a colorful flower in a garden',\n    duration: '6s',\n    aspect_ratio: '16:9',\n    resolution: '720p',\n    generate_audio: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'google/veo-3.1-fast',\n  {\n    prompt: 'A butterfly landing on a colorful flower in a garden',\n    duration: '6s',\n    aspect_ratio: '16:9',\n    resolution: '720p',\n    generate_audio: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -52,7 +52,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/veo-3.1-fast',\n  {\n    prompt:\n      'Aesthetic morning routine: sun rays through curtains, coffee being poured',\n    duration: '6s',\n    aspect_ratio: '9:16',\n    resolution: '720p',\n    generate_audio: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'google/veo-3.1-fast',\n  {\n    prompt:\n      'Aesthetic morning routine: sun rays through curtains, coffee being poured',\n    duration: '6s',\n    aspect_ratio: '9:16',\n    resolution: '720p',\n    generate_audio: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -73,7 +73,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/veo-3.1-fast',\n  {\n    prompt:\n      'Glowing neon lines forming geometric patterns on a dark background',\n    duration: '4s',\n    aspect_ratio: '16:9',\n    resolution: '720p',\n    generate_audio: false,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'google/veo-3.1-fast',\n  {\n    prompt:\n      'Glowing neon lines forming geometric patterns on a dark background',\n    duration: '4s',\n    aspect_ratio: '16:9',\n    resolution: '720p',\n    generate_audio: false,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -94,7 +94,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/veo-3.1-fast',\n  {\n    prompt:\n      'Rain falling on a window with a blurred city skyline in the background at night',\n    duration: '8s',\n    aspect_ratio: '16:9',\n    resolution: '720p',\n    generate_audio: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'google/veo-3.1-fast',\n  {\n    prompt:\n      'Rain falling on a window with a blurred city skyline in the background at night',\n    duration: '8s',\n    aspect_ratio: '16:9',\n    resolution: '720p',\n    generate_audio: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		}

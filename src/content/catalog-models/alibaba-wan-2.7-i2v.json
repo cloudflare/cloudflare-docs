@@ -24,7 +24,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'alibaba/wan-2.7-i2v',\n  {\n    image: 'https://example.com/photo.jpg',\n    prompt: 'A gentle camera push-in on the scene with soft ambient lighting',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'alibaba/wan-2.7-i2v',\n  {\n    image: 'https://example.com/photo.jpg',\n    prompt: 'A gentle camera push-in on the scene with soft ambient lighting',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -41,7 +41,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'alibaba/wan-2.7-i2v',\n  {\n    image: 'https://example.com/landscape.jpg',\n    prompt: 'Clouds slowly drifting across the sky, time-lapse style',\n    resolution: '1080P',\n    duration: 10,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'alibaba/wan-2.7-i2v',\n  {\n    image: 'https://example.com/landscape.jpg',\n    prompt: 'Clouds slowly drifting across the sky, time-lapse style',\n    resolution: '1080P',\n    duration: 10,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -59,7 +59,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'alibaba/wan-2.7-i2v',\n  {\n    image: 'https://example.com/portrait.jpg',\n    prompt: 'Subject slowly turns their head and smiles',\n    negative_prompt: 'blurry, distorted face, extra limbs',\n    resolution: '720P',\n    duration: 5,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'alibaba/wan-2.7-i2v',\n  {\n    image: 'https://example.com/portrait.jpg',\n    prompt: 'Subject slowly turns their head and smiles',\n    negative_prompt: 'blurry, distorted face, extra limbs',\n    resolution: '720P',\n    duration: 5,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -77,7 +77,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'alibaba/wan-2.7-i2v',\n  {\n    image: 'https://example.com/product.jpg',\n    prompt: 'Camera orbits around the product on a white background',\n    resolution: '720P',\n    duration: 8,\n    seed: 42,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'alibaba/wan-2.7-i2v',\n  {\n    image: 'https://example.com/product.jpg',\n    prompt: 'Camera orbits around the product on a white background',\n    resolution: '720P',\n    duration: 8,\n    seed: 42,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		}

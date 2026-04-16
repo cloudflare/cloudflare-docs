@@ -27,7 +27,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    prompt: 'A golden retriever running through a sunlit meadow in slow motion',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    prompt: 'A golden retriever running through a sunlit meadow in slow motion',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -46,7 +46,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    prompt:\n      'Aerial drone shot flying through a misty forest at dawn, rays of sunlight breaking through the trees',\n    duration: 10,\n    resolution: '1080p',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    prompt:\n      'Aerial drone shot flying through a misty forest at dawn, rays of sunlight breaking through the trees',\n    duration: 10,\n    resolution: '1080p',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -65,7 +65,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    prompt:\n      'A busy street in Tokyo at night with neon signs reflecting on wet pavement, rain falling',\n    aspect_ratio: '9:16',\n    duration: 5,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    prompt:\n      'A busy street in Tokyo at night with neon signs reflecting on wet pavement, rain falling',\n    aspect_ratio: '9:16',\n    duration: 5,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -85,7 +85,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    prompt:\n      'Abstract paint swirls slowly mixing in water, vivid blues and golds',\n    audio: false,\n    duration: 8,\n    resolution: '720p',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    prompt:\n      'Abstract paint swirls slowly mixing in water, vivid blues and golds',\n    audio: false,\n    duration: 8,\n    resolution: '720p',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -105,7 +105,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    prompt:\n      'A sleek wireless headphone rotating on a pedestal with soft studio lighting and a white background',\n    aspect_ratio: '1:1',\n    duration: 5,\n    resolution: '720p',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    prompt:\n      'A sleek wireless headphone rotating on a pedestal with soft studio lighting and a white background',\n    aspect_ratio: '1:1',\n    duration: 5,\n    resolution: '720p',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		}

@@ -31,7 +31,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/veo-3.1',\n  {\n    prompt:\n      'A majestic eagle soaring over snow-capped mountains, tracking shot following the bird as it glides through clouds',\n    duration: '8s',\n    aspect_ratio: '16:9',\n    resolution: '1080p',\n    generate_audio: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'google/veo-3.1',\n  {\n    prompt:\n      'A majestic eagle soaring over snow-capped mountains, tracking shot following the bird as it glides through clouds',\n    duration: '8s',\n    aspect_ratio: '16:9',\n    resolution: '1080p',\n    generate_audio: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -52,7 +52,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/veo-3.1',\n  {\n    prompt:\n      'A time-lapse of a busy city intersection at night, car lights creating streaks, people walking in fast motion',\n    duration: '6s',\n    aspect_ratio: '16:9',\n    resolution: '1080p',\n    generate_audio: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'google/veo-3.1',\n  {\n    prompt:\n      'A time-lapse of a busy city intersection at night, car lights creating streaks, people walking in fast motion',\n    duration: '6s',\n    aspect_ratio: '16:9',\n    resolution: '1080p',\n    generate_audio: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -73,7 +73,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/veo-3.1',\n  {\n    prompt:\n      'Colorful ink drops falling into water in slow motion, creating organic swirling patterns',\n    duration: '6s',\n    aspect_ratio: '16:9',\n    resolution: '720p',\n    generate_audio: false,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'google/veo-3.1',\n  {\n    prompt:\n      'Colorful ink drops falling into water in slow motion, creating organic swirling patterns',\n    duration: '6s',\n    aspect_ratio: '16:9',\n    resolution: '720p',\n    generate_audio: false,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -94,7 +94,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/veo-3.1',\n  {\n    prompt:\n      'Melted chocolate being poured over fresh strawberries in slow motion, rich and glossy',\n    duration: '4s',\n    aspect_ratio: '9:16',\n    resolution: '1080p',\n    generate_audio: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'google/veo-3.1',\n  {\n    prompt:\n      'Melted chocolate being poured over fresh strawberries in slow motion, rich and glossy',\n    duration: '4s',\n    aspect_ratio: '9:16',\n    resolution: '1080p',\n    generate_audio: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		}

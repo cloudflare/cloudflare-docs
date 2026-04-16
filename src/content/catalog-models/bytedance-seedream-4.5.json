@@ -29,7 +29,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.5',\n  {\n    prompt:\n      'A cozy reading nook with floor-to-ceiling bookshelves and a comfortable armchair',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.5',\n  {\n    prompt:\n      'A cozy reading nook with floor-to-ceiling bookshelves and a comfortable armchair',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -50,7 +50,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.5',\n  {\n    prompt:\n      'A hyperrealistic still life painting of fresh fruit on an antique wooden table with dramatic chiaroscuro lighting',\n    size: '4K',\n    aspect_ratio: '4:3',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.5',\n  {\n    prompt:\n      'A hyperrealistic still life painting of fresh fruit on an antique wooden table with dramatic chiaroscuro lighting',\n    size: '4K',\n    aspect_ratio: '4:3',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -73,7 +73,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.5',\n  {\n    prompt:\n      'Transform this scene into a winter wonderland with snow covering everything',\n    image_input: [\n      'https://replicate.delivery/xezq/0lxxNQSg3NabCZrDiQVAPGVmjP1Q2dd7TgYCOTfI9LpyZaMLA/tmp89gopylq.jpg',\n    ],\n    aspect_ratio: 'match_input_image',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.5',\n  {\n    prompt:\n      'Transform this scene into a winter wonderland with snow covering everything',\n    image_input: [\n      'https://replicate.delivery/xezq/0lxxNQSg3NabCZrDiQVAPGVmjP1Q2dd7TgYCOTfI9LpyZaMLA/tmp89gopylq.jpg',\n    ],\n    aspect_ratio: 'match_input_image',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -95,7 +95,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.5',\n  {\n    prompt:\n      'A character design sheet for a fantasy warrior: front view, side view, and back view',\n    sequential_image_generation: 'auto',\n    max_images: 3,\n    aspect_ratio: '16:9',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.5',\n  {\n    prompt:\n      'A character design sheet for a fantasy warrior: front view, side view, and back view',\n    sequential_image_generation: 'auto',\n    max_images: 3,\n    aspect_ratio: '16:9',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -119,14 +119,14 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.5',\n  {\n    prompt:\n      'Combine the style of the first image with the subject from the second image',\n    image_input: [\n      'https://replicate.delivery/xezq/TRYcLgNMrBpPJVq09ICKXWe4Z8d6olzpK5vtQPOB8O23ZaMLA/tmpaecga26m.jpg',\n      'https://replicate.delivery/xezq/1SbAc0aXYXbVD9doyrdCW78hYufVefMsaJXBrETN7Lu2npxsA/tmphvkx7emy.jpg',\n    ],\n    size: '2K',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.5',\n  {\n    prompt:\n      'Combine the style of the first image with the subject from the second image',\n    image_input: [\n      'https://replicate.delivery/xezq/TRYcLgNMrBpPJVq09ICKXWe4Z8d6olzpK5vtQPOB8O23ZaMLA/tmpaecga26m.jpg',\n      'https://replicate.delivery/xezq/1SbAc0aXYXbVD9doyrdCW78hYufVefMsaJXBrETN7Lu2npxsA/tmphvkx7emy.jpg',\n    ],\n    size: '2K',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		}
 	],
 	"supports_async": false,
 	"external_info": "https://seed.bytedance.com/en/seedream4_5",
-	"terms": "",
+	"terms": null,
 	"cover_image_url": "https://tjzk.replicate.delivery/models_models_featured_image/2e35026c-1f46-4bbe-a314-e27079e943fa/seedream-45-sm.jpg",
 	"metadata": {
 		"Max Images": "15",

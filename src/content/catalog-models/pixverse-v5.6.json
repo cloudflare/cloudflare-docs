@@ -30,7 +30,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'pixverse/v5.6',\n  {\n    prompt:\n      'A golden retriever running through a field of sunflowers on a sunny day',\n    duration: 5,\n    aspect_ratio: '16:9',\n    quality: '720p',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'pixverse/v5.6',\n  {\n    prompt:\n      'A golden retriever running through a field of sunflowers on a sunny day',\n    duration: 5,\n    aspect_ratio: '16:9',\n    quality: '720p',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -51,7 +51,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'pixverse/v5.6',\n  {\n    prompt:\n      'A dramatic aerial shot flying over misty mountain peaks at sunrise, cinematic lighting with volumetric fog',\n    duration: 8,\n    aspect_ratio: '16:9',\n    quality: '720p',\n    generate_audio: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'pixverse/v5.6',\n  {\n    prompt:\n      'A dramatic aerial shot flying over misty mountain peaks at sunrise, cinematic lighting with volumetric fog',\n    duration: 8,\n    aspect_ratio: '16:9',\n    quality: '720p',\n    generate_audio: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -71,7 +71,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'pixverse/v5.6',\n  {\n    prompt:\n      'A barista pouring latte art in a cozy coffee shop, close-up with shallow depth of field',\n    duration: 5,\n    aspect_ratio: '9:16',\n    quality: '540p',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'pixverse/v5.6',\n  {\n    prompt:\n      'A barista pouring latte art in a cozy coffee shop, close-up with shallow depth of field',\n    duration: 5,\n    aspect_ratio: '9:16',\n    quality: '540p',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -93,7 +93,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'pixverse/v5.6',\n  {\n    prompt:\n      'Abstract ink drops spreading through water, vivid colors mixing in slow motion',\n    negative_prompt: 'blurry, low quality',\n    duration: 5,\n    aspect_ratio: '1:1',\n    quality: '1080p',\n    seed: 12345,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'pixverse/v5.6',\n  {\n    prompt:\n      'Abstract ink drops spreading through water, vivid colors mixing in slow motion',\n    negative_prompt: 'blurry, low quality',\n    duration: 5,\n    aspect_ratio: '1:1',\n    quality: '1080p',\n    seed: 12345,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		}

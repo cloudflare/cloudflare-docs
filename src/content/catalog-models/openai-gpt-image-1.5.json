@@ -27,7 +27,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'openai/gpt-image-1.5',\n  {\n    prompt: 'A golden retriever puppy playing in autumn leaves',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'openai/gpt-image-1.5',\n  {\n    prompt: 'A golden retriever puppy playing in autumn leaves',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -45,7 +45,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'openai/gpt-image-1.5',\n  {\n    prompt:\n      'A detailed botanical illustration of exotic tropical flowers with fine line work and watercolor textures',\n    quality: 'high',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'openai/gpt-image-1.5',\n  {\n    prompt:\n      'A detailed botanical illustration of exotic tropical flowers with fine line work and watercolor textures',\n    quality: 'high',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -63,7 +63,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'openai/gpt-image-1.5',\n  {\n    prompt:\n      'A panoramic view of the northern lights over a snowy mountain range, vivid greens and purples dancing across the sky',\n    size: '1792x1024',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'openai/gpt-image-1.5',\n  {\n    prompt:\n      'A panoramic view of the northern lights over a snowy mountain range, vivid greens and purples dancing across the sky',\n    size: '1792x1024',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -82,7 +82,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'openai/gpt-image-1.5',\n  {\n    prompt:\n      'A neon-lit cyberpunk cityscape at night with rain-slicked streets and holographic billboards',\n    style: 'vivid',\n    quality: 'high',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'openai/gpt-image-1.5',\n  {\n    prompt:\n      'A neon-lit cyberpunk cityscape at night with rain-slicked streets and holographic billboards',\n    style: 'vivid',\n    quality: 'high',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -101,7 +101,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'openai/gpt-image-1.5',\n  {\n    prompt:\n      'A quiet Japanese garden in morning mist with a stone lantern and koi pond',\n    style: 'natural',\n    size: '1024x1024',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'openai/gpt-image-1.5',\n  {\n    prompt:\n      'A quiet Japanese garden in morning mist with a stone lantern and koi pond',\n    style: 'natural',\n    size: '1024x1024',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		}

@@ -29,7 +29,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    prompt: 'A golden retriever playing fetch on a sandy beach at sunset',\n    duration: 6,\n    resolution: '768P',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    prompt: 'A golden retriever playing fetch on a sandy beach at sunset',\n    duration: 6,\n    resolution: '768P',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -49,7 +49,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    prompt:\n      'A professional chef preparing sushi in a traditional Japanese kitchen, detailed close-up shots',\n    duration: 6,\n    resolution: '1080P',\n    prompt_optimizer: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    prompt:\n      'A professional chef preparing sushi in a traditional Japanese kitchen, detailed close-up shots',\n    duration: 6,\n    resolution: '1080P',\n    prompt_optimizer: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -69,7 +69,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    first_frame_image:\n      'https://replicate.delivery/xezq/MQpUhqkESIIQDlWUxtNcsznZLfUTmhEbCV3vdAZGHGPwwaMLA/tmpgl4gvv5n.jpeg',\n    prompt:\n      'Slowly zoom in with subtle parallax movement, gentle atmospheric motion',\n    duration: 6,\n    resolution: '768P',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    first_frame_image:\n      'https://replicate.delivery/xezq/MQpUhqkESIIQDlWUxtNcsznZLfUTmhEbCV3vdAZGHGPwwaMLA/tmpgl4gvv5n.jpeg',\n    prompt:\n      'Slowly zoom in with subtle parallax movement, gentle atmospheric motion',\n    duration: 6,\n    resolution: '768P',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -89,7 +89,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    prompt:\n      'Fireworks exploding over a city skyline at night, colorful reflections on water',\n    duration: 6,\n    resolution: '768P',\n    fast_pretreatment: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    prompt:\n      'Fireworks exploding over a city skyline at night, colorful reflections on water',\n    duration: 6,\n    resolution: '768P',\n    fast_pretreatment: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		}

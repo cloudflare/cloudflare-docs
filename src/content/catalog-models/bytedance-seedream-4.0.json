@@ -27,7 +27,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.0',\n  {\n    prompt: 'A serene mountain lake surrounded by pine trees at dawn',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.0',\n  {\n    prompt: 'A serene mountain lake surrounded by pine trees at dawn',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -46,7 +46,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.0',\n  {\n    prompt:\n      'A detailed steampunk mechanical owl with brass gears and copper feathers, intricate clockwork visible',\n    size: '4K',\n    aspect_ratio: '1:1',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.0',\n  {\n    prompt:\n      'A detailed steampunk mechanical owl with brass gears and copper feathers, intricate clockwork visible',\n    size: '4K',\n    aspect_ratio: '1:1',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -65,7 +65,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.0',\n  {\n    prompt:\n      'A vast alien desert landscape with two suns setting on the horizon, ancient ruins in the foreground',\n    size: '2K',\n    aspect_ratio: '21:9',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.0',\n  {\n    prompt:\n      'A vast alien desert landscape with two suns setting on the horizon, ancient ruins in the foreground',\n    size: '2K',\n    aspect_ratio: '21:9',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -84,7 +84,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.0',\n  {\n    prompt:\n      'An elegant Art Deco poster featuring a jazz singer under a spotlight',\n    aspect_ratio: '9:16',\n    enhance_prompt: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.0',\n  {\n    prompt:\n      'An elegant Art Deco poster featuring a jazz singer under a spotlight',\n    aspect_ratio: '9:16',\n    enhance_prompt: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -104,14 +104,14 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.0',\n  {\n    prompt: 'A detailed botanical illustration of exotic tropical flowers',\n    size: 'custom',\n    width: 2048,\n    height: 3072,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.0',\n  {\n    prompt: 'A detailed botanical illustration of exotic tropical flowers',\n    size: 'custom',\n    width: 2048,\n    height: 3072,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		}
 	],
 	"supports_async": false,
 	"external_info": "https://seed.bytedance.com/en/seedream4_0",
-	"terms": "",
+	"terms": null,
 	"cover_image_url": "https://tjzk.replicate.delivery/models_models_featured_image/53dda182-2998-4fde-b235-e1b2a09b0484/seedream4-sm.jpg",
 	"metadata": {
 		"Max Resolution": "4K",

@@ -28,7 +28,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'vidu/q3-turbo',\n  {\n    prompt: 'A cat lazily stretching on a sunlit windowsill',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'vidu/q3-turbo',\n  {\n    prompt: 'A cat lazily stretching on a sunlit windowsill',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -47,7 +47,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'vidu/q3-turbo',\n  {\n    prompt:\n      'Close-up of a hummingbird feeding from a vibrant red flower, slow motion with soft bokeh background',\n    resolution: '1080p',\n    duration: 5,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'vidu/q3-turbo',\n  {\n    prompt:\n      'Close-up of a hummingbird feeding from a vibrant red flower, slow motion with soft bokeh background',\n    resolution: '1080p',\n    duration: 5,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -66,7 +66,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'vidu/q3-turbo',\n  {\n    prompt:\n      'A waterfall cascading down mossy rocks in a tropical jungle, mist rising',\n    aspect_ratio: '9:16',\n    duration: 5,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'vidu/q3-turbo',\n  {\n    prompt:\n      'A waterfall cascading down mossy rocks in a tropical jungle, mist rising',\n    aspect_ratio: '9:16',\n    duration: 5,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -85,7 +85,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'vidu/q3-turbo',\n  {\n    prompt:\n      'Timelapse of clouds rolling over a mountain peak from sunrise to sunset, dramatic lighting',\n    duration: 16,\n    resolution: '720p',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'vidu/q3-turbo',\n  {\n    prompt:\n      'Timelapse of clouds rolling over a mountain peak from sunrise to sunset, dramatic lighting',\n    duration: 16,\n    resolution: '720p',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -104,7 +104,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'vidu/q3-turbo',\n  {\n    prompt: 'A sailboat gliding across calm ocean waters at sunset',\n    resolution: '540p',\n    duration: 3,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'vidu/q3-turbo',\n  {\n    prompt: 'A sailboat gliding across calm ocean waters at sunset',\n    resolution: '540p',\n    duration: 3,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		}

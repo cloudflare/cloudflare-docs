@@ -29,7 +29,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'runwayml/gen-4.5',\n  {\n    prompt:\n      'A timelapse of the Eiffel Tower on a sunny day with clouds flying by',\n    ratio: '1280:720',\n    duration: 5,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'runwayml/gen-4.5',\n  {\n    prompt:\n      'A timelapse of the Eiffel Tower on a sunny day with clouds flying by',\n    ratio: '1280:720',\n    duration: 5,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -48,7 +48,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'runwayml/gen-4.5',\n  {\n    prompt:\n      'A busy street in Tokyo at night with neon signs reflecting on wet pavement, rain falling',\n    ratio: '720:1280',\n    duration: 5,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'runwayml/gen-4.5',\n  {\n    prompt:\n      'A busy street in Tokyo at night with neon signs reflecting on wet pavement, rain falling',\n    ratio: '720:1280',\n    duration: 5,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -67,7 +67,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'runwayml/gen-4.5',\n  {\n    prompt:\n      'Close-up of a hummingbird feeding from a vibrant red flower, slow motion with soft bokeh background',\n    ratio: '960:960',\n    duration: 5,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'runwayml/gen-4.5',\n  {\n    prompt:\n      'Close-up of a hummingbird feeding from a vibrant red flower, slow motion with soft bokeh background',\n    ratio: '960:960',\n    duration: 5,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -86,7 +86,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'runwayml/gen-4.5',\n  {\n    prompt:\n      'Aerial drone shot flying through a misty forest at dawn, rays of sunlight breaking through the trees',\n    ratio: '1280:720',\n    duration: 10,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'runwayml/gen-4.5',\n  {\n    prompt:\n      'Aerial drone shot flying through a misty forest at dawn, rays of sunlight breaking through the trees',\n    ratio: '1280:720',\n    duration: 10,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -106,7 +106,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'runwayml/gen-4.5',\n  {\n    prompt: 'Camera slowly pans across the scene, gentle wind blowing',\n    image_input:\n      'https://upload.wikimedia.org/wikipedia/commons/8/85/Tour_Eiffel_Wikimedia_Commons_(cropped).jpg',\n    ratio: '1280:720',\n    duration: 5,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'runwayml/gen-4.5',\n  {\n    prompt: 'Camera slowly pans across the scene, gentle wind blowing',\n    image_input:\n      'https://upload.wikimedia.org/wikipedia/commons/8/85/Tour_Eiffel_Wikimedia_Commons_(cropped).jpg',\n    ratio: '1280:720',\n    duration: 5,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -126,7 +126,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'runwayml/gen-4.5',\n  {\n    prompt: 'A sailboat gliding across calm ocean waters at sunset',\n    ratio: '1280:720',\n    duration: 5,\n    seed: 42,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'runwayml/gen-4.5',\n  {\n    prompt: 'A sailboat gliding across calm ocean waters at sunset',\n    ratio: '1280:720',\n    duration: 5,\n    seed: 42,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -148,7 +148,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'runwayml/gen-4.5',\n  {\n    prompt: 'A press conference with multiple speakers at podiums',\n    ratio: '1280:720',\n    duration: 5,\n    content_moderation: {\n      public_figure_threshold: 'low',\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'runwayml/gen-4.5',\n  {\n    prompt: 'A press conference with multiple speakers at podiums',\n    ratio: '1280:720',\n    duration: 5,\n    content_moderation: {\n      public_figure_threshold: 'low',\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		}

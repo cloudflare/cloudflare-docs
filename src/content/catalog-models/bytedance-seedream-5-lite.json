@@ -30,7 +30,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5-lite',\n  {\n    prompt: 'A cute robot watering plants in a sunny greenhouse',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5-lite',\n  {\n    prompt: 'A cute robot watering plants in a sunny greenhouse',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -52,7 +52,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5-lite',\n  {\n    prompt:\n      'A detailed technical blueprint of a futuristic spacecraft with annotations and measurements',\n    size: '3K',\n    output_format: 'png',\n    aspect_ratio: '16:9',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5-lite',\n  {\n    prompt:\n      'A detailed technical blueprint of a futuristic spacecraft with annotations and measurements',\n    size: '3K',\n    output_format: 'png',\n    aspect_ratio: '16:9',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -74,7 +74,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5-lite',\n  {\n    prompt:\n      'A professional headshot portrait with soft studio lighting and a neutral gray background',\n    size: '2K',\n    output_format: 'jpeg',\n    aspect_ratio: '3:4',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5-lite',\n  {\n    prompt:\n      'A professional headshot portrait with soft studio lighting and a neutral gray background',\n    size: '2K',\n    output_format: 'jpeg',\n    aspect_ratio: '3:4',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -96,7 +96,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5-lite',\n  {\n    prompt:\n      'A four-panel comic strip showing a cat discovering a cardboard box and deciding to sit in it',\n    sequential_image_generation: 'auto',\n    max_images: 4,\n    aspect_ratio: '4:3',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5-lite',\n  {\n    prompt:\n      'A four-panel comic strip showing a cat discovering a cardboard box and deciding to sit in it',\n    sequential_image_generation: 'auto',\n    max_images: 4,\n    aspect_ratio: '4:3',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -120,14 +120,14 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5-lite',\n  {\n    prompt: 'Create a variation of this image in a watercolor painting style',\n    image_input: [\n      'https://replicate.delivery/xezq/jCypj4MeXYUiRyq7nfgm8z1OvFZF81wh4FznutDsZOuJz0YWA/tmp1iukn307.jpg',\n    ],\n    aspect_ratio: 'match_input_image',\n    size: '2K',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5-lite',\n  {\n    prompt: 'Create a variation of this image in a watercolor painting style',\n    image_input: [\n      'https://replicate.delivery/xezq/jCypj4MeXYUiRyq7nfgm8z1OvFZF81wh4FznutDsZOuJz0YWA/tmp1iukn307.jpg',\n    ],\n    aspect_ratio: 'match_input_image',\n    size: '2K',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		}
 	],
 	"supports_async": false,
 	"external_info": "https://seed.bytedance.com/en/seedream5_0_lite",
-	"terms": "",
+	"terms": null,
 	"cover_image_url": "https://tjzk.replicate.delivery/models_models_featured_image/a21f19af-c659-4598-a0f7-093d32011814/replicate-prediction-nmj3175dt.png",
 	"metadata": {
 		"Max Images": "15",

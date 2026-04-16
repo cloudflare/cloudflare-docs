@@ -19,8 +19,7 @@
 			"name": "Print-Ready Illustration",
 			"description": "High-resolution illustration for print",
 			"input": {
-				"prompt": "A detailed vintage botanical illustration of a rose with leaves and thorns, scientific illustration style",
-				"style": "realistic_image"
+				"prompt": "A detailed vintage botanical illustration of a rose with leaves and thorns, scientific illustration style"
 			},
 			"output": {
 				"image": "https://replicate.delivery/xezq/JrYNZOq5mNJfZKJyJBCUdD2YED51vRw9CVtA0EysOHQ3Q5MLA/tmp_z0l47_v.webp"
@@ -29,7 +28,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-pro',\n  {\n    prompt:\n      'A detailed vintage botanical illustration of a rose with leaves and thorns, scientific illustration style',\n    style: 'realistic_image',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-pro',\n  {\n    prompt:\n      'A detailed vintage botanical illustration of a rose with leaves and thorns, scientific illustration style',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -48,7 +47,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-pro',\n  {\n    prompt:\n      'A sweeping fantasy landscape with floating islands, waterfalls cascading into clouds, and ancient stone bridges connecting the islands',\n    size: '2048x2048',\n    style: 'digital_illustration',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-pro',\n  {\n    prompt:\n      'A sweeping fantasy landscape with floating islands, waterfalls cascading into clouds, and ancient stone bridges connecting the islands',\n    size: '2048x2048',\n    style: 'digital_illustration',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -91,7 +90,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-pro',\n  {\n    prompt:\n      'A modern, clean illustration of a shield with a checkmark inside, representing security and trust',\n    size: '2048x2048',\n    controls: {\n      colors: [\n        {\n          rgb: [46, 117, 182],\n        },\n        {\n          rgb: [255, 255, 255],\n        },\n      ],\n      background_color: {\n        rgb: [15, 23, 42],\n      },\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-pro',\n  {\n    prompt:\n      'A modern, clean illustration of a shield with a checkmark inside, representing security and trust',\n    size: '2048x2048',\n    controls: {\n      colors: [\n        {\n          rgb: [46, 117, 182],\n        },\n        {\n          rgb: [255, 255, 255],\n        },\n      ],\n      background_color: {\n        rgb: [15, 23, 42],\n      },\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -110,7 +109,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-pro',\n  {\n    prompt:\n      'A conceptual illustration of artificial intelligence as a tree with circuit-board branches and glowing data leaves',\n    style: 'digital_illustration',\n    substyle: 'hand_drawn',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-pro',\n  {\n    prompt:\n      'A conceptual illustration of artificial intelligence as a tree with circuit-board branches and glowing data leaves',\n    style: 'digital_illustration',\n    substyle: 'hand_drawn',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		}
@@ -204,7 +203,9 @@
 			"type": "object",
 			"properties": {
 				"image": {
-					"type": "string"
+					"type": "string",
+					"format": "uri",
+					"contentMediaType": "image/svg+xml"
 				}
 			},
 			"required": [

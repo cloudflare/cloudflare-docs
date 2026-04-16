@@ -28,7 +28,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/nano-banana-pro',\n  {\n    prompt:\n      'A sleek modern wireless headphone on a minimalist white marble surface with soft studio lighting and subtle shadows',\n    aspect_ratio: '1:1',\n    output_format: 'png',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'google/nano-banana-pro',\n  {\n    prompt:\n      'A sleek modern wireless headphone on a minimalist white marble surface with soft studio lighting and subtle shadows',\n    aspect_ratio: '1:1',\n    output_format: 'png',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -47,7 +47,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/nano-banana-pro',\n  {\n    prompt:\n      'An epic fantasy illustration of a wizard casting a spell in an ancient library, magical runes floating in the air, dust motes catching golden light streaming through stained glass windows',\n    aspect_ratio: '16:9',\n    image_size: '2K',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'google/nano-banana-pro',\n  {\n    prompt:\n      'An epic fantasy illustration of a wizard casting a spell in an ancient library, magical runes floating in the air, dust motes catching golden light streaming through stained glass windows',\n    aspect_ratio: '16:9',\n    image_size: '2K',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -67,7 +67,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/nano-banana-pro',\n  {\n    prompt:\n      'A photorealistic architectural visualization of a modern glass house perched on a cliff overlooking the ocean at sunset',\n    aspect_ratio: '16:9',\n    image_size: '4K',\n    output_format: 'jpg',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'google/nano-banana-pro',\n  {\n    prompt:\n      'A photorealistic architectural visualization of a modern glass house perched on a cliff overlooking the ocean at sunset',\n    aspect_ratio: '16:9',\n    image_size: '4K',\n    output_format: 'jpg',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -85,7 +85,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/nano-banana-pro',\n  {\n    prompt:\n      'A detailed character design sheet for a steampunk inventor, showing front view, side view, and detail callouts for mechanical arm and goggles',\n    aspect_ratio: '3:2',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"code": "const response = await env.AI.run(\n  'google/nano-banana-pro',\n  {\n    prompt:\n      'A detailed character design sheet for a steampunk inventor, showing front view, side view, and detail callouts for mechanical arm and goggles',\n    aspect_ratio: '3:2',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		}
