@@ -75,7 +75,7 @@ When a health check probe fails, Cloudflare sends two additional probes to confi
 
 The tunnel health dashboard reports health state per data center per tunnel. Each Cloudflare data center independently tracks the health of each tunnel.
 
-A common source of confusion is seeing "100% degraded" in the dashboard and interpreting it as 100% packet loss. It is not.
+A common source of confusion is seeing "100% degraded" in the dashboard and misinterpreting it as 100% packet loss. Note that these are different.
 
 :::note[100% degraded is a state, not a packet loss percentage]
 Each Cloudflare data center is a single tracking instance for a tunnel. When a tunnel enters the degraded state in a data center, the dashboard reports that data center as "100% degraded" for that tunnel. The actual packet loss that triggered the state change may be very small — even a brief period of intermittent loss that does not noticeably affect applications can trigger the degraded state.
