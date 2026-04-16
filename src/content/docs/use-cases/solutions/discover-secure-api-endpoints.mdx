@@ -238,10 +238,6 @@ The following example limits requests to `/api/auth/login` to 10 per minute per 
 For more information on rate limiting parameters and counting characteristics, refer to [Rate limiting parameters](/waf/rate-limiting-rules/parameters/).
 
 :::note
-Deploy rate limiting rules with the **Log** action first. Review [Security Events](/waf/analytics/security-events/) for 24 hours to confirm the thresholds do not block legitimate clients, then switch to **Block**.
-:::
-
-:::note
 Rate limiting rules may allow a small number of excess requests before enforcement starts, due to counter propagation delays across data centers. For more information, refer to [Request rate calculation](/waf/rate-limiting-rules/request-rate/).
 :::
 
