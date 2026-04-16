@@ -41,4 +41,13 @@ git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" clone "$ARTIFAC
 
 This flow is useful when another system owns repo discovery or access control, but your local tooling still expects a normal git remote.
 
-If you need a self-contained remote URL for a short-lived workflow, extract the token secret and build the authenticated remote only for that command.
+Treat `ARTIFACTS_TOKEN` as a secret. Keep it out of logs, and prefer `http.extraHeader` over saving credentials in a remote URL.
+
+If you need a self-contained remote URL for a short-lived workflow, extract the token secret and build the authenticated remote only for that command:
+
+```sh
+ARTIFACTS_TOKEN_SECRET="${ARTIFACTS_TOKEN%%\?expires=*}"
+ARTIFACTS_AUTH_REMOTE="https://x:${ARTIFACTS_TOKEN_SECRET}@${ARTIFACTS_REMOTE#https://}"
+
+git clone "$ARTIFACTS_AUTH_REMOTE" artifacts-clone
+```

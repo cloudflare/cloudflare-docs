@@ -73,6 +73,8 @@ The response resembles the following:
 }
 ```
 
+The REST control-plane base URL and the returned Git remote use different hosts. Use `result.remote` for Git operations.
+
 Copy the `remote` and `token` values from `result` into local shell variables:
 
 ```sh
@@ -80,7 +82,7 @@ export ARTIFACTS_REMOTE="<PASTE_RESULT_REMOTE_FROM_RESPONSE>"
 export ARTIFACTS_TOKEN="<PASTE_RESULT_TOKEN_FROM_RESPONSE>"
 ```
 
-If you want to extract them directly, use `jq`:
+Instead of copying them manually, capture the create response once and extract the fields with `jq`:
 
 ```bash
 CREATE_RESPONSE=$(curl --silent --request POST "$ARTIFACTS_BASE_URL/repos" \
@@ -120,6 +122,8 @@ curl "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO" \
 	"messages": []
 }
 ```
+
+This endpoint returns repo metadata only. If you need a new repo token, mint one with `POST /tokens`.
 
 ## 4. Push your first commit with git
 

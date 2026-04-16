@@ -18,13 +18,13 @@ Use the Artifacts REST API to manage repos, remotes, forks, imports, and tokens 
 Artifacts REST routes use this base path:
 
 ```txt
-https://artifacts.cloudflare.net/v1/api/namespaces/{namespace}
+https://artifacts.cloudflare.net/v1/api/namespaces/$ARTIFACTS_NAMESPACE
 ```
 
 Some edge deployments also expose this base path:
 
 ```txt
-https://artifacts.cloudflare.net/edge/v1/api/namespaces/{namespace}
+https://artifacts.cloudflare.net/edge/v1/api/namespaces/$ARTIFACTS_NAMESPACE
 ```
 
 Requests to `/v1/api/...` use Bearer authentication:
@@ -34,6 +34,10 @@ Authorization: Bearer <GATEWAY_JWT>
 ```
 
 If you are calling `/edge/v1/...`, use the gateway auth required by that edge deployment.
+
+All routes below are relative to the base URL your deployment exposes. The examples use `https://artifacts.cloudflare.net/v1/api/namespaces/$ARTIFACTS_NAMESPACE`.
+
+Gateway JWTs authenticate REST control-plane routes. Repo tokens authenticate Git operations against the returned `remote` URL.
 
 The following examples assume:
 
@@ -453,6 +457,8 @@ curl --request POST "$ARTIFACTS_BASE_URL/repos/react-mirror/import" \
 ```
 
 ## Tokens
+
+These tokens are for Git routes. They do not authenticate REST API requests.
 
 ### List tokens for a repo
 
