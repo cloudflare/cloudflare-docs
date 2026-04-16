@@ -6,7 +6,7 @@ sidebar:
   order: 3
 ---
 
-import { PackageManagers } from "~/components";
+import { PackageManagers, TypeScriptExample } from "~/components";
 
 This example uses the `git-repo-per-sandbox` Sandbox SDK template and highlights the Artifacts-specific pieces.
 
@@ -34,6 +34,8 @@ cd repo-per-sandbox
 
 The template keeps one Artifacts repo per sandbox ID:
 
+<TypeScriptExample filename="src/index.ts" typescriptFirst={true}>
+
 ```ts
 const repo = await env.ARTIFACTS.get(sandboxId);
 
@@ -59,9 +61,13 @@ if (repo) {
 }
 ```
 
+</TypeScriptExample>
+
 ## 2. Create or reuse the sandbox
 
 Use the same ID for the sandbox:
+
+<TypeScriptExample filename="src/index.ts" typescriptFirst={true}>
 
 ```ts
 import { getSandbox } from "@cloudflare/sandbox";
@@ -69,9 +75,15 @@ import { getSandbox } from "@cloudflare/sandbox";
 const sandbox = getSandbox(env.Sandbox, sandboxId);
 ```
 
+</TypeScriptExample>
+
 ## 3. Pass the repo into the sandbox
 
-Convert the write token into an authenticated Git remote, then store it as an environment variable inside the sandbox:
+Convert the write token into an authenticated Git remote, then store it as an environment variable inside the sandbox.
+
+Use a short-lived token and pass it into the sandbox only after the sandbox session is authorized to push changes.
+
+<TypeScriptExample filename="src/index.ts" typescriptFirst={true}>
 
 ```ts
 function toAuthenticatedRemote(remote: string, token: string) {
@@ -83,5 +95,7 @@ await sandbox.setEnvVars({
 	ARTIFACTS_GIT_REMOTE: toAuthenticatedRemote(remote, token),
 });
 ```
+
+</TypeScriptExample>
 
 Code running inside the sandbox can then use `ARTIFACTS_GIT_REMOTE` with `git clone`, `git fetch`, `git pull`, or `git push`.

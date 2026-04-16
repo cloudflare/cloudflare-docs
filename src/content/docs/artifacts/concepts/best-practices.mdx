@@ -42,7 +42,9 @@ Artifacts tokens are repo-scoped. Prefer `read` tokens for cloning, indexing, re
 
 Use `write` tokens only for the agent or system that must push changes. Give tokens short lifetimes, and re-issue a fresh token for each agent session.
 
-This example uses the [Workers binding](/artifacts/api/workers-binding/) to mint a short-lived read token for a repo:
+This example uses the [Workers binding](/artifacts/api/workers-binding/) to mint a short-lived read token for a repo.
+
+Assume the caller is already authenticated and authorized before this route returns a token.
 
 <TypeScriptExample filename="src/index.ts" typescriptFirst={true}>
 

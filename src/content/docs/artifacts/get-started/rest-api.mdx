@@ -24,6 +24,8 @@ You need:
 - An existing Artifacts namespace, for example `default`.
 - A local `git` client.
 
+Artifacts REST auth is environment-specific in private beta. If you do not already have a gateway JWT for your Artifacts environment, use the [Workers get started guide](/artifacts/get-started/workers/) instead.
+
 ## 1. Export your environment variables
 
 Set the variables used in the examples:
@@ -32,7 +34,7 @@ Set the variables used in the examples:
 export ARTIFACTS_NAMESPACE="default"
 export ARTIFACTS_REPO="starter-repo"
 export ARTIFACTS_JWT="<YOUR_GATEWAY_JWT>"
-export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.dev/v1/api/namespaces/$ARTIFACTS_NAMESPACE"
+export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.net/v1/api/namespaces/$ARTIFACTS_NAMESPACE"
 ```
 
 Artifacts uses Bearer authentication for control-plane requests:
@@ -61,9 +63,9 @@ The response resembles the following:
 		"name": "starter-repo",
 		"description": null,
 		"default_branch": "main",
-		"remote": "https://<ACCOUNT>.artifacts.cloudflare.dev/git/default/starter-repo.git",
+		"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/starter-repo.git",
 		"token": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000",
-		"expires_at": "2026-04-08T12:00:00.000Z"
+		"expires_at": "<ISO_TIMESTAMP>"
 	},
 	"success": true,
 	"errors": [],
@@ -76,8 +78,6 @@ Copy the `remote` and `token` values from `result` into local shell variables:
 ```sh
 export ARTIFACTS_REMOTE="<PASTE_RESULT_REMOTE_FROM_RESPONSE>"
 export ARTIFACTS_TOKEN="<PASTE_RESULT_TOKEN_FROM_RESPONSE>"
-export ARTIFACTS_TOKEN_SECRET="${ARTIFACTS_TOKEN%%\?expires=*}"
-export ARTIFACTS_AUTH_REMOTE="https://x:${ARTIFACTS_TOKEN_SECRET}@${ARTIFACTS_REMOTE#https://}"
 ```
 
 If you want to extract them directly, use `jq`:
@@ -90,8 +90,6 @@ CREATE_RESPONSE=$(curl --silent --request POST "$ARTIFACTS_BASE_URL/repos" \
 
 export ARTIFACTS_REMOTE=$(printf '%s' "$CREATE_RESPONSE" | jq -r '.result.remote')
 export ARTIFACTS_TOKEN=$(printf '%s' "$CREATE_RESPONSE" | jq -r '.result.token')
-export ARTIFACTS_TOKEN_SECRET="${ARTIFACTS_TOKEN%%\?expires=*}"
-export ARTIFACTS_AUTH_REMOTE="https://x:${ARTIFACTS_TOKEN_SECRET}@${ARTIFACTS_REMOTE#https://}"
 ```
 
 ## 3. Get the repo URL again
@@ -110,12 +108,12 @@ curl "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO" \
 		"name": "starter-repo",
 		"description": null,
 		"default_branch": "main",
-		"created_at": "2026-04-07T12:00:00.000Z",
-		"updated_at": "2026-04-07T12:30:00.000Z",
+		"created_at": "<ISO_TIMESTAMP>",
+		"updated_at": "<ISO_TIMESTAMP>",
 		"last_push_at": null,
 		"source": null,
 		"read_only": false,
-		"remote": "https://<ACCOUNT>.artifacts.cloudflare.dev/git/default/starter-repo.git"
+		"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/starter-repo.git"
 	},
 	"success": true,
 	"errors": [],
@@ -134,17 +132,18 @@ git init -b main
 printf '# Artifacts demo\n' > README.md
 git add README.md
 git commit -m "Initial commit"
-git remote add origin "$ARTIFACTS_AUTH_REMOTE"
-git push -u origin main
-```
-
-This uses the recommended HTTPS remote form. The `x` username is ignored, and the token secret is used as the Basic auth password.
-
-If you prefer to keep the remote URL unchanged, use an HTTP header instead:
-
-```sh
 git remote add origin "$ARTIFACTS_REMOTE"
 git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" push -u origin main
+```
+
+This uses the recommended header-based form and keeps the token out of the remote URL.
+
+If you need a self-contained remote URL for a short-lived command, build one from the token secret instead:
+
+```sh
+export ARTIFACTS_TOKEN_SECRET="${ARTIFACTS_TOKEN%%\?expires=*}"
+export ARTIFACTS_AUTH_REMOTE="https://x:${ARTIFACTS_TOKEN_SECRET}@${ARTIFACTS_REMOTE#https://}"
+git push "$ARTIFACTS_AUTH_REMOTE" HEAD:main
 ```
 
 ## 5. Pull the repo with a regular git client
@@ -153,16 +152,16 @@ Clone the same repo into a second directory:
 
 ```sh
 cd ..
-git clone "$ARTIFACTS_AUTH_REMOTE" artifacts-clone
+git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" clone "$ARTIFACTS_REMOTE" artifacts-clone
 git -C artifacts-clone log --oneline -1
 ```
 
 You should see the commit you pushed in the previous step.
 
-You can also clone with a header instead:
+You can also clone with a self-contained remote URL for a short-lived command:
 
 ```sh
-git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" clone "$ARTIFACTS_REMOTE" artifacts-clone
+git clone "$ARTIFACTS_AUTH_REMOTE" artifacts-clone
 ```
 
 ## Next steps

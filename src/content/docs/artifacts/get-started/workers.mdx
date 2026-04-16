@@ -66,23 +66,18 @@ You also need:
 
 ## 2. Add the Artifacts binding
 
-Open `wrangler.jsonc` and add the Artifacts binding:
+Open your Wrangler config file and add the Artifacts binding:
 
 <WranglerConfig>
 
-```jsonc title="wrangler.jsonc"
-{
-	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "artifacts-worker",
-	"main": "src/index.ts",
-	"compatibility_date": "$today",
-	"artifacts": [
-		{
-			"binding": "ARTIFACTS",
-			"namespace": "default",
-		},
-	],
-}
+```toml title="wrangler.toml"
+name = "artifacts-worker"
+main = "src/index.ts"
+compatibility_date = "$today"
+
+[[artifacts]]
+binding = "ARTIFACTS"
+namespace = "default"
 ```
 
 </WranglerConfig>
@@ -142,6 +137,10 @@ export default {
 
 This Worker does one job: create an Artifacts repo and return the values your git client needs next.
 
+:::caution[Protect token-issuing routes]
+This example omits authentication so it can focus on the Artifacts flow. In production, authorize the caller before creating repos or returning write tokens.
+:::
+
 ## 4. Create a repo through your Worker
 
 Start local development:
@@ -163,7 +162,7 @@ The response resembles the following:
 ```json
 {
 	"name": "starter-repo",
-	"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.dev/git/default/starter-repo.git",
+	"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/starter-repo.git",
 	"token": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000",
 	"expiresAt": "<ISO_TIMESTAMP>"
 }
@@ -177,8 +176,6 @@ Copy the `remote` and `token` values into local shell variables:
     ```sh
     export ARTIFACTS_REMOTE="<PASTE_REMOTE_FROM_RESPONSE>"
     export ARTIFACTS_TOKEN="<PASTE_TOKEN_FROM_RESPONSE>"
-    export ARTIFACTS_TOKEN_SECRET="${ARTIFACTS_TOKEN%%\?expires=*}"
-    export ARTIFACTS_AUTH_REMOTE="https://x:${ARTIFACTS_TOKEN_SECRET}@${ARTIFACTS_REMOTE#https://}"
     ```
 
     </TabItem>
@@ -191,8 +188,6 @@ Copy the `remote` and `token` values into local shell variables:
 
     export ARTIFACTS_REMOTE=$(printf '%s' "$RESPONSE" | jq -r '.remote')
     export ARTIFACTS_TOKEN=$(printf '%s' "$RESPONSE" | jq -r '.token')
-    export ARTIFACTS_TOKEN_SECRET="${ARTIFACTS_TOKEN%%\?expires=*}"
-    export ARTIFACTS_AUTH_REMOTE="https://x:${ARTIFACTS_TOKEN_SECRET}@${ARTIFACTS_REMOTE#https://}"
     ```
 
     </TabItem>
@@ -210,17 +205,18 @@ git init -b main
 printf '# Artifacts demo\n' > README.md
 git add README.md
 git commit -m "Initial commit"
-git remote add origin "$ARTIFACTS_AUTH_REMOTE"
-git push -u origin main
-```
-
-This uses the recommended HTTPS remote form. The `x` username is ignored, and the token secret is used as the Basic auth password.
-
-If you prefer to keep the remote URL unchanged, use an HTTP header instead:
-
-```sh
 git remote add origin "$ARTIFACTS_REMOTE"
 git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" push -u origin main
+```
+
+This uses the recommended header-based form and keeps the token out of the remote URL.
+
+If you need a self-contained remote URL for a short-lived command, build one from the token secret instead:
+
+```sh
+export ARTIFACTS_TOKEN_SECRET="${ARTIFACTS_TOKEN%%\?expires=*}"
+export ARTIFACTS_AUTH_REMOTE="https://x:${ARTIFACTS_TOKEN_SECRET}@${ARTIFACTS_REMOTE#https://}"
+git push "$ARTIFACTS_AUTH_REMOTE" HEAD:main
 ```
 
 ## 6. Pull the repo with a regular git client
@@ -229,16 +225,16 @@ Clone the same repo into a second directory:
 
 ```sh
 cd ..
-git clone "$ARTIFACTS_AUTH_REMOTE" artifacts-clone
+git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" clone "$ARTIFACTS_REMOTE" artifacts-clone
 git -C artifacts-clone log --oneline -1
 ```
 
 You should see the commit you pushed in the previous step.
 
-You can also clone with a header instead:
+You can also clone with a self-contained remote URL for a short-lived command:
 
 ```sh
-git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" clone "$ARTIFACTS_REMOTE" artifacts-clone
+git clone "$ARTIFACTS_AUTH_REMOTE" artifacts-clone
 ```
 
 ## 7. Deploy your Worker

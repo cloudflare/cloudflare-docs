@@ -9,7 +9,7 @@ head:
     content: REST API · Artifacts
 ---
 
-import { LinkCard, MetaInfo, Type } from "~/components";
+import { LinkCard, MetaInfo, Type, TypeScriptExample } from "~/components";
 
 Use the Artifacts REST API to manage repos, remotes, forks, imports, and tokens from external systems.
 
@@ -18,13 +18,13 @@ Use the Artifacts REST API to manage repos, remotes, forks, imports, and tokens 
 Artifacts REST routes use this base path:
 
 ```txt
-https://artifacts.cloudflare.dev/v1/api/namespaces/{namespace}
+https://artifacts.cloudflare.net/v1/api/namespaces/{namespace}
 ```
 
 Some edge deployments also expose this base path:
 
 ```txt
-https://artifacts.cloudflare.dev/edge/v1/api/namespaces/{namespace}
+https://artifacts.cloudflare.net/edge/v1/api/namespaces/{namespace}
 ```
 
 Requests to `/v1/api/...` use Bearer authentication:
@@ -41,12 +41,16 @@ The following examples assume:
 export ARTIFACTS_NAMESPACE="default"
 export ARTIFACTS_REPO="starter-repo"
 export ARTIFACTS_JWT="<YOUR_GATEWAY_JWT>"
-export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.dev/v1/api/namespaces/$ARTIFACTS_NAMESPACE"
+export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.net/v1/api/namespaces/$ARTIFACTS_NAMESPACE"
 ```
 
 All responses use the standard Cloudflare v4 envelope.
 
+Returned repo tokens are secrets. Do not log them or store them in long-lived remotes unless your workflow requires it.
+
 ## Shared types
+
+<TypeScriptExample typescriptFirst={true}>
 
 ```ts
 export type NamespaceName = string;
@@ -121,6 +125,8 @@ export interface TokenInfo {
 }
 ```
 
+</TypeScriptExample>
+
 ## Repos
 
 ### Create a repo
@@ -135,6 +141,8 @@ Request body:
 - `read_only` <Type text="boolean" /> <MetaInfo text="optional" />
 
 Response type:
+
+<TypeScriptExample omitTabs={true}>
 
 ```ts
 export interface CreateRepoRequest {
@@ -157,6 +165,8 @@ export interface CreateRepoResult {
 export type CreateRepoResponse = ApiEnvelope<CreateRepoResult>;
 ```
 
+</TypeScriptExample>
+
 ```bash
 curl --request POST "$ARTIFACTS_BASE_URL/repos" \
   --header "Authorization: Bearer $ARTIFACTS_JWT" \
@@ -176,9 +186,9 @@ curl --request POST "$ARTIFACTS_BASE_URL/repos" \
 		"name": "starter-repo",
 		"description": "Repository for automation experiments",
 		"default_branch": "main",
-		"remote": "https://<ACCOUNT>.artifacts.cloudflare.dev/git/default/starter-repo.git",
+		"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/starter-repo.git",
 		"token": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000",
-		"expires_at": "2026-04-08T12:00:00.000Z"
+		"expires_at": "<ISO_TIMESTAMP>"
 	},
 	"success": true,
 	"errors": [],
@@ -200,6 +210,8 @@ Query parameters:
 
 Response type:
 
+<TypeScriptExample typescriptFirst={true}>
+
 ```ts
 export interface ListReposQuery {
 	limit?: number;
@@ -211,6 +223,8 @@ export interface ListReposQuery {
 
 export type ListReposResponse = ApiEnvelope<RepoInfo[]>;
 ```
+
+</TypeScriptExample>
 
 ```bash
 curl "$ARTIFACTS_BASE_URL/repos?limit=20&sort=updated_at&direction=desc" \
@@ -225,9 +239,9 @@ curl "$ARTIFACTS_BASE_URL/repos?limit=20&sort=updated_at&direction=desc" \
 			"name": "starter-repo",
 			"description": "Repository for automation experiments",
 			"default_branch": "main",
-			"created_at": "2026-04-07T12:00:00.000Z",
-			"updated_at": "2026-04-07T12:30:00.000Z",
-			"last_push_at": "2026-04-07T12:30:00.000Z",
+			"created_at": "<ISO_TIMESTAMP>",
+			"updated_at": "<ISO_TIMESTAMP>",
+			"last_push_at": "<ISO_TIMESTAMP>",
 			"source": null,
 			"read_only": false
 		}
@@ -249,9 +263,13 @@ Route: `GET /repos/:name`
 
 Response type:
 
+<TypeScriptExample omitTabs={true}>
+
 ```ts
 export type GetRepoResponse = ApiEnvelope<RemoteRepoInfo>;
 ```
+
+</TypeScriptExample>
 
 ```bash
 curl "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO" \
@@ -265,12 +283,12 @@ curl "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO" \
 		"name": "starter-repo",
 		"description": "Repository for automation experiments",
 		"default_branch": "main",
-		"created_at": "2026-04-07T12:00:00.000Z",
-		"updated_at": "2026-04-07T12:30:00.000Z",
-		"last_push_at": "2026-04-07T12:30:00.000Z",
+		"created_at": "<ISO_TIMESTAMP>",
+		"updated_at": "<ISO_TIMESTAMP>",
+		"last_push_at": "<ISO_TIMESTAMP>",
 		"source": null,
 		"read_only": false,
-		"remote": "https://<ACCOUNT>.artifacts.cloudflare.dev/git/default/starter-repo.git"
+		"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/starter-repo.git"
 	},
 	"success": true,
 	"errors": [],
@@ -286,6 +304,8 @@ This route returns `202 Accepted`.
 
 Response type:
 
+<TypeScriptExample omitTabs={true}>
+
 ```ts
 export interface DeleteRepoResult {
 	id: string;
@@ -293,6 +313,8 @@ export interface DeleteRepoResult {
 
 export type DeleteRepoResponse = ApiEnvelope<DeleteRepoResult>;
 ```
+
+</TypeScriptExample>
 
 ```bash
 curl --request DELETE "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO" \
@@ -323,6 +345,8 @@ Request body:
 
 Response type:
 
+<TypeScriptExample omitTabs={true}>
+
 ```ts
 export interface ForkRepoRequest {
 	name: RepoName;
@@ -337,6 +361,8 @@ export interface ForkRepoResult extends CreateRepoResult {
 
 export type ForkRepoResponse = ApiEnvelope<ForkRepoResult>;
 ```
+
+</TypeScriptExample>
 
 ```bash
 curl --request POST "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO/fork" \
@@ -357,9 +383,9 @@ curl --request POST "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO/fork" \
 		"name": "starter-repo-copy",
 		"description": "Repository for automation experiments",
 		"default_branch": "main",
-		"remote": "https://<ACCOUNT>.artifacts.cloudflare.dev/git/default/starter-repo-copy.git",
+		"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/starter-repo-copy.git",
 		"token": "art_v1_89abcdef0123456789abcdef0123456789abcdef?expires=1760003600",
-		"expires_at": "2026-04-08T13:00:00.000Z",
+		"expires_at": "<ISO_TIMESTAMP>",
 		"objects": 128
 	},
 	"success": true,
@@ -381,6 +407,8 @@ Request body:
 
 Response type:
 
+<TypeScriptExample omitTabs={true}>
+
 ```ts
 export interface ImportRepoRequest {
 	url: string;
@@ -391,6 +419,8 @@ export interface ImportRepoRequest {
 
 export type ImportRepoResponse = ApiEnvelope<CreateRepoResult>;
 ```
+
+</TypeScriptExample>
 
 Pass a full HTTPS Git remote URL, for example `https://github.com/facebook/react` or `https://gitlab.com/group/project.git`.
 
@@ -412,9 +442,9 @@ curl --request POST "$ARTIFACTS_BASE_URL/repos/react-mirror/import" \
 		"name": "react-mirror",
 		"description": null,
 		"default_branch": "main",
-		"remote": "https://<ACCOUNT>.artifacts.cloudflare.dev/git/default/react-mirror.git",
+		"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/react-mirror.git",
 		"token": "art_v1_fedcba9876543210fedcba9876543210fedcba98?expires=1760007200",
-		"expires_at": "2026-04-08T14:00:00.000Z"
+		"expires_at": "<ISO_TIMESTAMP>"
 	},
 	"success": true,
 	"errors": [],
@@ -436,6 +466,8 @@ Query parameters:
 
 Response type:
 
+<TypeScriptExample omitTabs={true}>
+
 ```ts
 export interface ListTokensQuery {
 	state?: TokenState | "all";
@@ -445,6 +477,8 @@ export interface ListTokensQuery {
 
 export type ListTokensResponse = ApiEnvelope<TokenInfo[]>;
 ```
+
+</TypeScriptExample>
 
 ```bash
 curl "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO/tokens?state=all&per_page=30&page=1" \
@@ -458,8 +492,8 @@ curl "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO/tokens?state=all&per_page=30&pag
 			"id": "tok_123",
 			"scope": "read",
 			"state": "active",
-			"created_at": "2026-04-07T12:00:00.000Z",
-			"expires_at": "2026-04-07T13:00:00.000Z"
+			"created_at": "<ISO_TIMESTAMP>",
+			"expires_at": "<ISO_TIMESTAMP>"
 		}
 	],
 	"success": true,
@@ -487,6 +521,8 @@ Request body:
 
 Response type:
 
+<TypeScriptExample omitTabs={true}>
+
 ```ts
 export interface CreateTokenRequest {
 	repo: RepoName;
@@ -503,6 +539,8 @@ export interface CreateTokenResult {
 
 export type CreateTokenResponse = ApiEnvelope<CreateTokenResult>;
 ```
+
+</TypeScriptExample>
 
 ```bash
 curl --request POST "$ARTIFACTS_BASE_URL/tokens" \
@@ -521,7 +559,7 @@ curl --request POST "$ARTIFACTS_BASE_URL/tokens" \
 		"id": "tok_123",
 		"plaintext": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000",
 		"scope": "read",
-		"expires_at": "2026-04-07T13:00:00.000Z"
+		"expires_at": "<ISO_TIMESTAMP>"
 	},
 	"success": true,
 	"errors": [],
@@ -535,6 +573,8 @@ Route: `DELETE /tokens/:id`
 
 Response type:
 
+<TypeScriptExample omitTabs={true}>
+
 ```ts
 export interface RevokeTokenResult {
 	id: string;
@@ -542,6 +582,8 @@ export interface RevokeTokenResult {
 
 export type RevokeTokenResponse = ApiEnvelope<RevokeTokenResult>;
 ```
+
+</TypeScriptExample>
 
 ```bash
 curl --request DELETE "$ARTIFACTS_BASE_URL/tokens/tok_123" \
@@ -563,6 +605,8 @@ curl --request DELETE "$ARTIFACTS_BASE_URL/tokens/tok_123" \
 
 Application errors also use the v4 envelope:
 
+<TypeScriptExample omitTabs={true}>
+
 ```ts
 export interface ApiError {
 	code: number;
@@ -573,6 +617,8 @@ export interface ApiError {
 	};
 }
 ```
+
+</TypeScriptExample>
 
 ## Next steps
 

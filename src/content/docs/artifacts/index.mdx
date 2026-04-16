@@ -21,11 +21,11 @@ Versioned storage that speaks Git.
 
 :::note
 
-Artifacts is in [private beta (register interest)](https://forms.gle/Z2mig8TJVdY8x9bf8). Read the [announcement blog](https://blog.cloudflare.com/artifacts-git-for-agents-beta) to learn more about how Artifacts works.
+Artifacts is in [private beta (register interest)](https://forms.gle/Z2mig8TJVdY8x9bf8). Refer to [How Artifacts works](/artifacts/concepts/how-artifacts-works/) for the architecture overview.
 
 :::
 
-Give your agents, developers, and automations a home for code and data. Artifacts is Git-compatible storage built for scale: create tens of millions of repos, fork from any remote, and hand off a URL to any Git client.
+Artifacts stores versioned file trees behind a Git-compatible interface. Create repositories programmatically, fork from existing remotes, and hand off a URL to any standard Git client.
 
 Use Artifacts when you need to:
 
@@ -34,7 +34,7 @@ Use Artifacts when you need to:
 - isolate work in separate repos or branches for safer parallel execution
 - fork from a shared baseline and diff or merge the results later
 
-Artifacts stores versioned file trees behind a Git-compatible interface, so the same repository can be addressed from [Workers](/workers/), the REST API, and Git clients. Agents already know Git, which means you can give an agent a repository URL, let it work independently, and have it commit its output back to Artifacts with the same tools it already uses elsewhere. You can create one repo per agent, per user, per branch, or per task, scale that pattern to millions of repositories, and keep each unit of work separate until you are ready to compare or merge changes.
+The same repository can be addressed from [Workers](/workers/), the REST API, and Git clients. Agents already know Git, which means you can give an agent a repository URL, let it work independently, and have it commit its output back to Artifacts with the same tools it already uses elsewhere. You can create one repo per agent, per user, per branch, or per task, scale that pattern to millions of repositories, and keep each unit of work separate until you are ready to compare or merge changes.
 
 
 <CardGrid>

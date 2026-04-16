@@ -25,30 +25,29 @@ Use the [REST API](/artifacts/api/rest-api/) when you need to import a repo from
 
 ## Configure the binding
 
-Add the Artifacts binding to `wrangler.jsonc`:
+Add the Artifacts binding to your Wrangler config file:
 
 <WranglerConfig>
 
-```jsonc title="wrangler.jsonc"
-{
-	"artifacts": [
-		{
-			"binding": "ARTIFACTS",
-			"namespace": "default",
-		},
-	],
-}
+```toml title="wrangler.toml"
+[[artifacts]]
+binding = "ARTIFACTS"
+namespace = "default"
 ```
 
 </WranglerConfig>
 
 After you run `npx wrangler types`, your Worker environment looks like this:
 
+<TypeScriptExample typescriptFirst={true}>
+
 ```ts
 export interface Env {
 	ARTIFACTS: Artifacts;
 }
 ```
+
+</TypeScriptExample>
 
 Wrangler generates the `Artifacts` type for consumers and binds it directly in your environment.
 
@@ -337,106 +336,13 @@ export default {
 
 </TypeScriptExample>
 
-## Shared types
+:::caution[Protect token routes]
+This example omits authentication so it can focus on the binding surface. In production, authorize the caller before creating repos or returning tokens.
+:::
 
-These are the core response and helper types used in the examples on this page.
+## Generated types
 
-They match the current runtime binding surface.
-
-```ts
-export type NamespaceName = string;
-export type RepoName = string;
-export type Scope = "read" | "write";
-export type ArtifactToken = string;
-export type Cursor = string;
-
-export interface ArtifactsRepoInfo {
-	id: string;
-	name: string;
-	description: string | null;
-	defaultBranch: string;
-	createdAt: string;
-	updatedAt: string;
-	lastPushAt: string | null;
-	source: string | null;
-	readOnly: boolean;
-	remote: string;
-}
-
-export interface ArtifactsCreateRepoResult {
-	id: string;
-	name: string;
-	description: string | null;
-	defaultBranch: string;
-	remote: string;
-	token: string;
-	expiresAt: string;
-}
-
-export interface ArtifactsRepoListResult {
-	repos: Array<Omit<ArtifactsRepoInfo, "remote">>;
-	total: number;
-	cursor?: string;
-}
-
-export interface ArtifactsCreateTokenResult {
-	id: string;
-	plaintext: string;
-	scope: string;
-	expiresAt: string;
-}
-
-export interface ArtifactsTokenValidation {
-	valid: boolean;
-	scope?: string;
-}
-
-export interface ArtifactsTokenInfo {
-	id: string;
-	scope: string;
-	state: "active" | "expired" | "revoked";
-	createdAt: string;
-	expiresAt: string;
-}
-
-export interface ArtifactsTokenListResult {
-	tokens: ArtifactsTokenInfo[];
-	total: number;
-}
-
-export interface ArtifactsRepo {
-	info(): Promise<ArtifactsRepoInfo | null>;
-	createToken(
-		scope?: "write" | "read",
-		ttl?: number,
-	): Promise<ArtifactsCreateTokenResult>;
-	validateToken(token: string): Promise<ArtifactsTokenValidation>;
-	listTokens(): Promise<ArtifactsTokenListResult>;
-	revokeToken(tokenOrId: string): Promise<boolean>;
-	fork(
-		name: string,
-		opts?: {
-			description?: string;
-			readOnly?: boolean;
-			defaultBranchOnly?: boolean;
-		},
-	): Promise<ArtifactsCreateRepoResult>;
-}
-
-export interface Artifacts {
-	create(
-		name: string,
-		opts?: {
-			readOnly?: boolean;
-			description?: string;
-			setDefaultBranch?: string;
-		},
-	): Promise<ArtifactsCreateRepoResult & { repo: ArtifactsRepo }>;
-	get(name: string): Promise<ArtifactsRepo | null>;
-	list(opts?: { limit?: number; cursor?: string }): Promise<ArtifactsRepoListResult>;
-	delete(name: string): Promise<boolean>;
-}
-```
+Run `npx wrangler types` in your own project and treat the generated `worker-configuration.d.ts` file as the source of truth for the Artifacts binding types in that environment.
 
 ## Next steps
 
