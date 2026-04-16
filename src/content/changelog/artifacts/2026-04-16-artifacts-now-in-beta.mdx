@@ -1,12 +1,12 @@
 ---
-title: "Artifacts now in beta: versioned filesystem that can speak git"
-description: Artifacts is now available in beta as a versioned filesystem for Workers, APIs, and git-compatible workflows.
+title: "Artifacts now in beta: versioned filesystem with Git access"
+description: Artifacts is now available in beta as a versioned filesystem for Workers, APIs, and Git-compatible workflows.
 products:
   - artifacts
 date: 2026-04-16
 ---
 
-[Artifacts](/artifacts/) is now in beta. It provides a versioned filesystem for storing and exchanging file trees across Workers, the REST API, and git-compatible clients.
+[Artifacts](/artifacts/) is now in beta. It provides a versioned filesystem for storing and exchanging file trees across Workers, the REST API, and Git-compatible clients.
 
 Use Artifacts to publish build outputs, sync repositories, and move files between tools without inventing a new packaging format.
 
@@ -17,11 +17,10 @@ const created = await env.ARTIFACTS.create("starter-repo");
 const remote = (await created.repo.info())?.remote;
 ```
 
-You can use the REST API to create a namespace, then create a repo inside it:
+You can use the REST API to create a repo inside a namespace:
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/${ARTIFACTS_ACCOUNT_ID}/artifacts/namespaces" --header "Authorization: Bearer $ARTIFACTS_JWT" --header "Content-Type: application/json" --data '{"name":"starter-namespace"}'
-curl "https://api.cloudflare.com/client/v4/accounts/${ARTIFACTS_ACCOUNT_ID}/artifacts/namespaces/starter-namespace/repos" --header "Authorization: Bearer $ARTIFACTS_JWT" --header "Content-Type: application/json" --data '{"name":"starter-repo"}'
+curl --request POST "https://artifacts.cloudflare.net/v1/api/namespaces/starter-namespace/repos" --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" --header "Content-Type: application/json" --data '{"name":"starter-repo"}'
 ```
 
 Any Git client that speaks smart HTTP can use the returned remote URL:

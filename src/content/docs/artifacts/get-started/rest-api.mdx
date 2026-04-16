@@ -13,8 +13,6 @@ import { LinkCard, Tabs, TabItem } from "~/components";
 
 Create an Artifacts repo with the REST API, then use a regular Git client to push and pull content.
 
-Use this guide only if your Artifacts environment already provides a gateway JWT in private beta.
-
 By the end of this guide, you will create a repo inside an existing namespace, read back the repo remote URL, push a commit, and clone the same repo with a standard Git client.
 
 ## Prerequisites
@@ -22,12 +20,12 @@ By the end of this guide, you will create a repo inside an existing namespace, r
 You need:
 
 - A Cloudflare account with access to Artifacts.
-- A gateway JWT for the Artifacts API.
+- A [Cloudflare API token](/fundamentals/api/get-started/create-token/) with **Artifacts** > **Edit**.
 - An existing Artifacts namespace, for example `default`.
 - A local `git` client.
 - `jq`, if you want to extract response fields automatically.
 
-Artifacts REST auth is environment-specific in private beta. If you do not already have a gateway JWT for your Artifacts environment, use the [Workers get started guide](/artifacts/get-started/workers/) instead.
+For Workers-based access instead of direct HTTP calls, use the [Workers get started guide](/artifacts/get-started/workers/).
 
 ## 1. Export your environment variables
 
@@ -36,7 +34,7 @@ Set the variables used in the examples:
 ```sh
 export ARTIFACTS_NAMESPACE="default"
 export ARTIFACTS_REPO="starter-repo"
-export ARTIFACTS_JWT="<YOUR_GATEWAY_JWT>"
+export CLOUDFLARE_API_TOKEN="<YOUR_API_TOKEN>"
 export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.net/v1/api/namespaces/$ARTIFACTS_NAMESPACE"
 ```
 
@@ -45,7 +43,7 @@ Use a unique repo name each time you run this guide.
 Artifacts uses Bearer authentication for control-plane requests:
 
 ```txt
-Authorization: Bearer $ARTIFACTS_JWT
+Authorization: Bearer $CLOUDFLARE_API_TOKEN
 ```
 
 ## 2. Create a repo
@@ -57,7 +55,7 @@ Choose one of the following ways to create a repo inside that namespace:
 
 ```bash
 curl --request POST "$ARTIFACTS_BASE_URL/repos" \
-  --header "Authorization: Bearer $ARTIFACTS_JWT" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \
   --data "{\"name\":\"$ARTIFACTS_REPO\"}"
 ```
@@ -97,7 +95,7 @@ Capture the create response once and extract the fields with `jq`:
 
 ```bash
 CREATE_RESPONSE=$(curl --silent --request POST "$ARTIFACTS_BASE_URL/repos" \
-  --header "Authorization: Bearer $ARTIFACTS_JWT" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \
   --data "{\"name\":\"$ARTIFACTS_REPO\"}")
 
@@ -115,7 +113,7 @@ Fetch the repo metadata when you need to recover the remote URL later:
 
 ```bash
 curl "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO" \
-  --header "Authorization: Bearer $ARTIFACTS_JWT"
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
 ```json

@@ -8,9 +8,7 @@ sidebar:
 
 Use this pattern when you want to discover a repo over the REST API and then hand the returned HTTPS remote to a standard Git client.
 
-This example assumes the repo already exists and that you have a gateway JWT with permission to read repo metadata and mint repo tokens.
-
-Artifacts REST auth is environment-specific in private beta. If you do not already have a gateway JWT for your Artifacts environment, use the [Workers binding](/artifacts/api/workers-binding/) instead.
+This example assumes the repo already exists and that you have a [Cloudflare API token](/fundamentals/api/get-started/create-token/) with **Artifacts** > **Edit**.
 
 ## Fetch the remote and clone the repo
 
@@ -21,16 +19,16 @@ The example below uses `jq` to extract fields from the JSON responses.
 ```bash
 export ARTIFACTS_NAMESPACE="default"
 export ARTIFACTS_REPO="starter-repo"
-export ARTIFACTS_JWT="<YOUR_GATEWAY_JWT>"
+export CLOUDFLARE_API_TOKEN="<YOUR_API_TOKEN>"
 export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.net/v1/api/namespaces/$ARTIFACTS_NAMESPACE"
 
 REPO_JSON=$(curl --silent "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO" \
-  --header "Authorization: Bearer $ARTIFACTS_JWT")
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN")
 
 ARTIFACTS_REMOTE=$(printf '%s' "$REPO_JSON" | jq -r '.result.remote')
 
 TOKEN_JSON=$(curl --silent "$ARTIFACTS_BASE_URL/tokens" \
-  --header "Authorization: Bearer $ARTIFACTS_JWT" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \
   --data "{\"repo\":\"$ARTIFACTS_REPO\",\"scope\":\"read\",\"ttl\":3600}")
 

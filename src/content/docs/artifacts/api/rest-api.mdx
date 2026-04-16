@@ -21,30 +21,22 @@ Artifacts REST routes use this base path:
 https://artifacts.cloudflare.net/v1/api/namespaces/$ARTIFACTS_NAMESPACE
 ```
 
-Some edge deployments also expose this base path:
-
-```txt
-https://artifacts.cloudflare.net/edge/v1/api/namespaces/$ARTIFACTS_NAMESPACE
-```
-
 Requests to `/v1/api/...` use Bearer authentication:
 
 ```txt
-Authorization: Bearer <GATEWAY_JWT>
+Authorization: Bearer <CLOUDFLARE_API_TOKEN>
 ```
-
-If you are calling `/edge/v1/...`, use the gateway auth required by that edge deployment.
 
 All routes below are relative to the base URL your deployment exposes. The examples use `https://artifacts.cloudflare.net/v1/api/namespaces/$ARTIFACTS_NAMESPACE`.
 
-Gateway JWTs authenticate REST control-plane routes. Repo tokens authenticate Git operations against the returned `remote` URL.
+Cloudflare API tokens authenticate REST control-plane routes. Repo tokens authenticate Git operations against the returned `remote` URL.
 
 The following examples assume:
 
 ```sh
 export ARTIFACTS_NAMESPACE="default"
 export ARTIFACTS_REPO="starter-repo"
-export ARTIFACTS_JWT="<YOUR_GATEWAY_JWT>"
+export CLOUDFLARE_API_TOKEN="<YOUR_API_TOKEN>"
 export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.net/v1/api/namespaces/$ARTIFACTS_NAMESPACE"
 ```
 
@@ -173,7 +165,7 @@ export type CreateRepoResponse = ApiEnvelope<CreateRepoResult>;
 
 ```bash
 curl --request POST "$ARTIFACTS_BASE_URL/repos" \
-  --header "Authorization: Bearer $ARTIFACTS_JWT" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \
   --data '{
     "name": "starter-repo",
@@ -232,7 +224,7 @@ export type ListReposResponse = ApiEnvelope<RepoInfo[]>;
 
 ```bash
 curl "$ARTIFACTS_BASE_URL/repos?limit=20&sort=updated_at&direction=desc" \
-  --header "Authorization: Bearer $ARTIFACTS_JWT"
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
 ```json
@@ -277,7 +269,7 @@ export type GetRepoResponse = ApiEnvelope<RemoteRepoInfo>;
 
 ```bash
 curl "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO" \
-  --header "Authorization: Bearer $ARTIFACTS_JWT"
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
 ```json
@@ -322,7 +314,7 @@ export type DeleteRepoResponse = ApiEnvelope<DeleteRepoResult>;
 
 ```bash
 curl --request DELETE "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO" \
-  --header "Authorization: Bearer $ARTIFACTS_JWT"
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
 ```json
@@ -370,7 +362,7 @@ export type ForkRepoResponse = ApiEnvelope<ForkRepoResult>;
 
 ```bash
 curl --request POST "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO/fork" \
-	--header "Authorization: Bearer $ARTIFACTS_JWT" \
+	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 	--header "Content-Type: application/json" \
 	--data '{
 	  "name": "starter-repo-copy",
@@ -430,7 +422,7 @@ Pass a full HTTPS Git remote URL, for example `https://github.com/facebook/react
 
 ```bash
 curl --request POST "$ARTIFACTS_BASE_URL/repos/react-mirror/import" \
-  --header "Authorization: Bearer $ARTIFACTS_JWT" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 	--header "Content-Type: application/json" \
 	--data '{
 	  "url": "https://github.com/facebook/react",
@@ -488,7 +480,7 @@ export type ListTokensResponse = ApiEnvelope<TokenInfo[]>;
 
 ```bash
 curl "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO/tokens?state=all&per_page=30&page=1" \
-  --header "Authorization: Bearer $ARTIFACTS_JWT"
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
 ```json
@@ -550,7 +542,7 @@ export type CreateTokenResponse = ApiEnvelope<CreateTokenResult>;
 
 ```bash
 curl --request POST "$ARTIFACTS_BASE_URL/tokens" \
-  --header "Authorization: Bearer $ARTIFACTS_JWT" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \
   --data '{
     "repo": "starter-repo",
@@ -593,7 +585,7 @@ export type RevokeTokenResponse = ApiEnvelope<RevokeTokenResult>;
 
 ```bash
 curl --request DELETE "$ARTIFACTS_BASE_URL/tokens/tok_123" \
-  --header "Authorization: Bearer $ARTIFACTS_JWT"
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
 ```json

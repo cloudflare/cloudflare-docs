@@ -1,11 +1,11 @@
 ---
 title: Artifacts
-description: Store, version, and share filesystem artifacts across Workers, APIs, and git-compatible tools.
+description: Store, version, and share filesystem artifacts across Workers, APIs, and Git-compatible tools.
 pcx_content_type: overview
 sidebar:
   order: 1
   badge:
-    text: Private beta
+    text: Beta
 head:
   - tag: title
     content: Artifacts
@@ -21,11 +21,11 @@ Versioned storage that speaks Git.
 
 :::note
 
-Artifacts is in [private beta (register interest)](https://forms.gle/Z2mig8TJVdY8x9bf8). Refer to [How Artifacts works](/artifacts/concepts/how-artifacts-works/) for the architecture overview.
+Artifacts is in beta. Refer to [How Artifacts works](/artifacts/concepts/how-artifacts-works/) for the architecture overview.
 
 :::
 
-Artifacts stores versioned file trees behind a Git-compatible interface. Create repositories programmatically, fork from existing remotes, and hand off a URL to any standard Git client.
+Artifacts stores versioned file trees behind a Git-compatible interface. Create repositories programmatically, import existing repositories, and hand off a URL to any standard Git client.
 
 Use Artifacts when you need to:
 
@@ -34,7 +34,7 @@ Use Artifacts when you need to:
 - Isolate work in separate repos or branches for safer parallel execution
 - Fork from a shared baseline and diff or merge the results later
 
-The same repository can be addressed from [Workers](/workers/), the REST API, and Git clients. Agents already know Git, which means you can give an agent a repository URL, let it work independently, and have it commit its output back to Artifacts with the same tools it already uses elsewhere. You can create one repo per agent, per user, per branch, or per task, scale that pattern to millions of repositories, and keep each unit of work separate until you are ready to compare or merge changes.
+The same repository can be addressed from [Workers](/workers/), the REST API, and Git clients. You can create one repo per agent, user, branch, or task, keep each unit of work separate, and compare or merge the results later.
 
 
 <CardGrid>
@@ -44,7 +44,11 @@ The same repository can be addressed from [Workers](/workers/), the REST API, an
 	href="/artifacts/get-started/"
 	icon="open-book"
 >
-	Create your first Artifact with Workers or the REST API.
+	Create your first repo with Workers or the REST API.
+</LinkTitleCard>
+
+<LinkTitleCard title="Guides" href="/artifacts/guides/" icon="document">
+	Review authentication, imports, and ArtifactFS workflows.
 </LinkTitleCard>
 
 <LinkTitleCard title="Concepts" href="/artifacts/concepts/" icon="document">
@@ -52,7 +56,7 @@ The same repository can be addressed from [Workers](/workers/), the REST API, an
 </LinkTitleCard>
 
 <LinkTitleCard title="API" href="/artifacts/api/" icon="document">
-	Review the Workers binding, REST API, git protocol, and ArtifactFS.
+	Review the Workers binding, REST API, and Git protocol.
 </LinkTitleCard>
 
 <LinkTitleCard
