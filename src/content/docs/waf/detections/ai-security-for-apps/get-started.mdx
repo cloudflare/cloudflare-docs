@@ -44,7 +44,7 @@ Enable the feature using a `PUT` request similar to the following:
 curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/firewall-for-ai/settings" \
 --request PUT \
 --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---json '{ "pii_detection_enabled": true }'
+--json '{ "enabled": true }'
 ```
 
 </TabItem> </Tabs>
