@@ -62,7 +62,7 @@ Access will now validate the JWT token against the Linked App Token rule and pro
 
 ## SaaS MCP server (Access for SaaS with OAuth)
 
-If your MCP server is registered as an [Access for SaaS OIDC application](/cloudflare-one/access-controls/ai-controls/saas-mcp/) and implements [MCP OAuth](https://modelcontextprotocol.io/specification/2025-03-26/basic/authorization), it receives an OAuth `access_token` from Cloudflare Access. The MCP server forwards this token to downstream self-hosted applications in the `Authorization: Bearer` header.
+If your MCP server is registered as an [Access for SaaS OIDC application](/cloudflare-one/access-controls/ai-controls/secure-mcp-servers/) and implements [MCP OAuth](https://modelcontextprotocol.io/specification/2025-03-26/basic/authorization), it receives an OAuth `access_token` from Cloudflare Access. The MCP server forwards this token to downstream self-hosted applications in the `Authorization: Bearer` header.
 
 This approach requires your MCP server to implement the OAuth authorization code flow. Use the [self-hosted MCP server approach](#self-hosted-mcp-server-recommended) if you want Cloudflare to handle authentication for you.
 
@@ -79,7 +79,7 @@ accTitle: SaaS MCP server accessing internal applications
 ### Prerequisites
 
 - Add your downstream applications (for example, your `Internal API` and `Company wiki`) as [self-hosted Access applications](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/).
-- Add your MCP server as an [Access for SaaS OIDC application](/cloudflare-one/access-controls/ai-controls/saas-mcp/#access-for-saas-application).
+- Add your MCP server as an [Access for SaaS OIDC application](/cloudflare-one/access-controls/ai-controls/secure-mcp-servers/#access-for-saas-application).
 
 ### 1. Configure downstream applications
 
