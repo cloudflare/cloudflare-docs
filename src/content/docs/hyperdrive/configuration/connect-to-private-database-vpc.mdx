@@ -1,6 +1,6 @@
 ---
 pcx_content_type: how-to
-title: Connect to a private database using Workers VPC
+title: Connect to a private database using Workers VPC (Recommended)
 sidebar:
   order: 5
   badge:
@@ -11,7 +11,21 @@ import { Render, Tabs, TabItem, Steps } from "~/components";
 
 [Workers VPC](/workers-vpc/) provides a way to connect Hyperdrive to a private database without configuring Cloudflare Access applications or service tokens. Instead, you create a TCP [VPC Service](/workers-vpc/configuration/vpc-services/) that points to your database and pass its service ID to Hyperdrive.
 
-For the Tunnel and Access approach, refer to [Connect to a private database using Tunnel](/hyperdrive/configuration/connect-to-private-database/).
+For the Tunnel and Access approach, refer to [Connect to a private database using Tunnel](/hyperdrive/configuration/connect-to-private-database/). If you are migrating from the Tunnel and Access approach, refer to [Migrate from Tunnel + Access to Workers VPC](/hyperdrive/configuration/migrate-from-access-to-vpc/).
+
+## How it works
+
+When your database is isolated within a private network (such as a [virtual private cloud](https://www.cloudflare.com/learning/cloud/what-is-a-virtual-private-cloud) or an on-premise network), you must enable a secure connection from your network to Cloudflare.
+
+- [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) is used to establish a secure outbound connection from your private network to Cloudflare.
+- A [VPC Service](/workers-vpc/configuration/vpc-services/) is used to route traffic from your Worker through the tunnel to your database, without requiring Cloudflare Access applications or service tokens.
+
+A request from the Cloudflare Worker to the origin database goes through Hyperdrive, the VPC Service, and the Cloudflare Tunnel established by `cloudflared`. `cloudflared` must be running in the private network in which your database is accessible.
+
+```mermaid
+flowchart LR
+    A[Cloudflare Worker] --> B[Hyperdrive] --> C[VPC Service] --> D[Cloudflare Tunnel] --> E[Private Database]
+```
 
 <Render file="tutorials-before-you-start" product="workers" />
 

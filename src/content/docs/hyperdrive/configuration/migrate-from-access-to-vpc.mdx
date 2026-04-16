@@ -1,0 +1,233 @@
+---
+pcx_content_type: how-to
+title: Migrate from Tunnel + Access to Workers VPC
+sidebar:
+  order: 5
+---
+
+import { Tabs, TabItem, WranglerConfig, Steps } from "~/components";
+
+If you currently connect Hyperdrive to a private database using [Cloudflare Tunnel and Cloudflare Access](/hyperdrive/configuration/connect-to-private-database/), you can migrate to [Workers VPC](/hyperdrive/configuration/connect-to-private-database-vpc/) to simplify your setup. Workers VPC removes the need for Access applications, service tokens, and policies — you create a TCP VPC Service that points to your database and pass its service ID to Hyperdrive.
+
+This guide covers two migration approaches. Both start with the same first step: creating a TCP VPC Service that points to your existing database.
+
+| Approach                                                                                                 | Best for                                                                                | Tradeoff                                                                                                                    |
+| -------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| [Create a new Hyperdrive configuration](#option-1-create-a-new-hyperdrive-configuration-recommended)     | Production workloads that need incremental traffic shifting and instant rollback        | More steps, temporarily requires two Hyperdrive configurations, and the new configuration starts with an empty query cache. |
+| [Update your existing Hyperdrive configuration](#option-2-update-your-existing-hyperdrive-configuration) | Simpler setups where preserving the existing query cache is preferable to easy rollback | Fewer steps and the query cache is preserved, but rolling back requires the original Access credentials to still exist.     |
+
+## Prerequisites
+
+- An existing Hyperdrive configuration that uses [Cloudflare Tunnel and Cloudflare Access](/hyperdrive/configuration/connect-to-private-database/) to connect to a private database.
+- A [Cloudflare Tunnel](/workers-vpc/configuration/tunnel/) running in the same network as your database. You can reuse the tunnel from your existing setup.
+- The **Connectivity Directory Admin** role on your Cloudflare account to create VPC Services.
+
+## Create a TCP VPC Service
+
+Both migration options require a TCP VPC Service that points to your database. This step is non-disruptive and does not affect your existing Hyperdrive configuration.
+
+<Tabs>
+<TabItem label="PostgreSQL">
+
+```sh
+npx wrangler vpc service create my-postgres-db \
+  --type tcp \
+  --tcp-port 5432 \
+  --app-protocol postgresql \
+  --tunnel-id <YOUR_TUNNEL_ID> \
+  --ipv4 <YOUR_DATABASE_IP>
+```
+
+</TabItem>
+<TabItem label="MySQL">
+
+```sh
+npx wrangler vpc service create my-mysql-db \
+  --type tcp \
+  --tcp-port 3306 \
+  --app-protocol mysql \
+  --tunnel-id <YOUR_TUNNEL_ID> \
+  --ipv4 <YOUR_DATABASE_IP>
+```
+
+</TabItem>
+</Tabs>
+
+Replace:
+
+- `<YOUR_TUNNEL_ID>` with the ID of the tunnel connected to your database network.
+- `<YOUR_DATABASE_IP>` with the private IP address of your database (for example, `10.0.0.5`). You can also use `--hostname` with a DNS name instead of `--ipv4`.
+
+Save the service ID returned by the command. You will use it in the next step.
+
+For full VPC Service configuration options including TLS certificate verification, refer to [Connect to a private database using Workers VPC](/hyperdrive/configuration/connect-to-private-database-vpc/#2-create-a-tcp-vpc-service).
+
+## Option 1: Create a new Hyperdrive configuration (recommended)
+
+This approach creates a second Hyperdrive configuration that uses the VPC Service, then uses [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/) to incrementally shift traffic from the old configuration to the new one. This gives you zero-downtime migration and the ability to roll back instantly at any point.
+
+<Steps>
+
+1.  Create a new Hyperdrive configuration that uses the VPC Service:
+
+          <Tabs>
+
+    <TabItem label="PostgreSQL">
+
+    ```sh
+    npx wrangler hyperdrive create my-hyperdrive-vpc \
+      --service-id <YOUR_VPC_SERVICE_ID> \
+      --database <DATABASE_NAME> \
+      --user <DATABASE_USER> \
+      --password <DATABASE_PASSWORD> \
+      --scheme postgresql
+    ```
+
+          </TabItem>
+
+    <TabItem label="MySQL">
+
+    ```sh
+    npx wrangler hyperdrive create my-hyperdrive-vpc \
+      --service-id <YOUR_VPC_SERVICE_ID> \
+      --database <DATABASE_NAME> \
+      --user <DATABASE_USER> \
+      --password <DATABASE_PASSWORD> \
+      --scheme mysql
+    ```
+
+          </TabItem>
+
+    </Tabs>
+
+    Use the same database name, username, and password as your existing Hyperdrive configuration. Save the new Hyperdrive configuration ID.
+
+2.  Add a second Hyperdrive binding to your Wrangler configuration file. Keep the existing binding and add the new one alongside it:
+
+    <WranglerConfig>
+
+    ```toml
+    [[hyperdrive]]
+    binding = "HYPERDRIVE"
+    id = "<EXISTING_HYPERDRIVE_ID>"
+
+    [[hyperdrive]]
+    binding = "HYPERDRIVE_VPC"
+    id = "<NEW_HYPERDRIVE_ID>"
+    ```
+
+    </WranglerConfig>
+
+3.  Update your Worker code to use the new binding. For example, if you use `node-postgres`:
+
+    ```ts
+    const client = new Client({
+    	// Change from env.HYPERDRIVE to env.HYPERDRIVE_VPC
+    	connectionString: env.HYPERDRIVE_VPC.connectionString,
+    });
+    ```
+
+4.  Upload the new Worker version without deploying it:
+
+    ```sh
+    npx wrangler versions upload
+    ```
+
+5.  Use gradual deployments to shift traffic incrementally. Start with a small percentage to verify the VPC connection works:
+
+    ```sh
+    npx wrangler versions deploy
+    ```
+
+    The interactive prompt will ask you to set traffic percentages for each version. Start with 10% on the new version and 90% on the old version. Monitor your application and increase the percentage as you gain confidence.
+
+6.  Once you have shifted 100% of traffic to the new version, remove the old binding from your Wrangler configuration file:
+
+    <WranglerConfig>
+
+    ```toml
+    [[hyperdrive]]
+    binding = "HYPERDRIVE"
+    id = "<NEW_HYPERDRIVE_ID>"
+    ```
+
+    </WranglerConfig>
+
+    Update your Worker code to use the original binding name (`HYPERDRIVE` instead of `HYPERDRIVE_VPC`) and redeploy:
+
+    ```sh
+    npx wrangler deploy
+    ```
+
+7.  Delete the old Hyperdrive configuration:
+
+    ```sh
+    npx wrangler hyperdrive delete <OLD_HYPERDRIVE_ID>
+    ```
+
+8.  Clean up the Cloudflare Access resources that were used by the old configuration. If no other services depend on them, delete the Access application, service token, and policy from the [Zero Trust dashboard](https://one.dash.cloudflare.com/).
+
+</Steps>
+
+### Rolling back
+
+At any point during the gradual deployment, you can shift traffic back to 100% on the old version by running `wrangler versions deploy` again and setting the old version to 100%. The old Hyperdrive configuration and Access setup remain unchanged until you explicitly delete them.
+
+### What happens during the update
+
+- **Query cache:** The new configuration does not share the cache with the old configuration. The speed of the progressive rollout should be managed to maintain an acceptable cache hit ratio, if your origin database cannot handle a thundering herd of uncached queries.
+- **Connection latency:** There may be a brief increase in latency as new connections are established through the VPC Service, until the connection pool is filled.
+
+## Option 2: Update your existing Hyperdrive configuration
+
+This approach updates your existing Hyperdrive configuration in place to use the VPC Service instead of Access. It requires fewer steps but does not allow instant rollback.
+
+<Steps>
+
+1. Update the existing Hyperdrive configuration to use the VPC Service:
+
+   ```sh
+   npx wrangler hyperdrive update <EXISTING_HYPERDRIVE_ID> \
+     --service-id <YOUR_VPC_SERVICE_ID>
+   ```
+
+   The `--service-id` flag replaces the Access-based connection with the VPC Service. The Hyperdrive configuration ID stays the same, so your Worker binding does not need to change.
+
+2. Redeploy your Worker to pick up the updated configuration:
+
+   ```sh
+   npx wrangler deploy
+   ```
+
+3. Verify that your application is working correctly. Check that queries return expected results and review [Hyperdrive metrics](/hyperdrive/observability/metrics/) for errors.
+
+4. Clean up the Cloudflare Access resources that were used by the old configuration. If no other services depend on them, delete the Access application, service token, and policy from the [Zero Trust dashboard](https://one.dash.cloudflare.com/).
+
+</Steps>
+
+### What happens during the update
+
+- **Query cache:** Updating the configuration does not purge the Hyperdrive query cache. Cached query results continue to be served until their TTL expires (default [`max_age`](/hyperdrive/concepts/query-caching/) of 60 seconds).
+- **Connection pool:** The existing connection pool is rebuilt. New connections are established through the VPC Service. In-flight queries on existing connections complete normally.
+- **Connection latency:** There may be a brief increase in latency as new connections are established through the VPC Service. Queries that were being served from cache are unaffected.
+
+### Rolling back
+
+To revert to the Access-based setup, run `wrangler hyperdrive update` with the original Access credentials:
+
+```sh
+npx wrangler hyperdrive update <HYPERDRIVE_ID> \
+  --access-client-id <YOUR_ACCESS_CLIENT_ID> \
+  --access-client-secret <YOUR_ACCESS_CLIENT_SECRET> \
+  --origin-host <YOUR_TUNNEL_HOSTNAME> \
+  --origin-port <YOUR_DATABASE_PORT>
+```
+
+This requires that the Access application and service token still exist. If you have already deleted them, you will need to recreate them by following the [Tunnel + Access setup guide](/hyperdrive/configuration/connect-to-private-database/).
+
+## Next steps
+
+- Review [VPC Service configuration options](/workers-vpc/configuration/vpc-services/) including TLS certificate verification modes.
+- Configure [query caching](/hyperdrive/concepts/query-caching/) for your Hyperdrive configuration.
+- Set up [high availability tunnels](/workers-vpc/configuration/tunnel/hardware-requirements/) for production workloads.
+- Learn more about [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/) for Workers.
