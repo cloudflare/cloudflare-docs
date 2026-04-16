@@ -13,6 +13,35 @@ Flagship has two paths: a **write path** for managing flags and a **read path** 
 
 When you create or update a flag through the dashboard or API, Flagship stores the flag configuration and propagates it to Cloudflare's global network. When your Worker (or SDK) evaluates a flag, the evaluation happens at the edge using the cached configuration — no round-trip to a central server.
 
+```mermaid
+flowchart TB
+accTitle: Flagship system overview
+accDescr: Diagram showing how Flagship works. The write path flows from the dashboard through the control plane worker to a Durable Object and then to KV. The read path flows from the user's Worker through the data plane worker which reads from edge-cached KV and returns an evaluation result.
+
+    YourWorker["Your Worker"]
+
+    subgraph WritePath["Write path"]
+        direction TB
+        Dashboard["Dashboard / API"]
+        ControlPlane["Flagship control <br/> plane Worker"]
+        DO[("Durable Object <br/> (source of truth)")]
+    end
+
+    subgraph ReadPath["Read path"]
+        direction TB
+        DataPlane["Flagship data <br/> plane Worker"]
+    end
+
+    KV[("KV <br/> (edge-cached config)")]
+
+    Dashboard -->|CRUD operations| ControlPlane
+    ControlPlane -->|config updates| DO
+    DO -->|store in globally <br/> distributed store| KV
+    YourWorker -->|binding| DataPlane
+    DataPlane -->|read flag config| KV
+    DataPlane -->|eval result| YourWorker
+```
+
 The write path and read path are independent. If the dashboard is temporarily unavailable, flag evaluation continues to work using the last propagated configuration.
 
 ## Apps
