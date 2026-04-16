@@ -5,11 +5,26 @@ sidebar:
   order: 5
 ---
 
-import { DirectoryListing } from "~/components";
+import { DirectoryListing, WranglerConfig } from "~/components";
 
-Workers access Flagship through the `env.FLAGS` binding. The binding provides type-safe methods for evaluating feature flags. If an evaluation fails or a flag is not found, the method returns the default value you provide.
+Workers access Flagship through a binding that you add to your Wrangler configuration file. The `binding` field sets the variable name you use in your Worker code.
 
-To add the binding, configure your Wrangler file and run `npx wrangler types` to generate TypeScript types. Refer to [Get started](/flagship/get-started/) for setup instructions.
+<WranglerConfig>
+
+```jsonc
+{
+	"flagship": {
+		"binding": "FLAGS",
+		"app_id": "<APP_ID>",
+	},
+}
+```
+
+</WranglerConfig>
+
+Replace `<APP_ID>` with the app ID from the [Cloudflare dashboard](https://dash.cloudflare.com). With this configuration, the binding is available as `env.FLAGS`. Refer to [Configuration](/flagship/configuration/) for additional options such as binding to multiple apps.
+
+The binding provides type-safe methods for evaluating feature flags. If an evaluation fails or a flag is not found, the method returns the default value you provide.
 
 ```ts
 export default {
