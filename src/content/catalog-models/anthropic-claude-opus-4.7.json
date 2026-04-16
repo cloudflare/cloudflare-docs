@@ -1,16 +1,19 @@
 {
-	"model_id": "anthropic/claude-sonnet-4.6",
+	"model_id": "anthropic/claude-opus-4.7",
 	"provider_id": "anthropic",
-	"name": "Claude Sonnet 4.6",
-	"description": "Claude Sonnet 4.6 is Anthropic's latest balanced model offering strong coding, reasoning, and agentic capabilities with improved instruction following.",
+	"name": "Claude Opus 4.7",
+	"description": "Claude Opus 4.7 is Anthropic's most capable generally available model to date. It is highly autonomous and performs exceptionally well on long-horizon agentic work, knowledge work, vision tasks, and memory tasks.",
 	"task": "Text Generation",
 	"tags": [
 		"LLM",
 		"Coding",
 		"Reasoning",
-		"Agentic"
+		"Enterprise",
+		"Agentic",
+		"Financial Analysis",
+		"Legal"
 	],
-	"context_length": 200000,
+	"context_length": 1000000,
 	"max_output_tokens": 128000,
 	"schema_version": "1.0.0",
 	"pricing": {},
@@ -31,7 +34,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'anthropic/claude-sonnet-4.6',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'What are the three laws of thermodynamics?',\n      },\n    ],\n    max_tokens: 1024,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'anthropic/claude-opus-4.7',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'What are the three laws of thermodynamics?',\n      },\n    ],\n    max_tokens: 1024,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -53,7 +56,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'anthropic/claude-sonnet-4.6',\n  {\n    system: 'You are a helpful coding assistant specializing in Python.',\n    messages: [\n      {\n        role: 'user',\n        content: 'How do I read a JSON file in Python?',\n      },\n    ],\n    max_tokens: 1024,\n    temperature: 0.3,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'anthropic/claude-opus-4.7',\n  {\n    system: 'You are a helpful coding assistant specializing in Python.',\n    messages: [\n      {\n        role: 'user',\n        content: 'How do I read a JSON file in Python?',\n      },\n    ],\n    max_tokens: 1024,\n    temperature: 0.3,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -81,7 +84,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'anthropic/claude-sonnet-4.6',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'I need help planning a road trip from San Francisco to Los Angeles.',\n      },\n      {\n        role: 'assistant',\n        content:\n          \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n      },\n      {\n        role: 'user',\n        content: 'Yes, what are some good places to stop?',\n      },\n    ],\n    max_tokens: 1024,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'anthropic/claude-opus-4.7',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'I need help planning a road trip from San Francisco to Los Angeles.',\n      },\n      {\n        role: 'assistant',\n        content:\n          \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n      },\n      {\n        role: 'user',\n        content: 'Yes, what are some good places to stop?',\n      },\n    ],\n    max_tokens: 1024,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -102,7 +105,7 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'anthropic/claude-sonnet-4.6',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'Write a short story opening about a detective finding an unusual clue.',\n      },\n    ],\n    max_tokens: 512,\n    temperature: 0.8,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'anthropic/claude-opus-4.7',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'Write a short story opening about a detective finding an unusual clue.',\n      },\n    ],\n    max_tokens: 512,\n    temperature: 0.8,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -123,23 +126,24 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'anthropic/claude-sonnet-4.6',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'Explain the concept of recursion with a simple example.',\n      },\n    ],\n    max_tokens: 1024,\n    stream: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'anthropic/claude-opus-4.7',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'Explain the concept of recursion with a simple example.',\n      },\n    ],\n    max_tokens: 1024,\n    stream: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		}
 	],
 	"supports_async": false,
-	"external_info": "https://www.anthropic.com/claude/sonnet",
+	"external_info": "https://platform.claude.com/docs/en/about-claude/models/whats-new-claude-4-7",
 	"terms": "https://www.anthropic.com/legal/commercial-terms",
-	"cover_image_url": null,
+	"cover_image_url": "https://replicateassets.com/cdn-cgi/image/width=640,quality=85,fit=scale-down,format=auto/https://tjzk.replicate.delivery/models_models_cover_image/b200dc70-63c7-491d-a71f-e2b0b616ee18/replicate-prediction-amzhv0d91srm.jpg",
 	"metadata": {
-		"Architecture": "Transformer"
+		"Architecture": "Transformer",
+		"Extended Thinking": "Yes"
 	},
-	"created_at": "2026-04-13 16:44:14",
+	"created_at": "2026-04-16 19:12:00",
 	"default_example": null,
 	"code_snippets": [],
 	"schema": {
-		"model_id": "anthropic/claude-sonnet-4.6",
+		"model_id": "anthropic/claude-opus-4.7",
 		"version": "1.0.0",
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",

@@ -79,7 +79,7 @@
 	"supports_async": false,
 	"external_info": "https://hailuoai.com/",
 	"terms": "https://hailuoai.com/terms",
-	"cover_image_url": "https://tjzk.replicate.delivery/models_models_featured_image/9f1d0e6a-6b73-4b0f-97e2-c4ceeae8c585/hailuio-2.3-sm.mp4",
+	"cover_image_url": null,
 	"metadata": {
 		"Resolutions": "540p, 720p, 1080p"
 	},

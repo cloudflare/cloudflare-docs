@@ -91,7 +91,7 @@
 	"supports_async": false,
 	"external_info": "https://wan.video/",
 	"terms": "https://www.alibabacloud.com/help/en/legal",
-	"cover_image_url": "https://replicate.delivery/xezq/fG590HpoJ3xvPyBfT7VJrwvgaeINUIKiijWbnhrmAatPbZ1sA/tmp962by18n.jpeg",
+	"cover_image_url": null,
 	"metadata": {
 		"Size Format": "WxH (e.g. 1024x1024)",
 		"Negative Prompt": "Yes"

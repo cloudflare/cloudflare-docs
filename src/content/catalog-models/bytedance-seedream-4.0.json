@@ -112,7 +112,7 @@
 	"supports_async": false,
 	"external_info": "https://seed.bytedance.com/en/seedream4_0",
 	"terms": null,
-	"cover_image_url": "https://tjzk.replicate.delivery/models_models_featured_image/53dda182-2998-4fde-b235-e1b2a09b0484/seedream4-sm.jpg",
+	"cover_image_url": null,
 	"metadata": {
 		"Max Resolution": "4K",
 		"Editing": "Yes (single-sentence)"
