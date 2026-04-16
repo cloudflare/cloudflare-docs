@@ -45,8 +45,8 @@ Endpoints that accept file uploads, process payments, or return sensitive data (
 
 Record this inventory in a format you can reference when writing rule expressions in later sections. A spreadsheet or OpenAPI schema file works well. If you already have an OpenAPI specification for your API, you can use it directly with API Shield's schema validation (covered in the Enterprise callout below).
 
-:::note[API Shield Endpoint Discovery (Enterprise)]
-API Shield can automatically discover API endpoints by analyzing your traffic patterns, surfacing endpoints you may not know are being called. This includes abandoned or undocumented endpoints ("shadow APIs") that may be unpatched and unmonitored. For more information, refer to [API Discovery](/api-shield/security/api-discovery/).
+:::tip[API Shield Endpoint Discovery (Enterprise)]
+API Shield can automatically discover API endpoints by analyzing your traffic patterns, surfacing endpoints you may not know are being called. This includes abandoned or undocumented endpoints (also known as shadow APIs) that may be unpatched and unmonitored. For more information, refer to [API Discovery](/api-shield/security/api-discovery/).
 :::
 
 ## Enforce HTTPS for all API traffic
@@ -243,12 +243,12 @@ Rate limiting rules may allow a small number of excess requests before enforceme
 
 For an API-specific example using an API key as a counting characteristic, refer to [Rate limiting rule examples](/waf/rate-limiting-rules/use-cases/#example-2).
 
-:::note[Schema Validation (Enterprise)]
-API Shield can validate incoming requests against your OpenAPI schema, blocking requests with unexpected parameters, methods, or content types before they reach your origin. Upload your schema or let Cloudflare learn it from your traffic. For more information, refer to [Schema validation](/api-shield/security/schema-validation/).
-:::
+:::tip[Schema Validation and JWT Validation (Enterprise)]
 
-:::note[JWT Validation (Enterprise)]
-API Shield validates JSON Web Tokens (JWTs) at the edge, rejecting expired, tampered, or invalid tokens before requests reach your origin. This requires adding your JWT issuer's public keys and creating a validation rule. For more information, refer to [JWT validation](/api-shield/security/jwt-validation/).
+API Shield can validate incoming requests against your OpenAPI schema, blocking requests with unexpected parameters, methods, or content types before they reach your origin. Upload your schema or let Cloudflare learn it from your traffic. For more information, refer to [Schema validation](/api-shield/security/schema-validation/).
+
+API Shield can also validate JSON Web Tokens (JWTs) at the edge, rejecting expired, tampered, or invalid tokens before requests reach your origin. This requires adding your JWT issuer's public keys and creating a validation rule. For more information, refer to [JSON Web Tokens validation](/api-shield/security/jwt-validation/).
+
 :::
 
 ## Protect against automated API abuse
@@ -271,7 +271,7 @@ On Pro and Business plans, [Super Bot Fight Mode](/bots/get-started/super-bot-fi
 
 Super Bot Fight Mode applies domain-wide and does not support path-specific rules. If you need to apply different bot thresholds to different API paths, you need a [Bot Management](/bots/get-started/bot-management/) subscription (Enterprise).
 
-:::note[Bot score in custom rules (Enterprise)]
+:::tip[Bot score in custom rules (Enterprise)]
 With a Bot Management subscription, you can write custom rules using `cf.bot_management.score` to set path-specific thresholds. For example, block requests with a bot score below 30 on `/api/auth` paths while allowing all scores on other API paths. For more information, refer to [Bot Management](/bots/get-started/bot-management/).
 :::
 
@@ -318,7 +318,7 @@ The following rate limiting rule limits requests that contain a previously leake
 
 For the full expression including account takeover (ATO) detection IDs, refer to [Example mitigation rules](/waf/detections/leaked-credentials/examples/).
 
-:::note[Sequence Analytics (Enterprise)]
+:::tip[Sequence Analytics (Enterprise)]
 API Shield tracks the order of API endpoint requests over time, grouping important user journeys (sequences) across your API. Sequences with high precedence scores indicate requests that are likely to occur together in order. Anomalous sequences may indicate automated abuse, such as a bot that calls `/auth`, then `/account`, then `/transfer` in rapid succession. For more information, refer to [Sequence Analytics](/api-shield/security/sequence-analytics/).
 :::
 
@@ -386,7 +386,7 @@ Rate limiting thresholds that are too tight block legitimate clients. Thresholds
 
 </Steps>
 
-:::note
+:::tip[Specific dashboard for request rate analysis (Enterprise)]
 Enterprise customers can use the **Request rate analysis** tab in [Security Analytics](/waf/analytics/security-analytics/) to visualize request rate distribution and adjust thresholds with a slider interface. For more information, refer to [Find appropriate rate limit](/waf/rate-limiting-rules/find-rate-limit/).
 :::
 
@@ -414,7 +414,7 @@ Cloudflare Notifications can alert you when security event volume exceeds a thre
 
 For the full list of available notification types, refer to [Available notifications](/notifications/notification-available/).
 
-:::note
+:::tip[Advanced security events notifications (Enterprise)]
 Enterprise customers have access to the [Advanced Security Events Alert](/waf/reference/alerts/) notification type, which includes an additional filter for the app security services the alert should monitor.
 :::
 
