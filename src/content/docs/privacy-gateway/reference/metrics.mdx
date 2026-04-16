@@ -506,31 +506,29 @@ query ProtocolDistribution(
 Compare relay-to-gateway latency across data centers to detect routing or peering issues.
 
 ```graphql
-query RelayGatewayLatencyByColo(
+query RelayGatewayHandshakeLatencyByColo(
   $accountTag: String!
-  $start: Time!
-  $end: Time!
+  $startDate: Date!
+  $endDate: Date!
 ) {
   viewer {
     accounts(filter: { accountTag: $accountTag }) {
       ohttpRelayEgressConnMetricsAdaptiveGroups(
         filter: {
-          datetime_geq: $start
-          datetime_leq: $end
+          date_geq: $startDate
+          date_leq: $endDate
         }
         limit: 10000
-        orderBy: [quantiles_relayGatewayRttMsP50_DESC]
+        orderBy: [quantiles_handshakeDurationUsP50_DESC]
       ) {
+        count
         quantiles {
-          relayGatewayRttMsP50
-          relayGatewayRttMsP95
-          relayGatewayRttMsP99
+          handshakeDurationUsP50
+          handshakeDurationUsP95
+          handshakeDurationUsP99
         }
         dimensions {
-          datetimeMinute
-          datetimeFiveMinutes
-          datetimeHour
-          colo
+          coloCode
         }
       }
     }
