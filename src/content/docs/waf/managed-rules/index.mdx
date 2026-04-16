@@ -64,3 +64,16 @@ If included in your plan, you can use [request body fields](/ruleset-engine/rule
 ### Zone-level deployment
 
 At the zone level, you can deploy each managed ruleset once. At the [account level](/waf/account/managed-rulesets/), you can deploy each managed ruleset multiple times, which allows you to apply different configurations of the same ruleset to different subsets of incoming traffic.
+
+## Execution order
+
+WAF Managed Rules run in the `http_request_firewall_managed` phase, which executes **after**:
+
+- Custom Rules (`http_request_firewall_custom` phase)
+- Rate Limiting Rules (`http_ratelimit` phase)
+
+This means a Custom Rule or Rate Limiting rule with a terminal action (Block, Managed Challenge) prevents Managed Rules from evaluating that request.
+
+### WAF exceptions
+
+Skip rules (WAF exceptions) are also Custom Rules and run before Managed Rules. A Skip rule that bypasses all Managed Rules will prevent any managed ruleset from evaluating matching traffic.
