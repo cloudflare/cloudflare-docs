@@ -144,7 +144,8 @@ const hasRemainingExamples = remainingExamples.length > 0;
 const description = model.description;
 const isBeta = hasProperty(model.properties, "beta");
 
-let hasPlayground = model.task.name === "Text Generation";
+let hasPlayground =
+	model.task.name === "Text Generation" && model.hosting === "hosted";
 if (model.name.includes("@cf/openai/gpt-oss")) {
 	hasPlayground = false;
 }
