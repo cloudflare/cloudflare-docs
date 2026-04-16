@@ -10,3 +10,22 @@ import { Render } from "~/components"
 <Render file="ipsec-logs-troubleshooting"
 	product="networking-services"
 />
+
+## Anti-replay protection
+
+Some customer routers cannot fully disable IPsec anti-replay protection, which is required for optimal Magic Transit operation (packet reordering at the Cloudflare edge can otherwise trigger false drops).
+
+**If your router does not support disabling anti-replay:**
+1. Check whether your router supports configuring a **replay window size**. Setting this to `0` is equivalent to disabling anti-replay protection.
+2. If neither disabling anti-replay nor setting the window size to `0` is supported, **the router cannot be used as a Magic Transit IPsec on-ramp**. Consider using a GRE tunnel or Cloudflare Network Interconnect (CNI) instead.
+
+## Health check failures when using IPsec
+
+Magic Transit health check packets use **Direct Server Return (DSR)** — they are sent directly over the public internet to your origin IP, not through the IPsec tunnel. This means:
+
+- Your ISP or upstream network must allow inbound health check packets from [Cloudflare's IP ranges](/cloudflare-one/connections/connect-networks/private-net/tunnel-health-checks/) to your prefix.
+- If your ISP is blocking these packets, health checks will fail even when the IPsec tunnel and data plane are working correctly.
+
+**Symptom:** Health checks fail but application traffic flows normally through the tunnel.
+
+**Resolution:** Switch from the default ping-type health checks to [request-type health checks](/magic-transit/reference/tunnel-health-checks/), which travel through the tunnel rather than DSR.
