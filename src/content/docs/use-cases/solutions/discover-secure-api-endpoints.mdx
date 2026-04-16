@@ -35,9 +35,11 @@ Before configuring any security rules, build an inventory of your API endpoints.
 
 Review your application's routing configuration and list every endpoint, including the HTTP method and expected parameters for each. Group endpoints by access level:
 
-- **Public** endpoints (no authentication required) such as `/api/status` or `/api/products`
-- **Authenticated** endpoints (require a token or session) such as `/api/account` or `/api/orders`
-- **Internal** endpoints (should not be publicly accessible) such as `/api/admin` or `/api/debug`
+| Access Level                                               | Example endpoints              |
+|------------------------------------------------------------|--------------------------------|
+| **Public endpoints** (no authentication required)          | `/api/status`, `/api/products` |
+| **Authenticated endpoints** (require a token or session)   | `/api/account`, `/api/orders`  |
+| **Internal endpoints** (should not be publicly accessible) |  `/api/admin`, `/api/debug`    |
 
 Endpoints that accept file uploads, process payments, or return sensitive data (personal information, credentials, financial records) are the highest priority for protection.
 
