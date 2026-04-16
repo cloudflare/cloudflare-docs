@@ -3,6 +3,8 @@ pcx_content_type: reference
 title: Predefined profiles
 sidebar:
   order: 2
+tags:
+  - Compliance
 ---
 
 import { Render } from "~/components";
@@ -25,10 +27,18 @@ For more information on included detection entries, refer to [AI prompt topics](
 
 The following secrets are validated with regex.
 
-- Google Cloud Platform keys
-- AWS keys
+- Amazon Web Services (AWS) keys
 - Azure API keys
+- Google Cloud Platform keys
 - SSH keys
+
+The following Cloudflare API credentials are validated algorithmically using a checksum. Only credentials generated after [Cloudflare's token format update](/fundamentals/api/get-started/token-formats/) will be matched by these entries.
+
+| Detection entry | Format |
+| --- | --- |
+| Cloudflare User API Key | `cfk_` followed by 40 alphanumeric characters and an 8-character hex checksum |
+| Cloudflare User API Token | `cfut_` followed by 40 alphanumeric characters and an 8-character hex checksum |
+| Cloudflare Account Owned API Token | `cfat_` followed by 40 alphanumeric characters and an 8-character hex checksum |
 
 ## Financial Information
 

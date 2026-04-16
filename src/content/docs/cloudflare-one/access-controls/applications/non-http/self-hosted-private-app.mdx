@@ -63,24 +63,26 @@ This feature replaces the legacy [private network app type](/cloudflare-one/acce
 
 11. (Optional) Configure [App Launcher settings](/cloudflare-one/access-controls/access-settings/app-launcher/) for the application.
 
-12. (Optional) Turn on **Allow clientless access** to allow users to access this private hostname or IP without the Cloudflare One Client. Users who pass your Access policies will see a tile in their App Launcher which points to a prefixed URL such as `https://<your-teamname>.cloudflareaccess.com/browser/https://wiki.internal.local/`. The link will route traffic to the application through [Clientless Web Isolation](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/). This setting is useful for users on unmanaged devices or contractors who cannot install a device client.
+12. <Render file="access/configure-independent-mfa" product="cloudflare-one" />
+
+13. (Optional) Turn on **Allow clientless access** to allow users to access this private hostname or IP without the Cloudflare One Client. Users who pass your Access policies will see a tile in their App Launcher which points to a prefixed URL such as `https://<your-teamname>.cloudflareaccess.com/browser/https://wiki.internal.local/`. The link will route traffic to the application through [Clientless Web Isolation](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/). This setting is useful for users on unmanaged devices or contractors who cannot install a device client.
 
 	:::note
 	Ensure your [remote browser permissions](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/) allow users of this application to open Clientless Web Isolation links.
 	:::
 
-13. <Render file="access/access-block-page" product="cloudflare-one" />
+14. <Render file="access/access-block-page" product="cloudflare-one" />
 
-14. Select **Next**.
+15. Select **Next**.
 
-15. <Render
+16. <Render
     	file="access/self-hosted-app/advanced-settings"
     	product="cloudflare-one"
     />
 
         These settings only apply to private hostnames and require [Gateway TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/).
 
-16. Select **Save**.
+17. Select **Save**.
 
 Users can now connect to your private application after authenticating with Cloudflare Access.
 

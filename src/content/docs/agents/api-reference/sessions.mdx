@@ -10,7 +10,7 @@ sidebar:
 
 import { TypeScriptExample, InlineBadge, LinkCard } from "~/components";
 
-The Session API provides persistent conversation storage for agents, with tree-structured messages, context blocks, compaction, full-text search, and AI-controllable tools. It runs entirely on Durable Object SQLite — no external database needed.
+The Session API provides persistent conversation storage for agents, with tree-structured messages (inspired by [Pi](https://pi.dev)), context blocks, compaction, full-text search, and AI-controllable tools. It runs entirely on Durable Object SQLite — no external database needed.
 
 :::caution[Experimental]
 
@@ -639,6 +639,12 @@ All storage is in Durable Object SQLite. Tables are created lazily on first use.
 | `assistant_sessions` | Session registry (SessionManager only) with `name`, `parent_session_id`, `model`, `source`, token/cost counters |
 | `cf_agents_context_blocks` | Persistent context block storage (`AgentContextProvider`) |
 | `cf_agents_search_entries` / `cf_agents_search_fts` | Searchable context entries and FTS5 index (`AgentSearchProvider`) |
+
+## Acknowledgments
+
+- Session's tree-structured messages are inspired by [Pi](https://pi.dev).
+- Context blocks are inspired by [Letta AI memory blocks](https://www.letta.com/blog/memory-blocks).
+- Formatting of blocks is inspired by [Hermes Agent](https://github.com/nousresearch/hermes-agent).
 
 ## Related
 

@@ -143,9 +143,9 @@ We recommend configuring specific bindings to connect to their remote counterpar
 
 The following bindings are recommended to have `remote: true` in your Wrangler configuration:
 
-#### [Browser Rendering](/workers/wrangler/configuration/#browser-rendering):
+#### [Browser Run](/workers/wrangler/configuration/#browser-run):
 
-To interact with a real headless browser for rendering. There is no current local simulation for Browser Rendering.
+To interact with a real headless browser for rendering. There is no current local simulation for Browser Run.
 
 <WranglerConfig>
 ```jsonc title="wrangler.jsonc"
@@ -227,7 +227,7 @@ To connect to a high-fidelity version of the Images API, and verify that all tra
 </WranglerConfig>
 
 :::note
-If `remote: true` is not specified for Browser Rendering, Vectorize, mTLS, or Images, Cloudflare **will issue a warning**. This prompts you to consider enabling it for a more production-like testing experience.
+If `remote: true` is not specified for Browser Run, Vectorize, mTLS, or Images, Cloudflare **will issue a warning**. This prompts you to consider enabling it for a more production-like testing experience.
 
 If a Workers AI binding has `remote` set to `false`, Cloudflare will **produce an error**. If the property is omitted, Cloudflare will connect to the remote resource and issue a warning to add the property to configuration.
 :::

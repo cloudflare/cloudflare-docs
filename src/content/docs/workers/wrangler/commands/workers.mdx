@@ -129,6 +129,10 @@ None of the options for this command are required. Many of these options can be 
   - Specify modules to alias using [module aliasing](/workers/wrangler/configuration/#module-aliasing).
 - `--types` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Generate types from your Worker configuration.
+- `--local` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Run in local mode. In this mode:
+    - the Worker code is running locally on your machine
+    - all [remote bindings](/workers/development-testing/#remote-bindings) are disabled, which behaves exactly as if they were configured with `remote: false`.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 

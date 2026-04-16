@@ -1,0 +1,158 @@
+---
+pcx_content_type: how-to
+title: Session recording
+description: Record and replay Browser Run sessions to visually debug browser automation scripts.
+sidebar:
+  order: 2
+---
+
+import { Details, InlineBadge, Tabs, TabItem, DashButton } from "~/components";
+
+<InlineBadge preset="beta" />
+
+When browser automation fails or behaves unexpectedly, it can be difficult to understand what happened. Session recording captures DOM changes, mouse and keyboard events, and page navigation as structured JSON events — not a video — so it is lightweight and easy to inspect. Recordings are powered by [rrweb](https://github.com/rrweb-io/rrweb) and are opt-in per session.
+
+## Enable session recording
+
+Pass `recording: true` to `puppeteer.launch()` or `playwright.launch()`:
+
+<Tabs>
+  <TabItem label="Puppeteer">
+
+```ts
+import puppeteer from "@cloudflare/puppeteer";
+
+interface Env {
+	MYBROWSER: Fetcher;
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const browser = await puppeteer.launch(env.MYBROWSER, { recording: true });
+		const page = await browser.newPage();
+
+		await page.goto("https://example.com");
+		// ... your automation steps ...
+
+		const sessionId = browser.sessionId();
+		await browser.close();
+
+		return new Response(`Session recorded: ${sessionId}`);
+	},
+};
+```
+
+  </TabItem>
+  <TabItem label="Playwright">
+
+```ts
+import { launch } from "@cloudflare/playwright";
+
+interface Env {
+	MYBROWSER: Fetcher;
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const browser = await launch(env.MYBROWSER, { recording: true });
+		const page = await browser.newPage();
+
+		await page.goto("https://example.com");
+		// ... your automation steps ...
+
+		const sessionId = browser.sessionId();
+		await browser.close();
+
+		return new Response(`Session recorded: ${sessionId}`);
+	},
+};
+```
+
+  </TabItem>
+</Tabs>
+
+:::note
+The recording is finalized when the browser session closes, whether you call `browser.close()` explicitly, the session reaches its idle timeout, or the Worker terminates for any other reason. The recording is not available until after the session ends.
+:::
+
+## Enable with CDP endpoint
+
+When connecting to Browser Run from any environment using the [CDP endpoint](/browser-run/cdp/), add `recording=true` as a query parameter to the WebSocket URL:
+
+```txt
+wss://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-rendering/devtools/browser?recording=true&keep_alive=600000
+```
+
+For example, to enable session recording in an MCP client, add `recording=true` to the `--wsEndpoint` URL in your client configuration:
+
+```json
+{
+	"mcpServers": {
+		"browser-rendering": {
+			"command": "npx",
+			"args": [
+				"-y",
+				"chrome-devtools-mcp@latest",
+				"--wsEndpoint=wss://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-rendering/devtools/browser?recording=true&keep_alive=600000",
+				"--wsHeaders={\"Authorization\":\"Bearer <API_TOKEN>\"}"
+			]
+		}
+	}
+}
+```
+
+For other MCP clients and CDP usage with Puppeteer or Playwright, refer to the [CDP documentation](/browser-run/cdp/).
+
+:::note
+The recording is only available after the browser session closes. CDP sessions typically use `keep_alive` to stay open between commands. The browser will close automatically when it has been idle for the `keep_alive` duration. You can also close it explicitly with `browser.close()`.
+:::
+
+## View recordings
+
+After a session closes, its recording is available in the Cloudflare dashboard under **Browser Run** > **Runs**. Select a session to open the recording viewer, where you can scrub through the timeline and replay what happened during the session.
+
+<DashButton url="/?to=/:account/workers/browser-run/logs" />
+
+## Retrieve a recording via API
+
+You can also retrieve a recording programmatically using the session ID. Use `browser.sessionId()` to capture the session ID before closing the browser, then pass it to the recordings endpoint.
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-rendering/recording/<SESSION_ID> \
+  -H "Authorization: Bearer <API_TOKEN>"
+```
+
+A successful response looks similar to the following:
+
+```json
+{
+	"sessionId": "e26d4660-5b78-4761-b82f-c6b5bad5a925",
+	"duration": 4380,
+	"events": {
+		"target-1": []
+	}
+}
+```
+
+## Replay a recording
+
+The `events` values in the API response are standard rrweb event arrays. You can pass them directly to [`rrweb-player`](https://github.com/rrweb-io/rrweb/tree/master/packages/rrweb-player) to self-host a replay UI with a timeline scrubber and playback controls.
+
+## Limits
+
+- Recordings are retained for 30 days after the session ends and automatically deleted.
+- Recording is opt-in. It is not enabled by default.
+- Session recording is available with Browser Sessions via `launch()` and the [CDP endpoint](/browser-run/cdp/). It is not available with Quick Actions.
+- The minimum recording duration is 1 second. Sessions shorter than 1 second will not produce a viewable recording.
+- The maximum recording duration is 2 hours.
+
+## rrweb limitations
+
+Session recording uses [rrweb](https://github.com/rrweb-io/rrweb), which records DOM state and events rather than pixels. This approach is lightweight but has the following limitations:
+
+- **Canvas elements** — The content of `<canvas>` elements is not captured. The element itself appears in the recording as a blank placeholder.
+- **Cross-origin iframes** — Content inside cross-origin `<iframe>` elements is not recorded. Same-origin iframes are recorded normally.
+- **Video and audio** — The DOM structure of `<video>` and `<audio>` elements is captured, but media playback state and content are not.
+- **WebGL** — WebGL rendering is not captured.
+- **Input fields** — The content of all input fields is masked by default and will not be visible in the replay.
+- **Large or complex pages** — Pages with frequent DOM mutations (for example, pages with real-time data feeds or heavy animations) can generate a high volume of events, which increases the size of the recording.

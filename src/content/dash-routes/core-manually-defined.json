@@ -5,8 +5,13 @@
 		"parent": ["Networking"]
 	},
 	{
-		"deeplink": "/?to=/:account/workers/browser-rendering/logs",
-		"name": "Browser Rendering Logs",
+		"name": "Browser Run",
+		"deeplink": "/?to=/:account/workers/browser-run",
+		"parent": ["Compute & AI"]
+	},
+	{
+		"deeplink": "/?to=/:account/workers/browser-run/logs",
+		"name": "Browser Run Logs",
 		"parent": ["Compute & AI"]
 	},
 	{

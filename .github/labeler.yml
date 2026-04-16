@@ -50,10 +50,10 @@ product:bots:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/bots/**
-product:browser-rendering:
+product:browser-run:
   - changed-files:
       - any-glob-to-any-file:
-          - src/content/docs/browser-rendering/**
+          - src/content/docs/browser-run/**
 product:byoip:
   - changed-files:
       - any-glob-to-any-file:

@@ -9,40 +9,106 @@ head:
 description: Manage billing and subscriptions for your account.
 ---
 
-Welcome to the Cloudflare Billing and Payment Help Center! Here you will find answers to some of the most common and impactful issues facing our customers today. Most current issues revolve around:
+import { CardGrid, LinkTitleCard } from "~/components";
 
-* Payment failures
-* Outstanding balances
-* Subscription renewals
-* Cancellation requests
-* Updating payment methods
-* Understanding billing cycles
+Cloudflare bills on a 30-day cycle for each domain on your account. Plans and add-on services are billed separately, and some products use [usage-based billing](/billing/understand/usage-based-billing/). You can pay with Visa, Mastercard, American Express, Discover, PayPal, Apple Pay, Google Pay, Stripe Link, or UnionPay.
 
-An overview of these issues can be found below:
+## Get started
 
-## Failed Plan Modifications
+Set up your billing profile and payment methods.
 
-You may receive an error when attempting to purchase a product, pay a balance or change a paid plan. Review the following guides for possible solutions:
+<CardGrid>
 
-* [Resolve a payment failure](/billing/troubleshoot-failed-payments/)
-* [Resolve the zone cannot be upgraded error](/billing/resolve-zone-cannot-be-ugpraded/)
-* [Resolve "You cannot modify this subscription"](/billing/resolve-you-cannot-modify-this-subscription/)
+<LinkTitleCard title="Create billing profile" href="/billing/get-started/create-billing-profile/">
+Add a payment method to your Cloudflare account and configure your billing profile.
+</LinkTitleCard>
 
-If the problems above do not apply to you, there are intermittent issues with subscription upgrades, downgrades, and cancellations. This may result in billing charges being applied without the subscription level being updated. In these instances, you should [contact support](/support/contacting-cloudflare-support/).
+<LinkTitleCard title="Update billing information" href="/billing/get-started/update-billing-info/">
+Change your payment method, billing address, or billing email address.
+</LinkTitleCard>
 
-## Cannot update or remove payment methods
+</CardGrid>
 
-You should be able to add, update, and remove payment methods in your account. If you are seeing difficulties doing this, refer to the following guides for possible solutions:
+## Manage
 
-* [Update billing information](/billing/update-billing-info/)
-* [Resolve "Cannot remove payment method"](/billing/resolve-cannot-remove-payment-method/)
+Change plans, view invoices, monitor usage, and manage subscriptions.
 
-If the solutions above do not apply to you, we have observed reports of being unable to update or add payment methods within the dashboard. In these instances, you should [contact support](/support/contacting-cloudflare-support/).
+<CardGrid>
 
-## Cancellations 
+<LinkTitleCard title="Monitor billable usage" href="/billing/manage/billable-usage/">
+Track daily usage-based costs across your account with the billable usage dashboard.
+</LinkTitleCard>
 
-Cancellations are not processed until the end of the billing period. To understand more, refer to [Cancel Cloudflare subscriptions](/billing/cancel-subscription/).
+<LinkTitleCard title="Budget alerts" href="/billing/manage/budget-alerts/">
+Get notified by email when your usage-based spend crosses a dollar threshold.
+</LinkTitleCard>
 
-## Non-refundable occurrences
+<LinkTitleCard title="Change domain plan" href="/billing/manage/change-plan/">
+Upgrade or downgrade the plan associated with a specific Cloudflare domain.
+</LinkTitleCard>
 
-In accordance with the Cloudflare Billing Policy, be aware that some [Non-Refundable occurrences](/billing/billing-policy/#non-refundable-occurrences) cannot be refunded and you should not contact support to request refunds for these.
+<LinkTitleCard title="Cancel subscriptions" href="/billing/manage/cancel-subscription/">
+Cancel Cloudflare plans, add-ons, or subscriptions.
+</LinkTitleCard>
+
+<LinkTitleCard title="Pay an outstanding balance" href="/billing/manage/pay-invoices-overdue-balances/">
+Pay overdue invoices and resolve outstanding balances on your account.
+</LinkTitleCard>
+
+<LinkTitleCard title="Invoices" href="/billing/manage/invoices/">
+View, download, and manage your Cloudflare invoices.
+</LinkTitleCard>
+
+</CardGrid>
+
+## Understand
+
+Learn how Cloudflare billing works.
+
+<CardGrid>
+
+<LinkTitleCard title="Preview services" href="/billing/understand/preview-services/">
+Try certain products and features for 30 days as a contracted customer.
+</LinkTitleCard>
+
+<LinkTitleCard title="Billing policy" href="/billing/understand/billing-policy/">
+Understand billing cycles, refund policies, and how charges are calculated.
+</LinkTitleCard>
+
+<LinkTitleCard title="Usage-based billing" href="/billing/understand/usage-based-billing/">
+Learn how usage-based charges work for products like Workers and other metered services.
+</LinkTitleCard>
+
+<LinkTitleCard title="Sales tax" href="/billing/understand/sales-tax/">
+Understand how Cloudflare collects sales tax based on your billing address.
+</LinkTitleCard>
+
+</CardGrid>
+
+## Troubleshoot
+
+Resolve payment failures, invoice issues, and error messages.
+
+<CardGrid>
+
+<LinkTitleCard title="Resolve a payment failure" href="/billing/troubleshoot/troubleshoot-failed-payments/">
+Fix errors when purchasing products, changing subscriptions, or paying invoices.
+</LinkTitleCard>
+
+<LinkTitleCard title="Troubleshoot invoices" href="/billing/troubleshoot/troubleshoot-invoices/">
+Resolve issues with invoice data, billing contacts, or missing invoices.
+</LinkTitleCard>
+
+<LinkTitleCard title="Resolve the zone cannot be upgraded error" href="/billing/troubleshoot/resolve-zone-cannot-be-upgraded/">
+Fix errors when upgrading a domain or purchasing a subscription.
+</LinkTitleCard>
+
+<LinkTitleCard title="Resolve &quot;you cannot modify this subscription&quot;" href="/billing/troubleshoot/resolve-you-cannot-modify-this-subscription/">
+Fix errors when cancelling or modifying a subscription that is already scheduled for cancellation.
+</LinkTitleCard>
+
+<LinkTitleCard title="Resolve &quot;cannot remove payment method&quot;" href="/billing/troubleshoot/resolve-cannot-remove-payment-method/">
+Fix errors when attempting to remove a payment method linked to active subscriptions.
+</LinkTitleCard>
+
+</CardGrid>

@@ -10,7 +10,7 @@ head:
     content: Troubleshooting DNSSEC
 ---
 
-import { Example } from "~/components";
+import { Example, APIRequest } from "~/components";
 
 Learn more about how to troubleshoot issues with DNSSEC.
 
@@ -147,7 +147,7 @@ dig +short DS cloudflare.com
 2371 13 2 32996839A6D808AFE3EB4A795A0E6A7A39A76FC52FF228B22B76F6D6 3826F2B9
 ```
 
-When using the `+trace` option, `dig` confirms whether an answer is returned by the nameserver for `cloudflare.com` or the nameserver for `.com`.  In this example, the `DS` record for `cloudflare.com` is returned by `e.gtld-servers.net`:
+When using the `+trace` option, `dig` confirms whether an answer is returned by the nameserver for `cloudflare.com` or the nameserver for `.com`. In this example, the `DS` record for `cloudflare.com` is returned by `e.gtld-servers.net`:
 
 ```sh
 dig DS cloudflare.com +trace
@@ -201,6 +201,38 @@ In this example, DNSSEC is misconfigured if a proper DNS response is received wh
 
 ---
 
+## Delete remaining DNSKEY records after disabling DNSSEC
+
+After disabling DNSSEC, DNSKEY records continue to appear in DNS queries and zone transfers. In the `disabled` state, Cloudflare still signs the zone and serves RRSIG, NSEC, and DNSKEY records. This is expected behavior and **not a misconfiguration or error**. Refer to [DNSSEC states](/dns/dnssec/dnssec-states/) and [RFC 8078](https://www.rfc-editor.org/rfc/rfc8078.html#section-4) for details.
+
+However, some security vendors or audit tools may flag these DNSKEY records as problematic, reporting "DNSKEY record found but no DS record found" with a security outcome of "Provably Insecure". You can remove the DNSKEY records using the API.
+
+### How to remove remaining DNSKEY records
+
+:::caution[Make sure DNSSEC is fully turned off]
+As a rule of thumb, after removing the DS record from your registrar, wait at least 1.5 times its [TTL](/dns/manage-dns-records/reference/ttl/) before removing the DNSKEY records. If the DS TTL is 24 hours, wait 36 hours.
+
+Removing DNSKEY records while DNSSEC is still enabled will break DNS resolution.
+:::
+
+Use the [Delete DNSSEC API](/api/resources/dns/subresources/dnssec/methods/delete/) to transition the zone to the `deleted` state. This stops all zone signing and removes all DNSSEC record types (RRSIG, NSEC, DNSKEY, CDS, and CDNSKEY):
+
+<APIRequest path="/zones/{zone_id}/dnssec" method="DELETE" />
+
+For more information on DNSSEC states, refer to [DNSSEC states](/dns/dnssec/dnssec-states/).
+
+### Verify DNSKEY removal
+
+After removing the DNSKEY records, verify they no longer appear in DNS responses. An empty response confirms removal.
+
+```sh
+dig DNSKEY example.com +short
+```
+
+If DNSKEY records still appear, wait for the [time-to-live (TTL)](/dns/manage-dns-records/reference/ttl/) to expire. DNSKEY records typically have longer TTL values (often 3600 seconds or more), so propagation may take one hour or longer.
+
+---
+
 ## Next steps
 
-If a problem is discovered with DNSSEC implementation, contact the domain's registrar and confirm the `DS` record matches what the authoritative DNS provider has specified. If Cloudflare is the authoritative DNS provider, follow the instructions for [configuring DNSSEC with Cloudflare](/dns/dnssec/).
+If a problem is discovered with DNSSEC implementation, contact the domain's registrar and confirm the DS record matches what the authoritative DNS provider has specified. If Cloudflare is the authoritative DNS provider, follow the instructions for [configuring DNSSEC with Cloudflare](/dns/dnssec/).
