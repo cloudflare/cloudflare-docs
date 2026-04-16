@@ -12,6 +12,10 @@ Every request to a Cloudflare-proxied domain can touch multiple products, each w
 
 Understanding this flow helps you predict costs, identify optimization opportunities, and make sense of your invoice.
 
+:::note
+Pricing can change. This page describes the billing dimensions and free-tier allowances for each product, but links to each product's pricing page for current rates. For a full plan comparison, refer to the [Cloudflare plans page](https://www.cloudflare.com/plans/).
+:::
+
 ## A request through a Pro zone
 
 Consider a visitor loading a page on a Pro domain that uses Workers, R2, Argo Smart Routing, and Cache Reserve. Here is what happens at each stage and which billable resources are involved.
@@ -41,7 +45,7 @@ Cloudflare checks whether a cached response exists for this request.
 | Resource | Billing impact |
 |---|---|
 | Bandwidth | Included in all plans. Cloudflare does not charge for bandwidth. |
-| Cache Reserve reads | If Cache Reserve is enabled and the asset is served from tiered cache storage, reads are metered at $0.36 per million. |
+| Cache Reserve reads | If Cache Reserve is enabled and the asset is served from tiered cache storage, reads are metered. Refer to [Cache Reserve pricing](/cache/how-to/cache-reserve/) for current rates. |
 
 **Cache miss** — the request must be forwarded to the origin. Continue to step 4.
 
@@ -51,7 +55,7 @@ If Argo is enabled, Cloudflare routes the request through the fastest path acros
 
 | Resource | Billing impact |
 |---|---|
-| Argo data transfer | Metered per GB transferred between Cloudflare and your origin. First 1 GB included, then $0.10 per GB. |
+| Argo data transfer | Metered per GB transferred between Cloudflare and your origin. First 1 GB included. Refer to [Argo Smart Routing](/argo-smart-routing/) for current rates. |
 
 ### 5. Workers execution (if configured)
 
@@ -59,9 +63,9 @@ If a Worker is bound to the route, it executes before or instead of fetching fro
 
 | Resource | Billing impact |
 |---|---|
-| Worker requests | Metered per invocation. Workers Paid plan includes 10 million requests, then $0.30 per million. |
-| Worker CPU time | Metered per millisecond of CPU time. 30 million CPU-ms included, then $0.02 per million CPU-ms. |
-| Workers KV reads/writes | If the Worker reads from or writes to KV, each operation is metered separately. |
+| Worker requests | Metered per invocation. Workers Paid plan includes 10 million requests. Refer to [Workers pricing](/workers/platform/pricing/) for current rates. |
+| Worker CPU time | Metered per millisecond of CPU time. 30 million CPU-ms included. Refer to [Workers pricing](/workers/platform/pricing/) for current rates. |
+| Workers KV reads/writes | If the Worker reads from or writes to KV, each operation is metered separately. Refer to [KV pricing](/kv/platform/pricing/) for current rates. |
 
 ### 6. Origin fetch and response
 
@@ -77,9 +81,9 @@ If the Worker or origin logic reads from or writes to R2, each operation is mete
 
 | Resource | Billing impact |
 |---|---|
-| R2 Class A operations (writes) | First 1 million included, then $4.50 per million. |
-| R2 Class B operations (reads) | First 10 million included, then $0.36 per million. |
-| R2 storage | First 10 GB-month included, then $0.015 per GB-month. |
+| R2 Class A operations (writes) | First 1 million included. Refer to [R2 pricing](/r2/pricing/) for current rates. |
+| R2 Class B operations (reads) | First 10 million included. Refer to [R2 pricing](/r2/pricing/) for current rates. |
+| R2 storage | First 10 GB-month included. Refer to [R2 pricing](/r2/pricing/) for current rates. |
 | R2 data egress | Free. Cloudflare does not charge for R2 egress. |
 
 ### 8. Cache write (miss path)
@@ -88,7 +92,7 @@ After fetching from the origin, Cloudflare caches the response at the edge for f
 
 | Resource | Billing impact |
 |---|---|
-| Cache Reserve writes | If Cache Reserve is enabled, writes are metered at $4.50 per million. |
+| Cache Reserve writes | If Cache Reserve is enabled, writes are metered. Refer to [Cache Reserve pricing](/cache/how-to/cache-reserve/) for current rates. |
 
 ### 9. Image Resizing (if configured)
 
@@ -96,7 +100,7 @@ If the request triggers Image Resizing (via URL parameters or a Worker), the tra
 
 | Resource | Billing impact |
 |---|---|
-| Image transformations | First 50,000 included on the Business plan, then metered per request. |
+| Image transformations | First 50,000 included on the Business plan, then metered per request. Refer to [Images pricing](/images/pricing/) for current rates. |
 
 ### 10. Response delivered
 
