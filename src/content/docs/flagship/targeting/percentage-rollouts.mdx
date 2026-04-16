@@ -17,6 +17,12 @@ Flagship uses consistent hashing on a configurable attribute to assign users to 
 
 By default, the bucketing attribute is `targetingKey`. You can configure which attribute to use for bucketing when you set up the rollout in the dashboard.
 
+:::caution[Random assignment without targetingKey]
+If `targetingKey` is not present in the evaluation context and no alternative bucketing attribute is configured, Flagship cannot produce a stable hash. In this case the rollout bucket is assigned randomly on each evaluation, meaning the same user may receive different flag values across requests.
+
+Always provide a stable `targetingKey` (or configure a consistent bucketing attribute) to guarantee sticky bucketing.
+:::
+
 ## Example
 
 Consider a flag `new-checkout` with the following rules:

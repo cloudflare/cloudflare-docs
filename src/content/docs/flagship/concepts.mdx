@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-Flagship organizes feature flags into apps. You define flags with variations and targeting rules, then evaluate them at the edge with low latency.
+Flagship organizes feature flags into apps. You define flags with variations and targeting rules, then evaluate them at the edge.
 
 ## How it works
 
@@ -83,7 +83,7 @@ Each rule contains:
 - An optional **percentage rollout** that splits traffic across variations.
 - A **variation** to serve when the rule matches.
 
-Conditions within a rule can be grouped with `AND`/`OR` operators and nested up to six levels deep.
+Conditions within a rule can be grouped with `AND`/`OR` operators.
 
 Refer to [Targeting rules](/flagship/targeting/) and [Operators](/flagship/targeting/operators/) for the full list of operators and configuration options.
 
@@ -110,4 +110,4 @@ When you change a flag in the dashboard, the change propagates globally within s
 
 During the brief propagation window, some regions may still serve the previous flag value. After propagation completes, all subsequent evaluations return the updated value.
 
-This model is optimized for low-latency evaluation at the edge. You do not need to redeploy your Worker or restart your application to pick up flag changes.
+You do not need to redeploy your Worker or restart your application to pick up flag changes.

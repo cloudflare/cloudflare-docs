@@ -31,15 +31,32 @@ Each condition compares an attribute from the evaluation context against a value
 
 ## Logical grouping
 
-Conditions within a rule can be grouped using `AND`/`OR` logical operators. Groups can be nested up to six levels deep for complex targeting logic.
+Conditions within a rule are combined with `AND` and `OR` operators. The grouping follows a simple rule: **`OR` starts a new group, `AND` stays in the current group**. Equivalently, `AND` binds tighter than `OR`.
 
-For example, to target enterprise users in the US or Canada:
+You can think of the condition list as being split at every `OR` boundary. Each segment between `OR`s forms its own group, and all `AND`s inside that segment belong to the same group. The rule matches when any one group matches entirely.
 
-- `AND`:
-  - `plan equals "enterprise"`
-  - `OR`:
-    - `country equals "US"`
-    - `country equals "CA"`
+For example:
+
+```
+IF   country IN ["US", "CA"]
+AND  plan equals "enterprise"
+OR   email ends_with "cloudflare.com"
+OR   beta_tester equals true
+AND  user_age_days > 30
+```
+
+This evaluates as:
+
+```
+(country IN ["US", "CA"] AND plan equals "enterprise")
+OR (email ends_with "cloudflare.com")
+OR (beta_tester equals true AND user_age_days > 30)
+```
+
+The rule matches users who are either:
+- in the US or Canada **and** on the enterprise plan, or
+- using a `cloudflare.com` email address, or
+- a beta tester **and** have been a user for more than 30 days.
 
 ## Learn more
 
