@@ -72,8 +72,8 @@ WAF Managed Rules run in the `http_request_firewall_managed` phase, which execut
 - Custom Rules (`http_request_firewall_custom` phase)
 - Rate Limiting Rules (`http_ratelimit` phase)
 
-This means a Custom Rule or Rate Limiting rule with a terminal action (Block, Managed Challenge) prevents Managed Rules from evaluating that request.
+This means a Custom Rule or Rate Limiting rule with a terminal action (such as Block or Managed Challenge) prevents Managed Rules from evaluating that request.
 
 ### WAF exceptions
 
-Skip rules (WAF exceptions) are also Custom Rules and run before Managed Rules. A Skip rule that bypasses all Managed Rules will prevent any managed ruleset from evaluating matching traffic.
+WAF exceptions (skip rules) are rules with a `skip` action deployed to the `http_request_firewall_managed` phase entry-point ruleset. They are evaluated before the managed rulesets in that phase, so a skip rule that bypasses all Managed Rules will prevent any managed ruleset from evaluating matching traffic. For more information, refer to [WAF exceptions](/waf/managed-rules/waf-exceptions/).

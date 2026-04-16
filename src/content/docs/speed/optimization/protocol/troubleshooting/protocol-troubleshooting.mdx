@@ -52,13 +52,13 @@ Symptoms can include:
 2. Test the same request again over HTTP/2.
 3. If the issue disappears over HTTP/2, capture a NetLog for Chrome and compare the behavior.
 
-**Test immediately:** Disable QUIC in Chrome via `chrome://flags` → search "QUIC" → set to Disabled → Relaunch.
+**Test immediately:** In Chrome, go to `chrome://flags`, search for "QUIC", set it to **Disabled**, then relaunch Chrome.
 
 ### Resolution
 
 If the issue is limited to specific hostnames, you can apply a more targeted workaround: create a Response Header Modification Transform Rule to remove the `Alt-Svc` header for the affected hostname.
 
-1. Go to **Rules** → **Transform Rules** → **Response Header Modification**.
+1. Go to **Rules** > **Transform Rules** > **Response Header Modification**.
 2. Set the matching expression to your hostname: `(http.host eq "example.com")`.
 3. Set the action to **Remove** the `alt-svc` header.
 

@@ -5,22 +5,18 @@ sidebar:
   order: 5
 ---
 
-# Troubleshooting Advanced TCP Protection
-
 ## Mode transition behavior
 
 Advanced TCP Protection has three modes: **Disabled**, **Monitor** (log only, no drops), and **Enabled** (active mitigation).
 
-**Always transition Monitor → Enabled, never Disabled → Enabled directly.**
+Always transition from Monitor mode to Enabled mode. Do not switch directly from Disabled to Enabled.
 
-When you enable Advanced TCP Protection, it enters a 10-minute learning mode to observe existing connection state. If you switch directly from Disabled to Enabled without going through Monitor mode first, long-lived connections that are older than 10 minutes will be dropped immediately because they have no state in the tracker.
+When you switch directly from Disabled to Enabled, Advanced TCP Protection begins a learning period to observe existing connection state. Long-lived connections that pre-date this learning period may be dropped because they have no state in the tracker.
 
 **Recommended procedure:**
 1. Set to **Monitor** mode for at least 4 hours (longer if your network has long-lived connections).
 2. Review the Monitor mode logs to confirm legitimate traffic patterns.
 3. Switch to **Enabled** mode.
-
----
 
 ## Legitimate traffic is being dropped (false positives)
 
@@ -28,33 +24,26 @@ Use the drop reason to identify the cause:
 
 | Drop reason | Likely cause | Action |
 |---|---|---|
-| `NOT_FOUND` | Learning mode was incomplete, or long-lived connections pre-date ATP enablement | Set to Monitor mode for 4+ hours, then re-enable |
+| `NOT_FOUND` | Learning period was incomplete, or long-lived connections pre-date ATP enablement | Set to Monitor mode for 4+ hours, then re-enable |
 | `UNEXPECTED_SYN`, `UNEXPECTED_ACK`, `UNEXPECTED_FIN`, `UNEXPECTED_RST` | ECMP rehashing — packets from the same flow arriving at different Cloudflare data centers | Set to Monitor mode; increase burst threshold for affected colos; escalate if persistent |
 | `OUT_OF_SEQUENCE` | Packet reordering or packet loss in the network path | Increase burst threshold for the affected colo |
 | Drops during traffic spikes only | Burst threshold too low | Increase burst (keep rate the same); burst should be approximately 10× the rate value |
 
 **Threshold tuning:** Increase burst first, not rate. Burst handles momentary spikes; rate controls sustained packet rates.
 
----
-
 ## Traffic from known sources is being challenged
 
 The ATP allowlist allows you to bypass mitigation for specific source IP prefixes. However:
 
-- The allowlist is approximately **200 IP prefixes maximum** per account.
+- The allowlist supports approximately **200 IP addresses per allowlist expression**.
 - The allowlist is **not a security control** — it is bypass-by-IP-address, which is vulnerable to IP address spoofing. Do not add large IP ranges (for example, entire data center IP blocks) to the allowlist.
 - For large-scale legitimate traffic sources, prefer tuning thresholds rather than adding broad allowlist entries.
 
----
-
 ## Known limitations
 
-- **TCP only:** Advanced TCP Protection covers TCP traffic. UDP and ICMP flood attacks require [Magic Firewall](/magic-firewall/) rules or [DDoS Managed Rulesets](/ddos-protection/managed-rulesets/).
+- **TCP only:** Advanced TCP Protection covers TCP traffic. UDP and ICMP flood attacks require [Cloudflare Network Firewall](/cloudflare-network-firewall/) rules or [DDoS Managed Rulesets](/ddos-protection/managed-rulesets/).
 - **ECMP "shifty flows":** When packets from the same TCP flow arrive at different Cloudflare data centers (due to ECMP load balancing upstream), ATP loses connection state and drops packets as `UNEXPECTED_*`. This is a known architecture constraint. Mitigation: reduce burst sensitivity or tune per-colo thresholds for affected colos.
-- **API-only configuration:** ATP is configured via the Advanced DDoS Protection API. The legacy YAML/Bitbucket configuration approach is deprecated.
-- **Allowlist size:** Approximately 200 source IP prefixes per account.
-
----
+- **Allowlist size:** The allowlist supports approximately 200 IP addresses per allowlist expression.
 
 ## Attacks not being blocked (false negatives)
 
