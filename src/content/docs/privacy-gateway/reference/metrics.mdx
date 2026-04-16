@@ -547,7 +547,7 @@ query RelayGatewayHandshakeLatencyByColo(
 Track relay-to-gateway latency trends to detect gradual degradation.
 
 ```graphql
-query RelayGatewayLatencyOverTime(
+query RelayGatewayHandshakeLatencyOverTime(
   $accountTag: String!
   $start: Time!
   $end: Time!
@@ -556,24 +556,20 @@ query RelayGatewayLatencyOverTime(
     accounts(filter: { accountTag: $accountTag }) {
       ohttpRelayEgressConnMetricsAdaptiveGroups(
         filter: {
-          datetime_geq: $start
-          datetime_leq: $end
+          datetimeFiveMinutes_geq: $start
+          datetimeFiveMinutes_leq: $end
         }
         limit: 10000
-        orderBy: [datetimeMinute_ASC]
+        orderBy: [datetimeFiveMinutes_ASC]
       ) {
+        count
         quantiles {
-          relayGatewayRttMsP50
-          relayGatewayRttMsP95
-          relayGatewayRttMsP99
-        }
-        sum {
-          connections
+          handshakeDurationUsP50
+          handshakeDurationUsP95
+          handshakeDurationUsP99
         }
         dimensions {
-          datetimeMinute
           datetimeFiveMinutes
-          datetimeHour
         }
       }
     }
