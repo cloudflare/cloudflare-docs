@@ -46,6 +46,7 @@
 		"@astrojs/starlight": "0.38.4",
 		"@astrojs/starlight-docsearch": "0.7.0",
 		"@astrojs/starlight-tailwind": "5.0.0",
+		"@base-ui/react": "1.4.0",
 		"@cloudflare/vitest-pool-workers": "0.14.9",
 		"@cloudflare/workers-types": "4.20260413.1",
 		"@eslint/js": "9.35.0",
