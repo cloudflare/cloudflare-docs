@@ -82,44 +82,38 @@ function getLabel(label: string): string {
 	}
 
 	{
-		!hasImage && !hasSnippets && (
+		!hasImage && !hasSnippets && example.output && (
 			<Tabs>
 				<TabItem label="Input">
 					<Code code={JSON.stringify(example.input, null, 4)} lang="json" />
 				</TabItem>
-				{example.output ? (
-					<TabItem label="Output">
-						<Code code={JSON.stringify(example.output, null, 4)} lang="json" />
-					</TabItem>
-				) : (
-					<TabItem label="Output">
-						<p class="text-gray-500 italic">Output unavailable</p>
-					</TabItem>
-				)}
+				<TabItem label="Output">
+					<Code code={JSON.stringify(example.output, null, 4)} lang="json" />
+				</TabItem>
 			</Tabs>
 		)
 	}
 
 	{
-		!hasImage && hasSnippets && (
+		!hasImage && !hasSnippets && !example.output && example.input && (
+			<Code code={JSON.stringify(example.input, null, 4)} lang="json" />
+		)
+	}
+
+	{
+		!hasImage && hasSnippets && example.output && (
 			<details class="example-io">
 				<summary>Input / Output JSON</summary>
 				<Tabs>
 					<TabItem label="Input">
 						<Code code={JSON.stringify(example.input, null, 4)} lang="json" />
 					</TabItem>
-					{example.output ? (
-						<TabItem label="Output">
-							<Code
-								code={JSON.stringify(example.output, null, 4)}
-								lang="json"
-							/>
-						</TabItem>
-					) : (
-						<TabItem label="Output">
-							<p class="text-gray-500 italic">Run the example to see output</p>
-						</TabItem>
-					)}
+					<TabItem label="Output">
+						<Code
+							code={JSON.stringify(example.output, null, 4)}
+							lang="json"
+						/>
+					</TabItem>
 				</Tabs>
 			</details>
 		)
