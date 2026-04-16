@@ -1,0 +1,47 @@
+---
+pcx_content_type: how-to
+title: Test page for review-docs command
+sidebar:
+  order: 99
+tags:
+  - Testing
+---
+
+import { Render } from "~/components";
+
+This page enables you to test the review-docs command functionality. It contains several deliberate style issues.
+
+## Getting started with the Test Feature
+
+To get started, you will need to configure your account settings. This allows you to set up the feature properly and ensures that everything works as expected when you deploy your application to the Cloudflare network.
+
+### Setting up your Environment
+
+1. Go to **Workers & Pages** > **Settings**.
+2. Click on **Enable feature**.
+3. Enter your API key and click **Save**.
+
+:::note
+We recently added support for this feature. It is now available on all plans.
+:::
+
+## Using the API
+
+You can use the API to interact with the feature programmatically. The API enables you to create, read, update, and delete resources, and it also allows you to configure advanced settings that are not available through the dashboard, which makes it a powerful tool for automation and integration with other systems and services that you might be using in your workflow.
+
+```
+curl -X POST https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/test \
+  -H "Authorization: Bearer $API_TOKEN"
+```
+
+Refer to the [API documentation](/api/) for more information, e.g. rate limits and authentication.
+
+## Advanced Configuration
+
+i.e. this section covers advanced settings that allow you to customize the feature's behavior.
+
+Please note that these settings are for advanced users only. If you are unsure about any of these settings, please contact support.
+
+:::note
+N.B. These settings may change in future releases.
+:::
