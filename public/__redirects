@@ -197,8 +197,6 @@
 /agents/model-context-protocol/mcp-handler-api/ /agents/api-reference/mcp-handler-api/ 301
 /agents/api-reference/calling-agents/ /agents/api-reference/routing/ 301
 
-# ai
-/ai/ /use-cases/ai/ 301
 # ai-audit
 /ai-audit/features/detect-ai-crawlers/ /ai-crawl-control/features/analyze-ai-crawlers/ 301
 /ai-audit/features/enforce-robots-txt/ /ai-crawl-control/features/analyze-ai-crawlers/ 301
@@ -229,6 +227,7 @@
 /ai-gateway/configuration/custom-metadata/ /ai-gateway/observability/custom-metadata/ 301
 /ai-gateway/universal/ /ai-gateway/usage/universal/ 301
 /ai-gateway/chat-completion/ /ai-gateway/usage/chat-completion/ 301
+/ai-gateway/legacy-models/ /ai-gateway/supported-models/ 301
 
 # analytics
 /analytics/migration-guides/zone-analytics/ /analytics/graphql-api/migration-guides/zone-analytics/ 301
@@ -2089,17 +2088,17 @@
 /workers/ai/ /agent-lee/ 301
 /cloudflare-agent/ /agent-lee/ 301
 
-# workers ai
-/workers-ai/models/llm/ /workers-ai/models/#text-generation 301
-/workers-ai/models/sentiment-analysis/ /workers-ai/models/#text-classification 301
-/workers-ai/models/embedding/ /workers-ai/models/#text-embeddings 301
-/workers-ai/models/text-embeddings/ /workers-ai/models/#text-embeddings 301
-/workers-ai/models/speech-recognition/ /workers-ai/models/#automatic-speech-recognition 301
-/workers-ai/models/translation/ /workers-ai/models/#translation 301
-/workers-ai/models/text-classification/ /workers-ai/models/#text-classification 301
-/workers-ai/models/image-classification/ /workers-ai/models/#image-classification 301
+# workers ai - legacy task type URLs redirect to unified catalog
+/workers-ai/models/llm/ /ai/models/#text-generation 301
+/workers-ai/models/sentiment-analysis/ /ai/models/#text-classification 301
+/workers-ai/models/embedding/ /ai/models/#text-embeddings 301
+/workers-ai/models/text-embeddings/ /ai/models/#text-embeddings 301
+/workers-ai/models/speech-recognition/ /ai/models/#automatic-speech-recognition 301
+/workers-ai/models/translation/ /ai/models/#translation 301
+/workers-ai/models/text-classification/ /ai/models/#text-classification 301
+/workers-ai/models/image-classification/ /ai/models/#image-classification 301
 /workers-ai/models/openchat_3.5-awq/ /workers-ai/models/ 301
-/workers-ai/models/deepgram-nova-3/ /workers-ai/models/nova-3/ 301
+
 /workers-ai/platform/bindings/ /workers-ai/configuration/bindings/ 301
 /workers-ai/get-started/local-dev-setup/ /workers-ai/get-started/workers-wrangler/ 301
 /workers-ai/configuration/function-calling/ /workers-ai/features/function-calling/ 301
@@ -2706,6 +2705,9 @@
 
 # Agents x402 (moved under agentic-payments)
 /agents/x402/* /agents/agentic-payments/x402/:splat 301
+
+# AI Gateway models (unified under /ai/models/)
+/ai-gateway/models/* /ai/models/:splat 301
 
 # Changelog (individual entry route moved to /post/)
 /changelog/2024-* /changelog/post/2024-:splat 301

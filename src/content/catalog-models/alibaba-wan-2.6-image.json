@@ -1,0 +1,144 @@
+{
+	"model_id": "alibaba/wan-2.6-image",
+	"provider_id": "alibaba",
+	"name": "Wan 2.6 Image",
+	"description": "Alibaba's Wan 2.6 text-to-image model generating images from text prompts with optional negative prompts and customizable dimensions.",
+	"task": "Text-to-Image",
+	"tags": [
+		"Image Generation",
+		"Negative Prompt"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {},
+	"examples": [
+		{
+			"name": "Simple Generation",
+			"description": "Basic text-to-image generation",
+			"input": {
+				"prompt": "A golden retriever puppy playing in autumn leaves"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'alibaba/wan-2.6-image',\n  {\n    prompt: 'A golden retriever puppy playing in autumn leaves',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Custom Dimensions",
+			"description": "Specify image size in WxH format",
+			"input": {
+				"prompt": "A vast alien desert landscape with two suns setting on the horizon, ancient ruins in the foreground",
+				"size": "1024x768"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'alibaba/wan-2.6-image',\n  {\n    prompt:\n      'A vast alien desert landscape with two suns setting on the horizon, ancient ruins in the foreground',\n    size: '1024x768',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Square Format",
+			"description": "Square image for social media or product photos",
+			"input": {
+				"prompt": "A sleek wireless headphone on a minimalist white marble surface with soft studio lighting",
+				"size": "1024x1024"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'alibaba/wan-2.6-image',\n  {\n    prompt:\n      'A sleek wireless headphone on a minimalist white marble surface with soft studio lighting',\n    size: '1024x1024',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Negative Prompt",
+			"description": "Guide generation away from unwanted elements",
+			"input": {
+				"prompt": "A detailed oil painting portrait of a Renaissance nobleman with intricate lace collar",
+				"negative_prompt": "modern clothing, photograph, blurry, low quality"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'alibaba/wan-2.6-image',\n  {\n    prompt:\n      'A detailed oil painting portrait of a Renaissance nobleman with intricate lace collar',\n    negative_prompt: 'modern clothing, photograph, blurry, low quality',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Portrait Format",
+			"description": "Tall vertical image for portraits",
+			"input": {
+				"prompt": "An elegant Art Deco poster featuring a jazz singer under a spotlight",
+				"size": "768x1024"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'alibaba/wan-2.6-image',\n  {\n    prompt:\n      'An elegant Art Deco poster featuring a jazz singer under a spotlight',\n    size: '768x1024',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://wan.video/",
+	"terms": "https://www.alibabacloud.com/help/en/legal",
+	"cover_image_url": "https://replicate.delivery/xezq/fG590HpoJ3xvPyBfT7VJrwvgaeINUIKiijWbnhrmAatPbZ1sA/tmp962by18n.jpeg",
+	"metadata": {
+		"Size Format": "WxH (e.g. 1024x1024)",
+		"Negative Prompt": "Yes"
+	},
+	"created_at": "2026-04-14 18:41:46",
+	"default_example": null,
+	"code_snippets": [],
+	"schema": {
+		"model_id": "alibaba/wan-2.6-image",
+		"version": "1.0.0",
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string"
+				},
+				"size": {
+					"type": "string",
+					"pattern": "^\\d+x\\d+$"
+				},
+				"negative_prompt": {
+					"type": "string"
+				},
+				"n": {
+					"type": "number",
+					"const": 1
+				}
+			},
+			"required": [
+				"prompt"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"type": "string",
+					"format": "uri"
+				}
+			},
+			"required": [
+				"image"
+			],
+			"additionalProperties": false
+		}
+	}
+}

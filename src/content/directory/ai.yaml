@@ -1,0 +1,14 @@
+id: unifiedAI
+name: AI
+
+entry:
+  title: AI
+  url: /ai/
+  group: Developer platform
+  additional_groups: [AI]
+  tags: [AI]
+
+meta:
+  title: Cloudflare AI docs
+  description: Run AI models on Cloudflare's global network
+  author: "@cloudflare"

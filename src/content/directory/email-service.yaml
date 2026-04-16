@@ -1,4 +1,4 @@
-id: eMsVc1
+id: eMsRv1
 name: Email Service
 
 entry:
@@ -8,5 +8,5 @@ entry:
 
 meta:
   title: Cloudflare Email Service docs
-  description: Send and receive email on the Cloudflare developer platform
+  description: Send transactional emails at scale with Cloudflare Email Service
   author: "@cloudflare"

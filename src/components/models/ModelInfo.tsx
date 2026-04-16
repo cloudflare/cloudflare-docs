@@ -1,12 +1,22 @@
 import type { WorkersAIModelsSchema } from "~/schemas";
+import type { ResolvedModel } from "~/util/model-types";
+import { getModelAuthor } from "~/util/model-helpers";
 import { authorData } from "./data";
 
-const ModelInfo = ({ model }: { model: WorkersAIModelsSchema }) => {
-	const author =
-		authorData[model.name.split("/")[1]]?.name ?? model.name.split("/")[1];
+type ModelType = WorkersAIModelsSchema | ResolvedModel;
+
+const ModelInfo = ({ model }: { model: ModelType }) => {
+	const authorId = getModelAuthor(model.name);
+	const author = authorData[authorId]?.name ?? authorId;
+	const hosting =
+		"hosting" in model
+			? model.hosting === "proxied"
+				? "Proxied"
+				: "Hosted"
+			: "Hosted";
 	return (
 		<span className="mt-2 block! leading-5 text-gray-400">
-			{model.task.name} • {author}
+			{model.task.name} • {author} • {hosting}
 		</span>
 	);
 };

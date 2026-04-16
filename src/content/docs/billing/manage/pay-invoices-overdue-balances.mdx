@@ -7,23 +7,14 @@ sidebar:
 
 import { DashButton } from "~/components";
 
-If the automatic retry attempts to take payment fails, and you have not manually paid the invoice, your account will have an overdue balance. An overdue balance will block you from purchasing new products or subscriptions, upgrading existing ones, and you won’t be able to update your billing profile until you have successfully paid the balance. Attempts to purchase or upgrade subscriptions will return an error mentioning this:
+If automatic payment retries fail and you do not pay manually, your account accrues an overdue balance. While the balance is unpaid, you cannot purchase products, upgrade subscriptions, or update your billing profile. Attempts to do so return an error:
 
-**You cannot add or modify subscriptions or services until the outstanding balance is paid.**
 
-The full range of error messages you may see are:
+**"You cannot add or modify subscriptions or services until the outstanding balance is paid."**
 
-* "You cannot add or modify subscriptions/services until your outstanding balance is paid. Please visit the Billing section to proceed."
-
-The simplest way to pay your balance is to click **Pay Now** from your Billing homepage in the Cloudflare dashboard. To see these steps in more detail, refer to [Pay an outstanding balance](#pay-an-outstanding-balance).
-
-You can pay your entire balance in one transaction, or if you have multiple invoices with unpaid amounts, you can choose to pay them individually by following [pay unpaid invoices](#manually-pay-invoices).
+To pay, select **Pay Now** from the **Billing** page in the Cloudflare dashboard. You can pay the entire balance in one transaction or [pay individual invoices](#manually-pay-invoices) separately.
 
 ## Understand why you have an outstanding balance
-
-:::caution
-Please note that some unpaid invoices may not be visible. These unpaid invoices will still prevent account modifications. In these cases you should [contact Cloudflare Support](/support/contacting-cloudflare-support/).
-:::
 
 When an outstanding balance is due, a new invoice will be created in your account for that amount. When you view that new invoice, it will show the original invoice number that the outstanding balance relates to. You can look up this original invoice to understand which product(s) were not fully paid for.
 

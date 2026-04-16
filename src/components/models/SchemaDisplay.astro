@@ -1,0 +1,433 @@
+---
+/**
+ * SchemaDisplay - Unified schema display component for model parameters
+ *
+ * Features:
+ * - Table layout with Name, Type, Default, Description columns
+ * - Tree-line indentation for nested objects/arrays
+ * - Collapsible nested sections with lazy rendering
+ * - Search/filter with auto-expand on match
+ * - Essential params shown first (Input only), Advanced collapsed
+ * - Tabs for top-level anyOf/oneOf variants
+ */
+import {
+	SchemaTree,
+	SchemaCombinerName,
+	type SchemaNode,
+	type RegularNode,
+	type SchemaTreeRefDereferenceFn,
+} from "@stoplight/json-schema-tree";
+import { type Dictionary } from "@stoplight/types";
+import { resolveInlineRef } from "@stoplight/json";
+import SchemaTreeView from "./SchemaTree.tsx";
+import SchemaVariantSelector from "./SchemaVariantSelector.tsx";
+import type { SchemaRowData } from "./types";
+
+interface Props {
+	schema: Record<string, unknown>;
+	title: "Input" | "Output";
+}
+
+const { schema, title } = Astro.props;
+
+// Check if schema is a flat/simple schema (no properties, no oneOf/anyOf with properties)
+// These are things like streaming output: { type: "string", contentType: "...", format: "binary" }
+function isFlatSchema(schemaObj: Record<string, unknown>): boolean {
+	// Has properties = not flat
+	if (schemaObj.properties) return false;
+	// Has oneOf/anyOf with properties inside = not flat
+	const variants = (schemaObj.oneOf || schemaObj.anyOf) as
+		| Record<string, unknown>[]
+		| undefined;
+	if (variants?.some((v) => v.properties)) return false;
+	// Has type and some other attributes but no nested structure
+	return !!(schemaObj.type || schemaObj.contentType || schemaObj.format);
+}
+
+const isFlat = isFlatSchema(schema);
+
+// Convert flat schema keys into rows for display
+// e.g. { type: "string", format: "binary" } => rows with name=type, type=string
+function flatSchemaToRows(schemaObj: Record<string, unknown>): SchemaRowData[] {
+	const keys = Object.keys(schemaObj);
+	return keys.map((key, i) => ({
+		id: key,
+		name: key,
+		type: String(schemaObj[key]),
+		isArray: false,
+		isObject: false,
+		isOneOf: false,
+		isOneOfChild: false,
+		isFirstOneOfChild: false,
+		isLastOneOfChild: false,
+		required: false,
+		defaultValue: undefined,
+		description: undefined,
+		enumValues: undefined,
+		metadata: undefined,
+		depth: 0,
+		isLast: i === keys.length - 1,
+		ancestorIsLast: [],
+		children: undefined,
+	}));
+}
+
+// Generate unique ID for sessionStorage keys
+const schemaId = `schema-${title.toLowerCase()}-${Date.now()}`;
+
+type ReferenceInfo = {
+	source: string | null;
+	pointer: string | null;
+};
+type ReferenceResolver = (
+	ref: ReferenceInfo,
+	propertyPath: string[] | null,
+	currentObject?: object,
+) => unknown;
+
+const defaultResolver: SchemaTreeRefDereferenceFn =
+	(contextObject: object): ReferenceResolver =>
+	({ pointer }, _, currentObject) => {
+		const activeObject = contextObject ?? currentObject;
+		if (pointer === null) return null;
+		if (pointer === "#") return activeObject;
+		const resolved = resolveInlineRef(
+			activeObject as Dictionary<string>,
+			pointer,
+		);
+		if (resolved) return resolved;
+		throw new ReferenceError(`Could not resolve '${pointer}'`);
+	};
+
+// Skip structural JSON Schema keys that we handle separately
+const SKIP_KEYS = new Set([
+	"type",
+	"properties",
+	"items",
+	"required",
+	"description",
+	"default",
+	"enum",
+	"oneOf",
+	"anyOf",
+	"allOf",
+	"title",
+	"additionalProperties",
+]);
+
+// Skip internal JSON Schema keywords ($-prefixed) and vendor extensions (x-prefixed)
+const shouldSkipKey = (key: string) =>
+	SKIP_KEYS.has(key) || key.startsWith("$") || key.startsWith("x-");
+
+function collectRows(
+	nodes: SchemaNode[] | undefined,
+	depth: number,
+	ancestorIsLast: boolean[],
+	parentPath: string = "",
+): SchemaRowData[] {
+	if (!nodes) return [];
+	const rows: SchemaRowData[] = [];
+
+	// Filter to valid property nodes
+	const validNodes = nodes.filter((node) => {
+		const reg = node as RegularNode;
+		const rawName = reg.subpath?.[reg.subpath.length - 1];
+		if (rawName === undefined || rawName === "") return false;
+		const parentProperties = reg.parent?.fragment?.properties;
+		if (parentProperties && !(String(rawName) in (parentProperties as object)))
+			return false;
+		return true;
+	});
+
+	for (let i = 0; i < validNodes.length; i++) {
+		const reg = validNodes[i] as RegularNode;
+		const name = String(reg.subpath?.[reg.subpath.length - 1] ?? "");
+		const isLast = i === validNodes.length - 1;
+		const id = parentPath ? `${parentPath}.${name}` : name;
+
+		const parentRequired = reg.parent?.fragment?.required;
+		const required = Array.isArray(parentRequired)
+			? (parentRequired as string[]).includes(name)
+			: false;
+
+		const isArray = reg.primaryType === "array";
+		const isObject = reg.primaryType === "object";
+		const hasOneOf = reg.combiners?.includes(SchemaCombinerName.OneOf) ?? false;
+		const hasAnyOf = reg.combiners?.includes(SchemaCombinerName.AnyOf) ?? false;
+
+		// Check if this is a nullable type pattern (e.g., boolean | null, string | null)
+		// In this case, we should collapse it to just show the non-null type as nullable
+		let isNullable = false;
+		let nullableType: string | undefined;
+		let nullableChildDescription: string | undefined;
+		if ((hasOneOf || hasAnyOf) && reg.children?.length === 2) {
+			const childTypes = reg.children.map((c) =>
+				String((c as RegularNode).primaryType ?? ""),
+			);
+			const nullIndex = childTypes.findIndex((t) => t === "null");
+			if (nullIndex !== -1) {
+				// This is a nullable type - get the non-null type and its description
+				const nonNullIndex = nullIndex === 0 ? 1 : 0;
+				const nonNullChild = reg.children[nonNullIndex] as RegularNode;
+				nullableType = childTypes[nonNullIndex];
+				nullableChildDescription = nonNullChild.annotations?.description as
+					| string
+					| undefined;
+				isNullable = true;
+			}
+		}
+
+		const isOneOf = (hasOneOf || hasAnyOf) && !isNullable;
+		const type =
+			isNullable && nullableType
+				? `${nullableType} | null`
+				: isOneOf
+					? "one of"
+					: (reg.primaryType ?? "");
+
+		const defaultValue =
+			reg.annotations?.default !== undefined
+				? String(reg.annotations.default)
+				: undefined;
+
+		// For nullable types, prefer child description if parent doesn't have one
+		const description =
+			(reg.annotations?.description as string | undefined) ??
+			nullableChildDescription;
+		// Check both validations and fragment for enum (different schema parsers put it in different places)
+		const enumValues =
+			((reg.validations?.enum as unknown[]) ??
+				((reg.fragment as Record<string, unknown>)?.enum as unknown[]))?.map(
+				String,
+			);
+
+		// Collect all metadata from fragment and validations
+		const metadata: Record<string, string | number | boolean> = {};
+
+		// Get metadata from fragment (format, etc.)
+		const fragment = reg.fragment as Record<string, unknown>;
+		if (fragment) {
+			for (const [key, value] of Object.entries(fragment)) {
+				if (
+					!shouldSkipKey(key) &&
+					(typeof value === "string" ||
+						typeof value === "number" ||
+						typeof value === "boolean")
+				) {
+					metadata[key] = value;
+				}
+			}
+		}
+
+		// Get metadata from validations (minimum, maximum, minLength, maxLength, minItems, maxItems, etc.)
+		if (reg.validations) {
+			for (const [key, value] of Object.entries(reg.validations)) {
+				if (
+					!shouldSkipKey(key) &&
+					key !== "enum" &&
+					(typeof value === "string" ||
+						typeof value === "number" ||
+						typeof value === "boolean")
+				) {
+					metadata[key] = value;
+				}
+			}
+		}
+
+		// For arrays, also get format from items
+		if (isArray && reg.children?.length === 1) {
+			const itemsNode = reg.children[0] as RegularNode;
+			const itemsFragment = itemsNode.fragment as Record<string, unknown>;
+			if (itemsFragment?.format && typeof itemsFragment.format === "string") {
+				metadata["format"] = itemsFragment.format;
+			}
+		}
+
+		// Collect children recursively
+		// For arrays, skip the "items" intermediate node and lift its children
+		// For nullable types, don't show children (they're just the type | null options)
+		let children: SchemaRowData[] | undefined;
+		if (reg.children?.length && !isNullable) {
+			if (isArray && reg.children.length === 1) {
+				const itemsNode = reg.children[0] as RegularNode;
+				const itemsName = String(
+					itemsNode.subpath?.[itemsNode.subpath.length - 1] ?? "",
+				);
+				if (itemsName === "items" && itemsNode.children?.length) {
+					// Skip "items" node, use its children directly
+					children = collectRows(
+						itemsNode.children,
+						depth + 1,
+						[...ancestorIsLast, isLast],
+						id,
+					);
+				} else {
+					children = collectRows(
+						reg.children,
+						depth + 1,
+						[...ancestorIsLast, isLast],
+						id,
+					);
+				}
+			} else {
+				children = collectRows(
+					reg.children,
+					depth + 1,
+					[...ancestorIsLast, isLast],
+					id,
+				);
+			}
+		}
+
+		// For oneOf/anyOf items, try to extract a meaningful label
+		let displayName = name;
+		const parentReg = reg.parent as RegularNode | undefined;
+		const isOneOfChild = parentReg?.combiners?.includes(
+			SchemaCombinerName.OneOf,
+		);
+		const isAnyOfChild = parentReg?.combiners?.includes(
+			SchemaCombinerName.AnyOf,
+		);
+		if (isOneOfChild || isAnyOfChild) {
+			// Try node.title, annotations.title, or fragment.title
+			const fragment = reg.fragment as Record<string, unknown>;
+			const title =
+				reg.title ??
+				((reg.annotations as Record<string, unknown>)?.title as
+					| string
+					| undefined) ??
+				(fragment?.title as string | undefined);
+
+			if (title) {
+				displayName = title;
+			} else {
+				// Try to infer from role property's enum (for message types)
+				const properties = fragment?.properties as
+					| Record<string, Record<string, unknown>>
+					| undefined;
+				const roleEnum = properties?.role?.enum as string[] | undefined;
+				if (roleEnum && roleEnum.length === 1) {
+					// Single role value - use it as the name (e.g., "user", "assistant", "tool")
+					displayName = `${roleEnum[0]} message`;
+				} else {
+					// Try other heuristics
+					const nestedOneOf = fragment?.oneOf as
+						| Record<string, unknown>[]
+						| undefined;
+					if (nestedOneOf && nestedOneOf.length > 0 && nestedOneOf[0]?.title) {
+						displayName = `${nestedOneOf[0].title as string} format`;
+					} else if (properties) {
+						const props = Object.keys(properties);
+						if (props.includes("requests")) {
+							displayName = "Batch request";
+						} else {
+							displayName = `Option ${Number(name) + 1}`;
+						}
+					} else {
+						displayName = `Option ${Number(name) + 1}`;
+					}
+				}
+			}
+		}
+
+		rows.push({
+			id,
+			name: displayName,
+			type,
+			isArray,
+			isObject,
+			isOneOf,
+			isOneOfChild: !!(isOneOfChild || isAnyOfChild),
+			isFirstOneOfChild: !!(isOneOfChild || isAnyOfChild) && i === 0,
+			isLastOneOfChild: !!(isOneOfChild || isAnyOfChild) && isLast,
+			required,
+			defaultValue,
+			description,
+			enumValues,
+			metadata: Object.keys(metadata).length > 0 ? metadata : undefined,
+			depth,
+			isLast,
+			ancestorIsLast,
+			children,
+		});
+	}
+
+	return rows;
+}
+
+// Check if schema has top-level oneOf/anyOf with titled variants
+// If so, we'll render them as tabs instead of nested tree
+type SchemaVariant = {
+	title: string;
+	schema: Record<string, unknown>;
+};
+
+function getTopLevelVariants(
+	schemaObj: Record<string, unknown>,
+): SchemaVariant[] | null {
+	const variants = (schemaObj.oneOf || schemaObj.anyOf) as
+		| Record<string, unknown>[]
+		| undefined;
+	if (!variants || variants.length < 2) return null;
+
+	// Check if all variants have titles
+	const titled = variants.map((v, i) => ({
+		title: (v.title as string) || `Option ${i + 1}`,
+		schema: v,
+	}));
+
+	// Only use tabs if at least one variant has a real title
+	const hasRealTitle = variants.some((v) => v.title);
+	return hasRealTitle ? titled : null;
+}
+
+const topLevelVariants = getTopLevelVariants(schema);
+
+// Process variants or full schema
+function processSchema(schemaToProcess: Record<string, unknown>) {
+	const tree = new SchemaTree(schemaToProcess, {
+		mergeAllOf: true,
+		refResolver: defaultResolver,
+		maxRefDepth: 3,
+	});
+	tree.populate();
+
+	const topNodes =
+		(tree.root.children[0] as RegularNode)?.children ?? undefined;
+	return collectRows(topNodes, 0, []);
+}
+
+// For flat schemas, convert keys to rows directly
+// For non-variant schemas, process with tree parser
+// For variant schemas, defer to variantRows
+const rows = isFlat
+	? flatSchemaToRows(schema)
+	: topLevelVariants
+		? []
+		: processSchema(schema);
+
+// For variant schemas, process each variant
+const variantRows =
+	topLevelVariants?.map((v) => ({
+		title: v.title,
+		rows: processSchema(v.schema),
+	})) ?? [];
+---
+
+<div class="schema-display">
+	{
+		topLevelVariants && variantRows.length > 0 ? (
+			<SchemaVariantSelector
+				variants={variantRows}
+				schemaId={schemaId}
+				client:load
+			/>
+		) : rows.length === 0 ? (
+			<p class="text-sm text-gray-500 dark:text-gray-400">
+				No parameters defined.
+			</p>
+		) : (
+			<SchemaTreeView rows={rows} schemaId={schemaId} client:load />
+		)
+	}
+</div>
