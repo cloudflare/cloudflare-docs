@@ -1,0 +1,171 @@
+{
+	"model_id": "black-forest-labs/flux-2-klein-9b",
+	"provider_id": "black-forest-labs",
+	"name": "FLUX 2 Klein 9B",
+	"description": "FLUX 2 Klein is Black Forest Labs' 9-billion parameter image generation model optimized for fast inference.",
+	"task": "Text-to-Image",
+	"tags": [
+		"Image Generation",
+		"Fast",
+		"Open Source"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {},
+	"examples": [
+		{
+			"name": "Simple Prompt",
+			"description": "Basic text-to-image generation",
+			"input": {
+				"prompt": "A golden retriever puppy playing in autumn leaves"
+			},
+			"output": {
+				"image": "https://replicate.delivery/xezq/rVitACODTRq7IRhadkPPFpQ7M7wrOsuJbiwNXcXhnq7oONmF/out-0.webp"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-2-klein-9b',\n  {\n    prompt: 'A golden retriever puppy playing in autumn leaves',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Detailed Scene",
+			"description": "Complex scene with specific dimensions",
+			"input": {
+				"prompt": "A Victorian-era street scene at dusk, gas lamps casting warm pools of light on cobblestones, horse-drawn carriages, and elegantly dressed pedestrians",
+				"width": 1024,
+				"height": 768
+			},
+			"output": {
+				"image": "https://replicate.delivery/xezq/a0eYF64A1epaP0efHPESxpQGMbEGgczi4j8bASDluvgMqTjZB/out-0.webp"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-2-klein-9b',\n  {\n    prompt:\n      'A Victorian-era street scene at dusk, gas lamps casting warm pools of light on cobblestones, horse-drawn carriages, and elegantly dressed pedestrians',\n    width: 1024,\n    height: 768,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "High Quality Generation",
+			"description": "More inference steps for better quality",
+			"input": {
+				"prompt": "A detailed oil painting portrait of a Renaissance nobleman with intricate lace collar",
+				"num_steps": 50,
+				"guidance": 7.5
+			},
+			"output": {
+				"image": "https://replicate.delivery/xezq/tg3mOF5RGVpkF5D51okqiCWNkjpnMoORytQPeUDgt4NSdaMLA/out-0.webp"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-2-klein-9b',\n  {\n    prompt:\n      'A detailed oil painting portrait of a Renaissance nobleman with intricate lace collar',\n    num_steps: 50,\n    guidance: 7.5,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Fast Draft",
+			"description": "Quick generation with fewer steps",
+			"input": {
+				"prompt": "A simple sketch of a mountain landscape",
+				"num_steps": 10
+			},
+			"output": {
+				"image": "https://replicate.delivery/xezq/5fpRC3aXafgmD0mmnDn8dScpZdGbJCmgT93IfzbZagrL1pxsA/out-0.webp"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-2-klein-9b',\n  {\n    prompt: 'A simple sketch of a mountain landscape',\n    num_steps: 10,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Reproducible Generation",
+			"description": "Using a seed for consistent results",
+			"input": {
+				"prompt": "A serene Japanese zen garden with raked sand patterns and a single bonsai tree",
+				"seed": 42,
+				"num_steps": 25
+			},
+			"output": {
+				"image": "https://replicate.delivery/xezq/BjLs0q1eKETCLSAltMgMVZIe9BJxrDQJAMSaW67kn9mm60YWA/out-0.webp"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-2-klein-9b',\n  {\n    prompt:\n      'A serene Japanese zen garden with raked sand patterns and a single bonsai tree',\n    seed: 42,\n    num_steps: 25,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://blackforestlabs.ai/",
+	"terms": "https://blackforestlabs.ai/terms-of-service/",
+	"cover_image_url": "https://replicate.delivery/xezq/KOro9UrHuZZdPNTR7fy0FnwcCeu4zPkRceff9yOUkYulVj9vC/out.jpg",
+	"metadata": {
+		"Architecture": "Flow matching transformer",
+		"Parameters": "9B",
+		"Max Inference Steps": "4"
+	},
+	"created_at": "2026-04-08 22:09:44",
+	"default_example": null,
+	"code_snippets": [],
+	"schema": {
+		"model_id": "black-forest-labs/flux-2-klein-9b",
+		"version": "1.0.0",
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string"
+				},
+				"width": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"height": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"num_steps": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"guidance": {
+					"type": "number"
+				},
+				"seed": {
+					"type": "number"
+				}
+			},
+			"required": [
+				"prompt"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"type": "string",
+					"format": "uri"
+				}
+			},
+			"required": [
+				"image"
+			],
+			"additionalProperties": false
+		}
+	}
+}

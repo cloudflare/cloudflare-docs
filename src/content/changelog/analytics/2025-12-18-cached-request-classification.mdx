@@ -1,0 +1,17 @@
+---
+title: Improved accuracy of cached request classification in analytics
+description: The Zone Overview dashboard now correctly classifies cached vs. uncached requests, aligning with the logic already used in HTTP Analytics.
+date: 2025-12-18
+---
+
+The cached/uncached classification logic used in Zone Overview analytics has been updated to improve accuracy.
+
+Previously, requests were classified as "cached" based on an overly broad condition that included blocked 403 responses, Snippets requests, and other non-cache request types. This caused inflated cache hit ratios — in some cases showing near-100% cached — and affected approximately 15% of requests classified as cached in rollups.
+
+The condition has been removed from the Zone Overview page. Cached/uncached classification now aligns with the heuristics used in [HTTP Analytics](/analytics/account-and-zone-analytics/zone-analytics/), so only requests genuinely served from cache are counted as cached.
+
+**What changed:**
+
+- **Zone Overview** — Cache ratios now reflect actual cache performance.
+- **HTTP Analytics** — No change. HTTP Analytics already used the correct classification logic.
+- **Historical data** — This fix applies to new requests only. Previously logged data is not retroactively updated.

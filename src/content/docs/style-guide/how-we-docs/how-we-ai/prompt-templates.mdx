@@ -40,11 +40,15 @@ Your task is to write a cogent and helpful how-to page on the following topic.
 *Target Audience:* <Add user groups or roles here>
 *Why Do Customers Care?:* <Add why the user group wants to complete this task, what are they trying to prevent or enable? The more context, the better.>
 
-Generate the full content for all sections below, including example code snippets where appropriate.
+Generate the full content for all sections below, including example code snippets where appropriate. The output must begin with valid frontmatter. Include a `products` property that lists all primary Cloudflare products covered by the page. The `products` value must be a bullet list of product identifiers. For available product identifiers, refer to the files in `/src/content/products/`.
 
 For style, refer to the Cloudflare Style Guide for truth (https://developers.cloudflare.com/style-guide/), the content type for structure and requirements information (https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/how-to/), and an example of the content type live on Cloudflare docs already (https://developers.cloudflare.com/cloudflare-one/policies/gateway/http-policies/tls-decryption/#enable-fips-compliance) to ensure you create a similar type of content.
 
---
+---
+pcx_content_type: how-to
+products:
+  - <product-identifier>
+---
 
 Second-person imperative verb phrase
 
@@ -86,14 +90,20 @@ Your task is to write a cogent and helpful how-to page on the following topic.
 4. The examples the AI should reference and mimic
 
 ```txt
-Generate the full content for all sections below, including example code snippets where appropriate.
+Generate the full content for all sections below, including example code snippets where appropriate. The output must begin with valid frontmatter. Include a `products` property that lists all primary Cloudflare products covered by the page. The `products` value must be a bullet list of product identifiers. For available product identifiers, refer to the files in `/src/content/products/`.
 
 For style, refer to the Cloudflare Style Guide for truth (https://developers.cloudflare.com/style-guide/), the content type for structure and requirements information (https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/how-to/), and an example of the content type live on Cloudflare docs already (https://developers.cloudflare.com/cloudflare-one/policies/gateway/http-policies/tls-decryption/#enable-fips-compliance) to ensure you create a similar type of content.
 ```
 
-5. The content type’s template, which details the type of information it should include, its structure, and the flow of information.
+5. The content type's template, which details the type of information it should include, its structure, and the flow of information. The template must start with valid frontmatter that includes `pcx_content_type` and `products`.
 
 ```txt
+---
+pcx_content_type: how-to
+products:
+  - <product-identifier>
+---
+
 Second-person imperative verb phrase
 
 Context for procedure

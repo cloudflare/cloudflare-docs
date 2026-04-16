@@ -4,6 +4,8 @@ params:
   - greIpsecURL
   - warpURL
   - tracerouteURL
+  - trafficSteeringURL
+  - arrURL
 ---
 
 import { Render } from "~/components"
@@ -14,13 +16,63 @@ By default, <a href={props.gatewayURL}>Cloudflare Gateway</a> proxies and filter
 
 ## Route evaluation and precedence
 
-Cloudflare evaluates <a href="/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/">private network routes</a> together across the Cloudflare Tunnel and Cloudflare Virtual Network routing tables. If traffic matches either a Cloudflare Tunnel route (in any virtual network) or a Cloudflare Virtual Network route, the matched route determines the next hop.
+Cloudflare evaluates private network routes using longest-prefix-match. A prefix combines a base IP address with a prefix length that indicates how many bits define the network portion (for example, `192.168.0.0/24`). When multiple routes could match a destination IP, Cloudflare selects the route with the longest prefix (most specific match).
 
-When a destination IP matches both a Cloudflare Tunnel private network route and a Cloudflare Virtual Network route, Cloudflare Tunnel takes precedence. This happens whenever a `cloudflared` tunnel Classless Inter-Domain Routing (CIDR) matches a packet, regardless of prefix length. For example, a `cloudflared` tunnel with prefix `10.1.2.0/24` takes precedence over a static route configured to `10.1.2.4/32`, and Cloudflare sends packets over the tunnel instead of a GRE tunnel.
+For example, if you have routes for both `10.0.0.0/16` and `10.0.1.0/24`, traffic destined for `10.0.1.50` matches the `/24` route because it is more specific.
 
-For complex deployments where you need overlapping routes in both Cloudflare Tunnel and Cloudflare Virtual Network, consult your Solutions Engineering team for guidance.
+### Route uniqueness
 
-For more information about private network routes with `cloudflared`, refer to <a href="/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/">Connect with cloudflared</a>.
+Within a [virtual network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/), each prefix can only appear once in the Zero Trust routing table. You cannot create two Zero Trust routes with the same prefix pointing to different tunnels in the same virtual network.
+
+To route the same prefix to different destinations, use separate [virtual networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/).
+
+### Reserved IP ranges
+
+Cloudflare reserves the following IP ranges for Zero Trust services:
+
+| IP range | Purpose |
+| --- | --- |
+| `100.64.0.0/12` | [Cloudflare Source IPs](/cloudflare-wan/configuration/manually/how-to/configure-cloudflare-source-ips/) |
+| `100.96.0.0/12` | [Device IPs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/) |
+| `100.80.0.0/16` | [Initial resolved IPs](/cloudflare-one/traffic-policies/egress-policies/host-selectors/) |
+| `100.112.0.0/16` | [Private Load Balancers](/load-balancing/private-network/) |
+
+Do not configure routes that overlap with these reserved ranges.
+
+### Interaction with WAN routes
+
+If your account also uses WAN connections (IPsec, GRE, and CNI), route selection behavior depends on your routing mode.
+
+For more information, refer to <a href={props.trafficSteeringURL}>Route evaluation with Zero Trust connections</a>.
+
+## Interaction with other route selection mechanisms
+
+Longest-prefix-match routing is the default route selection method. Other mechanisms can bypass or augment route evaluation.
+
+### Automatic Return Routing (ARR)
+
+<a href={props.arrURL}>Automatic Return Routing</a> bypasses route lookup for return traffic.
+
+When ARR is enabled:
+
+1. Cloudflare tags each flow with the source connection (tunnel or interconnect) when the flow is established.
+2. For return traffic, Cloudflare routes packets back to the tagged source connection directly, bypassing the routing table.
+3. This allows multiple sites to use identical private IP ranges without NAT or VRF configuration.
+
+ARR requires Unified Routing mode. For more information, refer to <a href={props.arrURL}>Automatic Return Routing</a>.
+
+### Hostname Routes (Initial resolved IPs)
+
+[Hostname-based routing](/cloudflare-one/traffic-policies/egress-policies/host-selectors/) uses Gateway DNS to resolve hostnames to Initial resolved IPs, which then map to specific next hops.
+
+When Hostname Routes are enabled:
+
+1. Gateway DNS resolves the hostname to an Initial resolved IP (from `100.80.0.0/16`).
+2. The client sends traffic to the Initial resolved IP.
+3. Cloudflare looks up the Initial resolved IP to determine the real destination IP and the assigned next hop (specific tunnel or interconnect).
+4. Traffic is forwarded to the assigned next hop, bypassing route evaluation for next-hop selection.
+
+This enables hostname-based policies for non-HTTP traffic without requiring you to know destination IPs in advance.
 
 ## Test `cloudflared` tunnel integration
 

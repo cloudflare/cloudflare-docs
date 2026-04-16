@@ -186,6 +186,8 @@ await this.schedule("0 0 1 * *", "monthlyCleanup", {});
 - Health checks
 - Subscription renewals
 
+Cron schedules are idempotent by default — calling `schedule()` with the same cron expression, callback, and payload multiple times returns the existing schedule instead of creating a duplicate. This makes cron schedules safe to set up in `onStart()`.
+
 ### Interval
 
 Use `scheduleEvery()` to run a task at fixed intervals (in seconds). Unlike cron, intervals support sub-minute precision and arbitrary durations:
@@ -213,6 +215,25 @@ await this.scheduleEvery(90, "syncData", { destination: "warehouse" });
 | Arbitrary intervals | No (must fit cron pattern)            | Yes                    |
 | Fixed schedule      | Yes (for example, "every day at 8am") | No (relative to start) |
 | Overlap prevention  | No                                    | Yes (built-in)         |
+
+**Idempotency:**
+
+`scheduleEvery()` is idempotent on the combination of callback name, interval, and payload — calling it multiple times with the same arguments does not create duplicate schedules. This makes it safe to call in `onStart()`, which runs on every Durable Object wake:
+
+<TypeScriptExample>
+
+```ts
+class MyAgent extends Agent {
+	async onStart() {
+		// Safe to call on every wake — only one schedule is created
+		await this.scheduleEvery(30, "poll", { source: "api" });
+	}
+}
+```
+
+</TypeScriptExample>
+
+A different interval or payload creates a new, independent schedule.
 
 **Overlap prevention:**
 
@@ -277,7 +298,7 @@ Retrieve a scheduled task by its ID:
 <TypeScriptExample>
 
 ```ts
-const schedule = await this.getSchedule(scheduleId);
+const schedule = this.getSchedule(scheduleId);
 
 if (schedule) {
 	console.log(
@@ -668,7 +689,8 @@ Use Workflows when:
 async schedule<T>(
   when: Date | string | number,
   callback: keyof this,
-  payload?: T
+  payload?: T,
+  options?: { retry?: RetryOptions; idempotent?: boolean }
 ): Promise<Schedule<T>>
 ```
 
@@ -679,8 +701,29 @@ Schedule a task for future execution.
 - `when` - When to execute: `number` (seconds delay), `Date` (specific time), or `string` (cron expression)
 - `callback` - Name of the method to call
 - `payload` - Data to pass to the callback (must be JSON-serializable)
+- `options.retry` - Optional retry configuration. Refer to [Retries](/agents/api-reference/retries/) for details
+- `options.idempotent` - Deduplicate by callback + payload. Defaults to `true` for cron schedules, `false` for delayed and Date-based schedules
 
 **Returns:** A `Schedule` object with the task details
+
+**Idempotency:**
+
+Cron schedules are idempotent by default — calling `schedule("0 * * * *", "tick")` multiple times with the same callback, cron expression, and payload returns the existing schedule instead of creating a duplicate. Set `idempotent: false` to override this.
+
+For delayed and Date-based schedules, set `idempotent: true` to opt in to the same dedup behavior (matched on callback + payload). This is especially useful when calling `schedule()` in `onStart()` to avoid accumulating duplicate rows across Durable Object restarts:
+
+<TypeScriptExample>
+
+```ts
+class MyAgent extends Agent {
+	async onStart() {
+		// Without idempotent: true, this creates a new row on every DO restart
+		await this.schedule(3600, "hourlyCleanup", {}, { idempotent: true });
+	}
+}
+```
+
+</TypeScriptExample>
 
 :::caution
 
@@ -694,7 +737,8 @@ Tasks that set a callback for a method that does not exist will throw an excepti
 async scheduleEvery<T>(
   intervalSeconds: number,
   callback: keyof this,
-  payload?: T
+  payload?: T,
+  options?: { retry?: RetryOptions }
 ): Promise<Schedule<T>>
 ```
 
@@ -705,6 +749,7 @@ Schedule a task to run repeatedly at a fixed interval.
 - `intervalSeconds` - Number of seconds between executions (must be greater than 0)
 - `callback` - Name of the method to call
 - `payload` - Data to pass to the callback (must be JSON-serializable)
+- `options.retry` - Optional retry configuration. Refer to [Retries](/agents/api-reference/retries/) for details.
 
 **Returns:** A `Schedule` object with `type: "interval"`
 
@@ -743,6 +788,102 @@ async cancelSchedule(id: string): Promise<boolean>
 
 Cancel a scheduled task. Returns `true` if cancelled, `false` if not found.
 
+### `keepAlive()`
+
+```ts
+async keepAlive(): Promise<() => void>
+```
+
+Prevent the Durable Object from being evicted due to inactivity by creating a 30-second heartbeat schedule. Returns a disposer function that cancels the heartbeat when called. The disposer is idempotent — calling it multiple times is safe.
+
+Always call the disposer when the work is done — otherwise the heartbeat continues indefinitely.
+
+<TypeScriptExample>
+
+```ts
+const dispose = await this.keepAlive();
+try {
+	// Long-running work that must not be interrupted
+	const result = await longRunningComputation();
+	await sendResults(result);
+} finally {
+	dispose();
+}
+```
+
+</TypeScriptExample>
+
+### `keepAliveWhile()`
+
+```ts
+async keepAliveWhile<T>(fn: () => Promise<T>): Promise<T>
+```
+
+Run an async function while keeping the Durable Object alive. The heartbeat is automatically started before the function runs and stopped when it completes (whether it succeeds or throws). Returns the value returned by the function.
+
+This is the recommended way to use `keepAlive` — it guarantees cleanup.
+
+<TypeScriptExample>
+
+```ts
+const result = await this.keepAliveWhile(async () => {
+	const data = await longRunningComputation();
+	return data;
+});
+```
+
+</TypeScriptExample>
+
+## Keeping the agent alive
+
+Durable Objects are evicted after a period of inactivity (typically 70-140 seconds with no incoming requests, WebSocket messages, or alarms). During long-running operations — streaming LLM responses, waiting on external APIs, running multi-step computations — the agent can be evicted mid-flight.
+
+`keepAlive()` prevents this by creating a 30-second heartbeat schedule. The internal heartbeat callback is a no-op — the alarm firing itself is what resets the inactivity timer. Because it uses the scheduling system:
+
+- The heartbeat does not conflict with your own schedules (the scheduling system multiplexes through a single alarm slot)
+- The heartbeat shows up in `getSchedules()` if you need to inspect it
+- Multiple concurrent `keepAlive()` calls each get their own schedule, so they do not interfere with each other
+
+### Multiple concurrent callers
+
+Each `keepAlive()` call returns an independent disposer:
+
+<TypeScriptExample>
+
+```ts
+const dispose1 = await this.keepAlive();
+const dispose2 = await this.keepAlive();
+
+// Both heartbeats are active
+dispose1(); // Only cancels the first heartbeat
+// Agent is still alive via dispose2's heartbeat
+
+dispose2(); // Now the agent can go idle
+```
+
+</TypeScriptExample>
+
+### AIChatAgent
+
+`AIChatAgent` automatically calls `keepAlive()` during streaming responses. You do not need to add it yourself when using `AIChatAgent` — every LLM stream is protected from idle eviction by default.
+
+### When to use keepAlive
+
+| Scenario                                    | Use keepAlive?                         |
+| ------------------------------------------- | -------------------------------------- |
+| Streaming LLM responses via `AIChatAgent`   | No — already built in                  |
+| Long-running computation in a custom Agent  | Yes                                    |
+| Waiting on a slow external API call         | Yes                                    |
+| Multi-step tool execution                   | Yes                                    |
+| Short request-response handlers             | No — not needed                        |
+| Background work via scheduling or workflows | No — alarms already keep the DO active |
+
+:::note
+
+`keepAlive()` is marked `@experimental` and may change between releases.
+
+:::
+
 ## Limits
 
 - **Maximum tasks:** Limited by SQLite storage (each task is a row). Practical limit is tens of thousands per agent.
@@ -754,6 +895,12 @@ Cancel a scheduled task. Returns `true` if cancelled, `false` if not found.
 - **Interval jobs:** After execution, rescheduled for `now + intervalSeconds`; skipped if still running
 
 ## Next steps
+
+<LinkCard
+	title="Push notifications"
+	href="/agents/guides/push-notifications/"
+	description="Send browser push notifications using scheduling and web-push."
+/>
 
 <LinkCard
 	title="Queue tasks"

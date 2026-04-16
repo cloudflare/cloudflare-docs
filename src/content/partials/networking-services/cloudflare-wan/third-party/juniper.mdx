@@ -14,9 +14,9 @@ The configuration settings in this document are based on JUNOS 23.4R2.13.
 
 ## Prerequisites
 
-Confirm that you have two Cloudflare anycast IPs allocated to your account. You will establish IPsec tunnels to the two anycast IPs irrespective of the location of your Juniper SRX devices (from now on referred to as endpoint) — traffic will be naturally attracted to the closest Cloudflare colocation facility via BGP anycast.
+Confirm that you have two Cloudflare anycast IPs allocated to your account, available in the Cloudflare dashboard under **Address Space** > [**Leased IPs**](https://dash.cloudflare.com/?to=/:account/ip-addresses/address-space). You will establish IPsec tunnels to the two anycast IPs irrespective of the location of your Juniper SRX devices (from now on referred to as endpoint) — traffic will be naturally attracted to the closest Cloudflare colocation facility via BGP anycast.
 
-Cloudflare recommends that customers configure two IPsec tunnels (one to each of the two anycast IPs allocated to you Cloudflare account) per Internet service provider per endpoint. This provides tunnel redundancy.
+Cloudflare recommends that customers configure two IPsec tunnels (one to each of the two anycast IPs allocated to your Cloudflare account) per Internet service provider per endpoint. This provides tunnel redundancy.
 
 Equal-cost multi-path routing (ECMP) ensures traffic is load-balanced across the tunnels, and you can control traffic steering across the tunnels through route prioritization.
 

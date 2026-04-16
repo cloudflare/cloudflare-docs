@@ -1,0 +1,150 @@
+{
+	"model_id": "openai/gpt-4o-transcribe",
+	"provider_id": "openai",
+	"name": "GPT-4o Transcribe",
+	"description": "A speech-to-text model that uses GPT-4o to transcribe audio with improved word error rate and better language recognition compared to original Whisper models.",
+	"task": "Automatic Speech Recognition",
+	"tags": [
+		"Speech-to-Text",
+		"Transcription",
+		"Multilingual"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {},
+	"examples": [
+		{
+			"name": "Basic Transcription",
+			"description": "Transcribe an audio file with default settings",
+			"input": {
+				"file": "https://cdn.openai.com/API/docs/audio/alloy.wav"
+			},
+			"output": {
+				"text": "The sun rises in the east and sets in the west. This simple fact has been observed by humans for thousands of years."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const resp = await fetch('https://cdn.openai.com/API/docs/audio/alloy.wav')\nconst buffer = await resp.arrayBuffer();\nconst bytes = new Uint8Array(buffer);\nlet binary = '';\nfor (let i = 0; i < bytes.length; i++) {\n  binary += String.fromCharCode(bytes[i]);\n}\nconst encoded = btoa(binary);\nconst response = await env.AI.run(\n  'openai/gpt-4o-transcribe',\n  {\n    file: `data:audio/wav;base64,${encoded}`,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "With Language Hint",
+			"description": "Transcribe with a language hint for better accuracy",
+			"input": {
+				"file": "https://cdn.openai.com/API/docs/audio/shimmer.wav",
+				"language": "en"
+			},
+			"output": {
+				"text": "The beach was a popular spot on a hot summer day. People were swimming in the ocean, building sandcastles, and playing beach volleyball."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const resp = await fetch('https://cdn.openai.com/API/docs/audio/shimmer.wav')\nconst buffer = await resp.arrayBuffer();\nconst bytes = new Uint8Array(buffer);\nlet binary = '';\nfor (let i = 0; i < bytes.length; i++) {\n  binary += String.fromCharCode(bytes[i]);\n}\nconst encoded = btoa(binary);\nconst response = await env.AI.run(\n  'openai/gpt-4o-transcribe',\n  {\n    file: `data:audio/wav;base64,${encoded}`,\n    language: 'en',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Guided Transcription",
+			"description": "Use a prompt to guide transcription style and context",
+			"input": {
+				"file": "https://cdn.openai.com/API/docs/audio/fable.wav",
+				"language": "en",
+				"prompt": "This is a technical discussion about Kubernetes and cloud-native architecture."
+			},
+			"output": {
+				"text": "The library is a quiet and peaceful place where people go to read, study, and learn. The shelves are filled with books on every subject imaginable."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const resp = await fetch('https://cdn.openai.com/API/docs/audio/fable.wav')\nconst buffer = await resp.arrayBuffer();\nconst bytes = new Uint8Array(buffer);\nlet binary = '';\nfor (let i = 0; i < bytes.length; i++) {\n  binary += String.fromCharCode(bytes[i]);\n}\nconst encoded = btoa(binary);\nconst response = await env.AI.run(\n  'openai/gpt-4o-transcribe',\n  {\n    file: `data:audio/wav;base64,${encoded}`,\n    language: 'en',\n    prompt:\n      'This is a technical discussion about Kubernetes and cloud-native architecture.',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "High Temperature",
+			"description": "Higher temperature for more varied transcription",
+			"input": {
+				"file": "https://cdn.openai.com/API/docs/audio/echo.wav",
+				"temperature": 0.5
+			},
+			"output": {
+				"text": "In the heart of the city, there is a large park where people go to relax and enjoy nature. The park has a beautiful pond with ducks and swans."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const resp = await fetch('https://cdn.openai.com/API/docs/audio/echo.wav')\nconst buffer = await resp.arrayBuffer();\nconst bytes = new Uint8Array(buffer);\nlet binary = '';\nfor (let i = 0; i < bytes.length; i++) {\n  binary += String.fromCharCode(bytes[i]);\n}\nconst encoded = btoa(binary);\nconst response = await env.AI.run(\n  'openai/gpt-4o-transcribe',\n  {\n    file: `data:audio/wav;base64,${encoded}`,\n    temperature: 0.5,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://openai.com/",
+	"terms": "https://openai.com/policies/",
+	"cover_image_url": "https://tjzk.replicate.delivery/models_models_featured_image/b1aa75b9-0353-401e-a38f-5e129bee9658/4o-transcribe.webp",
+	"metadata": {
+		"Context Window": "16,000 tokens",
+		"Max Output": "2,000 tokens",
+		"Knowledge Cutoff": "Jun 01, 2024"
+	},
+	"created_at": "2026-04-13 16:45:23",
+	"default_example": null,
+	"code_snippets": [],
+	"schema": {
+		"model_id": "openai/gpt-4o-transcribe",
+		"version": "1.0.0",
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"file": {
+					"description": "The audio file as a data URI (data:audio/...;base64,...). Supported formats: flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm.",
+					"type": "string"
+				},
+				"language": {
+					"description": "The language of the input audio. Supplying the input language in ISO-639-1 format will improve accuracy and latency.",
+					"type": "string"
+				},
+				"prompt": {
+					"description": "An optional text to guide the model's style or continue a previous audio segment. The prompt should match the audio language.",
+					"type": "string"
+				},
+				"temperature": {
+					"description": "The sampling temperature, between 0 and 1. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.",
+					"default": 0,
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				}
+			},
+			"required": [
+				"file",
+				"temperature"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"text": {
+					"description": "The transcribed text.",
+					"type": "string"
+				}
+			},
+			"required": [
+				"text"
+			],
+			"additionalProperties": false
+		}
+	}
+}

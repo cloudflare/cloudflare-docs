@@ -1,0 +1,168 @@
+{
+	"model_id": "openai/tts-1-hd",
+	"provider_id": "openai",
+	"name": "TTS-1 HD",
+	"description": "OpenAI's high-definition text-to-speech model producing higher quality audio output.",
+	"task": "Text-to-Speech",
+	"tags": [
+		"TTS",
+		"Speech Synthesis",
+		"High Quality"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {},
+	"examples": [
+		{
+			"name": "Simple Speech",
+			"description": "Generate high-definition speech with default settings",
+			"input": {
+				"text": "Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do."
+			},
+			"output": {
+				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/openai-tts-1-hd/simple-speech.mp3"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/tts-1-hd',\n  {\n    text: 'Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do.',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Storytelling",
+			"description": "HD narration with the Fable voice",
+			"input": {
+				"text": "Once upon a time, in a kingdom beyond the clouds, there lived a young inventor who dreamed of building machines that could think.",
+				"voice": "fable",
+				"speed": 0.9
+			},
+			"output": {
+				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/openai-tts-1-hd/storytelling.mp3"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/tts-1-hd',\n  {\n    text: 'Once upon a time, in a kingdom beyond the clouds, there lived a young inventor who dreamed of building machines that could think.',\n    voice: 'fable',\n    speed: 0.9,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Podcast Style",
+			"description": "Conversational podcast narration",
+			"input": {
+				"text": "So here's the thing about large language models — they're not actually thinking. They're predicting the next token based on patterns in their training data. But the results can be surprisingly coherent.",
+				"voice": "echo"
+			},
+			"output": {
+				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/openai-tts-1-hd/podcast-style.mp3"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/tts-1-hd',\n  {\n    text: \"So here's the thing about large language models — they're not actually thinking. They're predicting the next token based on patterns in their training data. But the results can be surprisingly coherent.\",\n    voice: 'echo',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Shimmer Voice",
+			"description": "Bright and expressive voice",
+			"input": {
+				"text": "Breaking news: scientists have discovered a new species of deep-sea fish that produces its own light using bioluminescence.",
+				"voice": "shimmer"
+			},
+			"output": {
+				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/openai-tts-1-hd/shimmer-voice.mp3"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/tts-1-hd',\n  {\n    text: 'Breaking news: scientists have discovered a new species of deep-sea fish that produces its own light using bioluminescence.',\n    voice: 'shimmer',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://platform.openai.com/docs/guides/text-to-speech",
+	"terms": "https://openai.com/policies/",
+	"cover_image_url": "https://replicate.delivery/xezq/1DGqzN0pZE7fKKrcUrcfXXdhUvwHLadYEm1seL3BxcANeyqZB/tmp57lzzngv.jpeg",
+	"metadata": {
+		"Voices": "alloy, echo, fable, onyx, nova, shimmer"
+	},
+	"created_at": "2026-04-13 16:45:25",
+	"default_example": null,
+	"code_snippets": [],
+	"schema": {
+		"model_id": "openai/tts-1-hd",
+		"version": "1.0.0",
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"text": {
+					"description": "The text to generate audio for. Maximum length is 4096 characters.",
+					"type": "string",
+					"maxLength": 4096
+				},
+				"voice": {
+					"description": "The voice to use when generating the audio. Defaults to alloy.",
+					"default": "alloy",
+					"type": "string",
+					"enum": [
+						"alloy",
+						"echo",
+						"fable",
+						"onyx",
+						"nova",
+						"shimmer"
+					]
+				},
+				"response_format": {
+					"description": "The output format for the audio. Supported formats are mp3, opus, wav, aac and flac.",
+					"default": "mp3",
+					"type": "string",
+					"enum": [
+						"mp3",
+						"opus",
+						"wav",
+						"aac",
+						"flac"
+					]
+				},
+				"speed": {
+					"description": "The speed of the generated audio. Select a value from 0.25 to 4.0. 1.0 is the default.",
+					"default": 1,
+					"type": "number",
+					"minimum": 0.25,
+					"maximum": 4
+				}
+			},
+			"required": [
+				"text",
+				"voice",
+				"response_format",
+				"speed"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"audio": {
+					"description": "URL to the generated audio file",
+					"type": "string"
+				}
+			},
+			"required": [
+				"audio"
+			],
+			"additionalProperties": false
+		}
+	}
+}

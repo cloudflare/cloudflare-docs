@@ -1,0 +1,190 @@
+{
+	"model_id": "minimax/hailuo-2.3",
+	"provider_id": "minimax",
+	"name": "Hailuo 2.3",
+	"description": "A high-fidelity video generation model optimized for realistic human motion, cinematic VFX, expressive characters, and strong prompt and style adherence across text-to-video and image-to-video workflows.",
+	"task": "Text-to-Video",
+	"tags": [
+		"Video Generation",
+		"Cinematic",
+		"Image-to-Video"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {},
+	"examples": [
+		{
+			"name": "Simple Video",
+			"description": "Basic text-to-video with default settings",
+			"input": {
+				"prompt": "A golden retriever playing fetch on a sandy beach at sunset",
+				"duration": 6,
+				"resolution": "768P"
+			},
+			"output": {
+				"video": "https://replicate.delivery/xezq/5vfUPx0OSvTVdCEs35GiKnCAZGrHCs9vXmUWRYvRH1vYc5MLA/tmpr30r9rfv.mp4"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    prompt: 'A golden retriever playing fetch on a sandy beach at sunset',\n    duration: 6,\n    resolution: '768P',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "High Resolution",
+			"description": "1080P video for higher quality output",
+			"input": {
+				"prompt": "A professional chef preparing sushi in a traditional Japanese kitchen, detailed close-up shots",
+				"duration": 6,
+				"resolution": "1080P",
+				"prompt_optimizer": true
+			},
+			"output": {
+				"video": "https://replicate.delivery/xezq/Q7fkGSQHJsw1Qqe7MixDPsA9v24WT0e5eTQkjCCD4V8JdMnZB/tmp9uhjq3vp.mp4"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    prompt:\n      'A professional chef preparing sushi in a traditional Japanese kitchen, detailed close-up shots',\n    duration: 6,\n    resolution: '1080P',\n    prompt_optimizer: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Image to Video",
+			"description": "Animate a still image with I2V",
+			"input": {
+				"first_frame_image": "https://replicate.delivery/xezq/MQpUhqkESIIQDlWUxtNcsznZLfUTmhEbCV3vdAZGHGPwwaMLA/tmpgl4gvv5n.jpeg",
+				"prompt": "Slowly zoom in with subtle parallax movement, gentle atmospheric motion",
+				"duration": 6,
+				"resolution": "768P"
+			},
+			"output": {
+				"video": "https://replicate.delivery/xezq/Qg0LQ4sblmZ7ElAdCG5OVSzeUxMhN81vLuuwnScKDXnKd5MLA/tmppemgyhoq.mp4"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    first_frame_image:\n      'https://replicate.delivery/xezq/MQpUhqkESIIQDlWUxtNcsznZLfUTmhEbCV3vdAZGHGPwwaMLA/tmpgl4gvv5n.jpeg',\n    prompt:\n      'Slowly zoom in with subtle parallax movement, gentle atmospheric motion',\n    duration: 6,\n    resolution: '768P',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Fast Processing",
+			"description": "Enable fast pretreatment for quicker results",
+			"input": {
+				"prompt": "Fireworks exploding over a city skyline at night, colorful reflections on water",
+				"duration": 6,
+				"resolution": "768P",
+				"fast_pretreatment": true
+			},
+			"output": {
+				"video": "https://replicate.delivery/xezq/kFbe4aBxx1V1DCGgnqDT6DjSAmZ1wHZLeBNMdZ5PMpqi7yZWA/tmp_bg01gno.mp4"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    prompt:\n      'Fireworks exploding over a city skyline at night, colorful reflections on water',\n    duration: 6,\n    resolution: '768P',\n    fast_pretreatment: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://hailuoai.com/",
+	"terms": "https://hailuoai.com/terms",
+	"cover_image_url": "https://tjzk.replicate.delivery/models_models_featured_image/1c5d6ebb-8251-4f70-b3bb-dd64729d0858/hailuo-23-sm.mp4",
+	"metadata": {
+		"Resolutions": "540p, 720p, 1080p"
+	},
+	"created_at": "2026-04-13 16:46:33",
+	"default_example": null,
+	"code_snippets": [],
+	"schema": {
+		"model_id": "minimax/hailuo-2.3",
+		"version": "1.0.0",
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string",
+					"maxLength": 2000
+				},
+				"first_frame_image": {
+					"type": "string"
+				},
+				"prompt_optimizer": {
+					"default": true,
+					"type": "boolean"
+				},
+				"fast_pretreatment": {
+					"default": false,
+					"type": "boolean"
+				},
+				"duration": {
+					"default": 6,
+					"anyOf": [
+						{
+							"type": "number",
+							"const": 6
+						},
+						{
+							"type": "number",
+							"const": 10
+						}
+					]
+				},
+				"resolution": {
+					"default": "768P",
+					"type": "string",
+					"enum": [
+						"768P",
+						"1080P"
+					]
+				},
+				"callback_url": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"prompt_optimizer",
+				"fast_pretreatment",
+				"duration",
+				"resolution"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"video": {
+					"type": "string",
+					"format": "uri"
+				},
+				"task_id": {
+					"type": "string"
+				},
+				"status": {
+					"type": "string",
+					"enum": [
+						"Preparing",
+						"Queueing",
+						"Processing",
+						"Success",
+						"Fail"
+					]
+				}
+			},
+			"required": [
+				"task_id"
+			],
+			"additionalProperties": false
+		}
+	}
+}

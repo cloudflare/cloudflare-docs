@@ -1,0 +1,354 @@
+{
+	"model_id": "google/gemini-3.1-flash-lite",
+	"provider_id": "google",
+	"name": "Gemini 3.1 Flash Lite",
+	"description": "Google's lightest and most cost-efficient Gemini model for high-throughput tasks.",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Fast",
+		"Cost-Efficient",
+		"Multimodal"
+	],
+	"context_length": 1000000,
+	"max_output_tokens": 8192,
+	"schema_version": "1.0.0",
+	"pricing": {},
+	"examples": [
+		{
+			"name": "Simple Question",
+			"description": "Basic generateContent request",
+			"input": {
+				"contents": [
+					{
+						"role": "user",
+						"parts": [
+							{
+								"text": "What are the three laws of thermodynamics?"
+							}
+						]
+					}
+				]
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-3.1-flash-lite',\n  {\n    contents: [\n      {\n        role: 'user',\n        parts: [\n          {\n            text: 'What are the three laws of thermodynamics?',\n          },\n        ],\n      },\n    ],\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "With System Instruction",
+			"description": "Using a system instruction to set context",
+			"input": {
+				"systemInstruction": {
+					"parts": [
+						{
+							"text": "You are a helpful coding assistant specializing in Python."
+						}
+					]
+				},
+				"contents": [
+					{
+						"role": "user",
+						"parts": [
+							{
+								"text": "How do I read a JSON file in Python?"
+							}
+						]
+					}
+				],
+				"generationConfig": {
+					"temperature": 0.3
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-3.1-flash-lite',\n  {\n    systemInstruction: {\n      parts: [\n        {\n          text: 'You are a helpful coding assistant specializing in Python.',\n        },\n      ],\n    },\n    contents: [\n      {\n        role: 'user',\n        parts: [\n          {\n            text: 'How do I read a JSON file in Python?',\n          },\n        ],\n      },\n    ],\n    generationConfig: {\n      temperature: 0.3,\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Multi-turn Conversation",
+			"description": "Continuing a conversation with context",
+			"input": {
+				"contents": [
+					{
+						"role": "user",
+						"parts": [
+							{
+								"text": "I need help planning a road trip from San Francisco to Los Angeles."
+							}
+						]
+					},
+					{
+						"role": "model",
+						"parts": [
+							{
+								"text": "I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?"
+							}
+						]
+					},
+					{
+						"role": "user",
+						"parts": [
+							{
+								"text": "Yes, what are some good places to stop?"
+							}
+						]
+					}
+				]
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-3.1-flash-lite',\n  {\n    contents: [\n      {\n        role: 'user',\n        parts: [\n          {\n            text: 'I need help planning a road trip from San Francisco to Los Angeles.',\n          },\n        ],\n      },\n      {\n        role: 'model',\n        parts: [\n          {\n            text: \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n          },\n        ],\n      },\n      {\n        role: 'user',\n        parts: [\n          {\n            text: 'Yes, what are some good places to stop?',\n          },\n        ],\n      },\n    ],\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Creative Writing",
+			"description": "Higher temperature for creative output",
+			"input": {
+				"contents": [
+					{
+						"role": "user",
+						"parts": [
+							{
+								"text": "Write a short story opening about a detective finding an unusual clue."
+							}
+						]
+					}
+				],
+				"generationConfig": {
+					"temperature": 0.8,
+					"maxOutputTokens": 300
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-3.1-flash-lite',\n  {\n    contents: [\n      {\n        role: 'user',\n        parts: [\n          {\n            text: 'Write a short story opening about a detective finding an unusual clue.',\n          },\n        ],\n      },\n    ],\n    generationConfig: {\n      temperature: 0.8,\n      maxOutputTokens: 300,\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://deepmind.google/technologies/gemini/",
+	"terms": "https://ai.google.dev/gemini-api/terms",
+	"cover_image_url": "https://replicate.delivery/xezq/0eTvjvx0PhVoIaslnszKL5MPNGfu27HuPlsWHk8aWloTvsaWA/tmp7qu1pn34.jpeg",
+	"metadata": {
+		"Architecture": "Transformer (multimodal)"
+	},
+	"created_at": "2026-04-13 16:46:30",
+	"default_example": null,
+	"code_snippets": [],
+	"schema": {
+		"model_id": "google/gemini-3.1-flash-lite",
+		"version": "1.0.0",
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"contents": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"role": {
+								"type": "string",
+								"enum": [
+									"user",
+									"model"
+								]
+							},
+							"parts": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"text": {
+											"type": "string"
+										}
+									},
+									"additionalProperties": {}
+								}
+							}
+						},
+						"required": [
+							"parts"
+						],
+						"additionalProperties": {}
+					}
+				},
+				"systemInstruction": {
+					"type": "object",
+					"properties": {
+						"parts": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"text": {
+										"type": "string"
+									}
+								},
+								"additionalProperties": {}
+							}
+						}
+					},
+					"required": [
+						"parts"
+					],
+					"additionalProperties": {}
+				},
+				"generationConfig": {
+					"type": "object",
+					"properties": {
+						"temperature": {
+							"type": "number"
+						},
+						"topP": {
+							"type": "number"
+						},
+						"topK": {
+							"type": "number"
+						},
+						"maxOutputTokens": {
+							"type": "number"
+						},
+						"candidateCount": {
+							"type": "number"
+						},
+						"stopSequences": {
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						},
+						"responseMimeType": {
+							"type": "string"
+						}
+					},
+					"additionalProperties": {}
+				},
+				"safetySettings": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"category": {
+								"type": "string"
+							},
+							"threshold": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"category",
+							"threshold"
+						],
+						"additionalProperties": {}
+					}
+				},
+				"tools": {
+					"type": "array",
+					"items": {}
+				},
+				"toolConfig": {}
+			},
+			"required": [
+				"contents"
+			],
+			"additionalProperties": {}
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"candidates": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"content": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string"
+									},
+									"parts": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"text": {
+													"type": "string"
+												}
+											},
+											"additionalProperties": {}
+										}
+									}
+								},
+								"required": [
+									"parts"
+								],
+								"additionalProperties": {}
+							},
+							"finishReason": {
+								"type": "string"
+							},
+							"safetyRatings": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"category": {
+											"type": "string"
+										},
+										"probability": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"category",
+										"probability"
+									],
+									"additionalProperties": {}
+								}
+							}
+						},
+						"required": [
+							"content"
+						],
+						"additionalProperties": {}
+					}
+				},
+				"usageMetadata": {
+					"type": "object",
+					"properties": {
+						"promptTokenCount": {
+							"type": "number"
+						},
+						"candidatesTokenCount": {
+							"type": "number"
+						},
+						"totalTokenCount": {
+							"type": "number"
+						}
+					},
+					"additionalProperties": {}
+				},
+				"modelVersion": {
+					"type": "string"
+				}
+			},
+			"additionalProperties": {}
+		}
+	}
+}

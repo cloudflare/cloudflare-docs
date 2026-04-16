@@ -1,0 +1,51 @@
+---
+pcx_content_type: reference
+title: Automatic request headers
+sidebar:
+  order: 2
+---
+
+Cloudflare automatically attaches headers to every request made through Browser Run. These headers make it easy for destination servers to identify that these requests came from Cloudflare.
+
+## User-Agent
+
+The default User-Agent depends on how you access Browser Run:
+
+| Method                                                                                                  | Default User-Agent                                                                                                | Customizable                                |
+| ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
+| [Quick Actions](/browser-run/quick-actions/)                                                            | `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36` | Yes, using the `userAgent` parameter        |
+| [Crawl endpoint](/browser-run/quick-actions/crawl-endpoint/)                                            | `CloudflareBrowserRenderingCrawler/1.0`                                                                           | No                                          |
+| [CDP](/browser-run/cdp/) ([Puppeteer](/browser-run/puppeteer/), [Playwright](/browser-run/playwright/)) | The default User-Agent of the underlying Chrome version                                                           | Yes, via Puppeteer/Playwright configuration |
+
+:::note
+Because the User-Agent is configurable for most methods and the Chrome version may change as Browser Run updates its underlying browser engine, destination servers should use the non-configurable headers below to identify Browser Run requests rather than relying on the User-Agent string.
+:::
+
+## Non-configurable headers
+
+:::note
+The following headers are meant to ensure transparency and cannot be removed or overridden (with `setExtraHTTPHeaders`, for example).
+:::
+
+| Header                            | Description                                                                                                                                                             |
+| --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `cf-brapi-request-id`             | A unique identifier for the Browser Run request when using [Quick Actions](/browser-run/quick-actions/)                                                                 |
+| `cf-brapi-devtools`               | A unique identifier for the Browser Run request when using [Puppeteer](/browser-run/puppeteer/), [Playwright](/browser-run/playwright/), or [CDP](/browser-run/cdp/)    |
+| `cf-biso-devtools`                | A flag indicating the request originated from Cloudflare's rendering infrastructure                                                                                     |
+| `Signature-agent`                 | [The location of the bot public keys](https://web-bot-auth.cloudflare-browser-rendering-085.workers.dev), used to sign the request and verify it came from Cloudflare   |
+| `Signature` and `Signature-input` | A digital signature, used to validate requests, as shown in [this architecture document](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture) |
+
+### About Web Bot Auth
+
+The `Signature` headers use an authentication method called [Web Bot Auth](/bots/reference/bot-verification/web-bot-auth/). Web Bot Auth leverages cryptographic signatures in HTTP messages to verify that a request comes from an automated bot. To verify a request originated from Cloudflare Browser Run, use the keys found on [this directory](https://web-bot-auth.cloudflare-browser-rendering-085.workers.dev/.well-known/http-message-signatures-directory) to verify the `Signature` and `Signature-Input` found in the headers from the incoming request. A successful verification proves that the request originated from Cloudflare Browser Run and has not been tampered with in transit.
+
+### Bot detection
+
+Browser Run uses different bot detection IDs depending on the method. [Quick Actions](/browser-run/quick-actions/) (excluding the [crawl endpoint](/browser-run/quick-actions/crawl-endpoint/)), [Puppeteer](/browser-run/puppeteer/), [Playwright](/browser-run/playwright/), and [CDP](/browser-run/cdp/) share one ID, while the crawl endpoint has its own.
+
+| Method                                                                                                                                               | Bot detection ID |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- |
+| [Quick Actions](/browser-run/quick-actions/), [Puppeteer](/browser-run/puppeteer/), [Playwright](/browser-run/playwright/), [CDP](/browser-run/cdp/) | `119853733`      |
+| [Crawl endpoint](/browser-run/quick-actions/crawl-endpoint/)                                                                                         | `128292352`      |
+
+If you are attempting to scan your own zone and want Browser Run to access your website freely without your bot protection configuration interfering, you can create a WAF skip rule to [allowlist Browser Run](/browser-run/faq/#can-i-allowlist-browser-run-on-my-own-website).

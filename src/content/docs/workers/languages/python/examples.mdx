@@ -213,20 +213,20 @@ from workers import WorkflowEntrypoint
 
 class MyWorkflow(WorkflowEntrypoint):
     async def run(self, event, step):
-        @step.do("dependency a")
+        @step.do()
         async def step_a():
             # do some work
             return 10
 
-        @step.do("dependency b")
+        @step.do()
         async def step_b():
             # do some work
             return 20
 
-        @step.do("my final step", depends=[step_a, step_b], concurrent=True)
-        async def my_final_step(result_a=0, result_b=0):
+        @step.do(concurrent=True)
+        async def my_final_step(step_a, step_b):
             # should return 30
-            return result_a + result_b
+            return step_a + step_b
 
         await my_final_step()
 ```

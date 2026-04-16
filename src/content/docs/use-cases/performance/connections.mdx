@@ -1,0 +1,36 @@
+---
+pcx_content_type: how-to
+title: Accelerate connections
+description: Reduce latency with Argo Smart Routing, HTTP/3, and Early Hints asset preloading.
+sidebar:
+  order: 3
+---
+
+Network congestion and suboptimal routing between your origin and visitors add latency. Cloudflare Argo Smart Routing uses real-time network telemetry to route requests through the fastest paths, while Early Hints preloads assets before the full HTML response arrives.
+
+## Solutions
+
+### Argo Smart Routing
+
+Route traffic through the fastest paths across Cloudflare's network. [Learn more about Argo Smart Routing](/argo-smart-routing/).
+
+- **Smart routing** - Automatically route requests through uncongested network paths, reducing latency between edge and origin
+- **Optimized paths** - Real-time network telemetry selects the fastest available route for each request
+
+### Speed
+
+Improve the performance of your website or web application. [Learn more about Speed](/speed/).
+
+- **Faster handshakes** - Assess the performance of your website and gain recommendations on how to optimize your website
+
+### Early Hints
+
+Preload assets before the HTML response arrives. [Learn more about Early Hints](/speed/optimization/content/early-hints/).
+
+- **Asset preloading** - Send `103 Early Hints` responses so browsers start fetching assets before the full HTML arrives
+
+## Get started
+
+1. [Enable Argo Smart Routing](/argo-smart-routing/get-started/)
+2. [Enable HTTP/3](/speed/optimization/protocol/http3/)
+3. [Enable Early Hints](/speed/optimization/content/early-hints/)

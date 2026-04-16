@@ -1,0 +1,92 @@
+---
+pcx_content_type: tutorial
+title: DNS persistence
+sidebar:
+  order: 15
+---
+
+This guide explains how to achieve DNS persistence when using Cloudflare Load Balancing, similar to functionality provided by traditional DNS-based load balancers.
+
+DNS persistence ensures that subsequent DNS requests from the same local DNS server receive the same IP address. This is useful for applications that require session consistency, such as VPN connections or authentication systems.
+
+Cloudflare Load Balancing can achieve DNS persistence using different configuration approaches for DNS-only load balancing.
+
+---
+
+## DNS-only load balancing persistence
+
+For DNS-only load balancing, Cloudflare offers three methods to achieve DNS persistence:
+
+### Method 1: Geo-steering based on PoP location (Recommended)
+
+This method uses geographic steering based on the Cloudflare Point of Presence (PoP) that receives the DNS request.
+
+#### Configuration steps
+
+1. Create a pool for each endpoint. Do not apply load shedding to either pool.
+2. Create a DNS-only load balancer and add both pools. Ensure `pool_1` is ordered before `pool_2`.
+3. Under **Traffic Steering**, select **Geo Steering**.
+4. Create a geo-steering rule for a region (for example, **Eastern North America**) and select the same pools but in reverse order (`pool_2` first, then `pool_1`).
+5. Use **Never prefer ECS** and **PoP location** to determine the source of the request.
+
+#### How it works
+
+All requests received at Cloudflare PoPs in the specified region are sent to one endpoint, while requests from other regions are sent to the other endpoint.
+
+#### Why this is recommended
+
+Using the Cloudflare PoP that received the request as criteria for steering is more stable than IP hashing or splitting IP space, as it is not affected by recursive DNS providers using different egress IPs.
+
+### Method 2: Load shedding with IP hash
+
+This method uses load shedding to distribute traffic based on the source IP address of the recursive DNS resolver.
+
+#### Configuration steps
+
+1. Create a pool for each endpoint (for example, `pool_1` with `endpoint_1` and `pool_2` with `endpoint_2`).
+2. On the first pool, select **Hash** under **Endpoint Steering**.
+3. Configure **Load Shedding**:
+   - **Policy**: IP Hash
+   - **Shed %**: 50% (to split traffic evenly between two pools)
+4. Create a DNS-only load balancer and add both pools. Ensure `pool_1` is ordered before `pool_2`.
+5. Do not configure additional traffic steering or rules.
+
+#### How it works
+
+This configuration sheds half of the requests to the second pool using an IP hash and respects session affinity per source IP of the recursive resolver.
+
+#### Limitations
+
+Some recursive DNS providers (like Google DNS 8.8.8.8 or Quad9 9.9.9.9) may use different egress IPs randomly, which can reduce persistence stability.
+
+### Method 3: Custom rules with IP source filtering
+
+This method uses custom rules to split traffic based on IP address ranges.
+
+#### Configuration steps
+
+1. Create a pool for each endpoint. Do not apply load shedding to either pool.
+2. Create a DNS-only load balancer and add both pools. Ensure `pool_1` is ordered before `pool_2`.
+3. Do not configure traffic steering.
+4. Create a **Custom Rule** with:
+   - **Field**: IP Source Address
+   - **Operator**: is in
+   - **Value**: A subset of IP space (for example, `0.0.0.0/1` for the lower half of IPv4 space)
+5. For the rule action, choose **Override** > **Endpoints** and set the pools in reverse order (`pool_2`, `pool_1`).
+
+#### How it works
+
+Traffic with source IPs in the lower half of IPv4 space is sent to one endpoint, while traffic in the upper half is sent to the other endpoint.
+
+#### Limitations
+
+Similar to Method 2, this approach may be less stable with recursive DNS providers that use varying egress IPs.
+
+---
+
+## Related resources
+
+- [Session Affinity](/load-balancing/understand-basics/session-affinity/)
+- [Load Shedding](/load-balancing/additional-options/load-shedding/)
+- [Geo Steering](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/)
+- [Custom Rules](/load-balancing/additional-options/load-balancing-rules/)

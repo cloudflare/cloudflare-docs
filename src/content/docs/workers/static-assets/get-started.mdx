@@ -59,7 +59,7 @@ cd my-static-site
 
 ### 2. Develop locally
 
-After you have created your Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) in the project directory to start a local server. This will allow you to preview your project locally during development.
+After you have created your Worker, run the [`wrangler dev`](/workers/wrangler/commands/general/#dev) in the project directory to start a local server. This will allow you to preview your project locally during development.
 
 ```sh
 npx wrangler dev
@@ -69,7 +69,7 @@ npx wrangler dev
 
 Your project can be deployed to a `*.workers.dev` subdomain or a [Custom Domain](/workers/configuration/routing/custom-domains/), from your own machine or from any CI/CD system, including [Cloudflare's own](/workers/ci-cd/builds/).
 
-The [`wrangler deploy`](/workers/wrangler/commands/#deploy) will build and deploy your project. If you're using CI, ensure you update your ["deploy command"](/workers/ci-cd/builds/configuration/#build-settings) configuration appropriately.
+The [`wrangler deploy`](/workers/wrangler/commands/general/#deploy) will build and deploy your project. If you're using CI, ensure you update your ["deploy command"](/workers/ci-cd/builds/configuration/#build-settings) configuration appropriately.
 
 ```sh
 npx wrangler deploy
@@ -117,7 +117,7 @@ cd my-dynamic-site
 
 ### 2. Develop locally
 
-After you have created your Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) in the project directory to start a local server. This will allow you to preview your project locally during development.
+After you have created your Worker, run the [`wrangler dev`](/workers/wrangler/commands/general/#dev) in the project directory to start a local server. This will allow you to preview your project locally during development.
 
 ```sh
 npx wrangler dev
@@ -136,7 +136,7 @@ Then, save the files and reload the page. Your project's output will have change
 
 Your project can be deployed to a `*.workers.dev` subdomain or a [Custom Domain](/workers/configuration/routing/custom-domains/), from your own machine or from any CI/CD system, including [Cloudflare's own](/workers/ci-cd/builds/).
 
-The [`wrangler deploy`](/workers/wrangler/commands/#deploy) will build and deploy your project. If you're using CI, ensure you update your ["deploy command"](/workers/ci-cd/builds/configuration/#build-settings) configuration appropriately.
+The [`wrangler deploy`](/workers/wrangler/commands/general/#deploy) will build and deploy your project. If you're using CI, ensure you update your ["deploy command"](/workers/ci-cd/builds/configuration/#build-settings) configuration appropriately.
 
 ```sh
 npx wrangler deploy

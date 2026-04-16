@@ -96,6 +96,10 @@ If you have a DNS-only domain, you will have to do a [manual setup](/web-analyti
 
 <Render file="web-analytics-troubleshooting" product="web-analytics" />
 
+### Can I use Real User Monitoring (RUM) with Cloudflare Workers?
+
+Cloudflare's Real User Monitoring (RUM) operates exclusively on the initial client request and cannot collect metrics from Worker subrequests. This is a fundamental architectural limitation designed to ensure accurate performance measurements and prevent duplicate or misleading analytics data.
+
 ---
 
 ## Functionality

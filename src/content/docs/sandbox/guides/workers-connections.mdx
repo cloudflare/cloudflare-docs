@@ -1,0 +1,78 @@
+---
+title: Connect to Workers bindings
+pcx_content_type: how-to
+sidebar:
+  order: 17
+description: Access KV, R2, Durable Objects, and other bindings from a sandbox.
+---
+
+import { TypeScriptExample } from "~/components";
+
+Sandboxes can access [Workers bindings](/workers/runtime-apis/bindings/) — KV, R2, D1, Durable Objects, and others — through [outbound handlers](/sandbox/guides/outbound-traffic/#define-outbound-handlers). An outbound handler intercepts HTTP requests from the sandbox and runs inside the Workers runtime, where all of your configured bindings are available.
+
+The sandbox makes a plain HTTP request to a virtual hostname (for example, `http://my.kv/some-key`), and the outbound handler resolves it using the bound resource. No SDK or client library is required inside the sandbox.
+
+## Use bindings in outbound handlers
+
+Define an `outboundByHost` handler for each virtual hostname. The `env` argument gives you access to every binding declared in your Wrangler configuration.
+
+<TypeScriptExample>
+
+```ts
+export class MySandbox extends Sandbox {}
+
+MySandbox.outboundByHost = {
+	"my.kv": async (request: Request, env: Env, ctx: OutboundHandlerContext) => {
+		const url = new URL(request.url);
+		const key = url.pathname.slice(1);
+		const value = await env.KV.get(key);
+		return new Response(value ?? "", { status: value ? 200 : 404 });
+	},
+	"my.r2": async (request: Request, env: Env, ctx: OutboundHandlerContext) => {
+		const url = new URL(request.url);
+		// Scope access to this sandbox's ID
+		const path = `${ctx.containerId}${url.pathname}`;
+		const object = await env.R2.get(path);
+		return new Response(object?.body ?? null, { status: object ? 200 : 404 });
+	},
+};
+```
+
+</TypeScriptExample>
+
+The sandbox calls `http://my.kv/some-key` and the handler resolves it using the KV binding. A call to `http://my.r2/file.png` reads from R2, scoped to the current sandbox instance.
+
+:::note
+You can use `ctx.containerId` to apply different rules per sandbox instance — for example, to look up per-instance configuration from KV.
+:::
+
+## Access Durable Object state
+
+The `ctx` argument exposes `containerId`, which lets you interact with the sandbox's own Durable Object from an outbound handler.
+
+<TypeScriptExample>
+
+```ts
+export class MySandbox extends Sandbox {}
+
+MySandbox.outboundByHost = {
+	"get-state.do": async (
+		request: Request,
+		env: Env,
+		ctx: { containerId: string },
+	) => {
+		const id = env.MY_SANDBOX.idFromString(ctx.containerId);
+		const stub = env.MY_SANDBOX.get(id);
+		// Assumes getStateForKey is defined on your DO
+		return stub.getStateForKey(request.body);
+	},
+};
+```
+
+</TypeScriptExample>
+
+## Related resources
+
+- [Handle outbound traffic](/sandbox/guides/outbound-traffic/) — Block, allow, and intercept all outbound HTTP from a sandbox
+- [Sandbox options](/sandbox/configuration/sandbox-options/) — Configure sandbox behavior
+- [Environment variables](/sandbox/configuration/environment-variables/) — Configure secrets and environment variables

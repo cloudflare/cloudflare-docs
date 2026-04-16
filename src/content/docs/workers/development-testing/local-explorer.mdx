@@ -1,0 +1,67 @@
+---
+pcx_content_type: how-to
+title: Local Explorer
+sidebar:
+  order: 5
+head: []
+description: Browse and edit local binding data from your browser during development.
+---
+
+import { Details, PackageManagers, InlineBadge } from "~/components";
+
+Local Explorer is a browser-based interface for viewing and editing the data in your local [bindings](/workers/runtime-apis/bindings/) during development. It is available at `/cdn-cgi/explorer` on your local development server.
+
+Instead of running CLI commands or writing throwaway code to inspect local state, you can open Local Explorer in your browser and work with your data directly. This is useful when you want to seed test data, verify what your Worker wrote, debug a workflow run, or run ad-hoc SQL queries against a local [D1](/d1/) database.
+
+Local Explorer works with both [Wrangler](/workers/wrangler/) and the [Cloudflare Vite plugin](/workers/vite-plugin/).
+
+## Prerequisites
+
+- Wrangler 4.82.1 or later, or the latest [Cloudflare Vite plugin](/workers/vite-plugin/) (1.32.0+)
+
+## Open Local Explorer
+
+1. Start a local development session:
+
+<PackageManagers type="exec" pkg="wrangler" args="dev" />
+
+2. Press `e` in your terminal to open Local Explorer in your browser. You can also navigate directly to `/cdn-cgi/explorer` on your Worker's route and port.
+
+Local Explorer is available by default and detects the bindings defined in your [Wrangler configuration](/workers/wrangler/configuration/) automatically.
+
+## Supported bindings
+
+Local Explorer supports the following binding types:
+
+| Binding                                               | View                                           | Edit                                        |
+| ----------------------------------------------------- | ---------------------------------------------- | ------------------------------------------- |
+| [KV](/kv/)                                            | Browse keys, view values and metadata          | Create, update, and delete key-value pairs  |
+| [R2](/r2/)                                            | List objects, view metadata                    | Upload and delete objects                   |
+| [D1](/d1/)                                            | Browse tables and rows, run SQL queries        | Insert, update, and delete rows through SQL |
+| [Durable Objects](/durable-objects/) (SQLite storage) | Browse SQLite tables and rows, run SQL queries | Insert, update, and delete rows through SQL |
+| [Workflows](/workflows/)                              | List instances, view status and step history   | Trigger new runs, retry failed instances    |
+
+### D1 and Durable Objects SQL studio
+
+For [D1](/d1/) databases and [Durable Objects](/durable-objects/) that use the [SQLite storage API](/durable-objects/api/sqlite-storage-api/), Local Explorer includes a SQL studio. This is the same experience available in the Cloudflare dashboard for deployed D1 databases. It provides both a visual table browser with inline editing and a SQL query editor where you can run arbitrary queries.
+
+## API
+
+Local Explorer exposes an API at `/cdn-cgi/explorer/api` that provides programmatic access to the same operations available in the browser interface. The API serves an [OpenAPI specification](https://www.openapis.org/) that describes all available endpoints, parameters, and response formats.
+
+To retrieve the OpenAPI spec:
+
+```sh
+curl http://localhost:8787/cdn-cgi/explorer/api
+```
+
+### Use with AI coding agents
+
+The OpenAPI spec at `/cdn-cgi/explorer/api` allows AI coding agents and other tools to discover and interact with your local bindings programmatically. An agent can fetch the spec, understand what resources are available, and make API calls to read or modify local data without requiring manual setup.
+
+This can be useful as an alternative to the CLI when you want an agent to:
+
+- Populate test data in your local [KV](/kv/) namespaces or [D1](/d1/) databases
+- Inspect the state of a [Durable Object](/durable-objects/) during debugging
+- Trigger or retry a [Workflow](/workflows/) run with different input data
+- Upload test files to a local [R2](/r2/) bucket

@@ -127,7 +127,7 @@ Select **Save** to apply changes for the Profile.
 1. In the **IKE/IPsec Settings** tab, select:
    1. **IP Version**: _IPv4_
    2. **Primary VPN Gateway**
-      1. **Public IP**: Specify one of the two <a href={props.configureTunnelEndpointsUrl}>anycast IPs provided by Cloudflare</a>.
+      1. **Public IP**: Specify one of the two Cloudflare anycast IP addresses assigned to your account, available in [Leased IPs](https://dash.cloudflare.com/?to=/:account/ip-addresses/address-space).
 2. In **IKE Proposal**, expand **View advanced settings for IKE Proposal**:
    1. **Encryption**: _AES 256 CBC_
    2. **DH Group**: _14_
@@ -140,7 +140,7 @@ Select **Save** to apply changes for the Profile.
    3. **Hash**: _SHA 256_
    4. **IPsec SA Lifetime (min)**: **480**
 4. Scroll up **Secondary VPN Gateway**, and select **Add**.
-   1. **Public IP**: Specify the second of the two anycast IPs provided by Cloudflare
+   1. **Public IP**: Specify the second of the two Cloudflare anycast IP addresses
    2. **Keep Tunnel Active**: Enabled (this is read-only and cannot be modified)
    3. Tunnel settings are the same as the primary — therefore they are greyed out in this section.
 

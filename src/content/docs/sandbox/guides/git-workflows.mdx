@@ -51,6 +51,10 @@ await sandbox.gitCheckout(repoUrl);
 ```
 </TypeScriptExample>
 
+:::note[More secure alternative]
+Embedding a token in the URL passes the credential directly into the sandbox. For better access control, use a Worker proxy that validates a short-lived JWT and injects the real token at request time — the sandbox never holds the credential. Refer to [Proxy requests to external APIs](/sandbox/guides/proxy-requests/).
+:::
+
 ## Clone and build
 
 Clone a repository and run build steps:

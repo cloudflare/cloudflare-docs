@@ -22,13 +22,13 @@ params:
 
 import { AnchorHeading, APIRequest, CURL, DashButton, Details, GlossaryTooltip, Markdown, Render, TabItem, Tabs } from "~/components";
 
-Cloudflare recommends two tunnels for each ISP and network location router combination, one per Cloudflare endpoint. Shortly after your onboarding kickoff call, Cloudflare will assign two Cloudflare endpoint addresses that you can use as the tunnel destinations on your network location's routers/endpoints.
+Cloudflare recommends two tunnels for each ISP and network location router combination, one per Cloudflare endpoint. Cloudflare assigns two endpoint addresses to your account that you can use as the tunnel destinations on your network location's routers/endpoints. You can find these addresses in the Cloudflare dashboard under **Address Space** > [**Leased IPs**](https://dash.cloudflare.com/?to=/:account/ip-addresses/address-space).
 
 ## Before you begin
 
 Before creating a tunnel, make sure you have the following information:
 
-- **Cloudflare endpoint addresses**: Provided by Cloudflare after your onboarding kickoff call.{ props.magicWord === "Magic Transit" && (<> Refer to <a href="/magic-transit/cloudflare-ips/#check-your-cloudflare-ips">Check your Cloudflare IPs</a> for more information.</>)}
+- **Cloudflare endpoint addresses**: The anycast IP addresses assigned to your account. You can find them in the Cloudflare dashboard under **Address Space** > [**Leased IPs**](https://dash.cloudflare.com/?to=/:account/ip-addresses/address-space).
 - **Customer endpoint IP**: A public Internet routable IP address outside of the prefixes Cloudflare will advertise on your behalf (typically provided by your ISP). Not required if using [Cloudflare Network Interconnect](/network-interconnect/) or for <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels (unless your router uses an <GlossaryTooltip term="Internet key exchange (IKE)">IKE</GlossaryTooltip> ID of type `ID_IPV4_ADDR`).
 - **Interface address**: A `/31` (recommended) or `/30` subnet from RFC 1918 private IP space (`10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`) or `169.254.240.0/20`{props.ipRange}.
 
@@ -135,7 +135,7 @@ Expand the section below for your tunnel type to complete the configuration:
 <Details header="GRE tunnel">
 
 7. In **Customer GRE endpoint**, enter your router's public IP address. You do not need this value if you use a physical or virtual connection like Cloudflare Network Interconnect because Cloudflare provides it.
-8. In **Cloudflare GRE endpoint**, enter the anycast address you received from your account team.{ props.magicWord === "Magic Transit" && (<> Refer to <a href="/magic-transit/cloudflare-ips/#check-your-cloudflare-ips">Check your Cloudflare IPs</a> for more information.</>)}
+8. In **Cloudflare GRE endpoint**, enter one of the anycast addresses assigned to your account. You can find them in [Leased IPs](https://dash.cloudflare.com/?to=/:account/ip-addresses/address-space).
 9. _(Optional)_ Leave the default values for **TTL** and **MTU**, or customize them for your network.
 10. _(Optional)_ Configure health check settings. Expand the following to learn more about each option:
 
@@ -163,7 +163,7 @@ Expand the section below for your tunnel type to complete the configuration:
 <Details header="IPsec tunnel">
 
 7. _(Optional)_ In **Customer endpoint**, enter your router's public IP address. This value is only required if your router uses an IKE ID of type `ID_IPV4_ADDR`.
-8. In **Cloudflare endpoint**, enter the anycast address you received from your account team.{ props.magicWord === "Magic Transit" && (<> Refer to <a href="/magic-transit/cloudflare-ips/#check-your-cloudflare-ips">Check your Cloudflare IPs</a> for more information.</>)}
+8. In **Cloudflare endpoint**, enter one of the anycast addresses assigned to your account. You can find them in [Leased IPs](https://dash.cloudflare.com/?to=/:account/ip-addresses/address-space).
 9. _(Optional)_ Configure health check settings. Expand the following to learn more about each option:
 
     <Render

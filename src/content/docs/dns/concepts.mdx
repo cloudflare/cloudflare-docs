@@ -12,30 +12,31 @@ description: Understand key DNS concepts with Cloudflare's technical documentati
 
 import { Details, Example, GlossaryTooltip } from "~/components";
 
-This page defines and articulates key concepts that are relevant to the Cloudflare DNS service and are used in this documentation. For more concepts and broader descriptions, refer to the [Cloudflare Learning Center](https://www.cloudflare.com/learning/dns/what-is-dns/).
+The Domain Name System (DNS) translates human-readable domain names (like `example.com`) into IP addresses that computers use to locate each other on the Internet. This page covers key DNS concepts used throughout the Cloudflare DNS documentation. For more concepts and broader descriptions, refer to the [Cloudflare Learning Center](https://www.cloudflare.com/learning/dns/what-is-dns/).
+
 ## Domain
 
-Also known as domain name, a domain is the string of text that identifies a specific website, such as `google.com` or `facebook.com`. Every time you access a website from your web browser, a DNS query takes place and the DNS service maps the domain to the actual IP address where the website is [hosted](/fundamentals/manage-domains/).
+Also known as domain name, a domain is the string of text that identifies a specific website, such as `google.com` or `facebook.com`. Every time you access a website from your web browser, a DNS query (a lookup request to translate the domain into an address) takes place and the DNS service maps the domain to the actual IP address where the website is [hosted](/fundamentals/manage-domains/).
 
 ## Registrar
 
-Before you can start using the Cloudflare DNS service, you must first have a domain. This is achieved by using a service called registrar. As explained in our [Learning Center](https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name-registrar/), a registrar handles the reservation of domain names.
+Before you can start using the Cloudflare DNS service, you must first have a domain. You obtain a domain through a registrar, a service that handles the reservation of domain names as explained in the [Learning Center](https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name-registrar/).
 
 Very often the same company that offers domain registration also offers web hosting and DNS management.
 
-You can register a domain name at cost through [Cloudflare Registrar](/registrar/). Every domain acquired through Cloudflare Registrar must also use Cloudflare as their [primary authoritative DNS](#authoritative-dns).
+You can register a domain name at cost (without markup fees) through [Cloudflare Registrar](/registrar/). Every domain acquired through Cloudflare Registrar must also use Cloudflare as their [primary authoritative DNS](#authoritative-dns).
 
 ## Nameserver
 
-Although the resolution of a DNS query involves a number of different servers, in this documentation nameserver usually refers to the Cloudflare authoritative nameservers. As explained in the [article about DNS server types](https://www.cloudflare.com/learning/dns/dns-server-types/), the authoritative nameserver is the last stop in the resolution of a DNS query.
+DNS resolution — the process of translating a domain name into an IP address — involves several types of servers. In this documentation, nameserver usually refers to the Cloudflare authoritative nameservers, the servers that hold the definitive DNS records for your domain and provide the final answer in DNS resolution. For more context on the different server types involved, refer to the [article about DNS server types](https://www.cloudflare.com/learning/dns/dns-server-types/).
 
 Refer to [Nameservers](/dns/nameservers/) for details on the different nameserver offerings.
 
 ## Authoritative DNS
 
-Authoritative DNS refers to the service whose nameservers provide the final information mapping a hostname (such as `example.com` or `blog.example.com`) to the IP address that hosts the corresponding content or resources.
+Authoritative DNS refers to the service whose nameservers provide the final answer mapping a hostname (such as `example.com` or `blog.example.com`) to the IP address that hosts the corresponding content or resources.
 
-This is important because the performance of such authoritative DNS services determine how available, resilient, and performant your website or application is. Cloudflare DNS is an authoritative DNS service leveraging Cloudflare's global network. Refer to [How Cloudflare works](/fundamentals/concepts/how-cloudflare-works/) for details.
+The speed and reliability of your authoritative DNS service directly affects how available, resilient, and responsive your website or application is. If the authoritative DNS is slow or unreachable, visitors may not be able to reach your site. Cloudflare DNS is an authoritative DNS service that runs on Cloudflare's global network, distributing DNS answers from data centers worldwide. Refer to [How Cloudflare works](/fundamentals/concepts/how-cloudflare-works/) for details.
 
 ## DNS setups
 
@@ -55,23 +56,25 @@ For more details about using DNS records within Cloudflare, refer to [Manage DNS
 
 ## Zone
 
-DNS zone is an administrative concept used for delegating control over a given domain and its subdomains. Read more in the ["What is a DNS zone?" Learning Center article](https://www.cloudflare.com/learning/dns/glossary/dns-zone/).
+A DNS zone is an administrative boundary that defines who controls the DNS records for a given domain and its subdomains. For example, the zone for `example.com` contains the records for `example.com` and its subdomains like `blog.example.com`. Read more in the ["What is a DNS zone?" Learning Center article](https://www.cloudflare.com/learning/dns/glossary/dns-zone/).
 
-For the purpose of this documentation, keep in mind that each domain added to a Cloudflare account is listed in the account home page as a zone. The exact properties and behaviors of your zone depend on its [DNS setup](/dns/zone-setups/).
+Each domain added to a Cloudflare account is listed on the account home page as a zone. The exact properties and behaviors of your zone depend on its [DNS setup](/dns/zone-setups/).
 
-Also, different Cloudflare products and features are configurable at the zone level. Refer to [Fundamentals](/fundamentals/manage-domains/add-site/) for details.
+Different Cloudflare products and features are configurable at the zone level. Refer to [Fundamentals](/fundamentals/manage-domains/add-site/) for details.
 
 ### Zone apex
 
-Zone apex refers to the domain or subdomain on which the control of DNS records starts.
+The <GlossaryTooltip term="zone apex">zone apex</GlossaryTooltip> is the highest-level domain within a zone — the starting point from which all DNS records in that zone are managed.
+
+In most cases, the zone apex is the same as the <GlossaryTooltip term="apex domain">apex domain</GlossaryTooltip> (for example, `example.com`). However, with [subdomain delegation](/dns/zone-setups/subdomain-setup/) (available on Enterprise plans), a subdomain like `sub.example.com` can be its own zone, making that subdomain the zone apex.
 
 <Details header="Example 1">
 <Example>
 DNS management for **example.com**:
 
-| Type | Name    | Content      | Proxy status | TTL    |
-| ---- | ------- | ------------ | ------------ | ------ |
-| A    | `blog`  | `192.0.2.1`  | Proxied      | Auto   |
+| Type | Name   | Content     | Proxy status | TTL  |
+| ---- | ------ | ----------- | ------------ | ---- |
+| A    | `blog` | `192.0.2.1` | Proxied      | Auto |
 
 Zone apex: `example.com`
 
@@ -84,9 +87,9 @@ Full record name: `blog.example.com`
 <Example>
 DNS management for **sub.example.com**:
 
-| Type | Name    | Content      | Proxy status | TTL    |
-| ---- | ------- | ------------ | ------------ | ------ |
-| A    | `blog`  | `192.0.2.1`  | Proxied      | Auto   |
+| Type | Name   | Content     | Proxy status | TTL  |
+| ---- | ------ | ----------- | ------------ | ---- |
+| A    | `blog` | `192.0.2.1` | Proxied      | Auto |
 
 Zone apex: `sub.example.com`
 
@@ -95,38 +98,38 @@ Full record name: `blog.sub.example.com`
 </Example>
 </ Details>
 
-Usually, the zone apex coincides with the <GlossaryTooltip term="apex domain">apex domain</GlossaryTooltip>, as shown in Example 1. Example 2 refers to [subdomain delegation](/dns/zone-setups/subdomain-setup/), which is only available to Enterprise plans.
-
-To create a DNS record at the zone apex, use `@` for the record **Name**. For details, refer to [How to](/dns/manage-dns-records/how-to/create-zone-apex/).
+To create a DNS record at the zone apex, use `@` for the record **Name**. The `@` symbol is a DNS convention that represents the zone apex itself. For details, refer to [Create zone apex record](/dns/manage-dns-records/how-to/create-zone-apex/).
 
 <Details header="Record at the zone apex">
 <Example>
 DNS management for **example.com**:
 
-| Type | Name    | Content      | Proxy status | TTL    |
-| ---- | ------- | ------------ | ------------ | ------ |
-| A    | `@`  | `192.0.2.1`  | Proxied      | Auto   |
+| Type | Name | Content     | Proxy status | TTL  |
+| ---- | ---- | ----------- | ------------ | ---- |
+| A    | `@`  | `192.0.2.1` | Proxied      | Auto |
 
 Zone apex: `example.com`
 
 Full record name: `example.com`
+
 </Example>
 
 <Example>
 DNS management for **sub.example.com**:
 
-| Type | Name    | Content      | Proxy status | TTL    |
-| ---- | ------- | ------------ | ------------ | ------ |
-| A    | `@`  | `192.0.2.1`  | Proxied      | Auto   |
+| Type | Name | Content     | Proxy status | TTL  |
+| ---- | ---- | ----------- | ------------ | ---- |
+| A    | `@`  | `192.0.2.1` | Proxied      | Auto |
 
 Zone apex: `sub.example.com`
 
 Full record name: `sub.example.com`
+
 </Example>
 </Details>
 
 ## DNSSEC
 
-DNSSEC stands for DNS Security Extensions. It increases security by adding cryptographic signatures to DNS records. These signatures can then be checked to verify that a record came from the correct DNS server, preventing anyone else from issuing false DNS records on your behalf and redirecting traffic intended for your domain. You can read more about it in the [article about DNS security](https://www.cloudflare.com/learning/dns/dns-security/).
+Without additional protection, DNS responses can be spoofed — an attacker could return a forged response and redirect visitors to a malicious site. DNSSEC (DNS Security Extensions) addresses this by adding cryptographic signatures to DNS records. These signatures can then be checked to verify that a record came from the correct DNS server, preventing anyone else from issuing false DNS records on your behalf and redirecting traffic intended for your domain. You can read more about it in the [article about DNS security](https://www.cloudflare.com/learning/dns/dns-security/).
 
 For help setting up DNSSEC in Cloudflare, refer to [Enable DNSSEC](/dns/dnssec/).

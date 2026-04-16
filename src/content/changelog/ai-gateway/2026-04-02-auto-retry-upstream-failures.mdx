@@ -1,0 +1,17 @@
+---
+title: Automatically retry on upstream provider failures on AI Gateway
+description: Configure your AI Gateway to automatically retry failed requests to upstream providers with customizable delay and backoff settings.
+products:
+  - ai-gateway
+date: 2026-04-02
+---
+
+AI Gateway now supports automatic retries at the gateway level. When an upstream provider returns an error, your gateway retries the request based on the retry policy you configure, without requiring any client-side changes.
+
+You can configure the retry count (up to 5 attempts), the delay between retries (from 100ms to 5 seconds), and the backoff strategy (Constant, Linear, or Exponential). These defaults apply to all requests through the gateway, and per-request headers can override them.
+
+![Retry Requests settings in the AI Gateway dashboard](~/assets/images/ai-gateway/auto-retry-changelog.png)
+
+This is particularly useful when you do not control the client making the request and cannot implement retry logic on the caller side. For more complex failover scenarios — such as failing across different providers — use [Dynamic Routing](/ai-gateway/features/dynamic-routing/).
+
+For more information, refer to [Manage gateways](/ai-gateway/configuration/manage-gateway/#retry-requests).

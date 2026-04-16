@@ -22,19 +22,19 @@ This example blocks incoming requests from IP addresses that are not present in 
       | ----------------- | -------------- | ------------- |
       | IP Source Address | is not in list | `allowed_ips` |
 
-      If you are using the Expression Editor:<br/>
+      If you are using the expression editor:<br/>
       `(not ip.src in $allowed_ips)`
 
-    - **Action**: _Block_
+    - **Then take action**: _Block_
 
 3.  (Optional) Update your expression with any extra filters, like blocking non-allowlisted IPs only for specific URI paths:
 
-    | Field             | Operator       | Value         |     |
-    | ----------------- | -------------- | ------------- | --- |
-    | IP Source Address | is not in list | `allowed_ips` | And |
-    | URI Path          | wildcard       | `/admin/*`    |     |
+    | Field             | Operator       | Value         | Logic |
+    | ----------------- | -------------- | ------------- | ----- |
+    | IP Source Address | is not in list | `allowed_ips` | And   |
+    | URI Path          | wildcard       | `/admin/*`    |       |
 
-    If you are using the Expression Editor:<br/>
+    If you are using the expression editor:<br/>
     `(not ip.src in $allowed_ips and http.request.uri.path wildcard "/admin/*")`
 
 </Steps>

@@ -10,15 +10,15 @@ head:
 description: Guide on upgrading rate limiting rules from the previous version to the new version.
 ---
 
-Cloudflare is upgrading all rate limiting rules created in the [previous version](/waf/reference/legacy/old-rate-limiting/) to the [new version of rate limiting rules](/waf/rate-limiting-rules/).
+Cloudflare has upgraded all rate limiting rules created in the [previous version](/waf/reference/legacy/old-rate-limiting/) to the [new version of rate limiting rules](/waf/rate-limiting-rules/).
 
-The Cloudflare dashboard will now show all your rate limiting rules in a single list.
+The Cloudflare dashboard now shows all your rate limiting rules in a single list.
 
-:::caution[Deprecation notice]
+:::caution[Sunset notice]
 
-**The [Rate Limiting API](/api/resources/rate_limits/) and the [`cloudflare_rate_limit`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/rate_limit) Terraform resource for the previous version of rate limiting rules are now deprecated.**
+**The [Rate Limiting API](/api/resources/rate_limits/) and the [`cloudflare_rate_limit`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/rate_limit) Terraform resource for the previous version of rate limiting rules stopped being supported on 2025-06-15 and are no longer available.**
 
-This API and Terraform resource are no longer supported since 2025-06-15. You must use the [Rulesets API](/ruleset-engine/rulesets-api/) and the [`cloudflare_ruleset`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/ruleset) Terraform resource to configure rate limiting rules.
+You must now use the [Rulesets API](/ruleset-engine/rulesets-api/) and the [`cloudflare_ruleset`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/ruleset) Terraform resource to configure rate limiting rules.
 
 :::
 

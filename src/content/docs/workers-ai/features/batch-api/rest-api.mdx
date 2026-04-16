@@ -9,9 +9,9 @@ If you prefer to work directly with the REST API instead of a [Cloudflare Worker
 
 ## 1. Sending a Batch Request
 
-Make a POST request using the following pattern. You can pass `external_reference` as a unique ID per-prompt that will be returned in the response.
+Make a POST request using the following pattern. You can pass `external_reference` as a unique ID per-request that will be returned in the response.
 
-```bash title="Sending a batch request" {11,15,19}
+```bash title="Sending a batch request"
 curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai/run/@cf/baai/bge-m3?queueRequest=true" \
  --header "Authorization: Bearer $API_TOKEN" \
  --header 'Content-Type: application/json' \
@@ -21,18 +21,16 @@ curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai/run/@cf/baai/
             "query": "This is a story about Cloudflare",
             "contexts": [
                 {
-                    "text": "This is a story about an orange cloud",
-                    "external_reference": "story1"
+                    "text": "This is a story about an orange cloud"
                 },
                 {
-                    "text": "This is a story about a llama",
-                    "external_reference": "story2"
+                    "text": "This is a story about a llama"
                 },
                 {
-                    "text": "This is a story about a hugging emoji",
-                    "external_reference": "story3"
+                    "text": "This is a story about a hugging emoji"
                 }
-            ]
+            ],
+            "external_reference": "reference-1"
         }
     ]
   }'
@@ -78,7 +76,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai/run/@cf/baai/
 					]
 				},
 				"success": true,
-				"external_reference": null
+				"external_reference": "reference-1"
 			}
 		],
 		"usage": { "prompt_tokens": 12, "completion_tokens": 0, "total_tokens": 12 }

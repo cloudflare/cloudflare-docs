@@ -178,7 +178,7 @@ Note that `props` values specified in this way are allowed to contain any "persi
 
 ### TypeScript types for `ctx.exports` and `ctx.props`
 
-If using TypeScript, you should use [the `wrangler types` command](/workers/wrangler/commands/#types) to auto-generate types for your project. The generated types will ensure `ctx.exports` is typed correctly.
+If using TypeScript, you should use [the `wrangler types` command](/workers/wrangler/commands/general/#types) to auto-generate types for your project. The generated types will ensure `ctx.exports` is typed correctly.
 
 When declaring an entrypoint class that accepts `props`, make sure to declare it as `extends WorkerEntrypoint<Env, Props>`, where `Props` is the type of `ctx.props`. See the example above.
 

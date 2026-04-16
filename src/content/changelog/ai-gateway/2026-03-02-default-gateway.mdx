@@ -1,0 +1,28 @@
+---
+title: Get started with AI Gateway automatically
+description: AI Gateway now automatically creates a gateway for you on your first request.
+products:
+  - ai-gateway
+date: 2026-03-02
+---
+
+You can now start using AI Gateway with a single API call — no setup required. Use `default` as your gateway ID, and AI Gateway creates one for you automatically on the first request.
+
+To try it out, [create an API token](/fundamentals/api/get-started/create-token/) with `AI Gateway - Read`, `AI Gateway - Edit`, and `Workers AI - Read` permissions, then run:
+
+```bash
+curl -X POST https://gateway.ai.cloudflare.com/v1/$CLOUDFLARE_ACCOUNT_ID/default/compat/chat/completions \
+  --header "cf-aig-authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "model": "workers-ai/@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is Cloudflare?"
+      }
+    ]
+  }'
+```
+
+AI Gateway gives you logging, caching, rate limiting, and access to multiple AI providers through a single endpoint. For more information, refer to [Get started](/ai-gateway/get-started/).
