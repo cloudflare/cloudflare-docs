@@ -1,0 +1,174 @@
+{
+	"model_id": "minimax/hailuo-2.3-fast",
+	"provider_id": "minimax",
+	"name": "Hailuo 2.3 Fast",
+	"description": "A lower-latency version of Hailuo 2.3 that preserves core motion quality, visual consistency, and stylization while enabling faster iteration.",
+	"task": "Text-to-Video",
+	"tags": [
+		"Video Generation",
+		"Image-to-Video",
+		"Fast"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {},
+	"examples": [
+		{
+			"name": "Basic I2V",
+			"description": "Animate a photo with default settings",
+			"input": {
+				"first_frame_image": "https://replicate.delivery/xezq/MQpUhqkESIIQDlWUxtNcsznZLfUTmhEbCV3vdAZGHGPwwaMLA/tmpgl4gvv5n.jpeg",
+				"prompt": "Gentle movement and subtle animation, natural-looking motion",
+				"duration": 6,
+				"resolution": "768P"
+			},
+			"output": {
+				"video": "https://replicate.delivery/xezq/4af0qVRaJfn0GUzOAOrATCM6lznDM1SoAHlBb9XiF3nV2yZWA/tmpa64cynkm.mp4"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3-fast',\n  {\n    first_frame_image:\n      'https://replicate.delivery/xezq/MQpUhqkESIIQDlWUxtNcsznZLfUTmhEbCV3vdAZGHGPwwaMLA/tmpgl4gvv5n.jpeg',\n    prompt: 'Gentle movement and subtle animation, natural-looking motion',\n    duration: 6,\n    resolution: '768P',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "High Resolution I2V",
+			"description": "Animate a photo in 1080P",
+			"input": {
+				"first_frame_image": "https://replicate.delivery/xezq/IeNNble3XUqhpUZTd3CkYTUf8EgkFU1fl1Jnyive3B26MsGzC/tmp51dpln4i.jpeg",
+				"prompt": "Camera slowly pans across the scene with cinematic depth of field",
+				"duration": 6,
+				"resolution": "1080P"
+			},
+			"output": {
+				"video": "https://replicate.delivery/xezq/ZvOFGz7Mrsr8FZDRp7yepzVMepuqXXWeASql1sB0lfA4SMnZB/tmpqxqkz22r.mp4"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3-fast',\n  {\n    first_frame_image:\n      'https://replicate.delivery/xezq/IeNNble3XUqhpUZTd3CkYTUf8EgkFU1fl1Jnyive3B26MsGzC/tmp51dpln4i.jpeg',\n    prompt: 'Camera slowly pans across the scene with cinematic depth of field',\n    duration: 6,\n    resolution: '1080P',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Fast Processing",
+			"description": "Quick I2V with fast pretreatment enabled",
+			"input": {
+				"first_frame_image": "https://replicate.delivery/xezq/jfh37lJpnDQhaKcAfCrxSCEh7HA7lv5cCWmJW284tYXwh1YWA/tmpw2i437qe.jpeg",
+				"prompt": "Hair blowing in the wind, eyes blinking naturally",
+				"duration": 6,
+				"resolution": "768P",
+				"fast_pretreatment": true
+			},
+			"output": {
+				"video": "https://replicate.delivery/xezq/NsfiTjhgzw17Z6XFz8t2ENJBLfg3Nyko1TRSsu0Ei4eGvlzsA/tmpjypqp97o.mp4"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3-fast',\n  {\n    first_frame_image:\n      'https://replicate.delivery/xezq/jfh37lJpnDQhaKcAfCrxSCEh7HA7lv5cCWmJW284tYXwh1YWA/tmpw2i437qe.jpeg',\n    prompt: 'Hair blowing in the wind, eyes blinking naturally',\n    duration: 6,\n    resolution: '768P',\n    fast_pretreatment: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://hailuoai.com/",
+	"terms": "https://hailuoai.com/terms",
+	"cover_image_url": "https://tjzk.replicate.delivery/models_models_featured_image/9f1d0e6a-6b73-4b0f-97e2-c4ceeae8c585/hailuio-2.3-sm.mp4",
+	"metadata": {
+		"Resolutions": "540p, 720p, 1080p"
+	},
+	"created_at": "2026-04-13 16:46:34",
+	"default_example": null,
+	"code_snippets": [],
+	"schema": {
+		"model_id": "minimax/hailuo-2.3-fast",
+		"version": "1.0.0",
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"first_frame_image": {
+					"description": "URL or base64 data URI of the first frame image",
+					"type": "string"
+				},
+				"prompt": {
+					"type": "string",
+					"maxLength": 2000
+				},
+				"prompt_optimizer": {
+					"default": true,
+					"type": "boolean"
+				},
+				"fast_pretreatment": {
+					"default": false,
+					"type": "boolean"
+				},
+				"duration": {
+					"default": 6,
+					"anyOf": [
+						{
+							"type": "number",
+							"const": 6
+						},
+						{
+							"type": "number",
+							"const": 10
+						}
+					]
+				},
+				"resolution": {
+					"default": "768P",
+					"type": "string",
+					"enum": [
+						"768P",
+						"1080P"
+					]
+				},
+				"callback_url": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"first_frame_image",
+				"prompt_optimizer",
+				"fast_pretreatment",
+				"duration",
+				"resolution"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"video": {
+					"type": "string",
+					"format": "uri"
+				},
+				"task_id": {
+					"type": "string"
+				},
+				"status": {
+					"type": "string",
+					"enum": [
+						"Preparing",
+						"Queueing",
+						"Processing",
+						"Success",
+						"Fail"
+					]
+				}
+			},
+			"required": [
+				"task_id"
+			],
+			"additionalProperties": false
+		}
+	}
+}

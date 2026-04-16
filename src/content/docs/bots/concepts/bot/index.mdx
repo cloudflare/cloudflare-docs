@@ -1,6 +1,9 @@
 ---
 pcx_content_type: concept
 title: Bots
+description: Automated software programs that interact with websites and APIs.
+products:
+  - bots
 sidebar:
   order: 1
 learning_center:
@@ -66,15 +69,7 @@ This behavior remains the same if the setting for verified, definitely automated
 
 For self-serve non-Bot Management customers, all rules for verified, definitely automated, and likely bots run in the phase following the AI bots rule.
 
-```mermaid
----
-title: Rule phases
----
-flowchart LR
-accTitle: AI bots rule phases diagram
-accDescr: This diagram details the phases in which AI bots rules run.
-A[Custom rules] --> B[Block AI bots<br>managed rule] --> C[Allow verified bots rule]
-```
+<Render file="execution-order" product="bots" />
 
 This feature is available on all Cloudflare plans.
 

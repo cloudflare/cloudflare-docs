@@ -1,0 +1,32 @@
+---
+title: Stream live inputs can now be disabled and enabled
+description: >
+  Use the new enabled property on live inputs to programmatically control whether
+  a live input accepts incoming broadcasts.
+date: 2026-02-24
+---
+
+You can now disable a live input to reject incoming RTMPS and SRT
+connections. When a live input is disabled, any broadcast attempts will fail to
+connect.
+
+This gives you more control over your live inputs:
+
+- Temporarily pause an input without deleting it
+- Programmatically end creator broadcasts
+- Prevent new broadcasts from starting on a specific input
+
+To disable a live input via the API, set the `enabled` property to `false`:
+
+```bash
+curl --request PUT \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/live_inputs/{input_id} \
+--header "Authorization: Bearer <API_TOKEN>" \
+--data '{"enabled": false}'
+```
+
+You can also disable or enable a live input from the **Live inputs** list page
+or the live input detail page in the Dashboard.
+
+All existing live inputs remain enabled by default. For more information, refer
+to [Start a live stream](/stream/stream-live/start-stream-live/).

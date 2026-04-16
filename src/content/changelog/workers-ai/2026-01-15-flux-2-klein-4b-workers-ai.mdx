@@ -34,15 +34,12 @@ form.append("prompt", "a sunset with a dog");
 form.append("width", "1024");
 form.append("height", "1024");
 
-const resp = await env.AI.run("@cf/black-forest-labs/flux-2-klein-4b", {
-	multipart: {
-		body: formStream,
-		contentType: formContentType,
-	},
-});
-const formStream = formRequest.body;
-const formContentType =
-	formRequest.headers.get("content-type") || "multipart/form-data";
+// FormData doesn't expose its serialized body or boundary. Passing it to a
+// Request (or Response) constructor serializes it and generates the Content-Type
+// header with the boundary, which is required for the server to parse the multipart fields.
+const formResponse = new Response(form);
+const formStream = formResponse.body;
+const formContentType = formResponse.headers.get('content-type');
 
 const resp = await env.AI.run("@cf/black-forest-labs/flux-2-klein-4b", {
 	multipart: {
@@ -100,7 +97,6 @@ curl --request POST \
 Through Workers AI Binding:
 
 ```javascript
-
 //helper function to convert ReadableStream to Blob
 async function streamToBlob(stream: ReadableStream, contentType: string): Promise<Blob> {
   const reader = stream.getReader();
@@ -125,11 +121,17 @@ form.append('input_image_0', image_blob0)
 form.append('input_image_1', image_blob1)
 form.append('prompt', 'take the subject of image 1 and style it like image 0')
 
+// FormData doesn't expose its serialized body or boundary. Passing it to a
+// Request (or Response) constructor serializes it and generates the Content-Type
+// header with the boundary, which is required for the server to parse the multipart fields.
+const formResponse = new Response(form);
+const formStream = formResponse.body;
+const formContentType = formResponse.headers.get('content-type');
+
 const resp = await env.AI.run("@cf/black-forest-labs/flux-2-klein-4b", {
     multipart: {
-        body: form,
-        contentType: "multipart/form-data"
+        body: formStream,
+        contentType: formContentType
     }
 })
-
 ```

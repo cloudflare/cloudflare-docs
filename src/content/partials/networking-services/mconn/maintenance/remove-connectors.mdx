@@ -5,15 +5,15 @@ params:
 
 import { DashButton, Markdown } from "~/components";
 
-When adding or removing Magic WAN Connectors, you need to be aware of the difference between the physical device and its profile.
+When adding or removing Cloudflare One Appliances (formerly Magic WAN Connectors), you need to be aware of the difference between the physical device and its profile.
 - The physical device is the hardware at your site.
 - The profile contains the configuration that allows the device to connect to Cloudflare, including your WANs, LANs, traffic steering, and LAN policies.
 
-You can have more than one Magic WAN Connector in one profile if you initially enabled high availability during the configuration of the profile. If you did not enable high availability, you need to delete the profile associated with a site before adding a new Magic WAN Connector.
+You can have more than one Cloudflare One Appliance in one profile if you initially enabled high availability during the configuration of the profile. If you did not enable high availability, you need to delete the profile associated with a site before adding a new Cloudflare One Appliance.
 
 ## Remove a profile
 
-{ props.dashName === "WAN Tunnels" ? (
+{ props.dashName === "CF1 Cloudflare WAN" ? (
 	<>
 		<Markdown
 	text={`
@@ -46,9 +46,9 @@ You can have more than one Magic WAN Connector in one profile if you initially e
 
 ## Remove a physical device
 
-To remove a Magic WAN Connector from your account:
+To remove a Cloudflare One Appliance from your account:
 
-{ props.dashName === "WAN Tunnels" ? (
+{ props.dashName === "CF1 Cloudflare WAN" ? (
 	<>
 		<Markdown
 	text={`
@@ -77,4 +77,4 @@ To remove a Magic WAN Connector from your account:
 	</>
 )
 }
-3. Find the Magic WAN Connector that you want to delete > select the three dots next to it > **Delete**.
+3. Find the Cloudflare One Appliance that you want to delete > select the three dots next to it > **Delete**.

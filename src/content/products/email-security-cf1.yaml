@@ -1,9 +1,0 @@
-name: Email security
-
-product:
-  title: Email security
-  url: /cloudflare-one/email-security/
-  group: Cloudflare One
-
-meta:
-  description: Protect your email, web, and network from phishing and malware attacks

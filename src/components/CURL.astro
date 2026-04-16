@@ -1,5 +1,5 @@
 ---
-import { z } from "astro:schema";
+import { z } from "astro/zod";
 import type { ComponentProps } from "astro/types";
 import { Code } from "@astrojs/starlight/components";
 
@@ -11,7 +11,7 @@ const props = z.object({
 	method: z
 		.enum(["GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"])
 		.default("GET"),
-	url: z.string().url(),
+	url: z.url(),
 	headers: z.record(z.string(), z.string()).default({}),
 	json: z.union([Record, z.array(Record)]).optional(),
 	form: Record.optional(),

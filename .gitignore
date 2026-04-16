@@ -2,11 +2,22 @@
 dist/
 distmd/
 distllms/
+
 # generated types
 .astro/
 
+# skills/ is fetched from middlecache via bin/fetch-skills.ts
+skills/
+!.agents/skills/
+
 # dependencies
 node_modules/
+
+# lockfiles from other package managers
+yarn.lock
+pnpm-lock.yaml
+bun.lockb
+bun.lock
 
 # logs
 npm-debug.log*
@@ -15,11 +26,12 @@ yarn-error.log*
 pnpm-debug.log*
 
 # environment variables
-.env
+.env*
 .env.production
 
 # macOS-specific files
 .DS_Store
+
 /test-results/
 /playwright-report/
 /blob-report/
@@ -30,5 +42,18 @@ pnpm-debug.log*
 /worker/functions/
 
 .idea
+.ignore
 
 tools/relevant_changed_files.txt
+
+# Configuration of AI tools we don't directly support in this repo (generated via rulesync)
+.rulesync/
+.claude/
+CLAUDE.md
+.cursor/
+.github/prompts/
+.github/agents/
+/agents/
+
+# certain versions of opencode mistakenly commit package-lock.json
+.opencode/package-lock.json

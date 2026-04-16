@@ -1,6 +1,9 @@
 ---
 pcx_content_type: reference
 title: Rate limiting parameters
+description: Configurable parameters for rate limiting rules, including expressions and characteristics.
+products:
+  - rate-limiting
 sidebar:
   order: 18
 ---
@@ -28,6 +31,8 @@ Defines the criteria for the rate limiting rule to match a request.
 If this parameter is disabled (or when the `requests_to_origin` API field is set to `true`), only the requests going to the origin (that is, requests that are not cached) will be considered when determining the request rate.
 
 In some cases, you cannot disable the **Also apply rate limiting to cached assets** parameter due to configuration restrictions. Refer to [Configuration restrictions](#configuration-restrictions) for details.
+
+Depending on your [Cloudflare plan](/waf/rate-limiting-rules/#availability), this rule parameter might not be available. In that case, Cloudflare will also apply rate limiting to cached assets (the parameter is enabled by default).
 
 ### With the same characteristics
 
@@ -132,7 +137,7 @@ Name of HTTP header in the response, set by the origin server, with the score fo
 
 Action to perform when the rate specified in the rule is reached.
 
-Use one of the following values in the API: `block`, `challenge`, `js_challenge`, `managed_challenge`, or `log`.
+Use one of the following values in the API: `block`, `js_challenge` (Non-Interactive Challenge), `managed_challenge` (Managed Challenge), `challenge` (Interactive Challenge), or `log`.
 
 If you select the _Block_ action, you can define a custom response using the following parameters:
 
@@ -223,7 +228,7 @@ You cannot use both **IP with NAT support** and **IP** as characteristics of the
 
 ### Do not use `cf.colo.id` as a field in expressions
 
-You should not use the `cf.colo.id` characteristic (data center ID) as a field in rule expressions. Additionally, `cf.colo.id` values may change without warning. For more information about this rate limiting characteristic, refer to [How Cloudflare determines the request rate](/waf/rate-limiting-rules/request-rate/).
+You should not use the `cf.colo.id` characteristic (data center ID) as a field in rule expressions. Additionally, `cf.colo.id` values may change without warning. For more information about this rate limiting characteristic, refer to [Request rate calculation](/waf/rate-limiting-rules/request-rate/).
 
 ### Use a lowercased header name (for API users)
 

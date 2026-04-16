@@ -1,0 +1,13 @@
+id: gvEHpq
+name: Privacy Proxy
+
+entry:
+  title: Privacy Proxy
+  url: /privacy-proxy/
+  group: Developer platform
+  additional_groups: [Privacy]
+
+meta:
+  title: Cloudflare Privacy Proxy docs
+  description: A MASQUE-based forward proxy that protects user privacy while preserving geolocation accuracy
+  author: "@cloudflare"

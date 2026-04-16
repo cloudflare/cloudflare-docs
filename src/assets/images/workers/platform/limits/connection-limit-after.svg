@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 500" fill="none">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+    .label { font-size: 12px; font-weight: 600; fill: #1a1a1a; }
+    .sublabel { font-size: 11px; fill: #6b7280; }
+    .phase { font-size: 11px; font-weight: 600; fill: #fff; }
+    .phase-body { font-size: 11px; fill: #0369a1; }
+    .annotation { font-size: 10px; fill: #6b7280; }
+  </style>
+  <defs>
+    <marker id="time-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#d1d5db"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="820" height="500" fill="#fafafa" rx="8"/>
+
+  <!-- Time axis -->
+  <line x1="130" y1="48" x2="720" y2="48" stroke="#d1d5db" stroke-width="1.5" marker-end="url(#time-arrow)"/>
+  <text x="735" y="52" class="sublabel">time</text>
+
+  <!-- fetch #1: start=160, headers=110 → 270, body=280 → 550 -->
+  <text x="40" y="92" class="label">fetch #1</text>
+  <path d="M164,72 h106 v36 h-106 q-4,0 -4,-4 v-28 q0,-4 4,-4z" fill="#f97316" stroke="#ea580c" stroke-width="1"/>
+  <path d="M270,72 h276 q4,0 4,4 v28 q0,4 -4,4 h-276 v-36z" fill="#eff6ff" stroke="#93c5fd" stroke-width="1"/>
+  <text x="215" y="95" text-anchor="middle" class="phase">headers</text>
+  <text x="410" y="95" text-anchor="middle" class="phase-body">body</text>
+
+  <!-- fetch #2: start=175, headers=70 → 245, body=210 → 455 (earliest headers) -->
+  <text x="40" y="142" class="label">fetch #2</text>
+  <path d="M179,122 h66 v36 h-66 q-4,0 -4,-4 v-28 q0,-4 4,-4z" fill="#f97316" stroke="#ea580c" stroke-width="1"/>
+  <path d="M245,122 h206 q4,0 4,4 v28 q0,4 -4,4 h-206 v-36z" fill="#eff6ff" stroke="#93c5fd" stroke-width="1"/>
+  <text x="210" y="145" text-anchor="middle" class="phase">headers</text>
+  <text x="350" y="145" text-anchor="middle" class="phase-body">body</text>
+
+
+
+  <!-- fetch #3: start=195, headers=130 → 325, body=250 → 575 -->
+  <text x="40" y="192" class="label">fetch #3</text>
+  <path d="M199,172 h126 v36 h-126 q-4,0 -4,-4 v-28 q0,-4 4,-4z" fill="#f97316" stroke="#ea580c" stroke-width="1"/>
+  <path d="M325,172 h246 q4,0 4,4 v28 q0,4 -4,4 h-246 v-36z" fill="#eff6ff" stroke="#93c5fd" stroke-width="1"/>
+  <text x="260" y="195" text-anchor="middle" class="phase">headers</text>
+  <text x="450" y="195" text-anchor="middle" class="phase-body">body</text>
+
+  <!-- fetch #4: start=210, headers=65 → 275, body=150 → 425 -->
+  <text x="40" y="242" class="label">fetch #4</text>
+  <path d="M214,222 h61 v36 h-61 q-4,0 -4,-4 v-28 q0,-4 4,-4z" fill="#f97316" stroke="#ea580c" stroke-width="1"/>
+  <path d="M275,222 h146 q4,0 4,4 v28 q0,4 -4,4 h-146 v-36z" fill="#eff6ff" stroke="#93c5fd" stroke-width="1"/>
+  <text x="244" y="245" text-anchor="middle" class="phase">headers</text>
+  <text x="350" y="245" text-anchor="middle" class="phase-body">body</text>
+
+  <!-- fetch #5: start=230, headers=90 → 320, body=300 → 620 -->
+  <text x="40" y="292" class="label">fetch #5</text>
+  <path d="M234,272 h86 v36 h-86 q-4,0 -4,-4 v-28 q0,-4 4,-4z" fill="#f97316" stroke="#ea580c" stroke-width="1"/>
+  <path d="M320,272 h296 q4,0 4,4 v28 q0,4 -4,4 h-296 v-36z" fill="#eff6ff" stroke="#93c5fd" stroke-width="1"/>
+  <text x="276" y="295" text-anchor="middle" class="phase">headers</text>
+  <text x="470" y="295" text-anchor="middle" class="phase-body">body</text>
+
+  <!-- fetch #6: start=250, headers=105 → 355, body=320 → 675 -->
+  <text x="40" y="342" class="label">fetch #6</text>
+  <path d="M254,322 h101 v36 h-101 q-4,0 -4,-4 v-28 q0,-4 4,-4z" fill="#f97316" stroke="#ea580c" stroke-width="1"/>
+  <path d="M355,322 h316 q4,0 4,4 v28 q0,4 -4,4 h-316 v-36z" fill="#eff6ff" stroke="#93c5fd" stroke-width="1"/>
+  <text x="304" y="345" text-anchor="middle" class="phase">headers</text>
+  <text x="515" y="345" text-anchor="middle" class="phase-body">body</text>
+
+  <!-- fetch #7: issued at t=310, starts immediately (connection already free since t=245) -->
+  <text x="40" y="392" class="label">fetch #7</text>
+  <path d="M318,372 h76 v36 h-76 q-4,0 -4,-4 v-28 q0,-4 4,-4z" fill="#16a34a" stroke="#15803d" stroke-width="1"/>
+  <path d="M394,372 h201 q4,0 4,4 v28 q0,4 -4,4 h-201 v-36z" fill="#f0fdf4" stroke="#86efac" stroke-width="1"/>
+  <text x="356" y="395" text-anchor="middle" class="phase">headers</text>
+  <text x="496" y="395" text-anchor="middle" style="font-size: 11px; fill: #16a34a;">body</text>
+
+  <!-- Annotation below #7 -->
+  <text x="314" y="425" class="annotation">no queuing — a connection was already free</text>
+
+  <!-- Legend -->
+  <rect x="40" y="450" width="740" height="32" rx="6" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1"/>
+  <rect x="58" y="459" width="24" height="14" rx="3" fill="#f97316" stroke="#ea580c" stroke-width="1"/>
+  <text x="89" y="470" class="sublabel">Waiting for headers (counted)</text>
+  <rect x="290" y="459" width="24" height="14" rx="3" fill="#eff6ff" stroke="#93c5fd" stroke-width="1"/>
+  <text x="321" y="470" class="sublabel">Reading body (no longer counted)</text>
+  <rect x="520" y="459" width="24" height="14" rx="3" fill="#16a34a" stroke="#15803d" stroke-width="1"/>
+  <text x="551" y="470" class="sublabel">New connection (started earlier)</text>
+</svg>

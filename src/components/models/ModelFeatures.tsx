@@ -1,6 +1,9 @@
 import type { WorkersAIModelsSchema } from "~/schemas";
+import type { ResolvedModel } from "~/util/model-types";
 
-const ModelFeatures = ({ model }: { model: WorkersAIModelsSchema }) => {
+type ModelType = WorkersAIModelsSchema | ResolvedModel;
+
+const ModelFeatures = ({ model }: { model: ModelType }) => {
 	const nf = new Intl.NumberFormat("en-US");
 	const currencyFormatter = new Intl.NumberFormat("en-US", {
 		style: "currency",
@@ -94,6 +97,18 @@ const ModelFeatures = ({ model }: { model: WorkersAIModelsSchema }) => {
 											<span className="external-link"> ↗</span>
 										</a>
 									</td>
+									<td>Yes</td>
+								</tr>
+							)}
+							{properties.reasoning && (
+								<tr>
+									<td>Reasoning</td>
+									<td>Yes</td>
+								</tr>
+							)}
+							{properties.vision && (
+								<tr>
+									<td>Vision</td>
 									<td>Yes</td>
 								</tr>
 							)}

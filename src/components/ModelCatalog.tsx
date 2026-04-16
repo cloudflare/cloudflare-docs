@@ -2,8 +2,14 @@ import { useEffect, useState, useMemo } from "react";
 import ModelInfo from "./models/ModelInfo";
 import ModelBadges from "./models/ModelBadges";
 import { authorData } from "./models/data";
-import type { WorkersAIModelsSchema } from "~/schemas";
+import type { ResolvedModel } from "~/util/model-types";
+import { getModelAuthor } from "~/util/model-helpers";
 import { setSearchParams } from "~/util/url";
+import {
+	getCapabilities,
+	getLabelsByCategory,
+	hasProperty,
+} from "~/util/model-properties";
 
 type Filters = {
 	search: string;
@@ -12,7 +18,13 @@ type Filters = {
 	capabilities: string[];
 };
 
-const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
+const ModelCatalog = ({
+	models,
+	basePath = "/ai/models",
+}: {
+	models: ResolvedModel[];
+	basePath?: string;
+}) => {
 	const [filters, setFilters] = useState<Filters>({
 		search: "",
 		authors: [],
@@ -22,11 +34,10 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 
 	// List of model names to pin at the top
 	const pinnedModelNames = [
+		"@cf/moonshotai/kimi-k2.5",
+		"@cf/zai-org/glm-4.7-flash",
 		"@cf/openai/gpt-oss-120b",
-		"@cf/openai/gpt-oss-20b",
 		"@cf/meta/llama-4-scout-17b-16e-instruct",
-		"@cf/meta/llama-3.3-70b-instruct-fp8-fast",
-		"@cf/meta/llama-3.1-8b-instruct-fast",
 	];
 
 	// Sort models by pinned status first, then by created_at date
@@ -97,56 +108,32 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 	const mapped = sortedModels.map((model) => ({
 		model: {
 			...model,
-			capabilities: model.properties
-				.flatMap(({ property_id, value }) => {
-					if (property_id === "lora" && value === "true") {
-						return "LoRA";
-					}
-
-					if (property_id === "function_calling" && value === "true") {
-						return "Function calling";
-					}
-
-					if (property_id === "async_queue" && value === "true") {
-						return "Batch";
-					}
-
-					return [];
-				})
-				.filter((p) => Boolean(p)),
+			capabilities: getCapabilities(model.properties),
 		},
 		model_display_name: model.name.split("/").at(-1),
 	}));
 
 	const tasks = [...new Set(models.map((model) => model.task.name))];
-	const authors = [...new Set(models.map((model) => model.name.split("/")[1]))];
-	const capabilities = [
-		...new Set(
-			models.flatMap((model) =>
-				model.properties
-					.flatMap(({ property_id, value }) => {
-						if (property_id === "lora" && value === "true") {
-							return "LoRA";
-						}
-
-						if (property_id === "function_calling" && value === "true") {
-							return "Function calling";
-						}
-
-						if (property_id === "async_queue" && value === "true") {
-							return "Batch";
-						}
-
-						return [];
-					})
-					.filter((p) => Boolean(p)),
-			),
-		),
-	];
+	const getAuthorDisplayName = (id: string) => authorData[id]?.name ?? id;
+	const authors = [
+		...new Map(
+			models
+				.map((model) => getModelAuthor(model.name))
+				.map((id) => [getAuthorDisplayName(id), id] as const),
+		).values(),
+	].sort((a, b) =>
+		getAuthorDisplayName(a).localeCompare(getAuthorDisplayName(b)),
+	);
+	const modelProperties = getLabelsByCategory(models, "model");
+	const platformProperties = getLabelsByCategory(models, "platform");
 
 	const modelList = mapped.filter(({ model }) => {
 		if (filters.authors.length > 0) {
-			if (!filters.authors.includes(model.name.split("/")[1])) {
+			const selectedAuthorNames = new Set(
+				filters.authors.map(getAuthorDisplayName),
+			);
+			const modelAuthorName = getAuthorDisplayName(getModelAuthor(model.name));
+			if (!selectedAuthorNames.has(modelAuthorName)) {
 				return false;
 			}
 		}
@@ -183,10 +170,10 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 					onChange={(e) => setFilters({ ...filters, search: e.target.value })}
 				/>
 
-				<div className="mb-8! hidden md:block">
-					<span className="text-sm font-bold text-gray-600 uppercase dark:text-gray-200">
-						Tasks
-					</span>
+				<details className="mb-6! hidden md:block" open>
+					<summary className="cursor-pointer text-sm font-bold text-gray-600 uppercase select-none dark:text-gray-200">
+						Task Type
+					</summary>
 
 					{tasks.map((task) => (
 						<label key={task} className="my-2! block">
@@ -214,47 +201,88 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 							{task}
 						</label>
 					))}
-				</div>
+				</details>
 
-				<div className="mb-8! hidden md:block">
-					<span className="text-sm font-bold text-gray-600 uppercase dark:text-gray-200">
+				<details className="mb-6! hidden md:block" open>
+					<summary className="cursor-pointer text-sm font-bold text-gray-600 uppercase select-none dark:text-gray-200">
 						Capabilities
-					</span>
+					</summary>
 
-					{capabilities.map((capability) => (
-						<label key={capability} className="my-2! block">
-							<input
-								type="checkbox"
-								value={capability}
-								checked={filters.capabilities.includes(capability)}
-								className="mr-2"
-								onChange={(e) => {
-									const target = e.target as HTMLInputElement;
+					{modelProperties.length > 0 && (
+						<>
+							<span className="mt-3! mb-1! block text-xs font-semibold text-gray-500 dark:text-gray-400">
+								Model
+							</span>
+							{modelProperties.map((prop) => (
+								<label key={prop} className="my-2! block">
+									<input
+										type="checkbox"
+										value={prop}
+										checked={filters.capabilities.includes(prop)}
+										className="mr-2"
+										onChange={(e) => {
+											const target = e.target as HTMLInputElement;
+											if (target.checked) {
+												setFilters({
+													...filters,
+													capabilities: [...filters.capabilities, target.value],
+												});
+											} else {
+												setFilters({
+													...filters,
+													capabilities: filters.capabilities.filter(
+														(f) => f !== target.value,
+													),
+												});
+											}
+										}}
+									/>{" "}
+									{prop}
+								</label>
+							))}
+						</>
+					)}
 
-									if (target.checked) {
-										setFilters({
-											...filters,
-											capabilities: [...filters.capabilities, target.value],
-										});
-									} else {
-										setFilters({
-											...filters,
-											capabilities: filters.capabilities.filter(
-												(f) => f !== target.value,
-											),
-										});
-									}
-								}}
-							/>{" "}
-							{capability}
-						</label>
-					))}
-				</div>
+					{platformProperties.length > 0 && (
+						<>
+							<span className="mt-3! mb-1! block text-xs font-semibold text-gray-500 dark:text-gray-400">
+								Platform
+							</span>
+							{platformProperties.map((prop) => (
+								<label key={prop} className="my-2! block">
+									<input
+										type="checkbox"
+										value={prop}
+										checked={filters.capabilities.includes(prop)}
+										className="mr-2"
+										onChange={(e) => {
+											const target = e.target as HTMLInputElement;
+											if (target.checked) {
+												setFilters({
+													...filters,
+													capabilities: [...filters.capabilities, target.value],
+												});
+											} else {
+												setFilters({
+													...filters,
+													capabilities: filters.capabilities.filter(
+														(f) => f !== target.value,
+													),
+												});
+											}
+										}}
+									/>{" "}
+									{prop}
+								</label>
+							))}
+						</>
+					)}
+				</details>
 
-				<div className="hidden md:block">
-					<span className="text-sm font-bold text-gray-600 uppercase dark:text-gray-200">
+				<details className="mb-6! hidden md:block" open>
+					<summary className="cursor-pointer text-sm font-bold text-gray-600 uppercase select-none dark:text-gray-200">
 						Authors
-					</span>
+					</summary>
 
 					{authors.map((author) => (
 						<label key={author} className="my-2! block">
@@ -284,9 +312,9 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 							{authorData[author] ? authorData[author].name : author}
 						</label>
 					))}
-				</div>
+				</details>
 			</div>
-			<div className="mt-0! flex w-full flex-wrap items-stretch gap-[1%] self-start md:w-3/4">
+			<div className="mt-0! grid w-full grid-cols-1 gap-3 self-start md:w-3/4 lg:grid-cols-2">
 				{modelList.length === 0 && (
 					<div className="flex w-full flex-col justify-center rounded-md border bg-gray-50 py-6 text-center align-middle dark:border-gray-500 dark:bg-gray-800">
 						<span className="text-lg font-bold!">No models found</span>
@@ -297,20 +325,17 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 					</div>
 				)}
 				{modelList.map((model) => {
-					const isBeta = model.model.properties.find(
-						({ property_id, value }) =>
-							property_id === "beta" && value === "true",
-					);
+					const isBeta = hasProperty(model.model.properties, "beta");
 
-					const author = model.model.name.split("/")[1];
+					const author = getModelAuthor(model.model.name);
 					const authorInfo = authorData[author];
 					const isPinned = pinnedModelNames.includes(model.model.name);
 
 					return (
 						<a
 							key={model.model.id}
-							className="relative mb-3 block w-full self-start rounded-md border border-solid border-gray-200 p-3 text-inherit! no-underline hover:bg-gray-50 lg:w-[48%] dark:border-gray-700 dark:hover:bg-gray-800"
-							href={`/workers-ai/models/${model.model_display_name}`}
+							className="relative flex flex-col rounded-md border border-solid border-gray-200 p-3 text-inherit! no-underline hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
+							href={`${basePath}/${basePath === "/workers-ai/models" ? model.model.name.split("/").at(-1) : model.model.name}/`}
 						>
 							{isPinned && (
 								<span className="absolute top-1 right-2" title="Pinned model">
@@ -320,7 +345,7 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 							<div className="-mb-1 flex items-center">
 								{authorInfo?.logo ? (
 									<img
-										className="mr-2 block w-6"
+										className="mr-2 block w-6 rounded-xs p-0.5 dark:bg-gray-200 dark:ring-2 dark:ring-gray-200"
 										src={authorInfo.logo}
 										alt={`${authorInfo.name} logo`}
 									/>
@@ -337,10 +362,10 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 							<div className="m-0! text-xs">
 								<ModelInfo model={model.model} />
 							</div>
-							<p className="mt-2! line-clamp-2 text-sm leading-6">
+							<p className="mt-2! line-clamp-2 flex-1 text-sm leading-6">
 								{model.model.description}
 							</p>
-							<div className="mt-2! text-xs">
+							<div className="mt-2! min-h-6 text-xs">
 								<ModelBadges model={model.model} />
 							</div>
 						</a>

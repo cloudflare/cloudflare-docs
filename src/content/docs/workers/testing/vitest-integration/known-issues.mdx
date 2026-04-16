@@ -5,7 +5,6 @@ sidebar:
   order: 9
 head: []
 description: Explore the known issues associated with the Workers Vitest integration.
-
 ---
 
 The Workers Vitest pool is currently in open beta. The following are issues Cloudflare is aware of and fixing:
@@ -18,9 +17,9 @@ Native code coverage via [V8](https://v8.dev/blog/javascript-code-coverage) is n
 
 Vitest's [fake timers](https://vitest.dev/guide/mocking.html#timers) do not apply to KV, R2 and cache simulators. For example, you cannot expire a KV key by advancing fake time.
 
-### Dynamic `import()` statements with `SELF` and Durable Objects
+### Dynamic `import()` statements with `exports` and Durable Objects
 
-Dynamic `import()` statements do not work inside `export default { ... }` handlers when writing integration tests with `SELF`, or inside Durable Object event handlers. You must import and call your handlers directly, or use static `import` statements in the global scope.
+Dynamic `import()` statements do not work inside `export default { ... }` handlers when writing integration tests with `exports.default.fetch()`, or inside Durable Object event handlers. You must import and call your handlers directly, or use static `import` statements in the global scope.
 
 ### Durable Object alarms
 
@@ -28,11 +27,11 @@ Durable Object alarms are not reset between test runs and do not respect isolate
 
 ### WebSockets
 
-Using WebSockets with Durable Objects with the [`isolatedStorage`](/workers/testing/vitest-integration/isolation-and-concurrency) flag turned on is not supported. You must set `isolatedStorage: false` in your `vitest.config.ts` file.
+Using WebSockets with Durable Objects is not supported with per-file storage isolation. To work around this, run your tests with shared storage using `--max-workers=1 --no-isolate`.
 
-### Isolated storage
+### Storage isolation
 
-When the `isolatedStorage` flag is enabled (the default), the test runner will undo any writes to the storage at the end of the test as detailed in the [isolation and concurrency documentation](/workers/testing/vitest-integration/isolation-and-concurrency/). However, Cloudflare recommends that you consider the following actions to avoid any common issues:
+Storage isolation is per test file. The test runner will undo any writes to storage at the end of each test file as detailed in the [isolation and concurrency documentation](/workers/testing/vitest-integration/isolation-and-concurrency/). Cloudflare recommends the following actions to avoid common issues:
 
 #### Await all storage operations
 
@@ -41,8 +40,8 @@ Always `await` all `Promise`s that read or write to storage services.
 ```ts
 // Example: Seed data
 beforeAll(async () => {
-	await env.KV.put('message', 'test message');
-	await env.R2.put('file', 'hello-world');
+	await env.KV.put("message", "test message");
+	await env.R2.put("file", "hello-world");
 });
 ```
 
@@ -59,19 +58,19 @@ using result = await stub.getCounter();
 When making requests via `fetch` or `R2.get()`, consume the entire response body, even if you are not asserting its content. For example:
 
 ```ts
-test('check if file exists', async () => {
-	await env.R2.put('file', 'hello-world');
-	const response = await env.R2.get('file');
+test("check if file exists", async () => {
+	await env.R2.put("file", "hello-world");
+	const response = await env.R2.get("file");
 
 	expect(response).not.toBe(null);
 	// Consume the response body even if you are not asserting it
-	await response.text()
+	await response.text();
 });
 ```
 
 ### Missing properties on `ctx.exports`
 
-The `ctx.exports` property provides access to the exports of the main (`SELF`) Worker. The Workers Vitest integration attempts to automatically infer these exports by statically analyzing the Worker source code using esbuild. However, complex build setups, such as those using virtual modules or wildcard re-exports that esbuild cannot follow, may result in missing properties on the `ctx.exports` object.
+The `ctx.exports` property provides access to the exports of the main Worker. The Workers Vitest integration attempts to automatically infer these exports by statically analyzing the Worker source code using esbuild. However, complex build setups, such as those using virtual modules or wildcard re-exports that esbuild cannot follow, may result in missing properties on the `ctx.exports` object.
 
 For example, consider a Worker that re-exports an entrypoint from a virtual module using a wildcard export:
 
@@ -85,19 +84,18 @@ In this case, any exports from `@virtual-module` (such as `MyEntrypoint`) cannot
 To work around this, add the `additionalExports` option to your Vitest configuration:
 
 ```ts
-import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
+import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
+import { defineConfig } from "vitest/config";
 
-export default defineWorkersConfig({
-	test: {
-		poolOptions: {
-			workers: {
-				wrangler: { configPath: "./wrangler.jsonc" },
-				additionalExports: {
-					MyEntrypoint: "WorkerEntrypoint",
-				},
+export default defineConfig({
+	plugins: [
+		cloudflareTest({
+			wrangler: { configPath: "./wrangler.jsonc" },
+			additionalExports: {
+				MyEntrypoint: "WorkerEntrypoint",
 			},
-		},
-	},
+		}),
+	],
 });
 ```
 
@@ -107,10 +105,16 @@ The `additionalExports` option is a map where keys are the export names and valu
 
 If you encounter module resolution issues such as: `Error: Cannot use require() to import an ES Module` or `Error: No such module`, you can bundle these dependencies using the [deps.optimizer](https://vitest.dev/config/#deps-optimizer) option:
 
-```tsx
-import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
+```ts
+import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
+import { defineConfig } from "vitest/config";
 
-export default defineWorkersConfig({
+export default defineConfig({
+	plugins: [
+		cloudflareTest({
+			// ...
+		}),
+	],
 	test: {
 		deps: {
 			optimizer: {
@@ -118,11 +122,6 @@ export default defineWorkersConfig({
 					enabled: true,
 					include: ["your-package-name"],
 				},
-			},
-		},
-		poolOptions: {
-			workers: {
-				// ...
 			},
 		},
 	},
@@ -138,41 +137,42 @@ To work around this, you can create a wrapper that uses Vite's SSR module loader
 
 ```ts
 // File: global-setup-wrapper.ts
-import { createServer } from "vite"
+import { createServer } from "vite";
 
 // Import the actual global setup file with the correct setup
-const mod = await viteImport("./global-setup.ts")
+const mod = await viteImport("./global-setup.ts");
 
 export default mod.default;
 
 // Helper to import the file with default node setup
 async function viteImport(file: string) {
-  const server = await createServer({
-    root: import.meta.dirname,
-    configFile: false,
-    server: { middlewareMode: true, hmr: false, watch: null, ws: false },
-    optimizeDeps: { noDiscovery: true },
-    clearScreen: false,
-  });
-  const mod = await server.ssrLoadModule(file);
-  await server.close();
-  return mod;
+	const server = await createServer({
+		root: import.meta.dirname,
+		configFile: false,
+		server: { middlewareMode: true, hmr: false, watch: null, ws: false },
+		optimizeDeps: { noDiscovery: true },
+		clearScreen: false,
+	});
+	const mod = await server.ssrLoadModule(file);
+	await server.close();
+	return mod;
 }
 ```
 
 ```ts
 // File: vitest.config.ts
-import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
+import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
+import { defineConfig } from "vitest/config";
 
-export default defineWorkersConfig({
+export default defineConfig({
+	plugins: [
+		cloudflareTest({
+			// ...
+		}),
+	],
 	test: {
 		// Replace the globalSetup with the wrapper file
 		globalSetup: ["./global-setup-wrapper.ts"],
-		poolOptions: {
-			workers: {
-				// ...
-			},
-		},
 	},
 });
 ```

@@ -1,6 +1,9 @@
 ---
 title: Common API calls
 pcx_content_type: configuration
+description: Example API requests for managing Advanced TCP Protection prefixes, allowlists, and rules.
+products:
+  - ddos-protection
 sidebar:
   order: 2
 
@@ -51,7 +54,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_t
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-```json title="Example response"
+```json output
 {
   "result": [
     {
@@ -88,7 +91,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_t
 ]'
 ```
 
-```json title="Example response"
+```json output
 {
   "result": [
     {
@@ -123,7 +126,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_t
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-```json title="Example response"
+```json output
 {
   "result": [
     {
@@ -156,7 +159,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_t
 }'
 ```
 
-```json title="Example response"
+```json output
 {
   "result": {
     "id": "<ALLOWLIST_PREFIX_1_ID>",
@@ -189,7 +192,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_t
 }'
 ```
 
-```json title="Example response"
+```json output
 {
   "result": {
     "id": "<SYN_FLOOD_RULE_ID>",
@@ -226,7 +229,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_t
 }'
 ```
 
-```json title="Example response"
+```json output
 {
   "result": {
     "id": "<OOS_TCP_RULE_ID>",
@@ -260,7 +263,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_t
 }'
 ```
 
-```json title="Example response"
+```json output
 {
   "result": {
     "id": "<SYN_FLOOD_FILTER_ID>",
@@ -291,7 +294,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/advanced_t
 }'
 ```
 
-```json title="Example response"
+```json output
 {
   "result": {
     "id": "<OOS_TCP_FILTER_ID>",

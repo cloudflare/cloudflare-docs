@@ -2,12 +2,12 @@
 {}
 ---
 
-import { Tabs, TabItem} from "~/components";
+import { Tabs, TabItem } from "~/components";
 
 <Tabs>
 <TabItem label="Windows">
 
-On Windows, run `ipconfig`. When WARP is turned on, you will see an adapter called `CloudflareWARP` with your WARP device IP.
+On Windows, run `ipconfig`. When the Cloudflare One Client is turned on, you will see an adapter called `CloudflareWARP` with your device IP.
 
 ```powershell
 ipconfig
@@ -37,7 +37,7 @@ Unknown adapter CloudflareWARP:
 
 <TabItem label="macOS">
 
-On macOS, run `ifconfig`. When WARP is turned on, you will see a `utun` interface with your WARP device IP.
+On macOS, run `ifconfig`. When the Cloudflare One Client is turned on, you will see a `utun` interface with your device IP.
 
 ```sh
 ifconfig
@@ -51,11 +51,12 @@ utun3: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 1280
 	inet6 2606:4700:110:8c7d:7369:7526:a59b:5636 prefixlen 128
 	nd6 options=201<PERFORMNUD,DAD>
 ```
+
 </TabItem>
 
 <TabItem label="Linux">
 
-On Linux, run `ifconfig` or `ip addr`. When WARP is turned on, you will see a `utun` interface with your WARP device IP.
+On Linux, run `ifconfig` or `ip addr`. When the Cloudflare One Client is turned on, you will see a `utun` interface with your device IP.
 
 ```sh null
 ip addr

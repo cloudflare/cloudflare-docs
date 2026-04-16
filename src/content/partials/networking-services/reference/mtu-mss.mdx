@@ -10,7 +10,7 @@ import dsr from "~/assets/images/magic-transit/mtu-mss/dsr.png"
 import tunnel from "~/assets/images/magic-transit/mtu-mss/tcp-mss.png"
 import mss_ipsec from "~/assets/images/magic-transit/mtu-mss/ipsec-mss.png"
 
-{props.productName} has operation requirements that you need to understand to ensure your network functions as intended. Pay particular attention to the maximum transmission unit (MTU) and maximum segment size (MSS) values. Incorrect configuration of these values can cause performance loss or prevent data [packet](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) delivery.
+Because {props.productName} wraps your traffic in additional headers (encapsulation), the effective space available for your original data in each packet is reduced. If you do not account for this overhead, packets may be too large for the network path and will be dropped or fragmented — leading to performance loss or failed connections. This page explains the two key values you need to configure: maximum transmission unit (MTU) and maximum segment size (MSS).
 
 ## MTU and MSS
 
@@ -53,7 +53,7 @@ So the question is: which of these fragments does Cloudflare drop and which does
 The following diagram shows how the three UDP fragments in the preceding example flow through Cloudflare and {props.productName}. The main takeaways are:
 
 - **Cloudflare never sends incomplete packets to customers**: If Cloudflare does not see all parts of a packet required to fully reassemble that packet, Cloudflare will not send the partial data fragments to the customer.
-- **Magic Firewall operates on fully reassembled packets, not individual fragments**: This means that filters that match on UDP/TCP header information, for example, apply to the fully reassembled packet, not just the initial fragment. Cloudflare will not leak non-initial fragments to customers.
+- **Cloudflare Network Firewall operates on fully reassembled packets, not individual fragments**: This means that filters that match on UDP/TCP header information, for example, apply to the fully reassembled packet, not just the initial fragment. Cloudflare will not leak non-initial fragments to customers.
 - **Customers can still see fragmented packets**: By default (without `clear_dont_fragment_bit` set), Cloudflare fragments packets to fit within the configured MTU of the tunnel before sending the data to the customer. If a packet is larger than 1,476 bytes, Cloudflare will fragment it and send those fragments to the customer for reassembly.
 
 In all cases, Cloudflare sends all fragments to the customer.
@@ -96,9 +96,9 @@ Cloudflare only recommends applying a MSS clamp to adjust the size of TCP packet
 
 ### GRE tunnels as off-ramp
 
-{ (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
+{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "CF1 Cloudflare WAN") && (
   <>
-    <Render file="magic-wan/mtu-mss/mss-clamping-gre" product="networking-services" />
+    <Render file="cloudflare-wan/mtu-mss/mss-clamping-gre" product="networking-services" />
   </>
   )
 }
@@ -112,9 +112,9 @@ Cloudflare only recommends applying a MSS clamp to adjust the size of TCP packet
 
 ### IPsec tunnels
 
-{ (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
+{ (props.magicWord === "Cloudflare WAN" || props.magicWord === "CF1 Cloudflare WAN") && (
   <>
-    <Render file="magic-wan/mtu-mss/mss-clamping-ipsec" product="networking-services" />
+    <Render file="cloudflare-wan/mtu-mss/mss-clamping-ipsec" product="networking-services" />
   </>
   )
 }

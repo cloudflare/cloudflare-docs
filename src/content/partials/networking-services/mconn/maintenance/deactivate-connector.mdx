@@ -5,13 +5,13 @@ params:
 
 import { DashButton, Markdown } from '~/components';
 
-{ props.dashName === "WAN Tunnels" ? (
+{ props.dashName === "CF1 Cloudflare WAN" ? (
 	<>
 		<Markdown
 	text={`
 		1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
 		2. Go to **Connectors** > **Appliances** > **Appliances**.
-		3. Find the Magic WAN Connector you want to deactivate, select the three dots next to it > **Edit**.
+		3. Find the Cloudflare One Appliance you want to deactivate, select the three dots next to it > **Edit**.
 	`}
 	inline={false}
 	/>
@@ -29,7 +29,7 @@ import { DashButton, Markdown } from '~/components';
 		<Markdown
 	text={`
 		2. Go to the **Appliances** tab > **Appliances**.
-		3. From the list, find the Magic WAN Connector you want to deactivate > select the three dots next to it > **Edit**.
+		3. From the list, find the Cloudflare One Appliance you want to deactivate > select the three dots next to it > **Edit**.
 	`}
 	inline={false}
 	/>

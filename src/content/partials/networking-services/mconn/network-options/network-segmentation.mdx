@@ -7,14 +7,14 @@ params:
 
 import { APIRequest, DashButton, Markdown, Render, TabItem, Tabs } from "~/components";
 
-You can define policies in your Magic WAN Connector to either allow traffic to flow between your LANs without it leaving your local premises or to forward it via the Cloudflare network where you can add additional security features. The default behavior is to drop all LAN-to-LAN traffic. These policies can be created for specific subnets, and link two LANs.
+You can define policies in your Cloudflare One Appliance (formerly Magic WAN Connector) to either allow traffic to flow between your LANs without it leaving your local premises or to forward it via the Cloudflare network where you can add additional security features. The default behavior is to drop all LAN-to-LAN traffic. These policies can be created for specific subnets, and link two LANs.
 
 <pre class="mermaid">
 	{`
 		flowchart LR
 		accTitle: LAN-to-LAN traffic flow
 		accDescr: In this example, the red path shows traffic that stays in the customer's premises (allowing direct communication between LAN 3 and LAN 4), and the orange path shows traffic that goes to Cloudflare before returning to the customer's premises (processing traffic between LAN 1 and LAN 2 in Cloudflare).
-				a(Magic WAN Connector) <---> b(Internet) <---> c(Cloudflare)
+				a(Cloudflare One Appliance) <---> b(Internet) <---> c(Cloudflare)
 
 				subgraph Customer site
 				d[LAN 1] <---> a
@@ -40,7 +40,7 @@ If you enable LAN to LAN traffic flows, communications can only be initiated fro
 
 Unidirectional communication can be enabled for UDP and ICMP, but it is not available for TCP, as it would break that protocol.
 
-The following guide assumes you have already created a site and configured your Magic WAN Connector. For instructions to create a site and configure your Magic WAN Connector, refer to <a href={props.hardConnectorURL}>Configure hardware Connector</a> or <a href={props.virtualConnectorURL}>Configure Virtual Connector</a>, depending on the type of Magic WAN Connector you have on your premises.
+The following guide assumes you have already created a site and configured your Cloudflare One Appliance. For instructions to create a site and configure your Cloudflare One Appliance, refer to <a href={props.hardConnectorURL}>Configure hardware Appliance</a> or <a href={props.virtualConnectorURL}>Configure Virtual Appliance</a>, depending on the type of Cloudflare One Appliance you have on your premises.
 
 ## Create a policy
 
@@ -48,7 +48,7 @@ The following guide assumes you have already created a site and configured your 
 
 Follow these steps to create a new LAN policy to segment your network. Only the fields marked **required** are mandatory.
 
-{ props.dashName === "WAN Tunnels" ? (
+{ props.dashName === "CF1 Cloudflare WAN" ? (
 	<>
 		<Markdown
 	text={`
@@ -77,9 +77,9 @@ Follow these steps to create a new LAN policy to segment your network. Only the 
 	</>
 )
 }
-3. Select the Magic WAN Connector you want to configure > **Edit**.
+3. Select the Cloudflare One Appliance you want to configure > **Edit**.
 4. Go to **Network Configuration** > **LAN configuration**.
-5. Select **LAN policies** > **{props.dashName === "Magic WAN" ? "Create Policy" : "Create"}**.
+5. Select **LAN policies** > **{props.dashName === "Cloudflare WAN" ? "Create Policy" : "Create"}**.
 6. In **Policy name**, enter a descriptive name for the policy you are creating.
 7. From the drop-down menu **Origin (required)**, select your origin LAN.
 8. Specify a subnet for your first LAN in **Subnets**.
@@ -199,7 +199,7 @@ The new policy will ensure that traffic between the specified LANs flows locally
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-{ props.dashName === "WAN Tunnels" ? (
+{ props.dashName === "CF1 Cloudflare WAN" ? (
 	<>
 		<Markdown
 	text={`
@@ -228,7 +228,7 @@ The new policy will ensure that traffic between the specified LANs flows locally
 	</>
 )
 }
-3. Select the Magic WAN Connector you want to configure > **Edit**.
+3. Select the Cloudflare One Appliance you want to configure > **Edit**.
 4. Go to **Network Configuration** > **LAN configuration**.
 5. Select **LAN policies**.
 6. Select the policy you need to edit > **Edit**.
@@ -311,7 +311,7 @@ Example:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-{ props.dashName === "WAN Tunnels" ? (
+{ props.dashName === "CF1 Cloudflare WAN" ? (
 	<>
 		<Markdown
 	text={`
@@ -340,7 +340,7 @@ Example:
 	</>
 )
 }
-3. Select the Magic WAN Connector you want to configure > **Edit**.
+3. Select the Cloudflare One Appliance you want to configure > **Edit**.
 4. Go to **Network Configuration** > **LAN configuration**.
 5. Select **LAN policies**.
 6. Select the policy you need to edit > **Edit**.

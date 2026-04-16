@@ -10,6 +10,10 @@ product:agents:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/agents/**
+product:cloudflare-agent:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/content/docs/cloudflare-agent/**
 product:ai-crawl-control:
   - changed-files:
       - any-glob-to-any-file:
@@ -46,10 +50,10 @@ product:bots:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/bots/**
-product:browser-rendering:
+product:browser-run:
   - changed-files:
       - any-glob-to-any-file:
-          - src/content/docs/browser-rendering/**
+          - src/content/docs/browser-run/**
 product:byoip:
   - changed-files:
       - any-glob-to-any-file:
@@ -78,6 +82,10 @@ product:cloudflare-one:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/cloudflare-one/**
+product:tunnel:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/content/docs/tunnel/**
 product:constellation:
   - changed-files:
       - any-glob-to-any-file:
@@ -166,26 +174,26 @@ product:logs:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/logs/**
-product:magic-cloud-networking:
+product:multi-cloud-networking:
   - changed-files:
       - any-glob-to-any-file:
-          - src/content/docs/magic-cloud-networking/**
-product:magic-firewall:
+          - src/content/docs/multi-cloud-networking/**
+product:cloudflare-network-firewall:
   - changed-files:
       - any-glob-to-any-file:
-          - src/content/docs/magic-firewall/**
-product:magic-network-monitoring:
+          - src/content/docs/cloudflare-network-firewall/**
+product:network-flow:
   - changed-files:
       - any-glob-to-any-file:
-          - src/content/docs/magic-network-monitoring/**
+          - src/content/docs/network-flow/**
 product:magic-transit:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/magic-transit/**
-product:magic-wan:
+product:cloudflare-wan:
   - changed-files:
       - any-glob-to-any-file:
-          - src/content/docs/magic-wan/**
+          - src/content/docs/cloudflare-wan/**
 product:migration-guides:
   - changed-files:
       - any-glob-to-any-file:
@@ -210,10 +218,10 @@ product:notifications:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/notifications/**
-product:page-shield:
+product:client-side-security:
   - changed-files:
       - any-glob-to-any-file:
-          - src/content/docs/page-shield/**
+          - src/content/docs/client-side-security/**
 product:pages:
   - changed-files:
       - any-glob-to-any-file:

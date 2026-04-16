@@ -32,6 +32,8 @@ The sandbox container is running and processing requests. All state remains avai
 
 After a period of inactivity (10 minutes by default, configurable via [`sleepAfter`](/sandbox/configuration/sandbox-options/)), the container stops to free resources. When the next request arrives, a fresh container starts. All previous state is lost and the environment resets to its initial state.
 
+**Note**: Containers with [`keepAlive: true`](/sandbox/configuration/sandbox-options/#keepalive) never enter the idle state. They automatically send heartbeat pings every 30 seconds to prevent eviction.
+
 ### Destruction
 
 Sandboxes are explicitly destroyed or automatically cleaned up:
@@ -115,6 +117,21 @@ try {
 **Destroy when**: Session ends, task completes, resources no longer needed
 
 **Don't destroy**: Personal environments, long-running services
+
+### Managing keepAlive containers
+
+Containers with [`keepAlive: true`](/sandbox/configuration/sandbox-options/#keepalive) require explicit management since they do not timeout automatically:
+
+```typescript
+const sandbox = getSandbox(env.Sandbox, 'persistent-task', {
+  keepAlive: true
+});
+
+// Later, when done with long-running work
+await sandbox.setKeepAlive(false); // Allow normal timeout behavior
+// Or explicitly destroy:
+await sandbox.destroy();
+```
 
 ### Handling container restarts
 

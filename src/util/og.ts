@@ -1,4 +1,3 @@
-import { getImage } from "astro:assets";
 import { type CollectionEntry, getEntry } from "astro:content";
 
 const DEFAULT_OG_IMAGE = "/cf-twitter-card.png";
@@ -15,21 +14,6 @@ const PRODUCT_AREA_OG_IMAGES: Record<string, string> = {
 };
 
 export async function getOgImage(entry: CollectionEntry<"docs" | "changelog">) {
-	if (entry.data.preview_image) {
-		if (!entry.data.preview_image.src) {
-			throw new Error(
-				`${entry.id} has a preview_image property in frontmatter that is not a valid image path`,
-			);
-		}
-
-		const image = await getImage({
-			src: entry.data.preview_image,
-			format: "png",
-		});
-
-		return image.src;
-	}
-
 	if (entry.collection === "changelog") {
 		return CHANGELOG_OG_IMAGE;
 	}
@@ -40,11 +24,11 @@ export async function getOgImage(entry: CollectionEntry<"docs" | "changelog">) {
 		return DEFAULT_OG_IMAGE;
 	}
 
-	const product = await getEntry("products", section);
+	const product = await getEntry("directory", section);
 
-	if (product && product.data.product.group) {
+	if (product && product.data.entry.group) {
 		const image =
-			PRODUCT_AREA_OG_IMAGES[product.data.product.group.toLowerCase()];
+			PRODUCT_AREA_OG_IMAGES[product.data.entry.group.toLowerCase()];
 
 		if (image) {
 			return image;

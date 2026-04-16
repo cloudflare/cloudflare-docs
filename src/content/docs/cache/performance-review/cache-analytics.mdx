@@ -1,12 +1,15 @@
 ---
 title: Cache Analytics
 pcx_content_type: concept
+description: View cache hit rates and bandwidth savings in Cache Analytics.
+products:
+  - cache
 
 ---
 
 import { FeatureTable, DashButton } from "~/components"
 
-Use Cache Analytics to improve site performance or reduce origin web server traffic. Cache Analytics helps determine if resources are missing from cache, expired, or ineligible for caching. Cache Analytics includes filter by hostname, list of top URLs that miss cache, and a query of up to three days of data.
+Use Cache Analytics to improve site performance or reduce origin web server traffic. Cache Analytics helps determine if resources are [missing from cache](/cache/concepts/cache-responses/#miss), [expired](/cache/concepts/cache-responses/#expired), or [ineligible for caching](/cache/concepts/cache-responses/#noneunknown). Cache Analytics includes filter by hostname, list of top URLs that miss cache, and a query of up to three days of data.
 
 ## Availability
 
@@ -22,7 +25,7 @@ In the Cloudflare dashboard, go to the **Caching** page.
 
 You can decide wheter to focus on **Requests** or **Data Transfer**:
 
-- **Requests** (default view) help assess performance, as each cache miss slows down content delivery.
+- **Requests** (default view) help assess performance, as each cache [MISS](/cache/concepts/cache-responses/#miss) slows down content delivery.
 - **Data Transfer** is useful for cost analysis, since most hosting providers charge for every byte that leaves their network.
 
 You can switch between these views while keeping other analytics filters applied.

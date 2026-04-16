@@ -1,0 +1,13 @@
+id: cYrzmf
+name: MoQ
+
+entry:
+  title: MoQ
+  url: /moq/
+  group: Developer platform
+  additional_groups: [Media]
+
+meta:
+  title: Cloudflare MoQ docs
+  description: Protocol for live media
+  author: "@cloudflare"

@@ -3,6 +3,28 @@ link: "/realtime/realtimekit/release-notes/"
 productName: RealtimeKit Web Core
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-03-31"
+    title: RealtimeKit Web Core 1.3.0
+    description: |-
+      **Features**
+
+      - Simulcast support is now available to all RealtimeKit clients. Configure it per participant in Preset via the [RealtimeKit dashboard](https://dash.cloudflare.com/?to=/:account/realtime/kit), [Preset API](https://developers.cloudflare.com/api/resources/realtime_kit/subresources/presets/methods/create) using the `config.media.video.simulcast` field, or while [initializing the SDK](/realtime/realtimekit/core/).
+      - Added 4K UHD video support in media production (configurable in Preset and API). Falls back to the maximum supported resolution if the camera does not support 4K.
+  - publish_date: "2026-03-10"
+    title: RealtimeKit Web Core 1.2.5
+    description: |-
+      **Compatibility:** Works best with RealtimeKit Web UI Kit 1.1.1 or later.
+
+      **Enhancements**
+
+      - Implemented retry limits for ICE connection failures to prevent indefinite connection attempts and improve reliability.
+      - Improved error handling for room join operations to provide more descriptive and actionable error messages.
+      - Room join errors are now thrown consistently when network connectivity is blocked by firewalls or when TURN servers are unreachable.
+
+      **Fixes**
+
+      - Fixed an issue in Connected Meetings where peer IDs were not regenerated when switching between rooms. Peer IDs are now correctly assigned per room session.
+
   - publish_date: "2026-01-30"
     title: RealtimeKit Web Core 1.2.4
     description: |-

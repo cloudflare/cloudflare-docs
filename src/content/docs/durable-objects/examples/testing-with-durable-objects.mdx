@@ -19,17 +19,17 @@ Install Vitest and the Workers Vitest integration as dev dependencies:
 <Tabs>
 <TabItem label="npm">
 ```sh
-npm i -D vitest@~3.2.0 @cloudflare/vitest-pool-workers
+npm i -D vitest@^4.1.0 @cloudflare/vitest-pool-workers
 ```
 </TabItem>
 <TabItem label="pnpm">
 ```sh
-pnpm add -D vitest@~3.2.0 @cloudflare/vitest-pool-workers
+pnpm add -D vitest@^4.1.0 @cloudflare/vitest-pool-workers
 ```
 </TabItem>
 <TabItem label="yarn">
 ```sh
-yarn add -D vitest@~3.2.0 @cloudflare/vitest-pool-workers
+yarn add -D vitest@^4.1.0 @cloudflare/vitest-pool-workers
 ```
 </TabItem>
 </Tabs>
@@ -106,19 +106,18 @@ export default {
 
 ## Configure Vitest
 
-Create a `vitest.config.ts` file that uses `defineWorkersConfig`:
+Create a `vitest.config.ts` file that uses the `cloudflareTest()` plugin:
 
 ```ts title="vitest.config.ts"
-import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
+import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
+import { defineConfig } from "vitest/config";
 
-export default defineWorkersConfig({
-	test: {
-		poolOptions: {
-			workers: {
-				wrangler: { configPath: "./wrangler.jsonc" },
-			},
-		},
-	},
+export default defineConfig({
+	plugins: [
+		cloudflareTest({
+			wrangler: { configPath: "./wrangler.jsonc" },
+		}),
+	],
 });
 ```
 
@@ -160,7 +159,7 @@ Create a `test/tsconfig.json` to configure TypeScript for your tests:
 Create an `env.d.ts` file to type the test environment:
 
 ```ts title="test/env.d.ts"
-declare module "cloudflare:test" {
+declare module "cloudflare:workers" {
 	interface ProvidedEnv extends Env {}
 }
 ```
@@ -169,11 +168,11 @@ declare module "cloudflare:test" {
 
 ### Unit tests with direct Durable Object access
 
-You can get a stub to a Durable Object directly from the `env` object provided by `cloudflare:test`:
+You can get a stub to a Durable Object directly from the `env` object provided by `cloudflare:workers`:
 
 <TypeScriptExample filename="test/counter.test.ts">
 ```ts
-import { env } from "cloudflare:test";
+import { env } from "cloudflare:workers";
 import { describe, it, expect, beforeEach } from "vitest";
 
 describe("Counter Durable Object", () => {
@@ -237,18 +236,18 @@ describe("Counter Durable Object", () => {
 ```
 </TypeScriptExample>
 
-### Integration tests with SELF
+### Integration tests with `exports`
 
-Use the `SELF` fetcher to test your Worker's HTTP handler, which routes requests to Durable Objects:
+Use `exports.default.fetch()` to test your Worker's HTTP handler, which routes requests to Durable Objects:
 
 <TypeScriptExample filename="test/integration.test.ts">
 ```ts
-import { SELF } from "cloudflare:test";
+import { exports } from "cloudflare:workers";
 import { describe, it, expect } from "vitest";
 
 describe("Counter Worker integration", () => {
 	it("should increment via HTTP POST", async () => {
-		const response = await SELF.fetch("http://example.com?id=http-test", {
+		const response = await exports.default.fetch("http://example.com?id=http-test", {
 			method: "POST",
 		});
 
@@ -259,22 +258,22 @@ describe("Counter Worker integration", () => {
 
 	it("should get count via HTTP GET", async () => {
 		// First increment the counter
-		await SELF.fetch("http://example.com?id=get-test", { method: "POST" });
-		await SELF.fetch("http://example.com?id=get-test", { method: "POST" });
+		await exports.default.fetch("http://example.com?id=get-test", { method: "POST" });
+		await exports.default.fetch("http://example.com?id=get-test", { method: "POST" });
 
 		// Then get the count
-		const response = await SELF.fetch("http://example.com?id=get-test");
+		const response = await exports.default.fetch("http://example.com?id=get-test");
 		const data = await response.json<{ count: number }>();
 		expect(data.count).toBe(2);
 	});
 
 	it("should use different counters for different IDs", async () => {
-		await SELF.fetch("http://example.com?id=counter-a", { method: "POST" });
-		await SELF.fetch("http://example.com?id=counter-a", { method: "POST" });
-		await SELF.fetch("http://example.com?id=counter-b", { method: "POST" });
+		await exports.default.fetch("http://example.com?id=counter-a", { method: "POST" });
+		await exports.default.fetch("http://example.com?id=counter-a", { method: "POST" });
+		await exports.default.fetch("http://example.com?id=counter-b", { method: "POST" });
 
-		const responseA = await SELF.fetch("http://example.com?id=counter-a");
-		const responseB = await SELF.fetch("http://example.com?id=counter-b");
+		const responseA = await exports.default.fetch("http://example.com?id=counter-a");
+		const responseB = await exports.default.fetch("http://example.com?id=counter-b");
 
 		const dataA = await responseA.json<{ count: number }>();
 		const dataB = await responseB.json<{ count: number }>();
@@ -292,8 +291,8 @@ Use `runInDurableObject()` to access instance properties and storage directly. T
 
 <TypeScriptExample filename="test/direct-access.test.ts">
 ```ts
+import { env } from "cloudflare:workers";
 import {
-	env,
 	runInDurableObject,
 	listDurableObjectIds,
 } from "cloudflare:test";
@@ -349,7 +348,8 @@ Each test automatically gets isolated storage. Durable Objects created in one te
 
 <TypeScriptExample filename="test/isolation.test.ts">
 ```ts
-import { env, listDurableObjectIds } from "cloudflare:test";
+import { env } from "cloudflare:workers";
+import { listDurableObjectIds } from "cloudflare:test";
 import { describe, it, expect } from "vitest";
 
 describe("Test isolation", () => {
@@ -382,7 +382,8 @@ SQLite-backed Durable Objects work seamlessly in tests. The SQL API is available
 
 <TypeScriptExample filename="test/sqlite.test.ts">
 ```ts
-import { env, runInDurableObject } from "cloudflare:test";
+import { env } from "cloudflare:workers";
+import { runInDurableObject } from "cloudflare:test";
 import { describe, it, expect } from "vitest";
 
 describe("SQLite in Durable Objects", () => {
@@ -421,8 +422,8 @@ Use `runDurableObjectAlarm()` to immediately trigger a scheduled alarm without w
 
 <TypeScriptExample filename="test/alarm.test.ts">
 ```ts
+import { env } from "cloudflare:workers";
 import {
-	env,
 	runInDurableObject,
 	runDurableObjectAlarm,
 } from "cloudflare:test";

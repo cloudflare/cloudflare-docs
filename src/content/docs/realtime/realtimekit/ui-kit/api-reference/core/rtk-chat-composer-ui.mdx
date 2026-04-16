@@ -1,0 +1,43 @@
+---
+pcx_content_type: navigation
+title: rtk-chat-composer-ui
+description: API reference for rtk-chat-composer-ui component (Web Components (HTML) Library)
+---
+@deprecated . This component is deprecated, please use rtk-chat-composer-view instead.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `canSendFiles` | `boolean` | ✅ | - | Whether user can send file messages |
+| `canSendTextMessage` | `boolean` | ✅ | - | Whether user can send text messages |
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `prefill` | `{     suggestedReplies?: string[];     editMessage?: TextMessage;     replyMessage?: TextMessage;   }` | ❌ | - | prefill the composer |
+| `size` | `Size1` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-chat-composer-ui></rtk-chat-composer-ui>
+```
+
+### With Properties
+
+```html
+<rtk-chat-composer-ui
+ size="md">
+</rtk-chat-composer-ui>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-chat-composer-ui");
+
+  el.canSendFiles= true;
+  el.canSendTextMessage= true;
+</script>
+```

@@ -1,0 +1,35 @@
+---
+title: "Detect Cloudflare API tokens with DLP"
+description: "The Credentials and Secrets DLP profile now includes predefined entries to detect Cloudflare User API Keys, User API Tokens, and Account Owned API Tokens across your environment."
+date: "2026-04-14"
+products: [dlp]
+---
+
+The **Credentials and Secrets** DLP profile now includes three new predefined entries for detecting Cloudflare API credentials:
+
+| Entry name | Token prefix | Detects |
+| --- | --- | --- |
+| Cloudflare User API Key | `cfk_` | User-scoped API keys |
+| Cloudflare User API Token | `cfut_` | User-scoped API tokens |
+| Cloudflare Account Owned API Token | `cfat_` | Account-scoped API tokens |
+
+These detections target the new [Cloudflare API credential format](/fundamentals/api/get-started/token-formats/), which uses a structured prefix and a CRC32 checksum suffix. The identifiable prefix makes it possible to detect leaked credentials with high confidence and low false positive rates — no surrounding context such as `Authorization: Bearer` headers is required.
+
+Credentials generated before this format change will not be matched by these entries.
+
+## How to enable Cloudflare API token detections
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **DLP** > **DLP Profiles**.
+2. Select the **Credentials and Secrets** profile.
+3. Turn on one or more of the new Cloudflare API token entries.
+4. Use the profile in a Gateway HTTP policy to log or block traffic containing these credentials.
+
+Example policy:
+
+| Selector | Operator | Value | Action |
+| --- | --- | --- | --- |
+| DLP Profile | in | _Credentials and Secrets_ | Block |
+
+You can also enable individual entries to scope detection to specific credential types — for example, enabling **Account Owned API Token** detection without enabling **User API Key** detection.
+
+For more information, refer to [predefined DLP profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/predefined-profiles/).

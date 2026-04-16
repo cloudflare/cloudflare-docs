@@ -1,0 +1,14 @@
+id: EuzrMp
+name: Network Flow
+
+entry:
+  title: Network Flow
+  url: /network-flow/
+  wrap: true
+  group: Network security
+  additional_groups: [Analytics]
+
+meta:
+  title: Cloudflare Network Flow docs
+  description: Visibility into your network and cloud traffic by analyzing network flow data
+  author: "@cloudflare"

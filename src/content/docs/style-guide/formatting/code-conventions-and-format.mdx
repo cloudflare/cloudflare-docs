@@ -1,7 +1,6 @@
 ---
 pcx_content_type: concept
 title: Code conventions and format
-
 ---
 
 Use the conventions described below throughout Cloudflare product content.
@@ -36,7 +35,9 @@ Specify a subsearch that starts with this search command: `tag=dns query [search
 
 ## Curly braces ( `{` and `}` )
 
-Do not use curly braces for URL or variable placeholders. Instead, refer to [angle brackets](#angle-brackets---and--).
+As a general rule, do not use curly braces for URL or variable placeholders. Instead, refer to [angle brackets](#angle-brackets---and--).
+
+Curly braces are acceptable around parameter names when referring to a specific API schema path (for example, `/api/v4/{account_id}`). However, in API examples (`curl` blocks or [`APIRequest`](/style-guide/components/api-request/) blocks) use shell variables instead (for example, `$ACCOUNT_ID`). The `APIRequest` component handles this automatically for variables in the API operation's URL path. For more information, refer to [Guidelines for cURL commands](/style-guide/api-content-strategy/guidelines-for-curl-commands/).
 
 ## >
 

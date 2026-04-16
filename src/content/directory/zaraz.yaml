@@ -1,0 +1,13 @@
+id: hCkLP9
+name: Zaraz
+
+entry:
+  title: Zaraz
+  url: /zaraz/
+  group: Developer platform
+  additional_groups: [Application performance, Analytics, Privacy]
+
+meta:
+  title: Cloudflare Zaraz docs
+  description: Run third-party tools and services on the cloud for improved speed and security
+  author: "@cloudflare"

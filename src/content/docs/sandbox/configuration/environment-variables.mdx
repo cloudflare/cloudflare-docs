@@ -5,7 +5,59 @@ sidebar:
   order: 3
 ---
 
+import { WranglerConfig } from "~/components";
+
 Pass configuration, secrets, and runtime settings to your sandboxes using environment variables.
+
+## SDK configuration variables
+
+These environment variables configure how the Sandbox SDK behaves. Set these as Worker `vars` in your `wrangler.jsonc` file. The SDK reads them from the Worker's environment bindings.
+
+### SANDBOX_TRANSPORT
+
+| | |
+|---|---|
+| **Type** | `"http"` \| `"websocket"` |
+| **Default** | `"http"` |
+
+Controls the transport protocol for SDK-to-container communication. WebSocket transport multiplexes all operations over a single persistent connection, avoiding [subrequest limits](/workers/platform/limits/#subrequests) when performing many SDK operations per request.
+
+<WranglerConfig>
+```jsonc
+{
+	"vars": {
+		"SANDBOX_TRANSPORT": "websocket"
+	}
+}
+```
+</WranglerConfig>
+
+See [Transport modes](/sandbox/configuration/transport/) for a complete guide including when to use each transport, performance considerations, and migration instructions.
+
+### COMMAND_TIMEOUT_MS
+
+| | |
+|---|---|
+| **Type** | `number` (milliseconds) |
+| **Default** | None (no timeout) |
+
+Sets a global default timeout for every `exec()` call. When set, any command that exceeds this duration raises an error on the caller side and closes the connection.
+
+Per-command `timeout` on `exec()` and session-level `commandTimeoutMs` on [`createSession()`](/sandbox/api/sessions/#createsession) both override this value. For more details on timeout precedence, refer to [Execute commands - Timeouts](/sandbox/guides/execute-commands/#timeouts).
+
+<WranglerConfig>
+```jsonc
+{
+	"vars": {
+		"COMMAND_TIMEOUT_MS": "30000"
+	}
+}
+```
+</WranglerConfig>
+
+:::note
+A timeout does not kill the underlying process. It only terminates the connection to the caller. The process continues running until the session is deleted or the sandbox is destroyed.
+:::
 
 ## Three ways to set environment variables
 
@@ -35,6 +87,16 @@ await sandbox.setEnvVars({
 ```
 
 **Use when:** You need the same environment variables for multiple commands.
+
+**Unsetting variables**: Pass `undefined` or `null` to unset environment variables:
+
+```typescript
+await sandbox.setEnvVars({
+	API_KEY: 'new-key',     // Sets API_KEY
+	OLD_SECRET: undefined,  // Unsets OLD_SECRET
+	DEBUG_MODE: null        // Unsets DEBUG_MODE
+});
+```
 
 ### 2. Per-command with exec() options
 
@@ -81,6 +143,56 @@ await session.exec("python seed.py");
 
 **Use when:** You need isolated execution contexts with different environment variables running concurrently.
 
+## Unsetting environment variables
+
+The Sandbox SDK supports unsetting environment variables by passing `undefined` or `null` values. This enables idiomatic JavaScript patterns for managing configuration:
+
+```typescript
+await sandbox.setEnvVars({
+	// Set new values
+	API_KEY: 'new-key',
+	DATABASE_URL: env.DATABASE_URL,
+
+	// Unset variables (removes them from the environment)
+	OLD_API_KEY: undefined,
+	TEMP_TOKEN: null
+});
+```
+
+**Before this change**: Passing `undefined` values would throw a runtime error.
+
+**After this change**: `undefined` and `null` values run `unset VARIABLE_NAME` in the shell.
+
+### Use cases for unsetting
+
+**Remove sensitive data after use:**
+
+```typescript
+// Use a temporary token
+await sandbox.setEnvVars({ TEMP_TOKEN: 'abc123' });
+await sandbox.exec('curl -H "Authorization: $TEMP_TOKEN" api.example.com');
+
+// Clean up the token
+await sandbox.setEnvVars({ TEMP_TOKEN: undefined });
+```
+
+**Conditional environment setup:**
+
+```typescript
+await sandbox.setEnvVars({
+	API_KEY: env.API_KEY,
+	DEBUG_MODE: env.NODE_ENV === 'development' ? 'true' : undefined,
+	PROFILING: env.ENABLE_PROFILING ? 'true' : undefined
+});
+```
+
+**Reset to system defaults:**
+
+```typescript
+// Unset to fall back to container's default NODE_ENV
+await sandbox.setEnvVars({ NODE_ENV: undefined });
+```
+
 ## Common patterns
 
 ### Pass Worker secrets to sandbox
@@ -95,8 +207,11 @@ wrangler secret put DATABASE_URL
 Then pass them to your sandbox:
 
 ```typescript
+import { getSandbox } from "@cloudflare/sandbox";
+export { Sandbox } from "@cloudflare/sandbox";
+
 interface Env {
-	Sandbox: DurableObjectNamespace;
+	Sandbox: DurableObjectNamespace<Sandbox>;
 	OPENAI_API_KEY: string;
 	DATABASE_URL: string;
 }
@@ -156,6 +271,10 @@ await Promise.all([
 ]);
 ```
 
+### Configure transport mode
+
+Set `SANDBOX_TRANSPORT` in your Worker's `vars` to switch between HTTP and WebSocket transport. See [Transport modes](/sandbox/configuration/transport/) for details on when and how to configure each transport.
+
 ### Bucket mounting credentials
 
 When mounting S3-compatible object storage, the SDK uses **s3fs-fuse** under the hood, which requires AWS-style credentials. For R2, generate API tokens from the Cloudflare dashboard and provide them using AWS environment variable names:
@@ -177,15 +296,14 @@ wrangler secret put AWS_SECRET_ACCESS_KEY
 # Paste your R2 Secret Access Key
 ```
 
-:::caution[Production only]
-Bucket mounting requires production deployment. It does not work with `wrangler dev` due to FUSE support limitations. See [Mount buckets guide](/sandbox/guides/mount-buckets/) for details.
-:::
-
 **Mount buckets with automatic credential detection:**
 
 ```typescript
+import { getSandbox } from "@cloudflare/sandbox";
+export { Sandbox } from "@cloudflare/sandbox";
+
 interface Env {
-	Sandbox: DurableObjectNamespace;
+	Sandbox: DurableObjectNamespace<Sandbox>;
 	AWS_ACCESS_KEY_ID: string;
 	AWS_SECRET_ACCESS_KEY: string;
 }
@@ -252,7 +370,9 @@ await sandbox.exec("node app.js", {
 
 ## Related resources
 
+- [Transport modes](/sandbox/configuration/transport/) - Configure HTTP vs WebSocket transport
 - [Wrangler configuration](/sandbox/configuration/wrangler/) - Setting Worker-level environment
 - [Secrets](/workers/configuration/secrets/) - Managing sensitive data
 - [Sessions API](/sandbox/api/sessions/) - Session-level environment variables
 - [Security model](/sandbox/concepts/security/) - Understanding data isolation
+- [Proxy requests to external APIs](/sandbox/guides/proxy-requests/) - Keep credentials out of the sandbox entirely using a Worker proxy

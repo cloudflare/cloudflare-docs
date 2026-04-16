@@ -1,5 +1,7 @@
 ---
 pcx_content_type: navigation
+products:
+  - ssl
 title: Edge certificates
 sidebar:
   order: 4
@@ -15,6 +17,15 @@ import { GlossaryTooltip } from "~/components"
 Consider the information below for guidance on how to choose different edge certificates for common use cases, or refer to the other pages in this section for more options.
 
 If you are not familiar with what SSL/TLS certificates are, refer to [Concepts](/ssl/concepts/).
+
+:::note
+Occasionally, the Cloudflare dashboard displays a wildcard certificate with only the apex hostname listed (and does not include the wildcard symbol `*`).
+
+This behavior occurs when all of the following conditions are true:
+
+* The zone is on a [subdomain setup](/dns/zone-setups/subdomain-setup/).
+* The certificate has a subject or SAN that is a wildcard for the zone's parent domain.
+:::
 
 ## Use cases
 

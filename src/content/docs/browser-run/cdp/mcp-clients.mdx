@@ -1,0 +1,133 @@
+---
+pcx_content_type: how-to
+title: Using with MCP clients (CDP)
+description: Configure AI coding agents to control Browser Run sessions through the Model Context Protocol (MCP) using the chrome-devtools-mcp package.
+sidebar:
+  order: 4
+---
+
+import { Render } from "~/components";
+
+You can use the CDP endpoints with AI coding agents through the [Model Context Protocol (MCP)](https://modelcontextprotocol.io/). The [chrome-devtools-mcp](https://github.com/ChromeDevTools/chrome-devtools-mcp) package provides an MCP server that allows AI assistants to control and inspect browser sessions.
+
+<Render file="rest-api-token-permissions" product="browser-run" />
+
+## What is MCP?
+
+The Model Context Protocol (MCP) is an open protocol that enables AI assistants to interact with external tools and services. By configuring an MCP client with Browser Run, your AI coding agent can perform browser automation tasks like navigating to pages, taking screenshots, running performance audits, and debugging JavaScript.
+
+## Prerequisites
+
+- Node.js v20.19 or newer
+- An MCP-compatible AI client (for example, Claude Desktop, Claude Code, Cursor, OpenCode)
+- A Browser Run API token with `Browser Rendering - Edit` permissions
+
+## Configure your MCP client
+
+Add the following configuration to your MCP client settings file (the exact location depends on your client):
+
+### Claude Desktop and Claude Code
+
+Add to `claude_desktop_config.json` (Claude Desktop) or `~/.claude.json` (Claude Code):
+
+```json
+{
+	"mcpServers": {
+		"browser-rendering": {
+			"command": "npx",
+			"args": [
+				"-y",
+				"chrome-devtools-mcp@latest",
+				"--wsEndpoint=wss://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-rendering/devtools/browser?keep_alive=600000",
+				"--wsHeaders={\"Authorization\":\"Bearer <API_TOKEN>\"}"
+			]
+		}
+	}
+}
+```
+
+### OpenCode
+
+Add to `.opencode.jsonc`:
+
+```json
+{
+	"mcp": {
+		"browser-rendering": {
+			"type": "local",
+			"command": [
+				"npx",
+				"-y",
+				"chrome-devtools-mcp@latest",
+				"--wsEndpoint=wss://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-rendering/devtools/browser?keep_alive=600000",
+				"--wsHeaders={\"Authorization\":\"Bearer <API_TOKEN>\"}"
+			],
+			"enabled": true
+		}
+	}
+}
+```
+
+### Cursor
+
+Add to `~/.cursor/mcp.json`:
+
+```json
+{
+	"mcpServers": {
+		"browser-rendering": {
+			"command": "npx",
+			"args": [
+				"-y",
+				"chrome-devtools-mcp@latest",
+				"--wsEndpoint=wss://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-rendering/devtools/browser?keep_alive=600000",
+				"--wsHeaders={\"Authorization\":\"Bearer <API_TOKEN>\"}"
+			]
+		}
+	}
+}
+```
+
+Replace `ACCOUNT_ID` with your Cloudflare account ID and `API_TOKEN` with your Browser Run API token. You can obtain these from your Cloudflare dashboard.
+
+For other MCP clients, refer to the [chrome-devtools-mcp documentation](https://github.com/ChromeDevTools/chrome-devtools-mcp/tree/main?tab=readme-ov-file#mcp-client-configuration).
+
+## Example usage
+
+After configuring the MCP client, you can ask your AI agent to perform browser tasks:
+
+```txt
+Navigate to https://example.com and take a screenshot of the homepage
+```
+
+```txt
+Check the console messages on the current page for any errors
+```
+
+```txt
+Run a Lighthouse audit on https://developers.cloudflare.com
+```
+
+## How it works
+
+The MCP server connects to Browser Run via WebSocket using the CDP protocol:
+
+1. **WebSocket endpoint** - The `--wsEndpoint` URL connects to the Browser Run service
+2. **Authentication** - The `--wsHeaders` parameter includes your API token for authentication
+3. **Keep-alive** - The `keep_alive` query parameter (in milliseconds) specifies how long the session stays active
+4. **MCP protocol** - The server translates MCP tool calls into CDP commands
+
+:::note[Session management]
+The `--wsEndpoint` parameter creates a new browser session automatically when the MCP server starts. The session remains active for the duration specified in `keep_alive` (in the examples above, 10 minutes). The MCP server will use this session for all browser operations until it is restarted.
+:::
+
+## Additional resources
+
+- [chrome-devtools-mcp repository](https://github.com/ChromeDevTools/chrome-devtools-mcp) - Official MCP server for Chrome DevTools
+- [Model Context Protocol documentation](https://modelcontextprotocol.io/) - Learn more about MCP
+- [Claude Desktop MCP setup](https://modelcontextprotocol.io/docs/develop/connect-local-servers) - Configure MCP servers in Claude Desktop
+- [Claude Code MCP setup](https://docs.anthropic.com/en/docs/claude-code/mcp) - Configure MCP servers in Claude Code
+- [Cursor MCP setup](https://cursor.com/docs/mcp) - Configure MCP servers in Cursor
+- [OpenCode MCP setup](https://opencode.ai/docs/mcp-servers/) - Configure MCP servers in OpenCode
+
+<Render file="faq" product="browser-run" />

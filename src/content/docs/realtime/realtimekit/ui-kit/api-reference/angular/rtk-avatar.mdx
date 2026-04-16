@@ -1,0 +1,37 @@
+---
+pcx_content_type: navigation
+title: rtk-avatar
+description: API reference for rtk-avatar component (Angular Library)
+---
+Avatar component which renders a participant's image or their initials.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `participant` | `Peer \| WaitlistedParticipant \| { name: string; picture: string }` | ✅ | - | Participant object |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `AvatarVariant` | ✅ | - | Avatar type |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-avatar></rtk-avatar>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-avatar
+ participant="example"
+ size="md"
+ variant="circular">
+</rtk-avatar>
+```
+

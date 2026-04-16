@@ -22,6 +22,8 @@ import rehypeHeadingSlugs from "./src/plugins/rehype/heading-slugs.ts";
 import rehypeShiftHeadings from "./src/plugins/rehype/shift-headings.ts";
 import { createSitemapLastmodSerializer } from "./sitemap.serializer.ts";
 
+import skills from "astro-skills";
+
 async function autogenSections() {
 	const sections = (
 		await readdir("./src/content/docs/", {
@@ -133,8 +135,12 @@ export default defineConfig({
 				...(RUN_LINK_CHECK
 					? [
 							starlightLinksValidator({
+								failOnError: false,
 								errorOnInvalidHashes: false,
 								errorOnLocalLinks: false,
+								reporters: {
+									json: true,
+								},
 								exclude: [
 									"/api/",
 									"/api/**",
@@ -142,6 +148,8 @@ export default defineConfig({
 									"/http/resources/**",
 									"/llms.txt",
 									"/llms-full.txt",
+									"**/llms.txt",
+									"**/index.md",
 									"{props.*}",
 									"/",
 									"/glossary/",
@@ -153,10 +161,10 @@ export default defineConfig({
 									"/workers/examples/?tags=*",
 									"/workers/llms-full.txt",
 									"/workers-ai/models/**",
-									"**index.md",
 									"/markdown.zip",
 									"/style-guide/index.md",
-									"/style-guide/fixtures/markdown/index.md",
+									"/videos/**",
+									"/search/**",
 								],
 							}),
 						]
@@ -177,6 +185,7 @@ export default defineConfig({
 			lastUpdated: true,
 			markdown: {
 				headingLinks: false,
+				processedDirs: ["./src/content/partials/", "./src/content/changelog/"],
 			},
 			routeMiddleware: "./src/plugins/starlight/route-data.ts",
 			disable404Route: true,
@@ -198,6 +207,7 @@ export default defineConfig({
 			serialize: createSitemapLastmodSerializer(),
 		}),
 		react(),
+		skills(),
 	],
 	vite: {
 		resolve: {
@@ -207,6 +217,12 @@ export default defineConfig({
 				),
 				"../components/Page.astro": fileURLToPath(
 					new URL("./src/components/overrides/Page.astro", import.meta.url),
+				),
+				"./SidebarSublist.astro": fileURLToPath(
+					new URL(
+						"./src/components/overrides/SidebarSublist.astro",
+						import.meta.url,
+					),
 				),
 			},
 		},

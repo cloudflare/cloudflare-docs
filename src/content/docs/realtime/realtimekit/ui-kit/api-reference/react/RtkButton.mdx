@@ -1,0 +1,46 @@
+---
+pcx_content_type: navigation
+title: RtkButton
+description: API reference for RtkButton component (React Library)
+---
+A button that follows RTK Design System.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `disabled` | `boolean` | ✅ | - | Where the button is disabled or not |
+| `kind` | `ButtonKind` | ✅ | - | Button type |
+| `reverse` | `boolean` | ✅ | - | Whether to reverse order of children |
+| `size` | `Size` | ✅ | - | Size |
+| `type` | `HTMLButtonElement['type']` | ✅ | - | Button type |
+| `variant` | `ButtonVariant` | ✅ | - | Button variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkButton } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkButton />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkButton } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkButton
+      disabled={true}
+      kind={buttonkind}
+      reverse={true}
+    />
+  );
+}
+```
+

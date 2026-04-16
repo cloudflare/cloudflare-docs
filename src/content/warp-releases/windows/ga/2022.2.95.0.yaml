@@ -5,7 +5,7 @@ releaseNotes: |-
 
   **Notable updates**
   - Added support for Gateway session duration enforcement. This allows administrators to force re-authentication after a specified time.
-  - The "enabled" mdm.xml property has now been completely deprecated and is no longer respected. Please see https://developers.cloudflare.com/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters#switch_locked for switch_locked mechanism that was announced in April 2021
+  - The "enabled" mdm.xml property has now been completely deprecated and is no longer respected. Please see https://developers.cloudflare.com/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters#switch_locked for switch_locked mechanism that was announced in April 2021
   - Now that settings exist in the Zero Trust Dashboard, the Client UI should behave the same for clients manually joined to a Team and clients forced to by local mdm.xml policy
   - Updated Teams logo in app to Zero Trust
   - Modified GUI exit behavior for users who manually joined their device to a Team. Quitting the app will still keep the service running and enforcing policy for clients that were deployed via mdm/Intune/etc.

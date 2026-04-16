@@ -1,6 +1,9 @@
 ---
 title: Available skip options
 pcx_content_type: reference
+description: Available skip options for WAF custom rules.
+products:
+  - waf
 sidebar:
   order: 4
   label: Skip options
@@ -34,6 +37,14 @@ The phases you can skip are the following:
 
 Refer to [Phases](/ruleset-engine/about/phases/) for more information.
 
+:::note[Notes]
+
+Currently, you cannot skip [Bot Fight Mode](/bots/get-started/bot-fight-mode/), only Super Bot Fight Mode.
+
+Skipping a phase does not skip security products that run outside the Ruleset Engine, such as [Browser Integrity Check](/waf/tools/browser-integrity-check/) or [Zone Lockdown](/waf/tools/zone-lockdown/). To skip those products, use the [Skip products](#skip-products) option instead.
+
+:::
+
 ## Skip products
 
 - API action parameter: `products`
@@ -51,8 +62,6 @@ Skips specific security products that are not based on the Ruleset Engine. The p
 | [Managed rules (Previous version)](/waf/reference/legacy/old-waf-managed-rules/)   | `waf`           |
 
 The API values in the table are case-sensitive.
-
-Currently, you cannot skip [Bot Fight Mode](/bots/get-started/bot-fight-mode/), only Super Bot Fight Mode (refer to [Skip phases](#skip-phases)).
 
 ## Skip the remaining custom rules (current phase)
 

@@ -25,7 +25,7 @@ This document is aimed at administrators who are evaluating or have adopted Clou
 - **Building policies**: The main components of an access policy and how they are combined.
 - **Use cases**: Common use cases and policies that can serve as blueprints for your own policy designs.
 
-This design guide assumes you have a basic understanding of Cloudflare's ZTNA solution, [Cloudflare Access](/cloudflare-one/access-controls/). Therefore, this guide focuses on designing effective access policies and assumes you have already configured [DNS](/cloudflare-one/traffic-policies/initial-setup/dns/), [identity](/cloudflare-one/integrations/identity-providers/) and [device posture providers](/cloudflare-one/integrations/service-providers/) as well as [created connectivity](/cloudflare-one/networks/) to self-hosted applications and related networks.
+This design guide assumes you have a basic understanding of Cloudflare's ZTNA solution, [Cloudflare Access](/cloudflare-one/access-controls/). Therefore, this guide focuses on designing effective access policies and assumes you have already configured [DNS](/cloudflare-one/traffic-policies/get-started/dns/), [identity](/cloudflare-one/integrations/identity-providers/) and [device posture providers](/cloudflare-one/integrations/service-providers/) as well as [created connectivity](/cloudflare-one/networks/) to self-hosted applications and related networks.
 
 By the end of this guide, you will be equipped to implement granular access policies that enforce Zero Trust principles across various common enterprise scenarios.
 
@@ -59,10 +59,10 @@ Cloudflare supports access to the following types of applications:
 
 For SaaS and other Internet-facing applications, access from Cloudflare is simple — it is already on the Internet. But for self-hosted applications, you create a tunnel from Cloudflare to the private network where the application is running. There are two methods for doing this:
 
-- Our recommended approach is to use [software agents](/cloudflare-one/networks/connectors/cloudflare-tunnel/) such as [cloudflared](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/) or [WARP connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/). (Note, only cloudflared currently supports proxying of public hostnames to private applications.)
-- For network-based connectivity, [Magic WAN](/magic-wan/) uses IPsec or GRE tunnels connecting Cloudflare to existing network appliances that are connected to the private networks, and [Network Interconnect](/network-interconnect/) creates direct connectivity if your applications run on servers in a data center Cloudflare operates in. (For migrating from existing legacy VPN solutions to network-based tunnels, you may find [this guide](/reference-architecture/design-guides/network-vpn-migration/) useful.)
+- Our recommended approach is to use [software agents](/cloudflare-one/networks/connectors/cloudflare-tunnel/) such as [cloudflared](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/) or [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/). (Note, only cloudflared currently supports proxying of public hostnames to private applications.)
+- For network-based connectivity, [Cloudflare WAN](/cloudflare-wan/) (formerly Magic WAN) uses IPsec or GRE tunnels connecting Cloudflare to existing network appliances that are connected to the private networks, and [Network Interconnect](/network-interconnect/) creates direct connectivity if your applications run on servers in a data center Cloudflare operates in. (For migrating from existing legacy VPN solutions to network-based tunnels, you may find [this guide](/reference-architecture/design-guides/network-vpn-migration/) useful.)
 
-Once we have established connectivity to your applications, it is time to facilitate user access. Depending on your policy requirements (more on this later) users can access the application directly over an Internet connection to a public hostname, or — for greater security — we recommend using our [device agent](/cloudflare-one/team-and-resources/devices/warp/), Cloudflare WARP, which creates a tunnel directly to Cloudflare and also provides information about their device for use in access policies.
+Once we have established connectivity to your applications, it is time to facilitate user access. Depending on your policy requirements (more on this later) users can access the application directly over an Internet connection to a public hostname, or — for greater security — we recommend using our [device agent](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/), the Cloudflare One Client, which creates a tunnel directly to Cloudflare and also provides information about their device for use in access policies.
 
 ### Identity
 
@@ -70,7 +70,7 @@ A critical part of application access is authenticating a user. Cloudflare has a
 
 ### Device posture
 
-The final prerequisite for building really effective access policies is to configure [device posture](/cloudflare-one/reusable-components/posture-checks/). When using the [device agent](/cloudflare-one/team-and-resources/devices/warp/), Cloudflare has access to a [variety of information](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/) about the device which can then be used in an access policy. When using an [agentless method](/reference-architecture/diagrams/sase/sase-clientless-access-private-dns/) to access applications, only the user identity information is available. We also support using device posture information from [other vendors](/cloudflare-one/integrations/service-providers/), such as Microsoft, Crowdstrike and Sentinel One.
+The final prerequisite for building really effective access policies is to configure [device posture](/cloudflare-one/reusable-components/posture-checks/). When using the [device agent](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/), Cloudflare has access to a [variety of information](/cloudflare-one/reusable-components/posture-checks/client-checks/) about the device which can then be used in an access policy. When using an [agentless method](/reference-architecture/diagrams/sase/sase-clientless-access-private-dns/) to access applications, only the user identity information is available. We also support using device posture information from [other vendors](/cloudflare-one/integrations/service-providers/), such as Microsoft, Crowdstrike and Sentinel One.
 
 ![Figure 2 - two employees with different devices trying to access the same corporate application. Only the user with the device agent can access the SSH service.](~/assets/images/reference-architecture/designing-ztna-access-policies-for-cloudflare-access/figure2.svg "Figure 2 - two employees with different devices trying to access the same corporate application. Only the user with the device agent can access the SSH service.")
 
@@ -89,7 +89,7 @@ When a user makes a request to access an application, they must first authentica
 Cloudflare Access supports four main types of applications:
 
 - **Self-hosted** refers to applications that your organization hosts and manages, either on premises or in the cloud. Cloudflare creates a public hostname which it uses to proxy traffic through a secure tunnel to the application. While access via public hostnames is supported if your server is just publicly facing on the Internet, we recommend you use `cloudflared` to create a secure, outbound-only connection from your application to Cloudflare's edge. Once that occurs, Cloudflare will then reverse proxy the target application/content to your users.
-- **Private IP** applications are similarly privately hosted, but lack fully-qualified public hostnames. Access can be facilitated via `cloudflared`, WARP Connector, Cloudflare Magic WAN, or Cloudflare Network Interconnect. Remote users not connected to a network already connected to Cloudflare will need to use the device client to get access to the application via private IP and to avoid using IP addresses with users, use [internal DNS services](/cloudflare-one/traffic-policies/resolver-policies/#use-cases) to resolve private hostnames to private IP addresses. But it is possible to provide access without any software deployed to the client by using our agentless [browser isolation service](/reference-architecture/diagrams/sase/sase-clientless-access-private-dns/).
+- **Private IP** applications are similarly privately hosted, but lack fully-qualified public hostnames. Access can be facilitated via `cloudflared`, Cloudflare Mesh, Cloudflare WAN, or Cloudflare Network Interconnect. Remote users not connected to a network already connected to Cloudflare will need to use the device client to get access to the application via private IP and to avoid using IP addresses with users, use [internal DNS services](/cloudflare-one/traffic-policies/resolver-policies/#use-cases) to resolve private hostnames to private IP addresses. But it is possible to provide access without any software deployed to the client by using our agentless [browser isolation service](/reference-architecture/diagrams/sase/sase-clientless-access-private-dns/).
 - **SaaS** applications are accessed over the public Internet, and therefore do not require any tunnel connectivity to Cloudflare. Instead, Access acts as an identity proxy between users and the SaaS application. When a user attempts to access the SaaS app, they are first authenticated by Cloudflare, which redirects to your main identity service. SaaS applications are then configured via SAML or OAuth to trust Cloudflare. This allows organizations to implement additional security layers (like device posture checks) and centralize access control for their SaaS applications, even if the SaaS or identity provider does not natively support these features.
 - **Infrastructure** applications enable users to control access to individual servers, clusters or databases in a private network. Infrastructure apps work by defining a 'target' proxied over `cloudflared`, but allows users to group multiple machines under the same target - essentially, allowing users to define common access policies across potentially disparate infrastructure resources. Built-in access and command logging capabilities means organizations can maintain detailed audit trails for compliance and security investigation purposes.
 
@@ -167,7 +167,7 @@ There are many different [types of selectors](/cloudflare-one/access-controls/po
 - **Is user traffic coming over Cloudflare Gateway?**
   Guaranteeing that a user only accesses an application over our SWG, Cloudflare Gateway, is a great way to prevent unauthorized access due to phishing or credential theft. Additionally, you can ensure all traffic bound to the application is logged and filtered by Cloudflare Gateway.
 
-  You can configure this control by enabling the "gateway" device posture check and then requiring "gateway" in your application policies. Requiring "gateway" is more flexible than relying solely on the device agent because users can also on-ramp from Browser Isolation or a Magic WAN-connected site, both of which provide traffic logging and filtering. Additionally, when using the device agent, this allows you to guarantee that a user is coming from a compliant device that has passed a set of device posture checks.
+  You can configure this control by enabling the "gateway" device posture check and then requiring "gateway" in your application policies. Requiring "gateway" is more flexible than relying solely on the device agent because users can also on-ramp from Browser Isolation or a Cloudflare WAN-connected site, both of which provide traffic logging and filtering. Additionally, when using the device agent, this allows you to guarantee that a user is coming from a compliant device that has passed a set of device posture checks.
 
   Requiring the gateway is enforced continuously for [self-hosted applications](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/). For SaaS apps, it is only enforced at the time of login. However, a dedicated egress IP can be leveraged in tandem to enforce that traffic always goes via Cloudflare Gateway.
 
@@ -282,7 +282,7 @@ This is a very simple Access Group, with just two group selectors. Note that bec
 
 As you can see, it defines that "all employees" are those in the Azure AD group "Full Time Employees", who are also in the group "Completed security training." The first selector defines the initial scope of the Access Group, and the second selector requires that they must also be in that specific group.
 
-This Access Group requires that three [device posture checks](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/) have been created for the [OS version](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/os-version/). For example, the posture check "Latest version of macOS" is defined as "macOS version is greater than or equal to 15.1" and reflects the latest version the company considers stable and secure (vs. the very latest OS version). Once included in the Access policy, this will enforce the logic we’ve established here - if any user wants to sign in as a 'Secure Employee', they'll need to meet these requirements.
+This Access Group requires that three [device posture checks](/cloudflare-one/reusable-components/posture-checks/client-checks/) have been created for the [OS version](/cloudflare-one/reusable-components/posture-checks/client-checks/os-version/). For example, the posture check "Latest version of macOS" is defined as "macOS version is greater than or equal to 15.1" and reflects the latest version the company considers stable and secure (vs. the very latest OS version). Once included in the Access policy, this will enforce the logic we’ve established here - if any user wants to sign in as a 'Secure Employee', they'll need to meet these requirements.
 
 #### Employees on trusted devices
 
@@ -341,7 +341,7 @@ But notice we now enable "Isolate Application." What does this mean? This forces
 
 In the example above, the SWG policy is matching any traffic heading to your company wiki, then enforcing RBI (to match the ZTNA application policy) and then disabling all interaction with the wiki.
 
-It also adds the device posture check "WARP Check (Mac OS)" to scan the user's device for the presence of our device agent. If the user's device does not have the agent installed and enabled, then the device posture check cannot occur and they will automatically fail to meet the policy requirements. If the user does have the device agent enabled, then they will pass the posture check and be granted full wiki access. Note that WARP is the name used for our device agent.
+It also adds the device posture check "WARP Check (Mac OS)" to scan the user's device for the presence of our device agent. If the user's device does not have the agent installed and enabled, then the device posture check cannot occur and they will automatically fail to meet the policy requirements. If the user does have the device agent enabled, then they will pass the posture check and be granted full wiki access. Note that "WARP" is the previous name for the Cloudflare One Client, which is Cloudflare's device agent.
 
 Essentially, the employee on an insecure device is permitted to view the wiki in a "read-only" mode, but is restricted from further interactions like uploading/downloading or copying/pasting confidential information.
 
@@ -349,7 +349,7 @@ This policy approach accomplishes several objectives:
 
 1. It enforces the use of trusted devices for full access to the wiki, aligning with your Zero Trust security goals.
 2. It provides a fallback option for employees using personal devices, allowing them to access the wiki in a limited, secure manner through browser isolation.
-3. It incentivizes employees to use their company devices and/or keep WARP enabled, which is a net positive for an organization's security posture.
+3. It incentivizes employees to use their company devices and/or keep the Cloudflare One Client enabled, which is a net positive for an organization's security posture.
 4. It demonstrates the power and flexibility of more granular security controls achieved by combining Cloudflare Access policies with Cloudflare Gateway HTTP policies.
 
 This approach both secures your wiki and establishes a model for protecting other applications — allowing your organization to maintain strong cyber hygiene while adapting to the realities of hybrid work scenarios.
@@ -468,7 +468,7 @@ Define the policy:
 | Device Posture \- Serial Number List | Company Managed Device Serial Numbers |
 | External Evaluation                  | \[Time Evaluator URL\]                |
 
-Inside the policy, we have made this application available to our new access group for IT Admins. Under "Require," we are enforcing the use of Cloudflare WARP specifically (as opposed to only Cloudflare Gateway). The user must be on a company-managed device, with an active device client that is authenticated to the company's instance of Cloudflare, MFA must be used during login, and there is an additional option below for external evaluation.
+Inside the policy, we have made this application available to our new access group for IT Admins. Under "Require," we are enforcing the use of the Cloudflare One Client specifically (as opposed to only Cloudflare Gateway). The user must be on a company-managed device, with an active device client that is authenticated to the company's instance of Cloudflare, MFA must be used during login, and there is an additional option below for external evaluation.
 
 [External evaluation](/cloudflare-one/access-controls/policies/external-evaluation/) means we have an API endpoint containing some sort of [access logic](https://github.com/cloudflare/workers-access-external-auth-example) — in this case, time of day access. We are making an API call to this endpoint, and defining the key that Cloudflare is using to verify that the response came from the API. This is useful for several reasons:
 
@@ -483,7 +483,7 @@ Now, you will learn how to secure RDP access as a private IP application:
 | Application Name          | RDP             |
 | Destination IP            | 169.254.255.254 |
 
-As mentioned before, private IP applications work because Cloudflare proxies the IP range across its network. The nature of this application necessitates the use of the device client, as unless the user is connected to Cloudflare (and more specifically, unless they can take advantage of the WARP-to-Tunnel connectivity), they will not be able to reach non-local RFC 1918 addresses.
+As mentioned before, private IP applications work because Cloudflare proxies the IP range across its network. The nature of this application necessitates the use of the device client, as unless the user is connected to Cloudflare (and more specifically, unless they can take advantage of the Client-to-Tunnel connectivity), they will not be able to reach non-local RFC 1918 addresses.
 
 | Traffic                                  |                                                                 |
 | :--------------------------------------- | :-------------------------------------------------------------- |
@@ -494,7 +494,7 @@ As mentioned before, private IP applications work because Cloudflare proxies the
 | **Device Posture**                       |                                                                 |
 | Passed Device Posture Checks             | WARP Check (Mac OS) (File) Latest Version of macOS (OS version) |
 | **Action**                               | Allow                                                           |
-| **Enforce WARP client session duration** | 60m0s                                                           |
+| **Enforce Cloudflare One Client session duration** | 60m0s                                                           |
 
 Defining the application here is simple, as Cloudflare automatically fills in the IP range, and you need to limit the detected protocol to RDP. However, the rules for private IP applications are slightly different. You will notice they appear as network policies under the Cloudflare Gateway menu, despite managing them in Access. Certain options, such as checking for MFA and external evaluation, do not appear here. However, these attributes can be verified when the user activates their device client and authenticates to their organization.
 

@@ -21,6 +21,12 @@ Type: `string`
 
 Action performed by gateway on the HTTP request.
 
+## AppControlInfo
+
+Type: `object`
+
+Information about application control operations, APIs, and groups that matched the HTTP request.
+
 ## ApplicationIDs
 
 Type: `array[int]`
@@ -32,6 +38,12 @@ IDs of the applications that matched the HTTP request parameters.
 Type: `array[string]`
 
 Names of the applications that matched the HTTP request parameters.
+
+## ApplicationStatuses
+
+Type: `array[string]`
+
+Statuses of the applications that matched the HTTP request parameters.
 
 ## BlockedFileHash
 
@@ -203,9 +215,9 @@ The private app AUD, if any.
 
 ## ProxyEndpoint
 
-Type: ``
+Type: `string`
 
-
+The proxy endpoint used on the HTTP request, if any.
 
 ## Quarantined
 
@@ -272,6 +284,12 @@ Local LAN IP of the device. Only available when connected via a GRE/IPsec tunnel
 Type: `int`
 
 Source port of the request.
+
+## TenantID
+
+Type: `string`
+
+The tenant ID of the request, if exists.
 
 ## URL
 

@@ -5,10 +5,11 @@ sidebar:
   order: 6
 head: []
 description: Learn what account API tokens are, when to use them, and what they currently work with
-
 ---
 
-While user tokens act on behalf of a particular user and inherit a subset of that user's permissions, account API tokens allow you to set up durable integrations that can act as service principals with their own specific set of permissions. This approach is ideal for scenarios like CI/CD, or building integrations with external services like SEIMs where it is important that the integration continues working, even long after the user who configured the integration may have left your organization altogether. User tokens are better for ad hoc tasks like scripting, where acting as the user is ideal and durability is less of a concern.
+While user tokens act on behalf of a particular user and inherit a subset of that user's permissions, account API tokens allow you to set up durable integrations that can act as service principals with their own specific set of permissions. This approach is ideal for scenarios like CI/CD, or building integrations with external services like SIEMs where it is important that the integration continues working, even long after the user who configured the integration may have left your organization altogether. User tokens are better for ad hoc tasks like scripting, where acting as the user is ideal and durability is less of a concern.
+
+New account API tokens use the `cfat_` prefixed [scannable format](/fundamentals/api/get-started/token-formats/), which allows credential scanning tools to detect leaked tokens.
 
 ## Create an account owned token
 
@@ -30,64 +31,66 @@ Refer to the [blog post](https://blog.cloudflare.com/account-owned-tokens-automa
 
 Account API tokens are generally available for all accounts. Some services may not support account API tokens yet. Refer to the compatibility matrix below for the latest status.
 
-| Product                         | Compatibility |
-| ------------------------------- | ------------- |
-| Access                          | ✅            |
-| Account Analytics               | ✅            |
-| Account Management              | ✅            |
-| AI Gateway                      | ✅            |
-| API Shield                      | ✅            |
-| Argo                            | ✅            |
-| Billing                         | ✅            |
-| Cache                           | ✅            |
-| Tiered Cache                    | ✅            |
-| Cloud Connector                 | ✅            |
-| Configuration Rules             | ✅            |
-| Custom Lists                    | ✅            |
-| Custom Pages                    | ✅            |
-| D1                              | ✅            |
-| Data Loss Prevention            | ✅            |
-| Digital Experience Monitoring   | ✅            |
-| Distributed Web                 | ✅            |
-| DNS                             | ✅            |
-| Durable Objects                 | ✅            |
-| Email Relay                     | ✅            |
-| Secure Web Gateway              | ✅            |
-| Healthchecks                    | ✅            |
-| Hyperdrive                      | ✅            |
-| Images                          | ✅            |
-| Intel Data Platform             | ❌            |
-| Load Balancing                  | ✅            |
-| Log Explorer                    | ✅            |
-| Magic Network Monitoring        | ✅            |
-| Magic Transit                   | ✅            |
-| Magic WAN                       | ✅            |
-| Managed Rules                   | ✅            |
-| Network Error Logging           | ✅            |
-| Page Rules                      | ❌            |
-| Page Shield                     | ✅            |
-| Pages                           | ✅            |
-| R2                              | ✅            |
-| Radar                           | ✅            |
-| Registrar                       | ❌            |
-| Rulesets                        | ✅            |
-| Spectrum                        | ✅            |
-| Speed                           | ✅            |
-| SSL/TLS                         | ✅            |
-| Stream                          | ✅            |
-| Super Bot Fight Mode            | ❌            |
-| Trace                           | ✅            |
-| Tunnels                         | ✅            |
-| Turnstile                       | ❌            |
-| Vectorize                       | ✅            |
-| Waiting Room                    | ✅            |
-| Workers                         | ✅            |
-| Workers AI                      | ✅            |
-| Workers KV                      | ✅            |
-| Workers Observability           | ✅            |
-| Workers Queues                  | ✅            |
-| Workflows                       | ✅            |
-| Zaraz                           | ✅            |
-| Zero Trust Client Platform      | ❌            |
-| Zero Trust Devices and Services | ✅            |
-| Zone/Domain Management          | ✅            |
+| Product                                     | Compatibility |
+| ------------------------------------------- | ------------- |
+| Access                                      | ✅            |
+| Account Analytics                           | ✅            |
+| Account Management                          | ✅            |
+| AI Gateway                                  | ✅            |
+| API Shield                                  | ✅            |
+| Argo                                        | ✅            |
+| Billing                                     | ✅            |
+| Browser Run                                 | ✅            |
+| Bulk Redirects                              | ✅            |
+| Cache                                       | ✅            |
+| Tiered Cache                                | ✅            |
+| Client-side security (formerly Page Shield) | ✅            |
+| Cloud Connector                             | ✅            |
+| Configuration Rules                         | ✅            |
+| Custom Lists                                | ✅            |
+| Custom Pages                                | ✅            |
+| D1                                          | ✅            |
+| Data Loss Prevention                        | ✅            |
+| Digital Experience Monitoring               | ✅            |
+| Distributed Web                             | ✅            |
+| DNS                                         | ✅            |
+| Durable Objects                             | ✅            |
+| Email Relay                                 | ✅            |
+| Secure Web Gateway                          | ✅            |
+| Healthchecks                                | ✅            |
+| Hyperdrive                                  | ✅            |
+| Images                                      | ✅            |
+| Intel Data Platform                         | ❌            |
+| Load Balancing                              | ✅            |
+| Log Explorer                                | ✅            |
+| Network Flow                                | ✅            |
+| Magic Transit                               | ✅            |
+| Cloudflare WAN                              | ✅            |
+| Managed Rules                               | ✅            |
+| Network Error Logging                       | ✅            |
+| Page Rules                                  | ❌            |
+| Pages                                       | ✅            |
+| R2                                          | ✅            |
+| Radar                                       | ✅            |
+| Registrar                                   | ❌            |
+| Rulesets                                    | ✅            |
+| Spectrum                                    | ✅            |
+| Speed                                       | ✅            |
+| SSL/TLS                                     | ✅            |
+| Stream                                      | ✅            |
+| Super Bot Fight Mode                        | ❌            |
+| Trace                                       | ✅            |
+| Tunnels                                     | ✅            |
+| Turnstile                                   | ❌            |
+| Vectorize                                   | ✅            |
+| Waiting Room                                | ✅            |
+| Workers                                     | ✅            |
+| Workers AI                                  | ✅            |
+| Workers KV                                  | ✅            |
+| Workers Observability                       | ✅            |
+| Workers Queues                              | ✅            |
+| Workflows                                   | ✅            |
+| Zaraz                                       | ✅            |
+| Zero Trust Client Platform                  | ❌            |
+| Zero Trust Devices and Services             | ✅            |
+| Zone/Domain Management                      | ✅            |

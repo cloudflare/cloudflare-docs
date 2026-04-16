@@ -1,0 +1,23 @@
+---
+pcx_content_type: reference
+title: RtkSettingsFragment
+description: API reference for RtkSettingsFragment component (Android Library)
+---
+
+A settings dialog that contains audio and video device selectors and a self-preview tile. Used in landscape orientation.
+
+## Methods
+
+| Method                  | Parameters                                       | Description                                        |
+| ----------------------- | ------------------------------------------------ | -------------------------------------------------- |
+| `show`                  | `fragmentManager: FragmentManager, tag: String?` | Display the settings dialog                        |
+| `setBottomSheetEnabled` | `onClick: () -> Unit`                            | Enable a button to switch to the bottom sheet view |
+
+## Usage Examples
+
+### Basic Usage
+
+```kotlin
+val settingsFragment = RtkSettingsFragment()
+settingsFragment.show(fragmentManager, "SETTINGS_TAG")
+```
