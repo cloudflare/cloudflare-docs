@@ -1,6 +1,5 @@
 ---
 {}
-
 ---
 
 import { DashButton } from "~/components";
@@ -22,9 +21,8 @@ Before using Cloudflare Email Service, you need to configure your domain for ema
 4. Select **Continue** to proceed with DNS configuration.
 
 5. Select **Add records and onboard**. This will add the following DNS records to your domain:
-   - TXT records for SPF to authorize sending emails.
-   - CNAME records for DKIM to provide authentication for emails sent from your domain.
-   - MX records to route emails to Email Service.
+   - **Sending records** on the `cf-bounce` subdomain: MX records for bounce handling, TXT records for SPF and DKIM authentication.
+   - **Routing records** on the root domain: MX records to route incoming emails to Cloudflare, TXT records for SPF and DKIM authentication.
 
 :::note[DNS Propagation]
 DNS changes can take up to 24 hours to propagate globally, but usually complete within 5-15 minutes for domains using Cloudflare DNS.

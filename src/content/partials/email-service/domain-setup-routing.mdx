@@ -1,6 +1,5 @@
 ---
 {}
-
 ---
 
 import { DashButton } from "~/components";
@@ -17,10 +16,10 @@ Before using Email Routing, you need to configure your domain.
 
 4. Select **Continue** to proceed with DNS configuration.
 
-5. Select **Add records and onboard**. This will add the following DNS records to your domain:
+5. Select **Add records and onboard**. This will add the following DNS records to your root domain:
    - MX records to route incoming emails to Cloudflare.
-   - TXT records for SPF to authorize email routing.
-   - CNAME records for DKIM to provide authentication for routed emails.
+   - TXT record for SPF to authorize email routing.
+   - TXT record for DKIM to provide authentication for routed emails.
 
 :::note[DNS Propagation]
 DNS changes can take up to 24 hours to propagate globally, but usually complete within 5-15 minutes for domains using Cloudflare DNS.

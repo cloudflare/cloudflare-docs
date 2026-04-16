@@ -11,43 +11,17 @@ import { Tabs, TabItem } from "~/components";
 
 Suppression lists prevent emails from being sent to addresses that should not receive them, protecting your sender reputation and ensuring compliance with anti-spam regulations.
 
-## Suppression lists
+## Account suppression list
 
-There are 2 types of suppression lists that can prevent emails from being sent to an email address in order to ensure high deliverability:
+Cloudflare automatically manages suppressions for your account to preserve your reputation as an email sender.
 
-- Cloudflare's global suppression list (maintained by Cloudflare)
-- Your account's specific suppression list
+Cloudflare will automatically add email addresses to your account suppression list for the following reasons:
 
-### Global suppression list
-
-The global suppression list is a list of emails
-that have been flagged as problematic. Cloudflare Email Service will not send emails to email
-addresses on this global suppression list to preserve the reputation of the shared IP pool used for sending emails.
-
-Here are the factors that Cloudflare Email Service uses to determine emails to add to the global suppression list:
-
-- **Hard bounces**: Permanently invalid addresses
-- **Repeated soft bounces**: Addresses that consistently fail delivery
-- **Manual additions**: Addresses Cloudflare specifically blocks
-- **Compliance blocks**: Legal or regulatory requirements
-
-### Account suppression list
-
-Cloudflare also automatically manages suppressions for your account to preserve your reputation as an email sender.
-
-Cloudflare will automatically add email addresses to your account suppression list for the following reason:
-
+- **Hard bounces**: Invalid or non-existent email addresses are immediately suppressed.
+- **Repeated soft bounces**: Addresses that repeatedly fail delivery are temporarily or permanently suppressed based on the frequency and pattern of failures.
 - **Spam complaints**: Recipients who marked emails as spam. Cloudflare integrates with Postmasters to receive spam complaints and automatically updates your account suppression list to prevent you from sending emails to this email address and preserve your email sending reputation.
 
 You may also manually add or remove email addresses from your suppression list as needed. The removal of email addresses that have been automatically added to your suppression list as a result of a spam complaint is limited to avoid abuse.
-
-## Automatic suppression logic
-
-Cloudflare automatically suppresses addresses that:
-
-- **Hard bounce**: Invalid or non-existent email addresses are immediately added to the Cloudflare global suppression list.
-- **Repeated soft bounces**: Addresses that repeatedly fail delivery are temporarily or permanently suppressed based on the frequency and pattern of failures.
-- **Spam complaints**: Recipients who mark emails as spam are added to your account suppression list.
 
 ## Best practices
 

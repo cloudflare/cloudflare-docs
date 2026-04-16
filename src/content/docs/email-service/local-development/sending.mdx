@@ -34,11 +34,34 @@ name = "EMAIL"
 
 </WranglerConfig>
 
-:::note
+## Remote bindings (recommended)
 
-Local development simulates email sending by writing emails to local EML files instead of actually sending them.
+Using [remote bindings](/workers/development-testing/#remote-bindings) is the recommended way to develop with Email Service locally. By default, `wrangler dev` simulates the email binding locally -- emails are logged to the console but not actually sent. With remote bindings, your Worker runs locally but sends real emails through Email Service.
 
+Set `remote: true` on the email binding in your Wrangler configuration:
+
+<WranglerConfig>
+
+```toml
+name = "email-sending-worker"
+compatibility_date = "$today"
+
+[[send_email]]
+name = "EMAIL"
+remote = true
+```
+
+</WranglerConfig>
+
+Then run `wrangler dev` as usual. Calls to `env.EMAIL.send()` will send actual emails through Email Service while your Worker code runs locally.
+
+:::caution
+Remote bindings send real emails to real recipients. Use test email addresses to avoid sending unintended emails during development.
 :::
+
+## Local simulation
+
+When running `wrangler dev` without remote bindings, the email binding is simulated locally. Emails are not sent -- instead, the email content is logged to the console and saved to local files for inspection.
 
 ## Basic sending worker
 
@@ -85,7 +108,7 @@ export default {
 };
 ```
 
-## Testing
+## Testing locally
 
 Start your development server:
 
@@ -109,34 +132,30 @@ curl -X POST http://localhost:8787/ \
 
 Wrangler will show output like:
 
-```bash
-[wrangler:inf] send_email binding called with the following message:
-  /tmp/miniflare-files/email/test-email-abc123.eml
-```
-
-## Understanding the .eml file
-
-Wrangler simulates `env.EMAIL.send()` by writing the email to a local file in [EML format](https://en.wikipedia.org/wiki/Email#Message_format). The file contains the raw email message with headers and body:
-
-```eml
-Date: Fri, 04 Apr 2025 12:27:08 +0000
+```txt
+[wrangler:info] send_email binding called with MessageBuilder:
 From: sender@yourdomain.com
 To: recipient@example.com
-Message-ID: <2s95plkazox@example.com>
 Subject: Test Email
-MIME-Version: 1.0
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 7bit
 
-<h1>Hello from Wrangler!</h1>
+Text: /tmp/miniflare-.../files/email-text/<message-id>.txt
 ```
 
-You can:
+The email content (text and HTML) is saved to local files that you can inspect to verify your email structure before deploying.
 
-- Open `.eml` files in email clients to preview rendering
-- Inspect headers to verify email metadata
-- Test different content types (HTML, plain text, multipart)
-- Validate email structure before deployment
+## Known limitations
+
+### Binary attachments
+
+Local development simulates the `send_email` binding locally, but `ArrayBuffer` values in attachment `content` cannot be serialized by the local simulator. If you pass an `ArrayBuffer` (for example, for image or PDF attachments), you will see an error like:
+
+```
+Cannot serialize value: [object ArrayBuffer]
+```
+
+**Workaround:** Use string content for text-based attachments during local development. To test binary attachments (images, PDFs), deploy your Worker with `npx wrangler deploy` and test against the deployed version.
+
+This limitation only affects local development — `ArrayBuffer` content works correctly on deployed Workers.
 
 ## Next steps
 

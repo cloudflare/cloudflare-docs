@@ -26,9 +26,13 @@ Through this standard, the sender publishes its public key to a domain's DNS onc
 
 Email Service adds DKIM signatures to outgoing emails on behalf of the customer's sending domain to ensure email authenticity and improve deliverability.
 
-You can find the DKIM key for your domain by querying the following:
+Email Sending and Email Routing use separate DKIM selectors. You can find the DKIM keys for your domain by querying the following:
 
 ```sh
+# Email Sending DKIM
+dig TXT cf-bounce._domainkey.example.com +short
+
+# Email Routing DKIM
 dig TXT cf2024-1._domainkey.example.com +short
 ```
 
@@ -50,10 +54,10 @@ Email Service supports IPv6 for outbound email delivery. When connecting to reci
 
 When using Email Service for sending emails, no special MX records are required on your domain. However, if you're also using [Email Routing](/email-routing/) for inbound emails, the appropriate MX records will be configured automatically.
 
-For SPF records, you'll need to include Cloudflare's Email Service sending infrastructure:
+For SPF records, Email Service uses `_spf.mx.cloudflare.net`. Email Sending configures SPF on the `cf-bounce` subdomain, while Email Routing configures SPF on the root domain:
 
 ```txt
-v=spf1 include:_spf.email.cloudflare.net ~all
+v=spf1 include:_spf.mx.cloudflare.net ~all
 ```
 
 ### Outbound prefixes

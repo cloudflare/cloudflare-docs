@@ -17,9 +17,9 @@ Every email sent through Cloudflare Email Service follows this processing pipeli
 
 ```mermaid
 flowchart LR
-    A[Request Received] --> B[Rate Limit Check] --> C[Authentication & Reputation] --> D[Suppression Check] --> E[Delivery Attempt]
+    A[Request Received] --> B["Rate Limit, Authentication & Suppression Check"] --> E[Delivery Attempt]
     E --> G{Success?}
-    G -->|Yes| F[Final Status & Metrics]
+    G -->|Yes, successfully delivered| F[Final Status & Metrics]
     G -->|No - Soft Bounce| H[Retry with Exponential Backoff]
     G -->|No - Hard Bounce| F
     H --> E
@@ -39,7 +39,7 @@ flowchart LR
 
    These authentication mechanisms work together to establish sender legitimacy and protect against email fraud. Senders with low reputation scores may experience throttling or delayed processing.
 
-4. **Suppression list check:** The system checks the recipient against global suppression lists that include bounces, complaints, and unsubscribes. Recipients found on these lists are blocked from receiving the email.
+4. **Suppression list check:** The system checks the recipient against your account's suppression list, which includes bounces, complaints, and unsubscribes. Recipients found on this list are blocked from receiving the email.
 
 5. **Delivery attempt:** The system connects to the recipient's mail server and attempts message delivery via SMTP. When delivery fails, the system applies different retry logic based on the failure type:
    - **Soft bounces (4xx responses)**: The system retries delivery using exponential backoff timing

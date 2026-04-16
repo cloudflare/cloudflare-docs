@@ -6,9 +6,11 @@ sidebar:
   order: 3
 ---
 
-import {DashButton, Render} from "~/components";
+import { DashButton, Render } from "~/components";
 
-Email deliverability ensures your emails reach recipients' inboxes. Cloudflare Email Service handles bounces automatically and manages sender reputation to maximize delivery success.
+When you send an email, there is no guarantee it reaches the recipient's inbox. Inbox providers like Gmail, Yahoo, Outlook, and iCloud invest heavily in filtering out unwanted email. If you send poorly targeted emails, have high bounce rates, or trigger spam complaints, these providers may flag your domain as untrustworthy. Once that happens, even your legitimate emails can end up in spam or be blocked outright.
+
+This concept is referred to as email deliverability: maintaining a healthy sending reputation so that inbox providers trust your emails. Cloudflare Email Service helps with this by automatically handling bounces, managing suppression lists, and authenticating your emails through SPF, DKIM, and DMARC.
 
 ## Bounces
 
@@ -47,9 +49,9 @@ Cloudflare automatically manages:
 - **Domain authentication**: DKIM signing, SPF alignment, DMARC compliance
 - **Feedback processing**: ISP complaint handling and suppression list management
 
-Monitor your reputation and delivery metrics in the Cloudflare dashboard.
-
 ### Best practices
+
+#### Content and list hygiene
 
 Avoid content that can trigger spam-detection or can be perceived as unwanted content:
 
@@ -63,8 +65,18 @@ Ensure that your email lists are clean and contain intended recipients:
 - Implement double opt-in for subscriptions
 - Remove hard bounced addresses immediately
 
-Ensure that you deliverability stays above key metrics to avoid affecting your email sending reputation:
+Ensure that your deliverability stays above key metrics to avoid affecting your email sending reputation:
 
 - Delivery rate >95%
 - Hard bounce rate < 2%
 - Complaint rate < 0.1%
+
+#### Use separate domains for separate purposes
+
+Each domain builds its own deliverability reputation with inbox providers. Use separate domains or subdomains for different types of email so that one category does not affect the reputation of another. For example:
+
+- `notifications.yourdomain.com` for transactional emails (order confirmations, password resets)
+- `marketing.yourdomain.com` for marketing and promotional emails
+- `yourdomain.com` for important account-related communications
+
+This way, if marketing emails generate higher complaint rates, your transactional email deliverability is not impacted. Each domain can be onboarded separately through [domain configuration](/email-service/configuration/domains/).

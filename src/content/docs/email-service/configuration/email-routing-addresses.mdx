@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import {DashButton} from "~/components";
+import { DashButton } from "~/components";
 
 In Email routing, an email rule is a pair of a custom email address and a destination address, or a custom email address and an associated Worker. You can route emails to either:
 
@@ -17,7 +17,7 @@ This allows you to route emails to your preferred inbox, or apply logic with Wor
 ## Custom addresses
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **Email** > **Email Routing** > **Routes**.
+2. Go to **Compute** > **Email Service** > **Email Routing** > **Routing Rules**.
 
    <DashButton url="/?to=/:account/email-service/routing" />
 
@@ -69,7 +69,7 @@ Your email rule is now disabled. It will not forward emails to a destination add
 ### Delete a custom address
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **Email** > **Email Routing** > **Routes**.
+2. Go to **Compute** > **Email Service** > **Email Routing** > **Routing Rules**.
 3. In **Custom addresses**, identify the email rule you want to delete.
 4. Select **Delete** and confirm the action.
 

@@ -13,10 +13,10 @@ The metrics displayed in the [Cloudflare dashboard](https://dash.cloudflare.com/
 
 Email Service currently exposes the below metrics:
 
-| Dataset | GraphQL Dataset Name | Description |
-| ------- | -------------------- | ----------- |
-| Sending (aggregated) | `emailSendingAdaptiveGroups` | Aggregated email sending counts grouped by dimensions such as status, date, sending domain, and authentication results. |
-| Sending (events) | `emailSendingAdaptive` | Individual email sending events with full detail including sender, recipient, subject, message ID, and error information. |
+| Dataset              | GraphQL Dataset Name         | Description                                                                                                               |
+| -------------------- | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| Sending (aggregated) | `emailSendingAdaptiveGroups` | Aggregated email sending counts grouped by dimensions such as status, date, sending domain, and authentication results.   |
+| Sending (events)     | `emailSendingAdaptive`       | Individual email sending events with full detail including sender, recipient, subject, message ID, and error information. |
 
 Metrics can be queried (and are retained) for the past 31 days.
 
@@ -25,7 +25,7 @@ Metrics can be queried (and are retained) for the past 31 days.
 Per-domain analytics for Email Service are available in the Cloudflare dashboard. To view current and historical metrics:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to [**Compute & AI** > **Email Service**](https://dash.cloudflare.com/?to=/:account/email/service).
+2. Go to [**Compute** > **Email Service**](https://dash.cloudflare.com/?to=/:account/email-service/sending).
 3. Select an existing domain or view account-wide metrics.
 4. Select the **Analytics** tab.
 
@@ -46,25 +46,25 @@ These are **zone-level** datasets. To query them, provide your zone ID (not acco
 
 The `emailSendingAdaptiveGroups` dataset supports the following dimensions for grouping and filtering:
 
-| Dimension | Type | Description |
-| --------- | ---- | ----------- |
-| `date` | Date | Day-level grouping |
-| `datetime` | Time | Exact event timestamp |
-| `datetimeMinute` | Time | Minute-level grouping |
-| `datetimeFiveMinutes` | Time | 5-minute interval grouping |
-| `datetimeFifteenMinutes` | Time | 15-minute interval grouping |
-| `datetimeHour` | Time | Hour-level grouping |
-| `status` | string | Delivery status (for example, `delivered`, `deliveryFailed`) |
-| `eventType` | string | Type of sending event |
-| `sendingDomain` | string | The domain used to send the email |
-| `envelopeTo` | string | Recipient envelope address |
-| `errorCause` | string | Error cause for failed sends |
-| `arc` | string | ARC authentication result |
-| `dkim` | string | DKIM authentication result |
-| `dmarc` | string | DMARC authentication result |
-| `spf` | string | SPF authentication result |
-| `isSpam` | uint8 | Whether the email was flagged as spam |
-| `isNDR` | uint8 | Whether the email is a non-delivery report |
+| Dimension                | Type   | Description                                                  |
+| ------------------------ | ------ | ------------------------------------------------------------ |
+| `date`                   | Date   | Day-level grouping                                           |
+| `datetime`               | Time   | Exact event timestamp                                        |
+| `datetimeMinute`         | Time   | Minute-level grouping                                        |
+| `datetimeFiveMinutes`    | Time   | 5-minute interval grouping                                   |
+| `datetimeFifteenMinutes` | Time   | 15-minute interval grouping                                  |
+| `datetimeHour`           | Time   | Hour-level grouping                                          |
+| `status`                 | string | Delivery status (for example, `delivered`, `deliveryFailed`) |
+| `eventType`              | string | Type of sending event                                        |
+| `sendingDomain`          | string | The domain used to send the email                            |
+| `envelopeTo`             | string | Recipient envelope address                                   |
+| `errorCause`             | string | Error cause for failed sends                                 |
+| `arc`                    | string | ARC authentication result                                    |
+| `dkim`                   | string | DKIM authentication result                                   |
+| `dmarc`                  | string | DMARC authentication result                                  |
+| `spf`                    | string | SPF authentication result                                    |
+| `isSpam`                 | uint8  | Whether the email was flagged as spam                        |
+| `isNDR`                  | uint8  | Whether the email is a non-delivery report                   |
 
 The `emailSendingAdaptive` dataset includes all of the above plus per-event fields: `from`, `to`, `subject`, `messageId`, `sessionId`, `errorDetail`.
 
@@ -85,11 +85,7 @@ The following are common GraphQL queries that you can use to retrieve informatio
 To query the count of emails for a given date range, grouped by `date` and `status` (for example, `delivered`, `deliveryFailed`):
 
 ```graphql graphql-api-explorer
-query EmailSendingByStatus(
-	$zoneTag: string!
-	$start: Date!
-	$end: Date!
-) {
+query EmailSendingByStatus($zoneTag: string!, $start: Date!, $end: Date!) {
 	viewer {
 		zones(filter: { zoneTag: $zoneTag }) {
 			emailSendingAdaptiveGroups(
@@ -113,19 +109,11 @@ query EmailSendingByStatus(
 To investigate delivery failure causes for a specific date range, grouped by `errorCause` and `sendingDomain`:
 
 ```graphql graphql-api-explorer
-query EmailDeliveryFailures(
-	$zoneTag: string!
-	$start: Date!
-	$end: Date!
-) {
+query EmailDeliveryFailures($zoneTag: string!, $start: Date!, $end: Date!) {
 	viewer {
 		zones(filter: { zoneTag: $zoneTag }) {
 			emailSendingAdaptiveGroups(
-				filter: {
-					date_geq: $start
-					date_leq: $end
-					status: "deliveryFailed"
-				}
+				filter: { date_geq: $start, date_leq: $end, status: "deliveryFailed" }
 				limit: 10000
 				orderBy: [date_DESC]
 			) {
@@ -146,18 +134,11 @@ query EmailDeliveryFailures(
 To query email sending volume grouped by hour, useful for identifying traffic patterns:
 
 ```graphql graphql-api-explorer
-query EmailSendingHourlyVolume(
-	$zoneTag: string!
-	$start: Time!
-	$end: Time!
-) {
+query EmailSendingHourlyVolume($zoneTag: string!, $start: Time!, $end: Time!) {
 	viewer {
 		zones(filter: { zoneTag: $zoneTag }) {
 			emailSendingAdaptiveGroups(
-				filter: {
-					datetimeHour_geq: $start
-					datetimeHour_leq: $end
-				}
+				filter: { datetimeHour_geq: $start, datetimeHour_leq: $end }
 				limit: 10000
 				orderBy: [datetimeHour_ASC]
 			) {
@@ -177,11 +158,7 @@ query EmailSendingHourlyVolume(
 To query individual email events for troubleshooting specific delivery issues. This uses the `emailSendingAdaptive` dataset and filters by `datetime` (Time type):
 
 ```graphql graphql-api-explorer
-query RecentEmailEvents(
-	$zoneTag: string!
-	$start: Time!
-	$end: Time!
-) {
+query RecentEmailEvents($zoneTag: string!, $start: Time!, $end: Time!) {
 	viewer {
 		zones(filter: { zoneTag: $zoneTag }) {
 			emailSendingAdaptive(

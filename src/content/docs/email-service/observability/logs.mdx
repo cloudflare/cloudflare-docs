@@ -19,6 +19,7 @@ For outbound emails sent through Email Service:
 - **Sent**: Email successfully accepted and queued for delivery
 - **Delivered**: Email successfully delivered to recipient's mail server
 - **Delivery failed**: Email bounced (hard or soft bounce). This corresponds to the `deliveryFailed` status in the [GraphQL Analytics API](/email-service/observability/metrics-analytics/).
+- **Rejected**: Email was not sent because the recipient is on your account's [suppression list](/email-service/concepts/suppressions/).
 - **Failed**: Email failed to send due to configuration or authentication issues
 
 ### Email routing logs
@@ -59,37 +60,6 @@ For sent emails, see delivery details:
 - Delivery attempts and timestamps
 - Bounce reason codes and categories
 - Final delivery status
-
-## Taking action on emails
-
-Based on the information shown in email details, you can:
-
-### Mark as spam
-
-- Flag emails that should be treated as spam
-- Helps improve future filtering accuracy
-- Applies to both sending reputation and routing filters
-
-### Block sender
-
-- Block specific sender addresses from future delivery
-- Automatically reject emails from blocked senders
-- Useful for persistent spam or unwanted emails
-
-### Review patterns
-
-- Identify trends in bounce rates or authentication failures
-- Spot potential configuration issues
-- Monitor reputation changes over time
-
-## Filtering and searching logs
-
-Use the Activity Log filters to find specific emails:
-
-- **By status**: Filter by delivery status (for example: sent, delivered, delivery failed)
-- **By timeframe**: View logs for specific date ranges
-- **By sender/recipient**: Search for specific email addresses
-- **By authentication**: Filter by SPF/DKIM/DMARC results
 
 ## Best practices for log monitoring
 

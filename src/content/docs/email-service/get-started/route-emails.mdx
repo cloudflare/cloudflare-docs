@@ -7,7 +7,15 @@ sidebar:
   order: 2
 ---
 
-import { Steps, Tabs, TabItem, WranglerConfig, PackageManagers, DashButton, Render } from "~/components";
+import {
+	Steps,
+	Tabs,
+	TabItem,
+	WranglerConfig,
+	PackageManagers,
+	DashButton,
+	Render,
+} from "~/components";
 
 Route incoming emails sent to your domain to existing mailboxes, Workers for processing, or other destinations.
 
@@ -28,7 +36,7 @@ You must be using Cloudflare DNS to use Email Service.
 You can route your first email by setting up forwarding rules in the dashboard, or by processing emails with Workers.
 
 <Tabs>
-<TabItem label="Workflow with dashboard">
+<TabItem label="Route to email">
 
 The simplest way to route emails is forwarding them to existing email addresses.
 
@@ -62,7 +70,7 @@ Verify that your routing rule is working:
 3. If you do not see the email right away, check your spam folder.
 
 </TabItem>
-<TabItem label="Workflow with Workers">
+<TabItem label="Route to Workers">
 
 Use Workers to process emails with custom logic before forwarding or responding.
 
