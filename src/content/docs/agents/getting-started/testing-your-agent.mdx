@@ -25,7 +25,7 @@ Before you write your first test, install the necessary packages:
 npm install vitest@^4.1.0 @cloudflare/vitest-pool-workers --save-dev
 ```
 
-Ensure that your `vitest.config.js` file appears like the following:
+Ensure that your `vitest.config.js` has the `cloudflareTest` plugin configured:
 
 ```js
 import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
