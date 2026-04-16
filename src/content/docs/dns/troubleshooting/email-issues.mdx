@@ -29,7 +29,7 @@ This returns a list of mail servers for your domain. Compare the output to the M
 
 If the mail server listed does not match your email provider's expected value, update the MX record content to the correct value. Check your email provider's setup documentation for the correct MX record values.
 
-If your DNS query returns records you do not recognize, such as `_dc-mx` or `dc-#####` subdomains, refer to [Unexpected DNS records](/dns/manage-dns-records/troubleshooting/unexpected-dns-records/#dc--and-_dc-mx-subdomains).
+If your DNS query returns records you do not recognize, such as `_dc-mx` or `dc-#####` subdomains, refer to [Unexpected DNS records](/dns/manage-dns-records/troubleshooting/unexpected-dns-records/#_dc-mx-and-dc--subdomains).
 
 ## Are DNS records missing?
 
@@ -51,7 +51,7 @@ Refer to [Set up email records](/dns/manage-dns-records/how-to/email-records/) t
 
 Some email providers require `CNAME` records for features like DKIM authentication or autodiscover. When [CNAME flattening](/dns/cname-flattening/) is turned on — either globally for all `CNAME` records or individually on a specific record — the `CNAME` is flattened to an `A` record, which can prevent email providers from reading the record correctly.
 
-If your email provider requires `CNAME` records and those records are not resolving as expected, [CNAME flattening](/dns/cname-flattening/set-up-cname-flattening/) may need to be turned off.
+If your email provider requires `CNAME` records and those records are not resolving as expected, you may need to turn off [CNAME flattening](/dns/cname-flattening/set-up-cname-flattening/).
 
 ## Is your mail hostname proxied?
 
@@ -67,7 +67,10 @@ Common examples include:
 
 To fix this issue:
 
-1. Go to **DNS** > **Records**.
+1. Go to the **DNS Records** page.
+
+   <DashButton url="/?to=/:account/:zone/dns/records" />
+
 2. Locate the mail-related hostname.
 3. Change the [proxy status](/dns/proxy-status/) to **DNS only**.
 
@@ -90,7 +93,7 @@ Always confirm the exact values with your provider before making changes.
 
 ## Is Cloudflare Spectrum turned on?
 
-Cloudflare does not proxy email traffic (SMTP, port 25) by default. Unless you have explicitly configured [Cloudflare Spectrum](/spectrum/reference/configuration-options#smtp) to proxy SMTP traffic, email is delivered directly to your mail server and does not pass through the Cloudflare network. DNS records used for email should be set to [DNS-only](/dns/proxy-status/) to ensure mail traffic is not affected by the proxy.
+Cloudflare does not proxy email traffic (SMTP, port 25) by default. Unless you have explicitly configured [Cloudflare Spectrum](/spectrum/reference/configuration-options#smtp) to proxy SMTP traffic, email is delivered directly to your mail server and does not pass through the Cloudflare network. DNS records used for email should be set to [DNS only](/dns/proxy-status/) to ensure mail traffic is not affected by the proxy.
 
 <DashButton url="/?to=/:account/:zone/spectrum" />
 
