@@ -155,9 +155,7 @@ The following Application Security custom rule blocks requests to `/api/` paths 
 
 If your `/api/users` endpoint only accepts `GET` and `POST` requests, block all other HTTP methods on that path. This prevents attackers from probing with `PUT`, `DELETE`, or `PATCH` requests against endpoints that do not support them.
 
-Since you are already on the security rules page from the previous procedure, select **Create rule** > **Custom rules** to create a second rule.
-
-<Steps>
+<Render file="navigate-to-custom-rules" product="waf" />
 
 1. Define the rule name. For example, `Block unexpected methods on /api/users`.
 
@@ -172,8 +170,6 @@ Since you are already on the security rules page from the previous procedure, se
 3. For **Choose action**, select **Block**.
 
 4. Select **Deploy**.
-
-</Steps>
 
 Repeat this pattern for each endpoint with restricted methods. You can combine multiple paths into a single rule using `or` operators if they share the same allowed methods.
 
