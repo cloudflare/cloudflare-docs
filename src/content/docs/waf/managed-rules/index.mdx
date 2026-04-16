@@ -69,11 +69,13 @@ At the zone level, you can deploy each managed ruleset once. At the [account lev
 
 WAF Managed Rules run in the `http_request_firewall_managed` phase, which executes **after**:
 
+- HTTP DDoS Attack Protection (`ddos_l7` phase)
 - Custom Rules (`http_request_firewall_custom` phase)
 - Rate Limiting Rules (`http_ratelimit` phase)
 
-This means a Custom Rule or Rate Limiting rule with a terminal action (such as Block or Managed Challenge) prevents Managed Rules from evaluating that request.
+This means a rule with a terminal action (such as Block or Managed Challenge) in any of these earlier phases prevents Managed Rules from evaluating that request. For the complete security feature execution order, refer to [Security features interoperability](/waf/feature-interoperability/).
 
 ### WAF exceptions
 
-WAF exceptions (skip rules) are rules with a `skip` action deployed to the `http_request_firewall_managed` phase entry-point ruleset. They are evaluated before the managed rulesets in that phase, so a skip rule that bypasses all Managed Rules will prevent any managed ruleset from evaluating matching traffic. For more information, refer to [WAF exceptions](/waf/managed-rules/waf-exceptions/).
+WAF exceptions (skip rules) are rules with a `skip` action deployed to the `http_request_firewall_managed` phase entry-point ruleset. They are evaluated in list order within the entry-point ruleset — a skip rule only bypasses `execute` rules listed after it. Place exceptions before the managed ruleset execute rules they are intended to skip. For more information, refer to [WAF exceptions](/waf/managed-rules/waf-exceptions/).
+

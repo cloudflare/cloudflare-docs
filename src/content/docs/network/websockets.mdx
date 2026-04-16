@@ -83,6 +83,7 @@ The `EdgeStartTimestamp` and `EdgeStopTimestamp` fields in [HTTP requests logs](
 
 Cloudflare will close a WebSocket connection when no data is transmitted in either direction for a period of time. Enterprise customers can contact their account team to configure a custom idle timeout. To keep long-lived connections alive during periods of inactivity, implement a client-side heartbeat (ping/pong) mechanism.
 
-### Session Affinity for load-balanced WebSocket origins
+### Session affinity for load-balanced WebSocket origins
 
-If your WebSocket origin is behind a Cloudflare Load Balancer, turn on **Session Affinity** to ensure all requests from the same client are routed to the same origin server. Without session affinity, a WebSocket reconnect may land on a different origin that does not have the session state.
+If your WebSocket origin is behind a Cloudflare Load Balancer, turn on **Session affinity** to ensure all requests from the same client are routed to the same origin server. Without session affinity, a WebSocket reconnect may land on a different origin that does not have the session state.
+

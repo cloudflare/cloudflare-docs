@@ -36,7 +36,7 @@ For more information, refer to [Chromium URL Request Header](https://chromium.go
 
 ## Chrome stalls or fails only on HTTP/3
 
-If the issue reproduces only in Chrome over HTTP/3 and disappears when HTTP/3 is disabled, the problem may be related to a browser-side QUIC handling issue rather than your origin server. This is a known Chrome issue (Chromium #41161335) — Cloudflare's QUIC implementation is not the cause.
+If the issue reproduces only in Chrome over HTTP/3 and disappears when HTTP/3 is disabled, the problem may be related to a browser-side QUIC handling issue rather than your origin server. This is a known Chrome issue ([crbug.com/41161335](https://issues.chromium.org/issues/41161335)) — Cloudflare's QUIC implementation is not the cause.
 
 Symptoms can include:
 
@@ -58,9 +58,10 @@ Symptoms can include:
 
 If the issue is limited to specific hostnames, you can apply a more targeted workaround: create a Response Header Modification Transform Rule to remove the `Alt-Svc` header for the affected hostname.
 
-1. Go to **Rules** > **Transform Rules** > **Response Header Modification**.
-2. Set the matching expression to your hostname: `(http.host eq "example.com")`.
-3. Set the action to **Remove** the `alt-svc` header.
+1. In the Cloudflare dashboard, go to the Rules **Overview** page.
+2. Select **Create rule** > **Response Header Transform Rule**.
+3. Set the matching expression to your hostname: `(http.host eq "example.com")`.
+4. Under **Modify response header**, select **Remove** and enter `Alt-Svc` as the header name.
 
 This forces Chrome to use HTTP/2 for that hostname without disabling HTTP/3 globally. However, proxied hostnames can also advertise HTTP/3 through generated HTTPS records, so disabling HTTP/3 for the zone is the most reliable way to force HTTP/2 while you troubleshoot.
 
