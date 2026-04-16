@@ -269,19 +269,21 @@ This model is appropriate for a majority of scenarios, in which external users n
 
 ![Requests initiated from a client are securely tunneled to Cloudflare via a device agent, while requests from inside the private network follow the default route.](~/assets/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-10.svg)
 
-For bidirectional, or meshed connectivity, organizations should use the WARP Connector.
+For bidirectional, or meshed connectivity, organizations should use Cloudflare Mesh.
 
 ##### Mesh connectivity
 
-The [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) is a lightweight solution for site-to-site, bidirectional, and mesh networking connectivity that does not require changes to underlying network routing infrastructure. WARP Connector software is installed on a Linux server within an organization's network, which then becomes a gateway for other local networks that need to on-ramp traffic to Cloudflare.
+[Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) (formerly WARP Connector) is a lightweight solution for site-to-site, bidirectional, and mesh networking connectivity that does not require changes to underlying network routing infrastructure. Cloudflare Mesh is installed on a Linux server within an organization's network, which then becomes a gateway for other local networks that need to on-ramp traffic to Cloudflare.
 
 This provides a lightweight solution to support services such as Microsoft's System Center Configuration Manager (SCCM), Active Directory server updates, VOIP and SIP traffic, and developer workflows with complex CI/CD pipeline interaction. It can either be run supplementally to `cloudflared` and Cloudflare WAN (formerly Magic WAN), or can be a standalone remote access and site-to-site connector to the Cloudflare network.
 
-The WARP Connector can proxy both user-to-network and network-to-network connectivity, or can be used to establish an overlay network of Carrier Grade NAT ([CGNAT](https://en.wikipedia.org/wiki/Carrier-grade_NAT)) addressed endpoints to provide secure, direct connectivity to established resources using CGNAT IP ranges. This helps address overlapping network IP range challenges, point-solution access problems, or the process of shifting network design without impacting a greater underlying system.
+Cloudflare Mesh can proxy both user-to-network and network-to-network connectivity, or can be used to establish an overlay network of Carrier Grade NAT ([CGNAT](https://en.wikipedia.org/wiki/Carrier-grade_NAT)) addressed endpoints to provide secure, direct connectivity to established resources using CGNAT IP ranges. This helps address overlapping network IP range challenges, point-solution access problems, or the process of shifting network design without impacting a greater underlying system.
 
-![In an example scenario, a developer might push code to a git repository, which ends up in a Kubernetes cluster in a staging network. From staging, it is accessed by a QA tester. All of this traffic is routed and protected via WARP Connector.](~/assets/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-11.svg)
+![In an example scenario, a developer might push code to a git repository, which ends up in a Kubernetes cluster in a staging network. From staging, it is accessed by a QA tester. All of this traffic is routed and protected via a Cloudflare Mesh node.](~/assets/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-11.svg)
 
-Cloudflare Tunnel via `cloudflared` is the primary method for connecting users to applications and services on private networks because it is a simpler, more granular and agile solution for many application owners (vs. IP tunnel based connectivity technology, like [IPsec](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/) and [GRE](https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/)). Cloudflare Tunnel via WARP Connector is the preferred method for mesh or other software-defined networking — most of which require bidirectional connectivity — when organizations do not want to make changes to the underlying network routing or edge infrastructure.
+_Note: Labels in this image may reflect a previous product name._
+
+Cloudflare Tunnel via `cloudflared` is the primary method for connecting users to applications and services on private networks because it is a simpler, more granular and agile solution for many application owners (vs. IP tunnel based connectivity technology, like [IPsec](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/) and [GRE](https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/)). Cloudflare Mesh is the preferred method for mesh or other software-defined networking — most of which require bidirectional connectivity — when organizations do not want to make changes to the underlying network routing or edge infrastructure.
 
 #### Using network equipment
 
@@ -319,16 +321,16 @@ The following table summarizes the different methods of connecting networks to C
 | **Use case**                                                                                                                                           | **Recommended**                             | **Alternative solution**                                                                                      |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
 | Remote users connecting to applications on private networks in a Zero Trust model (e.g. most VPN replacement scenarios)                                | **Cloudflare Tunnel (with `cloudflared`)**  | **Cloudflare WAN** Alternative option if `cloudflared` not suitable for environment                           |
-| Site-to-site connectivity between branches, headquarters, and data centers                                                                             | **Cloudflare WAN**                          | **Cloudflare Tunnel (with WARP Connector)** Alternative option if routing changes cannot be made at perimeter |
+| Site-to-site connectivity between branches, headquarters, and data centers                                                                             | **Cloudflare WAN**                          | **Cloudflare Mesh** Alternative option if routing changes cannot be made at perimeter |
 | Egress traffic from physical sites or cloud environments to cloud security inspection (e.g. most common SWG and branch firewall replacement scenarios) | **Cloudflare WAN**                          | **N/A**                                                                                                       |
-| Service-initiated communication with remote users (e.g. AD or SCCM updates, DevOps workflows, VOIP)                                                    | **Cloudflare Tunnel (with WARP Connector)** | **Cloudflare WAN** Alternative option if inbound source IP fidelity not required                              |
-| Mesh networking and peer-to-peer connectivity                                                                                                          | **Cloudflare Tunnel (with WARP Connector)** | **N/A**                                                                                                       |
+| Service-initiated communication with remote users (e.g. AD or SCCM updates, DevOps workflows, VOIP)                                                    | **Cloudflare Mesh** | **Cloudflare WAN** Alternative option if inbound source IP fidelity not required                              |
+| Mesh networking and device-to-device connectivity                                                                                                      | **Cloudflare Mesh** | **N/A**                                                                                                       |
 
 Each of these methods of connecting and routing traffic can be deployed concurrently from any location. The following diagram highlights how different connectivity methods can be used in a single architecture.
 
 Note the following traffic flows:
 
-- All traffic connected via a WARP Connector or device agent can communicate with each other over the mesh network
+- All traffic connected via a Cloudflare Mesh node or device agent can communicate with each other over the mesh network
   - Developers working from home can communicate with the production and staging servers in the cloud
   - The employee in the retail location, as well as the developer at home, can receive VOIP calls on their laptop
 - A HPC Cluster in AWS represents a proprietary solution in which no third-party software agents can be installed; as a result, it uses an IPsec connection to Cloudflare WAN
@@ -336,12 +338,12 @@ Note the following traffic flows:
   - An employee's laptop running the device agent creates its own secure connection to Cloudflare that is routed over the IPsec tunnel
 - The application owner of the reporting system maintains a connection to Cloudflare using `cloudflared` and doesn't require any networking help to expose their application to employees
 
-![Connecting and routing traffic can be created using various methods such as Cloudflare Network Interconnect, IPSEC tunnels, WARP Connector and cloudflared.](~/assets/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-14.svg)
+![Connecting and routing traffic can be created using various methods such as Cloudflare Network Interconnect, IPSEC tunnels, Cloudflare Mesh and cloudflared.](~/assets/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-14.svg)
 
 _Note: Labels in this image may reflect a previous product name._
 
 <sub>
-	*Note: All of the endpoints connected via the WARP Connector or device agent
+	*Note: All of the endpoints connected via Cloudflare Mesh or device agent
 	are automatically assigned IP addresses from the 100.96.0.0/12 address range,
 	while endpoints connected to Cloudflare WAN retain their assigned RFC1918
 	private IP addresses. `cloudflared` can be deployed in any of the locations by

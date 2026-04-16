@@ -1,25 +1,18 @@
 ---
 {}
 ---
-import { Tabs, TabItem } from "~/components"
+import { Tabs, TabItem} from "~/components"
 
-Specifies how closely the image is cropped toward the face when combined with the `gravity=face` option.
-Valid range is from `0` (includes as much of the background as possible) to `1` (crops the image as closely to the face as possible), decimals allowed. The default is `0`.
+<a id="zoom"></a>
 
-This controls the threshold for how much of the surrounding pixels around the face will be included in the image and takes effect only if face(s) are detected in the image.
+### `zoom` | `face-zoom`
+
+Specifies how closely the image is cropped toward detected faces when combined with the `gravity=face` option. Accepts a valid range between `0.0` (includes as much of the background as possible) and `1.0` (crops the image as closely to the face as possible). The default is `0`.
 
 <Tabs>
   <TabItem label="URL format">
     ```txt
     zoom=0.1
-    ```
-  </TabItem>
-  <TabItem label="URL format alias">
-    ```txt
-    zoom=0.2
-    OR
-
-    face-zoom=0.2
     ```
   </TabItem>
   <TabItem label="Workers">

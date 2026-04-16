@@ -1,0 +1,32 @@
+---
+title: RtkMeetingHeaderView
+pcx_content_type: reference
+description: API reference for RtkMeetingHeaderView component (Android Library)
+---
+
+A pre-built meeting header that contains meeting title, clock, recording indicator, participant count, grid paginator, and switch camera button.
+
+## Methods
+
+| Method              | Parameters                      | Description                            |
+| ------------------- | ------------------------------- | -------------------------------------- |
+| `activate`          | `meeting: RealtimeKitClient`    | Bind the header to the meeting state   |
+| `applyDesignTokens` | `designTokens: RtkDesignTokens` | Apply custom design tokens for theming |
+
+## Usage Examples
+
+### Basic Usage
+
+```xml
+<com.cloudflare.realtimekit.ui.view.headers.RtkMeetingHeaderView
+    android:id="@+id/rtk_meeting_header"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+```
+
+### With Methods
+
+```kotlin
+val header = findViewById<RtkMeetingHeaderView>(R.id.rtk_meeting_header)
+header.activate(meeting)
+```

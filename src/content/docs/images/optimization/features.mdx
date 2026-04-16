@@ -1,0 +1,136 @@
+---
+pcx_content_type: concept
+title: Features
+sidebar:
+  order: 1
+---
+
+import { Details, Render, Tabs, TabItem } from "~/components";
+
+Cloudflare enables developers to optimize images at scale by dynamically generating different versions in real time.
+
+The guide describes all of the parameters that can be used to resize, crop, manipulate, and apply visual effects to images.
+
+## How to apply optimization
+
+Use Cloudflare's image optimization capabilities through:
+
+- **URL interface** — Apply parameters directly in the image URL to specify how images should be optimized when served to the browser.
+- **Workers** — Bind the Images API directly to your Worker or set the `cf.image` options on a `fetch` subrequest to build programmatic image workflows.
+
+### URL interface
+
+Cloudflare uses a different URL structure depending on whether you are optimizing a [remote](/images/optimization/transformations/overview/) or a [hosted](/images/optimization/hosted-images/serve-uploaded-images/) image:
+
+  <Tabs>
+  <TabItem label="Remote image (transformation)">
+    When optimizing images outside of Images, the default transformation URL uses the following structure:
+
+      ```txt
+      https://<ZONE>/cdn-cgi/image/<OPTIONS>/<SOURCE-IMAGE>
+      ```
+
+    <Details header="URL breakdown">
+    <Render file="transformation-url-breakdown" product="images" />
+    </Details>
+    </TabItem>
+
+  <TabItem label="Hosted image">
+    For images stored in Cloudflare Images, use the delivery URL with a variant or custom options:
+
+      ```txt
+      https://imagedelivery.net/<ACCOUNT_HASH>/<IMAGE-ID>/<VARIANT-OR-OPTIONS>
+      ```
+
+    <Details header="URL breakdown">
+    <Render file="delivery-url-breakdown" product="images" />
+    </Details>
+    </TabItem>
+
+</Tabs>
+
+### Workers
+
+When using [Images with Workers](/images/optimization/transformations/transform-via-workers/), you can:
+
+- Apply custom logic to set the order for optimization operations. For example, by default, Images will apply `flip` before `rotate`; instead, you can use the Images binding to customize your optimization workflow to rotate the image before flipping it.
+- Use a custom URL scheme instead of the default URL structure.
+- Implement content negotiation to dynamically adapt image size, format, and quality based on the device and network condition.
+
+---
+
+## Parameters
+
+<Render file="anim" product="images" />
+
+<Render file="background" product="images" />
+
+<Render file="blur" product="images" />
+
+<Render file="border" product="images" />
+
+<Render file="brightness" product="images" />
+
+<Render file="compression" product="images" />
+
+<Render file="contrast" product="images" />
+
+<Render file="dpr" product="images" />
+
+<Render file="fit" product="images" />
+
+<Render file="flip" product="images" />
+
+<Render file="format" product="images" />
+
+<Render file="gamma" product="images" />
+
+<Render file="gravity" product="images" />
+
+<Render file="height" product="images" />
+
+<Render file="metadata" product="images" />
+
+<Render file="onerror" product="images" />
+
+<Render file="quality" product="images" />
+
+<Render file="rotate" product="images" />
+
+<Render file="saturation" product="images" />
+
+<Render file="segment" product="images" />
+
+<Render file="sharpen" product="images" />
+
+<Render file="slow-connection-quality" product="images" />
+
+<Render file="trim" product="images" />
+
+<Render file="width" product="images" />
+
+<Render file="zoom" product="images" />
+
+## Recommended image sizes
+
+Ideally, image sizes should match the exact size that they are displayed on the page. If the page contains thumbnails with markup such as `<img width="200" …>`, then images should be resized to `width=200`.
+
+To [serve responsive images](/images/optimization/make-responsive-images/), you can use the HTML `srcset` attribute to let the provider pick the most optimal size. If you can't use the `<img srcset>` markup and have to hardcode specific maximum sizes, Cloudflare recommends the following sizes:
+
+- Maximum of 1920 pixels for desktop browsers.
+- Maximum of 960 pixels for tablets.
+- Maximum of 640 pixels for mobile phones.
+
+For example, `fit=scale-down,width=1920` sets a maximum size of 1920 px and ensures that the image will not be enlarged unnecessarily.
+
+You can detect device type by enabling the `CF-Device-Type` header [via Cache Rule](/cache/how-to/cache-rules/examples/cache-device-type/).
+
+## Caching
+
+When you optimize with Images, the original image will be fetched from the origin server and cached — following the usual rules of HTTP caching, `Cache-Control` header, etc.. Requests for multiple different image sizes are likely to reuse the cached original image without causing extra transfers from the origin server.
+
+If [Custom Cache Keys](/cache/how-to/cache-keys/) are used for the origin image, the origin image might not be cached and might result in more calls to the origin.
+
+Optimized images follow the same caching rules as the original image they were resized from, except the minimum cache time is one hour. If you need images to be updated more frequently, add `must-revalidate` to the `Cache-Control` header. The Images service supports cache revalidation, so we recommend serving images with the `Etag` header. Refer to the [Cache docs for more information](/cache/concepts/cache-control/#revalidation).
+
+Cloudflare does not support purging optimized images individually. URLs starting with `/cdn-cgi/` cannot be purged. However, purging of the original image's URL will also purge all of its optimized versions.

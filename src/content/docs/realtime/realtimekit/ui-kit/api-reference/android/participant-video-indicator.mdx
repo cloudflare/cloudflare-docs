@@ -1,0 +1,31 @@
+---
+title: RtkParticipantVideoIndicator
+pcx_content_type: reference
+description: API reference for RtkParticipantVideoIndicator component (Android Library)
+---
+
+A video indicator that shows a participant's camera status.
+
+## Methods
+
+| Method     | Parameters                           | Description                         |
+| ---------- | ------------------------------------ | ----------------------------------- |
+| `activate` | `participant: RtkMeetingParticipant` | Bind the indicator to a participant |
+
+## Usage Examples
+
+### Basic Usage
+
+```xml
+<com.cloudflare.realtimekit.ui.view.RtkParticipantVideoIndicator
+    android:id="@+id/video_indicator"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
+```
+
+### With Methods
+
+```kotlin
+val videoIndicator = findViewById<RtkParticipantVideoIndicator>(R.id.video_indicator)
+videoIndicator.activate(participant)
+```

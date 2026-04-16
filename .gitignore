@@ -42,6 +42,7 @@ pnpm-debug.log*
 /worker/functions/
 
 .idea
+.ignore
 
 tools/relevant_changed_files.txt
 
@@ -53,3 +54,6 @@ CLAUDE.md
 .github/prompts/
 .github/agents/
 /agents/
+
+# certain versions of opencode mistakenly commit package-lock.json
+.opencode/package-lock.json

@@ -1,0 +1,22 @@
+---
+pcx_content_type: reference
+title: RtkMeetingOptionBottomSheet
+description: API reference for RtkMeetingOptionBottomSheet component (Android Library)
+---
+
+A bottom sheet shown when tapping the more button. Contains options for participants, chat, polls, plugins, recording, screen share, mute all, and settings.
+
+## Methods
+
+| Method | Parameters                                       | Description                              |
+| ------ | ------------------------------------------------ | ---------------------------------------- |
+| `show` | `fragmentManager: FragmentManager, tag: String?` | Display the meeting options bottom sheet |
+
+## Usage Examples
+
+### Basic Usage
+
+```kotlin
+val meetingOptions = RtkMeetingOptionBottomSheet()
+meetingOptions.show(fragmentManager, "MEETING_OPTIONS_TAG")
+```

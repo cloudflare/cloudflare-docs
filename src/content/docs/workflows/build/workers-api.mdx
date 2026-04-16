@@ -29,7 +29,6 @@ export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 
 ### run
 
-{/* prettier-ignore */}
 - <code>run(event: WorkflowEvent&lt;T&gt;, step: WorkflowStep): Promise&lt;T&gt;</code>
   - `event` - the event passed to the Workflow, including an optional `payload` containing data (parameters)
   - `step` - the `WorkflowStep` type that provides the step methods for your Workflow
@@ -75,10 +74,9 @@ Refer to the [events and parameters](/workflows/build/events-and-parameters/) do
 
 ### step
 
-{/* prettier-ignore */}
 - <code>step.do(name: string, callback: (): RpcSerializable): Promise&lt;T&gt;</code>
 - <code>step.do(name: string, config?: WorkflowStepConfig, callback: ():
-	RpcSerializable): Promise&lt;T&gt;</code>
+  RpcSerializable): Promise&lt;T&gt;</code>
   - `name` - the name of the step, up to 256 characters.
   - `config` (optional) - an optional `WorkflowStepConfig` for configuring [step specific retry behaviour](/workflows/build/sleeping-and-retrying/).
   - `callback` - an asynchronous function that optionally returns serializable state for the Workflow to persist. In JavaScript Workflows, this includes a fresh, unlocked `ReadableStream<Uint8Array>` for large binary output.
@@ -130,13 +128,11 @@ export class MyWorkflow extends WorkflowEntrypoint<Env> {
 
 </TypeScriptExample>
 
-{/* prettier-ignore */}
 - <code>step.sleep(name: string, duration: WorkflowDuration): Promise&lt;void&gt;</code>
   - `name` - the name of the step.
   - `duration` - the duration to sleep until, in either seconds or as a `WorkflowDuration` compatible string.
   - Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how Workflows are retried.
 
-{/* prettier-ignore */}
 - <code>step.sleepUntil(name: string, timestamp: Date | number): Promise&lt;void&gt;</code>
   - `name` - the name of the step.
   - `timestamp` - a JavaScript `Date` object or milliseconds from the Unix epoch to sleep the Workflow instance until.
@@ -217,7 +213,6 @@ Note that Workflows on Workers Free have a limit of 1,024 steps. Refer to [Workf
 
 ## NonRetryableError
 
-{/* prettier-ignore */}
 - <code>throw new NonRetryableError(message: <Type text="string" />, name <Type text="string" /> <MetaInfo text="optional" />)</code>: <Type text="NonRetryableError" />
   - When thrown inside [`step.do()`](/workflows/build/workers-api/#step), this error stops step retries, propagating the error to the top level (the [run](/workflows/build/workers-api/#run) function). Any error not handled at this top level will cause the Workflow instance to fail.
   - Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how Workflows steps are retried.
@@ -317,7 +312,6 @@ The `Workflow` type exports the following methods:
 
 Create (trigger) a new instance of the given Workflow.
 
-{/* prettier-ignore */}
 - <code>create(options?: WorkflowInstanceCreateOptions): Promise&lt;WorkflowInstance&gt;</code>
   - `options` - optional properties to pass when creating an instance, including a user-provided ID and payload parameters.
 
@@ -381,7 +375,6 @@ Create (trigger) a batch of new instance of the given Workflow, up to 100 instan
 
 This is useful when you are scheduling multiple instances at once. A call to `createBatch` is treated the same as a call to `create` (for a single instance) and allows you to work within the [instance creation limit](/workflows/reference/limits/).
 
-{/* prettier-ignore */}
 - <code>createBatch(batch: WorkflowInstanceCreateOptions[]): Promise&lt;WorkflowInstance[]&gt;</code>
   - `batch` - list of Options to pass when creating an instance, including a user-provided ID and payload parameters.
 

@@ -46,7 +46,7 @@
 		"@astrojs/starlight-docsearch": "0.7.0",
 		"@astrojs/starlight-tailwind": "5.0.0",
 		"@cloudflare/vitest-pool-workers": "0.10.7",
-		"@cloudflare/workers-types": "4.20260331.1",
+		"@cloudflare/workers-types": "4.20260413.1",
 		"@expressive-code/plugin-collapsible-sections": "0.41.3",
 		"@expressive-code/plugin-line-numbers": "0.41.3",
 		"@floating-ui/react": "0.27.16",
@@ -141,7 +141,7 @@
 		"unist-util-visit": "5.0.0",
 		"vite-tsconfig-paths": "5.1.4",
 		"vitest": "3.2.4",
-		"wrangler": "4.79.0"
+		"wrangler": "4.82.1"
 	},
 	"devEngines": {
 		"runtime": {

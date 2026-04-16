@@ -31,13 +31,32 @@ To generate a public/private key pair in the command line, refer to [Generate a 
 
 ### Upload the public key to Cloudflare
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Traffic policies** > **Traffic settings**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to  **Zero Trust** > **Data loss prevention** > **DLP settings**.
 2. In the **Set a DLP payload and prompt encryption public key** field, select **Edit**.
 3. Paste your public key.
 4. Select **Save**.
 
 :::note
 The matching private key is required to view logs. If you lose your private key, you will need to [generate](#generate-a-key-pair) and [upload](#upload-the-public-key-to-cloudflare) a new public key. The payload of new requests will be encrypted with the new public key. Previously logged data encrypted with the old key will be permanently unreadable.
+:::
+
+## Configure payload log masking
+
+You can control how sensitive data appears in your DLP payload logs by selecting a masking level. This determines how much of the matched content is visible after decryption.
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to  **Zero Trust** >  **Data loss prevention** > **DLP settings**.
+2. Go to the **Payload log masking** card.
+3. Choose one of the following masking levels:
+   - **Full Mask (default):** Masks the match while preserving character count and visual formatting. For example, a Social Security Number appears as `***-**-****`.
+   - **Partial Mask:** Reveals 25% of the matched content while masking the remainder. For example, `***-**-6789`.
+   - **Clear Text:** Stores the full, unmasked match for detailed investigation. For example, `123-45-6789`.
+
+:::note
+The masking level is applied at detection time, before the payload is encrypted. Your team will see the selected format when they decrypt the log with your private key.
+:::
+
+:::caution
+The selected masking level applies to all sensitive data matches found within a payload window — not just the match that triggered the policy.
 :::
 
 ## Log the payload of matched rules
@@ -87,7 +106,7 @@ Based on your report, DLP's machine learning will adjust its confidence in futur
 
 - All Cloudflare logs are encrypted at rest (encrypted while stored on disk). Encrypting the payload content adds a second layer of encryption for the matched values that triggered a DLP rule.
 - Cloudflare cannot decrypt encrypted payloads, since this operation requires your private key. Cloudflare staff will never ask for the private key.
-- DLP will redact alphanumeric characters in the matched pattern, replacing them with `X` while preserving the format. For example, `123-45-6789` will become `XXX-XX-XXXX`.
+- By default, DLP uses Full Mask to redact alphanumeric characters in the matched pattern, replacing them with `*` while preserving the format. For example, `123-45-6789` becomes `***-**-****`. You can [configure the masking level](#configure-payload-log-masking) to show partial or full matches if your incident response workflow requires more context.
   - You can define sensitive data with [Exact Data Match (EDM)](/cloudflare-one/data-loss-prevention/detection-entries/#exact-data-match). EDM match logs will redact your defined strings.
 
 ## Log generative AI prompt content

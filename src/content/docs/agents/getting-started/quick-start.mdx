@@ -153,6 +153,8 @@ Update `wrangler.jsonc` to register the agent:
 Replace `src/client.tsx`:
 
 ```tsx title="src/client.tsx"
+import "./styles.css";
+import { createRoot } from "react-dom/client";
 import { useState } from "react";
 import { useAgent } from "agents/react";
 import type { CounterAgent, CounterState } from "./server";
@@ -178,6 +180,9 @@ export default function App() {
 		</div>
 	);
 }
+
+const root = createRoot(document.getElementById("root")!);
+root.render(<App />);
 ```
 
 Key points:

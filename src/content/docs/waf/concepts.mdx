@@ -74,3 +74,5 @@ Cloudflare evaluates different types of rules when processing incoming requests.
 Rules are evaluated in order. If there is a match for a rule with a [terminating action](/ruleset-engine/rules-language/actions/), the rule evaluation will stop and the action will be executed immediately. Rules with a non-terminating action (such as _Log_) will not prevent subsequent rules from being evaluated and executed. For more information on how rules are evaluated, refer to [Rule evaluation](/ruleset-engine/about/rules/#rule-evaluation) in the Ruleset Engine documentation.
 
 For more information on the phases where each WAF feature will execute, refer to [WAF phases](/waf/reference/phases/).
+
+For common interactions between rewrites, IP Access rules, custom rules, and managed rules, refer to [Rule phase interactions](/waf/troubleshooting/phase-interactions/).

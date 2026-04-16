@@ -1,0 +1,103 @@
+---
+title: "WAF Release - 2026-04-15"
+description: Cloudflare WAF managed rulesets 2026-04-15 release
+date: 2026-04-15
+---
+
+import { RuleID } from "~/components";
+
+This week's release introduces a new detection for a critical Remote Code Execution (RCE) vulnerability in Mesop (CVE-2026-33057), alongside protections for high-impact vulnerabilities in Cisco Secure Firewall Management Center (CVE-2026-20079) and FortiClient EMS (CVE-2026-21643). Additionally, this release includes an update to our existing React Server DoS coverage to address recently identified resource exhaustion vectors (CVE-2026-23869).
+
+**Key Findings**
+
+- Cisco Secure FMC (CVE-2026-20079): A vulnerability in the web-based management interface of Cisco Secure Firewall Management Center (FMC) that allows an unauthenticated, remote attacker to execute arbitrary commands or bypass security filters.
+
+- FortiClient EMS (CVE-2026-21643): A critical vulnerability in the FortiClient EMS permitting unauthorized access or administrative configuration manipulation via crafted HTTP requests.
+
+- Mesop (CVE-2026-33057): A vulnerability in the Mesop Python-based UI framework where unauthenticated attackers can execute arbitrary code by sending specially crafted, Base64-encoded payloads in the request body.
+
+**Impact**
+
+Successful exploitation of these vulnerabilities could allow unauthenticated attackers to execute arbitrary code, gain administrative control over network management infrastructure, or trigger server-side resource exhaustion. Administrators are strongly encouraged to apply official vendor updates.
+
+<table style="width: 100%">
+  <thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="7767165cda1841b8b6e5abb7aef9415b" />
+      </td>
+      <td>N/A</td>
+      <td>Cisco Secure FMC - RCE via upgradeReadinessCall - CVE:CVE-2026-20079</td>
+      <td>Log</td>
+      <td>Block</td>
+      <td>This is a new detection.</td>
+    </tr>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="3dd0b2b6f45c4bc08e49bf27ee7be621" />
+      </td>
+      <td>N/A</td>
+      <td>FortiClient EMS - Pre-Auth SQL Injection - CVE:CVE-2026-21643</td>
+      <td>Log</td>
+      <td>Block</td>
+      <td>This is a new detection.</td>
+    </tr>   
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="0e3a6828906c4b24bad318a9c953a72b" />
+      </td>
+      <td>N/A</td>
+      <td>Mesop - Remote Code Execution - Base64 Payload - CVE:CVE-2026-33057</td>
+      <td>Log</td>
+      <td>Block</td>
+      <td>This is a new detection.</td>
+    </tr>  
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="d95aa5410d1b4e98bf7a59d150c08f6f" />
+      </td>
+      <td>N/A</td>
+      <td>React Server - DOS - CVE:CVE-2026-23864 - 1 - Beta</td>
+      <td>Log</td>
+      <td>Block</td>
+      <td>This rule has been merged into the original rule "React Server - DOS - CVE:CVE-2026-23864 - 1" (ID: <RuleID id="aaede80b4d414dc89c443cea61680354" />)</td>
+    </tr>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="7d6757e8a28f4853a72b4ce6ebd81645" />
+      </td>
+      <td>N/A</td>
+			<td>XSS, HTML Injection - Link Tag - URI (beta)</td>
+      <td>N/A</td>
+      <td>Disabled</td>
+      <td>This is a new detection.</td>
+    </tr>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="5e69d599ad634c81abe36a5f0af34bba" />
+      </td>
+      <td>N/A</td>
+      <td>XSS, HTML Injection - Embed Tag  - URI (beta)</td>
+			<td>N/A</td>
+      <td>Disabled</td>
+      <td>This is a new detection.</td>
+    </tr>
+</tbody>
+</table>

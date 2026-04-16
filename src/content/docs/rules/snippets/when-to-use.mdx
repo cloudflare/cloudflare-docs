@@ -1,6 +1,8 @@
 ---
 title: When to use Snippets vs Workers
 pcx_content_type: design-guide
+products:
+  - rules
 sidebar:
   order: 8
 description: >-
@@ -80,7 +82,7 @@ Snippets are ideal for fast, cost-free request and response modifications at the
 | Route traffic dynamically between [origin servers](/rules/snippets/examples/serve-different-origin/)                                                                                                          |    ✅    |   ✅    |
 | [Authenticate](/rules/snippets/examples/auth-with-headers/) requests, [pre-sign](/cache/interaction-cloudflare-products/waf-snippets/) URLs, run [A/B testing](/rules/snippets/examples/ab-testing-same-url/) |    ✅    |   ✅    |
 | Define logic using [JavaScript and Web APIs](/workers/languages/javascript/)                                                                                                                                  |    ✅    |   ✅    |
-| Perform compute-heavy tasks (for example, [AI](/workers-ai/), [image transformations](/images/transform-images/transform-via-workers/))                                                                       |    ❌    |   ✅    |
+| Perform compute-heavy tasks (for example, [AI](/workers-ai/), [image transformations](/images/optimization/transformations/transform-via-workers/))                                                                       |    ❌    |   ✅    |
 | Store persistent data (for example, [KV](/kv/), [Durable Objects](/durable-objects/), and [D1](/d1/))                                                                                                         |    ❌    |   ✅    |
 | Build [APIs](/d1/tutorials/build-a-comments-api/) and [full-stack applications](/pages/framework-guides/deploy-an-astro-site/#video-tutorial)                                                                 |    ❌    |   ✅    |
 | Use TypeScript, Python, Rust, or other programming [languages](/workers/languages/)                                                                                                                           |    ❌    |   ✅    |
@@ -555,7 +557,7 @@ You should migrate from Snippets to Workers if your logic:
 - Performs compute-intensive operations, including:
   - [AI inference](/workers-ai/)
   - [Vector search](/vectorize/)
-  - [Image transformations](/images/transform-images/transform-via-workers/)
+  - [Image transformations](/images/optimization/transformations/transform-via-workers/)
 - Interacts with Cloudflare's [Developer Platform](/learning-paths/workers/devplat/intro-to-devplat/).
 - Requires [unit testing](/workers/testing/).
 - Needs deployment automation via CLI ([Wrangler](/workers/wrangler/)).
