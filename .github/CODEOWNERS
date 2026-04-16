@@ -109,6 +109,10 @@ package.json @cloudflare/content-engineering
 /src/content/partials/durable-objects/ @elithrar @rita3ko @irvinebroque @vy-ton @cloudflare/pcx-technical-writing
 /src/content/release-notes/durable-objects.yaml @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @cloudflare/pcx-technical-writing
 /src/content/docs/email-routing/ @cloudflare/pcx-technical-writing
+/src/content/docs/flagship/ @roerohan @palashgo @akshitsinha @abhishekkankani @thebongy @cloudflare/pcx-technical-writing
+/src/content/products/flagship.yaml @roerohan @palashgo @akshitsinha @abhishekkankani @thebongy @cloudflare/pcx-technical-writing
+/src/assets/images/flagship/ @roerohan @palashgo @akshitsinha @abhishekkankani @thebongy @cloudflare/pcx-technical-writing
+/src/icons/flagship.svg @roerohan @palashgo @akshitsinha @abhishekkankani @thebongy @cloudflare/pcx-technical-writing
 /src/content/docs/hyperdrive/ @elithrar @thomasgauvin @sejoker @oxyjun @cloudflare/pcx-technical-writing
 /src/content/release-notes/hyperdrive.yaml @elithrar @thomasgauvin @sejoker @oxyjun @cloudflare/pcx-technical-writing
 /src/content/partials/hyperdrive/ @elithrar @thomasgauvin @sejoker @oxyjun @cloudflare/pcx-technical-writing
