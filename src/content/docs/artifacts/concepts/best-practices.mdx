@@ -63,6 +63,36 @@ Start new repos from a trusted baseline when agents need the same starter files,
 
 This keeps your starting point consistent and makes downstream diffs easier to review. It also lets you merge back only the results you want.
 
+This example forks a reviewed baseline repo into a session-specific repo.
+
+<TypeScriptExample filename="src/index.ts" typescriptFirst={true}>
+
+```ts
+interface Env {
+	ARTIFACTS: Artifacts;
+}
+
+async function forkFromBaseline(env: Env, sessionId: string) {
+	const baseline = await env.ARTIFACTS.get("starter-repo");
+	if (!baseline) {
+		throw new Error("Baseline repo not found");
+	}
+
+	const forked = await baseline.fork(`starter-repo-${sessionId}`, {
+		description: `Fork for session ${sessionId}`,
+		defaultBranchOnly: true,
+		readOnly: false,
+	});
+
+	return {
+		name: forked.name,
+		remote: forked.remote,
+	};
+}
+```
+
+</TypeScriptExample>
+
 ## Scope access narrowly
 
 ### Mint least-privilege repo tokens
