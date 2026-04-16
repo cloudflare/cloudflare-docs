@@ -2,7 +2,7 @@
 	"model_id": "google/veo-3",
 	"provider_id": "google",
 	"name": "Veo 3",
-	"description": "Google's video generation model capable of producing high-quality videos with optional audio from text prompts.",
+	"description": "Google's video generation model capable of producing high-quality videos with optional audio, from using prompts.",
 	"task": "Text-to-Video",
 	"tags": [
 		"Video Generation",
