@@ -29,7 +29,7 @@ curl https://api.cloudflare.com/client/v4/graphql \
   --header "Authorization: Bearer <API_TOKEN>" \
   --header "Content-Type: application/json" \
   --data '{
-    "query": "query DailyRequestVolume($accountTag: String!, $startDate: Date!, $endDate: Date!) { viewer { accounts(filter: { accountTag: $accountTag }) { ohttpRelayRequestMetricsAdaptiveGroups(filter: { date_geq: $startDate, date_leq: $endDate }, limit: 10000, orderBy: [date_ASC]) { sum { requests bytesToGateway bytesToClient } dimensions { date } } } } }",
+    "query": "query DailyRequestVolume($accountTag: String!, $startDate: Date!, $endDate: Date!) { viewer { accounts(filter: { accountTag: $accountTag }) { ohttpRelayRequestMetricsAdaptiveGroups(filter: { date_geq: $startDate, date_leq: $endDate }, limit: 10000, orderBy: [date_ASC]) { count dimensions { date relayStatusCode } } } } }",
     "variables": {
       "accountTag": "<YOUR_ACCOUNT_TAG>",
       "startDate": "2026-01-01",
