@@ -29,10 +29,10 @@ Artifacts stores versioned file trees behind a Git-compatible interface. Create 
 
 Use Artifacts when you need to:
 
-- store versioned file trees instead of raw blobs
-- hand off work to Git-aware tools, agents, and automation
-- isolate work in separate repos or branches for safer parallel execution
-- fork from a shared baseline and diff or merge the results later
+- Store versioned file trees instead of raw blobs
+- Hand off work to Git-aware tools, agents, and automation
+- Isolate work in separate repos or branches for safer parallel execution
+- Fork from a shared baseline and diff or merge the results later
 
 The same repository can be addressed from [Workers](/workers/), the REST API, and Git clients. Agents already know Git, which means you can give an agent a repository URL, let it work independently, and have it commit its output back to Artifacts with the same tools it already uses elsewhere. You can create one repo per agent, per user, per branch, or per task, scale that pattern to millions of repositories, and keep each unit of work separate until you are ready to compare or merge changes.
 

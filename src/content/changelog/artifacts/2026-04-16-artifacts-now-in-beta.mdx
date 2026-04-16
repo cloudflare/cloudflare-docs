@@ -24,7 +24,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/${ARTIFACTS_ACCOUNT_ID}/arti
 curl "https://api.cloudflare.com/client/v4/accounts/${ARTIFACTS_ACCOUNT_ID}/artifacts/namespaces/starter-namespace/repos" --header "Authorization: Bearer $ARTIFACTS_JWT" --header "Content-Type: application/json" --data '{"name":"starter-repo"}'
 ```
 
-Any git client that speaks smart HTTP can use the returned remote URL:
+Any Git client that speaks smart HTTP can use the returned remote URL:
 
 ```bash
 git clone "$ARTIFACTS_AUTH_REMOTE"
