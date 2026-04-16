@@ -27,7 +27,7 @@ const remote = (await created.repo.info())?.remote;
 Or, use the REST API to create a repo inside a namespace from your agent(s) running on any platform:
 
 ```bash
-curl --request POST "https://artifacts.cloudflare.net/v1/api/namespaces/some-namespace/repos" --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" --header "Content-Type: application/json" --data '{"name":"agent-007"}'
+curl --request POST "https://artifacts.cloudflare.dev/v1/api/namespaces/some-namespace/repos" --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" --header "Content-Type: application/json" --data '{"name":"agent-007"}'
 ```
 
 Any Git client that speaks smart HTTP can use the returned remote URL:
@@ -35,7 +35,7 @@ Any Git client that speaks smart HTTP can use the returned remote URL:
 ```bash
 # Agents know git.
 # Every repository can act as a git repo, allowing agents to interact with Artifacts the way they know best: using the git CLI.
-git clone https://x:${REPO_TOKEN}@artifacts.cloudflare.net/some-namespace/agent-007.git
+git clone https://x:${REPO_TOKEN}@artifacts.cloudflare.dev/some-namespace/agent-007.git
 ```
 
 To learn more, refer to [Get started](/artifacts/get-started/), [Workers binding](/artifacts/api/workers-binding/), and [Git protocol](/artifacts/api/git-protocol/).

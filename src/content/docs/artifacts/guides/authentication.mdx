@@ -57,7 +57,7 @@ The REST API uses a Cloudflare API token in the `Authorization` header. Use **Ar
 ```sh
 export ARTIFACTS_NAMESPACE="default"
 export CLOUDFLARE_API_TOKEN="<YOUR_API_TOKEN>"
-export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.net/v1/api/namespaces/$ARTIFACTS_NAMESPACE"
+export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.dev/v1/api/namespaces/$ARTIFACTS_NAMESPACE"
 ```
 
 Read repo metadata with a read-capable token:
@@ -90,13 +90,13 @@ Git uses repo-scoped Artifacts tokens, not Cloudflare API tokens. Mint these tok
 Use a read token to clone:
 
 ```sh
-git -c http.extraHeader="Authorization: Bearer <YOUR_READ_TOKEN>" clone "https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/starter-repo.git" artifacts-clone
+git -c http.extraHeader="Authorization: Bearer <YOUR_READ_TOKEN>" clone "https://<ACCOUNT_ID>.artifacts.cloudflare.dev/git/default/starter-repo.git" artifacts-clone
 ```
 
 Use a write token to push:
 
 ```sh
-git -c http.extraHeader="Authorization: Bearer <YOUR_WRITE_TOKEN>" push "https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/starter-repo.git" HEAD:main
+git -c http.extraHeader="Authorization: Bearer <YOUR_WRITE_TOKEN>" push "https://<ACCOUNT_ID>.artifacts.cloudflare.dev/git/default/starter-repo.git" HEAD:main
 ```
 
 For more information on token handling and authenticated remotes, refer to [Git protocol](/artifacts/api/git-protocol/).
