@@ -17,6 +17,16 @@ const rawImageUrl = example.output?.image ?? example.output?.image_url;
 const imageUrl = typeof rawImageUrl === "string" ? rawImageUrl : undefined;
 const hasImage = !!imageUrl;
 
+const rawVideoUrl = example.output?.video ?? example.output?.video_url;
+const videoUrl = typeof rawVideoUrl === "string" ? rawVideoUrl : undefined;
+const hasVideo = !!videoUrl;
+
+const rawAudioUrl = example.output?.audio ?? example.output?.audio_url;
+const audioUrl = typeof rawAudioUrl === "string" ? rawAudioUrl : undefined;
+const hasAudio = !!audioUrl;
+
+const hasMedia = hasImage || hasVideo || hasAudio;
+
 const languageMap: Record<string, string> = {
 	typescript: "ts",
 	javascript: "js",
@@ -48,7 +58,7 @@ function getLabel(label: string): string {
 <div
 	class:list={[
 		"example-card",
-		{ "side-by-side": layout === "side-by-side" && hasImage && hasSnippets },
+		{ "side-by-side": layout === "side-by-side" && hasMedia && hasSnippets },
 	]}
 >
 	{
@@ -70,19 +80,31 @@ function getLabel(label: string): string {
 	}
 
 	{
-		hasImage && (
+		hasMedia && (
 			<div class="example-output">
 				<span class="example-output-label">
 					Response
 					<span class="example-status-badge">200</span>
 				</span>
-				<img src={imageUrl} alt={example.name} loading="lazy" />
+				{hasImage && (
+					<img src={imageUrl} alt={example.name} loading="lazy" />
+				)}
+				{hasVideo && (
+					<video src={videoUrl} controls preload="metadata">
+						<track kind="captions" />
+					</video>
+				)}
+				{hasAudio && (
+					<audio src={audioUrl} controls preload="metadata">
+						Your browser does not support the audio element.
+					</audio>
+				)}
 			</div>
 		)
 	}
 
 	{
-		!hasImage && !hasSnippets && example.output && (
+		!hasMedia && !hasSnippets && example.output && (
 			<Tabs>
 				<TabItem label="Input">
 					<Code code={JSON.stringify(example.input, null, 4)} lang="json" />
@@ -95,13 +117,13 @@ function getLabel(label: string): string {
 	}
 
 	{
-		!hasImage && !hasSnippets && !example.output && example.input && (
+		!hasMedia && !hasSnippets && !example.output && example.input && (
 			<Code code={JSON.stringify(example.input, null, 4)} lang="json" />
 		)
 	}
 
 	{
-		!hasImage && hasSnippets && example.output && (
+		!hasMedia && hasSnippets && example.output && (
 			<details class="example-io">
 				<summary>Input / Output JSON</summary>
 				<Tabs>
@@ -219,10 +241,15 @@ function getLabel(label: string): string {
 		line-height: 1.4;
 	}
 
-	.example-output img {
+	.example-output img,
+	.example-output video {
 		width: 100%;
 		border-radius: 0.5rem;
 		border: 1px solid var(--sl-color-gray-5);
+	}
+
+	.example-output audio {
+		width: 100%;
 	}
 
 	.example-io {
