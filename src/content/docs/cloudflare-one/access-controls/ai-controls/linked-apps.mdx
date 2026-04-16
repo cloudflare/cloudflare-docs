@@ -16,7 +16,7 @@ The [Linked App Token](/cloudflare-one/access-controls/applications/linked-app-t
 
 ## Self-hosted MCP server (recommended)
 
-If your MCP server is a [self-hosted Access application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/), Cloudflare Access handles authentication automatically. The MCP server receives the user's JWT from Access in the `Cf-Access-Jwt-Assertion` header and forwards it to downstream applications in the `Cf-Access-Token` header. No OAuth implementation is needed in your MCP server code.
+If your MCP server is a [self-hosted Access application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/), Cloudflare Access handles authentication automatically. The MCP server receives the user's JWT from Access in the `Cf-Access-Jwt-Assertion` header and should forward it to downstream applications in the `Cf-Access-Token` header. No OAuth implementation is needed in your MCP server code.
 
 ```mermaid
 flowchart LR
