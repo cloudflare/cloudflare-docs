@@ -16,7 +16,11 @@ An MCP server portal centralizes multiple [Model Context Protocol (MCP) servers]
 
 ![MCP clients connect through an MCP portal to access internal MCP servers and SaaS MCP servers.](~/assets/images/cloudflare-one/applications/mcp-portal.png)
 
-Key benefits include:
+This guide explains how to add MCP servers to Cloudflare Access, create an MCP portal with customized tools and policies, and connect users to the portal using an MCP client.
+
+## Key features
+
+MCP server portals provide the following capabilities:
 
 - **Streamlined access to multiple MCP servers**: MCP server portals support both unauthenticated MCP servers and MCP servers secured using OAuth (for example, via [Access for SaaS](/cloudflare-one/access-controls/ai-controls/saas-mcp/) or a [third-party OAuth provider](/agents/model-context-protocol/authorization/)). Users log in to the portal URL through Cloudflare Access and are prompted to authenticate separately to each server that requires OAuth.
 
@@ -29,8 +33,6 @@ Key benefits include:
 - **Code mode**: Code mode is available by default on all portals. It collapses all upstream tools into a single `code` tool. The AI agent writes JavaScript that calls typed methods for each tool, and the code runs in an isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/) environment. This keeps context window usage fixed regardless of how many tools are available. Refer to [code mode](#code-mode) for connection instructions.
 
 - **Observability**: Once the user's AI agent is connected to the portal, Cloudflare Access logs the individual requests made using the tools in the portal. You can optionally route portal traffic through [Cloudflare Gateway](#route-portal-traffic-through-gateway) for richer HTTP logging and data loss prevention (DLP) scanning.
-
-This guide explains how to add MCP servers to Cloudflare Access, create an MCP portal with customized tools and policies, and connect users to the portal using an MCP client.
 
 ## Prerequisites
 
@@ -337,7 +339,7 @@ To manage your server connections during an active session, ask your AI agent to
 
 > Take me back to the server selection page.
 
-The portal responds with an authorization URL via elicitation. Open this URL in your web browser to access the server selection page:
+The portal returns an authorization URL. Open this URL in your web browser to access the server selection page:
 
 ```txt
 https://<subdomain>.<domain>/authorize?elicitationId=<ELICITATION_ID>
@@ -350,7 +352,7 @@ From this page you can:
 
 ### Enable or disable a server inline
 
-You can also enable or disable a specific server directly from your MCP client without visiting the server selection page. Ask your AI agent by name, for example:
+You can also enable or disable a specific server directly from your MCP client without visiting the server selection page. For example:
 
 > Enable the wiki server.
 
@@ -360,9 +362,9 @@ The portal toggles the server and updates the active tool list immediately. Disa
 
 ### Reauthenticate a server
 
-When an upstream MCP server token expires or needs a refresh, the portal prompts you to reauthenticate directly from within your MCP client. The portal provides an authorization URL via elicitation that you open in your browser. After you complete the login, the updated session returns to the client automatically.
+When an upstream MCP server token expires, the portal prompts you to reauthenticate from within your MCP client. Open the provided URL in your browser and complete the login to restore the session.
 
-If your MCP client does not support elicitations, you can force all MCP servers to reauthenticate by clearing cached credentials:
+If your MCP client does not display the reauthentication prompt, you can manually clear cached credentials:
 
 :::note
 This command clears credentials for all MCP servers using `mcp-remote@latest`, not just MCP portals.
