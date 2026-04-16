@@ -259,6 +259,10 @@ Bots call API endpoints at machine speed without browser overhead. Common automa
 
 ### Turn on Bot Fight Mode (Free)
 
+:::note
+If you are on a Cloudflare Pro or Business plan, go to the [next section](#create-exception-rules-for-legitimate-bot-clients-pro-business). You will configure Super Bot Fight Mode later.
+:::
+
 Bot Fight Mode challenges requests that match known bot patterns. It applies to your entire domain and is available on all plans at no additional cost.
 
 <Render file="enable-bfm" product="bots" />
@@ -267,19 +271,9 @@ Bot Fight Mode may interfere with legitimate automated traffic to your API, such
 
 For more information on Bot Fight Mode behavior and limitations, refer to [Bot Fight Mode](/bots/get-started/bot-fight-mode/).
 
-### Configure Super Bot Fight Mode (Pro, Business)
-
-On Pro and Business plans, [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/) provides granular controls that apply to all traffic across your domain. You can configure separate actions for **Definitely automated** ([bot score](/bots/concepts/bot-score/) of 1) and **Likely automated** (bot score of 2-29) traffic categories. Business plans can also configure the **Likely automated** category.
-
-Super Bot Fight Mode applies domain-wide and does not support path-specific rules. If you need to apply different bot thresholds to different API paths, you need a [Bot Management](/bots/get-started/bot-management/) subscription (Enterprise).
-
-:::tip[Bot score in custom rules (Enterprise)]
-With a Bot Management subscription, you can write custom rules using `cf.bot_management.score` to set path-specific thresholds. For example, block requests with a bot score below 30 on `/api/auth` paths while allowing all scores on other API paths. For more information, refer to [Bot Management](/bots/get-started/bot-management/).
-:::
-
 ### Create exception rules for legitimate bot clients (Pro, Business)
 
-If your API receives traffic from known automated clients (monitoring services, partner APIs, CI/CD systems), create an Application Security [custom rule with the *Skip* action](/waf/custom-rules/skip/) to exclude them from bot protections. Create the exception rule before turning on Super Bot Fight Mode.
+If your API receives traffic from known automated clients (monitoring services, partner APIs, CI/CD systems), create a [custom security rule with the *Skip* action](/waf/custom-rules/skip/) to exclude them from bot protections. Create the exception rule before turning on Super Bot Fight Mode in the next section.
 
 <Render file="navigate-to-custom-rules" product="waf" />
 
@@ -293,12 +287,33 @@ If your API receives traffic from known automated clients (monitoring services, 
 
    Replace the IP range and User-Agent with values that match your legitimate bot clients.
 
-5. For **Choose action**, select *Skip* and then select **All Super Bot Fight Mode rules**. You may select other app security products to skip as well.
+5. For **Choose action**, select *Skip* and then select **All Super Bot Fight Mode rules**.
 
 6. Select **Deploy**.
 
 :::note
 Place exception rules above (before) enforcement rules in your rule list. Cloudflare evaluates custom rules in order, and the first matching rule with a terminating action stops evaluation. For more information, refer to [Rule execution order](/waf/concepts/#rule-execution-order).
+:::
+
+
+### Configure Super Bot Fight Mode (Pro, Business)
+
+[Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/) provides granular controls that apply across your domain, allowing you to apply different actions to different bot types.
+
+To configure Super Bot Fight Mode:
+
+<Render file="enable-sbfm" product="bots" />
+
+With Super Bot Fight Mode, you can configure different actions for different bot types:
+
+- Block or allow verified bots
+- Configure a separate action (allow, block, or challenge) for **Definitely automated traffic** ([bot score](/bots/concepts/bot-score/) of 1)
+- On Business plans and above: Configure a separate action for **Likely automated traffic** (bot score of 2-29)
+
+Super Bot Fight Mode applies domain-wide and does not support path-specific rules. If you need to apply different bot thresholds to different API paths, you need a [Bot Management](/bots/get-started/bot-management/) subscription (Enterprise).
+
+:::tip[Bot score in custom rules (Enterprise)]
+With a Bot Management subscription, you can write custom rules using `cf.bot_management.score` to set path-specific thresholds. For example, block requests with a bot score below 30 on `/api/auth` paths while allowing all scores on other API paths. For more information, refer to [Bot Management](/bots/get-started/bot-management/).
 :::
 
 ### Detect leaked credentials on login endpoints
