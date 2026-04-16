@@ -284,22 +284,18 @@ query GatewayTimeouts(
     accounts(filter: { accountTag: $accountTag }) {
       ohttpRelayRequestMetricsAdaptiveGroups(
         filter: {
-          datetime_geq: $start
-          datetime_leq: $end
+          datetimeFiveMinutes_geq: $start
+          datetimeFiveMinutes_leq: $end
           relayStatusCode: 504
           gatewayStatusCode: 0
         }
         limit: 10000
-        orderBy: [datetimeMinute_ASC]
+        orderBy: [datetimeFiveMinutes_ASC]
       ) {
-        sum {
-          requests
-        }
+        count
         dimensions {
-          datetimeMinute
           datetimeFiveMinutes
-          datetimeHour
-          colo
+          coloCode
         }
       }
     }
