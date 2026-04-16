@@ -157,7 +157,16 @@ function SchemaNode({
 					}
 				>
 					<div
-						className={`py-3 ${hasChildren ? "cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50" : ""} ${hasChildren && isExpanded ? "border-b border-gray-100 dark:border-gray-800" : ""}`}
+						className={[
+							"py-3",
+							hasChildren &&
+								"cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50",
+							hasChildren &&
+								isExpanded &&
+								"border-b border-gray-100 dark:border-gray-800",
+						]
+							.filter(Boolean)
+							.join(" ")}
 						style={{ paddingLeft: indentPx }}
 						onClick={hasChildren ? handleToggle : undefined}
 						role={hasChildren ? "button" : undefined}
@@ -168,9 +177,12 @@ function SchemaNode({
 							<span className="w-4 flex-shrink-0 text-center">
 								{hasChildren && (
 									<span
-										className={`inline-block text-xs text-gray-400 transition-transform ${
-											isExpanded ? "rotate-90" : ""
-										}`}
+										className={[
+											"inline-block text-xs text-gray-400 transition-transform",
+											isExpanded && "rotate-90",
+										]
+											.filter(Boolean)
+											.join(" ")}
 									>
 										▶
 									</span>
@@ -249,7 +261,16 @@ function SchemaNode({
 		>
 			{/* Clickable row */}
 			<div
-				className={`py-3 ${hasChildren ? "cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50" : ""} ${hasChildren && isExpanded ? "border-b border-gray-100 dark:border-gray-800" : ""}`}
+				className={[
+					"py-3",
+					hasChildren &&
+						"cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50",
+					hasChildren &&
+						isExpanded &&
+						"border-b border-gray-100 dark:border-gray-800",
+				]
+					.filter(Boolean)
+					.join(" ")}
 				style={{ paddingLeft: indentPx }}
 				onClick={hasChildren ? handleToggle : undefined}
 				role={hasChildren ? "button" : undefined}
@@ -260,9 +281,12 @@ function SchemaNode({
 					<span className="w-4 flex-shrink-0 text-center">
 						{hasChildren && (
 							<span
-								className={`inline-block text-xs text-gray-400 transition-transform ${
-									isExpanded ? "rotate-90" : ""
-								}`}
+								className={[
+									"inline-block text-xs text-gray-400 transition-transform",
+									isExpanded && "rotate-90",
+								]
+									.filter(Boolean)
+									.join(" ")}
 							>
 								▶
 							</span>
