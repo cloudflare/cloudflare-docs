@@ -3,9 +3,6 @@
 # STATIC REDIRECTS
 # ============================================================================
 
-# Email Service
-/email-service/reference/limits/ /email-service/platform/limits/ 301
-
 # homepage
 /docs/ /directory/ 301
 /support/ai/ / 301
