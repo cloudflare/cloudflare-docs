@@ -38,7 +38,7 @@ Add the Flagship binding in your Wrangler configuration file so your Worker can 
 
 </WranglerConfig>
 
-Replace `<APP_ID>` with the app ID shown in the Cloudflare dashboard. The `binding` field sets the name you use to access Flagship in your Worker code. In this example, the binding is available as `env.FLAGS`.
+Replace `<APP_ID>` with the app ID shown in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/flagship). The `binding` field sets the name you use to access Flagship in your Worker code. In this example, the binding is available as `env.FLAGS`.
 
 After updating the Wrangler configuration, run `npx wrangler types` to generate TypeScript types for the binding.
 
