@@ -18,13 +18,14 @@ To detect slow connections, enable any of the following client hints via HTTP in
 
 ```txt
 accept-ch: rtt, save-data, ect, downlink
+
 ```
 
 `slow-connection-quality` applies when the client hint is present and any of the following conditions are met:
 
 - [rtt](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/RTT): Greater than 150ms.
 - [save-data](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Save-Data): Value is "on".
-- [ect](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/ECT): Value is one of `slow-2g|2g|3g`.
+- [etc](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/ECT): Value is one of `slow-2g|2g|3g`.
 - [downlink](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Downlink): Less than 5Mbps.
 
 <Tabs>

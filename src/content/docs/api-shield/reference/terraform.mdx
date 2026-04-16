@@ -160,7 +160,7 @@ resource "cloudflare_token_validation_rules" "example_com" {
 resource "cloudflare_api_shield" "session_identifiers" {
   zone_id = var.zone_id
   auth_id_characteristics = [{
-    # select the JWT's `sub` claim as an extremly stable session identifier
+    # select the JWT's `sub` claim as an extremely stable session identifier
     # this is "<token_config_id:json_path>" format
     name = "${cloudflare_token_validation_config.example_es256_config.id}:$.sub"
     type = "jwt"
