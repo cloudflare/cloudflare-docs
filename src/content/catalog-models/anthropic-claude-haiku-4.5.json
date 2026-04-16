@@ -27,9 +27,6 @@
 				],
 				"max_tokens": 1024
 			},
-			"output": {
-				"text": "# The Three Laws of Thermodynamics\n\n## First Law (Conservation of Energy)\nEnergy cannot be created or destroyed, only transformed from one form to another. The total energy input to a system equals the change in internal energy plus the work done by the system.\n\n## Second Law (Entropy)\nThe entropy (disorder) of an isolated system always increases over time, or remains constant in reversible processes. This means heat naturally flows from hot to cold objects, and energy becomes less available for doing useful work.\n\n## Third Law (Absolute Zero)\nAs temperature approaches absolute zero (0 Kelvin or -273.15°C), the entropy of a perfect crystal approaches zero. It's impossible to reach absolute zero temperature, though you can get arbitrarily close to it.\n\n---\n\n**In simple terms:** You can't win (First Law), you can't break even (Second Law), and you can't leave the game (Third Law)."
-			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -51,9 +48,6 @@
 				],
 				"max_tokens": 1024,
 				"temperature": 0.3
-			},
-			"output": {
-				"text": "# Reading a JSON File in Python\n\nHere are the most common methods:\n\n## 1. **Basic Method** (Recommended)\n```python\nimport json\n\nwith open('file.json', 'r') as file:\n    data = json.load(file)\n\nprint(data)\n```\n\n## 2. **With Error Handling**\n```python\nimport json\n\ntry:\n    with open('file.json', 'r') as file:\n        data = json.load(file)\nexcept FileNotFoundError:\n    print(\"File not found\")\nexcept json.JSONDecodeError:\n    print(\"Invalid JSON format\")\n```\n\n## 3. **From a JSON String**\nIf you have JSON as a string instead:\n```python\nimport json\n\njson_string = '{\"name\": \"John\", \"age\": 30}'\ndata = json.loads(json_string)  # Note: loads() not load()\n```\n\n## Key Differences\n\n| Method | Use Case |\n|--------|----------|\n| `json.load(file)` | Read from a file object |\n| `json.loads(string)` | Parse a JSON string |\n\n## Example with Real Data\n```python\nimport json\n\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n\n# Access the data\nprint(data['name'])\nprint(data['age'])\n```\n\n**Tips:**\n- Always use `with` statement to automatically close the file\n- Use `encoding='utf-8'` for non-ASCII characters: `open('file.json', 'r', encoding='utf-8')`\n- JSON objects become Python dictionaries, arrays become lists"
 			},
 			"code_snippets": [
 				{
@@ -83,9 +77,6 @@
 				],
 				"max_tokens": 1024
 			},
-			"output": {
-				"text": "# Great Stops Between San Francisco and LA\n\nHere are some popular options depending on your route:\n\n**Scenic/Coastal Route (US-1):**\n- **Big Sur** - Stunning coastal views, hiking trails, McWay Falls\n- **Carmel-by-the-Sea** - Charming town, beaches, art galleries\n- **San Simeon** - Hearst Castle tours (impressive historical site)\n- **Cambria** - Coastal town with wine tasting, shops, restaurants\n\n**Faster Route (I-5):**\n- **San Luis Obispo** - Historic town, farmers market, wineries\n- **Santa Maria** - Barbecue and wine region (about halfway point)\n\n**Balanced Option (US-101):**\n- **Santa Barbara** - Beautiful beaches, wine country, Spanish architecture\n- **Ventura** - Coastal town with pier and beaches\n\n**Tips:**\n- The coastal route (US-1) is slower but more scenic - plan 8-10 hours\n- I-5 is fastest but less interesting\n- Consider breaking it into 2 days to enjoy stops without rushing\n- Peak travel times can add significant time, especially around LA\n\nWhat kind of experience are you looking for - scenic views, food/wine, historical sites, or something else?"
-			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -107,9 +98,6 @@
 				"max_tokens": 512,
 				"temperature": 0.8
 			},
-			"output": {
-				"text": "# The Backwards Watch\n\nDetective Maria Santos stood in the apartment doorway, her eyes sweeping across the overturned furniture and scattered belongings. Another break-in on Maple Street. The third this month.\n\nShe was about to radio in when something caught her eye—a glint of gold half-buried beneath the couch cushions.\n\nThe pocket watch was pristine. Expensive. Not the kind of thing a panicked burglar would leave behind, and not the kind of thing a struggling resident would own. She picked it up carefully, noting the heft of it in her palm.\n\nWhen she opened the cover, her breath caught.\n\nThe hands were moving backwards.\n\nNot slowly, not in some mechanical stutter—they were spinning steadily counterclockwise, the second hand ticking away in reverse. The time read 3:17, moving toward 3:16. The inscription on the lid read: *For when time runs out, turn it back.*\n\nMaria glanced at her wrist. Her watch showed 3:21 PM.\n\n\"Dispatch, this is Santos,\" she said slowly into her radio. \"I'm gonna need someone to check the city records for this address. And someone pull traffic cameras from the past four hours.\"\n\nShe didn't mention the watch. Not yet.\n\nBecause Maria understood something that most detectives never learned: sometimes the most important clues weren't evidence of a crime.\n\nSometimes they were warnings."
-			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -130,9 +118,6 @@
 				],
 				"max_tokens": 1024,
 				"stream": true
-			},
-			"output": {
-				"text": "# Recursion Explained\n\n## What is Recursion?\n\n**Recursion** is when a function calls itself to solve a problem by breaking it down into smaller, similar sub-problems. Each recursive call works on a simpler version of the problem until reaching a **base case** (stopping condition).\n\n## Key Components\n\n1. **Base Case** - The condition that stops recursion\n2. **Recursive Case** - The function calling itself with simpler input\n3. **Progress** - Each call must move closer to the base case\n\n## Simple Example: Factorial\n\n```python\ndef factorial(n):\n    # Base case: stop recursion\n    if n == 0 or n == 1:\n        return 1\n    \n    # Recursive case: break problem into smaller piece\n    return n * factorial(n - 1)\n\n# Usage\nprint(factorial(5))  # Output: 120\n```\n\n### How It Works\n\n```\nfactorial(5)\n  = 5 * factorial(4)\n  = 5 * 4 * factorial(3)\n  = 5 * 4 * 3 * factorial(2)\n  = 5 * 4 * 3 * 2 * factorial(1)\n  = 5 * 4 * 3 * 2 * 1\n  = 120\n```\n\n## Another Example: Countdown\n\n```python\ndef countdown(n):\n    if n == 0:              # Base case\n        print(\"Blastoff!\")\n    else:\n        print(n)\n        countdown(n - 1)    # Recursive call\n\ncountdown(3)\n# Output: 3, 2, 1, Blastoff!\n```\n\n## When to Use Recursion\n\n✅ **Good for:**\n- Tree/graph traversal\n- Divide-and-conquer problems\n- Mathematical sequences\n\n❌ **Avoid if:**\n- Simple loop is clearer\n- Risk of stack overflow with deep recursion"
 			},
 			"code_snippets": [
 				{

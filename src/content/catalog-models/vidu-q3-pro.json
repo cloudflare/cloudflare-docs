@@ -20,6 +20,9 @@
 			"input": {
 				"prompt": "A golden retriever running through a sunlit meadow in slow motion"
 			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/vidu-q3-pro/simple-text-to-video.mp4"
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -36,6 +39,9 @@
 				"duration": 10,
 				"resolution": "1080p"
 			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/vidu-q3-pro/custom-duration-and-resolution.mp4"
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -51,6 +57,9 @@
 				"prompt": "A busy street in Tokyo at night with neon signs reflecting on wet pavement, rain falling",
 				"aspect_ratio": "9:16",
 				"duration": 5
+			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/vidu-q3-pro/portrait-aspect-ratio.mp4"
 			},
 			"code_snippets": [
 				{
@@ -69,6 +78,9 @@
 				"duration": 8,
 				"resolution": "720p"
 			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/vidu-q3-pro/silent-video.mp4"
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -85,6 +97,9 @@
 				"aspect_ratio": "1:1",
 				"duration": 5,
 				"resolution": "720p"
+			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/vidu-q3-pro/square-format.mp4"
 			},
 			"code_snippets": [
 				{

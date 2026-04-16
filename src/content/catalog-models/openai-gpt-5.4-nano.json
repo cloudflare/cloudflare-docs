@@ -26,9 +26,6 @@
 					}
 				]
 			},
-			"output": {
-				"text": "The three (classical) laws of thermodynamics are:\n\n1. **Zeroth Law (Thermal equilibrium):**  \n   If system A is in thermal equilibrium with system B, and system B is in thermal equilibrium with system C, then A is in thermal equilibrium with C.  \n   *This justifies temperature as a measurable property and defines the concept of thermal equilibrium.*\n\n2. **First Law (Conservation of energy):**  \n   The change in internal energy of a system equals the heat added to the system minus the work done by the system:  \n   ΔU = Q - W  \n   *Energy is conserved; heat and work are ways of transferring energy.*\n\n3. **Second Law (Entropy and the direction of processes):**  \n   In an isolated system, the total entropy never decreases; it either increases or remains constant:  \n   ΔS ≥ 0  \n   *This explains why processes have a preferred direction (e.g., heat flows from hot to cold) and why perpetual motion of the second kind is impossible.*\n\n**Commonly added fourth \"law\" (related to the third):**\n4. **Third Law (Unattainability of absolute zero):**  \n   As temperature approaches absolute zero, the entropy of a perfect crystal approaches a constant minimum (often taken as zero):  \n   S → S₀ as T → 0  \n   *Absolute zero cannot be reached in a finite number of steps.*"
-			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -52,9 +49,6 @@
 					}
 				],
 				"temperature": 0.3
-			},
-			"output": {
-				"text": "You can read a JSON file in Python using the built-in `json` module.\n\n### Example\n```python\nimport json\n\nwith open(\"data.json\", \"r\", encoding=\"utf-8\") as f:\n    data = json.load(f)\n\nprint(data)  # data is now a Python dict/list depending on the JSON\n```\n\n### Notes\n- Use `json.load(f)` when reading from an open file object.\n- If your JSON file is a list at the top level, `data` will be a Python `list`; if it’s an object, `data` will be a `dict`.\n\nIf you share a sample of your JSON structure (object vs array), I can show how to access specific fields."
 			},
 			"code_snippets": [
 				{
@@ -84,9 +78,6 @@
 				],
 				"max_tokens": 500
 			},
-			"output": {
-				"text": "Sure—here are some great stop ideas on the SF → LA drive, with options depending on whether you want the fastest route or a more scenic one.\n\n## Classic / most popular stops (easy to do)\n- **Half Moon Bay (20–30 min north of SF)**: Ocean views, quick coffee, and a nice break if you start early.\n- **Santa Cruz Beach Boardwalk (Santa Cruz)**: Fun waterfront stop; grab a snack or stroll the boardwalk.\n- **Monterey Bay / Cannery Row**: Great if you like marine life—optionally visit the **Monterey Bay Aquarium**.\n- **Carmel-by-the-Sea**: Charming coastal town with great photo stops and quick lunch.\n- **Big Sur (scenic drive)**: If you have time, this is the highlight—pullouts for views and short walks.\n\n## Big Sur & coast highlights (if you want the scenic route)\n- **Point Lobos State Natural Reserve**: Beautiful coastline, excellent for quick hikes and spotting wildlife.\n- **McWay Falls (Julia Pfeiffer Burns State Park)**: One of the most famous viewpoints for waterfall-to-ocean scenery.\n- **Bixby Creek Bridge area (near Highway 1)**: Iconic photos from the roadside.\n\n## Optional inland stops (faster, but still interesting)\n- **Gilroy**: Known for garlic (grab a bite and stretch your legs).\n- **San Luis Obispo area**: Downtown stroll + food; also a convenient rest point.\n- **Solvang (Danish-style town)**: Fun detour/atmosphere if you want something different.\n\n## Fun “stretch your legs” stops as you near LA\n- **Santa Barbara**: Great waterfront area and easy sightseeing if you route via coastal or stop on the way in.\n- **Malibu**: Beach pullouts and scenic ocean views (traffic can be a factor, though).\n\n## Best way to choose your stops\nTwo quick questions and I’ll tailor an exact itinerary (with drive times and an order of stops):\n1) Are you taking **Highway 101 (faster)** or **Highway 1/CA-1 (more scenic)**?\n2) How much time do you want to spend total—**just a day trip** or **1–2 nights**?"
-			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -107,9 +98,6 @@
 				],
 				"temperature": 0.8,
 				"max_tokens": 300
-			},
-			"output": {
-				"text": "The rain had stopped an hour ago, but the street still looked wet enough to remember every car that had passed through it. Detective Mara Ellery stood under the awning of the closed pawnshop and watched the puddles tremble with the tail-end of thunder, as if the sky itself couldn’t decide whether to confess.\n\nInside, the shop smelled of old velvet and pennies. The owner—hands shaking, eyes fixed on the floorboards—had let Mara in without asking why. He’d only pointed to the counter and whispered, “It wasn’t like that yesterday.”\n\nMara stepped around the glass display cases, each one fogged at the edges like a secret. The place was mostly empty: pawn tags dangling from hooks, empty drawers, dust gathered in careful drifts. But there was one thing that didn’t belong.\n\nOn the counter sat a small paper envelope, sealed with wax the color of dried blood. No stamp. No address. No name.\n\nMara didn’t touch it at first. She circled it once, slow as a priest making a decision. The wax seal carried an imprint—an oval within an oval—with a single horizontal line cutting through the center.\n\nIt looked familiar in the way a nightmare does.\n\n“Who brought it?” she asked.\n\nThe owner blinked hard. “No one. I found it behind the register. I thought it was a prank at first. The police came, they—” He swallowed. “They said it"
 			},
 			"code_snippets": [
 				{

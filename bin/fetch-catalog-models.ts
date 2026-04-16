@@ -110,20 +110,24 @@ async function loadFromFile(filePath: string): Promise<CatalogModel[]> {
 	const data = JSON.parse(content) as CatalogListResponse | CatalogModel[];
 
 	// Handle both array format and API response format
+	let models: CatalogModel[];
 	if (Array.isArray(data)) {
-		console.log(`  Loaded ${data.length} models from array`);
-		return data;
+		models = data;
+	} else if (data.result) {
+		models = data.result;
+	} else {
+		console.error(
+			"Error: Unrecognized file format. Expected array or API response with 'result' field.",
+		);
+		process.exit(1);
 	}
 
-	if (data.result) {
-		console.log(`  Loaded ${data.result.length} models from API response`);
-		return data.result;
-	}
-
-	console.error(
-		"Error: Unrecognized file format. Expected array or API response with 'result' field.",
+	const publicModels = models.filter((m) => !m.private);
+	const skipped = models.length - publicModels.length;
+	console.log(
+		`  Loaded ${models.length} models${skipped > 0 ? ` (${skipped} private skipped)` : ""}`,
 	);
-	process.exit(1);
+	return publicModels;
 }
 
 function getApiHeaders(token: string): Record<string, string> {
@@ -167,13 +171,20 @@ async function fetchModelList(
 			process.exit(1);
 		}
 
+		let skippedPrivate = 0;
 		for (const model of data.result) {
+			if (model.private) {
+				skippedPrivate++;
+				continue;
+			}
 			modelIds.push(model.model_id);
 		}
 
 		const { count, total_count } = data.result_info!;
+		const privateNote =
+			skippedPrivate > 0 ? ` (${skippedPrivate} private skipped)` : "";
 		console.log(
-			`  Page ${page}: ${count} models (${modelIds.length}/${total_count})`,
+			`  Page ${page}: ${count} models (${modelIds.length}/${total_count})${privateNote}`,
 		);
 
 		hasMore = modelIds.length < total_count;

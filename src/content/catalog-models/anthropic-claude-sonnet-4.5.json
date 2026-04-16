@@ -27,9 +27,6 @@
 				],
 				"max_tokens": 1024
 			},
-			"output": {
-				"text": "# The Three Laws of Thermodynamics\n\n## **First Law (Conservation of Energy)**\nEnergy cannot be created or destroyed, only converted from one form to another. The total energy of an isolated system remains constant.\n\n*In equation form: ΔU = Q - W*\n- Change in internal energy = Heat added to system - Work done by system\n\n## **Second Law (Entropy)**\nThe entropy (disorder) of an isolated system always increases over time. Heat naturally flows from hot to cold, and processes have a preferred direction.\n\n*Key implications:*\n- No process is 100% efficient\n- Perfect heat engines are impossible\n- Time has a direction\n\n## **Third Law (Absolute Zero)**\nAs temperature approaches absolute zero (0 Kelvin or -273.15°C), the entropy of a perfect crystal approaches zero. Absolute zero cannot be reached in a finite number of steps.\n\n---\n\n**Note:** There's also a \"**Zeroth Law**\" (named later): If two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other. This establishes the concept of temperature."
-			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -51,9 +48,6 @@
 				],
 				"max_tokens": 1024,
 				"temperature": 0.3
-			},
-			"output": {
-				"text": "# Reading a JSON File in Python\n\nHere are the most common methods:\n\n## **Method 1: Using `json.load()` (Recommended)**\n\n```python\nimport json\n\n# Read JSON file\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n\nprint(data)\n```\n\n## **Method 2: Read as String First**\n\n```python\nimport json\n\n# Read file content, then parse\nwith open('data.json', 'r') as file:\n    json_string = file.read()\n    data = json.loads(json_string)\n\nprint(data)\n```\n\n## **Complete Example**\n\n```python\nimport json\n\n# Sample JSON file content:\n# {\n#     \"name\": \"John\",\n#     \"age\": 30,\n#     \"cities\": [\"New York\", \"London\"]\n# }\n\ntry:\n    with open('data.json', 'r') as file:\n        data = json.load(file)\n    \n    # Access the data\n    print(data['name'])        # Output: John\n    print(data['age'])         # Output: 30\n    print(data['cities'][0])   # Output: New York\n    \nexcept FileNotFoundError:\n    print(\"File not found!\")\nexcept json.JSONDecodeError:\n    print(\"Invalid JSON format!\")\n```\n\n## **Key Points**\n\n- **`json.load()`** - reads directly from a file object\n- **`json.loads()`** - parses a JSON string\n- Always use **`with open()`** to ensure the file closes properly\n- JSON objects become Python **dictionaries**\n- JSON arrays become Python **lists**\n\n## **With Encoding (for special characters)**\n\n```python\nwith open('data.json', 'r', encoding='utf-8') as file:\n    data = json.load(file)\n```"
 			},
 			"code_snippets": [
 				{
@@ -83,9 +77,6 @@
 				],
 				"max_tokens": 1024
 			},
-			"output": {
-				"text": "Great! Here are some excellent stops along the route:\n\n**Central Coast (via Highway 1 - scenic route):**\n- **Monterey & Carmel** - Beautiful coastal towns, Monterey Bay Aquarium\n- **Big Sur** - Stunning coastline, Bixby Bridge, McWay Falls\n- **Hearst Castle** - Historic mansion near San Simeon\n- **Morro Bay** - Iconic Morro Rock, charming waterfront\n- **San Luis Obispo** - Downtown mission, Bubblegum Alley\n- **Santa Barbara** - Spanish architecture, beaches, wine country\n\n**Inland Route (via I-5 - faster):**\n- **Gilroy** - Famous for garlic, outlet shopping\n- **Paso Robles** - Wine tasting\n- **Santa Clarita** - Six Flags Magic Mountain\n\n**Tips:**\n- Highway 1 adds 2-3 hours but offers breathtaking ocean views\n- Consider splitting the trip into 2 days for Highway 1\n- Book accommodations in advance, especially in Big Sur (limited options)\n\nWhat type of experience are you looking for - scenic and leisurely, or quick and efficient?"
-			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -107,9 +98,6 @@
 				"max_tokens": 512,
 				"temperature": 0.8
 			},
-			"output": {
-				"text": "# The Glass Eye\n\nDetective Sarah Chen had seen plenty of strange things left at crime scenes—love letters, children's toys, even a perfectly roasted chicken once—but she'd never seen anything quite like this.\n\nThe object sat in the center of the victim's desk, carefully placed atop a water ring from a long-gone coffee cup. At first glance, it looked like a marble: perfectly spherical, about an inch in diameter, with swirls of blue and white dancing through translucent glass. But when Sarah leaned closer, her breath caught.\n\nThere was an iris inside. Not painted—embedded. Human, or at least disturbingly realistic, with tiny capillaries radiating outward like crimson threads.\n\n\"Bagged everything else, Detective,\" Officer Martinez said behind her. \"But nobody wanted to touch that one. What is it? Some kind of art piece?\"\n\nSarah pulled on a latex glove and lifted the sphere to the light. The iris seemed to follow her movement, though she knew that was impossible. On its back surface, so small she almost missed it, seven numbers had been etched into the glass.\n\nA phone number. Or a date. Or a coordinate.\n\n\"I think,\" Sarah said slowly, \"we're dealing with someone who wants to play games.\"\n\nShe had no idea how right she was."
-			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -130,9 +118,6 @@
 				],
 				"max_tokens": 1024,
 				"stream": true
-			},
-			"output": {
-				"text": "# Recursion Explained\n\n**Recursion** is when a function calls itself to solve a problem by breaking it down into smaller, similar subproblems.\n\n## Key Components\n\n1. **Base case**: The stopping condition that prevents infinite loops\n2. **Recursive case**: Where the function calls itself with a simpler input\n\n## Simple Example: Countdown\n\n```python\ndef countdown(n):\n    # Base case: stop when we reach 0\n    if n == 0:\n        print(\"Done!\")\n        return\n    \n    # Recursive case: print and call itself with n-1\n    print(n)\n    countdown(n - 1)\n\ncountdown(3)\n```\n\n**Output:**\n```\n3\n2\n1\nDone!\n```\n\n## How It Works\n\n```\ncountdown(3)\n  → prints 3, calls countdown(2)\n      → prints 2, calls countdown(1)\n          → prints 1, calls countdown(0)\n              → prints \"Done!\", returns\n          ← returns\n      ← returns\n  ← returns\n```\n\n## Real-World Analogy\n\nThink of Russian nesting dolls: to find the smallest doll, you open one doll, then open the next smaller one inside, and repeat until you reach the smallest doll (base case).\n\n## Another Classic Example: Factorial\n\n```python\ndef factorial(n):\n    if n == 0 or n == 1:  # Base case\n        return 1\n    return n * factorial(n - 1)  # Recursive case\n\n# factorial(4) = 4 × 3 × 2 × 1 = 24\n```\n\nRecursion is elegant for problems with repetitive structure, like tree traversal, but can be less efficient than loops for simple tasks."
 			},
 			"code_snippets": [
 				{

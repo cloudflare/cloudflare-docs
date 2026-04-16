@@ -30,9 +30,6 @@
 					}
 				]
 			},
-			"output": {
-				"text": "The laws of thermodynamics are fundamental principles in physics that describe how energy, heat, and work interact in the universe. \n\nHere is a breakdown of the three main laws, explained simply:\n\n###"
-			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -65,9 +62,6 @@
 				"generationConfig": {
 					"temperature": 0.3
 				}
-			},
-			"output": {
-				"text": "To read a JSON file in Python, you can use the built-in **`json`** module. \n\nHere is the standard and safest way to do it:\n\n### Basic Example\n\nAssuming you have a file named `data.json`, here is how you read it:\n\n```python\nimport json\n\n# Open the file in read mode ('r')\nwith open('data.json', 'r', encoding='utf-8') as file:\n    # Load the JSON data into a Python dictionary or list\n    data = json.load(file)\n\n# Now you can use 'data' just like a normal Python dictionary\nprint(data)\n```\n\n### Why do it this way?\n1. **`import json`**: This is a built-in Python library, so you don't need to install anything.\n2. **`with open(...)`**: Using the `with` statement is a best practice. It ensures that the file is automatically closed as soon as you are done with it, even if an error occurs.\n3. **`encoding='utf-8'`**: JSON files are almost always UTF-8 encoded. Specifying this prevents errors if your JSON file contains special characters or emojis.\n4. **`"
 			},
 			"code_snippets": [
 				{
@@ -111,9 +105,6 @@
 					"maxOutputTokens": 500
 				}
 			},
-			"output": {
-				"text": "* Morro Rock, cute coastal towns. Good for a quick stop or overnight.\n"
-			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -140,9 +131,6 @@
 					"temperature": 0.8,
 					"maxOutputTokens": 300
 				}
-			},
-			"output": {
-				"text": "*Idea 3:* An impossible object"
 			},
 			"code_snippets": [
 				{

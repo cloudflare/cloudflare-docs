@@ -26,9 +26,6 @@
 					}
 				]
 			},
-			"output": {
-				"text": "Here’s a concise statement of the three “classical” laws of thermodynamics:\n\n1. First Law (Conservation of Energy)  \n   • In any process, the change in a system’s internal energy ΔU equals the heat Q added to the system minus the work W done by the system:  \n     ΔU = Q – W  \n   • Energy can be converted from heat to work (and vice versa) but is never created or destroyed.\n\n2. Second Law (Entropy and Irreversibility)  \n   • In an isolated system, the total entropy S never decreases; it either increases (for irreversible processes) or remains constant (for ideal reversible processes):  \n     ΔS ≥ 0.  \n   • Equivalently: it’s impossible to build a heat engine that, operating in a cycle, converts all absorbed heat completely into work (no 100% efficient heat engine).\n\n3. Third Law (Zero-Temperature Entropy)  \n   • As the temperature T of a system approaches absolute zero (0 K), its entropy S approaches a minimum constant (often taken as zero for a perfectly ordered crystal):  \n     limₜ→0 S = S₀ (commonly 0).  \n   • It is impossible, by any finite series of processes, to reach absolute zero.\n\n(For completeness: a “Zeroth Law” is often invoked to justify the concept of temperature, but the above are the traditional “three” laws.)"
-			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -52,9 +49,6 @@
 					}
 				],
 				"temperature": 0.3
-			},
-			"output": {
-				"text": "Here’s the canonical way using Python’s built‐in json module:\n\n1. Import the module  \n2. Open your file  \n3. Call json.load() to parse it into Python objects  \n\nExample:\n\n```python\nimport json\n\n# 1. Specify path to your JSON file\nfilename = 'data.json'\n\n# 2. Open the file in read mode\nwith open(filename, 'r', encoding='utf-8') as f:\n    # 3. Deserialize JSON content to Python (dict, list, etc.)\n    data = json.load(f)\n\n# Now `data` is a Python dict (or list, depending on your JSON)\nprint(type(data))\nprint(data)\n```\n\nIf you already have a JSON‐formatted string, use `json.loads()` instead:\n```python\nimport json\n\njson_str = '{\"name\": \"Alice\", \"age\": 30}'\ndata = json.loads(json_str)\nprint(data['name'])  # outputs: Alice\n```\n\nError handling example:\n\n```python\nimport json\n\ntry:\n    with open('data.json', 'r', encoding='utf-8') as f:\n        data = json.load(f)\nexcept FileNotFoundError:\n    print(\"File not found.\")\nexcept json.JSONDecodeError as e:\n    print(\"Invalid JSON:\", e)\nelse:\n    print(\"Successfully loaded JSON\")\n    # work with `data` here\n```\n\nAlternative using pathlib:\n\n```python\nfrom pathlib import Path\nimport json\n\np = Path('data.json')\ndata = json.loads(p.read_text(encoding='utf-8'))\n```\n\nThat’s it—once loaded, you can work with nested dicts/lists just like any Python object."
 			},
 			"code_snippets": [
 				{
@@ -84,9 +78,6 @@
 				],
 				"max_tokens": 500
 			},
-			"output": {
-				"text": "Here’s a selection of great stops between San Francisco and Los Angeles, organized roughly north-to-south along the coastal CA-1/US-101 corridor. Feel free to mix and match depending on your time, interests, and whether you’re doing the whole drive in one day or breaking it into 2–3 days.  \n\n1. Santa Cruz (approx. 75 mi / 1h-20m south of SF)  \n • Santa Cruz Beach Boardwalk – classic seaside amusement park  \n • West Cliff Drive – oceanfront bike/pedestrian path with surfers and seals  \n • Capitola Village – colorful beachfront shops and cafés  \n\n2. Monterey & Carmel-by-the-Sea (approx. 45 mi / 50m from Santa Cruz)  \n • Monterey Bay Aquarium – world-class marine exhibits  \n • Cannery Row & Fisherman’s Wharf – dining, galleries, souvenir shops  \n • 17-Mile Drive (Cypress Point, Pebble Beach) – $10 toll, spectacular coastal views  \n • Carmel Village – storybook downtown, art galleries, white-sand beach  \n\n3. Big Sur (approx. 26 mi / 40m from Carmel)  \n • Bixby Creek Bridge – iconic photo op  \n • Pfeiffer Beach – purple sand, keyhole rock (narrow turn-off; arrive early)  \n • Julia Pfeiffer Burns State Park – McWay Falls cascade onto the beach  \n • Andrew Molera State Park or Limekiln State Park – easy hikes, redwoods  \n\n4. Ragged Point & San Simeon (approx. 70 mi / 1h50m from Big Sur)  \n • Ragged Point Inn – cliff-top viewpoint, café  \n • Elephant Seal Vista Point (just north of San Simeon) – colonies of northern elephant seals  \n • Hearst Castle (San Simeon) – grand hilltop estate tours  \n\n5. Morro Bay & Cayucos (approx. 40 mi / 50m south of San Simeon)  \n • Morro Rock – volcanic plug you can walk up to at low tide  \n • Cayucos Pier – historic wooden pier, beachfront restaurants  \n\n6. Pismo Beach & Paso Robles (optional inland detour)  \n • Pismo Beach Pier – clam chowder, ATV dunes at nearby Oceano Dunes  \n • Paso Robles wineries (east on Hwy 46) – award-winning reds and whites  \n\n7. Solvang & Santa Ynez Valley (inland, via US-101/CA-154)  \n • Danish-style village of Solvang – windmills, bakeries, boutiques  \n • Wine tasting in Santa Ynez, Los Olivos, or Ballard Canyon  \n\n8. Santa Barbara (back on US-101, about 30 mi south of Solvang)  \n • State Street pedestrian mall – shopping and dining  \n • Stearns Wharf – aquarium, seafood  \n • Mission Santa Barbara – “Queen of the Missions”  \n\n9. Ventura & Malibu (continuing south on US-101/CA-1)  \n • Ventura Harbor Village – kayaking, paddleboarding  \n • Point Mugu State Park – scenic bluffs and beach access (if you swing onto Pacific Coast Hwy)  \n • Malibu’s Zuma Beach or Malibu Pier – surf culture, cafes  \n\n10. Santa Monica & Venice Beach (final leg into LA)  \n • Santa Monica Pier & Third Street Promenade  \n • Venice Boardwalk – street performers, skatepark, Muscle Beach  \n\nTips & Logistics  \n • Total coastal distance: ~380 miles. CA-1 between Monterey and San Simeon is winding—plan for slower speeds and allow extra time.  \n • Fuel up after Big Sur: services are sparse for ~70 miles.  \n • Highway closures: winter storms sometimes close parts of CA-1 around Big Sur. Keep an eye on Caltrans alerts and have US-101 as an alternate.  \n • Overnight options: Monterey/Carmel, Big Sur (if you want to stay “in the woods”), San Simeon (budget), Pismo/Solvang, or Santa Barbara if you prefer city comforts.  \n • Packing: layers (coastal fog can be cool), good walking shoes, sunscreen, camera/binoculars for whale/sea-life spotting.  \n\nHappy road-tripping! Let me know if you’d like more detail on any particular stop or accommodations."
-			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -107,9 +98,6 @@
 				],
 				"temperature": 0.8,
 				"max_tokens": 300
-			},
-			"output": {
-				"text": "Detective Fiona Banks stepped into Apartment 23B under the flickering glow of the hallway’s lone lamp. The air inside was stale with old coffee and cold fear—chairs overturned, drawers yanked open, yet no body in sight. On a battered filing cabinet, its metal corners dented and rusted, she spotted something out of place: a single sunflower seed, its husk polished to a dull gold sheen.\n\nKneeling, Fiona picked it up gingerly. The seed was unnaturally warm, almost pulsing against her palm, and when she turned it over she saw an impossibly fine inscription—a grid of letters so minute she needed her magnifier just to read them. Whoever left this had engineered more than a message; they’d created a puzzle meant for her alone. And in that silent, empty apartment, she understood that the game had already begun."
 			},
 			"code_snippets": [
 				{
@@ -133,9 +121,6 @@
 				"stream_options": {
 					"include_usage": true
 				}
-			},
-			"output": {
-				"text": "Recursion is a programming technique in which a function calls itself to solve a smaller piece of the same problem. Every recursive function needs two parts:  \n1) A base case (or stopping condition) that returns a result without making further recursive calls.  \n2) A recursive case that breaks the problem into a smaller subproblem and calls itself.  \n\nSimple example: computing the factorial of a non-negative integer n (written n!).  \nDefinition:  \n• 0! = 1    ← base case  \n• n! = n × (n−1)! for n > 0 ← recursive case  \n\nHere’s a Python-style implementation:\n\n```python\ndef factorial(n):\n    if n == 0:          # Base case\n        return 1\n    else:\n        return n * factorial(n - 1)  # Recursive case\n```\n\nTrace of factorial(3):  \n1. factorial(3)  \n   → 3 * factorial(2)  \n     2. factorial(2)  \n        → 2 * factorial(1)  \n          3. factorial(1)  \n             → 1 * factorial(0)  \n               4. factorial(0) returns 1  \n          ← factorial(1) returns 1 × 1 = 1  \n        ← factorial(2) returns 2 × 1 = 2  \n   ← factorial(3) returns 3 × 2 = 6  \n\nSo factorial(3) evaluates to 6.  \n\nKey points:  \n- The base case prevents infinite recursion.  \n- Each recursive call works on a smaller or simpler input.  \n- When the base case is reached, the function “unwinds,” combining results back up the call stack."
 			},
 			"code_snippets": [
 				{

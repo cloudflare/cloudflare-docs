@@ -24,6 +24,9 @@
 				"aspect_ratio": "16:9",
 				"quality": "720p"
 			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/pixverse-v6/simple-video.mp4"
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -41,6 +44,9 @@
 				"aspect_ratio": "16:9",
 				"quality": "720p",
 				"generate_audio": true
+			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/pixverse-v6/long-duration-video.mp4"
 			},
 			"code_snippets": [
 				{
@@ -60,6 +66,9 @@
 				"quality": "720p",
 				"generate_audio": true
 			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/pixverse-v6/ultra-wide-cinematic.mp4"
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -78,6 +87,9 @@
 				"aspect_ratio": "1:1",
 				"quality": "540p",
 				"generate_audio": false
+			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/pixverse-v6/silent-video.mp4"
 			},
 			"code_snippets": [
 				{
