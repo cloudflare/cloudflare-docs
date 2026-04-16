@@ -11,11 +11,13 @@ An array of message objects. Each message has:
 - `content` <Type text="string" /> - The search query content.
 - `role` <Type text="string" /> - The role: `user`, `system`, or `assistant`.
 
+---
+
 `ai_search_options` <Type text="object" /> <MetaInfo text="optional" />
 
 Per-request overrides for retrieval and model behavior. Supports the following nested options:
 
-- `retrieval.filters` <Type text="object" /> - Narrow down search results based on metadata. Refer to [Metadata filtering](/ai-search/configuration/metadata/) for syntax and examples.
+- `retrieval.filters` <Type text="object" /> - Narrow down search results based on metadata. Refer to [Metadata filtering](/ai-search/configuration/indexing/metadata/) for syntax and examples.
 - `retrieval.max_num_results` <Type text="number" /> - Maximum number of chunks to return. Defaults to `10`, maximum `50`.
 - `retrieval.retrieval_type` <Type text="string" /> - One of `vector`, `keyword`, or `hybrid`.
 - `retrieval.match_threshold` <Type text="number" /> - Minimum similarity score (0-1). Defaults to `0.4`.

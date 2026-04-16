@@ -1,0 +1,31 @@
+---
+title: RtkGridPaginatorView
+pcx_content_type: reference
+description: API reference for RtkGridPaginatorView component (Android Library)
+---
+
+A component which allows you to change the current page of the active participants grid.
+
+## Methods
+
+| Method     | Parameters                                                       | Description                             |
+| ---------- | ---------------------------------------------------------------- | --------------------------------------- |
+| `activate` | `rtkAndroidClient: RealtimeKitClient, uiTokens: RtkDesignTokens` | Bind the paginator to the meeting state |
+
+## Usage Examples
+
+### Basic Usage
+
+```xml
+<com.cloudflare.realtimekit.ui.view.RtkGridPaginatorView
+    android:id="@+id/rtk_grid_paginator"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
+```
+
+### With Methods
+
+```kotlin
+val paginatorView = findViewById<RtkGridPaginatorView>(R.id.rtk_grid_paginator)
+paginatorView.activate(meeting)
+```

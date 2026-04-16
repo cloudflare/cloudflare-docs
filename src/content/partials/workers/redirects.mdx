@@ -16,7 +16,7 @@ To apply custom redirects on {props.product === 'workers' ? 'a Worker with stati
 
 :::caution
 
-Redirects defined in the `_redirects` file are not applied to requests served by {props.product === 'workers' ? <>your Worker code, even if the request URL matches a rule defined in <code>{/* prettier-ignore-start */}_redirects{/* prettier-ignore-end */}</code>. You may wish to apply redirects manually in your Worker code, or explore other options such as <a href="/rules/url-forwarding/bulk-redirects/create-dashboard/">Bulk Redirects</a></> : <><a href="/pages/functions/">Pages Functions</a>, even if the Function route matches the URL pattern. If your Pages application uses Functions, you must migrate any behaviors from the <code>{/* prettier-ignore-start */}_redirects{/* prettier-ignore-end */}</code> file to the code in the appropriate <code>/functions</code> route, or <a href="/pages/functions/routing/#create-a-_routesjson-file">exclude the route from Functions</a></>}.
+Redirects defined in the `_redirects` file are not applied to requests served by {props.product === 'workers' ? <>your Worker code, even if the request URL matches a rule defined in <code>_redirects</code>. You may wish to apply redirects manually in your Worker code, or explore other options such as <a href="/rules/url-forwarding/bulk-redirects/create-dashboard/">Bulk Redirects</a></> : <><a href="/pages/functions/">Pages Functions</a>, even if the Function route matches the URL pattern. If your Pages application uses Functions, you must migrate any behaviors from the <code>_redirects</code> file to the code in the appropriate <code>/functions</code> route, or <a href="/pages/functions/routing/#create-a-_routesjson-file">exclude the route from Functions</a></>}.
 
 :::
 
@@ -31,18 +31,15 @@ Only one redirect can be defined per line and must follow this format, otherwise
 ```
 
 - `source` <Type text="string" /> <MetaInfo text="required" />
-
   - A file path.
   - Can include [wildcards (`*`)](#splats) and [placeholders](#placeholders).
   - Because fragments are evaluated by your browser and not Cloudflare's network, any fragments in the source are not evaluated.
 
 - `destination` <Type text="string" /> <MetaInfo text="required" />
-
   - A file path or external link.
   - Can include fragments, query strings, [splats](#splats), and [placeholders](#placeholders).
 
 - `code` <Type text="number" /> <MetaInfo text="(default: 302) optional" />
-
   - Optional parameter
 
 Lines starting with a `#` will be treated as comments.
@@ -77,12 +74,12 @@ Cloudflare currently offers limited support for advanced redirects.
 
 | Feature                             | Support | Example                                                         | Notes                                   |
 | ----------------------------------- | ------- | --------------------------------------------------------------- | --------------------------------------- |
-| Redirects (301, 302, 303, 307, 308) | ✅     | `/home / 301`                                                   | 302 is used as the default status code. |
+| Redirects (301, 302, 303, 307, 308) | ✅      | `/home / 301`                                                   | 302 is used as the default status code. |
 | Rewrites (other status codes)       | ❌      | `/blog/* /blog/404.html 404`                                    |                                         |
-| Splats                              | ✅     | `/blog/* /posts/:splat`                                         | Refer to [Splats](#splats).             |
-| Placeholders                        | ✅     | `/blog/:year/:month/:date/:slug /news/:year/:month/:date/:slug` | Refer to [Placeholders](#placeholders). |
+| Splats                              | ✅      | `/blog/* /posts/:splat`                                         | Refer to [Splats](#splats).             |
+| Placeholders                        | ✅      | `/blog/:year/:month/:date/:slug /news/:year/:month/:date/:slug` | Refer to [Placeholders](#placeholders). |
 | Query Parameters                    | ❌      | `/shop id=:id /blog/:id 301`                                    |                                         |
-| Proxying                            | ✅     | `/blog/* /news/:splat 200`                                      | Refer to [Proxying](#proxying).         |
+| Proxying                            | ✅      | `/blog/* /news/:splat 200`                                      | Refer to [Proxying](#proxying).         |
 | Domain-level redirects              | ❌      | `workers.example.com/* workers.example.com/blog/:splat 301`     |                                         |
 | Redirect by country or language     | ❌      | `/ /us 302 Country=us`                                          |                                         |
 | Redirect by cookie                  | ❌      | `/\* /preview/:splat 302 Cookie=preview`                        |                                         |

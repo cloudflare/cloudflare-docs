@@ -1,0 +1,32 @@
+---
+pcx_content_type: reference
+title: RtkMeetingTitleView
+description: API reference for RtkMeetingTitleView component (Android Library)
+---
+
+A text view that displays the meeting title. It automatically updates when the meeting title changes.
+
+## Methods
+
+| Method              | Parameters                      | Description                            |
+| ------------------- | ------------------------------- | -------------------------------------- |
+| `activate`          | `meeting: RealtimeKitClient`    | Bind the view to the meeting state     |
+| `applyDesignTokens` | `designTokens: RtkDesignTokens` | Apply custom design tokens for theming |
+
+## Usage Examples
+
+### Basic Usage
+
+```xml
+<com.cloudflare.realtimekit.ui.view.RtkMeetingTitleView
+    android:id="@+id/rtk_meeting_title"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
+```
+
+### With Methods
+
+```kotlin
+val titleView = findViewById<RtkMeetingTitleView>(R.id.rtk_meeting_title)
+titleView.activate(meeting)
+```

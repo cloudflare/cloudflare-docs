@@ -1,0 +1,33 @@
+---
+pcx_content_type: reference
+title: RtkAvatarView
+description: API reference for RtkAvatarView component (Android Library)
+---
+
+Avatar component which renders a participant's profile picture or their initials.
+
+## Methods
+
+| Method              | Parameters                           | Description                                        |
+| ------------------- | ------------------------------------ | -------------------------------------------------- |
+| `activate`          | `participant: RtkMeetingParticipant` | Bind the avatar to a participant                   |
+| `refresh`           | -                                    | Refresh the avatar based on the participant's name |
+| `applyDesignTokens` | `designTokens: RtkDesignTokens`      | Apply custom design tokens for theming             |
+
+## Usage Examples
+
+### Basic Usage
+
+```xml
+<com.cloudflare.realtimekit.ui.view.avatarview.RtkAvatarView
+    android:id="@+id/rtk_avatar"
+    android:layout_width="48dp"
+    android:layout_height="48dp" />
+```
+
+### With Methods
+
+```kotlin
+val avatar = findViewById<RtkAvatarView>(R.id.rtk_avatar)
+avatar.activate(participant)
+```

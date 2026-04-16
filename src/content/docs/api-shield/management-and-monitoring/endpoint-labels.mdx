@@ -1,6 +1,8 @@
 ---
 pcx_content_type: how-to
-
+description: Organize API endpoints and address vulnerabilities with managed and custom labels.
+products:
+  - api-shield
 title: Endpoint labeling service
 sidebar:
   order: 2
@@ -55,6 +57,8 @@ Use managed labels to identify endpoints by use case. Cloudflare may automatical
 `cf-rss-feed`: Add this label to endpoints that expect traffic from RSS clients.
 
 `cf-web-page`: Add this label to endpoints that serve HTML pages.
+
+`cf-contains-ads`: Add this label to endpoints that serve web pages containing advertisements.
 
 :::note
 [Bot Fight Mode](/bots/get-started/bot-fight-mode/) will not block requests to endpoints labeled as `cf-rss-feed`.

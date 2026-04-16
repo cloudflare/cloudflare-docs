@@ -1,0 +1,33 @@
+---
+pcx_content_type: reference
+title: RtkJoinButton
+description: API reference for RtkJoinButton component (Android Library)
+---
+
+A button that performs the room join operation. Displays "Join" by default and changes to "Joining..." during the join process. Automatically disables after a successful join.
+
+## Methods
+
+| Method     | Parameters                                                  | Description                                                                                                                                                                                                                                                         |
+| ---------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `activate` | `meeting: RealtimeKitClient, localUserNameField: EditText?` | Bind the button to the meeting state. Pass an optional `EditText` reference to validate the display name before joining — if the user has `canEditDisplayName` permission and the field is blank, the button shows a "Please enter name" toast and blocks the join. |
+
+## Usage Examples
+
+### Basic Usage
+
+```xml
+<com.cloudflare.realtimekit.ui.view.RtkJoinButton
+    android:id="@+id/rtk_join_button"
+    android:layout_width="wrap_content"
+    android:layout_height="48dp"
+    app:rtk_btn_variant="primary" />
+```
+
+### With Methods
+
+```kotlin
+val joinButton = findViewById<RtkJoinButton>(R.id.rtk_join_button)
+val nameField = findViewById<EditText>(R.id.name_field)
+joinButton.activate(meeting, nameField)
+```

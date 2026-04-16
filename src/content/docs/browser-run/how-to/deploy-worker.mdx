@@ -1,0 +1,27 @@
+---
+pcx_content_type: get-started
+title: Deploy a Browser Run Worker
+sidebar:
+  order: 1
+---
+
+import {
+	Render,
+	TabItem,
+	Tabs,
+	PackageManagers,
+	WranglerConfig,
+} from "~/components";
+
+By following this guide, you will create a Worker that uses the Browser Run API to take screenshots from web pages. This is a common use case for browser automation.
+
+<Render file="prereqs" product="workers" />
+
+<Render
+	file="example-workers-binding-screenshots-from-web"
+	product="browser-run"
+/>
+
+## Related resources
+
+- Other [Puppeteer examples](https://github.com/cloudflare/puppeteer/tree/main/examples)
