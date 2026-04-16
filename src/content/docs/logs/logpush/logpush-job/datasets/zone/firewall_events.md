@@ -9,6 +9,30 @@ sidebar:
 
 The descriptions below detail the fields available for `firewall_events`.
 
+## AISecurityInjectionScore
+
+Type: `int`
+
+The score indicating the likelihood of a prompt injection attack in the request, as determined by AI Security.
+
+## AISecurityPIICategories
+
+Type: `array[string]`
+
+List of PII categories detected in the request by AI Security.
+
+## AISecurityTokenCount
+
+Type: `int`
+
+The number of tokens in the request, as counted by AI Security.
+
+## AISecurityUnsafeTopicCategories
+
+Type: `array[string]`
+
+List of unsafe topic categories detected in the request by AI Security.
+
 ## Action
 
 Type: `string`
@@ -157,25 +181,25 @@ HTTP response status code returned to browser.
 
 Type: `int`
 
-The score indicating the likelihood of a prompt injection attack in the request, as determined by Firewall for AI.
+The score indicating the likelihood of a prompt injection attack in the request, as determined by Firewall for AI. Deprecated: Use AISecurityInjectionScore instead.
 
 ## FirewallForAIPIICategories
 
 Type: `array[string]`
 
-List of PII categories detected in the request by Firewall for AI.
+List of PII categories detected in the request by Firewall for AI. Deprecated: Use AISecurityPIICategories instead.
 
 ## FirewallForAITokenCount
 
 Type: `int`
 
-The number of tokens in the request, as counted by Firewall for AI.
+The number of tokens in the request, as counted by Firewall for AI. Deprecated: Use AISecurityTokenCount instead.
 
 ## FirewallForAIUnsafeTopicCategories
 
 Type: `array[string]`
 
-List of unsafe topic categories detected in the request by Firewall for AI.
+List of unsafe topic categories detected in the request by Firewall for AI. Deprecated: Use AISecurityUnsafeTopicCategories instead.
 
 ## FraudUserID
 
