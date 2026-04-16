@@ -424,22 +424,19 @@ query ClientRelayLatencyByColo(
     accounts(filter: { accountTag: $accountTag }) {
       ohttpRelayIngressConnMetricsAdaptiveGroups(
         filter: {
-          datetime_geq: $start
-          datetime_leq: $end
+          date_geq: $startDate
+          date_leq: $endDate
         }
         limit: 10000
-        orderBy: [quantiles_clientRelayRttMsP50_DESC]
+        orderBy: [quantiles_handshakeDurationUsP50_DESC]
       ) {
         quantiles {
-          clientRelayRttMsP50
-          clientRelayRttMsP95
-          clientRelayRttMsP99
+          handshakeDurationUsP50
+          handshakeDurationUsP95
+          handshakeDurationUsP99
         }
         dimensions {
-          datetimeMinute
-          datetimeFiveMinutes
-          datetimeHour
-          colo
+          coloCode
         }
       }
     }
