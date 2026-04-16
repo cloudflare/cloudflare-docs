@@ -1,0 +1,27 @@
+---
+pcx_content_type: overview
+title: Binding API
+sidebar:
+  order: 5
+---
+
+import { DirectoryListing } from "~/components";
+
+Workers access Flagship through the `env.FLAGS` binding. The binding provides type-safe methods for evaluating feature flags. If an evaluation fails or a flag is not found, the method returns the default value you provide.
+
+To add the binding, configure your Wrangler file and run `npx wrangler types` to generate TypeScript types. Refer to [Get started](/flagship/get-started/) for setup instructions.
+
+```ts
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const enabled = await env.FLAGS.getBooleanValue("new-feature", false, {
+			userId: "user-42",
+		});
+		return new Response(enabled ? "Feature on" : "Feature off");
+	},
+};
+```
+
+The binding has the type `Flagship` from the `@cloudflare/workers-types` package.
+
+<DirectoryListing />
