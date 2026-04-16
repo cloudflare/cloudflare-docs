@@ -96,7 +96,7 @@ function getLabel(label: string): string {
 				)}
 				{hasAudio && (
 					<audio src={audioUrl} controls preload="metadata">
-						Your browser does not support the audio element.
+						<track kind="captions" />
 					</audio>
 				)}
 			</div>
