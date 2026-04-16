@@ -334,20 +334,43 @@ After deploying your security rules, review the results to identify false positi
 
 [Security Events](/waf/analytics/security-events/) shows every request that your rules matched, including the action taken and the rule that triggered it. Filter by your API path prefix to see what Cloudflare is blocking and why.
 
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
+
 <Steps>
 
-1. In the Cloudflare dashboard, go to the **Security Events** page.
+1. In the Cloudflare dashboard, go to the **Analytics** page.
 
-   <DashButton url="/?to=/:account/:zone/security/events" />
+   <DashButton url="/?to=/:account/:zone/security/analytics" />
 
-2. Add a filter for **URI Path** starts with `/api/`.
+2. Select the **Events** tab.
 
-3. Review the events. Look for legitimate clients that are being blocked (false positives). Common indicators of false positives:
+3. Add a filter for **URI Path** starts with `/api/`.
+
+4. Review the events. Look for legitimate clients that are being blocked (false positives). Common indicators of false positives:
    - Requests from known partner IP addresses
    - Requests with valid API keys or authorization headers
    - Requests from monitoring services with known User-Agent strings
 
 </Steps>
+
+</TabItem> <TabItem label="Old dashboard">
+
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and zone.
+
+2. Go to **Security** > **Events**.
+
+3. Add a filter for **URI Path** starts with `/api/`.
+
+4. Review the events. Look for legitimate clients that are being blocked (false positives). Common indicators of false positives:
+   - Requests from known partner IP addresses
+   - Requests with valid API keys or authorization headers
+   - Requests from monitoring services with known User-Agent strings
+
+</Steps>
+
+</TabItem> </Tabs>
 
 If you find false positives, update your custom rules to exclude the affected traffic. Refer to the exception rule procedure in the previous section.
 
