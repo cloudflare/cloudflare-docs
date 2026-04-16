@@ -1,0 +1,55 @@
+---
+import type { AgentData } from "./types";
+
+interface Props {
+	agents: AgentData[];
+}
+
+const { agents } = Astro.props;
+
+const COLUMNS: { key: keyof AgentData["capabilities"]; label: string }[] = [
+	{ key: "ide", label: "IDE" },
+	{ key: "terminal", label: "Terminal" },
+	{ key: "standalone", label: "Standalone" },
+	{ key: "cloud", label: "Cloud" },
+	{ key: "extension", label: "Extension" },
+	{ key: "mcp", label: "MCP" },
+	{ key: "skills", label: "Skills" },
+	{ key: "open_source", label: "Open Source" },
+];
+---
+
+<div class="not-content overflow-x-auto" style="width: 100%;">
+	<table class="agent-setup-table">
+		<thead>
+			<tr>
+				<th>Agent</th>
+				{COLUMNS.map(({ label }) => <th style="text-align: center;">{label}</th>)}
+			</tr>
+		</thead>
+		<tbody>
+			{agents.map((agent) => (
+				<tr>
+					<td>
+						<a href={`/agent-setup/${agent.slug}/`} class="font-semibold no-underline" style="color: inherit;">
+							{agent.name}
+						</a>
+					</td>
+					{COLUMNS.map(({ key }) => (
+						<td>
+							{agent.capabilities[key] ? (
+								<svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="check" aria-label="Yes">
+									<path d="M3 8.5L6.5 12L13 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+								</svg>
+							) : (
+								<svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="dash" aria-label="No">
+									<path d="M4 8H12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+								</svg>
+							)}
+						</td>
+					))}
+				</tr>
+			))}
+		</tbody>
+	</table>
+</div>

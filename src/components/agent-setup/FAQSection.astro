@@ -1,4 +1,6 @@
 ---
+import { marked } from "marked";
+
 interface FAQItem {
 	question: string;
 	answer: string;
@@ -11,13 +13,23 @@ interface Props {
 const { items } = Astro.props;
 ---
 
-<div>
+<div class="not-content">
 	{
 		items.map((item) => (
 			<details class="agent-setup-faq-item">
 				<summary>{item.question}</summary>
-				<div class="agent-setup-faq-answer">{item.answer}</div>
+				<div class="agent-setup-faq-answer" set:html={marked.parseInline(item.answer)} />
 			</details>
 		))
 	}
 </div>
+
+<style>
+	.agent-setup-faq-answer :global(code) {
+		background-color: var(--sl-color-bg-inline-code);
+		font-family: var(--sl-font-mono, monospace);
+		font-size: var(--sl-text-code-sm);
+		padding: 0.125rem 0.375rem;
+		border-radius: 4px;
+	}
+</style>

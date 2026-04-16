@@ -2,8 +2,8 @@
 import { getCollection } from "astro:content";
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import type { StarlightPageProps } from "@astrojs/starlight/props";
-import { AgentCatalog } from "~/components/agent-setup/AgentCatalog";
-import { AgentComparison } from "~/components/agent-setup/AgentComparison";
+import AgentCatalog from "~/components/agent-setup/AgentCatalog.astro";
+import AgentComparison from "~/components/agent-setup/AgentComparison.astro";
 import type { AgentData } from "~/components/agent-setup/types";
 
 import "~/styles/agent-setup.css";
@@ -20,6 +20,7 @@ const props = {
 			"Build on Cloudflare with your favorite AI agent. Connect MCP servers, install skills, and deploy from your editor or terminal.",
 		template: "splash",
 	},
+	hideTitle: true,
 	hideBreadcrumbs: true,
 } as StarlightPageProps;
 ---
@@ -33,14 +34,14 @@ const props = {
 		</p>
 	</div>
 
-	<AgentCatalog agents={agents} client:load />
+	<AgentCatalog agents={agents} />
 
 	<div class="agent-setup-section" style="margin-top: 4rem;">
 		<div class="agent-setup-section-header">
 			<h2>Compare agents</h2>
 			<p>Find the right agent for your Cloudflare workflow</p>
 		</div>
-		<AgentComparison agents={agents} client:load />
+		<AgentComparison agents={agents} />
 	</div>
 
 	<div class="agent-setup-section" style="margin-top: 4rem;">
@@ -51,7 +52,7 @@ const props = {
 			</p>
 		</div>
 
-		<div class="agent-setup-features">
+		<div class="agent-setup-features not-content">
 			<div class="agent-setup-feature">
 				<h3>15+ MCP servers</h3>
 				<p>

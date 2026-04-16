@@ -1,4 +1,6 @@
 ---
+import { Code } from "@astrojs/starlight/components";
+
 interface Step {
 	title: string;
 	description: string;
@@ -21,9 +23,7 @@ const { steps } = Astro.props;
 				<div class="agent-setup-step-title">{step.title}</div>
 				<div class="agent-setup-step-description">{step.description}</div>
 				{step.command && (
-					<div class="agent-setup-step-command">
-						<code>{step.command}</code>
-					</div>
+					<Code code={step.command} lang="bash" />
 				)}
 				{step.link && !step.command && (
 					<a

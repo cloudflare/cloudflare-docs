@@ -11,18 +11,20 @@ interface Props {
 const { items } = Astro.props;
 ---
 
-<div>
+<div class="not-content">
 	{
 		items.map((item) => (
 			<div class="agent-setup-troubleshooting-item">
 				<div class="agent-setup-troubleshooting-issue">
-					<div class="agent-setup-troubleshooting-label" style={{ color: "var(--color-cl1-red-4)" }}>
+					<div class="agent-setup-troubleshooting-label" style="color: var(--color-cl1-red-4);">
+						<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>
 						Issue
 					</div>
 					{item.issue}
 				</div>
 				<div class="agent-setup-troubleshooting-solution">
-					<div class="agent-setup-troubleshooting-label" style={{ color: "var(--color-cl1-green-4)" }}>
+					<div class="agent-setup-troubleshooting-label" style="color: var(--color-cl1-green-4);">
+						<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>
 						Solution
 					</div>
 					{item.solution}

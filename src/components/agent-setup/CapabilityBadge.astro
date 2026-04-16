@@ -1,0 +1,39 @@
+---
+type BadgeType =
+	| "ide"
+	| "terminal"
+	| "standalone"
+	| "cloud"
+	| "extension"
+	| "mcp"
+	| "skills"
+	| "open_source";
+
+const BADGE_LABELS: Record<BadgeType, string> = {
+	ide: "IDE",
+	terminal: "Terminal",
+	standalone: "Standalone",
+	cloud: "Cloud",
+	extension: "Extension",
+	mcp: "MCP",
+	skills: "Skills",
+	open_source: "Open Source",
+};
+
+interface Props {
+	capabilities: Record<string, boolean>;
+}
+
+const { capabilities } = Astro.props;
+const active = Object.entries(capabilities).filter(([, v]) => v);
+---
+
+{active.length > 0 && (
+	<div class="flex flex-wrap gap-1.5">
+		{active.map(([key]) => (
+			<span class={`agent-setup-badge agent-setup-badge--${key.replace("_", "-")}`}>
+				{BADGE_LABELS[key as BadgeType]}
+			</span>
+		))}
+	</div>
+)}
