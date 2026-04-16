@@ -89,6 +89,11 @@ export default defineConfig({
 	},
 	experimental: {
 		contentIntellisense: true,
+		rustCompiler: true,
+		queuedRendering: {
+			enabled: true,
+			contentCache: true,
+		},
 	},
 	server: {
 		port: 1111,

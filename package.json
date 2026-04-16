@@ -39,6 +39,7 @@
 		"@actions/github": "9.0.0",
 		"@apidevtools/swagger-parser": "12.0.0",
 		"@astrojs/check": "0.9.8",
+		"@astrojs/compiler-rs": "0.1.7",
 		"@astrojs/react": "5.0.0",
 		"@astrojs/rss": "4.0.18",
 		"@astrojs/sitemap": "3.7.1",
