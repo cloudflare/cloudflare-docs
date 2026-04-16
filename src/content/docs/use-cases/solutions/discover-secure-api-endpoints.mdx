@@ -151,10 +151,6 @@ The following Application Security custom rule blocks requests to `/api/` paths 
 
 6. Select **Deploy**.
 
-:::note
-Deploy this rule with the **Log** action first. Review [Security Events](/waf/analytics/security-events/) for several hours to confirm the rule does not block legitimate clients, then switch to **Block**.
-:::
-
 ### Restrict HTTP methods per endpoint
 
 If your `/api/users` endpoint only accepts `GET` and `POST` requests, block all other HTTP methods on that path. This prevents attackers from probing with `PUT`, `DELETE`, or `PATCH` requests against endpoints that do not support them.
