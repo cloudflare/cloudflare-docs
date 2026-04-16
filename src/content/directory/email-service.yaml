@@ -1,0 +1,12 @@
+id: eMsVc1
+name: Email Service
+
+entry:
+  title: Email Service
+  url: /email-service/
+  group: Developer platform
+
+meta:
+  title: Cloudflare Email Service docs
+  description: Send and receive email on the Cloudflare developer platform
+  author: "@cloudflare"
