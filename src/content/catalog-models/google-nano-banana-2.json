@@ -27,6 +27,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'google/nano-banana-2',\n  {\n    prompt:\n      'A futuristic cyberpunk city at night with towering skyscrapers, neon signs in Japanese and English, flying cars, and rain-slicked streets reflecting colorful lights',\n    aspect_ratio: '16:9',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -45,6 +46,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'google/nano-banana-2',\n  {\n    prompt:\n      'An abstract expressionist painting with bold splashes of cobalt blue, crimson red, and gold leaf accents on a large canvas',\n    aspect_ratio: '1:1',\n    output_format: 'png',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -63,6 +65,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'google/nano-banana-2',\n  {\n    prompt:\n      'An illustration of the latest Mars rover exploring the Martian surface',\n    aspect_ratio: '16:9',\n    google_search: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -82,6 +85,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'google/nano-banana-2',\n  {\n    prompt:\n      'A professional studio portrait of a woman with dramatic side lighting, wearing elegant jewelry',\n    aspect_ratio: '3:4',\n    resolution: '4K',\n    output_format: 'jpg',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]

@@ -28,6 +28,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'inworld/tts-1.5-max',\n  {\n    text: 'Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do.',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -45,6 +46,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'inworld/tts-1.5-max',\n  {\n    text: 'In the beginning, the universe was a singularity of infinite density. Then, in a fraction of a second, it expanded into everything we know today.',\n    speaking_rate: 0.85,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -62,6 +64,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'inworld/tts-1.5-max',\n  {\n    text: 'This recording is generated at studio quality for the best possible listening experience.',\n    sample_rate: 48000,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -79,6 +82,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'inworld/tts-1.5-max',\n  {\n    text: 'The meeting is at 3:30 PM on Jan 15th, 2026. Please confirm by calling 555-0123.',\n    apply_text_normalization: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]

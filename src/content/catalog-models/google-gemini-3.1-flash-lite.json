@@ -30,9 +30,13 @@
 					}
 				]
 			},
+			"output": {
+				"text": "The laws of thermodynamics govern the behavior of energy, heat, and entropy in physical systems. While there are technically four laws (numbered 0 through 3), here are the three primary ones (along with the \"Zeroth\" law, which is foundational):\n\n### The Zeroth Law of Thermodynamics (Thermal Equilibrium)\nIf two systems are each in thermal equilibrium with a third system, then they are in thermal equilibrium with each other.\n*   **What it means:** This law essentially defines the concept of **temperature**. It allows us to use thermometers to compare the temperatures of different objects.\n\n---\n\n### The First Law of Thermodynamics (Conservation of Energy)\nEnergy cannot be created or destroyed; it can only be transferred or changed from one form to another.\n*   **What it means:** The total internal energy of an isolated system remains constant. If you add heat to a system, that energy must either increase the internal energy of the system or be used by the system to perform work on its surroundings.\n*   **The Equation:** $\\Delta U = Q - W$ (The change in internal energy equals heat added minus work done).\n\n---\n\n### The Second Law of Thermodynamics (Entropy)\nThe total entropy of an isolated system can never decrease over time; it can only remain constant or increase.\n*   **What it means:** Energy has a tendency to spread out. It implies that heat will naturally flow from a hotter object to a colder one, never the reverse. It also dictates that no heat engine can be 100% efficient, as some energy is always lost to \"disorder\" or waste heat. Essentially, the universe is constantly moving toward a state of higher randomness.\n\n---\n\n### The Third Law of Thermodynamics (Absolute Zero)\nAs the temperature of a system approaches absolute zero (0 Kelvin), the entropy of a perfect crystal approaches zero.\n*   **What it means:** It is impossible to reach absolute zero through any finite number of physical processes. At absolute zero, all molecular motion stops (or reaches its minimum quantum ground state), and the system reaches a state of perfect order.\n\n***\n\n**In summary (the \"fun\" version):**\n1.  **First Law:** You can't win (you can't get more energy out than you put in).\n2.  **Second Law:** You can't break even (you can't avoid losing some energy to entropy).\n3.  **Third Law:** You can't get out of the game (you can never reach absolute zero)."
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'google/gemini-3.1-flash-lite',\n  {\n    contents: [\n      {\n        role: 'user',\n        parts: [\n          {\n            text: 'What are the three laws of thermodynamics?',\n          },\n        ],\n      },\n    ],\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -62,9 +66,13 @@
 					"temperature": 0.3
 				}
 			},
+			"output": {
+				"text": "To read a JSON file in Python, you use the built-in `json` module.\n\nHere is the standard way to do it:\n\n### The Basic Approach\n```python\nimport json\n\n# Open the file and load the data\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n\n# Now 'data' is a Python dictionary or list\nprint(data)\n```\n\n### Breakdown of the code:\n1.  **`import json`**: Imports Python's built-in library for handling JSON.\n2.  **`with open(...)`**: This is a \"context manager.\" It is the best practice because it ensures the file is automatically closed after you are done reading it, even if an error occurs.\n3.  **`json.load(file)`**: This function parses the file content and converts it into a Python object (usually a dictionary or a list).\n\n---\n\n### Handling Common Scenarios\n\n#### 1. What if the file is empty or malformed?\nIf the file is empty or contains invalid JSON, `json.load()` will raise a `json.JSONDecodeError`. You can handle this with a `try-except` block:\n\n```python\nimport json\n\ntry:\n    with open('data.json', 'r') as file:\n        data = json.load(file)\nexcept json.JSONDecodeError:\n    print(\"The file contains invalid JSON.\")\nexcept FileNotFoundError:\n    print(\"The file does not exist.\")\n```\n\n#### 2. Reading a JSON string instead of a file\nIf you already have the JSON data as a string (e.g., from an API response), use `json.loads()` (the \"s\" stands for \"string\"):\n\n```python\nimport json\n\njson_string = '{\"name\": \"Alice\", \"age\": 30}'\ndata = json.loads(json_string)\n\nprint(data[\"name\"])  # Output: Alice\n```\n\n### Summary: Which one to use?\n*   Use **`json.load()`** (no 's') when reading from a **file object**.\n*   Use **`json.loads()`** (with an 's') when reading from a **string**."
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'google/gemini-3.1-flash-lite',\n  {\n    systemInstruction: {\n      parts: [\n        {\n          text: 'You are a helpful coding assistant specializing in Python.',\n        },\n      ],\n    },\n    contents: [\n      {\n        role: 'user',\n        parts: [\n          {\n            text: 'How do I read a JSON file in Python?',\n          },\n        ],\n      },\n    ],\n    generationConfig: {\n      temperature: 0.3,\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -98,15 +106,16 @@
 							}
 						]
 					}
-				],
-				"generationConfig": {
-					"maxOutputTokens": 500
-				}
+				]
+			},
+			"output": {
+				"text": "The coastal route (Highway 1) is the most scenic way to make the drive. Here are a few standout places to stop:\n*   Santa Cruz: A great spot to stretch your legs, grab a coffee, and walk the historic Beach Boardwalk.\n*   Monterey & Carmel-by-the-Sea: Perfect for visiting the Monterey Bay Aquarium or strolling through the charming, forested streets of Carmel.\n*   Big Sur: Essential for dramatic cliff-side views and redwood forests; McWay Falls is a must-see photo opportunity.\n*   San Luis Obispo: A relaxing place to take a break, explore the historic downtown, or see the Mission.\n*   Santa Barbara: Ideal for a final coastal lunch or a walk along State Street before the final stretch into Los Angeles.\nAre you looking for scenic photo spots, places to grab food, or somewhere to stay overnight?"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/gemini-3.1-flash-lite',\n  {\n    contents: [\n      {\n        role: 'user',\n        parts: [\n          {\n            text: 'I need help planning a road trip from San Francisco to Los Angeles.',\n          },\n        ],\n      },\n      {\n        role: 'model',\n        parts: [\n          {\n            text: \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n          },\n        ],\n      },\n      {\n        role: 'user',\n        parts: [\n          {\n            text: 'Yes, what are some good places to stop?',\n          },\n        ],\n      },\n    ],\n    generationConfig: {\n      maxOutputTokens: 500,\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-3.1-flash-lite',\n  {\n    contents: [\n      {\n        role: 'user',\n        parts: [\n          {\n            text: 'I need help planning a road trip from San Francisco to Los Angeles.',\n          },\n        ],\n      },\n      {\n        role: 'model',\n        parts: [\n          {\n            text: \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n          },\n        ],\n      },\n      {\n        role: 'user',\n        parts: [\n          {\n            text: 'Yes, what are some good places to stop?',\n          },\n        ],\n      },\n    ],\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
 		},
@@ -129,9 +138,13 @@
 					"maxOutputTokens": 300
 				}
 			},
+			"output": {
+				"text": "The rain drummed a frantic, hollow rhythm against the windowpane of the penthouse, but inside, the silence was heavy enough to bruise. Detective Elias Thorne knelt on the plush velvet carpet, his flashlight beam cutting through the gloom of a crime scene that defied logic.\n\nThe victim was sprawled near the fireplace, but it wasn't the body that held Thorne's attention. It was what sat precisely in the center of the mahogany coffee table.\n\nHe leaned in, his gloved fingers hovering inches away. It was a single, pristine white chess piece—a knight—carved from human bone. But that wasn't what made his blood run cold. As the beam of his light hit the smooth, polished surface, the piece began to hum, a low-frequency vibration that rattled the fillings in his teeth. \n\nAnd then, with a soft, wet click, the knight's tiny, carved eye flickered open, revealing a pupil that focused directly on Thorne's own."
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'google/gemini-3.1-flash-lite',\n  {\n    contents: [\n      {\n        role: 'user',\n        parts: [\n          {\n            text: 'Write a short story opening about a detective finding an unusual clue.',\n          },\n        ],\n      },\n    ],\n    generationConfig: {\n      temperature: 0.8,\n      maxOutputTokens: 300,\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]

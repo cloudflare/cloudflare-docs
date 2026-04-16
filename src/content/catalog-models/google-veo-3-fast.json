@@ -30,6 +30,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'google/veo-3-fast',\n  {\n    prompt: 'Ocean waves crashing on a rocky shoreline at sunset',\n    duration: '6s',\n    aspect_ratio: '16:9',\n    resolution: '720p',\n    generate_audio: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -50,6 +51,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'google/veo-3-fast',\n  {\n    prompt: 'A coffee cup with steam rising, cozy cafe atmosphere',\n    duration: '4s',\n    aspect_ratio: '9:16',\n    resolution: '720p',\n    generate_audio: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -70,6 +72,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'google/veo-3-fast',\n  {\n    prompt:\n      'A campfire burning with flames dancing and sparks floating upward, seamless loop',\n    duration: '4s',\n    aspect_ratio: '16:9',\n    resolution: '720p',\n    generate_audio: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -90,6 +93,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'google/veo-3-fast',\n  {\n    prompt: 'A smartphone rotating on a dark surface with dramatic lighting',\n    duration: '6s',\n    aspect_ratio: '16:9',\n    resolution: '720p',\n    generate_audio: false,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]

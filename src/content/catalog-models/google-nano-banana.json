@@ -26,6 +26,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'google/nano-banana',\n  {\n    prompt:\n      'A cozy coffee shop interior with warm lighting, plants hanging from the ceiling, and a cat sleeping on a velvet armchair by the window',\n    aspect_ratio: '16:9',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -43,6 +44,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'google/nano-banana',\n  {\n    prompt:\n      'A vintage travel poster for Tokyo, Japan in the style of 1960s airline advertisements, with Mount Fuji in the background and cherry blossoms framing the scene',\n    aspect_ratio: '9:16',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -60,6 +62,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'google/nano-banana',\n  {\n    prompt:\n      'A photorealistic macro shot of dewdrops on a spider web at sunrise, with rainbow light refracting through each droplet',\n    aspect_ratio: '1:1',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -77,6 +80,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'google/nano-banana',\n  {\n    prompt:\n      'An isometric pixel art scene of a bustling medieval marketplace with merchants, knights, and a dragon perched on the town hall roof',\n    aspect_ratio: '1:1',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -96,6 +100,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'google/nano-banana',\n  {\n    prompt:\n      'A dramatic mountain landscape at golden hour with snow-capped peaks and a crystal clear alpine lake',\n    aspect_ratio: '16:9',\n    image_size: '4K',\n    output_format: 'png',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]

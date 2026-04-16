@@ -28,6 +28,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-pro-vector',\n  {\n    prompt:\n      'A modern minimalist logo for a cloud computing company, clean geometric shapes',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -45,6 +46,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-pro-vector',\n  {\n    prompt:\n      'A flat design icon of a rocket launching, suitable for a mobile app',\n    size: '2048x2048',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -62,6 +64,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-pro-vector',\n  {\n    prompt:\n      'An intricate mandala pattern with floral and geometric elements, highly detailed and symmetrical',\n    size: '2048x2048',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -103,6 +106,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-pro-vector',\n  {\n    prompt:\n      'A vector illustration of a cityscape skyline at sunset with clean lines and flat colors',\n    controls: {\n      colors: [\n        {\n          rgb: [255, 87, 51],\n        },\n        {\n          rgb: [41, 50, 65],\n        },\n        {\n          rgb: [239, 239, 239],\n        },\n      ],\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]

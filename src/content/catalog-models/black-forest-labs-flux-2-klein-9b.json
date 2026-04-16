@@ -26,6 +26,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-2-klein-9b',\n  {\n    prompt: 'A golden retriever puppy playing in autumn leaves',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -44,6 +45,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-2-klein-9b',\n  {\n    prompt:\n      'A Victorian-era street scene at dusk, gas lamps casting warm pools of light on cobblestones, horse-drawn carriages, and elegantly dressed pedestrians',\n    width: 1024,\n    height: 768,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -62,6 +64,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-2-klein-9b',\n  {\n    prompt:\n      'A detailed oil painting portrait of a Renaissance nobleman with intricate lace collar',\n    num_steps: 50,\n    guidance: 7.5,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -79,6 +82,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-2-klein-9b',\n  {\n    prompt: 'A simple sketch of a mountain landscape',\n    num_steps: 10,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -97,6 +101,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-2-klein-9b',\n  {\n    prompt:\n      'A serene Japanese zen garden with raked sand patterns and a single bonsai tree',\n    seed: 42,\n    num_steps: 25,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]

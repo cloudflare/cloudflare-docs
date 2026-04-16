@@ -27,9 +27,13 @@
 				],
 				"max_tokens": 1024
 			},
+			"output": {
+				"text": "There are actually **four laws of thermodynamics** (numbered 0–3), but the three *main* ones most commonly referenced are:\n\n## The Three Main Laws\n\n**1st Law – Conservation of Energy**\nEnergy cannot be created or destroyed, only converted from one form to another. The total energy of an isolated system remains constant.\n\n**2nd Law – Entropy**\nThe total entropy (disorder) of an isolated system always increases over time. Heat naturally flows from hot to cold, not the reverse.\n\n**3rd Law – Absolute Zero**\nAs a system approaches absolute zero (−273.15°C), its entropy approaches a minimum constant value. It is impossible to reach absolute zero in a finite number of steps.\n\n---\n\n## The Often-Forgotten One\n\n**Zeroth Law – Thermal Equilibrium**\nIf two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other. (This establishes the concept of temperature.)\n\n---\n\nIt was numbered \"zeroth\" because it was recognized as fundamental *after* the others were already established.\n\nWould you like a deeper explanation of any of these?"
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'anthropic/claude-sonnet-4.6',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'What are the three laws of thermodynamics?',\n      },\n    ],\n    max_tokens: 1024,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -48,9 +52,13 @@
 				"max_tokens": 1024,
 				"temperature": 0.3
 			},
+			"output": {
+				"text": "## Reading a JSON File in Python\n\nThere are several ways to read a JSON file in Python:\n\n### Basic Method (Most Common)\n\n```python\nimport json\n\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n\nprint(data)\n```\n\n### Common Variations\n\n**Specify encoding (recommended for compatibility):**\n```python\nimport json\n\nwith open('data.json', 'r', encoding='utf-8') as file:\n    data = json.load(file)\n```\n\n**Read as string first, then parse:**\n```python\nimport json\n\nwith open('data.json', 'r') as file:\n    content = file.read()\n    data = json.loads(content)  # loads() parses a string\n```\n\n---\n\n### Accessing the Data\n\nGiven a JSON file like this:\n```json\n{\n    \"name\": \"Alice\",\n    \"age\": 30,\n    \"hobbies\": [\"reading\", \"coding\"]\n}\n```\n\n```python\nimport json\n\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n\nprint(data[\"name\"])          # Alice\nprint(data[\"age\"])           # 30\nprint(data[\"hobbies\"][0])    # reading\n```\n\n---\n\n### Key Functions\n\n| Function | Use Case |\n|----------|----------|\n| `json.load(file)` | Read directly from a **file object** |\n| `json.loads(string)` | Parse a **JSON string** |\n\n---\n\n### Error Handling (Best Practice)\n\n```python\nimport json\n\ntry:\n    with open('data.json', 'r', encoding='utf-8') as file:\n        data = json.load(file)\nexcept FileNotFoundError:\n    print(\"File not found\")\nexcept json.JSONDecodeError:\n    print(\"Invalid JSON format\")\n```\n\n### Tips\n- Use `with open()` so the file closes automatically\n- JSON objects become Python **dicts**\n- JSON arrays become Python **lists**\n- Use `encoding='utf-8'` to avoid encoding issues"
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'anthropic/claude-sonnet-4.6',\n  {\n    system: 'You are a helpful coding assistant specializing in Python.',\n    messages: [\n      {\n        role: 'user',\n        content: 'How do I read a JSON file in Python?',\n      },\n    ],\n    max_tokens: 1024,\n    temperature: 0.3,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -75,9 +83,13 @@
 				],
 				"max_tokens": 1024
 			},
+			"output": {
+				"text": "Here are some great stops depending on which route you take:\n\n**Coastal Route (Highway 1) - Scenic but longer**\n- **Santa Cruz** - Beach boardwalk and pier\n- **Monterey** - Famous aquarium and Cannery Row\n- **Big Sur** - Stunning coastal cliffs and views\n- **San Simeon** - Hearst Castle tour\n- **Morro Bay** - Charming harbor town\n- **Santa Barbara** - Beautiful beaches and Spanish architecture\n\n**Inland Route (Highway 101 or I-5) - Faster**\n- **San Jose** - Tech museums and good food\n- **Gilroy** - Known as the Garlic Capital\n- **Paso Robles** - Great wine country\n- **San Luis Obispo** - Cute college town with good restaurants\n\n**Tips to keep in mind:**\n- The coastal route adds several hours but is worth it for the scenery\n- Big Sur can have road closures, so check conditions ahead of time\n- Monterey and Santa Barbara are popular overnight stops\n- Plan for gas stops as some stretches are remote\n\n**Rough Timeline:**\n- The coastal route can take 8-10+ hours\n- The inland route is closer to 6 hours\n\nWould you like more details about any specific stop or help with lodging recommendations?"
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'anthropic/claude-sonnet-4.6',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'I need help planning a road trip from San Francisco to Los Angeles.',\n      },\n      {\n        role: 'assistant',\n        content:\n          \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n      },\n      {\n        role: 'user',\n        content: 'Yes, what are some good places to stop?',\n      },\n    ],\n    max_tokens: 1024,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -95,9 +107,13 @@
 				"max_tokens": 512,
 				"temperature": 0.8
 			},
+			"output": {
+				"text": "# The Weight of Nothing\n\nDetective Sara Voss had seen plenty of crime scenes in her fourteen years on the force—rooms torn apart by rage, by greed, by desperation. She knew how to read the chaos a person left behind.\n\nWhat she didn't know how to read was this.\n\nThe victim's apartment was immaculate. Not cleaned-up immaculate, not scrubbed-by-a-careful-killer immaculate. Just *lived-in* tidy, the kind that took daily discipline—books alphabetized, dishes drying in a neat row, a single coffee mug centered on a coaster like a period at the end of a sentence.\n\nNothing was missing. The wallet sat fat on the nightstand. The laptop was open, unlocked, practically an invitation.\n\nBut Sara kept coming back to the kitchen table.\n\nFour chairs. Four place settings, still laid out for a dinner that had never happened. Plates, forks, folded napkins—and in the center, a vase holding four white tulips, one for each seat.\n\nMarcus Webb had lived alone.\n\nShe crouched down, studying the arrangement without touching it. The flowers were fresh. Maybe two days old. Someone had set this table *after* he died—she was certain of it—and then simply walked away and left the door unlocked.\n\nNot a message. Not a warning.\n\nMore like a *goodbye.*\n\nHer radio crackled. She ignored it.\n\n*Who were the other three seats for?*"
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'anthropic/claude-sonnet-4.6',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'Write a short story opening about a detective finding an unusual clue.',\n      },\n    ],\n    max_tokens: 512,\n    temperature: 0.8,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -118,6 +134,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'anthropic/claude-sonnet-4.6',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'Explain the concept of recursion with a simple example.',\n      },\n    ],\n    max_tokens: 1024,\n    stream: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]

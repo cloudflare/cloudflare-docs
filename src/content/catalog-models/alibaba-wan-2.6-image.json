@@ -22,6 +22,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'alibaba/wan-2.6-image',\n  {\n    prompt: 'A golden retriever puppy playing in autumn leaves',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -36,6 +37,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'alibaba/wan-2.6-image',\n  {\n    prompt:\n      'A vast alien desert landscape with two suns setting on the horizon, ancient ruins in the foreground',\n    size: '1024x768',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -50,6 +52,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'alibaba/wan-2.6-image',\n  {\n    prompt:\n      'A sleek wireless headphone on a minimalist white marble surface with soft studio lighting',\n    size: '1024x1024',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -64,6 +67,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'alibaba/wan-2.6-image',\n  {\n    prompt:\n      'A detailed oil painting portrait of a Renaissance nobleman with intricate lace collar',\n    negative_prompt: 'modern clothing, photograph, blurry, low quality',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -78,13 +82,14 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'alibaba/wan-2.6-image',\n  {\n    prompt:\n      'An elegant Art Deco poster featuring a jazz singer under a spotlight',\n    size: '768x1024',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
 		}
 	],
 	"supports_async": false,
-	"external_info": "https://tongyi.aliyun.com/wanxiang",
+	"external_info": "https://wan.video/",
 	"terms": "https://www.alibabacloud.com/help/en/legal",
 	"cover_image_url": "https://replicate.delivery/xezq/fG590HpoJ3xvPyBfT7VJrwvgaeINUIKiijWbnhrmAatPbZ1sA/tmp962by18n.jpeg",
 	"metadata": {

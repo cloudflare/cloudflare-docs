@@ -27,6 +27,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'openai/whisper',\n  {\n    file: 'https://cdn.openai.com/API/docs/audio/alloy.wav',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -44,6 +45,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'openai/whisper',\n  {\n    file: 'https://cdn.openai.com/API/docs/audio/echo.wav',\n    language: 'en',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -62,6 +64,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'openai/whisper',\n  {\n    file: 'https://cdn.openai.com/API/docs/audio/nova.wav',\n    language: 'en',\n    prompt: 'This is a meeting about the Q3 product roadmap and OKR planning.',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -79,6 +82,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'openai/whisper',\n  {\n    file: 'https://replicate.delivery/xezq/Fig3OHSQej1AK66AOt3iWVz9aNPMR7BcYKWVopb90fjGVzZWA/tmp9g9qwkqp.mp3',\n    language: 'es',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]

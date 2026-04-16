@@ -26,6 +26,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'recraft/recraftv4',\n  {\n    prompt: 'A minimalist logo of a mountain range with a sun rising behind it',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -43,6 +44,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'recraft/recraftv4',\n  {\n    prompt:\n      'A cozy cabin in the woods surrounded by tall pine trees, smoke rising from the chimney',\n    style: 'realistic_image',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -61,6 +63,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'recraft/recraftv4',\n  {\n    prompt:\n      'A flat illustration of a workspace with a laptop, coffee cup, and potted plant',\n    size: '1024x1024',\n    style: 'digital_illustration',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -95,6 +98,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'recraft/recraftv4',\n  {\n    prompt:\n      'An abstract geometric pattern suitable for a tech company brand identity',\n    controls: {\n      colors: [\n        {\n          rgb: [255, 107, 53],\n        },\n        {\n          rgb: [0, 43, 91],\n        },\n      ],\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -121,6 +125,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'recraft/recraftv4',\n  {\n    prompt: 'A clean icon of a lightning bolt',\n    size: '1024x1024',\n    controls: {\n      background_color: {\n        rgb: [245, 245, 245],\n      },\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]

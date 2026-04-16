@@ -26,6 +26,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'openai/gpt-4o-transcribe',\n  {\n    file: 'https://cdn.openai.com/API/docs/audio/alloy.wav',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -43,6 +44,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'openai/gpt-4o-transcribe',\n  {\n    file: 'https://cdn.openai.com/API/docs/audio/shimmer.wav',\n    language: 'en',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -61,6 +63,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'openai/gpt-4o-transcribe',\n  {\n    file: 'https://cdn.openai.com/API/docs/audio/fable.wav',\n    language: 'en',\n    prompt:\n      'This is a technical discussion about Kubernetes and cloud-native architecture.',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
@@ -78,6 +81,7 @@
 			"code_snippets": [
 				{
 					"label": "typescript",
+					"language": "typescript",
 					"code": "const response = await env.AI.run(\n  'openai/gpt-4o-transcribe',\n  {\n    file: 'https://cdn.openai.com/API/docs/audio/echo.wav',\n    temperature: 0.5,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response.result)"
 				}
 			]
