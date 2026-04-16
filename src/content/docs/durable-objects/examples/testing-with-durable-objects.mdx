@@ -195,7 +195,7 @@ describe("Counter Durable Object", () => {
 		const id = env.COUNTER.idFromName("test-counter");
 		const stub = env.COUNTER.get(id);
 
-		expect(await stub.getCount()).toBe(4);
+		expect(await stub.getCount()).toBe(3);
 	});
 
 	it("should reset a counter", async () => {
