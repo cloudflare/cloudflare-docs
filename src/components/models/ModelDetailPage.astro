@@ -157,11 +157,15 @@ const hasSupportedLanguages = model.name === "@cf/deepgram/nova-3";
 const hasSchema =
 	model.schema.input && Object.keys(model.schema.input).length > 0;
 
+const authorName = author?.name ?? authorId;
+const pageTitle = `${displayName} (${authorName}) · Cloudflare AI docs`;
+
 const starlightPageProps = {
 	frontmatter: {
 		title: displayName,
 		description,
 		pcx_content_type: "reference",
+		head: [{ tag: "title" as const, content: pageTitle }],
 	},
 	headings: [
 		hasSupportedLanguages
