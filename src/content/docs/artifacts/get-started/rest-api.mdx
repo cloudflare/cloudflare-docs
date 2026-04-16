@@ -9,11 +9,13 @@ head:
     content: Get started - REST API
 ---
 
-import { LinkCard } from "~/components";
+import { LinkCard, Tabs, TabItem } from "~/components";
 
 Create an Artifacts repo with the REST API, then use a regular git client to push and pull content.
 
-In this guide, you will create a repo inside an existing namespace, read back the repo remote URL, and use that remote with `git push` and `git clone`.
+Use this guide only if your Artifacts environment already provides a gateway JWT in private beta.
+
+By the end of this guide, you will create a repo inside an existing namespace, read back the repo remote URL, push a commit, and clone the same repo with a standard Git client.
 
 ## Prerequisites
 
@@ -23,6 +25,7 @@ You need:
 - A gateway JWT for the Artifacts API.
 - An existing Artifacts namespace, for example `default`.
 - A local `git` client.
+- `jq`, if you want to extract response fields automatically.
 
 Artifacts REST auth is environment-specific in private beta. If you do not already have a gateway JWT for your Artifacts environment, use the [Workers get started guide](/artifacts/get-started/workers/) instead.
 
@@ -37,6 +40,8 @@ export ARTIFACTS_JWT="<YOUR_GATEWAY_JWT>"
 export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.net/v1/api/namespaces/$ARTIFACTS_NAMESPACE"
 ```
 
+Use a unique repo name each time you run this guide.
+
 Artifacts uses Bearer authentication for control-plane requests:
 
 ```txt
@@ -45,7 +50,10 @@ Authorization: Bearer $ARTIFACTS_JWT
 
 ## 2. Create a repo
 
-Create a repo inside that namespace:
+Choose one of the following ways to create a repo inside that namespace:
+
+<Tabs>
+	<TabItem label="Manual">
 
 ```bash
 curl --request POST "$ARTIFACTS_BASE_URL/repos" \
@@ -82,7 +90,10 @@ export ARTIFACTS_REMOTE="<PASTE_RESULT_REMOTE_FROM_RESPONSE>"
 export ARTIFACTS_TOKEN="<PASTE_RESULT_TOKEN_FROM_RESPONSE>"
 ```
 
-Instead of copying them manually, capture the create response once and extract the fields with `jq`:
+	</TabItem>
+	<TabItem label="jq">
+
+Capture the create response once and extract the fields with `jq`:
 
 ```bash
 CREATE_RESPONSE=$(curl --silent --request POST "$ARTIFACTS_BASE_URL/repos" \
@@ -93,6 +104,10 @@ CREATE_RESPONSE=$(curl --silent --request POST "$ARTIFACTS_BASE_URL/repos" \
 export ARTIFACTS_REMOTE=$(printf '%s' "$CREATE_RESPONSE" | jq -r '.result.remote')
 export ARTIFACTS_TOKEN=$(printf '%s' "$CREATE_RESPONSE" | jq -r '.result.token')
 ```
+
+	</TabItem>
+
+</Tabs>
 
 ## 3. Get the repo URL again
 
@@ -177,13 +192,13 @@ git clone "$ARTIFACTS_AUTH_REMOTE" artifacts-clone
 />
 
 <LinkCard
-	title="Workers get started"
-	href="/artifacts/get-started/workers/"
-	description="Create the same repos through a Worker instead of calling the REST API directly."
+	title="Git client example"
+	href="/artifacts/examples/git-client/"
+	description="Use repo discovery and token minting with a standard Git client flow."
 />
 
 <LinkCard
-	title="Git protocol"
-	href="/artifacts/api/git-protocol/"
-	description="Understand how Artifacts remotes map onto standard git-over-HTTPS workflows."
+	title="Best practices"
+	href="/artifacts/concepts/best-practices/"
+	description="Use repo isolation, least-privilege tokens, and namespace separation effectively."
 />

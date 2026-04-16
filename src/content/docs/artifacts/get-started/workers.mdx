@@ -22,7 +22,7 @@ import {
 
 Create an Artifacts repo from a Worker and use a standard git client to push and pull content.
 
-In this guide, you will create a Worker, bind it to Artifacts, create a repo through the Workers binding, and use the returned remote URL and token with `git push` and `git clone`.
+By the end of this guide, you will create a Worker, bind it to Artifacts, create a repo through the Workers binding, push a commit, and clone the same repo back with a standard Git client.
 
 ## Prerequisites
 
@@ -30,9 +30,11 @@ In this guide, you will create a Worker, bind it to Artifacts, create a repo thr
 
 You also need:
 
+- Wrangler authenticated with `wrangler login`.
 - Access to Artifacts in your Cloudflare account.
 - An existing Artifacts namespace, for example `default`.
 - A local `git` client.
+- `jq`, if you want to extract response fields automatically.
 
 ## 1. Create a Worker project
 
@@ -141,20 +143,27 @@ This Worker does one job: create an Artifacts repo and return the values your gi
 This example omits authentication so it can focus on the Artifacts flow. In production, authorize the caller before creating repos or returning write tokens.
 :::
 
+For the demo, the Worker returns the initial write token. In production, mint short-lived read tokens for clone and pull flows, and mint write tokens only for operations that need push access.
+
 ## 4. Create a repo through your Worker
 
 Start local development:
 
 <PackageManagers type="exec" pkg="wrangler" args="dev" />
 
-In a second terminal, create a repo through your Worker:
+In a second terminal, choose one of the following ways to create a repo through your Worker.
+
+If you rerun this guide, use a different repo name in the request body.
+
+<Tabs>
+	<TabItem label="Manual">
 
 ```bash
 curl http://localhost:8787/repos \
---header "Content-Type: application/json" \
---data '{
-  "name": "starter-repo"
-}'
+  --header "Content-Type: application/json" \
+  --data '{
+    "name": "starter-repo"
+  }'
 ```
 
 The response resembles the following:
@@ -170,27 +179,26 @@ The response resembles the following:
 
 Copy the `remote` and `token` values into local shell variables:
 
-<Tabs>
-	<TabItem label="Manual">
+```sh
+export ARTIFACTS_REMOTE="<PASTE_REMOTE_FROM_RESPONSE>"
+export ARTIFACTS_TOKEN="<PASTE_TOKEN_FROM_RESPONSE>"
+```
 
-    ```sh
-    export ARTIFACTS_REMOTE="<PASTE_REMOTE_FROM_RESPONSE>"
-    export ARTIFACTS_TOKEN="<PASTE_TOKEN_FROM_RESPONSE>"
-    ```
+	</TabItem>
+	<TabItem label="jq">
 
-    </TabItem>
-    <TabItem label="jq">
+```bash
+RESPONSE=$(curl --silent http://localhost:8787/repos \
+  --header "Content-Type: application/json" \
+  --data '{"name":"starter-repo"}')
 
-    ```bash
-    RESPONSE=$(curl --silent http://localhost:8787/repos \
-      --header "Content-Type: application/json" \
-      --data '{"name":"starter-repo"}')
+printf '%s\n' "$RESPONSE"
 
-    export ARTIFACTS_REMOTE=$(printf '%s' "$RESPONSE" | jq -r '.remote')
-    export ARTIFACTS_TOKEN=$(printf '%s' "$RESPONSE" | jq -r '.token')
-    ```
+export ARTIFACTS_REMOTE=$(printf '%s' "$RESPONSE" | jq -r '.remote')
+export ARTIFACTS_TOKEN=$(printf '%s' "$RESPONSE" | jq -r '.token')
+```
 
-    </TabItem>
+	</TabItem>
 
 </Tabs>
 
@@ -254,9 +262,9 @@ Wrangler prints your `workers.dev` URL. Use the same `curl` request against that
 />
 
 <LinkCard
-	title="REST API get started"
-	href="/artifacts/get-started/rest-api/"
-	description="Create repos directly over HTTP instead of going through a Worker."
+	title="Best practices"
+	href="/artifacts/concepts/best-practices/"
+	description="Use repo isolation, least-privilege tokens, and namespace separation effectively."
 />
 
 <LinkCard
