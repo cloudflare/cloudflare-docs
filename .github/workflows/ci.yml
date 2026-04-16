@@ -223,7 +223,7 @@ jobs:
           path: .starlight-links-validator
 
       - name: Link validation
-        run: npx tsx bin/check-link-validation/index.ts
+        run: pnpm exec tsx bin/check-link-validation/index.ts
 
   notify:
     name: Notify
@@ -280,7 +280,7 @@ jobs:
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx tsx bin/post-link-validation-comment/index.ts
+        run: pnpm exec tsx bin/post-link-validation-comment/index.ts
 
   publish-preview:
     name: Deploy Preview
