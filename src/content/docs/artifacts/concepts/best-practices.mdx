@@ -36,7 +36,7 @@ Include stable identifiers in the repo name, such as the agent name, session ID,
 
 This example creates a unique repo name before creating the repo.
 
-<TypeScriptExample filename="src/index.ts" typescriptFirst={true}>
+<TypeScriptExample filename="src/index.ts">
 
 ```ts
 interface Env {
@@ -65,7 +65,7 @@ This keeps your starting point consistent and makes downstream diffs easier to r
 
 This example forks a reviewed baseline repo into a session-specific repo.
 
-<TypeScriptExample filename="src/index.ts" typescriptFirst={true}>
+<TypeScriptExample filename="src/index.ts">
 
 ```ts
 interface Env {
@@ -105,7 +105,7 @@ This example uses the [Workers binding](/artifacts/api/workers-binding/) to mint
 
 Assume the caller is already authenticated and authorized before this route returns a token.
 
-<TypeScriptExample filename="src/index.ts" typescriptFirst={true}>
+<TypeScriptExample filename="src/index.ts">
 
 ```ts
 interface Env {

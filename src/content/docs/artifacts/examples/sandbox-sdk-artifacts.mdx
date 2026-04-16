@@ -34,7 +34,7 @@ cd repo-per-sandbox
 
 The template keeps one Artifacts repo per sandbox ID:
 
-<TypeScriptExample filename="src/index.ts" typescriptFirst={true}>
+<TypeScriptExample filename="src/index.ts">
 
 ```ts
 const repo = await env.ARTIFACTS.get(sandboxId);
@@ -67,7 +67,7 @@ if (repo) {
 
 Use the same ID for the sandbox:
 
-<TypeScriptExample filename="src/index.ts" typescriptFirst={true}>
+<TypeScriptExample filename="src/index.ts">
 
 ```ts
 import { getSandbox } from "@cloudflare/sandbox";
@@ -83,7 +83,7 @@ Convert the write token into an authenticated Git remote, then store it as an en
 
 Use a short-lived token and pass it into the sandbox only after the sandbox session is authorized to push changes.
 
-<TypeScriptExample filename="src/index.ts" typescriptFirst={true}>
+<TypeScriptExample filename="src/index.ts">
 
 ```ts
 function toAuthenticatedRemote(remote: string, token: string) {

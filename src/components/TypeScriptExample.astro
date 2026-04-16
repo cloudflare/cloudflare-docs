@@ -14,13 +14,10 @@ const props = z
 		playground: z.boolean().default(false),
 		code: z.custom<ComponentProps<typeof Code>>().optional(),
 		omitTabs: z.boolean().default(false),
-		typescriptFirst: z.boolean().default(false),
 	})
 	.strict();
 
-const { filename, playground, code, omitTabs, typescriptFirst } = props.parse(
-	Astro.props,
-);
+const { filename, playground, code, omitTabs } = props.parse(Astro.props);
 
 const slot = await Astro.slots.render("default");
 
@@ -50,35 +47,16 @@ const Wrapper = omitTabs ? Fragment : Tabs;
 ---
 
 <Wrapper syncKey="workersExamples">
-	{typescriptFirst ? (
-		<>
-			<TabItem label="TypeScript" icon="seti:typescript">
-				<Code {...code} lang="ts" code={raw} title={filename} />
-			</TabItem>
-			<TabItem label="JavaScript" icon="seti:javascript">
-				<Code
-					{...code}
-					lang="js"
-					code={js}
-					title={filename?.replace(".ts", ".js")}
-					meta={playground ? "playground" : undefined}
-				/>
-			</TabItem>
-		</>
-	) : (
-		<>
-			<TabItem label="JavaScript" icon="seti:javascript">
-				<Code
-					{...code}
-					lang="js"
-					code={js}
-					title={filename?.replace(".ts", ".js")}
-					meta={playground ? "playground" : undefined}
-				/>
-			</TabItem>
-			<TabItem label="TypeScript" icon="seti:typescript">
-				<Code {...code} lang="ts" code={raw} title={filename} />
-			</TabItem>
-		</>
-	)}
+	<TabItem label="JavaScript" icon="seti:javascript">
+		<Code
+			{...code}
+			lang="js"
+			code={js}
+			title={filename?.replace(".ts", ".js")}
+			meta={playground ? "playground" : undefined}
+		/>
+	</TabItem>
+	<TabItem label="TypeScript" icon="seti:typescript">
+		<Code {...code} lang="ts" code={raw} title={filename} />
+	</TabItem>
 </Wrapper>

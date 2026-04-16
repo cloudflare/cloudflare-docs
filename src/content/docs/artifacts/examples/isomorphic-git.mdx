@@ -28,7 +28,7 @@ Use this as a reference for the end-to-end flow. In a production Worker, look up
 This example omits authentication so it can focus on the Git flow. In production, authorize the caller before creating repos or granting write capability.
 :::
 
-<TypeScriptExample filename="src/index.ts" typescriptFirst={true}>
+<TypeScriptExample filename="src/index.ts">
 
 ```ts
 import git from "isomorphic-git";
@@ -102,7 +102,7 @@ export default {
 
 Use this helper with `isomorphic-git` in Workers when you need a short-lived working tree in memory.
 
-<TypeScriptExample filename="src/memory-fs.ts" typescriptFirst={true}>
+<TypeScriptExample filename="src/memory-fs.ts">
 
 ```ts
 type Entry =

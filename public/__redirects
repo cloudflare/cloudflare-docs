@@ -61,9 +61,6 @@
 /learning-paths/ /resources/ 301
 /markdown.zip /llms-full.txt 301
 
-# artifacts
-/artifacts/api/artifactfs/ /artifacts/guides/artifact-fs/ 301
-
 # changelog
 /changelog/rss.xml /changelog/rss/index.xml 301
 /api-shield/changelog/index.xml /changelog/rss/api-shield.xml 301
