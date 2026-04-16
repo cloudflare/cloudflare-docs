@@ -139,7 +139,7 @@ All three nodes share the same argument signature.
 
 <Details header="Total requests by day">
 
-Get a high-level view of daily request volume and bytes transferred over a time range.
+Get a high-level view of daily request volume over a time range.
 
 ```graphql
 query DailyRequestVolume(
@@ -157,11 +157,7 @@ query DailyRequestVolume(
         limit: 10000
         orderBy: [date_ASC]
       ) {
-        sum {
-          requests
-          bytesToGateway
-          bytesToClient
-        }
+        count
         dimensions {
           date
         }
