@@ -1,0 +1,22 @@
+---
+pcx_content_type: reference
+title: Cloudflare IP addresses
+---
+
+Cloudflare publishes its full list of IP ranges at [cloudflare.com/ips](https://www.cloudflare.com/ips/).
+
+## Cloudflare IP ranges and AWS VPC routing
+
+Cloudflare uses **172.64.0.0/13** (172.64.0.0–172.71.255.255) as public egress IP space. This range is **not RFC 1918 private space**. RFC 1918 covers 172.16.0.0/12 (172.16.0.0–172.31.255.255), which does not overlap with 172.64.0.0/13.
+
+### AWS VPC routing conflict
+
+AWS VPC route tables sometimes include a broad route such as `172.0.0.0/8` for internal networking. This captures Cloudflare's 172.64.x.x traffic before it reaches the Internet Gateway, causing connection errors (521, 522) from Cloudflare data centers that use this range.
+
+**To resolve:**
+
+1. Check your AWS VPC route table for any route covering `172.x.x.x` that routes to an internal target (ENI, NAT Gateway, VPC peering connection).
+2. Add a more-specific route: `172.64.0.0/13 → Internet Gateway`. More-specific routes take precedence in AWS routing.
+3. Alternatively, narrow the broad route to the actual RFC 1918 range you need: `172.16.0.0/12`, which does not include 172.64.0.0/13.
+
+This issue does not appear in security group audits because security groups are evaluated at the instance level, not the routing layer.
