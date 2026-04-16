@@ -1,0 +1,82 @@
+---
+title: Backup payment method auto-retry
+pcx_content_type: concept
+sidebar:
+  order: 8
+head:
+  - tag: title
+    content: Backup payment method auto-retry | Cloudflare Docs
+---
+
+import { Details } from "~/components";
+
+If your subscription renewal payment fails on your primary payment method, Cloudflare can automatically retry the payment using your backup payment method. This keeps your services active without requiring you to take action.
+
+## How it works
+
+1. Your subscription renewal payment is attempted using your primary (default) payment method.
+2. If the payment fails, Cloudflare automatically attempts to charge your backup payment method.
+3. If the backup payment succeeds, your services remain active and you receive an email notification confirming which payment method was charged.
+4. If the backup payment also fails, standard payment retry processes continue on your primary payment method.
+
+## Eligibility
+
+To use backup payment method auto-retry, you need:
+
+- A **Pay-as-you-go (PayGo)** account
+- Exactly **2 payment methods** on file (one primary, one backup)
+- The **auto-retry setting enabled** in your billing page
+
+Auto-retry works with any combination of credit/debit cards and PayPal:
+
+| Primary | Backup | Supported |
+|---------|--------|-----------|
+| Card    | Card   | Yes       |
+| Card    | PayPal | Yes       |
+| PayPal  | Card   | Yes       |
+| PayPal  | PayPal | Yes       |
+
+## Enable or disable auto-retry
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. Go to **Manage Account** > **Billing**.
+3. In the **Payment Methods** section, toggle **Auto-retry with backup payment method** on or off.
+
+:::note
+The toggle is only visible if you have at least 2 payment methods on file. If you remove a payment method and only have 1 remaining, auto-retry is automatically disabled.
+:::
+
+## Email notification
+
+When your backup payment method is charged, you receive an email with:
+
+- The invoice amount and number
+- Which primary payment method failed
+- Which backup payment method was charged
+- A link to manage your payment methods
+
+## FAQ
+
+<Details header="Will I be charged twice?">
+No. The backup payment method is only charged if your primary payment method fails. You will never be charged on both payment methods for the same invoice.
+</Details>
+
+<Details header="What happens if both payment methods fail?">
+If your backup payment method also fails, the standard payment retry process continues using your primary payment method. You may receive a separate email asking you to update your payment information.
+</Details>
+
+<Details header="Does this apply to all payments?">
+Auto-retry applies to subscription renewal payments only. One-time purchases and initial subscription setup payments are not affected.
+</Details>
+
+<Details header="Can I turn this off?">
+Yes. You can disable auto-retry at any time from the **Billing** page in the Cloudflare dashboard.
+</Details>
+
+<Details header="What if I have more than 2 payment methods?">
+Auto-retry is currently available for accounts with exactly 2 payment methods. If you have 3 or more, auto-retry will not activate.
+</Details>
+
+<Details header="Will my next renewal use my primary payment method again?">
+Yes. Each renewal always attempts your primary (default) payment method first. The backup is only used if the primary fails for that specific renewal.
+</Details>
