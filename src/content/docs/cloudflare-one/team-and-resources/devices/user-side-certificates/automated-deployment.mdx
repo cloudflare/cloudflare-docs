@@ -42,7 +42,8 @@ To configure the Cloudflare One Client to install a root certificate on your org
 3. Under **Global Cloudflare One Client settings**, turn on [**Install CA to system certificate store**](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#install-ca-to-system-certificate-store).
 4. [Install](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/) the Cloudflare One Client on the device.
 5. [Enroll the device](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/manual-deployment/) in your Zero Trust organization.
-6. (Optional) If the device is running macOS Big Sure or newer, [manually trust the certificate](#manually-trust-the-certificate).
+6. (Optional) If the device is running macOS Big Sur or newer, [manually trust the certificate](#manually-trust-the-certificate).
+
 
 The Cloudflare One Client will now download any [certificates set to **Available**](/cloudflare-one/team-and-resources/devices/user-side-certificates/#activate-a-root-certificate). After download, the Cloudflare One Client will add the certificates to the device's system certificate store in `installed_certs/<certificate_id>.pem` and append the contents to the `installed_cert.pem` file. If you have any scripts using `installed_cert.pem`, Cloudflare recommends you set them to use the individual files in the `installed_certs/` directory instead. `installed_certs.pem` will be deprecated by 2025-06-31.
 
