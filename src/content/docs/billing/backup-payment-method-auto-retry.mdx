@@ -21,11 +21,12 @@ If your subscription renewal payment fails on your primary payment method, Cloud
 
 ## Eligibility
 
-To use backup payment method auto-retry, you need:
+Backup auto-retry is enabled automatically for eligible accounts. You need:
 
 - A **Pay-as-you-go (PayGo)** account
 - Exactly **2 payment methods** on file (one primary, one backup)
-- The **auto-retry setting enabled** in your billing page
+
+No action is needed to turn it on.
 
 Auto-retry works with any combination of credit/debit cards and PayPal:
 
@@ -36,11 +37,15 @@ Auto-retry works with any combination of credit/debit cards and PayPal:
 | PayPal  | Card   | Yes       |
 | PayPal  | PayPal | Yes       |
 
-## Enable or disable auto-retry
+## Disable auto-retry
+
+Backup auto-retry is enabled by default for eligible accounts. If you prefer not to use it:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
 2. Go to **Manage Account** > **Billing**.
-3. In the **Payment Methods** section, toggle **Auto-retry with backup payment method** on or off.
+3. In the **Payment Methods** section, toggle off **Auto-retry with backup payment method**.
+
+To re-enable, toggle the setting back on from the same location.
 
 :::note
 The toggle is only visible if you have at least 2 payment methods on file. If you remove a payment method and only have 1 remaining, auto-retry is automatically disabled.
@@ -70,7 +75,7 @@ Auto-retry applies to subscription renewal payments only. One-time purchases and
 </Details>
 
 <Details header="Can I turn this off?">
-Yes. You can disable auto-retry at any time from the **Billing** page in the Cloudflare dashboard.
+Yes. Auto-retry is on by default, but you can disable it at any time from the **Billing** page in the Cloudflare dashboard by toggling off the setting in the Payment Methods section.
 </Details>
 
 <Details header="What if I have more than 2 payment methods?">
