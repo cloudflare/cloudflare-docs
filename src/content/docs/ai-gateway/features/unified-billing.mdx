@@ -51,6 +51,10 @@ When your balance falls below the set threshold, AI Gateway will automatically a
 
 Unified Billing works in two ways: through the AI binding or through the HTTP API. Both deduct credits from your account automatically without requiring provider API keys.
 
+:::note
+Workers AI models (models prefixed with `@cf/`) routed through AI Gateway are not charged via Unified Billing. These models are billed through [Workers AI pricing](/workers-ai/platform/pricing/) instead. Unified Billing only applies to third-party provider models (such as OpenAI, Anthropic, and Google AI Studio).
+:::
+
 ### AI binding
 
 Call any model listed in the [model catalog](https://developers.cloudflare.com/ai/models/) using `env.AI.run()`. This includes both Workers AI models and third-party models from providers like OpenAI, Anthropic, and Google.
