@@ -37,15 +37,11 @@ namespace = "default"
 
 After you run `npx wrangler types`, your Worker environment looks like this:
 
-<TypeScriptExample>
-
 ```ts
 export interface Env {
 	ARTIFACTS: Artifacts;
 }
 ```
-
-</TypeScriptExample>
 
 Wrangler generates the `Artifacts` type for consumers and binds it directly in your environment.
 

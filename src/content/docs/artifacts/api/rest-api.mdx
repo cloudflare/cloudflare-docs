@@ -9,7 +9,7 @@ head:
     content: REST API · Artifacts
 ---
 
-import { LinkCard, MetaInfo, Type, TypeScriptExample } from "~/components";
+import { LinkCard, MetaInfo, Type } from "~/components";
 
 Use the Artifacts REST API to manage repos, remotes, forks, imports, and tokens from external systems.
 
@@ -45,8 +45,6 @@ All responses use the standard Cloudflare v4 envelope.
 Returned repo tokens are secrets. Do not log them or store them in long-lived remotes unless your workflow requires it.
 
 ## Shared types
-
-<TypeScriptExample>
 
 ```ts
 export type NamespaceName = string;
@@ -121,8 +119,6 @@ export interface TokenInfo {
 }
 ```
 
-</TypeScriptExample>
-
 ## Repos
 
 ### Create a repo
@@ -137,8 +133,6 @@ Request body:
 - `read_only` <Type text="boolean" /> <MetaInfo text="optional" />
 
 Response type:
-
-<TypeScriptExample omitTabs={true}>
 
 ```ts
 export interface CreateRepoRequest {
@@ -160,8 +154,6 @@ export interface CreateRepoResult {
 
 export type CreateRepoResponse = ApiEnvelope<CreateRepoResult>;
 ```
-
-</TypeScriptExample>
 
 ```bash
 curl --request POST "$ARTIFACTS_BASE_URL/repos" \
@@ -206,8 +198,6 @@ Query parameters:
 
 Response type:
 
-<TypeScriptExample>
-
 ```ts
 export interface ListReposQuery {
 	limit?: number;
@@ -219,8 +209,6 @@ export interface ListReposQuery {
 
 export type ListReposResponse = ApiEnvelope<RepoInfo[]>;
 ```
-
-</TypeScriptExample>
 
 ```bash
 curl "$ARTIFACTS_BASE_URL/repos?limit=20&sort=updated_at&direction=desc" \
@@ -259,13 +247,9 @@ Route: `GET /repos/:name`
 
 Response type:
 
-<TypeScriptExample omitTabs={true}>
-
 ```ts
 export type GetRepoResponse = ApiEnvelope<RemoteRepoInfo>;
 ```
-
-</TypeScriptExample>
 
 ```bash
 curl "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO" \
@@ -300,8 +284,6 @@ This route returns `202 Accepted`.
 
 Response type:
 
-<TypeScriptExample omitTabs={true}>
-
 ```ts
 export interface DeleteRepoResult {
 	id: string;
@@ -309,8 +291,6 @@ export interface DeleteRepoResult {
 
 export type DeleteRepoResponse = ApiEnvelope<DeleteRepoResult>;
 ```
-
-</TypeScriptExample>
 
 ```bash
 curl --request DELETE "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO" \
@@ -341,8 +321,6 @@ Request body:
 
 Response type:
 
-<TypeScriptExample omitTabs={true}>
-
 ```ts
 export interface ForkRepoRequest {
 	name: RepoName;
@@ -357,8 +335,6 @@ export interface ForkRepoResult extends CreateRepoResult {
 
 export type ForkRepoResponse = ApiEnvelope<ForkRepoResult>;
 ```
-
-</TypeScriptExample>
 
 ```bash
 curl --request POST "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO/fork" \
@@ -403,8 +379,6 @@ Request body:
 
 Response type:
 
-<TypeScriptExample omitTabs={true}>
-
 ```ts
 export interface ImportRepoRequest {
 	url: string;
@@ -415,8 +389,6 @@ export interface ImportRepoRequest {
 
 export type ImportRepoResponse = ApiEnvelope<CreateRepoResult>;
 ```
-
-</TypeScriptExample>
 
 Pass a full HTTPS Git remote URL, for example `https://github.com/facebook/react` or `https://gitlab.com/group/project.git`.
 
@@ -464,8 +436,6 @@ Query parameters:
 
 Response type:
 
-<TypeScriptExample omitTabs={true}>
-
 ```ts
 export interface ListTokensQuery {
 	state?: TokenState | "all";
@@ -475,8 +445,6 @@ export interface ListTokensQuery {
 
 export type ListTokensResponse = ApiEnvelope<TokenInfo[]>;
 ```
-
-</TypeScriptExample>
 
 ```bash
 curl "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO/tokens?state=all&per_page=30&page=1" \
@@ -519,8 +487,6 @@ Request body:
 
 Response type:
 
-<TypeScriptExample omitTabs={true}>
-
 ```ts
 export interface CreateTokenRequest {
 	repo: RepoName;
@@ -537,8 +503,6 @@ export interface CreateTokenResult {
 
 export type CreateTokenResponse = ApiEnvelope<CreateTokenResult>;
 ```
-
-</TypeScriptExample>
 
 ```bash
 curl --request POST "$ARTIFACTS_BASE_URL/tokens" \
@@ -571,8 +535,6 @@ Route: `DELETE /tokens/:id`
 
 Response type:
 
-<TypeScriptExample omitTabs={true}>
-
 ```ts
 export interface RevokeTokenResult {
 	id: string;
@@ -580,8 +542,6 @@ export interface RevokeTokenResult {
 
 export type RevokeTokenResponse = ApiEnvelope<RevokeTokenResult>;
 ```
-
-</TypeScriptExample>
 
 ```bash
 curl --request DELETE "$ARTIFACTS_BASE_URL/tokens/tok_123" \
@@ -603,8 +563,6 @@ curl --request DELETE "$ARTIFACTS_BASE_URL/tokens/tok_123" \
 
 Application errors also use the v4 envelope:
 
-<TypeScriptExample omitTabs={true}>
-
 ```ts
 export interface ApiError {
 	code: number;
@@ -615,8 +573,6 @@ export interface ApiError {
 	};
 }
 ```
-
-</TypeScriptExample>
 
 ## Next steps
 
