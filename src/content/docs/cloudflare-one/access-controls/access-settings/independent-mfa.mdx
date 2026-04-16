@@ -179,7 +179,7 @@ When a user has at least one authenticator enrolled, Access requires MFA verific
 
 After the user completes MFA verification, they have 10 minutes to add or remove authenticators without additional prompts. This window is tied to the current device. After 10 minutes, or if the user switches to a different device, Access requires MFA verification again.
 
-This prevents an attacker with compromised IdP credentials from modifying a user's enrolled authenticators. Even if an attacker gains access to the user's IdP session, they cannot bypass the independent MFA verification step without also possessing the user's enrolled authenticator.
+This prevents an attacker with compromised IdP credentials from modifying a user's enrolled authenticators. Even if an attacker gains access to the user's IdP session, they cannot bypass the independent MFA verification step without also possessing the user's enrolled authenticator. If a user loses their only authenticator and cannot verify, an administrator can delete it to allow re-enrollment. Refer to [Manage user authenticators](#manage-user-authenticators).
 
 :::note
 MFA verification is not required when a user enrolls their first authenticator, since they do not yet have an MFA method to verify with.
