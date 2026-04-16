@@ -57,3 +57,31 @@ To create a CAA record via the API, use this [POST endpoint](/api/resources/dns/
 </TabItem> </Tabs>
 
 Once you have finished creating all the records, you can review them in the list of records appearing under the DNS Records panel.
+
+## Certificate authorities and required CAA values
+
+If you have CAA records on your domain, they must permit the certificate authority (CA) that Cloudflare uses.
+
+| Cloudflare CA | Required CAA `issue` value |
+|---|---|
+| Google Trust Services | `pki.goog` |
+| Let's Encrypt | `letsencrypt.org` |
+| SSL.com | `ssl.com` |
+| Sectigo | `sectigo.com` |
+
+**Example:** If Cloudflare is using Google Trust Services, your CAA record must include:
+
+```
+example.com. CAA 0 issue "pki.goog"
+```
+
+### CNAME chain CAA records
+
+CAA records on a CNAME target also apply. If your hostname CNAMEs to a domain whose zone has restrictive CAA records, those records take precedence — even if your own domain has no CAA records.
+
+Check CAA at all levels of your CNAME chain:
+
+```sh
+dig CAA yourdomain.com
+dig CAA cname-target.com
+```
