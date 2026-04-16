@@ -32,31 +32,27 @@ When an automatic payment fails, Cloudflare follows this process:
 
 To restore paid services after a downgrade, you must pay the outstanding balance and then re-subscribe to each product individually.
 
-:::note
-Cloudflare does not currently retry your secondary payment method if the primary one fails. You must manually update your payment method or pay the balance yourself.
-:::
-
 ## Types of charges
 
 A Cloudflare invoice can contain up to three types of charges. Understanding these is key to reading your invoice.
 
 ### 1. Plan charges (flat rate, billed in advance)
 
-Domain plan charges (Free, Pro, Business, Enterprise) are flat-rate and billed at the start of each billing period for the upcoming month or year. Plans are billed **per domain** -- if you have 20 domains on the Pro plan at $25/month, you will see a single line item for 20 x $25 = $500.
+Domain plan charges (Free, Pro, Business, Enterprise) are flat-rate and billed at the start of each billing period for the upcoming month or year. Plans are billed **per domain** — if you have 20 domains on the Pro plan at $25/month, you will see a single line item for 20 x $25 = $500.
 
 The line item lists the domain names the plan covers. For example:
 
-> **Cloudflare Pro Plan** (example1.com, example2.com, example3.com) -- Qty 3 -- $25.00 -- $75.00
+> **Cloudflare Pro Plan** (example1.com, example2.com, example3.com) — Qty 3 — $25.00 — $75.00
 
 ### 2. Subscription and add-on charges (flat rate, billed in advance)
 
-Add-on services with flat monthly fees -- such as Load Balancing, Argo Smart Routing, Images Stream Bundle, or Cache Reserve -- are billed at the start of each billing period. These appear as separate line items, each showing the product name and the period it covers.
+Add-on services with flat monthly fees — such as Load Balancing, Argo Smart Routing, Images Stream Bundle, or Cache Reserve — are billed at the start of each billing period. These appear as separate line items, each showing the product name and the period it covers.
 
 For example:
 
-> **Basic Load Balancing** -- Apr 14 - May 13, 2026 -- Qty 1 -- $5.00<br/>
-> **Images Stream Bundle Basic** -- Apr 14 - May 13, 2026 -- Qty 1 -- $5.00<br/>
-> **Smart Shield Argo Zone Level Plan - Basic** -- Apr 14 - May 13, 2026 -- Qty 1 -- $5.00
+> **Basic Load Balancing** — Apr 14 - May 13, 2026 — Qty 1 — $5.00<br/>
+> **Images Stream Bundle Basic** — Apr 14 - May 13, 2026 — Qty 1 — $5.00<br/>
+> **Smart Shield Argo Zone Level Plan - Basic** — Apr 14 - May 13, 2026 — Qty 1 — $5.00
 
 Some add-ons have multiple sub-line items (for example, Load Balancing shows separate lines for pools, origins, health check intervals, and health check regions). Many of these sub-items may show $0.00 if they are within your included allocation.
 
@@ -66,9 +62,9 @@ Products like Workers, R2, Cache Reserve operations, Stream minutes viewed, and 
 
 For example:
 
-> **Cache Reserve Reads** -- Mar 14 - Apr 13, 2026 -- Qty 166,865 -- $0.36 per 1,000,000 -- $0.36<br/>
-> **Smart Shield Argo Accelerated Gigabytes** (First GB is included) -- Mar 14 - Apr 13, 2026 -- Qty 34 -- $0.10 -- $3.40<br/>
-> **Stream Bundle Basic Minutes of Video Viewed** (in thousands) -- Mar 14 - Apr 13, 2026 -- Qty 198 -- $1.00 per 1,000 -- $1.00
+> **Cache Reserve Reads** — Mar 14 - Apr 13, 2026 — Qty 166,865 — $0.36 per 1,000,000 — $0.36<br/>
+> **Smart Shield Argo Accelerated Gigabytes** (First GB is included) — Mar 14 - Apr 13, 2026 — Qty 34 — $0.10 — $3.40<br/>
+> **Stream Bundle Basic Minutes of Video Viewed** (in thousands) — Mar 14 - Apr 13, 2026 — Qty 198 — $1.00 per 1,000 — $1.00
 
 Many usage-based products include a free tier (for example, "First 10GB-Month included" for R2 storage). If your usage stays within the free tier, the line item appears with a quantity of 0 and a $0.00 amount.
 
@@ -83,7 +79,7 @@ A typical Cloudflare invoice may span several pages and contain 20-30+ line item
 The top of the invoice shows:
 - **Invoice number** (for example, IN-62358374)
 - **Date of issue** and **date due** (usually the same day for automatic payments)
-- **Company name** -- the name on your billing profile
+- **Company name** — the name on your billing profile
 - **Cloudflare address** and your **billing address**
 - **Total amount due**
 
@@ -105,7 +101,7 @@ Each line item shows:
 
 ### Why are there so many $0.00 line items?
 
-Many products have multiple billable dimensions (for example, R2 has separate lines for storage, data retrieval, Class A operations, and Class B operations). Even if you did not use a dimension during the billing period, it appears on the invoice at $0.00. This is expected -- it confirms the product is active and shows that no charges were incurred for that specific dimension.
+Many products have multiple billable dimensions (for example, R2 has separate lines for storage, data retrieval, Class A operations, and Class B operations). Even if you did not use a dimension during the billing period, it appears on the invoice at $0.00. This is expected — it confirms the product is active and shows that no charges were incurred for that specific dimension.
 
 <Details header="Example: R2 line items on a typical invoice">
 
@@ -134,7 +130,7 @@ The bottom of the invoice shows:
 
 ## Billing cycles
 
-Your first paid purchase on a Cloudflare account sets the billing date for all future monthly subscriptions. Annual subscriptions follow their own cycle. You can have two different billing cycles on your account -- one for monthly and one for annual subscriptions.
+Your first paid purchase on a Cloudflare account sets the billing date for all future monthly subscriptions. Annual subscriptions follow their own cycle. You can have two different billing cycles on your account — one for monthly and one for annual subscriptions.
 
 All billing dates use **UTC** (Coordinated Universal Time), not your local time zone. Make any plan changes or cancellations at least 24 hours before your billing date to avoid timing issues.
 
@@ -144,13 +140,13 @@ For example, if you upgrade to the Pro plan on January 10, all monthly charges w
 
 - **Upgrades** take effect immediately. You are charged a prorated amount for the remainder of the current billing period, and your account is credited for the unused portion of the lower plan.
 - **Downgrades** take effect at the end of the current billing period. You continue to have access to the higher-tier features until the new period begins.
-- **Cancellations** follow the same timing as downgrades -- service continues until the end of the billing period. No refunds are issued for the remaining time.
+- **Cancellations** follow the same timing as downgrades — service continues until the end of the billing period. No refunds are issued for the remaining time.
 
 For details, refer to [Billing policy](/billing/understand/billing-policy/).
 
 ## Related resources
 
-- [Invoices](/billing/manage/invoices/) -- Download and manage your invoices
-- [Usage-based billing](/billing/understand/usage-based-billing/) -- Products that bill based on consumption
-- [Billing policy](/billing/understand/billing-policy/) -- Refund policy, payment methods, and terms
-- [Pay an outstanding balance](/billing/manage/pay-invoices-overdue-balances/) -- Resolve unpaid invoices
+- [Invoices](/billing/manage/invoices/) — Download and manage your invoices
+- [Usage-based billing](/billing/understand/usage-based-billing/) — Products that bill based on consumption
+- [Billing policy](/billing/understand/billing-policy/) — Refund policy, payment methods, and terms
+- [Pay an outstanding balance](/billing/manage/pay-invoices-overdue-balances/) — Resolve unpaid invoices
