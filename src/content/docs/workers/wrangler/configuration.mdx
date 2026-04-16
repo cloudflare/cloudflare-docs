@@ -284,6 +284,9 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
   - Declares the secret names your Worker requires. Used for validation during local development and deploy, and as the source of truth for type generation. Refer to [Secrets](#secrets).
   - `required` <Type text="string[]" /> <MetaInfo text="optional" /> — A list of secret names that must be set to deploy your Worker.
 
+- `secrets_store_secrets` <Type text="object" /> <MetaInfo text="optional" />
+  - A list of Secrets Store bindings that your worker should be bound to. Refer to [Secrets Store](/secrets-store/).
+
 ## Types of routes
 
 There are three types of [routes](/workers/configuration/routing/): [Custom Domains](/workers/configuration/routing/custom-domains/), [routes](/workers/configuration/routing/routes/), and [`workers.dev`](/workers/configuration/routing/workers-dev/).
@@ -513,9 +516,9 @@ Example:
 
 ## Bindings
 
-### Browser Rendering
+### Browser Run
 
-The [Workers Browser Rendering API](/browser-rendering/) allows developers to programmatically control and interact with a headless browser instance and create automation flows for their applications and products.
+The [Workers Browser Run API](/browser-run/) allows developers to programmatically control and interact with a headless browser instance and create automation flows for their applications and products.
 
 A [browser binding](/workers/runtime-apis/bindings/) will provide your Worker with an authenticated endpoint to interact with a dedicated Chromium browser instance.
 
@@ -1249,7 +1252,7 @@ The following options are available:
   - Build-time variables, equivalent to using `--build-arg` with `docker build`. If you want to provide environment variables to your container at _runtime_, you should [use secret bindings or `envVars` on the Container class](/containers/examples/env-vars-and-secrets/).
 
 - `rollout_active_grace_period` <Type text="number" /> <MetaInfo text="optional" />
-  - The minimum number of seconds to wait before an active container instance becomes eligible for updating during a [rollout](/containers/faq#how-do-container-updates-and-rollouts-work). At that point, the container will be sent at `SIGTERM` and still has 15 minutes to shut down before it is forcibly killed and updated.
+  - The minimum number of seconds to wait before an active container instance becomes eligible for updating during a [rollout](/containers/platform-details/rollouts/). At that point, the container will be sent a `SIGTERM` signal and still has 15 minutes to shut down before it is forcibly killed and updated.
   - Defaults to `0`.
 
 - `rollout_step_percentage` <Type text="number | number[]" /> <MetaInfo text="optional" />

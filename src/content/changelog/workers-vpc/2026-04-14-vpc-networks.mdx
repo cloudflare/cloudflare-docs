@@ -1,0 +1,33 @@
+---
+title: VPC Networks and Cloudflare Mesh support now in public beta
+description: Workers can now access entire private networks through VPC Network bindings, with support for Cloudflare Tunnel and Cloudflare Mesh.
+date: 2026-04-14
+---
+
+import { WranglerConfig } from "~/components";
+
+[VPC Network](/workers-vpc/configuration/vpc-networks/) bindings now give your Workers access to any service in your private network without pre-registering individual hosts or ports. This complements existing [VPC Service](/workers-vpc/configuration/vpc-services/) bindings, which scope each binding to a specific host and port.
+
+You can bind to a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) by `tunnel_id` to reach any service on the network where that tunnel is running, or bind to your [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) network using `cf1:network` to reach any Mesh node, client device, or subnet route in your account:
+
+<WranglerConfig>
+```jsonc
+{
+  "vpc_networks": [
+    {
+      "binding": "MESH",
+      "network_id": "cf1:network",
+      "remote": true
+    }
+  ]
+}
+```
+</WranglerConfig>
+
+At runtime, `fetch()` routes through the network to reach the service at the IP and port you specify:
+
+```js
+const response = await env.MESH.fetch("http://10.0.1.50:8080/api/data");
+```
+
+For configuration options and examples, refer to [VPC Networks](/workers-vpc/configuration/vpc-networks/) and [Connect Workers to Cloudflare Mesh](/workers-vpc/examples/connect-to-cloudflare-mesh/).

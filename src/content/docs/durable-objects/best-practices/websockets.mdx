@@ -321,9 +321,7 @@ The following methods are available on the Hibernation WebSocket API. Use them t
 
 #### `WebSocket.serializeAttachment`
 
-- <code>
-  	serializeAttachment(value <Type text="any" />)
-  </code>
+- <code>serializeAttachment(value <Type text="any" />)</code>
   : <Type text="void" />
 
 Keeps a copy of `value` associated with the WebSocket connection.
@@ -362,34 +360,35 @@ export class WebSocketServer extends DurableObject<Env> {
 		const url = new URL(request.url);
 		const orderId = url.searchParams.get("orderId") ?? "anonymous";
 
-		const webSocketPair = new WebSocketPair();
-		const [client, server] = Object.values(webSocketPair);
+    	const webSocketPair = new WebSocketPair();
+    	const [client, server] = Object.values(webSocketPair);
 
-		this.ctx.acceptWebSocket(server);
+    	this.ctx.acceptWebSocket(server);
 
-		// Persist per-connection state that survives hibernation
-		const state: ConnectionState = {
-			orderId,
-			joinedAt: Date.now(),
-		};
-		server.serializeAttachment(state);
+    	// Persist per-connection state that survives hibernation
+    	const state: ConnectionState = {
+    		orderId,
+    		joinedAt: Date.now(),
+    	};
+    	server.serializeAttachment(state);
 
-		return new Response(null, { status: 101, webSocket: client });
-	}
+    	return new Response(null, { status: 101, webSocket: client });
+    }
 
-	async webSocketMessage(ws: WebSocket, message: string | ArrayBuffer) {
-		// Restore state after potential hibernation
-		const state = ws.deserializeAttachment() as ConnectionState;
-		ws.send(`Hello ${state.orderId}, you joined at ${state.joinedAt}`);
-	}
+    async webSocketMessage(ws: WebSocket, message: string | ArrayBuffer) {
+    	// Restore state after potential hibernation
+    	const state = ws.deserializeAttachment() as ConnectionState;
+    	ws.send(`Hello ${state.orderId}, you joined at ${state.joinedAt}`);
+    }
 
-	async webSocketClose(ws: WebSocket, code: number, reason: string, wasClean: boolean) {
-		const state = ws.deserializeAttachment() as ConnectionState;
-		console.log(`${state.orderId} disconnected`);
-		// With web_socket_auto_reply_to_close (compat date >= 2026-04-07), the runtime
-		// auto-replies to Close frames. Calling close() is safe but no longer required.
-		ws.close(code, reason);
-	}
+    async webSocketClose(ws: WebSocket, code: number, reason: string, wasClean: boolean) {
+    	const state = ws.deserializeAttachment() as ConnectionState;
+    	console.log(`${state.orderId} disconnected`);
+    	// With web_socket_auto_reply_to_close (compat date >= 2026-04-07), the runtime
+    	// auto-replies to Close frames. Calling close() is safe but no longer required.
+    	ws.close(code, reason);
+    }
+
 }
 
 ````

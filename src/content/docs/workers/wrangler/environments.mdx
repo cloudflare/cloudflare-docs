@@ -38,14 +38,14 @@ Review the following environments flow:
 
     ```jsonc
     {
-      "$schema": "./node_modules/wrangler/config-schema.json",
-      "name": "your-worker",
-      "route": "example.com",
-      "env": {
-        "dev": {
-          "route": "dev.example.com"
-        }
-      }
+    	"$schema": "./node_modules/wrangler/config-schema.json",
+    	"name": "your-worker",
+    	"route": "example.com",
+    	"env": {
+    		"dev": {
+    			"route": "dev.example.com",
+    		},
+    	},
     }
     ```
 
@@ -74,27 +74,27 @@ Review the following example Wrangler file:
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "my-worker",
 	"vars": {
-		"API_HOST": "example.com"
+		"API_HOST": "example.com",
 	},
 	"kv_namespaces": [
 		{
 			"binding": "<BINDING_NAME>",
-			"id": "<KV_NAMESPACE_ID_DEV>"
-		}
+			"id": "<KV_NAMESPACE_ID_DEV>",
+		},
 	],
 	"env": {
 		"production": {
 			"vars": {
-				"API_HOST": "production.example.com"
+				"API_HOST": "production.example.com",
 			},
 			"kv_namespaces": [
 				{
 					"binding": "<BINDING_NAME>",
-					"id": "<KV_NAMESPACE_ID_PRODUCTION>"
-				}
-			]
-		}
-	}
+					"id": "<KV_NAMESPACE_ID_PRODUCTION>",
+				},
+			],
+		},
+	},
 }
 ```
 
@@ -112,15 +112,15 @@ In the example below, we have two Workers, both with a `staging` environment. `w
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "worker-a",
 	"vars": {
-		"FOO": "<top-level-var>"
+		"FOO": "<top-level-var>",
 	},
 	"env": {
 		"staging": {
 			"vars": {
-				"FOO": "<staging-var>"
-			}
-		}
-	}
+				"FOO": "<staging-var>",
+			},
+		},
+	},
 }
 ```
 
@@ -134,17 +134,17 @@ In the example below, we have two Workers, both with a `staging` environment. `w
 	"name": "worker-b",
 	"services": {
 		"binding": "<BINDING_NAME>",
-		"service": "worker-a"
+		"service": "worker-a",
 	},
 	// Note how `service = "worker-a-staging"`
 	"env": {
 		"staging": {
 			"service": {
 				"binding": "<BINDING_NAME>",
-				"service": "worker-a-staging"
-			}
-		}
-	}
+				"service": "worker-a-staging",
+			},
+		},
+	},
 }
 ```
 
@@ -176,25 +176,22 @@ The following Wrangler file adds two environments, `[env.staging]` and `[env.pro
 	"name": "my-worker",
 	"route": "dev.example.com/*",
 	"vars": {
-		"ENVIRONMENT": "dev"
+		"ENVIRONMENT": "dev",
 	},
 	"env": {
 		"staging": {
 			"vars": {
-				"ENVIRONMENT": "staging"
+				"ENVIRONMENT": "staging",
 			},
-			"route": "staging.example.com/*"
+			"route": "staging.example.com/*",
 		},
 		"production": {
 			"vars": {
-				"ENVIRONMENT": "production"
+				"ENVIRONMENT": "production",
 			},
-			"routes": [
-				"example.com/foo/*",
-				"example.com/bar/*"
-			]
-		}
-	}
+			"routes": ["example.com/foo/*", "example.com/bar/*"],
+		},
+	},
 }
 ```
 
@@ -234,16 +231,20 @@ Published my-worker-production
   example.com/*
 ```
 
-Any defined [environment variables](/workers/configuration/environment-variables/) (the [`vars`](/workers/wrangler/configuration/) key) are exposed as global variables to your Worker.
+Any defined [environment variables](/workers/configuration/environment-variables/) (the [`vars`](/workers/wrangler/configuration/) key) are available via the [`env` object](/workers/runtime-apis/bindings/#accessing-bindings) in your Worker.
 
-With this configuration, the `ENVIRONMENT` variable can be used to call specific code depending on the given environment:
+With this configuration, the `env.ENVIRONMENT` variable can be used to call specific code depending on the given environment:
 
 ```js
-if (ENVIRONMENT === "staging") {
-	// staging-specific code
-} else if (ENVIRONMENT === "production") {
-	// production-specific code
-}
+export default {
+	async fetch(request, env, ctx) {
+		if (env.ENVIRONMENT === "staging") {
+			// staging-specific code
+		} else if (env.ENVIRONMENT === "production") {
+			// production-specific code
+		}
+	},
+};
 ```
 
 ### Staging environment with \*.workers.dev
@@ -259,9 +260,9 @@ To deploy your code to your `*.workers.dev` subdomain, include `workers_dev = tr
 	"route": "example.com/*",
 	"env": {
 		"staging": {
-			"workers_dev": true
-		}
-	}
+			"workers_dev": true,
+		},
+	},
 }
 ```
 

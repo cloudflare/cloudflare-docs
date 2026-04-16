@@ -1,0 +1,23 @@
+---
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import ModelCatalog from "~/components/ModelCatalog.tsx";
+import { getResolvedModels } from "~/util/model-resolver";
+import { Aside } from "~/components";
+
+const models = await getResolvedModels();
+---
+
+<StarlightPage frontmatter={{ title: "Models", tableOfContents: false }}>
+	<Aside type="tip" title="Can't find what you're looking for?">
+		View all models available through AI Gateway, including third-party
+		providers like Anthropic, OpenAI, and more.
+		<a href="/ai-gateway/supported-models/">Browse supported models for the REST API</a>.
+	</Aside>
+	<ModelCatalog models={models} client:load />
+</StarlightPage>
+
+<style>
+	:root {
+		--sl-content-width: 1350px !important;
+	}
+</style>

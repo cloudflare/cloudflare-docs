@@ -1,0 +1,32 @@
+---
+title: RtkClockView
+pcx_content_type: reference
+description: API reference for RtkClockView component (Android Library)
+---
+
+A clock component which shows the elapsed time of a meeting.
+
+## Methods
+
+| Method              | Parameters                      | Description                            |
+| ------------------- | ------------------------------- | -------------------------------------- |
+| `activate`          | `meeting: RealtimeKitClient`    | Bind the clock to the meeting state    |
+| `applyDesignTokens` | `designTokens: RtkDesignTokens` | Apply custom design tokens for theming |
+
+## Usage Examples
+
+### Basic Usage
+
+```xml
+<com.cloudflare.realtimekit.ui.view.RtkClockView
+    android:id="@+id/rtk_clock_view"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
+```
+
+### With Methods
+
+```kotlin
+val clockView = findViewById<RtkClockView>(R.id.rtk_clock_view)
+clockView.activate(meeting)
+```

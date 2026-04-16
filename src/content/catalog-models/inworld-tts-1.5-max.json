@@ -1,0 +1,293 @@
+{
+	"model_id": "inworld/tts-1.5-max",
+	"provider_id": "inworld",
+	"name": "TTS 1.5 Max",
+	"description": "Highest-quality text-to-speech with under 200ms latency, emotion control, and 15-language support.",
+	"task": "Text-to-Speech",
+	"tags": [
+		"TTS",
+		"Speech Synthesis",
+		"Low Latency",
+		"Multilingual",
+		"Emotion Control"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {},
+	"examples": [
+		{
+			"name": "Simple Speech",
+			"description": "Generate speech with default settings",
+			"input": {
+				"text": "Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do."
+			},
+			"output": {
+				"audio": "https://replicate.delivery/xezq/6MfqwCfZcjoUEUtlm6e4pAyeoFRJiwLpHZTLkdsLY2WZsRqZB/tmp3dqi43vb.mp3"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'inworld/tts-1.5-max',\n  {\n    text: 'Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do.',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Slow Narration",
+			"description": "Slower speech for narration",
+			"input": {
+				"text": "In the beginning, the universe was a singularity of infinite density. Then, in a fraction of a second, it expanded into everything we know today.",
+				"speaking_rate": 0.85
+			},
+			"output": {
+				"audio": "https://replicate.delivery/xezq/1a1udAfaXsSBEqUHEBtm5U8XSdKPcK8AdjD8w70audOkNSNLA/tmpfadeuz7b.mp3"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'inworld/tts-1.5-max',\n  {\n    text: 'In the beginning, the universe was a singularity of infinite density. Then, in a fraction of a second, it expanded into everything we know today.',\n    speaking_rate: 0.85,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "High Quality Audio",
+			"description": "Higher sample rate for studio quality",
+			"input": {
+				"text": "This recording is generated at studio quality for the best possible listening experience.",
+				"sample_rate": 48000
+			},
+			"output": {
+				"audio": "https://replicate.delivery/xezq/8Y3lj7KudD7MGdJskGVr13mmU8jUCqbXSXbHOxWdZcjyGpmF/tmpof64s5bp.mp3"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'inworld/tts-1.5-max',\n  {\n    text: 'This recording is generated at studio quality for the best possible listening experience.',\n    sample_rate: 48000,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "With Text Normalization",
+			"description": "Expand numbers and abbreviations before synthesis",
+			"input": {
+				"text": "The meeting is at 3:30 PM on Jan 15th, 2026. Please confirm by calling 555-0123.",
+				"apply_text_normalization": true
+			},
+			"output": {
+				"audio": "https://replicate.delivery/xezq/aADtWEYMzHKoD5erT7viBRUZUDfd9vpMZRiYi0Vx42vNbkaWA/tmpaif9uuag.mp3"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'inworld/tts-1.5-max',\n  {\n    text: 'The meeting is at 3:30 PM on Jan 15th, 2026. Please confirm by calling 555-0123.',\n    apply_text_normalization: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://inworld.ai/",
+	"terms": "https://inworld.ai/terms",
+	"cover_image_url": "https://tjzk.replicate.delivery/models_models_featured_image/099327e7-d10c-470c-9816-52e5ef0b7a4b/inworld-max.jpg",
+	"metadata": {
+		"Latency": "<200ms",
+		"Languages": "15"
+	},
+	"created_at": "2026-04-13 16:47:22",
+	"default_example": null,
+	"code_snippets": [],
+	"schema": {
+		"model_id": "inworld/tts-1.5-max",
+		"version": "1.0.0",
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"text": {
+					"description": "The text to be synthesized into speech. Maximum input of 2,000 characters.",
+					"type": "string",
+					"maxLength": 2000
+				},
+				"voice_id": {
+					"description": "The ID of the voice to use for synthesizing speech. Defaults to Dennis.",
+					"default": "Dennis",
+					"type": "string",
+					"enum": [
+						"Loretta",
+						"Darlene",
+						"Marlene",
+						"Hank",
+						"Evelyn",
+						"Celeste",
+						"Pippa",
+						"Tessa",
+						"Liam",
+						"Callum",
+						"Hamish",
+						"Abby",
+						"Graham",
+						"Rupert",
+						"Mortimer",
+						"Snik",
+						"Anjali",
+						"Saanvi",
+						"Arjun",
+						"Claire",
+						"Oliver",
+						"Simon",
+						"Elliot",
+						"James",
+						"Serena",
+						"Gareth",
+						"Vinny",
+						"Lauren",
+						"Jessica",
+						"Ethan",
+						"Tyler",
+						"Jason",
+						"Chloe",
+						"Veronica",
+						"Victoria",
+						"Miranda",
+						"Sebastian",
+						"Victor",
+						"Malcolm",
+						"Nate",
+						"Brian",
+						"Amina",
+						"Kelsey",
+						"Derek",
+						"Evan",
+						"Kayla",
+						"Jake",
+						"Grant",
+						"Tristan",
+						"Nadia",
+						"Selene",
+						"Marcus",
+						"Riley",
+						"Damon",
+						"Cedric",
+						"Mia",
+						"Naomi",
+						"Jonah",
+						"Levi",
+						"Avery",
+						"Brandon",
+						"Conrad",
+						"Bianca",
+						"Lucian",
+						"Trevor",
+						"Alex",
+						"Ashley",
+						"Craig",
+						"Deborah",
+						"Dennis",
+						"Edward",
+						"Elizabeth",
+						"Hades",
+						"Julia",
+						"Pixie",
+						"Mark",
+						"Olivia",
+						"Priya",
+						"Ronald",
+						"Sarah",
+						"Shaun",
+						"Theodore",
+						"Timothy",
+						"Wendy",
+						"Dominus",
+						"Hana",
+						"Clive",
+						"Carter",
+						"Blake",
+						"Luna",
+						"Reed",
+						"Duncan",
+						"Felix",
+						"Eleanor",
+						"Sophie"
+					]
+				},
+				"output_format": {
+					"description": "The output format for the audio. Supported formats are mp3, opus, wav, and flac. Defaults to mp3.",
+					"default": "mp3",
+					"type": "string",
+					"enum": [
+						"mp3",
+						"opus",
+						"wav",
+						"flac"
+					]
+				},
+				"bit_rate": {
+					"description": "Bits per second of the audio. Only for compressed audio formats (mp3, opus). The default is 128,000.",
+					"type": "integer",
+					"minimum": 0
+				},
+				"sample_rate": {
+					"description": "The synthesis sample rate in hertz. Accepts: 8000, 16000, 22050, 24000, 32000, 44100, 48000. The default is 48,000.",
+					"type": "integer",
+					"enum": [
+						8000,
+						16000,
+						22050,
+						24000,
+						32000,
+						44100,
+						48000
+					]
+				},
+				"speaking_rate": {
+					"description": "Speaking rate/speed, in the range [0.5, 1.5]. The default is 1.0. We recommend using values above 0.8 to ensure high quality.",
+					"type": "number",
+					"minimum": 0.5,
+					"maximum": 1.5
+				},
+				"temperature": {
+					"description": "Determines the degree of randomness when sampling audio tokens. Defaults to 1.0. Accepts values between 0 (exclusive) and 2 (inclusive). Higher values = more expressive, lower values = more deterministic.",
+					"default": 1,
+					"type": "number",
+					"minimum": 0.01,
+					"maximum": 2
+				},
+				"timestamp_type": {
+					"description": "Controls timestamp metadata returned with the audio. \"word\" returns word-level timing, \"character\" returns character-level timing. Note: adds latency. Defaults to none.",
+					"default": "none",
+					"type": "string",
+					"enum": [
+						"none",
+						"word",
+						"character"
+					]
+				},
+				"apply_text_normalization": {
+					"description": "When enabled, text normalization expands numbers, dates, times, and abbreviations before converting to speech. Turning this off may reduce latency.",
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"text"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"audio": {
+					"description": "URL to the generated audio file",
+					"type": "string"
+				}
+			},
+			"required": [
+				"audio"
+			],
+			"additionalProperties": false
+		}
+	}
+}

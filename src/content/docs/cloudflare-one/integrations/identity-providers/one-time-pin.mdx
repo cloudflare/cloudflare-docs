@@ -85,3 +85,14 @@ By design, blocked users will not receive an email. The login page will always s
 
 Access only logs an authentication attempt after the user enters a code. If the user enters their email but never submits a code, the event will not appear in your [audit logs](/cloudflare-one/insights/logs/dashboard-logs/access-authentication-logs/#authentication-logs).
 :::
+
+## OTP behavior and limits
+
+Keep the following behavior in mind when troubleshooting OTP logins:
+
+- Each PIN is single-use.
+- Requesting a new PIN invalidates the previous PIN.
+- Cloudflare only sends the email if the user is allowed by an Access policy.
+- Third-party mail security tools may consume the link before the user does, which makes the code appear already used.
+
+If users repeatedly fail to sign in, request a fresh code and verify that your mail filtering or link-scanning product is allowlisting `noreply@notify.cloudflare.com`.

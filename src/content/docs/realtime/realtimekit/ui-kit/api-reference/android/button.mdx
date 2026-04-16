@@ -1,0 +1,33 @@
+---
+pcx_content_type: reference
+title: RtkButton
+description: API reference for RtkButton component (Android Library)
+---
+
+A button that follows the RealtimeKit design system.
+
+## Properties
+
+| Property          | Type                             | Required | Default | Description    |
+| ----------------- | -------------------------------- | -------- | ------- | -------------- |
+| `rtk_btn_variant` | `primary \| secondary \| danger` | ❌       | -       | Button variant |
+
+## Methods
+
+| Method              | Parameters                      | Description                                 |
+| ------------------- | ------------------------------- | ------------------------------------------- |
+| `applyDesignTokens` | `designTokens: RtkDesignTokens` | Apply custom design tokens for theming      |
+| `refresh`           | `uiTokens: RtkDesignTokens`     | Refresh the button with the provided tokens |
+
+## Usage Examples
+
+### Basic Usage
+
+```xml
+<com.cloudflare.realtimekit.ui.view.button.RtkButton
+    android:id="@+id/btn_id"
+    android:layout_width="200dp"
+    android:layout_height="48dp"
+    android:text="Text on Button"
+    app:rtk_btn_variant="primary" />
+```

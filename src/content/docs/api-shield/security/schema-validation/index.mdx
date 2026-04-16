@@ -1,6 +1,9 @@
 ---
 pcx_content_type: concept
 title: Schema validation
+description: Validate API requests against OpenAPI schemas to block malformed or unexpected traffic.
+products:
+  - api-shield
 sidebar:
   order: 8
 ---
@@ -29,7 +32,6 @@ You can migrate to Schema validation 2.0 manually by uploading your schemas to t
 
 ## Process
 
-{/* prettier-ignore */}
 <GlossaryTooltip term="API endpoint">Endpoints</GlossaryTooltip> must be added to [Endpoint Management](/api-shield/management-and-monitoring/endpoint-management/) for Schema validation to protect them. Uploading a schema via the Cloudflare dashboard will automatically add endpoints, or you can manually add them from [API Discovery](/api-shield/security/api-discovery/).
 
 If you are uploading a schema via the API or Terraform, you must parse the schema and add your endpoints manually.
@@ -434,12 +436,12 @@ Schema validation inspects request bodies up to a maximum size that depends on y
 
 The default body size limits are:
 
-| Plan | Default body size limit |
-| --- | --- |
-| Free | 1 KB |
-| Pro | 8 KB |
-| Business | 8 KB |
-| Enterprise | 128 KB |
+| Plan       | Default body size limit |
+| ---------- | ----------------------- |
+| Free       | 1 KB                    |
+| Pro        | 8 KB                    |
+| Business   | 8 KB                    |
+| Enterprise | 128 KB                  |
 
 :::note
 This limit is separate from the [WAF maximum body inspection size](/waf/managed-rules/#maximum-body-size), which controls how much of the request payload the WAF scans. Increasing one does not affect the other.

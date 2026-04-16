@@ -30,6 +30,10 @@ Expectations for user lifecycle management with SCIM:
 | Remove role from user                          | Remove the user from the corresponding group in the IdP.                                                                                                        |
 | Retain user in account but with no permissions | Remove the user from all role groups but leave them assigned to the SCIM application. They will be an account member with only the role Minimal Account Access. |
 
+:::note
+Dashboard SCIM handles group membership and user account lifecycle through separate services. Removing a user from a SCIM group updates their group membership in Cloudflare but has no effect on their account membership. Account membership removal requires the identity provider to send `active: false` in a `PATCH /Users` or `PUT /Users` request. Ensure your IdP is configured with the `active` attribute mapping. For Microsoft Entra ID, refer to [Provision with Microsoft Entra](/fundamentals/account/account-security/scim-setup/entra/).
+:::
+
 ## Limitations
 
 - If a user is the only Super Administrator on an Enterprise account, they will not be deprovisioned.

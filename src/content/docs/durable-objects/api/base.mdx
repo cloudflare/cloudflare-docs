@@ -56,9 +56,7 @@ class MyDurableObject(DurableObject):
 
 ### `fetch`
 
-- <code>
-  	fetch(request <Type text="Request" />)
-  </code>
+- <code>fetch(request <Type text="Request" />)</code>
   : <Type text="Response" /> | <Type text="Promise<Response>" />- Takes an HTTP
   [Request](https://developers.cloudflare.com/workers/runtime-apis/request/) and
   returns an HTTP
@@ -93,16 +91,11 @@ export class MyDurableObject extends DurableObject<Env> {
 
 ### `alarm`
 
-- <code>
-  	alarm(alarmInfo? <Type text="AlarmInvocationInfo" />)
-  </code>
+- <code>alarm(alarmInfo? <Type text="AlarmInvocationInfo" />)</code>
   : <Type text="void" /> | <Type text="Promise<void>" />
   - Called by the system when a scheduled alarm time is reached.
-
   - The `alarm()` handler has guaranteed at-least-once execution and will be retried upon failure using exponential backoff, starting at two second delays for up to six retries. Retries will be performed if the method fails with an uncaught exception.
-
   - This method can be `async`.
-
   - Refer to [Alarms](/durable-objects/api/alarms/) for more information.
 
 #### Parameters
@@ -132,10 +125,7 @@ export class MyDurableObject extends DurableObject<Env> {
 
 ### `webSocketMessage`
 
-- <code>
-  	webSocketMessage(ws <Type text="WebSocket" />, message{" "}
-  	<Type text="string | ArrayBuffer" />)
-  </code>
+- <code>webSocketMessage(ws <Type text="WebSocket" />, message <Type text="string | ArrayBuffer" />)</code>
   : <Type text="void" /> | <Type text="Promise<void>" />- Called by the system
   when an accepted WebSocket receives a message. - This method is not called for
   WebSocket control frames. The system will respond to an incoming [WebSocket
@@ -170,10 +160,7 @@ export class MyDurableObject extends DurableObject<Env> {
 
 ### `webSocketClose`
 
-- <code>
-  	webSocketClose(ws <Type text="WebSocket" />, code <Type text="number" />,
-  	reason <Type text="string" />, wasClean <Type text="boolean" />)
-  </code>
+- <code>webSocketClose(ws <Type text="WebSocket" />, code <Type text="number" />, reason <Type text="string" />, wasClean <Type text="boolean" />)</code>
   : <Type text="void" /> | <Type text="Promise<void>" />- Called by the system
   when a WebSocket connection is closed.
   - With the [`web_socket_auto_reply_to_close`](/workers/configuration/compatibility-flags/#websocket-auto-reply-to-close) compatibility flag (enabled by default on compatibility dates on or after `2026-04-07`), the runtime automatically sends a reciprocal Close frame and transitions `readyState` to `CLOSED` before this handler is called. You do not need to call `ws.close()` — but doing so is safe (the call is silently ignored).
@@ -209,9 +196,7 @@ export class MyDurableObject extends DurableObject<Env> {
 
 ### `webSocketError`
 
-- <code>
-  	webSocketError(ws <Type text="WebSocket" />, error <Type text="unknown" />)
-  </code>
+- <code>webSocketError(ws <Type text="WebSocket" />, error <Type text="unknown" />)</code>
   : <Type text="void" /> | <Type text="Promise<void>" />- Called by the system
   when a non-disconnection error occurs on a WebSocket connection. - This method
   can be `async`.

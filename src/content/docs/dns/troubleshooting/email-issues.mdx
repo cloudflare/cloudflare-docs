@@ -35,6 +35,41 @@ Also, if `CNAME` records are not returned by the queried nameserver (sometimes n
 
 Cloudflare does not proxy traffic on port 25 (SMTP) unless [Cloudflare Spectrum](/spectrum/reference/configuration-options#smtp) is turned on and configured to proxy email traffic across Cloudflare. If you do not have Spectrum turned on, then no email traffic (SMTP) passes through Cloudflare, and Cloudflare only resolves the DNS. This also means that any DNS record used to send email traffic must be DNS-only to bypass the Cloudflare network. For more information, refer to [Identifying subdomains compatible with Cloudflare's proxy](/dns/proxy-status/).
 
+## Is your mail hostname proxied?
+
+Mail protocols such as SMTP, IMAP, and POP3 do not work through Cloudflare's standard HTTP proxy.
+
+If the hostname used for mail resolves to a Cloudflare IP address, the record is proxied and mail clients will not be able to connect correctly.
+
+Common examples include:
+
+- `mail.example.com` used for SMTP, IMAP, or POP3
+- Any hostname targeted by your `MX` record
+- Autodiscover or mail service hostnames that must return the provider's actual DNS target
+
+To fix this issue:
+
+1. Go to **DNS** > **Records**.
+2. Locate the mail-related hostname.
+3. Change the [proxy status](/dns/proxy-status/) to **DNS only**.
+
+Your `MX` record itself is always DNS-only, but the hostname it points to must also resolve to a DNS-only target.
+
+## Common provider record values
+
+If you are not sure whether the DNS content itself is correct, compare it with the values from your provider.
+
+Common examples include:
+
+| Provider | MX records | SPF record |
+| --- | --- | --- |
+| Google Workspace | `ASPMX.L.GOOGLE.COM` (priority `1`), `ALT1.ASPMX.L.GOOGLE.COM` and `ALT2.ASPMX.L.GOOGLE.COM` (priority `5`), `ALT3.ASPMX.L.GOOGLE.COM` and `ALT4.ASPMX.L.GOOGLE.COM` (priority `10`) | `v=spf1 include:_spf.google.com ~all` |
+| Microsoft 365 | `<your-domain>.mail.protection.outlook.com` (priority `0`) | `v=spf1 include:spf.protection.outlook.com -all` |
+| iCloud Mail | `mx01.mail.icloud.com` and `mx02.mail.icloud.com` (priority `10`) | `v=spf1 include:icloud.com ~all` |
+| Mailgun | `mxa.mailgun.org` and `mxb.mailgun.org` (priority `10`) | `v=spf1 include:mailgun.org ~all` |
+
+Always confirm the exact values with your provider before making changes.
+
 ## Contact your mail provider for assistance
 
 If your email does not work shortly after editing DNS records, contact your mail administrator or mail provider for further assistance in troubleshooting so that data about the issue can be provided to Cloudflare support.

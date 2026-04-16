@@ -1,0 +1,212 @@
+---
+pcx_content_type: how-to
+title: Custom fonts
+description: Learn how to add custom fonts to Browser Run for use in screenshots and PDFs.
+sidebar:
+  order: 3
+---
+
+import { Tabs, TabItem } from "~/components";
+
+Browser Run uses a managed Chromium environment that includes a [standard set of pre-installed fonts](/browser-run/reference/supported-fonts/). When you generate a screenshot or PDF, text is rendered using the fonts available in this environment. If your page specifies a font that is not pre-installed, Chromium will automatically fall back to a similar supported font.
+
+If you need a specific font that is not pre-installed, you can inject it into the page at render time. You can load fonts from an external URL or embed them directly as a Base64 string.
+
+How you add a custom font depends on how you are using Browser Run:
+
+- If you are using [Puppeteer](/browser-run/puppeteer/), [Playwright](/browser-run/playwright/), or [CDP](/browser-run/cdp/), refer to the [Browser sessions](#browser-sessions) section.
+- If you are using [Quick Actions](/browser-run/quick-actions/), refer to the [Quick Actions](#quick-actions) section.
+
+## Browser sessions
+
+Use `addStyleTag` to inject a `@font-face` rule into the page before capturing your screenshot or PDF. You can load the font file from a CDN URL or embed it as a Base64-encoded string.
+
+The examples below use [Puppeteer](/browser-run/puppeteer/) with [Workers Bindings](/browser-run/puppeteer/#use-puppeteer-in-a-worker). If you are connecting via [CDP](/browser-run/cdp/), the only difference is how you connect to the browser. Once connected, `page.addStyleTag()` works the same way. Refer to [CDP connection example](#cdp-connection-example) for details.
+
+### From a CDN URL
+
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+Example with [Puppeteer](/browser-run/puppeteer/) and a CDN source:
+
+```js
+const browser = await puppeteer.launch(env.MYBROWSER);
+const page = await browser.newPage();
+await page.addStyleTag({
+	content: `
+    @font-face {
+      font-family: 'CustomFont';
+      src: url('https://your-cdn.com/fonts/MyFont.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    body {
+      font-family: 'CustomFont', sans-serif;
+    }
+  `,
+});
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+Example with [Puppeteer](/browser-run/puppeteer/) and a CDN source:
+
+```ts
+const browser = await puppeteer.launch(env.MYBROWSER);
+const page = await browser.newPage();
+await page.addStyleTag({
+	content: `
+    @font-face {
+      font-family: 'CustomFont';
+      src: url('https://your-cdn.com/fonts/MyFont.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    body {
+      font-family: 'CustomFont', sans-serif;
+    }
+  `,
+});
+```
+
+</TabItem> </Tabs>
+
+### Base64-encoded
+
+The following examples use [Playwright](/browser-run/playwright/), but this method works the same way with [Puppeteer](/browser-run/puppeteer/).
+
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+Example with a Base64-encoded data source:
+
+```js
+const browser = await playwright.launch(env.MYBROWSER);
+const page = await browser.newPage();
+await page.addStyleTag({
+	content: `
+    @font-face {
+      font-family: 'CustomFont';
+      src: url('data:font/woff2;base64,<BASE64_STRING>') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    body {
+      font-family: 'CustomFont', sans-serif;
+    }
+  `,
+});
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+Example with a Base64-encoded data source:
+
+```ts
+const browser = await playwright.launch(env.MYBROWSER);
+const page = await browser.newPage();
+await page.addStyleTag({
+	content: `
+    @font-face {
+      font-family: 'CustomFont';
+      src: url('data:font/woff2;base64,<BASE64_STRING>') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    body {
+      font-family: 'CustomFont', sans-serif;
+    }
+  `,
+});
+```
+
+</TabItem> </Tabs>
+
+### CDP connection example
+
+When connecting via [CDP](/browser-run/cdp/), you connect to the browser using a WebSocket endpoint instead of a Workers Binding. Once connected, you use `page.addStyleTag()` the same way as the examples above.
+
+```js
+import puppeteer from "puppeteer-core";
+
+const ACCOUNT_ID = "your-account-id";
+const API_TOKEN = "your-api-token";
+
+// Create a browser session via CDP
+const response = await fetch(
+	`https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/browser-rendering/devtools/browser`,
+	{
+		method: "POST",
+		headers: { Authorization: `Bearer ${API_TOKEN}` },
+	},
+);
+const { webSocketDebuggerUrl } = await response.json();
+
+// Connect Puppeteer to the session
+const browser = await puppeteer.connect({
+	browserWSEndpoint: webSocketDebuggerUrl,
+	headers: { Authorization: `Bearer ${API_TOKEN}` },
+});
+
+const page = await browser.newPage();
+
+// Add a custom font — same as with Workers Bindings
+await page.addStyleTag({
+	content: `
+    @font-face {
+      font-family: 'CustomFont';
+      src: url('https://your-cdn.com/fonts/MyFont.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    body {
+      font-family: 'CustomFont', sans-serif;
+    }
+  `,
+});
+
+// Take a screenshot, generate a PDF, etc.
+await page.goto("https://example.com");
+
+browser.disconnect();
+```
+
+## Quick Actions
+
+When using [Quick Actions](/browser-run/quick-actions/), you can load custom fonts by including the `addStyleTag` parameter in your request body. This works with both the [screenshot](/browser-run/quick-actions/screenshot-endpoint/) and [PDF](/browser-run/quick-actions/pdf-endpoint/) endpoints.
+
+### From a CDN URL
+
+```bash
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/screenshot' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "url": "https://example.com/",
+    "addStyleTag": [
+      {
+        "content": "@font-face { font-family: '\''CustomFont'\''; src: url('\''https://your-cdn.com/fonts/MyFont.woff2'\'') format('\''woff2'\''); font-weight: normal; font-style: normal; } body { font-family: '\''CustomFont'\'', sans-serif; }"
+      }
+    ]
+  }' \
+  --output "screenshot.png"
+```
+
+### Base64-encoded
+
+```bash
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/screenshot' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "url": "https://example.com/",
+    "addStyleTag": [
+      {
+        "content": "@font-face { font-family: '\''CustomFont'\''; src: url('\''data:font/woff2;base64,<BASE64_STRING>'\'') format('\''woff2'\''); font-weight: normal; font-style: normal; } body { font-family: '\''CustomFont'\'', sans-serif; }"
+      }
+    ]
+  }' \
+  --output "screenshot.png"
+```
+
+For more details on using `addStyleTag` with Quick Actions, refer to [Customize CSS and embed custom JavaScript](/browser-run/quick-actions/screenshot-endpoint/#customize-css-and-embed-custom-javascript).

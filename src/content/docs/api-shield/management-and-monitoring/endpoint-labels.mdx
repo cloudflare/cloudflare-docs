@@ -1,13 +1,22 @@
 ---
 pcx_content_type: how-to
-
+description: Organize API endpoints and address vulnerabilities with managed and custom labels.
+products:
+  - api-shield
 title: Endpoint labeling service
 sidebar:
   order: 2
   label: Labeling service
 ---
 
-import { Render, Steps, Tabs, TabItem, DashButton, GlossaryTooltip } from "~/components";
+import {
+	Render,
+	Steps,
+	Tabs,
+	TabItem,
+	DashButton,
+	GlossaryTooltip,
+} from "~/components";
 
 API Shield's labeling service will help you organize your endpoints and address vulnerabilities in your API. The labeling service comes with managed and user-defined labels.
 
@@ -77,6 +86,8 @@ Cloudflare automatically runs risk scans every 24 hours on your saved endpoints.
 
 `cf-risk-bola-pollution`: Automatically added when an endpoint experiences successful responses where parameters are found in multiple places in the request, as opposed to what is expected from the API's schema.
 
+`cf-risk-zombie`: Automatically added when a saved endpoint has not received traffic in 32 days.
+
 :::note
 Cloudflare will only add authentication labels to endpoints with successful response codes. Refer to the below table for more details.
 :::
@@ -110,7 +121,7 @@ How you address risks to your endpoints will depend on its label(s). The followi
 
    Speak with your developers or application owners in your organization to understand whether or not all requests to these endpoints should be authenticated. Modify your application to consistently enforce the authentication requirement for all traffic accessing these endpoints.
 
-	Refer to [Authentication Posture](/api-shield/security/authentication-posture/) for more information.
+   Refer to [Authentication Posture](/api-shield/security/authentication-posture/) for more information.
 
 </Steps>
 

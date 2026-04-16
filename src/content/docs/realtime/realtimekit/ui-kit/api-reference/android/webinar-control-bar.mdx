@@ -1,0 +1,33 @@
+---
+title: RtkWebinarControlBarView
+pcx_content_type: reference
+description: API reference for RtkWebinarControlBarView component (Android Library)
+---
+
+A pre-built control bar for webinar meetings. Contains mic toggle, camera toggle, webinar stage toggle, more toggle, and leave button.
+
+## Methods
+
+| Method                     | Parameters                   | Description                                       |
+| -------------------------- | ---------------------------- | ------------------------------------------------- |
+| `activate`                 | `meeting: RealtimeKitClient` | Bind the control bar to the meeting state         |
+| `deactivate`               | -                            | Unbind the control bar and remove event listeners |
+| `refreshStageToggleButton` | -                            | Force a refresh of the stage toggle button state  |
+
+## Usage Examples
+
+### Basic Usage
+
+```xml
+<com.cloudflare.realtimekit.ui.view.controlbars.RtkWebinarControlBarView
+    android:id="@+id/rtk_webinar_control_bar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+```
+
+### With Methods
+
+```kotlin
+val controlBar = findViewById<RtkWebinarControlBarView>(R.id.rtk_webinar_control_bar)
+controlBar.activate(meeting)
+```
