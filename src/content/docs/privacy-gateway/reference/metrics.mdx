@@ -483,19 +483,16 @@ query ProtocolDistribution(
     accounts(filter: { accountTag: $accountTag }) {
       ohttpRelayIngressConnMetricsAdaptiveGroups(
         filter: {
-          datetime_geq: $start
-          datetime_leq: $end
+          datetimeHour_geq: $start
+          datetimeHour_leq: $end
         }
         limit: 10000
-        orderBy: [datetimeMinute_ASC]
+        orderBy: [datetimeHour_ASC]
       ) {
-        sum {
-          connections
-        }
+        count
         dimensions {
-          datetimeMinute
-          datetimeFiveMinutes
           datetimeHour
+          transport
           httpVersion
           tlsVersion
         }
