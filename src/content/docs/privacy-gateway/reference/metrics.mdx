@@ -191,24 +191,20 @@ query ClientRequestErrors(
     accounts(filter: { accountTag: $accountTag }) {
       ohttpRelayRequestMetricsAdaptiveGroups(
         filter: {
-          datetime_geq: $start
-          datetime_leq: $end
+          datetimeFiveMinutes_geq: $start
+          datetimeFiveMinutes_leq: $end
           relayStatusCode_geq: 400
           relayStatusCode_leq: 499
           gatewayStatusCode: 0
         }
         limit: 10000
-        orderBy: [datetimeMinute_ASC]
+        orderBy: [datetimeFiveMinutes_ASC]
       ) {
-        sum {
-          requests
-        }
+        count
         dimensions {
-          datetimeMinute
           datetimeFiveMinutes
-          datetimeHour
           relayStatusCode
-          colo
+          coloCode
         }
       }
     }
