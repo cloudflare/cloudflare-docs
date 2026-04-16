@@ -375,7 +375,7 @@ const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export class MyWorkflow extends WorkflowEntrypoint {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
-		// 🔴 Bad: The `Promise.race` is not surrounded by a `step.do`, which may cause undeterministic caching behavior.
+		// 🔴 Bad: The `Promise.race` is not surrounded by a `step.do`, which may cause indeterministic caching behavior.
 		const race_return = await Promise.race([
 			step.do("Promise first race", async () => {
 				await sleep(1000);

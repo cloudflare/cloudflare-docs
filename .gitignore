@@ -57,3 +57,6 @@ CLAUDE.md
 
 # certain versions of opencode mistakenly commit package-lock.json
 .opencode/package-lock.json
+
+# local spell-check config — not for committing
+typos.toml
