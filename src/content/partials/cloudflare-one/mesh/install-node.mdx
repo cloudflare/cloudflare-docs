@@ -8,9 +8,10 @@ import { Tabs, TabItem } from "~/components";
 <TabItem label="Debian / Ubuntu">
 
 ```sh
-curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor -o /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
-sudo apt-get update && sudo apt-get install -y cloudflare-warp
+curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor -o /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg &&
+echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list &&
+sudo apt-get update && sudo apt-get install -y cloudflare-warp &&
+sudo sysctl -w net.ipv4.ip_forward=1
 ```
 
 ```sh
@@ -21,8 +22,9 @@ sudo warp-cli connector new <TOKEN> && sudo warp-cli connect
 <TabItem label="RedHat / CentOS">
 
 ```sh
-sudo rpm -ivh https://pkg.cloudflareclient.com/cloudflare-release-el8.rpm
-sudo yum install -y cloudflare-warp
+sudo rpm -ivh https://pkg.cloudflareclient.com/cloudflare-release-el8.rpm &&
+sudo yum install -y cloudflare-warp &&
+sudo sysctl -w net.ipv4.ip_forward=1
 ```
 
 ```sh

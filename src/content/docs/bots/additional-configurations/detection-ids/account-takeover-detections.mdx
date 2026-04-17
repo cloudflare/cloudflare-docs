@@ -26,8 +26,6 @@ Cloudflare's [Managed Challenge](/cloudflare-challenges/challenge-types/challeng
 
 To access account takeover detections:
 
-{/* prettier-ignore-start */}
-
 <Tabs syncKey="dashNewNav">
     <TabItem label="New dashboard" icon="rocket">
     <Steps>
@@ -50,8 +48,6 @@ To access account takeover detections:
     </TabItem>
 </Tabs>
 
-{/* prettier-ignore-end */}
-
 ```js title="Rule example"
 
 (any(cf.bot_management.detection_ids[*] eq 201326593))
@@ -62,8 +58,6 @@ To access account takeover detections:
 Rate limiting rules can limit the number of logins from a particular IP, JA4 fingerprint, or country.
 
 To use rate limiting rules with account takeover detections:
-
-{/* prettier-ignore-start */}
 
 <Tabs syncKey="dashNewNav">
   <TabItem label="New dashboard" icon="rocket">
@@ -86,8 +80,6 @@ To use rate limiting rules with account takeover detections:
         </Steps>
   </TabItem>
 </Tabs>
-
-{/* prettier-ignore-end */}
 
 :::tip[Enhanced with leaked credential detections]
 The rule can be enhanced with Leaked Credential Checks. Refer to the [WAF documentation](/waf/detections/leaked-credentials/) for more information on how to include leaked credentials and account takeover detections in a rate limiting rule.

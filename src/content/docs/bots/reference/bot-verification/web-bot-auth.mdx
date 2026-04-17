@@ -5,12 +5,11 @@ description: Verify bot identity using cryptographic HTTP message signatures.
 products:
   - bots
 sidebar:
-    order: 2
-    label: Web Bot Auth
-
+  order: 2
+  label: Web Bot Auth
 ---
 
-import { GlossaryTooltip, Steps } from "~/components"
+import { GlossaryTooltip, Steps } from "~/components";
 
 Web Bot Auth is an authentication method that leverages cryptographic signatures in HTTP messages to verify that a request comes from an automated bot. Web Bot Auth is used as a verification method for [verified bots](/bots/concepts/bot/verified-bots/) and [signed agents](/bots/concepts/bot/signed-agents/).
 
@@ -22,7 +21,6 @@ This documentation goes over specific integration within Cloudflare.
 
 You need to generate a signing key which will be used to authenticate your bot's requests.
 
-{/* prettier-ignore */}
 <Steps>
 1. Generate a unique [Ed25519](https://ed25519.cr.yp.to/) private key to sign your requests. This example uses the [OpenSSL](https://openssl-library.org/) `genpkey` command:
     :::note 
@@ -123,18 +121,18 @@ After successful verification, you will be able to send verified requests.
 
 After your bot has been successfully verified, your bot is ready to sign its requests. The signature protocol is defined in [draft-meunier-web-bot-auth-architecture-02](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture-02)
 
-
 ### 4.1. Choose a set of components to sign
 
 Choose a set of components to sign.
 
 A component is either an HTTP header, or any [derived components](https://www.rfc-editor.org/rfc/rfc9421#name-derived-components) in the HTTP Message Signatures specification. Cloudflare recommends the following:
-  - Choose at least the `@authority` derived component, which represents the domain you are sending requests to. For example, a request to `https://example.com` will be interpreted to have an `@authority` of `example.com`.
-  - Use components that only contain ASCII values. HTTP Message Signature specification disallows non-ASCII characters, which will result in failure to validate your bot's requests.
 
-  :::note[Use components with only ASCII values]
-  Cloudflare currently does not support `bs` or `sf` parameter designed to serialize non-ASCII values into ASCII equivalents.
-  :::
+- Choose at least the `@authority` derived component, which represents the domain you are sending requests to. For example, a request to `https://example.com` will be interpreted to have an `@authority` of `example.com`.
+- Use components that only contain ASCII values. HTTP Message Signature specification disallows non-ASCII characters, which will result in failure to validate your bot's requests.
+
+:::note[Use components with only ASCII values]
+Cloudflare currently does not support `bs` or `sf` parameter designed to serialize non-ASCII values into ASCII equivalents.
+:::
 
 :::caution[`Content-Digest` header]
 If you wish to sign your [message content](https://www.rfc-editor.org/rfc/rfc9421#name-message-content) using a `Content-Digest` header, note that you should only do so if there is zero risk of a message being altered on the way to Cloudflare.
@@ -176,9 +174,10 @@ Construct a [`Signature` header](https://www.rfc-editor.org/rfc/rfc9421#name-the
 #### `Signature-Agent` header
 
 Construct a [`Signature-Agent` header](https://www.ietf.org/archive/id/draft-meunier-http-message-signatures-directory-01.html#name-header-field-definition) that points to your key directory. Note that Cloudflare will fail to verify a message if:
-  - The message includes a `Signature-Agent` header that is not an `https://`.
-  - The message includes a valid URI but does not enclose it in double quotes. This is due to Signature-Agent being a structured field.
-  - The message has a valid `Signature-Agent` header, but does not include it in the component list in `Signature-Input`.
+
+- The message includes a `Signature-Agent` header that is not an `https://`.
+- The message includes a valid URI but does not enclose it in double quotes. This is due to Signature-Agent being a structured field.
+- The message has a valid `Signature-Agent` header, but does not include it in the component list in `Signature-Input`.
 
 ### 4.4. Add the headers to your bot's requests
 

@@ -197,8 +197,6 @@
 /agents/model-context-protocol/mcp-handler-api/ /agents/api-reference/mcp-handler-api/ 301
 /agents/api-reference/calling-agents/ /agents/api-reference/routing/ 301
 
-# ai
-/ai/ /use-cases/ai/ 301
 # ai-audit
 /ai-audit/features/detect-ai-crawlers/ /ai-crawl-control/features/analyze-ai-crawlers/ 301
 /ai-audit/features/enforce-robots-txt/ /ai-crawl-control/features/analyze-ai-crawlers/ 301
@@ -229,6 +227,7 @@
 /ai-gateway/configuration/custom-metadata/ /ai-gateway/observability/custom-metadata/ 301
 /ai-gateway/universal/ /ai-gateway/usage/universal/ 301
 /ai-gateway/chat-completion/ /ai-gateway/usage/chat-completion/ 301
+/ai-gateway/legacy-models/ /ai-gateway/supported-models/ 301
 
 # analytics
 /analytics/migration-guides/zone-analytics/ /analytics/graphql-api/migration-guides/zone-analytics/ 301
@@ -274,10 +273,40 @@
 /api-shield/security/sequence-mitigation/configure/ /api-shield/security/sequence-mitigation/api/ 301
 /api-shield/frequently-asked-questions/ /api-shield/ 301
 /autorag/usage/recipes/ /ai-search/how-to/ 301
-/autorag/configuration/metadata-filtering/ /ai-search/configuration/metadata/ 301
+/autorag/configuration/metadata-filtering/ /ai-search/configuration/retrieval/metadata/ 301
 /ai-search/tutorial/ /ai-search/how-to/ 301
-/ai-search/tutorial/brower-rendering-autorag-tutorial/ /ai-search/how-to/brower-rendering-autorag-tutorial/ 301
+/ai-search/tutorial/brower-rendering-autorag-tutorial/ /ai-search/how-to/ 301
 /ai-search/autorag-api/ /api/resources/ai_search/ 301
+/ai-search/usage/workers-binding/ /ai-search/api/search/workers-binding/ 301
+/ai-search/usage/workers-binding-legacy/ /ai-search/api/migration/workers-binding-legacy/ 301
+/ai-search/api/workers-binding-legacy/ /ai-search/api/migration/workers-binding-legacy/ 301
+/ai-search/usage/rest-api/ /ai-search/api/search/rest-api/ 301
+/ai-search/usage/public-endpoint/ /ai-search/api/search/public-endpoint/ 301
+/ai-search/usage/mcp/ /ai-search/api/search/mcp/ 301
+/ai-search/usage/ /ai-search/api/search/ 301
+/ai-search/instances-api/workers-binding/ /ai-search/api/instances/workers-binding/ 301
+/ai-search/instances-api/rest-api/ /ai-search/api/instances/rest-api/ 301
+/ai-search/instances-api/ /ai-search/api/instances/ 301
+/ai-search/how-to/migrate-from-autorag-api/ /ai-search/api/migration/rest-api/ 301
+/ai-search/autorag-filter-format/ /ai-search/api/migration/autorag-filter-format/ 301
+/ai-search/how-to/multitenancy/ /ai-search/how-to/per-tenant-search/ 301
+/ai-search/configuration/path-filtering/ /ai-search/configuration/indexing/path-filtering/ 301
+/ai-search/configuration/chunking/ /ai-search/configuration/indexing/chunking/ 301
+/ai-search/configuration/indexing/ /ai-search/configuration/indexing/syncing/ 301
+/ai-search/configuration/keyword-search/ /ai-search/configuration/indexing/keyword-search/ 301
+/ai-search/configuration/service-api-token/ /ai-search/configuration/indexing/service-api-token/ 301
+/ai-search/configuration/retrieval-configuration/ /ai-search/configuration/retrieval/result-filtering/ 301
+/ai-search/configuration/retrieval/retrieval-configuration/ /ai-search/configuration/retrieval/result-filtering/ 301
+/ai-search/configuration/hybrid-search/ /ai-search/configuration/indexing/hybrid-search/ 301
+/ai-search/configuration/metadata/ /ai-search/configuration/indexing/metadata/ 301
+/ai-search/configuration/retrieval/metadata/ /ai-search/configuration/indexing/metadata/ 301
+/ai-search/configuration/boosting/ /ai-search/configuration/retrieval/boosting/ 301
+/ai-search/configuration/reranking/ /ai-search/configuration/retrieval/reranking/ 301
+/ai-search/configuration/query-rewriting/ /ai-search/configuration/retrieval/query-rewriting/ 301
+/ai-search/configuration/system-prompt/ /ai-search/configuration/retrieval/system-prompt/ 301
+/ai-search/configuration/cache/ /ai-search/configuration/retrieval/cache/ 301
+/ai-search/configuration/public-endpoint/ /ai-search/configuration/retrieval/public-endpoint/ 301
+/ai-search/configuration/embed-search-snippets/ /ai-search/configuration/retrieval/embed-search-snippets/ 301
 
 # bots
 /bots/about/plans/ /bots/plans/ 301
@@ -800,6 +829,7 @@
 /fundamentals/setup/allow-cloudflare-ip-addresses/ /fundamentals/concepts/cloudflare-ip-addresses/ 301
 /fundamentals/basic-tasks/login/ /fundamentals/user-profiles/login/ 301
 /fundamentals/concepts/redirects/ /fundamentals/reference/redirects/ 301
+/fundamentals/reference/redirects-for-ai-training/ /ai-crawl-control/reference/redirects-for-ai-training/ 301
 /fundamentals/reference/changelog/ /fundamentals/reference/ 302
 /fundamentals/basic-tasks/optimize-speed-external-link/ /fundamentals/performance/optimize-speed-external-link/ 301
 /fundamentals/basic-tasks/prevent-ddos-attacks-external/ /fundamentals/security/prevent-ddos-attacks-external/ 301
@@ -872,52 +902,90 @@
 
 # google tag
 /google-tag-first-party-mode/ /google-tag-gateway/ 301
-# images
-/images/cloudflare-images/upload-images/supported-formats/ /images/upload-images/ 301
-/image-resizing/ /images/manage-images/create-variants/ 301
-/image-resizing/url-format/ /images/transform-images/ 301
+# images — legacy redirects (updated destinations)
+/images/cloudflare-images/upload-images/supported-formats/ /images/get-started/limits/ 301
+/image-resizing/ /images/optimization/features/ 301
+/image-resizing/url-format/ /images/optimization/features/ 301
 /images/about/ /images/ 301
 /images/images/ /images/ 301
-/images/keys/ /images/manage-images/serve-images/serve-private-images/ 301
-/images/resizing-with-workers/ /images/transform-images/transform-via-workers/ 301
-/images/url-format/ /images/transform-images/ 301
-/images/variants/ /images/manage-images/enable-flexible-variants/ 301
-/images/worker/ /images/transform-images/transform-via-workers/ 301
+/images/keys/ /images/optimization/hosted-images/serve-private-images/ 301
+/images/resizing-with-workers/ /images/optimization/transformations/transform-via-workers/ 301
+/images/url-format/ /images/optimization/features/ 301
+/images/variants/ /images/optimization/hosted-images/enable-flexible-variants/ 301
+/images/worker/ /images/optimization/transformations/transform-via-workers/ 301
 /support/troubleshooting/general-troubleshooting/troubleshoot-common-cf-polished-statuses/ /images/polish/cf-polished-statuses/ 301
 /images/cloudflare-images/ /images/ 301
-/images/cloudflare-images/api-request/ /images/get-started/ 301
+/images/cloudflare-images/api-request/ /images/storage/upload-images/methods/#upload-using-api 301
 /images/cloudflare-images/images-analytics/ /images/ 301
-/images/cloudflare-images/make-an-image-private/ /images/manage-images/serve-images/serve-private-images/ 301
-/images/cloudflare-images/serve-images/ /images/manage-images/serve-images/ 301
-/images/cloudflare-images/serve-images/adaptive-images-format/ /images/manage-images/serve-images/serve-uploaded-images/ 301
-/images/cloudflare-images/serve-images/browser-ttl/ /images/manage-images/browser-ttl/ 301
-/images/cloudflare-images/sourcing-kit/ /images/upload-images/sourcing-kit/ 301
-/images/cloudflare-images/sourcing-kit/credentials/ /images/upload-images/sourcing-kit/credentials/ 301
-/images/cloudflare-images/sourcing-kit/edit/ /images/upload-images/sourcing-kit/edit/ 301
-/images/cloudflare-images/sourcing-kit/enable/ /images/upload-images/sourcing-kit/enable/ 301
-/images/cloudflare-images/transform/ /images/transform-images/ 301
-/images/cloudflare-images/transform/blur-images/ /images/manage-images/blur-variants/ 301
-/images/cloudflare-images/transform/delete-images/ /images/manage-images/delete-images/ 301
-/images/cloudflare-images/transform/export-image/ /images/manage-images/export-images/ 301
-/images/cloudflare-images/transform/flexible-variants/ /images/manage-images/enable-flexible-variants/ 301
-/images/cloudflare-images/transform/resize-images/ /images/manage-images/create-variants/ 301
+/images/cloudflare-images/make-an-image-private/ /images/optimization/hosted-images/serve-private-images/ 301
+/images/cloudflare-images/serve-images/ /images/optimization/hosted-images/serve-uploaded-images/ 301
+/images/cloudflare-images/serve-images/adaptive-images-format/ /images/optimization/hosted-images/serve-uploaded-images/ 301
+/images/cloudflare-images/serve-images/browser-ttl/ /images/optimization/hosted-images/browser-ttl/ 301
+/images/cloudflare-images/sourcing-kit/ /images/storage/upload-images/sourcing-kit/ 301
+/images/cloudflare-images/sourcing-kit/credentials/ /images/storage/upload-images/sourcing-kit/credentials/ 301
+/images/cloudflare-images/sourcing-kit/edit/ /images/storage/upload-images/sourcing-kit/edit/ 301
+/images/cloudflare-images/sourcing-kit/enable/ /images/storage/upload-images/sourcing-kit/enable/ 301
+/images/cloudflare-images/transform/ /images/optimization/transformations/overview/ 301
+/images/cloudflare-images/transform/blur-images/ /images/optimization/hosted-images/blur-variants/ 301
+/images/cloudflare-images/transform/delete-images/ /images/storage/manage-images/delete-images/ 301
+/images/cloudflare-images/transform/export-image/ /images/storage/manage-images/export-images/ 301
+/images/cloudflare-images/transform/flexible-variants/ /images/optimization/hosted-images/enable-flexible-variants/ 301
+/images/cloudflare-images/transform/resize-images/ /images/optimization/hosted-images/create-variants/ 301
 /images/cloudflare-images/tutorials/ /images/ 301
 /images/cloudflare-images/tutorials/integrate-cloudflare-images/ /images/ 301
-/images/cloudflare-images/upload-images/ /images/upload-images/ 301
-/images/cloudflare-images/upload-images/custom-id/ /images/upload-images/upload-custom-path/ 301
-/images/cloudflare-images/upload-images/dashboard-upload/ /images/upload-images/upload-dashboard/ 301
-/images/cloudflare-images/upload-images/direct-creator-upload/ /images/upload-images/direct-creator-upload/ 301
+/images/cloudflare-images/upload-images/ /images/storage/upload-images/methods/ 301
+/images/cloudflare-images/upload-images/custom-id/ /images/storage/upload-images/upload-custom-path/ 301
+/images/cloudflare-images/upload-images/dashboard-upload/ /images/storage/upload-images/methods/ 301
+/images/cloudflare-images/upload-images/direct-creator-upload/ /images/storage/upload-images/direct-creator-upload/ 301
 /images/cloudflare-images/upload-images/images-batch/ /api/resources/images/subresources/v2/methods/list/ 301
-/images/cloudflare-images/upload-images/upload-via-url/ /images/upload-images/upload-url/ 301
+/images/cloudflare-images/upload-images/upload-via-url/ /images/storage/upload-images/upload-url/ 301
 /images/faq/ /images/ 301
-/images/image-resizing/ /images/manage-images/create-variants/ 301
-/images/image-resizing/format-limitations/ /images/transform-images/ 301
-/images/image-resizing/url-format/ /images/transform-images/ 301
-/images/image-resizing/resize-with-workers/ /images/transform-images/transform-via-workers/ 301
-/images/image-resizing/responsive-images/ /images/manage-images/create-variants/ 301
+/images/image-resizing/ /images/optimization/features/ 301
+/images/image-resizing/format-limitations/ /images/get-started/limits/ 301
+/images/image-resizing/url-format/ /images/optimization/features/ 301
+/images/image-resizing/resize-with-workers/ /images/optimization/transformations/transform-via-workers/ 301
+/images/image-resizing/responsive-images/ /images/optimization/make-responsive-images/ 301
 /images/security/ /images/reference/security/ 301
 /images/troubleshooting/ /images/reference/troubleshooting/ 301
 /images/platform/pricing/ /images/pricing/ 301
+# images — new IA redirects
+/images/get-started/ /images/get-started/introduction/ 301
+/images/transform-images/ /images/optimization/transformations/overview/ 301
+/images/transform-images/transform-via-url/ /images/optimization/features/ 301
+/images/transform-images/transform-via-workers/ /images/optimization/transformations/transform-via-workers/ 301
+/images/transform-images/bindings/ /images/optimization/transformations/bindings/ 301
+/images/transform-images/control-origin-access/ /images/optimization/transformations/control-origin-access/ 301
+/images/transform-images/draw-overlays/ /images/optimization/transformations/draw-overlays/ 301
+/images/transform-images/integrate-with-frameworks/ /images/optimization/transformations/integrate-with-frameworks/ 301
+/images/transform-images/make-responsive-images/ /images/optimization/make-responsive-images/ 301
+/images/transform-images/preserve-content-credentials/ /images/optimization/transformations/preserve-content-credentials/ 301
+/images/transform-images/serve-images-custom-paths/ /images/optimization/transformations/rewrite-rules/ 301
+/images/transform-images/sources/ /images/optimization/transformations/sources/ 301
+/images/manage-images/ /images/storage/manage-images/ 301
+/images/manage-images/serve-images/ /images/optimization/hosted-images/serve-uploaded-images/ 301
+/images/manage-images/serve-images/serve-uploaded-images/ /images/optimization/hosted-images/serve-uploaded-images/ 301
+/images/manage-images/serve-images/serve-from-custom-domains/ /images/optimization/hosted-images/serve-from-custom-domains/ 301
+/images/manage-images/serve-images/serve-private-images/ /images/optimization/hosted-images/serve-private-images/ 301
+/images/manage-images/create-variants/ /images/optimization/hosted-images/create-variants/ 301
+/images/manage-images/delete-variants/ /images/optimization/hosted-images/delete-variants/ 301
+/images/manage-images/enable-flexible-variants/ /images/optimization/hosted-images/enable-flexible-variants/ 301
+/images/manage-images/blur-variants/ /images/optimization/hosted-images/blur-variants/ 301
+/images/manage-images/browser-ttl/ /images/optimization/hosted-images/browser-ttl/ 301
+/images/manage-images/delete-images/ /images/storage/manage-images/delete-images/ 301
+/images/manage-images/edit-images/ /images/storage/manage-images/edit-images/ 301
+/images/manage-images/export-images/ /images/storage/manage-images/export-images/ 301
+/images/manage-images/configure-webhooks/ /images/storage/upload-images/configure-webhooks/ 301
+/images/upload-images/ /images/storage/upload-images/methods/ 301
+/images/upload-images/direct-creator-upload/ /images/storage/upload-images/direct-creator-upload/ 301
+/images/upload-images/images-batch/ /images/storage/upload-images/images-batch/ 301
+/images/upload-images/upload-custom-path/ /images/storage/upload-images/upload-custom-path/ 301
+/images/upload-images/upload-dashboard/ /images/storage/upload-images/methods/ 301
+/images/upload-images/upload-file-worker/ /images/storage/upload-images/upload-file-worker/ 301
+/images/upload-images/upload-url/ /images/storage/upload-images/upload-url/ 301
+/images/upload-images/sourcing-kit/ /images/storage/upload-images/sourcing-kit/ 301
+/images/upload-images/sourcing-kit/credentials/ /images/storage/upload-images/sourcing-kit/credentials/ 301
+/images/upload-images/sourcing-kit/edit/ /images/storage/upload-images/sourcing-kit/edit/ 301
+/images/upload-images/sourcing-kit/enable/ /images/storage/upload-images/sourcing-kit/enable/ 301
 
 # learning-paths
 /learning-paths/modules/cybersafe/cybersafe-account-creation/ /learning-paths/cybersafe/account-creation/ 301
@@ -2089,17 +2157,17 @@
 /workers/ai/ /agent-lee/ 301
 /cloudflare-agent/ /agent-lee/ 301
 
-# workers ai
-/workers-ai/models/llm/ /workers-ai/models/#text-generation 301
-/workers-ai/models/sentiment-analysis/ /workers-ai/models/#text-classification 301
-/workers-ai/models/embedding/ /workers-ai/models/#text-embeddings 301
-/workers-ai/models/text-embeddings/ /workers-ai/models/#text-embeddings 301
-/workers-ai/models/speech-recognition/ /workers-ai/models/#automatic-speech-recognition 301
-/workers-ai/models/translation/ /workers-ai/models/#translation 301
-/workers-ai/models/text-classification/ /workers-ai/models/#text-classification 301
-/workers-ai/models/image-classification/ /workers-ai/models/#image-classification 301
+# workers ai - legacy task type URLs redirect to unified catalog
+/workers-ai/models/llm/ /ai/models/#text-generation 301
+/workers-ai/models/sentiment-analysis/ /ai/models/#text-classification 301
+/workers-ai/models/embedding/ /ai/models/#text-embeddings 301
+/workers-ai/models/text-embeddings/ /ai/models/#text-embeddings 301
+/workers-ai/models/speech-recognition/ /ai/models/#automatic-speech-recognition 301
+/workers-ai/models/translation/ /ai/models/#translation 301
+/workers-ai/models/text-classification/ /ai/models/#text-classification 301
+/workers-ai/models/image-classification/ /ai/models/#image-classification 301
 /workers-ai/models/openchat_3.5-awq/ /workers-ai/models/ 301
-/workers-ai/models/deepgram-nova-3/ /workers-ai/models/nova-3/ 301
+
 /workers-ai/platform/bindings/ /workers-ai/configuration/bindings/ 301
 /workers-ai/get-started/local-dev-setup/ /workers-ai/get-started/workers-wrangler/ 301
 /workers-ai/configuration/function-calling/ /workers-ai/features/function-calling/ 301
@@ -2479,6 +2547,7 @@
 /cloudflare-one/insights/logs/enable-logs/ /cloudflare-one/insights/logs/logpush/email-security-logs/ 301
 /cloudflare-one/insights/logs/use-logpush-with-ids/ /cloudflare-one/insights/logs/logpush/ids-logs/ 301
 /cloudflare-one/insights/logs/filter-views/ /cloudflare-one/insights/logs/logpush/network-firewall-log-filters/ 301
+/cloudflare-one/remote-browser-isolation/canvas-rendering/ /cloudflare-one/remote-browser-isolation/canvas-remoting/ 301
 
 # ============================================================================
 # DYNAMIC REDIRECTS
@@ -2706,6 +2775,9 @@
 
 # Agents x402 (moved under agentic-payments)
 /agents/x402/* /agents/agentic-payments/x402/:splat 301
+
+# AI Gateway models (unified under /ai/models/)
+/ai-gateway/models/* /ai/models/:splat 301
 
 # Changelog (individual entry route moved to /post/)
 /changelog/2024-* /changelog/post/2024-:splat 301

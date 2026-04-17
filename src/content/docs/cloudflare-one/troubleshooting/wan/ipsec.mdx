@@ -1,13 +1,24 @@
 ---
 title: IPsec
 pcx_content_type: navigation
+description: IPsec for Zero Trust.
+products:
+  - cloudflare-one
 sidebar:
   order: 33
 ---
 
 import { Render, LinkButton } from "~/components"
 
-<Render file="ipsec-logs-troubleshooting" product="networking-services" />
+<Render file="ipsec-logs-troubleshooting"
+	product="networking-services"
+	params={{
+		supportedIpsecConfigLink: "/cloudflare-one/networks/connectors/cloudflare-wan/reference/gre-ipsec-tunnels/#supported-configuration-parameters",
+		antiReplayLink: "/cloudflare-one/networks/connectors/cloudflare-wan/reference/anti-replay-protection/",
+		tunnelHealthLink: "/cloudflare-one/networks/connectors/cloudflare-wan/troubleshooting/tunnel-health/",
+		mtuMssLink: "/cloudflare-one/networks/connectors/cloudflare-wan/reference/mtu-mss/"
+	}}
+/>
 
 ---
 

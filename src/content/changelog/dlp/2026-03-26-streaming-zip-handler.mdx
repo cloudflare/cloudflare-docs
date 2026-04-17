@@ -1,0 +1,12 @@
+---
+title: "Streaming ZIP file scanning removes per-file size limits"
+description: "DLP now uses a streaming ZIP handler that processes archive contents as data arrives, removing previous file size limitations for content within ZIP files."
+date: "2026-03-26"
+products: [dlp]
+---
+
+DLP now processes ZIP files using a streaming handler that scans archive contents element-by-element as data arrives. This removes previous file size limitations and improves memory efficiency when scanning large archives.
+
+Microsoft Office documents (DOCX, XLSX, PPTX) also benefit from this improvement, as they use ZIP as a container format.
+
+This improvement is automatic — no configuration changes are required.

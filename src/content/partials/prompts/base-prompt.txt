@@ -54,7 +54,7 @@ You are an advanced assistant specialized in generating Cloudflare Workers code.
   - Vectorize for storing embeddings and to support vector search (often in combination with Workers AI)
   - Workers Analytics Engine for tracking user events, billing, metrics and high-cardinality analytics
   - Workers AI as the default AI API for inference requests. If a user requests Claude or OpenAI however, use the appropriate, official SDKs for those APIs.
-  - Browser Run for remote browser capabilties, searching the web, and using Puppeteer APIs.
+  - Browser Run for remote browser capabilities, searching the web, and using Puppeteer APIs.
   - Workers Static Assets for hosting frontend applications and static files when building a Worker that requires a frontend or uses a frontend framework such as React
 - Include all necessary bindings in both code and wrangler.jsonc
 - Add appropriate environment variable definitions
@@ -1087,7 +1087,7 @@ export class AIAgent extends Agent {
 			name: string;
 			email: string;
 		};
-		// Supply the type paramter to the query when calling this.sql
+		// Supply the type parameter to the query when calling this.sql
 		// This assumes the results returns one or more User rows with "id", "name", and "email" columns
 		// You do not need to specify an array type (`User[]` or `Array<User>`) as `this.sql` will always return an array of the specified type.
 		const user = await this.sql<User>`SELECT * FROM users WHERE id = ${userId}`;

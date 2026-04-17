@@ -1,6 +1,9 @@
 ---
 title: Functions
 pcx_content_type: reference
+description: Functions available for transforming values in rule expressions.
+products:
+  - ruleset-engine
 sidebar:
   order: 7
 head:
@@ -146,6 +149,7 @@ Decodes a Base64-encoded String specified in `source`.
 `source` must be a field, that is, it cannot be a literal String.
 
 For example, with the following HTTP request header: `client_id: MTIzYWJj`, `(any(decode_base64(http.request.headers["client_id"][*])[*] eq "123abc"))` would return `true`.
+
 
 :::note
 You can only use the `decode_base64()` function in [Transform Rules](/rules/transform/), [custom rules](/waf/custom-rules/), and [rate limiting rules](/waf/rate-limiting-rules/).

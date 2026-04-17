@@ -20,7 +20,7 @@ import { Type, MetaInfo } from "~/components";
 
   - If `callback()` throws an exception, the transaction will be rolled back.
 
-  - The callback must complete synchronously, that is, it should not be declared `async` nor otherwise return a Promise. Only synchronous storage operations can be part of the transaction. This is intended for use with SQL queries using [`ctx.storage.sql.exec()`](/durable-objects/api/sqlite-storage-api/#exec), which complete sychronously.
+  - The callback must complete synchronously, that is, it should not be declared `async` nor otherwise return a Promise. Only synchronous storage operations can be part of the transaction. This is intended for use with SQL queries using [`ctx.storage.sql.exec()`](/durable-objects/api/sqlite-storage-api/#exec), which complete synchronously.
 
 ### `transaction`
 

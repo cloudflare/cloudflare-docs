@@ -328,6 +328,14 @@ WHERE total_amount IS NOT NULL
 GROUP BY department;
 ```
 
+### EXPLAIN FORMAT JSON
+
+Returns the execution plan as structured JSON for programmatic analysis.
+
+```sql
+EXPLAIN FORMAT JSON SELECT * FROM my_namespace.sales_data LIMIT 10;
+```
+
 ---
 
 ## Expressions

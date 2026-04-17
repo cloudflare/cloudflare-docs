@@ -1,0 +1,113 @@
+---
+pcx_content_type: reference
+title: Limits and formats
+sidebar:
+  order: 3
+---
+
+This section covers limits and supported formats for Images.
+
+---
+
+## Limits
+
+Here are limits to keep in mind when optimizing with Images.
+
+On an Enterprise plan, you can reach out to our account team to ensure that the limits align with your needs.
+
+### Remote images
+
+The following limits apply when transforming a remote image stored outside of Images:
+
+| Attribute                                | Limit                              |
+| ---------------------------------------- | ---------------------------------- |
+| Image file size                          | 100 MB                             |
+| Image area, excluding animated GIFs      | 100 MP (e.g. 10,000x10,000 pixels) |
+| Image area for animated GIFs             | 100 MP\*                           |
+| Image dimension, excluding WebP and AVIF | 12,000 pixels                      |
+| Image dimension, AVIF                    | 1,200 pixels                       |
+
+### Hosted images
+
+The following limits apply when uploading to your Images storage:
+
+| Attribute                                | Limit                              |
+| ---------------------------------------- | ---------------------------------- |
+| Image file size                          | 10 MB                              |
+| Image area, excluding animated GIFs      | 100 MP (e.g. 10,000x10,000 pixels) |
+| Image area, animated GIFs                | 100 MP\*                           |
+| Image dimension, excluding WebP and AVIF | 12,000 pixels                      |
+| Image dimension, AVIF                    | 1,200 pixels                       |
+| Image metadata                           | 1024 bytes                         |
+
+### Limits for animated images
+
+GIF/WebP animations are limited to the total megapixels across all frames, or the sum of areas of all frames. For example, a GIF with 500x500 dimensions and 10 frames has an image area of 2,500,000 pixels or 2.5 megapixels.
+
+The limit to deliver an animated GIF/WebP animation is 100 megapixels. However, any animations over 50 megapixels will be delivered without applying any transformations.
+
+When serving animations, we recommend using video formats like MP4 and WebM for best performance. As the GIF format has inefficient compression, high resolution animations typically have larger file sizes and take longer to compress.
+
+To optimize remote videos, you can use [media transformations](https://developers.cloudflare.com/stream/transform-videos/).
+
+## Supported formats
+
+### Input formats
+
+Images supports a wide range of input formats for both remote and hosted images:
+
+- PNG
+- JPEG
+- GIF (including animations)
+- WebP (including animations)
+- SVG
+- AVIF\*
+- HEIC
+
+\*Available on an Enterprise plan.
+
+### Output formats
+
+You can serve images in the following output formats:
+
+- PNG
+- JPEG
+- GIF (including animations)
+- WebP (including animations)
+- SVG
+- AVIF
+
+When detecting the most optimal output format for the requesting browser, Cloudflare balances the time to generate an image with the time to serve the image to the browser.
+
+In particular, AVIF encoding can be an order of magnitude slower than encoding to other formats. If the image is too large to be quickly encoded to AVIF, then Cloudflare will fall back to WebP or JPEG.
+
+### Progressive JPEG
+
+When transcoding to JPEG, Cloudflare generates images in an interlaced progressive JPEG format.
+
+You can use the [`format`](/images/optimization/features/#format) parameter to specify whether progressive or baseline JPEG should be used.
+
+However, we will always fall back to the baseline JPEG format — even when progressive JPEG is specified — if either:
+
+- The output image area dimensions are less than 50x50.
+- The output image area dimensions are greater than 3000x3000.
+
+### SVG
+
+Cloudflare does not resize SVG files and will ignore any optimization parameters.
+
+If you store in Images, then you can use any predefined variant as a placeholder to deliver a sanitized SVG. For example, applying the default public variant allows the SVG to be delivered without resizing or cropping:
+
+`imagedelivery.net/account_hash/svg_id/public`
+
+Similarly, you can use Images to serve a sanitized SVG that is stored in your own origin, like in [R2](/r2/).
+
+When SVG files are served, they are sanitized using [`svg-hush`](https://github.com/cloudflare/svg-hush), an open-source tool developed by Cloudflare to make SVGs as safe as possible. It streams the files without buffering, enabling us to quickly filter them on the fly. SVG files are XML documents and can contain links or Javascript features that may pose a security concern.
+
+The `svg-hush` tool filters SVGs and removes potentially risky features, such as:
+
+- <strong>Scripting.</strong> We prevent SVGs from being used for cross-site scripting attacks. Although browsers do not allow scripts in `<img>` tags, they do allow scripting when SVGs are opened directly as a top-level document.
+- <strong>Hyperlinks to other documents.</strong> Removing hyperlinking makes
+  SVG files less attractive for SEO spam and phishing.
+- <strong>References to cross-origin resources.</strong> We stop third parties
+  from tracking who is viewing the image.

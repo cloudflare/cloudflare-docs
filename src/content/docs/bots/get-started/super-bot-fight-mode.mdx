@@ -44,8 +44,6 @@ Accounts with an Enterprise subscription but not the [Bot Management add-on](/bo
 
 To start using Super Bot Fight Mode:
 
-{/* prettier-ignore-start */}
-
 <Tabs syncKey="dashNewNav">
   <TabItem label="New dashboard" icon="rocket">
     <Steps>
@@ -57,10 +55,10 @@ To start using Super Bot Fight Mode:
       4. Turn **Super Bot Fight Mode** on.
       5. Choose how your domain should respond to various types of traffic by selecting the associated edit icon:
 
-          - For more details on verified bots, refer to [Verified Bots](/bots/concepts/bot/verified-bots/).
-          - For more details on supported file types, refer to [Static resource protection](/bots/additional-configurations/static-resources/).
-          - For more details on invisible code injection, refer to [JavaScript detections](/bots/additional-configurations/javascript-detections/).
-          - For more details on WordPress optimization, refer to [Super Bot Fight Mode for WordPress](/bots/troubleshooting/wordpress-loopback-issue/).
+				- For more details on verified bots, refer to [Verified Bots](/bots/concepts/bot/verified-bots/).
+				- For more details on supported file types, refer to [Static resource protection](/bots/additional-configurations/static-resources/).
+				- For more details on invisible code injection, refer to [JavaScript detections](/bots/additional-configurations/javascript-detections/).
+				- For more details on WordPress optimization, refer to [Super Bot Fight Mode for WordPress](/bots/troubleshooting/wordpress-loopback-issue/).
 
     </Steps>
   </TabItem>
@@ -71,14 +69,12 @@ To start using Super Bot Fight Mode:
       3. Select **Configure Super Bot Fight Mode**.
       4. Choose how your domain should respond to various types of traffic:
 
-          - For more details on verified bots, refer to [Verified Bots](/bots/concepts/bot/verified-bots/).
-          - For more details on supported file types, refer to [Static resource protection](/bots/additional-configurations/static-resources/).
-          - For more details on invisible code injection, refer to [JavaScript detections](/bots/additional-configurations/javascript-detections/).
+				- For more details on verified bots, refer to [Verified Bots](/bots/concepts/bot/verified-bots/).
+				- For more details on supported file types, refer to [Static resource protection](/bots/additional-configurations/static-resources/).
+				- For more details on invisible code injection, refer to [JavaScript detections](/bots/additional-configurations/javascript-detections/).
     </Steps>
   </TabItem>
 </Tabs>
-
-{/* prettier-ignore-end */}
 
 :::caution[Warning]
 
@@ -95,32 +91,28 @@ If you find that **Super Bot Fight Mode** is causing problems with your applicat
 
 To disable Super Bot Fight Mode:
 
-{/* prettier-ignore-start */}
-
 <Tabs syncKey="dashNewNav">
-    <TabItem label="New dashboard" icon="rocket">
-        <Steps>
-          1. In the Cloudflare dashboard, go to the **Security Settings** page.
+	<TabItem label="New dashboard" icon="rocket">
+		<Steps>
+			1. In the Cloudflare dashboard, go to the **Security Settings** page.
 
-              <DashButton url="/?to=/:account/:zone/security/settings" />
-          2. Filter by **Bot traffic**.
-          3. Go to **Super Bot Fight Mode**.
-          4. For all bot groupings (**Definitely automated traffic**, **Likely automated traffic**, and **Verified bots**), set the value to **Allow**.
-          5. For all other options (**Static resource protection**, **JavaScript detections**, and **Optimize for WordPress**), select the edit icon and ensure they are off.
-        </Steps>
-    </TabItem>
-    <TabItem label="Old dashboard">
-        <Steps>
-         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-         2. Go to **Security** > **Bots**.
-         3. Select **Configure Super Bot Fight Mode**.
-         4. For all bot groupings (**Definitely automated traffic**, **Likely automated traffic**, and **Verified bots**), set the value to **Allow**.
-         5. For all other options (**Static resource protection**, **JavaScript detections**, and **Optimize for WordPress**), select the edit icon and ensure they are off.
-        </Steps>
-    </TabItem>
+				<DashButton url="/?to=/:account/:zone/security/settings" />
+			2. Filter by **Bot traffic**.
+			3. Go to **Super Bot Fight Mode**.
+			4. For all bot groupings (**Definitely automated traffic**, **Likely automated traffic**, and **Verified bots**), set the value to **Allow**.
+			5. For all other options (**Static resource protection**, **JavaScript detections**, and **Optimize for WordPress**), select the edit icon and ensure they are off.
+		</Steps>
+	</TabItem>
+	<TabItem label="Old dashboard">
+		<Steps>
+			1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
+			2. Go to **Security** > **Bots**.
+			3. Select **Configure Super Bot Fight Mode**.
+			4. For all bot groupings (**Definitely automated traffic**, **Likely automated traffic**, and **Verified bots**), set the value to **Allow**.
+			5. For all other options (**Static resource protection**, **JavaScript detections**, and **Optimize for WordPress**), select the edit icon and ensure they are off.
+		</Steps>
+	</TabItem>
 </Tabs>
-
-{/* prettier-ignore-end */}
 
 <Render file="flexible-sbfm" product="bots" />
 

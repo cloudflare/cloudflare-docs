@@ -23,31 +23,27 @@ Cloudflare's [Managed Challenge](/cloudflare-challenges/challenge-types/challeng
 
 To access scraping detections:
 
-{/* prettier-ignore-start */}
-
 <Tabs syncKey="dashNewNav">
-    <TabItem label="New dashboard" icon="rocket">
-        <Steps>
-            1. In the Cloudflare dashboard, go to the **Security rules** page.
+	<TabItem label="New dashboard" icon="rocket">
+		<Steps>
+			1. In the Cloudflare dashboard, go to the **Security rules** page.
 
-                <DashButton url="/?to=/:account/:zone/security/security-rules" />
-            2. Select **Create rule** and choose **Custom rule**.
-            3. Fill out the form using **Bot Detection IDs** along with other necessary information.
-            4. Select **Save as draft** to return to the rule later, or **Deploy** to deploy the rule.
-        </Steps>
-  </TabItem>
-  <TabItem label="Old dashboard">
-    <Steps>
-            1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-            2. Go to **Security** > **WAF**.
-            3. Under **Custom rules**, select **Create rule**.
-            4. Fill out the form using **Bot Detection IDs** along with other necessary information.
-            5. Select **Save as draft** to return to the rule later, or **Deploy** to deploy the rule.
-        </Steps>
-    </TabItem>
+					<DashButton url="/?to=/:account/:zone/security/security-rules" />
+			2. Select **Create rule** and choose **Custom rule**.
+			3. Fill out the form using **Bot Detection IDs** along with other necessary information.
+			4. Select **Save as draft** to return to the rule later, or **Deploy** to deploy the rule.
+		</Steps>
+	</TabItem>
+	<TabItem label="Old dashboard">
+		<Steps>
+				1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+				2. Go to **Security** > **WAF**.
+				3. Under **Custom rules**, select **Create rule**.
+				4. Fill out the form using **Bot Detection IDs** along with other necessary information.
+				5. Select **Save as draft** to return to the rule later, or **Deploy** to deploy the rule.
+			</Steps>
+	</TabItem>
 </Tabs>
-
-{/* prettier-ignore-end */}
 
 ```js title="Rule example"
 

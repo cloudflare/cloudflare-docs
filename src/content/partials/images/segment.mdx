@@ -1,11 +1,35 @@
 ---
 {}
 ---
-import { Tabs, TabItem } from "~/components"
+import { Tabs, TabItem} from "~/components"
+import originalImg from "~/assets/images/images/examples/original.jpg";
+import segmentImg from "~/assets/images/images/examples/segment-foreground.png";
 
-Automatically isolates the subject of an image by replacing the background with transparent pixels.
+### `segment`
 
-	This feature uses an open-source model called BiRefNet through Workers AI. Read more about Cloudflare's [approach to responsible AI](https://www.cloudflare.com/trust-hub/responsible-ai/).
+Automatically isolates the subject of an image by replacing the background with transparent pixels. Accepts `foreground`. The default is none.
+
+This feature uses an open-source model called BiRefNet through [Workers AI](/workers-ai/). Read more about Cloudflare's [approach to responsible AI](https://www.cloudflare.com/trust-hub/responsible-ai/).
+
+<table style="width:100%; table-layout:fixed; text-align:center; border:none">
+  <tr style="border:none; background:none">
+    <td style="width:50%; border:none; vertical-align:bottom">
+      <img src={originalImg.src} alt="Original image" style="width:100%; height:auto" />
+    </td>
+    <td style="width:50%; border:none; vertical-align:bottom">
+      <img src={segmentImg.src} alt="segment=foreground output" style="width:100%; height:auto" />
+    </td>
+  </tr>
+  <tr style="border:none; background:none">
+    <td style="border:none;">
+      <strong>Original</strong>
+    </td>
+    <td style="border:none;">
+      
+      <code>segment=foreground</code>
+    </td>
+  </tr>
+</table>
 
 <Tabs>
   <TabItem label="URL format">
@@ -15,7 +39,7 @@ Automatically isolates the subject of an image by replacing the background with 
   </TabItem>
   <TabItem label="Workers">
   ```js
-  cf: {segment: "foreground"}
+  cf: {image: {segment: "foreground"}}
   ```
   </TabItem>
 </Tabs>
