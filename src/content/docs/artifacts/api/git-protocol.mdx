@@ -23,7 +23,7 @@ Git routes accept repo access tokens in two forms:
 
 ### Token format
 
-Repo tokens are issued in the control-plane response format `art_v1_<40 hex>?expires=<unix_seconds>`.
+Repo tokens are issued in the format `art_v1_<40 hex>?expires=<unix_seconds>`. The `?expires=` suffix is the token's expiry as a unix timestamp in seconds. To check when a token expires, parse the value after `?expires=`.
 
 ### Git `extraHeader` parameter
 
