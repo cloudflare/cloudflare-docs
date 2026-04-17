@@ -41,11 +41,11 @@ Before configuring any security rules, build an inventory of your API endpoints.
 
 2. Categorize each endpoint by access level (public, authenticated, internal). Prioritize endpoints that accept file uploads, process payments, or return sensitive data.
 
-   | Access level                                               | Example endpoints              |
-   | ---------------------------------------------------------- | ------------------------------ |
-   | **Public endpoints** (no authentication required)          | `/api/status`, `/api/products` |
-   | **Authenticated endpoints** (require a token or session)   | `/api/account`, `/api/orders`  |
-   | **Internal endpoints** (should not be publicly accessible) | `/api/admin`, `/api/debug`     |
+   | Access level      | Description                       | Example endpoints              |
+   | ----------------- | --------------------------------- | ------------------------------ |
+   | **Public**        | No authentication required        | `/api/status`, `/api/products` |
+   | **Authenticated** | Require a token or session        | `/api/account`, `/api/orders`  |
+   | **Internal**      | Should not be publicly accessible | `/api/admin`, `/api/debug`     |
 
 3. Record the inventory in a spreadsheet or OpenAPI schema file for reference when writing rule expressions in later sections. If you already have an OpenAPI specification, you can use it directly with API Shield's schema validation (covered in the Enterprise callout below).
 
