@@ -12,13 +12,13 @@ Artifacts uses a different authentication path for each interface. Choose auth b
 
 ## Compare auth methods
 
-| Interface | Authenticate with | Permissions or scopes | Use for |
-| --- | --- | --- | --- |
-| Workers binding | Wrangler OAuth or a Cloudflare API token | `wrangler login` requests `artifacts:write` by default. API tokens need **Artifacts** > **Read** or **Artifacts** > **Edit**. | Worker code that calls `env.ARTIFACTS` |
-| REST API | Cloudflare API token in `Authorization: Bearer ...` | **Artifacts** > **Read** for read routes, **Artifacts** > **Edit** for create, import, delete, and token routes | Control-plane HTTP requests |
-| Git protocol | Repo-scoped Artifacts token | `read` for clone, fetch, and pull. `write` for push. | Standard Git over HTTPS |
+| Interface       | Authenticate with                                                                       | Permissions or scopes                                                                                                         | Use for                                |
+| --------------- | --------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
+| Workers binding | Wrangler OAuth or a Cloudflare API token                                                | `wrangler login` requests `artifacts:write` by default. API tokens need **Artifacts** > **Read** or **Artifacts** > **Edit**. | Worker code that calls `env.ARTIFACTS` |
+| REST API        | Gateway JWT in `Authorization: Bearer ...`, or edge gateway auth for `/edge/v1/api/...` | Use gateway credentials that allow the target namespace and route                                                             | Control-plane HTTP requests            |
+| Git protocol    | Repo-scoped Artifacts token                                                             | `read` for clone, fetch, and pull. `write` for push.                                                                          | Standard Git over HTTPS                |
 
-Cloudflare API tokens authenticate control-plane access. Repo-scoped Artifacts tokens authenticate Git access.
+Gateway credentials authenticate control-plane access. Repo-scoped Artifacts tokens authenticate Git access.
 
 ## Authenticate the Workers binding
 
@@ -52,27 +52,26 @@ export CLOUDFLARE_ACCOUNT_ID="<YOUR_ACCOUNT_ID>"
 
 ## Authenticate the REST API
 
-The REST API uses a Cloudflare API token in the `Authorization` header. Use **Artifacts** > **Read** for read routes, and **Artifacts** > **Edit** for routes that change repo state.
+The REST API uses a gateway JWT in the `Authorization` header for `/v1/api/...` routes. For `/edge/v1/api/...` routes, use edge gateway auth from Cloudflare Access and `cf-apigateway-metadata`.
 
 ```sh
-export ACCOUNT_ID="<YOUR_ACCOUNT_ID>"
 export ARTIFACTS_NAMESPACE="default"
-export CLOUDFLARE_API_TOKEN="<YOUR_API_TOKEN>"
-export ARTIFACTS_BASE_URL="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/artifacts/namespaces/$ARTIFACTS_NAMESPACE"
+export ARTIFACTS_GATEWAY_JWT="<YOUR_GATEWAY_JWT>"
+export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.dev/v1/api/namespaces/$ARTIFACTS_NAMESPACE"
 ```
 
-Read repo metadata with a read-capable token:
+Read repo metadata with a gateway JWT:
 
 ```bash
 curl "$ARTIFACTS_BASE_URL/repos/starter-repo" \
-  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+  --header "Authorization: Bearer $ARTIFACTS_GATEWAY_JWT"
 ```
 
-Create a repo with an edit-capable token:
+Create a repo with the same auth flow:
 
 ```bash
 curl --request POST "$ARTIFACTS_BASE_URL/repos" \
-  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Authorization: Bearer $ARTIFACTS_GATEWAY_JWT" \
   --header "Content-Type: application/json" \
   --data '{
     "name": "starter-repo"
@@ -83,10 +82,10 @@ curl --request POST "$ARTIFACTS_BASE_URL/repos" \
 
 Git uses repo-scoped Artifacts tokens, not Cloudflare API tokens. Mint these tokens from the Workers binding or the REST API, then use them with the repo `remote` URL.
 
-| Token scope | Allowed commands |
-| --- | --- |
-| `read` | `git clone`, `git fetch`, `git pull` |
-| `write` | `git clone`, `git fetch`, `git pull`, `git push` |
+| Token scope | Allowed commands                                 |
+| ----------- | ------------------------------------------------ |
+| `read`      | `git clone`, `git fetch`, `git pull`             |
+| `write`     | `git clone`, `git fetch`, `git pull`, `git push` |
 
 Use a read token to clone:
 

@@ -83,8 +83,7 @@ Use a short-lived token and pass it into the sandbox only after the sandbox sess
 
 ```ts
 function toAuthenticatedRemote(remote: string, token: string) {
-	const tokenSecret = token.split("?expires=")[0];
-	return `https://x:${tokenSecret}@${remote.slice("https://".length)}`;
+	return `https://x:${token}@${remote.slice("https://".length)}`;
 }
 
 await sandbox.setEnvVars({

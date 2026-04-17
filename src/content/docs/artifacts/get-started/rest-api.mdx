@@ -20,12 +20,14 @@ By the end of this guide, you will create a repo inside an existing namespace, r
 You need:
 
 - A Cloudflare account with access to Artifacts.
-- A [Cloudflare API token](/fundamentals/api/get-started/create-token/) with **Artifacts** > **Edit**.
+- A gateway JWT that can call the Artifacts REST control plane.
 - An existing Artifacts namespace, for example `default`.
 - A local `git` client.
 - `jq`, if you want to extract response fields automatically.
 
 For Workers-based access instead of direct HTTP calls, use the [Workers get started guide](/artifacts/get-started/workers/).
+
+For REST auth details, refer to [Authentication](/artifacts/guides/authentication/#authenticate-the-rest-api).
 
 ## 1. Export your environment variables
 
@@ -34,17 +36,16 @@ Set the variables used in the examples:
 ```sh
 export ARTIFACTS_NAMESPACE="default"
 export ARTIFACTS_REPO="starter-repo"
-export CLOUDFLARE_API_TOKEN="<YOUR_API_TOKEN>"
-export ACCOUNT_ID="<YOUR_ACCOUNT_ID>"
-export ARTIFACTS_BASE_URL="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/artifacts/namespaces/$ARTIFACTS_NAMESPACE"
+export ARTIFACTS_GATEWAY_JWT="<YOUR_GATEWAY_JWT>"
+export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.dev/v1/api/namespaces/$ARTIFACTS_NAMESPACE"
 ```
 
 Use a unique repo name each time you run this guide.
 
-Artifacts uses Bearer authentication for control-plane requests:
+Artifacts uses Bearer authentication for `/v1/api/...` control-plane requests:
 
 ```txt
-Authorization: Bearer $CLOUDFLARE_API_TOKEN
+Authorization: Bearer $ARTIFACTS_GATEWAY_JWT
 ```
 
 ## 2. Create a repo
@@ -56,7 +57,7 @@ Choose one of the following ways to create a repo inside that namespace:
 
 ```bash
 curl --request POST "$ARTIFACTS_BASE_URL/repos" \
-  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Authorization: Bearer $ARTIFACTS_GATEWAY_JWT" \
   --header "Content-Type: application/json" \
   --data "{\"name\":\"$ARTIFACTS_REPO\"}"
 ```
@@ -71,7 +72,8 @@ The response resembles the following:
 		"description": null,
 		"default_branch": "main",
 		"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/starter-repo.git",
-		"token": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000"
+		"token": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000",
+		"token_expires_at": "<ISO_TIMESTAMP>"
 	},
 	"success": true,
 	"errors": [],
@@ -95,7 +97,7 @@ Capture the create response once and extract the fields with `jq`:
 
 ```bash
 CREATE_RESPONSE=$(curl --silent --request POST "$ARTIFACTS_BASE_URL/repos" \
-  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Authorization: Bearer $ARTIFACTS_GATEWAY_JWT" \
   --header "Content-Type: application/json" \
   --data "{\"name\":\"$ARTIFACTS_REPO\"}")
 
@@ -113,7 +115,7 @@ Fetch the repo metadata when you need to recover the remote URL later:
 
 ```bash
 curl "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO" \
-  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+  --header "Authorization: Bearer $ARTIFACTS_GATEWAY_JWT"
 ```
 
 ```json
@@ -155,11 +157,10 @@ git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" push -u origin 
 
 This uses the recommended header-based form and keeps the token out of the remote URL.
 
-If you need a self-contained remote URL for a short-lived command, build one from the token secret instead:
+If you need a self-contained remote URL for a short-lived command, use the full token string in the password slot:
 
 ```sh
-export ARTIFACTS_TOKEN_SECRET="${ARTIFACTS_TOKEN%%\?expires=*}"
-export ARTIFACTS_AUTH_REMOTE="https://x:${ARTIFACTS_TOKEN_SECRET}@${ARTIFACTS_REMOTE#https://}"
+export ARTIFACTS_AUTH_REMOTE="https://x:${ARTIFACTS_TOKEN}@${ARTIFACTS_REMOTE#https://}"
 git push "$ARTIFACTS_AUTH_REMOTE" HEAD:main
 ```
 

@@ -15,30 +15,32 @@ Use the Artifacts REST API to manage repos, remotes, forks, imports, and tokens 
 
 ## Base URL and authentication
 
-Artifacts REST routes use this base path:
+Artifacts REST routes use one of these base paths:
 
 ```txt
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/artifacts/namespaces/$ARTIFACTS_NAMESPACE
+https://artifacts.cloudflare.dev/v1/api/namespaces/$ARTIFACTS_NAMESPACE
+https://artifacts.cloudflare.dev/edge/v1/api/namespaces/$ARTIFACTS_NAMESPACE
 ```
 
-Requests to `/v1/api/...` use Bearer authentication:
+Requests to `/v1/api/...` use a gateway JWT:
 
 ```txt
-Authorization: Bearer <CLOUDFLARE_API_TOKEN>
+Authorization: Bearer <ARTIFACTS_GATEWAY_JWT>
 ```
 
-All routes below are relative to this base URL.
+Requests to `/edge/v1/api/...` use edge gateway auth from Cloudflare Access and `cf-apigateway-metadata`.
 
-Cloudflare API tokens authenticate REST control-plane routes. Repo tokens authenticate Git operations against the returned `remote` URL.
+All routes below are relative to either base path.
+
+Gateway auth authenticates REST control-plane routes. Repo tokens authenticate Git operations against the returned `remote` URL.
 
 The following examples assume:
 
 ```sh
-export ACCOUNT_ID="<YOUR_ACCOUNT_ID>"
 export ARTIFACTS_NAMESPACE="default"
 export ARTIFACTS_REPO="starter-repo"
-export CLOUDFLARE_API_TOKEN="<YOUR_API_TOKEN>"
-export ARTIFACTS_BASE_URL="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/artifacts/namespaces/$ARTIFACTS_NAMESPACE"
+export ARTIFACTS_GATEWAY_JWT="<YOUR_GATEWAY_JWT>"
+export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.dev/v1/api/namespaces/$ARTIFACTS_NAMESPACE"
 ```
 
 All responses use the standard Cloudflare v4 envelope.
@@ -48,12 +50,12 @@ Returned repo tokens are secrets. Do not log them or store them in long-lived re
 ## Shared types
 
 ```ts
-export type NamespaceName = string;
-export type RepoName = string;
-export type BranchName = string;
+export type NamespaceName = string; // /^[a-zA-Z0-9][a-zA-Z0-9._-]*$/
+export type RepoName = string; // same regex
+export type BranchName = string; // allows slashes, disallows ..
 export type Scope = "read" | "write";
 export type TokenState = "active" | "expired" | "revoked";
-export type ArtifactToken = string;
+export type ArtifactToken = string; // art_v1_<40hex>?expires=<unix_seconds>
 export type Cursor = string;
 export type RepoSortField =
 	| "created_at"
@@ -150,6 +152,7 @@ export interface CreateRepoResult {
 	default_branch: string;
 	remote: string;
 	token: ArtifactToken;
+	token_expires_at: string;
 }
 
 export type CreateRepoResponse = ApiEnvelope<CreateRepoResult>;
@@ -157,7 +160,7 @@ export type CreateRepoResponse = ApiEnvelope<CreateRepoResult>;
 
 ```bash
 curl --request POST "$ARTIFACTS_BASE_URL/repos" \
-  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Authorization: Bearer $ARTIFACTS_GATEWAY_JWT" \
   --header "Content-Type: application/json" \
   --data '{
     "name": "starter-repo",
@@ -175,7 +178,8 @@ curl --request POST "$ARTIFACTS_BASE_URL/repos" \
 		"description": "Repository for automation experiments",
 		"default_branch": "main",
 		"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/starter-repo.git",
-		"token": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000"
+		"token": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000",
+		"token_expires_at": "<ISO_TIMESTAMP>"
 	},
 	"success": true,
 	"errors": [],
@@ -211,7 +215,7 @@ export type ListReposResponse = ApiEnvelope<RepoInfo[]>;
 
 ```bash
 curl "$ARTIFACTS_BASE_URL/repos?limit=20&sort=updated_at&direction=desc" \
-  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+  --header "Authorization: Bearer $ARTIFACTS_GATEWAY_JWT"
 ```
 
 ```json
@@ -252,7 +256,7 @@ export type GetRepoResponse = ApiEnvelope<RemoteRepoInfo>;
 
 ```bash
 curl "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO" \
-  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+  --header "Authorization: Bearer $ARTIFACTS_GATEWAY_JWT"
 ```
 
 ```json
@@ -293,7 +297,7 @@ export type DeleteRepoResponse = ApiEnvelope<DeleteRepoResult>;
 
 ```bash
 curl --request DELETE "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO" \
-  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+  --header "Authorization: Bearer $ARTIFACTS_GATEWAY_JWT"
 ```
 
 ```json
@@ -337,7 +341,7 @@ export type ForkRepoResponse = ApiEnvelope<ForkRepoResult>;
 
 ```bash
 curl --request POST "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO/fork" \
-	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+	--header "Authorization: Bearer $ARTIFACTS_GATEWAY_JWT" \
 	--header "Content-Type: application/json" \
 	--data '{
 	  "name": "starter-repo-copy",
@@ -356,6 +360,7 @@ curl --request POST "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO/fork" \
 		"default_branch": "main",
 		"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/starter-repo-copy.git",
 		"token": "art_v1_89abcdef0123456789abcdef0123456789abcdef?expires=1760003600",
+		"token_expires_at": "<ISO_TIMESTAMP>",
 		"objects": 128
 	},
 	"success": true,
@@ -390,9 +395,11 @@ export type ImportRepoResponse = ApiEnvelope<CreateRepoResult>;
 
 Pass a full HTTPS Git remote URL, for example `https://github.com/facebook/react` or `https://gitlab.com/group/project.git`.
 
+If the repo already exists but is still importing or forking, some routes return `409 Conflict` with a retriable error. Retry after a short delay.
+
 ```bash
 curl --request POST "$ARTIFACTS_BASE_URL/repos/react-mirror/import" \
-  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+	--header "Authorization: Bearer $ARTIFACTS_GATEWAY_JWT" \
 	--header "Content-Type: application/json" \
 	--data '{
 	  "url": "https://github.com/facebook/react",
@@ -409,7 +416,8 @@ curl --request POST "$ARTIFACTS_BASE_URL/repos/react-mirror/import" \
 		"description": null,
 		"default_branch": "main",
 		"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/react-mirror.git",
-		"token": "art_v1_fedcba9876543210fedcba9876543210fedcba98?expires=1760007200"
+		"token": "art_v1_fedcba9876543210fedcba9876543210fedcba98?expires=1760007200",
+		"token_expires_at": "<ISO_TIMESTAMP>"
 	},
 	"success": true,
 	"errors": [],
@@ -445,7 +453,7 @@ export type ListTokensResponse = ApiEnvelope<TokenInfo[]>;
 
 ```bash
 curl "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO/tokens?state=all&per_page=30&page=1" \
-  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+  --header "Authorization: Bearer $ARTIFACTS_GATEWAY_JWT"
 ```
 
 ```json
@@ -503,7 +511,7 @@ export type CreateTokenResponse = ApiEnvelope<CreateTokenResult>;
 
 ```bash
 curl --request POST "$ARTIFACTS_BASE_URL/tokens" \
-  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Authorization: Bearer $ARTIFACTS_GATEWAY_JWT" \
   --header "Content-Type: application/json" \
   --data '{
     "repo": "starter-repo",
@@ -542,7 +550,7 @@ export type RevokeTokenResponse = ApiEnvelope<RevokeTokenResult>;
 
 ```bash
 curl --request DELETE "$ARTIFACTS_BASE_URL/tokens/tok_123" \
-  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+  --header "Authorization: Bearer $ARTIFACTS_GATEWAY_JWT"
 ```
 
 ```json

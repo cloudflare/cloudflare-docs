@@ -16,10 +16,10 @@ Use the returned repo `remote` with a regular Git client for `clone`, `fetch`, `
 
 Git routes accept repo access tokens in two forms:
 
-| Format                             | Details                                                                                                                               | Example                                                                                                      |
-| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Format                             | Details                                                                                                                              | Example                                                                                                      |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
 | Bearer token in `http.extraHeader` | Recommended for local workflows. Use the full token string returned by the control plane and keep credentials out of the remote URL. | `git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" clone "$ARTIFACTS_REMOTE" artifacts-clone` |
-| HTTP Basic auth in the remote URL  | Use for short-lived, one-off commands when you need a self-contained remote. Put the token secret in the password slot.              | `https://x:<token-secret>@<accountId>.artifacts.cloudflare.net/git/<namespace>/<repo>.git`                 |
+| HTTP Basic auth in the remote URL  | Use for short-lived, one-off commands when you need a self-contained remote. Put the full token in the password slot.                | `https://x:<token>@<accountId>.artifacts.cloudflare.net/git/<namespace>/<repo>.git`                          |
 
 ### Token format
 
@@ -37,13 +37,12 @@ git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" clone "$ARTIFAC
 
 ### HTTPS remote with Basic auth
 
-For the URL form, use the token secret in the password slot. Artifacts ignores the Basic auth username.
+For the URL form, use the full token string in the password slot. Artifacts ignores the Basic auth username.
 
 Use this form only when you need a self-contained remote URL for a short-lived command.
 
 ```sh
-export ARTIFACTS_TOKEN_SECRET="${ARTIFACTS_TOKEN%%\?expires=*}"
-export ARTIFACTS_AUTH_REMOTE="https://x:${ARTIFACTS_TOKEN_SECRET}@${ARTIFACTS_REMOTE#https://}"
+export ARTIFACTS_AUTH_REMOTE="https://x:${ARTIFACTS_TOKEN}@${ARTIFACTS_REMOTE#https://}"
 ```
 
 ```sh
