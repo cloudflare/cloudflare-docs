@@ -1,0 +1,463 @@
+---
+import type { MarkdownHeading } from "astro";
+import StarlightPage, {
+	type StarlightPageProps,
+} from "@astrojs/starlight/components/StarlightPage.astro";
+import { LinkButton, Tabs, TabItem, Code, Aside, Badge } from "~/components";
+import ModelInfo from "~/components/models/ModelInfo.tsx";
+import ModelFeatures from "~/components/models/ModelFeatures.tsx";
+import SchemaDisplay from "~/components/models/SchemaDisplay.astro";
+import ExampleCard from "~/components/models/ExampleCard.astro";
+import CopyableCode from "~/components/models/CopyableCode.astro";
+
+import TextGenerationCode from "~/components/models/code/TextGenerationCode.astro";
+import AutomaticSpeechRecognitionCode from "~/components/models/code/AutomaticSpeechRecognitionCode.astro";
+import ImageClassificationCode from "~/components/models/code/ImageClassificationCode.astro";
+import ImageToTextCode from "~/components/models/code/ImageToTextCode.astro";
+import ObjectDetectionCode from "~/components/models/code/ObjectDetectionCode.astro";
+import SummarizationCode from "~/components/models/code/SummarizationCode.astro";
+import TextClassificationCode from "~/components/models/code/TextClassificationCode.astro";
+import TextEmbeddingCode from "~/components/models/code/TextEmbeddingCode.astro";
+import TextToImageCode from "~/components/models/code/TextToImageCode.astro";
+import TranslationCode from "~/components/models/code/TranslationCode.astro";
+import StableDiffusionV15Img2ImgCode from "~/components/models/code/StableDiffusion-v1-5-img2imgCode.astro";
+import StableDiffusionV15InpaintingCode from "~/components/models/code/StableDiffusion-v1-5-inpaintingCode.astro";
+import Flux1Schnell from "~/components/models/code/Flux-1-Schnell.astro";
+import Flux2 from "~/components/models/code/Flux-2.astro";
+import WhisperBase64Code from "~/components/models/code/WhisperBase64Code.astro";
+import MelottsCode from "~/components/models/code/MelottsCode.astro";
+import LlamaGuard from "~/components/models/code/LlamaGuard.astro";
+import BgeRerankerBase from "~/components/models/code/Bge-Reranker-Base.astro";
+import OpenAIResponsesTextGenerationCode from "~/components/models/code/OpenAIResponsesTextGenerationCode.astro";
+import DeepgramAura from "~/components/models/code/DeepgramAura.astro";
+import DeepgramNova from "~/components/models/code/DeepgramNova.astro";
+import DeepgramFlux from "~/components/models/code/DeepgramFlux.astro";
+
+import Render from "~/components/Render.astro";
+import { authorData } from "~/components/models/data";
+import { hasProperty } from "~/util/model-properties";
+import { getModelAuthor } from "~/util/model-resolver";
+import type { ResolvedModel } from "~/util/model-types";
+
+interface Props {
+	model: ResolvedModel;
+}
+
+const { model } = Astro.props;
+
+// Display name: use catalog displayName, or fall back to last segment of model ID
+const displayName =
+	model.displayName !== model.slug
+		? model.displayName
+		: model.name.split("/").at(-1);
+
+// For catalog models, first example is the "Usage" section
+const firstExample = model.examples?.[0];
+const remainingExamples = model.examples?.slice(1) ?? [];
+const hasCatalogUsage = !!firstExample?.code_snippets?.length;
+
+// Legacy code example overrides (only used when no catalog usage)
+let CodeExamples = null;
+if (!hasCatalogUsage) {
+	switch (model.task.name) {
+		case "Text Generation":
+			CodeExamples = TextGenerationCode;
+			break;
+		case "Automatic Speech Recognition":
+			CodeExamples = AutomaticSpeechRecognitionCode;
+			break;
+		case "Image Classification":
+			CodeExamples = ImageClassificationCode;
+			break;
+		case "Object Detection":
+			CodeExamples = ObjectDetectionCode;
+			break;
+		case "Image-to-Text":
+			CodeExamples = ImageToTextCode;
+			break;
+		case "Text-to-Image":
+			CodeExamples = TextToImageCode;
+			break;
+		case "Translation":
+			CodeExamples = TranslationCode;
+			break;
+		case "Summarization":
+			CodeExamples = SummarizationCode;
+			break;
+		case "Text Embeddings":
+			CodeExamples = TextEmbeddingCode;
+			break;
+		case "Text Classification":
+			CodeExamples = TextClassificationCode;
+			break;
+	}
+
+	// Model-specific overrides
+	if (model.name === "@cf/runwayml/stable-diffusion-v1-5-img2img") {
+		CodeExamples = StableDiffusionV15Img2ImgCode;
+	}
+	if (model.name === "@cf/runwayml/stable-diffusion-v1-5-inpainting") {
+		CodeExamples = StableDiffusionV15InpaintingCode;
+	}
+	if (model.name === "@cf/black-forest-labs/flux-1-schnell") {
+		CodeExamples = Flux1Schnell;
+	}
+	if (
+		model.name === "@cf/black-forest-labs/flux-2-dev" ||
+		model.name === "@cf/black-forest-labs/flux-2-klein-4b" ||
+		model.name === "@cf/black-forest-labs/flux-2-klein-9b"
+	) {
+		CodeExamples = Flux2;
+	}
+	if (model.name === "@cf/openai/whisper-large-v3-turbo") {
+		CodeExamples = WhisperBase64Code;
+	}
+	if (model.name === "@cf/myshell-ai/melotts") {
+		CodeExamples = MelottsCode;
+	}
+	if (model.name === "@cf/meta/llama-guard-3-8b") {
+		CodeExamples = LlamaGuard;
+	}
+	if (model.name === "@cf/baai/bge-reranker-base") {
+		CodeExamples = BgeRerankerBase;
+	}
+	if (
+		model.name === "@cf/openai/gpt-oss-120b" ||
+		model.name === "@cf/openai/gpt-oss-20b"
+	) {
+		CodeExamples = OpenAIResponsesTextGenerationCode;
+	}
+	if (model.name === "@cf/deepgram/aura-1") {
+		CodeExamples = DeepgramAura;
+	}
+	if (model.name === "@cf/deepgram/nova-3") {
+		CodeExamples = DeepgramNova;
+	}
+	if (model.name === "@cf/deepgram/flux") {
+		CodeExamples = DeepgramFlux;
+	}
+}
+
+const hasCodeExamples = hasCatalogUsage || CodeExamples;
+const hasRemainingExamples = remainingExamples.length > 0;
+
+const description = model.description;
+const isBeta = hasProperty(model.properties, "beta");
+
+let hasPlayground =
+	model.task.name === "Text Generation" && model.hosting === "hosted";
+if (model.name.includes("@cf/openai/gpt-oss")) {
+	hasPlayground = false;
+}
+
+const authorId = getModelAuthor(model.name);
+const author = authorData[authorId];
+
+const hasSupportedLanguages = model.name === "@cf/deepgram/nova-3";
+
+const hasSchema =
+	model.schema.input && Object.keys(model.schema.input).length > 0;
+
+const authorName = author?.name ?? authorId;
+const pageTitle = `${displayName} (${authorName}) · Cloudflare AI docs`;
+
+const starlightPageProps = {
+	frontmatter: {
+		title: displayName,
+		description,
+		pcx_content_type: "reference",
+		head: [{ tag: "title" as const, content: pageTitle }],
+	},
+	headings: [
+		hasSupportedLanguages
+			? { depth: 2, slug: "supported-languages", text: "Supported languages" }
+			: false,
+		hasPlayground
+			? { depth: 2, slug: "Playground", text: "Playground" }
+			: false,
+		hasCodeExamples ? { depth: 2, slug: "Usage", text: "Usage" } : false,
+		hasRemainingExamples
+			? { depth: 2, slug: "Examples", text: "Examples" }
+			: false,
+		hasSchema ? { depth: 2, slug: "Parameters", text: "Parameters" } : false,
+		hasSchema ? { depth: 2, slug: "API-Schemas", text: "API Schemas" } : false,
+	].filter((v) => Boolean(v)) as MarkdownHeading[],
+	hideTitle: true,
+} as StarlightPageProps;
+---
+
+<StarlightPage {...starlightPageProps}>
+	<div class="align-center flex">
+		{
+			author ? (
+				<img
+					class="mr-4 block h-14 w-14 rounded-xs dark:ml-1 dark:bg-gray-200 dark:ring-4 dark:ring-gray-200"
+					src={author.logo}
+					alt={`${author.name} logo`}
+				/>
+			) : (
+				<div class="mr-4 flex h-14 w-14 items-center justify-center rounded-md bg-gray-100 text-2xl font-black text-gray-400 uppercase">
+					{authorId.substring(0, 1)}
+				</div>
+			)
+		}
+		<div>
+			<h1
+				id="_top"
+				class="-mt-4! mb-0! flex items-center text-4xl! leading-none! font-bold!"
+			>
+				{displayName}
+				{isBeta && <Badge text="Beta" variant="caution" class="mt-2 ml-3" />}
+			</h1>
+			<span class="-mt-1 block"><ModelInfo model={model} /></span>
+		</div>
+	</div>
+
+	<div class="mt-4">
+		<CopyableCode text={model.name} label="Copy model ID" />
+	</div>
+
+	<p class="mt-3 mb-2!">{description}</p>
+
+	{
+		model.name === "@cf/meta/llama-3.2-11b-vision-instruct" && (
+			<Aside>
+				<p>
+					To use Llama 3.2 11b Vision Instruct, you need to agree to the{" "}
+					<a href="https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/LICENSE">
+						Meta License
+					</a>{" "}
+					and{" "}
+					<a href="https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/USE_POLICY.md">
+						Acceptable Use Policy
+					</a>
+					. To do so, please send an initial request to
+					<code>@cf/meta/llama-3.2-11b-vision-instruct</code> with
+					<code>"prompt" : "agree"</code>. After that, you'll be able to use the
+					model as normal.
+				</p>
+				<Code
+					code={`curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/@cf/meta/llama-3.2-11b-vision-instruct \\
+   -X POST \\
+   -H "Authorization: Bearer $CLOUDFLARE_AUTH_TOKEN" \\
+   -d '{ "prompt": "agree"}'`}
+					lang="sh"
+				/>
+			</Aside>
+		)
+	}
+
+	<ModelFeatures model={model} />
+	{
+		model.name === "@cf/deepgram/nova-3" && (
+			<Aside>
+				<p>
+					The <a href="/workers-ai/platform/pricing">pricing of this model</a>{" "}
+					is different based on transport. Transport-based pricing does not
+					apply to all models.
+				</p>
+				<p>
+					<ul>
+						<li>
+							WebSocket: $0.0092 per audio minute output (836.36 neurons per
+							audio minute output)
+						</li>
+						<li>
+							Regular HTTP: $0.0052 per audio minute output (472.73 neurons per
+							audio minute output)
+						</li>
+					</ul>
+				</p>
+			</Aside>
+		)
+	}
+
+	{
+		hasSupportedLanguages && (
+			<>
+				<h2 id="supported-languages">Supported languages</h2>
+				<Render file="nova-3-supported-languages" product="workers-ai" />
+			</>
+		)
+	}
+
+	{
+		hasPlayground && (
+			<>
+				<h2 id="Playground">Playground</h2>
+				<p>
+					Try out this model with Workers AI LLM Playground. It does not require
+					any setup or authentication and an instant way to preview and test a
+					model directly in the browser.
+				</p>
+				<LinkButton
+					href={`https://playground.ai.cloudflare.com/?model=${model.name}`}
+				>
+					Launch the LLM Playground
+				</LinkButton>
+			</>
+		)
+	}
+
+	{
+		hasCatalogUsage && firstExample && (
+			<>
+				<h2 id="Usage">Usage</h2>
+				<ExampleCard example={firstExample} layout="stack" />
+			</>
+		)
+	}
+
+	{
+		!hasCatalogUsage && CodeExamples && (
+			<>
+				<h2 id="Usage">Usage</h2>
+				<CodeExamples name={model.name} lora={false} />
+			</>
+		)
+	}
+
+	{
+		hasRemainingExamples && (
+			<>
+				<h2 id="Examples">Examples</h2>
+				{remainingExamples.map((example) => (
+					<details>
+						<summary>
+							<strong>{example.name}</strong>
+							{example.description && (
+								<span> &mdash; {example.description}</span>
+							)}
+						</summary>
+						<ExampleCard example={example} />
+					</details>
+				))}
+			</>
+		)
+	}
+
+	{
+		hasSchema && model.apiModes && model.apiModes.length > 1 ? (
+			<>
+				<h2 id="Parameters">Parameters</h2>
+
+				<div class="space-y-3">
+					{model.apiModes.map((mode) => (
+						<details class="group rounded-lg border border-gray-200 p-0 py-3 dark:border-gray-700">
+							<summary class="cursor-pointer px-8 font-medium text-gray-900 dark:text-gray-100">
+								<span>{mode.name}</span>
+								{mode.description && (
+									<span class="text-sm font-normal text-gray-500 dark:text-gray-400">
+										— {mode.description}
+									</span>
+								)}
+							</summary>
+							<div class="border-t border-gray-200 p-4 pb-1 dark:border-gray-700">
+								<Tabs syncKey={`schema-${mode.id}`}>
+									<TabItem label="Input">
+										<SchemaDisplay schema={mode.input} title="Input" />
+									</TabItem>
+									<TabItem label="Output">
+										<SchemaDisplay schema={mode.output} title="Output" />
+									</TabItem>
+								</Tabs>
+							</div>
+						</details>
+					))}
+				</div>
+
+				<h2 id="API-Schemas">API Schemas (Raw)</h2>
+				<div class="space-y-3">
+					{model.apiModes.map((mode) => (
+						<details class="group rounded-lg border border-gray-200 p-0 py-3 dark:border-gray-700">
+							<summary class="cursor-pointer px-8 font-medium text-gray-900 dark:text-gray-100">
+								<span>{mode.name}</span>
+								{mode.description && (
+									<span class="ml-2 text-sm font-normal text-gray-500 dark:text-gray-400">
+										— {mode.description}
+									</span>
+								)}
+							</summary>
+							<div class="px-4 py-2">
+								<Tabs syncKey={`raw-schema-${mode.id}`}>
+									<TabItem label="Input">
+										<div class="[&_pre]:max-h-[500px] [&_pre]:overflow-y-scroll">
+											<Code
+												code={JSON.stringify(mode.input, null, 2)}
+												lang="json"
+											/>
+										</div>
+									</TabItem>
+									<TabItem label="Output">
+										<div class="[&_pre]:max-h-[500px] [&_pre]:overflow-y-scroll">
+											<Code
+												code={JSON.stringify(mode.output, null, 2)}
+												lang="json"
+											/>
+										</div>
+									</TabItem>
+								</Tabs>
+							</div>
+						</details>
+					))}
+				</div>
+			</>
+		) : (
+			hasSchema && (
+				<>
+					<h2 id="Parameters">Parameters</h2>
+					<Tabs syncKey="schema-tab">
+						<TabItem label="Input">
+							<SchemaDisplay schema={model.schema.input} title="Input" />
+						</TabItem>
+						<TabItem label="Output">
+							{model.schema.output.format === "binary" ? (
+								<p>
+									{(model.schema.output.contentType as string)?.startsWith(
+										"audio/",
+									) ? (
+										<>
+											The binding returns a <code>ReadableStream</code> with the
+											audio in{" "}
+											{(model.schema.output.contentType as string)
+												.replace("audio/", "")
+												.toUpperCase()}{" "}
+											format (check the model's output schema).
+										</>
+									) : (
+										<>
+											The binding returns a <code>ReadableStream</code> with the
+											output (check the model's output schema).
+										</>
+									)}
+								</p>
+							) : (
+								<SchemaDisplay schema={model.schema.output} title="Output" />
+							)}
+						</TabItem>
+					</Tabs>
+
+					<h2 id="API-Schemas">API Schemas</h2>
+					<Tabs syncKey="schema-tab">
+						<TabItem label="Input">
+							<div class="[&_pre]:max-h-[500px] [&_pre]:overflow-y-auto">
+								<Code
+									code={JSON.stringify(model.schema.input, null, 2)}
+									lang="json"
+								/>
+							</div>
+						</TabItem>
+						<TabItem label="Output">
+							<div class="[&_pre]:max-h-[500px] [&_pre]:overflow-y-auto">
+								<Code
+									code={JSON.stringify(model.schema.output, null, 2)}
+									lang="json"
+								/>
+							</div>
+						</TabItem>
+					</Tabs>
+				</>
+			)
+		)
+	}
+</StarlightPage>

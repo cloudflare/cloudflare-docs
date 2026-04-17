@@ -1,6 +1,9 @@
 ---
 title: Create an IP access rule
 pcx_content_type: how-to
+description: Create IP Access rules to allow, block, or challenge by IP.
+products:
+  - waf
 sidebar:
   order: 2
   label: Create a rule
@@ -8,7 +11,7 @@ sidebar:
 
 import { TabItem, Tabs, Steps, DashButton } from "~/components";
 
-:::tip[Recommendation: Use custom rules instead]
+:::caution[Recommendation: Use custom rules instead]
 Cloudflare recommends that you create [custom rules](/waf/custom-rules/) instead of IP Access rules to perform IP-based or geography-based blocking (geoblocking).
 :::
 

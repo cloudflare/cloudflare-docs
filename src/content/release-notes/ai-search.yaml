@@ -3,6 +3,26 @@ link: "/ai-search/platform/release-note/"
 productName: AI Search
 productLink: "/ai-search/"
 entries:
+  - publish_date: "2026-04-16"
+    title: Hybrid search
+    description: |-
+      AI Search now supports [hybrid search](/ai-search/configuration/indexing/hybrid-search/), combining vector and BM25 keyword search in a single query. Configure the tokenizer, keyword match mode, and fusion method per instance. Refer to [Search modes](/ai-search/concepts/search-modes/) for an overview.
+  - publish_date: "2026-04-16"
+    title: Relevance boosting
+    description: |-
+      Boost search results by metadata fields like timestamp or priority using [relevance boosting](/ai-search/configuration/retrieval/boosting/). Configure up to 3 boost fields per instance or per request.
+  - publish_date: "2026-04-16"
+    title: Cross-instance search
+    description: |-
+      Search across multiple AI Search instances in a single call using [namespace-level search](/ai-search/api/search/workers-binding/#namespace-level). Results are merged and ranked, with each chunk identifying which instance it came from.
+  - publish_date: "2026-04-16"
+    title: Built-in storage and vector index
+    description: |-
+      New AI Search instances come with [built-in storage](/ai-search/configuration/data-source/built-in-storage/) and a [built-in vector index](/ai-search/configuration/indexing/vector-search/#built-in-vector-index). Upload files directly to an instance using the Items API or the dashboard without setting up external infrastructure.
+  - publish_date: "2026-04-16"
+    title: New AI Search Workers bindings
+    description: |-
+      Two new [Workers bindings](/ai-search/api/search/workers-binding/) for AI Search. The `ai_search_namespaces` binding gives access to all instances within a [namespace](/ai-search/concepts/namespaces/) and supports dynamic instance management at runtime. The `ai_search` binding binds directly to a single instance for simpler use cases.
   - publish_date: "2026-04-01"
     title: Wrangler CLI support for AI Search
     description: |-
@@ -14,11 +34,11 @@ entries:
   - publish_date: "2026-03-23"
     title: Public endpoint, UI snippets, and MCP support
     description: |-
-      AI Search now supports [public endpoints](/ai-search/configuration/public-endpoint/), [UI snippets](/ai-search/configuration/embed-search-snippets/), and [MCP](/ai-search/usage/mcp/), making it easy to add search to your website or connect AI agents.
+      AI Search now supports [public endpoints](/ai-search/configuration/retrieval/public-endpoint/), [UI snippets](/ai-search/configuration/retrieval/embed-search-snippets/), and [MCP](/ai-search/api/search/mcp/), making it easy to add search to your website or connect AI agents.
   - publish_date: "2026-03-23"
     title: New REST API endpoints
     description: |-
-      AI Search introduces new [REST API](/ai-search/usage/rest-api/) endpoints for search that use an OpenAI-compatible format. You can use the familiar `messages` array structure that works with existing OpenAI SDKs and tools. The previous AutoRAG API endpoints will continue working as expected for the time being. New features will only be added to the new API. We will provide at least 90 days notice before any end of life. See the [migration guide](/ai-search/how-to/migrate-from-autorag-api/) for instructions.
+      AI Search introduces new [REST API](/ai-search/api/search/rest-api/) endpoints for search that use an OpenAI-compatible format. You can use the familiar `messages` array structure that works with existing OpenAI SDKs and tools. The previous AutoRAG API endpoints will continue working as expected. New features will only be added to the new API. See the [migration guide](/ai-search/api/migration/rest-api/) for instructions.
   - publish_date: "2026-02-09"
     title: Crawler user agent renamed
     description: |-
@@ -139,7 +159,7 @@ entries:
   - publish_date: "2025-04-23"
     title: Response streaming in AI Search binding added
     description: |-
-      AI Search now supports response streaming in the `AI Search` method of the [Workers binding](/ai-search/usage/workers-binding/), allowing you to stream results as they're retrieved by setting `stream: true`.
+      AI Search now supports response streaming in the `AI Search` method of the [Workers binding](/ai-search/api/search/workers-binding/), allowing you to stream results as they're retrieved by setting `stream: true`.
   - publish_date: "2025-04-07"
     title: AI Search is now in open beta!
     description: |-

@@ -1,22 +1,25 @@
 ---
 {}
 ---
-import { Tabs, TabItem } from "~/components"
+import { Tabs, TabItem} from "~/components"
 
-Specifies maximum width of the image. Exact behavior depends on the `fit` mode; use the `fit=scale-down` option to ensure that the image will not be enlarged unnecessarily.
+<a id="width"></a>
 
-Available options are a specified width in pixels or `auto`.
+### `width` | `w`
 
-**Alias:** `w`
+Sets the width of the output image in pixels using a positive integer value. By default, Cloudflare uses the original width of the input image.
+
+When `width` is set, the exact behavior depends on the `fit` parameter.
+
+Accepts the following values:
+
+- A number in pixels (for example, `250`).
+- `auto` — Automatically serves the image in the most optimal width based on available information about the browser and device. This method is supported only by Chromium browsers. For more information, refer to [Transform width parameter](/images/optimization/make-responsive-images/#transform-with-width-parameter).
 
 <Tabs>
   <TabItem label="URL format">
     ```txt
     width=250
-    ```
-  </TabItem>
-  <TabItem label="URL format alias">
-    ```txt
     w=250
     ```
   </TabItem>
@@ -29,6 +32,4 @@ Available options are a specified width in pixels or `auto`.
 
 Ideally, image sizes should match the exact dimensions at which they are displayed on the page. If the page contains thumbnails with markup such as `<img width="200">`, then you can resize the image by applying `width=200`.
 
-[To serve responsive images](/images/transform-images/make-responsive-images/#transform-with-html-srcset), you can use the HTML `srcset` element and apply width parameters.
-
-`auto` - Automatically serves the image in the most optimal width based on available information about the browser and device. This method is supported only by Chromium browsers. For more information about this works, refer to [Transform width parameter](/images/transform-images/make-responsive-images/#transform-with-width-parameter).
+[To serve responsive images](/images/optimization/make-responsive-images/#transform-with-html-srcset), you can use the HTML `srcset` element and apply width parameters.

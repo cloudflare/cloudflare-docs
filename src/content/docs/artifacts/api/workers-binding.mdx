@@ -1,0 +1,359 @@
+---
+title: Workers binding
+description: Call Artifacts from a Worker binding.
+pcx_content_type: reference
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Workers binding · Artifacts
+---
+
+import {
+	LinkCard,
+	MetaInfo,
+	Type,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+Use the Artifacts Workers binding to create, inspect, fork, and delete repos directly from your Worker. The Artifacts binding returns repo handles that allow repo-scoped operations such as token management and forking.
+
+Use the [REST API](/artifacts/api/rest-api/) when you need to import a repo from another remote.
+
+## Configure the binding
+
+Add the Artifacts binding to your Wrangler config file:
+
+<WranglerConfig>
+
+```toml title="wrangler.toml"
+[[artifacts]]
+binding = "ARTIFACTS"
+namespace = "default"
+```
+
+</WranglerConfig>
+
+After you run `npx wrangler types`, your Worker environment looks like this:
+
+```ts
+export interface Env {
+	ARTIFACTS: Artifacts;
+}
+```
+
+Wrangler generates the `Artifacts` type for consumers and binds it directly in your environment.
+
+If you authenticate with `wrangler login`, Wrangler requests `artifacts:write` by default.
+
+## Namespace methods
+
+Use namespace methods on `env.ARTIFACTS` to create, list, inspect, or delete repos.
+
+### `create(name, opts?)`
+
+- `name` <Type text="RepoName" /> <MetaInfo text="required" />
+- `opts.readOnly` <Type text="boolean" /> <MetaInfo text="optional" />
+- `opts.description` <Type text="string" /> <MetaInfo text="optional" />
+- `opts.setDefaultBranch` <Type text="string" /> <MetaInfo text="optional" />
+- Returns <Type text="Promise<ArtifactsCreateRepoResult & { repo: ArtifactsRepo } >" />
+
+<TypeScriptExample>
+
+```ts
+async function createRepo(artifacts: Artifacts) {
+	const created = await artifacts.create("starter-repo", {
+		description: "Repository for automation experiments",
+		readOnly: false,
+		setDefaultBranch: "main",
+	});
+
+	return {
+		defaultBranch: created.defaultBranch,
+		name: created.name,
+		remote: created.remote,
+		initialToken: created.token,
+	};
+}
+```
+
+</TypeScriptExample>
+
+### `get(name)`
+
+- `name` <Type text="RepoName" /> <MetaInfo text="required" />
+- Returns <Type text="Promise<ArtifactsRepo | null>" />
+
+<TypeScriptExample>
+
+```ts
+async function getRepoHandle(artifacts: Artifacts) {
+	const repo = await artifacts.get("starter-repo");
+
+	if (!repo) {
+		return null;
+	}
+
+	return repo;
+}
+```
+
+</TypeScriptExample>
+
+### `list(opts?)`
+
+- `opts.limit` <Type text="number" /> <MetaInfo text="optional" />
+- `opts.cursor` <Type text="Cursor" /> <MetaInfo text="optional" />
+- Returns <Type text="Promise<ArtifactsRepoListResult>" />
+
+<TypeScriptExample>
+
+```ts
+async function listRepos(artifacts: Artifacts) {
+	const page = await artifacts.list({ limit: 10 });
+
+	return {
+		names: page.repos.map((repo) => repo.name),
+		nextCursor: page.cursor ?? null,
+	};
+}
+```
+
+</TypeScriptExample>
+
+### `delete(name)`
+
+- `name` <Type text="RepoName" /> <MetaInfo text="required" />
+- Returns <Type text="Promise<boolean>" />
+
+<TypeScriptExample>
+
+```ts
+async function deleteRepo(artifacts: Artifacts) {
+	return artifacts.delete("starter-repo");
+}
+```
+
+</TypeScriptExample>
+
+## Repo handle methods
+
+Use the `repo` returned by `create()`, or first check that `await artifacts.get(name)` returned a repo handle.
+
+These examples match the current runtime binding surface. If your generated types show `import()` or a discriminated union for `get()`, those types are ahead of the current runtime.
+
+### `info()`
+
+- Returns <Type text="Promise<ArtifactsRepoInfo | null>" />
+
+Use `info()` when you need repo metadata, including the remote URL.
+
+<TypeScriptExample>
+
+```ts
+async function getRemoteUrl(artifacts: Artifacts) {
+	const repo = await artifacts.get("starter-repo");
+	if (!repo) {
+		return null;
+	}
+
+	const info = await repo.info();
+	return info?.remote ?? null;
+}
+```
+
+</TypeScriptExample>
+
+### `createToken(scope?, ttl?)`
+
+- `scope` <Type text='"read" | "write"' /> <MetaInfo text='optional (default: "write")' />
+- `ttl` <Type text="number" /> <MetaInfo text="optional (seconds)" />
+- Returns <Type text="Promise<ArtifactsCreateTokenResult>" />
+
+<TypeScriptExample>
+
+```ts
+async function mintReadToken(artifacts: Artifacts) {
+	const repo = await artifacts.get("starter-repo");
+	if (!repo) {
+		throw new Error("Repo not found");
+	}
+
+	return repo.createToken("read", 3600);
+}
+```
+
+</TypeScriptExample>
+
+### `validateToken(token)`
+
+- `token` <Type text="ArtifactToken" /> <MetaInfo text="required" />
+- Returns <Type text="Promise<ArtifactsTokenValidation>" />
+
+<TypeScriptExample>
+
+```ts
+async function validateToken(artifacts: Artifacts, token: string) {
+	const repo = await artifacts.get("starter-repo");
+	if (!repo) {
+		throw new Error("Repo not found");
+	}
+
+	return repo.validateToken(token);
+}
+```
+
+</TypeScriptExample>
+
+### `listTokens()`
+
+- Returns <Type text="Promise<ArtifactsTokenListResult>" />
+
+<TypeScriptExample>
+
+```ts
+async function listRepoTokens(artifacts: Artifacts) {
+	const repo = await artifacts.get("starter-repo");
+	if (!repo) {
+		throw new Error("Repo not found");
+	}
+
+	const result = await repo.listTokens();
+	return {
+		total: result.total,
+		tokens: result.tokens,
+	};
+}
+```
+
+</TypeScriptExample>
+
+### `revokeToken(tokenOrId)`
+
+- `tokenOrId` <Type text="string" /> <MetaInfo text="required" />
+- Returns <Type text="Promise<boolean>" />
+
+<TypeScriptExample>
+
+```ts
+async function revokeToken(artifacts: Artifacts, tokenOrId: string) {
+	const repo = await artifacts.get("starter-repo");
+	if (!repo) {
+		throw new Error("Repo not found");
+	}
+
+	return repo.revokeToken(tokenOrId);
+}
+```
+
+</TypeScriptExample>
+
+### `fork(name, opts?)`
+
+- `name` <Type text="RepoName" /> <MetaInfo text="required" />
+- `opts.description` <Type text="string" /> <MetaInfo text="optional" />
+- `opts.readOnly` <Type text="boolean" /> <MetaInfo text="optional" />
+- `opts.defaultBranchOnly` <Type text="boolean" /> <MetaInfo text="optional" />
+- Returns <Type text="Promise<ArtifactsCreateRepoResult>" />
+
+<TypeScriptExample>
+
+```ts
+async function forkRepo(artifacts: Artifacts) {
+	const repo = await artifacts.get("starter-repo");
+	if (!repo) {
+		throw new Error("Repo not found");
+	}
+
+	const forked = await repo.fork("starter-repo-copy", {
+		description: "Fork for testing",
+		defaultBranchOnly: true,
+		readOnly: false,
+	});
+
+	return forked.remote;
+}
+```
+
+</TypeScriptExample>
+
+## Worker example
+
+This example combines the binding methods in one Worker route.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+interface Env {
+	ARTIFACTS: Artifacts;
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const url = new URL(request.url);
+
+		if (request.method === "POST" && url.pathname === "/repos") {
+			const created = await env.ARTIFACTS.create("starter-repo");
+			return Response.json({
+				name: created.name,
+				remote: created.remote,
+			});
+		}
+
+		if (request.method === "GET" && url.pathname === "/repos/starter-repo") {
+			const repo = await env.ARTIFACTS.get("starter-repo");
+			if (!repo) {
+				return Response.json({ error: "Repo not found" }, { status: 404 });
+			}
+			const info = await repo.info();
+			return Response.json(info);
+		}
+
+		if (request.method === "POST" && url.pathname === "/tokens") {
+			const repo = await env.ARTIFACTS.get("starter-repo");
+			if (!repo) {
+				return Response.json({ error: "Repo not found" }, { status: 404 });
+			}
+
+			const token = await repo.createToken("read", 3600);
+			return Response.json(token);
+		}
+
+		return Response.json(
+			{ message: "Use POST /repos, GET /repos/starter-repo, or POST /tokens." },
+			{ status: 404 },
+		);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+:::caution[Protect token routes]
+This example omits authentication so it can focus on the binding surface. In production, authorize the caller before creating repos or returning tokens.
+:::
+
+## Generated types
+
+Run `npx wrangler types` in your own project and treat the generated `worker-configuration.d.ts` file as the source of truth for the Artifacts binding types in that environment.
+
+## Next steps
+
+<LinkCard
+	title="REST API"
+	href="/artifacts/api/rest-api/"
+	description="Compare the binding methods with the underlying HTTP routes."
+/>
+
+<LinkCard
+	title="Get started with Workers"
+	href="/artifacts/get-started/workers/"
+	description="Use the binding in a full Worker project from local development through deploy."
+/>
+
+<LinkCard
+	title="Git protocol"
+	href="/artifacts/api/git-protocol/"
+	description="Use repo remotes and tokens with standard git-over-HTTPS clients."
+/>

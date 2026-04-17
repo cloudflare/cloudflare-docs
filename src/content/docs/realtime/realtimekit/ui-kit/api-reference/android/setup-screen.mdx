@@ -1,0 +1,18 @@
+---
+pcx_content_type: reference
+title: RtkSetupFragment
+description: API reference for RtkSetupFragment component (Android Library)
+---
+
+A screen shown before joining the meeting, where you can edit your display name and media settings.
+
+## Usage Examples
+
+### Basic Usage
+
+```kotlin
+val rtkSetupFragment = RtkSetupFragment()
+supportFragmentManager.beginTransaction()
+    .add(R.id.fragmentContainer, rtkSetupFragment)
+    .commit()
+```

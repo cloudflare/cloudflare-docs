@@ -1,0 +1,11 @@
+---
+title: Introducing Redirects for AI Training
+description: Direct AI training crawlers to canonical URLs to ensure models train on authoritative content.
+date: 2026-04-17
+---
+
+Cloudflare's network now supports redirecting verified AI training crawlers to canonical URLs when they request deprecated or duplicate pages. When enabled via **AI Crawl Control** > **Quick Actions**, AI training crawlers that request a page with a canonical tag pointing elsewhere receive a 301 redirect to the canonical version. Humans, search engine crawlers, and AI Search agents continue to see the original page normally.
+
+This feature leverages your existing `<link rel="canonical">` tags. No additional configuration required beyond enabling the toggle. Available on Pro, Business, and Enterprise plans at no additional cost.
+
+Refer to the [Redirects for AI Training documentation](/ai-crawl-control/reference/redirects-for-ai-training/) for details.

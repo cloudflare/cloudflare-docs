@@ -5,6 +5,8 @@ sidebar:
   order: 6
 ---
 
+import { Render } from "~/components";
+
 Create documentation that is accessible to all users, including disabled users. Following accessibility best practices ensures that everyone can access, understand, and use the Cloudflare docs effectively.
 
 These guidelines align with Web Content Accessibility Guidelines (WCAG) 2.1 Level AA standards and focus on aspects relevant to documentation.
@@ -276,7 +278,7 @@ Use tables only to present data that has a logical relationship between rows and
 - Include clear, descriptive headers for all columns and rows.
 - Keep tables simple when possible.
 - For complex tables, consider breaking them into multiple simpler tables.
-- Provide a caption or introductory text that describes the table's purpose.
+- <Render file="table-guidelines" product="style-guide" />
 
 **WCAG reference**: [1.3.1 Info and Relationships (Level A)](https://www.w3.org/WAI/WCAG21/Understanding/info-and-relationships)
 

@@ -19,6 +19,7 @@ const linuxDistributions = ["Ubuntu", "Debian", "CentOS", "Fedora"];
 const linesToRemove = [
 	"For related Cloudflare for Teams documentation please see: https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp",
 	"For Zero Trust documentation please see: <https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp>",
+	"For Zero Trust documentation please see: <https://developers.cloudflare.com/cloudflare-one/team-and-resources/devices/cloudflare-one-client/>",
 	"For related Consumer documentation please see: https://developers.cloudflare.com/warp-client/",
 	"For Consumer documentation please see: <https://developers.cloudflare.com/warp-client/>",
 	"For Consumer documentation please see: <https://developers.cloudflare.com/warp-client>",

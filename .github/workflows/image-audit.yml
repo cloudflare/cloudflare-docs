@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
       - name: Find Unused Files
         id: find-files
@@ -43,10 +43,19 @@ jobs:
         if: steps.find-files.outputs.unused_files
         env:
           UNUSED_FILES: ${{ steps.find-files.outputs.unused_files }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Create the issue and reference the unused_files variable
           echo "The following files are not referenced in any markdown file:\n${UNUSED_FILES}" > unused_files.txt
-          curl --silent -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+
+          # Use jq to safely construct JSON payload
+          BODY=$(cat unused_files.txt)
+          JSON_PAYLOAD=$(jq -n \
+            --arg title "Unused Image Files Found" \
+            --arg body "$BODY" \
+            '{title: $title, body: $body}')
+
+          curl --silent -X POST -H "Authorization: Bearer $GITHUB_TOKEN" \
             -H "Accept: application/vnd.github+json" \
             "https://api.github.com/repos/cloudflare/cloudflare-docs/issues" \
-            -d "{\"title\": \"Unused Image Files Found\", \"body\": \"$(cat unused_files.txt)\"}"
+            -d "$JSON_PAYLOAD"

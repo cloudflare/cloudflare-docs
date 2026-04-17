@@ -1,0 +1,31 @@
+---
+pcx_content_type: reference
+title: RtkJoinLivestreamButton
+description: API reference for RtkJoinLivestreamButton component (Android Library)
+---
+
+A button for joining or leaving the livestream stage.
+
+## Methods
+
+| Method     | Parameters                   | Description                          |
+| ---------- | ---------------------------- | ------------------------------------ |
+| `activate` | `meeting: RealtimeKitClient` | Bind the button to the meeting state |
+
+## Usage Examples
+
+### Basic Usage
+
+```xml
+<com.cloudflare.realtimekit.ui.view.RtkJoinLivestreamButton
+    android:id="@+id/rtk_join_livestream"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
+```
+
+### With Methods
+
+```kotlin
+val joinLivestreamButton = findViewById<RtkJoinLivestreamButton>(R.id.rtk_join_livestream)
+joinLivestreamButton.activate(meeting)
+```

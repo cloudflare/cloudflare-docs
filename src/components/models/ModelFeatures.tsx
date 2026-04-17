@@ -1,6 +1,9 @@
 import type { WorkersAIModelsSchema } from "~/schemas";
+import type { ResolvedModel } from "~/util/model-types";
 
-const ModelFeatures = ({ model }: { model: WorkersAIModelsSchema }) => {
+type ModelType = WorkersAIModelsSchema | ResolvedModel;
+
+const ModelFeatures = ({ model }: { model: ModelType }) => {
 	const nf = new Intl.NumberFormat("en-US");
 	const currencyFormatter = new Intl.NumberFormat("en-US", {
 		style: "currency",

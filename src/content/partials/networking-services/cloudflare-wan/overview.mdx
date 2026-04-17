@@ -12,6 +12,7 @@ params:
   - zeroTrustUrl
   - bgpRoutesUrl
   - wanTransformationUrl
+  - virtualNetworksUrl?
 ---
 
 import {
@@ -136,6 +137,18 @@ cta="Automate your cloud on-ramps"
 	Replace MPLS circuits and hub-and-spoke routing with cloud-native networking.
 	Compare WAN approaches and plan an incremental migration.
 </Feature>
+
+{props.virtualNetworksUrl && (
+<Feature
+	header="Virtual networks"
+	href={props.virtualNetworksUrl}
+	cta="Learn about virtual networks"
+>
+	Understand how virtual networks provide routing isolation within your
+	Cloudflare account, keeping traffic separated between environments,
+	partners, or applications.
+</Feature>
+)}
 
 ---
 

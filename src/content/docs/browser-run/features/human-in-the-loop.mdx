@@ -1,0 +1,80 @@
+---
+pcx_content_type: how-to
+title: Human in the Loop
+description: Temporarily hand off browser control to a human operator for authentication, sensitive actions, or tasks that are difficult to fully automate.
+sidebar:
+  order: 2
+  badge: Beta
+---
+
+Some browser automation workflows require manual intervention. A login page may need multi-factor authentication, a form may require sensitive credentials you do not want to pass to an automation script, or a task may be too complex to fully automate. Human in the Loop lets a human step into a live browser session through [Live View](/browser-run/features/live-view/) to handle what automation cannot, then hand control back to the script.
+
+## How it works
+
+Human in the Loop works with any [Browser Session](/browser-run/#integration-methods) and uses [Live View](/browser-run/features/live-view/) to give humans access:
+
+1. Your automation script navigates to a page that needs human input.
+2. The script retrieves the [Live View](/browser-run/features/live-view/) URL from the session's target list and shares it with a human operator (for example, by sending it via Slack, email, or displaying it in a user interface).
+3. The human operator opens the Live View URL and completes the required action (logging in, solving a CAPTCHA, entering sensitive data, etc.).
+4. The automation script detects that the human is done (for example, by waiting for a navigation event or polling for a page element) and resumes.
+
+A more structured handoff flow where the agent can signal that it needs help and notify a human is coming soon.
+
+## Example: login with human assistance
+
+This example uses [Puppeteer](/browser-run/puppeteer/) connected to Browser Run via the [CDP](/browser-run/cdp/) endpoints. The script navigates to a login page, shares a Live View URL for a human to enter credentials, then continues the automation after login completes.
+
+```js
+import puppeteer from "puppeteer-core";
+
+const ACCOUNT_ID = "<your-account-id>";
+const API_TOKEN = "<your-api-token>";
+
+// Create a browser session via CDP
+const response = await fetch(
+	`https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/browser-rendering/devtools/browser?keep_alive=600000&targets=true`,
+	{
+		method: "POST",
+		headers: { Authorization: `Bearer ${API_TOKEN}` },
+	},
+);
+const { webSocketDebuggerUrl, targets } = await response.json();
+const liveUrl = targets[0].devtoolsFrontendUrl;
+
+// Connect Puppeteer to the session
+const browser = await puppeteer.connect({
+	browserWSEndpoint: webSocketDebuggerUrl,
+	headers: { Authorization: `Bearer ${API_TOKEN}` },
+});
+
+const page = await browser.newPage();
+await page.goto("https://example.com/login");
+
+// Share the Live View URL with the human operator (for example, send it via Slack, email, or display it in a UI)
+console.log(`Human input needed. Open this URL: ${liveUrl}`);
+
+// Wait for the human to complete login (5 minute timeout — the script will continue after this period)
+await page.waitForNavigation({ waitUntil: "networkidle0", timeout: 300000 });
+
+// Login complete, continue automation
+const cookies = await page.cookies();
+console.log("Login complete. Continuing automation...");
+
+await page.goto("https://example.com/dashboard");
+const content = await page.content();
+
+browser.disconnect();
+```
+
+The Live View URL is valid for five minutes from when it was generated. If the URL expires before the human operator opens it, list the targets again to get a fresh URL.
+
+## Use cases
+
+- **Authentication flows**: Login pages with MFA, SSO, or CAPTCHA that cannot be bypassed programmatically
+- **Sensitive data entry**: Forms requiring credentials or personal information you do not want to pass to an automation script
+- **Complex interactions**: One-off tasks that are too difficult or not worth fully automating, such as configuring a dashboard or approving a workflow
+- **Verification steps**: Confirming an order, reviewing generated content, or approving an action before the script proceeds
+
+:::note[Bot detection]
+Browser Run requests are [always identified as bot traffic](/browser-run/faq/#will-browser-run-be-detected-by-bot-management). Even with a human controlling the session, some third-party services may still block the request.
+:::

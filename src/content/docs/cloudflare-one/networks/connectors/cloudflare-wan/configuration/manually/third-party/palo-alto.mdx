@@ -4,7 +4,8 @@ title: Palo Alto Networks NGFW
 head:
   - tag: title
     content: Palo Alto Networks Next-Generation Firewall
-
+tags:
+  - IPsec
 ---
 
 import { Render } from "~/components";
@@ -12,9 +13,7 @@ import { Render } from "~/components";
 <Render file="cloudflare-wan/third-party/palo-alto"
   product="networking-services"
   params={{
-    configureTwoIpsecTunnelsUrl: "/cloudflare-one/networks/connectors/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels",
-    configureBidirectionalHealthChecksUrl: "/cloudflare-one/networks/connectors/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels",
-    addTunnelsUrl: "/cloudflare-one/networks/connectors/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/",
-    staticRouteUrl: "/cloudflare-one/networks/connectors/cloudflare-wan/configuration/manually/how-to/configure-routes/#create-a-static-route",
-    equalcostMultipathEcmpRoutingUrl: "/cloudflare-one/networks/connectors/cloudflare-wan/reference/traffic-steering/#equal-cost-multi-path-routing"
+    mssClampingUrl: "/cloudflare-one/networks/connectors/cloudflare-wan/reference/mtu-mss/#mss-clamping",
+    configureTunnelEndpointsUrl: "/cloudflare-one/networks/connectors/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/",
+    configureStaticRoutesUrl: "/cloudflare-one/networks/connectors/cloudflare-wan/configuration/manually/how-to/configure-routes/"
   }} />

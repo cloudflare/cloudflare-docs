@@ -1,0 +1,31 @@
+---
+pcx_content_type: reference
+title: RtkMoreToggleButton
+description: API reference for RtkMoreToggleButton component (Android Library)
+---
+
+A button which toggles visibility of a more menu.
+
+## Methods
+
+| Method     | Parameters                   | Description                          |
+| ---------- | ---------------------------- | ------------------------------------ |
+| `activate` | `meeting: RealtimeKitClient` | Bind the button to the meeting state |
+
+## Usage Examples
+
+### Basic Usage
+
+```xml
+<com.cloudflare.realtimekit.ui.view.controlbarbuttons.RtkMoreToggleButton
+    android:id="@+id/rtk_more_toggle"
+    android:layout_width="50dp"
+    android:layout_height="50dp" />
+```
+
+### With Methods
+
+```kotlin
+val moreToggleButton = findViewById<RtkMoreToggleButton>(R.id.rtk_more_toggle)
+moreToggleButton.activate(meeting)
+```

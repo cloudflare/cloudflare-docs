@@ -1,0 +1,27 @@
+---
+title: Context optimization for MCP server portals
+description: Reduce context window usage for MCP servers protected by portals with minimize_tools and search_and_execute query parameters.
+date: 2026-03-26
+products:
+  - access
+---
+
+[MCP server portals](/cloudflare-one/access-controls/ai-controls/mcp-portals/) support two context optimization options that reduce how many tokens tool definitions consume in the model's context window. Both options are activated by appending the `optimize_context` query parameter to the portal URL.
+
+### `minimize_tools`
+
+Strips tool descriptions and input schemas from all upstream tools, leaving only their names. The portal exposes a special `query` tool that agents use to retrieve full definitions on demand. This provides up to 5x savings in token usage.
+
+```txt
+https://<subdomain>.<domain>/mcp?optimize_context=minimize_tools
+```
+
+### `search_and_execute`
+
+Hides all upstream tools and exposes only two tools: `query` and `execute`. The `query` tool searches and retrieves tool definitions. The `execute` tool runs the upstream tools in an isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/) environment. This reduces the initial token cost to a small constant, regardless of how many tools are available through the portal.
+
+```txt
+https://<subdomain>.<domain>/mcp?optimize_context=search_and_execute
+```
+
+For more information, refer to [Optimize context](/cloudflare-one/access-controls/ai-controls/mcp-portals/#optimize-context).

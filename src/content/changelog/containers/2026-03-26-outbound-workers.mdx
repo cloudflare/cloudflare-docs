@@ -32,13 +32,6 @@ In this example, requests from the container to `http://my.worker` will run the 
 and any other HTTP requests will run the `outbound` handler. These handlers run entirely inside the Workers runtime,
 outside of the container sandbox.
 
-:::note[TLS support coming soon]
-Containers and Sandboxes currently only intercept HTTP traffic. HTTPS interception is coming soon. This will enable using Workers as a transparent proxy for credential injection.
-
-Even though this is just using HTTP, traffic to Workers is secure and runs on the same machine as the container.
-If needed, you can also upgrade requests to TLS from the Worker itself.
-:::
-
 ## Access Workers bindings
 
 Each handler has access to `env`, so it can call any binding set in [Wrangler config](/workers/wrangler/configuration/#bindings).

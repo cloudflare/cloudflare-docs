@@ -345,6 +345,30 @@ Type: `int`
 
 Total view of Time To First Byte as measured at Cloudflare's edge. Starts after a TCP connection is established and ends when Cloudflare begins returning the first byte of a response to eyeballs. Includes TLS handshake time (for new connections) and origin response time.
 
+## FirewallForAIInjectionScore
+
+Type: `int`
+
+The score indicating the likelihood of a prompt injection attack in the request, as determined by Firewall for AI.
+
+## FirewallForAIPIICategories
+
+Type: `array[string]`
+
+List of PII categories detected in the request by Firewall for AI.
+
+## FirewallForAITokenCount
+
+Type: `int`
+
+The number of tokens in the request, as counted by Firewall for AI.
+
+## FirewallForAIUnsafeTopicCategories
+
+Type: `array[string]`
+
+List of unsafe topic categories detected in the request by Firewall for AI.
+
 ## FraudAttack
 
 Type: `string`

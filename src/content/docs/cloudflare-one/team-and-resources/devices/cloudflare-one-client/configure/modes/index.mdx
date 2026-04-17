@@ -3,6 +3,9 @@ pcx_content_type: reference
 title: Client modes
 sidebar:
   order: 2
+tags:
+  - DNS
+  - Posture
 ---
 
 You can deploy the Cloudflare One Client (formerly WARP) in different modes to control the types of traffic sent to Cloudflare Gateway. The client mode determines which Zero Trust features are available on the device.
@@ -11,7 +14,7 @@ You can deploy the Cloudflare One Client (formerly WARP) in different modes to c
 
 The Cloudflare One Client routes device traffic for all ports and protocols, and forwards DNS resolution to the [client DNS resolver](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/dns-resolver-ips/).
 
-Use when you want to enforce advanced firewall/proxy functionalities and device posture rules.
+Use when you want full security coverage, including DNS filtering, HTTP inspection, network firewall policies, and device posture checks.
 
 | DNS filtering | Network filtering | HTTP filtering | Features enabled                                                                                                                                        |
 | ------------- | ----------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -91,7 +94,7 @@ To make more complex routing decisions (such as, routing traffic directly to the
 
 ## Posture only mode
 
-The Cloudflare One Client only provides asynchronous information to provide device health and posture data, which can be referenced in security policies. The client does not control device routing or forward DNS resolution.
+The Cloudflare One Client collects device health and posture data, which you can reference in your security policies. The client does not route traffic or forward DNS queries in this mode.
 
 Use when you only want to enforce [Cloudflare One Client device posture checks](/cloudflare-one/reusable-components/posture-checks/client-checks/) for zones in your account. To set up Posture only mode, refer to the [dedicated page](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/device-information-only/).
 
