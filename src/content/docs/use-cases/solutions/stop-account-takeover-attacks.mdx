@@ -20,7 +20,7 @@ import {
   Render,
 } from "~/components";
 
-Protecting login endpoints requires multiple layers of defense because attackers use different techniques: credential stuffing with leaked password lists, brute force at high volume, and automated scripts that bypass browser-based protections. This guide covers five stages: enforce HTTPS, turn on bot protection, add Turnstile to your login form, create rate limiting and custom rules for suspicious patterns, and monitor for ongoing attacks. It combines [Turnstile](/turnstile/), Application Security [rate limiting rules](/waf/rate-limiting-rules/) and [custom rules](/waf/custom-rules/), [SSL/TLS](/ssl/) transport security, and [bot protection](/bots/). The core workflow covers features available on Free, Pro, and Business plans. Enterprise features such as leaked credentials custom detection locations and Bot Management custom rules are included as callouts.
+Protecting login endpoints requires multiple layers of defense because attackers use different techniques: credential stuffing with leaked password lists, brute force at high volume, and automated scripts that bypass browser-based protections. This guide covers five stages: enforce HTTPS, turn on bot protection, add Turnstile to your login form, create rate limiting and custom rules for suspicious patterns, and monitor for ongoing attacks. It combines [Turnstile](/turnstile/), Application Security [rate limiting rules](/waf/rate-limiting-rules/) and [custom rules](/waf/custom-rules/), [SSL/TLS](/ssl/) transport security, and [Cloudflare bot solutions](/bots/). The core workflow covers features available on Free, Pro, and Business plans. Enterprise features such as leaked credentials custom detection locations and Bot Management custom rules are included as callouts.
 
 :::note
 Most procedures in this guide are configured per domain. Select your domain in the Cloudflare dashboard before starting. Turnstile is the exception. It is configured at the account level.
@@ -51,11 +51,11 @@ Always Use HTTPS redirects all visitor requests from `http` to `https` for all s
 </Steps>
 
 :::note
-Do not perform redirects at your origin web server when Always Use HTTPS is turned on. Dual redirects from both Cloudflare and your origin can cause [redirect loop errors](/ssl/troubleshooting/too-many-redirects/).
+Do not perform redirects at your origin web server when Always Use HTTPS is turned on. Dual redirects from both Cloudflare and your origin can cause redirect loop errors.
 :::
 
 :::note[Optional: HTTP Strict Transport Security (HSTS)]
-For additional transport hardening, consider enabling [HTTP Strict Transport Security (HSTS)](/ssl/edge-certificates/additional-options/http-strict-transport-security/). HSTS tells browsers to only connect over HTTPS, preventing downgrade attacks on the initial request. HSTS is irreversible for the configured Max Age duration. If you later disable HTTPS, your site becomes inaccessible until the Max Age expires. Review the [requirements](/ssl/edge-certificates/additional-options/http-strict-transport-security/#requirements) before turning it on.
+For additional transport hardening, consider enabling HTTP Strict Transport Security (HSTS). HSTS tells browsers to only connect over HTTPS, preventing downgrade attacks on the initial request. HSTS is irreversible for the configured Max Age duration. If you later disable HTTPS, your site becomes inaccessible until the Max Age expires. Review the [HSTS requirements](/ssl/edge-certificates/additional-options/http-strict-transport-security/#requirements) before turning it on.
 :::
 
 ## Turn on bot protection
@@ -214,7 +214,7 @@ Turnstile provides test site keys that return predictable results without contac
 - **Always blocks**: Use site key `2x00000000000000000000AB` and secret key `2x0000000000000000000000000000000AA` to simulate a failed challenge.
 - **Forces interactive challenge**: Use site key `3x00000000000000000000FF` to test the interactive challenge flow.
 
-For the full list of test keys and expected behaviors, refer to [Testing](/turnstile/troubleshooting/testing/).
+For the full list of test keys and expected behaviors, refer to [Test your Turnstile implementation](/turnstile/troubleshooting/testing/).
 
 ### Rate limit your login endpoint
 
@@ -337,7 +337,11 @@ Application Security [custom rules](/waf/custom-rules/) and [traffic detections]
 
 Leaked credentials detection scans incoming login requests for usernames and passwords that appear in known data breach databases. Cloudflare hashes credentials before comparison and does not store plaintext passwords. When a match is found, the detection populates fields you can use in custom rules and rate limiting rules.
 
-The `cf.waf.credential_check.password_leaked` field is available on all plans. The `cf.waf.credential_check.username_and_password_leaked` field requires a Pro plan or above.
+The `cf.waf.credential_check.password_leaked` field is available on all plans.
+
+:::note
+The `cf.waf.credential_check.username_and_password_leaked` field requires a Pro plan or above.
+:::
 
 {/* Confirmed: /waf/detections/leaked-credentials/ says "Available on all plans" for password_leaked and "Requires a Pro plan or above" for username_and_password_leaked */}
 
@@ -607,13 +611,17 @@ Security Events Alert notifications are available on Business and Enterprise pla
 
 </Steps>
 
-For the full list of available notification types, refer to [Notification available](/notifications/notification-available/).
+For the full list of available notification types, refer to [Available Notifications](/notifications/notification-available/).
 
-### Review bot traffic patterns (Pro plan and above)
+### Review bot traffic patterns
 
 {/* Source: /bots/concepts/bot-score/ — bot score groupings */}
 
-Pro, Business, and Enterprise customers can view bot traffic analytics to track bot score distribution on their login endpoint over time. A sudden spike in low-score traffic (scores 1-29) on your login path is an early signal of a credential stuffing campaign.
+:::note
+Bot traffic analytics require a Pro plan or above.
+:::
+
+Bot traffic analytics show bot score distribution on your login endpoint over time. A sudden spike in low-score traffic (scores 1-29) on your login path is an early signal of a credential stuffing campaign.
 
 <Steps>
 
@@ -658,7 +666,7 @@ If you see sustained automated traffic reaching your login endpoint despite the 
 
 - [Get started with Turnstile](/turnstile/get-started/) — create widgets and implement client-side and server-side validation
 - [Server-side validation](/turnstile/get-started/server-side-validation/) — validate Turnstile tokens on your server
-- [Testing](/turnstile/troubleshooting/testing/) — test site keys for development and staging environments
+- [Test your Turnstile implementation](/turnstile/troubleshooting/testing/) — test site keys for development and staging environments
 - [Integrate Turnstile, WAF, and Bot Management](/turnstile/tutorials/integrating-turnstile-waf-and-bot-management/) — tutorial for combining Turnstile with WAF rules
 
 **SSL/TLS**
