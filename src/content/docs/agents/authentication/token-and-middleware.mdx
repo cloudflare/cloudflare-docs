@@ -22,17 +22,17 @@ The examples below assume you have already [configured your Agent's Durable Obje
 
 `routeAgentRequest` accepts two optional hooks:
 
-| Hook              | Runs before                                   | Typical credential source      |
-| ----------------- | --------------------------------------------- | ------------------------------ |
-| `onBeforeConnect` | A WebSocket upgrade request reaches the Agent | Query parameter (`?token=...`) |
-| `onBeforeRequest` | An HTTP request reaches the Agent             | `Authorization` header         |
+| Hook              | Runs before                                   | Typical credential source                 |
+| ----------------- | --------------------------------------------- | ----------------------------------------- |
+| `onBeforeConnect` | A WebSocket upgrade request reaches the Agent | Query parameter (`?token=...`)            |
+| `onBeforeRequest` | An HTTP request reaches the Agent             | `Authorization` header or query parameter |
 
 Both hooks follow the same contract:
 
 - Return a `Request` (or `void`) to allow the request through to the Agent.
 - Return a `Response` to short-circuit and reject the request (for example, a `401 Unauthorized`).
 
-Both hooks also receive a second argument `{ party, name }` containing the resolved Agent class name and instance name from the URL. You can use this to make per-instance authorization decisions — for example, restricting which Agents a user can access.
+Both hooks also receive a second argument containing the resolved Agent `className` and instance `name` from the URL. You can use this to make per-instance authorization decisions — for example, restricting which Agents a user can access.
 
 ### Validate a static token
 
@@ -122,7 +122,9 @@ function extractToken(request: Request): string | null {
 	const queryToken = new URL(request.url).searchParams.get("token");
 	if (queryToken) return queryToken;
 
-	// HTTP clients pass tokens in the Authorization header.
+	// HTTP clients typically use the Authorization header. However,
+	// the SDK also appends query parameters from the useAgent `query`
+	// option on its own HTTP requests, so check both sources.
 	const authHeader = request.headers.get("Authorization");
 	if (authHeader?.startsWith("Bearer ")) return authHeader.slice(7);
 
@@ -169,6 +171,12 @@ Key points for JWT validation:
 - **JWKS caching** — `createRemoteJWKSet` fetches and caches the public keys from your identity provider. It automatically refreshes when keys rotate.
 - **Clock skew** — `jose` allows a small clock tolerance by default. For Workers environments, this is usually sufficient.
 
+:::note[Check both header and query parameter in `onBeforeRequest`]
+
+When using the `useAgent` React hook, the `query` option appends parameters to both WebSocket upgrade requests **and** the SDK's own HTTP requests (for example, fetching initial messages). This means `onBeforeRequest` should check the query parameter as a fallback, not only the `Authorization` header. The `extractToken` helper above handles both sources.
+
+:::
+
 ### Pass tokens from the client
 
 When using the `useAgent` React hook, pass the token via the `query` parameter. The SDK appends these as query parameters to the WebSocket URL:
@@ -213,6 +221,9 @@ export default {
 			(await routeAgentRequest(request, env, {
 				onBeforeConnect: async (req, { name }) => {
 					const token = new URL(req.url).searchParams.get("token");
+					if (!token) {
+						return Response.json({ error: "Missing token" }, { status: 401 });
+					}
 					const payload = await verifyJwt(token);
 					if (!payload) {
 						return Response.json({ error: "Unauthorized" }, { status: 401 });
