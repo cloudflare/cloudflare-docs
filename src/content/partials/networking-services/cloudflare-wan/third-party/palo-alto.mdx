@@ -1,6 +1,8 @@
 ---
 params:
   - mssClampingUrl
+  - configureTunnelEndpointsUrl
+  - configureStaticRoutesUrl
 ---
 {/* Consumed by:
   - /cloudflare-one/networks/connectors/cloudflare-wan/configuration/manually/third-party/palo-alto/
@@ -134,9 +136,9 @@ This guide is a companion to the Cloudflare WAN IPsec VPN Reference Architecture
 
 This guide assumes the following apply:
 
-- Already configured IPsec Tunnels and Static Routes in the Cloudflare Dashboard
+- Already configured <a href={props.configureTunnelEndpointsUrl}>IPsec tunnels</a> and <a href={props.configureStaticRoutesUrl}>static routes</a> in the Cloudflare dashboard
 - Used the Cloudflare Dashboard to obtain the Local Identifier (FQDN/hostname) and generate a Pre-Shared Key for each of the IPsec tunnels
-- Understand the importance of [MSS clamping]({props.mssClampingUrl}) and adjusting it based on the traffic flows traversing the Cloudflare WAN IPsec Tunnels
+- Understand the importance of <a href={props.mssClampingUrl}>MSS clamping</a> and adjusting it based on the traffic flows traversing the Cloudflare WAN IPsec Tunnels
 - Highly Available/Fault Tolerant Palo Alto Networks NGFW configurations, while possible, are out of scope.
 
 ## High-Level Steps
