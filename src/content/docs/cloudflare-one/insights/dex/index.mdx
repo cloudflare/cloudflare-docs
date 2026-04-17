@@ -1,5 +1,8 @@
 ---
 pcx_content_type: navigation
+description: Digital experience resources and guides for Zero Trust analytics.
+products:
+  - cloudflare-one
 title: Digital experience
 sidebar:
   order: 1
@@ -9,7 +12,7 @@ import { DirectoryListing, Render } from "~/components";
 
 <Render file="dex/intro" product="cloudflare-one" />
 
-DEX is compatible with Cloudflare's [Customer Metadata Boundary](/data-localization/metadata-boundary/) for the 'EU' (European Union) which ensures that customer log will not leave the 'EU' region.
+DEX is compatible with Cloudflare's [Customer Metadata Boundary](/data-localization/metadata-boundary/) (CMB) for the EU (European Union). When CMB is configured for the EU, customer logs are stored exclusively in the EU region.
 
 <Render file="analytics/observability-tools-note" product="cloudflare-one" />
 
@@ -18,7 +21,7 @@ DEX is compatible with Cloudflare's [Customer Metadata Boundary](/data-localizat
 If a user notifies that “the connection is not working” or “performance is slow,” DEX allows you to:
 
 - Use [device monitoring](/cloudflare-one/insights/dex/monitoring/) to check device health and endpoint connectivity.
-- Test network health and application responsiveness with [synthetic tests](/cloudflare-one/insights/dex/tests/).
+- Test network health and application responsiveness with [synthetic tests](/cloudflare-one/insights/dex/tests/) — automated connectivity checks that run periodically from user devices.
 - Identify whether problems originate from the device (such as [issues with the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/troubleshooting-guide/)), the network, or Cloudflare.
 
 ## Troubleshooting other Cloudflare One features

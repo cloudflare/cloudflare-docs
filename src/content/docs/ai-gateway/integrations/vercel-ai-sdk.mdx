@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Details, Tabs, TabItem } from "~/components";
+import { Details, Tabs, TabItem, TypeScriptExample } from "~/components";
 import CodeSnippets from "~/components/ai-gateway/code-examples.astro";
 
 The [Vercel AI SDK](https://sdk.vercel.ai/) is a TypeScript library for building AI applications. The SDK supports many different AI providers, tools for streaming completions, and more.
@@ -24,6 +24,8 @@ npm install ai-gateway-provider
 ### AI binding with third-party models
 
 If you are already using the [`workers-ai-provider`](https://www.npmjs.com/package/workers-ai-provider) package, you can route requests through AI Gateway to call third-party models without needing separate provider SDKs. Pass a `gateway` option with your gateway ID to `createWorkersAI`:
+
+<TypeScriptExample>
 
 ```ts
 import { createWorkersAI } from "workers-ai-provider";
@@ -46,7 +48,9 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
-This works with any [supported provider and model](/ai-gateway/usage/providers/) available through AI Gateway.
+</TypeScriptExample>
+
+This works with any [supported provider and model](/ai/models/) available through AI Gateway.
 
 ### Fallback Providers
 

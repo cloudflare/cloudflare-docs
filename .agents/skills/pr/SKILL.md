@@ -20,7 +20,9 @@ When asked to update or edit an existing PR description (or title), follow these
 2. **If the description is empty**, treat it as a new PR body and follow the template and guidelines in the "Creating a new PR" section below.
 3. **Follow the existing format** — if the author has structured their description in a particular way, preserve that structure. Do not reformat, reorder, or restructure sections they wrote.
 4. **Only change what was asked** — make the minimum edit necessary to fulfill the request. Do not "improve" unrelated phrasing, fix grammar elsewhere, rewrite the summary, or modify checklist items that were not part of the request.
-5. Apply the edit using `gh pr edit <number> --body "..."` or `--title "..."`.
+5. Apply the edit:
+   - **Title**: `gh pr edit <number> --title "..."`
+   - **Body**: Write the updated body to a temp file using the Write tool, then run `gh pr edit <number> --body-file /tmp/pr-body.md` and clean up with `rm /tmp/pr-body.md`. Do not use `--body "..."` — shell quoting mangles backticks and other Markdown formatting.
 
 ## Creating a new PR
 
@@ -161,7 +163,7 @@ Go through each item and decide whether it applies:
 
 1. **Changelog entry** — Required if the PR documents a new feature, enhancement, or noteworthy change to a Cloudflare product. Remove this item if the PR is a fix, typo correction, internal restructure, or style update.
 
-2. **Style guide adherence** — Keep this item only if the PR touches user-facing authored content in `src/content/` (MDX pages, partials, changelogs, frontmatter, or images). The style guide covers writing guidelines, formatting, grammar, component usage, content types, and links — all of which only apply to content rendered on the site. Remove this item for PRs that change source code, tooling, CI, configuration files, agent skills, or any other non-content assets — even if those files happen to be Markdown.
+2. **Style guide adherence** — Check the diff for files under `src/content/` or authored component files (`.mdx`, `.astro`, `.css`). Keep this item **only** if at least one such file was added or modified. Remove this item if the PR exclusively changes source code (`.ts`, `.tsx`, `.js`), tooling, CI, configuration files, agent skills, or any other non-content assets — even if those files live under `src/` or happen to be Markdown.
 
 3. **Issue opened for larger changes** — Keep this item if the PR adds a new page, restructures a section, or addresses known inaccuracies. Remove it for small focused changes.
 
@@ -180,10 +182,16 @@ These patterns create review friction and will result in the PR being sent back:
 
 ## Step 4 — Create the PR
 
-Build the PR body by starting from the template read in Step 3 — replace the summary placeholder comment with your actual summary, remove checklist items that do not apply, and handle the screenshots section per the guidance above. Then create the PR as a **draft**:
+Build the PR body by starting from the template read in Step 3 — replace the summary placeholder comment with your actual summary, remove checklist items that do not apply, and handle the screenshots section per the guidance above.
+
+**Important:** Do not pass the body via `--body "$BODY"` or `--body '...'` — shell quoting mangles backticks and other Markdown formatting. Instead, write the body to a temporary file and use `--body-file`:
 
 ```bash
-gh pr create --base production --draft --title "[Product] short description" --body "$BODY"
+# 1. Write the PR body to a temp file using the Write tool (not echo/cat)
+# 2. Create the PR referencing that file
+gh pr create --base production --draft --title "[Product] short description" --body-file /tmp/pr-body.md
+# 3. Clean up
+rm /tmp/pr-body.md
 ```
 
 All PRs MUST be created as drafts. Most contributors should not land straight into the review queue — the author should review the deploy preview first and mark the PR ready when it looks correct.
