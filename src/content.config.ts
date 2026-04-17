@@ -91,7 +91,11 @@ export const collections = {
 		schema: learningPathsSchema,
 	}),
 	directory: defineCollection({
-		loader: dataLoader("directory"),
+		loader: glob({
+			pattern: "**/*.(json|yml|yaml)",
+			base: "./src/content/directory",
+			generateId: ({ entry }) => entry.replace(/\.(json|yml|yaml)$/, ""),
+		}),
 	}),
 	"workers-ai-models": defineCollection({
 		loader: dataLoader("workers-ai-models"),
