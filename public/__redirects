@@ -2654,6 +2654,7 @@
 /cloudflare-one/identity/idp-integration/* /cloudflare-one/integrations/identity-providers/:splat 301
 /cloudflare-one/policies/access/* /cloudflare-one/access-controls/policies/:splat 301
 /cloudflare-one/policies/browser-isolation/* /cloudflare-one/remote-browser-isolation/:splat 301
+/cloudflare-one/remote-browser-isolation/canvas-rendering/ /cloudflare-one/remote-browser-isolation/canvas-remoting/ 301
 /cloudflare-one/policies/data-loss-prevention/* /cloudflare-one/data-loss-prevention/:splat 301
 /cloudflare-one/policies/gateway/* /cloudflare-one/traffic-policies/:splat 301
 /cloudflare-one/team-and-resources/devices/agentless/dns/* /cloudflare-one/networks/resolvers-and-proxies/dns/:splat 301
