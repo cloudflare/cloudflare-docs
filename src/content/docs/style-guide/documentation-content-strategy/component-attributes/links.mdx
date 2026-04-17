@@ -35,6 +35,50 @@ Use a _Related resources_ section at the end of your document for:
 
 External links placed in-paragraph are strongly discouraged because Cloudflare has no control over them. For example, if a link no longer resolves, our content feels less reliable. By shifting all external links to the end of the document, the impact of a broken link is less dramatic.
 
+## Cross-linking requirements
+
+Cross-links between related pages create a navigable knowledge graph. When an AI system encounters a concept page, it can follow links to find step-by-step instructions, troubleshooting guidance, or reference data and cite the most relevant page for a user's query. Search engines use the same link structure to understand topic relationships.
+
+Every page with a `pcx_content_type` should include links to related pages in its **Related resources** section. Use the following table to determine which content types to link to from each page.
+
+| Content type | Must link to |
+| --- | --- |
+| Concept | Related how-to or get-started page; related reference page |
+| How-to | Prerequisite concept page; relevant configuration page; troubleshooting page |
+| Get started | Next-level how-to pages; product overview page |
+| Troubleshooting | Related how-to page; relevant configuration page |
+| Configuration | Parent how-to or get-started page; relevant concept page |
+| Reference | Related concept page; how-to pages that use the reference |
+| Tutorial | Related product overview; prerequisite get-started page |
+
+Links should be bidirectional. If a concept page links to a how-to, the how-to should link back to the concept page. This ensures that users (and AI systems) can traverse between pages in either direction.
+
+### Example
+
+A concept page about DNS records should link to related how-to, troubleshooting, and reference pages:
+
+```markdown title="Related resources section on a concept page"
+## Related resources
+
+- To create or modify DNS records, refer to [Manage DNS records](/dns/manage-dns-records/how-to/create-dns-records/).
+- For common DNS issues, refer to [Troubleshoot DNS records](/dns/troubleshooting/).
+- For a complete list of supported record types, refer to [DNS record types](/dns/manage-dns-records/reference/dns-record-types/).
+```
+
+The corresponding how-to page should link back:
+
+```markdown title="Related resources section on a how-to page"
+## Related resources
+
+- To learn how DNS records work, refer to [DNS records](/dns/manage-dns-records/).
+- For record type details, refer to [DNS record types](/dns/manage-dns-records/reference/dns-record-types/).
+- For common DNS issues, refer to [Troubleshoot DNS records](/dns/troubleshooting/).
+```
+
+### When links do not exist
+
+Not every content type will have a matching page for every row in the table. Link to what exists. If a related page does not exist yet, do not create a placeholder link. Instead, consider whether the missing page represents a gap in the doc set that should be addressed.
+
 ## Links for instructions in documentation
 
 Place links for example requests and API calls in code blocks.

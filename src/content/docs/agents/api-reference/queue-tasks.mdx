@@ -21,6 +21,7 @@ type QueueItem<T> = {
 	payload: T; // Data to pass to the callback function
 	callback: keyof Agent; // Name of the method to call
 	created_at: number; // Timestamp when the task was created
+	retry?: RetryOptions; // Retry options for this task
 };
 ```
 
@@ -31,13 +32,19 @@ type QueueItem<T> = {
 Adds a task to the queue for future execution.
 
 ```ts
-async queue<T>(callback: keyof this, payload: T): Promise<string>
+async queue<T>(
+  callback: keyof this,
+  payload: T,
+  options?: { retry?: RetryOptions }
+): Promise<string>
 ```
 
 **Parameters:**
 
 - `callback` - The name of the method to call when processing the task
 - `payload` - Data to pass to the callback method
+- `options` - Optional configuration:
+  - `retry` - Retry options for the callback execution. If the callback throws, it is retried with exponential backoff. Refer to [Retries](/agents/api-reference/retries/) for details on `RetryOptions`
 
 **Returns:** The unique ID of the queued task
 
@@ -296,29 +303,39 @@ class BatchProcessor extends Agent {
 
 ## Error handling
 
+Use the built-in `retry` option instead of manual re-queue logic. When a callback throws, the task is automatically retried with exponential backoff:
+
 <TypeScriptExample>
 
 ```ts
 class RobustAgent extends Agent {
-	async reliableTask(payload: any, queueItem: QueueItem) {
-		try {
-			await this.doSomethingRisky(payload);
-		} catch (error) {
-			console.error(`Task ${queueItem.id} failed:`, error);
-
-			// Optionally re-queue with retry logic
-			if (payload.retryCount < 3) {
-				await this.queue("reliableTask", {
-					...payload,
-					retryCount: (payload.retryCount || 0) + 1,
-				});
-			}
+	async reliableTask(payload: { url: string }, queueItem: QueueItem) {
+		console.log(`Processing task ${queueItem.id}`);
+		const response = await fetch(payload.url);
+		if (!response.ok) {
+			throw new Error(`Request failed: ${response.status}`);
 		}
+	}
+
+	async onMessage(connection: Connection, message: WSMessage) {
+		await this.queue(
+			"reliableTask",
+			{ url: "https://api.example.com/data" },
+			{
+				retry: {
+					maxAttempts: 5,
+					baseDelayMs: 500,
+					maxDelayMs: 10_000,
+				},
+			},
+		);
 	}
 }
 ```
 
 </TypeScriptExample>
+
+If no `retry` option is provided, the class-level defaults from `static options.retry` are used (3 attempts, 100ms base delay, 3s max delay). Refer to [Retries](/agents/api-reference/retries/) for full details.
 
 ## Best practices
 
@@ -343,9 +360,6 @@ The queue system works with other Agent SDK features:
 - No priority system (FIFO only).
 - Queue processing happens during agent execution, not as separate background jobs.
 
-:::note
-Queue tasks support built-in retries with exponential backoff. Pass `{ retry: { maxAttempts, baseDelayMs, maxDelayMs } }` as the third argument to `queue()`. Refer to [Retries](/agents/api-reference/retries/) for details.
-:::
 
 ## Queue vs Schedule
 

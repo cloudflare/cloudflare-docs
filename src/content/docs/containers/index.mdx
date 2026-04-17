@@ -1,12 +1,10 @@
 ---
-title: Containers (Beta)
+title: Containers
 order: 0
 
 pcx_content_type: overview
 sidebar:
   order: 1
-  badge:
-    text: Beta
 head:
   - tag: title
     content: Overview
@@ -18,10 +16,8 @@ import {
 	Feature,
 	LinkTitleCard,
 	Plan,
-	RelatedProduct,
 	TabItem,
 	Tabs,
-	Badge,
 	WranglerConfig,
 	LinkButton,
 } from "~/components";
@@ -137,14 +133,6 @@ regional placement, Workflow and Queue integrations, AI-generated code execution
 <CardGrid>
 
 <LinkTitleCard
-	title="Beta Information"
-	href="/containers/beta-info/"
-	icon="seti:shell"
->
-	Learn about the Containers Beta and upcoming features.
-</LinkTitleCard>
-
-<LinkTitleCard
 	title="Wrangler"
 	href="/workers/wrangler/commands/containers/#containers"
 	icon="document"
@@ -155,17 +143,13 @@ regional placement, Workflow and Queue integrations, AI-generated code execution
 
 <LinkTitleCard
 	title="Limits"
-	href="/containers/platform-details/#limits"
+	href="/containers/platform-details/limits/"
 	icon="seti:lock"
 >
 	Learn about what limits Containers have and how to work within them.
 </LinkTitleCard>
 
-<LinkTitleCard
-	title="SSH"
-	href="/containers/ssh/"
-	icon="seti:shell"
->
+<LinkTitleCard title="SSH" href="/containers/ssh/" icon="seti:shell">
 	Connect to running Container instances with SSH through Wrangler.
 </LinkTitleCard>
 

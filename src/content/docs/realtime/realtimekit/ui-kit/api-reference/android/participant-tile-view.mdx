@@ -1,0 +1,43 @@
+---
+pcx_content_type: reference
+title: RtkParticipantTileView
+description: API reference for RtkParticipantTileView component (Android Library)
+---
+
+A component which plays a participant's video and allows for placement of components like name tag and avatar.
+
+## Properties
+
+| Property                  | Type                        | Required | Default       | Description                  |
+| ------------------------- | --------------------------- | -------- | ------------- | ---------------------------- |
+| `rtk_ptv_nameTagPosition` | `BOTTOM_LEFT \| TOP_CENTER` | ❌       | `BOTTOM_LEFT` | Position of the name tag     |
+| `cardBackgroundColor`     | `color`                     | ❌       | -             | Background color of the tile |
+| `cardCornerRadius`        | `dimension`                 | ❌       | -             | Corner radius of the tile    |
+
+## Methods
+
+| Method                    | Parameters                           | Description                             |
+| ------------------------- | ------------------------------------ | --------------------------------------- |
+| `activate`                | `participant: RtkMeetingParticipant` | Bind the tile to a specific participant |
+| `refreshParticipantName`  | -                                    | Refresh the name tag and avatar         |
+| `refreshParticipantVideo` | -                                    | Refresh the video view state            |
+| `applyDesignTokens`       | `designTokens: RtkDesignTokens`      | Apply custom design tokens for theming  |
+
+## Usage Examples
+
+### Basic Usage
+
+```xml
+<com.cloudflare.realtimekit.ui.view.participanttile.RtkParticipantTileView
+    android:id="@+id/rtk_participant_tile"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    app:rtk_ptv_nameTagPosition="BOTTOM_LEFT" />
+```
+
+### With Methods
+
+```kotlin
+val tile = findViewById<RtkParticipantTileView>(R.id.rtk_participant_tile)
+tile.activate(participant)
+```

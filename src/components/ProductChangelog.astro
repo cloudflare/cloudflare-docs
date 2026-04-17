@@ -22,7 +22,7 @@ const props = z
 	.and(
 		z.object({
 			hideEntry: z.string().optional(),
-			scheduled: z.boolean().default(false),
+			publish_future_dated_entry: z.boolean().default(false),
 			numberOfEntries: z.number().int().positive().optional(),
 		}),
 	);
@@ -40,7 +40,7 @@ if ("product" in input) {
 			!e.data.hidden &&
 			e.data.products.some(({ id }) => id === input.product.id) &&
 			input.hideEntry !== e.id &&
-			input.scheduled == e.data.scheduled
+			input.publish_future_dated_entry == e.data.publish_future_dated_entry
 		);
 	};
 } else {
@@ -64,7 +64,15 @@ const changelogs =
 
 <RSSButton href={rss} />
 
-{changelogs.length === 0 && <p>There are no scheduled entries at this time.</p>}
+{
+	changelogs.length === 0 && (
+		<>
+			<br />
+			<br />
+			<p>There are no scheduled entries at this time.</p>
+		</>
+	)
+}
 
 {
 	changelogs.map(async (entry) => {

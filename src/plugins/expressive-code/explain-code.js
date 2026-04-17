@@ -93,6 +93,17 @@ export default () => {
 				opacity: var(--ec-frm-inlBtnBgHoverOrFocusOpa);
 			}
 
+			@media (hover: hover) {
+				.expressive-code .explain button {
+					opacity: 0;
+				}
+			}
+
+			.expressive-code .frame:hover .explain button:not(:hover),
+			.expressive-code .frame:focus-within :focus-visible ~ .explain button:not(:hover) {
+				opacity: 0.75;
+			}
+
 			.expressive-code .explain button:active, .expressive-code .explain button:hover {
 				opacity: 1;
 			}
@@ -157,14 +168,12 @@ export default () => {
 					context.renderData.blockAst
 				);
 
+				// Expressive Code frames plugin is required for explain button to work correctly. Ignore if it's not present.
 				if (
 					blockAst.tagName !== "figure" ||
 					!Array.isArray(blockAst.properties?.className) ||
 					!blockAst.properties.className.includes("frame")
 				) {
-					console.warn(
-						"Expressive Code frames plugin is required for explain button to work correctly",
-					);
 					return;
 				}
 

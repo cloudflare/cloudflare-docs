@@ -1,0 +1,31 @@
+---
+pcx_content_type: reference
+title: RtkVideoPeer
+description: API reference for RtkVideoPeer component (Android Library)
+---
+
+A view that renders a participant's video stream with an avatar fallback when video is disabled.
+
+## Methods
+
+| Method    | Parameters                                                   | Description                               |
+| --------- | ------------------------------------------------------------ | ----------------------------------------- |
+| `refresh` | `participant: RtkMeetingParticipant, isScreenShare: Boolean` | Update the view with the participant data |
+
+## Usage Examples
+
+### Basic Usage
+
+```xml
+<com.cloudflare.realtimekit.ui.view.RtkVideoPeer
+    android:id="@+id/rtk_video_peer"
+    android:layout_width="match_parent"
+    android:layout_height="200dp" />
+```
+
+### With Methods
+
+```kotlin
+val videoPeer = findViewById<RtkVideoPeer>(R.id.rtk_video_peer)
+videoPeer.refresh(participant, isScreenShare = false)
+```

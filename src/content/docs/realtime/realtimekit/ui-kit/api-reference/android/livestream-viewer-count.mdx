@@ -1,0 +1,31 @@
+---
+title: RtkLivestreamViewerCount
+pcx_content_type: reference
+description: API reference for RtkLivestreamViewerCount component (Android Library)
+---
+
+Displays the current viewer count for a livestream.
+
+## Methods
+
+| Method    | Parameters                   | Description                                                |
+| --------- | ---------------------------- | ---------------------------------------------------------- |
+| `refresh` | `meeting: RealtimeKitClient` | Update the viewer count based on the current meeting state |
+
+## Usage Examples
+
+### Basic Usage
+
+```xml
+<com.cloudflare.realtimekit.ui.view.RtkLivestreamViewerCount
+    android:id="@+id/rtk_viewer_count"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
+```
+
+### With Methods
+
+```kotlin
+val viewerCount = findViewById<RtkLivestreamViewerCount>(R.id.rtk_viewer_count)
+viewerCount.refresh(meeting)
+```

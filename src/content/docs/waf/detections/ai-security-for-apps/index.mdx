@@ -1,5 +1,8 @@
 ---
 pcx_content_type: concept
+description: Detect prompt injection, PII, and unsafe topics in AI application traffic.
+products:
+  - waf
 title: AI Security for Apps
 tags:
   - AI
@@ -15,13 +18,9 @@ Applications that use <GlossaryTooltip term="LLM">large language models</Glossar
 
 AI Security for Apps (formerly Firewall for AI) complements your existing WAF rules with detections designed for these LLM-specific threats. It is model-agnostic — the detections work regardless of which LLM you use.
 
-{/* prettier-ignore-start */}
-
 - [PII detection](/waf/detections/ai-security-for-apps/pii-detection/) — Detect personally identifiable information (PII) in incoming prompts, such as phone numbers, email addresses, social security numbers, and credit card numbers.
 - [Unsafe and custom topic detection](/waf/detections/ai-security-for-apps/unsafe-topics/) — Detect prompts related to unsafe subjects such as violent crimes or hate speech, or custom topics specific to your organization.
 - <a href="/waf/detections/ai-security-for-apps/prompt-injection/"><GlossaryTooltip term="prompt injection">Prompt injection</GlossaryTooltip> detection</a> — Detect prompts designed to subvert your LLM's intended behavior, such as attempts to make the model ignore its instructions or reveal its system prompt.
-
-{/* prettier-ignore-end */}
 
 When enabled, AI Security for Apps scans incoming requests to [endpoints labeled `cf-llm`](/api-shield/management-and-monitoring/endpoint-labels/) for LLM prompts that may contain threats. Currently, the detection only handles requests with a JSON content type (`application/json`).
 

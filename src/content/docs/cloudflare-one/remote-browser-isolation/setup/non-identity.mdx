@@ -1,11 +1,14 @@
 ---
 pcx_content_type: how-to
+description: Non-identity on-ramps in Browser Isolation.
+products:
+  - cloudflare-one
 title: Non-identity on-ramps
 sidebar:
   order: 5
 ---
 
-With Cloudflare One, you can isolate HTTP traffic from on-ramps such as [proxy endpoints](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) or [Cloudflare WAN](/cloudflare-wan/zero-trust/cloudflare-gateway/) (formerly Magic WAN). Since these on-ramps do not require users to log in to the Cloudflare One Client, [identity-based policies](/cloudflare-one/traffic-policies/identity-selectors/) are not supported.
+On-ramps are the methods used to route traffic from your network to Cloudflare for inspection. With Cloudflare One, you can isolate HTTP traffic from on-ramps such as [proxy endpoints](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) (which your browser connects to via PAC files to send traffic through Gateway) or [Cloudflare WAN](/cloudflare-wan/zero-trust/cloudflare-gateway/) (formerly Magic WAN, which connects your network to Cloudflare through GRE or IPsec tunnels). Since these on-ramps do not require users to log in to the Cloudflare One Client, [identity-based policies](/cloudflare-one/traffic-policies/identity-selectors/) are not supported.
 
 :::note
 
@@ -16,8 +19,8 @@ If you want to apply Isolate policies based on user identity, you will need to e
 
 1. [Install a Cloudflare certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on your devices.
 2. Connect your infrastructure to Gateway using one of the following on-ramps:
-   - Configure your browser to forward traffic to a Gateway proxy endpoint with [PAC files](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/).
-   - Connect your enterprise site router to Gateway with the [anycast GRE or IPsec tunnel on-ramp to Cloudflare WAN](/cloudflare-wan/zero-trust/cloudflare-gateway/).
+   - Configure your browser to forward traffic to a Gateway proxy endpoint with [PAC files](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) (Proxy Auto-Configuration files that tell the browser which traffic to route through the proxy).
+   - Connect your enterprise site router to Gateway with the [anycast GRE or IPsec tunnel on-ramp to Cloudflare WAN](/cloudflare-wan/zero-trust/cloudflare-gateway/) (site-to-site encrypted tunnels between your network and Cloudflare).
 3. Enable non-identity browser isolation:
    1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Browser isolation** > **Browser isolation settings**.
    2. Turn on **Allow isolated HTTP traffic when user identity is unknown**.
