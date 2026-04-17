@@ -1,0 +1,36 @@
+---
+title: Privacy Gateway metrics now available via GraphQL Analytics API
+description: Privacy Gateway metrics are now queryable through the GraphQL Analytics API. Three nodes cover requests, ingress connections, and egress connections.
+date: 2026-04-15
+---
+
+Privacy Gateway metrics are now queryable through Cloudflare's [GraphQL Analytics API](/privacy-gateway/reference/metrics/), the new default method for accessing Privacy Gateway observability data. All metrics are available through a single endpoint:
+
+```bash
+curl https://api.cloudflare.com/client/v4/graphql \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "query": "{ viewer { accounts(filter: { accountTag: $accountTag }) { ohttpRelayRequestMetricsAdaptiveGroups(filter: { date_geq: $startDate, date_leq: $endDate }, limit: 10000, orderBy: [date_ASC]) { count dimensions { date } } } } }",
+    "variables": {
+      "accountTag": "<YOUR_ACCOUNT_TAG>",
+      "startDate": "2026-04-04",
+      "endDate": "2026-04-06"
+    }
+  }'
+```
+
+#### Available nodes
+
+Three GraphQL nodes are now live, providing aggregate metrics across all key dimensions of your Privacy Gateway deployment:
+
+- **`ohttpRelayRequestMetricsAdaptiveGroups`** — Request volume, error rates, status codes, and proxy status breakdowns.
+- **`ohttpRelayIngressConnMetricsAdaptiveGroups`** — Client-to-relay connection counts, bytes transferred, and latency percentiles.
+- **`ohttpRelayEgressConnMetricsAdaptiveGroups`** — Relay-to-gateway connection counts, bytes transferred, and latency percentiles.
+
+All nodes support filtering by time, data center (`coloCode`), and endpoint, with additional node-specific dimensions such as transport protocol, HTTP version, and TLS version.
+
+#### Learn more
+
+- [GraphQL Analytics API for Privacy Gateway](/privacy-gateway/reference/metrics/)
+- [GraphQL Analytics API — getting started](/analytics/graphql-api/getting-started/)
