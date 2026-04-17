@@ -412,9 +412,7 @@ After deploying your security rules, review the results to identify false positi
    <DashButton url="/?to=/:account/:zone/security/analytics" />
 
 2. Select the **Events** tab.
-
 3. Add a filter for **URI Path** starts with `/api/`.
-
 4. Review the events. Look for legitimate clients that are being blocked (false positives). Common indicators of false positives:
    - Requests from known partner IP addresses
    - Requests with valid API keys or authorization headers
@@ -427,11 +425,8 @@ After deploying your security rules, review the results to identify false positi
 <Steps>
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and zone.
-
 2. Go to **Security** > **Events**.
-
 3. Add a filter for **URI Path** starts with `/api/`.
-
 4. Review the events. Look for legitimate clients that are being blocked (false positives). Common indicators of false positives:
    - Requests from known partner IP addresses
    - Requests with valid API keys or authorization headers
@@ -441,7 +436,7 @@ After deploying your security rules, review the results to identify false positi
 
 </TabItem> </Tabs>
 
-If you find false positives, update your custom rules to exclude the affected traffic. Refer to the exception rule procedure in the previous section.
+If you find false positives, update your custom rules to exclude the affected traffic. Refer to the [exception rule procedure](#create-exception-rules-for-legitimate-bot-clients-pro-business) in an earlier section.
 
 ### Tune rate limiting thresholds
 
