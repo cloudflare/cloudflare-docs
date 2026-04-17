@@ -35,17 +35,17 @@ Before configuring any security rules, build an inventory of your API endpoints.
 
 ### Audit your API surface manually
 
-Review your application's routing configuration and list every endpoint, including the HTTP method and expected parameters for each. Group endpoints by access level:
+1. Review your application's routing configuration and list every endpoint with its HTTP method and expected parameters.
 
-| Access Level                                               | Example endpoints              |
-|------------------------------------------------------------|--------------------------------|
-| **Public endpoints** (no authentication required)          | `/api/status`, `/api/products` |
-| **Authenticated endpoints** (require a token or session)   | `/api/account`, `/api/orders`  |
-| **Internal endpoints** (should not be publicly accessible) |  `/api/admin`, `/api/debug`    |
+2. Categorize each endpoint by access level (public, authenticated, internal). Prioritize endpoints that accept file uploads, process payments, or return sensitive data.
 
-Endpoints that accept file uploads, process payments, or return sensitive data (personal information, credentials, financial records) are the highest priority for protection.
+   | Access level                                               | Example endpoints              |
+   | ---------------------------------------------------------- | ------------------------------ |
+   | **Public endpoints** (no authentication required)          | `/api/status`, `/api/products` |
+   | **Authenticated endpoints** (require a token or session)   | `/api/account`, `/api/orders`  |
+   | **Internal endpoints** (should not be publicly accessible) | `/api/admin`, `/api/debug`     |
 
-Record this inventory in a format you can reference when writing rule expressions in later sections. A spreadsheet or OpenAPI schema file works well. If you already have an OpenAPI specification for your API, you can use it directly with API Shield's schema validation (covered in the Enterprise callout below).
+3. Record the inventory in a spreadsheet or OpenAPI schema file for reference when writing rule expressions in later sections. If you already have an OpenAPI specification, you can use it directly with API Shield's schema validation (covered in the Enterprise callout below).
 
 :::tip[API Shield Endpoint Discovery (Enterprise)]
 API Shield can automatically discover API endpoints by analyzing your traffic patterns, surfacing endpoints you may not know are being called. This includes abandoned or undocumented endpoints (also known as shadow APIs) that may be unpatched and unmonitored. For more information, refer to [API Discovery](/api-shield/security/api-discovery/).
