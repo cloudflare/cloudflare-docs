@@ -42,7 +42,7 @@ curl https://api.cloudflare.com/client/v4/graphql \
 
 ## Available nodes
 
-Three GraphQL nodes are available. All three return aggregate data only — no raw per-connection records are exposed.
+Three GraphQL nodes are available. All three return aggregate data only. No raw per-connection records are exposed.
 
 1. `ohttpRelayRequestMetricsAdaptiveGroups` — Query aggregate request volume, bytes transferred, and error rates, filterable by time, location, endpoint, and relay/gateway status code dimensions.
 2. `ohttpRelayIngressConnMetricsAdaptiveGroups` — Query the number of client-to-relay connections and round-trip latency percentiles (P50/P95/P99), filterable by time, location, endpoint, HTTP version, and TLS version dimensions.
