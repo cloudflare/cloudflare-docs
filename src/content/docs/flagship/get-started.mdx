@@ -5,8 +5,13 @@ sidebar:
   order: 2
 ---
 
-import { WranglerConfig, Tabs, TabItem } from "~/components";
-import { PackageManagers } from "starlight-package-managers";
+import {
+	WranglerConfig,
+	Tabs,
+	TabItem,
+	PackageManagers,
+	TypeScriptExample,
+} from "~/components";
 
 In this guide, you will create a feature flag in Flagship and evaluate it inside a Cloudflare Worker.
 
@@ -46,6 +51,8 @@ After updating the Wrangler configuration, run `npx wrangler types` to generate 
 
 Use the `env.FLAGS` binding to evaluate the flag. The binding provides type-safe methods that return the flag value and fall back to the default you provide if evaluation fails.
 
+<TypeScriptExample>
+
 ```ts
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
@@ -67,6 +74,8 @@ export default {
 };
 ```
 
+</TypeScriptExample>
+
 The third argument to `getBooleanValue` is the [evaluation context](/flagship/concepts/#evaluation-context). Flagship uses the context attributes to match targeting rules. In this example, the `userId` attribute is passed so that percentage rollouts and user-specific targeting work correctly.
 
 ## Deploy and test
@@ -85,7 +94,7 @@ curl "https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/?userId=user-42"
 
 Change the flag value or targeting rules in the dashboard and observe the updated response. Flag changes propagate globally within seconds.
 
-## (Optional) Use the OpenFeature SDK 
+## (Optional) Use the OpenFeature SDK
 
 If you prefer the [OpenFeature](https://openfeature.dev/) standard interface, or if you are running outside of a Cloudflare Worker, you can use the [`@cloudflare/flagship`](https://www.npmjs.com/package/@cloudflare/flagship) SDK instead of the binding.
 
@@ -102,6 +111,8 @@ Evaluate flags using the OpenFeature client:
 <Tabs> <TabItem label="With binding">
 
 Pass the Flagship binding directly to the provider. This avoids additional HTTP requests and is the recommended approach inside a Worker. Authentication is handled automatically through the binding.
+
+<TypeScriptExample>
 
 ```ts
 import { OpenFeature } from "@openfeature/server-sdk";
@@ -128,9 +139,13 @@ export default {
 };
 ```
 
+</TypeScriptExample>
+
 </TabItem> <TabItem label="With app ID">
 
 Use an app ID, account ID, and an API token when running outside of a Worker (for example, in Node.js). The provider makes HTTP requests to the Flagship evaluation endpoint. Generate an [API token](/fundamentals/api/get-started/create-token/) from your Cloudflare account with Flagship read permissions.
+
+<TypeScriptExample>
 
 ```ts
 import { OpenFeature } from "@openfeature/server-sdk";
@@ -150,6 +165,8 @@ const showNewCheckout = await client.getBooleanValue("new-checkout", false, {
 	targetingKey: "user-42",
 });
 ```
+
+</TypeScriptExample>
 
 </TabItem> </Tabs>
 

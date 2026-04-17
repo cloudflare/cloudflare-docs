@@ -9,7 +9,7 @@ import { DirectoryListing } from "~/components";
 
 Targeting rules let you serve different flag values to different users based on their attributes. Each flag can have zero or more rules.
 
-Rules are evaluated in priority order. A lower priority number is evaluated first. The first rule whose conditions match is used, and its configured variation is returned. If no rule matches, Flagship returns the flag's default variation.
+Rules are evaluated in sequential order, from top to bottom. The first rule whose conditions match is used, and its configured variation is returned. If no rule matches, Flagship returns the flag's default variation.
 
 When a flag is disabled, the default variation is always returned regardless of rules.
 

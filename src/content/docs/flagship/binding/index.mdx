@@ -5,7 +5,11 @@ sidebar:
   order: 5
 ---
 
-import { DirectoryListing, WranglerConfig } from "~/components";
+import {
+	DirectoryListing,
+	WranglerConfig,
+	TypeScriptExample,
+} from "~/components";
 
 Workers access Flagship through a binding that you add to your Wrangler configuration file. The `binding` field sets the variable name you use in your Worker code.
 
@@ -26,6 +30,8 @@ Replace `<APP_ID>` with the app ID from your Flagship app. If you have not creat
 
 The binding provides type-safe methods for evaluating feature flags. If an evaluation fails or a flag is not found, the method returns the default value you provide.
 
+<TypeScriptExample>
+
 ```ts
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
@@ -36,6 +42,8 @@ export default {
 	},
 };
 ```
+
+</TypeScriptExample>
 
 The binding has the type `Flagship` from the `@cloudflare/workers-types` package.
 

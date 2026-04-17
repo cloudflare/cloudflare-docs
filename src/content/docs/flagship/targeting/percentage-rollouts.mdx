@@ -27,8 +27,8 @@ Always provide a stable `targetingKey` (or configure a consistent bucketing attr
 
 Consider a flag `new-checkout` with the following rules:
 
-1. **Rule 1** (priority 1): `plan equals "enterprise"` — serve variation `on`.
-2. **Rule 2** (priority 2): 25% rollout on `userId` — serve variation `on`.
+1. **Rule 1**: `plan equals "enterprise"` — serve variation `on`.
+2. **Rule 2**: 25% rollout on `userId` — serve variation `on`.
 3. **Default variation**: `off`.
 
 In this configuration:

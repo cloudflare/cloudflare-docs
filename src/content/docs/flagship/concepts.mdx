@@ -5,44 +5,17 @@ sidebar:
   order: 3
 ---
 
-Flagship organizes feature flags into apps. You define flags with variations and targeting rules, then evaluate them at the edge.
+Flagship organizes feature flags into apps. You define flags with variations and targeting rules, then evaluate them within Cloudflare's global network.
 
-## How it works
+## Overview
 
-Flagship has two paths: a **write path** for managing flags and a **read path** for evaluating them.
+Flagship feature flags go through three stages from creation to evaluation:
 
-When you create or update a flag through the dashboard or API, Flagship stores the flag configuration and propagates it to Cloudflare's global network. When your Worker (or SDK) evaluates a flag, the evaluation happens at the edge using the cached configuration — no round-trip to a central server.
+1. **Configure** — Create flags and targeting rules in the [Cloudflare dashboard](https://dash.cloudflare.com/) or through the API.
+2. **Propagate** — Flagship automatically distributes your flag configuration across Cloudflare's global network within seconds.
+3. **Evaluate** — Your Worker (or SDK) evaluates flags locally using the propagated configuration. There is no round-trip to a central server.
 
-```mermaid
-flowchart TB
-accTitle: Flagship system overview
-accDescr: Diagram showing how Flagship works. The write path flows from the dashboard through the control plane worker to a Durable Object and then to KV. The read path flows from the user's Worker through the data plane worker which reads from edge-cached KV and returns an evaluation result.
-
-    YourWorker["Your Worker"]
-
-    subgraph WritePath["Write path"]
-        direction TB
-        Dashboard["Dashboard / API"]
-        ControlPlane["Flagship control <br/> plane Worker"]
-        DO[("Durable Object <br/> (source of truth)")]
-    end
-
-    subgraph ReadPath["Read path"]
-        direction TB
-        DataPlane["Flagship data <br/> plane Worker"]
-    end
-
-    KV[("KV <br/> (edge-cached config)")]
-
-    Dashboard -->|CRUD operations| ControlPlane
-    ControlPlane -->|config updates| DO
-    DO -->|store in globally <br/> distributed store| KV
-    YourWorker -->|binding| DataPlane
-    DataPlane -->|read flag config| KV
-    DataPlane -->|eval result| YourWorker
-```
-
-The write path and read path are independent. If the dashboard is temporarily unavailable, flag evaluation continues to work using the last propagated configuration.
+Flag changes take effect globally within seconds of saving. You do not need to redeploy your Worker or restart your application. If the dashboard is temporarily unavailable, flag evaluation continues to work using the last propagated configuration.
 
 ## Apps
 
@@ -75,7 +48,7 @@ Use boolean flags for simple on/off toggles. Use string, number, or JSON object 
 
 ## Targeting rules
 
-Targeting rules control which variation a flag returns for a given request. Rules are evaluated in priority order, and the first matching rule wins. If no rule matches, the default variation is returned.
+Targeting rules control which variation a flag returns for a given request. Rules are evaluated in sequential order, and the first matching rule wins. If no rule matches, the default variation is returned.
 
 Each rule contains:
 
@@ -106,8 +79,4 @@ Flagship uses context attributes to match targeting rules and to determine perce
 
 ## Flag propagation
 
-When you change a flag in the dashboard, the change propagates globally within seconds.
-
-During the brief propagation window, some regions may still serve the previous flag value. After propagation completes, all subsequent evaluations return the updated value.
-
-You do not need to redeploy your Worker or restart your application to pick up flag changes.
+During the brief propagation window after a flag change, some regions may still serve the previous flag value. After propagation completes, all subsequent evaluations return the updated value.

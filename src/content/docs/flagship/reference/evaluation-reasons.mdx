@@ -5,6 +5,8 @@ sidebar:
   order: 2
 ---
 
+import { TypeScriptExample } from "~/components";
+
 When you evaluate a flag using the binding's `*Details` methods or the OpenFeature SDK, the response includes a `reason` field that explains why a particular value was returned. If an error occurs, the response includes an `errorCode` field.
 
 ## Evaluation reasons
@@ -29,6 +31,8 @@ When an evaluation error occurs, the method returns the default value you provid
 ## Example
 
 The following example inspects evaluation details returned by `getBooleanDetails`:
+
+<TypeScriptExample>
 
 ```ts
 const details = await env.FLAGS.getBooleanDetails("my-feature", false, {
@@ -56,3 +60,5 @@ if (details.errorCode) {
 	);
 }
 ```
+
+</TypeScriptExample>
