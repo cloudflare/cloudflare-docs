@@ -62,10 +62,20 @@ Requests are sampled.
 
 | Field | Type | Description | Node |
 | --- | --- | --- | --- |
-| `requests` | `uint64` | Total request count. | Request |
-| `bytesToGateway` | `uint64` | Total bytes sent from client to gateway. | Request |
-| `bytesToClient` | `uint64` | Total bytes sent from gateway back to client. | Request |
-| `connections` | `uint64` | Total connection count. | Ingress and egress connection |
+| `bytesSentToClient` | `uint64` | Total bytes sent from the relay back to the client. | Ingress connection |
+| `bytesRecvdFromClient` | `uint64` | Total bytes received by the relay from the client. | Ingress connection |
+| `bytesSentToGateway` | `uint64` | Total bytes sent from the relay to the upstream gateway. | Egress connection |
+| `bytesRecvdFromGateway` | `uint64` | Total bytes received by the relay from the upstream gateway. | Egress connection |
+| `packetsSentToClient` | `uint64` | Total packets sent from the relay back to the client. | Ingress connection |
+| `packetsRecvdFromClient` | `uint64` | Total packets received by the relay from the client. | Ingress connection |
+| `packetsSentToGateway` | `uint64` | Total packets sent from the relay to the upstream gateway. | Egress connection |
+| `packetsRecvdFromGateway` | `uint64` | Total packets received by the relay from the upstream gateway. | Egress connection |
+
+</Details>
+
+<Details header="Count fields">
+
+All three nodes expose a `count` field that returns the total number of sampled events (requests or connections) matching the query filter.
 
 </Details>
 
@@ -73,12 +83,12 @@ Requests are sampled.
 
 | Field | Type | Description | Node |
 | --- | --- | --- | --- |
-| `clientRelayRttMsP50` | `float64` | Median round-trip time between client and relay, in milliseconds. | Ingress connection |
-| `clientRelayRttMsP95` | `float64` | 95th percentile RTT between client and relay, in milliseconds. | Ingress connection |
-| `clientRelayRttMsP99` | `float64` | 99th percentile RTT between client and relay, in milliseconds. | Ingress connection |
-| `relayGatewayRttMsP50` | `float64` | Median round-trip time between relay and gateway, in milliseconds. | Egress connection |
-| `relayGatewayRttMsP95` | `float64` | 95th percentile RTT between relay and gateway, in milliseconds. | Egress connection |
-| `relayGatewayRttMsP99` | `float64` | 99th percentile RTT between relay and gateway, in milliseconds. | Egress connection |
+| `durationMsP50` | `float64` | Median lifetime of a connection, in milliseconds. | Ingress and egress connection |
+| `durationMsP95` | `float64` | 95th percentile connection lifetime, in milliseconds. | Ingress and egress connection |
+| `durationMsP99` | `float64` | 99th percentile connection lifetime, in milliseconds. | Ingress and egress connection |
+| `handshakeDurationUsP50` | `float64` | Median TCP+TLS/QUIC handshake time, in microseconds. | Ingress and egress connection |
+| `handshakeDurationUsP95` | `float64` | 95th percentile handshake time, in microseconds. | Ingress and egress connection |
+| `handshakeDurationUsP99` | `float64` | 99th percentile handshake time, in microseconds. | Ingress and egress connection |
 
 </Details>
 
@@ -95,8 +105,10 @@ Requests are sampled.
 | `datetimeFiveMinutes` | `Time` | Timestamp truncated to five-minute intervals. |
 | `datetimeFifteenMinutes` | `Time` | Timestamp truncated to fifteen-minute intervals. |
 | `datetimeHour` | `Time` | Timestamp truncated to the hour. |
-| `colo` | `string` | Cloudflare data center that handled the request. |
+| `coloCode` | `string` | Cloudflare data center that handled the request. |
 | `endpoint` | `string` | The appId that generated traffic. |
+
+All timestamp dimensions refer to the end of each connection or request, not the start.
 
 </Details>
 
@@ -114,8 +126,17 @@ Requests are sampled.
 
 | Field | Type | Description |
 | --- | --- | --- |
+| `transport` | `string` | Transport protocol on the client-to-relay connection (`tcp`, `quic`). |
 | `httpVersion` | `string` | HTTP protocol version used for the client-to-relay connection. |
 | `tlsVersion` | `string` | TLS version negotiated on the client-to-relay connection. |
+
+</Details>
+
+<Details header="Egress connection node only">
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `transport` | `string` | Transport protocol on the relay-to-gateway connection (`tcp`, `quic`). |
 
 </Details>
 
@@ -332,15 +353,11 @@ query RelayInternalErrors(
         limit: 10000
         orderBy: [datetimeMinute_ASC]
       ) {
-        sum {
-          requests
-        }
+        count
         dimensions {
           datetimeMinute
-          datetimeFiveMinutes
-          datetimeHour
           relayStatusCode
-          colo
+          coloCode
         }
       }
     }
@@ -360,7 +377,7 @@ query RelayInternalErrors(
 
 <Details header="Errors by proxy status">
 
-Categorize relay-to-gateway failures by root cause. Filters for requests where a proxy-level error occurred and groups by `proxyStatus` and `colo`.
+Categorize relay-to-gateway failures by root cause. Filters for requests where a proxy-level error occurred and groups by `proxyStatus` and `coloCode`.
 
 ```graphql
 query ErrorsByProxyStatus(
@@ -372,19 +389,18 @@ query ErrorsByProxyStatus(
     accounts(filter: { accountTag: $accountTag }) {
       ohttpRelayRequestMetricsAdaptiveGroups(
         filter: {
-          datetime_geq: $start
-          datetime_leq: $end
+          datetimeHour_geq: $start
+          datetimeHour_leq: $end
           proxyStatus_neq: ""
         }
-        orderBy: [sum_requests_DESC]
+        limit: 10000
+        orderBy: [datetimeHour_ASC, count_DESC]
       ) {
-        sum {
-          requests
-        }
+        count
         dimensions {
           datetimeHour
           proxyStatus
-          colo
+          coloCode
         }
       }
     }
