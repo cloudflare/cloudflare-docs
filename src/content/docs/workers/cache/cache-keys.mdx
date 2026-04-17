@@ -1,0 +1,166 @@
+---
+title: Cache keys
+pcx_content_type: concept
+description: How Workers Caching builds cache keys, with guidance for service bindings, multi-tenant Workers, and gradual deployments.
+sidebar:
+  order: 2
+---
+
+import { TypeScriptExample } from "~/components";
+
+Every cached response is stored under a **cache key**. When a request arrives, Cloudflare computes a cache key for it and looks it up — on a hit, the stored response is returned; on a miss, your Worker runs and its response is stored under that key for next time.
+
+Two requests that produce the same cache key share the same cached response. Two requests that produce different cache keys get independent cached entries.
+
+This page explains what Workers Caching puts into the cache key, why each component is there, and how to reason about it when designing your Worker.
+
+## What goes into the cache key
+
+Workers Caching keys responses by:
+
+- The **target entrypoint** — which specific [named entrypoint](/workers/runtime-apis/bindings/service-bindings/rpc/#named-entrypoints) of the Worker received the request. A `default` export and an exported class are different entrypoints and do not share a cache even if they produce identical responses.
+- The **path and query string** of the request URL. Query parameter order matters — `?a=1&b=2` and `?b=2&a=1` are different cache keys. Trailing slashes matter too.
+- The invocation's [`ctx.props`](/workers/runtime-apis/bindings/service-bindings/rpc/#ctxprops), when the Worker is invoked through a service binding or RPC. See [Multi-tenant safety with `ctx.props`](#multi-tenant-safety-with-ctxprops).
+- The `x-http-method-override`, `x-http-method`, and `x-method-override` request headers.
+- The `x-forwarded-host`, `x-host`, `x-forwarded-scheme` (unless its value is `http` or `https`), `x-original-url`, `x-rewrite-url`, and `forwarded` request headers.
+
+The last two bullets are a safety measure, not something you should need to reason about. Some frameworks interpret those headers as overriding the effective method or URL of a request, which can lead to [cache poisoning](https://portswigger.net/research/practical-web-cache-poisoning) if two requests differ only in those headers but produce materially different responses. Including them in the cache key ensures a poisoned entry only affects requests that carry the same poisoned header.
+
+Requests that differ only in request headers **not** listed above (for example, `User-Agent` or `Accept-Language`) return the same cached response. This is usually what you want — you do not want every user agent string or language preference producing a separate cache entry. If you do need content negotiation, handle it inside your Worker and produce a canonical response per URL.
+
+Notably, the cache key does **not** include:
+
+- **The request's host.** The Worker's cache is keyed by path and query string, not the full URL. See [The cache belongs to the Worker, not to a domain](#the-cache-belongs-to-the-worker-not-to-a-domain).
+- **The currently invoked Worker version.** This is intentional — see [Invalidating cache across deployments](#invalidating-cache-across-deployments).
+
+At launch, you cannot inspect the exact cache key Cloudflare computed for a request. The primary signals you have for understanding cache behavior are the `Cf-Cache-Status` response header and per-invocation cache-hit information in the [Workers observability dashboard](/workers/observability/). See [Inspecting the cache key](#inspecting-the-cache-key).
+
+## The cache belongs to the Worker, not to a domain
+
+A Worker is a zoneless entity. It can be invoked through several different paths:
+
+- Directly on a `workers.dev` subdomain.
+- Through a [route](/workers/configuration/routing/routes/) on any zone you control.
+- Through a [custom domain](/workers/configuration/routing/custom-domains/) — and you can bind the same Worker to many custom domains.
+- Through a [service binding](/workers/runtime-apis/bindings/service-bindings/) from another Worker, with an arbitrary placeholder hostname in the URL.
+
+Workers Caching treats all of these as the same Worker and uses a single shared cache across them. The cache key does not include the host, so a request to `/api/users/42` hits the same cached entry whether it came in through `api.example.com`, `api.example.net`, a service binding, or a `workers.dev` URL.
+
+This is the behavior you almost always want. A Worker's responses are a function of its code and its inputs, not of which domain the request arrived through — so caching them once and serving that response back to every ingress path maximizes the cache hit rate without losing correctness.
+
+If you genuinely need different cached responses for the same path on different hostnames — for example, white-labeled tenants where `tenant-a.example.com/index` and `tenant-b.example.com/index` must produce different content — the cache key does not do this for you automatically. Instead, distinguish the tenants at your gateway Worker and pass the tenant identifier via `ctx.props`, which _is_ part of the cache key.
+
+## Invalidating cache across deployments
+
+The currently invoked Worker version is **not** part of the cache key. This surprises some developers at first, so it is worth explaining why.
+
+Most deployments do not change response content or freshness semantics — they change implementation details, fix bugs, or adjust internals. If the cache invalidated every time you deployed, you would throw away a lot of correct cached data for no benefit. And during a [gradual deployment](/workers/configuration/versions-and-deployments/gradual-deployments/), version-keyed cache entries would split the cache across the old and new versions — so while you used a gradual rollout to safely test changes on a slice of traffic, both halves would be populating independent caches from cold.
+
+So by default, cached responses are shared across versions. A response written by version A is still served after version B is deployed, as long as its TTL has not expired. In most cases this is what you want.
+
+When it is not what you want — for example, after a rollback, or when a release changes response content in a way that matters — you have two tools.
+
+### Tag responses by version, purge the tag on rollback
+
+If you want fine-grained control, tag each cached response with the Worker version that produced it. Later, purging that version tag removes every entry that version wrote, without affecting cached responses from other versions.
+
+This uses the [version metadata binding](/workers/runtime-apis/bindings/version-metadata/) to read the current version ID at request time, and prepends it as a `Cache-Tag` value. See [Version-specific purging](/workers/cache/purge/#version-specific-purging) for the full pattern with code.
+
+This is the best option if your Worker is on a gradual rollout or you might need to roll back a specific version without blowing away cached content from working versions.
+
+### Purge everything after deploy
+
+The simpler approach: after each deploy, hit a small Worker endpoint from your CI that calls [`ctx.cache.purge({ purgeEverything: true })`](/workers/cache/purge/#purge-everything). The next request after the purge re-populates the cache from whichever Worker version is live at that moment.
+
+This is coarser but requires zero in-Worker logic. Use it if your deployments always want to invalidate cache, or if you are not using gradual rollouts and do not need per-version granularity.
+
+## Multi-tenant safety with `ctx.props`
+
+When your Worker is invoked through a [service binding](/workers/runtime-apis/bindings/service-bindings/) or [RPC](/workers/runtime-apis/bindings/service-bindings/rpc/), the caller's [`ctx.props`](/workers/runtime-apis/bindings/service-bindings/rpc/#ctxprops) is part of the cache key. Two callers that invoke your Worker with different `ctx.props` get **separate cached entries** — one caller can never receive another caller's cached response.
+
+This is the mechanism that makes caching safe for multi-tenant Workers invoked over a service binding. If you use `ctx.props` to carry per-caller authorization context — user ID, tenant ID, organization, role — caching is safe by default. Responses that logically belong to one caller cannot leak to another through the cache.
+
+<TypeScriptExample filename="src/backend.ts">
+
+```ts
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+interface Props {
+	userId: string;
+}
+
+export default class Backend extends WorkerEntrypoint<Env, Props> {
+	async fetch(request: Request): Promise<Response> {
+		// ctx.props.userId is set by the caller (for example, an auth gateway).
+		// Because it is part of the cache key, User A and User B requesting the
+		// same URL get separate cache entries — there is no way for one to
+		// see the other's response.
+		const { userId } = this.ctx.props;
+		const data = { userId, timestamp: Date.now() };
+
+		return new Response(JSON.stringify(data), {
+			headers: {
+				"Content-Type": "application/json",
+				"Cache-Control": "public, s-maxage=300",
+			},
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+:::caution
+If you authenticate callers through some mechanism other than `ctx.props` — for example, by reading a custom header your gateway Worker attaches — that input is **not** automatically part of the cache key. Two callers authenticated by different header values but otherwise identical requests will share a single cached entry, which means one caller can receive another caller's response.
+
+The fix is to move per-caller authorization state into `ctx.props`. Your gateway Worker should populate `ctx.props` with whatever distinguishes callers before invoking the cached Worker. Cloudflare's standard [automatic bypass rules](/cache/concepts/cache-responses/#bypass) (`Set-Cookie`, `Authorization`) can also prevent the problem by disabling caching entirely for authenticated requests, but `ctx.props` is the recommended approach because it still lets you cache.
+:::
+
+### Service binding URL
+
+Service binding calls deserve a specific note because the URL you pass does not mean what you might think it means.
+
+When you call a service binding with [`fetch()`](/workers/runtime-apis/bindings/service-bindings/#use-the-fetch-method), the hostname in the URL is a placeholder. The request is routed via the binding, not by DNS — the hostname is never resolved. And because the host is not part of the cache key (as described in [The cache belongs to the Worker, not to a domain](#the-cache-belongs-to-the-worker-not-to-a-domain)), the placeholder has no effect on caching either. Only the **path** (and query string) contribute to the cache key, alongside the target entrypoint and `ctx.props`:
+
+<TypeScriptExample filename="src/gateway.ts">
+
+```ts
+interface Env {
+	BACKEND: Fetcher;
+}
+
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		// "internal" here is just a placeholder — it is not routed anywhere
+		// and is not part of the cache key.
+		//
+		// What identifies this cached response is:
+		//   - the BACKEND entrypoint
+		//   - the path "/api/users/42"
+		//   - whatever ctx.props the gateway passes along
+		return env.BACKEND.fetch("http://internal/api/users/42");
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+If you want cached responses to differ for different callers, vary `ctx.props`. If you want them to differ by request, vary the path or query string. Varying the hostname does nothing.
+
+## Inspecting the cache key
+
+At launch, two signals give you visibility into cache behavior:
+
+1. **The `Cf-Cache-Status` response header.** `HIT` means Cloudflare returned a cached response without running your Worker. `MISS` means your Worker ran and the response was stored. `UPDATING` means the cached response was stale and your Worker ran in the background to refresh it. `BYPASS` means caching was disabled for this request. Refer to [Cloudflare cache responses](/cache/concepts/cache-responses/) for the full set of values.
+
+2. **Cache hits in the [Workers observability dashboard](/workers/observability/).** Each invocation surfaces whether it was served from cache, so you can filter and aggregate cache-hit behavior across your Worker's traffic.
+
+Cloudflare does not currently expose the cache key composition itself. If two requests you expected to share a cached response do not, you have to reason about what part of the key differed from the components listed in [What goes into the cache key](#what-goes-into-the-cache-key). For a walkthrough of common caching problems and how to diagnose them, refer to [Debugging](/workers/cache/debugging/).
+
+## Custom cache keys
+
+At launch, the cache key is composed from the components listed in [What goes into the cache key](#what-goes-into-the-cache-key). You cannot customize the cache key directly — for example, to ignore a tracking query parameter, or to include a session cookie.
+
+{/* TODO(dan): Document the custom cache key API once available. Track use cases: ignore query strings, key on a session cookie, exclude specific query parameters, include Accept-Language or other content-negotiation headers. */}
+
+As a workaround, you can shape the request your Worker receives (for example, by stripping tracking parameters in a gateway Worker before passing the request on) or you can incorporate discriminating values into `ctx.props` so they become part of the cache key.

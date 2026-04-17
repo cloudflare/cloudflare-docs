@@ -14,6 +14,10 @@ head:
 
 You can use [Workers](/workers/) to customize cache behavior on Cloudflare's CDN. Cloudflare Workers provide flexibility in handling assets and responses by running both before and after the cache. A Worker can be configured to run before a request reaches the cache, allowing for modifications to the request, and it can also be used to modify assets once they are returned from the cache.
 
+:::note
+This page describes how Workers interact with a zone's Cloudflare Cache. Workers can also opt in to **[Workers Caching](/workers/cache/)** — a cache that sits in front of the Worker itself, so that Cloudflare returns a cached response without running the Worker. Use Workers Caching to cache the output of a Worker's logic directly, independent of any zone configuration.
+:::
+
 The diagram below illustrates a common interaction flow between Workers and Cache.
 
 ![Workers and cache flow example flow diagram.](~/assets/images/cache/workers-cache-flow.png)

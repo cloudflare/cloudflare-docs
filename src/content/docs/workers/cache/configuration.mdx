@@ -1,0 +1,226 @@
+---
+title: Configuration
+pcx_content_type: configuration
+description: Enable and configure Workers Caching.
+sidebar:
+  order: 1
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+Workers Caching is configured per Worker, in your Wrangler configuration file. When enabled, caching applies to every HTTP invocation — eyeball requests, service binding calls, and loopback calls via [`ctx.exports`](/workers/runtime-apis/bindings/service-bindings/rpc/).
+
+This is **your Worker's cache** — configured through your Worker's code and Wrangler file. Your Worker controls its cache entirely through:
+
+- The `cache.enabled` flag in your Wrangler configuration, which turns caching on or off.
+- The `Cache-Control` (and `cdn-cache-control`, `cloudflare-cdn-cache-control`) headers your Worker sets on its responses, per [RFC 9111](https://www.rfc-editor.org/rfc/rfc9111).
+- The optional `Cache-Tag` response header for bulk purging, and [`ctx.cache.purge()`](/workers/cache/purge/) for programmatic invalidation.
+
+That is the entire configuration surface.
+
+## Enable caching
+
+Add a `cache` block to your Wrangler configuration:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "my-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"cache": {
+		"enabled": true,
+	},
+}
+```
+
+</WranglerConfig>
+
+Setting `cache.enabled` to `true` causes Cloudflare to check the cache before invoking your Worker on every HTTP request.
+
+## Disable caching
+
+To turn caching off, set `cache.enabled` to `false` (or remove the `cache` block) and redeploy:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "my-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"cache": {
+		"enabled": false,
+	},
+}
+```
+
+</WranglerConfig>
+
+Disabling caching does not purge previously cached responses — it only stops Cloudflare from consulting or populating the cache on subsequent requests. If you re-enable caching later, any entries that are still within their TTL become usable again. If you need cached responses to stop being served immediately, [purge the cache](/workers/cache/purge/) after disabling.
+
+## Versioned deployments
+
+The `cache` configuration is part of your Worker version:
+
+- Each version uploaded with [`wrangler deploy`](/workers/wrangler/commands/#deploy) or [`wrangler versions upload`](/workers/wrangler/commands/#versions-upload) captures whatever `cache.enabled` value is in its Wrangler configuration.
+- Rolling back to a previous version also rolls back the `cache` setting attached to that version.
+- You can use [gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/) to turn caching on for a percentage of traffic before applying it to 100%. During a gradual rollout from a version with caching disabled to a version with caching enabled, traffic routed to the old version runs uncached as it did before, and traffic routed to the new version consults and populates the cache. Cached entries written during the rollout remain valid once the new version reaches 100% because cache entries are not keyed on the Worker version.
+
+## Environment-specific configuration
+
+The `cache` block can be set at the top level and overridden per [environment](/workers/wrangler/environments/). The typical pattern is to turn caching on in production once you are confident it is safe, while keeping staging uncached for easier debugging:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "my-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"cache": {
+		"enabled": false,
+	},
+	"env": {
+		"production": {
+			"cache": {
+				"enabled": true,
+			},
+		},
+	},
+}
+```
+
+</WranglerConfig>
+
+## Cache-Control semantics
+
+With caching enabled, your Worker is the origin for Cloudflare's cache. Standard HTTP `Cache-Control` directives on the response your Worker returns determine whether and for how long Cloudflare caches it. For the full list of directives and how they interact, refer to [Cache-Control](/cache/concepts/cache-control/).
+
+### Set `s-maxage` and `max-age` separately
+
+Use `s-maxage` to control how long Cloudflare caches a response; use `max-age` to control how long browsers cache it:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request): Promise<Response> {
+		const body = await renderPage(request);
+
+		return new Response(body, {
+			headers: {
+				"Content-Type": "text/html",
+				// Browsers cache for 5 minutes; Cloudflare caches for 1 hour.
+				"Cache-Control": "public, max-age=300, s-maxage=3600",
+			},
+		});
+	},
+} satisfies ExportedHandler;
+
+// Replace with your own rendering logic.
+async function renderPage(request: Request): Promise<string> {
+	return `<!doctype html><title>Home</title><h1>Hello</h1>`;
+}
+```
+
+</TypeScriptExample>
+
+### Use `stale-while-revalidate` for low-latency refreshes
+
+When a cached response becomes stale, `stale-while-revalidate` lets Cloudflare return the stale response immediately and refresh it in the background:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request): Promise<Response> {
+		const data = { timestamp: Date.now() };
+
+		return new Response(JSON.stringify(data), {
+			headers: {
+				"Content-Type": "application/json",
+				// Fresh for 10 minutes; may be served stale for up to 1 minute
+				// while a background revalidation runs.
+				"Cache-Control": "public, s-maxage=600, stale-while-revalidate=60",
+			},
+		});
+	},
+} satisfies ExportedHandler;
+```
+
+</TypeScriptExample>
+
+### Choose TTL and stale-while-revalidate values
+
+High cache hit rate and high freshness are in tension. Background revalidation hides the latency of refreshing the cache, but your Worker still runs once per revalidation — it is not free.
+
+Two common patterns:
+
+- **Mostly static content with a small tolerance for staleness.** Use a short `s-maxage` (for example, 60 seconds) and a longer `stale-while-revalidate` window (for example, 3600 seconds). Most requests are `HIT`s; occasional requests trigger a background refresh.
+- **"Always serve from cache" for high-traffic endpoints.** Use `max-age=0, s-maxage=0, stale-while-revalidate=<large>`. Every request returns the previously cached response immediately and triggers a background refresh. Your Worker runs once per request to revalidate, so CPU costs are close to running the Worker every time. Freshness drops as request volume drops — if no request arrives for a long time, the next request will see stale content.
+
+### Header precedence
+
+When multiple cache headers are present, the most specific wins:
+
+1. `cloudflare-cdn-cache-control` — Cloudflare-specific, highest precedence. Consumed by Cloudflare and stripped from the response returned to clients.
+2. `cdn-cache-control` — standard header for CDN-only directives. Respected by Cloudflare and passed through to downstream CDNs.
+3. `Cache-Control` — standard HTTP header. Respected by Cloudflare and passed through to clients.
+
+Use `cloudflare-cdn-cache-control` when you want a longer edge TTL than you expose to browsers without leaking the directive downstream.
+
+## Response headers
+
+### `Cf-Cache-Status`
+
+Every response carries a `Cf-Cache-Status` header indicating what happened for that request. The most common values are `HIT`, `MISS`, `UPDATING`, and `BYPASS`. For the full set of values and their meanings, refer to [Cloudflare cache responses](/cache/concepts/cache-responses/).
+
+### `Cache-Tag`
+
+The [`Cache-Tag`](/cache/how-to/purge-cache/purge-by-tags/) response header attaches tags to a cached response so you can purge it later in bulk. Cloudflare consumes this header and strips it before the response reaches the client.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request): Promise<Response> {
+		const html = `<!doctype html><title>Post</title>`;
+
+		return new Response(html, {
+			headers: {
+				"Content-Type": "text/html",
+				"Cache-Control": "public, s-maxage=3600",
+				"Cache-Tag": "blog,posts,post-123",
+			},
+		});
+	},
+} satisfies ExportedHandler;
+```
+
+</TypeScriptExample>
+
+The `Cache-Tag` header value is a comma-separated list of tags. For limits on the number, length, and character set of tags, refer to [Cache tag limits](/cache/how-to/purge-cache/purge-by-tags/#a-few-things-to-remember).
+
+### Automatic bypass conditions
+
+Workers Caching inherits Cloudflare's standard [cache bypass rules](/cache/concepts/cache-responses/#bypass). The most common triggers:
+
+- The response includes a `Set-Cookie` header.
+- The request includes an `Authorization` header (the response is treated as private unless `Cache-Control: public` explicitly overrides it).
+- The response `Cache-Control` header includes `private`, `no-store`, or `no-cache`.
+
+When any of these apply, `Cf-Cache-Status` is `BYPASS` and your Worker runs on every request.
+
+### `Vary`
+
+{/* TODO(zaidoon): Full Vary support is landing after initial release. Replace this with the accurate launch-time behavior — which values are respected, whether responses with Vary are stored at all, and the recommended workaround. */}
+
+### `Accept-Encoding` and `Content-Encoding`
+
+Your Worker controls its own content negotiation. Whatever `Content-Encoding` your Worker sets on the response is what Cloudflare stores and serves to subsequent requests.
+
+If your Worker needs to return different encodings to different clients, handle the `Accept-Encoding` request header inside your Worker and produce a single canonical encoding.
+
+{/* TODO(zaidoon): Add guidance on how to key by Accept-Encoding once Vary support lands. */}

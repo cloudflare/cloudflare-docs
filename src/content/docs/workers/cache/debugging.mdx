@@ -1,0 +1,101 @@
+---
+title: Debugging
+pcx_content_type: troubleshooting
+description: Diagnose why Workers Caching is not behaving the way you expect.
+sidebar:
+  order: 4
+---
+
+If caching is not behaving the way you expect, the `Cf-Cache-Status` response header is the first place to look. Every response carries it, and its value tells you exactly what happened for that request.
+
+:::note
+Workers Caching is **your Worker's cache**. When debugging, look at your Worker's traces and responses. Zone-level cache controls and dashboards operate on a separate cache and will not affect what Workers Caching stores or serves.
+:::
+
+## Inspect `Cf-Cache-Status`
+
+Send two requests to the same URL and compare the headers:
+
+```sh
+curl -I https://my-worker.example.workers.dev/api/users/42
+curl -I https://my-worker.example.workers.dev/api/users/42
+```
+
+Match the status value against the scenarios below.
+
+## My Worker runs on every request
+
+`Cf-Cache-Status` is `MISS` on every request, or `DYNAMIC`, or `BYPASS`. Caching is not storing anything, or a bypass rule is firing.
+
+**Check your `Cache-Control` header.** The response must carry directives that make it cacheable:
+
+- `public, s-maxage=N` — cached in Cloudflare for `N` seconds.
+- `public, max-age=N` — cached in Cloudflare and browsers for `N` seconds (if `s-maxage` is not set).
+
+A response with no `Cache-Control` header, or with `Cache-Control: private`, `no-store`, or `no-cache`, is not cached. Refer to [Cache-Control](/cache/concepts/cache-control/) for the full directive reference.
+
+**Check the request method.** Only `GET` and `HEAD` requests are cached. Everything else is `BYPASS`.
+
+**Check for automatic bypass conditions.** Cloudflare bypasses the cache when:
+
+- The response includes a `Set-Cookie` header.
+- The request includes an `Authorization` header, unless the response explicitly sets `Cache-Control: public`.
+
+If your Worker unconditionally sets `Set-Cookie` (for example, a session cookie on every response), the response is never cached. Either remove the cookie from cacheable responses, or separate cookie-setting and cacheable responses into different routes.
+
+**Check the status code.** Workers Caching follows [RFC 9111](https://www.rfc-editor.org/rfc/rfc9111). Responses with status codes that are not cacheable by default (for example, `401`, `403`, `500`) are not stored.
+
+## My Worker runs even after the first request
+
+`Cf-Cache-Status` is `MISS` on the first request but still `MISS` on subsequent requests.
+
+**The cache is likely partitioned.** The cache key includes the request path, the target entrypoint, and the invocation's `ctx.props`. Two requests that look the same to you may produce different cache keys if any of these differ.
+
+Common causes:
+
+- The URL path or query string differs between requests (even trailing slashes matter).
+- The calling Worker passes different `ctx.props` for each request — for example, a different user ID.
+- Requests are hitting different [named entrypoints](/workers/runtime-apis/bindings/service-bindings/rpc/#named-entrypoints) of the same Worker.
+
+Cloudflare does not currently expose the cache key composition, so you cannot see the computed key directly. Instead, walk through the components listed in [Cache keys](/workers/cache/cache-keys/#what-goes-into-the-cache-key) and verify each one is the same for both requests.
+
+## My cache does not update after a deployment
+
+Deploying a new Worker version does not invalidate cached responses by design — the cache key does not include the invoked Worker version. If you want a deployment to remove cached content, you have two options:
+
+- **Call [`ctx.cache.purge({ purgeEverything: true })`](/workers/cache/purge/#purge-everything)** after deploying. This is the simplest approach.
+- **Tag each cached response with the producing version** using the [version metadata binding](/workers/runtime-apis/bindings/version-metadata/), then purge that tag on rollback. Refer to [Version-specific purging](/workers/cache/purge/#version-specific-purging).
+
+## My cache never updates after content changes
+
+If your origin data changed but requests still return stale content:
+
+- **Check the TTL.** The response stays cached for `s-maxage` seconds (or `max-age` if `s-maxage` is absent). You may be looking at a response that is still within its freshness window.
+- **Purge the affected responses.** Use `ctx.cache.purge()` with tags or a path prefix to invalidate specific entries. Refer to [Purging the cache](/workers/cache/purge/).
+- **Add tags at write time.** If you did not set `Cache-Tag` headers, you cannot purge by tag. Add tags to your cached responses, deploy, and once new entries are written they become purgeable.
+
+## Two callers receive each other's cached responses
+
+This should not happen if you use `ctx.props` for per-caller authorization context. If it does, one of the following is true:
+
+- You are authenticating callers with a header or query parameter that is not part of the cache key. Move the authorization input into `ctx.props`. Refer to [Multi-tenant safety with `ctx.props`](/workers/cache/cache-keys/#multi-tenant-safety-with-ctxprops).
+- You are calling a service binding with a user-specific query parameter that is not present. The query string is part of the cache key; make sure each caller's request path actually differs.
+
+## `Cf-Cache-Status: UPDATING` appears constantly
+
+`UPDATING` means the response was served from cache while stale and your Worker is running in the background to refresh it. This is expected behavior when using `stale-while-revalidate`.
+
+If you see `UPDATING` more often than you expect:
+
+- Your `s-maxage` is shorter than your request arrival rate. Every request that arrives after `s-maxage` elapses triggers a revalidation.
+- With `max-age=0, s-maxage=0, stale-while-revalidate=<large>`, **every** request triggers a revalidation. This is "always serve from cache" behavior, not "don't run the Worker." Refer to [Choose TTL and stale-while-revalidate values](/workers/cache/configuration/#choose-ttl-and-stale-while-revalidate-values).
+
+## My response is larger than the size limit
+
+If a response is too large to cache, Cloudflare does not store it. You will see `Cf-Cache-Status: MISS` on every request even though the response otherwise looks cacheable.
+
+For per-plan response size limits, refer to [Cacheable size limits](/cache/concepts/default-cache-behavior/#cacheable-size-limits). Note that at launch all Workers Caching responses are subject to the Free plan size limit — refer to [Response size](/workers/cache/limitations/#response-size) for details.
+
+## I need more visibility
+
+At launch, the primary debugging surfaces are the `Cf-Cache-Status` response header and per-invocation cache-hit information in the [Workers observability dashboard](/workers/observability/).
