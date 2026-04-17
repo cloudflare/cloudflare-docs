@@ -152,7 +152,7 @@ You need both the sitekey and secret key in the following steps.
 
 #### 2. Add the client-side snippet
 
-Add the Turnstile script and widget div to your login form. Replace `<YOUR_SITE_KEY>` with the site key from the previous step.
+Add the Turnstile script and widget div to your login form. Replace `<YOUR-SITE-KEY>` with the sitekey from the previous step.
 
 {/* Source: /turnstile/tutorials/integrating-turnstile-waf-and-bot-management/ — client-side integration */}
 
@@ -160,7 +160,7 @@ Add the Turnstile script and widget div to your login form. Replace `<YOUR_SITE_
 <form id="login-form" action="/login" method="POST">
   <input type="text" name="username" placeholder="Username" required />
   <input type="password" name="password" placeholder="Password" required />
-  <div class="cf-turnstile" data-sitekey="<YOUR_SITE_KEY>"></div>
+  <div class="cf-turnstile" data-sitekey="<YOUR-SITE-KEY>"></div>
   <button type="submit">Log in</button>
 </form>
 
@@ -211,7 +211,7 @@ Turnstile provides test site keys that return predictable results without contac
 {/* Source: /turnstile/troubleshooting/testing/ — testing procedures */}
 
 - **Always passes**: Use site key `1x00000000000000000000AA` and secret key `1x0000000000000000000000000000000AA` to simulate a successful challenge.
-- **Always blocks**: Use site key `2x00000000000000000000AB` and secret key `2x0000000000000000000000000000000AB` to simulate a failed challenge.
+- **Always blocks**: Use site key `2x00000000000000000000AB` and secret key `2x0000000000000000000000000000000AA` to simulate a failed challenge.
 - **Forces interactive challenge**: Use site key `3x00000000000000000000FF` to test the interactive challenge flow.
 
 For the full list of test keys and expected behaviors, refer to [Testing](/turnstile/troubleshooting/testing/).
@@ -564,13 +564,15 @@ After deploying the rules and configurations from the previous sections, monitor
 
 <Steps>
 
-1. In the Cloudflare dashboard, go to the **Security Events** page.
+1. In the Cloudflare dashboard, go to the **Analytics** page.
 
    <DashButton url="/?to=/:account/:zone/security/analytics" />
 
-2. Add a filter: set **URI Path** to your login endpoint path (for example, `/login`).
+2. Select the **Events** tab.
 
-3. Review the events to identify patterns:
+3. Add a filter: set **URI Path** to your login endpoint path (for example, `/login`).
+
+4. Review the events to identify patterns:
    - Are attacks concentrated from specific countries or Autonomous System Numbers (ASNs)?
    - Are rate limiting rules triggering as expected?
    - Are legitimate users being challenged or blocked?
@@ -581,7 +583,13 @@ If you see legitimate users being affected, adjust your rate limiting thresholds
 
 ### Set up notifications for security event spikes
 
-Cloudflare Notifications can alert you when security event volume exceeds a threshold, giving you early warning of a new attack campaign. [VERIFY: confirm exact notification type name for security event spikes]
+Cloudflare Notifications can alert you when security event volume spikes, giving you early warning of a new attack campaign.
+
+{/* Confirmed: /notifications/notification-available/ lists "Security Events Alert" under WAF category for Business and Enterprise */}
+
+:::note
+Security Events Alert notifications are available on Business and Enterprise plans. Enterprise customers can use Advanced Security Events Alert for more granular filtering.
+:::
 
 <Steps>
 
@@ -591,7 +599,7 @@ Cloudflare Notifications can alert you when security event volume exceeds a thre
 
 2. Select **Add**.
 
-3. Under the **Security** category, select the notification type for security event alerts.
+3. Under the **Security** category, select **Security Events Alert**.
 
 4. Configure the notification threshold and delivery method (email, webhook, or PagerDuty).
 
