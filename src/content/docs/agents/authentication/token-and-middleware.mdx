@@ -82,98 +82,124 @@ npx wrangler secret put AUTH_TOKEN
 
 ### Validate a JWT
 
-For production applications, validate a JSON Web Token (JWT) instead of a static token. This lets you verify the caller's identity and any claims without maintaining a session store.
-
-This example uses the [`jose`](https://github.com/panva/jose) library:
+A JSON Web Token (JWT) lets you verify the caller's identity and any claims without maintaining a session store. This example uses the [`jose`](https://github.com/panva/jose) library and signs tokens with HMAC-SHA256, sharing a single secret between the signer and verifier.
 
 ```sh
 npm install jose
 ```
 
+Define JWT helpers that issue and verify tokens using a shared secret stored as a [Workers secret](/workers/configuration/secrets/):
+
 <TypeScriptExample>
 
 ```ts
-import { Agent, routeAgentRequest } from "agents";
-import { jwtVerify, createRemoteJWKSet } from "jose";
+import { SignJWT, jwtVerify } from "jose";
 
-// Fetch public keys from your identity provider's JWKS endpoint.
-// createRemoteJWKSet caches keys automatically.
-const jwks = createRemoteJWKSet(
-	new URL("https://your-idp.example.com/.well-known/jwks.json"),
-);
+function getSecret(env: Env) {
+	if (!env.AUTH_SECRET) {
+		throw new Error("AUTH_SECRET is not set");
+	}
+	return new TextEncoder().encode(env.AUTH_SECRET);
+}
 
-async function verifyJwt(
-	token: string,
-): Promise<Record<string, unknown> | null> {
+// Issue a short-lived JWT containing the user's name.
+async function issueToken(env: Env, name: string) {
+	return new SignJWT({ sub: name })
+		.setProtectedHeader({ alg: "HS256" })
+		.setIssuer("auth-agent")
+		.setAudience("auth-agent")
+		.setIssuedAt()
+		.setExpirationTime("1h")
+		.sign(getSecret(env));
+}
+
+// Verify a JWT and return its payload, or null if invalid or expired.
+async function verifyToken(env: Env, token: string) {
 	try {
-		const { payload } = await jwtVerify(token, jwks, {
-			issuer: "https://your-idp.example.com",
-			audience: "your-app-id",
+		const { payload } = await jwtVerify(token, getSecret(env), {
+			issuer: "auth-agent",
+			audience: "auth-agent",
 		});
 		return payload;
 	} catch {
 		return null;
 	}
 }
-
-function extractToken(request: Request): string | null {
-	// WebSocket clients pass tokens as query parameters because
-	// upgrade requests cannot set custom headers.
-	const queryToken = new URL(request.url).searchParams.get("token");
-	if (queryToken) return queryToken;
-
-	// HTTP clients typically use the Authorization header. However,
-	// the SDK also appends query parameters from the useAgent `query`
-	// option on its own HTTP requests, so check both sources.
-	const authHeader = request.headers.get("Authorization");
-	if (authHeader?.startsWith("Bearer ")) return authHeader.slice(7);
-
-	return null;
-}
-
-export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
-		return (
-			(await routeAgentRequest(request, env, {
-				onBeforeConnect: async (req) => {
-					const token = extractToken(req);
-					if (!token) {
-						return Response.json({ error: "Missing token" }, { status: 401 });
-					}
-					const payload = await verifyJwt(token);
-					if (!payload) {
-						return Response.json({ error: "Invalid token" }, { status: 401 });
-					}
-					return req;
-				},
-				onBeforeRequest: async (req) => {
-					const token = extractToken(req);
-					if (!token) {
-						return Response.json({ error: "Missing token" }, { status: 401 });
-					}
-					const payload = await verifyJwt(token);
-					if (!payload) {
-						return Response.json({ error: "Invalid token" }, { status: 401 });
-					}
-					return req;
-				},
-			})) || new Response("Not found", { status: 404 })
-		);
-	},
-} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
 
+Wire the verifier into `routeAgentRequest`. `onBeforeConnect` reads the JWT from the `?token=` query parameter, and `onBeforeRequest` checks the `Authorization` header, falling back to the query parameter:
+
+<TypeScriptExample>
+
+```ts
+import { Agent, routeAgentRequest } from "agents";
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const url = new URL(request.url);
+
+		if (url.pathname.startsWith("/agents")) {
+			const response = await routeAgentRequest(request, env, {
+				// WebSocket: JWT passed as ?token= query param
+				onBeforeConnect: async (req) => {
+					const token = new URL(req.url).searchParams.get("token");
+					if (!token) {
+						return Response.json({ error: "Missing token" }, { status: 401 });
+					}
+					const payload = await verifyToken(env, token);
+					if (!payload) {
+						return Response.json({ error: "Unauthorized" }, { status: 401 });
+					}
+					return req;
+				},
+				// HTTP: JWT from Authorization header or ?token= query param
+				onBeforeRequest: async (req) => {
+					const authHeader = req.headers.get("Authorization");
+					const token = authHeader?.startsWith("Bearer ")
+						? authHeader.slice(7)
+						: new URL(req.url).searchParams.get("token");
+					if (!token) {
+						return Response.json({ error: "Missing token" }, { status: 401 });
+					}
+					const payload = await verifyToken(env, token);
+					if (!payload) {
+						return Response.json({ error: "Unauthorized" }, { status: 401 });
+					}
+					return req;
+				},
+			});
+			if (response) return response;
+			return new Response("Agent not found", { status: 404 });
+		}
+
+		return new Response("Not found", { status: 404 });
+	},
+} satisfies ExportedHandler<Env>;
+
+export class MyAgent extends Agent<Env> {
+	// Agent code here — only reached by authenticated requests
+}
+```
+
+</TypeScriptExample>
+
+Set `AUTH_SECRET` as a Workers secret. A 32-byte random value is sufficient:
+
+```sh
+npx wrangler secret put AUTH_SECRET
+```
+
 Key points for JWT validation:
 
-- **`issuer` and `audience`** — Always set both to prevent tokens issued for a different service from being accepted.
-- **JWKS caching** — `createRemoteJWKSet` fetches and caches the public keys from your identity provider. It automatically refreshes when keys rotate.
-- **Clock skew** — `jose` allows a small clock tolerance by default. For Workers environments, this is usually sufficient.
+- **`issuer` and `audience`** — Always set both on both signing and verification to prevent tokens issued for a different service from being accepted.
+- **Shared-secret (HS256) vs. asymmetric signing** — The example above signs and verifies with the same secret, which is the simplest setup when one Worker both issues and verifies tokens. If your tokens come from an external identity provider, verify them against the provider's JWKS endpoint with `createRemoteJWKSet` instead.
+- **Short expiration** — Keep JWTs short-lived (for example, one hour). On the client, detect expired tokens and re-authenticate rather than reusing a stale token.
 
 :::note[Check both header and query parameter in `onBeforeRequest`]
 
-When using the `useAgent` React hook, the `query` option appends parameters to both WebSocket upgrade requests **and** the SDK's own HTTP requests (for example, fetching initial messages). This means `onBeforeRequest` should check the query parameter as a fallback, not only the `Authorization` header. The `extractToken` helper above handles both sources.
+When using the `useAgent` React hook, the `query` option appends parameters to both WebSocket upgrade requests **and** the SDK's own HTTP requests (for example, fetching initial messages). `onBeforeRequest` should check the query parameter as a fallback, not only the `Authorization` header.
 
 :::
 
@@ -224,7 +250,7 @@ export default {
 					if (!token) {
 						return Response.json({ error: "Missing token" }, { status: 401 });
 					}
-					const payload = await verifyJwt(token);
+					const payload = await verifyToken(env, token);
 					if (!payload) {
 						return Response.json({ error: "Unauthorized" }, { status: 401 });
 					}
