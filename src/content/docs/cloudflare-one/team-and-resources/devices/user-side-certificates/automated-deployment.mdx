@@ -44,7 +44,6 @@ To configure the Cloudflare One Client to install a root certificate on your org
 5. [Enroll the device](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/manual-deployment/) in your Zero Trust organization.
 6. (Optional) If the device is running macOS Big Sur or newer, [manually trust the certificate](#manually-trust-the-certificate).
 
-
 The Cloudflare One Client will now download any [certificates set to **Available**](/cloudflare-one/team-and-resources/devices/user-side-certificates/#activate-a-root-certificate). After download, the Cloudflare One Client will add the certificates to the device's system certificate store in `installed_certs/<certificate_id>.pem` and append the contents to the `installed_cert.pem` file. If you have any scripts using `installed_cert.pem`, Cloudflare recommends you set them to use the individual files in the `installed_certs/` directory instead. `installed_certs.pem` will be deprecated by 2025-06-31.
 
 :::note
@@ -70,8 +69,8 @@ To access the installed certificate in macOS:
 The Cloudflare One Client will also place the certificate in `/Library/Application Support/Cloudflare/installed_cert.pem` for reference by scripts or tools.
 
 #### Manually trust the certificate
+
 macOS Big Sur and newer do not allow the Cloudflare One Client to automatically trust the certificate. To manually trust the certificate:
-macOS Big Sure and newer do not allow the Cloudflare One Client to automatically trust the certificate. To manually trust the certificate:
 
 1. In Keychain Access, [find and open the certificate](#macos).
 2. Open **Trust**.
