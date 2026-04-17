@@ -27,10 +27,10 @@ For current overage rates, refer to the [Cloudflare plans page](https://www.clou
 | [R2](/r2/pricing/) | Storage, operations | 10 GB storage, 1M Class A, 10M Class B | [R2 pricing](/r2/pricing/) |
 | [Argo Smart Routing](/argo-smart-routing/) | Data transfer (GB) | First 1 GB | [Argo pricing](/argo-smart-routing/) |
 | [Cache Reserve](/cache/advanced-configuration/cache-reserve/) | Reads, writes, storage | None | [Cache Reserve pricing](/cache/advanced-configuration/cache-reserve/) |
-| [Load Balancing](/load-balancing/pricing/) | DNS queries | First 500K | [Load Balancing pricing](/load-balancing/pricing/) |
+| [Load Balancing](/load-balancing/) | DNS queries | First 500K | [Load Balancing](/load-balancing/) |
 | [Stream](/stream/pricing/) | Minutes stored, minutes viewed | Varies by plan | [Stream pricing](/stream/pricing/) |
 | [Images](/images/pricing/) | Transformations, storage | Varies by plan | [Images pricing](/images/pricing/) |
-| [Spectrum](/spectrum/pricing/) | Data transfer (GB) | None | [Spectrum pricing](/spectrum/pricing/) |
+| [Spectrum](/spectrum/) | Data transfer (GB) | None | [Spectrum](/spectrum/) |
 
 ## Optimize usage-based costs
 
@@ -41,7 +41,7 @@ Reducing usage-based charges starts with understanding where your consumption co
 | Increase cache hit ratio with longer TTLs and appropriate `Cache-Control` headers | Argo data transfer, Workers invocations, origin load |
 | Use [Cache Reserve](/cache/advanced-configuration/cache-reserve/) for long-tail content | Origin fetches for infrequently accessed assets |
 | Set up [R2 lifecycle rules](/r2/buckets/object-lifecycles/) to transition cold data to Infrequent Access | R2 storage costs |
-| Use [Workers Smart Placement](/workers/configuration/smart-placement/) for data-heavy Workers | Workers CPU time |
+| Use [Workers Smart Placement](/workers/configuration/placement/) for data-heavy Workers | Workers CPU time |
 | Batch R2 operations where possible instead of per-object reads | R2 Class B operation count |
 | Set up [budget alerts](/billing/manage/budget-alerts/) to catch unexpected spikes early | All products — prevents surprise invoices |
 
