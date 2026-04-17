@@ -20,30 +20,11 @@ import {
   Render,
 } from "~/components";
 
-Protecting login endpoints requires multiple layers of defense because attackers use different techniques: credential stuffing with leaked password lists, brute force at high volume, and automated scripts that bypass browser-based protections. This guide combines [Turnstile](/turnstile/), Application Security [rate limiting rules](/waf/rate-limiting-rules/) and [custom rules](/waf/custom-rules/), [SSL/TLS](/ssl/) transport security, and [bot protection](/bots/) to block these attacks before they reach your origin. The core workflow covers features available on Free, Pro, and Business plans. Enterprise features such as leaked credentials custom detection locations and Bot Management custom rules are included as callouts.
+Protecting login endpoints requires multiple layers of defense because attackers use different techniques: credential stuffing with leaked password lists, brute force at high volume, and automated scripts that bypass browser-based protections. This guide covers five stages: enforce HTTPS, turn on bot protection, add Turnstile to your login form, create rate limiting and custom rules for suspicious patterns, and monitor for ongoing attacks. It combines [Turnstile](/turnstile/), Application Security [rate limiting rules](/waf/rate-limiting-rules/) and [custom rules](/waf/custom-rules/), [SSL/TLS](/ssl/) transport security, and [bot protection](/bots/). The core workflow covers features available on Free, Pro, and Business plans. Enterprise features such as leaked credentials custom detection locations and Bot Management custom rules are included as callouts.
 
 :::note
 Most procedures in this guide are configured per domain. Select your domain in the Cloudflare dashboard before starting. Turnstile is the exception. It is configured at the account level.
 :::
-
-## Understand the attack
-
-Credential stuffing and brute force attacks target login endpoints because even a low success rate yields compromised accounts at scale.
-
-### How credential stuffing works
-
-Attackers acquire lists of leaked username and password pairs from previous data breaches. Automated bots submit each pair against your login endpoint. The success rate per attempt is low, but attacks run millions of attempts. Even a 0.1% success rate across a large list means thousands of compromised accounts.
-
-The fundamental vulnerability is password reuse. Users who reuse passwords across services are exposed when any one service is breached.
-
-### Identify if you are being targeted
-
-Several signals indicate an active credential stuffing or brute force campaign against your site:
-
-- Unusual spikes in login attempts visible in origin server logs or [Security Analytics](/waf/analytics/security-analytics/)
-- High volume of failed logins from distributed IP addresses
-- Bot Analytics showing automated traffic concentrated on your login path. Bot Analytics is available on Pro plans and above.
-- User reports of unexpected "incorrect password" errors or account lockouts they did not initiate
 
 ## Enforce HTTPS to protect credentials in transit
 
@@ -61,7 +42,7 @@ Always Use HTTPS redirects all visitor requests from `http` to `https` for all s
 
    <DashButton url="/?to=/:account/:zone/ssl-tls" />
 
-2. Verify that your SSL/TLS encryption mode is not set to **Off**. If it is, Always Use HTTPS will not be visible.
+2. Verify that your SSL/TLS encryption mode is set to **Full** or **Full (strict)**. If the mode is **Off**, Always Use HTTPS will not be visible. If the mode is **Flexible**, enabling Always Use HTTPS can cause [redirect loop errors](/ssl/troubleshooting/too-many-redirects/).
 
 3. Go to the **Edge Certificates** page.
 
@@ -69,45 +50,13 @@ Always Use HTTPS redirects all visitor requests from `http` to `https` for all s
 
 </Steps>
 
-{/* PARTIAL NEEDED: extract from /ssl/edge-certificates/additional-options/always-use-https/ */}
-
 :::note
-Do not perform redirects at your origin web server when Always Use HTTPS is turned on. This can cause [redirect loop errors](/ssl/troubleshooting/too-many-redirects/).
+Do not perform redirects at your origin web server when Always Use HTTPS is turned on. Dual redirects from both Cloudflare and your origin can cause [redirect loop errors](/ssl/troubleshooting/too-many-redirects/).
 :::
 
-### Turn on HTTP Strict Transport Security (HSTS)
-
-{/* Source: /ssl/edge-certificates/additional-options/http-strict-transport-security/ — HSTS procedure */}
-
-HSTS adds an HTTP header that tells browsers to only connect to your site over HTTPS. This prevents downgrade attacks where an attacker intercepts the initial HTTP request before the redirect to HTTPS occurs.
-
-:::caution
-Only turn on HSTS after HTTPS is working on your domain. If you turn on HSTS and later disable HTTPS, your site becomes inaccessible for the duration of the Max Age Header. Refer to [HSTS requirements](/ssl/edge-certificates/additional-options/http-strict-transport-security/#requirements) before proceeding.
+:::note[Optional: HTTP Strict Transport Security (HSTS)]
+For additional transport hardening, consider enabling [HTTP Strict Transport Security (HSTS)](/ssl/edge-certificates/additional-options/http-strict-transport-security/). HSTS tells browsers to only connect over HTTPS, preventing downgrade attacks on the initial request. HSTS is irreversible for the configured Max Age duration. If you later disable HTTPS, your site becomes inaccessible until the Max Age expires. Review the [requirements](/ssl/edge-certificates/additional-options/http-strict-transport-security/#requirements) before turning it on.
 :::
-
-<Steps>
-
-1. In the Cloudflare dashboard, go to the **Edge Certificates** page.
-
-   <DashButton url="/?to=/:account/:zone/ssl-tls/edge-certificates" />
-
-2. For **HTTP Strict Transport Security (HSTS)**, select **Enable HSTS**.
-
-3. Read the dialog and select **I understand**.
-
-4. Select **Next**.
-
-5. Configure the HSTS settings:
-   - **Max Age Header**: Select _6 months_ (or _12 months_ for HSTS preload list eligibility).
-   - **Apply HSTS policy to subdomains**: Turn on if all your subdomains support HTTPS.
-   - **Preload**: Turn on to allow browser preload lists. Requires a Max Age Header of 12 months.
-   - **No-Sniff Header**: Turn on to send the `X-Content-Type-Options: nosniff` header.
-
-6. Select **Save**.
-
-</Steps>
-
-{/* PARTIAL NEEDED: extract from /ssl/edge-certificates/additional-options/http-strict-transport-security/ */}
 
 ## Turn on bot protection
 
@@ -180,39 +129,28 @@ If your organization uses [Cloudflare Tunnel](/cloudflare-one/networks/connector
 
 To create exceptions for specific paths or traffic, create a custom rule with the [Skip action](/waf/custom-rules/skip/). Custom rules execute before Super Bot Fight Mode, so a Skip rule prevents Super Bot Fight Mode from evaluating the matching request.
 
-## Add Turnstile to your login form
+## Protect your login form with Turnstile and rate limiting
 
-Credential stuffing relies on automation. Turnstile runs a non-intrusive challenge in the visitor's browser that distinguishes humans from bots before the login form is submitted, stopping automated attempts at the client level before they reach your authentication system. Unlike traditional CAPTCHA, Turnstile does not require the visitor to solve a visual puzzle.
+Two tools protect login endpoints from automated abuse, and they cover different attack vectors:
+
+- **[Turnstile](/turnstile/)** runs a challenge in the visitor's browser before the form is submitted. It stops automated browsers and scripts that execute JavaScript but cannot solve challenges. Turnstile is free on all plans and does not require visitors to solve a visual puzzle.
+- **Application Security [rate limiting rules](/waf/rate-limiting-rules/)** operate at the Cloudflare edge and throttle requests that exceed a threshold regardless of whether the client runs JavaScript. They stop raw HTTP request floods that bypass browser-based protections entirely.
+
+Use both together. Turnstile blocks the browser-based automation. Rate limiting blocks the direct HTTP requests.
+
+### Add Turnstile to your login form
 
 Implementing Turnstile involves three steps: create a widget, add the client-side snippet to your login form, and validate the token on your server.
 
-### 1. Create a Turnstile widget
+#### 1. Create a Turnstile widget
 
-{/* Source: /turnstile/get-started/ — widget creation procedure */}
+Turnstile is configured at the account level.
 
-<Steps>
+<Render file="create-widget-dashboard" product="turnstile" />
 
-1. In the Cloudflare dashboard, go to the **Turnstile** page.
+You need both the sitekey and secret key in the following steps.
 
-   <DashButton url="/?to=/:account/turnstile" />
-
-2. Select **Add widget**.
-
-3. Enter a descriptive name for the widget (for example, "Login Form").
-
-4. Add your domain to the widget configuration.
-
-5. For **Widget Mode**, select _Managed_. Managed mode automatically adjusts the challenge level based on visitor signals.
-
-6. Select **Create**.
-
-7. Copy the **Site Key** and **Secret Key**. You will use the site key in the client-side snippet and the secret key for server-side validation.
-
-</Steps>
-
-{/* PARTIAL NEEDED: extract from /turnstile/get-started/ */}
-
-### 2. Add the client-side snippet
+#### 2. Add the client-side snippet
 
 Add the Turnstile script and widget div to your login form. Replace `<YOUR_SITE_KEY>` with the site key from the previous step.
 
@@ -235,7 +173,7 @@ Add the Turnstile script and widget div to your login form. Replace `<YOUR_SITE_
 
 The Turnstile widget runs a challenge when the page loads. When the visitor submits the form, a `cf-turnstile-response` token is included in the form data.
 
-### 3. Validate the token on your server
+#### 3. Validate the token on your server
 
 Before processing login credentials, send the Turnstile token to the Siteverify API to confirm the visitor passed the challenge. Replace `<YOUR_SECRET_KEY>` with your secret key.
 
@@ -266,7 +204,7 @@ If `data.success` is `false`, reject the login attempt before checking credentia
 
 For more information on server-side validation, including the full response format and error codes, refer to [Validate the token](/turnstile/get-started/server-side-validation/).
 
-### Test your implementation
+#### Test your implementation
 
 Turnstile provides test site keys that return predictable results without contacting the Siteverify API.
 
@@ -278,15 +216,13 @@ Turnstile provides test site keys that return predictable results without contac
 
 For the full list of test keys and expected behaviors, refer to [Testing](/turnstile/troubleshooting/testing/).
 
-## Rate limit your login endpoint
-
-Turnstile stops automated browsers, but attackers also send raw HTTP requests that bypass the browser entirely. Application Security [rate limiting rules](/waf/rate-limiting-rules/) throttle or block requests that exceed a defined threshold, covering the attack vector that Turnstile does not reach.
+### Rate limit your login endpoint
 
 {/* Source: /waf/rate-limiting-rules/ — rate limiting rules overview */}
 
-### Create a rate limiting rule for your login endpoint
+#### Create a rate limiting rule for your login endpoint
 
-The following example creates a rate limiting rule that issues a Managed Challenge after more than five POST requests to your login path from the same IP within one minute. Adjust the path (`/login`), threshold, and period for your site.
+The following example creates a rate limiting rule that issues a Managed Challenge after more than five POST requests to your login path from the same IP within one minute. Start with Managed Challenge rather than Block. Managed Challenge allows legitimate users who trigger the limit to pass by completing a challenge, while blocking automated traffic that cannot solve it. After monitoring [Security Events](/waf/analytics/security-events/) to confirm the rule is not producing false positives, switch to Block. Adjust the path (`/login`), threshold, and period for your site.
 
 {/* Source: /waf/rate-limiting-rules/best-practices/ — credential stuffing protection pattern */}
 
@@ -369,22 +305,11 @@ The following example creates a rate limiting rule that issues a Managed Challen
 </TabItem>
 </Tabs>
 
-Start with Managed Challenge rather than Block. Managed Challenge allows legitimate users who trigger the rate limit to pass by completing a challenge, while blocking automated traffic that cannot solve it. After monitoring Security Events for several days, switch to Block if the rule is not producing false positives.
-
-### Handle users who hit the rate limit
-
-When a legitimate user triggers the rate limit, they see a Cloudflare challenge page by default. If your login form submits via an asynchronous API call (`fetch` or `XMLHttpRequest`), configure a custom response so your frontend can display an appropriate message:
-
-- Return a JSON error body with a `retry-after` value so the client can inform the user
-- Consider adding your own IP address to an IP Access Rule allowlist during testing to avoid triggering the rule
-
-Review rate limiting events in [Security Events](/waf/analytics/security-events/) and adjust the threshold if legitimate users are being affected.
-
 :::note[Advanced Rate Limiting on Business plan and above]
 Business and Enterprise plans support rate limiting by cookie, header, or other request characteristics beyond IP address. This is useful when attackers distribute attempts across many IP addresses. For more information on available characteristics, refer to [Rate limiting parameters](/waf/rate-limiting-rules/parameters/).
 :::
 
-### Escalating rate limits for persistent attackers
+#### Escalating rate limits for persistent attackers
 
 For sites that experience sustained credential stuffing campaigns, consider deploying multiple rate limiting rules with increasing severity. The following pattern from the Application Security documentation uses three rules with separate counting expressions that track failed login responses (401/403 status codes):
 
@@ -396,10 +321,10 @@ For sites that experience sustained credential stuffing campaigns, consider depl
 | Rule 2 | 10 failed login requests per 10 minutes | Managed Challenge | Login path only |
 | Rule 3 | 20 failed login requests per 1 hour     | Block for 1 day   | Entire domain   |
 
-Rule 1 handles short bursts. Rule 2 catches slower distributed attacks. Rule 3 blocks persistent attackers from the entire domain. The counting expressions use response status codes, so successful logins do not count against the limit.
+Rule 1 handles short bursts. Rule 2 catches slower distributed attacks. Rule 3 blocks persistent attackers from the entire domain. The counting expressions use response status codes, so successful logins do not count against the limit. To create these rules, follow the same procedure as the rate limiting rule above but adjust the expression, rate, and action for each row. For the full configuration details, including expression syntax for response code counting, refer to [Rate limiting best practices](/waf/rate-limiting-rules/best-practices/).
 
 :::note
-These example rules require a Business plan or above because they use counting expressions that reference HTTP response codes. For more information, refer to [Rate limiting best practices](/waf/rate-limiting-rules/best-practices/).
+These example rules require a Business plan or above because they use counting expressions that reference HTTP response codes.
 :::
 
 ## Add Application Security rules for suspicious login patterns
@@ -416,20 +341,44 @@ The `cf.waf.credential_check.password_leaked` field is available on all plans. T
 
 {/* Confirmed: /waf/detections/leaked-credentials/ says "Available on all plans" for password_leaked and "Requires a Pro plan or above" for username_and_password_leaked */}
 
-{/* Source: /waf/detections/ — Turn on a detection procedure */}
+<Render file="leaked-credentials-detection-enable" product="waf" />
+
+After turning on the detection, your origin server can receive leaked credential status via the `Exposed-Credential-Check` request header. To forward this header, turn on the [Add leaked credentials checks header](/rules/transform/managed-transforms/reference/#add-leaked-credentials-checks-header) managed transform. Your origin can then trigger a password reset for affected users.
+
+:::note[Enterprise: Custom detection locations]
+If your application uses non-standard credential field names, Enterprise customers can configure [custom detection locations](/waf/detections/leaked-credentials/#custom-detection-locations) to tell Cloudflare where to find usernames and passwords in HTTP requests.
+:::
+
+### Create a skip rule for legitimate automated traffic
+
+Before deploying rules that challenge or block login traffic, create a skip rule that exempts known legitimate automated traffic. This prevents your monitoring tools, health checks, and partner integrations from being blocked by the rules that follow.
 
 <Tabs syncKey="dashNewNav">
 <TabItem label="New dashboard" icon="rocket">
 
 <Steps>
 
-1. In the Cloudflare dashboard, go to the **Security Settings** page.
+1. In the Cloudflare dashboard, go to the **Security rules** page.
 
-   <DashButton url="/?to=/:account/:zone/security/settings" />
+   <DashButton url="/?to=/:account/:zone/security/security-rules" />
 
-2. Filter by **Detection tools**.
+2. Select **Create rule** and choose **Custom rule**.
 
-3. Turn on **Leaked credentials**.
+3. Enter a name for the rule (for example, "Skip login rules for known clients").
+
+4. Select **Edit expression** and enter an expression that matches your legitimate automated traffic. For example, to skip verified bots and a specific monitoring service IP:
+
+   ```txt
+   (cf.client.bot) or (ip.src eq 198.51.100.1)
+   ```
+
+   Replace `198.51.100.1` with the IP address of your monitoring service. Add additional conditions for other known clients.
+
+5. For **Action**, select _Skip_ and choose which security features to skip for matching requests.
+
+6. Select **Deploy**.
+
+7. **Place the rule above your blocking and challenge rules** in the rule list. Custom rules execute in order, so the skip rule must come first.
 
 </Steps>
 
@@ -440,34 +389,36 @@ The `cf.waf.credential_check.password_leaked` field is available on all plans. T
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 
-2. Go to **Security** > **Settings**.
+2. Go to **Security** > **WAF**.
 
-3. Under **Incoming traffic detections**, turn on **Leaked credentials**.
+3. Under **Custom rules**, select **Create rule**.
+
+4. Enter a name for the rule (for example, "Skip login rules for known clients").
+
+5. Select **Edit expression** and enter an expression that matches your legitimate automated traffic. For example:
+
+   ```txt
+   (cf.client.bot) or (ip.src eq 198.51.100.1)
+   ```
+
+   Replace `198.51.100.1` with the IP address of your monitoring service.
+
+6. For **Action**, select _Skip_ and choose which security features to skip.
+
+7. Select **Deploy**.
+
+8. Drag the rule above your blocking and challenge rules in the rule list.
 
 </Steps>
 
 </TabItem>
 </Tabs>
 
-{/* PARTIAL NEEDED: extract from /waf/detections/ */}
-
-:::note
-On Free plans, leaked credentials detection is turned on by default. No action is required.
-:::
-
-After turning on the detection, your origin server can receive leaked credential status via the `Exposed-Credential-Check` request header. To forward this header, turn on the [Add leaked credentials checks header](/rules/transform/managed-transforms/reference/#add-leaked-credentials-checks-header) managed transform. Your origin can then trigger a password reset for affected users.
-
-:::note[Enterprise: Custom detection locations]
-If your application uses non-standard credential field names, Enterprise customers can configure [custom detection locations](/waf/detections/leaked-credentials/#custom-detection-locations) to tell Cloudflare where to find usernames and passwords in HTTP requests.
-:::
+For more information about the Skip action and available skip options, refer to [Skip action](/waf/custom-rules/skip/).
 
 ### Block requests with suspicious headers
 
 Credential stuffing tools often send requests without standard browser headers or with known-bad User-Agent patterns. Create a custom rule that issues a Managed Challenge for POST requests to your login path where the User-Agent is empty.
-
-:::note
-Verified bots (Googlebot, Bingbot, and similar) set a User-Agent header, so this rule does not affect them. If you add more restrictive rules later that match broader traffic, add `not cf.client.bot` to the expression to exempt [verified bots](/bots/concepts/bot/verified-bots/).
-:::
 
 <Tabs syncKey="dashNewNav">
 <TabItem label="New dashboard" icon="rocket">
@@ -615,7 +566,7 @@ After deploying the rules and configurations from the previous sections, monitor
 
 1. In the Cloudflare dashboard, go to the **Security Events** page.
 
-   <DashButton url="/?to=/:account/:zone/security/events" />
+   <DashButton url="/?to=/:account/:zone/security/analytics" />
 
 2. Add a filter: set **URI Path** to your login endpoint path (for example, `/login`).
 
