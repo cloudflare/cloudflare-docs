@@ -377,7 +377,7 @@ With a Bot Management subscription, you can write custom rules using `cf.bot_man
 Application Security [leaked credentials detection](/waf/detections/leaked-credentials/) checks incoming requests for username and password combinations that appeared in known data breaches. Use this detection to rate limit or challenge requests containing compromised credentials on your authentication endpoints.
 
 :::note
-Access to the `cf.waf.credential_check.username_and_password_leaked` field requires a Pro plan or above.
+Access to the `cf.waf.credential_check.username_and_password_leaked` field (User and Password Leaked) requires a Pro plan or above. If you are on a Free plan, use the `cf.waf.credential_check.password_leaked` field (Password Leaked) instead, which indicates whether the password detected in the request was previously leaked.
 :::
 
 The following rate limiting rule limits requests that contain a previously leaked username and password combination to 5 per minute per IP:
