@@ -2731,7 +2731,7 @@
 					"free": "50,000",
 					"pro": "50,000",
 					"biz": "50,000",
-					"ent": "Unlimited, but contact sales if using over 50,000."
+					"ent": "Unlimited, contact account team if using over 50,000."
 				},
 				"d_cost_per_hostname": {
 					"title": "Price per additional hostname",
