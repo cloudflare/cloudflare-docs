@@ -27,8 +27,15 @@ It accepts an optional `PluginConfig` parameter.
 
 - `configPath` <Type text='string' /> <MetaInfo text='optional' />
 
-  An optional path to your Worker config file.
-  By default, a `wrangler.jsonc`, `wrangler.json`, or `wrangler.toml` file in the root of your application will be used as the Worker config.
+  An optional path to your entry Worker config file.
+
+  For the entry Worker, the plugin resolves the config path in this order:
+
+  1. `configPath`
+  2. `CLOUDFLARE_VITE_WRANGLER_CONFIG_PATH` (typically set by a framework or other external tool)
+  3. `wrangler.jsonc`, `wrangler.json`, or `wrangler.toml` in the root of your application
+
+  This applies in `vite dev` and `vite build`.
 
   For more information about the Worker configuration, see [Configuration](/workers/wrangler/configuration/).
 
@@ -89,6 +96,7 @@ It accepts an optional `PluginConfig` parameter.
 ## `interface AuxiliaryWorkerConfig`
 
 Auxiliary Workers require a `configPath`, a `config` option, or both.
+`CLOUDFLARE_VITE_WRANGLER_CONFIG_PATH` only applies to the entry Worker. Auxiliary Workers do not use this environment variable. If an auxiliary Worker uses a config file, set `configPath` explicitly.
 
 - `configPath` <Type text='string' /> <MetaInfo text='optional' />
 
