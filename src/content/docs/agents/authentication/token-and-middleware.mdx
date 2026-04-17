@@ -1,0 +1,360 @@
+---
+pcx_content_type: how-to
+title: Token and middleware auth
+sidebar:
+  order: 1
+description: Validate tokens and API keys using built-in auth hooks or framework middleware before requests reach your Agent.
+head: []
+---
+
+import { TypeScriptExample } from "~/components";
+
+The Agents SDK provides two ways to validate credentials before a request reaches your Agent:
+
+- **Auth hooks** via [`routeAgentRequest`](/agents/api-reference/routing/) — built-in hooks that run before each request is forwarded. Best for straightforward token or JWT checks with no external framework.
+- **Custom routing** via [`getAgentByName`](/agents/api-reference/routing/) — look up Agent instances manually after running your own middleware. Best when you use a framework like [Hono](https://hono.dev) and want to use its middleware ecosystem.
+
+Both follow the same principle: authenticate in the Worker, then forward to the Agent only if the credentials are valid.
+
+The examples below assume you have already [configured your Agent's Durable Object binding](/agents/getting-started/testing-your-agent/#add-the-agent-configuration) in your Wrangler configuration.
+
+## Auth hooks with `routeAgentRequest`
+
+`routeAgentRequest` accepts two optional hooks:
+
+| Hook              | Runs before                                   | Typical credential source      |
+| ----------------- | --------------------------------------------- | ------------------------------ |
+| `onBeforeConnect` | A WebSocket upgrade request reaches the Agent | Query parameter (`?token=...`) |
+| `onBeforeRequest` | An HTTP request reaches the Agent             | `Authorization` header         |
+
+Both hooks follow the same contract:
+
+- Return a `Request` (or `void`) to allow the request through to the Agent.
+- Return a `Response` to short-circuit and reject the request (for example, a `401 Unauthorized`).
+
+Both hooks also receive a second argument `{ party, name }` containing the resolved Agent class name and instance name from the URL. You can use this to make per-instance authorization decisions — for example, restricting which Agents a user can access.
+
+### Validate a static token
+
+The simplest approach checks for a known token on both WebSocket and HTTP requests. In production, store tokens as [Workers secrets](/workers/configuration/secrets/) rather than hardcoding them.
+
+<TypeScriptExample>
+
+```ts
+import { Agent, routeAgentRequest } from "agents";
+
+function authenticate(request: Request, env: Env): Request | Response {
+	const url = new URL(request.url);
+	// Check query param (?token=...) or Authorization header
+	const token =
+		url.searchParams.get("token") ||
+		request.headers.get("Authorization")?.replace("Bearer ", "");
+
+	if (token === env.AUTH_TOKEN) {
+		return request; // Valid — continue to the Agent
+	}
+	return Response.json({ error: "Unauthorized" }, { status: 401 });
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		return (
+			(await routeAgentRequest(request, env, {
+				onBeforeConnect: async (req) => authenticate(req, env),
+				onBeforeRequest: async (req) => authenticate(req, env),
+			})) || new Response("Not found", { status: 404 })
+		);
+	},
+} satisfies ExportedHandler<Env>;
+
+export class MyAgent extends Agent<Env> {
+	// Agent code here -- only reached by authenticated requests
+}
+```
+
+</TypeScriptExample>
+
+The `AUTH_TOKEN` value should be set as a [Workers secret](/workers/configuration/secrets/):
+
+```sh
+npx wrangler secret put AUTH_TOKEN
+```
+
+### Validate a JWT
+
+For production applications, validate a JSON Web Token (JWT) instead of a static token. This lets you verify the caller's identity and any claims without maintaining a session store.
+
+This example uses the [`jose`](https://github.com/panva/jose) library:
+
+```sh
+npm install jose
+```
+
+<TypeScriptExample>
+
+```ts
+import { Agent, routeAgentRequest } from "agents";
+import { jwtVerify, createRemoteJWKSet } from "jose";
+
+// Fetch public keys from your identity provider's JWKS endpoint.
+// createRemoteJWKSet caches keys automatically.
+const jwks = createRemoteJWKSet(
+	new URL("https://your-idp.example.com/.well-known/jwks.json"),
+);
+
+async function verifyJwt(
+	token: string,
+): Promise<Record<string, unknown> | null> {
+	try {
+		const { payload } = await jwtVerify(token, jwks, {
+			issuer: "https://your-idp.example.com",
+			audience: "your-app-id",
+		});
+		return payload;
+	} catch {
+		return null;
+	}
+}
+
+function extractToken(request: Request): string | null {
+	// WebSocket clients pass tokens as query parameters because
+	// upgrade requests cannot set custom headers.
+	const queryToken = new URL(request.url).searchParams.get("token");
+	if (queryToken) return queryToken;
+
+	// HTTP clients pass tokens in the Authorization header.
+	const authHeader = request.headers.get("Authorization");
+	if (authHeader?.startsWith("Bearer ")) return authHeader.slice(7);
+
+	return null;
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		return (
+			(await routeAgentRequest(request, env, {
+				onBeforeConnect: async (req) => {
+					const token = extractToken(req);
+					if (!token) {
+						return Response.json({ error: "Missing token" }, { status: 401 });
+					}
+					const payload = await verifyJwt(token);
+					if (!payload) {
+						return Response.json({ error: "Invalid token" }, { status: 401 });
+					}
+					return req;
+				},
+				onBeforeRequest: async (req) => {
+					const token = extractToken(req);
+					if (!token) {
+						return Response.json({ error: "Missing token" }, { status: 401 });
+					}
+					const payload = await verifyJwt(token);
+					if (!payload) {
+						return Response.json({ error: "Invalid token" }, { status: 401 });
+					}
+					return req;
+				},
+			})) || new Response("Not found", { status: 404 })
+		);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+Key points for JWT validation:
+
+- **`issuer` and `audience`** — Always set both to prevent tokens issued for a different service from being accepted.
+- **JWKS caching** — `createRemoteJWKSet` fetches and caches the public keys from your identity provider. It automatically refreshes when keys rotate.
+- **Clock skew** — `jose` allows a small clock tolerance by default. For Workers environments, this is usually sufficient.
+
+### Pass tokens from the client
+
+When using the `useAgent` React hook, pass the token via the `query` parameter. The SDK appends these as query parameters to the WebSocket URL:
+
+```tsx
+import { useAgent } from "agents/react";
+
+function ChatApp() {
+	const agent = useAgent({
+		agent: "MyAgent",
+		name: "user-123",
+		// query can be a function (sync or async) that returns params
+		query: async () => ({
+			token: localStorage.getItem("auth_token") || "",
+		}),
+	});
+
+	// Use the agent connection...
+}
+```
+
+For HTTP requests using `agentFetch` or direct `fetch`, include the token in the `Authorization` header:
+
+```ts
+const response = await fetch("/agents/my-agent/user-123", {
+	headers: {
+		Authorization: `Bearer ${token}`,
+	},
+});
+```
+
+### Per-instance authorization
+
+The second argument to `onBeforeConnect` and `onBeforeRequest` contains the resolved Agent class name and instance name. Use this to restrict which Agents a user can access:
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		return (
+			(await routeAgentRequest(request, env, {
+				onBeforeConnect: async (req, { name }) => {
+					const token = new URL(req.url).searchParams.get("token");
+					const payload = await verifyJwt(token);
+					if (!payload) {
+						return Response.json({ error: "Unauthorized" }, { status: 401 });
+					}
+
+					// Only allow users to connect to their own Agent instance
+					if (payload.sub !== name) {
+						return Response.json({ error: "Forbidden" }, { status: 403 });
+					}
+
+					return req;
+				},
+			})) || new Response("Not found", { status: 404 })
+		);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+## Custom routing with `getAgentByName`
+
+When you need more control over routing — for example, using a framework like [Hono](https://hono.dev) with its own middleware stack — use [`getAgentByName`](/agents/api-reference/routing/) to look up Agent instances after authenticating the request yourself.
+
+This approach is useful when:
+
+- You want to use your framework's middleware ecosystem for auth.
+- You need to derive the Agent instance name from the authenticated user (for example, one Agent per user).
+- You have non-Agent routes in the same Worker that also need auth.
+
+### Hono with bearer auth
+
+<TypeScriptExample>
+
+```ts
+import { Agent, getAgentByName, type AgentNamespace } from "agents";
+import { Hono } from "hono";
+import { bearerAuth } from "hono/bearer-auth";
+
+interface Env {
+	MyAgent: AgentNamespace<MyAgent>;
+	AUTH_TOKEN: string;
+}
+
+const app = new Hono<{ Bindings: Env }>();
+
+// Apply auth middleware to all agent routes
+app.use("/agent/*", bearerAuth({ token: "my-secret-token" }));
+
+// Route authenticated requests to an Agent named by user ID
+app.all("/agent/:userId/*", async (c) => {
+	const userId = c.req.param("userId");
+	const agent = await getAgentByName<Env, MyAgent>(c.env.MyAgent, userId);
+	return agent.fetch(c.req.raw);
+});
+
+// You can also call Agent methods directly via RPC
+app.post("/agent/:userId/summarize", async (c) => {
+	const userId = c.req.param("userId");
+	const agent = await getAgentByName<Env, MyAgent>(c.env.MyAgent, userId);
+	const summary = await agent.summarize();
+	return c.json({ summary });
+});
+
+export default app;
+
+export class MyAgent extends Agent<Env> {
+	async summarize() {
+		return "Here is a summary of your data.";
+	}
+}
+```
+
+</TypeScriptExample>
+
+Since `getAgentByName` returns a Durable Object stub, you can also call [methods directly on the Agent via RPC](/agents/api-reference/routing/#server-side-agent-access), without going through HTTP.
+
+### Hono Agents middleware
+
+The [`hono-agents`](https://www.npmjs.com/package/hono-agents) package provides an `agentsMiddleware()` that wraps `routeAgentRequest` as Hono middleware. You can combine it with Hono's auth middleware to protect Agent routes:
+
+```ts
+import { Hono } from "hono";
+import { bearerAuth } from "hono/bearer-auth";
+import { agentsMiddleware } from "hono-agents";
+
+const app = new Hono();
+
+// Auth first, then route to agents
+app.use("/agents/*", bearerAuth({ token: "my-secret-token" }));
+app.use("/agents/*", agentsMiddleware());
+
+export default app;
+```
+
+### Hono with JWT middleware
+
+For JWT-based auth with Hono, use the built-in `jwt` middleware:
+
+```ts
+import { Hono } from "hono";
+import { jwt } from "hono/jwt";
+import { Agent, getAgentByName, type AgentNamespace } from "agents";
+
+interface Env {
+	MyAgent: AgentNamespace<MyAgent>;
+	JWT_SECRET: string;
+}
+
+const app = new Hono<{ Bindings: Env }>();
+
+// Verify JWT on all agent routes
+app.use("/agent/*", (c, next) => {
+	const jwtMiddleware = jwt({ secret: c.env.JWT_SECRET });
+	return jwtMiddleware(c, next);
+});
+
+// The JWT payload is available on the context
+app.all("/agent/:userId/*", async (c) => {
+	const jwtPayload = c.get("jwtPayload");
+	const userId = c.req.param("userId");
+
+	// Ensure the JWT subject matches the requested Agent
+	if (jwtPayload.sub !== userId) {
+		return c.json({ error: "Forbidden" }, 403);
+	}
+
+	const agent = await getAgentByName<Env, MyAgent>(c.env.MyAgent, userId);
+	return agent.fetch(c.req.raw);
+});
+
+export default app;
+
+export class MyAgent extends Agent<Env> {}
+```
+
+## Complete example
+
+For a working end-to-end implementation of the JWT pattern shown above — including `onBeforeConnect`, `onBeforeRequest`, a token endpoint, and a React client — see the [`auth-agent` example](https://github.com/cloudflare/agents/tree/main/examples/auth-agent) in the Agents SDK repository.
+
+## Next steps
+
+- For OAuth 2.1 flows and third-party identity providers, see [Workers OAuth Provider](/agents/authentication/oauth-provider/).
+- For complete user management with sign-up, sign-in, and sessions, see [Full-stack auth with Better Auth](/agents/authentication/better-auth/).
+- For MCP-specific authorization, see [MCP Authorization](/agents/model-context-protocol/authorization/).
