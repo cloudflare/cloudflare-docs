@@ -5,6 +5,8 @@ description: Block API abuse, restrict unauthorized access, and monitor endpoint
 products:
   - api-shield
   - bots
+  - leaked-credentials
+  - rate-limiting
   - ssl
   - waf
 sidebar:
@@ -448,9 +450,9 @@ Rate limiting thresholds that are too tight block legitimate clients. Thresholds
 
 2. Check whether blocked requests come from legitimate clients or abusive traffic.
 
-3. If legitimate clients are being rate limited, increase the request threshold or widen the time period for the affected rule.
+3. If legitimate clients are being rate limited, edit the relevant rate limiting rule to increase the request threshold or widen the time period for the affected rule.
 
-4. If abusive traffic is getting through, lower the threshold or narrow the time period.
+4. If abusive traffic is getting through, lower the rule threshold or narrow the time period.
 
 </Steps>
 
