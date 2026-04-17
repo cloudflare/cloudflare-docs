@@ -55,9 +55,10 @@ export CLOUDFLARE_ACCOUNT_ID="<YOUR_ACCOUNT_ID>"
 The REST API uses a Cloudflare API token in the `Authorization` header. Use **Artifacts** > **Read** for read routes, and **Artifacts** > **Edit** for routes that change repo state.
 
 ```sh
+export ACCOUNT_ID="<YOUR_ACCOUNT_ID>"
 export ARTIFACTS_NAMESPACE="default"
 export CLOUDFLARE_API_TOKEN="<YOUR_API_TOKEN>"
-export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.net/v1/api/namespaces/$ARTIFACTS_NAMESPACE"
+export ARTIFACTS_BASE_URL="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/artifacts/namespaces/$ARTIFACTS_NAMESPACE"
 ```
 
 Read repo metadata with a read-capable token:

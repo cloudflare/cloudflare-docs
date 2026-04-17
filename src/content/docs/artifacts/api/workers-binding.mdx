@@ -17,9 +17,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-Use the Artifacts Workers binding to create, inspect, fork, and delete repos directly from your Worker. The Artifacts binding returns repo handles that allow repo-scoped operations such as token management and forking.
-
-Use the [REST API](/artifacts/api/rest-api/) when you need to import a repo from another remote.
+Use the Artifacts Workers binding to create, import, inspect, fork, and delete repos directly from your Worker. The Artifacts binding returns repo handles that allow repo-scoped operations such as token management and forking.
 
 ## Configure the binding
 
@@ -30,7 +28,7 @@ Add the Artifacts binding to your Wrangler config file:
 ```toml title="wrangler.toml"
 [[artifacts]]
 binding = "ARTIFACTS"
-namespace = "default"
+namespace = "default" # any name works — use namespaces to organise repos
 ```
 
 </WranglerConfig>
@@ -49,7 +47,7 @@ If you authenticate with `wrangler login`, Wrangler requests `artifacts:write` b
 
 ## Namespace methods
 
-Use namespace methods on `env.ARTIFACTS` to create, list, inspect, or delete repos.
+Use namespace methods on `env.ARTIFACTS` to create, list, inspect, import, or delete repos.
 
 ### `create(name, opts?)`
 
@@ -57,7 +55,7 @@ Use namespace methods on `env.ARTIFACTS` to create, list, inspect, or delete rep
 - `opts.readOnly` <Type text="boolean" /> <MetaInfo text="optional" />
 - `opts.description` <Type text="string" /> <MetaInfo text="optional" />
 - `opts.setDefaultBranch` <Type text="string" /> <MetaInfo text="optional" />
-- Returns <Type text="Promise<ArtifactsCreateRepoResult & { repo: ArtifactsRepo } >" />
+- Returns <Type text="Promise<ArtifactsCreateRepoResult>" />
 
 <TypeScriptExample>
 
@@ -83,18 +81,14 @@ async function createRepo(artifacts: Artifacts) {
 ### `get(name)`
 
 - `name` <Type text="RepoName" /> <MetaInfo text="required" />
-- Returns <Type text="Promise<ArtifactsRepo | null>" />
+- Returns <Type text="Promise<ArtifactsRepo>" />
+- Throws if the repo does not exist.
 
 <TypeScriptExample>
 
 ```ts
 async function getRepoHandle(artifacts: Artifacts) {
 	const repo = await artifacts.get("starter-repo");
-
-	if (!repo) {
-		return null;
-	}
-
 	return repo;
 }
 ```
@@ -122,6 +116,42 @@ async function listRepos(artifacts: Artifacts) {
 
 </TypeScriptExample>
 
+### `import(params)`
+
+Import a repository from an external git remote.
+
+- `params.source.url` <Type text="string" /> <MetaInfo text="required" /> — HTTPS URL of the source repository.
+- `params.source.branch` <Type text="string" /> <MetaInfo text="optional" /> — Branch to import (defaults to the remote's default branch).
+- `params.source.depth` <Type text="number" /> <MetaInfo text="optional" /> — Shallow clone depth.
+- `params.target.name` <Type text="RepoName" /> <MetaInfo text="required" /> — Name for the imported repo.
+- `params.target.opts.description` <Type text="string" /> <MetaInfo text="optional" />
+- `params.target.opts.readOnly` <Type text="boolean" /> <MetaInfo text="optional" />
+- Returns <Type text="Promise<ArtifactsCreateRepoResult>" />
+
+<TypeScriptExample>
+
+```ts
+async function importFromGitHub(artifacts: Artifacts) {
+	const imported = await artifacts.import({
+		source: {
+			url: "https://github.com/cloudflare/workers-sdk",
+			branch: "main",
+		},
+		target: {
+			name: "workers-sdk",
+		},
+	});
+
+	return {
+		name: imported.name,
+		remote: imported.remote,
+		token: imported.token,
+	};
+}
+```
+
+</TypeScriptExample>
+
 ### `delete(name)`
 
 - `name` <Type text="RepoName" /> <MetaInfo text="required" />
@@ -139,27 +169,14 @@ async function deleteRepo(artifacts: Artifacts) {
 
 ## Repo handle methods
 
-Use the `repo` returned by `create()`, or first check that `await artifacts.get(name)` returned a repo handle.
-
-These examples match the current runtime binding surface. If your generated types show `import()` or a discriminated union for `get()`, those types are ahead of the current runtime.
-
-### `info()`
-
-- Returns <Type text="Promise<ArtifactsRepoInfo | null>" />
-
-Use `info()` when you need repo metadata, including the remote URL.
+Call `await artifacts.get(name)` to get a repo handle. The handle extends `ArtifactsRepoInfo`, so repo metadata (`id`, `name`, `remote`, `defaultBranch`, etc.) is available directly as properties.
 
 <TypeScriptExample>
 
 ```ts
 async function getRemoteUrl(artifacts: Artifacts) {
 	const repo = await artifacts.get("starter-repo");
-	if (!repo) {
-		return null;
-	}
-
-	const info = await repo.info();
-	return info?.remote ?? null;
+	return repo.remote;
 }
 ```
 
@@ -176,31 +193,7 @@ async function getRemoteUrl(artifacts: Artifacts) {
 ```ts
 async function mintReadToken(artifacts: Artifacts) {
 	const repo = await artifacts.get("starter-repo");
-	if (!repo) {
-		throw new Error("Repo not found");
-	}
-
 	return repo.createToken("read", 3600);
-}
-```
-
-</TypeScriptExample>
-
-### `validateToken(token)`
-
-- `token` <Type text="ArtifactToken" /> <MetaInfo text="required" />
-- Returns <Type text="Promise<ArtifactsTokenValidation>" />
-
-<TypeScriptExample>
-
-```ts
-async function validateToken(artifacts: Artifacts, token: string) {
-	const repo = await artifacts.get("starter-repo");
-	if (!repo) {
-		throw new Error("Repo not found");
-	}
-
-	return repo.validateToken(token);
 }
 ```
 
@@ -215,10 +208,6 @@ async function validateToken(artifacts: Artifacts, token: string) {
 ```ts
 async function listRepoTokens(artifacts: Artifacts) {
 	const repo = await artifacts.get("starter-repo");
-	if (!repo) {
-		throw new Error("Repo not found");
-	}
-
 	const result = await repo.listTokens();
 	return {
 		total: result.total,
@@ -239,10 +228,6 @@ async function listRepoTokens(artifacts: Artifacts) {
 ```ts
 async function revokeToken(artifacts: Artifacts, tokenOrId: string) {
 	const repo = await artifacts.get("starter-repo");
-	if (!repo) {
-		throw new Error("Repo not found");
-	}
-
 	return repo.revokeToken(tokenOrId);
 }
 ```
@@ -262,10 +247,6 @@ async function revokeToken(artifacts: Artifacts, tokenOrId: string) {
 ```ts
 async function forkRepo(artifacts: Artifacts) {
 	const repo = await artifacts.get("starter-repo");
-	if (!repo) {
-		throw new Error("Repo not found");
-	}
-
 	const forked = await repo.fork("starter-repo-copy", {
 		description: "Fork for testing",
 		defaultBranchOnly: true,
@@ -303,19 +284,16 @@ export default {
 
 		if (request.method === "GET" && url.pathname === "/repos/starter-repo") {
 			const repo = await env.ARTIFACTS.get("starter-repo");
-			if (!repo) {
-				return Response.json({ error: "Repo not found" }, { status: 404 });
-			}
-			const info = await repo.info();
-			return Response.json(info);
+			return Response.json({
+				id: repo.id,
+				name: repo.name,
+				remote: repo.remote,
+				defaultBranch: repo.defaultBranch,
+			});
 		}
 
 		if (request.method === "POST" && url.pathname === "/tokens") {
 			const repo = await env.ARTIFACTS.get("starter-repo");
-			if (!repo) {
-				return Response.json({ error: "Repo not found" }, { status: 404 });
-			}
-
 			const token = await repo.createToken("read", 3600);
 			return Response.json(token);
 		}

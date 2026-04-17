@@ -1,0 +1,159 @@
+---
+pcx_content_type: faq
+title: 504 responses with origin status 0 in Logpush
+structured_data: true
+sidebar:
+  order: 7
+description: Why internal subrequests appear as 504 with origin status 0 in Logpush.
+---
+
+[❮ Back to FAQ](/logs/faq/)
+
+### Why do I see 504 responses with `OriginResponseStatus=0` in Logpush that do not appear in the dashboard?
+
+If you ingest Cloudflare Logpush into Splunk, Datadog, or another SIEM, you may see log entries with `EdgeResponseStatus=504` and `OriginResponseStatus=0` that do not appear anywhere in the Cloudflare dashboard.
+
+In most cases these are internal Cloudflare subrequests, not real end-user errors. The most common sources are [Early Hints](/cache/advanced-configuration/early-hints/) cache MISS lookups and Workers [Cache API](/workers/runtime-apis/cache/) `cache.match()` MISS returns. These subrequests never reach your origin, so your site continues to work normally for end users.
+
+Cache Analytics and the dashboard filter these subrequests out by design. Logpush ships every log line the edge produces, including internal subrequests, so the same data appears in two places with two different default filters. Filter the subrequests out in your SIEM using the `RequestSource` field.
+
+### What a matching log entry looks like
+
+A typical entry in your SIEM looks like this:
+
+```txt
+EdgeResponseStatus: 504
+OriginResponseStatus: 0
+ClientRequestHost: www.example.com
+EdgeStartTimestamp: 2026-04-15T10:23:17Z
+```
+
+Your application is working normally, your origin is healthy, and no 504 responses appear in the dashboard for this zone. Your SIEM dashboards may still show tens of thousands of these entries per day.
+
+### What the fields mean
+
+From the [HTTP requests dataset reference](/logs/logpush/logpush-job/datasets/zone/http_requests/):
+
+| Field                  | Definition                                                                                                                                                                                                                                                                              |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `EdgeResponseStatus`   | HTTP status code returned by Cloudflare to the client.                                                                                                                                                                                                                                  |
+| `OriginResponseStatus` | Status returned by the upstream server. The value `0` means that there was no response received from the origin server and the response was served by Cloudflare's edge. If the zone has a Worker running on it, `0` can also be the result of a Workers subrequest made to the origin. |
+
+`OriginResponseStatus=0` on its own is not an error signal. It means Cloudflare did not make a successful origin fetch for that log line. This is normal for cache hits, Worker responses, WAF blocks, redirects, and internal subrequests.
+
+### Why the combination occurs
+
+The [Error 502/504 page](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-502-504/) calls out two documented, benign causes for `504` entries in logs: cache MISS responses from Early Hints, and Workers Cache API `cache.match` operations that return cache MISS.
+
+#### Cause 1: Early Hints cache MISS
+
+From the [Early Hints documentation](/cache/advanced-configuration/early-hints/#emit-early-hints):
+
+> You may see an influx of `504` responses with the `RequestSource` of `earlyHintsCache` in Cloudflare Logs when Early Hints is enabled, which is expected and benign. Requests from `earlyHintsCache` are internal subrequests for cached Early Hints, and they are neither end user requests, nor do they go to your origin.
+
+Their response status only indicates whether there are cached Early Hints for the request URI: `200` on cache HIT, `504` on cache MISS.
+
+This happens when Early Hints is enabled on the zone and Cloudflare is looking up whether there are any cached `Link: <...>; rel=preload` or `rel=preconnect` headers to send to the browser ahead of the main response. A cache MISS means there are no cached `Link` headers for that URL, so the lookup returns `504` internally.
+
+If your origin does not emit `Link` preload or preconnect headers, every Early Hints lookup is a MISS and every request on the zone produces one of these internal `504` log lines. At scale, this can be millions of entries per day.
+
+#### Cause 2: Workers Cache API `cache.match` MISS
+
+From the [Workers Cache API documentation](/workers/runtime-apis/cache/#errors):
+
+> `cache.match` generates a `504` error response when the requested content is missing or expired. The Cache API does not expose this `504` directly to the Worker script, instead returning `undefined`. Nevertheless, the underlying `504` is still visible in Cloudflare Logs. If you use Cloudflare Logs, you may see these `504` responses with the `RequestSource` of `edgeWorkerCacheAPI`.
+
+This happens when a Worker on the zone calls `caches.default.match(request)` (or similar) and the content is not in the cache, or has expired. The API returns `undefined` to the Worker, but the internal `504` still appears in your logs.
+
+### Why the dashboard does not show these entries
+
+The Cloudflare dashboard applies a `requestSource = "eyeball"` filter to every analytics view — Cache Analytics, HTTP Analytics, and Security Analytics. That filter strips out internal subrequests by design.
+
+Logpush is a raw log stream with no such filter. It ships every log line the edge produces, including internal subrequests. The same data appears in both places with two different default filters, so the dashboard hides these entries and your SIEM does not.
+
+To replicate the dashboard's filter in the GraphQL Analytics API, refer to [Filter end users](/analytics/graphql-api/features/filtering/#filter-end-users).
+
+### Confirm what you are seeing
+
+Add the `RequestSource` field to your Logpush job's `output_options.field_names`. Field changes propagate in approximately 10–15 minutes, per the [API configuration reference](/logs/logpush/logpush-job/api-configuration/).
+
+```bash
+curl -X PUT "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/logpush/jobs/$JOB_ID" \
+  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  --data '{
+    "output_options": {
+      "field_names": ["...existing fields...", "RequestSource"]
+    }
+  }'
+```
+
+Once the field flows, re-check your `504` / `0` entries:
+
+| `RequestSource` value | Meaning                                  | Action                         |
+| --------------------- | ---------------------------------------- | ------------------------------ |
+| `earlyHintsCache`     | Early Hints internal subrequest (benign) | Filter out                     |
+| `edgeWorkerCacheAPI`  | Workers Cache API MISS (benign)          | Filter out                     |
+| `eyeball` or empty    | Real end-user request                    | Investigate as a genuine `504` |
+
+### Filter in your SIEM
+
+Add a filter equivalent to the following to your SIEM dashboards, alerts, and queries. This replicates the filter the Cloudflare dashboard applies to its analytics views.
+
+**Splunk:**
+
+```txt
+NOT RequestSource IN ("earlyHintsCache", "edgeWorkerCacheAPI")
+```
+
+**Datadog:**
+
+```txt
+NOT @RequestSource:("earlyHintsCache" OR "edgeWorkerCacheAPI")
+```
+
+**Sumo Logic or generic:**
+
+```txt
+!(RequestSource = "earlyHintsCache" OR RequestSource = "edgeWorkerCacheAPI")
+```
+
+### When 504 with origin status 0 is a real problem
+
+Not every `504` with `OriginResponseStatus=0` is an internal subrequest. Real origin-side failures produce the same field combination:
+
+- **Origin timeout** — Cloudflare opened the connection (or tried to) but got no response. `OriginResponseStatus` stays `0` because no status was received.
+- **Cloudflare Tunnel cannot reach origin** — `cloudflared` is connected but cannot reach the configured service. Refer to [Tunnel common errors](/cloudflare-one/networks/connectors/cloudflare-tunnel/troubleshoot-tunnels/common-errors/).
+- **Worker `fetch()` to origin fails or times out** — per the `OriginResponseStatus` field definition, if the zone has a Worker running on it, the value `0` can be the result of a Workers subrequest made to the origin.
+
+The `RequestSource` field distinguishes these from internal subrequests. If `RequestSource` is `eyeball` or empty and the edge returned `504`, investigate origin health, Tunnel connectivity, or Worker reliability.
+
+### Stop the noise at the source
+
+If you do not benefit from Early Hints — for example, your origin does not emit `Link` preload or preconnect headers — you can turn Early Hints off entirely:
+
+1. In the Cloudflare dashboard, go to **Speed** > **Optimization** > **Content Optimization**.
+2. Turn **Early Hints** off.
+
+This eliminates the `earlyHintsCache` subrequests at source rather than filtering them downstream. To check whether Early Hints is doing anything useful for your zone, query the GraphQL Analytics API for `103` status codes served to clients. If that count is zero while `earlyHintsCache` activity is high, Early Hints is on but not serving anything.
+
+For the Workers Cache API case, the `504` MISS behavior is intrinsic to how `cache.match` signals a miss. Filtering in your SIEM is the appropriate fix.
+
+### Summary
+
+1. Add `RequestSource` to your Logpush job's `field_names`.
+2. Wait approximately 15 minutes for the change to propagate.
+3. Check the `RequestSource` value on your `504` / `0` entries.
+4. Filter out `earlyHintsCache` and `edgeWorkerCacheAPI` in your SIEM.
+5. If all your `504` / `0` entries are `earlyHintsCache` and you do not serve `Link` preload headers, consider turning Early Hints off in Speed settings.
+6. Only investigate entries where `RequestSource` is `eyeball` or empty as real origin issues.
+
+### Related resources
+
+- [HTTP requests dataset — field reference](/logs/logpush/logpush-job/datasets/zone/http_requests/)
+- [Early Hints — Emit Early Hints](/cache/advanced-configuration/early-hints/#emit-early-hints)
+- [Workers Cache API — Errors](/workers/runtime-apis/cache/#errors)
+- [Error 502 or 504](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-502-504/)
+- [GraphQL Analytics API — Filter end users](/analytics/graphql-api/features/filtering/#filter-end-users)
+- [Logpush API configuration](/logs/logpush/logpush-job/api-configuration/)
+- [Cloudflare Tunnel — Common errors](/cloudflare-one/networks/connectors/cloudflare-tunnel/troubleshoot-tunnels/common-errors/)

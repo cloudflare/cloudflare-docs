@@ -161,6 +161,10 @@ package.json @cloudflare/content-engineering
 /src/content/docs/pipelines/ @Marcinthecloud @cmackenzie1 @oliy @garvit-gupta @sejoker @jonesphillip @elithrar @cloudflare/pcx-technical-writing @cloudflare/product-owners
 /src/content/docs/r2-sql/  @Marcinthecloud @netgusto @sesteves @sejoker @laplab @jonesphillip @elithrar @jonathanc-n @cloudflare/pcx-technical-writing @cloudflare/product-owners
 /src/content/docs/r2/data-catalog/ @Marcinthecloud @sejoker @jonesphillip @elithrar @laplab @vovacf201 @nagraham @cloudflare/pcx-technical-writing @cloudflare/product-owners
+/src/content/docs/flagship/ @roerohan @palashgo @akshitsinha @abhishekkankani @thebongy @cloudflare/pcx-technical-writing @cloudflare/product-owners
+/src/content/directory/flagship.yaml @roerohan @palashgo @akshitsinha @abhishekkankani @thebongy @cloudflare/pcx-technical-writing @cloudflare/product-owners
+/src/assets/images/flagship/ @roerohan @palashgo @akshitsinha @abhishekkankani @thebongy @cloudflare/pcx-technical-writing @cloudflare/product-owners
+/src/icons/flagship.svg @roerohan @palashgo @akshitsinha @abhishekkankani @thebongy @cloudflare/pcx-technical-writing @cloudflare/product-owners
 
 # DDoS Protection
 

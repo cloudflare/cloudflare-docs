@@ -108,7 +108,7 @@
 	"supports_async": false,
 	"external_info": "https://platform.openai.com/docs/guides/text-to-speech",
 	"terms": "https://openai.com/policies/",
-	"cover_image_url": "https://replicate.delivery/xezq/K99qxjVN2GJ2FZNZJzeKM8t4GxgGRRzY2HzIUpzoqjIGXWNLA/tmp34i73hyw.jpeg",
+	"cover_image_url": null,
 	"metadata": {
 		"Voices": "alloy, echo, fable, onyx, nova, shimmer"
 	},

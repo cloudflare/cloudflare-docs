@@ -123,7 +123,6 @@ export default {
 				name: created.name,
 				remote: created.remote,
 				token: created.token,
-				expiresAt: created.expiresAt,
 			});
 		}
 
@@ -172,8 +171,7 @@ The response resembles the following:
 {
 	"name": "starter-repo",
 	"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/starter-repo.git",
-	"token": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000",
-	"expiresAt": "<ISO_TIMESTAMP>"
+	"token": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000"
 }
 ```
 

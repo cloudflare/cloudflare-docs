@@ -102,7 +102,7 @@
 	"supports_async": false,
 	"external_info": "https://deepmind.google/technologies/veo/",
 	"terms": "https://ai.google.dev/gemini-api/terms",
-	"cover_image_url": "https://tjzk.replicate.delivery/models_models_featured_image/8a4d195c-cdd7-4544-9ee4-d9f67bb9017d/replicate-prediction-9y7jqn5by.mp4",
+	"cover_image_url": null,
 	"metadata": {
 		"Max Duration": "8 seconds",
 		"Audio Generation": "Yes",

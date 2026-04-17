@@ -54,6 +54,8 @@ Advanced TCP Protection rules can have one of the following scopes:
 
 The rule scope allows you to adjust the system's tolerance for out-of-state packets in locations where you may have more or less traffic than usual, or due to any other networking reasons.
 
+When multiple rules with different scopes apply to a data center, the rule with the most specific scope takes precedence. For example, if you have both a region rule (such as Western Europe) and a data center rule (such as Marseille), traffic through Marseille will be processed according to the data center rule.
+
 Besides defining rules with one of the above scopes, you must also select the [prefixes](/ddos-protection/advanced-ddos-systems/concepts/#prefixes) that you wish to protect with Advanced TCP Protection.
 
 #### Mode

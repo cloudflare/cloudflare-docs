@@ -97,7 +97,7 @@
 	"supports_async": false,
 	"external_info": "https://hailuoai.com/",
 	"terms": "https://hailuoai.com/terms",
-	"cover_image_url": "https://tjzk.replicate.delivery/models_models_featured_image/1c5d6ebb-8251-4f70-b3bb-dd64729d0858/hailuo-23-sm.mp4",
+	"cover_image_url": null,
 	"metadata": {
 		"Resolutions": "540p, 720p, 1080p"
 	},

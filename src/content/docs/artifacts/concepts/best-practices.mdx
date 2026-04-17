@@ -74,10 +74,6 @@ interface Env {
 
 async function forkFromBaseline(env: Env, sessionId: string) {
 	const baseline = await env.ARTIFACTS.get("starter-repo");
-	if (!baseline) {
-		throw new Error("Baseline repo not found");
-	}
-
 	const forked = await baseline.fork(`starter-repo-${sessionId}`, {
 		description: `Fork for session ${sessionId}`,
 		defaultBranchOnly: true,
@@ -118,10 +114,6 @@ export default {
 		const repoName = url.searchParams.get("repo") ?? "starter-repo";
 
 		const repo = await env.ARTIFACTS.get(repoName);
-		if (!repo) {
-			return Response.json({ error: "Repo not found" }, { status: 404 });
-		}
-
 		const token = await repo.createToken("read", 900);
 
 		return Response.json({

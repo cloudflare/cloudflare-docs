@@ -133,7 +133,7 @@
 	"supports_async": false,
 	"external_info": "https://openai.com/",
 	"terms": "https://openai.com/policies/",
-	"cover_image_url": "https://replicate.delivery/xezq/Oktjm48c1doBBNO22jKdfeyAnaQe7KfF00AtLMKpHej2tlVzC/tmpi91v9z4c.jpeg",
+	"cover_image_url": null,
 	"metadata": {
 		"Architecture": "Transformer"
 	},

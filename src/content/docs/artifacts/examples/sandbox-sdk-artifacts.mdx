@@ -37,22 +37,18 @@ The template keeps one Artifacts repo per sandbox ID:
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
-const repo = await env.ARTIFACTS.get(sandboxId);
-
 let defaultBranch: string;
 let remote: string;
 let token: string;
 
-if (repo) {
-	const info = await repo.info();
-	if (!info) {
-		throw new Error("Repo metadata not found");
-	}
+try {
+	const repo = await env.ARTIFACTS.get(sandboxId);
 
-	defaultBranch = info.defaultBranch;
-	remote = info.remote;
+	defaultBranch = repo.defaultBranch;
+	remote = repo.remote;
 	token = (await repo.createToken("write", 3600)).plaintext;
-} else {
+} catch {
+	// Repo doesn't exist yet — create it.
 	const created = await env.ARTIFACTS.create(sandboxId);
 
 	defaultBranch = created.defaultBranch;
