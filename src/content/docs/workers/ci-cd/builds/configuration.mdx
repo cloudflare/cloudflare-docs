@@ -69,6 +69,47 @@ Examples of other non-production branch deploy commands you can set include:
 | `yarn exec wrangler versions upload`         | You can customize the package manager used to run Wrangler.                                                                                                                                                                                                                                           |
 | `npx wrangler versions upload --env staging` | If you have a [Wrangler environment](/workers/ci-cd/builds/advanced-setups/#wrangler-environments) Worker, you should set your non-production branch deploy command with the environment flag. For more details, see [Advanced Setups](/workers/ci-cd/builds/advanced-setups/#wrangler-environments). |
 
+### Separating build and deploy commands
+
+Workers Builds runs your build command and deploy command as **separate steps**. Your `package.json` scripts should reflect this separation — the `build` script should only compile your project, and the `deploy` script should only deploy. Do not bundle build and deploy into a single script (for example, `"deploy": "astro build && wrangler deploy"`), as this causes your project to be built twice.
+
+This is especially important when using a framework adapter like `@opennextjs/cloudflare` that internally calls `npm run build`. If your `package.json` has `"build": "opennextjs-cloudflare build"`, this creates an infinite loop because `opennextjs-cloudflare build` calls `npm run build`, which calls `opennextjs-cloudflare build` again.
+
+**Recommended pattern:** Use framework adapter commands directly in the dashboard settings, and keep `package.json` scripts simple:
+
+```json title="package.json"
+{
+	"scripts": {
+		"build": "next build",
+		"deploy": "wrangler deploy"
+	}
+}
+```
+
+| Setting | Example (OpenNext) | Example (Astro) |
+| --- | --- | --- |
+| **Build command** | `npx opennextjs-cloudflare build` | `npm run build` |
+| **Deploy command** | `npx opennextjs-cloudflare deploy` | `npx wrangler deploy` |
+| **Non-production deploy command** | `npx opennextjs-cloudflare upload` | `npx wrangler versions upload` |
+
+:::caution
+Do not use npm lifecycle hooks (`prebuild`, `postbuild`) when your framework adapter internally calls `npm run build`. Lifecycle hooks fire on every `npm run build` invocation — including internal ones from framework adapters — causing duplicate or recursive execution. Chain pre-build steps in the dashboard build command instead.
+:::
+
+For example, if you need to generate static tokens, download a manifest, and lint before building:
+
+```
+node ./bin/generate-tokens.js && npm run download:manifest && npm run lint && npx opennextjs-cloudflare build
+```
+
+Or for a simpler project that just needs to lint before an Astro build:
+
+```
+npm run lint && npm run build
+```
+
+For troubleshooting, see [Double builds or infinite loops](/workers/ci-cd/builds/troubleshoot/#double-builds-or-infinite-loops).
+
 ### Automatic configuration for new projects
 
 If your repository does not have a Wrangler configuration file, the deploy command (`wrangler deploy`) will trigger [automatic project configuration](/workers/framework-guides/automatic-configuration/). This detects your framework, creates the necessary configuration, and opens a [pull request](/workers/ci-cd/builds/automatic-prs/) for you to review. Once you merge the PR, your project is configured and future builds will deploy normally.

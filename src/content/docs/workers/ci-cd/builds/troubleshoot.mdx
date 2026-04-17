@@ -51,6 +51,46 @@ The API Token dropdown in Build Configuration settings may show stale tokens tha
 
 There is a maximum build duration of 20 minutes. If a build exceeds this time, then the build will be terminated and the above error log is shown. For more details, see [Workers Builds limits](/workers/ci-cd/builds/limits-and-pricing/).
 
+### Double builds or infinite loops
+
+If your build runs the same steps twice, or loops indefinitely until it times out, the cause is usually that your `package.json` scripts bundle build and deploy together, or that a framework adapter internally calls `npm run build`.
+
+**Why this happens:** Workers Builds runs your build command and deploy command as separate steps. If your `package.json` `deploy` script includes a build step (for example, `"deploy": "astro build && wrangler deploy"` or `"deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy"`), and you set your dashboard deploy command to `npm run deploy`, your project gets built twice — once by the dashboard build command and once inside the deploy script.
+
+This becomes an **infinite loop** when a framework adapter internally calls `npm run build`. For example, `opennextjs-cloudflare build` runs `npm run build` internally. If your `package.json` has `"build": "opennextjs-cloudflare build"`, this creates recursion: `opennextjs-cloudflare build` → `npm run build` → `opennextjs-cloudflare build` → forever. npm lifecycle hooks (`prebuild`, `postbuild`) make this worse, since they fire on every `npm run build` invocation.
+
+**How to fix it:**
+
+1. **Keep build and deploy as separate, single-purpose commands** in your `package.json`. The `build` script should only compile your project (for example, `next build` or `astro build`), and the `deploy` script should only deploy (for example, `wrangler deploy`). Do not chain build+deploy together.
+
+2. **Use framework adapter commands directly in the dashboard**, not via `npm run`. For example, with OpenNext:
+
+| Setting | Value |
+| --- | --- |
+| **Build command** | `npx opennextjs-cloudflare build` |
+| **Deploy command** | `npx opennextjs-cloudflare deploy` |
+| **Non-production deploy command** | `npx opennextjs-cloudflare upload` |
+
+3. **Do not use npm lifecycle hooks** (`prebuild`, `postbuild`) when your framework adapter internally calls `npm run build`. If you need pre-build steps, chain them in the dashboard build command instead. For example:
+
+```
+node ./bin/generate-tokens.js && npm run download:manifest && npm run lint && npx opennextjs-cloudflare build
+```
+
+For more details, see [Separating build and deploy commands](/workers/ci-cd/builds/configuration/#separating-build-and-deploy-commands).
+
+### Private registry lockfile errors
+
+`npm error network request to https://internal-registry.example.com/... failed, reason: getaddrinfo ENOTFOUND internal-registry.example.com`
+
+If your build fails trying to reach an internal or private npm registry, the cause is likely hardcoded `resolved` URLs in your `package-lock.json`. When developers install dependencies locally against a private registry (such as Nexus, Artifactory, or GitHub Packages), the lockfile records the resolved tarball URLs pointing to that registry. When Workers Builds runs `npm install`, it follows those URLs — even if your `.npmrc` points to a different (public) registry.
+
+**How to fix it:**
+
+- **Option 1: Remove the lockfile.** Without a `package-lock.json`, `npm install` resolves packages fresh using the registry configured in `.npmrc`. This works if your private packages are also available on the public registry.
+- **Option 2: Use a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/).** Set up a tunnel to expose your private registry to Workers Builds, so the lockfile URLs are reachable.
+- **Option 3: Regenerate the lockfile.** Run `npm install` in an environment that resolves against a publicly reachable registry, then commit the updated lockfile.
+
 ### Git integration issues
 
 If you are running into errors associated with your Git integration, you can try removing access to your [GitHub](/workers/ci-cd/builds/git-integration/github-integration/#removing-access) or [GitLab](/workers/ci-cd/builds/git-integration/gitlab-integration/#removing-access) integration from Cloudflare, then reinstalling the [GitHub](/workers/ci-cd/builds/git-integration/github-integration/#reinstall-a-git-integration) or [GitLab](/workers/ci-cd/builds/git-integration/gitlab-integration/#reinstall-a-git-integration) integration.
