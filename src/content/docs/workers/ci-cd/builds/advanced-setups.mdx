@@ -80,3 +80,38 @@ When a new commit is detected in the repository, a new build/deploy will trigger
 Imagine you have a Worker named `my-worker`, and you want to set up two environments `staging` and `production` set in the `wrangler.jsonc`. If you have not already, you can deploy `my-worker` for each environment using the commands `wrangler deploy --env staging` and `wrangler deploy --env production`.
 
 In your Cloudflare Dashboard, you should find the two Workers `my-worker-staging` and `my-worker-production`. Then, connect the Git repository for the Worker, `my-worker`, to both of the environment Workers. In the build configurations of each environment Worker, edit the deploy commands to be `npx wrangler deploy --env staging` and `npx wrangler deploy --env production` and the non-production branch deploy commands to be `npx wrangler versions upload --env staging` and `npx wrangler versions upload --env production` respectively.
+
+## SBOM generation
+
+You can generate a Software Bill of Materials (SBOM) during your Workers Build to produce an inventory of every dependency included in your deployed application. This is useful for:
+
+- **Vulnerability scanning**: Run the SBOM through tools like [Snyk](https://snyk.io/), [Grype](https://github.com/anchore/grype), or [Trivy](https://trivy.dev/) to check dependencies against known CVE databases.
+- **Compliance**: Meet regulatory requirements that mandate visibility into deployed software components.
+- **Incident response**: When a new vulnerability is disclosed, quickly determine if your production deployments are affected.
+
+Generating the SBOM during the build (rather than locally) ensures it reflects the exact dependency tree that was installed and shipped to production.
+
+### Setup
+
+1. Add a dependency on an SBOM generator such as [`@cyclonedx/cyclonedx-npm`](https://www.npmjs.com/package/@cyclonedx/cyclonedx-npm):
+
+    ```json title="package.json"
+    {
+    	"devDependencies": {
+    		"@cyclonedx/cyclonedx-npm": "^1.19.0"
+    	},
+    	"scripts": {
+    		"generate-sbom": "npx @cyclonedx/cyclonedx-npm --output-file sbom.json --output-format JSON"
+    	}
+    }
+    ```
+
+2. Chain the SBOM generation into your dashboard build command, after the main build step:
+
+    ```
+    npm run build && npm run generate-sbom
+    ```
+
+3. To push the SBOM back to your repository for security tooling to scan, create a script that commits and pushes the generated file using the GitHub or GitLab API with an access token stored as a [build secret](/workers/ci-cd/builds/configuration/#environment-variables). Add `[skip ci]` to the commit message to prevent the push from triggering another build.
+
+4. Add the SBOM output file (for example, `sbom.json`) to your [build watch paths](/workers/ci-cd/builds/build-watch-paths/) exclude list so that pushing it back to the repository does not trigger a new build.
