@@ -129,6 +129,7 @@ Other entry types include:
 
 - `CLOUDFLARE_CF_FETCH_PATH` <Type text="string" /> <MetaInfo text="optional" />
   - Specifies a custom path for caching the `cf.json` file, overriding the default `node_modules/.mf/cf.json` location. This is useful for multi-project setups where you want a shared cache location, or for projects that want to store the cache outside of `node_modules`. The explicit `cf` option in the [Miniflare API](/workers/testing/miniflare/get-started/#requestcf-object) takes precedence over this environment variable, and `CLOUDFLARE_CF_FETCH_ENABLED=false` takes precedence over this variable.
+
 ## Example `.env` file
 
 The following is an example `.env` file:
