@@ -15,22 +15,19 @@ Use the Artifacts REST API to manage repos, remotes, forks, imports, and tokens 
 
 ## Base URL and authentication
 
-Artifacts REST routes use one of these base paths:
+All REST routes use the following base path:
 
 ```txt
 https://artifacts.cloudflare.dev/v1/api/namespaces/$ARTIFACTS_NAMESPACE
-https://artifacts.cloudflare.dev/edge/v1/api/namespaces/$ARTIFACTS_NAMESPACE
 ```
 
-Requests to `/v1/api/...` use a gateway JWT:
+Authenticate with a gateway JWT:
 
 ```txt
 Authorization: Bearer <ARTIFACTS_GATEWAY_JWT>
 ```
 
-Requests to `/edge/v1/api/...` use edge gateway auth from Cloudflare Access and `cf-apigateway-metadata`.
-
-All routes below are relative to either base path.
+All routes below are relative to this base path.
 
 Gateway auth authenticates REST control-plane routes. Repo tokens authenticate Git operations against the returned `remote` URL.
 
