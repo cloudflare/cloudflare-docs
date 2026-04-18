@@ -50,7 +50,7 @@ Both classes must be exported from the worker entry point. No separate Durable O
 
 ```toml
 compatibility_date = "$today"
-compatibility_flags = ["nodejs_compat", "experimental"]
+compatibility_flags = ["nodejs_compat"]
 
 [[durable_objects.bindings]]
 class_name = "Orchestrator"
@@ -320,14 +320,16 @@ export class Streamer extends Agent {
 
 Sub-agents run as facets of the parent Durable Object. Some `Agent` methods are not available in sub-agents:
 
-| Method             | Behavior in sub-agent                              |
-| ------------------ | -------------------------------------------------- |
-| `schedule()`       | Throws `"not supported in sub-agents"`             |
-| `cancelSchedule()` | Throws `"not supported in sub-agents"`             |
-| `keepAlive()`      | Throws `"not supported in sub-agents"`             |
-| `setState()`       | Works normally (writes to the child's own storage) |
-| `this.sql`         | Works normally (child's own SQLite)                |
-| `subAgent()`       | Works — sub-agents can spawn their own children    |
+| Method              | Behavior in sub-agent                                        |
+| ------------------- | ------------------------------------------------------------ |
+| `schedule()`        | Throws `"not supported in sub-agents"`                       |
+| `cancelSchedule()`  | Throws `"not supported in sub-agents"`                       |
+| `keepAlive()`       | Throws `"not supported in sub-agents"`                       |
+| `broadcast()`       | No-op — sub-agents do not accept WebSocket clients           |
+| `getConnections()`  | Returns empty — sub-agents do not accept WebSocket clients   |
+| `setState()`        | Writes to the child's own storage; broadcast step is skipped |
+| `this.sql`          | Works normally (child's own SQLite)                          |
+| `subAgent()`        | Works — sub-agents can spawn their own children              |
 
 For scheduled work, have the parent schedule the task and delegate to the sub-agent when the schedule fires.
 
