@@ -1,0 +1,196 @@
+---
+pcx_content_type: how-to
+title: Alerts
+head: []
+description: Track your Workers' metrics and get notified when they exceed defined thresholds.
+sidebar:
+  order: 5
+  badge:
+    text: Beta
+---
+
+import { WranglerConfig, DashButton } from "~/components";
+
+Alerts let you monitor your Workers' metrics and get notified when they exceed defined thresholds. You can set conditions on aggregated log data — such as request counts, error rates, CPU time, and execution duration — and receive notifications via email, webhooks, or PagerDuty when those conditions are violated.
+
+<DashButton url="/?to=/:account/workers-and-pages/observability" />
+
+## Prerequisites
+
+Alerts query the Workers Observability dataset, which requires [Workers Logs](/workers/observability/logs/workers-logs/) to be enabled. If you have not yet enabled Workers Logs, add the following to your Worker's Wrangler configuration and redeploy:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"observability": {
+		"enabled": true,
+		"logs": {
+			"invocation_logs": true,
+			"head_sampling_rate": 1 // optional. default = 1.
+		}
+	}
+}
+```
+
+</WranglerConfig>
+
+## Create an alert
+
+1. In the Cloudflare dashboard, go to **Observability**.
+2. Select the **Alerts** tab.
+3. Select **+ New Alert**.
+4. Configure the alert settings described below.
+5. Select **Save Alert**.
+
+You can also create an alert directly from a query in the [Query Builder](/workers/observability/query-builder/). The query's visualization, filters, and group-by fields will carry over into the alert configuration.
+
+### Conditions
+
+Conditions define the thresholds that determine when an alert fires. You can add one or more conditions per alert.
+
+There are two types of conditions:
+
+| Type            | Description                                                          | Example                              |
+| --------------- | -------------------------------------------------------------------- | ------------------------------------ |
+| **Count**       | Evaluates the total number of log events matching your filters.      | Count &gt; 10,000                    |
+| **Calculation** | Evaluates an aggregation function applied to a numeric field.        | p99($workers.cpuTimeMs) &gt; 500    |
+
+#### Supported aggregation functions
+
+| Function               | Description                                                 |
+| ---------------------- | ----------------------------------------------------------- |
+| **Count**              | Total number of matching events                             |
+| **Count Distinct**     | Number of unique values for a field                         |
+| **Average**            | Mean value of a numeric field                               |
+| **Sum**                | Total of all values for a numeric field                     |
+| **Min**                | Smallest value for a numeric field                          |
+| **Max**                | Largest value for a numeric field                           |
+| **Median (P50)**       | 50th percentile                                             |
+| **P75**                | 75th percentile                                             |
+| **P90**                | 90th percentile                                             |
+| **P95**                | 95th percentile                                             |
+| **P99**                | 99th percentile                                             |
+| **Standard Deviation** | Standard deviation of a numeric field                       |
+| **Variance**           | Variance of a numeric field                                 |
+
+#### Comparison operators
+
+Conditions support the following comparison operators: `>` (greater than), `>=` (greater than or equal), `<` (less than), `<=` (less than or equal), `=` (equal), `!=` (not equal).
+
+#### Combining multiple conditions
+
+When you add multiple conditions, you can combine them with either:
+
+- **AND** — The alert fires only when **all** conditions are violated simultaneously.
+- **OR** — The alert fires when **any** condition is violated.
+
+### Filters
+
+Filters narrow the data evaluated by the alert. Each filter has three components:
+
+| Component    | Description                              | Example                |
+| ------------ | ---------------------------------------- | ---------------------- |
+| **Key**      | Any field in a log event                 | `$workers.outcome`     |
+| **Operator** | A comparison operator                    | `equals`               |
+| **Value**    | The value to compare against             | `exception`            |
+
+For example, you could add a filter for `$workers.outcome equals exception` to only evaluate log events where the Worker threw an exception.
+
+### Group By
+
+Group By evaluates conditions separately for each unique value of the specified field. For example, grouping by `scriptName` evaluates thresholds independently per Worker, so an alert can fire for one Worker without affecting others.
+
+### Timings
+
+Timing parameters control how frequently the alert is checked and how state transitions behave.
+
+| Parameter                        | Description                                                                                                                                     |
+| -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Check alert every**            | How often the alert conditions are evaluated. For example, every 5 minutes.                                                                     |
+| **Include data from the last**   | The time window of data included in each check. For example, the last 15 minutes of data.                                                       |
+| **Fire after failing for**       | How long conditions must be continuously violated before the alert transitions to **Firing** and sends a notification. Prevents transient spikes from triggering alerts. |
+| **Resolve after passing for**    | How long conditions must be continuously passing before a firing alert transitions back to **Normal** and sends a resolution notification. Prevents flapping. |
+
+## Notifications
+
+Alerts support three notification channels. You can configure any combination of these on a single alert.
+
+| Channel        | Description                                                                                                                          |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| **Email**      | Send notifications to one or more email addresses. Select **+ Add** to add recipients.                                               |
+| **Webhooks**   | Send notifications to a webhook endpoint. You must first [configure a webhook integration](/notifications/get-started/configure-webhooks/). |
+| **PagerDuty**  | Send notifications to PagerDuty. You must first [configure a PagerDuty integration](/notifications/get-started/configure-pagerduty/).       |
+
+You can control which state transitions trigger notifications:
+
+- **Notify when fired** — Send a notification when the alert transitions to the Firing state (turned on by default).
+- **Notify when resolved** — Send a notification when a firing alert transitions back to Normal.
+
+## Alert states
+
+Alerts follow a state machine lifecycle with four states:
+
+| State               | Description                                                                                                                                                |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Normal**          | Conditions are not violated. The alert is healthy.                                                                                                         |
+| **Pending Fire**    | Conditions are being violated, but the **Fire after failing for** duration has not yet elapsed. If conditions stop being violated, the alert returns to Normal without firing. |
+| **Firing**          | Conditions have been violated for longer than the **Fire after failing for** duration. A notification is sent and an incident is created.                    |
+| **Pending Resolve** | Conditions are passing again, but the **Resolve after passing for** duration has not yet elapsed. If conditions start being violated again, the alert returns to Firing without resolving. |
+
+## Alert detail view
+
+Selecting an alert from the alerts list opens the detail view, which provides three tabs:
+
+### Metrics
+
+The **Metrics** tab displays a time-series chart of the data being evaluated by the alert. Threshold lines are drawn on the chart to visualize your configured conditions. You can select different time ranges (15m, 1h, 24h, 3d, 7d) and brush-select a region to zoom in.
+
+The chart also shows:
+
+- **Thresholds** — Horizontal lines representing your condition values.
+- **Checks** — Vertical markers showing when each check was evaluated and whether it passed or failed.
+
+### Checks
+
+The **Checks** tab shows a table of every evaluation performed by the alert, including:
+
+- The timestamp of the check.
+- Whether each condition passed or failed.
+- The actual metric values at the time of the check.
+- Any state transition that occurred (Fired or Resolved).
+
+If your alert uses Group By, you can expand each check to see per-group results.
+
+### Incidents
+
+The **Incidents** tab shows the history of all incidents created by the alert. Each incident includes:
+
+- When the alert first started failing.
+- When it fired (transitioned to Firing).
+- When it resolved (if applicable).
+- An incident ID for reference.
+
+## Manage alerts
+
+### Edit an alert
+
+1. From the alerts list, select the alert name to open the detail view.
+2. Select **Edit Alert**.
+3. Make your changes and select **Save Alert**.
+
+### Delete an alert
+
+1. From the alerts list, select the three-dot menu on the right side of the alert row.
+2. Select **Delete**.
+3. Confirm the deletion.
+
+Deleting an alert also removes its associated notification policy.
+
+### Check Now
+
+You can trigger an immediate evaluation of an alert by selecting **Check Now** from the alert detail view. This runs the alert's conditions against the current data without waiting for the next scheduled check.
+
+### Test notifications
+
+From the alerts list, you can send a test notification to verify that your notification channels are configured correctly. Select the three-dot menu on an alert and select **Test Notification**.
