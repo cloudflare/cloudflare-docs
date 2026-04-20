@@ -29,9 +29,9 @@ If you are on a Free, Pro, or Business Plan and your application appears to be s
 
 * **Serve redirected content from a paid service as outlined below**
 
-## Delivering videos and large files with Cloudflare using paid products
+## Delivering videos with Cloudflare using paid products
 
-Cloudflare permits the delivery of video content and large files with specific paid services. If your application serves videos or many large files, use one of the following options.
+Cloudflare permits the delivery of video content with specific paid services. If you are interested in serving video content, there are two recommended options.
 
 ### Option 1: Cloudflare Stream
 
@@ -39,25 +39,9 @@ Cloudflare permits the delivery of video content and large files with specific p
 
 To get started with Stream, visit **Stream** from your Dashboard or [sign up](https://dash.cloudflare.com/sign-up/stream). Your Stream videos are not attached to a domain in your Cloudflare account, and you do not need a domain on Cloudflare to use Stream.
 
-For more information, refer to the [Stream documentation](/stream/).
+### Option 2: Stream Delivery (Enterprise only)
 
-### Option 2: Cloudflare R2
-
-[R2](/r2/) is an S3-compatible object storage service with zero egress fees. R2 is well suited for storing and serving large files such as media assets, backups, software downloads, and datasets.
-
-R2 does not charge egress for data accessed directly through the Workers API, S3 API, or `r2.dev` domains. If you serve R2 content through a [custom domain](/r2/buckets/public-buckets/#custom-domains), traffic routes through the Cloudflare CDN proxy — this has no additional cost for most plans, but Enterprise customers should verify whether their contract includes CDN bandwidth charges that may apply. You can use [Cache Rules](/cache/how-to/cache-rules/) to control caching behavior.
-
-To get started, refer to the [R2 documentation](/r2/).
-
-### Option 3: Cloudflare Images
-
-[Images](/images/) stores, resizes, optimizes, and delivers images. If your site serves a large number of images and you want to reduce bandwidth while improving load times, Images handles format conversion, responsive sizing, and delivery automatically.
-
-To get started, refer to the [Images documentation](/images/).
-
-### Option 4: Stream Delivery (Enterprise only)
-
-[Stream Delivery](https://www.cloudflare.com/products/stream-delivery/) offers caching and delivery of video content through Cloudflare data centers. This CDN feature is only available on the Cloudflare Enterprise Plan. [Contact sales](https://www.cloudflare.com/products/stream-delivery/#) to explore this option.
+[Stream Delivery](https://www.cloudflare.com/products/stream-delivery/) offers caching and delivery of video content through Cloudflare data centers around the globe. This CDN feature is only available on the Cloudflare Enterprise Plan. [Contact sales](https://www.cloudflare.com/products/stream-delivery/#) to explore this option.
 
 ***
 
