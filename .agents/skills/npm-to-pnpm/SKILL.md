@@ -84,24 +84,6 @@ Run:
 corepack enable pnpm
 ```
 
-## Step 3: Install dependencies
+## Step 3: Inform the user
 
-Run:
-
-```bash
-pnpm install --frozen-lockfile
-```
-
-If this succeeds, the migration is complete.
-
-## Step 4: Inform the user
-
-Let the user know that npm commands no longer apply in this repo. The equivalents are:
-
-| Before            | After            |
-| ----------------- | ---------------- |
-| `npm run dev`     | `pnpm run dev`   |
-| `npm run build`   | `pnpm run build` |
-| `npm run check`   | `pnpm run check` |
-| `npm install`     | `pnpm install`   |
-| `npm install pkg` | `pnpm add pkg`   |
+Let the user know that pnpm is now installed and ready. This repo currently uses npm, so they should continue using `npm` commands for this project — pnpm is installed for future use when the repo migrates.

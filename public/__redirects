@@ -2547,6 +2547,7 @@
 /cloudflare-one/insights/logs/enable-logs/ /cloudflare-one/insights/logs/logpush/email-security-logs/ 301
 /cloudflare-one/insights/logs/use-logpush-with-ids/ /cloudflare-one/insights/logs/logpush/ids-logs/ 301
 /cloudflare-one/insights/logs/filter-views/ /cloudflare-one/insights/logs/logpush/network-firewall-log-filters/ 301
+/cloudflare-one/remote-browser-isolation/canvas-rendering/ /cloudflare-one/remote-browser-isolation/canvas-remoting/ 301
 
 # ============================================================================
 # DYNAMIC REDIRECTS
