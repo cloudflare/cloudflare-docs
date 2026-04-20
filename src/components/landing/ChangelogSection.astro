@@ -50,7 +50,7 @@ function catColor(id: string) {
 
 /* ── Data ────────────────────────────────────────────────────────── */
 const all = await getChangelogs({
-	filter: (e) => !e.data.hidden && !e.data.scheduled,
+	filter: (e) => !e.data.hidden,
 });
 
 const entries = await Promise.all(
