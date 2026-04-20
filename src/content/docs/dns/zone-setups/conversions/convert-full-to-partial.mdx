@@ -12,17 +12,19 @@ If you initially configured a [primary setup (full)](/dns/zone-setups/full-setup
 
 A CNAME setup allows you to use [Cloudflare's reverse proxy](/fundamentals/concepts/how-cloudflare-works/) on individual subdomains while using a different authoritative DNS provider.
 
-:::note
-
-This guide assumes your zone is already in an [active status](/dns/zone-setups/reference/domain-status/#active).
-
-:::
 
 ## Before you begin
 
 Make sure you consider the following:
 
-- A CNAME setup requires a CNAME record for each proxied hostname, but [CNAME records are not allowed on the zone apex](https://datatracker.ietf.org/doc/html/rfc1912#section-2.4) (`example.com`). You can only proxy the zone apex if your authoritative DNS provider supports [CNAME Flattening](https://blog.cloudflare.com/introducing-cname-flattening-rfc-compliant-cnames-at-a-domains-root/) (or an equivalent like ALIAS/ANAME records), or if you create A/AAAA records pointing the apex directly to Cloudflare [anycast IP addresses](/fundamentals/concepts/cloudflare-ip-addresses/). Cloudflare only recommends the A/AAAA approach if you use [Static IPs](/byoip/concepts/static-ips/) or [Bring Your Own IP (BYOIP)](/byoip/), because standard Cloudflare anycast IPs can change. Otherwise, you can only proxy subdomains.
+- This guide assumes your zone is already in an [active status](/dns/zone-setups/reference/domain-status/#active).
+
+- CNAME setup is focused on allowing you to proxy individual subdomains (`sub.example.com`), not the zone apex (`example.com`).
+
+   :::note
+   It is possible to proxy the zone apex if your authoritative DNS provider points it directly to Cloudflare's anycast IP addresses. However, this approach is only recommended if you [Bring Your Own IP (BYOIP)](/byoip/) or use [Static IPs](/byoip/concepts/static-ips/).
+   :::
+
 - On the dashboard, you will only be able to create A, AAAA, and CNAME records, which are the DNS record types that can be [proxied](/dns/proxy-status/).
 - You should plan for SSL/TLS certificates. If you are only using [Universal SSL](/ssl/edge-certificates/universal-ssl/) prior to converting your zone, a certificate will be provisioned for your subdomains only after each of the respective DNS records are proxied. If your domain is sensitive to downtime, instead of using Universal SSL, consider using an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) with [delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/#setup).
 
