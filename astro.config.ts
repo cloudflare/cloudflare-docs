@@ -231,6 +231,8 @@ export default defineConfig({
 				}
 
 				const pathname = new URL(page).pathname;
+
+				// Exclude external_link pages
 				if (externalLinkPaths.has(pathname)) {
 					return false;
 				}
