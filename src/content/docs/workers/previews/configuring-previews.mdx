@@ -1,0 +1,302 @@
+---
+pcx_content_type: overview
+title: Configuring Previews
+sidebar:
+  order: 2
+description: Configure default Preview settings, understand how Preview bindings behave, and learn when to use separate resources from production.
+---
+
+import { Details, WranglerConfig } from "~/components";
+
+A Worker can have many Previews, such as one Preview per feature branch. Before you can create Previews, you need to first define the **Preview settings** that all Previews will start with.
+
+### What are Preview settings?
+
+Your **Preview settings** are the default [bindings](/workers/configuration/bindings/), [environment variables](/workers/configuration/environment-variables/), and other values that every new Preview starts with. You can define Preview settings in the Cloudflare dashboard or in your Wrangler configuration file. Previews never inherit values from your production settings.
+
+When a specific Preview needs different values, you can override them for that single Preview deployment — without affecting other running Previews. You can learn more about Overrides in this section.
+
+## Configure Preview settings
+
+### Cloudflare dashboard
+
+To configure Preview settings in the Cloudflare dashboard:
+
+1. Go to **Compute** > **Workers & Pages** > Select your Worker >**Settings**. There, you can add values to be used for all Previews, or import values from your Production settings.
+2. You can also do the same for your bindings in your Worker's **Bindings** tab.
+
+### Wrangler configuration file
+
+Preview settings are stored on the Cloudflare platform's API, meaning that you can configure your Preview settings in the Cloudflare dashboard, and don't need to also define them in Wrangler configuration.
+
+If you do want to always have Preview settings in your **Wrangler configuration file** (for exaple, when using coding agents or when you want to keep all settings checked into version control), you can define them in a `previews` block. Wrangler treats your top-level configuration as your Production settings.
+
+Any Preview settings defined in Wrangler configuration will always override settings in the Cloudflare dashboard. Learn more about Overrides in this section.
+
+<WranglerConfig>
+
+```toml
+vars = { ENVIRONMENT = "production" }
+
+[[kv_namespaces]]
+binding = "MY_KV"
+id = "prod-kv-id"
+
+[previews]
+vars = { ENVIRONMENT = "preview" }
+
+[[previews.kv_namespaces]]
+binding = "MY_KV"
+id = "preview-kv-id"
+```
+
+</WranglerConfig>
+
+In this example:
+
+- Your **Production settings** use `ENVIRONMENT = "production"` and the KV namespace `prod-kv-id`
+- Your Preview settings use `ENVIRONMENT = "preview"` and the KV namespace `preview-kv-id`
+- The binding name stays the same, so your Worker code can keep using `env.MY_KV`, and only the values themselves change.
+
+Cloudflare does not automatically create `preview-kv-id` for you, unless you use Wrangler's auto-provisioning feature. Otherwise, you must create that KV namespace first, then reference it in the `previews`block.
+
+<Details header="Full `previews` configuration example">
+
+This reference example shows a detailed configuration example with all bindings types in `previews`.
+
+<WranglerConfig>
+```jsonc
+{
+	// Top-level fields apply to production. Previews inherit compatibility_date,
+	// compatibility_flags, placement, assets, and migrations from the top level —
+	// everything else for Previews must be declared inside the `previews` block.
+	"compatibility_date": "$today",
+	"assets": {
+		"directory": "./public",
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["Counter"],
+		},
+	],
+	// Everything inside `previews` applies only to Preview deployments.
+	// Previews do NOT inherit bindings (KV, D1, R2, etc.)
+// from the top level. If you want a binding available in a Preview,
+	// you must declare it here.
+	"previews": {
+		// Plain-text and JSON environment variables for Previews only.
+		// Never put secrets here — use `wrangler preview secret put` instead.
+		"vars": {
+			"ENVIRONMENT": "preview",
+			"FEATURE_FLAGS": { "checkoutV2": true },
+		},
+		// Account-level bindings — no resource IDs required.
+		"browser": { "binding": "MY_BROWSER" },
+		"ai": { "binding": "AI" },
+		"images": { "binding": "IMAGES" },
+		"stream": { "binding": "STREAM" },
+		"media": { "binding": "MEDIA" },
+		// Version metadata binding — exposes the Worker's version id and tag
+		// at runtime via `env.CF_VERSION_METADATA`.
+		"version_metadata": { "binding": "CF_VERSION_METADATA" },
+		// Dynamic Worker loader binding.
+		"worker_loaders": [{ "binding": "LOADER" }],
+		// Durable Object binding. When `class_name` refers to a class defined in
+		// this Worker (no `script_name`), each Preview gets its own isolated namespace and
+		// Durable Object instances — independent from production. Prefer
+		// `ctx.exports.Counter` .
+		"durable_objects": {
+			"bindings": [
+				{ "name": "COUNTER", "class_name": "Counter" },
+			],
+		},
+		// Workflow binding. Same isolation rules as Durable Objects: when the
+		// class lives in this Worker, each Preview gets isolated Workflow
+		// instances. Prefer `ctx.exports` for self-referential Workflow bindings.
+		"workflows": [
+			{
+				"binding": "MY_WORKFLOW",
+				"name": "preview-workflow", // The Workflow name registered on your account
+				"class_name": "MyWorkflow", // The class exported by your Worker
+			},
+		],
+		// KV namespace. Provide an `id` to bind to an existing namespace,
+		// or omit `id` and Wrangler will auto-provision a new namespace on your
+		// first `wrangler preview` run and write the id back to this file.
+		"kv_namespaces": [{ "binding": "MY_KV", "id": "preview-kv-id" }],
+		// Send Email binding. NOTE: the runtime binding name comes from `name`,
+		// not `binding`. So in your Worker you access this as `env.MAILER`.
+		"send_email": [
+			{
+				"name": "MAILER",
+				"destination_address": "preview@example.com",
+			},
+		],
+		// D1 database. Provide `database_id` to bind to an existing database,
+		// or omit `database_name` and Wrangler will auto-provision one.
+		"d1_databases": [
+			{
+				"binding": "DB",
+				"database_name": "preview-db",
+				"database_id": "preview-db-id",
+			},
+		],
+		// R2 bucket. Provide `bucket_name` to bind to an existing bucket,
+		// or omit `bucket_name` and Wrangler will auto-provision one.
+		"r2_buckets": [{ "binding": "BUCKET", "bucket_name": "preview-bucket" }],
+		// Vectorize index. You must create the index manually before deploying.
+		"vectorize": [{ "binding": "VECTOR_INDEX", "index_name": "preview-index" }],
+		// Hyperdrive configuration. You must create the Hyperdrive config
+		// manually before deploying.
+		"hyperdrive": [
+			{ "binding": "HYPERDRIVE", "id": "preview-hyperdrive-id" },
+		],
+		// Service binding to another Worker. IMPORTANT: service bindings from a
+		// Preview always resolve to the bound Worker's production deployment.
+		// You cannot point a service binding at another Worker's Preview.
+		"services": [
+			{ "binding": "AUTH_SERVICE", "service": "auth-service-preview" },
+		],
+		// Analytics Engine dataset.
+		"analytics_engine_datasets": [
+			{ "binding": "ANALYTICS", "dataset": "preview_events" },
+		],
+		// Workers for Platforms dispatch namespace binding.
+		// `outbound.parameters` is an array of string parameter names passed
+		// to the outbound Worker as request context.
+		"dispatch_namespaces": [
+			{
+				"binding": "DISPATCH",
+				"namespace": "preview-namespace",
+				"outbound": {
+					"service": "outbound-worker",
+					"parameters": ["tenant"],
+				},
+			},
+		],
+		// mTLS client certificate.
+		"mtls_certificates": [
+			{ "binding": "CLIENT_CERT", "certificate_id": "preview-cert-id" },
+		],
+		// Cloudflare Pipelines binding.
+		"pipelines": [
+			{ "binding": "EVENT_STREAM", "pipeline": "preview-stream-id" },
+		],
+		// Secrets Store binding. Unlike `send_email` and `ratelimits`, this one
+		// uses `binding` (not `name`) as the runtime binding identifier.
+		"secrets_store_secrets": [
+			{
+				"binding": "API_KEY",
+				"store_id": "store-id",
+				"secret_name": "preview-api-key",
+			},
+		],
+		// Rate Limiting binding. NOTE: the runtime binding name comes from `name`,
+		// not `binding`. So in your Worker you access this as `env.API_LIMITER`.
+		// `simple.period` must be 10 or 60 (seconds).
+		"ratelimits": [
+			{
+				"name": "API_LIMITER",
+				"namespace_id": "1001",
+				"simple": { "limit": 100, "period": 60 },
+			},
+		],
+		// VPC service binding.
+		"vpc_services": [{ "binding": "PRIVATE_API", "service_id": "service-id" }],
+		// Tail Workers that receive Preview logs. Each entry is identified by
+		// its `service` name (the Worker that receives the tail events).
+		"tail_consumers": [{ "service": "preview-tail-worker" }],
+		// Default observability settings for new Previews.
+		"observability": {
+			"enabled": true,
+			"head_sampling_rate": 0.25,
+		},
+		// Logpush toggle for new Previews.
+		"logpush": false,
+		// Default runtime limits for new Preview deployments.
+		"limits": {
+			"cpu_ms": 50,
+			"subrequests": 100,
+		},
+	},
+}
+```
+</WranglerConfig>
+
+</Details>
+
+## Overrides
+
+Any values in the `previews` block will always override settings defined in the Cloudflare dashboard for that specific Preview deployment. This makes it possible to override a value (for example, using a different environment variable) without also changing that value for all the running Previews your teammates might be using.
+
+Let's say you check out a branch and want to use a different D1 database for your testing, without other Previews now using that database. You can simply change the `database_name` to point to a different database in the `previews` block, and then run `wrangler preview`. You'll notice that the Preview deployment now uses the new database, but your shared Preview settings remain unchanged. You can view the values that your Preview deployments run with in the dashboard under **Previews** > Preview name > **Deployments**. If you don't want to merge that new `database_name` into `main`, simply revert the change.
+
+If you want to update all your Preview settings with the values defined in your `previews` block, you can run `wrangler preview settings update` to push those values to the Cloudflare platform. This is purely for hygeine purposes, and so that you can see the consistency between the values in your configuration file and the Preview settings in the Cloudflare dashboard.
+
+## Binding behavior in `previews` block
+
+Previews do **not** inherit bindings from your top-level Wrangler configuration. Any binding you want available inside a Preview must be declared in the `previews` block. If you omit a binding here, your Preview will not have access to it at runtime.
+
+For most binding types — such as KV, D1, R2, Queues, Vectorize, and Hyperdrive — all of your Previews share the same underlying resource that you specify in `previews`. These are account-level resources referenced by ID or name, so pointing two Previews at the same `kv_namespaces.id` means they read and write the same data. If you need a Preview's writes to stay separate from production, create a dedicated resource for Previews (or omit the id/name to let Wrangler auto-provision one for KV, D1, and R2).
+
+The exceptions are **Durable Objects**, **Workflows**, and **Containers**. When your Worker defines the class itself (no `script_name` on the binding), each Preview automatically gets its own isolated instances, separate from production and from other Previews. State persists across deployments within the same Preview and is deleted when the Preview is deleted. If you set `script_name` to point at another Worker, the binding targets that Worker's production instance and this isolation does not apply — prefer [`ctx.exports`](/workers/runtime-apis/context/#exports) for Durable Objects and Workflows defined in the same Worker.
+
+[Service bindings](/workers/runtime-apis/bindings/service-bindings/) behave differently from both: they always resolve to the bound Worker's production deployment, and cannot be pointed at another Worker's Preview.
+
+| `previews` field            | How it behaves                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `vars`                      | For defining plain-text and JSON string environment variables. Never define secrets in `vars` — instead, use the `wrangler preview secret` command.                                                                                                                                                                                                                                                                                                               |
+| `kv_namespaces`             | For connecting your KV namespace binding to a Preview KV namespace `id`. You need to manually create a separate KV namespace for Previews, or leave the `id` field empty and Wrangler will auto-provision you a new KV namespace and write the `id` back to your configuration file.                                                                                                                                                                              |
+| `d1_databases`              | For connecting your D1 database binding to a Preview D1 database `database_id`. You need to manually create the D1 database for Previews to use, or leave the `database_name` field empty and Wrangler will auto-provision you a new D1 database and write the `database_name` back to your configuration file.                                                                                                                                                   |
+| `r2_buckets`                | For connecting your R2 bucket binding to a Preview R2 bucket `bucket_name`. You need to manually create the R2 bucket for Previews to use, or leave the `bucket_name` field empty and Wrangler will auto-provision you a new R2 bucket and write the `bucket_name` back to your configuration file.                                                                                                                                                               |
+| `services`                  | For connecting a Service binding to a Worker `service` and optional `entrypoint`. Service bindings from a Preview always target the production instance of the bound Worker — they cannot be pointed at another Preview.                                                                                                                                                                                                                                          |
+| `durable_objects.bindings`  | For connecting a Durable Object binding to the `class_name` (and optional `script_name`) you specify. When the class is defined in the same Worker, each Preview gets its own isolated Durable Object instances, separate from production. If `script_name` points at another Worker, the binding targets that Worker's production Durable Object. Prefer [`ctx.exports`](/workers/runtime-apis/context/#exports) for Durable Objects defined in the same Worker. |
+| `workflows`                 | For connecting a Workflow binding to the `class_name`, Workflow `name`, and optional `script_name` you specify. When the class is defined in the same Worker, each Preview gets its own isolated Workflow instances, separate from production. If `script_name` points at another Worker, the binding targets that Worker's production Workflow. Prefer [`ctx.exports`](/workers/runtime-apis/context/#exports) for Workflows defined in the same Worker.         |
+| `send_email`                | For creating a Send Email binding. The runtime binding name comes from `name`, not `binding`. `destination_address`, `allowed_destination_addresses`, and `allowed_sender_addresses` are preserved when set.                                                                                                                                                                                                                                                      |
+| `queues.producers`          | For connecting a Queue producer binding to the `queue` name you specify. `delivery_delay` is preserved when set. Queue consumer settings (`queues.consumers`) are not Preview bindings — Previews cannot consume from Queues.                                                                                                                                                                                                                                     |
+| `vectorize`                 | For connecting a Vectorize binding to the `index_name` you specify. You need to manually create the Vectorize index for Previews to use.                                                                                                                                                                                                                                                                                                                          |
+| `hyperdrive`                | For connecting a Hyperdrive binding to the configuration `id` you specify. You need to manually create the Hyperdrive configuration for Previews to use.                                                                                                                                                                                                                                                                                                          |
+| `analytics_engine_datasets` | For creating an Analytics Engine binding that writes to the `dataset` you specify.                                                                                                                                                                                                                                                                                                                                                                                |
+| `dispatch_namespaces`       | For connecting a Dispatch Namespace binding to the `namespace` you specify. `outbound.service`, `outbound.environment`, and `outbound.parameters` are preserved when set.                                                                                                                                                                                                                                                                                         |
+| `mtls_certificates`         | For connecting an mTLS certificate binding to the `certificate_id` you specify.                                                                                                                                                                                                                                                                                                                                                                                   |
+| `pipelines`                 | For connecting a Pipelines binding to the `pipeline` you specify.                                                                                                                                                                                                                                                                                                                                                                                                 |
+| `secrets_store_secrets`     | For connecting a Secrets Store binding to the `store_id` and `secret_name` you specify.                                                                                                                                                                                                                                                                                                                                                                           |
+| `ratelimits`                | For creating a Rate Limiting binding. The runtime binding name comes from `name`, not `binding`. `namespace_id` and `simple` are preserved when set.                                                                                                                                                                                                                                                                                                              |
+| `vpc_services`              | For connecting a VPC Services binding to the `service_id` you specify.                                                                                                                                                                                                                                                                                                                                                                                            |
+| `worker_loaders`            | For creating a dynamic Worker loader binding using the `binding` name you specify.                                                                                                                                                                                                                                                                                                                                                                                |
+| `browser`                   | For creating a Browser Rendering binding using the `binding` name you specify.                                                                                                                                                                                                                                                                                                                                                                                    |
+| `ai`                        | For creating a Workers AI binding using the `binding` name you specify. `staging` is preserved when set.                                                                                                                                                                                                                                                                                                                                                          |
+| `images`                    | For creating an Images binding using the `binding` name you specify.                                                                                                                                                                                                                                                                                                                                                                                              |
+| `stream`                    | For creating a Stream binding using the `binding` name you specify.                                                                                                                                                                                                                                                                                                                                                                                               |
+| `media`                     | For creating a Media binding using the `binding` name you specify.                                                                                                                                                                                                                                                                                                                                                                                                |
+| `version_metadata`          | For creating a version metadata binding using the `binding` name you specify.                                                                                                                                                                                                                                                                                                                                                                                     |
+
+## Other Preview settings
+
+Some `previews` fields are not runtime bindings, but they still change how new Previews behave.
+| `previews` field | How it behaves |
+| --- | --- |
+| `observability` | Sets default observability settings for new Previews. |
+| `logpush` | Turns default Logpush on or off for new Previews. |
+| `tail_consumers` | Sends Preview logs to the Tail Workers you list. Each entry is specified by its `service` name. These are not deployment bindings. |
+| `limits` | Sets default deployment limits for new Preview deployments. |
+| `define` | Changes compile-time replacements for the Preview build. It does not create a runtime binding. |
+Some Preview-related settings still come from the top level of your Wrangler config, not from `previews`:
+
+- `compatibility_date`
+- `compatibility_flags`
+- `placement`
+- `assets`
+- `migrations`
+
+### Use environment-specific Preview defaults
+
+If you use Wrangler environments, you can define `env.<name>.previews` to give one environment a different set of Preview defaults.
+
+When `env.<name>.previews` exists, Wrangler uses the values from that block for the fields you define there. If a field is not defined there, Wrangler falls back to the top-level `previews` block.
+
+Example:
+
+- top-level `previews.kv_namespaces` can point all new Previews at a shared staging KV namespace
+- `env.dev.previews.kv_namespaces` can instead point development Previews at a different KV namespace
