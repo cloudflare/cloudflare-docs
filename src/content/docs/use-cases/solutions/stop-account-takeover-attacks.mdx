@@ -115,8 +115,6 @@ Super Bot Fight Mode identifies traffic matching patterns of known bots, can cha
 </TabItem>
 </Tabs>
 
-{/* UNTESTED: custom workflow — recommended starting values are guide-specific, not from source docs. */}
-
 For login protection, the following are recommended starting values. Adjust based on your traffic patterns.
 
 - **Definitely automated**: _Managed Challenge_. After reviewing Security Events to confirm the setting does not affect legitimate traffic, switch to _Block_.
@@ -563,8 +561,6 @@ Combine rate limiting with leaked credentials detection to throttle login attemp
 </TabItem>
 </Tabs>
 
-{/* UNTESTED: custom expression using documented Enterprise fields. Cannot validate without Bot Management subscription. */}
-
 :::note[Enterprise: Bot Management custom rules]
 Enterprise customers with Bot Management can create custom rules that combine `cf.bot_management.score` with login path matching to challenge or block automated traffic with more precision. For example, the expression `(cf.bot_management.score lt 30 and not cf.bot_management.verified_bot and http.request.uri.path eq "/login")` targets likely automated traffic on the login path specifically. For more information, refer to [Custom rules for bot protection](/bots/additional-configurations/custom-rules/).
 :::
@@ -604,33 +600,11 @@ If you see legitimate users being affected, adjust your rate limiting thresholds
 
 ### Set up notifications for security event spikes
 
-{/* UNTESTED: custom workflow — generic notification creation steps. Notification type name confirmed from /notifications/notification-available/. */}
-
-Cloudflare Notifications can alert you when security event volume spikes, giving you early warning of a new attack campaign.
-
-{/* Confirmed: /notifications/notification-available/ lists "Security Events Alert" under WAF category for Business and Enterprise */}
+Set up a **Security Events Alert** notification to receive alerts when security event volume spikes, giving you early warning of a new attack campaign. This notification is in the **WAF** category of the [Notifications](/notifications/) page. For setup instructions, refer to [Create a notification](/notifications/get-started/).
 
 :::note
 Security Events Alert notifications are available on Business and Enterprise plans. Enterprise customers can use Advanced Security Events Alert for more granular filtering.
 :::
-
-<Steps>
-
-1. In the Cloudflare dashboard, go to **Notifications**.
-
-   <DashButton url="/?to=/:account/notifications" />
-
-2. Select **Add**.
-
-3. Under the **Security** category, select **Security Events Alert**.
-
-4. Configure the notification threshold and delivery method (email, webhook, or PagerDuty).
-
-5. Select **Save**.
-
-</Steps>
-
-For the full list of available notification types, refer to [Available Notifications](/notifications/notification-available/).
 
 ### Review bot traffic patterns
 
