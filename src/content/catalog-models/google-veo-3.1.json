@@ -33,7 +33,7 @@
 				"generate_audio": true
 			},
 			"output": {
-				"video": "https://replicate.delivery/xezq/X9aq3bkKHhadFZ0E7kd79E3HmVpjqQneoX3LLBBACdeNa1YWA/tmpitg5dp57.mp4"
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__veo-3.1/nature-documentary.mp4"
 			},
 			"code_snippets": [
 				{
@@ -54,7 +54,7 @@
 				"generate_audio": true
 			},
 			"output": {
-				"video": "https://replicate.delivery/xezq/VsBJu50M8UYuIJ85oL3D8fFqVJLnR5ikS9v4kfSE2bXCc1YWA/tmp572v21_0.mp4"
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__veo-3.1/urban-time-lapse.mp4"
 			},
 			"code_snippets": [
 				{
@@ -75,7 +75,7 @@
 				"generate_audio": false
 			},
 			"output": {
-				"video": "https://replicate.delivery/xezq/B9esXAHSIZSHAK2FsS5L3TyhmK8aKzg7NERn1dDfgBFzc1YWA/tmpdumtwcow.mp4"
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__veo-3.1/abstract-art.mp4"
 			},
 			"code_snippets": [
 				{
@@ -96,7 +96,7 @@
 				"generate_audio": true
 			},
 			"output": {
-				"video": "https://replicate.delivery/xezq/fb8xudp0ddXaK6mvuTEfFKue4HCmwyNb6flyUFQZ2RGO4VjZB/tmpkdcqn70q.mp4"
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__veo-3.1/food-video.mp4"
 			},
 			"code_snippets": [
 				{
@@ -110,7 +110,7 @@
 	"supports_async": false,
 	"external_info": "https://deepmind.google/technologies/veo/",
 	"terms": "https://ai.google.dev/gemini-api/terms",
-	"cover_image_url": null,
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/google/veo-3.1.png",
 	"metadata": {
 		"Max Duration": "8 seconds",
 		"Audio Generation": "Yes",
@@ -120,8 +120,6 @@
 	"default_example": null,
 	"code_snippets": [],
 	"schema": {
-		"model_id": "google/veo-3.1",
-		"version": "1.0.0",
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
 			"type": "object",

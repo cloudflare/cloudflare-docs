@@ -25,7 +25,7 @@
 				"prompt": "A modern minimalist logo for a cloud computing company, clean geometric shapes"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/ADdqVTvbVaJVNpexJBKcfHfaisT6IqHCKMVtdCIfexaCXGOzC/tmpyl5i46hr.svg"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-pro-vector/logo-design.jpg"
 			},
 			"code_snippets": [
 				{
@@ -43,7 +43,7 @@
 				"size": "2048x2048"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/kAEXVRyFCewUK6mBCZWun3GnQ1nUOgeRmV3VjDeWloAlmhzsA/tmpweqnhf9b.svg"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-pro-vector/icon-set.jpg"
 			},
 			"code_snippets": [
 				{
@@ -61,7 +61,7 @@
 				"size": "2048x2048"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/oF6t1Dm9hi6IH9ECfGRUt0FR2mCsSbfMcdfCedXfJVaieMcmF/tmpuiezfalr.svg"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-pro-vector/print-ready-vector.jpg"
 			},
 			"code_snippets": [
 				{
@@ -103,7 +103,7 @@
 				}
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/CIT2K8gZDCJVLd2VhDla0GOkhWwg92eo4eikkCq285IP0wZWA/tmpds4b_4rl.svg"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-pro-vector/brand-illustration.jpg"
 			},
 			"code_snippets": [
 				{
@@ -117,7 +117,7 @@
 	"supports_async": false,
 	"external_info": "https://www.recraft.ai/",
 	"terms": "https://www.recraft.ai/terms",
-	"cover_image_url": "https://replicate.delivery/xezq/zOjOSqPexepGEEafhufhkn0fJq9fxvuYnGidFuAp8XJfqdbELA/tmp5rpedkjl.svg",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/recraft/recraftv4-pro-vector.png",
 	"metadata": {
 		"Output Format": "SVG",
 		"Resolution": "2048px+"
@@ -126,8 +126,6 @@
 	"default_example": null,
 	"code_snippets": [],
 	"schema": {
-		"model_id": "recraft/recraftv4-pro-vector",
-		"version": "1.0.0",
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
 			"type": "object",
@@ -203,9 +201,7 @@
 			"type": "object",
 			"properties": {
 				"image": {
-					"type": "string",
-					"format": "uri",
-					"contentMediaType": "image/svg+xml"
+					"type": "string"
 				}
 			},
 			"required": [

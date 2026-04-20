@@ -33,7 +33,7 @@
 				"generate_audio": true
 			},
 			"output": {
-				"video": "https://replicate.delivery/xezq/bgvHjdeBRuxeakY9DVQOvFvXK9QBWeFDiSPfPE5JxA6qFVjZB/tmphg0x9a7g.mp4"
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__veo-3.1-fast/quick-demo.mp4"
 			},
 			"code_snippets": [
 				{
@@ -54,7 +54,7 @@
 				"generate_audio": true
 			},
 			"output": {
-				"video": "https://replicate.delivery/xezq/DCkE6FDc8qIGLpklpzKriZONIxMHiaSVfxW9YwMW29UFpaMLA/tmpfk788pc_.mp4"
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__veo-3.1-fast/social-content.mp4"
 			},
 			"code_snippets": [
 				{
@@ -75,7 +75,7 @@
 				"generate_audio": false
 			},
 			"output": {
-				"video": "https://replicate.delivery/xezq/cQjpeAZhjJXYEi8HzaoHYHO1LWvHnKczDfB5YDcrrI3oS1YWA/tmpc5mup0o7.mp4"
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__veo-3.1-fast/motion-graphics.mp4"
 			},
 			"code_snippets": [
 				{
@@ -96,7 +96,7 @@
 				"generate_audio": true
 			},
 			"output": {
-				"video": "https://replicate.delivery/xezq/ZX40MrTBmj5QC9vsEz4QSb8SGtjWU6bpUMnjXRbLYCPepaMLA/tmpfwxbqeig.mp4"
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__veo-3.1-fast/ambient-scene.mp4"
 			},
 			"code_snippets": [
 				{
@@ -110,7 +110,7 @@
 	"supports_async": false,
 	"external_info": "https://deepmind.google/technologies/veo/",
 	"terms": "https://ai.google.dev/gemini-api/terms",
-	"cover_image_url": null,
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/google/veo-3.1-fast.png",
 	"metadata": {
 		"Max Duration": "8 seconds",
 		"Audio Generation": "Yes",
@@ -120,8 +120,6 @@
 	"default_example": null,
 	"code_snippets": [],
 	"schema": {
-		"model_id": "google/veo-3.1-fast",
-		"version": "1.0.0",
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
 			"type": "object",
