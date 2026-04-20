@@ -3,6 +3,20 @@ link: "/realtime/realtimekit/release-notes/android-core/"
 productName: RealtimeKit Android Core
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-04-20"
+    title: RealtimeKit Android Core 2.0.0
+    description: |-
+      **Breaking changes**
+
+      - Removed Hive SFU support. Only the Cloudflare SFU is supported going forward.
+      - The default base URI is now `realtime.cloudflare.com`. Calling `init()` with a `dyte.io` base domain now fails immediately with `MeetingError.InvalidBaseUrl`
+
+      **Fixes**
+
+      - Added compatibility with new backend plugins API field naming
+      - Fixed a crash that could occur when accessing the socket controller before `init()` was called
+      - Fixed auth token not being sent to the callstats collector endpoint
+      - Removed custom ping-pong keepalive logic that was only required for the previous infrastructure
   - publish_date: "2026-03-06"
     title: RealtimeKit Android Core 1.6.2
     description: |-

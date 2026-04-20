@@ -3,6 +3,13 @@ link: "/realtime/realtimekit/release-notes/ios-ui-kit/"
 productName: RealtimeKit iOS UI Kit
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-04-20"
+    title: RealtimeKit iOS UI Kit 1.0.0
+    description: |-
+      **Breaking changes**
+
+      - Upgraded to [RealtimeKit Core v2.0.0](/realtime/realtimekit/release-notes/ios-core/#2026-04-20) which removes support for Dyte APIs and SFU.
+      - Minimum deployment target is now iOS 15.6
   - publish_date: "2026-01-14"
     title: RealtimeKit iOS UI Kit 0.5.7
     description: |-

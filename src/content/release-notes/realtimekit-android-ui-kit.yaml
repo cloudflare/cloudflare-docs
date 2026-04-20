@@ -3,6 +3,12 @@ link: "/realtime/realtimekit/release-notes/android-ui-kit/"
 productName: RealtimeKit Android UI Kit
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-04-20"
+    title: RealtimeKit Android UI Kit 1.0.0
+    description: |-
+      **Breaking changes**
+
+      - Upgraded to [RealtimeKit Core v2.0.0](/realtime/realtimekit/release-notes/android-core/#2026-04-20) which removes support for Dyte APIs and SFU.
   - publish_date: "2026-02-06"
     title: RealtimeKit Android UI Kit 0.3.4
     description: |-
