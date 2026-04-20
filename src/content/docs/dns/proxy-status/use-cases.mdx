@@ -19,7 +19,7 @@ You should proxy all A, AAAA, and CNAME records that serve HTTP or HTTPS web tra
 
 Proxied records benefit from [DDoS protection](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/), [caching](/cache/), [WAF](/waf/), and other Cloudflare security and performance features.
 
-When traffic is proxied through Cloudflare, the following behaviors. You may need to adjust your origin configuration, depending on your use case.
+When traffic is proxied through Cloudflare, the following behaviors apply. You may need to adjust your origin configuration, depending on your use case.
 
 ### Source IP changes
 
@@ -51,7 +51,7 @@ MX records cannot be proxied. If an A or AAAA record is used exclusively for ema
 
 Cloudflare does not proxy SMTP traffic on port 25 by default. Proxying a record that handles email traffic causes mail servers to connect to Cloudflare's IP addresses instead of your mail server. This prevents email delivery.
 
-Use a dedicated hostname for email that is separate from your proxied web traffic hostname. If your MX record points to the same hostname as your website, Cloudflare creates a `dc-#####` record to route email traffic directly to your origin. Refer to [Email issues](/dns/troubleshooting/email-issues/) for details.
+Use a dedicated hostname for email that is separate from your proxied web traffic hostname. If your MX record points to the same hostname as your website, Cloudflare [dynamically prepends](/dns/manage-dns-records/troubleshooting/unexpected-dns-records/#_dc-mx-and-dc--subdomains) `_dc-mx` to the hostname in the response for the MX record. This ensures that mail or service traffic bypasses the Cloudflare proxy and reaches your server directly.
 
 :::note
 You can proxy SMTP traffic if you have [Cloudflare Spectrum](/spectrum/) configured for [SMTP](/spectrum/reference/configuration-options/#smtp).
