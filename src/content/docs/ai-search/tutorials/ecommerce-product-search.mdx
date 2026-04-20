@@ -1,0 +1,346 @@
+---
+pcx_content_type: tutorial
+title: "AI e-commerce product search"
+sidebar:
+  order: 1
+description: Expand a natural language shopping query into category-targeted sub-queries using Workers AI, run parallel AI Search calls with folder filters, and compose a curated product collection.
+tags:
+  - AI
+products:
+  - ai-search
+  - r2
+  - workers
+  - workers-ai
+reviewed: 2026-04-20
+---
+
+import { TypeScriptExample, WranglerConfig, FileTree } from "~/components";
+
+Users rarely search for a single item -- they describe a vibe. "Beach vacation outfit" means shoes, a bag, sunglasses, and a dress, all matching a mood. This walkthrough shows how to build a search pipeline that takes a single user query, expands it into category-targeted sub-queries using an LLM, runs them in parallel against AI Search with folder filters, and composes the results into a curated collection.
+
+## Prerequisites
+
+- An R2 bucket with product content organized in category folders (for example, `shoes/`, `bags/`, `dresses/`).
+- An AI Search instance connected to the R2 bucket. For more information, refer to [R2 data source](/ai-search/configuration/data-source/r2/).
+
+## 1. Configure bindings
+
+<WranglerConfig>
+
+```toml
+name = "product-search"
+main = "src/index.ts"
+compatibility_date = "$today"
+compatibility_flags = ["nodejs_compat"]
+
+[ai]
+binding = "AI"
+
+[[ai_search_namespaces]]
+binding = "AI_SEARCH"
+namespace = "default"
+
+[[r2_buckets]]
+binding = "PRODUCTS_BUCKET"
+bucket_name = "my-products"
+
+[vars]
+AI_SEARCH_INSTANCE = "my-product-catalog"
+```
+
+</WranglerConfig>
+
+## 2. Organize products in R2
+
+Store product descriptions as Markdown files in category folders. AI Search uses the folder path as filterable metadata.
+
+<FileTree>
+
+- shoes/
+  - 1001.md
+  - 1002.md
+- bags/
+  - 2001.md
+  - 2002.md
+- dresses/
+  - 3001.md
+- accessories/
+  - 4001.md
+
+</FileTree>
+
+Each `.md` file contains a product description that AI Search will chunk and embed:
+
+```md
+---
+id: "1001"
+name: "Coastal Woven Sandals"
+brand: "Shore"
+price: 89.99
+color: "tan"
+---
+
+# Coastal Woven Sandals
+
+Brand: Shore
+
+Handwoven leather sandals with a cushioned footbed. Perfect for beachside dining and boardwalk strolls.
+```
+
+## 3. Expand the query into category sub-queries
+
+Use Workers AI to decompose the user's natural language query into category-targeted sub-queries. Each sub-query targets one product category and includes style descriptors.
+
+<TypeScriptExample>
+
+```ts
+interface Env {
+	AI: Ai;
+	AI_SEARCH: AiSearchNamespace;
+	PRODUCTS_BUCKET: R2Bucket;
+	AI_SEARCH_INSTANCE: string;
+}
+
+interface ExpandedQuery {
+	query: string;
+	category: string;
+	role: "hero" | "supporting" | "accent";
+	priority: number;
+}
+
+interface Expansion {
+	reasoning: string;
+	queries: ExpandedQuery[];
+}
+
+const CATEGORIES = [
+	"tops",
+	"bottoms",
+	"dresses",
+	"outerwear",
+	"shoes",
+	"bags",
+	"accessories",
+	"jewelry",
+];
+
+async function expandQuery(ai: Ai, userQuery: string): Promise<Expansion> {
+	const prompt = `You are a fashion stylist. Given a style query, expand it into specific product searches that form a complete look.
+
+Each query MUST target exactly ONE category from: ${CATEGORIES.join(", ")}
+
+Return ONLY valid JSON:
+{
+  "reasoning": "<brief look concept>",
+  "queries": [
+    { "query": "<8-15 word product search>", "category": "<category>", "role": "hero"|"supporting"|"accent", "priority": 1|2|3 }
+  ]
+}
+
+Rules:
+- 3-6 queries total. First query is the "hero" piece.
+- Include at least shoes and one bag or accessory.
+- Queries describe the PRODUCT, not the occasion.
+User query: "${userQuery}"`;
+
+	const response = await ai.run("@cf/meta/llama-3.1-8b-instruct-fp8", {
+		messages: [{ role: "user", content: prompt }],
+		max_tokens: 500,
+	});
+
+	const text = response.response || "";
+	const match = text.match(/\{[\s\S]*\}/);
+	if (!match) {
+		return { reasoning: userQuery, queries: [] };
+	}
+
+	let parsed: { reasoning?: string; queries?: ExpandedQuery[] };
+	try {
+		parsed = JSON.parse(match[0]);
+	} catch {
+		return { reasoning: userQuery, queries: [] };
+	}
+	return {
+		reasoning: parsed.reasoning || userQuery,
+		queries: (parsed.queries || []).filter(
+			(q) =>
+				typeof q.query === "string" &&
+				typeof q.category === "string" &&
+				CATEGORIES.includes(q.category),
+		),
+	};
+}
+```
+
+</TypeScriptExample>
+
+The LLM is instructed to return structured JSON with category assignments. Each query is validated against the known category list to prevent hallucinated categories from reaching AI Search.
+
+## 4. Run parallel filtered searches
+
+Run one AI Search call per expanded query, each scoped to a category folder with a `folder` filter. `Promise.all` runs them concurrently, keeping total latency close to a single search call.
+
+<TypeScriptExample>
+
+```ts
+interface SearchResult {
+	category: string;
+	key: string;
+	score: number;
+	content: string;
+}
+
+async function searchByCategory(
+	env: Env,
+	queries: ExpandedQuery[],
+): Promise<SearchResult[][]> {
+	const instance = env.AI_SEARCH.get(env.AI_SEARCH_INSTANCE);
+
+	return Promise.all(
+		queries.map(async (eq) => {
+			try {
+				const response = await instance.search({
+					messages: [{ role: "user", content: eq.query }],
+					ai_search_options: {
+						retrieval: {
+							max_num_results: 6,
+							match_threshold: 0.1,
+							filters: { folder: `${eq.category}/` },
+						},
+					},
+				});
+
+				return (response.chunks ?? []).map((chunk) => ({
+					category: eq.category,
+					key: chunk.item?.key ?? "",
+					score: chunk.score,
+					content: chunk.text ?? "",
+				}));
+			} catch {
+				return [] as SearchResult[];
+			}
+		}),
+	);
+}
+```
+
+</TypeScriptExample>
+
+Setting `max_num_results` to 6 instead of 1 provides enough candidates for deduplication -- if the R2 bucket contains both `.md` and image files for the same product, extra results ensure you still get a text match.
+
+## 5. Compose and deduplicate results
+
+Process queries by priority so must-have items get first pick. Deduplicate by key to prevent the same product appearing twice.
+
+<TypeScriptExample>
+
+```ts
+interface ComposedItem {
+	key: string;
+	category: string;
+	role: "hero" | "supporting" | "accent";
+	score: number;
+	content: string;
+}
+
+function composeResults(
+	queries: ExpandedQuery[],
+	searchResults: SearchResult[][],
+): ComposedItem[] {
+	const seen = new Set<string>();
+	const items: ComposedItem[] = [];
+
+	// Process by priority (1 = must-have first)
+	const sorted = queries
+		.map((q, i) => ({ query: q, results: searchResults[i] || [] }))
+		.sort((a, b) => a.query.priority - b.query.priority);
+
+	for (const { query, results } of sorted) {
+		for (const result of results) {
+			if (seen.has(result.key)) continue;
+			seen.add(result.key);
+
+			items.push({
+				key: result.key,
+				category: query.category,
+				role: query.role,
+				score: result.score,
+				content: result.content,
+			});
+			break; // Best match per category query
+		}
+	}
+
+	// Display order: hero first, then supporting, then accent
+	const roleOrder = { hero: 0, supporting: 1, accent: 2 };
+	return items.sort((a, b) => roleOrder[a.role] - roleOrder[b.role]);
+}
+```
+
+</TypeScriptExample>
+
+## 6. Put it together
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		try {
+			const url = new URL(request.url);
+			const query = url.searchParams.get("query");
+			if (!query) {
+				return Response.json(
+					{ error: "Missing query parameter" },
+					{ status: 400 },
+				);
+			}
+
+			// 1. Expand query into category sub-queries
+			const expansion = await expandQuery(env.AI, query);
+			if (expansion.queries.length === 0) {
+				return Response.json(
+					{ error: "Could not expand query into categories" },
+					{ status: 422 },
+				);
+			}
+
+			// 2. Parallel search -- one call per category
+			const searchResults = await searchByCategory(env, expansion.queries);
+
+			// 3. Compose and deduplicate
+			const items = composeResults(expansion.queries, searchResults);
+
+			return Response.json({
+				query,
+				concept: expansion.reasoning,
+				expansions: expansion.queries.map((q) => ({
+					query: q.query,
+					category: q.category,
+					role: q.role,
+				})),
+				results: items,
+			});
+		} catch (err) {
+			const message = err instanceof Error ? err.message : "Unknown error";
+			return Response.json({ error: message }, { status: 500 });
+		}
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+## How it works
+
+1. **Query expansion** adds one Workers AI inference call (~200-400ms). A smaller, faster model like Llama 3.1 8B minimizes this overhead.
+2. **Parallel search** runs all category searches concurrently with `Promise.all`. Total search latency is the time of the slowest single call, not the sum.
+3. **Folder filters** (for example, `{ folder: "shoes/" }`) are the key pattern. They guarantee category isolation -- a shoes query only returns shoes. Without this, unrelated categories pollute results and the query expansion is wasted. This works for flat folder structures where product files are directly inside the category folder. For nested subfolders, use the [starts-with filter](/ai-search/configuration/indexing/metadata/#starts-with-filter-for-folders) instead.
+4. **Priority-based composition** ensures must-have items (hero pieces) get first pick from the result pool before optional accent items.
+
+## Related resources
+
+- [Path filtering](/ai-search/configuration/indexing/path-filtering/)
+- [Metadata filtering](/ai-search/configuration/indexing/metadata/)
+- [Build per-tenant search](/ai-search/how-to/per-tenant-search/) for a related folder-filtering pattern
+- [Workers AI models](/workers-ai/models/)

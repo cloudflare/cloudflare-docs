@@ -1,0 +1,266 @@
+---
+pcx_content_type: how-to
+title: Ingest external content into AI Search
+sidebar:
+  order: 11
+description: Build a Worker that fetches content from an external source, uploads it to R2, and uses AI Search auto-indexing for semantic search.
+tags:
+  - AI
+products:
+  - ai-search
+  - r2
+  - workers
+reviewed: 2026-04-20
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+You can programmatically ingest content from external sources into AI Search by uploading files to an R2 bucket that AI Search is configured to index. AI Search automatically indexes files in R2 when the instance is created and periodically after that. You can trigger a manual sync from the dashboard for immediate results.
+
+This pattern works for any external source: code repositories, CMS content, API responses, documentation sites, or database exports.
+
+## Prerequisites
+
+- An R2 bucket. For more information, refer to [R2 documentation](/r2/).
+- An AI Search instance connected to the R2 bucket. For more information, refer to [R2 data source](/ai-search/configuration/data-source/r2/).
+
+## 1. Configure bindings
+
+<WranglerConfig>
+
+```toml
+name = "content-ingestion"
+main = "src/index.ts"
+compatibility_date = "$today"
+compatibility_flags = ["nodejs_compat"]
+
+[[ai_search_namespaces]]
+binding = "AI_SEARCH"
+namespace = "default"
+
+[[r2_buckets]]
+binding = "CONTENT_BUCKET"
+bucket_name = "my-content"
+
+[vars]
+AI_SEARCH_INSTANCE = "my-search-index"
+```
+
+</WranglerConfig>
+
+The R2 bucket name must match the data source configured in your AI Search instance.
+
+## 2. Upload content to R2 with metadata
+
+When uploading files to R2, use a hierarchical key structure that preserves the source organization. AI Search uses the folder path as filterable metadata.
+
+<TypeScriptExample>
+
+```ts
+interface Env {
+	AI_SEARCH: AiSearchNamespace;
+	CONTENT_BUCKET: R2Bucket;
+	AI_SEARCH_INSTANCE: string;
+}
+
+async function uploadContent(
+	bucket: R2Bucket,
+	files: Array<{ path: string; content: string }>,
+	source: string,
+): Promise<{ uploaded: number; failed: number }> {
+	let uploaded = 0;
+	let failed = 0;
+
+	// Process in batches of 10
+	for (let i = 0; i < files.length; i += 10) {
+		const batch = files.slice(i, i + 10);
+		const results = await Promise.allSettled(
+			batch.map(async (file) => {
+				const key = `${source}/${file.path}`;
+				await bucket.put(key, file.content, {
+					httpMetadata: { contentType: "text/plain; charset=utf-8" },
+					customMetadata: {
+						source,
+						file_path: file.path,
+						indexed_at: new Date().toISOString(),
+					},
+				});
+			}),
+		);
+
+		for (const r of results) {
+			if (r.status === "fulfilled") uploaded++;
+			else failed++;
+		}
+	}
+
+	return { uploaded, failed };
+}
+```
+
+</TypeScriptExample>
+
+The key structure `{source}/{path}` creates folder-based organization that AI Search can filter on. The `source`, `file_path`, and `indexed_at` custom metadata keys are stored with the R2 object. To make custom metadata filterable, define a [custom metadata schema](/ai-search/configuration/indexing/metadata/#custom-metadata) in your AI Search instance configuration.
+
+## 3. Fetch content from an external source
+
+Implement a function that retrieves content from an external URL and returns it as an array of files. The example below fetches a JSON feed -- replace the fetch logic with whatever suits your source (API pagination, HTML scraping, git clone).
+
+<TypeScriptExample>
+
+```ts
+async function fetchContentFromSource(
+	sourceUrl: string,
+): Promise<Array<{ path: string; content: string }>> {
+	const response = await fetch(sourceUrl);
+	if (!response.ok) {
+		throw new Error(`Failed to fetch source: ${response.status}`);
+	}
+
+	// Expects a JSON array of { path, content } objects.
+	// Adapt this to your source format (RSS, API, sitemap, etc.).
+	const items = (await response.json()) as Array<{
+		path: string;
+		content: string;
+	}>;
+
+	return items.map((item) => ({
+		path: item.path.replace(/[^a-zA-Z0-9_\-/.]/g, "_"),
+		content: item.content,
+	}));
+}
+```
+
+</TypeScriptExample>
+
+## 4. Create an ingestion API endpoint
+
+Build a Worker endpoint that accepts an external source URL, fetches the content, and uploads it to R2.
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		if (request.method !== "POST") {
+			return new Response("Method not allowed", { status: 405 });
+		}
+
+		try {
+			const { sourceUrl, sourceName } = (await request.json()) as {
+				sourceUrl: string;
+				sourceName: string;
+			};
+
+			const files = await fetchContentFromSource(sourceUrl);
+			const result = await uploadContent(env.CONTENT_BUCKET, files, sourceName);
+
+			return Response.json({
+				status: "success",
+				files_uploaded: result.uploaded,
+				files_failed: result.failed,
+				message: `Uploaded ${result.uploaded} files. AI Search indexes files when the instance is created and periodically after that. You can manually trigger indexing from the dashboard for immediate results.`,
+			});
+		} catch (err) {
+			const message = err instanceof Error ? err.message : "Unknown error";
+			return Response.json({ status: "error", message }, { status: 500 });
+		}
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+## 5. Search with source filtering
+
+Use folder-based metadata filtering to scope searches to content from a specific source.
+
+<TypeScriptExample>
+
+```ts
+async function searchContent(
+	env: Env,
+	query: string,
+	source?: string,
+): Promise<Response> {
+	try {
+		// Range filter: $gte + $lt is the starts-with pattern for folder prefixes
+		const filters = source
+			? { folder: { $gte: `${source}/`, $lt: `${source}0` } }
+			: undefined;
+
+		const instance = env.AI_SEARCH.get(env.AI_SEARCH_INSTANCE);
+		const result = await instance.search({
+			messages: [{ role: "user", content: query }],
+			ai_search_options: {
+				retrieval: {
+					max_num_results: 10,
+					match_threshold: 0.3,
+					...(filters && { filters }),
+				},
+				query_rewrite: { enabled: true },
+			},
+		});
+
+		return Response.json({
+			search_query: result.search_query,
+			sources: (result.chunks ?? []).map((chunk) => ({
+				key: chunk.item?.key ?? "",
+				score: chunk.score,
+				content: chunk.text ?? "",
+			})),
+		});
+	} catch (err) {
+		const message = err instanceof Error ? err.message : "Search failed";
+		return Response.json({ error: message }, { status: 500 });
+	}
+}
+```
+
+</TypeScriptExample>
+
+For more information on folder filtering, refer to [Path filtering](/ai-search/configuration/indexing/path-filtering/) and [Metadata](/ai-search/configuration/indexing/metadata/).
+
+## Indexing timing considerations
+
+After uploading content to R2, there is a delay before it becomes searchable:
+
+- **Automatic indexing**: AI Search indexes files when the instance is created and periodically after that.
+- **Manual sync**: Go to the [Cloudflare dashboard](https://dash.cloudflare.com/), select your AI Search instance, and select **Sync Index** for immediate indexing.
+
+Your ingestion API response should inform callers about this delay.
+
+## Use case: index a GitHub repository
+
+The same pattern works for indexing code from GitHub. Use the [GitHub Contents API](https://docs.github.com/en/rest/repos/contents) to list files, fetch their contents, and upload them to R2 with keys like `{owner}/{repo}/{branch}/{path}`. A folder filter then scopes searches to a single repository:
+
+<TypeScriptExample>
+
+```ts
+const instance = env.AI_SEARCH.get(env.AI_SEARCH_INSTANCE);
+const result = await instance.chatCompletions({
+	messages: [{ role: "user", content: query }],
+	model: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+	ai_search_options: {
+		retrieval: {
+			max_num_results: 10,
+			match_threshold: 0.3,
+			filters: {
+				folder: { $gte: "facebook/react/", $lt: "facebook/react0" },
+			},
+		},
+	},
+});
+```
+
+</TypeScriptExample>
+
+Using `chatCompletions()` instead of `search()` provides an LLM-generated answer grounded in the code search results -- useful for answering questions like "how does this codebase handle errors?" with a synthesized explanation and source citations.
+
+## Related resources
+
+- [R2 data source configuration](/ai-search/configuration/data-source/r2/)
+- [Path filtering](/ai-search/configuration/indexing/path-filtering/)
+- [Metadata filtering](/ai-search/configuration/indexing/metadata/)
+- [Build per-tenant search](/ai-search/how-to/per-tenant-search/) for tenant-scoped ingestion
+- [Persistent memory for AI agents](/ai-search/tutorials/persistent-memory-for-agents/) for a related R2-based pattern

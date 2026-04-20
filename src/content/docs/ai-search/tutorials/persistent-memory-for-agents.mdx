@@ -1,0 +1,471 @@
+---
+pcx_content_type: tutorial
+title: "Persistent memory for AI agents"
+sidebar:
+  order: 2
+description: Build a memory service that stores structured memories in R2, uses AI Search for semantic recall, and deduplicates on save to prevent redundant entries.
+tags:
+  - AI
+products:
+  - ai-search
+  - r2
+  - workers
+reviewed: 2026-04-20
+---
+
+import { TypeScriptExample, WranglerConfig, FileTree } from "~/components";
+
+AI agents lose context between sessions. This walkthrough shows how to build a persistent memory service on Cloudflare Workers that gives any agent -- whether connected via [MCP](/ai-search/mcp-server/), REST API, or tool calling -- the ability to save, recall, and manage memories across sessions. Memories are stored as Markdown in R2, AI Search provides semantic recall, and a deduplication layer prevents the same insight from being stored repeatedly.
+
+:::note
+Cloudflare offers two managed alternatives to building your own memory layer:
+
+- **[Agent Memory](https://blog.cloudflare.com/introducing-agent-memory/)** (private beta) is a managed service that extracts, stores, and recalls memories from agent conversations. It handles extraction, deduplication, classification, and retrieval automatically via a simple binding (`env.MEMORY.getProfile()`). Use this when you want turnkey agent memory without managing storage or search infrastructure.
+- **[Agents SDK Session memory](/agents/concepts/memory/)** provides conversation history, writable context, searchable knowledge, and loadable skills built into the Agents SDK's Session API, backed by Durable Object SQLite.
+
+The tutorial below is for cases where you need a standalone memory service with custom storage (R2) and semantic search (AI Search), want full control over the memory format and deduplication logic, or need to integrate memory into an existing architecture outside the Agents SDK.
+:::
+
+This is a **simplified take on agent memory** -- enough to get a working system and understand the core pattern. Production memory systems typically add access control, TTL-based expiry, vector re-ranking, and more sophisticated deduplication. The focus here is the **memory service pattern** itself, not the transport layer. The same `save()`, `recall()`, and `delete()` functions work whether exposed as MCP tools, REST endpoints, or [agent tool definitions](/ai-search/how-to/use-as-agent-tool/).
+
+## Prerequisites
+
+- An R2 bucket. For more information, refer to [R2 documentation](/r2/).
+- An AI Search instance connected to the R2 bucket. For more information, refer to [R2 data source](/ai-search/configuration/data-source/r2/).
+
+## 1. Configure bindings
+
+<WranglerConfig>
+
+```toml
+name = "memory-service"
+main = "src/index.ts"
+compatibility_date = "$today"
+compatibility_flags = ["nodejs_compat"]
+
+[[ai_search_namespaces]]
+binding = "AI_SEARCH"
+namespace = "default"
+
+[[r2_buckets]]
+binding = "MEMORIES_BUCKET"
+bucket_name = "memories"
+
+[vars]
+AI_SEARCH_INSTANCE = "memory-index"
+```
+
+</WranglerConfig>
+
+## 2. Define the memory format
+
+Each memory is a Markdown file with YAML frontmatter for structured metadata. This format is human-readable for debugging and machine-parseable for structured recall.
+
+<FileTree>
+
+- memory-index/
+  - global/
+    - mem_lz1abc_12345678.md
+  - project/
+    - mem_lz1def_87654321.md
+
+</FileTree>
+
+The key structure `{instance}/{scope}/{id}.md` provides:
+
+- **Scope isolation**: `global/` for cross-project memories, `project/` for project-specific ones.
+- **Folder filtering**: AI Search can filter by the `folder` attribute to scope searches to a specific scope prefix.
+
+Each file looks like:
+
+```md
+---
+id: mem_lz1abc_12345678
+timestamp: 2026-02-26T10:30:00.000Z
+type: decision
+tags: [auth, jwt]
+scope: global
+importance: high
+repository: my-api
+branch: feat/auth-refactor
+---
+
+We decided to use JWT tokens with RS256 for API authentication because
+symmetric signing would require sharing secrets across services.
+```
+
+## 3. Serialize and parse memories
+
+<TypeScriptExample>
+
+```ts
+interface Env {
+	AI_SEARCH: AiSearchNamespace;
+	MEMORIES_BUCKET: R2Bucket;
+	AI_SEARCH_INSTANCE: string;
+}
+
+interface Memory {
+	id: string;
+	content: string;
+	timestamp: string;
+	type: "decision" | "pattern" | "preference" | "context";
+	tags: string[];
+	scope: "global" | "project";
+	importance: "low" | "medium" | "high";
+	metadata: Record<string, unknown>;
+	score?: number;
+}
+
+function toMarkdown(memory: Memory): string {
+	const lines = [
+		"---",
+		`id: ${memory.id}`,
+		`timestamp: ${memory.timestamp}`,
+		`type: ${memory.type}`,
+		`tags: [${memory.tags.join(", ")}]`,
+		`scope: ${memory.scope}`,
+		`importance: ${memory.importance}`,
+	];
+
+	// Additional metadata fields go into frontmatter
+	for (const [key, val] of Object.entries(memory.metadata)) {
+		if (val !== undefined && val !== null && val !== "") {
+			const formatted = Array.isArray(val)
+				? `[${val.join(", ")}]`
+				: String(val);
+			lines.push(`${key}: ${formatted}`);
+		}
+	}
+
+	lines.push("---", "", memory.content);
+	return lines.join("\n");
+}
+
+function fromMarkdown(raw: string, score?: number): Memory | null {
+	const match = raw.match(/^---\n([\s\S]*?)\n---\n\n?([\s\S]*)$/);
+	if (!match) return null;
+
+	const frontmatter: Record<string, string> = {};
+	for (const line of match[1].split("\n")) {
+		const idx = line.indexOf(": ");
+		if (idx > 0) frontmatter[line.slice(0, idx)] = line.slice(idx + 2);
+	}
+
+	const tags = (frontmatter.tags || "[]")
+		.replace(/[\[\]]/g, "")
+		.split(",")
+		.map((t) => t.trim())
+		.filter(Boolean);
+
+	const coreKeys = new Set([
+		"id",
+		"timestamp",
+		"type",
+		"tags",
+		"scope",
+		"importance",
+	]);
+	const metadata: Record<string, unknown> = {};
+	for (const [key, val] of Object.entries(frontmatter)) {
+		if (!coreKeys.has(key)) metadata[key] = val;
+	}
+
+	return {
+		id: frontmatter.id,
+		content: match[2].trim(),
+		timestamp: frontmatter.timestamp,
+		type: frontmatter.type as Memory["type"],
+		tags,
+		scope: frontmatter.scope as Memory["scope"],
+		importance: frontmatter.importance as Memory["importance"],
+		metadata,
+		score,
+	};
+}
+```
+
+</TypeScriptExample>
+
+## 4. Save memories with deduplication
+
+Before saving a new memory, search for existing similar memories. Near-duplicates (score `>= 0.85`) are automatically replaced. Similar memories (score `>= 0.6`) are flagged as warnings so the caller can decide what to do.
+
+<TypeScriptExample>
+
+```ts
+const REPLACE_THRESHOLD = 0.85;
+const SIMILAR_THRESHOLD = 0.6;
+
+async function saveMemory(
+	env: Env,
+	content: string,
+	options: {
+		type?: Memory["type"];
+		scope?: Memory["scope"];
+		importance?: Memory["importance"];
+		tags?: string[];
+		metadata?: Record<string, unknown>;
+	} = {},
+): Promise<{
+	memory: Memory;
+	action: "created" | "replaced" | "similar_exists";
+	replaced: string[];
+	similar: string[];
+}> {
+	const id = `mem_${Date.now().toString(36)}_${crypto.randomUUID().slice(0, 8)}`;
+	const scope = options.scope ?? "project";
+	const replaced: string[] = [];
+	const similar: string[] = [];
+
+	// Dedup: search for similar existing memories
+	try {
+		const existing = await recallMemories(env, content, {
+			scope,
+			limit: 5,
+			matchThreshold: SIMILAR_THRESHOLD,
+		});
+
+		for (const match of existing) {
+			if ((match.score ?? 0) >= REPLACE_THRESHOLD) {
+				// Near-duplicate: auto-replace
+				await deleteMemory(env, match.id, scope);
+				replaced.push(match.id);
+			} else if ((match.score ?? 0) >= SIMILAR_THRESHOLD) {
+				// Similar but distinct: flag for caller
+				similar.push(match.id);
+			}
+		}
+	} catch {
+		// Skip dedup if AI Search index is not ready yet
+	}
+
+	const memory: Memory = {
+		id,
+		content,
+		timestamp: new Date().toISOString(),
+		type: options.type ?? "context",
+		tags: options.tags ?? [],
+		scope,
+		importance: options.importance ?? "medium",
+		metadata: options.metadata ?? {},
+	};
+
+	const key = `${env.AI_SEARCH_INSTANCE}/${scope}/${id}.md`;
+	await env.MEMORIES_BUCKET.put(key, toMarkdown(memory), {
+		httpMetadata: { contentType: "text/markdown" },
+		customMetadata: {
+			memoryId: id,
+			type: memory.type,
+			scope,
+			importance: memory.importance,
+			tags: memory.tags.join(","),
+		},
+	});
+
+	const action =
+		replaced.length > 0
+			? "replaced"
+			: similar.length > 0
+				? "similar_exists"
+				: "created";
+
+	return { memory, action, replaced, similar };
+}
+```
+
+</TypeScriptExample>
+
+The two-threshold design balances precision and recall:
+
+- **0.85+ (replace)**: The memories say essentially the same thing. Delete the old one, keep the new.
+- **0.6-0.85 (flag)**: The memories are related but distinct. Inform the caller so it can decide -- the agent might want to update the existing memory rather than create a new one.
+- **Below 0.6**: No meaningful similarity. Save without warning.
+
+If the AI Search index is not ready (for example, on first use before the first indexing cycle), deduplication is skipped entirely and the memory is saved regardless.
+
+## 5. Recall memories with semantic search
+
+Use AI Search to find memories by meaning. Each search result contains an R2 key, which is fetched to reconstruct the full memory with all metadata.
+
+<TypeScriptExample>
+
+```ts
+async function recallMemories(
+	env: Env,
+	query: string,
+	options: {
+		scope?: "global" | "project" | "both";
+		limit?: number;
+		matchThreshold?: number;
+		type?: Memory["type"];
+		importance?: Memory["importance"];
+	} = {},
+): Promise<Memory[]> {
+	const limit = options.limit ?? 10;
+	const matchThreshold = options.matchThreshold ?? 0.3;
+
+	// Scope filter: folder is a built-in filterable attribute
+	const folderFilter =
+		options.scope && options.scope !== "both"
+			? { folder: `${env.AI_SEARCH_INSTANCE}/${options.scope}/` }
+			: undefined;
+
+	const instance = env.AI_SEARCH.get(env.AI_SEARCH_INSTANCE);
+	const response = await instance.search({
+		messages: [{ role: "user", content: query }],
+		ai_search_options: {
+			retrieval: {
+				max_num_results: limit,
+				match_threshold: matchThreshold,
+				...(folderFilter && { filters: folderFilter }),
+			},
+		},
+	});
+
+	// Fetch full memories from R2 in parallel
+	const results = await Promise.all(
+		(response.chunks ?? []).map(async (chunk) => {
+			const key = chunk.item?.key;
+			if (!key) return null;
+
+			const obj = await env.MEMORIES_BUCKET.get(key);
+			if (!obj) return null; // Stale index entry -- file was deleted
+
+			return fromMarkdown(await obj.text(), chunk.score);
+		}),
+	);
+
+	// Deduplicate: multiple chunks can come from the same .md file
+	const deduped = new Map<string, Memory>();
+	for (const m of results) {
+		if (!m) continue;
+		const existing = deduped.get(m.id);
+		if (!existing || (m.score ?? 0) > (existing.score ?? 0)) {
+			deduped.set(m.id, m);
+		}
+	}
+
+	// Client-side filtering on type and importance (parsed from R2 Markdown frontmatter)
+	return Array.from(deduped.values()).filter((m) => {
+		if (options.type && m.type !== options.type) return false;
+		if (options.importance && m.importance !== options.importance) return false;
+		return true;
+	});
+}
+```
+
+</TypeScriptExample>
+
+Two important details:
+
+- **Scope filtering is server-side.** The `folder` filter uses the [metadata filter syntax](/ai-search/configuration/indexing/metadata/) to narrow results to a specific scope prefix before retrieval. When `scope` is `"both"`, no folder filter is applied, so memories from both `global/` and `project/` are returned. Filtering on `type` and `importance` is done client-side after fetching the full memory from R2, unless you have defined these as [custom metadata fields](/ai-search/configuration/indexing/metadata/#custom-metadata).
+- **Stale index entries are handled gracefully.** When a memory is deleted from R2 but AI Search still has it indexed, `bucket.get(key)` returns `null` and the result is filtered out.
+
+## 6. Delete memories
+
+<TypeScriptExample>
+
+```ts
+async function deleteMemory(
+	env: Env,
+	memoryId: string,
+	scope: "global" | "project",
+): Promise<boolean> {
+	const key = `${env.AI_SEARCH_INSTANCE}/${scope}/${memoryId}.md`;
+	const obj = await env.MEMORIES_BUCKET.head(key);
+	if (!obj) return false;
+
+	await env.MEMORIES_BUCKET.delete(key);
+	return true;
+}
+```
+
+</TypeScriptExample>
+
+After deletion, the memory disappears from R2 immediately. AI Search will remove it from the index on the next sync cycle. In the meantime, `recallMemories` handles this gracefully -- if a search result points to a deleted R2 key, it is filtered out.
+
+## 7. Wire up the Worker
+
+Expose the memory service as REST endpoints. The same functions can be used as MCP tool handlers, [agent tool definitions](/ai-search/how-to/use-as-agent-tool/), or any other integration pattern.
+
+:::note
+The example below uses a plain `fetch` handler for brevity. For production Workers with multiple routes, consider [Hono](https://hono.dev/) -- it adds routing, middleware, and error handling with minimal overhead and runs natively on Workers.
+:::
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const url = new URL(request.url);
+
+		try {
+			if (url.pathname === "/save" && request.method === "POST") {
+				const body = (await request.json()) as {
+					content: string;
+					type?: Memory["type"];
+					scope?: Memory["scope"];
+					importance?: Memory["importance"];
+					tags?: string[];
+					metadata?: Record<string, unknown>;
+				};
+				const result = await saveMemory(env, body.content, body);
+				return Response.json(result);
+			}
+
+			if (url.pathname === "/recall" && request.method === "POST") {
+				const body = (await request.json()) as {
+					query: string;
+					limit?: number;
+					scope?: "global" | "project" | "both";
+					type?: Memory["type"];
+					importance?: Memory["importance"];
+				};
+				const memories = await recallMemories(env, body.query, body);
+				return Response.json({ memories });
+			}
+
+			if (url.pathname === "/delete" && request.method === "POST") {
+				const body = (await request.json()) as {
+					memoryId: string;
+					scope: "global" | "project";
+				};
+				const deleted = await deleteMemory(env, body.memoryId, body.scope);
+				return Response.json({ deleted });
+			}
+		} catch (err) {
+			const message = err instanceof Error ? err.message : "Unknown error";
+			return Response.json({ error: message }, { status: 500 });
+		}
+
+		return new Response("Not found", { status: 404 });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+## How it works
+
+1. **R2 is the source of truth.** Every memory is a Markdown file. AI Search indexes the bucket automatically, enabling semantic search without a separate vector database.
+2. **Semantic recall** uses AI Search to find memories by meaning. A query like "how did we handle auth?" finds a memory about "JWT tokens with RS256" because the concepts are semantically related.
+3. **Deduplication on save** uses the memory's own content as a search query to find similar existing entries. The two-threshold system (0.85 auto-replace, 0.6 flag) prevents redundant storage while preserving distinct but related memories.
+4. **Markdown with YAML frontmatter** serves a dual purpose -- structured metadata for filtering and classification, plus free-text content for semantic search.
+5. **Folder-based isolation** scopes memories by instance, scope (global/project), and user. AI Search inherits this structure through its folder metadata, and the service enforces it post-search.
+
+## Indexing timing
+
+After saving a memory to R2, there is a delay before it becomes searchable via AI Search:
+
+- **Automatic indexing**: AI Search indexes files in R2 when the instance is created and periodically after that. New files are picked up on the next indexing cycle.
+- **Manual sync**: Use the [Cloudflare dashboard](https://dash.cloudflare.com/) to trigger immediate indexing.
+
+## Related resources
+
+- [Agents SDK Session memory](/agents/concepts/memory/) for managed agent memory built into the Agents SDK
+- [R2 data source configuration](/ai-search/configuration/data-source/r2/)
+- [Build per-tenant search](/ai-search/how-to/per-tenant-search/) for per-user folder isolation
+- [Use AI Search as an agent tool](/ai-search/how-to/use-as-agent-tool/)
+- [AI Search MCP server](/ai-search/mcp-server/) for the built-in MCP integration
+- [Ingest external content into AI Search](/ai-search/how-to/ingest-external-content/)

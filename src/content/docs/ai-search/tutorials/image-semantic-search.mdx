@@ -1,0 +1,288 @@
+---
+pcx_content_type: tutorial
+title: "Image semantic search"
+sidebar:
+  order: 4
+description: Build natural language search over an image collection stored in R2, using AI Search for semantic matching and R2 as an image CDN.
+tags:
+  - AI
+products:
+  - ai-search
+  - r2
+  - workers
+reviewed: 2026-04-20
+---
+
+import { TypeScriptExample, WranglerConfig, FileTree } from "~/components";
+
+AI Search can index images stored in R2 and make them searchable with natural language queries. This walkthrough shows how to build an image search application where users type descriptions like "cat sleeping on a windowsill" and get back matching images, without any manual tagging or classification.
+
+## Prerequisites
+
+- An R2 bucket with images. For more information, refer to [R2 documentation](/r2/).
+- An AI Search instance connected to the R2 bucket. For more information, refer to [R2 data source](/ai-search/configuration/data-source/r2/).
+
+## 1. Configure bindings
+
+<WranglerConfig>
+
+```toml
+name = "image-search"
+main = "src/index.ts"
+compatibility_date = "$today"
+compatibility_flags = ["nodejs_compat"]
+
+[[ai_search_namespaces]]
+binding = "AI_SEARCH"
+namespace = "default"
+
+[[r2_buckets]]
+binding = "IMAGES_BUCKET"
+bucket_name = "my-images"
+
+[vars]
+AI_SEARCH_INSTANCE = "my-image-index"
+```
+
+</WranglerConfig>
+
+## 2. Organize images in R2
+
+Structure image filenames to encode searchable metadata. AI Search indexes the full R2 key path, so descriptive naming makes images discoverable.
+
+<FileTree>
+
+- nature/
+  - Sunset Over Ocean Waves.jpg
+  - Mountain Peak Above Clouds.jpg
+- architecture/
+  - Gothic Cathedral Interior.jpg
+  - Modern Glass Skyscraper.jpg
+- animals/
+  - Cat Sleeping on Windowsill.jpg
+  - Golden Retriever in Snow.jpg
+
+</FileTree>
+
+The folder name provides a category, and the filename describes the scene. AI Search will embed these descriptions and match them against user queries.
+
+## 3. Parse search results into image metadata
+
+When AI Search returns results, each chunk's `item.key` field contains the R2 key. Parse it to extract displayable metadata.
+
+<TypeScriptExample>
+
+```ts
+interface Env {
+	AI_SEARCH: AiSearchNamespace;
+	IMAGES_BUCKET: R2Bucket;
+	AI_SEARCH_INSTANCE: string;
+}
+
+interface ImageResult {
+	key: string;
+	category: string;
+	description: string;
+	imageUrl: string;
+	thumbnailUrl: string;
+	score: number;
+}
+
+function parseKey(key: string, score: number): ImageResult | null {
+	// Expected format: "category/Description.ext"
+	const parts = key.split("/");
+	if (parts.length < 2) return null;
+
+	const category = parts[0];
+	const fileWithExt = parts.slice(1).join("/");
+	const description = fileWithExt.replace(/\.\w+$/, "");
+
+	return {
+		key,
+		category,
+		description,
+		imageUrl: `/images/${encodeURIComponent(key)}`,
+		thumbnailUrl: `/thumbnails/${encodeURIComponent(key.replace(/\.\w+$/, ".webp"))}`,
+		score,
+	};
+}
+```
+
+</TypeScriptExample>
+
+## 4. Search images with natural language
+
+<TypeScriptExample>
+
+```ts
+async function searchImages(env: Env, query: string): Promise<ImageResult[]> {
+	const instance = env.AI_SEARCH.get(env.AI_SEARCH_INSTANCE);
+	const response = await instance.search({
+		messages: [{ role: "user", content: query }],
+		ai_search_options: {
+			retrieval: {
+				max_num_results: 30,
+				match_threshold: 0.25,
+			},
+		},
+	});
+
+	return (response.chunks ?? [])
+		.map((chunk) => parseKey(chunk.item?.key ?? "", chunk.score))
+		.filter((r): r is ImageResult => r !== null);
+}
+```
+
+</TypeScriptExample>
+
+The low score threshold (0.25) is intentional for image search -- semantic matching on short descriptions benefits from more candidates.
+
+## 5. Find similar images
+
+Given an existing image, use its filename as a search query to find visually or thematically similar images.
+
+<TypeScriptExample>
+
+```ts
+async function findSimilar(env: Env, key: string): Promise<ImageResult[]> {
+	const parsed = parseKey(key, 1);
+	if (!parsed) return [];
+
+	// Use the description + category as the search query
+	const query = `${parsed.description} ${parsed.category}`;
+
+	const instance = env.AI_SEARCH.get(env.AI_SEARCH_INSTANCE);
+	const response = await instance.search({
+		messages: [{ role: "user", content: query }],
+		ai_search_options: {
+			retrieval: {
+				max_num_results: 12,
+				match_threshold: 0.2,
+			},
+		},
+	});
+
+	return (response.chunks ?? [])
+		.filter((chunk) => chunk.item?.key !== key) // Exclude the original
+		.slice(0, 8)
+		.map((chunk) => parseKey(chunk.item?.key ?? "", chunk.score))
+		.filter((r): r is ImageResult => r !== null);
+}
+```
+
+</TypeScriptExample>
+
+## 6. Serve images from R2
+
+Proxy R2 images through the Worker with aggressive caching. This turns R2 into an image CDN.
+
+<TypeScriptExample>
+
+```ts
+async function serveImage(bucket: R2Bucket, key: string): Promise<Response> {
+	const object = await bucket.get(key);
+	if (!object) {
+		return new Response("Image not found", { status: 404 });
+	}
+
+	return new Response(object.body, {
+		headers: {
+			"Content-Type": object.httpMetadata?.contentType || "image/jpeg",
+			"Cache-Control": "public, max-age=31536000, immutable",
+			"Content-Length": String(object.size),
+		},
+	});
+}
+```
+
+</TypeScriptExample>
+
+The `immutable` cache directive tells browsers and CDNs this image will never change at this URL. For mutable images, use content-hashed URLs instead.
+
+## 7. Put it together
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const url = new URL(request.url);
+
+		try {
+			// Search endpoint
+			if (url.pathname === "/api/search") {
+				const query = url.searchParams.get("q");
+				if (!query) {
+					return Response.json(
+						{ error: "Missing q parameter" },
+						{ status: 400 },
+					);
+				}
+				const results = await searchImages(env, query);
+				return Response.json({ query, results });
+			}
+
+			// Similar images endpoint
+			if (url.pathname === "/api/similar") {
+				const key = url.searchParams.get("key");
+				if (!key) {
+					return Response.json(
+						{ error: "Missing key parameter" },
+						{ status: 400 },
+					);
+				}
+				const results = await findSimilar(env, key);
+				return Response.json({ results });
+			}
+
+			// Image proxy
+			if (url.pathname.startsWith("/images/")) {
+				const key = decodeURIComponent(url.pathname.replace("/images/", ""));
+				return serveImage(env.IMAGES_BUCKET, key);
+			}
+		} catch (err) {
+			const message = err instanceof Error ? err.message : "Unknown error";
+			return Response.json({ error: message }, { status: 500 });
+		}
+
+		return new Response("Not found", { status: 404 });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+## How it works
+
+1. **AI Search indexes images automatically.** When you connect an R2 bucket containing images, AI Search processes them -- extracting visual features and indexing filenames -- to build a semantic search index.
+2. **Filenames are the metadata layer.** Descriptive filenames like `Sunset Over Ocean Waves.jpg` give AI Search text to embed alongside the image content. The combination of visual features and text descriptions provides strong semantic matching.
+3. **No tagging required.** Unlike traditional image search that requires manual tags, AI Search's semantic understanding matches natural language queries to image content directly.
+4. **R2 as CDN.** Serving images through the Worker with long-lived cache headers turns R2 into an efficient image delivery network.
+
+## Extending with image upload search
+
+You can accept uploaded images and convert them to text queries using a Workers AI vision model:
+
+<TypeScriptExample>
+
+```ts
+const imageBytes = new Uint8Array(await file.arrayBuffer());
+const aiResponse = await env.AI.run("@cf/llava-hf/llava-1.5-7b-hf", {
+	image: [...imageBytes],
+	prompt: "Describe this image in detail.",
+	max_tokens: 256,
+});
+const description = aiResponse.description ?? "";
+// Use description as the search query
+const results = await searchImages(env, description);
+```
+
+</TypeScriptExample>
+
+This enables "search by image" -- upload a photo, get a text description from the vision model, then find similar images in your collection.
+
+## Related resources
+
+- [R2 data source configuration](/ai-search/configuration/data-source/r2/)
+- [Workers AI models](/workers-ai/models/)
+- [R2 documentation](/r2/)

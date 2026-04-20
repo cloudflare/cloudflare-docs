@@ -1,0 +1,392 @@
+---
+pcx_content_type: tutorial
+title: "Agentic deep research with RAG"
+sidebar:
+  order: 6
+description: Build a research agent that runs parallel AI Search queries across multiple facets and synthesizes results into a narrative with Workers AI.
+tags:
+  - AI
+products:
+  - ai-search
+  - workers
+  - workers-ai
+  - agents
+reviewed: 2026-04-20
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+A single search query often misses the full picture. "What patterns does this codebase use?" requires searching for file structure, dependencies, naming conventions, and architecture decisions -- all in parallel. This walkthrough shows how to build a research agent that decomposes a question into multiple facets, runs parallel AI Search queries, and synthesizes the results into a coherent narrative.
+
+## Prerequisites
+
+- An AI Search instance with indexed content. For more information, refer to [R2 data source](/ai-search/configuration/data-source/r2/).
+- The [Agents SDK](/agents/). For more information, refer to [Get started with Agents](/agents/getting-started/).
+
+## 1. Configure bindings
+
+<WranglerConfig>
+
+```toml
+name = "research-agent"
+main = "src/index.ts"
+compatibility_date = "$today"
+compatibility_flags = ["nodejs_compat"]
+
+[ai]
+binding = "AI"
+
+[[ai_search_namespaces]]
+binding = "AI_SEARCH"
+namespace = "default"
+
+[vars]
+AI_SEARCH_INSTANCE = "my-index"
+```
+
+</WranglerConfig>
+
+## 2. Define research queries
+
+Instead of asking the LLM to decide what to search for, define a set of facet queries that cover different aspects of the topic. Each query targets a specific dimension with terms optimized for semantic retrieval.
+
+<TypeScriptExample>
+
+```ts
+interface ResearchQuery {
+	label: string;
+	query: string;
+	maxResults: number;
+}
+
+const RESEARCH_QUERIES: ResearchQuery[] = [
+	{
+		label: "Overview",
+		query: "overview summary description purpose architecture design",
+		maxResults: 30,
+	},
+	{
+		label: "Implementation Details",
+		query: "implementation code function class method handler endpoint",
+		maxResults: 25,
+	},
+	{
+		label: "Configuration",
+		query: "configuration setup environment variables settings options",
+		maxResults: 20,
+	},
+	{
+		label: "Dependencies",
+		query: "dependencies packages imports libraries frameworks tools",
+		maxResults: 20,
+	},
+	{
+		label: "Error Handling",
+		query: "error handling exception catch retry fallback validation",
+		maxResults: 15,
+	},
+	{
+		label: "Testing",
+		query: "test testing spec assertion mock fixture coverage",
+		maxResults: 15,
+	},
+	{
+		label: "Performance",
+		query: "performance optimization cache latency throughput memory",
+		maxResults: 15,
+	},
+	{
+		label: "Security",
+		query: "security authentication authorization token secret encryption",
+		maxResults: 15,
+	},
+];
+```
+
+</TypeScriptExample>
+
+Using deterministic queries rather than LLM-driven decomposition ensures consistent coverage and eliminates one round of inference latency.
+
+## 3. Run parallel research queries
+
+Execute all facet queries against AI Search simultaneously using `Promise.all`. Each query is independent and can fail without affecting the others.
+
+<TypeScriptExample>
+
+```ts
+interface Env {
+	AI: Ai;
+	AI_SEARCH: AiSearchNamespace;
+	AI_SEARCH_INSTANCE: string;
+}
+
+interface ResearchResult {
+	label: string;
+	query: string;
+	resultCount: number;
+	chunks: Array<{
+		key: string;
+		score: number;
+		text: string;
+	}>;
+	error?: string;
+}
+
+async function runResearch(
+	env: Env,
+	onProgress?: (label: string) => Promise<void>,
+): Promise<{ context: string; results: ResearchResult[] }> {
+	const instance = env.AI_SEARCH.get(env.AI_SEARCH_INSTANCE);
+
+	const results = await Promise.all(
+		RESEARCH_QUERIES.map(async (rq): Promise<ResearchResult> => {
+			if (onProgress) await onProgress(rq.label);
+
+			try {
+				const response = await instance.search({
+					messages: [{ role: "user", content: rq.query }],
+					ai_search_options: {
+						retrieval: { max_num_results: rq.maxResults },
+					},
+				});
+
+				return {
+					label: rq.label,
+					query: rq.query,
+					resultCount: (response.chunks ?? []).length,
+					chunks: (response.chunks ?? []).map((chunk) => ({
+						key: chunk.item?.key ?? "",
+						score: chunk.score ?? 0,
+						text: chunk.text ?? "",
+					})),
+				};
+			} catch (err) {
+				return {
+					label: rq.label,
+					query: rq.query,
+					resultCount: 0,
+					chunks: [],
+					error: err instanceof Error ? err.message : "Unknown error",
+				};
+			}
+		}),
+	);
+
+	const context = formatContext(results);
+	return { context, results };
+}
+```
+
+</TypeScriptExample>
+
+The `onProgress` callback lets you stream progress indicators to the client as each query label is dispatched.
+
+## 4. Format the context document
+
+Assemble all research results into a single structured document that the LLM can use as its knowledge base.
+
+<TypeScriptExample>
+
+```ts
+function formatContext(results: ResearchResult[]): string {
+	const sections: string[] = [
+		"# RESEARCH DATA",
+		"Use ONLY this data to write the analysis. Do not fabricate information.",
+		"",
+	];
+
+	for (const result of results) {
+		sections.push(`## ${result.label}`);
+		sections.push(`Query: "${result.query}"`);
+		sections.push(`Results found: ${result.resultCount}`);
+
+		if (result.error) {
+			sections.push(`Error: ${result.error}`);
+			continue;
+		}
+
+		for (const chunk of result.chunks) {
+			sections.push(
+				`### File: ${chunk.key} (score: ${chunk.score.toFixed(3)})`,
+			);
+			// Truncate long chunks to keep context window manageable
+			const text =
+				chunk.text.length > 2000
+					? chunk.text.slice(0, 2000) + "\n... [truncated]"
+					: chunk.text;
+			sections.push(text);
+		}
+		sections.push("");
+	}
+
+	return sections.join("\n");
+}
+```
+
+</TypeScriptExample>
+
+Truncating individual chunks to 2000 characters prevents any single result from dominating the context window while preserving the most relevant content.
+
+## 5. Synthesize with streaming
+
+Feed the context document to Workers AI and stream the response token-by-token.
+
+<TypeScriptExample>
+
+```ts
+const SYSTEM_PROMPT = `You are a research analyst. Given a set of research data, write a comprehensive analysis.
+
+Rules:
+- Use ONLY the provided research data. Never fabricate information.
+- When data is missing, say so explicitly.
+- Cite filenames when referencing specific findings.
+- Structure the response with clear headings.`;
+
+async function synthesize(
+	ai: Ai,
+	context: string,
+): Promise<ReadableStream<string>> {
+	const response = await ai.run("@cf/meta/llama-3.3-70b-instruct-fp8-fast", {
+		messages: [
+			{ role: "system", content: SYSTEM_PROMPT },
+			{
+				role: "user",
+				content: `Analyze the following research data and write a comprehensive report:\n\n${context}`,
+			},
+		],
+		stream: true,
+	});
+
+	// Workers AI streaming returns SSE-framed text (data: {...}\n\n).
+	// Parse each frame and extract the token text.
+	const sseStream = response as ReadableStream<Uint8Array>;
+	let buffer = "";
+
+	return new ReadableStream<string>({
+		async start(controller) {
+			const reader = sseStream.getReader();
+			const decoder = new TextDecoder();
+
+			try {
+				while (true) {
+					const { done, value } = await reader.read();
+					if (done) break;
+
+					buffer += decoder.decode(value, { stream: true });
+					const lines = buffer.split("\n");
+					buffer = lines.pop() ?? "";
+
+					for (const line of lines) {
+						if (!line.startsWith("data: ")) continue;
+						const payload = line.slice(6).trim();
+						if (payload === "[DONE]") continue;
+						try {
+							const parsed = JSON.parse(payload);
+							const token = parsed.response ?? "";
+							if (token) controller.enqueue(token);
+						} catch {
+							// Skip malformed frames
+						}
+					}
+				}
+			} finally {
+				reader.releaseLock();
+				controller.close();
+			}
+		},
+	});
+}
+```
+
+</TypeScriptExample>
+
+## 6. Build the streaming response pipeline
+
+Combine the research phase and synthesis phase into a single streaming response using a `TransformStream`.
+
+<TypeScriptExample>
+
+```ts
+async function handleResearch(env: Env): Promise<Response> {
+	const encoder = new TextEncoder();
+	const { readable, writable } = new TransformStream();
+	const writer = writable.getWriter();
+
+	const writeEvent = (data: string) =>
+		writer.write(encoder.encode(`data: ${data}\n\n`));
+
+	// Run pipeline in the background
+	const pipeline = (async () => {
+		try {
+			// Phase 1: Research
+			await writeEvent(
+				JSON.stringify({ type: "status", message: "Researching..." }),
+			);
+
+			const { context } = await runResearch(env, async (label) => {
+				await writeEvent(JSON.stringify({ type: "progress", label }));
+			});
+
+			// Phase 2: Synthesis
+			await writeEvent(
+				JSON.stringify({ type: "status", message: "Synthesizing..." }),
+			);
+
+			const stream = await synthesize(env.AI, context);
+			const reader = stream.getReader();
+
+			while (true) {
+				const { done, value } = await reader.read();
+				if (done) break;
+
+				await writeEvent(JSON.stringify({ type: "text", content: value }));
+			}
+
+			await writeEvent(JSON.stringify({ type: "done" }));
+		} catch (err) {
+			const message = err instanceof Error ? err.message : "Unknown error";
+			// Ignore write errors if the client already disconnected
+			await writeEvent(JSON.stringify({ type: "error", message })).catch(
+				() => {},
+			);
+		} finally {
+			await writer.close().catch(() => {});
+		}
+	})().catch(() => {}); // Suppress unhandled rejection if client disconnects mid-stream
+
+	void pipeline;
+	return new Response(readable, {
+		headers: { "Content-Type": "text/event-stream" },
+	});
+}
+```
+
+</TypeScriptExample>
+
+The `TransformStream` pattern returns the readable side immediately while the pipeline writes to the writable side in the background. This enables streaming from the very first progress label through the final synthesis token.
+
+## 7. Add follow-up chat with search tools
+
+After the initial research, let users ask follow-up questions with the LLM having access to AI Search as a callable tool. For the full implementation pattern -- defining search tools, wiring them into an agent, and handling multi-step tool calls -- refer to [Use AI Search as an agent tool](/ai-search/how-to/use-as-agent-tool/).
+
+## How it works
+
+1. **Parallel research** runs all facet queries simultaneously with `Promise.all`. Total research time equals the slowest single query, not the sum of all queries.
+2. **Deterministic facets** ensure consistent coverage. Rather than relying on an LLM to decide what to search for (which adds latency and unpredictability), the facets are predefined to cover the dimensions that matter for the use case. An alternative approach is to let the agent decide what to search: give it multiple specialized tools and let the LLM invoke them autonomously across multiple steps.
+3. **Context document assembly** creates a structured knowledge base that the LLM can reference. Including filenames and scores helps the model cite specific sources.
+4. **Streaming pipeline** returns results progressively -- progress labels during research, then synthesis tokens. The user sees activity from the first second.
+
+## `search()` vs `chatCompletions()`
+
+This tutorial uses `search()` for the research phase and Workers AI directly for synthesis. An alternative is to use `chatCompletions()`, which combines retrieval and generation in a single call:
+
+- **`search()`** -- returns source chunks only. Use this when you want to control the generation step yourself, run multiple searches before synthesizing, or pass results to an external model.
+- **`chatCompletions()`** -- returns a generated answer alongside the retrieved chunks. Use this when you want AI Search to handle both retrieval and generation in one call.
+
+For the research agent pattern, `search()` is the better choice because the agent needs to gather results from many queries before synthesizing. Using `chatCompletions()` would generate a response per query, wasting tokens on intermediate answers that get discarded.
+
+## Related resources
+
+- [Agents SDK](/agents/)
+- [Use AI Search as an agent tool](/ai-search/how-to/use-as-agent-tool/)
+- [Workers AI models](/workers-ai/models/)

@@ -1,0 +1,326 @@
+---
+pcx_content_type: how-to
+title: Use AI Search as an agent tool
+sidebar:
+  order: 14
+description: Integrate AI Search into an AI agent as a callable tool for retrieval-augmented generation, using the Agents SDK or any framework with tool calling support.
+tags:
+  - AI
+products:
+  - ai-search
+  - workers
+  - workers-ai
+  - agents
+reviewed: 2026-04-20
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+You can give any AI agent the ability to search your indexed content by exposing AI Search as a callable tool. The agent decides when to search, what to search for, and how to use the results to ground its responses.
+
+## Agents SDK
+
+The [Agents SDK](/agents/) is the recommended way to build stateful agents on Cloudflare. Extend `AIChatAgent` to get WebSocket management, message persistence, and SQLite-backed conversation history. Define AI Search as a tool that the agent's LLM can call.
+
+### Configure bindings
+
+<WranglerConfig>
+
+```toml
+name = "my-agent"
+main = "src/index.ts"
+compatibility_date = "$today"
+compatibility_flags = ["nodejs_compat"]
+
+[[ai_search_namespaces]]
+binding = "AI_SEARCH"
+namespace = "default"
+
+[ai]
+binding = "AI"
+
+[durable_objects]
+bindings = [
+  { name = "MyAgent", class_name = "MyAgent" }
+]
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["MyAgent"]
+```
+
+</WranglerConfig>
+
+The `new_sqlite_classes` migration is required for `AIChatAgent` to persist conversation history in the Durable Object's embedded SQLite.
+
+### Define the search tool
+
+<TypeScriptExample>
+
+```ts
+import { tool } from "ai";
+import { z } from "zod";
+
+interface Env {
+	AI: Ai;
+	AI_SEARCH: AiSearchNamespace;
+	MyAgent: DurableObjectNamespace;
+}
+
+function createSearchTool(env: Env, instanceName: string) {
+	return tool({
+		description:
+			"Search indexed documents for relevant information. Use this before answering questions about the content.",
+		inputSchema: z.object({
+			query: z.string().describe("The search query"),
+			maxResults: z.number().optional().default(5),
+		}),
+		execute: async ({ query, maxResults }) => {
+			try {
+				const instance = env.AI_SEARCH.get(instanceName);
+				const result = await instance.search({
+					messages: [{ role: "user", content: query }],
+					ai_search_options: {
+						retrieval: {
+							max_num_results: maxResults,
+							match_threshold: 0.3,
+						},
+					},
+				});
+
+				return (result.chunks ?? []).map((chunk) => ({
+					key: chunk.item?.key ?? "",
+					score: chunk.score,
+					content: chunk.text ?? "",
+				}));
+			} catch (err) {
+				console.error("Search failed:", err);
+				return [];
+			}
+		},
+	});
+}
+```
+
+</TypeScriptExample>
+
+Using `search()` (retrieval only) is recommended when the agent LLM will synthesize the answer from the chunks. Use `chatCompletions()` instead if you want AI Search to generate an answer that the agent can relay directly.
+
+### Create the agent
+
+<TypeScriptExample>
+
+```ts
+import { AIChatAgent } from "@cloudflare/ai-chat";
+import { createWorkersAI } from "workers-ai-provider";
+import { streamText, convertToModelMessages, pruneMessages, stepCountIs } from "ai";
+
+export class MyAgent extends AIChatAgent {
+	async onChatMessage() {
+		const workersai = createWorkersAI({ binding: this.env.AI });
+
+		const result = streamText({
+			model: workersai("@cf/meta/llama-3.3-70b-instruct-fp8-fast"),
+			system:
+				"You are a helpful assistant. Search documents before answering questions.",
+			messages: pruneMessages({
+				messages: await convertToModelMessages(this.messages),
+				toolCalls: "before-last-2-messages",
+			}),
+			tools: {
+				search: createSearchTool(this.env, "my-index"),
+			},
+			stopWhen: stepCountIs(5),
+		});
+
+		return result.toUIMessageStreamResponse();
+	}
+}
+```
+
+</TypeScriptExample>
+
+The `stepCountIs(5)` parameter allows the agent up to 5 tool-use rounds per user message. Increase this if the agent needs to make multiple sequential searches. `pruneMessages` trims older tool call history to keep the context window manageable.
+
+### Route requests to the agent
+
+<TypeScriptExample>
+
+```ts
+import { routeAgentRequest } from "agents";
+
+export { MyAgent };
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		return (
+			(await routeAgentRequest(request, env)) ||
+			new Response("Not found", { status: 404 })
+		);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+Install the required packages and deploy:
+
+```bash
+npm install @cloudflare/ai-chat agents ai workers-ai-provider zod
+npx wrangler deploy
+```
+
+Users connect via WebSocket to `/agents/my-agent/{instance-id}`. The agent persists conversation history in SQLite and uses AI Search to ground its responses.
+
+## Vercel AI SDK (without Agents SDK)
+
+If you do not need stateful Durable Object agents and just want to add search tools to a standard Worker, use the Vercel AI SDK `tool` function directly:
+
+<TypeScriptExample>
+
+```ts
+import { streamText, stepCountIs } from "ai";
+import { createWorkersAI } from "workers-ai-provider";
+import { tool } from "ai";
+import { z } from "zod";
+
+interface Env {
+	AI: Ai;
+	AI_SEARCH: AiSearchNamespace;
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const { messages } = (await request.json()) as { messages: any[] };
+		const workersai = createWorkersAI({ binding: env.AI });
+
+		const result = streamText({
+			model: workersai("@cf/meta/llama-3.3-70b-instruct-fp8-fast"),
+			system: "You are a helpful assistant. Search before answering.",
+			messages,
+			tools: {
+				search: tool({
+					description: "Search indexed documents.",
+					inputSchema: z.object({
+						query: z.string(),
+						maxResults: z.number().optional().default(5),
+					}),
+					execute: async ({ query, maxResults }) => {
+						try {
+							const instance = env.AI_SEARCH.get("my-index");
+							const result = await instance.search({
+								messages: [{ role: "user", content: query }],
+								ai_search_options: {
+									retrieval: {
+										max_num_results: maxResults,
+										match_threshold: 0.3,
+									},
+								},
+							});
+							return (result.chunks ?? []).map((chunk) => ({
+								key: chunk.item?.key ?? "",
+								score: chunk.score,
+								content: chunk.text ?? "",
+							}));
+						} catch {
+							return [];
+						}
+					},
+				}),
+			},
+			stopWhen: stepCountIs(3),
+		});
+
+		return result.toTextStreamResponse();
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+This approach is simpler but does not include WebSocket transport, conversation persistence, or Durable Object state management.
+
+## Filtered search tool
+
+To let the agent narrow searches by path, expose a `folder` parameter in the tool definition. Use the [starts-with filter pattern](/ai-search/configuration/indexing/metadata/#starts-with-filter-for-folders) to match all files under a path prefix.
+
+<TypeScriptExample>
+
+```ts
+function createFilteredSearchTool(env: Env, instanceName: string) {
+	return tool({
+		description: `Search indexed documents. Use the folder parameter to scope results to a specific path prefix.`,
+		inputSchema: z.object({
+			query: z.string().describe("The search query"),
+			folder: z
+				.string()
+				.optional()
+				.describe(
+					"Folder prefix to scope the search, for example: guides/ — matches all files under that path",
+				),
+			maxResults: z.number().optional().default(5),
+		}),
+		execute: async ({ query, folder, maxResults }) => {
+			try {
+				const folderValue = folder
+					? folder.endsWith("/")
+						? folder
+						: `${folder}/`
+					: null;
+
+				// Range filter: $gte + $lt is the canonical starts-with pattern
+				const filters = folderValue
+					? { folder: { $gte: folderValue, $lt: `${folderValue.slice(0, -1)}0` } }
+					: undefined;
+
+				const instance = env.AI_SEARCH.get(instanceName);
+				const result = await instance.search({
+					messages: [{ role: "user", content: query }],
+					ai_search_options: {
+						retrieval: {
+							max_num_results: maxResults,
+							match_threshold: 0.3,
+							...(filters && { filters }),
+						},
+					},
+				});
+
+				return (result.chunks ?? []).map((chunk) => ({
+					key: chunk.item?.key ?? "",
+					score: chunk.score,
+					content: chunk.text ?? "",
+				}));
+			} catch {
+				return [];
+			}
+		},
+	});
+}
+```
+
+</TypeScriptExample>
+
+The `folder` parameter uses the [starts-with filter pattern](/ai-search/configuration/indexing/metadata/#starts-with-filter-for-folders) to match all files under a path prefix. You can also filter on `filename`, `timestamp`, and any [custom metadata](/ai-search/configuration/indexing/metadata/#custom-metadata) fields defined in your schema.
+
+## REST API variant
+
+If your agent runs outside a Cloudflare Worker (for example, in a local development environment or external service), use the [REST API](/ai-search/api/search/rest-api/) instead of the Workers binding:
+
+```bash
+curl -X POST \
+  "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/<INSTANCE_NAME>/search" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{"query": "your search query"}'
+```
+
+Wrap this HTTP call in your agent framework's tool definition.
+
+## Related resources
+
+- [Workers binding reference](/ai-search/api/search/workers-binding/)
+- [REST API reference](/ai-search/api/search/rest-api/)
+- [Metadata filtering](/ai-search/configuration/indexing/metadata/)
+- [Path filtering](/ai-search/configuration/indexing/path-filtering/)
+- [Agents SDK documentation](/agents/)
+- [Agentic deep research with RAG](/ai-search/tutorials/agentic-deep-research/) for a full multi-step research agent

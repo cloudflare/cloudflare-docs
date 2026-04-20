@@ -1,0 +1,361 @@
+---
+pcx_content_type: tutorial
+title: "Full-stack app with AI Search"
+sidebar:
+  order: 7
+description: Build a full-stack application using D1 for storage, R2 as a content mirror for AI Search indexing, KV as a write buffer, and Service Bindings to connect components.
+tags:
+  - AI
+products:
+  - ai-search
+  - d1
+  - r2
+  - kv
+  - workers
+reviewed: 2026-04-20
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+When AI Search is part of a full application -- not just a search endpoint -- you need to keep the search index in sync with your primary database. This walkthrough shows how to build a task management application where D1 is the source of truth, R2 mirrors content as Markdown for AI Search indexing, KV provides a fast write buffer for rapid captures, and Service Bindings connect the API Worker to a frontend.
+
+## Prerequisites
+
+- A D1 database. For more information, refer to [D1 documentation](/d1/).
+- An R2 bucket. For more information, refer to [R2 documentation](/r2/).
+- A KV namespace. For more information, refer to [KV documentation](/kv/).
+- An AI Search instance connected to the R2 bucket.
+
+## 1. Configure the API Worker
+
+<WranglerConfig>
+
+```toml
+name = "my-app-api"
+main = "src/index.ts"
+compatibility_date = "$today"
+compatibility_flags = ["nodejs_compat"]
+
+[[ai_search_namespaces]]
+binding = "AI_SEARCH"
+namespace = "default"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "my-app-db"
+database_id = "<DATABASE_ID>"
+
+[[kv_namespaces]]
+binding = "KV"
+id = "<KV_NAMESPACE_ID>"
+
+[[r2_buckets]]
+binding = "R2"
+bucket_name = "my-app-content"
+
+[vars]
+AI_SEARCH_INSTANCE = "my-app-search"
+```
+
+</WranglerConfig>
+
+## 2. Configure the Web Worker with a Service Binding
+
+The frontend Worker connects to the API Worker through a Service Binding -- zero-latency Worker-to-Worker calls with no network hop.
+
+<WranglerConfig>
+
+```toml
+name = "my-app-web"
+main = ".svelte-kit/cloudflare/_worker.js"
+compatibility_date = "$today"
+
+[[services]]
+binding = "API"
+service = "my-app-api"
+```
+
+</WranglerConfig>
+
+The web Worker calls the API like a local function:
+
+<TypeScriptExample>
+
+```ts
+interface Env {
+	API: Fetcher;
+}
+
+async function callApi<T>(
+	api: Fetcher,
+	path: string,
+	init?: RequestInit,
+): Promise<T> {
+	const response = await api.fetch(
+		new Request(`https://api.internal${path}`, init),
+	);
+	return response.json() as Promise<T>;
+}
+
+// Usage in a server-side load function
+const tasks = await callApi<Task[]>(env.API, "/api/tasks");
+```
+
+</TypeScriptExample>
+
+The hostname `api.internal` is arbitrary -- Service Bindings ignore it. What matters is the path, which the API Worker routes normally.
+
+## 3. Create the D1 schema
+
+```sql
+-- migrations/0001_initial.sql
+CREATE TABLE IF NOT EXISTS tasks (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL,
+  title TEXT NOT NULL,
+  status TEXT NOT NULL DEFAULT 'todo',
+  priority TEXT NOT NULL DEFAULT 'medium',
+  scratchpad TEXT DEFAULT '',
+  due_date TEXT,
+  created_at TEXT NOT NULL,
+  updated_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS tags (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL,
+  name TEXT NOT NULL,
+  UNIQUE(user_id, name)
+);
+
+CREATE TABLE IF NOT EXISTS task_tags (
+  task_id TEXT NOT NULL,
+  tag_id TEXT NOT NULL,
+  PRIMARY KEY (task_id, tag_id),
+  FOREIGN KEY (task_id) REFERENCES tasks(id),
+  FOREIGN KEY (tag_id) REFERENCES tags(id)
+);
+
+CREATE TABLE IF NOT EXISTS inbox_entries (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL,
+  text TEXT NOT NULL,
+  created_at TEXT NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_tasks_user ON tasks(user_id);
+CREATE INDEX IF NOT EXISTS idx_tasks_status ON tasks(user_id, status);
+CREATE INDEX IF NOT EXISTS idx_inbox_user ON inbox_entries(user_id);
+```
+
+## 4. Mirror D1 writes to R2 with `waitUntil`
+
+After every D1 write, generate a Markdown representation and write it to R2. Use `waitUntil` so the R2 write does not block the response.
+
+<TypeScriptExample>
+
+```ts
+interface Env {
+	AI_SEARCH: AiSearchNamespace;
+	DB: D1Database;
+	KV: KVNamespace;
+	R2: R2Bucket;
+	AI_SEARCH_INSTANCE: string;
+}
+
+interface Task {
+	id: string;
+	user_id: string;
+	title: string;
+	status: string;
+	priority: string;
+	scratchpad: string;
+	due_date: string | null;
+	tags: string[];
+}
+
+function taskToMarkdown(task: Task): string {
+	const lines = [
+		"---",
+		`id: ${task.id}`,
+		`type: task`,
+		`status: ${task.status}`,
+		`priority: ${task.priority}`,
+		`tags: [${task.tags.join(", ")}]`,
+		task.due_date ? `due: ${task.due_date}` : null,
+		"---",
+		"",
+		`# ${task.title}`,
+	]
+		.filter(Boolean)
+		.map(String);
+
+	if (task.scratchpad) {
+		lines.push("", "## Notes", task.scratchpad);
+	}
+
+	return lines.join("\n");
+}
+
+async function syncToR2(r2: R2Bucket, task: Task): Promise<void> {
+	const key = `${task.user_id}/tasks/${task.id}.md`;
+	await r2.put(key, taskToMarkdown(task), {
+		httpMetadata: { contentType: "text/markdown" },
+		customMetadata: {
+			entity_type: "task",
+			entity_id: task.id,
+			context: `Task: ${task.title}. Status: ${task.status}. Priority: ${task.priority}.`,
+		},
+	});
+}
+
+async function removeFromR2(
+	r2: R2Bucket,
+	userId: string,
+	taskId: string,
+): Promise<void> {
+	await r2.delete(`${userId}/tasks/${taskId}.md`);
+}
+```
+
+</TypeScriptExample>
+
+The R2 key structure `{user_id}/tasks/{task_id}.md` provides user-scoped isolation. AI Search's folder metadata lets you filter searches to a specific user's content.
+
+## 5. Use KV as a fast write buffer
+
+For rapid capture endpoints (like a quick inbox), write to KV first for sub-100ms response times, then flush to D1 and R2 asynchronously.
+
+<TypeScriptExample>
+
+```ts
+interface InboxEntry {
+	id: string;
+	user_id: string;
+	text: string;
+	created_at: string;
+}
+
+async function captureToInbox(
+	env: Env,
+	ctx: ExecutionContext,
+	userId: string,
+	text: string,
+): Promise<InboxEntry> {
+	const entry: InboxEntry = {
+		id: crypto.randomUUID(),
+		user_id: userId,
+		text,
+		created_at: new Date().toISOString(),
+	};
+
+	// Write to KV immediately (sub-100ms response)
+	await env.KV.put(`inbox:${userId}:${entry.id}`, JSON.stringify(entry), {
+		expirationTtl: 86400, // 24h TTL as safety net
+	});
+
+	// Async flush to D1 + R2, then clean up KV
+	ctx.waitUntil(
+		(async () => {
+			try {
+				await env.DB.prepare(
+					"INSERT INTO inbox_entries (id, user_id, text, created_at) VALUES (?, ?, ?, ?)",
+				)
+					.bind(entry.id, userId, text, entry.created_at)
+					.run();
+
+				const key = `${userId}/inbox/${entry.id}.md`;
+				await env.R2.put(key, `# Quick capture\n\n${text}`, {
+					httpMetadata: { contentType: "text/markdown" },
+				});
+
+				// Only delete from KV after both D1 and R2 succeed
+				await env.KV.delete(`inbox:${userId}:${entry.id}`);
+			} catch (err) {
+				// KV entry is retained (24h TTL) so the flush can be retried.
+				// In production, log the error and consider a retry mechanism.
+				console.error("Flush failed for inbox entry:", entry.id, err);
+			}
+		})(),
+	);
+
+	return entry;
+}
+```
+
+</TypeScriptExample>
+
+When reading the inbox, merge KV entries (not yet flushed) with D1 results to avoid data loss during the async window.
+
+## 6. Search with user-scoped filtering
+
+Use AI Search with folder-based filtering to scope results to the current user.
+
+<TypeScriptExample>
+
+```ts
+async function searchTasks(
+	env: Env,
+	userId: string,
+	query: string,
+	includeAnswer: boolean = false,
+): Promise<Response> {
+	// Range filter: match all keys that start with "{userId}/"
+	const filters = {
+		folder: { $gte: `${userId}/`, $lt: `${userId}0` },
+	};
+
+	const instance = env.AI_SEARCH.get(env.AI_SEARCH_INSTANCE);
+
+	if (includeAnswer) {
+		const result = await instance.chatCompletions({
+			messages: [{ role: "user", content: query }],
+			model: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+			ai_search_options: {
+				retrieval: {
+					max_num_results: 10,
+					match_threshold: 0.3,
+					filters,
+				},
+				query_rewrite: { enabled: true },
+			},
+		});
+		return Response.json(result);
+	}
+
+	const result = await instance.search({
+		messages: [{ role: "user", content: query }],
+		ai_search_options: {
+			retrieval: {
+				max_num_results: 10,
+				match_threshold: 0.3,
+				filters,
+			},
+		},
+	});
+	return Response.json(result);
+}
+```
+
+</TypeScriptExample>
+
+The `$gte` + `$lt` filter on `{userId}/` acts as a [starts-with match](/ai-search/configuration/indexing/metadata/#starts-with-filter-for-folders), scoping results to all content belonging to that user -- tasks, inbox entries, and any other entity types stored in R2.
+
+## How it works
+
+1. **D1 is the source of truth.** All CRUD operations write to D1 first. The application reads from D1, not from R2 or AI Search.
+2. **R2 is a read-only mirror for AI Search.** Every D1 write triggers a `waitUntil` that converts the entity to Markdown and writes it to R2. AI Search indexes the R2 bucket automatically.
+3. **KV as a write buffer** decouples capture latency from storage latency. The KV write completes in single-digit milliseconds, while the D1 + R2 flush happens asynchronously.
+4. **`waitUntil` is the orchestration primitive.** It lets you run R2 syncs and AI tagging after the response is sent, keeping response times fast while ensuring data consistency.
+5. **Service Bindings** eliminate network hops between the frontend and API Workers. Calls look like `fetch()` but execute within the same Cloudflare location.
+6. **Folder-based user isolation** means every user's content is in their own R2 prefix. A `$gte` + `$lt` filter on `folder` scopes all searches to the authenticated user.
+
+## Related resources
+
+- [D1 documentation](/d1/)
+- [KV documentation](/kv/)
+- [R2 documentation](/r2/)
+- [Service Bindings](/workers/runtime-apis/bindings/service-bindings/)
+- [Build per-tenant search](/ai-search/how-to/per-tenant-search/)
+- [Ingest external content into AI Search](/ai-search/how-to/ingest-external-content/)
+- [Path filtering](/ai-search/configuration/indexing/path-filtering/)

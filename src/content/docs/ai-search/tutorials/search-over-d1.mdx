@@ -1,0 +1,421 @@
+---
+pcx_content_type: tutorial
+title: "Search over D1 data"
+sidebar:
+  order: 3
+description: Keep a D1 database searchable with AI Search by mirroring rows to R2 as Markdown on every write, and triggering an index sync so results stay current.
+tags:
+  - AI
+products:
+  - ai-search
+  - d1
+  - r2
+  - workers
+difficulty: Intermediate
+reviewed: 2026-04-20
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+D1 is the right place to store structured application data. AI Search is built for unstructured text -- it embeds and retrieves natural language content like descriptions, notes, and summaries. The two work together by treating R2 as a mirror: every time a row is written to D1, the row's text content is written to R2 as a Markdown file. AI Search indexes those files automatically, so the search index stays in sync with the database.
+
+The key idea is that the R2 mirror contains the **text** you want to be searchable -- not a serialized copy of the database row. Structured fields like IDs, prices, and timestamps belong in D1. The R2 file should read like a document: a title, a description, any prose that helps someone find this record with a natural language query.
+
+This tutorial shows how to build a product catalog where records live in D1 and product descriptions are searchable through AI Search.
+
+## Prerequisites
+
+- A D1 database. For more information, refer to [D1 documentation](/d1/).
+- An R2 bucket. For more information, refer to [R2 documentation](/r2/).
+- An AI Search instance connected to the R2 bucket. For more information, refer to [R2 data source](/ai-search/configuration/data-source/r2/).
+
+## 1. Configure bindings
+
+<WranglerConfig>
+
+```toml
+name = "product-catalog"
+main = "src/index.ts"
+compatibility_date = "$today"
+
+[[ai_search_namespaces]]
+binding = "AI_SEARCH"
+namespace = "default"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "products-db"
+database_id = "<DATABASE_ID>"
+
+[[r2_buckets]]
+binding = "CONTENT"
+bucket_name = "products-content"
+
+[vars]
+AI_SEARCH_INSTANCE = "product-search"
+```
+
+</WranglerConfig>
+
+## 2. Create the D1 schema
+
+```sql
+CREATE TABLE IF NOT EXISTS products (
+  id        TEXT PRIMARY KEY,
+  name      TEXT NOT NULL,
+  category  TEXT NOT NULL,
+  price     REAL NOT NULL,
+  summary   TEXT NOT NULL,
+  created_at TEXT NOT NULL,
+  updated_at TEXT NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_products_category ON products(category);
+```
+
+Apply this migration with Wrangler:
+
+```bash
+npx wrangler d1 execute products-db --file=migrations/0001_products.sql
+```
+
+## 3. Mirror D1 rows to R2
+
+For each product write, generate a Markdown document that contains the text content you want AI Search to index. Keep structured fields (price, ID, timestamps) in D1 -- the R2 file should read like a short product description, not a serialized database row.
+
+<TypeScriptExample>
+
+```ts
+interface Env {
+	AI_SEARCH: AiSearchNamespace;
+	DB: D1Database;
+	CONTENT: R2Bucket;
+	AI_SEARCH_INSTANCE: string;
+}
+
+interface Product {
+	id: string;
+	name: string;
+	category: string;
+	price: number;
+	summary: string;
+	created_at: string;
+	updated_at: string;
+}
+
+function productToMarkdown(product: Product): string {
+	return [
+		`# ${product.name}`,
+		"",
+		`Category: ${product.category}`,
+		"",
+		product.summary,
+	].join("\n");
+}
+
+// R2 key: "{category}/{id}.md" — gives folder-based category filtering
+function r2Key(product: Pick<Product, "id" | "category">): string {
+	return `${product.category}/${product.id}.md`;
+}
+
+async function syncToR2(bucket: R2Bucket, product: Product): Promise<void> {
+	await bucket.put(r2Key(product), productToMarkdown(product), {
+		httpMetadata: { contentType: "text/markdown" },
+		customMetadata: {
+			context: `${product.name} — ${product.category} product.`,
+		},
+	});
+}
+
+async function removeFromR2(
+	bucket: R2Bucket,
+	product: Pick<Product, "id" | "category">,
+): Promise<void> {
+	await bucket.delete(r2Key(product));
+}
+```
+
+</TypeScriptExample>
+
+The key structure `{category}/{id}.md` creates a folder hierarchy that AI Search uses as filterable metadata. A search scoped to `{ folder: "shoes/" }` returns only products in the `shoes` category.
+
+## 4. Write to D1 and mirror to R2
+
+Use `ctx.waitUntil` to write to R2 after the D1 write completes, without blocking the HTTP response. The response goes back to the caller immediately while the mirror write runs in the background.
+
+<TypeScriptExample>
+
+```ts
+async function createProduct(
+	env: Env,
+	ctx: ExecutionContext,
+	input: Omit<Product, "created_at" | "updated_at">,
+): Promise<Product> {
+	const now = new Date().toISOString();
+	const product: Product = { ...input, created_at: now, updated_at: now };
+
+	await env.DB.prepare(
+		`INSERT INTO products (id, name, category, price, summary, created_at, updated_at)
+		 VALUES (?, ?, ?, ?, ?, ?, ?)`,
+	)
+		.bind(
+			product.id,
+			product.name,
+			product.category,
+			product.price,
+			product.summary,
+			product.created_at,
+			product.updated_at,
+		)
+		.run();
+
+	// Mirror to R2 after D1 write — does not block the response
+	ctx.waitUntil(syncToR2(env.CONTENT, product));
+
+	return product;
+}
+
+async function updateProduct(
+	env: Env,
+	ctx: ExecutionContext,
+	id: string,
+	patch: Partial<Pick<Product, "name" | "summary" | "price">>,
+): Promise<Product | null> {
+	const updated_at = new Date().toISOString();
+	// Allowlist field names before interpolating into SQL to prevent injection
+	const ALLOWED_FIELDS = new Set<keyof Product>(["name", "summary", "price"]);
+	const fields = (Object.keys(patch) as Array<keyof typeof patch>).filter((f) =>
+		ALLOWED_FIELDS.has(f),
+	);
+	if (fields.length === 0) return null;
+
+	const setClauses = fields.map((f) => `${f} = ?`).join(", ");
+	const values = fields.map((f) => patch[f]);
+
+	await env.DB.prepare(
+		`UPDATE products SET ${setClauses}, updated_at = ? WHERE id = ?`,
+	)
+		.bind(...values, updated_at, id)
+		.run();
+
+	const row = await env.DB.prepare("SELECT * FROM products WHERE id = ?")
+		.bind(id)
+		.first<Product>();
+
+	if (!row) return null;
+
+	ctx.waitUntil(syncToR2(env.CONTENT, row));
+	return row;
+}
+
+async function deleteProduct(
+	env: Env,
+	ctx: ExecutionContext,
+	id: string,
+): Promise<boolean> {
+	// Fetch category before deletion to build the correct R2 key
+	const row = await env.DB.prepare(
+		"SELECT id, category FROM products WHERE id = ?",
+	)
+		.bind(id)
+		.first<Pick<Product, "id" | "category">>();
+
+	if (!row) return false;
+
+	await env.DB.prepare("DELETE FROM products WHERE id = ?").bind(id).run();
+
+	ctx.waitUntil(removeFromR2(env.CONTENT, row));
+	return true;
+}
+```
+
+</TypeScriptExample>
+
+The `waitUntil` pattern keeps writes fast while guaranteeing the R2 mirror is updated before the isolate shuts down. If the R2 write fails, the D1 row still exists — a retry on the next write or a background sync job can recover the mirror.
+
+## 5. Search with AI Search
+
+Query AI Search to find products by natural language. Optionally scope results to a category using a folder filter.
+
+<TypeScriptExample>
+
+```ts
+interface SearchResult {
+	id: string;
+	key: string;
+	score: number;
+	excerpt: string;
+}
+
+async function searchProducts(
+	env: Env,
+	query: string,
+	category?: string,
+): Promise<SearchResult[]> {
+	const filter = category
+		? { folder: `${category}/` }
+		: undefined;
+
+	const instance = env.AI_SEARCH.get(env.AI_SEARCH_INSTANCE);
+	const response = await instance.search({
+		messages: [{ role: "user", content: query }],
+		ai_search_options: {
+			retrieval: {
+				max_num_results: 10,
+				match_threshold: 0.3,
+				...(filter && { filters: filter }),
+			},
+			query_rewrite: { enabled: true },
+		},
+	});
+
+	return (response.chunks ?? []).map((chunk) => ({
+		id: (chunk.item?.key ?? "").replace(/^.*\//, "").replace(/\.md$/, ""),
+		key: chunk.item?.key ?? "",
+		score: chunk.score,
+		excerpt: chunk.text ?? "",
+	}));
+}
+```
+
+</TypeScriptExample>
+
+## 6. Enrich search results from D1
+
+AI Search returns R2 keys and text excerpts. To return full product records, fetch the matching rows from D1 using the IDs parsed from the keys.
+
+<TypeScriptExample>
+
+```ts
+async function searchAndEnrich(
+	env: Env,
+	query: string,
+	category?: string,
+): Promise<Array<Product & { score: number; excerpt: string }>> {
+	const searchResults = await searchProducts(env, query, category);
+	if (searchResults.length === 0) return [];
+
+	// Fetch D1 rows for all matched IDs in one query
+	const ids = searchResults.map((r) => r.id);
+	const placeholders = ids.map(() => "?").join(", ");
+	const rows = await env.DB.prepare(
+		`SELECT * FROM products WHERE id IN (${placeholders})`,
+	)
+		.bind(...ids)
+		.all<Product>();
+
+	const byId = new Map(rows.results.map((r) => [r.id, r]));
+
+	// Preserve search result ordering (highest score first)
+	return searchResults
+		.map((r) => {
+			const product = byId.get(r.id);
+			if (!product) return null;
+			return { ...product, score: r.score, excerpt: r.excerpt };
+		})
+		.filter(
+			(r): r is Product & { score: number; excerpt: string } => r !== null,
+		);
+}
+```
+
+</TypeScriptExample>
+
+Preserving the AI Search result order matters — it is ranked by semantic relevance. Re-sorting by a D1 field (such as price) after the fact discards that signal.
+
+## 7. Put it together
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(
+		request: Request,
+		env: Env,
+		ctx: ExecutionContext,
+	): Promise<Response> {
+		const url = new URL(request.url);
+
+		try {
+			// Search endpoint: GET /search?q=...&category=...
+			if (url.pathname === "/search" && request.method === "GET") {
+				const query = url.searchParams.get("q");
+				if (!query) {
+					return Response.json(
+						{ error: "Missing q parameter" },
+						{ status: 400 },
+					);
+				}
+				const category = url.searchParams.get("category") ?? undefined;
+				const results = await searchAndEnrich(env, query, category);
+				return Response.json({ query, results });
+			}
+
+			// Create product: POST /products
+			if (url.pathname === "/products" && request.method === "POST") {
+				const body = (await request.json()) as Omit<
+					Product,
+					"created_at" | "updated_at"
+				>;
+				const product = await createProduct(env, ctx, body);
+				return Response.json(product, { status: 201 });
+			}
+
+			// Update product: PATCH /products/:id
+			const updateMatch = url.pathname.match(/^\/products\/([^/]+)$/);
+			if (updateMatch && request.method === "PATCH") {
+				const id = updateMatch[1];
+				const patch = (await request.json()) as Partial<
+					Pick<Product, "name" | "summary" | "price">
+				>;
+				const product = await updateProduct(env, ctx, id, patch);
+				if (!product) {
+					return Response.json({ error: "Not found" }, { status: 404 });
+				}
+				return Response.json(product);
+			}
+
+			// Delete product: DELETE /products/:id
+			const deleteMatch = url.pathname.match(/^\/products\/([^/]+)$/);
+			if (deleteMatch && request.method === "DELETE") {
+				const id = deleteMatch[1];
+				const deleted = await deleteProduct(env, ctx, id);
+				if (!deleted) {
+					return Response.json({ error: "Not found" }, { status: 404 });
+				}
+				return new Response(null, { status: 204 });
+			}
+		} catch (err) {
+			const message = err instanceof Error ? err.message : "Unknown error";
+			return Response.json({ error: message }, { status: 500 });
+		}
+
+		return new Response("Not found", { status: 404 });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+## How it works
+
+1. **D1 is the source of truth.** All reads and structured queries go to D1. AI Search is only queried for semantic search.
+2. **R2 mirrors the text, not the row.** The R2 file contains the natural language content -- name, category, description -- that AI Search embeds and retrieves. Structured fields like price and timestamps stay in D1.
+3. **Folder structure encodes category.** The key `{category}/{id}.md` lets AI Search filter by category using a folder filter -- no custom metadata required.
+4. **Search results are enriched from D1.** AI Search returns keys and text excerpts. The full product record (price, timestamps) is fetched from D1 in a single `IN` query.
+5. **`waitUntil` keeps responses fast.** The R2 mirror write runs after the HTTP response is sent. If it fails, the D1 row is unaffected and the search index will be slightly stale until the next write or a manual sync.
+
+## Indexing timing
+
+After writing a row to R2, there is a delay before it becomes searchable via AI Search:
+
+- **Automatic indexing**: AI Search indexes files in R2 when the instance is created and periodically after that. New files are picked up on the next indexing cycle.
+- **Manual sync**: Go to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/ai/ai-search), select your AI Search instance, and select **Sync Index** for immediate indexing.
+
+## Related resources
+
+- [D1 documentation](/d1/)
+- [R2 data source configuration](/ai-search/configuration/data-source/r2/)
+- [Path filtering](/ai-search/configuration/indexing/path-filtering/)
+- [Full-stack app with AI Search](/ai-search/tutorials/full-stack-app-with-search/) for a more complete application pattern with KV buffering and Service Bindings
+- [Ingest external content into AI Search](/ai-search/how-to/ingest-external-content/)
