@@ -115,6 +115,8 @@ Super Bot Fight Mode identifies traffic matching patterns of known bots, can cha
 </TabItem>
 </Tabs>
 
+{/* UNTESTED: custom workflow — recommended starting values are guide-specific, not from source docs. */}
+
 For login protection, the following are recommended starting values. Adjust based on your traffic patterns.
 
 - **Definitely automated**: _Managed Challenge_. After reviewing Security Events to confirm the setting does not affect legitimate traffic, switch to _Block_.
@@ -131,10 +133,10 @@ If your organization also uses [Cloudflare Tunnel](/cloudflare-one/networks/conn
 
 Two tools protect login endpoints from automated abuse, and they cover different attack vectors:
 
-- **[Turnstile](/turnstile/)** runs a challenge in the visitor's browser before the form is submitted. It stops automated browsers and scripts that execute JavaScript but cannot solve challenges. Turnstile is free on all plans and does not require visitors to solve a visual puzzle.
-- **Application Security [rate limiting rules](/waf/rate-limiting-rules/)** operate at the Cloudflare edge and throttle requests that exceed a threshold regardless of whether the client runs JavaScript. They stop raw HTTP request floods that bypass browser-based protections entirely.
+- **[Turnstile](/turnstile/)** verifies that visitors are human without showing a CAPTCHA. It can be embedded into any website without sending traffic through Cloudflare. Use Turnstile to challenge automated form submissions.
+- **Application Security [rate limiting rules](/waf/rate-limiting-rules/)** define rate limits for requests matching an expression and the action to perform when those limits are reached. Use rate limiting to protect login endpoints from abuse, such as brute-force attacks.
 
-Use both together. Turnstile blocks the browser-based automation. Rate limiting blocks the direct HTTP requests.
+Both together provide the strongest coverage. Turnstile challenges automated submissions at the form level. Rate limiting catches high-volume attacks that bypass or do not encounter the form, such as direct `POST` requests to the endpoint.
 
 ### Add Turnstile to your login form
 
@@ -150,57 +152,65 @@ You need both the sitekey and secret key in the following steps.
 
 #### 2. Add the client-side snippet
 
-Add the Turnstile script and widget div to your login form. Replace `<YOUR-SITE-KEY>` with the sitekey from the previous step.
+Add the Turnstile script and widget container to your login form. Replace `<YOUR-SITE-KEY>` with the sitekey from the previous step.
 
 {/* Source: /turnstile/tutorials/integrating-turnstile-waf-and-bot-management/ — client-side integration */}
 
 ```html
-<form id="login-form" action="/login" method="POST">
-  <input type="text" name="username" placeholder="Username" required />
-  <input type="password" name="password" placeholder="Password" required />
-  <div class="cf-turnstile" data-sitekey="<YOUR-SITE-KEY>"></div>
-  <button type="submit">Log in</button>
+<form id="login-form">
+	<input type="text" id="username" placeholder="Username" required />
+	<input type="password" id="password" placeholder="Password" autocomplete="off" required />
+	<div class="cf-turnstile" data-sitekey="<YOUR-SITE-KEY>"></div>
+	<button type="submit">Log in</button>
 </form>
 
 <script
-  src="https://challenges.cloudflare.com/turnstile/v0/api.js"
-  async
-  defer
+	src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+	async
+	defer
 ></script>
 ```
 
-The Turnstile widget runs a challenge when the page loads. When the visitor submits the form, a `cf-turnstile-response` token is included in the form data.
+The widget renders inside the `div` and produces a token when the visitor passes the challenge. When the form is submitted, a `cf-turnstile-response` token is included in the form data.
 
 #### 3. Validate the token on your server
 
-Before processing login credentials, send the Turnstile token to the Siteverify API to confirm the visitor passed the challenge. Replace `<YOUR_SECRET_KEY>` with your secret key.
+Before processing the form submission, send the token to the Turnstile siteverify endpoint to confirm the visitor passed the challenge.
 
-{/* Source: /turnstile/get-started/server-side-validation/ — server-side validation */}
+{/* Source: /turnstile/get-started/server-side-validation/ — server-side validation (JS JSON example) */}
 
 ```js title="server.js"
-const TURNSTILE_SECRET = "<YOUR_SECRET_KEY>";
+const SECRET_KEY = "your-secret-key";
 
 async function validateTurnstile(token, remoteip) {
-  const response = await fetch(
-    "https://challenges.cloudflare.com/turnstile/v0/siteverify",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({
-        secret: TURNSTILE_SECRET,
-        response: token,
-        remoteip: remoteip,
-      }),
-    },
-  );
-  const data = await response.json();
-  return data.success;
+	try {
+		const response = await fetch(
+			"https://challenges.cloudflare.com/turnstile/v0/siteverify",
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					secret: SECRET_KEY,
+					response: token,
+					remoteip: remoteip,
+				}),
+			},
+		);
+
+		const result = await response.json();
+		return result;
+	} catch (error) {
+		console.error("Turnstile validation error:", error);
+		return { success: false, "error-codes": ["internal-error"] };
+	}
 }
 ```
 
-If `data.success` is `false`, reject the login attempt before checking credentials. Decide whether to fail open (allow the login if Siteverify is unreachable) or fail closed (block the login) based on your risk tolerance.
+Replace `"your-secret-key"` with your Turnstile secret key. The endpoint returns a JSON object with a `success` field. Only process the form submission if `success` is `true`.
 
-For more information on server-side validation, including the full response format and error codes, refer to [Validate the token](/turnstile/get-started/server-side-validation/).
+For the complete response format, error codes, and examples in other languages, refer to [Validate the token](/turnstile/get-started/server-side-validation/).
 
 #### Test your implementation
 
@@ -222,7 +232,8 @@ For the full list of test keys and expected behaviors, refer to [Test your Turns
 
 The following example creates a rate limiting rule that issues a Managed Challenge after more than five POST requests to your login path from the same IP within one minute. Start with Managed Challenge rather than Block. Managed Challenge allows legitimate users who trigger the limit to pass by completing a challenge, while blocking automated traffic that cannot solve it. After monitoring [Security Events](/waf/analytics/security-events/) to confirm the rule is not producing false positives, switch to Block. Adjust the path (`/login`), threshold, and period for your site.
 
-{/* Source: /waf/rate-limiting-rules/best-practices/ — credential stuffing protection pattern */}
+{/* Source: /waf/rate-limiting-rules/best-practices/ — credential stuffing protection pattern. Navigation from /waf/custom-rules/create-dashboard/. Expression from source. Threshold (5 req/min) is guide-specific example. */}
+{/* UNTESTED: custom workflow combining sourced expression with guide-specific threshold. Validate syntax in dashboard. */}
 
 <Tabs syncKey="dashNewNav">
 <TabItem label="New dashboard" icon="rocket">
@@ -353,6 +364,8 @@ If your application uses non-standard credential field names, Enterprise custome
 
 ### Create a skip rule for legitimate automated traffic
 
+{/* UNTESTED: custom workflow not from source docs. Verify steps in dashboard. Navigation follows /waf/custom-rules/create-dashboard/ pattern. Expression uses documented fields. */}
+
 Before deploying rules that challenge or block login traffic, create a skip rule that exempts known legitimate automated traffic. This prevents your monitoring tools, health checks, and partner integrations from being blocked by the rules that follow.
 
 <Tabs syncKey="dashNewNav">
@@ -420,6 +433,8 @@ For more information about the Skip action and available skip options, refer to 
 
 ### Block requests with suspicious headers
 
+{/* UNTESTED: custom expression using documented fields. Validate syntax in dashboard. */}
+
 Credential stuffing tools often send requests without standard browser headers or with known-bad User-Agent patterns. Create a custom rule that issues a Managed Challenge for POST requests to your login path where the User-Agent is empty.
 
 <Tabs syncKey="dashNewNav">
@@ -480,6 +495,8 @@ Credential stuffing tools often send requests without standard browser headers o
 </Tabs>
 
 ### Create a rate limiting rule with leaked credentials
+
+{/* UNTESTED: custom expression using documented fields. Validate syntax in dashboard. */}
 
 Combine rate limiting with leaked credentials detection to throttle login attempts that use known-compromised passwords. This rule issues a Managed Challenge when the same IP sends more than three requests with leaked passwords within one minute.
 
@@ -546,6 +563,8 @@ Combine rate limiting with leaked credentials detection to throttle login attemp
 </TabItem>
 </Tabs>
 
+{/* UNTESTED: custom expression using documented Enterprise fields. Cannot validate without Bot Management subscription. */}
+
 :::note[Enterprise: Bot Management custom rules]
 Enterprise customers with Bot Management can create custom rules that combine `cf.bot_management.score` with login path matching to challenge or block automated traffic with more precision. For example, the expression `(cf.bot_management.score lt 30 and not cf.bot_management.verified_bot and http.request.uri.path eq "/login")` targets likely automated traffic on the login path specifically. For more information, refer to [Custom rules for bot protection](/bots/additional-configurations/custom-rules/).
 :::
@@ -560,7 +579,7 @@ After deploying the rules and configurations from the previous sections, monitor
 
 ### Review Security Events
 
-{/* Source: /waf/analytics/security-analytics/ — Security Analytics overview */}
+{/* Source: /waf/analytics/security-analytics/ — Security Analytics overview. Navigation (steps 1-2) validated against source. Steps 3-4 are guide-specific. */}
 
 [Security Events](/waf/analytics/security-events/) shows requests that Cloudflare security products acted on or flagged. Filter by your login path to see the volume of blocked and challenged attempts.
 
@@ -584,6 +603,8 @@ After deploying the rules and configurations from the previous sections, monitor
 If you see legitimate users being affected, adjust your rate limiting thresholds or add exceptions for specific IP ranges.
 
 ### Set up notifications for security event spikes
+
+{/* UNTESTED: custom workflow — generic notification creation steps. Notification type name confirmed from /notifications/notification-available/. */}
 
 Cloudflare Notifications can alert you when security event volume spikes, giving you early warning of a new attack campaign.
 
