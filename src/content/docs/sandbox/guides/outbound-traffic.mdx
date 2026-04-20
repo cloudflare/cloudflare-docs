@@ -171,7 +171,7 @@ This is especially useful for agentic workloads where you cannot fully trust the
 
 - **No token is exposed to the sandbox.** The secret lives in the Worker's environment and is never passed into the sandbox.
 - **No token rotation inside the sandbox.** Rotate the secret in your Worker's environment and every request picks it up immediately.
-- **Per-host and per-instance rules.** Combine `outboundByHost` with `ctx.containerId` to scope credentials or permissions to a specific sandbox instance.
+- **Per-host and per-instance rules.** Combine `outboundByHost` with `ctx.containerId` to scope credentials or permissions to a specific sandbox instance, or use [per-instance handlers](#per-instance-handlers) to pass credentials directly into a specific instance's handler.
 
 Here, `ctx.containerId` looks up a per-instance key from KV:
 
@@ -196,6 +196,91 @@ MySandbox.outboundByHost = {
 ```
 
 </TypeScriptExample>
+
+## Per-instance handlers
+
+Set outbound handlers on a specific sandbox instance using `setOutbound()` or `setOutboundByHost()`. Both accept an optional final argument that populates `ctx.params` inside the handler, letting you pass per-instance configuration such as credentials or feature flags without sharing them across every instance.
+
+Instance-level handlers take precedence over class-level `outbound` and `outboundByHost` handlers (see [Handler precedence](#handler-precedence)).
+
+Define a named handler on the class that reads `ctx.params`:
+
+<TypeScriptExample>
+
+```ts
+import { Sandbox, ContainerProxy } from "@cloudflare/sandbox";
+export { ContainerProxy };
+
+export class MySandbox extends Sandbox {}
+
+MySandbox.outboundHandlers = {
+	authenticatedApi: async (
+		request: Request,
+		env: Env,
+		ctx: OutboundHandlerContext,
+	) => {
+		const requestWithAuth = new Request(request);
+		requestWithAuth.headers.set("x-auth-token", ctx.params.key);
+		return fetch(requestWithAuth);
+	},
+};
+```
+
+</TypeScriptExample>
+
+Use `setOutboundByHost()` to apply the handler to a specific host on each instance. Each instance gets its own credential via `ctx.params`:
+
+<TypeScriptExample>
+
+```ts
+import { getSandbox } from "@cloudflare/sandbox";
+
+export default {
+	async fetch(request: Request, env: Env) {
+		const instanceA = getSandbox(env.Sandbox, "instance-a");
+		const instanceB = getSandbox(env.Sandbox, "instance-b");
+
+		await instanceA.setOutboundByHost("api.example.com", "authenticatedApi", {
+			key: "key-for-instance-a",
+		});
+		await instanceB.setOutboundByHost("api.example.com", "authenticatedApi", {
+			key: "key-for-instance-b",
+		});
+
+		// ...
+	},
+};
+```
+
+</TypeScriptExample>
+
+Or use `setOutbound()` to apply the handler as a catch-all on each instance:
+
+<TypeScriptExample>
+
+```ts
+import { getSandbox } from "@cloudflare/sandbox";
+
+export default {
+	async fetch(request: Request, env: Env) {
+		const instanceA = getSandbox(env.Sandbox, "instance-a");
+		const instanceB = getSandbox(env.Sandbox, "instance-b");
+
+		await instanceA.setOutbound("authenticatedApi", {
+			key: "key-for-instance-a",
+		});
+		await instanceB.setOutbound("authenticatedApi", {
+			key: "key-for-instance-b",
+		});
+
+		// ...
+	},
+};
+```
+
+</TypeScriptExample>
+
+Use this pattern to pass per-instance proxy credentials, tenant identifiers, or any other information scoped to a single sandbox instance.
 
 ## HTTPS traffic
 
