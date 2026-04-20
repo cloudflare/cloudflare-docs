@@ -1,0 +1,110 @@
+---
+pcx_content_type: concept
+title: Core concepts
+sidebar:
+  order: 1
+description: Understand how Previews, Preview deployments, and Preview settings work, and what's isolated from production.
+---
+
+Understanding these concepts will help you configure Previews correctly and reason about what happens when you run `wrangler preview`.
+
+## Preview vs. Preview deployment
+
+A **Preview** is an isolated copy of your Worker that runs at its own URL. A Preview is typically tied to something like a feature branch, a pull request, or a teammate's local work, and stays up until you delete it.
+
+A **Preview deployment** is an immutable snapshot of your Worker code and configuration pushed to a Preview — similar in spirit to a Git commit. Each time you run `wrangler preview` or push a commit that triggers a Preview build, Cloudflare creates a new deployment under the existing Preview.
+
+One Preview can have many deployments over its lifetime. The latest deployment is what serves traffic on your Preview URL.
+
+## Preview settings
+
+**Preview settings** are the shared defaults stored on Cloudflare that apply to every new Preview on a Worker. They include:
+
+- Bindings (KV, D1, R2, Durable Objects, and so on)
+- Environment variables
+- Secrets
+- Observability, Logpush, and Tail Worker settings
+- Runtime limits
+
+Preview settings are distinct from your Production settings. Previews never inherit from production.
+
+When you create a new Preview — via `wrangler preview`, CI, the dashboard, or a pull request — it starts with your Worker's Preview settings. Individual deployments can override those values for one deployment without changing the shared settings. See [Per-deployment overrides](/workers/previews/configuring-previews/#per-deployment-overrides).
+
+## Preview URLs
+
+Every Preview has an auto-generated URL on the `workers.dev` subdomain:
+`<preview-name>-<worker-name>.<subdomain>.workers.dev`
+
+Each Preview deployment also gets its own URL, so you can reach a specific immutable deployment directly:
+`<deployment-short-id>-<worker-name>.<subdomain>.workers.dev`
+
+The Preview URL always points to the latest deployment — you can think of it as your Preview domain. A deployment URL always points to that one specific deployment and never changes, even after you push a new deployment to the Preview.
+
+You can also serve Previews from your own **custom domain**. When Previews are enabled on a Worker custom domain, Cloudflare provisions a wildcard DNS record (`*.app.example.com`) and a wildcard certificate to cover all Preview subdomains:
+
+- **Preview URL**: `<preview-name>.app.example.com`
+- **Deployment URL**: `<deployment-short-id>-<preview-name>.app.example.com`
+
+Previews can only be reached through these auto-generated URLs and custom domain wildcard URLs.
+
+User-managed triggers like Worker routes, cron triggers, and Queue consumers do not apply to Previews.
+
+For configuration details, see [Use a custom domain for Previews](/workers/previews/#use-a-custom-domain-for-previews).
+
+Preview URLs can be secured with [Cloudflare Access](/cloudflare-one/access-controls/policies/) to restrict who can reach them.
+
+## What's shared and what's isolated
+
+Previews are designed so that testing changes does not risk your production data. The isolation model differs by binding type.
+
+### Isolated per Preview automatically
+
+When your Worker defines the class itself, these binding types give each Preview its own isolated namespace, instances, and storage — separate from production and from every other Preview:
+
+- **Durable Objects**
+- **Workflows**
+- **Containers** (hosted on Durable Objects)
+  Concretely, this means:
+- A Durable Object you reach via `env.MY_DO.getByName("some-id")` in a Preview returns a different instance — with different storage — than the same call in production, and different from the same call in another Preview.
+- Writes to `ctx.storage` inside a Preview's Durable Object never affect production data or other Previews.
+- State persists across deployments within the same Preview. Pushing a new deployment to the Preview keeps its Durable Object storage intact.
+- When you delete a Preview, its Durable Objects, Workflows, and Container instances are deleted along with it.
+
+This isolation applies only when the class is defined in the same Worker. If you set `script_name` on a Durable Object or Workflow binding, the binding points at another Worker's production instance and this isolation does not apply.
+
+For Durable Objects and Workflows defined in the same Worker, you can access them via [`ctx.exports`](/workers/runtime-apis/context/#exports) without configuring a binding at all.
+
+### Shared across Previews
+
+These binding types reference resources that exist at the account level. All Previews pointing at the same resource ID share it with each other and with production (unless you override the ID in `previews`):
+
+- KV
+- D1
+- R2
+- Queues (producers only — Previews cannot consume from Queues)
+- Vectorize
+- Hyperdrive
+- Analytics Engine
+- Pipelines
+- Secrets Store
+- mTLS certificates
+- Dispatch namespaces
+
+To keep Preview writes separate from production, create a dedicated resource for Previews and reference it under `previews`, or use [auto-provisioning](/workers/previews/configuring-previews/#auto-provisioning) for KV, D1, and R2.
+
+### Always target production
+
+- **Service bindings** from a Preview always resolve to the bound Worker's production deployment. You cannot point a service binding at another Preview.
+
+### Scoped to the Preview
+
+- **Secrets** set via `wrangler preview secret put` apply only to Preview deployments.
+- **Environment variables** set in `previews.vars` apply only to Preview deployments.
+
+## External state
+
+Preview isolation covers only resources that Cloudflare manages on your behalf. If your Durable Object writes to an external API, publishes to a Queue that your production Worker consumes, or mutates a shared D1 database, the Preview can still affect production through those channels. Audit for shared side effects and override them in `previews` where it matters.
+
+## Next steps
+
+- [Configure your Preview settings](/workers/previews/configuring-previews/)

@@ -8,62 +8,54 @@ description: Deploy isolated copies of your Worker to test changes before deploy
 
 import { Steps, Tabs, TabItem, PackageManagers } from "~/components";
 
-A **Preview** is an isolated copy of your Worker with its own [bindings](/workers/runtime-apis/bindings/), [environment variables](/workers/configuration/environment-variables/), and [secrets](/workers/configuration/secrets/). Previews let you test out changes to your Worker without impacting production data or traffic.
+**Previews** let you test changes to your Worker without affecting production data or traffic. A Preview is an isolated copy of your Worker with its own [bindings](/workers/runtime-apis/bindings/), [environment variables](/workers/configuration/environment-variables/), and [secrets](/workers/configuration/secrets/).
 
-You create a Preview each time you:
+You create or update a Preview by:
 
-- Run `wrangler preview` with the Wrangler CLI.
-- Push to a feature branch with a connected Git repository.
-- Use the Previews API or Terraform resource (needs api docs).
+- Running `wrangler preview` from the Wrangler CLI.
+- Pushing to a feature branch in a connected Git repository.
+- Calling the [Previews API](/workers/previews/api/) or using the Terraform resource.
 
-When you deploy a Preview, Cloudflare outputs two URLs:
+Each Preview has two kinds of **URLs**:
 
-- a stable **Preview URL** that always shows the latest deployed change on your Preview or branch.
-- a **Deployment URL** for each pushed change or commit.
-
-When you connect your Git repository, Cloudflare posts these URLs on your Pull Requests as a comment. By default, Cloudflare gives you a `workers.dev` domain to host your Previews, but you can also connect them your [custom domains](/workers/configuration/routing/custom-domains/).
+- A stable **Preview URL** that always points at the latest deployment.
+- A **Deployment URL** for each individual deployment, which is immutable and never changes.
+  When you connect your Git repository, Cloudflare posts these URLs on your pull requests as a comment. By default, Previews are served from your `workers.dev` subdomain. You can also route them through a [custom domain](/workers/previews/#use-a-custom-domain-for-previews).
 
 ## Getting started
 
 <Steps>
-
 <ol>
   <li>
-    <strong>Configure your Preview settings.</strong> These settings will act as default values for all your Worker's Previews, unless overridden.
-
+    <strong>Configure your Preview settings.</strong> These settings act as defaults for every new Preview on your Worker unless overridden for a specific deployment.
     <Tabs>
       <TabItem label="Wrangler configuration">
-        Add your Preview settings to a `[previews]` block of your Wrangler configuration file.
+        Add your Preview settings to a `previews` block in your Wrangler configuration file.
         ```jsonc
-        "previews": {
-          "d1_databases": [
-            {
-              "binding": "MY_DB",
-              "database_id": "preview-db-id"
-            }
-          ]
+        {
+          "previews": {
+            "d1_databases": [
+              { "binding": "MY_DB", "database_id": "preview-db-id" }
+            ]
+          }
         }
         ```
-
-        Learn more in Configuring Previews.
+        Learn more in [Configuring Previews](/workers/previews/configuring-previews/).
       </TabItem>
-      <TabItem label="Dashboard">Go to your Worker's **Settings** tab and the **Bindings** tab to set up your default Preview settings. You can easily import Production values to get started quickly.  </TabItem>
+      <TabItem label="Dashboard">
+        Go to your Worker's **Settings** > **Bindings** tab to set up your default Preview settings. You can import Production values to get started quickly.
+      </TabItem>
     </Tabs>
-
   </li>
   <li>
     Check out a new branch and make your changes.
-    
     ```sh
     git checkout -b my-feature
     ```
   </li>
   <li>
-    Run `wrangler preview`
+    Run `wrangler preview`.
     <PackageManagers type="exec" pkg="wrangler" args="preview" />
   </li>
 </ol>
-
 </Steps>
-
----

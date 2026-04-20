@@ -68,7 +68,19 @@ This reference example shows all supported binding types in `previews`.
 	"migrations": [
 		{
 			"tag": "v1",
-			"new_sqlite_classes": ["Counter"],
+			"new_sqlite_classes": ["Counter", "MyContainer"],
+		},
+	],
+	// Containers are declared at the top level alongside your Durable Object
+	// migrations. Each Preview inherits this container declaration, and the
+	// Container image is built and deployed per Preview. Because Containers run
+	// on Durable Objects, each Preview gets its own isolated container instances.
+	"containers": [
+		{
+			"class_name": "MyContainer",
+			"image": "./Dockerfile",
+			"max_instances": 10,
+			"instance_type": "basic",
 		},
 	],
 	// Everything inside `previews` applies only to Preview deployments.
@@ -92,13 +104,20 @@ This reference example shows all supported binding types in `previews`.
 		"version_metadata": { "binding": "CF_VERSION_METADATA" },
 		// Dynamic Worker loader binding.
 		"worker_loaders": [{ "binding": "LOADER" }],
-		// Durable Object binding. When `class_name` refers to a class defined in
-		// this Worker (no `script_name`), each Preview gets its own isolated
-		// Durable Object instances — independent from production.
-		// For Durable Objects defined in the same Worker, you can also access them
-		// via `ctx.exports.Counter` without configuring a binding at all.
+	// Durable Object bindings. When `class_name` refers to a class defined in
+	// this Worker (no `script_name`), each Preview gets its own isolated
+	// Durable Object namespace and instances — independent from production.
+	// For Durable Objects defined in the same Worker, you can also access them
+	// via `ctx.exports.Counter` without configuring a binding at all.
+	//
+	// Containers are accessed through a Durable Object binding whose `class_name`
+	// matches the container's `class_name`. Each Preview gets its own isolated
+	// Container instances, separate from production.
 		"durable_objects": {
-			"bindings": [{ "name": "COUNTER", "class_name": "Counter" }],
+			"bindings": [
+				{ "name": "COUNTER", "class_name": "Counter" },
+				{ "name": "MY_CONTAINER", "class_name": "MyContainer" },
+			],
 		},
 		// Workflow binding. Same isolation rules as Durable Objects: when the
 		// class lives in this Worker, each Preview gets isolated Workflow
@@ -300,6 +319,7 @@ Some Preview-related settings come from the top level of your Wrangler config, n
 - `placement`
 - `assets`
 - `migrations`
+- `containers`
 
 ## Use environment-specific Preview defaults
 
