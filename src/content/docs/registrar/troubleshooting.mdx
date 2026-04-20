@@ -129,6 +129,14 @@ Instead, the losing registrar changes the domain's IPS tag to the gaining regist
 
 If the transfer does not proceed, contact the current registrar and confirm that they have updated the IPS tag correctly.
 
+## Email verification required
+
+Cloudflare may send a verification email to your registrant contact email address when you register or transfer a domain, or when you update your registrant email. Per ICANN requirements, if the registrant email is not verified within 15 days, a hold is placed on the domain and nameservers are replaced with a parking server until verification is complete. After successful verification, nameservers are automatically restored.
+
+Verification is triggered when your registrant contact email differs from your verified Cloudflare account email.
+
+Some TLDs — including `.mx`, `.nz`, and `.ca` — may send verification through a third-party service. In these cases, the verification email will come from `noreply@emailverification.info` rather than Cloudflare. Check your spam folder if you do not receive it.
+
 ## Restart your transfer
 
 :::note
