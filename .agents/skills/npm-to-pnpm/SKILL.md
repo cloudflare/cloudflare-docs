@@ -90,7 +90,7 @@ This repo uses pnpm. Delete the old npm lockfile and install with pnpm:
 
 ```bash
 rm -f package-lock.json
-pnpm install
+pnpm install --frozen-lockfile
 ```
 
 ## Step 4: Inform the user
