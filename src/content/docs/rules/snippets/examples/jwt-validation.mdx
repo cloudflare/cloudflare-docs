@@ -1,14 +1,14 @@
 ---
-summary: Extract the JWT token from a header, decode it, and implement
-  validation checks to verify it.
+summary: Extract a JWT from the Authorization header, verify its HMAC-SHA256
+  signature using the WebCrypto API, and validate its claims.
 tags:
   - Authentication
   - Request modification
 products: [snippets]
 pcx_content_type: example
 title: Validate JSON web tokens (JWT)
-description: Extract the JWT token from a header, decode it, and implement
-  validation checks to verify it.
+description: Extract a JWT from the Authorization header, verify its HMAC-SHA256
+  signature using the WebCrypto API, and validate its claims.
 ---
 
 :::caution[Caution when using in production]
