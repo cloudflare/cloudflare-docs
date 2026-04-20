@@ -2,21 +2,25 @@ name: Windsurf
 vendor: Codeium
 slug: windsurf
 icon: windsurf
-description: "Agentic IDE with Cascade. Maintains context across actions with Flows for multi-step tasks and deep codebase search."
+description: "Agentic IDE with Cascade context and Flows for multi-step tasks. Made by Codeium."
 capabilities:
   ide: true
   terminal: false
   standalone: true
   cloud: false
   extension: false
-  mcp: true
-  skills: false
   open_source: false
 features:
   - Cascade context engine
   - Flows automation
   - Deep codebase search
   - Command suggestions
+
+primary_type: ide
+pricing_model: subscription
+pricing_detail: "Free tier; Pro ($15/mo), Teams ($30/mo per user), Enterprise (custom)"
+model_flexibility: multi_provider
+context_approach: indexed_codebase
 
 quick_start:
   - title: Download Windsurf
@@ -47,7 +51,6 @@ mcp_config: |
   }
 
 skills_install:
-  method: manual_copy
   docs_url: "https://docs.windsurf.com"
 
 example_prompts:

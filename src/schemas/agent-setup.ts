@@ -22,25 +22,19 @@ const troubleshootingSchema = z.object({
 	solution: z.string(),
 });
 
+// Capabilities shown on cards / in the comparison table.
+// MCP + Skills are omitted because every listed agent supports them
+// (a footnote below the table mentions this).
 const capabilitiesSchema = z.object({
 	ide: z.boolean().default(false),
 	terminal: z.boolean().default(false),
 	standalone: z.boolean().default(false),
 	cloud: z.boolean().default(false),
 	extension: z.boolean().default(false),
-	mcp: z.boolean().default(false),
-	skills: z.boolean().default(false),
 	open_source: z.boolean().default(false),
 });
 
 const skillsInstallSchema = z.object({
-	method: z.enum([
-		"plugin_marketplace",
-		"cursor_marketplace",
-		"npx_skills",
-		"manual_copy",
-		"copilot_instructions",
-	]),
 	command: z.string().optional(),
 	directory: z.string().optional(),
 	docs_url: z.string().optional(),
@@ -54,6 +48,16 @@ const linksSchema = z.object({
 	website: z.string().optional(),
 });
 
+export const pricingModelSchema = z.enum(["subscription", "byok", "hybrid"]);
+
+export const modelFlexibilitySchema = z.enum(["locked", "multi_provider"]);
+
+export const contextApproachSchema = z.enum([
+	"session",
+	"project_memory",
+	"indexed_codebase",
+]);
+
 export const agentSetupSchema = z.object({
 	name: z.string(),
 	vendor: z.string(),
@@ -62,6 +66,11 @@ export const agentSetupSchema = z.object({
 	description: z.string(),
 	capabilities: capabilitiesSchema,
 	features: z.array(z.string()),
+	// Decision-support metadata shown in the comparison table.
+	pricing_model: pricingModelSchema.optional(),
+	pricing_detail: z.string().optional(),
+	model_flexibility: modelFlexibilitySchema.optional(),
+	context_approach: contextApproachSchema.optional(),
 	quick_start: z.array(quickStartStepSchema),
 	mcp_config: z.string(),
 	skills_install: skillsInstallSchema,

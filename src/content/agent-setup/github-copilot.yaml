@@ -2,21 +2,25 @@ name: GitHub Copilot
 vendor: GitHub
 slug: github-copilot
 icon: copilot
-description: "AI pair programmer with agent mode. Workspace agent understands your entire project, with CLI integration and PR summaries."
+description: "Editor extension and CLI with agent mode, workspace context, and native PR integration. Made by GitHub."
 capabilities:
   ide: false
   terminal: true
   standalone: false
   cloud: true
   extension: true
-  mcp: true
-  skills: true
   open_source: false
 features:
   - Agent mode
   - Workspace context
   - CLI integration
   - PR summaries
+
+primary_type: extension
+pricing_model: subscription
+pricing_detail: "Free tier with limits; Pro ($10/mo), Business ($19/mo per user), Enterprise ($39/mo per user)"
+model_flexibility: multi_provider
+context_approach: indexed_codebase
 
 quick_start:
   - title: Install GitHub Copilot
@@ -45,7 +49,6 @@ mcp_config: |
   }
 
 skills_install:
-  method: copilot_instructions
   command: "Create .github/copilot-instructions.md with Cloudflare Workers context"
   directory: ".github/"
   docs_url: "https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot"

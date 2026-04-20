@@ -2,21 +2,25 @@ name: Cursor
 vendor: Cursor
 slug: cursor
 icon: cursor
-description: "AI-first code editor built on VS Code. Composer mode for multi-file edits and background agents that work autonomously."
+description: "AI-first IDE built on VS Code with multi-file Composer edits and background agents. Made by Cursor."
 capabilities:
   ide: true
   terminal: true
   standalone: true
   cloud: true
   extension: false
-  mcp: true
-  skills: false
   open_source: false
 features:
   - Multi-file Composer
   - Background agents
   - Codebase indexing
   - Terminal integration
+
+primary_type: ide
+pricing_model: subscription
+pricing_detail: "Free tier; Pro ($20/mo), Business ($40/mo per user) for advanced features"
+model_flexibility: multi_provider
+context_approach: indexed_codebase
 
 quick_start:
   - title: Download Cursor
@@ -48,7 +52,6 @@ mcp_config: |
   }
 
 skills_install:
-  method: cursor_marketplace
   command: "cloudflare/skills"
   directory: "~/.cursor/skills/"
   docs_url: "https://cursor.com/docs/context/skills"

@@ -2,21 +2,25 @@ name: OpenCode
 vendor: Anomaly
 slug: opencode
 icon: opencode
-description: "Open-source terminal agent with a rich TUI. Works with 75+ LLMs, provider-agnostic architecture, and built-in agent support."
+description: "Open-source terminal agent with a rich TUI that works with 75+ LLMs. Made by Anomaly."
 capabilities:
   ide: false
   terminal: true
   standalone: true
   cloud: false
   extension: true
-  mcp: true
-  skills: true
   open_source: true
 features:
   - 75+ model support
   - Rich terminal TUI
   - Built-in agents (build/plan)
   - LSP integration
+
+primary_type: terminal
+pricing_model: byok
+pricing_detail: "Free open-source tool; bring your own API key for any supported model provider"
+model_flexibility: multi_provider
+context_approach: project_memory
 
 quick_start:
   - title: Install OpenCode
@@ -52,7 +56,6 @@ mcp_config: |
   }
 
 skills_install:
-  method: npx_skills
   command: "npx skills add https://github.com/cloudflare/skills"
   directory: "~/.config/opencode/skills/"
   docs_url: "https://opencode.ai/docs/skills/"

@@ -1,3 +1,7 @@
+export type PricingModel = "subscription" | "byok" | "hybrid";
+export type ModelFlexibility = "locked" | "multi_provider";
+export type ContextApproach = "session" | "project_memory" | "indexed_codebase";
+
 export interface AgentData {
 	name: string;
 	vendor: string;
@@ -10,11 +14,14 @@ export interface AgentData {
 		standalone: boolean;
 		cloud: boolean;
 		extension: boolean;
-		mcp: boolean;
-		skills: boolean;
 		open_source: boolean;
 	};
 	features: string[];
+	// Decision-support metadata
+	pricing_model?: PricingModel;
+	pricing_detail?: string;
+	model_flexibility?: ModelFlexibility;
+	context_approach?: ContextApproach;
 	quick_start: {
 		title: string;
 		description: string;
@@ -23,7 +30,6 @@ export interface AgentData {
 	}[];
 	mcp_config: string;
 	skills_install: {
-		method: string;
 		command?: string;
 		directory?: string;
 		docs_url?: string;

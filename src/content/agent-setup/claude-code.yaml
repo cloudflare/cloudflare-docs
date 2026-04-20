@@ -2,21 +2,25 @@ name: Claude Code
 vendor: Anthropic
 slug: claude-code
 icon: claude
-description: "Agentic coding in your terminal. Understands your codebase, runs commands, edits files, and manages git operations autonomously."
+description: "Terminal-based coding agent that understands your codebase, runs commands, edits files, and manages git. Made by Anthropic."
 capabilities:
   ide: false
   terminal: true
   standalone: true
   cloud: true
   extension: true
-  mcp: true
-  skills: true
   open_source: false
 features:
   - Full codebase understanding
   - Terminal command execution
   - Git operations
   - Multi-file editing
+
+primary_type: terminal
+pricing_model: subscription
+pricing_detail: "Included with Claude Pro ($20/mo) and Max ($200/mo); API usage billing also available"
+model_flexibility: locked
+context_approach: project_memory
 
 quick_start:
   - title: Install Claude Code
@@ -39,7 +43,6 @@ mcp_config: |
   claude mcp add cloudflare-bindings -- npx mcp-remote https://bindings.mcp.cloudflare.com/mcp
 
 skills_install:
-  method: plugin_marketplace
   command: "/plugin marketplace add cloudflare/skills"
   directory: "~/.claude/skills/"
   docs_url: "https://code.claude.com/docs/en/skills"

@@ -2,21 +2,25 @@ name: Codex
 vendor: OpenAI
 slug: codex
 icon: codex
-description: "Lightweight terminal agent from OpenAI. Reads and writes files, executes commands, and browses the web in a sandboxed environment."
+description: "Lightweight open-source terminal agent that reads and writes files, runs commands, and browses the web in a sandbox. Made by OpenAI."
 capabilities:
   ide: false
   terminal: true
   standalone: true
   cloud: true
   extension: true
-  mcp: true
-  skills: true
   open_source: true
 features:
   - File read/write operations
   - Command execution
   - Web browsing
   - Sandboxed environment
+
+primary_type: terminal
+pricing_model: hybrid
+pricing_detail: "Open source CLI is free; requires OpenAI API key or ChatGPT Plus/Pro subscription"
+model_flexibility: locked
+context_approach: session
 
 quick_start:
   - title: Install Codex
@@ -38,7 +42,6 @@ mcp_config: |
   codex mcp add cloudflare-observability -- npx mcp-remote https://observability.mcp.cloudflare.com/mcp
 
 skills_install:
-  method: npx_skills
   command: "npx skills add https://github.com/cloudflare/skills"
   directory: "~/.codex/skills/"
   docs_url: "https://developers.openai.com/codex/skills/"
