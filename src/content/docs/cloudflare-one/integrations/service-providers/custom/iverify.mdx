@@ -1,0 +1,115 @@
+---
+pcx_content_type: how-to
+title: iVerify
+description: Set up conditional access with Cloudflare One using iVerify device posture signals.
+products:
+  - cloudflare-one
+sidebar:
+  order: 4
+tags:
+  - Posture
+---
+
+import { Render, Details } from "~/components";
+
+Cloudflare One can integrate with [iVerify](https://www.iverify.io/) as a [custom service provider](/cloudflare-one/integrations/service-providers/custom/) to enforce conditional access based on device risk scores. iVerify provides device posture data for iOS, Android, macOS, Windows, and Linux devices, allowing you to extend Zero Trust controls to mobile endpoints.
+
+## Prerequisites
+
+- You have admin access to your iVerify tenant.
+- You have a [Cloudflare Zero Trust organization](/cloudflare-one/setup/).
+- Devices are enrolled and reporting to iVerify.
+- <Render
+  	file="posture/prereqs-warp-is-deployed"
+  	product="cloudflare-one"
+  	params={{
+  		name: "Service providers",
+  		link: "/cloudflare-one/integrations/service-providers/",
+  	}}
+  />
+
+## Set up iVerify as a service provider
+
+### 1. Create a Cloudflare One service token
+
+The Cloudflare One Client uses a [service token](/cloudflare-one/access-controls/service-credentials/service-tokens/) to authenticate when calling the iVerify posture API.
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Service credentials** > **Service Tokens**.
+2. Select **Create Service Token**.
+3. Copy and securely store the generated **Client ID** and **Client Secret**.
+
+These credentials uniquely identify your Cloudflare Zero Trust organization when it requests posture data from iVerify.
+
+### 2. Configure Cloudflare One in iVerify
+
+Next, register the service token in iVerify as a Custom Service Provider.
+
+1. In the iVerify admin console, go to **Integrations** > **Cloudflare Zero Trust**.
+2. Select **Configure**.
+3. Enter the **Service Token Client ID** and **Service Token Client Secret**.
+4. Copy and securely store your **Posture Evaluation URL**.
+5. Select **Save**.
+
+### 3. Create device policies in iVerify
+
+Device policies in iVerify determine how iVerify evaluates device risk scores. We recommend configuring device policies in iVerify before [adding iVerify as a service provider](#add-iverify-as-a-service-provider). This allows you to test how policies behave before applying threat levels or access restrictions.
+
+To configure iVerify device policies:
+
+1.  In the iVerify admin console, go to **Policies** > **Device Policies**.
+2. Select **Create Policy** and follow the guided steps to configure it. If you already have policies in place, you can update them at any time using the **Edit Policy** option.
+3. Set an appropriate **Name** and **Description** for your policy.
+4. Configure the **Rules** you wish to apply to this policy.
+5. Under **Set Integration**, if Cloudflare Zero Trust is connected, set the appropriate risk score for your policy (a value from `0` to `100`).
+6. In the **Summary** step, ensure the policy is activated on creation.
+
+### 4. Add iVerify as a service provider
+
+<Render
+	file="posture/add-service-provider"
+	product="cloudflare-one"
+	params={{ provider: "Custom service provider" }}
+/>
+
+5. In **Access client ID** and **Access client secret**, enter the service token credentials created in [Step 1](#1-create-a-cloudflare-one-service-token).
+6. In **Rest API URL**, enter the iVerify **Posture Evaluation URL** obtained in [Step 2](#2-configure-cloudflare-one-in-iverify).
+7. In **Polling frequency**, choose how often Cloudflare One should query iVerify for posture data. The recommended interval is once per hour. The minimum supported interval is every 10 minutes.
+8. Select **Test and save**.
+
+### 5. Configure the posture check
+
+<Render
+	file="posture/configure-posture-check"
+	product="cloudflare-one"
+	params={{ one: "iVerify" }}
+/>
+
+## Device posture attributes
+
+iVerify returns a single numeric risk score per device. Risk scores are based on the device policies configured in the iVerify portal.
+
+| Selector | Description                          | Value        |
+| -------- | ------------------------------------ | ------------ |
+| Score    | Device risk score returned by iVerify | `0` to `100` |
+
+Higher scores indicate higher risk. For example, you could [create a posture check](#5-configure-the-posture-check) with the following configuration:
+- **Pass** if risk score is less than or equal to `20`.
+- **Fail** if risk score is greater than `20`.
+
+You can adjust thresholds to match your organization's risk tolerance.
+
+## Troubleshooting
+
+### Devices are not being blocked
+
+- Verify the Service Token **Client ID** and **Client Secret** are correctly entered in both iVerify's [Cloudflare Zero Trust integration](#2-configure-cloudflare-one-in-iverify) and in your Cloudflare One [service provider integration](#3-add-the-service-provider-to-cloudflare-one).
+- Confirm devices are enrolled and reporting to iVerify.
+- Confirm devices have the Cloudflare One Client installed and are signed in to your organization.
+- Ensure score thresholds are configured correctly in the [posture check](#5-configure-the-posture-check).
+- Ensure you have an Access or Gateway policy configured to block devices with a risk score above your threshold.
+
+#### Device blocking behavior with multiple devices
+
+In the iVerify integration, devices cannot be individually linked from Cloudflare to iVerify. Instead, devices in iVerify are associated with the Cloudflare user's email identity.
+
+As a result, when a single user is signed in on multiple devices, all of those devices are treated as part of the same context. If any one of the user's devices fails posture requirements, Cloudflare will block access for the entire user account. Access is only restored once the non-compliant device is remediated and returns to a compliant state.
