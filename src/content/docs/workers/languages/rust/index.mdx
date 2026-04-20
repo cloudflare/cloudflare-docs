@@ -43,7 +43,19 @@ Open a terminal window, and run the following command to generate a Worker proje
 cargo generate cloudflare/workers-rs
 ```
 
-Your project will be created in a new directory that you named, in which you will find the following files and folders:
+For setup, select the following options:
+
+- For _Which template should be expanded?_, choose `templates/hello-world`.
+- For _Project Name_, choose `my-rust-worker`.
+- For _Enable panic=unwind and abort recovery?_, choose `true`.
+
+Now, you have a new project set up. Move into that project folder.
+
+```sh
+cd my-rust-worker
+```
+
+In the project folder, you will find the following files and folders:
 
 - `Cargo.toml` - The standard project configuration file for Rust's [`Cargo`](https://doc.rust-lang.org/cargo/) package manager. The template pre-populates some best-practice settings for building for Wasm on Workers.
 - `wrangler.toml` - Wrangler configuration, pre-populated with a custom build command to invoke `worker-build` (Refer to [Wrangler Bundling](/workers/languages/rust/#bundling-worker-build)).
