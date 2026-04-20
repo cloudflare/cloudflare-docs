@@ -1,6 +1,13 @@
 {
 	"$schema": "https://opencode.ai/config.json",
 	"permission": "allow",
+	"mcp": {
+		"aperture": {
+			"type": "local",
+			"command": ["node", "/Users/mhassan/Documents/dev/tinkering/aperture/build/index.js"],
+			"enabled": true
+		}
+	},
 	"experimental": {
 		"continue_loop_on_deny": true,
 	},

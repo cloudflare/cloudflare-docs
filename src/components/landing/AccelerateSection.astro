@@ -168,12 +168,12 @@ const phases = [
 			</button>
 		</div>
 		<div
-			class="wf-total-label flex items-baseline gap-2 font-mono text-sm text-zinc-500 tabular-nums transition-opacity duration-300 max-[600px]:text-xs dark:text-zinc-400"
+			class="wf-total-label flex items-baseline gap-2 font-mono text-xs text-zinc-500 tabular-nums transition-opacity duration-300 dark:text-zinc-400"
 		>
-			<span class="text-[11px] tracking-widest uppercase">Total</span>
+			<span class="tracking-widest uppercase">Total</span>
 			<span
 				id="wf-total-value"
-				class="text-sm font-semibold text-zinc-900 tabular-nums dark:text-zinc-100"
+				class="font-medium text-zinc-900 tabular-nums dark:text-zinc-100"
 				>~110 ms</span
 			>
 		</div>
@@ -394,24 +394,18 @@ const phases = [
 </section>
 
 <style>
-	/* Toggle track */
-	.wf-toggle-track {
-		box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06);
-	}
-	:root[data-theme="dark"] .wf-toggle-track {
-		box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
-	}
-
 	/* Sliding background indicator */
 	.wf-toggle-slider {
 		background: white;
 		box-shadow:
-			0 1px 3px rgba(0, 0, 0, 0.1),
-			0 1px 2px rgba(0, 0, 0, 0.06);
+			inset 0 0 0 1px rgba(0, 0, 0, 0.06),
+			0 1px 2px rgba(0, 0, 0, 0.08);
 	}
 	:root[data-theme="dark"] .wf-toggle-slider {
 		background: #2a2a2a;
-		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+		box-shadow:
+			inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+			0 1px 2px rgba(0, 0, 0, 0.3);
 	}
 
 	/* Toggle button states */
@@ -441,14 +435,9 @@ const phases = [
 	#wf-toggle-after.wf-toggle-active {
 		background: var(--color-accent, #f56500);
 		color: white;
-	}
-	#wf-toggle-after.wf-toggle-active::after {
-		content: "";
-		position: absolute;
-		inset: 0;
-		border: 1px solid color-mix(in srgb, black 12%, transparent);
-		border-radius: inherit;
-		pointer-events: none;
+		box-shadow:
+			inset 0 0 0 1px rgba(0, 0, 0, 0.12),
+			0 1px 2px rgba(0, 0, 0, 0.1);
 	}
 	#wf-toggle-before.wf-toggle-active .wf-toggle-dot {
 		background-color: var(--color-zinc-500, #71717a);

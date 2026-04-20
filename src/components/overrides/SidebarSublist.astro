@@ -59,8 +59,8 @@ const restoreIndices = sublist.map((entry) =>
 							"flex min-h-[2.125rem] items-start rounded-lg px-3 py-1.5 text-sm font-medium no-underline",
 							"outline-2 outline-offset-[-2px] outline-transparent focus-visible:outline-blue-500 dark:focus-visible:outline-blue-400",
 							entry.isCurrent
-								? "!bg-[var(--sidebar-active-bg)] !font-semibold !text-[var(--sidebar-active-text)]"
-								: "text-[var(--sidebar-text)] transition-colors duration-150 hover:bg-[var(--sidebar-hover-bg)] hover:text-[var(--sidebar-hover-text)]",
+								? "!bg-[var(--sidebar-active-bg)] !font-semibold !text-[var(--sidebar-active-text)] transition-colors duration-150 hover:!bg-[color:var(--sidebar-active-bg)]/80"
+								: "text-[var(--sidebar-text)] transition-colors duration-150 hover:bg-[color:var(--sidebar-hover-bg)]/80 hover:text-[var(--sidebar-hover-text)]",
 							!nested && "large",
 							entry.attrs.class,
 						]}
@@ -87,7 +87,7 @@ const restoreIndices = sublist.map((entry) =>
 						<summary
 							class:list={[
 								"group/expander flex min-h-[2.125rem] cursor-pointer items-center justify-between rounded-lg px-3 py-1.5 text-sm no-underline outline-2 outline-offset-[-2px] outline-transparent transition-colors duration-150 select-none focus-visible:outline-blue-500 dark:focus-visible:outline-blue-400 [&::-webkit-details-marker]:hidden [&::marker]:hidden",
-								"hover:bg-[var(--sidebar-hover-bg)] hover:text-[var(--sidebar-hover-text)]",
+								"hover:bg-[color:var(--sidebar-hover-bg)]/80 hover:text-[var(--sidebar-hover-text)]",
 								entry.hasActivePage
 									? "font-semibold text-[var(--sidebar-text-strong)]"
 									: "font-medium text-[var(--sidebar-text)]",
