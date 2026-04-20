@@ -20,7 +20,7 @@ import {
   Render,
 } from "~/components";
 
-Protecting login endpoints requires multiple layers of defense because attackers use different techniques: credential stuffing with leaked password lists, brute force at high volume, and automated scripts that bypass browser-based protections. This guide covers five stages: enforce HTTPS, turn on bot protection, add Turnstile to your login form, create rate limiting and custom rules for suspicious patterns, and monitor for ongoing attacks. It combines [Turnstile](/turnstile/), Application Security [rate limiting rules](/waf/rate-limiting-rules/) and [custom rules](/waf/custom-rules/), [SSL/TLS](/ssl/) transport security, and [Cloudflare bot solutions](/bots/). The core workflow covers features available on Free, Pro, and Business plans. Enterprise features such as leaked credentials custom detection locations and Bot Management custom rules are included as callouts.
+When your site has login pages, you need to decide how to verify that visitors are human, how aggressively to limit failed attempts, and which request patterns to block. This guide covers five stages: enforce HTTPS, turn on bot protection, add [Turnstile](/turnstile/) to your login form, create Application Security [rate limiting rules](/waf/rate-limiting-rules/) and [custom rules](/waf/custom-rules/) for suspicious patterns, and monitor for ongoing attacks using [SSL/TLS](/ssl/) transport security and [Cloudflare bot solutions](/bots/). The core workflow covers features available on Free, Pro, and Business plans. Enterprise features such as leaked credentials custom detection locations and Bot Management custom rules are included as callouts.
 
 :::note
 Most procedures in this guide are configured per domain. Select your domain in the Cloudflare dashboard before starting. Turnstile is the exception. It is configured at the account level.
@@ -32,26 +32,12 @@ Credentials sent over plain HTTP are visible to anyone on the network path betwe
 
 ### Turn on Always Use HTTPS
 
-{/* Source: /ssl/edge-certificates/additional-options/always-use-https/ — Always Use HTTPS procedure */}
-
 Always Use HTTPS redirects all visitor requests from `http` to `https` for all subdomains and hosts.
 
-<Steps>
-
-1. In the Cloudflare dashboard, go to the **SSL/TLS Overview** page.
-
-   <DashButton url="/?to=/:account/:zone/ssl-tls" />
-
-2. Verify that your SSL/TLS encryption mode is set to **Full** or **Full (strict)**. If the mode is **Off**, Always Use HTTPS will not be visible. If the mode is **Flexible**, enabling Always Use HTTPS can cause [redirect loop errors](/ssl/troubleshooting/too-many-redirects/).
-
-3. Go to the **Edge Certificates** page.
-
-4. Turn on **Always Use HTTPS**.
-
-</Steps>
+<Render file="enable-always-use-https" product="ssl" />
 
 :::note
-Do not perform redirects at your origin web server when Always Use HTTPS is turned on. Dual redirects from both Cloudflare and your origin can cause redirect loop errors.
+Cloudflare recommends not performing redirects at your origin web server, as this can cause [redirect loop errors](/ssl/troubleshooting/too-many-redirects/).
 :::
 
 :::note[Optional: HTTP Strict Transport Security (HSTS)]
@@ -77,8 +63,11 @@ Bot Fight Mode cannot be skipped by custom rules because it does not run inside 
 ### Pro and Business plans: Super Bot Fight Mode
 
 {/* Source: /bots/get-started/super-bot-fight-mode/ — SBFM enable procedure */}
+{/* FOLLOW-UP: Replace inline procedure with <Render file="enable-sbfm" product="bots" /> once Pedro's PR #29991 merges. Partial matches steps 1-5 exactly. Guide-specific action recommendations stay inline as a note after the Render. */}
 
-Super Bot Fight Mode provides more control than Bot Fight Mode. It classifies traffic into three categories (definitely automated, likely automated, and verified bots) and lets you choose a separate action for each. You can also configure exceptions using custom rules with the Skip action.
+Super Bot Fight Mode identifies traffic matching patterns of known bots, can challenge or block bots, and offers protection for static resources. You configure a separate action for each bot grouping: **Definitely automated**, **Likely automated**, and **Verified bots**. You can also [configure exceptions](/bots/get-started/super-bot-fight-mode/#configure-exceptions-to-super-bot-fight-mode) using custom rules with the Skip action.
+
+<Render file="sbfm-upgrade" product="bots" />
 
 <Tabs syncKey="dashNewNav">
 <TabItem label="New dashboard" icon="rocket">
@@ -95,10 +84,12 @@ Super Bot Fight Mode provides more control than Bot Fight Mode. It classifies tr
 
 4. Turn **Super Bot Fight Mode** on.
 
-5. Configure the actions for each traffic category:
-   - **Definitely automated**: Select _Managed Challenge_. After reviewing Security Events to confirm the setting does not affect legitimate traffic, switch to _Block_.
-   - **Likely automated**: Select _Managed Challenge_.
-   - **Verified bots**: Leave set to _Allow_ to avoid blocking search engine crawlers and other legitimate bots.
+5. Choose how your domain should respond to various types of traffic by selecting the associated edit icon:
+
+   - For more details on verified bots, refer to [Verified Bots](/bots/concepts/bot/verified-bots/).
+   - For more details on supported file types, refer to [Static resource protection](/bots/additional-configurations/static-resources/).
+   - For more details on invisible code injection, refer to [JavaScript detections](/bots/additional-configurations/javascript-detections/).
+   - For more details on WordPress optimization, refer to [Super Bot Fight Mode for WordPress](/bots/troubleshooting/wordpress-loopback-issue/).
 
 </Steps>
 
@@ -113,18 +104,25 @@ Super Bot Fight Mode provides more control than Bot Fight Mode. It classifies tr
 
 3. Select **Configure Super Bot Fight Mode**.
 
-4. Configure the actions for each traffic category:
-   - **Definitely automated**: Select _Managed Challenge_. After reviewing Security Events to confirm the setting does not affect legitimate traffic, switch to _Block_.
-   - **Likely automated**: Select _Managed Challenge_.
-   - **Verified bots**: Leave set to _Allow_.
+4. Choose how your domain should respond to various types of traffic:
+
+   - For more details on verified bots, refer to [Verified Bots](/bots/concepts/bot/verified-bots/).
+   - For more details on supported file types, refer to [Static resource protection](/bots/additional-configurations/static-resources/).
+   - For more details on invisible code injection, refer to [JavaScript detections](/bots/additional-configurations/javascript-detections/).
 
 </Steps>
 
 </TabItem>
 </Tabs>
 
+For login protection, the following are recommended starting values. Adjust based on your traffic patterns.
+
+- **Definitely automated**: _Managed Challenge_. After reviewing Security Events to confirm the setting does not affect legitimate traffic, switch to _Block_.
+- **Likely automated**: _Managed Challenge_.
+- **Verified bots**: _Allow_.
+
 :::caution
-If your organization uses [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/), keep **Definitely Automated** set to _Allow_. Otherwise, tunnels may fail with a `websocket: bad handshake` error.
+If your organization also uses [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/), keep **Definitely Automated** set to **Allow**. Otherwise, tunnels might fail with a `websocket: bad handshake` error.
 :::
 
 To create exceptions for specific paths or traffic, create a custom rule with the [Skip action](/waf/custom-rules/skip/). Custom rules execute before Super Bot Fight Mode, so a Skip rule prevents Super Bot Fight Mode from evaluating the matching request.
@@ -623,18 +621,13 @@ Bot traffic analytics require a Pro plan or above.
 
 Bot traffic analytics show bot score distribution on your login endpoint over time. A sudden spike in low-score traffic (scores 1-29) on your login path is an early signal of a credential stuffing campaign.
 
+<Render file="bot-score-categories" product="bots" />
+
 <Steps>
 
 1. In the Cloudflare dashboard, go to **Security** > **Bots**.
 
-2. Review the **Bot Report** for traffic distribution across bot score groupings:
-
-   | Category         | Bot score range |
-   | ---------------- | --------------- |
-   | Automated        | 1               |
-   | Likely automated | 2-29            |
-   | Likely human     | 30-99           |
-   | Verified bot     | Known good bots |
+2. Review the **Bot Report** for traffic distribution across the bot score groupings above.
 
 3. Apply a filter for your login path to isolate login-specific bot traffic.
 

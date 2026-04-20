@@ -1,0 +1,10 @@
+---
+{}
+---
+
+Cloudflare classifies bot traffic into categories based on bot scores and verification status:
+
+- **Verified bots**: Crawlers and services that Cloudflare has confirmed as legitimate, such as Googlebot, Bingbot, and uptime monitors. Cloudflare maintains a [verified bot list](/bots/concepts/bot/verified-bots/policy/) with strict requirements.
+- **Automated** (score 1): Cloudflare is quite certain the request is automated.
+- **Likely automated** (scores 2-29): Probably a bot. This category and Automated are the primary targets for security rules, including scrapers, credential stuffing tools, and spam submitters.
+- **Likely human** (scores 30-99): These requests appear to come from real users. Do not challenge or block this traffic.
