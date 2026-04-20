@@ -51,14 +51,14 @@ Examples of other deploy commands you can set include:
 
 The non-production branch deploy command is only applicable when you have enabled [non-production branch builds](/workers/ci-cd/builds/build-branches/#configure-non-production-branch-builds).
 
-It defaults to `npx wrangler versions upload`, producing a [preview URL](/workers/previews/). Like the build and deploy commands, it can be customized to instead run anything.
+It defaults to `npx wrangler preview`, producing a [Preview URL](/workers/previews/). Like the build and deploy commands, it can be customized to instead run anything.
 
 Examples of other non-production branch deploy commands you can set include:
 
-| Example Command                              | Description                                                                                                                                                                                                                                                                                           |
-| -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `yarn exec wrangler versions upload`         | You can customize the package manager used to run Wrangler.                                                                                                                                                                                                                                           |
-| `npx wrangler versions upload --env staging` | If you have a [Wrangler environment](/workers/ci-cd/builds/advanced-setups/#wrangler-environments) Worker, you should set your non-production branch deploy command with the environment flag. For more details, see [Advanced Setups](/workers/ci-cd/builds/advanced-setups/#wrangler-environments). |
+| Example Command                      | Description                                                                                                                                                                                                                                                                                           |
+| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `yarn exec wrangler preview`         | You can customize the package manager used to run Wrangler.                                                                                                                                                                                                                                           |
+| `npx wrangler preview --env staging` | If you have a [Wrangler environment](/workers/ci-cd/builds/advanced-setups/#wrangler-environments) Worker, you should set your non-production branch deploy command with the environment flag. For more details, see [Advanced Setups](/workers/ci-cd/builds/advanced-setups/#wrangler-environments). |
 
 ### API token
 
