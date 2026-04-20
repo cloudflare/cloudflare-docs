@@ -52,6 +52,19 @@ The Sandbox SDK is built on Cloudflare Containers. Your configuration requires t
 
 The minimal configuration shown above includes all required settings. For detailed configuration options, refer to the [Containers configuration documentation](/workers/wrangler/configuration/#containers).
 
+## Deploy without Docker
+
+If you do not have Docker running locally but want to deploy Worker code changes without rebuilding the container image, pass [`--containers-rollout=none`](/workers/wrangler/commands/workers/#deploy) to the deploy command:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="deploy --containers-rollout=none"
+/>
+
+This skips the container image build and push steps and deploys your Worker code while reusing the existing container image from a previous deployment. You must have deployed the container at least once with Docker before using this option.
+
+
 ## Backup storage
 
 To use the [backup and restore API](/sandbox/api/backups/), you need an R2 bucket binding and presigned URL credentials. The container uploads and downloads backup archives directly to/from R2 using presigned URLs, which requires R2 API token credentials.
