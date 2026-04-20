@@ -235,11 +235,11 @@ This reference example shows all supported binding types in `previews`.
 
 Previews do **not** inherit bindings from your top-level Wrangler configuration. Any binding you want available inside a Preview must be declared in the `previews` block. If you omit a binding here, your Preview will not have access to it at runtime.
 
-For most binding types — such as KV, D1, R2, Queues, Vectorize, and Hyperdrive — all of your Previews share the same underlying resource that you specify in `previews`. These are account-level resources referenced by ID or name, so pointing two Previews at the same `kv_namespaces.id` means they read and write the same data.
+For most binding types — such as [KV](/kv/), [D1](/d1/), [R2](/r2/), [Queues](/queues/), [Vectorize](/vectorize/), and [Hyperdrive](/hyperdrive/) — all of your Previews share the same underlying resource that you specify in `previews`. These are account-level resources referenced by ID or name, so pointing two Previews at the same `kv_namespaces.id` means they read and write the same data.
 
 If you need a Preview's writes to stay separate from production, create a dedicated resource for Previews, or use [auto-provisioning](#auto-provisioning) for KV, D1, and R2.
 
-The exceptions are **Durable Objects**, **Workflows**, and **Containers**. When your Worker defines the class itself (no `script_name` on the binding), each Preview automatically gets its own isolated namespace and instances, separate from production and from other Previews. State persists across deployments within the same Preview and is deleted when the Preview is deleted. If you set `script_name` to point at another Worker, the binding targets that Worker's production instance and this isolation does not apply — prefer [`ctx.exports`](/workers/runtime-apis/context/#exports) for Durable Objects and Workflows defined in the same Worker.
+The exceptions are [**Durable Objects**](/durable-objects/), [**Workflows**](/workflows/), and [**Containers**](/containers/). When your Worker defines the class itself (no `script_name` on the binding), each Preview automatically gets its own isolated namespace and instances, separate from production and from other Previews. State persists across deployments within the same Preview and is deleted when the Preview is deleted. If you set `script_name` to point at another Worker, the binding targets that Worker's production instance and this isolation does not apply — prefer [`ctx.exports`](/workers/runtime-apis/context/#exports) for Durable Objects and Workflows defined in the same Worker.
 
 [Service bindings](/workers/runtime-apis/bindings/service-bindings/) behave differently from both: they always resolve to the bound Worker's production deployment, and cannot be pointed at another Worker's Preview.
 | `previews` field | How it behaves |
@@ -314,12 +314,12 @@ Some `previews` fields are not runtime bindings, but they still change how new P
 | `define` | Changes compile-time replacements for the Preview build. It does not create a runtime binding. |
 Some Preview-related settings come from the top level of your Wrangler config, not from `previews`:
 
-- `compatibility_date`
-- `compatibility_flags`
-- `placement`
-- `assets`
-- `migrations`
-- `containers`
+- [`compatibility_date`](/workers/configuration/compatibility-dates/)
+- [`compatibility_flags`](/workers/configuration/compatibility-flags/)
+- [`placement`](/workers/configuration/smart-placement/)
+- [`assets`](/workers/static-assets/)
+- [`migrations`](/durable-objects/reference/durable-objects-migrations/)
+- [`containers`](/containers/)
 
 ## Use environment-specific Preview defaults
 
