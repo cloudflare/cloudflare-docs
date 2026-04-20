@@ -26,6 +26,7 @@ jobs:
           # we are okay with PRs being auto-closed
           days-before-pr-close: 30
           exempt-pr-labels: "never-stale"
+          exempt-issue-labels: "never-stale"
           close-pr-message: "Hey there, we've closed out this pull request because it's been stale for a while and there's been no additional action on it. If these changes are still relevant, open a new pull request (or flag to us in a GitHub issue)."
           close-pr-label: "closed-as-stale"
           operations-per-run: 500
