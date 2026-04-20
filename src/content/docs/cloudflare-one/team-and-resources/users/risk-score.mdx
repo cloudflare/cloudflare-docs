@@ -113,10 +113,7 @@ To add a risk score requirement to an Access policy:
 
 To prevent users with elevated risk scores from accessing sensitive applications, create a policy with the following configuration:
 
-| Action | Rule type | Selector        | Value                 |
-| ------ | --------- | --------------- | --------------------- |
-| Allow  | Include   | Emails Ending In | `@example.com`       |
-|        | Exclude   | User Risk Score | _High_                |
+<Render file="access/example-exclude-risk-score" product="cloudflare-one" />
 
 Users with a High risk score will be blocked, while users with Low or Medium scores can access the application.
 

@@ -11,7 +11,7 @@ head:
     content: Common Access policies
 ---
 
-import { Details } from "~/components";
+import { Details, Render } from "~/components";
 
 The following Cloudflare Access policies are commonly used to secure applications. Each example uses the dashboard policy builder format that you can adapt for your organization.
 
@@ -21,9 +21,7 @@ Refer to the [Access policies page](/cloudflare-one/access-controls/policies/) f
 
 The most basic Access policy grants access to anyone who authenticates with an email address belonging to your organization. This is a good starting point when you first protect an application with Access and want to restrict it to employees using your corporate [identity provider](/cloudflare-one/integrations/identity-providers/).
 
-| Action | Rule type | Selector         | Value          |
-| ------ | --------- | ---------------- | -------------- |
-| Allow  | Include   | Emails ending in | `@example.com` |
+<Render file="access/example-allow-email-domain" product="cloudflare-one" />
 
 You can add multiple email domains to the Include rule if your organization uses more than one domain (for example, `@example.com` and `@example.co.uk`).
 
@@ -131,10 +129,7 @@ For more information, refer to [Isolate self-hosted application](/cloudflare-one
 
 If your organization restricts access from certain countries due to internal policy or regulatory requirements such as [OFAC sanctions](https://orpa.princeton.edu/export-controls/sanctioned-countries) or [ITAR regulations](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries), you can create a Block policy that denies access from those regions. Adding a corporate IP allowlist as an Exclude rule ensures that employees connecting through trusted office networks are not inadvertently blocked. To use an IP list, first [create a list](/cloudflare-one/reusable-components/lists/) with your approved IP ranges.
 
-| Action | Rule type | Selector | Value                    |
-| ------ | --------- | -------- | ------------------------ |
-| Block  | Include   | Country  | `Russian Federation`     |
-|        | Exclude   | IP list  | `Corporate IP allowlist` |
+<Render file="access/example-block-country" product="cloudflare-one" />
 
 Block policies are best used together with [Allow policies](#allow-employees-by-email-domain) to carve out exceptions. Because Access denies all requests by default, users who do not match a Block policy are still denied unless they match an Allow policy.
 
@@ -142,10 +137,7 @@ Block policies are best used together with [Allow policies](#allow-employees-by-
 
 If your organization uses [Cloudflare User Risk Scoring](/cloudflare-one/team-and-resources/users/risk-score/) to flag users with anomalous behavior, you can exclude high-risk users from accessing sensitive applications. This is useful as a dynamic safeguard that automatically restricts access when a user's behavior triggers a risk level change, without requiring manual intervention. User risk scoring is available on Enterprise plans.
 
-| Action | Rule type | Selector        | Value          |
-| ------ | --------- | --------------- | -------------- |
-| Allow  | Include   | Emails ending in | `@example.com` |
-|        | Exclude   | User risk score | _High_         |
+<Render file="access/example-exclude-risk-score" product="cloudflare-one" />
 
 In this example, any user scored as High risk is excluded even if they match the Include rule. To learn how risk scores are calculated and how to configure risk behaviors, refer to [User risk score](/cloudflare-one/team-and-resources/users/risk-score/).
 
@@ -160,19 +152,19 @@ Automated services such as CI/CD pipelines, monitoring systems, and backend APIs
 
 ## Authenticate a service using mutual TLS
 
-For environments that require certificate-based authentication, you can use [mutual TLS (mTLS)](/cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/) to verify that a connecting client presents a valid certificate with an expected identity. This is common for API gateways, service-to-service communication, and IoT devices that need to prove their identity cryptographically. To use this policy, first [upload a certificate authority (CA)](/cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/#add-mtls-authentication-to-your-access-configuration) to your Access configuration.
+For environments that require certificate-based authentication, you can use [mutual TLS (mTLS)](/cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/) to verify that a connecting client presents a valid certificate with an expected identity. mTLS is useful for authenticating automated systems and IoT devices that do not use an identity provider, or as an additional authentication factor for team members who also log in through an IdP. To use this policy, first [upload a certificate authority (CA)](/cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/#add-mtls-authentication-to-your-access-configuration) to your Access configuration.
 
 To restrict access to a specific client, use the **Common Name** selector to match the identity in the client certificate:
 
-| Action       | Rule type | Selector    | Value                    |
-| ------------ | --------- | ----------- | ------------------------ |
-| Service Auth | Include   | Common Name | `api-client.example.com` |
+<Render file="access/example-service-auth-mtls" product="cloudflare-one" />
 
-To allow any client presenting a valid certificate signed by your CA, use the **Valid Certificate** selector. This is useful when you trust all certificates issued by your CA and do not need to check a specific Common Name:
+To allow any client presenting a valid certificate signed by your CA, use the **Valid Certificate** selector. This selector is useful when you trust all certificates issued by your CA and do not need to check a specific Common Name.
 
 | Action       | Rule type | Selector          |
 | ------------ | --------- | ----------------- |
 | Service Auth | Include   | Valid Certificate |
+
+
 
 ## Require purpose justification for sensitive applications
 
@@ -192,9 +184,7 @@ You can combine purpose justification with [temporary authentication](/cloudflar
 
 Some applications have endpoints that must be publicly reachable, such as OAuth callback URLs, webhook receivers, or health check paths. You can create a Bypass policy scoped to a specific [application path](/cloudflare-one/access-controls/policies/app-paths/) to disable Access enforcement for that endpoint only. For example, if your application is `app.example.com`, you could create a separate Access application for `app.example.com/oauth/callback` and apply the following Bypass policy:
 
-| Action | Rule type | Selector | Value      |
-| ------ | --------- | -------- | ---------- |
-| Bypass | Include   | Everyone | `Everyone` |
+<Render file="access/example-bypass-everyone" product="cloudflare-one" />
 
 :::caution
 Bypass disables all Access security controls and request logging for matching traffic. Scope Bypass policies as narrowly as possible and never use them as a persistent access mechanism for users or services. If you need to allow automated traffic while maintaining authentication and logging, use a [Service Auth](#authenticate-a-service-using-a-service-token) policy instead.
