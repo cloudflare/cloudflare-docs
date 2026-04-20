@@ -9,7 +9,8 @@ import icon from "astro-icon";
 import sitemap from "@astrojs/sitemap";
 import react from "@astrojs/react";
 
-import { readdir } from "fs/promises";
+import { readdir, readFile } from "fs/promises";
+import { join } from "path";
 import { fileURLToPath } from "url";
 
 import remarkValidateImages from "./src/plugins/remark/validate-images";
@@ -59,8 +60,33 @@ async function autogenStyles() {
 	return styles;
 }
 
+async function getExternalLinkPaths(dir: string): Promise<Set<string>> {
+	const paths = new Set<string>();
+	const entries = await readdir(dir, { withFileTypes: true });
+	for (const entry of entries) {
+		const full = join(dir, entry.name);
+		if (entry.isDirectory()) {
+			for (const p of await getExternalLinkPaths(full)) {
+				paths.add(p);
+			}
+		} else if (entry.name.endsWith(".mdx") || entry.name.endsWith(".md")) {
+			const content = await readFile(full, "utf-8");
+			const match = content.match(/^---\n([\s\S]*?)\n---/);
+			if (match?.[1].includes("external_link:")) {
+				let rel = full.slice("src/content/docs".length);
+				rel = rel.replace(/\.(mdx|md)$/, "");
+				rel = rel.replace(/\/index$/, "/");
+				if (!rel.endsWith("/")) rel += "/";
+				paths.add(rel);
+			}
+		}
+	}
+	return paths;
+}
+
 const sidebar = await autogenSections();
 const customCss = await autogenStyles();
+const externalLinkPaths = await getExternalLinkPaths("src/content/docs");
 
 const RUN_LINK_CHECK =
 	process.env.RUN_LINK_CHECK?.toLowerCase() === "true" || false;
@@ -204,14 +230,14 @@ export default defineConfig({
 					return false;
 				}
 
+				const pathname = new URL(page).pathname;
+				if (externalLinkPaths.has(pathname)) {
+					return false;
+				}
+
 				// Exclude pages disallowed in robots.txt
-				try {
-					const pathname = new URL(page).pathname;
-					if (isDisallowedByRobots(pathname)) {
-						return false;
-					}
-				} catch {
-					// If URL parsing fails, include the page
+				if (isDisallowedByRobots(pathname)) {
+					return false;
 				}
 
 				return true;
