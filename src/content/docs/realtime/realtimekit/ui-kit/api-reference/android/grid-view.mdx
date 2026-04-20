@@ -1,0 +1,34 @@
+---
+title: RtkGridView
+pcx_content_type: reference
+description: API reference for RtkGridView component (Android Library)
+---
+
+The main grid component which handles the participant grid layout, pagination, and focus modes.
+
+## Methods
+
+| Method              | Parameters                      | Description                                                                                                                                |
+| ------------------- | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `activate`          | `meeting: RealtimeKitClient`    | Bind the grid to the meeting state                                                                                                         |
+| `refresh`           | `force: Boolean`                | Force a refresh of the grid layout and participants                                                                                        |
+| `enableFocusMode`   | -                               | Enable focus mode, which hides the horizontal peer strip and full-screen toggle to keep attention on the primary speaker or shared content |
+| `applyDesignTokens` | `designTokens: RtkDesignTokens` | Apply custom design tokens for theming                                                                                                     |
+
+## Usage Examples
+
+### Basic Usage
+
+```xml
+<com.cloudflare.realtimekit.ui.view.grid.RtkGridView
+    android:id="@+id/rtk_grid"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+```
+
+### With Methods
+
+```kotlin
+val grid = findViewById<RtkGridView>(R.id.rtk_grid)
+grid.activate(meeting)
+```

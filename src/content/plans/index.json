@@ -1619,7 +1619,7 @@
 					"title": "Historical time",
 					"free": "Up to the last 24 hours",
 					"pro": "Up to the last 24 hours",
-					"biz": "Up to the last 72 hours",
+					"biz": "Up to the last 3 days",
 					"ent": "Up to the last 30 days"
 				},
 				"export_records": {

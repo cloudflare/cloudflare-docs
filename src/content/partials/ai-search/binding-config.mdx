@@ -1,0 +1,54 @@
+---
+{}
+---
+
+import { WranglerConfig } from "~/components";
+
+To use AI Search with Workers, you must create an AI Search binding. You create bindings by updating your [Wrangler configuration](/workers/wrangler/configuration/). AI Search provides two types of bindings:
+
+- Namespace binding: `ai_search_namespaces`
+- Instance binding: `ai_search`
+
+### Namespace binding
+
+Access all instances within a [namespace](/ai-search/concepts/namespaces/). You can get, create, list, and delete instances at runtime.
+
+<WranglerConfig>
+
+```toml
+compatibility_date = "2026-03-27"
+
+[[ai_search_namespaces]]
+binding = "AI_SEARCH"
+namespace = "my-namespace"
+```
+
+</WranglerConfig>
+
+| Field       | Type    | Required | Description                                                                                                                                                                                    |
+| ----------- | ------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `binding`   | string  | Yes      | The variable name available on `env`. For example, `"AI_SEARCH"` makes it accessible as `env.AI_SEARCH`.                                                                                       |
+| `namespace` | string  | Yes      | The [namespace](/ai-search/concepts/namespaces/) to bind to. A `default` namespace is created automatically for every account. If the namespace does not exist, Wrangler creates it on deploy. |
+| `remote`    | boolean | No       | Set to `true` for local development with `wrangler dev`.                                                                                                                                       |
+
+### Instance binding
+
+Bind directly to a single instance in the `default` namespace. Use this when you know which instance you need at deploy time.
+
+<WranglerConfig>
+
+```toml
+compatibility_date = "2026-03-27"
+
+[[ai_search]]
+binding = "MY_SEARCH"
+instance_name = "my-instance"
+```
+
+</WranglerConfig>
+
+| Field           | Type    | Required | Description                                                                                              |
+| --------------- | ------- | -------- | -------------------------------------------------------------------------------------------------------- |
+| `binding`       | string  | Yes      | The variable name available on `env`. For example, `"MY_SEARCH"` makes it accessible as `env.MY_SEARCH`. |
+| `instance_name` | string  | Yes      | The name of the AI Search instance. Must exist in the default namespace at deploy time.                  |
+| `remote`        | boolean | No       | Set to `true` for local development with `wrangler dev`.                                                 |

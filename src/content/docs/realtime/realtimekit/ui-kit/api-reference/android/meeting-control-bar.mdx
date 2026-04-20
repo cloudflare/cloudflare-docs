@@ -1,0 +1,31 @@
+---
+title: RtkMeetingControlBarView
+pcx_content_type: reference
+description: API reference for RtkMeetingControlBarView component (Android Library)
+---
+
+A pre-built control bar for group call meetings. Contains mic toggle, camera toggle, more toggle, and leave button.
+
+## Methods
+
+| Method     | Parameters                   | Description                               |
+| ---------- | ---------------------------- | ----------------------------------------- |
+| `activate` | `meeting: RealtimeKitClient` | Bind the control bar to the meeting state |
+
+## Usage Examples
+
+### Basic Usage
+
+```xml
+<com.cloudflare.realtimekit.ui.view.controlbars.RtkMeetingControlBarView
+    android:id="@+id/rtk_meeting_control_bar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+```
+
+### With Methods
+
+```kotlin
+val controlBar = findViewById<RtkMeetingControlBarView>(R.id.rtk_meeting_control_bar)
+controlBar.activate(meeting)
+```

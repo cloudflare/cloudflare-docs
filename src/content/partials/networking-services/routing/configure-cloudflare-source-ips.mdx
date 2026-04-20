@@ -43,7 +43,7 @@ Before you begin, ensure that:
 Cloudflare One supports multiple <a href={props.connectivityOptionsLink}>connectivity options</a>. The following connectors will receive traffic from the `cloudflare_source` subnet when a Cloudflare service initiates a request to the connected network or endpoint as an offramp:
 
 - **Anycast tunnels:** GRE, IPsec, and CNI
-- **Software connectors:** Cloudflare One Client and WARP Connector
+- **Software connectors:** Cloudflare One Client and Cloudflare Mesh
 
 Networks or endpoints connected via Cloudflare Tunnel will not receive traffic from the Cloudflare source IP subnet. Instead, the source IP address will be that of the host running the `cloudflared` software.
 

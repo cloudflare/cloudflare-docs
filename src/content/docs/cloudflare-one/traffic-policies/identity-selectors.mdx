@@ -1,8 +1,15 @@
 ---
 pcx_content_type: reference
+description: Reference information for Identity-based policies in Gateway.
+products:
+  - cloudflare-one
 title: Identity-based policies
 sidebar:
   order: 7
+tags:
+  - OIDC
+  - SAML
+  - SCIM
 ---
 
 import { Render } from "~/components";
@@ -43,6 +50,10 @@ Gateway will automatically detect changes in user name, title, and group members
 ### OIDC Claims
 
 Specify a value from a [custom OIDC claim](/cloudflare-one/integrations/identity-providers/generic-oidc/#custom-oidc-claims) configured on your identity provider.
+
+:::note
+This selector is only available for the [Generic OIDC](/cloudflare-one/integrations/identity-providers/generic-oidc/) identity provider integration. Named OIDC providers such as Okta and Microsoft Entra ID do not support custom OIDC claims in Gateway policies — use the [User Group Names](#user-group-names) or [User Group IDs](#user-group-ids) selectors for those providers instead.
+:::
 
 <Render file="gateway/selectors/oidc-claims" product="cloudflare-one" />
 

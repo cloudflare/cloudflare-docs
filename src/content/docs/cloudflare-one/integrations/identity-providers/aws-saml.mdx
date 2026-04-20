@@ -1,5 +1,8 @@
 ---
 pcx_content_type: how-to
+description: AWS IAM (SAML) in Zero Trust integrations.
+products:
+  - cloudflare-one
 title: AWS IAM (SAML)
 tags:
   - SAML
@@ -56,6 +59,7 @@ https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
 | -------------- | -------------------- |
 | `name`         | `${user:name}`       |
 | `surName`      | `${user:familyName}` |
+
 | `givenName`    | `${user:givenName}`  |
 
 ![Configuring attribute statements in IAM Identity Center](~/assets/images/cloudflare-one/identity/aws/aws-saml-attributes.png)

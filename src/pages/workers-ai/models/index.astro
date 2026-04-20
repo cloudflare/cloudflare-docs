@@ -1,15 +1,22 @@
 ---
-import { getCollection } from "astro:content";
-
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import ModelCatalog from "~/components/ModelCatalog.tsx";
+import { getLegacyModels } from "~/util/model-resolver";
+import { Aside } from "~/components";
 
-const modelData = await getCollection("workers-ai-models");
-const models = modelData.map(({ data }) => data);
+const models = await getLegacyModels();
 ---
 
-<StarlightPage frontmatter={{ title: "Models", tableOfContents: false }}>
-	<ModelCatalog models={models} client:load />
+<StarlightPage
+	frontmatter={{ title: "Workers AI Models", tableOfContents: false }}
+>
+	<Aside
+		type="tip"
+		title="Looking for more models, including external providers?"
+	>
+		Check out the <a href="/ai/models/">unified AI model catalog</a>.
+	</Aside>
+	<ModelCatalog models={models} basePath="/workers-ai/models" client:load />
 </StarlightPage>
 
 <style>

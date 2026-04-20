@@ -79,7 +79,8 @@ flowchart TD
 | --------------------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------- |
 | **State**             | `setState()`, `onStateChanged()`, `initialState`                                     | [Store and sync state](/agents/api-reference/store-and-sync-state/) |
 | **Callable methods**  | `@callable()` decorator                                                              | [Callable methods](/agents/api-reference/callable-methods/)         |
-| **Scheduling**        | `schedule()`, `scheduleEvery()`, `getSchedules()`, `cancelSchedule()`, `keepAlive()` | [Schedule tasks](/agents/api-reference/schedule-tasks/)             |
+| **Scheduling**        | `schedule()`, `scheduleEvery()`, `getSchedules()`, `cancelSchedule()`                | [Schedule tasks](/agents/api-reference/schedule-tasks/)             |
+| **Durable execution** | `runFiber()`, `stash()`, `onFiberRecovered()`, `keepAlive()`, `keepAliveWhile()`     | [Durable execution](/agents/api-reference/durable-execution/)      |
 | **Queue**             | `queue()`, `dequeue()`, `dequeueAll()`, `getQueue()`                                 | [Queue tasks](/agents/api-reference/queue-tasks/)                   |
 | **WebSockets**        | `onConnect()`, `onMessage()`, `onClose()`, `broadcast()`                             | [WebSockets](/agents/api-reference/websockets/)                     |
 | **HTTP/SSE**          | `onRequest()`                                                                        | [HTTP and SSE](/agents/api-reference/http-sse/)                     |
@@ -90,6 +91,9 @@ flowchart TD
 | **Protocol messages** | `shouldSendProtocolMessages()`, `isConnectionProtocolEnabled()`                      | [Protocol messages](/agents/api-reference/protocol-messages/)       |
 | **Context**           | `getCurrentAgent()`                                                                  | [getCurrentAgent()](/agents/api-reference/get-current-agent/)       |
 | **Observability**     | `subscribe()`, diagnostics channels, Tail Workers                                    | [Observability](/agents/api-reference/observability/)               |
+| **Sub-agents**        | `subAgent()`, `abortSubAgent()`, `deleteSubAgent()`                                  | [Sub-agents](/agents/api-reference/sub-agents/)                    |
+| **Sessions**          | `Session.create()`, context blocks, compaction, search                               | [Sessions](/agents/api-reference/sessions/)                        |
+| **Think**             | `Think` base class, workspace tools, lifecycle hooks, extensions                     | [Think](/agents/api-reference/think/)                              |
 
 ## SQL API
 

@@ -1,8 +1,14 @@
 ---
 pcx_content_type: configuration
+description: Configure HTTP policies in Gateway.
+products:
+  - cloudflare-one
 title: HTTP policies
 sidebar:
   order: 4
+tags:
+  - TLS
+  - SAML
 ---
 
 import { Details, InlineBadge, Render } from "~/components";
@@ -83,7 +89,7 @@ The Block action blocks outbound traffic from reaching destinations you specify 
 <Render
 	file="gateway/client-notifications"
 	product="cloudflare-one"
-	params={{ toggleName: "**Display block notification for WARP Client**" }}
+	params={{ toggleName: "**Display block notification for Cloudflare One Client**" }}
 />
 
 ### Redirect

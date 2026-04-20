@@ -1,0 +1,18 @@
+---
+pcx_content_type: reference
+title: RtkMeetingActivity
+description: API reference for RtkMeetingActivity component (Android Library)
+---
+
+The main meeting activity that manages the full meeting lifecycle. Handles transitions between loading, setup, waiting room, group call, webinar, and error states. This is the activity launched by `RealtimeKitUI.startMeeting()`.
+
+## Usage Examples
+
+### Basic Usage
+
+```kotlin
+val meetingInfo = RtkMeetingInfo(authToken = authToken, baseUrl = baseUrl)
+val realtimeKitUIInfo = RealtimeKitUIInfo(activity = this, rtkMeetingInfo = meetingInfo)
+val realtimeKitUI = RealtimeKitUIBuilder.build(realtimeKitUIInfo)
+realtimeKitUI.startMeeting()
+```

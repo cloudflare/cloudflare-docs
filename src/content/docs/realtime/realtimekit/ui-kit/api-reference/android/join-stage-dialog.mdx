@@ -1,0 +1,26 @@
+---
+pcx_content_type: reference
+title: RtkJoinStageDialog
+description: API reference for RtkJoinStageDialog component (Android Library)
+---
+
+A confirmation dialog screen shown when the user's request to join stage is approved or when the host invites the local user to join stage.
+
+## Methods
+
+| Method              | Parameters                      | Description                            |
+| ------------------- | ------------------------------- | -------------------------------------- |
+| `activate`          | `meeting: RealtimeKitClient`    | Bind the dialog to the meeting state   |
+| `applyDesignTokens` | `designTokens: RtkDesignTokens` | Apply custom design tokens for theming |
+| `show`              | -                               | Display the dialog                     |
+| `dismiss`           | -                               | Dismiss the dialog                     |
+
+## Usage Examples
+
+### Basic Usage
+
+```kotlin
+val rtkJoinStage = RtkJoinStageDialog(requireContext())
+rtkJoinStage.show()
+rtkJoinStage.activate(meeting)
+```
