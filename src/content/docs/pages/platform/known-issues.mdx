@@ -103,6 +103,14 @@ npx wrangler pages deployment delete <DEPLOYMENT_ID> --project-name <PROJECT_NAM
 
 Use the `--force` flag to skip the confirmation prompt and to force deletion of aliased deployments.
 
+To delete _all_ your deployments for a particular project name, you could run the following shell script:
+
+```sh
+npx wrangler pages deployment list --project-name <PROJECT_NAME> --json \
+  | jq -r '.[].Id' \
+  | xargs -I {} npx wrangler pages deployment delete {} --project-name <PROJECT_NAME> --force
+```
+
 ## Use Pages as Origin in Cloudflare Load Balancer
 
 [Cloudflare Load Balancing](/load-balancing/) will not work without the host header set. To use a Pages project as target, make sure to select **Add host header** when [creating a pool](/load-balancing/pools/create-pool/#create-a-pool), and set both the host header value and the endpoint address to your `pages.dev` domain.
