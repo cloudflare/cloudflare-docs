@@ -1,14 +1,14 @@
 ---
 title: RTKConnectedMeetings
 sidebar_position: 4
-web_core_version: 1.2.4
+web_core_version: 1.4.0-staging.5
 ---
 
 <!-- Auto Generated Below -->
 
 <a name="module_RTKConnectedMeetings"></a>
 
-This consists of the methods to facilitate connected meetings
+This consists of the methods to faciliate connected meetings
 
 
 * [RTKConnectedMeetings](#module_RTKConnectedMeetings)

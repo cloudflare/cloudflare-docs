@@ -1,7 +1,7 @@
 ---
 title: RTKSelf
 sidebar_position: 15
-web_core_version: 1.2.4
+web_core_version: 1.4.0-staging.5
 ---
 
 <!-- Auto Generated Below -->
@@ -57,11 +57,11 @@ We might want to look at deprecating the `id` sometime later.
 
 ### meeting.self.roomState
 Returns the current state of room
-init - Initial State
+init - Inital State
 joined - User is in the meeting
 waitlisted - User is in the waitlist state
 rejected - User's was in the waiting room, but the entry was rejected
-kicked - A privileged user removed the user from the meeting
+kicked - A priveleged user removed the user from the meeting
 left - User left the meeting
 ended - The meeting was ended
 

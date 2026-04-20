@@ -1,7 +1,7 @@
 ---
 title: RTKPlugin
 sidebar_position: 10
-web_core_version: 1.2.4
+web_core_version: 1.4.0-staging.5
 ---
 
 <!-- Auto Generated Below -->
@@ -102,7 +102,7 @@ be used before the iframe is removed from the DOM.
 <a name="module_RTKPlugin--module.exports+addRTKPluginView"></a>
 
 #### module.exports.addRTKPluginView(iframe, viewId)
-This method adds the communication layer between the plugin inside the iframe
+This method adds the communcation layer between the plugin inside the iframe
 and the core application (meeting object) in the main window.
 
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKPlugin--module.exports)  

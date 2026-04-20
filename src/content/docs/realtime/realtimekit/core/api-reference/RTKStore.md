@@ -1,7 +1,7 @@
 ---
 title: RTKStore
 sidebar_position: 18
-web_core_version: 1.2.4
+web_core_version: 1.4.0-staging.5
 ---
 
 <!-- Auto Generated Below -->

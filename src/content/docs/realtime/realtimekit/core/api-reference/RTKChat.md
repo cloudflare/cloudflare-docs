@@ -1,7 +1,7 @@
 ---
 title: RTKChat
 sidebar_position: 2
-web_core_version: 1.2.4
+web_core_version: 1.4.0-staging.5
 ---
 
 <!-- Auto Generated Below -->
@@ -72,7 +72,7 @@ This is the chat module, which can be used to send and receive messages from the
 
 #### module.exports.pinned
 **Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKChat--module.exports)  
-**Deprecated.**: This property is deprecated. Please use `fetchPinnedMessages()` instead.
+**Deprecated.**: This property is deprectated. Please use `fetchPinnedMessages()` instead.
 Returns an array of pinned messages.  
 <a name="module_RTKChat--module.exports+setMaxTextLimit"></a>
 

@@ -1,7 +1,7 @@
 ---
 title: RTKStage
 sidebar_position: 17
-web_core_version: 1.2.4
+web_core_version: 1.4.0-staging.5
 ---
 
 <!-- Auto Generated Below -->
@@ -92,7 +92,7 @@ This should be called in response to a RTKStage Join request
 
 #### module.exports.join()
 Method to join the stage
-Users either need to have the permission in the preset or must be accepted by a privileged
+Users either need to have the permission in the preset or must be accepted by a priveleged
 user to call this method
 
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKStage--module.exports)  
