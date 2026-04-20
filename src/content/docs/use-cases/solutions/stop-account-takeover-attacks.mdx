@@ -65,7 +65,7 @@ Bot Fight Mode cannot be skipped by custom rules because it does not run inside 
 {/* Source: /bots/get-started/super-bot-fight-mode/ — SBFM enable procedure */}
 {/* FOLLOW-UP: Replace inline procedure with <Render file="enable-sbfm" product="bots" /> once Pedro's PR #29991 merges. Partial matches steps 1-5 exactly. Guide-specific action recommendations stay inline as a note after the Render. */}
 
-Super Bot Fight Mode identifies traffic matching patterns of known bots, can challenge or block bots, and offers protection for static resources. You configure a separate action for each bot grouping: **Definitely automated**, **Likely automated**, and **Verified bots**. You can also [configure exceptions](/bots/get-started/super-bot-fight-mode/#configure-exceptions-to-super-bot-fight-mode) using custom rules with the Skip action.
+Super Bot Fight Mode identifies traffic matching patterns of known bots, can challenge or block bots, and offers protection for static resources. You configure a separate action for each bot grouping: **Definitely automated**, **Likely automated**, and **Verified bots**. You can also [configure exceptions](/bots/get-started/super-bot-fight-mode/#configure-exceptions-to-super-bot-fight-mode) using Application Security [custom rules](/waf/custom-rules/) with the Skip action.
 
 <Render file="sbfm-upgrade" product="bots" />
 
@@ -125,7 +125,7 @@ For login protection, the following are recommended starting values. Adjust base
 If your organization also uses [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/), keep **Definitely Automated** set to **Allow**. Otherwise, tunnels might fail with a `websocket: bad handshake` error.
 :::
 
-To create exceptions for specific paths or traffic, create a custom rule with the [Skip action](/waf/custom-rules/skip/). Custom rules execute before Super Bot Fight Mode, so a Skip rule prevents Super Bot Fight Mode from evaluating the matching request.
+[Custom rules](/waf/custom-rules/) are executed before Super Bot Fight Mode. To create exceptions for specific paths or traffic, create a custom rule with the [Skip action](/waf/custom-rules/skip/). The Skip action allows the request to bypass the Super Bot Fight Mode phase without terminating the request, enabling it to continue through the rest of the security stack.
 
 ## Protect your login form with Turnstile and rate limiting
 
@@ -576,7 +576,7 @@ After deploying the rules and configurations from the previous sections, monitor
 
 4. Review the events to identify patterns:
    - Are attacks concentrated from specific countries or Autonomous System Numbers (ASNs)?
-   - Are rate limiting rules triggering as expected?
+   - Are Application Security rate limiting rules triggering as expected?
    - Are legitimate users being challenged or blocked?
 
 </Steps>
