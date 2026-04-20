@@ -20,7 +20,7 @@ By the end of this guide, you will create a repo inside an existing namespace, r
 You need:
 
 - A Cloudflare account with access to Artifacts.
-- A gateway JWT that can call the Artifacts REST control plane.
+- A Cloudflare API token with **Artifacts** > **Edit**.
 - An existing Artifacts namespace, for example `default`.
 - A local `git` client.
 - `jq`, if you want to extract response fields automatically.
@@ -36,16 +36,16 @@ Set the variables used in the examples:
 ```sh
 export ARTIFACTS_NAMESPACE="default"
 export ARTIFACTS_REPO="starter-repo"
-export ARTIFACTS_GATEWAY_JWT="<YOUR_GATEWAY_JWT>"
+export CLOUDFLARE_API_TOKEN="<YOUR_API_TOKEN>"
 export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.dev/v1/api/namespaces/$ARTIFACTS_NAMESPACE"
 ```
 
 Use a unique repo name each time you run this guide.
 
-Artifacts uses Bearer authentication for `/v1/api/...` control-plane requests:
+Artifacts uses Bearer authentication for control-plane requests:
 
 ```txt
-Authorization: Bearer $ARTIFACTS_GATEWAY_JWT
+Authorization: Bearer $CLOUDFLARE_API_TOKEN
 ```
 
 ## 2. Create a repo
@@ -57,7 +57,7 @@ Choose one of the following ways to create a repo inside that namespace:
 
 ```bash
 curl --request POST "$ARTIFACTS_BASE_URL/repos" \
-  --header "Authorization: Bearer $ARTIFACTS_GATEWAY_JWT" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \
   --data "{\"name\":\"$ARTIFACTS_REPO\"}"
 ```
@@ -97,7 +97,7 @@ Capture the create response once and extract the fields with `jq`:
 
 ```bash
 CREATE_RESPONSE=$(curl --silent --request POST "$ARTIFACTS_BASE_URL/repos" \
-  --header "Authorization: Bearer $ARTIFACTS_GATEWAY_JWT" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \
   --data "{\"name\":\"$ARTIFACTS_REPO\"}")
 
@@ -115,7 +115,7 @@ Fetch the repo metadata when you need to recover the remote URL later:
 
 ```bash
 curl "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO" \
-  --header "Authorization: Bearer $ARTIFACTS_GATEWAY_JWT"
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
 ```json

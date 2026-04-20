@@ -20,18 +20,18 @@ Artifacts imports public HTTPS remotes through the [REST API](/artifacts/api/res
 
 This example imports a public GitHub repo into the `default` namespace. The same route also accepts other public HTTPS Git remotes.
 
-Use a gateway JWT that can call the Artifacts REST control plane.
+Use a Cloudflare API token with **Artifacts** > **Edit**.
 
 ```sh
 export ARTIFACTS_NAMESPACE="default"
 export ARTIFACTS_REPO="workers-sdk-baseline"
-export ARTIFACTS_GATEWAY_JWT="<YOUR_GATEWAY_JWT>"
+export CLOUDFLARE_API_TOKEN="<YOUR_API_TOKEN>"
 export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.dev/v1/api/namespaces/$ARTIFACTS_NAMESPACE"
 ```
 
 ```bash
 IMPORT_RESPONSE=$(curl --silent --request POST "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO/import" \
-  --header "Authorization: Bearer $ARTIFACTS_GATEWAY_JWT" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \
   --data '{
     "url": "https://github.com/cloudflare/workers-sdk",

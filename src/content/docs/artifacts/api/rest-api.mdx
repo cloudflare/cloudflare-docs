@@ -15,28 +15,30 @@ Use the Artifacts REST API to manage repos, remotes, forks, imports, and tokens 
 
 ## Base URL and authentication
 
-All REST routes use the following base path:
+Artifacts REST routes use this base path:
 
 ```txt
 https://artifacts.cloudflare.dev/v1/api/namespaces/$ARTIFACTS_NAMESPACE
 ```
 
-Authenticate with a gateway JWT:
+Requests use Bearer authentication:
 
 ```txt
-Authorization: Bearer <ARTIFACTS_GATEWAY_JWT>
+Authorization: Bearer $CLOUDFLARE_API_TOKEN
 ```
 
 All routes below are relative to this base path.
 
-Gateway auth authenticates REST control-plane routes. Repo tokens authenticate Git operations against the returned `remote` URL.
+Cloudflare API tokens authenticate REST control-plane routes. Repo tokens authenticate Git operations against the returned `remote` URL.
+
+Use **Artifacts** > **Read** for read routes. Use **Artifacts** > **Edit** for create, import, delete, and token routes.
 
 The following examples assume:
 
 ```sh
 export ARTIFACTS_NAMESPACE="default"
 export ARTIFACTS_REPO="starter-repo"
-export ARTIFACTS_GATEWAY_JWT="<YOUR_GATEWAY_JWT>"
+export CLOUDFLARE_API_TOKEN="<YOUR_API_TOKEN>"
 export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.dev/v1/api/namespaces/$ARTIFACTS_NAMESPACE"
 ```
 
@@ -157,7 +159,7 @@ export type CreateRepoResponse = ApiEnvelope<CreateRepoResult>;
 
 ```bash
 curl --request POST "$ARTIFACTS_BASE_URL/repos" \
-  --header "Authorization: Bearer $ARTIFACTS_GATEWAY_JWT" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \
   --data '{
     "name": "starter-repo",
@@ -212,7 +214,7 @@ export type ListReposResponse = ApiEnvelope<RepoInfo[]>;
 
 ```bash
 curl "$ARTIFACTS_BASE_URL/repos?limit=20&sort=updated_at&direction=desc" \
-  --header "Authorization: Bearer $ARTIFACTS_GATEWAY_JWT"
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
 ```json
@@ -253,7 +255,7 @@ export type GetRepoResponse = ApiEnvelope<RemoteRepoInfo>;
 
 ```bash
 curl "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO" \
-  --header "Authorization: Bearer $ARTIFACTS_GATEWAY_JWT"
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
 ```json
@@ -294,7 +296,7 @@ export type DeleteRepoResponse = ApiEnvelope<DeleteRepoResult>;
 
 ```bash
 curl --request DELETE "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO" \
-  --header "Authorization: Bearer $ARTIFACTS_GATEWAY_JWT"
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
 ```json
@@ -338,7 +340,7 @@ export type ForkRepoResponse = ApiEnvelope<ForkRepoResult>;
 
 ```bash
 curl --request POST "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO/fork" \
-	--header "Authorization: Bearer $ARTIFACTS_GATEWAY_JWT" \
+	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 	--header "Content-Type: application/json" \
 	--data '{
 	  "name": "starter-repo-copy",
@@ -396,7 +398,7 @@ If the repo already exists but is still importing or forking, some routes return
 
 ```bash
 curl --request POST "$ARTIFACTS_BASE_URL/repos/react-mirror/import" \
-	--header "Authorization: Bearer $ARTIFACTS_GATEWAY_JWT" \
+	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 	--header "Content-Type: application/json" \
 	--data '{
 	  "url": "https://github.com/facebook/react",
@@ -450,7 +452,7 @@ export type ListTokensResponse = ApiEnvelope<TokenInfo[]>;
 
 ```bash
 curl "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO/tokens?state=all&per_page=30&page=1" \
-  --header "Authorization: Bearer $ARTIFACTS_GATEWAY_JWT"
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
 ```json
@@ -508,7 +510,7 @@ export type CreateTokenResponse = ApiEnvelope<CreateTokenResult>;
 
 ```bash
 curl --request POST "$ARTIFACTS_BASE_URL/tokens" \
-  --header "Authorization: Bearer $ARTIFACTS_GATEWAY_JWT" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \
   --data '{
     "repo": "starter-repo",
@@ -547,7 +549,7 @@ export type RevokeTokenResponse = ApiEnvelope<RevokeTokenResult>;
 
 ```bash
 curl --request DELETE "$ARTIFACTS_BASE_URL/tokens/tok_123" \
-  --header "Authorization: Bearer $ARTIFACTS_GATEWAY_JWT"
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
 ```json
