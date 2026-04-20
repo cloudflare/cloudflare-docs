@@ -11,7 +11,12 @@
 	"context_length": 128000,
 	"max_output_tokens": 4096,
 	"schema_version": "1.0.0",
-	"pricing": {},
+	"pricing": {
+		"Input tokens (per 1M)": 0.3,
+		"Output tokens (per 1M)": 1.2,
+		"Cache write tokens (per 1M)": 0.375,
+		"Cache read tokens (per 1M)": 0.06
+	},
 	"examples": [
 		{
 			"name": "Simple Conversation",

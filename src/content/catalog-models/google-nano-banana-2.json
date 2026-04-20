@@ -12,7 +12,10 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {},
+	"pricing": {
+		"Input tokens (per 1M)": 0.5,
+		"Output tokens (per 1M)": 60
+	},
 	"examples": [
 		{
 			"name": "Futuristic City",

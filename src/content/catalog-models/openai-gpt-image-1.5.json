@@ -12,7 +12,14 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {},
+	"pricing": {
+		"Input tokens (per 1M)": 5,
+		"Input image tokens (per 1M)": 8,
+		"Cached input tokens (per 1M)": 1.25,
+		"Cached input image tokens (per 1M)": 2,
+		"Output image tokens (per 1M)": 32,
+		"Output tokens (per 1M)": 10
+	},
 	"examples": [
 		{
 			"name": "Simple Generation",

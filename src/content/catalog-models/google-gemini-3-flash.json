@@ -13,7 +13,14 @@
 	"context_length": 1000000,
 	"max_output_tokens": 8192,
 	"schema_version": "1.0.0",
-	"pricing": {},
+	"pricing": {
+		"Input <=200k (per 1M)": 0.5,
+		"Output <=200k (per 1M)": 3,
+		"Cached input <=200k (per 1M)": 0.05,
+		"Input >200k (per 1M)": 0.5,
+		"Output >200k (per 1M)": 3,
+		"Cached input >200k (per 1M)": 0.05
+	},
 	"examples": [
 		{
 			"name": "Simple Question",

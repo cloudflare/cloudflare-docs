@@ -12,7 +12,9 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {},
+	"pricing": {
+		"Per image": 0.03
+	},
 	"examples": [
 		{
 			"name": "Simple Generation",

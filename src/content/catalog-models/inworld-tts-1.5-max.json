@@ -14,7 +14,9 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {},
+	"pricing": {
+		"Per character": 0.00005
+	},
 	"examples": [
 		{
 			"name": "Simple Speech",

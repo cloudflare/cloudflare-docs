@@ -13,7 +13,17 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {},
+	"pricing": {
+		"@720p w/ audio (per second)": 0.06,
+		"@540p w/ audio (per second)": 0.045,
+		"@360p w/ audio (per second)": 0.035,
+		"@1080p w/ audio (per second)": 0.115,
+		"@720p (per second)": 0.045,
+		"@1080p (per second)": 0.09,
+		"@540p (per second)": 0.035,
+		"@360p (per second)": 0.025,
+		"Default (per second)": 0.06
+	},
 	"examples": [
 		{
 			"name": "Simple Video",
@@ -102,7 +112,7 @@
 	],
 	"supports_async": false,
 	"external_info": "https://pixverse.ai/",
-	"terms": "https://pixverse.ai/terms",
+	"terms": "https://pixverse.ai/en/terms-of-service/",
 	"cover_image_url": null,
 	"metadata": {
 		"Max Duration": "15 seconds",

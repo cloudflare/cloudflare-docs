@@ -13,7 +13,10 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {},
+	"pricing": {
+		"Per lyrics generation": 0.01,
+		"Per track": 0.15
+	},
 	"examples": [
 		{
 			"name": "Simple Prompt",

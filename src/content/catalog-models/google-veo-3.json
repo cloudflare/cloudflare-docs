@@ -11,7 +11,13 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {},
+	"pricing": {
+		"@720p (per second)": 0.2,
+		"@1080p (per second)": 0.2,
+		"Default (per second)": 0.2,
+		"@720p w/ audio (per second)": 0.4,
+		"@1080p w/ audio (per second)": 0.4
+	},
 	"examples": [
 		{
 			"name": "Simple Video Generation",

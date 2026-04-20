@@ -13,7 +13,12 @@
 	"context_length": 200000,
 	"max_output_tokens": 8192,
 	"schema_version": "1.0.0",
-	"pricing": {},
+	"pricing": {
+		"Input tokens (per 1M)": 1,
+		"Output tokens (per 1M)": 5,
+		"Cached input tokens (per 1M)": 0.1,
+		"Cache creation tokens (per 1M)": 1.25
+	},
 	"examples": [
 		{
 			"name": "Simple Question",

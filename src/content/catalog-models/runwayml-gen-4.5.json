@@ -12,7 +12,9 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {},
+	"pricing": {
+		"Default (per second)": 0.12
+	},
 	"examples": [
 		{
 			"name": "Simple Text-to-Video",

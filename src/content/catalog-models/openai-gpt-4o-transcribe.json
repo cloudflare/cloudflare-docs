@@ -4,11 +4,17 @@
 	"name": "GPT-4o Transcribe",
 	"description": "A speech-to-text model that uses GPT-4o to transcribe audio with improved word error rate and better language recognition compared to original Whisper models.",
 	"task": "Automatic Speech Recognition",
-	"tags": ["Speech-to-Text", "Transcription", "Multilingual"],
+	"tags": [
+		"Speech-to-Text",
+		"Transcription",
+		"Multilingual"
+	],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {},
+	"pricing": {
+		"Per audio minute": 0.006
+	},
 	"examples": [
 		{
 			"name": "Basic Transcription",
@@ -103,7 +109,7 @@
 			"type": "object",
 			"properties": {
 				"file": {
-					"description": "The audio file as a URL or data URI (data:audio/...;base64,...). Supported formats: flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm.",
+					"description": "The audio file as a data URI (data:audio/...;base64,...). Supported formats: flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm.",
 					"type": "string"
 				},
 				"language": {
@@ -122,7 +128,10 @@
 					"maximum": 1
 				}
 			},
-			"required": ["file", "temperature"],
+			"required": [
+				"file",
+				"temperature"
+			],
 			"additionalProperties": false
 		},
 		"output": {
@@ -134,7 +143,9 @@
 					"type": "string"
 				}
 			},
-			"required": ["text"],
+			"required": [
+				"text"
+			],
 			"additionalProperties": false
 		}
 	}
