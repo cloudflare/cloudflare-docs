@@ -35,7 +35,8 @@ Set the variables used in the examples:
 export ARTIFACTS_NAMESPACE="default"
 export ARTIFACTS_REPO="starter-repo"
 export CLOUDFLARE_API_TOKEN="<YOUR_API_TOKEN>"
-export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.net/v1/api/namespaces/$ARTIFACTS_NAMESPACE"
+export ACCOUNT_ID="<YOUR_ACCOUNT_ID>"
+export ARTIFACTS_BASE_URL="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/artifacts/namespaces/$ARTIFACTS_NAMESPACE"
 ```
 
 Use a unique repo name each time you run this guide.
@@ -70,8 +71,7 @@ The response resembles the following:
 		"description": null,
 		"default_branch": "main",
 		"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/starter-repo.git",
-		"token": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000",
-		"expires_at": "<ISO_TIMESTAMP>"
+		"token": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000"
 	},
 	"success": true,
 	"errors": [],

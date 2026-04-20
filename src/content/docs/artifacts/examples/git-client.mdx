@@ -17,10 +17,11 @@ First, fetch the repo metadata from the REST API. Then mint a read token for tha
 The example below uses `jq` to extract fields from the JSON responses.
 
 ```bash
+export ACCOUNT_ID="<YOUR_ACCOUNT_ID>"
 export ARTIFACTS_NAMESPACE="default"
 export ARTIFACTS_REPO="starter-repo"
 export CLOUDFLARE_API_TOKEN="<YOUR_API_TOKEN>"
-export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.net/v1/api/namespaces/$ARTIFACTS_NAMESPACE"
+export ARTIFACTS_BASE_URL="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/artifacts/namespaces/$ARTIFACTS_NAMESPACE"
 
 REPO_JSON=$(curl --silent "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN")

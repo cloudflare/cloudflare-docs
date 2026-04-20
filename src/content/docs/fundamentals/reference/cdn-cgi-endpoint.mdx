@@ -34,3 +34,14 @@ Search engine crawlers can encounter [errors when crawling these endpoints](/sup
 SEO and other web crawlers may also mistakenly crawl these endpoints, thinking that they are part of your site's content.
 
 As a best practice, update your `robots.txt` file to include `Disallow: /cdn-cgi/`.
+
+:::note
+If you serve transformations through [Images](/images/optimization/transformations/overview/), a blanket `Disallow: /cdn-cgi/` prevents search engines from indexing your transformed images served from `/cdn-cgi/image/`. To allow crawlers to discover these images, add an `Allow` rule before the `Disallow`:
+
+```txt
+Allow: /cdn-cgi/image/
+Disallow: /cdn-cgi/
+```
+
+The more specific `Allow` path takes precedence over the broader `Disallow`, so crawlers will still be blocked from other `/cdn-cgi/` endpoints.
+:::
