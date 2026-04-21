@@ -39,6 +39,10 @@ Before configuring any security rules, build an inventory of your API endpoints.
 
 1. Review your application's routing configuration and list every endpoint with its HTTP method and expected parameters.
 
+   :::tip[AI-assisted endpoint discovery]
+   Consider using an AI agent to analyze the API routes exposed in your codebase and then generate an OpenAPI schema from the findings.
+   :::
+
 2. Categorize each endpoint by access level (public, authenticated, internal). Prioritize endpoints that accept file uploads, process payments, or return sensitive data.
 
    | Access level      | Description                       | Example endpoints              |
