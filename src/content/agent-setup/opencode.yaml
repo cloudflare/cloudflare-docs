@@ -77,9 +77,10 @@ example_prompts:
 tips:
   - "OpenCode supports 75+ LLMs — you can use Cloudflare Workers AI as the model provider for a fully Cloudflare-native workflow."
   - "The Skills plugin includes a wrangler Skill that teaches OpenCode when to reach for npx wrangler deploy, wrangler d1, and other CLI commands."
-  - "Use OpenCode's plan agent (Tab key) to break down complex Workers projects before coding — pair it with /cloudflare:build-agent or /cloudflare:build-mcp slash commands."
+  - "Use OpenCode's plan agent (Tab key) to break down complex Workers projects before coding — pair it with <code>/cloudflare:build-agent</code> or <code>/cloudflare:build-mcp</code> slash commands."
   - "The Cloudflare API MCP server uses Code Mode — OpenCode writes JavaScript to reach any of 2,500+ endpoints in ~1,000 tokens."
   - "Cloudflare was one of the first sites to serve agent-friendly Markdown docs natively — OpenCode automatically requests text/markdown on every docs fetch."
+  - 'For more information on installing additional MCP servers, or when to use Code Mode versus traditional MCP servers, refer to the <a href="https://github.com/cloudflare/mcp-server-cloudflare" target="_blank" rel="noopener noreferrer">Cloudflare MCP server repository</a>.'
 
 faq:
   - question: "Should I use Skills, the MCP server, Wrangler CLI, or all of them?"

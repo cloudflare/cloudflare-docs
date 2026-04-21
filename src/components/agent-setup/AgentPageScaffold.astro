@@ -162,7 +162,7 @@ const externalLinks = [
 			) : (
 				<ul class="agent-setup-tips">
 					{agent.tips.map((tip) => (
-						<li>{tip}</li>
+						<li set:html={tip} />
 					))}
 				</ul>
 			)

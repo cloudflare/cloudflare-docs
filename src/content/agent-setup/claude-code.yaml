@@ -30,8 +30,8 @@ quick_start:
     description: Start Claude Code from the root of your project, where wrangler.jsonc lives (if it already exists).
     command: "claude"
   - title: Install the Cloudflare Skills plugin
-    description: In Claude Code, run this slash command. The plugin installs all 8 Cloudflare Skills and additionally registers the Cloudflare API, docs, bindings, builds, and observability MCP servers.
-    command: "/plugin marketplace add cloudflare/skills"
+    description: In Claude Code, run these two slash commands. The plugin installs all 8 Cloudflare Skills and additionally registers the Cloudflare API, docs, bindings, builds, and observability MCP servers.
+    command: "/plugin marketplace add cloudflare/skills\n/plugin install cloudflare@cloudflare"
   - title: Try a prompt
     description: 'For example, "Create an example hello world app using Cloudflare Workers."'
 
@@ -43,11 +43,11 @@ mcp_config: |
 
 skills_plugin_install:
   supported: true
-  command: "/plugin marketplace add cloudflare/skills"
+  command: "/plugin marketplace add cloudflare/skills\n/plugin install cloudflare@cloudflare"
   note: "Install via the Claude Code plugin marketplace. Bundles Skills + MCP servers."
 
 skills_install:
-  command: "/plugin marketplace add cloudflare/skills"
+  command: "/plugin marketplace add cloudflare/skills\n/plugin install cloudflare@cloudflare"
   directory: "~/.claude/skills/"
   docs_url: "https://code.claude.com/docs/en/skills"
 
@@ -65,24 +65,25 @@ example_prompts:
 
 tips:
   - "The Skills plugin includes a wrangler Skill — Claude knows when to reach for npx wrangler deploy, wrangler d1 migrations apply, and other CLI commands automatically."
-  - "Try the /cloudflare:build-agent slash command to scaffold a complete Agents SDK project, or /cloudflare:build-mcp for a remote MCP server."
+  - "Try the <code>/cloudflare:build-agent</code> slash command to scaffold a complete Agents SDK project, or <code>/cloudflare:build-mcp</code> for a remote MCP server."
   - "The Cloudflare API MCP server uses Code Mode — Claude writes JavaScript against a TypeScript API to hit any of 2,500+ endpoints in ~1,000 tokens."
   - "Claude Code works best from the root of your Workers project where wrangler.jsonc lives — that's what the agent uses to understand your bindings."
-  - "Use claude mcp list to verify Cloudflare servers are connected. For CI/CD, skip OAuth by passing a Cloudflare API token as a bearer token instead."
+  - "Use <code>claude mcp list</code> to verify Cloudflare servers are connected. For CI/CD, skip OAuth by passing a Cloudflare API token as a bearer token instead."
+  - 'For more information on installing additional MCP servers, or when to use Code Mode versus traditional MCP servers, refer to the <a href="https://github.com/cloudflare/mcp-server-cloudflare" target="_blank" rel="noopener noreferrer">Cloudflare MCP server repository</a>.'
 
 faq:
   - question: "Should I use Skills, the MCP server, Wrangler CLI, or all of them?"
     answer: "All three — and the Skills plugin configures them together. Skills give Claude persistent Cloudflare knowledge (when to use Durable Objects vs KV, what a good Workers project layout looks like). The Cloudflare API MCP server handles platform operations (DNS, WAF, R2 buckets, Zero Trust). Wrangler runs local dev and Workers-specific commands. The `wrangler` Skill teaches Claude when to reach for which."
   - question: "How do I give Claude Code access to my Cloudflare account?"
-    answer: "Install the Skills plugin with `/plugin marketplace add cloudflare/skills`. The first time Claude calls a Cloudflare tool, you'll be redirected to authorize via OAuth and choose what permissions to grant."
+    answer: "The first time Claude calls a Cloudflare tool, you'll be redirected to authorize via OAuth and choose what permissions to grant."
   - question: "Can Claude Code deploy to existing Workers projects?"
     answer: "Yes. Run Claude Code from your existing project directory where `wrangler.jsonc` is located, and it will understand your project configuration and deploy accordingly."
   - question: "What does Code Mode mean for MCP?"
-    answer: "Code Mode is how the Cloudflare API MCP server fits all 2,500+ API endpoints into ~1,000 tokens. Instead of exposing every endpoint as a separate tool, it exposes two — search() and execute() — and Claude writes JavaScript to call them. See the blog post on Code Mode for details."
+    answer: 'Code Mode is how the Cloudflare API MCP server fits all 2,500+ API endpoints into ~1,000 tokens. Instead of exposing every endpoint as a separate tool, it exposes two — <code>search()</code> and <code>execute()</code> — and Claude writes JavaScript to call them. <a href="https://developers.cloudflare.com/agents/api-reference/codemode/">Learn more about Code Mode</a>.'
 
 troubleshooting:
   - issue: "MCP server connection fails or times out"
-    solution: "Run `claude mcp list` to verify the server is registered. Try removing and re-adding: `claude mcp remove cloudflare` then re-add it. Ensure you have `npx` and `mcp-remote` available."
+    solution: 'Run <code>claude mcp list</code> to verify the server is registered. Try removing and re-adding: <code>claude mcp remove cloudflare</code> then re-add it. Ensure you have <code>npx</code> and <code>mcp-remote</code> available.'
   - issue: "Claude cannot authenticate with Cloudflare"
     solution: "The MCP server uses OAuth. When prompted, complete the authorization flow in your browser. For CI/CD, create a Cloudflare API token and pass it as a bearer token instead."
   - issue: "Claude does not understand Workers APIs"

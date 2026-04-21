@@ -76,6 +76,7 @@ tips:
   - "The Cloudflare API MCP server uses Code Mode — Cursor writes JavaScript against a typed API to reach any of 2,500+ endpoints in ~1,000 tokens."
   - "Add @wrangler.jsonc to your Composer prompts so Cursor sees your current bindings when generating or modifying code."
   - "For background agents running in the cloud, use a Cloudflare API token instead of OAuth — pass it as a bearer token in the MCP server config."
+  - 'For more information on installing additional MCP servers, or when to use Code Mode versus traditional MCP servers, refer to the <a href="https://github.com/cloudflare/mcp-server-cloudflare" target="_blank" rel="noopener noreferrer">Cloudflare MCP server repository</a>.'
 
 faq:
   - question: "Should I use Skills, the MCP server, Wrangler CLI, or all of them?"

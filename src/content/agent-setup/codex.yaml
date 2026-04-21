@@ -65,7 +65,8 @@ tips:
   - "Codex runs in a sandbox — it can safely execute Wrangler commands without touching your host system, and the bundled wrangler Skill guides it on what to run."
   - "The Cloudflare API MCP server uses Code Mode — Codex writes JavaScript against a typed API to reach any of 2,500+ endpoints in ~1,000 tokens."
   - "Codex supports web browsing; pair it with the docs MCP server for the freshest Cloudflare references without leaving the agent loop."
-  - "Try the /cloudflare:build-agent slash command to scaffold a complete Agents SDK project, or /cloudflare:build-mcp for a remote MCP server."
+  - "Try the <code>/cloudflare:build-agent</code> slash command to scaffold a complete Agents SDK project, or <code>/cloudflare:build-mcp</code> for a remote MCP server."
+  - 'For more information on installing additional MCP servers, or when to use Code Mode versus traditional MCP servers, refer to the <a href="https://github.com/cloudflare/mcp-server-cloudflare" target="_blank" rel="noopener noreferrer">Cloudflare MCP server repository</a>.'
 
 faq:
   - question: "Should I use Skills, the MCP server, Wrangler CLI, or all of them?"

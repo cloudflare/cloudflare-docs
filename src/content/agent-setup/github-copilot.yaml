@@ -73,6 +73,7 @@ tips:
   - "Connect the Cloudflare API MCP server to VS Code — Copilot can then manage Cloudflare resources (DNS, WAF, R2 buckets) through Code Mode in ~1,000 tokens."
   - "GitHub Copilot integrates natively with GitHub Actions — ask it to generate a deploy workflow that runs Wrangler with your CLOUDFLARE_API_TOKEN secret."
   - "The Cloudflare docs MCP server keeps Copilot's Workers API references fresh without you needing to paste documentation into prompts."
+  - 'For more information on installing additional MCP servers, or when to use Code Mode versus traditional MCP servers, refer to the <a href="https://github.com/cloudflare/mcp-server-cloudflare" target="_blank" rel="noopener noreferrer">Cloudflare MCP server repository</a>.'
 
 faq:
   - question: "Does Copilot support Cloudflare Skills?"

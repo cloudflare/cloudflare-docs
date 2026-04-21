@@ -72,6 +72,7 @@ tips:
   - "The Cloudflare API MCP server uses Code Mode — Cascade writes JavaScript to reach any of 2,500+ endpoints in ~1,000 tokens."
   - "Use @-mention to include your wrangler.jsonc in Cascade prompts — Cascade uses this to understand your current bindings when generating code."
   - "Add the observability MCP server to let Cascade automatically check Workers logs and debug deployments without leaving the IDE."
+  - 'For more information on installing additional MCP servers, or when to use Code Mode versus traditional MCP servers, refer to the <a href="https://github.com/cloudflare/mcp-server-cloudflare" target="_blank" rel="noopener noreferrer">Cloudflare MCP server repository</a>.'
 
 faq:
   - question: "Does Windsurf support Cloudflare Skills?"

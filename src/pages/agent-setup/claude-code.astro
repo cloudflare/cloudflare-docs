@@ -40,23 +40,31 @@ const agent = allAgents.find((a) => a.slug === "claude-code")!;
 				<p>
 					Claude Code automatically sends <code>Accept: text/markdown</code> when
 					fetching Cloudflare docs, so it gets the clean markdown version by default.
-					For preloaded context without using the docs MCP server:
+					Every top-level product section also has its own <code>llms.txt</code> — a
+					page index sized for a single context window. A few useful ones:
 				</p>
 				<ul class="agent-platform-resources">
 					<li>
-						<a href="/llms.txt">developers.cloudflare.com/llms.txt</a> &mdash; a
-						directory of every Cloudflare product.
+						<a href="/llms.txt">developers.cloudflare.com/llms.txt</a> &mdash; directory
+						of every Cloudflare product.
 					</li>
 					<li>
-						<a href="/workers/llms.txt"
-							>developers.cloudflare.com/workers/llms.txt</a
-						> &mdash; a page index scoped to one product, sized for a single context
-						window.
+						<a href="/workers/llms.txt">developers.cloudflare.com/workers/llms.txt</a>
 					</li>
 					<li>
-						Append <code>/index.md</code> to any docs URL for a clean markdown version.
+						<a href="/agents/llms.txt">developers.cloudflare.com/agents/llms.txt</a>
+					</li>
+					<li>
+						<a href="/r2/llms.txt">developers.cloudflare.com/r2/llms.txt</a>
+					</li>
+					<li>
+						<a href="/d1/llms.txt">developers.cloudflare.com/d1/llms.txt</a>
 					</li>
 				</ul>
+				<p>
+					For a full overview of how these docs are structured for agents, refer to the{" "}
+					<a href="/style-guide/ai-tooling/">AI tooling guide</a>.
+				</p>
 			</Fragment>
 		</PlatformAccessSection>
 	</Fragment>
