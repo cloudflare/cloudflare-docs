@@ -449,19 +449,38 @@ If you find false positives, update your custom rules to exclude the affected tr
 
 ### Tune rate limiting thresholds
 
-Rate limiting thresholds that are too tight block legitimate clients. Thresholds that are too loose allow abuse. Review rate limiting events in Security Events to find the right balance.
+Rate limiting thresholds that are too tight block legitimate clients. Thresholds that are too loose allow abuse. Review rate limiting events in [Security Events](/waf/analytics/security-events/) to find the right balance.
+
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
 <Steps>
 
-1. In Security Events, filter by **Action** equals **Block** and **Service** equals **Rate limiting**.
+1. In the Cloudflare dashboard, go to the **Analytics** page.
 
-2. Check whether blocked requests come from legitimate clients or abusive traffic.
+   <DashButton url="/?to=/:account/:zone/security/analytics" />
 
-3. If legitimate clients are being rate limited, edit the relevant rate limiting rule to increase the request threshold or widen the time period for the affected rule.
-
-4. If abusive traffic is getting through, lower the rule threshold or narrow the time period.
+2. Select the **Events** tab.
+3. Filter by **Action** equals **Block** and **Service** equals **Rate limiting**.
+4. Check whether blocked requests come from legitimate clients or abusive traffic.
+5. If legitimate clients are being rate limited, edit the relevant rate limiting rule to increase the request threshold or widen the time period for the affected rule.
+6. If abusive traffic is getting through, lower the rule threshold or narrow the time period.
 
 </Steps>
+
+</TabItem> <TabItem label="Old dashboard">
+
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and zone.
+2. Go to **Security** > **Events**.
+3. Filter by **Action** equals **Block** and **Service** equals **Rate limiting**.
+4. Check whether blocked requests come from legitimate clients or abusive traffic.
+5. If legitimate clients are being rate limited, edit the relevant rate limiting rule to increase the request threshold or widen the time period for the affected rule.
+6. If abusive traffic is getting through, lower the rule threshold or narrow the time period.
+
+</Steps>
+
+</TabItem> </Tabs>
 
 :::tip[Security Analytics rate analysis requires an Enterprise plan]
 Enterprise customers can use the **Request rate analysis** tab in [Security Analytics](/waf/analytics/security-analytics/) to visualize request rate distributions and the **Log** action to observe rule matches without taking action. On other plans, estimate thresholds based on your expected traffic patterns. Refer to [Find an appropriate rate limit](/waf/rate-limiting-rules/find-rate-limit/) for the full methodology.
