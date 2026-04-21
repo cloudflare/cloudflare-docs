@@ -2,7 +2,7 @@
 pcx_content_type: overview
 title: Overview
 
-description: Build scalable, fully-managed RAG applications with Cloudflare AI Search. Create retrieval-augmented generation pipelines to deliver accurate, context-aware AI without managing infrastructure.
+description: Cloudflare AI Search is a managed search service. Index your content and query it with natural language from a Workers binding, REST API, or MCP server.
 tags:
   - AI
 sidebar:
@@ -10,6 +10,8 @@ sidebar:
 head:
   - tag: title
     content: Cloudflare AI Search
+products:
+  - ai-search
 ---
 
 import {
@@ -22,16 +24,22 @@ import {
 	Feature,
 } from "~/components";
 
-<Description>Create AI-powered search for your data</Description>
+<Description>
+	The search primitive for your applications and agents.
+</Description>
 
 <Plan type="all" />
 
-AI Search is Cloudflare’s managed search service. You can connect your data such as websites or unstructured content, and it automatically creates a continuously updating index that you can query with natural language in your applications or AI agents. It natively integrates with Cloudflare’s developer platform tools like Vectorize, AI Gateway, R2, Browser Run, and Workers AI, while also supporting third-party providers and open standards.
+AI Search lets you add search to any application or agent without having to build an entire retrieval infrastructure. Create an instance, give it your data, and search it with natural language.
 
-It supports retrieval-augmented generation (RAG) patterns, enabling you to build enterprise search, natural language search, and AI-powered chat without managing infrastructure.
+You can use AI Search for:
+
+- Documentation and knowledge base search
+- AI agent tool use and memory
+- Per-tenant or per-agent file search
 
 <div>
-	<LinkButton href="/ai-search/get-started">Get started</LinkButton>
+	<LinkButton href="/ai-search/get-started/">Get started</LinkButton>
 	<LinkButton
 		target="_blank"
 		variant="secondary"
@@ -42,31 +50,35 @@ It supports retrieval-augmented generation (RAG) patterns, enabling you to build
 	</LinkButton>
 </div>
 
+:::note[Latest update]
+New AI Search instances created after April 16, 2026 include [managed storage](/ai-search/configuration/data-source/built-in-storage/), vector index, and web crawling. [View limits and pricing](/ai-search/platform/limits-pricing/).
+:::
+
 ---
 
 ## Features
 
-<Feature header="Automated indexing" href="/ai-search/configuration/indexing/" cta="View indexing">
+<Feature header="Automated indexing" href="/ai-search/configuration/indexing/syncing/" cta="View indexing">
 
 Automatically and continuously index your data source, keeping your content fresh without manual reprocessing.
 
 </Feature>
 
-<Feature header="Multitenancy support" href="/ai-search/how-to/multitenancy/" cta="Add filters">
+<Feature header="Metadata filtering" href="/ai-search/configuration/indexing/metadata/" cta="Add filters">
 
-Create multitenancy by scoping search to each tenant’s data using folder-based metadata filters.
-
-</Feature>
-
-<Feature header="Workers Binding" href="/ai-search/usage/workers-binding/" cta="Add to Worker">
-
-Call your AI Search instance for search or AI Search directly from a Cloudflare Worker using the native binding integration.
+Define custom metadata fields and filter search results by category, version, language, or any attribute you define.
 
 </Feature>
 
-<Feature header="Similarity caching" href="/ai-search/configuration/cache/" cta="Use caching">
+<Feature header="Hybrid search" href="/ai-search/configuration/indexing/hybrid-search/" cta="Configure hybrid search">
 
-Cache repeated queries and results to improve latency and reduce compute on repeated requests.
+Combine semantic and keyword matching in the same query for more accurate results.
+
+</Feature>
+
+<Feature header="MCP and UI snippets" href="/ai-search/api/search/mcp/" cta="Connect agents">
+
+Every instance includes a built-in MCP endpoint for AI agents and embeddable search components for your website.
 
 </Feature>
 
@@ -76,7 +88,7 @@ Cache repeated queries and results to improve latency and reduce compute on repe
 
 <RelatedProduct header="Workers AI" href="/workers-ai/" product="workers-ai">
 
-Run machine learning models, powered by serverless GPUs, on Cloudflare’s global network.
+Run machine learning models, powered by serverless GPUs, on Cloudflare's global network.
 
 </RelatedProduct>
 
@@ -88,7 +100,7 @@ Observe and control your AI applications with caching, rate limiting, request re
 
 <RelatedProduct header="Vectorize" href="/vectorize/" product="vectorize">
 
-Build full-stack AI applications with Vectorize, Cloudflare’s vector database.
+Build full-stack AI applications with Vectorize, Cloudflare's vector database.
 
 </RelatedProduct>
 
@@ -112,10 +124,10 @@ Store large amounts of unstructured data without the costly egress bandwidth fee
 
 <LinkTitleCard
 	title="Get started"
-	href="/workers-ai/get-started/workers-wrangler/"
+	href="/ai-search/get-started/"
 	icon="open-book"
 >
-	Build and deploy your first Workers AI application.
+	Create your first AI Search instance and run your first query.
 </LinkTitleCard>
 
 <LinkTitleCard

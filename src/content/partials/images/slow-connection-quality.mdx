@@ -2,41 +2,36 @@
 {}
 ---
 
-import { Tabs, TabItem } from "~/components";
+import { Tabs, TabItem} from "~/components";
 
-Allows overriding `quality` value whenever a slow connection is detected.
+<a id="slow-connection-quality"></a>
 
-Available options are same as [quality](/images/transform-images/transform-via-url/#quality).
+### `slow-connection-quality` | `scq`
 
-**Alias:** `scq`
+Overrides the `quality` value whenever a slow connection is detected. Accepts the same fixed or perceptual settings as [quality](/images/optimization/features/#quality). The default is none.
 
-<Tabs>
-	<TabItem label="URL format">
-		```txt
-		slow-connection-quality=50
-		```
-	</TabItem>
-	<TabItem label="URL format alias">
-		```txt
-		scq=50
-		```
-	</TabItem>
-</Tabs>
+:::note
+This feature is available only when optimizing through the URL interface on Chromium-based browsers such as Chrome, Edge, and Opera.
+:::
 
-Detecting slow connections is currently only supported on Chromium-based browsers such as Chrome, Edge, and Opera.
-
-You can enable any of the following client hints via HTTP in a header
+To detect slow connections, enable any of the following client hints via HTTP in a header:
 
 ```txt
 accept-ch: rtt, save-data, ect, downlink
 ```
 
-slow-connection-quality applies whenever any of the following is true and the client hint is present:
+`slow-connection-quality` applies when the client hint is present and any of the following conditions are met:
 
 - [rtt](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/RTT): Greater than 150ms.
-
 - [save-data](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Save-Data): Value is "on".
-
 - [ect](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/ECT): Value is one of `slow-2g|2g|3g`.
-
 - [downlink](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Downlink): Less than 5Mbps.
+
+<Tabs>
+	<TabItem label="URL format">
+		```txt
+		slow-connection-quality=50
+		scq=50
+		```
+	</TabItem>
+</Tabs>

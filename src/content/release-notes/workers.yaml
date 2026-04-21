@@ -3,6 +3,10 @@ link: "/workers/platform/changelog/"
 productName: Workers
 productLink: "/workers/"
 entries:
+  - publish_date: "2026-04-17"
+    description: |-
+      - Updated v8 to version 14.7.
+      - Allow passing custom limits for dynamic workers.
   - publish_date: "2026-03-20"
     description: |-
       - Updated v8 to version 14.6.

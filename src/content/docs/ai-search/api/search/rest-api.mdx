@@ -1,0 +1,115 @@
+---
+pcx_content_type: reference
+title: REST API
+description: Query AI Search instances over HTTP using the REST API for search and chat completions.
+sidebar:
+  order: 2
+products:
+  - ai-search
+---
+
+import { Render } from "~/components";
+
+Use the AI Search REST API to query your AI Search instances over HTTP.
+
+:::note
+The previous [AutoRAG API endpoints](/api/resources/autorag/) are no longer recommended for use. Refer to [Migrate from AutoRAG REST API](/ai-search/api/migration/rest-api/) for details.
+:::
+
+## Authentication
+
+<Render file="rest-api-auth" product="ai-search" />
+
+## Search and chat
+
+AI Search provides two APIs for querying an instance. Both use an OpenAI-compatible `messages` format.
+
+- **Search** returns relevant content chunks. Use this when you want to handle generation yourself or display results directly.
+- **Chat completions** retrieves content and generates a response in one call.
+
+### API paths
+
+AI Search APIs are available at two base paths:
+
+| Path                                                                      | Description                                                                 |
+| ------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| `/accounts/{account_id}/ai-search/instances/{id}/`                        | Operates on a specific instance                                             |
+| `/accounts/{account_id}/ai-search/namespaces/{namespace}/instances/{id}/` | Operates on instances within a [namespace](/ai-search/concepts/namespaces/) |
+
+The below operations are the same for both paths. For the namespace-scoped API, refer to the [Namespace API reference](/api/resources/ai_search/subresources/namespaces/).
+
+### Search
+
+Search a specific instance. The search endpoint also accepts a `query` string parameter. For the full specification, refer to the [Search API reference](/api/resources/ai_search/subresources/instances/methods/search/).
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/<INSTANCE_NAME>/search" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "messages": [
+      {
+        "content": "What is Cloudflare?",
+        "role": "user"
+      }
+    ]
+  }'
+```
+
+### Chat completions
+
+Generate a response from a specific instance. For the full specification, refer to the [Chat completions API reference](/api/resources/ai_search/subresources/instances/methods/chat_completions/).
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/<INSTANCE_NAME>/chat/completions" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "messages": [
+      {
+        "content": "What is Cloudflare?",
+        "role": "user"
+      }
+    ]
+  }'
+```
+
+#### Streaming
+
+Set `stream` to `true` to receive responses as Server-Sent Events (SSE). The retrieved chunks are sent first as a `chunks` event, followed by the streamed response.
+
+```txt
+event: chunks
+data: [{"id":"chunk-001","type":"text","score":0.85,"text":"...","item":{"key":"about-cloudflare.md","timestamp":1775925540000},"scoring_details":{"vector_score":0.85}}]
+
+data: {"id":"id-1776072781845","created":1776072781,"model":"@cf/meta/llama-3.3-70b-instruct-fp8-fast","object":"chat.completion.chunk","choices":[{"index":0,"delta":{"content":" document"}}]}
+
+data: {"id":"id-1776072781845","created":1776072781,"model":"@cf/meta/llama-3.3-70b-instruct-fp8-fast","object":"chat.completion.chunk","choices":[{"index":0,"delta":{"content":" you provided doesn"}}]}
+
+data: {"id":"id-1776072781845","created":1776072781,"model":"@cf/meta/llama-3.3-70b-instruct-fp8-fast","object":"chat.completion.chunk","choices":[{"index":0,"delta":{"content":"'t contain"}}]}
+
+data: {"id":"id-1776072781845","created":1776072781,"model":"@cf/meta/llama-3.3-70b-instruct-fp8-fast","object":"chat.completion.chunk","choices":[{"index":0,"delta":{"content":" information"}}]}
+
+data: [DONE]
+```
+
+## Cross-instance search and chat
+
+The search and chat completions APIs are also available at the namespace level. These work the same as the instance endpoints, but you pass an `instance_ids` array to specify which instances to query. Each chunk in the response includes an `instance_id` field identifying which instance it came from. For the full specification, refer to the [Namespace API reference](/api/resources/ai_search/subresources/namespaces/).
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/<NAMESPACE>/search" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is Cloudflare?"
+      }
+    ],
+    "ai_search_options": {
+      "instance_ids": ["product-docs", "customer-abc123"]
+    }
+  }'
+```

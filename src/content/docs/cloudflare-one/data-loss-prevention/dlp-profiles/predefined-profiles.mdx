@@ -1,5 +1,8 @@
 ---
 pcx_content_type: reference
+description: Reference information for Predefined profiles in Cloudflare One.
+products:
+  - cloudflare-one
 title: Predefined profiles
 sidebar:
   order: 2
@@ -49,6 +52,7 @@ The following Cloudflare API credentials are validated algorithmically using a c
 
 Credit card numbers begin with a six or eight-digit Issuer Identification Number (IIN) and are followed by up to 23 additional digits. Card verification values (CVVs) are not validated.
 
+
 In the table below, entries use one of three validation methods. [Luhn's algorithm](https://en.wikipedia.org/wiki/Luhn_algorithm) is a checksum formula used to verify credit card numbers. Entries validated "with checksum" use an arithmetic check specific to that number format. Entries validated "with regex" match a known text pattern without performing a mathematical check.
 
 | Detection entry                  | Notes                                                                             |
@@ -65,6 +69,16 @@ In the table below, entries use one of three validation methods. [Luhn's algorit
 | Visa Text                        | Text matching `visa`.                                                             |
 | United States ABA Routing Number | Validated algorithmically with checksum.                                          |
 | IBAN                             | Validated with checksum.                                                          |
+
+## HTTP Archive
+
+The **Unsanitized HAR** predefined profile detects HTTP Archive (HAR) files in traffic that have not been processed by Cloudflare's HAR sanitizer. HAR files frequently contain sensitive data such as session cookies, authorization headers, and other credentials.
+
+| Detection entry       | Notes                                                                                                                           |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| Unsanitized HAR file  | Detects HAR files that do not carry a Cloudflare sanitized marker. Files processed by the Cloudflare HAR sanitizer and unmodified since will not match this entry. |
+
+You can use this profile in a Gateway HTTP policy to block HAR file uploads or redirect users to `https://har-sanitizer.pages.dev/` to sanitize the file before uploading. For more information, refer to [common DLP policies](/cloudflare-one/data-loss-prevention/dlp-policies/common-policies/).
 
 ## Health Information
 

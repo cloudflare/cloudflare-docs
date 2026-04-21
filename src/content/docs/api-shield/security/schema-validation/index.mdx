@@ -46,8 +46,6 @@ To view the contents in your learned schema, refer to [Export a schema](/api-shi
 
 ### Add validation by uploading a schema
 
-{/* prettier-ignore-start */}
-
 <Tabs syncKey="dashNewNav">
    <TabItem label="New dashboard" icon="rocket">
       <Steps>
@@ -73,15 +71,11 @@ To view the contents in your learned schema, refer to [Export a schema](/api-shi
    </TabItem>
 </Tabs>
 
-{/* prettier-ignore-end */}
-
 :::note
 Changes may take a few minutes to process depending on the number of added endpoints.
 :::
 
 ### Add validation by applying a learned schema to a single endpoint
-
-{/* prettier-ignore-start */}
 
 <Tabs syncKey="dashNewNav">
    <TabItem label="New dashboard" icon="rocket">
@@ -107,13 +101,9 @@ Changes may take a few minutes to process depending on the number of added endpo
    </TabItem>
 </Tabs>
 
-{/* prettier-ignore-end */}
-
 ### Add validation by applying a learned schema to an entire hostname
 
 At this time, learned schemas will not overwrite customer-uploaded schemas. If an endpoint is covered by a customer-uploaded schema and also appears in a learned schema, the **Changes** field is set to `Unaffected`.
-
-{/* prettier-ignore-start */}
 
 <Tabs syncKey="dashNewNav">
    <TabItem label="New dashboard" icon="rocket">
@@ -142,8 +132,6 @@ At this time, learned schemas will not overwrite customer-uploaded schemas. If a
    </TabItem>
 </Tabs>
 
-{/* prettier-ignore-end */}
-
 :::note
 If an endpoint is currently protected by a learned schema, the date of the last applied learned schema will be shown in the current schema field.
 :::
@@ -155,8 +143,6 @@ A fallthrough rule acts as a catch-all for requests that do not match endpoints 
 By ensuring that all your endpoints in a schema are added to Endpoint Management, the fallthrough action can protect you against legacy or zombie endpoints that your team may be unaware of.
 
 To set up a fallthrough action:
-
-{/* prettier-ignore-start */}
 
 <Tabs syncKey="dashNewNav">
    <TabItem label="New dashboard" icon="rocket">
@@ -191,15 +177,11 @@ To set up a fallthrough action:
    </TabItem>
 </Tabs>
 
-{/* prettier-ignore-end */}
-
 :::note
 You can use the `cf.api_gateway.fallthrough_detected` field in your own custom rule for a more customized logic check. This field evaluates as `true` when a request does not match an endpoint in Endpoint Management. Check against your API hostname or root path to ensure that you are not blocking non-API traffic on your zone.
 :::
 
 ### Change the action of an entire schema
-
-{/* prettier-ignore-start */}
 
 <Tabs syncKey="dashNewNav">
    <TabItem label="New dashboard" icon="rocket">
@@ -228,8 +210,6 @@ You can use the `cf.api_gateway.fallthrough_detected` field in your own custom r
    </TabItem>
 </Tabs>
 
-{/* prettier-ignore-end */}
-
 ### Change the global default action of Schema validation
 
 Schema validation’s default action is visible on the main Schema validation page. This action applies to any endpoint with its action set to `Default`.
@@ -239,8 +219,6 @@ Schema validation’s default action is visible on the main Schema validation pa
 - `None` action: non-compliant requests are neither logged nor blocked.
 
 To change the default action:
-
-{/* prettier-ignore-start */}
 
 <Tabs syncKey="dashNewNav">
    <TabItem label="New dashboard" icon="rocket">
@@ -267,8 +245,6 @@ To change the default action:
    </TabItem>
 </Tabs>
 
-{/* prettier-ignore-end */}
-
 ### Change the action of a single endpoint
 
 You can change individual endpoint actions separately from the default action in Schema validation.
@@ -276,8 +252,6 @@ You can change individual endpoint actions separately from the default action in
 This allows you to be stricter on blocking non-compliant requests on certain endpoints when the default action is `Log`. It can also be used to relax constraints on non-compliant requests on certain endpoints when the default action is set to `Block`. You may want to silence known false positives on an endpoint by setting the action to `None`.
 
 To change the action on an individual endpoint:
-
-{/* prettier-ignore-start */}
 
 <Tabs syncKey="dashNewNav">
    <TabItem label="New dashboard" icon="rocket">
@@ -303,15 +277,11 @@ To change the action on an individual endpoint:
    </TabItem>
 </Tabs>
 
-{/* prettier-ignore-end */}
-
 ### Disable Schema validation without changing actions
 
 You can disable Schema validation entirely for temporary troubleshooting. You can override all actions at once, preventing Schema validation from taking any action while you complete your troubleshooting.
 
 To disable Schema validation without changing actions:
-
-{/* prettier-ignore-start */}
 
 <Tabs syncKey="dashNewNav">
    <TabItem label="New dashboard" icon="rocket">
@@ -335,13 +305,9 @@ To disable Schema validation without changing actions:
    </TabItem>
 </Tabs>
 
-{/* prettier-ignore-end */}
-
 Your per-endpoint configurations will be saved when modifying the setting, so that you do not lose your configuration. To re-enable your configurations after troubleshooting, navigate back to the settings and select **Enable**.
 
 ### View active schemas
-
-{/* prettier-ignore-start */}
 
 <Tabs syncKey="dashNewNav">
    <TabItem label="New dashboard" icon="rocket">
@@ -370,15 +336,11 @@ Your per-endpoint configurations will be saved when modifying the setting, so th
 To export a schema, refer to [Export a schema](/api-shield/management-and-monitoring/endpoint-management/schema-learning/#export-a-schema).
 :::
 
-{/* prettier-ignore-end */}
-
 ### Delete active schemas
 
 Deleting the schema will remove validation from the currently associated endpoints, but it will not delete the endpoints from Endpoint Management.
 
 To delete currently uploaded or learned schemas:
-
-{/* prettier-ignore-start */}
 
 <Tabs syncKey="dashNewNav">
    <TabItem label="New dashboard" icon="rocket">
@@ -403,8 +365,6 @@ To delete currently uploaded or learned schemas:
       </Steps>
    </TabItem>
 </Tabs>
-
-{/* prettier-ignore-end */}
 
 ---
 

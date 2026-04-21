@@ -34,8 +34,6 @@ When an endpoint is using [Cloudflare Workers](/workers/), the metrics data will
 
 ## Access
 
-{/* prettier-ignore-start */}
-
 <Tabs syncKey="dashNewNav">
   <TabItem label="New dashboard" icon="rocket">
     <Steps>
@@ -56,15 +54,11 @@ When an endpoint is using [Cloudflare Workers](/workers/), the metrics data will
   </TabItem>
 </Tabs>
 
-{/* prettier-ignore-end */}
-
 ### Add endpoints from API Discovery
 
 There are two ways to add API endpoints from Discovery.
 
 #### Add from the Endpoints tab
-
-{/* prettier-ignore-start */}
 
 <Tabs syncKey="dashNewNav">
   <TabItem label="New dashboard" icon="rocket">
@@ -83,11 +77,7 @@ There are two ways to add API endpoints from Discovery.
   </TabItem>
 </Tabs>
 
-{/* prettier-ignore-end */}
-
 #### Add from the Discovery tab
-
-{/* prettier-ignore-start */}
 
 <Tabs syncKey="dashNewNav">
   <TabItem label="New dashboard" icon="rocket">
@@ -106,11 +96,7 @@ There are two ways to add API endpoints from Discovery.
   </TabItem>
 </Tabs>
 
-{/* prettier-ignore-end */}
-
 ### Add endpoints from Schema validation
-
-{/* prettier-ignore-start */}
 
 <Tabs syncKey="dashNewNav">
   <TabItem label="New dashboard" icon="rocket">
@@ -130,8 +116,6 @@ There are two ways to add API endpoints from Discovery.
   </TabItem>
 </Tabs>
 
-{/* prettier-ignore-end */}
-
 API Shield will look for duplicate endpoints that have the same host, method, and path. Duplicate endpoints will not be saved to endpoint management.
 
 :::note
@@ -139,8 +123,6 @@ If you deselect **Save new endpoints to endpoint management**, the endpoints wil
 :::
 
 ### Add endpoints manually
-
-{/* prettier-ignore-start */}
 
 <Tabs syncKey="dashNewNav">
   <TabItem label="New dashboard" icon="rocket">
@@ -159,8 +141,6 @@ If you deselect **Save new endpoints to endpoint management**, the endpoints wil
     </Steps>
   </TabItem>
 </Tabs>
-
-{/* prettier-ignore-end */}
 
 :::note
 By selecting multiple checkboxes, you can add several endpoints from Discovery at once instead of individually.
@@ -194,8 +174,6 @@ For more information on how Cloudflare uses variables in API Shield, refer to th
 
 You can delete endpoints one at a time or in bulk.
 
-{/* prettier-ignore-start */}
-
 <Tabs syncKey="dashNewNav">
   <TabItem label="New dashboard" icon="rocket">
     <Steps>
@@ -211,8 +189,6 @@ You can delete endpoints one at a time or in bulk.
     </Steps>
   </TabItem>
 </Tabs>
-
-{/* prettier-ignore-end */}
 
 :::caution
 When you delete an endpoint from Endpoint Management, Cloudflare immediately stops tracking all associated performance and analytics data. The endpoint's previous historical metrics are permanently removed and cannot be restored. If you later save this endpoint again, metric tracking will resume, starting from the point the endpoint is re-saved.

@@ -9,25 +9,23 @@ sidebar:
   label: robots.txt setting
 ---
 
-import { Render, Tabs, TabItem, Steps, DashButton } from "~/components";
+import { Tabs, TabItem, Steps, DashButton } from "~/components";
 
-Protect your website or application from AI crawlers by implementing a `robots.txt` file on your domain to direct AI bot operators on what content they can and cannot scrape for AI model training.
+AI companies use crawlers to collect website content for training language models, generating search answers, and other purposes. A `robots.txt` file at the root of your domain tells these crawlers which content they should or should not access. When you turn on the managed `robots.txt` setting, Cloudflare generates and maintains a `robots.txt` file that instructs known AI crawlers to stay away from your content.
 
-AI bots are expected to follow the `robots.txt` directives.
-
-`robots.txt` files express your preferences. They do not prevent crawler operators from crawling your content at a technical level. Some crawler operators may disregard your `robots.txt` preferences and crawl your content regardless of what your `robots.txt` file says.
+`robots.txt` compliance is voluntary. The file expresses your preferences, but it does not prevent crawlers from accessing your content at a technical level. Some crawler operators may disregard your `robots.txt` directives (instructions like `Disallow: /`) and crawl your content regardless.
 
 :::note
-Respecting `robots.txt` is voluntary. If you want to prevent crawling, use AI Crawl Control's [manage AI crawlers](/ai-crawl-control/features/manage-ai-crawlers/) feature.
+If you want to enforce crawl blocking rather than request it, use [AI Crawl Control](/ai-crawl-control/features/manage-ai-crawlers/). You can also use both features together — `robots.txt` to express your preferences and AI Crawl Control to enforce them.
 :::
 
 ## Compatibility with existing `robots.txt` files
 
-Cloudflare will independently check whether your website has an existing `robots.txt` file and update the behavior of this feature based on your website.
+Cloudflare detects whether your origin server already has a `robots.txt` file and adjusts accordingly — either merging with your existing file or creating one from scratch.
 
 ### Existing robots.txt file
 
-If your website already has a `robots.txt` file — verified by a HTTP `200` response — Cloudflare will prepend our managed `robots.txt` before your existing `robots.txt`, combining both into a single response.
+If your website already has a `robots.txt` file — verified by an HTTP `200` response — Cloudflare will prepend our managed `robots.txt` before your existing `robots.txt`, combining both into a single response.
 
 For example, without this feature enabled, the `robots.txt` content of `crawlstop.com` would be:
 
@@ -109,13 +107,11 @@ Sitemap: https://www.crawlstop.com/sitemap.xml
 
 ### No robots.txt file
 
-If your website does not have a `robots.txt` file, Cloudflare creates a new file with our managed block directives and serves it for you.
+If your website does not have a `robots.txt` file, Cloudflare creates a new file with managed `Disallow` rules for known AI crawlers and serves it for you.
 
 ## Implementation
 
 To implement a `robots.txt` file on your domain:
-
-{/* prettier-ignore-start */}
 
 <Tabs syncKey="dashNewNav">
   <TabItem label="New dashboard" icon="rocket">
@@ -138,13 +134,13 @@ To implement a `robots.txt` file on your domain:
   </TabItem>
 </Tabs>
 
-{/* prettier-ignore-end */}
-
 ## Content Signals Policy
 
-Free zones that do not have their own `robots.txt` file and do not use the managed `robots.txt` feature will display the Content Signals Policy when a crawler requests the `robots.txt` file for your zone.
+Content Signals are a set of machine-readable directives in a `robots.txt` file that categorize how crawlers may use your content. The three categories are `search` (building a search index), `ai-input` (feeding content into AI models for real-time answers), and `ai-train` (training or fine-tuning AI models).
 
-This file only outlines the Content Signals framework. It does not express your preferences or rights associated with your content.
+Domains on the Free plan that do not have their own `robots.txt` file and do not use the managed `robots.txt` feature will display the Content Signals Policy when a crawler requests the `robots.txt` file for your domain.
+
+The Content Signals Policy defines these categories but does not express any specific preferences about your content. To set preferences (for example, `ai-train=no`), turn on the managed `robots.txt` feature.
 
 ```txt title="Content Signals Policy"
 # As a condition of accessing this website, you agree to abide by the

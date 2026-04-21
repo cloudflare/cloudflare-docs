@@ -1,36 +1,54 @@
 ---
 pcx_content_type: navigation
 title: Configuration
+description: Customize how your AI Search instance indexes data, retrieves results, and generates responses.
 sidebar:
   order: 6
+products:
+  - ai-search
 ---
 
-import { MetaInfo, Type } from "~/components";
+You can customize how your AI Search instance indexes your data, retrieves results, and generates responses. Some settings can be updated after the instance is created, while others are fixed at creation time.
 
-You can customize how your AI Search instance indexes your data, and retrieves and generates responses for queries. Some settings can be updated after the instance is created, while others are fixed at creation time.
+## Data source
 
-The table below lists all available configuration options:
+| Configuration                                                              | Editable after creation | Description                                              |
+| -------------------------------------------------------------------------- | ----------------------- | -------------------------------------------------------- |
+| [Built-in storage](/ai-search/configuration/data-source/built-in-storage/) | n/a                     | Upload files directly to an instance                     |
+| [Website](/ai-search/configuration/data-source/website/)                   | no                      | Connect a domain you own to index website pages          |
+| [R2 Bucket](/ai-search/configuration/data-source/r2/)                      | no                      | Connect a Cloudflare R2 bucket to index stored documents |
 
-| Configuration                                                                  | Editable after creation | Description                                                                                               |
-| ------------------------------------------------------------------------------ | ----------------------- | --------------------------------------------------------------------------------------------------------- |
-| [Data source](/ai-search/configuration/data-source/)                           | no                      | The source where your knowledge base is stored                                                            |
-| [Custom metadata schema](/ai-search/configuration/metadata/#define-a-schema)   | no                      | Define custom metadata fields for filtering (max 5 fields)                                                |
-| [Path filtering](/ai-search/configuration/path-filtering/)                     | yes                     | Include or exclude specific paths from indexing                                                           |
-| [Chunk size](/ai-search/configuration/chunking/)                               | yes                     | Number of tokens per chunk                                                                                |
-| [Chunk overlap](/ai-search/configuration/chunking/)                            | yes                     | Number of overlapping tokens between chunks                                                               |
-| [Embedding model](/ai-search/configuration/models/)                            | no                      | Model used to generate vector embeddings                                                                  |
-| [Query rewrite](/ai-search/configuration/query-rewriting/)                     | yes                     | Enable or disable query rewriting before retrieval                                                        |
-| [Query rewrite model](/ai-search/configuration/models/)                        | yes                     | Model used for query rewriting                                                                            |
-| [Query rewrite system prompt](/ai-search/configuration/system-prompt/)         | yes                     | Custom system prompt to guide query rewriting behavior                                                    |
-| [Match threshold](/ai-search/configuration/retrieval-configuration/)           | yes                     | Minimum similarity score required for a vector match                                                      |
-| [Maximum number of results](/ai-search/configuration/retrieval-configuration/) | yes                     | Maximum number of vector matches returned (`top_k`)                                                       |
-| [Reranking](/ai-search/configuration/reranking/)                               | yes                     | Rerank to reorder retrieved results by semantic relevance using a reranking model after initial retrieval |
-| [Generation model](/ai-search/configuration/models/)                           | yes                     | Model used to generate the final response                                                                 |
-| [Generation system prompt](/ai-search/configuration/system-prompt/)            | yes                     | Custom system prompt to guide response generation                                                         |
-| [Similarity caching](/ai-search/configuration/cache/)                          | yes                     | Enable or disable caching of responses for similar (not just exact) prompts                               |
-| [Similarity caching threshold](/ai-search/configuration/cache/)                | yes                     | Controls how similar a new prompt must be to a previous one to reuse its cached response                  |
-| [AI Gateway](/ai-gateway)                                                      | yes                     | AI Gateway for monitoring and controlling model usage                                                     |
-| AI Search name                                                                 | no                      | Name of your AI Search instance                                                                           |
-| [Service API token](/ai-search/configuration/service-api-token/)               | yes                     | API token that grants AI Search permission to configure resources on your account                         |
-| [Public endpoint](/ai-search/configuration/public-endpoint/)                   | yes                     | Enable public access to search, chat, and MCP endpoints                                                   |
-| [UI snippets](/ai-search/configuration/embed-search-snippets/)                 | yes                     | Embed pre-built search and chat components in your website                                                |
+## Indexing
+
+| Configuration                                                             | Editable after creation | Description                                                     |
+| ------------------------------------------------------------------------- | ----------------------- | --------------------------------------------------------------- |
+| [Vector search](/ai-search/configuration/indexing/vector-search/)         | yes                     | Vector search and the built-in vector index                     |
+| [Path filtering](/ai-search/configuration/indexing/path-filtering/)       | yes                     | Include or exclude specific paths from indexing                 |
+| [Chunking](/ai-search/configuration/indexing/chunking/)                   | yes                     | Number of tokens per chunk and overlap between chunks           |
+| [Syncing](/ai-search/configuration/indexing/syncing/)                     | yes                     | Sync jobs and indexing controls                                 |
+| [Keyword search](/ai-search/configuration/indexing/keyword-search/)       | yes                     | Enable keyword (BM25) search for exact term matching            |
+| [Hybrid search](/ai-search/configuration/indexing/hybrid-search/)         | yes                     | Combine vector and keyword search with configurable fusion      |
+| [Metadata](/ai-search/configuration/indexing/metadata/)                   | yes                     | Custom metadata fields for filtering                            |
+| [Service API token](/ai-search/configuration/indexing/service-api-token/) | yes                     | API token that grants AI Search permission to access R2 buckets |
+
+## Retrieval
+
+| Configuration                                                            | Editable after creation | Description                                                   |
+| ------------------------------------------------------------------------ | ----------------------- | ------------------------------------------------------------- |
+| [Result filtering](/ai-search/configuration/retrieval/result-filtering/) | yes                     | Match threshold and maximum number of results                 |
+| [Relevance boosting](/ai-search/configuration/retrieval/boosting/)       | yes                     | Bias results by metadata characteristics                      |
+| [Reranking](/ai-search/configuration/retrieval/reranking/)               | yes                     | Reorder results by semantic relevance using a reranking model |
+| [Query rewriting](/ai-search/configuration/retrieval/query-rewriting/)   | yes                     | Rewrite follow-up queries using conversation context          |
+| [System prompt](/ai-search/configuration/retrieval/system-prompt/)       | yes                     | Guide query rewriting and response generation behavior        |
+| [Similarity caching](/ai-search/configuration/retrieval/cache/)          | yes                     | Cache responses for similar prompts                           |
+| [Public endpoint](/ai-search/configuration/retrieval/public-endpoint/)   | yes                     | Enable public access to search, chat, and MCP endpoints       |
+| [UI snippets](/ai-search/configuration/retrieval/embed-search-snippets/) | yes                     | Embed pre-built search and chat components in your website    |
+
+## Models
+
+| Configuration                                             | Editable after creation | Description                                         |
+| --------------------------------------------------------- | ----------------------- | --------------------------------------------------- |
+| [Embedding model](/ai-search/configuration/models/)       | no                      | Model used to generate vector embeddings            |
+| [Generation model](/ai-search/configuration/models/)      | yes                     | Model used to generate the final response           |
+| [Query rewriting model](/ai-search/configuration/models/) | yes                     | Model used for query rewriting                      |
+| [Reranking model](/ai-search/configuration/models/)       | yes                     | Model used to reorder results by semantic relevance |

@@ -1,15 +1,22 @@
 ---
 title: Workers AI
+description: Route Workers AI requests through AI Gateway for analytics, caching, and rate limiting.
 pcx_content_type: configuration
 tags:
   - AI
 sidebar:
   order: 2
+products:
+  - ai-gateway
 ---
 
 import { Render, TypeScriptExample } from "~/components";
 
 Use AI Gateway for analytics, caching, and security on requests to [Workers AI](/workers-ai/). Workers AI integrates seamlessly with AI Gateway, allowing you to execute AI inference via API requests or through an environment binding for Workers scripts. The binding simplifies the process by routing requests through your AI Gateway with minimal setup.
+
+:::note
+You can also access third-party models through AI Gateway using the AI binding. Refer to the [binding reference](/ai-gateway/integrations/worker-binding-methods/#envairun) for details.
+:::
 
 ## Prerequisites
 

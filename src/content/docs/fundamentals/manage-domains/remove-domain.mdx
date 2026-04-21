@@ -1,9 +1,12 @@
 ---
 pcx_content_type: how-to
 title: Remove a domain
+description: Remove a domain from your Cloudflare account, including required steps for DNS, subscriptions, and registrar settings.
 head:
   - tag: title
     content: Remove a domain from Cloudflare
+products:
+  - fundamentals
 ---
 
 import { DashButton } from "~/components";
@@ -19,9 +22,9 @@ If you have an Enterprise plan, you need to [change the zone plan](/billing/mana
 If you need to re-add the domain in a different account, make sure the current settings have been saved. For example, you may [Import and export DNS records](/dns/manage-dns-records/how-to/import-and-export/).
 
 :::note
-If you have just added a domain and have not configured its plan yet, the domain is in the `Initializing (Setup)` status and cannot be deleted.
+If you have just added a domain and have not configured its plan yet, the domain is in the `Initializing (Finish setup)` status and cannot be deleted.
 At this step you'll need to select a plan for this domain: the status will then change to `Pending` and you can then delete the domain.
-Please also note that domains in the `Initializing (Setup)` or `Pending` statuses will [automatically be deleted after 28 days](/dns/zone-setups/reference/domain-status/#initializing-setup) if they do not activate.
+Please also note that domains in the `Initializing (Finish setup)` or `Pending` statuses will [automatically be deleted after 28 days](/dns/zone-setups/reference/domain-status/#initializing-finish-setup) if they do not activate.
 :::
 
 ### Actions outside of Cloudflare
@@ -48,16 +51,14 @@ Please also note that domains in the `Initializing (Setup)` or `Pending` statuse
 
 ## Remove a domain activated in Cloudflare
 
-1. Log in to the Cloudflare dashboard.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your domain.
 
-   <DashButton url="/?to=/:account/home" />
+   <DashButton url="/?to=/:account/:zone/" />
 
-2. On the **Overview** page, find **Advanced Actions** and then select **Remove Site from Cloudflare**.
-
-   ![Remove site from Cloudflare is an option under Advanced Actions](~/assets/images/fundamentals/get-started/remove-domain.png)
+2. On the domain **Overview** page, find **Advanced Actions** and then select **Remove from Cloudflare**.
 
    :::note
-   If you are using an Enterprise domain, [change your domain plan](/billing/manage/change-plan/#change-plan-type) to **Free**, which will give you access to **Remove Site from Cloudflare**.<br/><br/>If this does not work, contact your Customer Success Manager.
+   If you are using an Enterprise domain, [change your domain plan](/billing/manage/change-plan/#change-plan-type) to **Free**, which will give you access to **Remove from Cloudflare**.<br/><br/>If this does not work, contact your Customer Success Manager.
    :::
 
 3. Select **Confirm**.

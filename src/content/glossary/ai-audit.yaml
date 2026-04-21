@@ -13,6 +13,10 @@ entries:
     general_definition: |-
       An emerging IETF standard for expressing AI content preferences via HTTP headers or metadata. Aims to replace non-standard vendor signals. Refer to contentsignals.org.
 
+  - term: canonical URL
+    general_definition: |-
+      The preferred version of a web page, specified by a `<link rel="canonical">` HTML tag in the page's `<head>` section. When multiple URLs serve the same or similar content, the canonical URL tells search engines and crawlers which version is authoritative.
+
   - term: crawl
     general_definition: |-
       A single HTTP request from a bot to access a page on your site.

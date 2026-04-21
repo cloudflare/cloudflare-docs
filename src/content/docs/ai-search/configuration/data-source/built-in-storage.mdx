@@ -1,0 +1,46 @@
+---
+title: Built-in storage
+description: Upload files directly to an AI Search instance using built-in storage powered by R2 and Vectorize.
+pcx_content_type: concept
+sidebar:
+  order: 1
+products:
+  - ai-search
+---
+
+import { DashButton } from "~/components";
+
+Every new AI Search instance comes with built-in storage and a built-in vector index, powered by [R2](/r2/) and [Vectorize](/vectorize/). You can upload files directly to an instance without setting up either service yourself.
+
+## Instances created after April 16, 2026
+
+Instances created after **April 16, 2026** include built-in storage. You can upload files directly using the [Items API](/ai-search/api/items/workers-binding/) or the dashboard.
+
+Instances created before this date do not include built-in storage and do not support the Items API. You can see which of your instances have built-in storage on the dashboard under **AI** > **AI Search**. Select your instance and check the **Overview** tab to see if it includes built-in storage.
+
+<DashButton url="/?to=/:account/ai/ai-search" />
+
+All instances will be migrated to managed infrastructure. Migration details are coming soon.
+
+## Upload and manage files
+
+Upload files to an instance using the [Items API](/ai-search/api/items/workers-binding/) (Workers binding or REST API) or the **Items** tab in the dashboard (**AI** > **AI Search** > your instance > **Items**). You can also list, view, and delete uploaded files through the Items API or the dashboard.
+
+For supported file types, refer to [Supported file types](/ai-search/configuration/data-source/#supported-file-types).
+
+## Indexing
+
+Files uploaded to built-in storage are indexed immediately. External data sources like websites and R2 buckets are indexed on a sync schedule.
+
+## External data sources
+
+An instance can use built-in storage alongside an external data source. The available external data sources are:
+
+- [Website](/ai-search/configuration/data-source/website/): crawl and index a website that you own
+- [R2 Bucket](/ai-search/configuration/data-source/r2/): index documents stored in a Cloudflare R2 bucket
+
+For example, an instance can be backed by a website for shared documentation while also accepting file uploads through the Items API for additional content.
+
+## Limits and pricing
+
+For instances with built-in storage, R2 storage, Vectorize, and Browser Run are included. Workers AI and AI Gateway usage is billed separately. For full details, refer to [Limits and pricing](/ai-search/platform/limits-pricing/).
