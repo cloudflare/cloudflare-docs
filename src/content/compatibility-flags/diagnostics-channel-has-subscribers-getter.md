@@ -5,8 +5,8 @@ _build:
   list: never
 
 name: "`hasSubscribers` is a getter on `diagnostics_channel.Channel`"
-sort_date: "2026-05-01"
-enable_date: "2026-05-01"
+sort_date: "2026-05-19"
+enable_date: "2026-05-19"
 enable_flag: "diagnostics_channel_has_subscribers_getter"
 disable_flag: "no_diagnostics_channel_has_subscribers_getter"
 ---
