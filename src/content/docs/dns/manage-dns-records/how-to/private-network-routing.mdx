@@ -25,7 +25,7 @@ This feature is in closed beta. Contact your account team to request access and 
 
 Before you enable private network routing, you need:
 
-- An active tunnel connection to Cloudflare through one of the supported on-ramp methods ([Cloudflare WAN](/cloudflare-wan/), [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/), [IPsec](/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/), [GRE](/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/), or [CNI](/network-interconnect/)).
+- An active tunnel connection to Cloudflare through one of the supported on-ramp methods ([Cloudflare WAN](/cloudflare-wan/), [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/), [IPsec](/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/), [GRE](/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/), or [CNI](/network-interconnect/)).
 - The **Private Origins Allowed** entitlement enabled on your account.
 
 ## Supported records and IP ranges
@@ -107,7 +107,7 @@ curl --request PATCH \
 
 - **Record types**: Only `A` and `AAAA` records support private network routing.
 - **Proxy status**: Records must be proxied. DNS-only records cannot use private routing.
-- **Virtual networks**: Traffic routes through your default [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/). Selecting a specific virtual network is not supported.
+- **Virtual networks**: Traffic routes through your default [virtual network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/). Selecting a specific virtual network is not supported.
 
 ## Troubleshooting
 
