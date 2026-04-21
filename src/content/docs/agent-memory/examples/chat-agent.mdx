@@ -32,14 +32,15 @@ A Cloudflare Worker that:
 	"name": "memory-chat-agent",
 	"main": "src/index.ts",
 	"compatibility_date": "$today",
-	"memory_namespaces": [
+	"agent_memory": [
 		{
 			"binding": "MEMORY",
-			"namespace": "<NAMESPACE_ID>"
+			"namespace": "<NAMESPACE_NAME>"
 		}
 	],
 	"ai": {
-		"binding": "AI"
+		"binding": "AI",
+		"remote": true,
 	}
 }
 ```
@@ -51,72 +52,67 @@ A Cloudflare Worker that:
 <TypeScriptExample>
 
 ```ts
-interface Env {
-  MEMORY: AgentMemoryBinding;
-  AI: Ai;
-}
-
 type ChatRequest = {
-  userId: string;
-  sessionId: string;
-  message: string;
+	userId: string;
+	sessionId: string;
+	message: string;
 };
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    if (request.method !== "POST") {
-      return new Response("Method not allowed", { status: 405 });
-    }
+	async fetch(request, env, ctx): Promise<Response> {
+		if (request.method !== "POST") {
+			return new Response("Method not allowed", { status: 405 });
+		}
 
-    const { userId, sessionId, message } = await request.json<ChatRequest>();
-    const profile = await env.MEMORY.getProfile(userId);
+		const { userId, sessionId, message } = (await request.json()) as ChatRequest;
+		const profile = await env.MEMORY.getProfile(userId);
 
-    // Step 1: Get the profile summary for the system prompt
-    const { summary } = await profile.getSummary({ sessionId });
+		// Step 1: Get the profile summary for the system prompt
+		const { summary } = await profile.getSummary({ sessionId });
 
-    // Step 2: Recall specific context relevant to the user's message
-    const memory = await profile.recall(message, {
-      thinkingLevel: "medium",
-      responseLength: "short",
-    });
+		// Step 2: Recall specific context relevant to the user's message
+		const memory = await profile.recall(message, {
+			thinkingLevel: "medium",
+			responseLength: "short",
+		});
 
-    // Step 3: Build the system prompt with memory context
-    let systemPrompt = "You are a helpful assistant.";
-    if (summary) {
-      systemPrompt += `\n\nHere is what you know about the user:\n\n${summary}`;
-    }
-    if (memory.answer) {
-      systemPrompt += `\n\nRelevant context for this question:\n${memory.answer}`;
-    }
+		// Step 3: Build the system prompt with memory context
+		let systemPrompt = "You are a helpful assistant.";
+		if (summary) {
+			systemPrompt += `\n\nHere is what you know about the user:\n\n${summary}`;
+		}
+		if (memory.answer) {
+			systemPrompt += `\n\nRelevant context for this question:\n${memory.answer}`;
+		}
 
-    // Step 4: Generate a response using Workers AI
-    const aiResponse = await env.AI.run(
-      "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
-      {
-        messages: [
-          { role: "system", content: systemPrompt },
-          { role: "user", content: message },
-        ],
-      },
-    );
+		// Step 4: Generate a response using Workers AI
+		const aiResponse = await env.AI.run(
+			"@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+			{
+				messages: [
+					{ role: "system", content: systemPrompt },
+					{ role: "user", content: message },
+				],
+			},
+		);
 
-    const assistantMessage =
-      "response" in aiResponse ? aiResponse.response : "";
+		const assistantMessage =
+			typeof aiResponse === "object" && aiResponse !== null && "response" in aiResponse ? aiResponse.response : "";
 
-    // Step 5: Ingest this conversation turn for future recall
-    await profile.ingest(
-      [
-        { role: "user", content: message },
-        { role: "assistant", content: assistantMessage || "" },
-      ],
-      { sessionId },
-    );
+		// Step 5: Ingest this conversation turn for future recall
+		await profile.ingest(
+			[
+				{ role: "user", content: message },
+				{ role: "assistant", content: assistantMessage || "" },
+			],
+			{ sessionId },
+		);
 
-    return Response.json({
-      response: assistantMessage,
-    });
-  },
-};
+		return Response.json({
+			response: assistantMessage,
+		});
+	},
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
