@@ -1,0 +1,73 @@
+---
+title: R2 SQL adds JSON functions, EXPLAIN FORMAT JSON, and unpartitioned table support
+description: Query JSON data, analyze query plans programmatically, and query unpartitioned Iceberg tables
+products:
+  - r2-sql
+date: 2026-04-20
+---
+
+[R2 SQL](/r2-sql/) is Cloudflare's serverless, distributed, analytics query engine for querying [Apache Iceberg](https://iceberg.apache.org/) tables stored in [R2 Data Catalog](/r2/data-catalog/).
+
+R2 SQL now supports functions for querying JSON data stored in Apache Iceberg tables, an easier way to parse query plans with `EXPLAIN FORMAT JSON`, and querying tables without partition keys stored in [R2 Data Catalog](/r2/data-catalog/).
+
+JSON functions extract and manipulate JSON values directly in SQL without client-side processing:
+
+```sql
+SELECT
+  json_get_str(doc, 'name') AS name,
+  json_get_int(doc, 'user', 'profile', 'level') AS level,
+  json_get_bool(doc, 'active') AS is_active
+FROM my_namespace.sales_data
+WHERE json_contains(doc, 'email')
+```
+For a full list of available functions, refer to [JSON functions](/r2-sql/sql-reference/scalar-functions/#json-functions).
+
+`EXPLAIN FORMAT JSON` returns query execution plans as structured JSON for programmatic analysis and observability integrations:
+
+```bash
+npx wrangler r2 sql query "${WAREHOUSE}" "EXPLAIN FORMAT JSON SELECT * FROM logpush.requests LIMIT 10;"
+
+┌──────────────────────────────────────┐
+│ plan                                 │
+├──────────────────────────────────────┤
+│ {                                    │
+│   "name": "CoalescePartitionsExec",  │
+│   "output_partitions": 1,            │
+│   "rows": 10,                        │
+│   "size_approx": "310B",             │
+│   "children": [                      │
+│     {                                │
+│       "name": "DataSourceExec",      │
+│       "output_partitions": 4,        │
+│       "rows": 28951,                 │
+│       "size_approx": "900.0KB",      │
+│       "table": "logpush.requests",   │
+│       "files": 7,                    │
+│       "bytes": 900019,               │
+│       "projection": [                │
+│         "__ingest_ts",               │
+│         "CPUTimeMs",                 │
+│         "DispatchNamespace",         │
+│         "Entrypoint",                │
+│         "Event",                     │
+│         "EventTimestampMs",          │
+│         "EventType",                 │
+│         "Exceptions",                │
+│         "Logs",                      │
+│         "Outcome",                   │
+│         "ScriptName",                │
+│         "ScriptTags",                │
+│         "ScriptVersion",             │
+│         "WallTimeMs"                 │
+│       ],                             │
+│       "limit": 10                    │
+│     }                                │
+│   ]                                  │
+│ }                                    │
+└──────────────────────────────────────┘
+```
+For more details, refer to [EXPLAIN](/r2-sql/sql-reference/#explain).
+
+Unpartitioned Iceberg tables can now be queried directly, which is useful for smaller datasets or data without natural time dimensions. For tables with more than 1000 files, partitioning is still recommended for better performance.
+
+Refer to [Limitations and best practices](/r2-sql/reference/limitations-best-practices/) for the latest guidance on using R2 SQL.

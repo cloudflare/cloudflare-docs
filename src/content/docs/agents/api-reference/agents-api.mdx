@@ -1,8 +1,11 @@
 ---
 title: Agents API
+description: Reference for the Agent base class, lifecycle hooks, SQL storage, and error handling in the Agents SDK.
 pcx_content_type: reference
 sidebar:
   order: 1
+products:
+  - agents
 ---
 
 import { Render, LinkCard } from "~/components";
@@ -91,6 +94,9 @@ flowchart TD
 | **Protocol messages** | `shouldSendProtocolMessages()`, `isConnectionProtocolEnabled()`                      | [Protocol messages](/agents/api-reference/protocol-messages/)       |
 | **Context**           | `getCurrentAgent()`                                                                  | [getCurrentAgent()](/agents/api-reference/get-current-agent/)       |
 | **Observability**     | `subscribe()`, diagnostics channels, Tail Workers                                    | [Observability](/agents/api-reference/observability/)               |
+| **Sub-agents**        | `subAgent()`, `abortSubAgent()`, `deleteSubAgent()`                                  | [Sub-agents](/agents/api-reference/sub-agents/)                    |
+| **Sessions**          | `Session.create()`, context blocks, compaction, search                               | [Sessions](/agents/api-reference/sessions/)                        |
+| **Think**             | `Think` base class, workspace tools, lifecycle hooks, extensions                     | [Think](/agents/api-reference/think/)                              |
 
 ## SQL API
 

@@ -8,6 +8,8 @@ head:
     content: Configure HTTPS settings
 description: >-
   This tutorial shows how to enable TLS 1.3, Automatic HTTPS Rewrites, and Strict SSL mode using the updated v5 provider.
+products:
+  - terraform
 ---
 
 import { Render } from "~/components";
@@ -25,7 +27,7 @@ After setting up basic DNS records, you can configure zone settings using Terraf
 Create a new branch and add zone settings:
 
 ```bash
-git checkout -b step3-zone-setings
+git checkout -b step3-zone-settings
 ```
 
 Add the following to your `main.tf` file:

@@ -1,0 +1,48 @@
+---
+pcx_content_type: reference
+title: RtkNameTag
+description: API reference for RtkNameTag component (React Native Library)
+---
+
+Displays a participant's name with optional child content (such as an audio visualizer icon). Used as an overlay on participant tiles.
+
+## Properties
+
+| Property        | Type                           | Required | Default | Description                                              |
+| --------------- | ------------------------------ | -------- | ------- | -------------------------------------------------------- |
+| `participant`   | `Peer`                         | ✅       | -       | The participant to display the name for                  |
+| `meeting`       | `RealtimeKitClient`            | ❌       | -       | The RealtimeKit meeting instance (used to identify self) |
+| `isScreenshare` | `boolean`                      | ❌       | `false` | Whether this is a screenshare name tag                   |
+| `maxLength`     | `number`                       | ❌       | `20`    | Maximum width offset for the name tag                    |
+| `size`          | `'lg' \| 'md' \| 'sm' \| 'xl'` | ❌       | `'sm'`  | Text size                                                |
+| `t`             | `RtkI18n`                      | ❌       | -       | i18n translation function                                |
+| `children`      | `ReactNode`                    | ❌       | -       | Content to render before the name                        |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkNameTag } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkNameTag participant={participant} />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkNameTag } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return (
+		<RtkNameTag
+			participant={participant}
+			meeting={meeting}
+			size="md"
+			maxLength={25}
+		/>
+	);
+}
+```

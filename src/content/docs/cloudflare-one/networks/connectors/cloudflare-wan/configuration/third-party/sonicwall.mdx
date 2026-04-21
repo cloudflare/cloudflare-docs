@@ -1,0 +1,20 @@
+---
+title: SonicWall
+pcx_content_type: integration-guide
+description: Integrate SonicWall with Zero Trust networking.
+products:
+  - cloudflare-one
+tags:
+  - IPsec
+---
+
+import { Render } from "~/components";
+
+<Render file="cloudflare-wan/third-party/sonicwall"
+  product="networking-services"
+  params={{
+    ipsecTunnelsUrl: "/cloudflare-one/networks/connectors/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/",
+    creatingYourIpsecTunnelsUrl: "/cloudflare-one/networks/connectors/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/#add-tunnels",
+    createYourStaticRoutesUrl: "/cloudflare-one/networks/connectors/cloudflare-wan/configuration/how-to/configure-routes/#create-a-static-route",
+    checkTunnelHealthInTheDashboardUrl: "/cloudflare-one/networks/connectors/cloudflare-wan/configuration/common-settings/check-tunnel-health-dashboard/"
+  }} />

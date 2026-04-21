@@ -4,6 +4,8 @@ pcx_content_type: get-started
 sidebar:
   order: 1
 description: Build your first agent in 10 minutes — a counter with persistent state that syncs to a React frontend in real-time.
+products:
+  - agents
 ---
 
 import {
@@ -153,6 +155,8 @@ Update `wrangler.jsonc` to register the agent:
 Replace `src/client.tsx`:
 
 ```tsx title="src/client.tsx"
+import "./styles.css";
+import { createRoot } from "react-dom/client";
 import { useState } from "react";
 import { useAgent } from "agents/react";
 import type { CounterAgent, CounterState } from "./server";
@@ -178,6 +182,9 @@ export default function App() {
 		</div>
 	);
 }
+
+const root = createRoot(document.getElementById("root")!);
+root.render(<App />);
 ```
 
 Key points:

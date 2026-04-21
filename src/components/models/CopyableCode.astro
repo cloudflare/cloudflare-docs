@@ -1,0 +1,104 @@
+---
+interface Props {
+	text: string;
+	label?: string;
+}
+
+const { text, label = "Copy" } = Astro.props;
+---
+
+<copyable-code data-text={text}>
+	<button
+		type="button"
+		title={label}
+		aria-label={label}
+		class="copy-button"
+	>
+		<code>{text}</code>
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width="14"
+			height="14"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			stroke-width="2"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			class="copy-icon"
+		>
+			<rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
+			<path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
+		</svg>
+	</button>
+</copyable-code>
+
+<style>
+	.copy-button {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.375rem 0.625rem;
+		border-radius: 0.375rem;
+		border: 1px solid var(--sl-color-gray-5);
+		background: transparent;
+		cursor: pointer;
+		transition: border-color 0.15s, background-color 0.15s;
+	}
+
+	.copy-button:hover {
+		border-color: var(--sl-color-gray-4);
+		background: var(--sl-color-gray-6);
+	}
+
+	.copy-button code {
+		font-size: 0.8125rem;
+		color: var(--sl-color-gray-2);
+		background: none;
+		padding: 0;
+		border: none;
+	}
+
+	.copy-icon {
+		color: var(--sl-color-gray-3);
+		flex-shrink: 0;
+	}
+
+	.copy-button:hover .copy-icon {
+		color: var(--sl-color-gray-2);
+	}
+</style>
+
+<script>
+	class CopyableCode extends HTMLElement {
+		connectedCallback() {
+			const text = this.dataset.text ?? "";
+			const button = this.querySelector("button");
+			const icon = this.querySelector<SVGElement>(".copy-icon");
+
+			const copyPath = icon?.innerHTML;
+			const checkPath = '<polyline points="20 6 9 17 4 12"></polyline>';
+
+			button?.addEventListener("click", async () => {
+				try {
+					await navigator.clipboard.writeText(text);
+
+					if (icon && copyPath) {
+						icon.innerHTML = checkPath;
+						icon.style.color = "var(--sl-color-green)";
+						setTimeout(() => {
+							icon.innerHTML = copyPath;
+							icon.style.color = "";
+						}, 1500);
+					}
+				} catch {
+					// Ignore clipboard failures (denied/unavailable access)
+				}
+			});
+		}
+	}
+
+	if (!customElements.get("copyable-code")) {
+		customElements.define("copyable-code", CopyableCode);
+	}
+</script>

@@ -1,12 +1,14 @@
 ---
 pcx_content_type: configuration
 title: JavaScript APIs
+description: Produce and consume Cloudflare Queues messages using the Workers JavaScript API.
 sidebar:
   order: 6
 head:
   - tag: title
     content: Cloudflare Queues - JavaScript APIs
-
+products:
+  - queues
 ---
 
 import { Type, TypeScriptExample, Tabs, TabItem } from "~/components";
@@ -282,7 +284,7 @@ interface MessageBatch<Body = unknown> {
 
 * <code>messages</code> <Type text="Message[]" />
 
-  * An array of messages in the batch. Ordering of messages is best effort -- not guaranteed to be exactly the same as the order in which they were published. If you are interested in guaranteed FIFO ordering, please [email the Queues team](mailto:queues@cloudflare.com).
+  * An array of messages in the batch. Ordering of messages is best effort -- not guaranteed to be exactly the same as the order in which they were published.
 
 * <code>ackAll()</code> <Type text="void" />
 

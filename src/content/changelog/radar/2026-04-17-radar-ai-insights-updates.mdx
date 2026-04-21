@@ -1,0 +1,44 @@
+---
+title: AI Insights updates on Cloudflare Radar
+description: Adoption of AI agent standards, Markdown for Agents savings, and response status distribution for AI bots now available on Cloudflare Radar
+products:
+  - radar
+date: 2026-04-17
+---
+
+[**Radar**](/radar/) adds three new features to the [AI Insights](https://radar.cloudflare.com/ai-insights) page, expanding visibility into how AI bots, crawlers, and agents interact with the web.
+
+## Adoption of AI agent standards
+
+The AI Insights page now includes an [adoption of AI agent standards](https://radar.cloudflare.com/ai-insights#adoption-of-ai-agent-standards) widget that tracks how websites adopt agent-facing standards. The data is filterable by domain category and updated weekly on Mondays.
+This data is also available through the [Agent Readiness API reference](/api/resources/radar/subresources/agent_readiness/methods/summary/).
+
+![Screenshot of the adoption of AI agent standards chart](~/assets/images/radar/agent-readiness-adoption-chart.png)
+
+[URL Scanner](https://radar.cloudflare.com/scan) reports now include an **Agent readiness** tab that evaluates a scanned URL against the criteria used by the [Agent Readiness score tool](https://isitagentready.com/).
+
+![Screenshot of the URL Scanner agent readiness tab](~/assets/images/radar/agent-readiness-url-scanner.png)
+
+For more details, refer to the [Agent Readiness blog post](https://blog.cloudflare.com/agent-readiness/).
+
+## Markdown for Agents savings
+
+A new [savings gauge](https://radar.cloudflare.com/ai-insights#markdown-for-agents-savings) shows the median response-size reduction when serving Markdown instead of HTML to AI bots and crawlers. This highlights the bandwidth and token savings that [Markdown for Agents](/fundamentals/reference/markdown-for-agents/) provides.
+
+<div style="max-width: 300px;">
+
+![Screenshot of the Markdown for Agents savings gauge](~/assets/images/radar/markdown-for-agents-savings.png)
+
+</div>
+
+For more details, refer to the [Markdown for Agents API reference](/api/resources/radar/subresources/ai/subresources/markdown_for_agents/methods/summary).
+
+## Response status
+
+The new [response status widget](https://radar.cloudflare.com/ai-insights#response-status) displays the distribution of HTTP response status codes returned to AI bots and crawlers. Results are groupable by individual status code (200, 403, 404) or by category (2xx, 3xx, 4xx, 5xx).
+
+The same widget is available on each verified bot's detail page (only available for AI bots), for example [Google](https://radar.cloudflare.com/bots/directory/google#response-status).
+
+![Screenshot of the response status distribution widget](~/assets/images/radar/ai-response-status.png)
+
+Explore all three features on the [Cloudflare Radar AI Insights](https://radar.cloudflare.com/ai-insights) page.

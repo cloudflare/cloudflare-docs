@@ -1,5 +1,6 @@
 export * from "./apps";
 export * from "./base";
+export * from "./catalog-models";
 export * from "./changelog";
 export * from "./release-notes";
 export * from "./compatibility-flags";

@@ -6,6 +6,8 @@ tags:
   - AI
 sidebar:
   order: 11
+products:
+  - agents
 ---
 
 Run work that survives Durable Object eviction. `runFiber()` registers a task in SQLite, keeps the agent alive during execution, lets you checkpoint intermediate state with `stash()`, and calls `onFiberRecovered()` on the next activation if the agent was evicted mid-task.
@@ -283,7 +285,7 @@ Key points:
 
 ### Chat recovery
 
-`AIChatAgent` builds on fibers for LLM streaming recovery. When `unstable_chatRecovery` is enabled, each chat turn is wrapped in a fiber automatically. The framework handles the internal recovery path and exposes `onChatRecovery` for provider-specific strategies. Refer to [Long-running agents: Recovering interrupted LLM streams](/agents/concepts/long-running-agents/#recovering-interrupted-llm-streams) for details.
+`AIChatAgent` builds on fibers for LLM streaming recovery. When `chatRecovery` is enabled, each chat turn is wrapped in a fiber automatically. The framework handles the internal recovery path and exposes `onChatRecovery` for provider-specific strategies. Refer to [Long-running agents: Recovering interrupted LLM streams](/agents/concepts/long-running-agents/#recovering-interrupted-llm-streams) for details.
 
 ## Concurrent fibers
 
@@ -344,4 +346,4 @@ Run an async function while keeping the DO alive. Heartbeat starts before `fn` a
 - [Long-running agents](/agents/concepts/long-running-agents/) — how fibers compose with schedules, plans, and async operations
 - [Schedule tasks](/agents/api-reference/schedule-tasks/) — `keepAlive` details and the alarm system
 - [Workflows](/agents/concepts/workflows/) — durable multi-step execution outside the agent
-- [Chat agents](/agents/api-reference/chat-agents/) — `unstable_chatRecovery` and `onChatRecovery`
+- [Chat agents](/agents/api-reference/chat-agents/) — `chatRecovery` and `onChatRecovery`

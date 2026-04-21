@@ -1,8 +1,11 @@
 ---
 title: Browse the web
+description: Give Agents full Chrome DevTools Protocol access to inspect pages, scrape data, and capture screenshots with Browser Run.
 pcx_content_type: reference
 sidebar:
   order: 15
+products:
+  - agents
 ---
 
 import {
@@ -12,16 +15,16 @@ import {
 	PackageManagers,
 } from "~/components";
 
-Give your agents full access to the Chrome DevTools Protocol (CDP) with browser tools. <InlineBadge preset="beta" />
+Give your agents full access to the [Chrome DevTools Protocol (CDP)](/browser-run/cdp/) with [Browser Run](/browser-run/) tools. <InlineBadge preset="beta" />
 
 Instead of a fixed set of browser actions (click, screenshot, navigate), the LLM writes JavaScript code that runs CDP commands against a live browser session — accessing all domains, commands, events, and types in the protocol.
 
 Two tools are provided:
 
-| Tool | Description |
-| --- | --- |
-| `browser_search` | Query the CDP spec to discover commands, events, and types. The spec is fetched dynamically from the browser's CDP endpoint and cached. |
-| `browser_execute` | Run CDP commands against a live browser via a `cdp` helper. Each call opens a fresh browser session, executes the code, and closes it. |
+| Tool              | Description                                                                                                                             |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `browser_search`  | Query the CDP spec to discover commands, events, and types. The spec is fetched dynamically from the browser's CDP endpoint and cached. |
+| `browser_execute` | Run CDP commands against a live browser via a `cdp` helper. Each call opens a fresh browser session, executes the code, and closes it.  |
 
 ## When to use browser tools
 
@@ -47,7 +50,7 @@ npm install agents @cloudflare/codemode ai zod
 
 ### 1. Configure bindings
 
-Add the Browser Rendering and Worker Loader bindings to your wrangler configuration:
+Add the Browser Run (formerly Browser Rendering) and Worker Loader bindings to your wrangler configuration:
 
 <WranglerConfig>
 
@@ -55,13 +58,13 @@ Add the Browser Rendering and Worker Loader bindings to your wrangler configurat
 {
 	"compatibility_flags": ["nodejs_compat"],
 	"browser": {
-		"binding": "BROWSER"
+		"binding": "BROWSER",
 	},
 	"worker_loaders": [
 		{
-			"binding": "LOADER"
-		}
-	]
+			"binding": "LOADER",
+		},
+	],
 }
 ```
 
@@ -82,7 +85,7 @@ const browserTools = createBrowserTools({
 
 </TypeScriptExample>
 
-To connect to a custom CDP endpoint instead of the Browser Rendering binding, pass `cdpUrl`.
+To connect to a custom CDP endpoint instead of the Browser Run binding, pass `cdpUrl`.
 
 ### 3. Use with streamText
 
@@ -216,20 +219,20 @@ Inside `browser_execute`, the following functions are available to the sandboxed
 
 Send a CDP command and wait for the response.
 
-| Parameter | Type | Description |
-| --- | --- | --- |
-| `method` | `string` | CDP method, for example `"DOM.getDocument"` or `"Network.enable"` |
-| `params` | `unknown` | Method parameters |
-| `options.timeoutMs` | `number` | Per-command timeout (default: 10 seconds) |
-| `options.sessionId` | `string` | Target session ID (required for page-scoped commands) |
+| Parameter           | Type      | Description                                                       |
+| ------------------- | --------- | ----------------------------------------------------------------- |
+| `method`            | `string`  | CDP method, for example `"DOM.getDocument"` or `"Network.enable"` |
+| `params`            | `unknown` | Method parameters                                                 |
+| `options.timeoutMs` | `number`  | Per-command timeout (default: 10 seconds)                         |
+| `options.sessionId` | `string`  | Target session ID (required for page-scoped commands)             |
 
 ### `cdp.attachToTarget(targetId, options?)`
 
 Attach to a target and get a session ID. Uses `Target.attachToTarget` with `flatten: true`.
 
-| Parameter | Type | Description |
-| --- | --- | --- |
-| `targetId` | `string` | The target to attach to |
+| Parameter           | Type     | Description                    |
+| ------------------- | -------- | ------------------------------ |
+| `targetId`          | `string` | The target to attach to        |
 | `options.timeoutMs` | `number` | Timeout for the attach command |
 
 Returns the `sessionId` string.
@@ -248,13 +251,13 @@ Clear the debug log buffer.
 
 Returns AI SDK tools (`browser_search` and `browser_execute`).
 
-| Option | Type | Default | Description |
-| --- | --- | --- | --- |
-| `browser` | `Fetcher` | — | Browser Rendering binding |
-| `cdpUrl` | `string` | — | Optional override for a custom CDP endpoint |
-| `cdpHeaders` | `Record<string, string>` | — | Headers for CDP URL discovery (for example, Cloudflare Access) |
-| `loader` | `WorkerLoader` | required | Worker Loader binding for sandboxed execution |
-| `timeout` | `number` | `30000` | Execution timeout in milliseconds |
+| Option       | Type                     | Default  | Description                                                    |
+| ------------ | ------------------------ | -------- | -------------------------------------------------------------- |
+| `browser`    | `Fetcher`                | —        | Browser Run binding                                            |
+| `cdpUrl`     | `string`                 | —        | Optional override for a custom CDP endpoint                    |
+| `cdpHeaders` | `Record<string, string>` | —        | Headers for CDP URL discovery (for example, Cloudflare Access) |
+| `loader`     | `WorkerLoader`           | required | Worker Loader binding for sandboxed execution                  |
+| `timeout`    | `number`                 | `30000`  | Execution timeout in milliseconds                              |
 
 Either `browser` or `cdpUrl` must be provided. When both are set, `cdpUrl` takes priority.
 
@@ -282,7 +285,7 @@ session.close();
 
 ## Local development
 
-Recent Wrangler releases support Browser Rendering in local development. `npx wrangler dev` provisions the browser automatically, so the same `browser: env.BROWSER` setup works locally and when deployed.
+Recent Wrangler releases support Browser Run in local development. `npx wrangler dev` provisions the browser automatically, so the same `browser: env.BROWSER` setup works locally and when deployed.
 
 Use `cdpUrl` only when you intentionally want to connect to some other CDP-compatible browser endpoint, such as a tunnel or a manually managed Chrome instance.
 
@@ -305,7 +308,7 @@ Use `cdpUrl` only when you intentionally want to connect to some other CDP-compa
 
 ## Using Puppeteer directly
 
-If you prefer to control the browser programmatically without LLM-generated code, you can use Puppeteer with the [Browser Rendering](/browser-rendering/) API directly.
+If you prefer to control the browser programmatically without LLM-generated code, you can use Puppeteer with the [Browser Run](/browser-run/) API directly.
 
 <PackageManagers pkg="@cloudflare/puppeteer" dev />
 
@@ -360,11 +363,11 @@ Add the browser binding to your wrangler configuration:
 ```jsonc
 {
 	"ai": {
-		"binding": "AI"
+		"binding": "AI",
 	},
 	"browser": {
-		"binding": "BROWSER"
-	}
+		"binding": "BROWSER",
+	},
 }
 ```
 

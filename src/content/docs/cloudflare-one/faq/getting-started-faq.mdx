@@ -1,5 +1,7 @@
 ---
 pcx_content_type: faq
+products:
+  - cloudflare-one
 title: Getting started with Cloudflare Zero Trust FAQ
 structured_data: true
 sidebar:
@@ -24,15 +26,24 @@ Your team domain is a unique subdomain assigned to your Cloudflare account, for 
 
 You can change your team name at any time, unless you have the Cloudflare dashboard SSO feature enabled on your account. If Cloudflare dashboard SSO is enabled, you must [turn off SSO](/fundamentals/manage-members/dashboard-sso/#change-your-zero-trust-team-name) before changing your team name.
 
-:::note
-
-Once a team name has been used, even if the team domain is later deleted, the team name cannot be reused by any account. Once you delete a team name, you will not be able to use it again. Consider this limitation before changing or deleting your team name.
-
-:::
+When you change your team name, the old name becomes available for other accounts to claim. However, if you delete your entire Zero Trust organization, any team name it used is permanently reserved and cannot be reused by any account — including your own.
 
 :::caution[Warning]
 
 If you change your team name, you need to update your organization's identity providers (IdPs) and the Cloudflare One Client to reflect the new team name in order to avoid any mismatch errors.
+:::
+
+### How do I transfer a team name to another account?
+
+If you want to move a team name from one Cloudflare account to another (for example, migrating from a personal account to a company account), you can do so as long as the source Zero Trust organization still exists:
+
+1. In the source account, go to **Settings** and change the team name to a temporary value (for example, `mycompany-old`).
+2. In the destination account, go to **Settings** and set the team name to the desired value.
+
+:::caution
+
+Do not delete the Zero Trust organization on the source account before changing the team name. If the organization is deleted, the team name is permanently locked and no account will be able to claim it.
+
 :::
 
 ### Why is my old team name is still showing up on the Login page and App Launcher?

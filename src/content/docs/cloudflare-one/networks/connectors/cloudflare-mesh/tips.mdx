@@ -1,5 +1,6 @@
 ---
 pcx_content_type: reference
+description: Reference information for Tips and best practices in Zero Trust networking.
 title: Tips and best practices
 products:
   - mesh
@@ -58,6 +59,24 @@ Updating a Mesh node means updating the `cloudflare-warp` package on the Linux h
 
    You should see `Status update: Connected` in the output.
 
+## Make IP forwarding persistent
+
+IP forwarding allows a Mesh node to act as a gateway, forwarding packets between its network interface and the Cloudflare network. This is only required if the node advertises [CIDR routes](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/) — if you are only reaching the node by its Mesh IP, forwarding is not needed.
+
+Older installations may have used `sysctl -w` for IP forwarding, which does not persist across reboots. If your node loses route connectivity after a server restart, run the following to make forwarding permanent:
+
+```sh
+printf 'net.ipv4.ip_forward = 1\nnet.ipv6.conf.all.forwarding = 1\nnet.ipv6.conf.all.accept_ra = 2\n' | sudo tee /etc/sysctl.d/99-zzz-cloudflare-warp-connector.conf && sudo sysctl --system
+```
+
+You can verify the settings are active with:
+
+```sh
+sysctl net.ipv4.ip_forward net.ipv6.conf.all.forwarding net.ipv6.conf.all.accept_ra
+```
+
+New installations include this step automatically.
+
 ## Cloud VPC deployments
 
 When deploying Mesh nodes in a cloud VPC, you may need to configure additional provider settings so the node can forward traffic for other devices on the subnet.
@@ -75,6 +94,12 @@ When deploying Mesh nodes in a cloud VPC, you may need to configure additional p
 
 - [Enable IP forwarding](https://learn.microsoft.com/en-us/azure/virtual-network/virtual-network-network-interface?tabs=azure-portal#enable-or-disable-ip-forwarding) on the network interface of the VM.
 - Add a [user-defined route](https://learn.microsoft.com/en-us/azure/virtual-network/manage-route-table) for Mesh traffic pointing to the VM's private IP.
+
+## Running Mesh on a DNS server
+
+Mesh nodes run in [Traffic and DNS mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/), which redirects DNS queries on the host to Cloudflare Gateway. This will conflict with DNS services running on the same machine (for example, Active Directory DNS, Pi-hole, Unbound, BIND, or dnsmasq).
+
+If your server runs a DNS service, do not install the Mesh node on that host. Instead, install the node on a separate machine on the same subnet and use [CIDR routes](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/) to make the DNS server reachable.
 
 ## Running Mesh with Cloudflare Tunnel
 
@@ -98,7 +123,7 @@ For setup instructions and examples, refer to [Connect Workers to Cloudflare Mes
 
 ## Source IPs for Cloudflare services
 
-When Cloudflare services (such as [Load Balancing](/load-balancing/) health checks or [Workers](/workers/)) send traffic to your private network through a Mesh node, the traffic originates from the Cloudflare source IP range (default `100.64.0.0/12`). You may need to [configure Cloudflare source IPs](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/manually/how-to/configure-cloudflare-source-ips/) to avoid IP conflicts.
+When Cloudflare services (such as [Load Balancing](/load-balancing/) health checks or [Workers](/workers/)) send traffic to your private network through a Mesh node, the traffic originates from the Cloudflare source IP range (default `100.64.0.0/12`). You may need to [configure Cloudflare source IPs](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/how-to/configure-cloudflare-source-ips/) to avoid IP conflicts.
 
 ## MTU and packet fragmentation
 

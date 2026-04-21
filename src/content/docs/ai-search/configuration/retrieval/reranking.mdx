@@ -1,0 +1,45 @@
+---
+pcx_content_type: concept
+title: Reranking
+description: Enable reranking in AI Search to reorder retrieved results by semantic relevance.
+sidebar:
+  order: 4
+products:
+  - ai-search
+---
+
+Reranking can help improve the quality of AI Search results by reordering retrieved documents based on semantic relevance to the user's query. It applies a secondary model after retrieval to rerank the top results before they are returned.
+
+## How it works
+
+By default, reranking is **disabled** for all AI Search instances. You can enable it during creation or later from the settings page.
+
+When enabled, AI Search will:
+
+1. Retrieve a set of relevant results from your index, constrained by your `max_num_results` and `score_threshold` parameters.
+2. Pass those results through a [reranking model](/ai-search/configuration/models/supported-models/).
+3. Return the reranked results, which the text generation model can use for answer generation.
+
+Reranking helps improve accuracy, especially for large or noisy datasets where vector similarity alone may not produce the optimal ordering.
+
+## Configuration
+
+When you make a `/search` or `/chat/completions` request using the [Workers binding](/ai-search/api/search/workers-binding/) or [REST API](/ai-search/api/search/rest-api/), you can enable or disable reranking per request and specify the reranking model.
+
+```ts
+const instance = env.AI_SEARCH.get("my-instance");
+
+const results = await instance.search({
+	messages: [{ role: "user", content: "What is Cloudflare?" }],
+	ai_search_options: {
+		reranking: {
+			enabled: true,
+			model: "@cf/baai/bge-reranker-base",
+		},
+	},
+});
+```
+
+### Considerations
+
+Adding reranking will include an additional step to the query request, as a result, there may be an increase in the latency of the request.

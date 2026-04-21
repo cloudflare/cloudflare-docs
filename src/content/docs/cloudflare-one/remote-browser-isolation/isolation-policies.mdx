@@ -1,5 +1,8 @@
 ---
 pcx_content_type: reference
+description: Reference information for Isolation policies in Browser Isolation.
+products:
+  - cloudflare-one
 title: Isolation policies
 sidebar:
   order: 2
@@ -13,7 +16,7 @@ With Browser Isolation, you can define policies to dynamically isolate websites 
 
 ## Isolate
 
-When an HTTP policy applies the Isolate action, the user's web browser is transparently served an HTML compatible remote browser client. Isolation policies can be applied to requests that include `Accept: text/html*`. This allows Browser Isolation policies to co-exist with API traffic.
+When an HTTP policy applies the Isolate action, the user's web browser is transparently served an HTML compatible remote browser client. Isolation policies can be applied to requests that include `Accept: text/html*` (requests for web pages). This allows Browser Isolation policies to co-exist with API traffic.
 
 The following example enables isolation for all web traffic:
 
@@ -45,7 +48,7 @@ You can choose to disable isolation for certain destinations or categories. The 
 
 ## Policy settings
 
-The following optional settings appear in the Gateway HTTP policy builder when you select the _Isolate_ action. Configure these settings to [prevent data loss](https://blog.cloudflare.com/data-protection-browser/) when users interact with untrusted websites in the remote browser.
+When you isolate a website, you can also restrict what users do on that site. The following optional settings appear in the Gateway HTTP policy builder when you select the _Isolate_ action. Configure these settings to [prevent data loss](https://blog.cloudflare.com/data-protection-browser/) when users interact with untrusted websites in the remote browser — for example, to stop a user from copying confidential data out of an isolated internal application.
 
 ### Copy (from remote to client)
 
