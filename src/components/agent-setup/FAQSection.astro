@@ -18,7 +18,10 @@ const { items } = Astro.props;
 		items.map((item) => (
 			<details class="agent-setup-faq-item">
 				<summary>{item.question}</summary>
-				<div class="agent-setup-faq-answer" set:html={marked.parseInline(item.answer)} />
+				<div
+					class="agent-setup-faq-answer"
+					set:html={marked.parseInline(item.answer)}
+				/>
 			</details>
 		))
 	}

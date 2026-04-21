@@ -24,19 +24,18 @@ context_approach: indexed_codebase
 
 quick_start:
   - title: Install GitHub Copilot
-    description: Install the GitHub Copilot extension in VS Code.
+    description: 'Install the GitHub Copilot extension in VS Code from the <a href="https://marketplace.visualstudio.com/items?itemName=GitHub.copilot" target="_blank" rel="noopener noreferrer">Visual Studio Marketplace</a>. For JetBrains IDEs, Visual Studio, or Xcode, see the <a href="https://docs.github.com/en/copilot/how-tos/set-up/install-copilot-extension" target="_blank" rel="noopener noreferrer">Install the Copilot extension</a> guide.'
     link: "https://marketplace.visualstudio.com/items?itemName=GitHub.copilot"
-  - title: Configure Cloudflare MCP server
-    description: Add the Cloudflare API MCP server to your VS Code MCP settings.
-    command: '{"mcpServers": {"cloudflare": {"url": "https://mcp.cloudflare.com/mcp"}}}'
-  - title: Add Copilot instructions
-    description: Create a .github/copilot-instructions.md file with Cloudflare Workers context.
-    command: "mkdir -p .github && touch .github/copilot-instructions.md"
+  - title: Install the Cloudflare Skills
+    description: 'Installs the Cloudflare Skills. See <a href="https://docs.github.com/en/copilot/concepts/agents/about-agent-skills" target="_blank" rel="noopener noreferrer">About agent skills</a> for where Copilot looks for Skills and how they work in VS Code agent mode, the Copilot CLI, and the cloud agent.'
+    command: "npx skills add https://github.com/cloudflare/skills"
+  - title: Configure Cloudflare MCP servers
+    description: Add the Cloudflare API and docs MCP servers to your VS Code MCP settings. VS Code 1.99+ supports MCP natively.
+    command: '{"mcpServers": {"cloudflare": {"url": "https://mcp.cloudflare.com/mcp"}, "cloudflare-docs": {"url": "https://docs.mcp.cloudflare.com/mcp"}}}'
   - title: Start building
-    description: Open Copilot Chat and use agent mode (@workspace) to build on Cloudflare.
+    description: 'Open Copilot Chat (Ctrl+Shift+I), switch to agent mode, and try a prompt — for example, "Create an example hello world app using Cloudflare Workers."'
 
 mcp_config: |
-  Add to your VS Code settings.json or .vscode/mcp.json:
   {
     "mcpServers": {
       "cloudflare": {
@@ -48,73 +47,55 @@ mcp_config: |
     }
   }
 
+skills_plugin_install:
+  supported: true
+  command: "npx skills add https://github.com/cloudflare/skills"
+  note: "Uses the npx skills CLI. Installs Skills only — MCP servers are configured separately."
+
 skills_install:
-  command: "Create .github/copilot-instructions.md with Cloudflare Workers context"
-  directory: ".github/"
-  docs_url: "https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot"
+  command: "npx skills add https://github.com/cloudflare/skills"
+  docs_url: "https://docs.github.com/en/copilot/concepts/agents/about-agent-skills"
 
 example_prompts:
-  - "@workspace Create a new Cloudflare Workers application with TypeScript."
-  - "@workspace Add a D1 database binding and create the schema."
-  - "@workspace Configure R2 storage for this project."
-  - "@workspace Explain how Workers routing works in this project."
-  - "@workspace Help me set up GitHub Actions to auto-deploy to Cloudflare Workers."
-  - "@workspace Add error handling and logging to my Worker."
-  - "@workspace Generate tests for my Worker using Vitest."
-  - "@workspace Review my wrangler.jsonc configuration for best practices."
-
-workflows:
-  - title: Build and deploy with agent mode
-    steps:
-      - "Open Copilot Chat with Ctrl+Shift+I"
-      - "Use @workspace to give Copilot full project context"
-      - "Ask Copilot to scaffold your Workers application"
-      - "Run npx wrangler deploy from the terminal"
-  - title: Set up CI/CD with GitHub Actions
-    steps:
-      - "Ask Copilot to create a GitHub Actions workflow for Workers"
-      - "Copilot generates .github/workflows/deploy.yml"
-      - "Configure CLOUDFLARE_API_TOKEN as a repository secret"
-      - "Push to trigger automatic deployment"
-  - title: Add Copilot instructions for Workers
-    steps:
-      - "Create .github/copilot-instructions.md"
-      - "Add Workers API context and project conventions"
-      - "Copilot uses these instructions for all future suggestions"
-  - title: Code review with Copilot
-    steps:
-      - "Open a pull request with your Workers changes"
-      - "Copilot generates a PR summary automatically"
-      - "Use Copilot review to check for Workers best practices"
+  - "Create a new Cloudflare Workers application with TypeScript."
+  - "Add a D1 database binding to this Worker and create the schema."
+  - "Configure R2 storage for this project."
+  - "Explain how Workers routing works in this project."
+  - "Set up GitHub Actions to auto-deploy this Worker to Cloudflare."
+  - "Add error handling and logging to my Worker."
+  - "Generate Vitest tests for my Worker."
+  - "Review my wrangler.jsonc for best practices."
 
 tips:
-  - "Use @workspace in Copilot Chat to give the agent full context of your Workers project."
-  - "Create .github/copilot-instructions.md with Workers API patterns and project conventions for better suggestions."
-  - "GitHub Copilot integrates natively with GitHub Actions — use it to generate deployment workflows for Cloudflare Workers."
-  - "Use Copilot's PR summary feature to document your Workers changes automatically."
+  - "Agent Skills work with VS Code agent mode, the Copilot CLI, and the GitHub cloud agent — but not with inline code completion. Switch Copilot Chat to agent mode to unlock Skills-aware behavior."
+  - "Use @workspace in Copilot Chat to give the agent full context of your Workers project before asking it to build or deploy."
+  - "Commit a .github/copilot-instructions.md file with repository-wide conventions (coding standards, preferred patterns) — Copilot loads it automatically on every interaction, complementing Skills which are loaded on demand."
+  - "Connect the Cloudflare API MCP server to VS Code — Copilot can then manage Cloudflare resources (DNS, WAF, R2 buckets) through Code Mode in ~1,000 tokens."
+  - "GitHub Copilot integrates natively with GitHub Actions — ask it to generate a deploy workflow that runs Wrangler with your CLOUDFLARE_API_TOKEN secret."
+  - "The Cloudflare docs MCP server keeps Copilot's Workers API references fresh without you needing to paste documentation into prompts."
 
 faq:
-  - question: "How do I give Copilot context about Workers APIs?"
-    answer: "Create a `.github/copilot-instructions.md` file with Workers API patterns, or connect the Cloudflare docs MCP server for real-time documentation access."
+  - question: "Does Copilot support Cloudflare Skills?"
+    answer: "Yes. GitHub Copilot added Agent Skills support for VS Code agent mode, the Copilot CLI, and the cloud agent. Run `npx skills add https://github.com/cloudflare/skills` to install them. See the [About agent skills](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills) guide for details on where Copilot looks for Skills."
+  - question: "Should I use Skills, the MCP server, Wrangler CLI, or all of them?"
+    answer: "All three. Skills load Cloudflare expertise into every agent-mode session. The Cloudflare API MCP server handles platform operations (DNS, WAF, Zero Trust, R2 buckets). Wrangler runs local dev and deploys in the VS Code terminal. The bundled `wrangler` Skill teaches Copilot when to reach for which."
+  - question: "Do I still need .github/copilot-instructions.md?"
+    answer: "It's complementary. Use custom instructions for simple repository-wide conventions that apply to almost every task (coding standards, preferred libraries). Use Skills for detailed, situational guidance Copilot should only load when relevant."
   - question: "Can Copilot deploy to Cloudflare directly?"
-    answer: "Copilot does not have a CLI component, but it can generate deployment commands and GitHub Actions workflows that deploy to Cloudflare Workers."
-  - question: "Does Copilot support MCP?"
-    answer: "Yes. VS Code supports MCP servers natively. Add the Cloudflare MCP server to your VS Code settings or .vscode/mcp.json."
+    answer: "Yes, via Wrangler in the VS Code terminal, or via a GitHub Actions workflow that Copilot can generate for you."
 
 troubleshooting:
+  - issue: "Skills don't load in Copilot"
+    solution: "Skills only work in VS Code agent mode, the Copilot CLI, and the cloud agent — not with inline completion or plain chat. Switch Copilot Chat to agent mode. If Skills still aren't discovered, see [About agent skills](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills) for the paths Copilot checks."
   - issue: "Copilot does not understand Workers APIs"
-    solution: "Connect the Cloudflare docs MCP server and create a .github/copilot-instructions.md with Workers context. The Cloudflare Workers prompt.txt is available at developers.cloudflare.com/workers/prompt.txt."
+    solution: "Verify the Cloudflare Skills are installed, connect the Cloudflare docs MCP server, and make sure you're using Copilot in agent mode."
   - issue: "MCP server not available in VS Code"
-    solution: "Ensure you are using VS Code 1.99+ which supports MCP natively. Add the server configuration to .vscode/mcp.json."
+    solution: "Ensure you are using VS Code 1.99+ which supports MCP natively. Add the server configuration to `.vscode/mcp.json`."
   - issue: "GitHub Actions deployment fails"
-    solution: "Verify CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID are set as repository secrets. Ensure the token has Workers write permissions."
-
-related_agents:
-  - cursor
-  - windsurf
-  - claude-code
+    solution: "Verify `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` are set as repository secrets. Ensure the token has Workers write permissions."
 
 links:
+  skills: "https://github.com/cloudflare/skills"
   mcp_server: "https://github.com/cloudflare/mcp"
   docs: "https://docs.github.com/en/copilot"
   website: "https://github.com/features/copilot"

@@ -1,4 +1,10 @@
 ---
+// Renders quick-start steps using Starlight's native `.sl-steps` styling.
+// We can't use the <Steps> component directly because it expects a parsed
+// MDX <ol> in its default slot and our steps come from structured YAML data.
+// Instead we render the same <ol class="sl-steps"> markup that <Steps>
+// generates — the global Starlight stylesheet styles it automatically,
+// giving us the site-standard compact numbered list with a hairline guide.
 import { Code } from "@astrojs/starlight/components";
 
 interface Step {
@@ -15,16 +21,13 @@ interface Props {
 const { steps } = Astro.props;
 ---
 
-<div class="agent-setup-steps">
+<ol class="sl-steps agent-setup-steps">
 	{
-		steps.map((step, i) => (
-			<div class="agent-setup-step">
-				<div class="agent-setup-step-number">{i + 1}</div>
-				<div class="agent-setup-step-title">{step.title}</div>
-				<div class="agent-setup-step-description">{step.description}</div>
-				{step.command && (
-					<Code code={step.command} lang="bash" />
-				)}
+		steps.map((step) => (
+			<li>
+				<p class="agent-setup-step-title">{step.title}</p>
+				<p class="agent-setup-step-description" set:html={step.description} />
+				{step.command && <Code code={step.command} lang="bash" />}
 				{step.link && !step.command && (
 					<a
 						href={step.link}
@@ -35,7 +38,7 @@ const { steps } = Astro.props;
 						{step.link} &rarr;
 					</a>
 				)}
-			</div>
+			</li>
 		))
 	}
-</div>
+</ol>

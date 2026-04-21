@@ -10,7 +10,22 @@ const lightSrc = `/icons/agents/${icon}/light.svg`;
 const darkSrc = `/icons/agents/${icon}/dark.svg`;
 ---
 
-<span class="agent-setup-icon-wrap" style={`width: ${size}px; height: ${size}px; flex-shrink: 0;`}>
-	<img src={lightSrc} alt={`${name} icon`} width={size} height={size} class="agent-icon-light" />
-	<img src={darkSrc} alt={`${name} icon`} width={size} height={size} class="agent-icon-dark" />
+<span
+	class="agent-setup-icon-wrap"
+	style={`width: ${size}px; height: ${size}px; flex-shrink: 0;`}
+>
+	<img
+		src={lightSrc}
+		alt={`${name} icon`}
+		width={size}
+		height={size}
+		class="agent-icon-light"
+	/>
+	<img
+		src={darkSrc}
+		alt={`${name} icon`}
+		width={size}
+		height={size}
+		class="agent-icon-dark"
+	/>
 </span>

@@ -1,4 +1,10 @@
 ---
+// Collapsible troubleshooting list. Each item is an <details> accordion with
+// the issue as the summary line and the solution revealed on click. A subtle
+// warning accent (dot + hairline) signals "something's wrong, click to fix"
+// without being as heavy as a full red card.
+import { marked } from "marked";
+
 interface TroubleshootingItem {
 	issue: string;
 	solution: string;
@@ -11,25 +17,55 @@ interface Props {
 const { items } = Astro.props;
 ---
 
-<div class="not-content">
+<div class="agent-setup-troubleshooting not-content">
 	{
 		items.map((item) => (
-			<div class="agent-setup-troubleshooting-item">
-				<div class="agent-setup-troubleshooting-issue">
-					<div class="agent-setup-troubleshooting-label" style="color: var(--color-cl1-red-4);">
-						<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>
-						Issue
-					</div>
-					{item.issue}
-				</div>
+			<details class="agent-setup-troubleshooting-item">
+				<summary>
+					<span class="agent-setup-troubleshooting-dot" aria-hidden="true" />
+					<span class="agent-setup-troubleshooting-issue-text">
+						{item.issue}
+					</span>
+					<svg
+						class="agent-setup-troubleshooting-chevron"
+						xmlns="http://www.w3.org/2000/svg"
+						width="16"
+						height="16"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						aria-hidden="true"
+					>
+						<polyline points="6 9 12 15 18 9" />
+					</svg>
+				</summary>
 				<div class="agent-setup-troubleshooting-solution">
-					<div class="agent-setup-troubleshooting-label" style="color: var(--color-cl1-green-4);">
-						<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>
-						Solution
+					<div class="agent-setup-troubleshooting-solution-label">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="12"
+							height="12"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2.5"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							aria-hidden="true"
+						>
+							<path d="M20 6L9 17l-5-5" />
+						</svg>
+						Fix
 					</div>
-					{item.solution}
+					<div
+						class="agent-setup-troubleshooting-solution-body"
+						set:html={marked.parseInline(item.solution)}
+					/>
 				</div>
-			</div>
+			</details>
 		))
 	}
 </div>

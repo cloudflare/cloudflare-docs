@@ -88,10 +88,7 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" cl
 							>
 								<button
 									type="button"
-									class:list={[
-										"agent-table-sort",
-										{ "is-active": i === 0 },
-									]}
+									class:list={["agent-table-sort", { "is-active": i === 0 }]}
 									data-sort-key={col.key}
 								>
 									<span>{col.label}</span>
@@ -120,9 +117,13 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" cl
 									{agent.name}
 								</a>
 							</td>
-							<td set:html={agent.capabilities.terminal ? checkIcon : dashIcon} />
+							<td
+								set:html={agent.capabilities.terminal ? checkIcon : dashIcon}
+							/>
 							<td set:html={agent.capabilities.ide ? checkIcon : dashIcon} />
-							<td set:html={agent.capabilities.extension ? checkIcon : dashIcon} />
+							<td
+								set:html={agent.capabilities.extension ? checkIcon : dashIcon}
+							/>
 							<td set:html={agent.capabilities.cloud ? checkIcon : dashIcon} />
 							<td>
 								{agent.pricing_model ? (
@@ -180,7 +181,9 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" cl
 									<span class="agent-table-dim">—</span>
 								)}
 							</td>
-							<td set:html={agent.capabilities.open_source ? checkIcon : dashIcon} />
+							<td
+								set:html={agent.capabilities.open_source ? checkIcon : dashIcon}
+							/>
 						</tr>
 					))
 				}
@@ -240,10 +243,8 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" cl
 
 			const sortBy = (key: string, dir: "asc" | "desc") => {
 				const sorted = [...rows].sort((r1, r2) => {
-					const k1 =
-						JSON.parse(r1.dataset.sortKeys ?? "{}")[key] ?? "";
-					const k2 =
-						JSON.parse(r2.dataset.sortKeys ?? "{}")[key] ?? "";
+					const k1 = JSON.parse(r1.dataset.sortKeys ?? "{}")[key] ?? "";
+					const k2 = JSON.parse(r2.dataset.sortKeys ?? "{}")[key] ?? "";
 					const result = compareValues(String(k1), String(k2));
 					return dir === "asc" ? result : -result;
 				});
@@ -257,23 +258,14 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" cl
 				buttons.forEach((btn) => {
 					const isActive = btn.dataset.sortKey === key;
 					btn.classList.toggle("is-active", isActive);
-					const indicator =
-						btn.querySelector<HTMLElement>("[data-indicator]");
+					const indicator = btn.querySelector<HTMLElement>("[data-indicator]");
 					if (indicator) {
-						indicator.textContent = isActive
-							? dir === "asc"
-								? "↑"
-								: "↓"
-							: "";
+						indicator.textContent = isActive ? (dir === "asc" ? "↑" : "↓") : "";
 					}
 					const th = btn.closest("th");
 					th?.setAttribute(
 						"aria-sort",
-						isActive
-							? dir === "asc"
-								? "ascending"
-								: "descending"
-							: "none",
+						isActive ? (dir === "asc" ? "ascending" : "descending") : "none",
 					);
 				});
 			};

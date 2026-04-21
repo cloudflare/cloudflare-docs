@@ -29,16 +29,17 @@ export interface AgentData {
 		link?: string;
 	}[];
 	mcp_config: string;
+	skills_plugin_install: {
+		supported: boolean;
+		command?: string;
+		note?: string;
+	};
 	skills_install: {
 		command?: string;
 		directory?: string;
 		docs_url?: string;
 	};
 	example_prompts: string[];
-	workflows: {
-		title: string;
-		steps: string[];
-	}[];
 	tips: string[];
 	faq: {
 		question: string;
@@ -48,7 +49,6 @@ export interface AgentData {
 		issue: string;
 		solution: string;
 	}[];
-	related_agents: string[];
 	links: {
 		skills?: string;
 		mcp_server?: string;

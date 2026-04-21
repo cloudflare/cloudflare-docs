@@ -1,27 +1,32 @@
 ---
+// Lists every agent in the collection except the current one.
+// Replaces the old YAML-driven RelatedAgents, which required each agent to
+// explicitly name which others it was related to. With only 6 agents total,
+// showing "everything else" is more useful and stays correct as the list grows.
 import type { AgentData } from "./types";
 
 interface Props {
-	slugs: string[];
+	currentSlug: string;
 	allAgents: AgentData[];
 }
 
-const { slugs, allAgents } = Astro.props;
-const related = slugs
-	.map((slug) => allAgents.find((a) => a.slug === slug))
-	.filter(Boolean) as AgentData[];
+const { currentSlug, allAgents } = Astro.props;
+const others = allAgents.filter((a) => a.slug !== currentSlug);
 ---
 
 <div class="agent-setup-related">
 	{
-		related.map((agent) => (
+		others.map((agent) => (
 			<a
 				href={`/agent-setup/${agent.slug}/`}
 				class="agent-setup-card"
 				style="text-decoration: none;"
 			>
 				<div class="agent-setup-card-header">
-					<span class="agent-setup-icon-wrap" style="width: 36px; height: 36px;">
+					<span
+						class="agent-setup-icon-wrap"
+						style="width: 36px; height: 36px;"
+					>
 						<img
 							src={`/icons/agents/${agent.icon}/light.svg`}
 							alt={`${agent.name} icon`}

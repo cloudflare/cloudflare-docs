@@ -1,0 +1,61 @@
+---
+import { getCollection } from "astro:content";
+import type { AgentData } from "~/components/agent-setup/types";
+import AgentPageScaffold from "~/components/agent-setup/AgentPageScaffold.astro";
+import QuickStartSteps from "~/components/agent-setup/QuickStartSteps.astro";
+import PlatformAccessSection from "~/components/agent-setup/PlatformAccessSection.astro";
+import "~/styles/agent-setup.css";
+
+const entries = await getCollection("agent-setup");
+const allAgents = entries.map((e) => e.data as AgentData);
+const agent = allAgents.find((a) => a.slug === "windsurf")!;
+---
+
+<AgentPageScaffold agent={agent} allAgents={allAgents}>
+	<Fragment slot="quick-start">
+		<QuickStartSteps steps={agent.quick_start} />
+	</Fragment>
+
+	<Fragment slot="platform-access">
+		<PlatformAccessSection
+			agentName="Windsurf"
+		>
+			<Fragment slot="wrangler">
+				<p class="agent-platform-hint">
+					Run deploys and platform commands from the integrated terminal.
+				</p>
+				<p>
+					Cascade runs <a href="/workers/wrangler/">Wrangler</a> in Windsurf's integrated
+					terminal. The bundled <strong>wrangler</strong> Skill teaches Cascade
+					when to reach for commands like <code>wrangler deploy</code> or <code
+						>wrangler tail</code
+					>.
+				</p>
+			</Fragment>
+
+			<Fragment slot="docs">
+				<p class="agent-platform-hint">
+					Use @-mentions and llms.txt to preload context.
+				</p>
+				<p>
+					Cascade works best when you explicitly <code>@</code>-mention files
+					and paste URLs. Useful Cloudflare docs URLs to reference:
+				</p>
+				<ul class="agent-platform-resources">
+					<li>
+						<a href="/llms.txt">developers.cloudflare.com/llms.txt</a> &mdash; directory
+						of every Cloudflare product.
+					</li>
+					<li>
+						<a href="/workers/llms.txt"
+							>developers.cloudflare.com/workers/llms.txt</a
+						> &mdash; per-product page index.
+					</li>
+					<li>
+						Append <code>/index.md</code> to any docs URL for clean markdown.
+					</li>
+				</ul>
+			</Fragment>
+		</PlatformAccessSection>
+	</Fragment>
+</AgentPageScaffold>

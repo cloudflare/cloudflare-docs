@@ -1,0 +1,63 @@
+---
+import { getCollection } from "astro:content";
+import type { AgentData } from "~/components/agent-setup/types";
+import AgentPageScaffold from "~/components/agent-setup/AgentPageScaffold.astro";
+import QuickStartSteps from "~/components/agent-setup/QuickStartSteps.astro";
+import PlatformAccessSection from "~/components/agent-setup/PlatformAccessSection.astro";
+import "~/styles/agent-setup.css";
+
+const entries = await getCollection("agent-setup");
+const allAgents = entries.map((e) => e.data as AgentData);
+const agent = allAgents.find((a) => a.slug === "codex")!;
+---
+
+<AgentPageScaffold agent={agent} allAgents={allAgents}>
+	<Fragment slot="quick-start">
+		<QuickStartSteps steps={agent.quick_start} />
+	</Fragment>
+
+	<Fragment slot="platform-access">
+		<PlatformAccessSection
+			agentName="Codex"
+		>
+			<Fragment slot="wrangler">
+				<p class="agent-platform-hint">
+					Sandbox-safe local dev and deploys.
+				</p>
+				<p>
+					Codex runs in a sandboxed environment &mdash; it can safely execute <a
+						href="/workers/wrangler/">Wrangler</a
+					> commands without affecting your host system. The bundled <strong
+						>wrangler</strong
+					> Skill teaches Codex which commands to run for deploys, migrations, and
+					log tailing.
+				</p>
+			</Fragment>
+
+			<Fragment slot="docs">
+				<p class="agent-platform-hint">
+					Codex also browses the web &mdash; pair with the docs MCP server.
+				</p>
+				<p>
+					Codex supports web browsing natively. Combined with the docs MCP
+					server, you get both fast indexed lookups and live browsing when
+					needed. For offline or preloaded context:
+				</p>
+				<ul class="agent-platform-resources">
+					<li>
+						<a href="/llms.txt">developers.cloudflare.com/llms.txt</a> &mdash; directory
+						of every Cloudflare product.
+					</li>
+					<li>
+						<a href="/workers/llms.txt"
+							>developers.cloudflare.com/workers/llms.txt</a
+						> &mdash; per-product page index.
+					</li>
+					<li>
+						Append <code>/index.md</code> to any docs URL for clean markdown.
+					</li>
+				</ul>
+			</Fragment>
+		</PlatformAccessSection>
+	</Fragment>
+</AgentPageScaffold>

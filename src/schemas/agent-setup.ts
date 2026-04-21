@@ -7,11 +7,6 @@ const quickStartStepSchema = z.object({
 	link: z.string().optional(),
 });
 
-const workflowSchema = z.object({
-	title: z.string(),
-	steps: z.array(z.string()),
-});
-
 const faqSchema = z.object({
 	question: z.string(),
 	answer: z.string(),
@@ -38,6 +33,16 @@ const skillsInstallSchema = z.object({
 	command: z.string().optional(),
 	directory: z.string().optional(),
 	docs_url: z.string().optional(),
+});
+
+// Bundled install that pulls in Cloudflare's MCP servers + Skills together
+// via the cloudflare/skills plugin. Some agents (like Windsurf) don't support
+// the Agent Skills standard, in which case `supported: false` + the MCP-only
+// path in mcp_config is used instead.
+const skillsPluginInstallSchema = z.object({
+	supported: z.boolean().default(true),
+	command: z.string().optional(),
+	note: z.string().optional(),
 });
 
 const linksSchema = z.object({
@@ -73,13 +78,12 @@ export const agentSetupSchema = z.object({
 	context_approach: contextApproachSchema.optional(),
 	quick_start: z.array(quickStartStepSchema),
 	mcp_config: z.string(),
+	skills_plugin_install: skillsPluginInstallSchema,
 	skills_install: skillsInstallSchema,
 	example_prompts: z.array(z.string()),
-	workflows: z.array(workflowSchema),
 	tips: z.array(z.string()),
 	faq: z.array(faqSchema),
 	troubleshooting: z.array(troubleshootingSchema),
-	related_agents: z.array(z.string()),
 	links: linksSchema,
 });
 

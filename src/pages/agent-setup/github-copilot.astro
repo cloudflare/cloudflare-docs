@@ -1,0 +1,78 @@
+---
+import { getCollection } from "astro:content";
+import type { AgentData } from "~/components/agent-setup/types";
+import AgentPageScaffold from "~/components/agent-setup/AgentPageScaffold.astro";
+import QuickStartSteps from "~/components/agent-setup/QuickStartSteps.astro";
+import PlatformAccessSection from "~/components/agent-setup/PlatformAccessSection.astro";
+import "~/styles/agent-setup.css";
+
+const entries = await getCollection("agent-setup");
+const allAgents = entries.map((e) => e.data as AgentData);
+const agent = allAgents.find((a) => a.slug === "github-copilot")!;
+---
+
+<AgentPageScaffold agent={agent} allAgents={allAgents}>
+	<Fragment slot="quick-start">
+		<QuickStartSteps steps={agent.quick_start} />
+	</Fragment>
+
+	<Fragment slot="platform-access">
+		<PlatformAccessSection
+			agentName="GitHub Copilot"
+			skillsExtraHtml="Copilot supports Agent Skills in VS Code agent mode, the Copilot CLI, and the cloud agent. Skills aren&rsquo;t used for inline code completion &mdash; switch Copilot Chat to agent mode to unlock them."
+		>
+			<Fragment slot="wrangler">
+				<p class="agent-platform-hint">
+					Copilot's deploy story runs through CI, not a local CLI.
+				</p>
+				<p>
+					Unlike terminal agents, Copilot doesn't have its own CLI that runs
+					Wrangler directly. Instead, ask Copilot to generate a GitHub Actions
+					workflow that runs <a href="/workers/wrangler/">Wrangler</a> on every
+					push &mdash; GitHub's ecosystem is Copilot's native turf.
+				</p>
+				<p>
+					You'll also want to add <code>CLOUDFLARE_API_TOKEN</code> and <code
+						>CLOUDFLARE_ACCOUNT_ID</code
+					> as repository secrets. Copilot knows this pattern and will prompt you
+					if you forget.
+				</p>
+			</Fragment>
+
+			<Fragment slot="docs">
+				<p class="agent-platform-hint">
+					Pair Skills with repository custom instructions.
+				</p>
+				<p>
+					Skills load Cloudflare expertise on demand &mdash; use a <code
+						>.github/copilot-instructions.md</code
+					> file for repository-wide conventions that should apply to every task
+					(coding standards, preferred libraries, project layout). GitHub recommends
+					<a
+						href="https://docs.github.com/en/copilot/concepts/agents/about-agent-skills#skills-versus-custom-instructions"
+						target="_blank"
+						rel="noopener noreferrer">both together</a
+					>: instructions for the always-on basics, Skills for the situational
+					depth.
+				</p>
+				<ul class="agent-platform-resources">
+					<li>
+						<a href="/llms.txt">developers.cloudflare.com/llms.txt</a> &mdash; directory
+						of every Cloudflare product.
+					</li>
+					<li>
+						<a href="/workers/llms.txt"
+							>developers.cloudflare.com/workers/llms.txt</a
+						> &mdash; per-product page index.
+					</li>
+					<li>
+						<a href="/workers/prompt.txt">/workers/prompt.txt</a> &mdash; Cloudflare's
+						own Workers context prompt, useful to include inside <code
+							>copilot-instructions.md</code
+						>.
+					</li>
+				</ul>
+			</Fragment>
+		</PlatformAccessSection>
+	</Fragment>
+</AgentPageScaffold>

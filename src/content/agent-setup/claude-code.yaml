@@ -24,23 +24,27 @@ context_approach: project_memory
 
 quick_start:
   - title: Install Claude Code
-    description: Install the Claude Code CLI globally.
-    command: "npm install -g @anthropic-ai/claude-code"
-  - title: Connect Cloudflare MCP server
-    description: Give Claude native access to the Cloudflare API — over 2,500 endpoints through two tools.
-    command: "claude mcp add cloudflare -- npx mcp-remote https://mcp.cloudflare.com/mcp"
-  - title: Install Cloudflare Skills
-    description: Add Cloudflare slash commands, contextual prompts, and MCP servers.
-    command: "/plugin marketplace add cloudflare/skills"
-  - title: Start building
-    description: Launch Claude Code in your project directory and try a prompt.
+    description: 'Install the Claude Code CLI. For Windows, Homebrew, WinGet, or npm, see the <a href="https://docs.anthropic.com/en/docs/claude-code/setup" target="_blank" rel="noopener noreferrer">Claude Code setup guide</a>.'
+    command: "curl -fsSL https://claude.ai/install.sh | bash"
+  - title: Launch Claude Code in your project
+    description: Start Claude Code from the root of your project, where wrangler.jsonc lives (if it already exists).
     command: "claude"
+  - title: Install the Cloudflare Skills plugin
+    description: In Claude Code, run this slash command. The plugin installs all 8 Cloudflare Skills and additionally registers the Cloudflare API, docs, bindings, builds, and observability MCP servers.
+    command: "/plugin marketplace add cloudflare/skills"
+  - title: Try a prompt
+    description: 'For example, "Create an example hello world app using Cloudflare Workers."'
 
 mcp_config: |
   claude mcp add cloudflare -- npx mcp-remote https://mcp.cloudflare.com/mcp
   claude mcp add cloudflare-docs -- npx mcp-remote https://docs.mcp.cloudflare.com/mcp
   claude mcp add cloudflare-observability -- npx mcp-remote https://observability.mcp.cloudflare.com/mcp
   claude mcp add cloudflare-bindings -- npx mcp-remote https://bindings.mcp.cloudflare.com/mcp
+
+skills_plugin_install:
+  supported: true
+  command: "/plugin marketplace add cloudflare/skills"
+  note: "Install via the Claude Code plugin marketplace. Bundles Skills + MCP servers."
 
 skills_install:
   command: "/plugin marketplace add cloudflare/skills"
@@ -59,65 +63,32 @@ example_prompts:
   - "Build a WebSocket-based pub/sub app using Durable Objects with hibernation."
   - "Deploy this project to Cloudflare Workers with a custom domain."
 
-workflows:
-  - title: Deploy a new Workers app
-    steps:
-      - "Ask Claude to scaffold a new Workers project"
-      - "Claude runs npm create cloudflare@latest and configures the project"
-      - "Claude generates wrangler.jsonc with your bindings"
-      - "Claude deploys with npx wrangler deploy"
-      - "Claude verifies the deployment and returns the live URL"
-  - title: Add a D1 database
-    steps:
-      - "Ask Claude to add a D1 database to your project"
-      - "Claude creates the database with npx wrangler d1 create"
-      - "Claude adds the binding to wrangler.jsonc"
-      - "Claude writes the schema migration and applies it"
-      - "Claude updates your Worker code to query the database"
-  - title: Debug a failing deployment
-    steps:
-      - "Ask Claude to check your deployment logs"
-      - "Claude uses the observability MCP server to fetch recent logs"
-      - "Claude analyzes errors and identifies the root cause"
-      - "Claude applies the fix and redeploys"
-  - title: Set up a custom domain
-    steps:
-      - "Ask Claude to configure a custom domain for your Worker"
-      - "Claude adds the route to wrangler.jsonc"
-      - "Claude provides DNS configuration instructions"
-      - "Claude verifies the domain is working"
-
 tips:
-  - "Connect the observability MCP server to let Claude automatically debug deployment errors and check logs."
-  - "Use the /cloudflare-docs skill to search Cloudflare documentation inline without leaving your terminal."
-  - "Add the bindings MCP server for Claude to discover and configure Workers bindings (D1, R2, KV, etc.) automatically."
-  - "Claude Code works best when you run it from the root of your Workers project where wrangler.jsonc lives."
-  - "Use claude mcp list to verify all Cloudflare MCP servers are connected before starting work."
+  - "The Skills plugin includes a wrangler Skill — Claude knows when to reach for npx wrangler deploy, wrangler d1 migrations apply, and other CLI commands automatically."
+  - "Try the /cloudflare:build-agent slash command to scaffold a complete Agents SDK project, or /cloudflare:build-mcp for a remote MCP server."
+  - "The Cloudflare API MCP server uses Code Mode — Claude writes JavaScript against a TypeScript API to hit any of 2,500+ endpoints in ~1,000 tokens."
+  - "Claude Code works best from the root of your Workers project where wrangler.jsonc lives — that's what the agent uses to understand your bindings."
+  - "Use claude mcp list to verify Cloudflare servers are connected. For CI/CD, skip OAuth by passing a Cloudflare API token as a bearer token instead."
 
 faq:
+  - question: "Should I use Skills, the MCP server, Wrangler CLI, or all of them?"
+    answer: "All three — and the Skills plugin configures them together. Skills give Claude persistent Cloudflare knowledge (when to use Durable Objects vs KV, what a good Workers project layout looks like). The Cloudflare API MCP server handles platform operations (DNS, WAF, R2 buckets, Zero Trust). Wrangler runs local dev and Workers-specific commands. The `wrangler` Skill teaches Claude when to reach for which."
   - question: "How do I give Claude Code access to my Cloudflare account?"
-    answer: "Connect the Cloudflare API MCP server with `claude mcp add cloudflare -- npx mcp-remote https://mcp.cloudflare.com/mcp`. On first use, you will be redirected to Cloudflare to authorize via OAuth and select permissions."
+    answer: "Install the Skills plugin with `/plugin marketplace add cloudflare/skills`. The first time Claude calls a Cloudflare tool, you'll be redirected to authorize via OAuth and choose what permissions to grant."
   - question: "Can Claude Code deploy to existing Workers projects?"
-    answer: "Yes. Run Claude Code from your existing project directory where wrangler.jsonc is located, and it will understand your project configuration and deploy accordingly."
-  - question: "What MCP servers should I connect?"
-    answer: "At minimum, connect the Cloudflare API server (mcp.cloudflare.com/mcp) and docs server (docs.mcp.cloudflare.com/mcp). For debugging, add the observability server. For building, add the bindings server."
-  - question: "How do I use Cloudflare Skills with Claude Code?"
-    answer: "Install via the plugin marketplace with `/plugin marketplace add cloudflare/skills`. This gives you slash commands like /deploy, /workers, and contextual Cloudflare prompts."
+    answer: "Yes. Run Claude Code from your existing project directory where `wrangler.jsonc` is located, and it will understand your project configuration and deploy accordingly."
+  - question: "What does Code Mode mean for MCP?"
+    answer: "Code Mode is how the Cloudflare API MCP server fits all 2,500+ API endpoints into ~1,000 tokens. Instead of exposing every endpoint as a separate tool, it exposes two — search() and execute() — and Claude writes JavaScript to call them. See the blog post on Code Mode for details."
 
 troubleshooting:
   - issue: "MCP server connection fails or times out"
-    solution: "Run `claude mcp list` to verify the server is registered. Try removing and re-adding: `claude mcp remove cloudflare` then re-add it. Ensure you have npx and mcp-remote available."
+    solution: "Run `claude mcp list` to verify the server is registered. Try removing and re-adding: `claude mcp remove cloudflare` then re-add it. Ensure you have `npx` and `mcp-remote` available."
   - issue: "Claude cannot authenticate with Cloudflare"
     solution: "The MCP server uses OAuth. When prompted, complete the authorization flow in your browser. For CI/CD, create a Cloudflare API token and pass it as a bearer token instead."
   - issue: "Claude does not understand Workers APIs"
     solution: "Connect the docs MCP server: `claude mcp add cloudflare-docs -- npx mcp-remote https://docs.mcp.cloudflare.com/mcp`. This gives Claude access to up-to-date Cloudflare documentation."
   - issue: "Deployment fails with permission error"
     solution: "Verify your Cloudflare OAuth permissions include Workers write access. Re-authorize via the MCP server if needed, or check your API token scopes."
-
-related_agents:
-  - codex
-  - opencode
-  - cursor
 
 links:
   skills: "https://github.com/cloudflare/skills"
