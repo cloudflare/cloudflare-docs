@@ -506,6 +506,12 @@
 }
 
 /* The whole chip is a button that copies the prompt text on click. */
+@media (max-width: 50rem) {
+	.agent-setup-prompt {
+		width: 100%;
+	}
+}
+
 .agent-setup-prompt {
 	margin: 0 !important;
 	display: inline-flex;
