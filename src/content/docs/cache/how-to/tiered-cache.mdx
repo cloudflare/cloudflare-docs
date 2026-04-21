@@ -135,14 +135,14 @@ Cloud region hints are available on all plan types (Free, Pro, Business, and Ent
 To see all available cloud providers and regions, use the supported regions endpoint:
 
 <APIRequest
-  path="/zones/{zone_id}/cache/supported_cloud_regions"
+  path="/zones/{zone_id}/cache/origin_cloud_regions/supported_regions"
   method="GET"
 />
 
 #### Set a cloud region hint via API
 
 <APIRequest
-  path="/zones/{zone_id}/cache/origin_public_cloud_region"
+  path="/zones/{zone_id}/cache/origin_cloud_regions"
   method="PATCH"
   json={{
     ip: "203.0.113.1",
