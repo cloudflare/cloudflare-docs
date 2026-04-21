@@ -1,22 +1,5 @@
 import { z } from "astro/zod";
 
-const quickStartStepSchema = z.object({
-	title: z.string(),
-	description: z.string(),
-	command: z.string().optional(),
-	link: z.string().optional(),
-});
-
-const faqSchema = z.object({
-	question: z.string(),
-	answer: z.string(),
-});
-
-const troubleshootingSchema = z.object({
-	issue: z.string(),
-	solution: z.string(),
-});
-
 // Capabilities shown on cards / in the comparison table.
 // MCP + Skills are omitted because every listed agent supports them
 // (a footnote below the table mentions this).
@@ -27,22 +10,6 @@ const capabilitiesSchema = z.object({
 	cloud: z.boolean().default(false),
 	extension: z.boolean().default(false),
 	open_source: z.boolean().default(false),
-});
-
-const skillsInstallSchema = z.object({
-	command: z.string().optional(),
-	directory: z.string().optional(),
-	docs_url: z.string().optional(),
-});
-
-// Bundled install that pulls in Cloudflare's MCP servers + Skills together
-// via the cloudflare/skills plugin. Some agents (like Windsurf) don't support
-// the Agent Skills standard, in which case `supported: false` + the MCP-only
-// path in mcp_config is used instead.
-const skillsPluginInstallSchema = z.object({
-	supported: z.boolean().default(true),
-	command: z.string().optional(),
-	note: z.string().optional(),
 });
 
 const linksSchema = z.object({
@@ -63,6 +30,9 @@ export const contextApproachSchema = z.enum([
 	"indexed_codebase",
 ]);
 
+// Structured data for each agent.
+// All rich prose — tips, FAQ, troubleshooting, platform-access text — lives
+// in the matching MDX file at src/content/docs/agent-setup/{slug}.mdx.
 export const agentSetupSchema = z.object({
 	name: z.string(),
 	vendor: z.string(),
@@ -77,14 +47,6 @@ export const agentSetupSchema = z.object({
 	pricing_detail: z.string().optional(),
 	model_flexibility: modelFlexibilitySchema.optional(),
 	context_approach: contextApproachSchema.optional(),
-	quick_start: z.array(quickStartStepSchema),
-	mcp_config: z.string(),
-	skills_plugin_install: skillsPluginInstallSchema,
-	skills_install: skillsInstallSchema,
-	example_prompts: z.array(z.string()),
-	tips: z.array(z.string()),
-	faq: z.array(faqSchema),
-	troubleshooting: z.array(troubleshootingSchema),
 	links: linksSchema,
 });
 

@@ -1,0 +1,202 @@
+---
+title: GitHub Copilot + Cloudflare
+description: "Editor extension and CLI with agent mode, workspace context, and native PR integration. Made by GitHub."
+template: splash
+slug: agent-setup/github-copilot
+hideTitle: true
+hideBreadcrumbs: true
+pcx_content_type: how-to
+---
+
+import {
+	AgentHeader,
+	AgentSteps,
+	PlatformAccess,
+	ExamplePromptsList,
+	TipsList,
+	FAQList,
+	FAQItem,
+	TroubleshootingList,
+	TroubleshootingItem,
+	BuildAgentsCallout,
+	OtherAgents,
+} from "~/components/agent-setup";
+
+<AgentHeader slug="github-copilot" />
+
+## Quick start
+
+<AgentSteps>
+
+1. **Install GitHub Copilot**
+
+   Install the GitHub Copilot extension in VS Code from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot). For JetBrains IDEs, Visual Studio, or Xcode, see the [Install the Copilot extension](https://docs.github.com/en/copilot/how-tos/set-up/install-copilot-extension) guide.
+
+2. **Install the Cloudflare Skills**
+
+   Installs the Cloudflare Skills. See [About agent skills](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills) for where Copilot looks for Skills and how they work in VS Code agent mode, the Copilot CLI, and the cloud agent.
+
+   ```bash
+   npx skills add https://github.com/cloudflare/skills
+   ```
+
+3. **Configure Cloudflare MCP servers**
+
+   Add the Cloudflare API and docs MCP servers to your VS Code MCP settings. VS Code 1.99+ supports MCP natively.
+
+   ```json
+   {
+     "mcpServers": {
+       "cloudflare": { "url": "https://mcp.cloudflare.com/mcp" },
+       "cloudflare-docs": { "url": "https://docs.mcp.cloudflare.com/mcp" }
+     }
+   }
+   ```
+
+4. **Start building**
+
+   Open Copilot Chat (**Ctrl+Shift+I**), switch to agent mode, and try a prompt — for example, "Create an example hello world app using Cloudflare Workers."
+
+</AgentSteps>
+
+## Cloudflare platform access
+
+<PlatformAccess
+	agentName="GitHub Copilot"
+	skillsExtraHtml="Copilot supports Agent Skills in VS Code agent mode, the Copilot CLI, and the cloud agent. Skills aren&rsquo;t used for inline code completion &mdash; switch Copilot Chat to agent mode to unlock them."
+>
+	<Fragment slot="wrangler">
+		<p class="agent-platform-hint">
+			Copilot's deploy story runs through CI, not a local CLI.
+		</p>
+		<p>
+			Unlike terminal agents, Copilot doesn't have its own CLI that runs Wrangler
+			directly. Instead, ask Copilot to generate a GitHub Actions workflow that runs
+			<a href="/workers/wrangler/">Wrangler</a> on every push — GitHub's ecosystem
+			is Copilot's native turf.
+		</p>
+		<p>
+			You'll also want to add <code>CLOUDFLARE_API_TOKEN</code> and <code>CLOUDFLARE_ACCOUNT_ID</code>
+			as repository secrets. Copilot knows this pattern and will prompt you if you
+			forget.
+		</p>
+	</Fragment>
+
+    <Fragment slot="docs">
+    	<p class="agent-platform-hint">
+    		Pair Skills with repository custom instructions.
+    	</p>
+    	<p>
+    		Skills load Cloudflare expertise on demand — use a <code>.github/copilot-instructions.md</code>
+    		file for repository-wide conventions that should apply to every task (coding
+    		standards, preferred libraries, project layout). GitHub recommends <a href="https://docs.github.com/en/copilot/concepts/agents/about-agent-skills#skills-versus-custom-instructions" target="_blank" rel="noopener noreferrer">both together</a>: instructions for the always-on basics, Skills for the situational
+    		depth.
+    	</p>
+    	<ul class="agent-platform-resources">
+    		<li>
+    			<a href="/llms.txt">developers.cloudflare.com/llms.txt</a> — directory of
+    			every Cloudflare product.
+    		</li>
+    		<li>
+    			<a href="/workers/llms.txt">developers.cloudflare.com/workers/llms.txt</a>
+    		</li>
+    		<li>
+    			<a href="/agents/llms.txt">developers.cloudflare.com/agents/llms.txt</a>
+    		</li>
+    		<li>
+    			<a href="/r2/llms.txt">developers.cloudflare.com/r2/llms.txt</a>
+    		</li>
+    		<li>
+    			<a href="/d1/llms.txt">developers.cloudflare.com/d1/llms.txt</a>
+    		</li>
+    		<li>
+    			<a href="/workers/prompt.txt">/workers/prompt.txt</a> — Cloudflare's own Workers
+    			context prompt, useful to include inside <code>copilot-instructions.md</code>.
+    		</li>
+    	</ul>
+    	<p>
+    		For a full overview of how these docs are structured for agents, refer to the{" "}
+    		<a href="/style-guide/ai-tooling/">AI tooling guide</a>.
+    	</p>
+    </Fragment>
+
+</PlatformAccess>
+
+## Example prompts
+
+<ExamplePromptsList />
+
+## Tips
+
+<TipsList>
+
+- Agent Skills work with VS Code agent mode, the Copilot CLI, and the GitHub cloud agent — but not with inline code completion. Switch Copilot Chat to agent mode to unlock Skills-aware behavior.
+- Use `@workspace` in Copilot Chat to give the agent full context of your Workers project before asking it to build or deploy.
+- Commit a `.github/copilot-instructions.md` file with repository-wide conventions (coding standards, preferred patterns) — Copilot loads it automatically on every interaction, complementing Skills which are loaded on demand.
+- Connect the Cloudflare API MCP server to VS Code — Copilot can then manage Cloudflare resources (DNS, WAF, R2 buckets) through Code Mode in ~1,000 tokens.
+- GitHub Copilot integrates natively with GitHub Actions — ask it to generate a deploy workflow that runs Wrangler with your `CLOUDFLARE_API_TOKEN` secret.
+- The Cloudflare docs MCP server keeps Copilot's Workers API references fresh without you needing to paste documentation into prompts.
+- For more information on installing additional MCP servers, or when to use Code Mode versus traditional MCP servers, refer to the [Cloudflare MCP server repository](https://github.com/cloudflare/mcp-server-cloudflare).
+
+</TipsList>
+
+## FAQ
+
+<FAQList>
+	<FAQItem question="Does Copilot support Cloudflare Skills?">
+		Yes. GitHub Copilot added Agent Skills support for VS Code agent mode, the
+		Copilot CLI, and the cloud agent. Run `npx skills add
+		https://github.com/cloudflare/skills` to install them. See the [About agent
+		skills](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills)
+		guide for details on where Copilot looks for Skills.
+	</FAQItem>
+	<FAQItem question="Should I use Skills, the MCP server, Wrangler CLI, or all of them?">
+		All three. Skills load Cloudflare expertise into every agent-mode session.
+		The Cloudflare API MCP server handles platform operations (DNS, WAF, Zero
+		Trust, R2 buckets). Wrangler runs local dev and deploys in the VS Code
+		terminal. The bundled `wrangler` Skill teaches Copilot when to reach for
+		which.
+	</FAQItem>
+	<FAQItem question="Do I still need .github/copilot-instructions.md?">
+		It's complementary. Use custom instructions for simple repository-wide
+		conventions that apply to almost every task (coding standards, preferred
+		libraries). Use Skills for detailed, situational guidance Copilot should
+		only load when relevant.
+	</FAQItem>
+	<FAQItem question="Can Copilot deploy to Cloudflare directly?">
+		Yes, via Wrangler in the VS Code terminal, or via a GitHub Actions workflow
+		that Copilot can generate for you.
+	</FAQItem>
+</FAQList>
+
+## Troubleshooting
+
+<TroubleshootingList>
+	<TroubleshootingItem issue="Skills don't load in Copilot">
+		Skills only work in VS Code agent mode, the Copilot CLI, and the cloud agent
+		— not with inline completion or plain chat. Switch Copilot Chat to agent
+		mode. If Skills still aren't discovered, see [About agent
+		skills](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills)
+		for the paths Copilot checks.
+	</TroubleshootingItem>
+	<TroubleshootingItem issue="Copilot does not understand Workers APIs">
+		Verify the Cloudflare Skills are installed, connect the Cloudflare docs MCP
+		server, and make sure you're using Copilot in agent mode.
+	</TroubleshootingItem>
+	<TroubleshootingItem issue="MCP server not available in VS Code">
+		Ensure you are using VS Code 1.99+ which supports MCP natively. Add the
+		server configuration to `.vscode/mcp.json`.
+	</TroubleshootingItem>
+	<TroubleshootingItem issue="GitHub Actions deployment fails">
+		Verify `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` are set as
+		repository secrets. Ensure the token has Workers write permissions.
+	</TroubleshootingItem>
+</TroubleshootingList>
+
+## Build agents on Cloudflare
+
+<BuildAgentsCallout />
+
+## Other agents
+
+<OtherAgents currentSlug="github-copilot" />

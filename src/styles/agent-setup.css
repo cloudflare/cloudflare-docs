@@ -666,17 +666,24 @@
 }
 
 /* ─── FAQ ─── */
+.sl-markdown-content .agent-setup-faq-item,
 .agent-setup-faq-item {
 	border-bottom: 1px solid var(--color-cl1-gray-8);
 	padding: 0;
+	margin: 0;
+	/* Override Starlight's orange accent — no left border on FAQ rows */
+	border-inline-start: 0 none;
+	padding-inline-start: 0;
 }
 
 :root[data-theme="dark"] .agent-setup-faq-item {
 	border-bottom-color: var(--color-cl1-gray-2);
 }
 
+.sl-markdown-content .agent-setup-faq-item summary,
 .agent-setup-faq-item summary {
 	padding: 0.875rem 0;
+	margin: 0;
 	font-weight: 600;
 	font-size: 0.9375rem;
 	cursor: pointer;
@@ -684,8 +691,28 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	color: inherit;
 }
 
+/* Hide Starlight's default disclosure marker and browser defaults */
+.sl-markdown-content .agent-setup-faq-item summary::-webkit-details-marker,
+.agent-setup-faq-item summary::-webkit-details-marker {
+	display: none;
+}
+
+.sl-markdown-content .agent-setup-faq-item summary::marker,
+.agent-setup-faq-item summary::marker {
+	content: "";
+}
+
+/* Override Starlight's default summary::before chevron */
+.sl-markdown-content .agent-setup-faq-item summary::before,
+.agent-setup-faq-item summary::before {
+	content: none;
+	display: none;
+}
+
+.sl-markdown-content .agent-setup-faq-item summary::after,
 .agent-setup-faq-item summary::after {
 	content: "+";
 	font-size: 1.25rem;
@@ -693,10 +720,12 @@
 	transition: transform 0.2s ease;
 }
 
+.sl-markdown-content .agent-setup-faq-item[open] summary::after,
 .agent-setup-faq-item[open] summary::after {
 	content: "−";
 }
 
+.sl-markdown-content .agent-setup-faq-answer,
 .agent-setup-faq-answer {
 	padding: 0 0 1rem;
 	font-size: 0.875rem;
@@ -708,29 +737,47 @@
 	color: var(--color-cl1-gray-7);
 }
 
+/* Tighten prose spacing inside FAQ answers */
+.sl-markdown-content .agent-setup-faq-answer > * + * {
+	margin-top: 0.75rem;
+}
+
+.sl-markdown-content .agent-setup-faq-answer p {
+	margin: 0;
+	line-height: 1.6;
+}
+
 /* ─── Troubleshooting ─── */
+.sl-markdown-content .agent-setup-troubleshooting,
 .agent-setup-troubleshooting {
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
 }
 
+.sl-markdown-content .agent-setup-troubleshooting-item,
 .agent-setup-troubleshooting-item {
 	border: 1px solid var(--color-cl1-gray-8);
 	border-radius: 8px;
 	background: transparent;
 	overflow: hidden;
 	transition: border-color 120ms ease;
+	/* Override Starlight's orange accent — restore uniform 1px border */
+	border-inline-start: 1px solid var(--color-cl1-gray-8);
+	padding-inline-start: 0;
+	margin: 0;
 }
 
 :root[data-theme="dark"] .agent-setup-troubleshooting-item {
 	border-color: var(--color-cl1-gray-2);
 }
 
+.sl-markdown-content .agent-setup-troubleshooting-item:hover,
 .agent-setup-troubleshooting-item:hover {
 	border-color: var(--color-cl1-gray-5);
 }
 
+.sl-markdown-content .agent-setup-troubleshooting-item[open],
 .agent-setup-troubleshooting-item[open] {
 	border-color: var(--color-cl1-gray-5);
 	background: var(--color-cl1-gray-9);
@@ -740,11 +787,13 @@
 	background: var(--color-cl1-gray-1);
 }
 
+.sl-markdown-content .agent-setup-troubleshooting-item > summary,
 .agent-setup-troubleshooting-item > summary {
 	display: flex;
 	align-items: center;
 	gap: 0.625rem;
 	padding: 0.75rem 1rem;
+	margin: 0;
 	font-size: 0.9375rem;
 	font-weight: 500;
 	color: var(--color-cl1-gray-3);
@@ -757,10 +806,12 @@
 	color: var(--color-cl1-gray-8);
 }
 
+.sl-markdown-content .agent-setup-troubleshooting-item > summary::-webkit-details-marker,
 .agent-setup-troubleshooting-item > summary::-webkit-details-marker {
 	display: none;
 }
 
+.sl-markdown-content .agent-setup-troubleshooting-item > summary:focus-visible,
 .agent-setup-troubleshooting-item > summary:focus-visible {
 	outline: 2px solid var(--color-cl1-brand-orange);
 	outline-offset: -2px;
@@ -787,10 +838,12 @@
 	transition: transform 180ms ease;
 }
 
+.sl-markdown-content .agent-setup-troubleshooting-item[open] .agent-setup-troubleshooting-chevron,
 .agent-setup-troubleshooting-item[open] .agent-setup-troubleshooting-chevron {
 	transform: rotate(-180deg);
 }
 
+.sl-markdown-content .agent-setup-troubleshooting-solution,
 .agent-setup-troubleshooting-solution {
 	padding: 0 1rem 0.875rem calc(1rem + 8px + 0.625rem);
 	/* Align with issue text after the dot + gap on the summary row */
@@ -803,6 +856,7 @@
 	color: var(--color-cl1-gray-7);
 }
 
+.sl-markdown-content .agent-setup-troubleshooting-solution-label,
 .agent-setup-troubleshooting-solution-label {
 	display: inline-flex;
 	align-items: center;
@@ -818,6 +872,16 @@
 :root[data-theme="dark"] .agent-setup-troubleshooting-solution-label {
 	/* Light palette token reads better as "accent" on dark backgrounds. */
 	color: var(--color-cl1-green-7);
+}
+
+/* Tighten prose spacing inside troubleshooting solution body */
+.sl-markdown-content .agent-setup-troubleshooting-solution-body > * + * {
+	margin-top: 0.75rem;
+}
+
+.sl-markdown-content .agent-setup-troubleshooting-solution-body p {
+	margin: 0;
+	line-height: 1.6;
 }
 
 .agent-setup-troubleshooting-solution-body :global(code) {
@@ -1759,8 +1823,15 @@
 /* ────────────────────────────────────────────────────────────────────
    Agent detail page — Platform access deep-dive
 
-   Each block is a site-wide <Details> widget styled as a bordered card so
-   it reads as a discrete "area" rather than a run of indented headings.
+   Each block is a bespoke <PlatformAccessDetails> (.agent-platform-card)
+   styled as a bordered card so it reads as a discrete "area" rather than
+   a run of indented headings.
+
+   Uses high-specificity selectors (.sl-markdown-content .agent-platform-card)
+   so our card styling beats Starlight's default prose styling for <details>
+   and <summary> WITHOUT needing a `.not-content` wrapper. That keeps inline
+   <code>, hyperlinks, and other prose elements inside the body correctly
+   themed by Starlight's markdown styles.
    ──────────────────────────────────────────────────────────────────── */
 .agent-setup-platform-access {
 	display: flex;
@@ -1768,8 +1839,22 @@
 	gap: 0.75rem;
 }
 
-/* Wrap each <Details> as a card: border, rounded corners, surface bg. */
-.agent-setup-platform-access > details {
+/* Short intro sentence above the four Details cards. */
+.agent-setup-platform-access .agent-platform-lede {
+	margin: 0 !important;
+	padding: 0 !important;
+	font-size: 0.875rem;
+	line-height: 1.5;
+	color: var(--color-cl1-gray-4);
+}
+
+/*
+ * Card reset + border. The `:where()` selectors in Starlight's
+ * `.sl-markdown-content details` rules have zero specificity, so a single
+ * class selector here is enough to beat them without !important.
+ */
+.sl-markdown-content .agent-platform-card,
+.agent-platform-card {
 	margin: 0;
 	padding: 0;
 	border: 1px solid var(--color-cl1-gray-8);
@@ -1779,58 +1864,70 @@
 	transition:
 		border-color 0.15s ease,
 		background-color 0.15s ease;
+	/* Cancel Starlight's `border-inline-start: 2px solid` + `padding-inline-start: 1rem` */
+	border-inline-start-width: 1px;
+	padding-inline-start: 0;
 }
 
-:root[data-theme="dark"] .agent-setup-platform-access > details {
+:root[data-theme="dark"] .agent-platform-card {
 	border-color: var(--color-cl1-gray-2);
 	background: var(--color-cl1-gray-1);
 }
 
 /* Closed state: subtle hover on the whole card. */
-.agent-setup-platform-access > details:not([open]):hover {
+.agent-platform-card:not([open]):hover {
 	border-color: var(--color-cl1-gray-5);
 }
 
-:root[data-theme="dark"]
-	.agent-setup-platform-access
-	> details:not([open]):hover {
+:root[data-theme="dark"] .agent-platform-card:not([open]):hover {
 	border-color: var(--color-cl1-gray-4);
 }
 
 /* Open state: stronger border + slightly different bg so it stands out. */
-.agent-setup-platform-access > details[open] {
+.agent-platform-card[open] {
 	border-color: var(--color-cl1-gray-6);
 	background: var(--sl-color-bg);
 	/* Card owns the side padding — children get zero horizontal padding. */
 	padding: 0 1rem 1rem;
 }
 
-:root[data-theme="dark"] .agent-setup-platform-access > details[open] {
+:root[data-theme="dark"] .agent-platform-card[open] {
 	border-color: var(--color-cl1-gray-3);
 	background: var(--color-cl1-gray-1);
 }
 
 /*
- * Starlight indents <Details> summaries with padding-left and renders the
- * chevron as a marker on the parent. We want our own padding so the chevron
- * and text sit inside our card evenly.
+ * The <summary>. Uses its own class so we can beat Starlight's
+ * `.sl-markdown-content summary` rule without !important or `.not-content`.
  */
-.agent-setup-platform-access > details > summary {
-	padding: 0.875rem 1rem 0.875rem 1.75rem !important;
-	margin: 0 !important;
+.sl-markdown-content .agent-platform-card-summary,
+.agent-platform-card-summary {
+	padding: 0.875rem 1rem 0.875rem 1.75rem;
+	margin: 0;
 	list-style: none;
 	font-weight: 600;
 	font-size: 0.9375rem;
+	line-height: 1.5;
 	position: relative;
 	cursor: pointer;
+	color: inherit;
 }
 
-.agent-setup-platform-access > details > summary::-webkit-details-marker {
+.agent-platform-card-summary::-webkit-details-marker,
+.agent-platform-card-summary::marker {
 	display: none;
+	content: "";
 }
 
-/* Custom chevron — an SVG so it scales crisply and matches other doc cards. */
-.agent-setup-platform-access > details > summary::before {
+/*
+ * Custom chevron — overrides Starlight's default `summary::before` marker
+ * (which would show a larger arrow icon on the left). We replace its
+ * mask-image with our own chevron SVG and position it absolutely inside the
+ * summary's left padding. High specificity (`.sl-markdown-content ...`)
+ * ensures we beat Starlight's default `.sl-markdown-content summary::before`.
+ */
+.sl-markdown-content .agent-platform-card-summary::before,
+.agent-platform-card-summary::before {
 	content: "";
 	position: absolute;
 	left: 0.625rem;
@@ -1847,52 +1944,69 @@
 	-webkit-mask-repeat: no-repeat;
 	mask-position: center;
 	-webkit-mask-position: center;
+	/* Reset Starlight's default marker sizing + inline positioning — we use absolute */
+	--sl-details-marker-size: 16px;
+	display: block;
+	margin-inline: 0;
+	vertical-align: baseline;
 }
 
-.agent-setup-platform-access > details[open] > summary::before {
+.agent-platform-card[open] > .agent-platform-card-summary::before {
 	transform: translateY(-50%) rotate(90deg);
 	opacity: 1;
 }
 
-/* Open body gets padding + a top divider. */
-.agent-setup-platform-access > details[open] > summary {
+/* Open body gets a top divider between summary and content. */
+.sl-markdown-content .agent-platform-card[open] > .agent-platform-card-summary,
+.agent-platform-card[open] > .agent-platform-card-summary {
 	border-bottom: 1px solid var(--color-cl1-gray-8);
+	margin-bottom: 0;
 }
 
 :root[data-theme="dark"]
-	.agent-setup-platform-access
-	> details[open]
-	> summary {
+	.agent-platform-card[open]
+	> .agent-platform-card-summary {
 	border-bottom-color: var(--color-cl1-gray-2);
 }
 
-/* The body content — everything after <summary>. */
-.agent-setup-platform-access > details > *:not(summary) {
-	margin-left: 0;
-	margin-right: 0;
+/* The body wrapper — everything inside the card after <summary>. */
+.agent-platform-card-body {
+	padding-top: 0.75rem;
+	font-size: 0.875rem;
+	line-height: 1.55;
 }
 
-.agent-setup-platform-access > details > summary + * {
+/*
+ * Tighten prose spacing inside the card. Starlight's default
+ * `.sl-markdown-content :not(...) + :not(...) { margin-top: var(--sl-content-gap-y) }`
+ * uses ~1.5rem which is too spacious for a compact card.
+ */
+.sl-markdown-content .agent-platform-card-body > * + * {
 	margin-top: 0.75rem;
 }
 
-/* Children carry no horizontal padding — the card's own padding handles inset. */
+.sl-markdown-content .agent-platform-card-body p {
+	margin: 0;
+	line-height: 1.55;
+}
 
 /*
- * Hint line directly under the summary — small + muted. This is the first
- * body element, so it sits against the summary's bottom border and gets a
- * little top padding for breathing room.
+ * Hint line directly under the summary — small + muted.
+ * Force zero top-margin regardless of whether the hint is the first element
+ * (Astro-authored) or arrives via an MDX slot (where Starlight's > * + *
+ * rule would otherwise add spacing).
  */
-.agent-setup-platform-access .agent-platform-hint {
+.sl-markdown-content .agent-platform-card .agent-platform-hint,
+.agent-platform-card .agent-platform-hint {
 	margin: 0 !important;
-	padding-top: 0.75rem !important;
-	padding-bottom: 0 !important;
-	font-size: 0.8125rem !important;
+	padding: 0;
+	font-size: 0.8125rem;
 	color: var(--color-cl1-gray-5);
 }
 
-.agent-setup-platform-access .agent-platform-hint + * {
-	margin-top: 0.75rem !important;
+.sl-markdown-content .agent-platform-card .agent-platform-hint + *,
+.agent-platform-card .agent-platform-hint + * {
+	margin-top: 0.625rem !important;
 }
 
 /*
@@ -1902,25 +2016,22 @@
  * imported in an Astro page (CSS layer flip). We restore the border here,
  * unlayered, so the <Code> frame is visible inside these cards.
  */
-.agent-setup-platform-access .expressive-code figure.frame {
+.agent-platform-card .expressive-code figure.frame {
 	border: 1px solid var(--color-cl1-gray-8);
 	border-radius: 6px;
 	overflow: hidden;
 }
 
-:root[data-theme="dark"]
-	.agent-setup-platform-access
-	.expressive-code
-	figure.frame {
+:root[data-theme="dark"] .agent-platform-card .expressive-code figure.frame {
 	border-color: var(--color-cl1-gray-2);
 }
 
 /* Also restore the copy-button hover state — same issue as above. */
-.agent-setup-platform-access .expressive-code .copy button {
+.agent-platform-card .expressive-code .copy button {
 	border: 1px solid transparent;
 }
 
-.agent-setup-platform-access .expressive-code .copy button:hover {
+.agent-platform-card .expressive-code .copy button:hover {
 	border-color: var(--color-cl1-gray-6);
 }
 
@@ -2033,29 +2144,37 @@
  *
  *   orange-name [bundled?]  description text
  *
- * No grid alignment — the name and description flow together per item, with
- * a subtle separator between items.
+ * The list sits in a subtle rounded container to visually separate it from
+ * the prose above without taking extra vertical space.
  */
 .agent-simple-list {
-	margin: 0 !important;
+	margin: 1rem 0 0 !important;
 	padding: 0 !important;
 	list-style: none !important;
+	border: 1px solid var(--color-cl1-gray-8);
+	border-radius: 6px;
+	overflow: hidden;
+}
+
+:root[data-theme="dark"] .agent-simple-list {
+	border-color: var(--color-cl1-gray-2);
 }
 
 .agent-simple-item {
-	padding: 0.375rem 0;
+	padding: 0.375rem 0.625rem;
 	border-bottom: 1px solid var(--color-cl1-gray-8);
 	font-size: 0.8125rem;
 	line-height: 1.55;
+	background: var(--sl-color-bg);
 }
 
-.agent-simple-item:first-child {
-	border-top: 1px solid var(--color-cl1-gray-8);
+.agent-simple-item:last-child {
+	border-bottom: none;
 }
 
-:root[data-theme="dark"] .agent-simple-item,
-:root[data-theme="dark"] .agent-simple-item:first-child {
+:root[data-theme="dark"] .agent-simple-item {
 	border-color: var(--color-cl1-gray-2);
+	background: color-mix(in srgb, var(--color-cl1-gray-1) 50%, transparent);
 }
 
 .agent-simple-name {

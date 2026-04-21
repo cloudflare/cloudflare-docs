@@ -1,0 +1,173 @@
+---
+title: Windsurf + Cloudflare
+description: "Agentic IDE with Cascade context and Flows for multi-step tasks. Made by Codeium."
+template: splash
+slug: agent-setup/windsurf
+hideTitle: true
+hideBreadcrumbs: true
+pcx_content_type: how-to
+---
+
+import {
+	AgentHeader,
+	AgentSteps,
+	PlatformAccess,
+	ExamplePromptsList,
+	TipsList,
+	FAQList,
+	FAQItem,
+	TroubleshootingList,
+	TroubleshootingItem,
+	BuildAgentsCallout,
+	OtherAgents,
+} from "~/components/agent-setup";
+
+<AgentHeader slug="windsurf" />
+
+## Quick start
+
+<AgentSteps>
+
+1. **Download Windsurf**
+
+   Download Windsurf for macOS, Windows, or Linux from the [Windsurf downloads page](https://windsurf.com/download).
+
+2. **Install the Cloudflare Skills**
+
+   Windsurf supports the Agent Skills standard in Cascade. Install the Cloudflare Skills bundle from [cloudflare/skills](https://github.com/cloudflare/skills) — see the [Windsurf Skills documentation](https://docs.windsurf.com/windsurf/cascade/skills) for where Cascade loads Skills from.
+
+3. **Configure Cloudflare MCP servers**
+
+   Windsurf supports remote MCP servers via OAuth. Add the Cloudflare API and docs servers to `~/.codeium/windsurf/mcp_config.json`.
+
+   ```json
+   {
+     "mcpServers": {
+       "cloudflare": { "serverUrl": "https://mcp.cloudflare.com/mcp" },
+       "cloudflare-docs": { "serverUrl": "https://docs.mcp.cloudflare.com/mcp" }
+     }
+   }
+   ```
+
+4. **Start building**
+
+   Open Cascade and try a prompt — for example, "Create an example hello world app using Cloudflare Workers."
+
+</AgentSteps>
+
+## Cloudflare platform access
+
+<PlatformAccess agentName="Windsurf">
+	<Fragment slot="wrangler">
+		<p class="agent-platform-hint">
+			Run deploys and platform commands from the integrated terminal.
+		</p>
+		<p>
+			Cascade runs <a href="/workers/wrangler/">Wrangler</a> in Windsurf's integrated
+			terminal. The bundled <strong>wrangler</strong> Skill teaches Cascade when to
+			reach for commands like <code>wrangler deploy</code> or <code>wrangler tail</code>.
+		</p>
+	</Fragment>
+
+    <Fragment slot="docs">
+    	<p class="agent-platform-hint">Use @-mentions and llms.txt to preload context.</p>
+    	<p>
+    		Cascade works best when you explicitly <code>@</code>-mention files and paste
+    		URLs. Useful Cloudflare docs URLs to reference:
+    	</p>
+    	<ul class="agent-platform-resources">
+    		<li>
+    			<a href="/llms.txt">developers.cloudflare.com/llms.txt</a> — directory of
+    			every Cloudflare product.
+    		</li>
+    		<li>
+    			<a href="/workers/llms.txt">developers.cloudflare.com/workers/llms.txt</a>
+    		</li>
+    		<li>
+    			<a href="/agents/llms.txt">developers.cloudflare.com/agents/llms.txt</a>
+    		</li>
+    		<li>
+    			<a href="/r2/llms.txt">developers.cloudflare.com/r2/llms.txt</a>
+    		</li>
+    		<li>
+    			<a href="/d1/llms.txt">developers.cloudflare.com/d1/llms.txt</a>
+    		</li>
+    	</ul>
+    	<p>
+    		For a full overview of how these docs are structured for agents, refer to the{" "}
+    		<a href="/style-guide/ai-tooling/">AI tooling guide</a>.
+    	</p>
+    </Fragment>
+
+</PlatformAccess>
+
+## Example prompts
+
+<ExamplePromptsList />
+
+## Tips
+
+<TipsList>
+
+- Install the Cloudflare Skills bundle so Cascade knows when to reach for Workers, Wrangler, Durable Objects, and the Agents SDK without you re-explaining them.
+- Windsurf's Cascade maintains context across actions — start with MCP + Skills and Cascade will remember your Cloudflare configuration for subsequent requests.
+- The Cloudflare API MCP server uses Code Mode — Cascade writes JavaScript to reach any of 2,500+ endpoints in ~1,000 tokens.
+- Use `@`-mention to include your `wrangler.jsonc` in Cascade prompts — Cascade uses this to understand your current bindings when generating code.
+- Add the observability MCP server to let Cascade automatically check Workers logs and debug deployments without leaving the IDE.
+- For more information on installing additional MCP servers, or when to use Code Mode versus traditional MCP servers, refer to the [Cloudflare MCP server repository](https://github.com/cloudflare/mcp-server-cloudflare).
+
+</TipsList>
+
+## FAQ
+
+<FAQList>
+	<FAQItem question="Does Windsurf support Cloudflare Skills?">
+		Yes. Windsurf supports Agent Skills in Cascade. Install the Cloudflare
+		Skills bundle from [cloudflare/skills](https://github.com/cloudflare/skills)
+		— see the [Windsurf Cascade Skills
+		documentation](https://docs.windsurf.com/windsurf/cascade/skills) for where
+		Cascade discovers and loads Skills.
+	</FAQItem>
+	<FAQItem question="Should I use the MCP server, Wrangler CLI, or both?">
+		Both. Use the Cloudflare API MCP server for platform operations (DNS, WAF,
+		Zero Trust, R2 buckets) and Wrangler in Windsurf's integrated terminal for
+		local dev and deploys. Cascade coordinates between them naturally.
+	</FAQItem>
+	<FAQItem question="How do I configure MCP servers in Windsurf?">
+		Edit `~/.codeium/windsurf/mcp_config.json` and add the Cloudflare server
+		URLs under `mcpServers` using the `serverUrl` field. Restart Windsurf to
+		pick up changes. Windsurf supports OAuth for remote MCP servers, so you'll
+		be redirected to Cloudflare to authorize on first use.
+	</FAQItem>
+	<FAQItem question="Can Cascade deploy to Cloudflare?">
+		Yes. Cascade can run `npx wrangler deploy` in the integrated terminal, and
+		with the MCP server configured it can also call the Cloudflare API directly
+		for managed deploys and resource creation.
+	</FAQItem>
+</FAQList>
+
+## Troubleshooting
+
+<TroubleshootingList>
+	<TroubleshootingItem issue="MCP server not connecting">
+		Verify your `mcp_config.json` configuration. Restart Windsurf after making
+		changes. Ensure the MCP server URL ends with `/mcp`.
+	</TroubleshootingItem>
+	<TroubleshootingItem issue="Cascade loses context about Workers">
+		Use @-mention to include `wrangler.jsonc` and key configuration files in
+		your Cascade prompt. The Flows feature helps maintain context across
+		multi-step tasks.
+	</TroubleshootingItem>
+	<TroubleshootingItem issue="Wrangler not found in terminal">
+		Install Wrangler globally with `npm install -g wrangler` and restart
+		Windsurf to refresh the terminal PATH.
+	</TroubleshootingItem>
+</TroubleshootingList>
+
+## Build agents on Cloudflare
+
+<BuildAgentsCallout />
+
+## Other agents
+
+<OtherAgents currentSlug="windsurf" />
