@@ -2058,7 +2058,7 @@
  * Cloudflare brand orange. Has a distinct title line then body text below it.
  */
 .agent-platform-note {
-	margin: 0.5rem 0 0 !important;
+	margin: 1.25rem 0 0 !important;
 	padding: 0.75rem 1rem !important;
 	border-left: 3px solid var(--color-cl1-brand-orange);
 	background: var(--color-cl1-orange-8);

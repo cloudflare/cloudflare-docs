@@ -9,6 +9,7 @@ import { Steps } from "~/components";
 import AgentHeader from "~/components/agent-setup/AgentHeader.astro";
 import PlatformAccess from "~/components/agent-setup/PlatformAccessSection.astro";
 import ExamplePromptsList from "~/components/agent-setup/ExamplePromptsList.astro";
+import RandomPrompt from "~/components/agent-setup/RandomPrompt.astro";
 import TipsList from "~/components/agent-setup/TipsList.astro";
 import FAQList from "~/components/agent-setup/FAQList.astro";
 import FAQItem from "~/components/agent-setup/FAQItem.astro";
@@ -30,29 +31,33 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
    npm install -g @openai/codex
    ```
 
-2. **Install the Cloudflare Skills**
-
-   Installs the Cloudflare Skills into `~/.codex/skills/`.
+2. **Install Cloudflare Skills**
 
    ```bash
    npx skills add https://github.com/cloudflare/skills
    ```
 
-3. **Add the Cloudflare MCP servers**
-
-   Register the Cloudflare MCP servers with Codex.
+3. **Add Cloudflare MCP servers**
 
    ```bash
-   codex mcp add cloudflare -- npx mcp-remote https://mcp.cloudflare.com/mcp
+   codex mcp add cloudflare --url https://mcp.cloudflare.com/mcp
+   codex mcp add cloudflare-docs --url https://docs.mcp.cloudflare.com/mcp
    ```
 
-4. **Launch Codex and build**
+4. **Launch Codex**
 
-   Start Codex in your project directory and try a prompt — for example, "Create an example hello world app using Cloudflare Workers."
+   Start Codex from the root of your project, where `wrangler.jsonc` lives (if it already exists).
 
-    ```bash
-    codex
-    ```
+   ```bash
+   codex
+   ```
+
+5. **Try a prompt**
+
+   For example:
+
+   <RandomPrompt />
+
 </Steps>
 
 ## Cloudflare platform access
@@ -110,7 +115,6 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
 <TipsList>
 
-- Codex runs in a sandbox — it can safely execute Wrangler commands without touching your host system, and the bundled wrangler Skill guides it on what to run.
 - The Cloudflare API MCP server uses Code Mode — Codex writes JavaScript against a typed API to reach any of 2,500+ endpoints in ~1,000 tokens.
 - Codex supports web browsing; pair it with the docs MCP server for the freshest Cloudflare references without leaving the agent loop.
 - Try the `/cloudflare:build-agent` slash command to scaffold a complete Agents SDK project, or `/cloudflare:build-mcp` for a remote MCP server.
