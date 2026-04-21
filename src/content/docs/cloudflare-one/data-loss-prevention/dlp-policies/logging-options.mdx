@@ -10,6 +10,8 @@ sidebar:
   order: 2
 ---
 
+import { Details } from "~/components";
+
 Data Loss Prevention allows you to capture, store, and view the data that triggered a specific DLP policy for use as forensic evidence. DLP offers three logging approaches, each suited to different needs:
 
 | Approach                                                                    | What it captures                                            | Encryption                      | Availability |
@@ -34,7 +36,7 @@ To generate a public/private key pair in the command line, refer to [Generate a 
 
 ### Upload the public key to Cloudflare
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to  **Zero Trust** > **Data loss prevention** > **DLP settings**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Data loss prevention** > **DLP settings**.
 2. In the **Set a DLP payload and prompt encryption public key** field, select **Edit**.
 3. Paste your public key.
 4. Select **Save**.
@@ -47,7 +49,7 @@ The matching private key is required to view logs. If you lose your private key,
 
 You can control how sensitive data appears in your DLP payload logs by selecting a masking level. This determines how much of the matched content is visible after decryption.
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to  **Zero Trust** >  **Data loss prevention** > **DLP settings**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Data loss prevention** > **DLP settings**.
 2. Go to the **Payload log masking** card.
 3. Choose one of the following masking levels:
    - **Full Mask (default):** Masks the match while preserving character count and visual formatting. For example, a Social Security Number appears as `***-**-****`.
@@ -164,3 +166,65 @@ To set up the DLP Forensic Copy Logpush job:
 DLP will now send a copy of HTTP requests that match this policy to your Logpush destination.
 
 Logpush supports up to four DLP Forensic Copy Logpush jobs per account. By default, Gateway will send all matched HTTP requests to your configured DLP Forensic Copy jobs. To send specific policy matches to specific jobs, configure [Log filters](/logs/logpush/logpush-job/filters/). If the request contains an archive file, DLP will only send up to 100 MB of uncompressed content to your configured storage.
+
+### Decoding a DLP forensic copy
+
+:::note
+There is a community-built tool called [cf-dlp-decode](https://github.com/Devolvio-B-V/cloudflare-dlp-forensic-copy-decoder) that can help decode DLP forensic copies.
+:::
+
+The forensic copy of a matched HTTP request is stored in the Common Log Format (CLF) as a gzip-compressed file. To decode the forensic copy:
+
+1. Download the gzip file from your Logpush destination.
+
+    <Details header="Example with AWS S3 CLI">
+
+   ```sh
+    aws s3 sync s3://my-logpush-bucket/20251107/20251107T122322Z_59c286615a38eef2.log.gz ./20251107/
+   ```
+
+   </Details>
+
+2. Decompress the file using a tool that supports gzip, such as `gunzip` in the command line or a file decompression software.
+
+    <Details header="Example gunzip command">
+
+   ```sh
+    gzip -dc ./20251107/20251107T122322Z_59c286615a38eef2.log.gz > ./20251107/20251107T122322Z_59c286615a38eef2.log.json
+   ```
+
+   </Details>
+
+3. The resulting file will be in Common Log Format, which is a standardized text format for HTTP server logs. Each line in the file represents a single HTTP request and includes fields such as the client's IP address, timestamp, request method, URL, HTTP status code, and user agent.
+
+    <Details header="Example log file">
+
+   ```json
+   {
+   	"AccountID": "d2a3ee221dab48f2b05c43baa77008b2",
+   	"Datetime": "2025-11-07T12:23:22Z",
+   	"ForensicCopyID": "1e00065546384344adc79e056a31c6a5",
+   	"GatewayRequestID": "e05f752e928b43d6bd9962412373fd89",
+   	"Headers": {
+   		"content-type": "application/json",
+   		"content-encoding": "gzip"
+   	},
+   	"Payload": "H4sIAAAAAAAA/2NgYGBgBGIAYhQMAwMABBgAAX+QeXUAAAA=",
+   	"Phase": "response",
+   	"TriggeredRuleID": "2605128c-b0c0-41fa-aa1b-dfc569ba1d14"
+   }
+   ```
+
+   </Details>
+
+4. Use a log analysis tool or script to parse the Common Log Format file and extract the information you need for your forensic investigation. Note that the payload is encoded in Base64, so you will need to decode it to view the original content of the HTTP request.
+
+    <Details header="Example cf-dlp-decode command">
+
+   ```sh
+   cf-dlp-decode --input ./20251107/20251107T122322Z_59c286615a38eef2.log.gz --output ./20251107/20251107T122322Z_59c286615a38eef2.payload
+   ```
+
+   </Details>
+
+5. A payload may be compressed using gzip. If the payload is gzip-compressed, you will need to decompress it after Base64 decoding to view the original content.
