@@ -71,11 +71,7 @@ const mediaProducts = new Set([
 ]);
 
 const normalizeProduct = (value: string) =>
-	value
-		.toLowerCase()
-		.replace(/[-_]/g, " ")
-		.replace(/\s+/g, " ")
-		.trim();
+	value.toLowerCase().replace(/[-_]/g, " ").replace(/\s+/g, " ").trim();
 
 const getIconHoverPalette = (value: string) => {
 	const normalized = normalizeProduct(value);
@@ -126,8 +122,9 @@ const {
 const iconHoverPalette = getIconHoverPalette(product);
 ---
 
-<div
-	class="pc-card group/product-card bg-l-card hover:bg-l-card-hover dark:bg-l-card-dark dark:hover:bg-l-card-hover-dark flex flex-1 flex-col p-6 transition-colors duration-150"
+<a
+	href={href}
+	class="pc-card group/product-card bg-l-card hover:bg-l-card-hover dark:bg-l-card-dark dark:hover:bg-l-card-hover-dark focus-visible:outline-accent relative flex flex-1 flex-col p-6 no-underline transition-colors duration-150 focus-visible:outline-2 focus-visible:-outline-offset-2"
 	style={`--pc-hover-color: ${iconHoverPalette.color}; --pc-hover-bg: ${iconHoverPalette.bg}; --pc-hover-bg-dark: ${iconHoverPalette.bgDark};`}
 >
 	{/* Header: icon + product label */}
@@ -135,7 +132,11 @@ const iconHoverPalette = getIconHoverPalette(product);
 		<span
 			class="pc-icon-shell relative flex size-11 items-center justify-center rounded-md border border-zinc-200 bg-zinc-100 text-zinc-400 transition-[background-color,border-color,color] duration-200 dark:border-[#2a2a2a] dark:bg-zinc-800 dark:text-zinc-500"
 		>
-			<Icon name={icon} size="24px" class="pc-icon transition-colors duration-200" />
+			<Icon
+				name={icon}
+				size="24px"
+				class="pc-icon transition-colors duration-200"
+			/>
 		</span>
 		<span class="text-accent font-mono text-xs tracking-wide uppercase">
 			{product}
@@ -154,10 +155,9 @@ const iconHoverPalette = getIconHoverPalette(product);
 		{detail}
 	</p>
 
-	{/* CTA */}
-	<a
-		href={href}
-		class="group/cta hover:text-accent hover:underline focus-visible:outline-accent inline-flex w-fit items-center gap-2 rounded-md py-1 text-sm font-medium text-zinc-600 no-underline underline-offset-4 transition-colors duration-150 focus-visible:outline-2 focus-visible:-outline-offset-2 dark:text-zinc-300"
+	{/* CTA — visual only; the whole card is the link */}
+	<span
+		class="pc-cta group-hover/product-card:text-accent inline-flex w-fit items-center gap-2 text-sm font-medium text-zinc-600 underline-offset-4 transition-colors duration-150 group-hover/product-card:underline dark:text-zinc-300"
 	>
 		{cta}
 		<svg
@@ -169,14 +169,14 @@ const iconHoverPalette = getIconHoverPalette(product);
 			stroke-width="2"
 			stroke-linecap="round"
 			stroke-linejoin="round"
-			class="transition-transform duration-150 group-hover/cta:translate-x-0.5"
+			class="transition-transform duration-150 group-hover/product-card:translate-x-0.5"
 			aria-hidden="true"
 		>
 			<line x1="5" y1="12" x2="19" y2="12"></line>
 			<polyline points="12 5 19 12 12 19"></polyline>
 		</svg>
-	</a>
-</div>
+	</span>
+</a>
 
 <style>
 	.pc-card:hover .pc-icon-shell,

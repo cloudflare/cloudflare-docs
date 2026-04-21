@@ -100,7 +100,7 @@ const CORNERS = [
 					</div>
 					<h2
 						id="cl-heading"
-						class="mb-2 text-2xl leading-tight font-medium -tracking-tight text-balance text-zinc-900 md:text-3xl dark:text-zinc-50"
+						class="mb-2 text-2xl leading-[1.1] font-medium -tracking-[0.035em] text-balance text-zinc-900 md:text-3xl dark:text-zinc-50"
 					>
 						What we've shipped
 					</h2>
@@ -110,7 +110,7 @@ const CORNERS = [
 				</div>
 				<a
 					href="/changelog/"
-					class="group text-accent decoration-accent/40 hidden shrink-0 items-center gap-1.5 font-mono text-xs tracking-wider underline-offset-4 hover:underline md:inline-flex"
+					class="group text-accent decoration-accent/40 hidden shrink-0 items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline md:inline-flex"
 				>
 					View all
 					<svg
@@ -148,7 +148,7 @@ const CORNERS = [
 							x2="10"
 							y2="5"
 							stroke-width="1"
-							class="stroke-accent dark:stroke-white"
+							class="l-corner-stroke"
 						/>
 						<line
 							x1="5"
@@ -156,127 +156,127 @@ const CORNERS = [
 							x2="5"
 							y2="10"
 							stroke-width="1"
-							class="stroke-accent dark:stroke-white"
+							class="l-corner-stroke"
 						/>
 					</svg>
 				))}
 
-					{/* ── Featured (latest) — same spacing rhythm as ProductCard ── */}
-					{featured && (
-						<a
-							href={featured.url}
-							class="cl-featured bg-l-card dark:bg-l-card-dark hover:bg-l-card-hover dark:hover:bg-l-card-hover-dark flex flex-col p-6 transition-colors duration-150"
-						>
-							{/* Header — date left, product label right (matching small cards) */}
-							<div class="mb-4 flex items-center justify-between">
-								<div class="flex items-center gap-2.5">
-									<span class="cl-broadcast" aria-hidden="true">
-										<span class="cl-ring" />
-										<span class="cl-ring cl-ring--delay" />
-										<span class="cl-core" />
-									</span>
-									<span class="text-accent font-mono text-xs font-medium tracking-widest uppercase">
-										Latest
-									</span>
-									<time class="font-mono text-xs text-zinc-500 tabular-nums dark:text-zinc-400">
-										{featured.dateFormatted}
-									</time>
-								</div>
-								{featured.products[0] && (
-									<span class="text-accent font-mono text-xs tracking-wide uppercase">
-										{featured.products[0].name}
-									</span>
-								)}
-							</div>
-
-							{/* Title — mirrors ProductCard scenario (mb-2) */}
-							<div class="mb-9 flex-1 pt-4">
-								<h3 class="mb-2 text-xl leading-snug font-medium text-zinc-900 md:text-2xl dark:text-zinc-50">
-									{featured.title}
-								</h3>
-
-								{/* Description — mirrors ProductCard detail (mb-6 flex-1) */}
-								<p class="max-w-[480px] text-sm leading-relaxed text-zinc-500 md:text-base dark:text-zinc-400">
-									{featured.description}
-								</p>
-							</div>
-
-							{/* CTA — mirrors ProductCard CTA */}
-							<span class="group/cta inline-flex w-fit items-center gap-2 text-sm font-medium text-zinc-600 dark:text-zinc-300">
-								Read update
-								<svg
-									width="14"
-									height="14"
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="currentColor"
-									stroke-width="2"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									class="transition-transform duration-150 group-hover/cta:translate-x-0.5"
-									aria-hidden="true"
-								>
-									<line x1="5" y1="12" x2="19" y2="12" />
-									<polyline points="12 5 19 12 12 19" />
-								</svg>
-							</span>
-						</a>
-					)}
-
-					{/* ── Smaller cards (mirrors ProductCard anatomy) ── */}
-					{grid.map((entry) => (
-						<a
-							href={entry.url}
-							class="cl-card bg-l-card dark:bg-l-card-dark hover:bg-l-card-hover dark:hover:bg-l-card-hover-dark flex flex-col p-6 transition-colors duration-150"
-						>
-							{/* Header: date + product label — mirrors ProductCard icon + label row */}
-							<div class="mb-4 flex items-center justify-between">
-								<time class="font-mono text-xs text-zinc-500 tabular-nums dark:text-zinc-400">
-									{entry.dateShort}
-								</time>
-								<span class="text-accent font-mono text-xs tracking-wide uppercase">
-									{entry.products[0]?.name}
+				{/* ── Featured (latest) — same spacing rhythm as ProductCard ── */}
+				{featured && (
+					<a
+						href={featured.url}
+						class="cl-featured bg-l-card dark:bg-l-card-dark hover:bg-l-card-hover dark:hover:bg-l-card-hover-dark flex flex-col p-6 transition-colors duration-150"
+					>
+						{/* Header — date left, product label right (matching small cards) */}
+						<div class="mb-4 flex items-center justify-between">
+							<div class="flex items-center gap-2.5">
+								<span class="cl-broadcast" aria-hidden="true">
+									<span class="cl-ring" />
+									<span class="cl-ring cl-ring--delay" />
+									<span class="cl-core" />
 								</span>
+								<span class="text-accent font-mono text-xs font-medium tracking-widest uppercase">
+									Latest
+								</span>
+								<time class="font-mono text-xs text-zinc-500 tabular-nums dark:text-zinc-400">
+									{featured.dateFormatted}
+								</time>
 							</div>
+							{featured.products[0] && (
+								<span class="text-accent font-mono text-xs tracking-wide uppercase">
+									{featured.products[0].name}
+								</span>
+							)}
+						</div>
 
-							{/* Title — matches ProductCard scenario */}
-							<p class="mb-2 line-clamp-2 text-base leading-snug font-medium text-zinc-900 md:text-lg dark:text-zinc-50">
-								{entry.title}
+						{/* Title — mirrors ProductCard scenario (mb-2) */}
+						<div class="mb-9 flex-1 pt-4">
+							<h3 class="mb-2 text-xl leading-snug font-medium text-zinc-900 md:text-2xl dark:text-zinc-50">
+								{featured.title}
+							</h3>
+
+							{/* Description — mirrors ProductCard detail (mb-6 flex-1) */}
+							<p class="max-w-[480px] text-sm leading-relaxed text-zinc-500 md:text-base dark:text-zinc-400">
+								{featured.description}
 							</p>
+						</div>
 
-							{/* Description — matches ProductCard detail */}
-							<p class="mb-6 line-clamp-2 flex-1 text-sm leading-relaxed text-zinc-500 md:text-base dark:text-zinc-400">
-								{entry.description}
-							</p>
+						{/* CTA — mirrors ProductCard CTA */}
+						<span class="group/cta inline-flex w-fit items-center gap-2 text-sm font-medium text-zinc-600 dark:text-zinc-300">
+							Read update
+							<svg
+								width="14"
+								height="14"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								class="transition-transform duration-150 group-hover/cta:translate-x-0.5"
+								aria-hidden="true"
+							>
+								<line x1="5" y1="12" x2="19" y2="12" />
+								<polyline points="12 5 19 12 12 19" />
+							</svg>
+						</span>
+					</a>
+				)}
 
-							{/* CTA — matches ProductCard CTA */}
-							<span class="group/cta inline-flex w-fit items-center gap-2 text-sm font-medium text-zinc-600 dark:text-zinc-300">
-								Read more
-								<svg
-									width="14"
-									height="14"
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="currentColor"
-									stroke-width="2"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									class="transition-transform duration-150 group-hover/cta:translate-x-0.5"
-									aria-hidden="true"
-								>
-									<line x1="5" y1="12" x2="19" y2="12" />
-									<polyline points="12 5 19 12 12 19" />
-								</svg>
+				{/* ── Smaller cards (mirrors ProductCard anatomy) ── */}
+				{grid.map((entry) => (
+					<a
+						href={entry.url}
+						class="cl-card bg-l-card dark:bg-l-card-dark hover:bg-l-card-hover dark:hover:bg-l-card-hover-dark flex flex-col p-6 transition-colors duration-150"
+					>
+						{/* Header: date + product label — mirrors ProductCard icon + label row */}
+						<div class="mb-4 flex items-center justify-between">
+							<time class="font-mono text-xs text-zinc-500 tabular-nums dark:text-zinc-400">
+								{entry.dateShort}
+							</time>
+							<span class="text-accent font-mono text-xs tracking-wide uppercase">
+								{entry.products[0]?.name}
 							</span>
-						</a>
-					))}
+						</div>
+
+						{/* Title — matches ProductCard scenario */}
+						<p class="mb-2 line-clamp-2 text-base leading-snug font-medium text-zinc-900 md:text-lg dark:text-zinc-50">
+							{entry.title}
+						</p>
+
+						{/* Description — matches ProductCard detail */}
+						<p class="mb-6 line-clamp-2 flex-1 text-sm leading-relaxed text-zinc-500 md:text-base dark:text-zinc-400">
+							{entry.description}
+						</p>
+
+						{/* CTA — matches ProductCard CTA */}
+						<span class="group/cta inline-flex w-fit items-center gap-2 text-sm font-medium text-zinc-600 dark:text-zinc-300">
+							Read more
+							<svg
+								width="14"
+								height="14"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								class="transition-transform duration-150 group-hover/cta:translate-x-0.5"
+								aria-hidden="true"
+							>
+								<line x1="5" y1="12" x2="19" y2="12" />
+								<polyline points="12 5 19 12 12 19" />
+							</svg>
+						</span>
+					</a>
+				))}
 			</div>
 
 			{/* ── Mobile CTA ─────────────────────────────────────── */}
 			<div class="mt-6 md:hidden">
 				<a
 					href="/changelog/"
-					class="group text-accent decoration-accent/40 inline-flex items-center gap-1.5 font-mono text-xs tracking-wider underline-offset-4 hover:underline"
+					class="group text-accent decoration-accent/40 inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline"
 				>
 					View all updates
 					<svg

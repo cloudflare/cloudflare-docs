@@ -65,7 +65,7 @@ const stats = [
 							x2="10"
 							y2="5"
 							stroke-width="1"
-							class="stroke-accent dark:stroke-white"
+							class="l-corner-stroke"
 						/>
 						<line
 							x1="5"
@@ -73,7 +73,7 @@ const stats = [
 							x2="5"
 							y2="10"
 							stroke-width="1"
-							class="stroke-accent dark:stroke-white"
+							class="l-corner-stroke"
 						/>
 					</svg>
 					<svg
@@ -89,7 +89,7 @@ const stats = [
 							x2="10"
 							y2="5"
 							stroke-width="1"
-							class="stroke-accent dark:stroke-white"
+							class="l-corner-stroke"
 						/>
 						<line
 							x1="5"
@@ -97,7 +97,7 @@ const stats = [
 							x2="5"
 							y2="10"
 							stroke-width="1"
-							class="stroke-accent dark:stroke-white"
+							class="l-corner-stroke"
 						/>
 					</svg>
 					<svg
@@ -113,7 +113,7 @@ const stats = [
 							x2="10"
 							y2="5"
 							stroke-width="1"
-							class="stroke-accent dark:stroke-white"
+							class="l-corner-stroke"
 						/>
 						<line
 							x1="5"
@@ -121,7 +121,7 @@ const stats = [
 							x2="5"
 							y2="10"
 							stroke-width="1"
-							class="stroke-accent dark:stroke-white"
+							class="l-corner-stroke"
 						/>
 					</svg>
 					<svg
@@ -137,7 +137,7 @@ const stats = [
 							x2="10"
 							y2="5"
 							stroke-width="1"
-							class="stroke-accent dark:stroke-white"
+							class="l-corner-stroke"
 						/>
 						<line
 							x1="5"
@@ -145,7 +145,7 @@ const stats = [
 							x2="5"
 							y2="10"
 							stroke-width="1"
-							class="stroke-accent dark:stroke-white"
+							class="l-corner-stroke"
 						/>
 					</svg>
 
@@ -159,9 +159,7 @@ const stats = [
 
 					{/* Stat value */}
 					<p class="mb-1">
-						<span
-							class="stat-counter font-mono text-3xl leading-none font-medium -tracking-tight text-zinc-900 tabular-nums dark:text-white"
-						>
+						<span class="stat-counter inline-flex items-baseline font-mono text-3xl leading-none font-medium -tracking-tight text-zinc-900 tabular-nums dark:text-white">
 							<span
 								class="stat-counter-value inline-block"
 								data-target={stat.value}
@@ -169,7 +167,8 @@ const stats = [
 								style={`min-width: ${(stat.value % 1 !== 0 ? stat.value.toFixed(2) : String(stat.value)).length}ch;`}
 							>
 								{stat.value % 1 !== 0 ? stat.value.toFixed(2) : stat.value}
-							</span><span class="stat-counter-suffix">{stat.suffix}</span>
+							</span>
+							<span class="stat-counter-suffix">{stat.suffix}</span>
 						</span>
 					</p>
 
@@ -184,7 +183,7 @@ const stats = [
 							<p class="text-sm leading-tight font-medium text-zinc-900 dark:text-zinc-50">
 								{stat.label}
 							</p>
-							<p class="font-mono text-xs text-zinc-500 dark:text-zinc-400">
+							<p class="text-xs text-zinc-500 dark:text-zinc-400">
 								{stat.detail}
 							</p>
 						</div>
@@ -225,7 +224,10 @@ const stats = [
 			const elapsed = now - start;
 			const progress = Math.min(elapsed / duration, 1);
 			const eased = easeOutCubic(progress);
-			const nextScaled = Math.min(targetScaled, Math.floor(targetScaled * eased));
+			const nextScaled = Math.min(
+				targetScaled,
+				Math.floor(targetScaled * eased),
+			);
 
 			if (nextScaled !== lastScaled) {
 				el.textContent = (nextScaled / scale).toFixed(decimals);
@@ -272,10 +274,13 @@ const stats = [
 	}
 
 	initPlatformStatsCounters();
-	if (!(window as Window & { __platformStatsCountersBound?: boolean })
-		.__platformStatsCountersBound) {
+	if (
+		!(window as Window & { __platformStatsCountersBound?: boolean })
+			.__platformStatsCountersBound
+	) {
 		document.addEventListener("astro:page-load", initPlatformStatsCounters);
-		(window as Window & { __platformStatsCountersBound?: boolean })
-			.__platformStatsCountersBound = true;
+		(
+			window as Window & { __platformStatsCountersBound?: boolean }
+		).__platformStatsCountersBound = true;
 	}
 </script>

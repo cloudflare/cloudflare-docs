@@ -31,7 +31,8 @@ const marks =
 	<div
 		class="landing-dot-grid absolute h-full w-full"
 		style="background-image: radial-gradient(var(--l-dot-color) 1px, transparent 1px); background-size: var(--l-dot-size)"
-	></div>
+	>
+	</div>
 </div>
 
 <!-- Plus marks at line intersections -->
@@ -59,8 +60,22 @@ const marks =
 						style={`margin-top:${offset};margin-left:${offset}`}
 						aria-hidden="true"
 					>
-						<line x1="0" y1={half} x2={size} y2={half} stroke={stroke} stroke-width="1" />
-						<line x1={half} y1="0" x2={half} y2={size} stroke={stroke} stroke-width="1" />
+						<line
+							x1="0"
+							y1={half}
+							x2={size}
+							y2={half}
+							stroke={stroke}
+							stroke-width="1"
+						/>
+						<line
+							x1={half}
+							y1="0"
+							x2={half}
+							y2={size}
+							stroke={stroke}
+							stroke-width="1"
+						/>
 					</svg>
 					<svg
 						width={size}
@@ -71,12 +86,25 @@ const marks =
 						style={`margin-top:${offset};margin-right:${offset}`}
 						aria-hidden="true"
 					>
-						<line x1="0" y1={half} x2={size} y2={half} stroke={stroke} stroke-width="1" />
-						<line x1={half} y1="0" x2={half} y2={size} stroke={stroke} stroke-width="1" />
+						<line
+							x1="0"
+							y1={half}
+							x2={size}
+							y2={half}
+							stroke={stroke}
+							stroke-width="1"
+						/>
+						<line
+							x1={half}
+							y1="0"
+							x2={half}
+							y2={size}
+							stroke={stroke}
+							stroke-width="1"
+						/>
 					</svg>
 				</div>
 			);
 		})
 	}
-
 </div>

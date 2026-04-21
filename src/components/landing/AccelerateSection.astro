@@ -100,7 +100,6 @@ const phases = [
 		colorMuted: "bg-sky-500/20",
 	},
 ];
-
 ---
 
 <section
@@ -116,7 +115,7 @@ const phases = [
 	</div>
 	<h2
 		id="accelerate-heading"
-		class="mb-2 text-2xl leading-tight font-medium -tracking-tight text-balance text-zinc-900 md:text-3xl dark:text-zinc-50"
+		class="mb-2 text-2xl leading-[1.1] font-medium -tracking-[0.035em] text-balance text-zinc-900 md:text-3xl dark:text-zinc-50"
 	>
 		See where the milliseconds go
 	</h2>
@@ -204,7 +203,7 @@ const phases = [
 						x2="10"
 						y2="5"
 						stroke-width="1"
-						class="stroke-accent dark:stroke-white"
+						class="l-corner-stroke"
 					/>
 					<line
 						x1="5"
@@ -212,7 +211,7 @@ const phases = [
 						x2="5"
 						y2="10"
 						stroke-width="1"
-						class="stroke-accent dark:stroke-white"
+						class="l-corner-stroke"
 					/>
 				</svg>
 			))
@@ -220,8 +219,8 @@ const phases = [
 
 		<!-- Timescale ruler — uses the same grid as waterfall rows so ticks align with bars -->
 		<div
-			class="bg-l-card dark:bg-l-card-dark grid h-7 items-end gap-3 border-b border-zinc-200 px-4 max-[600px]:hidden dark:border-[#2a2a2a]"
-			style="grid-template-columns: 150px 1fr auto;"
+			class="bg-l-card dark:bg-l-card-dark grid h-7 items-end gap-4 border-b border-zinc-200 px-5 max-[600px]:hidden dark:border-[#2a2a2a]"
+			style="grid-template-columns: minmax(220px, 1.1fr) minmax(0, 3fr) auto;"
 			aria-hidden="true"
 		>
 			<div></div>
@@ -252,13 +251,13 @@ const phases = [
 				<a
 					href={p.href}
 					class:list={[
-						"wf-row group relative grid items-center gap-3 px-4 py-3 no-underline transition-colors duration-150",
+						"wf-row group relative grid items-center gap-4 px-5 py-3 no-underline transition-colors duration-150",
 						"bg-l-card hover:bg-l-card-hover dark:bg-l-card-dark dark:hover:bg-l-card-hover-dark",
 						"focus-visible:outline-accent focus-visible:outline-2 focus-visible:-outline-offset-2",
 						"max-[600px]:grid-cols-[1fr] max-[600px]:gap-2 max-[600px]:px-3 max-[600px]:py-3",
 						i > 0 && "border-t border-zinc-200 dark:border-[#2a2a2a]",
 					]}
-					style="grid-template-columns: 150px 1fr auto;"
+					style="grid-template-columns: minmax(220px, 1.1fr) minmax(0, 3fr) auto;"
 					data-phase={p.id}
 				>
 					{/* Accent bar — bottom reveal on hover */}
@@ -268,15 +267,15 @@ const phases = [
 					/>
 
 					{/* Left: phase name + product */}
-					<div class="flex min-w-0 items-center gap-2.5 max-[600px]:gap-2">
+					<div class="flex min-w-0 items-center gap-3 max-[600px]:gap-2">
 						<span class="group-hover:border-accent/30 group-hover:bg-accent/5 group-hover:text-accent flex size-8 shrink-0 items-center justify-center rounded border border-zinc-200 bg-zinc-100 text-zinc-400 transition-colors duration-150 dark:border-[#2a2a2a] dark:bg-zinc-800 dark:text-zinc-500">
 							<Icon name={p.icon} size="16px" />
 						</span>
-						<div class="min-w-0 truncate">
-							<p class="truncate text-sm leading-tight font-medium text-zinc-800 dark:text-zinc-100">
+						<div class="min-w-0">
+							<p class="text-sm leading-tight font-medium text-zinc-800 dark:text-zinc-100">
 								{p.phase}
 							</p>
-							<p class="wf-product-label text-accent truncate font-mono text-[11px] tracking-widest uppercase opacity-100 transition-opacity duration-300">
+							<p class="wf-product-label text-accent font-mono text-[11px] tracking-widest uppercase opacity-100 transition-opacity duration-300">
 								{p.product}
 							</p>
 						</div>
@@ -296,7 +295,7 @@ const phases = [
 							data-offset-after={p.after.offset}
 							data-width-after={p.after.width}
 						>
-							<span class="wf-bar-label absolute top-1/2 right-1.5 -translate-y-1/2 font-mono text-[9px] font-medium whitespace-nowrap text-white/90 tabular-nums drop-shadow-sm">
+							<span class="wf-bar-label absolute top-1/2 right-1.5 -translate-y-1/2 font-mono text-[9px] font-medium whitespace-nowrap text-white/90 tabular-nums drop-shadow-sm max-[456px]:hidden">
 								{Math.round(p.after.width * 13)}ms
 							</span>
 						</div>
@@ -334,17 +333,20 @@ const phases = [
 
 		<!-- Total bar / savings summary row -->
 		<div
-			class="wf-summary bg-l-card dark:bg-l-card-dark border-t border-zinc-200 px-4 py-3 dark:border-[#2a2a2a]"
+			class="wf-summary bg-l-card dark:bg-l-card-dark border-t border-zinc-200 px-5 py-3 dark:border-[#2a2a2a]"
 			aria-live="polite"
 		>
 			<div class="flex items-center justify-between gap-4">
-				<div class="flex items-center gap-3">
-					<span
-						class="font-mono text-[11px] tracking-widest text-zinc-500 uppercase dark:text-zinc-400"
-						>Total Latency</span
-					>
+				{
+					/* Left: label + bar — same mono, uppercase, muted grey as the top "Total" label */
+				}
+				<div
+					class="flex items-center gap-3 font-mono text-xs text-zinc-500 tabular-nums dark:text-zinc-400"
+				>
+					<span class="tracking-widest uppercase">Total latency</span>
 					<div
-						class="relative h-3 w-48 overflow-hidden rounded-full bg-zinc-100 max-[600px]:w-28 dark:bg-zinc-800/50"
+						class="relative h-1.5 w-48 overflow-hidden rounded-full bg-zinc-100 max-[600px]:w-28 dark:bg-zinc-800/60"
+						role="presentation"
 					>
 						<div
 							id="wf-total-bar"
@@ -354,12 +356,20 @@ const phases = [
 						</div>
 					</div>
 				</div>
-				<div class="flex items-center gap-2">
+
+				{
+					/* Right: savings — mirrors the top's `TOTAL ~110 ms` label+value rhythm */
+				}
+				<div
+					id="wf-savings-group"
+					class="flex items-baseline gap-2 font-mono text-xs text-zinc-500 tabular-nums transition-opacity duration-300 max-[500px]:hidden dark:text-zinc-400"
+				>
+					<span class="tracking-widest uppercase">Savings</span>
 					<span
 						id="wf-savings-badge"
-						class="font-mono text-xs font-semibold text-emerald-600 tabular-nums dark:text-emerald-400"
+						class="font-medium text-zinc-900 tabular-nums dark:text-zinc-100"
 					>
-						-91% faster
+						91% faster
 					</span>
 				</div>
 			</div>
@@ -367,7 +377,9 @@ const phases = [
 	</div>
 
 	<!-- Section bridge — connects waterfall to product cards -->
-	<h3 class="not-content mb-6 pt-12 text-lg font-medium -tracking-tight text-zinc-900 dark:text-zinc-100">
+	<h3
+		class="not-content mb-6 pt-12 text-lg font-medium -tracking-tight text-zinc-900 dark:text-zinc-100"
+	>
 		Explore by product
 	</h3>
 
@@ -472,9 +484,11 @@ const phases = [
 		border-style: dashed;
 		color: var(--pc-hover-color, #f56500);
 	}
-	:global(:root[data-theme="dark"]
-		.wf-product-card[data-highlighted="true"]
-		.pc-icon-shell) {
+	:global(
+		:root[data-theme="dark"]
+			.wf-product-card[data-highlighted="true"]
+			.pc-icon-shell
+	) {
 		background: var(--pc-hover-bg-dark, rgba(245, 101, 0, 0.16));
 		border-color: var(--pc-hover-color, #f56500);
 		color: var(--pc-hover-color, #f56500);
@@ -552,6 +566,9 @@ const phases = [
 		) as HTMLElement | null;
 		const savingsBadge = section.querySelector(
 			"#wf-savings-badge",
+		) as HTMLElement | null;
+		const savingsGroup = section.querySelector(
+			"#wf-savings-group",
 		) as HTMLElement | null;
 		const bars = section.querySelectorAll<HTMLElement>(".wf-bar-before");
 		const productLabels =
@@ -637,7 +654,10 @@ const phases = [
 				totalValue.textContent = after ? "~110 ms" : "~1,300 ms";
 			}
 			if (savingsBadge) {
-				savingsBadge.classList.toggle("hidden", !after);
+				savingsBadge.textContent = "91% faster";
+			}
+			if (savingsGroup) {
+				savingsGroup.classList.toggle("hidden", !after);
 			}
 		}
 

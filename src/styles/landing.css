@@ -45,6 +45,10 @@
 	}
 }
 
+@utility l-corner-stroke {
+	stroke: var(--l-corner-mark, rgba(24, 24, 27, 0.28));
+}
+
 @utility v27-broadcast {
 	position: absolute;
 	left: 50%;
@@ -130,6 +134,8 @@
 	);
 	--l-grid-mark: rgba(0, 0, 0, 0.08);
 	--l-grid-mark-accent: rgba(0, 0, 0, 0.12);
+	/* Corner plus marks on cards/grids — subdued, solid grey like the Workers site */
+	--l-corner-mark: #d4d4d8;
 	--l-h-line: rgba(0, 0, 0, 0.05);
 	--l-h-line-fine: rgba(0, 0, 0, 0.025);
 }
@@ -157,6 +163,7 @@
 	);
 	--l-grid-mark: rgba(255, 255, 255, 0.1);
 	--l-grid-mark-accent: rgba(255, 255, 255, 0.16);
+	--l-corner-mark: #52525b;
 	--l-h-line: rgba(255, 255, 255, 0.06);
 	--l-h-line-fine: rgba(255, 255, 255, 0.03);
 }

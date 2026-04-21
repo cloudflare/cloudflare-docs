@@ -110,7 +110,7 @@ const primitives = [
 	</div>
 	<h2
 		id="build-heading"
-		class="mb-8 text-2xl leading-tight font-medium -tracking-tight text-balance text-zinc-900 md:text-3xl dark:text-zinc-50"
+		class="mb-8 text-2xl leading-[1.1] font-medium -tracking-[0.035em] text-balance text-zinc-900 md:text-3xl dark:text-zinc-50"
 	>
 		Everything you need to build at the edge
 	</h2>
@@ -140,7 +140,7 @@ const primitives = [
 						x2="10"
 						y2="5"
 						stroke-width="1"
-						class="stroke-accent dark:stroke-white"
+						class="l-corner-stroke"
 					/>
 					<line
 						x1="5"
@@ -148,7 +148,7 @@ const primitives = [
 						x2="5"
 						y2="10"
 						stroke-width="1"
-						class="stroke-accent dark:stroke-white"
+						class="l-corner-stroke"
 					/>
 				</svg>
 			))
@@ -170,7 +170,7 @@ const primitives = [
 						id={`build-tab-${p.id}`}
 						class={[
 							"build-tab group relative flex shrink-0 items-center gap-2 px-5 py-3",
-							"font-mono text-xs tracking-widest uppercase",
+							"text-sm font-medium -tracking-[0.005em]",
 							"cursor-pointer transition-colors duration-150 select-none",
 							"border-r border-zinc-200 last:border-r-0 dark:border-[#2a2a2a]",
 							"focus-visible:outline-accent focus-visible:outline-2 focus-visible:-outline-offset-2",
@@ -200,13 +200,13 @@ const primitives = [
 					class="bg-l-card dark:bg-l-card-dark p-8 max-[600px]:p-5"
 				>
 					<div class="w-full">
-					<div class="mb-4 flex items-center gap-3">
-						<div
-							class="build-panel-icon flex size-8 shrink-0 items-center justify-center rounded border border-dashed"
-							style={`--build-icon-color:${p.iconColor};--build-icon-bg:${p.iconBg};--build-icon-bg-dark:${p.iconBgDark};`}
-						>
-							<Icon name={p.icon} size="16px" />
-						</div>
+						<div class="mb-4 flex items-center gap-3">
+							<div
+								class="build-panel-icon flex size-8 shrink-0 items-center justify-center rounded border border-dashed"
+								style={`--build-icon-color:${p.iconColor};--build-icon-bg:${p.iconBg};--build-icon-bg-dark:${p.iconBgDark};`}
+							>
+								<Icon name={p.icon} size="16px" />
+							</div>
 							<h3 class="text-base leading-snug font-medium text-zinc-900 md:text-lg dark:text-zinc-50">
 								{p.heading}
 							</h3>
@@ -267,12 +267,22 @@ const primitives = [
 									</>
 								</svg>
 							</a>
-							<p class="relative top-px min-w-0 flex-1 font-mono text-xs text-zinc-600 dark:text-zinc-300">
+							<p class="relative top-px min-w-0 flex-1 text-sm text-zinc-500 dark:text-zinc-400">
 								{p.tags.map((tag, idx) => (
 									<span class="inline-flex items-center">
-										<a href={tag.href} class="text-zinc-600 no-underline hover:underline hover:underline-offset-4 dark:text-zinc-300">{tag.label}</a>
+										<a
+											href={tag.href}
+											class="text-zinc-600 no-underline hover:underline hover:underline-offset-4 dark:text-zinc-300"
+										>
+											{tag.label}
+										</a>
 										{idx < p.tags.length - 1 && (
-											<span class="mx-1" aria-hidden="true">·</span>
+											<span
+												class="mx-1.5 text-zinc-300 dark:text-zinc-600"
+												aria-hidden="true"
+											>
+												·
+											</span>
 										)}
 									</span>
 								))}
