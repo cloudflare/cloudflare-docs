@@ -1,0 +1,53 @@
+---
+pcx_content_type: navigation
+title: Get started
+sidebar:
+  order: 1
+---
+
+import { Render } from "~/components";
+
+Cloudflare Browser Run (formerly Browser Rendering) allows you to programmatically control a headless browser, enabling you to do things like take screenshots, generate PDFs, and perform automated browser tasks. This guide will help you choose the right integration method and get you started with your first project.
+
+<Render file="integration-methods" product="browser-run" />
+
+## Quick Actions
+
+### Prerequisites
+
+- Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages).
+- Create a [Cloudflare API Token](/fundamentals/api/get-started/create-token/) with `Browser Rendering - Edit` permissions.
+
+### Example: Take a screenshot of the Cloudflare homepage
+
+<Render file="example-screenshot-from-url" product="browser-run" />
+
+Other Quick Actions endpoints include:
+
+- [Fetch HTML](/browser-run/quick-actions/content-endpoint/)
+- [Generate a PDF](/browser-run/quick-actions/pdf-endpoint/)
+- [Crawl web content](/browser-run/quick-actions/crawl-endpoint/)
+
+Check out the full list of [Quick Actions endpoints](/browser-run/quick-actions/).
+
+## Browser Sessions
+
+### Prerequisites
+
+<Render file="prereqs" product="workers" />
+
+### Example: Navigate to a URL, take a screenshot, and store in KV
+
+<Render
+	file="example-workers-binding-screenshots-from-web"
+	product="browser-run"
+/>
+
+## Next steps
+
+- Check out all the [Quick Actions endpoints](/browser-run/quick-actions/)
+- Try out the [Playwright MCP](/browser-run/playwright/playwright-mcp/)
+- Connect from any environment using [CDP](/browser-run/cdp/)
+- Learn more about Browser Run [limits](/browser-run/limits/) and [pricing](/browser-run/pricing/)
+
+If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.cloudflare.com/).

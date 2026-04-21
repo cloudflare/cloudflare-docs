@@ -1,15 +1,24 @@
 ---
 title: R2
+description: Connect a Cloudflare R2 bucket as a data source to index stored documents with AI Search.
 pcx_content_type: how-to
 sidebar:
   order: 2
+products:
+  - ai-search
 ---
 
-import { Render, Tabs, TabItem } from "~/components";
+import { Tabs, TabItem } from "~/components";
 
-You can use Cloudflare R2 to store data for indexing. To get started, [configure an R2 bucket](/r2/get-started/) containing your data.
+You can connect a [Cloudflare R2](/r2/) bucket as a data source for your AI Search instance. AI Search indexes the files stored in your bucket automatically.
 
-AI Search will automatically scan and process supported files stored in that bucket. Files that are unsupported or exceed the size limit will be skipped during indexing and logged as errors.
+## Get started
+
+You can connect an R2 bucket when creating a new instance through the [dashboard](/ai-search/get-started/dashboard/), the [REST API](/ai-search/get-started/api/), or [Wrangler](/ai-search/get-started/wrangler/). R2 is an optional data source that you can add alongside [built-in storage](/ai-search/configuration/data-source/built-in-storage/).
+
+If you have never created an R2-backed instance before, we recommend using the dashboard or Wrangler CLI, which will create and register a [service API token](/ai-search/configuration/indexing/service-api-token/) for you automatically. If you are using the REST API or Workers binding, you will need to create a service API token and pass the `token_id` in the create request. Refer to [Service API token](/ai-search/configuration/indexing/service-api-token/) for setup instructions.
+
+To get started, [configure an R2 bucket](/r2/get-started/) containing your data. Files that are unsupported or exceed the size limit will be skipped during indexing and logged as errors.
 
 ## Path filtering
 
@@ -20,59 +29,15 @@ For example, to index only documentation while excluding drafts:
 - **Include:** `/docs/**`
 - **Exclude:** `/docs/drafts/**`
 
-Refer to [Path filtering](/ai-search/configuration/path-filtering/) for pattern syntax, filtering behavior, and more examples.
+Refer to [Path filtering](/ai-search/configuration/indexing/path-filtering/) for pattern syntax, filtering behavior, and more examples.
 
-## File limits
-
-AI Search has a file size limit of **up to 4 MB**.
-
-Files that exceed these limits will not be indexed and will show up in the error logs.
-
-## File types
-
-AI Search can ingest a variety of different file types to power your RAG. The following plain text files and rich format files are supported.
-
-### Plain text file types
-
-AI Search supports the following plain text file types:
-
-| Format     | File extensions                                                                | Mime Type                                                             |
-| ---------- | ------------------------------------------------------------------------------ | --------------------------------------------------------------------- |
-| Text       | `.txt`, `.rst`                                                                 | `text/plain`                                                          |
-| Log        | `.log`                                                                         | `text/plain`                                                          |
-| Config     | `.ini`, `.conf`, `.env`, `.properties`, `.gitignore`, `.editorconfig`, `.toml` | `text/plain`, `text/toml`                                             |
-| Markdown   | `.markdown`, `.md`, `.mdx`                                                     | `text/markdown`                                                       |
-| LaTeX      | `.tex`, `.latex`                                                               | `application/x-tex`, `application/x-latex`                            |
-| Script     | `.sh`, `.bat` , `.ps1`                                                         | `application/x-sh` , `application/x-msdos-batch`, `text/x-powershell` |
-| SGML       | `.sgml`                                                                        | `text/sgml`                                                           |
-| JSON       | `.json`                                                                        | `application/json`                                                    |
-| YAML       | `.yaml`, `.yml`                                                                | `application/x-yaml`                                                  |
-| CSS        | `.css`                                                                         | `text/css`                                                            |
-| JavaScript | `.js`                                                                          | `application/javascript`                                              |
-| PHP        | `.php`                                                                         | `application/x-httpd-php`                                             |
-| Python     | `.py`                                                                          | `text/x-python`                                                       |
-| Ruby       | `.rb`                                                                          | `text/x-ruby`                                                         |
-| Java       | `.java`                                                                        | `text/x-java-source`                                                  |
-| C          | `.c`                                                                           | `text/x-c`                                                            |
-| C++        | `.cpp`, `.cxx`                                                                 | `text/x-c++`                                                          |
-| C Header   | `.h`, `.hpp`                                                                   | `text/x-c-header`                                                     |
-| Go         | `.go`                                                                          | `text/x-go`                                                           |
-| Rust       | `.rs`                                                                          | `text/rust`                                                           |
-| Swift      | `.swift`                                                                       | `text/swift`                                                          |
-| Dart       | `.dart`                                                                        | `text/dart`                                                           |
-| EMACS Lisp | `.el`                                                                          | `application/x-elisp`, `text/x-elisp`, `text/x-emacs-lisp`            |
-
-### Rich format file types
-
-AI Search uses [Markdown Conversion](/workers-ai/features/markdown-conversion/) to convert rich format files to markdown. The following table lists the supported formats that will be converted to Markdown:
-
-<Render file="markdown-conversion-support" product="workers-ai" />
+For supported file types and size limits, refer to [Data source](/ai-search/configuration/data-source/#supported-file-types).
 
 ## Custom metadata
 
 You can attach custom metadata to R2 objects for filtering search results. AI Search reads metadata from S3-compatible custom headers (`x-amz-meta-*`).
 
-Before metadata can be extracted, you must [define a schema](/ai-search/configuration/metadata/#define-a-schema) in your AI Search configuration.
+Before metadata can be extracted, you must [define a schema](/ai-search/configuration/indexing/metadata/#define-a-schema) in your AI Search configuration.
 
 ### Set metadata when uploading
 

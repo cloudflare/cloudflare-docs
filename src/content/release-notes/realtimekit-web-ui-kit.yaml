@@ -3,6 +3,12 @@ link: "/realtime/realtimekit/release-notes/"
 productName: RealtimeKit Web UI Kit
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-03-31"
+    title: RealtimeKit Web UI Kit 1.1.2
+    description: |-
+      **Enhancements**
+
+      - AI sidebar component now uses `activeSidebar` state instead of `activeAI` state, streamlining all sidebar components under a single state.
   - publish_date: "2026-03-10"
     title: RealtimeKit Web UI Kit 1.1.1
     description: |-

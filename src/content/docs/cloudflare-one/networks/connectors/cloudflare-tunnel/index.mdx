@@ -1,11 +1,21 @@
 ---
 pcx_content_type: concept
+description: How Cloudflare Tunnel works in Zero Trust networking.
+products:
+  - cloudflare-one
 title: Cloudflare Tunnel
 sidebar:
   order: 1
+tags:
+  - Video
+  - Private networks
 ---
 
 import { Render, Stream } from "~/components";
+
+:::note[Looking to expose public applications?] 
+This documentation covers Cloudflare Tunnel use cases for private networking and Zero Trust, like VPN replacement and private network access. For publishing public web applications, APIs, and services to the Internet through Cloudflare refer to the [Cloudflare Tunnel documentation](/tunnel). 
+:::
 
 Cloudflare Tunnel provides you with a secure way to connect your resources to Cloudflare without a publicly routable IP address. With Tunnel, you do not send traffic to an external IP — instead, a lightweight daemon in your infrastructure (`cloudflared`) creates [outbound-only connections](#outbound-only-connections) to Cloudflare's global network. Cloudflare Tunnel can connect HTTP web servers, [SSH servers](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/), [remote desktops](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/rdp/), and other protocols safely to Cloudflare. This way, your origins can serve traffic through Cloudflare without being vulnerable to attacks that bypass Cloudflare.
 
@@ -19,7 +29,7 @@ Refer to our [reference architecture](/reference-architecture/architectures/sase
 
 ## How it works
 
-`cloudflared` establishes [outbound connections](#outbound-only-connections) (tunnels) between your resources and Cloudflare's global network. Tunnels are persistent objects that route traffic to DNS records. Within the same tunnel, you can run as many 'cloudflared' processes (connectors) as needed. These processes will establish connections to Cloudflare and send traffic to the nearest Cloudflare data center.
+`cloudflared` establishes [outbound connections](#outbound-only-connections) (tunnels) between your resources and Cloudflare's global network. A tunnel is a persistent object identified by a UUID — it serves as the logical link between your origin and Cloudflare. Within the same tunnel, you can run as many `cloudflared` processes ([connectors](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/tunnel-useful-terms/#connector)) as needed. Each connector sends traffic to the nearest Cloudflare data center.
 
 ![How an HTTP request reaches a private application connected with Cloudflare Tunnel](~/assets/images/cloudflare-one/connections/connect-apps/handshake.jpg)
 

@@ -1,9 +1,45 @@
 ---
 {}
 ---
-import { Tabs, TabItem } from "~/components"
+import { Tabs, TabItem} from "~/components"
+import originalImg from "~/assets/images/images/examples/original.jpg";
+import contrastLowImg from "~/assets/images/images/examples/contrast-0.5.jpg";
+import contrastHighImg from "~/assets/images/images/examples/contrast-2.jpg";
 
-Increase contrast by a factor. A value of `1.0` equals no change, a value of `0.5` equals low contrast, and a value of `2.0` equals high contrast. `0` is ignored.
+### `contrast`
+
+Adjusts the image's overall difference between the darkest and lightest parts using a multiplier.
+
+- `1` (default) — No change to the original contrast.
+- `< 1.0` — Decreases contrast, which makes shadows lighter and highlights darker.
+- `> 1.0` — Increases contrast, which pushes shadows toward black and highlights toward white.
+
+<table style="width:100%; table-layout:fixed; text-align:center; border:none">
+  <tr style="border:none; background:none">
+    <td style="width:33%; border:none; vertical-align:bottom">
+      <img src={originalImg.src} alt="Original image" style="width:100%; height:auto" />
+    </td>
+    <td style="width:33%; border:none; vertical-align:bottom">
+      <img src={contrastLowImg.src} alt="contrast=0.5 output" style="width:100%; height:auto" />
+    </td>
+    <td style="width:33%; border:none; vertical-align:bottom">
+      <img src={contrastHighImg.src} alt="contrast=2 output" style="width:100%; height:auto" />
+    </td>
+  </tr>
+  <tr style="border:none; background:none">
+    <td style="border:none;">
+      <strong>Original</strong>
+    </td>
+    <td style="border:none;">
+      
+      <code>contrast=0.5</code>
+    </td>
+    <td style="border:none;">
+      
+      <code>contrast=2</code>
+    </td>
+  </tr>
+</table>
 
 <Tabs>
   <TabItem label="URL format">

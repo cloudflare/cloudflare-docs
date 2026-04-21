@@ -10,7 +10,7 @@ import { Render } from "~/components"
 
 ## Email Workers size limits
 
-When you process emails with Email Workers and you are on [Workers’ free pricing tier](/workers/platform/pricing/) you might encounter an allocation error. This may happen due to the size of the emails you are processing and/or the complexity of your Email Worker. Refer to [Worker limits](/workers/platform/limits/#account-plan-limits) for more information.
+When you process emails with Email Workers on the [Workers Free plan](/workers/platform/pricing/), your Worker may exceed its CPU or memory allocation and fail with an error. This is more likely with large emails or complex processing logic. Refer to [Worker limits](/workers/platform/limits/#account-plan-limits) for more information.
 
 You can use the [log functionality for Workers](/workers/observability/logs/) to look for messages related to CPU limits (such as `EXCEEDED_CPU`) and troubleshoot any issues regarding allocation errors.
 
@@ -21,6 +21,8 @@ If you encounter these error messages frequently, consider upgrading to the [Wor
 Currently, Email Routing does not support messages bigger than 25 MiB.
 
 ## Rules and addresses
+
+Each rule maps one custom email address (like `info@yourdomain.com`) to one destination address or an [Email Worker](/email-routing/email-workers/).
 
 | Feature                                                                          | Limit |
 | -------------------------------------------------------------------------------- | ----- |

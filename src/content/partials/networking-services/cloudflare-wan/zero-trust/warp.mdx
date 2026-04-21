@@ -13,9 +13,9 @@ params:
 ---
 
 :::note
-By default, Cloudflare WAN does not support direct Peer-to-peer connections for devices with the Cloudflare One Client enabled. Double encapsulation and asymmetric routing prevent these connections.
+By default, Cloudflare WAN does not support direct Mesh connectivity for devices with the Cloudflare One Client enabled. Double encapsulation and asymmetric routing prevent these connections.
 
-When a device is behind Cloudflare WAN, avoid enabling the Cloudflare One Client. Instead, access the device using its local LAN IP from remote systems, rather than relying on Peer-to-peer communication.
+When a device is behind Cloudflare WAN, avoid enabling the Cloudflare One Client. Instead, access the device using its local LAN IP from remote systems, rather than relying on Mesh IPs.
 
 If you do want to use the Cloudflare One Client on a device behind Cloudflare WAN and connect to its virtual IP (within the `100.96.0.0/12` range), you will need to adjust your Cloudflare One Client profiles. Specifically, exclude the `100.96.0.0/12` subnet from the on-premises Cloudflare One Client profiles, and include it in the off-premises profile.
 :::

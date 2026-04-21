@@ -1,0 +1,215 @@
+{
+	"model_id": "recraft/recraftv4-pro-vector",
+	"provider_id": "recraft",
+	"name": "Recraft V4 Pro Vector",
+	"description": "Generate detailed, production-ready SVG vector graphics from text prompts with fine geometry, scalable to any size for print and design work.",
+	"task": "Text-to-Image",
+	"tags": [
+		"Image Generation",
+		"SVG",
+		"Vector",
+		"Design",
+		"High Resolution"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {},
+	"examples": [
+		{
+			"name": "Logo Design",
+			"description": "Generate a scalable vector logo",
+			"input": {
+				"prompt": "A modern minimalist logo for a cloud computing company, clean geometric shapes"
+			},
+			"output": {
+				"image": "https://replicate.delivery/xezq/ADdqVTvbVaJVNpexJBKcfHfaisT6IqHCKMVtdCIfexaCXGOzC/tmpyl5i46hr.svg"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-pro-vector',\n  {\n    prompt:\n      'A modern minimalist logo for a cloud computing company, clean geometric shapes',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Icon Set",
+			"description": "Generate a vector icon",
+			"input": {
+				"prompt": "A flat design icon of a rocket launching, suitable for a mobile app",
+				"size": "2048x2048"
+			},
+			"output": {
+				"image": "https://replicate.delivery/xezq/kAEXVRyFCewUK6mBCZWun3GnQ1nUOgeRmV3VjDeWloAlmhzsA/tmpweqnhf9b.svg"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-pro-vector',\n  {\n    prompt:\n      'A flat design icon of a rocket launching, suitable for a mobile app',\n    size: '2048x2048',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Print-Ready Vector",
+			"description": "High-resolution vector for large-format print",
+			"input": {
+				"prompt": "An intricate mandala pattern with floral and geometric elements, highly detailed and symmetrical",
+				"size": "2048x2048"
+			},
+			"output": {
+				"image": "https://replicate.delivery/xezq/oF6t1Dm9hi6IH9ECfGRUt0FR2mCsSbfMcdfCedXfJVaieMcmF/tmpuiezfalr.svg"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-pro-vector',\n  {\n    prompt:\n      'An intricate mandala pattern with floral and geometric elements, highly detailed and symmetrical',\n    size: '2048x2048',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Brand Illustration",
+			"description": "Vector illustration with brand colors",
+			"input": {
+				"prompt": "A vector illustration of a cityscape skyline at sunset with clean lines and flat colors",
+				"controls": {
+					"colors": [
+						{
+							"rgb": [
+								255,
+								87,
+								51
+							]
+						},
+						{
+							"rgb": [
+								41,
+								50,
+								65
+							]
+						},
+						{
+							"rgb": [
+								239,
+								239,
+								239
+							]
+						}
+					]
+				}
+			},
+			"output": {
+				"image": "https://replicate.delivery/xezq/CIT2K8gZDCJVLd2VhDla0GOkhWwg92eo4eikkCq285IP0wZWA/tmpds4b_4rl.svg"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-pro-vector',\n  {\n    prompt:\n      'A vector illustration of a cityscape skyline at sunset with clean lines and flat colors',\n    controls: {\n      colors: [\n        {\n          rgb: [255, 87, 51],\n        },\n        {\n          rgb: [41, 50, 65],\n        },\n        {\n          rgb: [239, 239, 239],\n        },\n      ],\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://www.recraft.ai/",
+	"terms": "https://www.recraft.ai/terms",
+	"cover_image_url": "https://replicate.delivery/xezq/zOjOSqPexepGEEafhufhkn0fJq9fxvuYnGidFuAp8XJfqdbELA/tmp5rpedkjl.svg",
+	"metadata": {
+		"Output Format": "SVG",
+		"Resolution": "2048px+"
+	},
+	"created_at": "2026-04-13 16:46:33",
+	"default_example": null,
+	"code_snippets": [],
+	"schema": {
+		"model_id": "recraft/recraftv4-pro-vector",
+		"version": "1.0.0",
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string"
+				},
+				"size": {
+					"type": "string"
+				},
+				"style": {
+					"type": "string"
+				},
+				"substyle": {
+					"type": "string"
+				},
+				"controls": {
+					"type": "object",
+					"properties": {
+						"colors": {
+							"maxItems": 5,
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"rgb": {
+										"minItems": 3,
+										"maxItems": 3,
+										"type": "array",
+										"items": {
+											"type": "integer",
+											"minimum": 0,
+											"maximum": 255
+										}
+									}
+								},
+								"required": [
+									"rgb"
+								],
+								"additionalProperties": false
+							}
+						},
+						"background_color": {
+							"type": "object",
+							"properties": {
+								"rgb": {
+									"minItems": 3,
+									"maxItems": 3,
+									"type": "array",
+									"items": {
+										"type": "integer",
+										"minimum": 0,
+										"maximum": 255
+									}
+								}
+							},
+							"required": [
+								"rgb"
+							],
+							"additionalProperties": false
+						}
+					},
+					"additionalProperties": false
+				}
+			},
+			"required": [
+				"prompt"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"type": "string",
+					"format": "uri",
+					"contentMediaType": "image/svg+xml"
+				}
+			},
+			"required": [
+				"image"
+			],
+			"additionalProperties": false
+		}
+	}
+}

@@ -298,7 +298,7 @@
 	},
 	{
 		"name": "Interconnects",
-		"deeplink": "/?to=/:account/interconnects",
+		"deeplink": "/?to=/:account/magic-networks/connections/cni-tunnels",
 		"parent": ["Networking"]
 	},
 	{

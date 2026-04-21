@@ -1,0 +1,33 @@
+---
+pcx_content_type: reference
+title: RtkErrorView
+description: API reference for RtkErrorView component (Android Library)
+---
+
+A full-screen error view that displays an error message and a retry button.
+
+## Methods
+
+| Method    | Parameters                                         | Description                                     |
+| --------- | -------------------------------------------------- | ----------------------------------------------- |
+| `refresh` | `errorMessage: String, onRetryClicked: () -> Unit` | Set the error message and retry button callback |
+
+## Usage Examples
+
+### Basic Usage
+
+```xml
+<com.cloudflare.realtimekit.ui.view.RtkErrorView
+    android:id="@+id/rtk_error_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+```
+
+### With Methods
+
+```kotlin
+val errorView = findViewById<RtkErrorView>(R.id.rtk_error_view)
+errorView.refresh("Failed to connect") {
+    // Retry connection
+}
+```
