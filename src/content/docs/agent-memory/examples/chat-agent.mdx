@@ -1,0 +1,158 @@
+---
+title: Chat agent with memory
+pcx_content_type: example
+description: Build a chat agent that remembers user preferences and context across conversations using Agent Memory and Workers AI.
+products:
+  - agent-memory
+tags:
+  - AI
+sidebar:
+  order: 1
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+This example builds a chat agent that uses Agent Memory to remember user preferences and provide personalized responses across conversations.
+
+## What you will build
+
+A Cloudflare Worker that:
+
+1. Ingests each conversation turn into Agent Memory.
+2. Uses `getSummary()` to build a personalized system prompt.
+3. Uses `recall()` to fetch relevant context for the current question.
+4. Generates a response using Workers AI with full memory context.
+
+## Configuration
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "memory-chat-agent",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"memory_namespaces": [
+		{
+			"binding": "MEMORY",
+			"namespace": "<NAMESPACE_ID>"
+		}
+	],
+	"ai": {
+		"binding": "AI"
+	}
+}
+```
+
+</WranglerConfig>
+
+## Worker code
+
+<TypeScriptExample>
+
+```ts
+interface Env {
+  MEMORY: AgentMemoryBinding;
+  AI: Ai;
+}
+
+type ChatRequest = {
+  userId: string;
+  sessionId: string;
+  message: string;
+};
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    if (request.method !== "POST") {
+      return new Response("Method not allowed", { status: 405 });
+    }
+
+    const { userId, sessionId, message } = await request.json<ChatRequest>();
+    const profile = await env.MEMORY.getProfile(userId);
+
+    // Step 1: Get the profile summary for the system prompt
+    const { summary } = await profile.getSummary({ sessionId });
+
+    // Step 2: Recall specific context relevant to the user's message
+    const memory = await profile.recall(message, {
+      thinkingLevel: "medium",
+      responseLength: "short",
+    });
+
+    // Step 3: Build the system prompt with memory context
+    let systemPrompt = "You are a helpful assistant.";
+    if (summary) {
+      systemPrompt += `\n\nHere is what you know about the user:\n\n${summary}`;
+    }
+    if (memory.answer) {
+      systemPrompt += `\n\nRelevant context for this question:\n${memory.answer}`;
+    }
+
+    // Step 4: Generate a response using Workers AI
+    const aiResponse = await env.AI.run(
+      "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+      {
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: message },
+        ],
+      },
+    );
+
+    const assistantMessage =
+      "response" in aiResponse ? aiResponse.response : "";
+
+    // Step 5: Ingest this conversation turn for future recall
+    await profile.ingest(
+      [
+        { role: "user", content: message },
+        { role: "assistant", content: assistantMessage || "" },
+      ],
+      { sessionId },
+    );
+
+    return Response.json({
+      response: assistantMessage,
+    });
+  },
+};
+```
+
+</TypeScriptExample>
+
+## How it works
+
+1. **Profile summary as system prompt** — `getSummary()` returns a Markdown summary of the user's key facts, recent events, active tasks, and stored instructions. This gives the LLM broad context about the user without requiring a specific query.
+
+2. **Targeted recall** — `recall()` searches stored memories for content specifically relevant to the current message. This provides focused context beyond what the general summary includes.
+
+3. **Post-conversation ingestion** — After generating a response, the conversation turn is ingested into Agent Memory. The system extracts any new facts, events, or instructions from the exchange.
+
+4. **Memory accumulation** — Over multiple conversations, the agent builds up a rich profile of the user. Facts like "prefers TypeScript" or "works on the billing team" persist across sessions and surface automatically in future interactions.
+
+## Test the agent
+
+```bash
+curl -X POST "http://localhost:8787" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "userId": "alice",
+    "sessionId": "session-1",
+    "message": "I am working on the billing API and prefer TypeScript."
+  }'
+```
+
+In a subsequent request, the agent remembers the context:
+
+```bash
+curl -X POST "http://localhost:8787" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "userId": "alice",
+    "sessionId": "session-2",
+    "message": "Can you help me with the project I mentioned?"
+  }'
+```
+
+The agent responds with awareness of the billing API project and TypeScript preference, even though those details were from a previous session.

@@ -1,0 +1,219 @@
+---
+title: Namespace management
+pcx_content_type: reference
+description: Create, list, get, and delete Agent Memory namespaces using the Cloudflare REST API.
+products:
+  - agent-memory
+sidebar:
+  order: 4
+  label: Namespaces API
+---
+
+Namespaces are managed through the Cloudflare REST API. A [namespace](/agent-memory/concepts/profiles-and-namespaces/) is a top-level container that scopes memory profiles for your application.
+
+All requests require an [API token](/fundamentals/api/get-started/create-token/) with the appropriate permissions.
+
+## Base URL
+
+```txt
+https://api.cloudflare.com/client/v4/accounts/{account_id}/agent-memory/namespaces
+```
+
+## Authentication
+
+Include your API token in the `Authorization` header:
+
+```txt
+Authorization: Bearer {api_token}
+```
+
+---
+
+## Create a namespace
+
+Creates a new namespace for the given account.
+
+### Request
+
+```txt
+POST /client/v4/accounts/{account_id}/agent-memory/namespaces
+```
+
+### Request body
+
+```json
+{
+  "name": "my-app"
+}
+```
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `name` | `string` | Yes | The namespace name. Maximum 32 characters. Lowercase letters, digits, and hyphens only (`[a-z0-9-]`). Must be unique within the account. |
+
+### Response
+
+```json
+{
+  "result": {
+    "namespace_id": "01JSGCEXAMPLE000000000000",
+    "name": "my-app",
+    "created_at": "2026-04-21T00:00:00.000Z",
+    "updated_at": "2026-04-21T00:00:00.000Z"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+### Example
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/agent-memory/namespaces" \
+  -H "Authorization: Bearer {api_token}" \
+  -H "Content-Type: application/json" \
+  -d '{"name": "my-app"}'
+```
+
+---
+
+## List namespaces
+
+Lists all namespaces for the given account. Results are paginated.
+
+### Request
+
+```txt
+GET /client/v4/accounts/{account_id}/agent-memory/namespaces
+```
+
+### Query parameters
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `per_page` | `integer` | `20` | Number of results per page. Range: 1 to 1000. |
+| `cursor` | `string` | — | Cursor for the next page of results. Returned in the `result_info` of the previous response. |
+
+### Response
+
+```json
+{
+  "result": [
+    {
+      "namespace_id": "01JSGCEXAMPLE000000000000",
+      "name": "my-app",
+      "created_at": "2026-04-21T00:00:00.000Z",
+      "updated_at": "2026-04-21T00:00:00.000Z"
+    }
+  ],
+  "result_info": {
+    "count": 1,
+    "cursor": ""
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+### Example
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/agent-memory/namespaces?per_page=50" \
+  -H "Authorization: Bearer {api_token}"
+```
+
+---
+
+## Get a namespace
+
+Retrieves a single namespace by name.
+
+### Request
+
+```txt
+GET /client/v4/accounts/{account_id}/agent-memory/namespaces/{namespace_name}
+```
+
+### Response
+
+```json
+{
+  "result": {
+    "namespace_id": "01JSGCEXAMPLE000000000000",
+    "name": "my-app",
+    "created_at": "2026-04-21T00:00:00.000Z",
+    "updated_at": "2026-04-21T00:00:00.000Z"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+### Example
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/agent-memory/namespaces/my-app" \
+  -H "Authorization: Bearer {api_token}"
+```
+
+---
+
+## Delete a namespace
+
+Soft-deletes a namespace. The namespace name becomes available for reuse after deletion.
+
+### Request
+
+```txt
+DELETE /client/v4/accounts/{account_id}/agent-memory/namespaces/{namespace_name}
+```
+
+### Response
+
+```json
+{
+  "result": null,
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+### Example
+
+```bash
+curl -X DELETE "https://api.cloudflare.com/client/v4/accounts/{account_id}/agent-memory/namespaces/my-app" \
+  -H "Authorization: Bearer {api_token}"
+```
+
+---
+
+## Error responses
+
+All endpoints return standard Cloudflare V4 error responses on failure:
+
+```json
+{
+  "result": null,
+  "success": false,
+  "errors": [
+    {
+      "code": 10001,
+      "message": "Namespace name already exists"
+    }
+  ],
+  "messages": []
+}
+```
+
+Common error scenarios:
+
+| Scenario | HTTP status |
+| --- | --- |
+| Invalid namespace name format | `400` |
+| Authentication failure | `401` |
+| Namespace name already exists | `409` |
+| Namespace not found | `404` |

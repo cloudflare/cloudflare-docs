@@ -1,0 +1,146 @@
+---
+title: getSummary()
+pcx_content_type: reference
+description: Generate a Markdown summary of a memory profile, organized into sections for system prompt injection.
+products:
+  - agent-memory
+sidebar:
+  order: 3
+  label: getSummary()
+---
+
+import { TypeScriptExample } from "~/components";
+
+`getSummary()` generates a structured Markdown summary of everything stored in a memory profile. The summary is designed to be injected into a system prompt to give an LLM full context about a user.
+
+## Signature
+
+```ts
+profile.getSummary(options?: GetSummaryOptions): Promise<GetSummaryResponse>
+```
+
+## Parameters
+
+### `options`
+
+```ts
+type GetSummaryOptions = {
+  sessionId?: string | null;
+};
+```
+
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `sessionId` | `string` \| `null` | Most recent session | An optional session ID to scope the "Last Session" section of the summary. If omitted, the most recent session is used. |
+
+## Return value
+
+```ts
+type GetSummaryResponse = {
+  summary: string;
+};
+```
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `summary` | `string` | A Markdown-formatted summary of the profile. |
+
+## Summary structure
+
+The generated summary is organized into the following sections, each allocated a portion of the total token budget:
+
+| Section | Description | Budget share |
+| --- | --- | --- |
+| **Key Facts** | The most important facts about the user — preferences, identity, relationships, and goals. | 25-30% |
+| **Recent Events** | Events from the last 30 days, ordered by recency. | 25-30% |
+| **Active Tasks** | Current investigations, implementations, and follow-ups from the active session. | 15-20% |
+| **Last Session** | A summary of the most recent (or specified) session. | ~15% |
+| **Instructions** | Active procedures, conventions, and rules the agent should follow. | ~20% |
+
+Sections with no content are omitted from the output. The summary is concise and factual, not conversational.
+
+### Example output
+
+```markdown
+## Key Facts
+- Prefers dark mode in all applications
+- Uses VS Code as primary editor
+- Works on the billing team
+- Primary language is TypeScript
+
+## Recent Events
+- Deployed billing API v2.3.0 to production (April 15)
+- Completed migration from REST to GraphQL (April 10)
+
+## Active Tasks
+- Investigating intermittent 500 errors on /users endpoint
+- Need to update README after refactoring
+
+## Instructions
+- Use conventional commits: type: description
+- Run pnpm build && wrangler deploy --env production for deployments
+- Database migrations require approval before execution
+```
+
+## Examples
+
+### Basic summary
+
+<TypeScriptExample>
+
+```ts
+const profile = await env.MEMORY.getProfile("alice");
+const { summary } = await profile.getSummary();
+
+console.log(summary);
+// Markdown summary of Alice's profile
+```
+
+</TypeScriptExample>
+
+### Injecting into a system prompt
+
+<TypeScriptExample>
+
+```ts
+const profile = await env.MEMORY.getProfile(userId);
+const { summary } = await profile.getSummary();
+
+const response = await env.AI.run("@cf/meta/llama-3.3-70b-instruct-fp8-fast", {
+  messages: [
+    {
+      role: "system",
+      content: `You are a helpful coding assistant.\n\nHere is what you know about the user:\n\n${summary}`,
+    },
+    { role: "user", content: userMessage },
+  ],
+});
+```
+
+</TypeScriptExample>
+
+### Scoping to a specific session
+
+<TypeScriptExample>
+
+```ts
+const { summary } = await profile.getSummary({
+  sessionId: "deployment-session-42",
+});
+
+// The "Last Session" section will reflect deployment-session-42
+// instead of the most recent session
+```
+
+</TypeScriptExample>
+
+## When to use `getSummary()` vs `recall()`
+
+| Use case | Method |
+| --- | --- |
+| Broad context for a system prompt | `getSummary()` — Returns a comprehensive overview of the entire profile. |
+| Answer a specific question | `recall()` — Searches for and synthesizes an answer to a targeted query. |
+| Build a user profile card | `getSummary()` — Structured sections make it easy to extract key facts. |
+| Look up a specific fact or event | `recall()` — More efficient for targeted lookups. |
+
+In many applications, you will use both: `getSummary()` to populate the system prompt at the start of a conversation, and `recall()` to fetch additional context as the conversation progresses.

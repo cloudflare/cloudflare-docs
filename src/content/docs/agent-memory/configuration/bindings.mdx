@@ -1,0 +1,140 @@
+---
+title: Bindings
+pcx_content_type: configuration
+description: Configure the memory_namespaces binding in your Wrangler configuration to connect your Worker to Agent Memory.
+products:
+  - agent-memory
+sidebar:
+  order: 1
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+You connect a Cloudflare Worker to Agent Memory through a **binding**. The binding gives your Worker access to a specific [namespace](/agent-memory/concepts/profiles-and-namespaces/), which contains the memory profiles for your application.
+
+## Add a binding
+
+Add a `memory_namespaces` entry to your Wrangler configuration. The `binding` field is the variable name you use in your Worker code, and the `namespace` field is the namespace ID from the [Namespace Management API](/agent-memory/api/namespaces/).
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "my-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"memory_namespaces": [
+		{
+			"binding": "MEMORY",
+			"namespace": "<NAMESPACE_ID>"
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+## Use the binding in your Worker
+
+The binding is available on the `env` object in your Worker. Call `getProfile()` to get a memory profile for a specific user or entity.
+
+<TypeScriptExample>
+
+```ts
+interface Env {
+  MEMORY: AgentMemoryBinding;
+}
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const profile = await env.MEMORY.getProfile("user-123");
+
+    // Ingest a conversation
+    await profile.ingest([
+      { role: "user", content: "I prefer TypeScript over JavaScript." },
+      { role: "assistant", content: "Got it, I will use TypeScript by default." },
+    ]);
+
+    // Recall a memory
+    const result = await profile.recall("What language does the user prefer?");
+
+    return Response.json({ answer: result.answer });
+  },
+};
+```
+
+</TypeScriptExample>
+
+## Multiple bindings
+
+You can bind to multiple namespaces in a single Worker. This is useful when you need separate memory stores for different purposes — for example, per-user memory and shared team memory.
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "my-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"memory_namespaces": [
+		{
+			"binding": "USER_MEMORY",
+			"namespace": "<USER_NAMESPACE_ID>"
+		},
+		{
+			"binding": "TEAM_MEMORY",
+			"namespace": "<TEAM_NAMESPACE_ID>"
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+<TypeScriptExample>
+
+```ts
+interface Env {
+  USER_MEMORY: AgentMemoryBinding;
+  TEAM_MEMORY: AgentMemoryBinding;
+}
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    // Per-user memory
+    const userProfile = await env.USER_MEMORY.getProfile("alice");
+
+    // Shared team memory
+    const teamProfile = await env.TEAM_MEMORY.getProfile("engineering");
+
+    // Use both profiles independently
+    const userContext = await userProfile.recall("user preferences");
+    const teamContext = await teamProfile.recall("team conventions");
+
+    return Response.json({
+      user: userContext.answer,
+      team: teamContext.answer,
+    });
+  },
+};
+```
+
+</TypeScriptExample>
+
+## TypeScript types
+
+The `AgentMemoryBinding` type is available automatically when you configure a `memory_namespaces` binding. It exposes a single method:
+
+| Method | Signature | Description |
+| --- | --- | --- |
+| `getProfile` | `(profileName: string) => Promise<Profile>` | Returns a `Profile` for the given name. Creates the profile implicitly if it does not exist. |
+
+The `Profile` interface exposes three methods:
+
+| Method | Description |
+| --- | --- |
+| [`ingest()`](/agent-memory/api/ingest/) | Extract and store memories from a conversation. |
+| [`recall()`](/agent-memory/api/recall/) | Search memories and synthesize an answer. |
+| [`getSummary()`](/agent-memory/api/get-summary/) | Generate a Markdown profile summary. |
+
+For full details on each method, refer to the [API reference](/agent-memory/api/).
