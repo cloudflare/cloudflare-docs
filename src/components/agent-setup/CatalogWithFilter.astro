@@ -60,7 +60,6 @@ const CARD_CAPABILITY_KEYS: (keyof AgentData["capabilities"])[] = [
 					(k) => agent.capabilities[k],
 				);
 				const matchKeys = [
-					agent.primary_type,
 					...Object.entries(agent.capabilities)
 						.filter(([, v]) => v)
 						.map(([k]) => k),
