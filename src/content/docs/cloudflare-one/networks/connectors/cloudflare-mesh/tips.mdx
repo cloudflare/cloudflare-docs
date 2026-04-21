@@ -97,7 +97,7 @@ When deploying Mesh nodes in a cloud VPC, you may need to configure additional p
 
 ## Running Mesh on a DNS server
 
-Mesh nodes run in [Gateway with WARP](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/warp-modes/) mode, which redirects DNS queries on the host to Cloudflare Gateway. This will conflict with DNS services running on the same machine (for example, Active Directory DNS, Pi-hole, Unbound, BIND, or dnsmasq).
+Mesh nodes run in [Traffic and DNS mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/), which redirects DNS queries on the host to Cloudflare Gateway. This will conflict with DNS services running on the same machine (for example, Active Directory DNS, Pi-hole, Unbound, BIND, or dnsmasq).
 
 If your server runs a DNS service, do not install the Mesh node on that host. Instead, install the node on a separate machine on the same subnet and use [CIDR routes](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/) to make the DNS server reachable.
 
