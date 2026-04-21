@@ -1,0 +1,125 @@
+---
+pcx_content_type: how-to
+description: Route DNS record traffic to private origins through tunnels.
+products:
+  - dns
+title: Private network routing
+sidebar:
+  order: 8
+  badge: Beta
+tags:
+  - Private networks
+---
+
+import { Tabs, TabItem, DashButton, Plan } from "~/components";
+
+<Plan type="enterprise" />
+
+Private network routing lets you proxy HTTP/HTTPS traffic from public hostnames to origins in your private network. When you enable this setting on a DNS record, Cloudflare routes traffic through your configured tunnel instead of over the public internet.
+
+:::note
+This feature is in closed beta. Contact your account team to request access and the **Private Origins Allowed** entitlement.
+:::
+
+## Prerequisites
+
+Before you enable private network routing, you need:
+
+- An active tunnel connection to Cloudflare through one of the supported on-ramp methods ([Cloudflare WAN](/cloudflare-wan/), [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/), [IPsec](/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/), [GRE](/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/), or [CNI](/network-interconnect/)).
+- The **Private Origins Allowed** entitlement enabled on your account.
+
+## Supported records and IP ranges
+
+Private network routing is available for `A` (IPv4) and `AAAA` (IPv6) records only. Records must be [proxied](/dns/proxy-status/).
+
+The following private address ranges are automatically detected:
+
+| Range            | Description        |
+| ---------------- | ------------------ |
+| `10.0.0.0/8`     | Private (RFC 1918) |
+| `172.16.0.0/12`  | Private (RFC 1918) |
+| `192.168.0.0/16` | Private (RFC 1918) |
+
+When you use an IP address from one of these ranges, the **Use private network routing** toggle turns on automatically. You can also turn it on manually for public IP addresses that are only reachable through your tunnel.
+
+## Enable private network routing
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Go to **DNS** > **Records**.
+
+   <DashButton url="/?to=/:account/:zone/dns/records" />
+
+2. Select **Add record** or select **Edit** on an existing `A` or `AAAA` record.
+3. Enter the origin IP address.
+4. Verify that **Proxy status** is enabled (orange cloud).
+5. Turn on **Use private network routing**.
+6. Select **Save**.
+
+:::note
+For private IP addresses (for example, `10.0.0.50`), the toggle turns on automatically. For public IP addresses used with private infrastructure, turn on the toggle manually.
+:::
+
+</TabItem>
+
+<TabItem label="API">
+
+To create a record with private routing enabled, use a [POST request](/api/resources/dns/subresources/records/methods/create/) and set `private_routing` to `true`:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "type": "A",
+  "name": "app.example.com",
+  "content": "10.0.0.50",
+  "proxied": true,
+  "private_routing": true
+}'
+```
+
+To enable private routing on an existing record, use a [PATCH request](/api/resources/dns/subresources/records/methods/edit/):
+
+```bash
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records/{record_id}" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "private_routing": true
+}'
+```
+
+</TabItem> </Tabs>
+
+## API field behavior
+
+| Scenario                                 | `private_routing` value |
+| ---------------------------------------- | ----------------------- |
+| New `A`/`AAAA` record with private IP    | Auto-set to `true`      |
+| New `A`/`AAAA` record with public IP     | Defaults to `false`     |
+| Private IP with `private_routing: false` | Returns error           |
+| Non-`A`/`AAAA` record types              | Field not supported     |
+| Account without entitlement              | Field not visible       |
+
+## Limitations
+
+- **Record types**: Only `A` and `AAAA` records support private network routing.
+- **Proxy status**: Records must be proxied. DNS-only records cannot use private routing.
+- **Virtual networks**: Traffic routes through your default [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/). Selecting a specific virtual network is not supported.
+
+## Troubleshooting
+
+### Traffic not reaching origin
+
+If traffic is not reaching your private origin:
+
+1. Verify your tunnel is active and healthy in the Cloudflare dashboard.
+2. Confirm the origin IP is routable within your private network.
+3. Check that `private_routing` is set to `true` on the DNS record.
+4. Verify the record has proxy status enabled.
+
+### Error 1002: DNS points to prohibited IP
+
+This error occurs when you proxy a private IP address without the **Private Origins Allowed** entitlement. Contact your account team to enable this entitlement.

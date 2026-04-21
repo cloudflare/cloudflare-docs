@@ -8,7 +8,15 @@ sidebar:
   order: 2
 ---
 
-import { GlossaryTooltip, Render, TabItem, Tabs, Details, DashButton, DirectoryListing } from "~/components";
+import {
+	GlossaryTooltip,
+	Render,
+	TabItem,
+	Tabs,
+	Details,
+	DashButton,
+	DirectoryListing,
+} from "~/components";
 
 Consider the sections below for step-by-step instructions on managing DNS records at Cloudflare.
 
@@ -37,6 +45,7 @@ To create a DNS record in the dashboard:
 4. Complete the required fields, which vary per record. Particularly important fields (for some records) include:
    - **Proxy status**: For `A`, `AAAA`, and `CNAME` records, decide whether hostname traffic is <GlossaryTooltip term="proxy status" link="/dns/proxy-status/">proxied through Cloudflare</GlossaryTooltip>.
    - **TTL**: Short for [_Time to Live_](/dns/manage-dns-records/reference/ttl/), this field controls how long each record is valid and — as a result — how long it takes for record updates to reach your end users.
+   - **Private network routing**: For `A` and `AAAA` records, route traffic to private origins through your tunnels. Refer to [Private network routing](/dns/manage-dns-records/how-to/private-network-routing/).
    - **Comment** and **Tag**: [Record attributes](/dns/manage-dns-records/reference/record-attributes/) meant for your reference.
 5. Select **Save**.
 
@@ -114,4 +123,4 @@ This allows you to route requests using products such as [Redirect Rules](/rules
 
 ## Further guidance
 
-<DirectoryListing folder="/dns/manage-dns-records/how-to/"/>
+<DirectoryListing folder="/dns/manage-dns-records/how-to/" />
