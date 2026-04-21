@@ -130,13 +130,17 @@ Then reference the rule group in your Access policy:
 	}}
 />
 
+Replace `<APPROVED_COUNTRIES_GROUP_ID>` with the `id` returned when you created the rule group above. To look up existing groups, use the [List Access groups](/api/resources/zero_trust/subresources/access/subresources/groups/methods/list/) endpoint.
+
 </TabItem> </Tabs>
 
 ## Require device posture for sensitive applications
 
 For applications that contain sensitive data, you can verify that users connect from managed devices that meet your organization's security baseline. The following example combines identity verification with [device posture checks](/cloudflare-one/reusable-components/posture-checks/) to ensure that the device is running a supported [OS version](/cloudflare-one/reusable-components/posture-checks/client-checks/os-version/), has [disk encryption](/cloudflare-one/reusable-components/posture-checks/client-checks/disk-encryption/) turned on, and has an active [firewall](/cloudflare-one/reusable-components/posture-checks/client-checks/firewall/). Users must also be connected through the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/), which is enforced by the [Require Gateway check](/cloudflare-one/reusable-components/posture-checks/client-checks/require-gateway/).
 
-Before using this policy, [create device posture checks](/cloudflare-one/reusable-components/posture-checks/) for each requirement and [enable the Require Gateway posture check](/cloudflare-one/reusable-components/posture-checks/client-checks/require-gateway/).
+:::note
+Before creating this policy, [create device posture checks](/cloudflare-one/reusable-components/posture-checks/) for each requirement and [enable the Require Gateway posture check](/cloudflare-one/reusable-components/posture-checks/client-checks/require-gateway/).
+:::
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -187,7 +191,7 @@ Before using this policy, [create device posture checks](/cloudflare-one/reusabl
 	}}
 />
 
-To get the integration UIDs for your device posture checks, use the [List device posture integrations](/api/resources/zero_trust/subresources/devices/subresources/posture/subresources/integrations/methods/list/) endpoint.
+Replace the `okta` rule with the [appropriate rule for your identity provider](/api/resources/zero_trust/subresources/access/subresources/policies/methods/create/). To get your identity provider ID, use the [List Access identity providers](/api/resources/zero_trust/subresources/access/subresources/identity_providers/methods/list/) endpoint. To get the integration UIDs for your device posture checks, use the [List device posture checks](/api/resources/zero_trust/subresources/devices/subresources/posture/methods/list/) endpoint.
 
 </TabItem> </Tabs>
 
@@ -242,7 +246,7 @@ If your identity provider reports the authentication method used during login, y
 	}}
 />
 
-The `auth_method` value uses [RFC 8176](https://datatracker.ietf.org/doc/html/rfc8176#section-2) authentication method reference values. For example, `swk` represents a software-secured key (security key).
+The `auth_method` value uses [RFC 8176](https://datatracker.ietf.org/doc/html/rfc8176#section-2) authentication method reference values. For example, `swk` represents a software-secured key (security key). Replace the `okta` rule with the [appropriate rule for your identity provider](/api/resources/zero_trust/subresources/access/subresources/policies/methods/create/). To get your identity provider ID, use the [List Access identity providers](/api/resources/zero_trust/subresources/access/subresources/identity_providers/methods/list/) endpoint. To get `<GATEWAY_CHECK_ID>`, use the [List device posture checks](/api/resources/zero_trust/subresources/devices/subresources/posture/methods/list/) endpoint.
 
 </TabItem> </Tabs>
 
@@ -254,7 +258,11 @@ For the full details on both approaches, refer to [Enforce MFA](/cloudflare-one/
 
 ## Allow contractor access with email-based authentication
 
-When you collaborate with external contractors or partners who are not part of your corporate identity provider, you can grant them access using a [one-time PIN (OTP)](/cloudflare-one/integrations/identity-providers/one-time-pin/). OTP sends a short-lived code to the contractor's email address, allowing them to authenticate without needing an account in your IdP. To use this policy, first [enable OTP as a login method](/cloudflare-one/integrations/identity-providers/one-time-pin/#set-up-otp) in your identity provider settings.
+When you collaborate with external contractors or partners who are not part of your corporate identity provider, you can grant them access using a [one-time PIN (OTP)](/cloudflare-one/integrations/identity-providers/one-time-pin/). OTP sends a short-lived code to the contractor's email address, allowing them to authenticate without needing an account in your IdP.
+
+:::note
+Before creating this policy, [enable OTP as a login method](/cloudflare-one/integrations/identity-providers/one-time-pin/#set-up-otp) in your identity provider settings.
+:::
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -306,7 +314,7 @@ Adding `Login Methods: One-time PIN` as an Include rule without restricting emai
 When contractors or other external users need to view internal applications but should not be able to download, copy, or transfer data to their unmanaged devices, you can serve the application in a [remote browser](/cloudflare-one/remote-browser-isolation/). This gives external users read-only visibility into the application while keeping sensitive data from leaving your environment.
 
 :::note
-Requires the [Cloudflare Browser Isolation](/cloudflare-one/remote-browser-isolation/) add-on. Before creating this Access policy, you must turn on [Clientless Web Isolation](/cloudflare-one/remote-browser-isolation/clientless-web-isolation/) for your account.
+Before creating this policy, you must turn on [Clientless Web Isolation](/cloudflare-one/remote-browser-isolation/clientless-web-isolation/).
 :::
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
@@ -384,7 +392,11 @@ For more information, refer to [Isolate self-hosted application](/cloudflare-one
 
 ## Block requests from high-risk countries
 
-If your organization restricts access from certain countries due to internal policy or regulatory requirements such as [OFAC sanctions](https://orpa.princeton.edu/export-controls/sanctioned-countries) or [ITAR regulations](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries), you can create a Block policy that denies access from those regions. Adding a corporate IP allowlist as an Exclude rule ensures that employees connecting through trusted office networks are not inadvertently blocked. To use an IP list, first [create a list](/cloudflare-one/reusable-components/lists/) with your approved IP ranges.
+If your organization restricts access from certain countries due to internal policy or regulatory requirements such as [OFAC sanctions](https://orpa.princeton.edu/export-controls/sanctioned-countries) or [ITAR regulations](https://www.tradecompliance.pitt.edu/embargoed-and-sanctioned-countries), you can create a Block policy that denies access from those regions. Adding a corporate IP allowlist as an Exclude rule ensures that employees connecting through trusted office networks are not inadvertently blocked.
+
+:::note
+Before creating this policy, [create a list](/cloudflare-one/reusable-components/lists/) with your approved IP ranges.
+:::
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -423,7 +435,7 @@ Block policies are best used together with [Allow policies](#allow-employees-by-
 
 ## Exclude high-risk users
 
-If your organization uses [Cloudflare User Risk Scoring](/cloudflare-one/team-and-resources/users/risk-score/) to flag users with anomalous behavior, you can exclude high-risk users from accessing sensitive applications. This is useful as a dynamic safeguard that automatically restricts access when a user's behavior triggers a risk level change, without requiring manual intervention. User risk scoring is available on Enterprise plans.
+If your organization uses [Cloudflare User Risk Scores](/cloudflare-one/team-and-resources/users/risk-score/) to flag users with anomalous behavior, you can exclude high-risk users from accessing sensitive applications. This is useful as a dynamic safeguard that automatically restricts access when a user's behavior triggers a risk level change, without requiring manual intervention.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -460,7 +472,11 @@ In this example, any user scored as High risk is excluded even if they match the
 
 ## Authenticate a service using a service token
 
-Automated services such as CI/CD pipelines, monitoring systems, and backend APIs need to access protected applications without an interactive login. Service Auth policies allow machine-to-machine communication by authenticating requests that present valid [service token](/cloudflare-one/access-controls/service-credentials/service-tokens/) headers. For additional security, you can restrict the token to requests from specific IP ranges, ensuring the token can only be used from known infrastructure. To use this policy, first [create a service token](/cloudflare-one/access-controls/service-credentials/service-tokens/#create-a-service-token).
+Automated services such as CI/CD pipelines, monitoring systems, and backend APIs need to access protected applications without an interactive login. Service Auth policies allow machine-to-machine communication by authenticating requests that present valid [service token](/cloudflare-one/access-controls/service-credentials/service-tokens/) headers. For additional security, you can restrict the token to requests from specific IP ranges, ensuring the token can only be used from known infrastructure.
+
+:::note
+Before creating this policy, [create a service token](/cloudflare-one/access-controls/service-credentials/service-tokens/#create-a-service-token).
+:::
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -500,7 +516,11 @@ To get the ID of your service token, use the [List service tokens](/api/resource
 
 ## Authenticate a service using mutual TLS
 
-For environments that require certificate-based authentication, you can use [mutual TLS (mTLS)](/cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/) to verify that a connecting client presents a valid certificate with an expected identity. mTLS is useful for authenticating automated systems and IoT devices that do not use an identity provider, or as an additional authentication factor for team members who also log in through an IdP. To use this policy, first [upload a certificate authority (CA)](/cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/#add-mtls-authentication-to-your-access-configuration) to your Access configuration.
+For environments that require certificate-based authentication, you can use [mutual TLS (mTLS)](/cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/) to verify that a connecting client presents a valid certificate with an expected identity. mTLS is useful for authenticating automated systems and IoT devices that do not use an identity provider, or as an additional authentication factor for team members who also log in through an IdP.
+
+:::note
+Before creating this policy, [upload a certificate authority (CA)](/cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/#add-mtls-authentication-to-your-access-configuration) to your Access configuration.
+:::
 
 To restrict access to a specific client, use the **Common Name** selector to match the identity in the client certificate:
 
@@ -605,6 +625,8 @@ For applications such as database admin tools, production consoles, or HR system
 		purpose_justification_prompt: "Please enter a justification for accessing this application.",
 	}}
 />
+
+Replace the `okta` rule with the [appropriate rule for your identity provider](/api/resources/zero_trust/subresources/access/subresources/policies/methods/create/). To get your identity provider ID, use the [List Access identity providers](/api/resources/zero_trust/subresources/access/subresources/identity_providers/methods/list/) endpoint. To get the integration UIDs for your device posture checks, use the [List device posture checks](/api/resources/zero_trust/subresources/devices/subresources/posture/methods/list/) endpoint.
 
 </TabItem> </Tabs>
 
