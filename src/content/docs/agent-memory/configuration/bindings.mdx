@@ -1,7 +1,7 @@
 ---
 title: Bindings
 pcx_content_type: configuration
-description: Configure the memory_namespaces binding in your Wrangler configuration to connect your Worker to Agent Memory.
+description: Configure the agent_memory binding in your Wrangler configuration to connect your Worker to Agent Memory.
 products:
   - agent-memory
 sidebar:
@@ -14,7 +14,7 @@ You connect a Cloudflare Worker to Agent Memory through a **binding**. The bindi
 
 ## Add a binding
 
-Add a `memory_namespaces` entry to your Wrangler configuration. The `binding` field is the variable name you use in your Worker code, and the `namespace` field is the namespace ID from the [Namespace Management API](/agent-memory/api/namespaces/).
+Add an `agent_memory` entry to your Wrangler configuration. The `binding` field is the variable name you use in your Worker code, and the `namespace` field is the namespace name from the [Namespace Management API](/agent-memory/api/namespaces/).
 
 <WranglerConfig>
 
@@ -23,10 +23,10 @@ Add a `memory_namespaces` entry to your Wrangler configuration. The `binding` fi
 	"name": "my-worker",
 	"main": "src/index.ts",
 	"compatibility_date": "$today",
-	"memory_namespaces": [
+	"agent_memory": [
 		{
 			"binding": "MEMORY",
-			"namespace": "<NAMESPACE_ID>"
+			"namespace": "<NAMESPACE_NAME>"
 		}
 	]
 }
@@ -41,26 +41,22 @@ The binding is available on the `env` object in your Worker. Call `getProfile()`
 <TypeScriptExample>
 
 ```ts
-interface Env {
-  MEMORY: AgentMemoryBinding;
-}
-
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    const profile = await env.MEMORY.getProfile("user-123");
+	async fetch(request, env, ctx): Promise<Response> {
+		const profile = await env.MEMORY.getProfile("user-123");
 
-    // Ingest a conversation
-    await profile.ingest([
-      { role: "user", content: "I prefer TypeScript over JavaScript." },
-      { role: "assistant", content: "Got it, I will use TypeScript by default." },
-    ]);
+		// Ingest a conversation
+		await profile.ingest([
+			{ role: "user", content: "I prefer TypeScript over JavaScript." },
+			{ role: "assistant", content: "Got it, I will use TypeScript by default." },
+		]);
 
-    // Recall a memory
-    const result = await profile.recall("What language does the user prefer?");
+		// Recall a memory
+		const result = await profile.recall("What language does the user prefer?");
 
-    return Response.json({ answer: result.answer });
-  },
-};
+		return Response.json({ answer: result.answer });
+	},
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
@@ -76,14 +72,14 @@ You can bind to multiple namespaces in a single Worker. This is useful when you 
 	"name": "my-worker",
 	"main": "src/index.ts",
 	"compatibility_date": "$today",
-	"memory_namespaces": [
+	"agent_memory": [
 		{
 			"binding": "USER_MEMORY",
-			"namespace": "<USER_NAMESPACE_ID>"
+			"namespace": "<USER_NAMESPACE_NAME>"
 		},
 		{
 			"binding": "TEAM_MEMORY",
-			"namespace": "<TEAM_NAMESPACE_ID>"
+			"namespace": "<TEAM_NAMESPACE_NAME>"
 		}
 	]
 }
@@ -94,36 +90,31 @@ You can bind to multiple namespaces in a single Worker. This is useful when you 
 <TypeScriptExample>
 
 ```ts
-interface Env {
-  USER_MEMORY: AgentMemoryBinding;
-  TEAM_MEMORY: AgentMemoryBinding;
-}
-
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    // Per-user memory
-    const userProfile = await env.USER_MEMORY.getProfile("alice");
+	async fetch(request, env, ctx): Promise<Response> {
+		// Per-user memory
+		const userProfile = await env.USER_MEMORY.getProfile("alice");
 
-    // Shared team memory
-    const teamProfile = await env.TEAM_MEMORY.getProfile("engineering");
+		// Shared team memory
+		const teamProfile = await env.TEAM_MEMORY.getProfile("engineering");
 
-    // Use both profiles independently
-    const userContext = await userProfile.recall("user preferences");
-    const teamContext = await teamProfile.recall("team conventions");
+		// Use both profiles independently
+		const userContext = await userProfile.recall("user preferences");
+		const teamContext = await teamProfile.recall("team conventions");
 
-    return Response.json({
-      user: userContext.answer,
-      team: teamContext.answer,
-    });
-  },
-};
+		return Response.json({
+			user: userContext.answer,
+			team: teamContext.answer,
+		});
+	},
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
 
 ## TypeScript types
 
-The `AgentMemoryBinding` type is available automatically when you configure a `memory_namespaces` binding. It exposes a single method:
+The binding type is available automatically when you configure an `agent_memory` binding. The binding exposes a single method:
 
 | Method | Signature | Description |
 | --- | --- | --- |

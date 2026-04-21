@@ -100,18 +100,18 @@ A `recall()` on Alice's profile never returns memories from Bob's profile. Each 
 
 ## Multiple bindings
 
-You can bind to multiple namespaces in a single Worker by adding multiple entries to `memory_namespaces`:
+You can bind to multiple namespaces in a single Worker by adding multiple entries to `agent_memory`:
 
 ```jsonc
 {
-	"memory_namespaces": [
+	"agent_memory": [
 		{
 			"binding": "USER_MEMORY",
-			"namespace": "<USER_NAMESPACE_ID>"
+			"namespace": "<USER_NAMESPACE_NAME>"
 		},
 		{
 			"binding": "TEAM_MEMORY",
-			"namespace": "<TEAM_NAMESPACE_ID>"
+			"namespace": "<TEAM_NAMESPACE_NAME>"
 		}
 	]
 }

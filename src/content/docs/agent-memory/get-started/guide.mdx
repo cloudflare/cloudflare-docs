@@ -59,7 +59,7 @@ Select the default options when prompted.
 
 ## 3. Add the memory binding
 
-Add the `memory_namespaces` binding to your Wrangler configuration. Replace the `namespace` value with the `namespace_id` from step 1.
+Add the `agent_memory` binding to your Wrangler configuration. Replace the `namespace` value with the `namespace_id` from step 1.
 
 <WranglerConfig>
 
@@ -68,10 +68,10 @@ Add the `memory_namespaces` binding to your Wrangler configuration. Replace the 
 	"name": "memory-demo",
 	"main": "src/index.ts",
 	"compatibility_date": "$today",
-	"memory_namespaces": [
+	"agent_memory": [
 		{
 			"binding": "MEMORY",
-			"namespace": "<NAMESPACE_ID>"
+			"namespace": "<NAMESPACE_NAME>"
 		}
 	]
 }
@@ -86,50 +86,47 @@ Replace the contents of `src/index.ts` with the following code. This Worker expo
 <TypeScriptExample>
 
 ```ts
-interface Env {
-  MEMORY: AgentMemoryBinding;
-}
-
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    const url = new URL(request.url);
-    const userId = url.searchParams.get("user") || "default-user";
+	async fetch(request, env, ctx): Promise<Response> {
+		const url = new URL(request.url);
+		const userId = url.searchParams.get("user") || "default-user";
 
-    // Get the memory profile for this user
-    const profile = await env.MEMORY.getProfile(userId);
+		// Get the memory profile for this user
+		const profile = await env.MEMORY.getProfile(userId);
 
-    if (url.pathname === "/ingest" && request.method === "POST") {
-      const { messages } = await request.json<{
-        messages: { role: string; content: string }[];
-      }>();
+		if (url.pathname === "/ingest" && request.method === "POST") {
+			const { messages } = (await request.json()) as { messages: any[] };
 
-      await profile.ingest(messages);
+			await profile.ingest(messages);
 
-      return Response.json({ success: true });
-    }
+			return Response.json({ success: true });
+		}
 
-    if (url.pathname === "/recall") {
-      const query = url.searchParams.get("q");
-      if (!query) {
-        return Response.json({ error: "Missing ?q= parameter" }, { status: 400 });
-      }
+		if (url.pathname === "/recall") {
+			const query = url.searchParams.get("q");
+			if (!query) {
+				return Response.json(
+					{ error: "Missing ?q= parameter" },
+					{ status: 400 },
+				);
+			}
 
-      const result = await profile.recall(query);
+			const result = await profile.recall(query);
 
-      return Response.json({
-        answer: result.answer,
-      });
-    }
+			return Response.json({
+				answer: result.answer,
+			});
+		}
 
-    if (url.pathname === "/summary") {
-      const { summary } = await profile.getSummary();
+		if (url.pathname === "/summary") {
+			const { summary } = await profile.getSummary();
 
-      return Response.json({ summary });
-    }
+			return Response.json({ summary });
+		}
 
-    return new Response("Not found", { status: 404 });
-  },
-};
+		return new Response("Not found", { status: 404 });
+	},
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
