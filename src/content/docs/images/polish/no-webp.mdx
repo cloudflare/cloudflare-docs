@@ -1,7 +1,6 @@
 ---
 pcx_content_type: troubleshooting
 title: WebP may be skipped
-
 ---
 
 Polish avoids converting images to the WebP format when such conversion would increase the file size, or significantly degrade image quality.
@@ -43,7 +42,7 @@ The WebP format does not support progressive rendering. With [HTTP/2 prioritizat
 
 ## Beware of compression that is not better, only more of the same
 
-With a lossy format like JPEG or WebP, it is always possible to take an existing image, save it with a slightly lower quality, and get an image that looks *almost* the same, but has a smaller file size.
+With a lossy format like JPEG or WebP, it is always possible to take an existing image, save it with a slightly lower quality, and get an image that looks _almost_ the same, but has a smaller file size.
 It is the [heap paradox](https://en.wikipedia.org/wiki/Sorites_paradox): you can remove a grain of sand from a heap, and still have a heap of sand. There is no point when you can not make the heap smaller, except when there is no sand left. It is always possible to make an image with a slightly lower quality, all the way until all the accumulated losses degrade the image beyond recognition.
 
 Avoid applying multiple lossy optimization tools to images, before or after Polish. Multiple lossy operations degrade quality disproportionally more than what they save in file sizes.

@@ -28,6 +28,7 @@ const workspace = defineWorkspace([
 		test: {
 			name: "Node",
 			include: ["**/*.node.test.ts"],
+			environment: "happy-dom",
 		},
 		plugins: [tsconfigPaths()],
 	}),

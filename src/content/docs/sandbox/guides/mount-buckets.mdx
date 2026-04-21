@@ -33,7 +33,7 @@ const sandbox = getSandbox(env.Sandbox, 'data-processor');
 
 // Mount R2 bucket
 await sandbox.mountBucket('my-r2-bucket', '/data', {
-	endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com'
+endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com'
 });
 
 // Access bucket with standard filesystem operations
@@ -116,13 +116,13 @@ await sandbox.writeFile('/images/photo.jpg', imageData);
 
 // Mount different prefixes to different paths
 await sandbox.mountBucket('datasets', '/training-data', {
-	endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com',
-	prefix: '/ml/training/'
+endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com',
+prefix: '/ml/training/'
 });
 
 await sandbox.mountBucket('datasets', '/test-data', {
-	endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com',
-	prefix: '/ml/testing/'
+endpoint: 'https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com',
+prefix: '/ml/testing/'
 });
 ```
 </TypeScriptExample>
@@ -212,8 +212,8 @@ await sandbox.mountBucket('MY_BUCKET', '/data', {
 
 // Mount a subdirectory
 await sandbox.mountBucket('MY_BUCKET', '/images', {
-	localBucket: true,
-	prefix: '/uploads/images/'
+localBucket: true,
+prefix: '/uploads/images/'
 });
 ```
 </TypeScriptExample>
@@ -391,7 +391,7 @@ await sandbox.exec('cp', { args: ['/workspace/results.json', '/data/results/outp
 - **Read-only when possible** - Protect data with read-only mounts
 - **Use prefixes for isolation** - Mount subdirectories when working with specific datasets
 - **Mount paths** - Use `/data`, `/storage`, or `/mnt/*` (avoid `/workspace`, `/tmp`)
-- **Handle errors** - Wrap mount operations in try/catch blocks
+- **Handle errors** - Wrap mount operations in `try...catch` blocks
 - **Optimize access** - Copy frequently accessed files locally
 
 ## Related resources

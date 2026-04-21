@@ -44,4 +44,15 @@ export default [
 			],
 		},
 	},
+	{
+		files: ["src/scripts/**/*.{js,ts}"],
+		rules: {
+			"no-console": [
+				"error",
+				{
+					allow: ["warn", "error"],
+				},
+			],
+		},
+	},
 ];

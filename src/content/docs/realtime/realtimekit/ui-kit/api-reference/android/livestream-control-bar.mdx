@@ -1,0 +1,31 @@
+---
+title: RtkLivestreamControlBarView
+pcx_content_type: reference
+description: API reference for RtkLivestreamControlBarView component (Android Library)
+---
+
+A pre-built control bar for livestream meetings. Contains mic toggle, camera toggle, livestream toggle, join stage button, more toggle, and leave button.
+
+## Methods
+
+| Method     | Parameters                   | Description                               |
+| ---------- | ---------------------------- | ----------------------------------------- |
+| `activate` | `meeting: RealtimeKitClient` | Bind the control bar to the meeting state |
+
+## Usage Examples
+
+### Basic Usage
+
+```xml
+<com.cloudflare.realtimekit.ui.view.controlbars.RtkLivestreamControlBarView
+    android:id="@+id/rtk_livestream_control_bar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+```
+
+### With Methods
+
+```kotlin
+val controlBar = findViewById<RtkLivestreamControlBarView>(R.id.rtk_livestream_control_bar)
+controlBar.activate(meeting)
+```

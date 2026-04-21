@@ -1,0 +1,28 @@
+---
+title: Introducing Cloudflare Mesh
+description: Cloudflare Mesh connects your services and devices with post-quantum encrypted mesh networking. Route traffic privately between servers, laptops, and phones without VPNs or bastion hosts.
+date: 2026-04-14
+---
+
+[Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) is now available ([blog post](https://blog.cloudflare.com/mesh/)). Mesh connects your services and devices with post-quantum encrypted networking, allowing you to route traffic privately between servers, laptops, and phones over TCP, UDP, and ICMP.
+
+![Cloudflare Mesh network map showing nodes and devices connected through Cloudflare](~/assets/images/cloudflare-one/connections/mesh-network-map.gif)
+
+### What Cloudflare Mesh does
+
+- Assigns a private [Mesh IP](/cloudflare-one/networks/connectors/cloudflare-mesh/#mesh-ips) to every enrolled device and node.
+- Enables any participant to reach any other participant by IP — including client-to-client, without deploying any infrastructure.
+- Supports [CIDR routes](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/) for subnet routing through Mesh nodes.
+- Supports [high availability](/cloudflare-one/networks/connectors/cloudflare-mesh/high-availability/) with active-passive replicas for nodes with routes.
+- All traffic flows through Cloudflare, so [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/), [device posture checks](/cloudflare-one/reusable-components/posture-checks/), and access rules apply to every connection.
+
+### What changed
+
+- **WARP Connector** is now **Cloudflare Mesh**. Existing WARP Connectors are now called mesh nodes. All existing deployments continue to work — no migration required.
+- **Peer-to-peer connectivity** is now called **Mesh connectivity** and is part of the Cloudflare Mesh documentation.
+- **Mesh node limit** increased from 10 to **50 per account**.
+- New [dashboard experience](https://dash.cloudflare.com/?to=/:account/mesh) at **Networking** > **Mesh** with an interactive network map, node management, route configuration, diagnostics, and a setup wizard.
+
+### Get started
+
+Refer to the [Cloudflare Mesh documentation](/cloudflare-one/networks/connectors/cloudflare-mesh/) to set up your first Mesh network.

@@ -2,84 +2,187 @@
 {}
 ---
 
-import { Tabs, TabItem } from "~/components";
+import { Tabs, TabItem} from "~/components";
+import xxy from "~/assets/images/images/examples/gravity/xxy.png";
+import coffeeBase from "~/assets/images/images/examples/gravity/coffee-base.jpg";
+import coffeeCrop from "~/assets/images/images/examples/gravity/coffee-crop.jpg";
+import coffeeAuto from "~/assets/images/images/examples/gravity/coffee-auto.jpg";
+import faceBase from "~/assets/images/images/examples/gravity/suad-kamardeen.jpeg";
+import faceCrop from "~/assets/images/images/examples/gravity/suad-kamardeen-crop.jpeg";
+import faceOutput from "~/assets/images/images/examples/gravity/suad-kamardeen-face.jpeg";
+import pete from "~/assets/images/images/examples/fit/pete-landscape.jpg";
+import sideOutput from "~/assets/images/images/examples/gravity/pete-bottom.jpg";
+import base from "~/assets/images/images/examples/gravity/base.png";
+import relPoints from "~/assets/images/images/examples/gravity/rel-points.png";
+import relAlignment from "~/assets/images/images/examples/gravity/rel-alignment.png";
+import relOutput from "~/assets/images/images/examples/gravity/rel-output.png";
 
-Specifies how an image should be cropped when used with `fit=cover` and `fit=crop`.
-Available options are `auto`, `face`, a side (`left`, `right`, `top`, `bottom`), and relative coordinates (`XxY` with a valid range of `0.0` to `1.0`):
+<a id="gravity"></a>
 
-- `auto`\
-  Selects focal point based on saliency detection (using maximum symmetric surround algorithm).
-- `side`\
-  A side (`"left"`, `"right"`, `"top"`, `"bottom"`) or coordinates specified on a scale from `0.0` (top or left) to `1.0` (bottom or right), `0.5` being the center. The X and Y coordinates are separated by lowercase `x` in the URL format. For example, `0x1` means left and bottom, `0.5x0.5` is the center, `0.5x0.33` is a point in the top third of the image.
+### `gravity` | `g`
 
-  For the Workers integration, use an object `{x, y}` to specify coordinates. It contains focal point coordinates in the original image expressed as fractions ranging from `0.0` (top or left) to `1.0` (bottom or right), with `0.5` being the center. `{fit: "cover", gravity: {x:0.5, y:0.2}}` will crop each side to preserve as much as possible around a point at 20% of the height of the source image.
+Specifies how the image should be cropped when used with `fit=cover` and `fit=crop`. By default, Cloudflare will crop toward the center point of the original image.
 
-:::note
-You must subtract the height of the image before you calculate the focal point.
-:::
-
-- `face`\
-	Automatically sets the focal point based on detected faces in an image. This can be combined with the `zoom` parameter to specify how closely the image should be cropped towards the faces.
-
-	The new focal point is determined by a minimum bounding box that surrounds all detected faces. If no faces are found, then the focal point will fall back to the center of the image.
-
-	This feature uses an open-source model called RetinaFace through WorkersAI. Our model pipeline is limited only to facial detection, or identifying the pixels that represent a human face. We do not support facial identification or recognition. Read more about Cloudflare's [approach to responsible AI](https://www.cloudflare.com/trust-hub/responsible-ai/).
-
-**Alias:** `g`
+Accepts `auto`, `face`, a side (`left`, `right`, `top`, `bottom`), and relative coordinates (`XxY`).
 
 <Tabs>
   <TabItem label="URL format">
     ```txt
     gravity=auto
-
-    OR
-
-    gravity=left
-
-    OR
-
-    gravity=0x1
-
-    OR
-
-    gravity=face
-    ```
-
-  </TabItem>
-  <TabItem label="URL format alias">
-    ```txt
     g=auto
-
-    OR
-
-    g=left
-
-    OR
-
-    g=0x1
-
-    OR
-
-    g=face
+    gravity=face
+    gravity=left
+    gravity=0.5x1
     ```
-
   </TabItem>
   <TabItem label="Workers">
   ```js
   cf: {image: {gravity: "auto"}}
-
-OR
-
-cf: {image: {gravity: "right"}}
-
-OR
-
-cf: {image: {gravity: {x:0.5, y:0.2}}}
-
-OR
-
-cf: {image: {gravity: "face"}}
+  cf: {image: {gravity: "face"}}
+  cf: {image: {gravity: "left"}}
+  cf: {image: {gravity: {x:0.5, y:0.2}}}
 ```
 </TabItem>
 </Tabs>
-```
+
+#### `auto`
+Automatically sets the focal point by using a saliency algorithm to detect the most visually interesting pixels.
+
+This is useful when you don't know the contents of the image ahead of time, such as with user-generated content. For large image libraries such as e-commerce product galleries, this feature eliminates the need to manually set a focal point for each image.
+
+<table style="width:100%; text-align:center; border:none">
+  <tr style="border:none; background:none">
+    <td style="border:none; width:33%; vertical-align:bottom">
+      <img src={coffeeBase.src} alt="original image" />
+    </td>
+    <td style="border:none; width:33%; vertical-align:bottom">
+      <img src={coffeeCrop.src} alt="output without gravity=auto" />
+    </td>
+    <td style="border:none; width:33%; vertical-align:bottom">
+      <img src={coffeeAuto.src} alt="output with gravity=auto" />
+    </td>
+  </tr>
+  <tr style="border:none; background:none">
+    <td style="border:none;">
+      <strong>Original</strong>
+    </td>
+    <td style="border:none;">
+      <strong>Default crop</strong>
+    </td>
+    <td style="border:none;">
+      `gravity=auto`
+    </td>
+  </tr>
+</table>
+
+#### `face`
+Automatically sets the focal point based on faces in the image.
+
+This can be combined with the [`zoom`](/images/optimization/features#zoom) parameter to specify how closely the image should be cropped toward the face.
+
+<table style="width:100%; text-align:center; border:none">
+  <tr style="border:none; background:none">
+    <td style="border:none; width:33%; vertical-align:bottom">
+      <img src={faceBase.src} alt="original image" />
+    </td>
+    <td style="border:none; width:33%; vertical-align:bottom">
+      <img src={faceCrop.src} alt="output without gravity=face" />
+    </td>
+    <td style="border:none; width:33%; vertical-align:bottom">
+      <img src={faceOutput.src} alt="output with gravity=face" />
+    </td>
+  </tr>
+  <tr style="border:none; background:none">
+    <td style="border:none;">
+      <strong>Original</strong>
+    </td>
+    <td style="border:none;">
+      <strong>Default crop</strong>
+    </td>
+    <td style="border:none;">
+      `gravity=face`
+    </td>
+  </tr>
+</table>
+
+*Photograph by [Suad Kamardeen (@suadkamardeen) on Unsplash](https://unsplash.com/photos/woman-in-black-cardigan-standing-beside-pink-flowers-UO-82DJ3rcc)*
+
+<style>{`
+  .gravity-xxy-table img {
+    height: 180px !important;
+    width: auto !important;
+    max-width: none !important;
+    margin: 0 !important;
+  }
+`}</style>
+
+#### `left`, `right`, `top`, `bottom`
+Sets the side of the image that should not be cropped.
+
+In the example below, the 1080x720 image is cropped to a 1080x400 area, starting from its bottom edge:
+
+<table style="width:100%; text-align:center; border:none">
+  <tr style="border:none; background:none">
+    <td style="border:none; width:33%; vertical-align:bottom">
+      <img src={pete.src} alt="original image" />
+    </td>
+    <td style="border:none; width:33%; vertical-align:bottom">
+      <img src={sideOutput.src} alt="output without gravity=auto" />
+    </td>
+  </tr>
+  <tr style="border:none; background:none">
+    <td style="border:none;">
+      <strong>Original</strong>
+    </td>
+    <td style="border:none;">
+      `gravity=bottom`
+    </td>
+  </tr>
+</table>
+
+#### `XxY`
+Sets the focal point (X,Y) so that the relative coordinates of the output image are positioned at the relative coordinates of the original image. Accepts a coordinate pair formatted as `XxY`, where X and Y are decimal values between `0.0` and `1.0`.
+
+![Change the focal point using the relative coordinates](~/assets/images/images/examples/gravity/xxy.png)
+
+- <strong>Horizontal value (X)</strong> — `0.0` is the left edge and `1.0` is the right edge of the image.
+- <strong>Vertical value (Y)</strong> — `0.0` is the top edge and `1.0` is the bottom edge of the image.
+
+The example below crops a 900x900 image to 300x900 using a 0.33x0.5 gravity point:
+- Both the original image and target area will have gravity points set at 1/3 of the width from the left edge and 1/2 of the height from the top edge.
+- The relative coordinates of the output gravity point are positioned at the relative coordinates of the original image. That is, the target area is positioned so that its gravity point sits at the same relative position in the original image (0.33, 0.5).
+- The darkened parts of the image show the area outside of the requested output, which will be cropped.
+- The final cropped result captures the 300x900 content that is around the gravity point (0.33, 0.5).
+
+<table class="gravity-xxy-table" style="text-align:center; border:none">
+  <tr style="border:none; background:none">
+    <td style="border:none; vertical-align:middle">
+      <img src={base.src} alt="original image" />
+    </td>
+    <td style="border:none; vertical-align:middle">
+      <img src={relPoints.src} alt="align gravity points on original and target area" />
+    </td>
+    <td style="border:none; vertical-align:middle">
+      <img src={relAlignment.src} alt="crop using new gravity point" />
+    </td>
+    <td style="border:none; vertical-align:middle">
+      <img src={relOutput.src} alt="final output" />
+    </td>
+  </tr>
+  <tr style="border:none; background:none">
+    <td style="border:none;">
+      <strong>Original</strong><br />
+    </td>
+    <td style="border:none;">
+      <strong>Align</strong><br />
+    </td>
+    <td style="border:none;">
+      <strong>Crop</strong><br />
+    </td>
+    <td style="border:none;">
+      <strong>Output</strong><br />
+    </td>
+  </tr>
+</table>
+
+When optimizing through Workers, use an object `{x, y}` to specify coordinates. For example, `{fit: "cover", gravity: {x:0.5, y:0.2}}` will crop each side to preserve as much as possible around a point at 20% of the height of the original image.

@@ -76,7 +76,7 @@ Configure `meeting.summary` event in [webhooks](/api/resources/realtime_kit/subr
 
 #### Fetch summary
 
-Refer to [Fetch summary of transcripts for a session](/api/resources/realtime_kit/subresources/sessions/#fetch-summary-of-transcripts-for-a-session).
+Refer to [Fetch summary of transcripts for a session](/api/resources/realtime_kit/subresources/sessions/methods/get_session_summary/).
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/accounts/{account_id}/realtime/kit/{app_id}/sessions/{session_id}/summary" \
@@ -85,7 +85,7 @@ curl -X GET "https://api.cloudflare.com/client/v4/accounts/{account_id}/realtime
 
 #### Trigger manually
 
-Generate a summary after the meeting if `summarize_on_end` was not set. Refer to [Generate summary of transcripts for the session](/api/resources/realtime_kit/subresources/sessions/#generate-summary-of-transcripts-for-the-session).
+Generate a summary after the meeting if `summarize_on_end` was not set. Refer to [Generate summary of transcripts for the session](/api/resources/realtime_kit/subresources/sessions/methods/generate_summary_of_transcripts/).
 
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/realtime/kit/{app_id}/sessions/{session_id}/summary" \

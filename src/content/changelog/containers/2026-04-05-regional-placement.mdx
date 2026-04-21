@@ -1,0 +1,18 @@
+---
+title: Control where your Containers run with regional and jurisdictional placement
+description: Specify regions or jurisdictions to control where your containers run.
+products:
+  - containers
+date: 2026-04-15
+---
+
+You can now specify placement constraints to control where your [Containers](/containers/) run.
+
+| Constraint     | Values                                  | Use case                          |
+| -------------- | --------------------------------------- | --------------------------------- |
+| `regions`      | `ENAM`, `WNAM`, `EEUR`, `WEUR`          | Geographic placement              |
+| `jurisdiction` | `eu`, `fedramp`                         | Compliance boundaries             |
+
+Use `regions` to limit placement to specific geographic areas. Use `jurisdiction` to restrict containers to compliance boundaries — `eu` maps to European regions (EEUR, WEUR) and `fedramp` maps to North American regions (ENAM, WNAM).
+
+Refer to [Containers architecture](/containers/platform-details/architecture/) for more details on placement.

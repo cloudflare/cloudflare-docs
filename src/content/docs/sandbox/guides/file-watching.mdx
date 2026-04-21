@@ -427,7 +427,7 @@ for await (const event of parseSSEStream<FileWatchSSEEvent>(stream2)) {
 
 ### Handle errors in event processing
 
-Errors in your event handler do not stop the watch stream. Wrap handler logic in try/catch to prevent unhandled exceptions:
+Errors in your event handler do not stop the watch stream. Wrap handler logic in `try...catch` to prevent unhandled exceptions:
 
 <TypeScriptExample>
 

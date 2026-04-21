@@ -9,6 +9,10 @@ import { WranglerConfig } from "~/components";
 
 Since the Sandbox SDK is built on top of the [Containers](/containers/) platform, it shares the same underlying platform characteristics. Refer to these pages to understand how pricing and limits work for your sandbox deployments.
 
+Sandbox also inherits current Containers lifecycle, placement, and routing behavior. For more
+detail, refer to [Lifecycle of a Container](/containers/platform-details/architecture/) and
+[Scaling and Routing](/containers/platform-details/scaling-and-routing/).
+
 ## Container limits
 
 Refer to [Containers limits](/containers/platform-details/limits/) for complete details on:
@@ -41,6 +45,7 @@ Enable WebSocket transport to multiplex all SDK calls over a single persistent c
 </WranglerConfig>
 
 With WebSocket transport enabled:
+
 - The WebSocket upgrade counts as one subrequest
 - All subsequent SDK operations use the existing connection (no additional subrequests)
 - Ideal for workflows with many SDK operations per request

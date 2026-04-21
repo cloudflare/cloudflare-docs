@@ -1,0 +1,36 @@
+---
+title: Manage Browser Rendering sessions with Wrangler CLI
+description: Use wrangler browser commands to manage Browser Rendering sessions from the CLI.
+products:
+  - browser-run
+date: 2026-04-14
+---
+
+[Browser Rendering](/browser-run/) now supports `wrangler browser` commands, letting you create, manage, and view browser sessions directly from your terminal, streamlining your workflow. Since Wrangler handles authentication, you do not need to pass API tokens in your commands.
+
+The following commands are available:
+
+| Command                   | Description                  |
+| ------------------------- | ---------------------------- |
+| `wrangler browser create` | Create a new browser session |
+| `wrangler browser close`  | Close a session              |
+| `wrangler browser list`   | List active sessions         |
+| `wrangler browser view`   | View a live browser session  |
+
+The `create` command spins up a browser instance on Cloudflare's network and returns a session URL. Once created, you can connect to the session using any [CDP](/browser-run/cdp/)-compatible client like [Puppeteer](/browser-run/cdp/puppeteer/), [Playwright](/browser-run/cdp/playwright/), or [MCP clients](/browser-run/cdp/mcp-clients/) to automate browsing, scrape content, or debug remotely.
+
+```sh
+wrangler browser create
+```
+
+Use `--keepAlive` to set the session keep-alive duration (60-600 seconds):
+
+```sh
+wrangler browser create --keepAlive 300
+```
+
+The `view` command auto-selects when only one session exists, or prompts for selection when multiple sessions are available.
+
+All commands support `--json` for structured output, and because these are CLI commands, you can incorporate them into scripts to automate session management.
+
+For full usage details, refer to the [Wrangler commands documentation](/browser-run/reference/wrangler-commands/).

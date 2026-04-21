@@ -1,8 +1,11 @@
 ---
 pcx_content_type: troubleshooting
 title: Troubleshooting
+description: Resolve common AI Gateway issues including authentication errors, missing logs, and provider connectivity problems.
 sidebar:
   order: 5
+products:
+  - ai-gateway
 ---
 
 This page covers common issues when using AI Gateway. For provider-specific troubleshooting, refer to the relevant provider documentation.
@@ -58,4 +61,4 @@ For troubleshooting Data Loss Prevention issues such as DLP not triggering or un
 ### Unexpected cache hits or misses
 
 - Review your cache TTL settings
-- Check if [semantic caching](/ai-gateway/features/caching/#semantic-caching) is affecting cache behavior
+- Check if you have request headers that are [bypassing the cache](/ai-gateway/features/caching/#skip-cache-cf-aig-skip-cache) or setting a [custom cache key](/ai-gateway/features/caching/#custom-cache-key-cf-aig-cache-key).
