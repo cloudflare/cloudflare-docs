@@ -1,0 +1,25 @@
+---
+title: API reference
+pcx_content_type: navigation
+description: Complete API reference for Agent Memory, including the Worker binding methods and the namespace management REST API.
+products:
+  - agent-memory
+sidebar:
+  order: 5
+  group:
+    hideIndex: true
+---
+
+import { DirectoryListing } from "~/components";
+
+Agent Memory provides two APIs:
+
+- **Worker binding API** — The primary interface for interacting with memory profiles. Accessed through the `agent_memory` binding in your Worker code.
+  - [`ingest()`](/agent-memory/api/ingest/) — Extract and store memories from conversations.
+  - [`recall()`](/agent-memory/api/recall/) — Search memories and synthesize answers.
+  - [`getSummary()`](/agent-memory/api/get-summary/) — Generate a Markdown profile summary.
+
+- **REST API** — For managing namespaces (create, list, get, delete).
+  - [Namespace management](/agent-memory/api/namespaces/) — CRUD operations for namespaces via the Cloudflare API.
+
+<DirectoryListing />

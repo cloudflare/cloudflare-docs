@@ -1,0 +1,177 @@
+---
+title: Get started
+pcx_content_type: get-started
+description: Add persistent memory to a Cloudflare Worker in five steps.
+products:
+  - agent-memory
+sidebar:
+  order: 1
+  label: Guide
+---
+
+import { TypeScriptExample, WranglerConfig, Steps } from "~/components";
+
+This guide walks you through adding persistent memory to a Cloudflare Worker. By the end, your Worker will be able to ingest conversations, recall stored knowledge, and generate profile summaries.
+
+## Prerequisites
+
+Before you begin, make sure you have:
+
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up)
+- [Node.js](https://nodejs.org/) v18 or later installed
+- [Wrangler](/workers/wrangler/) installed and authenticated
+
+## 1. Create a namespace
+
+A namespace is a container that scopes your memory profiles. Create one using the Cloudflare API:
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/agent-memory/namespaces" \
+  -H "Authorization: Bearer {api_token}" \
+  -H "Content-Type: application/json" \
+  -d '{"name": "my-app"}'
+```
+
+The response includes a `namespace_id` that you will use to configure your Worker binding.
+
+```json
+{
+  "result": {
+    "namespace_id": "01JSGC...",
+    "name": "my-app",
+    "created_at": "2026-04-21T00:00:00Z"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+## 2. Create a Worker project
+
+Create a new Worker project using Wrangler:
+
+```bash
+npx wrangler init memory-demo
+```
+
+Select the default options when prompted.
+
+## 3. Add the memory binding
+
+Add the `agent_memory` binding to your Wrangler configuration. Replace the `namespace` value with the `namespace_id` from step 1.
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "memory-demo",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"agent_memory": [
+		{
+			"binding": "MEMORY",
+			"namespace": "<NAMESPACE_NAME>"
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+## 4. Write your Worker
+
+Replace the contents of `src/index.ts` with the following code. This Worker exposes three endpoints: one to ingest a conversation, one to recall memories, and one to get a profile summary.
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const url = new URL(request.url);
+		const userId = url.searchParams.get("user") || "default-user";
+
+		// Get the memory profile for this user
+		const profile = await env.MEMORY.getProfile(userId);
+
+		if (url.pathname === "/ingest" && request.method === "POST") {
+			const { messages } = (await request.json()) as { messages: any[] };
+
+			await profile.ingest(messages);
+
+			return Response.json({ success: true });
+		}
+
+		if (url.pathname === "/recall") {
+			const query = url.searchParams.get("q");
+			if (!query) {
+				return Response.json(
+					{ error: "Missing ?q= parameter" },
+					{ status: 400 },
+				);
+			}
+
+			const result = await profile.recall(query);
+
+			return Response.json({
+				answer: result.answer,
+			});
+		}
+
+		if (url.pathname === "/summary") {
+			const { summary } = await profile.getSummary();
+
+			return Response.json({ summary });
+		}
+
+		return new Response("Not found", { status: 404 });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+## 5. Test locally and deploy
+
+Start a local development server:
+
+```bash
+npx wrangler dev
+```
+
+Ingest a conversation:
+
+```bash
+curl -X POST "http://localhost:8787/ingest?user=alice" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "messages": [
+      { "role": "user", "content": "I prefer dark mode and use VS Code as my editor." },
+      { "role": "assistant", "content": "Noted. I will remember your preference for dark mode and VS Code." }
+    ]
+  }'
+```
+
+Recall a memory:
+
+```bash
+curl "http://localhost:8787/recall?user=alice&q=What%20editor%20does%20the%20user%20prefer?"
+```
+
+Get a profile summary:
+
+```bash
+curl "http://localhost:8787/summary?user=alice"
+```
+
+When you are ready, deploy your Worker:
+
+```bash
+npx wrangler deploy
+```
+
+## Next steps
+
+- Learn [how Agent Memory works](/agent-memory/concepts/how-agent-memory-works/), including the four memory types it extracts from conversations.
+- Understand how [profiles and namespaces](/agent-memory/concepts/profiles-and-namespaces/) isolate memory for different users.
+- Explore the full [API reference](/agent-memory/api/) for `ingest()`, `recall()`, and `getSummary()`.
