@@ -812,7 +812,9 @@
 	color: var(--color-cl1-gray-8);
 }
 
-.sl-markdown-content .agent-setup-troubleshooting-item > summary::-webkit-details-marker,
+.sl-markdown-content
+	.agent-setup-troubleshooting-item
+	> summary::-webkit-details-marker,
 .agent-setup-troubleshooting-item > summary::-webkit-details-marker {
 	display: none;
 }
@@ -844,7 +846,9 @@
 	transition: transform 180ms ease;
 }
 
-.sl-markdown-content .agent-setup-troubleshooting-item[open] .agent-setup-troubleshooting-chevron,
+.sl-markdown-content
+	.agent-setup-troubleshooting-item[open]
+	.agent-setup-troubleshooting-chevron,
 .agent-setup-troubleshooting-item[open] .agent-setup-troubleshooting-chevron {
 	transform: rotate(-180deg);
 }
