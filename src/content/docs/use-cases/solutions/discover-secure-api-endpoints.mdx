@@ -95,6 +95,8 @@ If only some parts of your application support HTTPS, do not turn on Always Use 
 
 ### Set minimum TLS version to 1.2
 
+Since APIs can carry sensitive information, like credentials and tokens, you want to select an appropriate minimum TLS version with this in mind.
+
 TLS 1.0 and 1.1 have known vulnerabilities. Setting the minimum to TLS 1.2 rejects connections from clients using older protocols.
 
 <Steps>
