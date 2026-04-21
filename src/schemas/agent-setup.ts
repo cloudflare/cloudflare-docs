@@ -69,6 +69,7 @@ export const agentSetupSchema = z.object({
 	slug: z.string(),
 	icon: z.string(),
 	description: z.string(),
+	primary_type: z.enum(["ide", "terminal", "extension", "cloud"]).optional(),
 	capabilities: capabilitiesSchema,
 	features: z.array(z.string()),
 	// Decision-support metadata shown in the comparison table.

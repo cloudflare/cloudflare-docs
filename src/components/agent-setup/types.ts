@@ -8,6 +8,7 @@ export interface AgentData {
 	slug: string;
 	icon: string;
 	description: string;
+	primary_type?: "ide" | "terminal" | "extension" | "cloud";
 	capabilities: {
 		ide: boolean;
 		terminal: boolean;
