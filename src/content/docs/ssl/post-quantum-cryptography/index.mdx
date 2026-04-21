@@ -14,11 +14,11 @@ head: []
 description: Get an overview of how Cloudflare is deploying post-quantum cryptography to protect you against harvest now, decrypt later.
 ---
 
-Post-quantum cryptography (PQC) refers to cryptographic algorithms that have been designed to resist attacks from [quantum computers](https://www.cloudflare.com/learning/ssl/quantum/what-is-quantum-computing/). Cloudflare has been researching and [writing about post-quantum](https://blog.cloudflare.com/tag/post-quantum/) since 2017.
+Post-quantum cryptography (PQC) refers to cryptographic algorithms that have been designed to resist attacks from [quantum computers](https://www.cloudflare.com/learning/ssl/quantum/what-is-quantum-computing/). Cloudflare has been researching and [writing about post-quantum](https://blog.cloudflare.com/tag/post-quantum/) since 2017, and is targeting 2029 to be fully post-quantum secure across its entire product suite — refer to [Cloudflare targets 2029 for full post-quantum security](https://blog.cloudflare.com/post-quantum-roadmap/) for the full roadmap.
 
-To protect you against the risk of [harvest now, decrypt later attacks](https://en.wikipedia.org/wiki/Harvest_now,_decrypt_later), and considering all the [connections](#three-connections-in-the-life-of-a-request) that take place when your website or application is on Cloudflare, we have deployed and are actively expanding the use of [post-quantum hybrid key agreement](#hybrid-key-agreement).
+To protect you against the risk of [harvest now, decrypt later attacks](https://en.wikipedia.org/wiki/Harvest_now,_decrypt_later), and considering all the [connections](#three-connections-in-the-life-of-a-request) that take place when your website or application is on Cloudflare, we have deployed and are actively expanding the use of [post-quantum hybrid key agreement](#hybrid-key-agreement). In parallel, Cloudflare is beginning to deploy [post-quantum signatures](#post-quantum-signatures) to protect authentication against future quantum attacks.
 
-Refer to [Cloudflare Radar](https://radar.cloudflare.com/adoption-and-usage#post-quantum-encryption-adoption) for current statistics on the adoption of PQ encryption in requests to Cloudflare, and visit [pq.cloudflareresearch.com](https://pq.cloudflareresearch.com) to check if your connection is secured using PQ key agreement.
+Refer to [Cloudflare Radar](https://radar.cloudflare.com/adoption-and-usage#post-quantum-encryption-adoption) for current statistics on the adoption of PQ encryption in requests to Cloudflare, and visit [Cloudflare Radar's browser support check](https://radar.cloudflare.com/post-quantum#browser-support) to check if your browser is secured using PQ key agreement.
 
 :::caution[TLS 1.3]
 Cloudflare post-quantum key agreements are only supported in protocols based on TLS 1.3 (including HTTP/3) and are disabled for websites in [FIPS mode](/cloudflare-one/traffic-policies/http-policies/tls-decryption/#fips-compliance).
@@ -53,9 +53,11 @@ A hybrid key agreement lays the groundwork as more and more [clients](#1-visitor
 
 ### Post-quantum signatures
 
-The migration to post-quantum signatures is less urgent and more involved. Cloudflare is closely following the developments of new standards, testing their performance, and working together with browsers to understand user impact.
+Recent advances in quantum hardware and algorithms have accelerated the timeline on which a cryptographically relevant quantum computer might exist, which in turn elevates the priority of migrating authentication (signatures) to post-quantum algorithms. Refer to [Cloudflare targets 2029 for full post-quantum security](https://blog.cloudflare.com/post-quantum-roadmap/) for context.
 
-For details refer to [A look at the latest post-quantum signature standardization candidates](https://blog.cloudflare.com/another-look-at-pq-signatures/).
+Cloudflare is an early adopter of [ML-DSA](https://csrc.nist.gov/pubs/fips/204/final), the post-quantum digital signature algorithm selected by NIST (FIPS 204), and is beginning to roll out support for ML-DSA in selected product surfaces. Software support for specific schemes is tracked on the [PQC support](/ssl/post-quantum-cryptography/pqc-support/) page.
+
+For background on the post-quantum signature landscape, refer to [A look at the latest post-quantum signature standardization candidates](https://blog.cloudflare.com/another-look-at-pq-signatures/).
 
 ## Three connections in the life of a request
 
