@@ -19,15 +19,15 @@ Dynamic Workers support two loading modes:
 
 `load()` is best for one-time code execution, for example when using [Codemode](/agents/api-reference/codemode/). `get(id, callback)` is better when the same code will receive subsequent requests, for example when you are building applications.
 
-### Try it out
+## Try it out
 
-#### Dynamic Workers Starter
+### Dynamic Workers Starter
 
 [![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/agents/tree/main/examples/dynamic-workers)
 
 Use this "hello world" [starter](https://github.com/cloudflare/agents/tree/main/examples/dynamic-workers) to get a Worker deployed that can load and execute Dynamic Workers.
 
-#### Dynamic Workers Playground
+### Dynamic Workers Playground
 
 [![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/agents/tree/main/examples/dynamic-workers-playground)
 
@@ -35,20 +35,15 @@ You can also deploy the [Dynamic Workers Playground](https://github.com/cloudfla
 
 ## Configure Worker Loader
 
-In order for a Worker to be able to create Dynamic Workers, it needs a Worker Loader binding. Unlike most Workers bindings, this binding doesn't point at any external resource in particular; it simply provides access to the Worker Loader API.
+For a Worker to create Dynamic Workers, it needs a Worker Loader binding. Unlike most Workers bindings, this binding does not point at any external resource. It provides access to the Worker Loader API.
 
-Configure it like so, in your Worker's `wrangler.jsonc`:
+Add the following to your Worker's Wrangler configuration:
 
 <WranglerConfig>
 
-```jsonc
-{
-	"worker_loaders": [
-		{
-			"binding": "LOADER",
-		},
-	],
-}
+```toml
+[[worker_loaders]]
+binding = "LOADER"
 ```
 
 </WranglerConfig>
@@ -101,9 +96,9 @@ In this example, `env.LOADER.load()` creates a Dynamic Worker from the code defi
 
 ### Reusing a Dynamic Worker across requests
 
-If you expect to load the exact same Worker more than once, use [`get(id, callback)`](/dynamic-workers/api-reference/#get) instead of `load()`. The `id` should be a unique string identifying the particular code you intend to load. When the runtime sees the same `id` again, it can reuse the existing Worker instead of creating a new one, if it hasn't been evicted yet.
+If you expect to load the exact same Worker more than once, use [`get(id, callback)`](/dynamic-workers/api-reference/#get) instead of `load()`. The `id` should be a unique string identifying the particular code you intend to load. When the runtime sees the same `id` again, it can reuse the existing Worker instead of creating a new one, if it has not been evicted yet.
 
-The callback you provide will only be called if the Worker is not already loaded. This lets you skip loading the code from storage when the Worker is already running.
+The callback you provide only runs if the Worker is not already loaded. This lets you skip loading the code from storage when the Worker is already running.
 
 <TypeScriptExample>
 
@@ -157,7 +152,7 @@ const worker = env.LOADER.get("my-worker", async () => {
 		},
 	});
 
-	return { mainModule, modules, compatibilityDate: "2026-01-01" };
+	return { mainModule, modules, compatibilityDate: "$today" };
 });
 ```
 

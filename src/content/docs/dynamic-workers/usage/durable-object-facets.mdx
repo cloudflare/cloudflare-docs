@@ -111,7 +111,7 @@ export class AppRunner extends DurableObject<Env> {
 
 		return this.env.LOADER.get(codeId, async () => {
 			return {
-				compatibilityDate: "2026-04-01",
+				compatibilityDate: "$today",
 				mainModule: "worker.js",
 				modules: { "worker.js": AGENT_CODE },
 				globalOutbound: null, // block network access

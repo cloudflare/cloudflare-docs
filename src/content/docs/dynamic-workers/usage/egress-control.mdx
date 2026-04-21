@@ -8,12 +8,12 @@ products:
   - dynamic-workers
 ---
 
-When you run untrusted or AI-generated code in a dynamic Worker, you need to control what it can access on the network. You might want to:
+When you run untrusted or AI-generated code in a dynamic Worker, you need to control what it can access on the network. Common requirements include:
 
-- block all outbound access so the dynamic Worker can only use the [bindings](/dynamic-workers/usage/bindings/) you give it
-- restrict outbound requests to a specific set of allowed destinations
-- inject credentials into outbound requests without exposing secrets to the dynamic Worker
-- log or audit every outbound request for observability
+- Block all outbound access so the dynamic Worker can only use the [bindings](/dynamic-workers/usage/bindings/) you provide.
+- Restrict outbound requests to a specific set of allowed destinations.
+- Inject credentials into outbound requests without exposing secrets to the dynamic Worker.
+- Log or audit every outbound request for observability.
 
 The `globalOutbound` option in the `WorkerCode` object returned by `get()` or passed to `load()` controls all of this. It intercepts every `fetch()` and `connect()` call the dynamic Worker makes.
 
@@ -29,11 +29,11 @@ return {
 };
 ```
 
-This causes any `fetch()` or `connect()` request from the dynamic Worker to throw an exception.
+Any `fetch()` or `connect()` call from the dynamic Worker throws an exception.
 
-In this mode, you can still give the Dynamic Worker direct access to specific resources and services using [bindings](/dynamic-workers/usage/bindings/). This is the cleanest and most secure way to design your sandbox: block the Internet, then constructively offer specific capabilities via bindings.
+In this mode, you can still give the Dynamic Worker direct access to specific resources and services using [bindings](/dynamic-workers/usage/bindings/). This is the most secure way to design your sandbox: block the internet, then provide specific capabilities through bindings.
 
-That said, if you need to offer compatibility with existing HTTP client libraries running directly inside your Dynamic Worker sandbox, then blocking `fetch()` may be infeasible, and you may prefer to intercept requests instead.
+If you need compatibility with existing HTTP client libraries running inside your Dynamic Worker sandbox, blocking `fetch()` may not be feasible. In that case, intercept requests instead.
 
 ## Intercept outbound requests
 
