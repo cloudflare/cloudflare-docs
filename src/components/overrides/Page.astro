@@ -13,8 +13,10 @@ const html = await Astro.slots.render("default");
 // still need a right-hand ToC. Splash pages have props.toc === undefined, so we
 // bootstrap the object here before calling generateTableOfContents.
 const isAgentSetup = props.id.startsWith("agent-setup/") && props.id !== "agent-setup/index";
-if (isAgentSetup && !props.toc) {
-	props.toc = { minHeadingLevel: 2, maxHeadingLevel: 3, items: [] };
+if (isAgentSetup) {
+	if (!props.toc) props.toc = { minHeadingLevel: 2, maxHeadingLevel: 3, items: [] };
+	props.hideBreadcrumbs = true;
+	props.hideTitle = true;
 }
 
 if (props.toc) {

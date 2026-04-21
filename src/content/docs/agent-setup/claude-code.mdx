@@ -2,73 +2,66 @@
 title: Claude Code + Cloudflare
 description: "Terminal-based coding agent that understands your codebase, runs commands, edits files, and manages git. Made by Anthropic."
 template: splash
-slug: agent-setup/claude-code
-hideTitle: true
-hideBreadcrumbs: true
 pcx_content_type: how-to
 ---
 
-import {
-	AgentHeader,
-	AgentSteps,
-	PlatformAccess,
-	ExamplePromptsList,
-	RandomPrompt,
-	TipsList,
-	FAQList,
-	FAQItem,
-	TroubleshootingList,
-	TroubleshootingItem,
-	BuildAgentsCallout,
-	OtherAgents,
-} from "~/components/agent-setup";
+import { Steps } from "~/components";
+import AgentHeader from "~/components/agent-setup/AgentHeader.astro";
+import PlatformAccess from "~/components/agent-setup/PlatformAccessSection.astro";
+import ExamplePromptsList from "~/components/agent-setup/ExamplePromptsList.astro";
+import RandomPrompt from "~/components/agent-setup/RandomPrompt.astro";
+import TipsList from "~/components/agent-setup/TipsList.astro";
+import FAQList from "~/components/agent-setup/FAQList.astro";
+import FAQItem from "~/components/agent-setup/FAQItem.astro";
+import TroubleshootingList from "~/components/agent-setup/TroubleshootingList.astro";
+import TroubleshootingItem from "~/components/agent-setup/TroubleshootingItem.astro";
+import BuildAgentsCallout from "~/components/agent-setup/BuildAgentsCallout.astro";
+import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
 <AgentHeader slug="claude-code" />
 
 ## Quick start
 
 <Steps>
+	1. **Install Claude Code**
 
-    1. **Install Claude Code**
+		Install the Claude Code CLI. For Windows, Homebrew, WinGet, or npm, see the [Claude Code setup guide](https://docs.anthropic.com/en/docs/claude-code/setup).
 
-    	Install the Claude Code CLI. For Windows, Homebrew, WinGet, or npm, see the [Claude Code setup guide](https://docs.anthropic.com/en/docs/claude-code/setup).
+		```bash
+		curl -fsSL https://claude.ai/install.sh | bash
+		```
 
-    	```bash
-    	curl -fsSL https://claude.ai/install.sh | bash
-    	```
+	2. **Launch Claude Code in your project**
 
-    2. **Launch Claude Code in your project**
+		Start Claude Code from the root of your project, where `wrangler.jsonc` lives (if it already exists).
 
-    	Start Claude Code from the root of your project, where `wrangler.jsonc` lives (if it already exists).
+		```bash
+		claude
+		```
 
-    	```bash
-    	claude
-    	```
+	3. **Install the Cloudflare Skills plugin**
 
-    3. **Install the Cloudflare Skills plugin**
+		In Claude Code, run these two slash commands. The plugin installs all 8 Cloudflare Skills and additionally registers the Cloudflare API, docs, bindings, builds, and observability MCP servers.
 
-    	In Claude Code, run these two slash commands. The plugin installs all 8 Cloudflare Skills and additionally registers the Cloudflare API, docs, bindings, builds, and observability MCP servers.
+		```txt
+		/plugin marketplace add cloudflare/skills
+		/plugin install cloudflare@cloudflare
+		```
 
-    	```txt
-    	/plugin marketplace add cloudflare/skills
-    	/plugin install cloudflare@cloudflare
-    	```
+	4. **Try a prompt**
 
-    4. **Try a prompt**
+		For example:
 
-    	For example:
-
+		<RandomPrompt />
 </Steps>
-
-<RandomPrompt />
 
 ## Cloudflare platform access
 
 <PlatformAccess agentName="Claude Code">
 	<Fragment slot="wrangler">
-		<p class="agent-platform-hint">
+		<div class="agent-platform-hint">
 			Local dev, deploys, and Workers-specific commands.
-		</p>
+		</div>
 		<p>
 			Claude Code uses <a href="/workers/wrangler/">Wrangler</a> directly in the
 			terminal for local dev, deploys, and commands like <code>wrangler d1 migrations apply</code>
@@ -77,39 +70,39 @@ import {
 		</p>
 	</Fragment>
 
-    <Fragment slot="docs">
-    	<p class="agent-platform-hint">
-    		Token-efficient references you can point Claude at.
-    	</p>
-    	<p>
-    		Claude Code automatically sends <code>Accept: text/markdown</code> when fetching
-    		Cloudflare docs, so it gets the clean markdown version by default. Every top-level
-    		product section also has its own <code>llms.txt</code> — a page index sized for
-    		a single context window. A few useful ones:
-    	</p>
-    	<ul class="agent-platform-resources">
-    		<li>
-    			<a href="/llms.txt">developers.cloudflare.com/llms.txt</a> — directory of
-    			every Cloudflare product.
-    		</li>
-    		<li>
-    			<a href="/workers/llms.txt">developers.cloudflare.com/workers/llms.txt</a>
-    		</li>
-    		<li>
-    			<a href="/agents/llms.txt">developers.cloudflare.com/agents/llms.txt</a>
-    		</li>
-    		<li>
-    			<a href="/r2/llms.txt">developers.cloudflare.com/r2/llms.txt</a>
-    		</li>
-    		<li>
-    			<a href="/d1/llms.txt">developers.cloudflare.com/d1/llms.txt</a>
-    		</li>
-    	</ul>
-    	<p>
-    		For a full overview of how these docs are structured for agents, refer to the{" "}
-    		<a href="/style-guide/ai-tooling/">AI tooling guide</a>.
-    	</p>
-    </Fragment>
+<Fragment slot="docs">
+	<div class="agent-platform-hint">
+		Token-efficient references you can point Claude at.
+	</div>
+	<p>
+		Claude Code automatically sends <code>Accept: text/markdown</code> when fetching
+		Cloudflare docs, so it gets the clean markdown version by default. Every top-level
+		product section also has its own <code>llms.txt</code> — a page index sized for
+		a single context window. A few useful ones:
+	</p>
+	<ul class="agent-platform-resources">
+		<li>
+			<a href="/llms.txt">developers.cloudflare.com/llms.txt</a> — directory of
+			every Cloudflare product.
+		</li>
+		<li>
+			<a href="/workers/llms.txt">developers.cloudflare.com/workers/llms.txt</a>
+		</li>
+		<li>
+			<a href="/agents/llms.txt">developers.cloudflare.com/agents/llms.txt</a>
+		</li>
+		<li>
+			<a href="/r2/llms.txt">developers.cloudflare.com/r2/llms.txt</a>
+		</li>
+		<li>
+			<a href="/d1/llms.txt">developers.cloudflare.com/d1/llms.txt</a>
+		</li>
+	</ul>
+	<p>
+		For a full overview of how these docs are structured for agents, refer to the{" "}
+		<a href="/style-guide/ai-tooling/">AI tooling guide</a>.
+	</p>
+</Fragment>
 
 </PlatformAccess>
 

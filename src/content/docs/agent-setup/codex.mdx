@@ -2,32 +2,26 @@
 title: Codex + Cloudflare
 description: "Lightweight open-source terminal agent that reads and writes files, runs commands, and browses the web in a sandbox. Made by OpenAI."
 template: splash
-slug: agent-setup/codex
-hideTitle: true
-hideBreadcrumbs: true
 pcx_content_type: how-to
 ---
 
-import {
-	AgentHeader,
-	AgentSteps,
-	PlatformAccess,
-	ExamplePromptsList,
-	TipsList,
-	FAQList,
-	FAQItem,
-	TroubleshootingList,
-	TroubleshootingItem,
-	BuildAgentsCallout,
-	OtherAgents,
-} from "~/components/agent-setup";
+import { Steps } from "~/components";
+import AgentHeader from "~/components/agent-setup/AgentHeader.astro";
+import PlatformAccess from "~/components/agent-setup/PlatformAccessSection.astro";
+import ExamplePromptsList from "~/components/agent-setup/ExamplePromptsList.astro";
+import TipsList from "~/components/agent-setup/TipsList.astro";
+import FAQList from "~/components/agent-setup/FAQList.astro";
+import FAQItem from "~/components/agent-setup/FAQItem.astro";
+import TroubleshootingList from "~/components/agent-setup/TroubleshootingList.astro";
+import TroubleshootingItem from "~/components/agent-setup/TroubleshootingItem.astro";
+import BuildAgentsCallout from "~/components/agent-setup/BuildAgentsCallout.astro";
+import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
 <AgentHeader slug="codex" />
 
 ## Quick start
 
-<AgentSteps>
-
+<Steps>
 1. **Install Codex**
 
    Install the Codex CLI. macOS and Linux are fully supported; use WSL2 on Windows. For Homebrew or other install methods, see the [Codex CLI setup guide](https://developers.openai.com/codex/cli/).
@@ -59,14 +53,13 @@ import {
     ```bash
     codex
     ```
-
-</AgentSteps>
+</Steps>
 
 ## Cloudflare platform access
 
 <PlatformAccess agentName="Codex">
 	<Fragment slot="wrangler">
-		<p class="agent-platform-hint">Sandbox-safe local dev and deploys.</p>
+		<div class="agent-platform-hint">Sandbox-safe local dev and deploys.</div>
 		<p>
 			Codex runs in a sandboxed environment — it can safely execute <a href="/workers/wrangler/">Wrangler</a>
 			commands without affecting your host system. The bundled <strong>wrangler</strong>
@@ -75,9 +68,9 @@ import {
 	</Fragment>
 
     <Fragment slot="docs">
-    	<p class="agent-platform-hint">
+    	<div class="agent-platform-hint">
     		Codex also browses the web — pair with the docs MCP server.
-    	</p>
+    	</div>
     	<p>
     		Codex supports web browsing natively. Combined with the docs MCP server, you
     		get both fast indexed lookups and live browsing when needed. For offline or

@@ -2,25 +2,20 @@
 title: Cursor + Cloudflare
 description: "AI-first IDE built on VS Code with multi-file Composer edits and background agents. Made by Cursor."
 template: splash
-slug: agent-setup/cursor
-hideTitle: true
-hideBreadcrumbs: true
 pcx_content_type: how-to
 ---
 
 import { Steps } from "~/components";
-import {
-	AgentHeader,
-	PlatformAccess,
-	ExamplePromptsList,
-	TipsList,
-	FAQList,
-	FAQItem,
-	TroubleshootingList,
-	TroubleshootingItem,
-	BuildAgentsCallout,
-	OtherAgents,
-} from "~/components/agent-setup";
+import AgentHeader from "~/components/agent-setup/AgentHeader.astro";
+import PlatformAccess from "~/components/agent-setup/PlatformAccessSection.astro";
+import ExamplePromptsList from "~/components/agent-setup/ExamplePromptsList.astro";
+import TipsList from "~/components/agent-setup/TipsList.astro";
+import FAQList from "~/components/agent-setup/FAQList.astro";
+import FAQItem from "~/components/agent-setup/FAQItem.astro";
+import TroubleshootingList from "~/components/agent-setup/TroubleshootingList.astro";
+import TroubleshootingItem from "~/components/agent-setup/TroubleshootingItem.astro";
+import BuildAgentsCallout from "~/components/agent-setup/BuildAgentsCallout.astro";
+import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
 <AgentHeader slug="cursor" />
 
@@ -59,9 +54,9 @@ import {
 
 <PlatformAccess agentName="Cursor">
 	<Fragment slot="wrangler">
-		<p class="agent-platform-hint">
+		<div class="agent-platform-hint">
 			Local dev, deploys, and Workers-specific commands.
-		</p>
+		</div>
 		<p>
 			Cursor's integrated terminal runs <a href="/workers/wrangler/">Wrangler</a> for
 			local dev and deploys. The bundled <strong>wrangler</strong> Skill teaches Composer
@@ -70,9 +65,9 @@ import {
 	</Fragment>
 
     <Fragment slot="docs">
-    	<p class="agent-platform-hint">
+    	<div class="agent-platform-hint">
     		Token-efficient references for Composer context.
-    	</p>
+    	</div>
     	<p>
     		Add Cloudflare docs to Composer context by @-mentioning files in your repo.
     		For a global reference, point Composer at:

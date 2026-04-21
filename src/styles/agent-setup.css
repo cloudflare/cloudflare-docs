@@ -1971,7 +1971,6 @@
 
 /* The body wrapper — everything inside the card after <summary>. */
 .agent-platform-card-body {
-	padding-top: 0.75rem;
 	font-size: 0.875rem;
 	line-height: 1.55;
 }
@@ -1997,8 +1996,11 @@
  * rule would otherwise add spacing).
  */
 .sl-markdown-content .agent-platform-card .agent-platform-hint,
-.agent-platform-card .agent-platform-hint {
+.agent-platform-card .agent-platform-hint,
+.sl-markdown-content .agent-platform-card .agent-platform-hint p,
+.agent-platform-card .agent-platform-hint p {
 	margin: 0 !important;
+	margin-top: 0 !important;
 	padding: 0;
 	font-size: 0.8125rem;
 	color: var(--color-cl1-gray-5);
