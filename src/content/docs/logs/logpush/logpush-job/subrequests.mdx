@@ -33,7 +33,7 @@ Subrequest merging is an opt-in feature on the http_requests dataset. With subre
 
 ## Merging Eligibility
 - A maximum of 50 subrequests are merged per parent request. Subrequests beyond this limit are passed through unmodified as individual log entries.
-- Subrequests must complete within 5 minutes of the parent request. Subrequests that exceed this window are passed through unmodified.
+- Subrequests must complete within 5 minutes of the visitor request. Subrequests that exceed this window are passed through unmodified.
 
 ## New log field
 When subrequest merging is enabled, a `Subrequests` field (`array<object>`) is added to each parent request log record. Each element in the array contains the standard http_requests fields for that subrequest.
@@ -52,7 +52,7 @@ Subrequest merging can be enabled via API or the Cloudflare dashboard.
 4. Select Save.
 
 ### API
-1. To enable subrequest merging on a new job, set "subrequest_merging": true in the request body.
+1. To enable subrequest merging on a new job, set "merge_subrequests": true in the request body.
 
 ### Required API token permissions
 
@@ -83,7 +83,7 @@ curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/logpush/jobs" \
       ],
       "timestamp_format": "rfc3339"
     },
-    "subrequest_merging": true,
+    "merge_subrequests": true,
     "enabled": true
   }'
 ```
@@ -101,7 +101,7 @@ curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/logpush/jobs/$JOB_ID" 
   --request PUT \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --json '{
-    "subrequest_merging": true
+    "merge_subrequests": true
   }'
 ```
 
