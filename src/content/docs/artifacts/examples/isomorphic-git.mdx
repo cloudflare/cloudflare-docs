@@ -45,7 +45,8 @@ export default {
 		const created = await env.ARTIFACTS.create(repoName);
 
 		// Artifacts returns art_v1_<secret>?expires=<unix_seconds>.
-		// For Git Basic auth, pass the full token as the password.
+		// For Git Basic auth, pass only the secret as the password.
+		const tokenSecret = created.token.split("?expires=")[0];
 		const dir = "/workspace";
 		const fs = new MemoryFS();
 
@@ -81,7 +82,7 @@ export default {
 			ref: "main",
 			onAuth: () => ({
 				username: "x",
-				password: created.token,
+				password: tokenSecret,
 			}),
 		});
 
