@@ -11,7 +11,7 @@ tags:
   - Private networks
 ---
 
-import { Tabs, TabItem, DashButton, Plan } from "~/components";
+import { Tabs, TabItem, DashButton, Plan, APIRequest } from "~/components";
 
 <Plan type="enterprise" />
 
@@ -66,30 +66,27 @@ For private IP addresses (for example, `10.0.0.50`), the toggle turns on automat
 
 To create a record with private routing enabled, use a [POST request](/api/resources/dns/subresources/records/methods/create/) and set `private_routing` to `true`:
 
-```bash
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records" \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "type": "A",
-  "name": "app.example.com",
-  "content": "10.0.0.50",
-  "proxied": true,
-  "private_routing": true
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/dns_records"
+	method="POST"
+	json={{
+		type: "A",
+		name: "app.example.com",
+		content: "10.0.0.50",
+		proxied: true,
+		private_routing: true,
+	}}
+/>
 
 To enable private routing on an existing record, use a [PATCH request](/api/resources/dns/subresources/records/methods/edit/):
 
-```bash
-curl --request PATCH \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records/{record_id}" \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "private_routing": true
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/dns_records/{dns_record_id}"
+	method="PATCH"
+	json={{
+		private_routing: true,
+	}}
+/>
 
 </TabItem> </Tabs>
 
