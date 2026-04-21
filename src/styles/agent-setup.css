@@ -1966,7 +1966,9 @@
 	color: var(--color-cl1-gray-3);
 }
 
-:root[data-theme="dark"] .agent-platform-note > p:not(.agent-platform-note-title) {
+:root[data-theme="dark"]
+	.agent-platform-note
+	> p:not(.agent-platform-note-title) {
 	color: var(--color-cl1-gray-7);
 }
 
