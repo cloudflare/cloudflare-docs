@@ -11,7 +11,7 @@ enable_flag: "workflows_preserve_non_retryable_error_message"
 disable_flag: "workflows_replace_non_retryable_error_message"
 ---
 
-When enabled, if a [Workflow](/workflows/) step throws a [`NonRetryableError`](/workflows/build/rules-of-workflows/#nonretryableerror), the error `message` and `name` properties are preserved on the thrown exception instead of being replaced with a generic termination string.
+When enabled, if a [Workflow](/workflows/) step throws a [`NonRetryableError`](/workflows/build/workers-api/#nonretryableerror), the error `message` and `name` properties are preserved on the thrown exception instead of being replaced with a generic termination string.
 
 Previously, throwing a `NonRetryableError` with a custom message would result in the original error message being lost and replaced with `"The execution of the Workflow instance was terminated, as a step threw an NonRetryableError and it was not handled"`:
 
