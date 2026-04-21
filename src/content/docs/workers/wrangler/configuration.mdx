@@ -1330,6 +1330,15 @@ The following options are available:
 - `authorized_keys` <Type text="object[]" /> <MetaInfo text="optional" />
   - Public keys that should be added to the Container's `authorized_keys` file.
 
+- `constraints` <Type text="object" /> <MetaInfo text="optional" />
+  - Placement constraints for the container. Refer to [Containers placement](/containers/platform-details/placement/) for details.
+
+- `constraints.regions` <Type text="string[]" /> <MetaInfo text="optional" />
+  - Limit container placement to specific geographic regions. Valid values: `"ENAM"`, `"WNAM"`, `"EEUR"`, `"WEUR"`, `"APAC"`, `"SAM"`, `"ME"`, `"OC"`, `"AFR"`.
+
+- `constraints.jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - Restrict containers to compliance boundaries. Valid values: `"eu"`, `"fedramp"`.
+
 <WranglerConfig>
 
 ```jsonc
@@ -1342,6 +1351,10 @@ The following options are available:
 			"instance_type": "basic", // Optional, defaults to "lite"
 			"image_vars": {
 				"FOO": "BAR",
+			},
+			"constraints": {
+				"regions": ["ENAM", "WNAM"],
+				"jurisdiction": "fedramp",
 			},
 		},
 	],
