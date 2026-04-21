@@ -119,6 +119,7 @@
 	"created_at": "2026-04-08 21:40:52",
 	"default_example": null,
 	"code_snippets": [],
+	"zdr": false,
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
