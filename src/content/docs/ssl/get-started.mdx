@@ -13,7 +13,7 @@ head:
 
 import { GlossaryDefinition, Render } from "~/components";
 
-Follow the steps below to enable SSL/TLS protection for your application.
+Set up encrypted connections for your domain by choosing a certificate, selecting an encryption mode, and enforcing HTTPS.
 
 ## Before you begin
 
@@ -21,16 +21,14 @@ Follow the steps below to enable SSL/TLS protection for your application.
 
 ## Choose an edge certificate
 
-As explained in the [concepts page](/ssl/concepts/#ssltls-certificate), edge certificates are the SSL/TLS certificates that Cloudflare presents to your visitors.
-
-Cloudflare offers a variety of options for your application's edge certificates:
+[Edge certificates](/ssl/concepts/#edge-certificate) are the SSL/TLS certificates that Cloudflare presents to visitors connecting to your domain. Cloudflare offers several types:
 
 - [**Universal certificates**](/ssl/edge-certificates/universal-ssl/): <GlossaryDefinition term="Universal SSL certificate" />
 - [**Advanced certificates**](/ssl/edge-certificates/advanced-certificate-manager/): <Render file="acm-definition" product="ssl" />
 - [**Custom certificates**](/ssl/edge-certificates/custom-certificates/): <Render file="custom-certificates-definition" product="ssl" />
 - [**Keyless certificates**](/ssl/keyless-ssl/) (Enterprise only): <Render file="keyless-ssl-definition" product="ssl" />
 
-Refer to [Edge certificates](/ssl/edge-certificates/) for more information on how different certificate types can respond to common use cases.
+For help deciding which certificate type fits your use case, refer to [Edge certificates](/ssl/edge-certificates/).
 
 :::note[For SaaS providers]
 
@@ -44,9 +42,9 @@ For more details, refer to [Cloudflare for SaaS (managed hostnames)](/cloudflare
 
 Once you have chosen your edge certificate, [choose an encryption mode](/ssl/origin-configuration/ssl-modes/).
 
-Encryption modes specify how Cloudflare encrypts connections between (a) visitors and Cloudflare, and (b) Cloudflare and your origin server. For more context about this two-part process refer to the [concepts page](/ssl/concepts/#ssltls-certificate).
+Encryption modes control how Cloudflare manages two separate connections: one between visitors and Cloudflare, and another between Cloudflare and your origin server. Modes range from no encryption to strict validation of your origin certificate. For more context, refer to the [concepts page](/ssl/concepts/#ssltls-certificate).
 
-Note that some encryption modes will require you to have a valid [origin certificate](/ssl/concepts/#origin-certificate), which is managed on your origin server. Each encryption mode setup page lists out this and other requirements and you can also [consider other Cloudflare options to use with your origin server](/ssl/origin-configuration/), such as [Origin CA certificates](/ssl/origin-configuration/origin-ca/).
+[Full (strict)](/ssl/origin-configuration/ssl-modes/full-strict/) mode — the most secure option — requires a valid, unexpired certificate on your origin server. You can use a certificate from a publicly trusted certificate authority (CA), or generate a free [Origin CA certificate](/ssl/origin-configuration/origin-ca/) from Cloudflare. Each encryption mode page lists its specific requirements.
 
 ## Enforce HTTPS connections
 
