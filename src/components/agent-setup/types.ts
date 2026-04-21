@@ -8,7 +8,6 @@ export interface AgentData {
 	slug: string;
 	icon: string;
 	description: string;
-	primary_type?: "ide" | "terminal" | "extension" | "cloud";
 	capabilities: {
 		ide: boolean;
 		terminal: boolean;
@@ -18,9 +17,7 @@ export interface AgentData {
 		open_source: boolean;
 	};
 	features: string[];
-	// Decision-support metadata
 	pricing_model?: PricingModel;
-	pricing_detail?: string;
 	model_flexibility?: ModelFlexibility;
 	context_approach?: ContextApproach;
 	links: {

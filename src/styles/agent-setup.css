@@ -332,7 +332,7 @@
 	left: 0;
 	z-index: 2;
 	background: var(--sl-color-bg);
-	box-shadow: 4px 0 8px -6px rgb(0 0 0 / 0.18);
+	border-right: 1px solid var(--sl-color-gray-6);
 }
 
 .agent-setup-table--sticky-first thead th:first-child {
@@ -341,18 +341,6 @@
 }
 
 :root[data-theme="dark"] .agent-setup-table--sticky-first thead th:first-child {
-	background: var(--color-cl1-gray-1);
-}
-
-.agent-setup-table--sticky-first tbody tr:hover td:first-child {
-	background: var(--sl-color-gray-7, #f5f5f5);
-}
-
-:root[data-theme="dark"]
-	.agent-setup-table--sticky-first
-	tbody
-	tr:hover
-	td:first-child {
 	background: var(--color-cl1-gray-1);
 }
 
@@ -412,16 +400,16 @@
 	vertical-align: middle;
 }
 
-.agent-setup-table tbody tr {
-	transition: background 0.12s ease;
+.agent-setup-table tbody tr td {
+	transition: background-color 0.12s ease;
 }
 
-.agent-setup-table tbody tr:hover {
-	background: var(--sl-color-gray-7, #f5f5f5);
+.agent-setup-table tbody tr:hover td {
+	background-color: var(--sl-color-gray-7, #f5f5f5);
 }
 
-:root[data-theme="dark"] .agent-setup-table tbody tr:hover {
-	background: var(--color-cl1-gray-1);
+:root[data-theme="dark"] .agent-setup-table tbody tr:hover td {
+	background-color: var(--color-cl1-gray-1);
 }
 
 .agent-table-name {

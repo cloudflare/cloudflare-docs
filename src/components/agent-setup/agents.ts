@@ -22,10 +22,7 @@ export const AGENTS: AgentData[] = [
 			"Git operations",
 			"Multi-file editing",
 		],
-		primary_type: "terminal",
 		pricing_model: "subscription",
-		pricing_detail:
-			"Included with Claude Pro ($20/mo) and Max ($200/mo); API usage billing also available",
 		model_flexibility: "locked",
 		context_approach: "project_memory",
 		links: {
@@ -56,10 +53,7 @@ export const AGENTS: AgentData[] = [
 			"Web browsing",
 			"Sandboxed environment",
 		],
-		primary_type: "terminal",
 		pricing_model: "hybrid",
-		pricing_detail:
-			"Open source CLI is free; requires OpenAI API key or ChatGPT Plus/Pro subscription",
 		model_flexibility: "locked",
 		context_approach: "session",
 		links: {
@@ -90,10 +84,7 @@ export const AGENTS: AgentData[] = [
 			"Codebase indexing",
 			"Terminal integration",
 		],
-		primary_type: "ide",
 		pricing_model: "subscription",
-		pricing_detail:
-			"Free tier; Pro ($20/mo), Business ($40/mo per user) for advanced features",
 		model_flexibility: "multi_provider",
 		context_approach: "indexed_codebase",
 		links: {
@@ -124,10 +115,7 @@ export const AGENTS: AgentData[] = [
 			"CLI integration",
 			"PR summaries",
 		],
-		primary_type: "extension",
 		pricing_model: "subscription",
-		pricing_detail:
-			"Free tier with limits; Pro ($10/mo), Business ($19/mo per user), Enterprise ($39/mo per user)",
 		model_flexibility: "multi_provider",
 		context_approach: "indexed_codebase",
 		links: {
@@ -158,10 +146,7 @@ export const AGENTS: AgentData[] = [
 			"Built-in agents (build/plan)",
 			"LSP integration",
 		],
-		primary_type: "terminal",
 		pricing_model: "byok",
-		pricing_detail:
-			"Free open-source tool; bring your own API key for any supported model provider",
 		model_flexibility: "multi_provider",
 		context_approach: "project_memory",
 		links: {
@@ -192,10 +177,7 @@ export const AGENTS: AgentData[] = [
 			"Deep codebase search",
 			"Command suggestions",
 		],
-		primary_type: "ide",
 		pricing_model: "subscription",
-		pricing_detail:
-			"Free tier; Pro ($15/mo), Teams ($30/mo per user), Enterprise (custom)",
 		model_flexibility: "multi_provider",
 		context_approach: "indexed_codebase",
 		links: {

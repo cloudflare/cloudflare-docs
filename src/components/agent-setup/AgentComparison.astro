@@ -1,6 +1,6 @@
 ---
 import type { AgentData } from "./types";
-import { capabilityDefinitions, capabilityLabels } from "./definitions";
+import { capabilityLabels } from "./definitions";
 
 interface Props {
 	agents: AgentData[];
@@ -26,10 +26,6 @@ const COLUMNS: ColumnDef[] = [
 	{ key: "open_source", label: "Open source" },
 ];
 
-// Fixed ordering so autonomy-like tokens sort in a sensible sequence.
-const AUTONOMY_ORDER = ["suggest", "approve", "autonomous"];
-
-/** Return a string sort value for a given agent + sort key. */
 function sortValue(agent: AgentData, key: string): string {
 	switch (key) {
 		case "name":
@@ -53,12 +49,10 @@ function sortValue(agent: AgentData, key: string): string {
 	}
 }
 
-// Pre-sort alphabetically by name to match the default React behavior.
 const sorted = [...agents].sort((a, b) =>
 	sortValue(a, "name").localeCompare(sortValue(b, "name")),
 );
 
-// Build per-row sort values so client-side JS can sort without recomputing.
 type RowData = { agent: AgentData; sortKeys: Record<string, string> };
 
 const rows: RowData[] = sorted.map((agent) => {
@@ -76,7 +70,6 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" cl
 		<table
 			class="agent-setup-table agent-setup-table--sticky-first"
 			data-agent-table
-			data-autonomy-order={AUTONOMY_ORDER.join(",")}
 		>
 			<thead>
 				<tr>
@@ -129,13 +122,6 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" cl
 								{agent.pricing_model ? (
 									<span
 										class={`agent-setup-badge agent-token-badge agent-token-badge--${agent.pricing_model.replace("_", "-")}`}
-										data-agent-tooltip={
-											agent.pricing_detail ||
-											capabilityDefinitions[
-												agent.pricing_model as keyof typeof capabilityDefinitions
-											] ||
-											""
-										}
 									>
 										{capabilityLabels[
 											agent.pricing_model as keyof typeof capabilityLabels
@@ -149,11 +135,6 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" cl
 								{agent.model_flexibility ? (
 									<span
 										class={`agent-setup-badge agent-token-badge agent-token-badge--${agent.model_flexibility.replace("_", "-")}`}
-										data-agent-tooltip={
-											capabilityDefinitions[
-												agent.model_flexibility as keyof typeof capabilityDefinitions
-											] ?? ""
-										}
 									>
 										{capabilityLabels[
 											agent.model_flexibility as keyof typeof capabilityLabels
@@ -167,11 +148,6 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" cl
 								{agent.context_approach ? (
 									<span
 										class={`agent-setup-badge agent-token-badge agent-token-badge--${agent.context_approach.replace("_", "-")}`}
-										data-agent-tooltip={
-											capabilityDefinitions[
-												agent.context_approach as keyof typeof capabilityDefinitions
-											] ?? ""
-										}
 									>
 										{capabilityLabels[
 											agent.context_approach as keyof typeof capabilityLabels
@@ -196,28 +172,6 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" cl
 </div>
 
 <script>
-	import tippy from "tippy.js";
-
-	// Initialize tippy tooltips on table badges. Appending to body escapes the
-	// table's horizontal overflow clip.
-	document
-		.querySelectorAll<HTMLElement>("[data-agent-tooltip]")
-		.forEach((el) => {
-			const content = el.dataset.agentTooltip;
-			if (!content) return;
-			tippy(el, {
-				content,
-				placement: "top",
-				appendTo: () => document.body,
-				arrow: true,
-				maxWidth: 280,
-				delay: [150, 0],
-			});
-		});
-
-	// Client-side sort for the agent comparison table.
-	// Each row has a data-sort-keys JSON blob with pre-computed sort values.
-	// Clicking a column header re-orders the rows in-place.
 	document
 		.querySelectorAll<HTMLTableElement>("[data-agent-table]")
 		.forEach((table) => {
@@ -228,27 +182,17 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" cl
 			const buttons = Array.from(
 				table.querySelectorAll<HTMLButtonElement>(".agent-table-sort"),
 			);
-			const autonomyOrder = (table.dataset.autonomyOrder ?? "").split(",");
 
 			let currentKey = "name";
 			let currentDir: "asc" | "desc" = "asc";
-
-			const compareValues = (a: string, b: string): number => {
-				// Autonomy-style ordered tokens
-				const ai = autonomyOrder.indexOf(a);
-				const bi = autonomyOrder.indexOf(b);
-				if (ai !== -1 && bi !== -1) return ai - bi;
-				return a.localeCompare(b);
-			};
 
 			const sortBy = (key: string, dir: "asc" | "desc") => {
 				const sorted = [...rows].sort((r1, r2) => {
 					const k1 = JSON.parse(r1.dataset.sortKeys ?? "{}")[key] ?? "";
 					const k2 = JSON.parse(r2.dataset.sortKeys ?? "{}")[key] ?? "";
-					const result = compareValues(String(k1), String(k2));
+					const result = String(k1).localeCompare(String(k2));
 					return dir === "asc" ? result : -result;
 				});
-				// Rebuild tbody in new order
 				const frag = document.createDocumentFragment();
 				sorted.forEach((row) => frag.appendChild(row));
 				tbody.appendChild(frag);
