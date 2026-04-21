@@ -1,0 +1,207 @@
+import type { AgentData } from "./types";
+
+export const AGENTS: AgentData[] = [
+	{
+		name: "Claude Code",
+		vendor: "Anthropic",
+		slug: "claude-code",
+		icon: "claude",
+		description:
+			"Terminal-based coding agent that understands your codebase, runs commands, edits files, and manages git. Made by Anthropic.",
+		capabilities: {
+			ide: false,
+			terminal: true,
+			standalone: true,
+			cloud: true,
+			extension: true,
+			open_source: false,
+		},
+		features: [
+			"Full codebase understanding",
+			"Terminal command execution",
+			"Git operations",
+			"Multi-file editing",
+		],
+		primary_type: "terminal",
+		pricing_model: "subscription",
+		pricing_detail:
+			"Included with Claude Pro ($20/mo) and Max ($200/mo); API usage billing also available",
+		model_flexibility: "locked",
+		context_approach: "project_memory",
+		links: {
+			skills: "https://github.com/cloudflare/skills",
+			mcp_server: "https://github.com/cloudflare/mcp",
+			docs: "https://docs.anthropic.com/en/docs/claude-code",
+			website: "https://claude.ai/code",
+		},
+	},
+	{
+		name: "Codex",
+		vendor: "OpenAI",
+		slug: "codex",
+		icon: "codex",
+		description:
+			"Lightweight open-source terminal agent that reads and writes files, runs commands, and browses the web in a sandbox. Made by OpenAI.",
+		capabilities: {
+			ide: false,
+			terminal: true,
+			standalone: true,
+			cloud: true,
+			extension: true,
+			open_source: true,
+		},
+		features: [
+			"File read/write operations",
+			"Command execution",
+			"Web browsing",
+			"Sandboxed environment",
+		],
+		primary_type: "terminal",
+		pricing_model: "hybrid",
+		pricing_detail:
+			"Open source CLI is free; requires OpenAI API key or ChatGPT Plus/Pro subscription",
+		model_flexibility: "locked",
+		context_approach: "session",
+		links: {
+			skills: "https://github.com/cloudflare/skills",
+			mcp_server: "https://github.com/cloudflare/mcp",
+			docs: "https://developers.openai.com/codex/",
+			website: "https://openai.com/codex",
+		},
+	},
+	{
+		name: "Cursor",
+		vendor: "Cursor",
+		slug: "cursor",
+		icon: "cursor",
+		description:
+			"AI-first IDE built on VS Code with multi-file Composer edits and background agents. Made by Cursor.",
+		capabilities: {
+			ide: true,
+			terminal: true,
+			standalone: true,
+			cloud: true,
+			extension: false,
+			open_source: false,
+		},
+		features: [
+			"Multi-file Composer",
+			"Background agents",
+			"Codebase indexing",
+			"Terminal integration",
+		],
+		primary_type: "ide",
+		pricing_model: "subscription",
+		pricing_detail:
+			"Free tier; Pro ($20/mo), Business ($40/mo per user) for advanced features",
+		model_flexibility: "multi_provider",
+		context_approach: "indexed_codebase",
+		links: {
+			skills: "https://github.com/cloudflare/skills",
+			mcp_server: "https://github.com/cloudflare/mcp",
+			docs: "https://docs.cursor.com",
+			website: "https://cursor.sh",
+		},
+	},
+	{
+		name: "GitHub Copilot",
+		vendor: "GitHub",
+		slug: "github-copilot",
+		icon: "copilot",
+		description:
+			"Editor extension and CLI with agent mode, workspace context, and native PR integration. Made by GitHub.",
+		capabilities: {
+			ide: false,
+			terminal: true,
+			standalone: false,
+			cloud: true,
+			extension: true,
+			open_source: false,
+		},
+		features: [
+			"Agent mode",
+			"Workspace context",
+			"CLI integration",
+			"PR summaries",
+		],
+		primary_type: "extension",
+		pricing_model: "subscription",
+		pricing_detail:
+			"Free tier with limits; Pro ($10/mo), Business ($19/mo per user), Enterprise ($39/mo per user)",
+		model_flexibility: "multi_provider",
+		context_approach: "indexed_codebase",
+		links: {
+			skills: "https://github.com/cloudflare/skills",
+			mcp_server: "https://github.com/cloudflare/mcp",
+			docs: "https://docs.github.com/en/copilot",
+			website: "https://github.com/features/copilot",
+		},
+	},
+	{
+		name: "OpenCode",
+		vendor: "Anomaly",
+		slug: "opencode",
+		icon: "opencode",
+		description:
+			"Open-source terminal agent with a rich TUI that works with 75+ LLMs. Made by Anomaly.",
+		capabilities: {
+			ide: false,
+			terminal: true,
+			standalone: true,
+			cloud: false,
+			extension: true,
+			open_source: true,
+		},
+		features: [
+			"75+ model support",
+			"Rich terminal TUI",
+			"Built-in agents (build/plan)",
+			"LSP integration",
+		],
+		primary_type: "terminal",
+		pricing_model: "byok",
+		pricing_detail:
+			"Free open-source tool; bring your own API key for any supported model provider",
+		model_flexibility: "multi_provider",
+		context_approach: "project_memory",
+		links: {
+			skills: "https://github.com/cloudflare/skills",
+			mcp_server: "https://github.com/cloudflare/mcp",
+			docs: "https://opencode.ai/docs",
+			website: "https://opencode.ai",
+		},
+	},
+	{
+		name: "Windsurf",
+		vendor: "Codeium",
+		slug: "windsurf",
+		icon: "windsurf",
+		description:
+			"Agentic IDE with Cascade context and Flows for multi-step tasks. Made by Codeium.",
+		capabilities: {
+			ide: true,
+			terminal: false,
+			standalone: true,
+			cloud: false,
+			extension: false,
+			open_source: false,
+		},
+		features: [
+			"Cascade context engine",
+			"Flows automation",
+			"Deep codebase search",
+			"Command suggestions",
+		],
+		primary_type: "ide",
+		pricing_model: "subscription",
+		pricing_detail:
+			"Free tier; Pro ($15/mo), Teams ($30/mo per user), Enterprise (custom)",
+		model_flexibility: "multi_provider",
+		context_approach: "indexed_codebase",
+		links: {
+			mcp_server: "https://github.com/cloudflare/mcp",
+			docs: "https://docs.windsurf.com",
+			website: "https://windsurf.com",
+		},
+	},
+];

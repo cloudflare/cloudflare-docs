@@ -1,18 +1,14 @@
 ---
-import { getCollection } from "astro:content";
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import type { StarlightPageProps } from "@astrojs/starlight/props";
 import CatalogWithFilter from "~/components/agent-setup/CatalogWithFilter.astro";
 import AgentComparison from "~/components/agent-setup/AgentComparison.astro";
 import AgentPrimer from "~/components/agent-setup/AgentPrimer.astro";
-import type { AgentData } from "~/components/agent-setup/types";
+import { AGENTS } from "~/components/agent-setup/agents";
 
 import "~/styles/agent-setup.css";
 
-const agentEntries = await getCollection("agent-setup");
-const agents: AgentData[] = agentEntries
-	.map((entry) => entry.data as AgentData)
-	.sort((a, b) => a.name.localeCompare(b.name));
+const agents = AGENTS;
 
 const props = {
 	frontmatter: {

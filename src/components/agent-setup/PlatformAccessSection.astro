@@ -95,7 +95,7 @@ const {
 			>.
 		</p>
 		{mcpExtraHtml && <p set:html={mcpExtraHtml} />}
-		<McpServerList />
+		<McpServerList showBundled={agentName === "Claude Code" || agentName === "Cursor"} />
 	</PlatformAccessDetails>
 
 	<PlatformAccessDetails header="Wrangler CLI">

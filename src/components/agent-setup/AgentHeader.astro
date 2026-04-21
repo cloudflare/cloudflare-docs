@@ -6,12 +6,9 @@
 // Usage from an MDX page:
 //   <AgentHeader slug="claude-code" />
 //   <AgentHeader slug="opencode">custom intro markup here</AgentHeader>
-import { getCollection } from "astro:content";
-import type { AgentData } from "./types";
+import { AGENTS } from "./agents";
 import AgentIcon from "./AgentIcon.astro";
 import CapabilityBadge from "./CapabilityBadge.astro";
-// Shared agent-setup styles, loaded alongside the page header so every detail
-// page picks them up without each MDX file having to import the stylesheet.
 import "~/styles/agent-setup.css";
 
 interface Props {
@@ -20,14 +17,11 @@ interface Props {
 
 const { slug } = Astro.props;
 
-const entries = await getCollection("agent-setup");
-const agent = entries.find((e) => e.data.slug === slug)?.data as
-	| AgentData
-	| undefined;
+const agent = AGENTS.find((a) => a.slug === slug);
 
 if (!agent) {
 	throw new Error(
-		`[AgentHeader] No agent-setup entry found for slug="${slug}"`,
+		`[AgentHeader] No agent found for slug="${slug}"`,
 	);
 }
 

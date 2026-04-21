@@ -15,4 +15,3 @@ export * from "./stream";
 export * from "./videos";
 export * from "./warp-releases";
 export * from "./workers-ai-models";
-export * from "./agent-setup";

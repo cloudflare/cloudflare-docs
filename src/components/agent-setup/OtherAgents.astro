@@ -6,8 +6,7 @@
 //
 // Self-fetches from the collection so MDX callers only need to pass `currentSlug`:
 //   <OtherAgents currentSlug="claude-code" />
-import { getCollection } from "astro:content";
-import type { AgentData } from "./types";
+import { AGENTS } from "./agents";
 
 interface Props {
 	currentSlug: string;
@@ -15,11 +14,7 @@ interface Props {
 
 const { currentSlug } = Astro.props;
 
-const entries = await getCollection("agent-setup");
-const allAgents = entries
-	.map((e) => e.data as AgentData)
-	.sort((a, b) => a.name.localeCompare(b.name));
-const others = allAgents.filter((a) => a.slug !== currentSlug);
+const others = AGENTS.filter((a) => a.slug !== currentSlug);
 ---
 
 <div class="agent-setup-related">

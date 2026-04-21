@@ -9,6 +9,7 @@ import { Steps } from "~/components";
 import AgentHeader from "~/components/agent-setup/AgentHeader.astro";
 import PlatformAccess from "~/components/agent-setup/PlatformAccessSection.astro";
 import ExamplePromptsList from "~/components/agent-setup/ExamplePromptsList.astro";
+import RandomPrompt from "~/components/agent-setup/RandomPrompt.astro";
 import TipsList from "~/components/agent-setup/TipsList.astro";
 import FAQList from "~/components/agent-setup/FAQList.astro";
 import FAQItem from "~/components/agent-setup/FAQItem.astro";
@@ -22,34 +23,34 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 ## Quick start
 
 <Steps>
-1. **Install GitHub Copilot**
+	1. **Install GitHub Copilot**
 
-   Install the GitHub Copilot extension in VS Code from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot). For JetBrains IDEs, Visual Studio, or Xcode, see the [Install the Copilot extension](https://docs.github.com/en/copilot/how-tos/set-up/install-copilot-extension) guide.
+		Install the GitHub Copilot extension in VS Code from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot). For JetBrains IDEs, Visual Studio, or Xcode, see the [Install the Copilot extension](https://docs.github.com/en/copilot/how-tos/set-up/install-copilot-extension) guide.
 
-2. **Install the Cloudflare Skills**
+	2. **Install Cloudflare Skills**
 
-   Installs the Cloudflare Skills. See [About agent skills](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills) for where Copilot looks for Skills and how they work in VS Code agent mode, the Copilot CLI, and the cloud agent.
+		```bash
+		npx skills add https://github.com/cloudflare/skills
+		```
 
-   ```bash
-   npx skills add https://github.com/cloudflare/skills
-   ```
+	3. **Configure Cloudflare MCP servers**
 
-3. **Configure Cloudflare MCP servers**
+		For VS Code, add to `.vscode/mcp.json`. For Copilot CLI, add to `~/.copilot/mcp-config.json`. See all available Cloudflare MCP servers on [GitHub](https://github.com/cloudflare/mcp-server-cloudflare).
 
-   Add the Cloudflare API and docs MCP servers to your VS Code MCP settings. VS Code 1.99+ supports MCP natively.
+		```json
+		{
+		  "mcpServers": {
+		    "cloudflare": { "url": "https://mcp.cloudflare.com/mcp" },
+		    "cloudflare-docs": { "url": "https://docs.mcp.cloudflare.com/mcp" }
+		  }
+		}
+		```
 
-   ```json
-   {
-     "mcpServers": {
-       "cloudflare": { "url": "https://mcp.cloudflare.com/mcp" },
-       "cloudflare-docs": { "url": "https://docs.mcp.cloudflare.com/mcp" }
-     }
-   }
-   ```
+	4. **Try a prompt**
 
-4. **Start building**
+		Open Copilot Chat (**Ctrl+Shift+I**), switch to agent mode, and try a prompt — for example:
 
-   Open Copilot Chat (**Ctrl+Shift+I**), switch to agent mode, and try a prompt — for example, "Create an example hello world app using Cloudflare Workers."
+		<RandomPrompt />
 </Steps>
 
 ## Cloudflare platform access
@@ -123,13 +124,9 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
 <TipsList>
 
-- Agent Skills work with VS Code agent mode, the Copilot CLI, and the GitHub cloud agent — but not with inline code completion. Switch Copilot Chat to agent mode to unlock Skills-aware behavior.
+- The Cloudflare API MCP server uses Code Mode — Copilot writes JavaScript against a typed API to reach any of 2,500+ endpoints in ~1,000 tokens.
 - Use `@workspace` in Copilot Chat to give the agent full context of your Workers project before asking it to build or deploy.
-- Commit a `.github/copilot-instructions.md` file with repository-wide conventions (coding standards, preferred patterns) — Copilot loads it automatically on every interaction, complementing Skills which are loaded on demand.
-- Connect the Cloudflare API MCP server to VS Code — Copilot can then manage Cloudflare resources (DNS, WAF, R2 buckets) through Code Mode in ~1,000 tokens.
-- GitHub Copilot integrates natively with GitHub Actions — ask it to generate a deploy workflow that runs Wrangler with your `CLOUDFLARE_API_TOKEN` secret.
-- The Cloudflare docs MCP server keeps Copilot's Workers API references fresh without you needing to paste documentation into prompts.
-- For more information on installing additional MCP servers, or when to use Code Mode versus traditional MCP servers, refer to the [Cloudflare MCP server repository](https://github.com/cloudflare/mcp-server-cloudflare).
+- Commit a `.github/copilot-instructions.md` file with repository-wide conventions — Copilot loads it automatically on every interaction, complementing Skills which are loaded on demand.
 
 </TipsList>
 
@@ -172,17 +169,16 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 		skills](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills)
 		for the paths Copilot checks.
 	</TroubleshootingItem>
-	<TroubleshootingItem issue="Copilot does not understand Workers APIs">
-		Verify the Cloudflare Skills are installed, connect the Cloudflare docs MCP
-		server, and make sure you're using Copilot in agent mode.
-	</TroubleshootingItem>
 	<TroubleshootingItem issue="MCP server not available in VS Code">
 		Ensure you are using VS Code 1.99+ which supports MCP natively. Add the
 		server configuration to `.vscode/mcp.json`.
 	</TroubleshootingItem>
-	<TroubleshootingItem issue="GitHub Actions deployment fails">
-		Verify `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` are set as
-		repository secrets. Ensure the token has Workers write permissions.
+	<TroubleshootingItem issue="Getting outdated information about Cloudflare products">
+		Enable the <a href="https://github.com/cloudflare/mcp-server-cloudflare" target="_blank" rel="noopener noreferrer">Cloudflare docs MCP server</a> so the agent can fetch
+		current documentation at runtime. If you prefer not to use the MCP server, point
+		the agent directly at <a href="/llms.txt">developers.cloudflare.com/llms.txt</a> for
+		a directory of every product, or <code>developers.cloudflare.com/&lt;product&gt;/llms.txt</code>
+		for a product-specific index.
 	</TroubleshootingItem>
 </TroubleshootingList>
 

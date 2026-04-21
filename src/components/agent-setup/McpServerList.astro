@@ -19,6 +19,13 @@ interface McpServer {
 	bundled?: boolean;
 }
 
+interface Props {
+	/** Whether to show the "bundled" chip. Only relevant for plugin-based agents (Claude Code, Cursor). */
+	showBundled?: boolean;
+}
+
+const { showBundled = false } = Astro.props;
+
 const SERVERS: McpServer[] = [
 	{
 		name: "cloudflare-api",
@@ -106,7 +113,7 @@ const SERVERS: McpServer[] = [
 			<li class="agent-simple-item">
 				<span class="agent-simple-name">
 					{s.name}
-					{s.bundled && (
+					{showBundled && s.bundled && (
 						<span
 							class="agent-simple-tag"
 							title="Included in the cloudflare/skills plugin"
