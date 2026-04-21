@@ -73,6 +73,10 @@ For more information on encryption modes and their requirements, refer to [SSL/T
 
 [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/) redirects all HTTP requests to HTTPS for every subdomain and host in your application. This prevents clients from accidentally sending API requests over unencrypted connections.
 
+:::note
+If only some parts of your application support HTTPS, do not turn on Always Use HTTPS. Use a [single redirect](/rules/url-forwarding/single-redirects/) to redirect specific API paths instead. Refer to [Redirect admin area requests to HTTPS](/rules/url-forwarding/examples/redirect-admin-https/) for an example.
+:::
+
 <Steps>
 
 1. In the Cloudflare dashboard, go to the SSL/TLS **Overview** page.
@@ -88,10 +92,6 @@ For more information on encryption modes and their requirements, refer to [SSL/T
 4. Turn on **Always Use HTTPS**.
 
 </Steps>
-
-:::note
-If only some parts of your application support HTTPS, do not turn on Always Use HTTPS. Use a [single redirect](/rules/url-forwarding/single-redirects/) to redirect specific API paths instead. Refer to [Redirect admin area requests to HTTPS](/rules/url-forwarding/examples/redirect-admin-https/) for an example.
-:::
 
 ### Set minimum TLS version to 1.2
 
