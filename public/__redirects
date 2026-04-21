@@ -441,6 +441,7 @@
 /realtime/realtimekit/getting-started/ /realtime/realtimekit/quickstart/ 302
 /realtime/introduction/ /realtime/realtimekit/introduction/ 302
 /realtime/concepts/ /realtime/realtimekit/concepts/ 302
+/realtime/static/calls-api-2024-05-21.yaml /realtime/static/realtime-api-2024-05-21.yaml 301
 
 # Cloudflare Challenges
 /cloudflare-challenges/frequently-asked-questions/ /cloudflare-challenges/ 301

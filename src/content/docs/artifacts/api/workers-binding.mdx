@@ -29,9 +29,14 @@ Add the Artifacts binding to your Wrangler config file:
 [[artifacts]]
 binding = "ARTIFACTS"
 namespace = "default" # any name works — use namespaces to organise repos
+# remote = true # optional in local development
 ```
 
 </WranglerConfig>
+
+:::note
+You must be on `wrangler` `4.84.0` or later. Use `npx wrangler@latest` to always use the latest available `wrangler` version.
+:::
 
 After you run `npx wrangler types`, your Worker environment looks like this:
 
@@ -42,6 +47,8 @@ export interface Env {
 ```
 
 Wrangler generates the `Artifacts` type for consumers and binds it directly in your environment.
+
+Use `remote = true` in local development when you want Miniflare to call the remote Artifacts service. In named Wrangler environments, repeat the `artifacts` block because it is non-inheritable.
 
 If you authenticate with `wrangler login`, Wrangler requests `artifacts:write` by default.
 
@@ -72,6 +79,7 @@ async function createRepo(artifacts: Artifacts) {
 		name: created.name,
 		remote: created.remote,
 		initialToken: created.token,
+		initialTokenExpiresAt: created.tokenExpiresAt,
 	};
 }
 ```
@@ -82,7 +90,7 @@ async function createRepo(artifacts: Artifacts) {
 
 - `name` <Type text="RepoName" /> <MetaInfo text="required" />
 - Returns <Type text="Promise<ArtifactsRepo>" />
-- Throws if the repo does not exist.
+- Throws if the repo does not exist or is not ready yet.
 
 <TypeScriptExample>
 
@@ -101,6 +109,8 @@ async function getRepoHandle(artifacts: Artifacts) {
 - `opts.cursor` <Type text="Cursor" /> <MetaInfo text="optional" />
 - Returns <Type text="Promise<ArtifactsRepoListResult>" />
 
+Each returned repo includes `status`, which is one of `"ready"`, `"importing"`, or `"forking"`.
+
 <TypeScriptExample>
 
 ```ts
@@ -108,7 +118,11 @@ async function listRepos(artifacts: Artifacts) {
 	const page = await artifacts.list({ limit: 10 });
 
 	return {
-		names: page.repos.map((repo) => repo.name),
+		total: page.total,
+		repos: page.repos.map((repo) => ({
+			name: repo.name,
+			status: repo.status,
+		})),
 		nextCursor: page.cursor ?? null,
 	};
 }
@@ -131,7 +145,7 @@ Import a repository from an external git remote.
 <TypeScriptExample>
 
 ```ts
-async function importFromGitHub(artifacts: Artifacts) {
+async function importFromRemote(artifacts: Artifacts) {
 	const imported = await artifacts.import({
 		source: {
 			url: "https://github.com/cloudflare/workers-sdk",
@@ -146,6 +160,7 @@ async function importFromGitHub(artifacts: Artifacts) {
 		name: imported.name,
 		remote: imported.remote,
 		token: imported.token,
+		tokenExpiresAt: imported.tokenExpiresAt,
 	};
 }
 ```
@@ -253,7 +268,10 @@ async function forkRepo(artifacts: Artifacts) {
 		readOnly: false,
 	});
 
-	return forked.remote;
+	return {
+		remote: forked.remote,
+		tokenExpiresAt: forked.tokenExpiresAt,
+	};
 }
 ```
 

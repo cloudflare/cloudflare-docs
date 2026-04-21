@@ -16,18 +16,17 @@ This works well for:
 
 Artifacts imports public HTTPS remotes through the [REST API](/artifacts/api/rest-api/#import-a-public-https-remote) or the [Workers binding](/artifacts/api/workers-binding/#importparams). After import, the repo has a normal Artifacts remote URL and can be cloned, forked, or issued repo-scoped tokens like any other repo.
 
-## Import a repo from GitHub
+## Import a repo from a public HTTPS remote
 
-This example imports a public GitHub repo into the `default` namespace.
+This example imports a public GitHub repo into the `default` namespace. The same route also accepts other public HTTPS Git remotes.
 
-Use a [Cloudflare API token](/fundamentals/api/get-started/create-token/) with **Artifacts** > **Edit**.
+Use a Cloudflare API token with **Artifacts** > **Edit**.
 
 ```sh
-export ACCOUNT_ID="<YOUR_ACCOUNT_ID>"
 export ARTIFACTS_NAMESPACE="default"
 export ARTIFACTS_REPO="workers-sdk-baseline"
 export CLOUDFLARE_API_TOKEN="<YOUR_API_TOKEN>"
-export ARTIFACTS_BASE_URL="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/artifacts/namespaces/$ARTIFACTS_NAMESPACE"
+export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.dev/v1/api/namespaces/$ARTIFACTS_NAMESPACE"
 ```
 
 ```bash
@@ -43,7 +42,11 @@ IMPORT_RESPONSE=$(curl --silent --request POST "$ARTIFACTS_BASE_URL/repos/$ARTIF
 printf '%s\n' "$IMPORT_RESPONSE"
 ```
 
-The response includes the new Artifacts repo metadata, including `result.remote` and an initial repo token.
+The response includes the new Artifacts repo metadata, including `result.remote`, an initial repo token, and `result.token_expires_at`.
+
+:::note[Retry during import]
+While the repo is still importing, some routes can return `409 Conflict`. Retry after a short delay.
+:::
 
 ## Use the imported repo
 

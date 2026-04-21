@@ -70,6 +70,20 @@ To view branch aliases within your Pages project, select **View build** for any 
 
 You can attach a Preview alias to a custom domain by [adding a custom domain to a branch](https://developers.cloudflare.com/pages/how-to/custom-branch-aliases/).
 
+## Delete preview deployments
+
+To clean up old preview deployments, you can delete them using Wrangler:
+
+```sh
+npx wrangler pages deployment delete <DEPLOYMENT_ID> --project-name <PROJECT_NAME>
+```
+
+Use the `--force` (or `-f`) flag to skip the confirmation prompt, and to force deletion of aliased deployments. You can find deployment IDs by running [`wrangler pages deployment list`](/workers/wrangler/commands/pages/#pages-deployment-list).
+
+:::note
+The latest deployment for a branch cannot be deleted.
+:::
+
 ## Preview indexing by search engines
 
 To maintain a healthy SEO profile, it's vital to prevent search engines from finding duplicate content across the web. Because preview deployments are designed to be an exact replica of your production environment, they inherently create this exact situation. Cloudflare Pages by default ensures your search rankings are not harmed by these temporary previews.

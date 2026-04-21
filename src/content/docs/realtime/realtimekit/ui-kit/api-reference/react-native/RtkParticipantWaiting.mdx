@@ -1,0 +1,44 @@
+---
+pcx_content_type: reference
+title: RtkParticipantWaiting
+description: API reference for RtkParticipantWaiting component (React Native Library)
+---
+
+A waiting participant card with accept/reject buttons for waitlist and stage request management.
+
+## Properties
+
+| Property      | Type                | Required | Default           | Description                      |
+| ------------- | ------------------- | -------- | ----------------- | -------------------------------- |
+| `participant` | `Peer`              | ✅       | -                 | The waiting participant          |
+| `meeting`     | `RealtimeKitClient` | ❌       | -                 | The RealtimeKit meeting instance |
+| `iconPack`    | `IconPack`          | ❌       | `defaultIconPack` | Custom icon pack                 |
+| `t`           | `RtkI18n`           | ❌       | -                 | i18n translation function        |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkParticipantWaiting } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkParticipantWaiting participant={waitingParticipant} />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkParticipantWaiting } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return (
+		<RtkParticipantWaiting
+			participant={waitingParticipant}
+			meeting={meeting}
+			iconPack={customIconPack}
+		/>
+	);
+}
+```

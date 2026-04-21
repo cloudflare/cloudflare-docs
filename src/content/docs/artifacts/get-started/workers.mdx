@@ -88,6 +88,10 @@ This exposes Artifacts as `env.ARTIFACTS` inside your Worker.
 
 If you authenticate with `wrangler login`, Wrangler requests `artifacts:write` by default.
 
+:::note
+You must be on `wrangler` `4.84.0` or later. Use `npx wrangler@latest` to always use the latest available `wrangler` version.
+:::
+
 If you are using TypeScript, regenerate your local binding types:
 
 <PackageManagers type="exec" pkg="wrangler" args="types" />
@@ -123,6 +127,7 @@ export default {
 				name: created.name,
 				remote: created.remote,
 				token: created.token,
+				tokenExpiresAt: created.tokenExpiresAt,
 			});
 		}
 
@@ -171,7 +176,8 @@ The response resembles the following:
 {
 	"name": "starter-repo",
 	"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/starter-repo.git",
-	"token": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000"
+	"token": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000",
+	"tokenExpiresAt": "<ISO_TIMESTAMP>"
 }
 ```
 
@@ -217,11 +223,10 @@ git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" push -u origin 
 
 This uses the recommended header-based form and keeps the token out of the remote URL.
 
-If you need a self-contained remote URL for a short-lived command, build one from the token secret instead:
+If you need a self-contained remote URL for a short-lived command, use the full token string in the password slot:
 
 ```sh
-export ARTIFACTS_TOKEN_SECRET="${ARTIFACTS_TOKEN%%\?expires=*}"
-export ARTIFACTS_AUTH_REMOTE="https://x:${ARTIFACTS_TOKEN_SECRET}@${ARTIFACTS_REMOTE#https://}"
+export ARTIFACTS_AUTH_REMOTE="https://x:${ARTIFACTS_TOKEN}@${ARTIFACTS_REMOTE#https://}"
 git push "$ARTIFACTS_AUTH_REMOTE" HEAD:main
 ```
 

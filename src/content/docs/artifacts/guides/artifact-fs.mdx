@@ -39,8 +39,7 @@ go install github.com/cloudflare/artifact-fs/cmd/artifact-fs@latest
 
 export ARTIFACTS_REMOTE="https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/starter-repo.git"
 export ARTIFACTS_TOKEN="<YOUR_READ_TOKEN>"
-export ARTIFACTS_TOKEN_SECRET="${ARTIFACTS_TOKEN%%\?expires=*}"
-export ARTIFACTS_AUTH_REMOTE="https://x:${ARTIFACTS_TOKEN_SECRET}@${ARTIFACTS_REMOTE#https://}"
+export ARTIFACTS_AUTH_REMOTE="https://x:${ARTIFACTS_TOKEN}@${ARTIFACTS_REMOTE#https://}"
 
 artifact-fs add-repo \
   --name starter-repo \
