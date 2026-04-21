@@ -1,0 +1,120 @@
+---
+title: Profiles and namespaces
+pcx_content_type: concept
+description: How Agent Memory isolates memory storage using namespaces for applications and profiles for individual users or agents.
+products:
+  - agent-memory
+sidebar:
+  order: 3
+---
+
+Agent Memory uses a two-level isolation model: **namespaces** group profiles by application or environment, and **profiles** provide isolated memory stores for individual users or agents.
+
+## Namespaces
+
+A namespace is a top-level container that scopes a set of memory profiles. You typically create one namespace per application, or one per environment (development, staging, production) within an application.
+
+Namespaces are created through the [Namespace Management API](/agent-memory/api/namespaces/) and referenced by ID in your [Wrangler binding configuration](/agent-memory/configuration/bindings/).
+
+### Naming constraints
+
+- Maximum 32 characters
+- Lowercase letters, digits, and hyphens only (`[a-z0-9-]`)
+- Must start and end with an alphanumeric character
+
+### Example
+
+If you have a coding assistant app, you might create separate namespaces for each environment:
+
+```txt
+my-assistant-dev
+my-assistant-staging
+my-assistant-prod
+```
+
+Each namespace contains its own set of profiles that are completely isolated from other namespaces.
+
+## Profiles
+
+A profile is an isolated memory store for a single entity — typically a user, but it could also be an agent, a team, or any logical grouping. Each profile has its own:
+
+- **Memory storage** — Dedicated SQLite-backed storage for extracted memories
+- **Full-text search index** — Keyword search across memory content
+- **Vector index** — Semantic search across memory embeddings
+- **Message storage** — Raw conversation messages preserved verbatim
+
+You access a profile by calling `getProfile()` on your Agent Memory binding:
+
+```ts
+const profile = await env.MEMORY.getProfile("alice");
+```
+
+### Profile naming constraints
+
+- Maximum 32 characters
+- Lowercase letters, digits, and hyphens only (`[a-z0-9-]`)
+
+### Implicit creation
+
+Profiles are created automatically the first time you call `getProfile()` with a new name. You do not need to explicitly create or register profiles before using them.
+
+## Sessions
+
+A session groups a set of related messages within a profile. Sessions are optional but useful for organizing conversations, scoping tasks, and generating targeted summaries.
+
+You can provide a `sessionId` when calling [`ingest()`](/agent-memory/api/ingest/):
+
+```ts
+await profile.ingest(messages, { sessionId: "conversation-42" });
+```
+
+If you do not provide a `sessionId`, Agent Memory derives one deterministically from the message content. This means the same conversation always maps to the same session, which makes re-ingestion idempotent.
+
+### Session naming constraints
+
+- Maximum 64 characters
+
+Sessions are scoped to a profile. Two different profiles can use the same session ID without conflict.
+
+## Isolation model
+
+The full address for a memory is: `namespace > profile > memory`. No data crosses these boundaries:
+
+```txt
+Namespace: my-assistant-prod
+├── Profile: alice
+│   ├── Memories (facts, events, instructions, tasks)
+│   ├── Messages (raw conversation transcripts)
+│   ├── FTS index (keyword search)
+│   └── Vector index (semantic search)
+├── Profile: bob
+│   ├── Memories
+│   ├── Messages
+│   ├── FTS index
+│   └── Vector index
+└── Profile: charlie
+    └── ...
+```
+
+A `recall()` on Alice's profile never returns memories from Bob's profile. Each profile is a self-contained memory system.
+
+## Multiple bindings
+
+You can bind to multiple namespaces in a single Worker by adding multiple entries to `memory_namespaces`:
+
+```jsonc
+{
+	"memory_namespaces": [
+		{
+			"binding": "USER_MEMORY",
+			"namespace": "<USER_NAMESPACE_ID>"
+		},
+		{
+			"binding": "TEAM_MEMORY",
+			"namespace": "<TEAM_NAMESPACE_ID>"
+		}
+	]
+}
+```
+
+This allows you to maintain separate memory stores for different purposes — for example, per-user memory and shared team memory — within the same application.

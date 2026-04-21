@@ -1,0 +1,137 @@
+---
+title: ingest()
+pcx_content_type: reference
+description: Extract and store memories from a conversation. Agent Memory identifies facts, events, instructions, and tasks automatically.
+products:
+  - agent-memory
+sidebar:
+  order: 1
+  label: ingest()
+---
+
+import { TypeScriptExample } from "~/components";
+
+`ingest()` processes a conversation and extracts structured memories from it. The system identifies facts, events, instructions, and tasks automatically — you do not need to specify what to remember.
+
+## Signature
+
+```ts
+profile.ingest(messages: Iterable<Message>, options?: IngestOptions): Promise<void>
+```
+
+## Parameters
+
+### `messages`
+
+An iterable (typically an array) of `Message` objects representing the conversation to process.
+
+```ts
+type Message = {
+  role: "system" | "user" | "assistant";
+  content: string;
+  timestamp?: Date | string;
+};
+```
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `role` | `"system"` \| `"user"` \| `"assistant"` | Yes | The role of the message sender. |
+| `content` | `string` | Yes | The message content. Maximum 32 KB (32,768 bytes UTF-8). |
+| `timestamp` | `Date` \| `string` | No | When the message was sent. Accepts a `Date` object or an ISO 8601 string (for example, `"2026-04-21T12:00:00Z"` or `"2026-04-21"`). |
+
+#### Timestamp resolution
+
+Agent Memory determines a message timestamp using the following priority:
+
+1. **Explicit `timestamp` field** — If provided, this value is used.
+2. **Current time** — If `timestamp` not present, the current time is used.
+
+Timestamps do not affect message identity. Two messages with the same `role` and `content` but different timestamps are treated as the same message.
+
+### `options`
+
+```ts
+type IngestOptions = {
+  sessionId?: string | null;
+};
+```
+
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `sessionId` | `string` \| `null` | Auto-derived | An identifier for the conversation session. Maximum 64 characters. If omitted, a deterministic session ID is derived from the message content. |
+
+## Return value
+
+`ingest()` returns `Promise<void>`. It does not return the extracted memories.
+
+### Idempotency
+
+`ingest()` is safe to call multiple times with the same messages. Message identity is content-addressed (based on the session ID, role, and content), so re-ingesting the same conversation does not create duplicates.
+
+### No-op behavior
+
+If the AI does not identify any memorable content in the conversation, `ingest()` completes successfully without creating any memories. The raw messages are still stored for future keyword search.
+
+## Examples
+
+### Basic ingestion
+
+<TypeScriptExample>
+
+```ts
+const profile = await env.MEMORY.getProfile("alice");
+
+await profile.ingest([
+  { role: "user", content: "I prefer dark mode and use VS Code." },
+  { role: "assistant", content: "Noted your preferences for dark mode and VS Code." },
+]);
+```
+
+</TypeScriptExample>
+
+### With a session ID
+
+<TypeScriptExample>
+
+```ts
+await profile.ingest(
+  [
+    { role: "user", content: "Deploy the API to production." },
+    { role: "assistant", content: "Deployed v2.3.0 to production successfully." },
+  ],
+  { sessionId: "deployment-session-42" },
+);
+```
+
+</TypeScriptExample>
+
+### With explicit timestamps
+
+<TypeScriptExample>
+
+```ts
+await profile.ingest([
+  {
+    role: "user",
+    content: "We decided to use PostgreSQL for the new service.",
+    timestamp: "2026-04-15T14:30:00Z",
+  },
+  {
+    role: "assistant",
+    content: "Understood. I will recommend PostgreSQL for the new service going forward.",
+    timestamp: "2026-04-15T14:30:05Z",
+  },
+]);
+```
+
+</TypeScriptExample>
+
+## Limits
+
+| Parameter | Limit |
+| --- | --- |
+| Messages per call | 500 |
+| Message content size | 32 KB (32,768 bytes UTF-8) |
+| Session ID length | 64 characters |
+
+Refer to [Limits](/agent-memory/platform/limits/) for the complete list of constraints.

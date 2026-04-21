@@ -1,0 +1,150 @@
+---
+title: recall()
+pcx_content_type: reference
+description: Search stored memories and synthesize a natural language answer from the most relevant results.
+products:
+  - agent-memory
+sidebar:
+  order: 2
+  label: recall()
+---
+
+import { TypeScriptExample } from "~/components";
+
+`recall()` takes a natural language query, searches across all stored memories in the profile, and returns a synthesized answer grounded in the actual stored content.
+
+## Signature
+
+```ts
+profile.recall(query: string, options?: RecallOptions): Promise<RecallResult>
+```
+
+## Parameters
+
+### `query`
+
+A natural language question or search query. Maximum 1 KB (1,024 bytes UTF-8).
+
+**Examples:**
+- `"What editor does the user prefer?"`
+- `"When was the last production deployment?"`
+- `"What are the team coding conventions?"`
+- `"Summarize recent deployment events"`
+
+### `options`
+
+```ts
+type RecallOptions = {
+  thinkingLevel?: "low" | "medium" | "high";
+  responseLength?: "short" | "medium" | "long";
+  referenceDate?: Date | string;
+};
+```
+
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `thinkingLevel` | `"low"` \| `"medium"` \| `"high"` | `"low"` | Controls the breadth of retrieval. Higher levels search more candidates but take longer. |
+| `responseLength` | `"short"` \| `"medium"` \| `"long"` | `"medium"` | Controls the verbosity of the synthesized answer. |
+| `referenceDate` | `Date` \| `string` | Current time | A temporal anchor for date-relative queries. Accepts a `Date` object or ISO 8601 string (for example, `"2026-04-21"` or `"2026-04-21T12:00:00Z"`). |
+
+#### Thinking levels
+
+The `thinkingLevel` option controls how broadly the system searches for relevant memories:
+
+| Level | Behavior | Best for |
+| --- | --- | --- |
+| `"low"` | Fastest retrieval. Searches fewer candidates. | Simple factual lookups where speed matters. |
+| `"medium"` | Broader search. Considers more candidates. | Questions that may span multiple memories. |
+| `"high"` | Most thorough. Searches the widest set of candidates. | Complex queries, aggregations, or questions about patterns over time. |
+
+#### Reference date
+
+The `referenceDate` option anchors temporal reasoning. Use it when the query contains relative time references and "now" should mean something other than the current time.
+
+For example, if you want to ask "What happened last week?" as of a specific date:
+
+```ts
+const result = await profile.recall("What happened last week?", {
+  referenceDate: "2026-04-14",
+});
+```
+
+## Return value
+
+```ts
+type RecallResult = {
+  answer: string;
+};
+```
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `answer` | `string` | A natural language answer synthesized from the most relevant memories. Empty string if no relevant memories were found. |
+
+## Examples
+
+### Basic recall
+
+<TypeScriptExample>
+
+```ts
+const profile = await env.MEMORY.getProfile("alice");
+
+const result = await profile.recall("What editor does the user prefer?");
+console.log(result.answer);
+// "The user prefers VS Code as their primary editor."
+```
+
+</TypeScriptExample>
+
+### With options
+
+<TypeScriptExample>
+
+```ts
+const result = await profile.recall("Summarize all deployment events from last month", {
+  thinkingLevel: "high",
+  responseLength: "long",
+  referenceDate: "2026-04-01",
+});
+
+console.log(result.answer);
+// A detailed summary of deployment events from March 2026
+```
+
+</TypeScriptExample>
+
+### Injecting memory into an LLM call
+
+<TypeScriptExample>
+
+```ts
+const profile = await env.MEMORY.getProfile(userId);
+
+// Recall relevant context for the user's question
+const memory = await profile.recall(userQuestion, {
+  thinkingLevel: "medium",
+  responseLength: "short",
+});
+
+// Include memory context in the LLM prompt
+const response = await env.AI.run("@cf/meta/llama-3.3-70b-instruct-fp8-fast", {
+  messages: [
+    {
+      role: "system",
+      content: `You are a helpful assistant. Here is what you know about the user:\n\n${memory.answer}`,
+    },
+    { role: "user", content: userQuestion },
+  ],
+});
+```
+
+</TypeScriptExample>
+
+## Limits
+
+| Parameter | Limit |
+| --- | --- |
+| Query size | 1 KB (1,024 bytes UTF-8) |
+
+Refer to [Limits](/agent-memory/platform/limits/) for the complete list of constraints.

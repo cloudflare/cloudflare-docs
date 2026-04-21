@@ -1,0 +1,50 @@
+---
+title: Limits
+pcx_content_type: reference
+description: Validation limits and constraints for Agent Memory, including message sizes, profile naming rules, and API parameters.
+products:
+  - agent-memory
+sidebar:
+  order: 1
+---
+
+The following limits apply to Agent Memory operations.
+
+## Binding API limits
+
+| Parameter | Limit |
+| --- | --- |
+| Messages per `ingest()` call | 500 |
+| Message content size | 32 KB (32,768 bytes UTF-8) |
+| Recall query size | 1 KB (1,024 bytes UTF-8) |
+| Session ID length | 64 characters |
+
+## Naming constraints
+
+| Entity | Max length | Allowed characters | Additional rules |
+| --- | --- | --- | --- |
+| Profile name | 32 characters | Lowercase letters, digits, hyphens (`[a-z0-9-]`) | No colons. Must not be empty. |
+| Namespace name | 32 characters | Lowercase letters, digits, hyphens (`[a-z0-9-]`) | Must start and end with alphanumeric. Must be unique within account. |
+
+## Message constraints
+
+| Field | Constraint |
+| --- | --- |
+| `role` | Must be `"system"`, `"user"`, or `"assistant"` |
+| `content` | Non-empty string. Maximum 32 KB (32,768 bytes UTF-8). |
+| `timestamp` | Optional. Accepts `Date` objects, ISO 8601 strings (`YYYY-MM-DDTHH:mm:ssZ`), or date strings (`YYYY-MM-DD`). |
+
+## Recall options
+
+| Option | Allowed values | Default |
+| --- | --- | --- |
+| `thinkingLevel` | `"low"`, `"medium"`, `"high"` | `"low"` |
+| `responseLength` | `"short"`, `"medium"`, `"long"` | `"medium"` |
+| `referenceDate` | `Date` object or ISO 8601 / `YYYY-MM-DD` string | Current time |
+
+## Namespace API limits
+
+| Parameter | Limit |
+| --- | --- |
+| `per_page` (list namespaces) | 1 to 1,000 (default: 20) |
+
