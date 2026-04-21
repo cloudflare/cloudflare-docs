@@ -1,30 +1,60 @@
 ---
 pcx_content_type: how-to
-description: How Workers interact with Cache Rules execution.
+description: How Workers interact with Cache Rules and Cache Response Rules execution.
 products:
   - cache
-title: How Workers interact with Cache Rules
+title: How Workers interact with Cache Rules and Cache Response Rules
 sidebar:
   order: 2
 head:
   - tag: title
-    content: How Workers interact with Cache Rules
+    content: How Workers interact with Cache Rules and Cache Response Rules
 
 ---
 
-Your Workers script can override [Cache Rules](/cache/how-to/cache-rules/) behavior, whether it is applied to a zone using Cloudflare or a zone that is not proxied through Cloudflare.
+Your Workers script can override [Cache Rules](/cache/how-to/cache-rules/) and [Cache Response Rules](/cache/how-to/cache-response-rules/) behavior, whether it is applied to a zone using Cloudflare or a zone that is not proxied through Cloudflare.
 
 For example, if there is a cache rule configured to bypass cache for `example.com/foo`, but your Workers script sets `cacheEverything: true`, the script's setting will take precedence, and the request will be cached. The same applies if the request is made to a non-Cloudflare zone — the Worker's `cacheEverything` setting will still override.
 
 ## Precedence order
 
-Cache behavior is determined by the following order of precedence:
+Cache behavior is determined by the following order of precedence, highest to lowest:
 
-1. [Workers](/workers/) script settings
-2. [Cache rules](/cache/how-to/cache-rules/)
-3. [Page rules](/rules/page-rules/)
+1. [Workers](/workers/) script settings (`cf` properties on `fetch()` subrequests)
+2. [Cache Response Rules](/cache/how-to/cache-response-rules/) (response-phase actions such as `set_cache_control`, `set_cache_tags`, and `set_cache_settings`)
+3. [Cache Rules](/cache/how-to/cache-rules/) (request-phase settings such as cache eligibility, edge TTL, and cache key)
+4. [Page Rules](/rules/page-rules/)
 
-Cache rules override page rule settings, and Workers scripts override cache rules. Among rules at the same level, the one with the highest specificity takes priority.
+Workers script settings take precedence over all rules-based configurations. Cache Response Rules override Cache Rules, and Cache Rules override Page Rules. Among rules at the same level, the one with the highest specificity takes priority.
+
+### Workers override Cache Rules
+
+The following `cf` object properties on a `fetch()` subrequest override matching [Cache Rules](/cache/how-to/cache-rules/settings/) settings:
+
+| `cf` property | Cache Rules setting |
+| --- | --- |
+| `cacheEverything` | Cache eligibility |
+| `cacheTtl` | Edge TTL |
+| `cacheTtlByStatus` | Edge TTL by status code |
+| `cacheKey` | Custom cache key |
+| `cacheDeceptionArmor` | [Cache Deception Armor](/cache/cache-security/cache-deception-armor/) |
+| `cacheReserveEligible` | [Cache Reserve](/cache/advanced-configuration/cache-reserve/) eligibility |
+| `cacheReserveMinimumFileSize` | [Cache Reserve](/cache/advanced-configuration/cache-reserve/) minimum file size |
+| `respectStrongEtag` | [Respect Strong ETags](/cache/how-to/cache-rules/settings/#respect-strong-etags) |
+
+### Workers override Cache Response Rules
+
+The following `cf` object properties also override matching [Cache Response Rules](/cache/how-to/cache-response-rules/settings/) actions:
+
+| `cf` property | Cache Response Rules action |
+| --- | --- |
+| `cacheControl` | `set_cache_control` |
+| `cacheTags` | `set_cache_tags` (replaces the tag list) |
+| `cacheTtlByStatus` | `set_cache_control` for matching status codes |
+| `stripEtags` | `set_cache_settings` (`strip_etags`) |
+| `stripLastModified` | `set_cache_settings` (`strip_last_modified`) |
+
+When a Worker sets one of these properties, the value takes effect even when a Cache Response Rule configures a different value for the same request.
 
 ## Compatibility flags
 

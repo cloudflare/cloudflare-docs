@@ -1,0 +1,36 @@
+---
+title: Workers override Cache Response Rules
+description: Workers `cf` object properties now take precedence over Cache Response Rules, giving you per-request control over response-phase cache settings.
+products:
+  - cache
+date: YYYY-MM-DD
+---
+
+Workers `fetch()` requests now take precedence over matching [Cache Response Rules](/cache/how-to/cache-response-rules/). Combined with the existing ability to override [Cache Rules](/cache/how-to/cache-rules/), `cf` object properties are now the highest-precedence cache configuration in Cloudflare's cache pipeline on a per-request basis.
+
+## What changed
+
+New `cf` object properties are available on `fetch()` subrequests for fine-grained cache control:
+
+- **`cacheControl`**: Sets an explicit `Cache-Control` value on the cached response, overriding any `set_cache_control` [Cache Response Rule](/cache/how-to/cache-response-rules/settings/).
+- **`cacheTtlByStatus`**: Now also overrides `set_cache_control` Cache Response Rules for matching status codes.
+- **`cacheTags`**: Now replaces response cache tags, overriding any `set_cache_tags` Cache Response Rule.
+- **`stripEtags`**: Strips `ETag` headers from the origin response, overriding the `strip_etags` parameter of `set_cache_settings`.
+- **`stripLastModified`**: Strips `Last-Modified` headers from the origin response, overriding the `strip_last_modified` parameter of `set_cache_settings`.
+- **`respectStrongEtag`**: Preserves strong `ETag` headers from the origin, overriding the [Respect Strong ETags](/cache/how-to/cache-rules/settings/#respect-strong-etags) setting.
+- **`cacheDeceptionArmor`**: Enables [Cache Deception Armor](/cache/cache-security/cache-deception-armor/) for the request, overriding the Cache Rules setting.
+- **`cacheReserveEligible`**: Controls [Cache Reserve](/cache/advanced-configuration/cache-reserve/) eligibility, overriding the Cache Rules setting.
+- **`cacheReserveMinimumFileSize`**: Sets the minimum response size for [Cache Reserve](/cache/advanced-configuration/cache-reserve/) eligibility, overriding the Cache Rules setting.
+
+## Precedence order
+
+Cache behavior now follows this order of precedence, highest to lowest:
+
+1. Workers script settings (`cf` object on `fetch()`)
+2. [Cache Response Rules](/cache/how-to/cache-response-rules/)
+3. [Cache Rules](/cache/how-to/cache-rules/)
+4. [Page Rules](/rules/page-rules/)
+
+## Get started
+
+For the full list of `cf` object properties, refer to the [`cf` property documentation](/workers/runtime-apis/request/#the-cf-property-requestinitcfproperties) and [How Workers interact with Cache Rules and Cache Response Rules](/cache/interaction-cloudflare-products/workers-cache-rules/).

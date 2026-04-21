@@ -109,6 +109,14 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
   * Whether [Cloudflare Apps](https://www.cloudflare.com/apps/) should be enabled for this request. Defaults to `true`.
 
+* `cacheControl` <Type text="string" /> <MetaInfo text="optional" />
+
+  * Sets an explicit `Cache-Control` directive value on the response stored in cache (for example, `"public, max-age=3600, s-maxage=86400"`). Cannot be used together with `cacheTtl` or the `cache` request option (`"no-store"` or `"no-cache"`) — these are mutually exclusive cache control mechanisms and setting them together throws a `TypeError`. Can be combined with `cacheTtlByStatus`, where `cacheTtlByStatus` overrides `cacheControl` for matching status codes. This option applies to `GET` and `HEAD` request methods only.
+
+* `cacheDeceptionArmor` <Type text="boolean" /> <MetaInfo text="optional" />
+
+  * Enables [Cache Deception Armor](/cache/cache-security/cache-deception-armor/), which protects against web cache deception attacks by verifying that the response `Content-Type` matches the file extension of the URL path.
+
 * `cacheEverything` <Type text="boolean" /> <MetaInfo text="optional" />
 
   * Treats all content as static and caches all [file types](/cache/concepts/default-cache-behavior#default-cached-file-extensions) beyond the Cloudflare default cached content. Respects cache headers from the origin web server. This is equivalent to setting the Page Rule [**Cache Level** (to **Cache Everything**)](/rules/page-rules/reference/settings/). Defaults to `false`.
@@ -116,7 +124,15 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 * `cacheKey` <Type text="string" /> <MetaInfo text="optional" />
 
-  * A request’s cache key is what determines if two requests are the same for caching purposes. If a request has the same cache key as some previous request, then Cloudflare can serve the same cached response for both.
+  * A request's cache key is what determines if two requests are the same for caching purposes. If a request has the same cache key as some previous request, then Cloudflare can serve the same cached response for both.
+
+* `cacheReserveEligible` <Type text="boolean" /> <MetaInfo text="optional" />
+
+  * Controls whether the response is eligible to be stored in [Cache Reserve](/cache/advanced-configuration/cache-reserve/). Set to `false` to prevent the response from being written to Cache Reserve.
+
+* `cacheReserveMinimumFileSize` <Type text="number" /> <MetaInfo text="optional" />
+
+  * Minimum response size in bytes for eligibility to be stored in [Cache Reserve](/cache/advanced-configuration/cache-reserve/). Responses smaller than this value are not written to Cache Reserve.
 
 * `cacheTags` Array\<string> optional
 
@@ -124,7 +140,7 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
 * `cacheTtl` <Type text="number" /> <MetaInfo text="optional" />
 
-  * This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting two Page Rules: [**Edge Cache TTL**](/cache/how-to/edge-browser-cache-ttl/) and [**Cache Level** (to **Cache Everything**)](/rules/page-rules/reference/settings/). The value must be zero or a positive number. A value of `0` indicates that the cache asset expires immediately. This option applies to `GET` and `HEAD` request methods only.
+  * This option forces Cloudflare to cache the response for this request, regardless of what headers are seen on the response. This is equivalent to setting two Page Rules: [**Edge Cache TTL**](/cache/how-to/edge-browser-cache-ttl/) and [**Cache Level** (to **Cache Everything**)](/rules/page-rules/reference/settings/). The value must be zero or a positive number. A value of `0` indicates that the cache asset expires immediately. Cannot be used together with `cacheControl`. This option applies to `GET` and `HEAD` request methods only.
 
 * `cacheTtlByStatus` `{ [key: string]: number }` optional
 
@@ -142,9 +158,21 @@ Invalid or incorrectly-named keys in the `cf` object will be silently ignored. C
 
   * Directs the request to an alternate origin server by overriding the DNS lookup. The value of `resolveOverride` specifies an alternate hostname which will be used when determining the origin IP address, instead of using the hostname specified in the URL. The `Host` header of the request will still match what is in the URL. Thus, `resolveOverride` allows a request to be sent to a different server than the URL / `Host` header specifies. However, `resolveOverride` will only take effect if both the URL host and the host specified by `resolveOverride` are within your zone. If either specifies a host from a different zone / domain, then the option will be ignored for security reasons. If you need to direct a request to a host outside your zone (while keeping the `Host` header pointing within your zone), first create a CNAME record within your zone pointing to the outside host, and then set `resolveOverride` to point at the CNAME record. Note that, for security reasons, it is not possible to set the `Host` header to specify a host outside of your zone unless the request is actually being sent to that host.
 
+* `respectStrongEtag` <Type text="boolean" /> <MetaInfo text="optional" />
+
+  * When set to `true`, preserves strong `ETag` headers from the origin response rather than converting them to weak ETags (`W/"..."`). Refer to [Respect Strong ETags](/cache/how-to/cache-rules/settings/#respect-strong-etags) for more information.
+
 * `scrapeShield` <Type text="boolean" /> <MetaInfo text="optional" />
 
   * Whether [ScrapeShield](https://blog.cloudflare.com/introducing-scrapeshield-discover-defend-dete/) should be enabled for this request, if otherwise configured for this zone. Defaults to `true`.
+
+* `stripEtags` <Type text="boolean" /> <MetaInfo text="optional" />
+
+  * When set to `true`, removes the `ETag` header from the origin response before caching and serving.
+
+* `stripLastModified` <Type text="boolean" /> <MetaInfo text="optional" />
+
+  * When set to `true`, removes the `Last-Modified` header from the origin response before caching and serving.
 
 * `webp` <Type text="boolean" /> <MetaInfo text="optional" />
 
