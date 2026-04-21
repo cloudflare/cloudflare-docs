@@ -101,6 +101,11 @@ Wrangler supports the following environment variables:
 - `MINIFLARE_CACHE_DIR` <Type text="string" /> <MetaInfo text="optional" />
   - Custom directory for Miniflare's `cf.json` cache file, used during local development with `wrangler dev`. When set, this overrides the default cache location (`node_modules/.mf`). Useful for environments that do not use a traditional `node_modules` directory, such as Yarn PnP.
 
+- `CLOUDFLARE_CF_FETCH_ENABLED` <Type text="string" /> <MetaInfo text="optional" />
+  - Controls whether [Miniflare](/workers/testing/miniflare/) fetches the `cf.json` file containing [`Request.cf`](/workers/runtime-apis/request/#the-cf-property-requestinitcfproperties) properties from Cloudflare during local development. Set to `"false"` or `"0"` to disable fetching entirely and use fallback data. No `node_modules/.mf/cf.json` file will be created when disabled. Defaults to `"true"`. This is particularly useful for non-JavaScript projects (such as Rust or Go Workers) that do not want a `node_modules` directory created automatically. The explicit `cf` option in the [Miniflare API](/workers/testing/miniflare/get-started/#requestcf-object) takes precedence over this environment variable.
+
+- `CLOUDFLARE_CF_FETCH_PATH` <Type text="string" /> <MetaInfo text="optional" />
+  - Specifies a custom path for caching the `cf.json` file, overriding the default `node_modules/.mf/cf.json` location. This is useful for multi-project setups where you want a shared cache location, or for projects that want to store the cache outside of `node_modules`. The explicit `cf` option in the [Miniflare API](/workers/testing/miniflare/get-started/#requestcf-object) takes precedence over this environment variable, and `CLOUDFLARE_CF_FETCH_ENABLED=false` takes precedence over this variable.
 
 ### Example output file
 
@@ -119,12 +124,6 @@ Other entry types include:
 - `version-deploy` - Written by `wrangler versions deploy` with deployment information
 - `pages-deploy` - Written by `wrangler pages deploy` with Pages deployment details
 - `command-failed` - Written when a command fails, including error code and message
-
-- `CLOUDFLARE_CF_FETCH_ENABLED` <Type text="string" /> <MetaInfo text="optional" />
-  - Controls whether [Miniflare](/workers/testing/miniflare/) fetches the `cf.json` file containing [`Request.cf`](/workers/runtime-apis/request/#the-cf-property-requestinitcfproperties) properties from Cloudflare during local development. Set to `"false"` or `"0"` to disable fetching entirely and use fallback data. No `node_modules/.mf/cf.json` file will be created when disabled. Defaults to `"true"`. This is particularly useful for non-JavaScript projects (such as Rust or Go Workers) that do not want a `node_modules` directory created automatically. The explicit `cf` option in the [Miniflare API](/workers/testing/miniflare/get-started/#requestcf-object) takes precedence over this environment variable.
-
-- `CLOUDFLARE_CF_FETCH_PATH` <Type text="string" /> <MetaInfo text="optional" />
-  - Specifies a custom path for caching the `cf.json` file, overriding the default `node_modules/.mf/cf.json` location. This is useful for multi-project setups where you want a shared cache location, or for projects that want to store the cache outside of `node_modules`. The explicit `cf` option in the [Miniflare API](/workers/testing/miniflare/get-started/#requestcf-object) takes precedence over this environment variable, and `CLOUDFLARE_CF_FETCH_ENABLED=false` takes precedence over this variable.
 
 ## Example `.env` file
 
