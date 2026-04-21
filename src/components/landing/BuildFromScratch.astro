@@ -22,10 +22,10 @@ const primitives = [
 		iconColor: "#0a95ff",
 		iconBg: "rgba(10, 149, 255, 0.1)",
 		iconBgDark: "rgba(10, 149, 255, 0.16)",
-		heading: "Run code at the edge",
+		heading: "Run code everywhere",
 		description:
-			"Deploy serverless functions and full-stack apps onto Cloudflare's global network. No servers to manage, no cold starts — your code runs in 330+ cities, milliseconds from every user.",
-		command: "npm create cloudflare@latest my-app",
+			"Deploy serverless functions and full-stack apps on Cloudflare's global network. No servers to manage, no cold starts — your code runs in 330+ cities, milliseconds from every user.",
+		command: "npx wrangler init my-app",
 		cta: {
 			label: "Deploy your first Worker",
 			href: "/workers/get-started/guide/",
@@ -48,7 +48,7 @@ const primitives = [
 		heading: "Add intelligence to anything you build",
 		description:
 			"Run inference, build agents, and search across your data — all from inside your Workers, with no external API calls or GPU infrastructure.",
-		command: "npx wrangler ai models list",
+		command: "npx wrangler ai models",
 		cta: { label: "Browse available models", href: "/workers-ai/models/" },
 		tags: [
 			{ label: "Workers AI", href: "/workers-ai/" },
@@ -61,17 +61,16 @@ const primitives = [
 	{
 		id: "storage",
 		label: "Storage",
-		icon: "kv",
+		icon: "d1",
 		iconColor: "#ee0ddb",
 		iconBg: "rgba(238, 13, 219, 0.1)",
 		iconBgDark: "rgba(238, 13, 219, 0.16)",
-		heading: "Persist data close to your users",
+		heading: "Query your data from anywhere",
 		description:
-			"S3-compatible object storage, a relational SQL database, and low-latency KV — all queryable directly from Workers with no connection pooling.",
-		command: "npx wrangler r2 bucket create my-bucket",
-		cta: { label: "Get started with R2", href: "/r2/get-started/" },
+			"Serverless SQL, low-latency key-value storage, and global database acceleration — query directly from Workers with no connection management.",
+		command: "npx wrangler d1 create my-database",
+		cta: { label: "Get started with D1", href: "/d1/get-started/" },
 		tags: [
-			{ label: "R2", href: "/r2/" },
 			{ label: "D1", href: "/d1/" },
 			{ label: "KV", href: "/kv/" },
 			{ label: "Hyperdrive", href: "/hyperdrive/" },
@@ -84,12 +83,13 @@ const primitives = [
 		iconColor: "#9616ff",
 		iconBg: "rgba(150, 22, 255, 0.1)",
 		iconBgDark: "rgba(150, 22, 255, 0.22)",
-		heading: "Serve images and video at scale",
+		heading: "Store and serve media at scale",
 		description:
-			"Store, transform, and deliver images and video from Cloudflare's network. Resize on the fly, stream live or on-demand — no separate infrastructure.",
-		command: "npx wrangler pages project create my-site",
-		cta: { label: "Get started with Images", href: "/images/get-started/" },
+			"Egress-free object storage, image transformations, and video streaming — store, transform, and deliver from Cloudflare's network.",
+		command: "npx wrangler r2 bucket create my-bucket",
+		cta: { label: "Get started with R2", href: "/r2/get-started/" },
 		tags: [
+			{ label: "R2", href: "/r2/" },
 			{ label: "Images", href: "/images/" },
 			{ label: "Stream", href: "/stream/" },
 			{ label: "Realtime", href: "/realtime/" },
@@ -112,7 +112,7 @@ const primitives = [
 		id="build-heading"
 		class="mb-8 text-2xl leading-[1.1] font-medium -tracking-[0.035em] text-balance text-zinc-900 md:text-3xl dark:text-zinc-50"
 	>
-		Everything you need to build at the edge
+		Everything you need to build full-stack applications
 	</h2>
 
 	<div

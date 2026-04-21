@@ -26,8 +26,13 @@ const marks =
 	"absolute -top-0 left-1/2 -translate-x-1/2 h-full pointer-events-none";
 ---
 
-<!-- Dot grid -->
-<div class="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
+<!-- Dot grid — extends beyond content to reach the footer divider.
+     The footer's opaque background-color covers any overshoot. -->
+<div
+	class="pointer-events-none absolute inset-x-0 top-0 z-0"
+	style="height: calc(100% + 25rem)"
+	aria-hidden="true"
+>
 	<div
 		class="landing-dot-grid absolute h-full w-full"
 		style="background-image: radial-gradient(var(--l-dot-color) 1px, transparent 1px); background-size: var(--l-dot-size)"

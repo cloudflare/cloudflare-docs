@@ -7,8 +7,8 @@ const phases = [
 	{
 		id: "dns",
 		phase: "DNS Lookup",
-		before: { offset: 0, width: 9.6 },
-		after: { offset: 0, width: 0.85 },
+		before: { offset: 0, width: 8.33 },
+		after: { offset: 0, width: 0.46 },
 		product: "DNS",
 		icon: "dns",
 		href: "/dns/",
@@ -23,8 +23,8 @@ const phases = [
 	{
 		id: "connect",
 		phase: "TCP + TLS",
-		before: { offset: 9.6, width: 19.2 },
-		after: { offset: 0.85, width: 2 },
+		before: { offset: 8.33, width: 16.67 },
+		after: { offset: 0.46, width: 2.04 },
 		product: "Argo Smart Routing",
 		icon: "argo-smart-routing",
 		href: "/argo-smart-routing/",
@@ -39,12 +39,12 @@ const phases = [
 	{
 		id: "wait",
 		phase: "Server Wait (TTFB)",
-		before: { offset: 28.8, width: 38.46 },
-		after: { offset: 2.85, width: 0.4 },
+		before: { offset: 25, width: 20.83 },
+		after: { offset: 2.5, width: 0.21 },
 		product: "Cache",
 		icon: "cache",
 		href: "/cache/get-started/",
-		outcome: "Cache at the edge, not from origin",
+		outcome: "Serve from cache, not from origin",
 		detail: "Serve from 330+ cities. Cache Rules, tiered caching, purge API.",
 		cta: "Improve cache hit ratio",
 		tags: ["Cache Rules", "Tiered Cache", "Cache Reserve"],
@@ -54,14 +54,14 @@ const phases = [
 	{
 		id: "db",
 		phase: "Database Query",
-		before: { offset: 52, width: 48.1 },
-		after: { offset: 3.25, width: 12 },
+		before: { offset: 37.5, width: 58.33 },
+		after: { offset: 2.71, width: 9.71 },
 		product: "Hyperdrive",
 		icon: "hyperdrive",
 		href: "/hyperdrive/",
 		outcome: "Make database queries feel local",
 		detail:
-			"Connection pooling and caching at the edge. Slash query latency for Postgres, MySQL, and more.",
+			"Connection pooling and query caching globally. Slash query latency for Postgres, MySQL, and more.",
 		cta: "Speed up database queries",
 		tags: ["Connection Pooling", "Query Caching"],
 		color: "bg-lime-500",
@@ -70,12 +70,12 @@ const phases = [
 	{
 		id: "assets",
 		phase: "Asset Optimization",
-		before: { offset: 28.8, width: 20.8 },
-		after: { offset: 2.85, width: 10.8 },
+		before: { offset: 25, width: 11.25 },
+		after: { offset: 2.5, width: 5.83 },
 		product: "Images",
 		icon: "images",
 		href: "/images/",
-		outcome: "Transform and serve images from the edge",
+		outcome: "Transform and serve images globally",
 		detail:
 			"Resize, convert to modern formats, and deliver from 330+ cities. No origin round-trip.",
 		cta: "Optimize image delivery",
@@ -86,8 +86,8 @@ const phases = [
 	{
 		id: "scripts",
 		phase: "Third-party Scripts",
-		before: { offset: 52, width: 38.46 },
-		after: { offset: 14, width: 0 },
+		before: { offset: 37.5, width: 20.83 },
+		after: { offset: 12.42, width: 0 },
 		product: "Zaraz",
 		icon: "zaraz",
 		href: "/zaraz/",
@@ -173,7 +173,7 @@ const phases = [
 			<span
 				id="wf-total-value"
 				class="font-medium text-zinc-900 tabular-nums dark:text-zinc-100"
-				>~110 ms</span
+				>~300 ms</span
 			>
 		</div>
 	</div>
@@ -226,10 +226,10 @@ const phases = [
 			<div></div>
 			<div class="relative h-full">
 				{
-					[0, 200, 400, 600, 800, 1000, 1200].map((ms) => (
+					[0, 400, 800, 1200, 1600, 2000].map((ms) => (
 						<div
 							class="absolute bottom-0 flex flex-col items-center"
-							style={`left: ${(ms / 1300) * 100}%`}
+							style={`left: ${(ms / 2400) * 100}%`}
 						>
 							<span
 								class="wf-ruler-label mb-1 font-mono text-[9px] tracking-wider text-zinc-400 tabular-nums dark:text-zinc-500"
@@ -296,7 +296,7 @@ const phases = [
 							data-width-after={p.after.width}
 						>
 							<span class="wf-bar-label absolute top-1/2 right-1.5 -translate-y-1/2 font-mono text-[9px] font-medium whitespace-nowrap text-white/90 tabular-nums drop-shadow-sm max-[456px]:hidden">
-								{Math.round(p.after.width * 13)}ms
+								{Math.round(p.after.width * 24)}ms
 							</span>
 						</div>
 
@@ -351,14 +351,14 @@ const phases = [
 						<div
 							id="wf-total-bar"
 							class="bg-accent absolute inset-y-0 left-0 rounded-full transition-[width] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
-							style="width: 9%;"
+							style="width: 12%;"
 						>
 						</div>
 					</div>
 				</div>
 
 				{
-					/* Right: savings — mirrors the top's `TOTAL ~110 ms` label+value rhythm */
+					/* Right: savings — mirrors the top's `TOTAL ~300 ms` label+value rhythm */
 				}
 				<div
 					id="wf-savings-group"
@@ -369,7 +369,7 @@ const phases = [
 						id="wf-savings-badge"
 						class="font-medium text-zinc-900 tabular-nums dark:text-zinc-100"
 					>
-						91% faster
+						87% faster
 					</span>
 				</div>
 			</div>
@@ -629,7 +629,7 @@ const phases = [
 				// Update label text
 				const label = bar.querySelector(".wf-bar-label");
 				if (label && width) {
-					const ms = Math.round(parseFloat(width) * 13);
+					const ms = Math.round(parseFloat(width) * 24);
 					label.textContent = `${ms}ms`;
 					// Hide label if bar too narrow
 					(label as HTMLElement).style.opacity =
@@ -648,13 +648,13 @@ const phases = [
 
 			// Update total bar + label
 			if (totalBar) {
-				totalBar.style.width = after ? "9%" : "95%";
+				totalBar.style.width = after ? "12%" : "96%";
 			}
 			if (totalValue) {
-				totalValue.textContent = after ? "~110 ms" : "~1,300 ms";
+				totalValue.textContent = after ? "~300 ms" : "~2,300 ms";
 			}
 			if (savingsBadge) {
-				savingsBadge.textContent = "91% faster";
+				savingsBadge.textContent = "87% faster";
 			}
 			if (savingsGroup) {
 				savingsGroup.classList.toggle("hidden", !after);
