@@ -7,7 +7,6 @@ _build:
 name: "Workflows preserve `NonRetryableError` message"
 sort_date: "2026-05-14"
 enable_date: "2026-05-14"
-experimental: true
 enable_flag: "workflows_preserve_non_retryable_error_message"
 disable_flag: "workflows_replace_non_retryable_error_message"
 ---
