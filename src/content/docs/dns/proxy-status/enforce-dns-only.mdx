@@ -8,7 +8,7 @@ sidebar:
 
 import { APIRequest } from "~/components";
 
-The enforce DNS-only setting is an account-level break-glass mechanism that allows you to bypass Cloudflare's reverse proxy for all zones in your account in a single action. When enabled, Cloudflare responds to DNS queries with your origin IP addresses instead of Cloudflare's anycast IP addresses, effectively setting all [proxied DNS records](/dns/proxy-status/) to DNS-only without modifying the records themselves.
+The enforce DNS-only setting is an account-level break-glass mechanism that allows you to bypass Cloudflare's reverse proxy for all zones in your account in a single action. When enabled, Cloudflare responds to DNS queries with the underlying record content — origin IP addresses for proxied `A` and `AAAA` records, and CNAME targets for proxied `CNAME` records — instead of Cloudflare's anycast IP addresses, effectively setting all [proxied DNS records](/dns/proxy-status/) to DNS-only without modifying the records themselves.
 
 This setting is intended for emergency situations only, such as during an outage when you need to quickly route traffic directly to your origins.
 
@@ -32,7 +32,8 @@ Due to DNS caching by recursive resolvers, the transitions from proxied to DNS-o
 Before relying on enforce DNS-only as part of your incident response plan, you should:
 
 - Verify origin server capacity: Without Cloudflare proxying, your origin servers handle all traffic directly, including traffic that Cloudflare would normally cache or filter. Ensure your infrastructure can sustain this load.
-- Review exposed IP addresses: When enforce DNS-only is active, all origin IPs configured in proxied records become publicly visible through DNS queries. If your origins rely on IP obscurity for security, plan accordingly.
+- Review exposed record content: When enforce DNS-only is active, all origin IPs configured in proxied `A` and `AAAA` records, as well as the targets of proxied `CNAME` records, become publicly visible through DNS queries. If your origins rely on IP obscurity for security, plan accordingly.
+- 
 - Test in advance: Use the API in a staging or test account to confirm that you understand the behavior before you need it in an emergency.
 
 ## Enable enforce DNS-only
@@ -47,7 +48,7 @@ Use the [Update DNS Settings](/api/resources/dns/subresources/settings/subresour
 	}}
 />
 
-Once enabled, Cloudflare responds to DNS queries for all proxied records with your configured origin IP addresses instead of Cloudflare's anycast IPs.
+Once enabled, Cloudflare responds to DNS queries for all proxied records with the underlying record content — your configured origin IP addresses for `A` and `AAAA` records, and the configured CNAME target for `CNAME` records — instead of Cloudflare's anycast IPs.
 
 ## Disable enforce DNS-only
 
