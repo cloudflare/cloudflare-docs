@@ -14,8 +14,8 @@ Zone transfers allow you to use multiple DNS providers for the same domain to in
 
 With zone transfers, your providers synchronize DNS records between themselves using one of two protocols:
 
-- **Authoritative zone transfer ([AXFR](https://datatracker.ietf.org/doc/html/rfc5936))**: Copies the entire zone from the primary to the secondary provider, even if only one record changes.
-- **Incremental zone transfer ([IXFR](https://datatracker.ietf.org/doc/html/rfc1995))**: Transfers only the changes since the last transfer, rather than the entire zone.
+- **Authoritative zone transfer ([AXFR](https://www.rfc-editor.org/rfc/rfc5936.html))**: Copies the entire zone from the primary to the secondary provider, even if only one record changes.
+- **Incremental zone transfer ([IXFR](https://www.rfc-editor.org/rfc/rfc1995.html))**: Transfers only the changes since the last transfer, rather than the entire zone.
 
 Cloudflare supports both protocols.
 
