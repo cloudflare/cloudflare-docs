@@ -12,27 +12,86 @@ tags:
   - Post-quantum
 ---
 
-Cloudflare is [targeting 2029](https://blog.cloudflare.com/post-quantum-roadmap/) to be fully post-quantum secure across its entire product suite. The table below summarizes where post-quantum cryptography is deployed today, organized by the two classes of post-quantum algorithms: [key agreement](/ssl/post-quantum-cryptography/#hybrid-key-agreement) (which protects against [harvest-now-decrypt-later](https://en.wikipedia.org/wiki/Harvest_now,_decrypt_later) attacks) and [signatures](/ssl/post-quantum-cryptography/#post-quantum-signatures) (which protect against quantum-forged authentication).
+Cloudflare is [targeting 2029](https://blog.cloudflare.com/post-quantum-roadmap/) to be fully post-quantum secure across its entire product suite.
+
+Post-quantum cryptography at Cloudflare is organized around a small number of shared **transport layers** — once a transport layer has been upgraded to post-quantum, every product layered on top of that transport inherits the same protection. The sections below group Cloudflare products by the transport layer responsible for their post-quantum protection, and capture which classes of post-quantum algorithms are deployed on each: [key agreement](/ssl/post-quantum-cryptography/#hybrid-key-agreement) (which protects against [harvest-now-decrypt-later](https://en.wikipedia.org/wiki/Harvest_now,_decrypt_later) attacks) and [signatures](/ssl/post-quantum-cryptography/#post-quantum-signatures) (which protect against quantum-forged authentication).
 
 Third-party software support for specific algorithms is tracked separately on the [PQC support](/ssl/post-quantum-cryptography/pqc-support/) page.
 
-| Product | Key agreement | Signatures | Reference |
-| --- | --- | --- | --- |
-| Visitor to Cloudflare (HTTPS / TLS 1.3 / HTTP/3) | ✅ X25519MLKEM768 | 🚧 via [MTC](https://blog.cloudflare.com/bootstrap-mtc/) | [PQC for all websites and APIs](https://blog.cloudflare.com/post-quantum-for-all/) |
-| Cloudflare internal network | 🚧 X25519MLKEM768 | Not yet | [PQC generally available](https://blog.cloudflare.com/post-quantum-cryptography-ga/), [Roadmap](https://blog.cloudflare.com/post-quantum-roadmap/) |
-| Cloudflare to origin (default) | ✅ X25519MLKEM768 | Not yet | [PQC to your origin](/ssl/post-quantum-cryptography/pqc-to-origin/) |
-| Cloudflare Tunnel (`cloudflared`) | ✅ X25519MLKEM768 | Not yet | [PQ Cloudflare Tunnel](https://blog.cloudflare.com/post-quantum-tunnel/) |
-| WARP / Cloudflare One Client (MASQUE) | ✅ X25519MLKEM768 | Not yet | [PQC and Cloudflare One](/ssl/post-quantum-cryptography/pqc-and-zero-trust/) |
-| Cloudflare Gateway (SWG, HTTPS inspection) | ✅ X25519MLKEM768 | Not yet | [Gateway TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/#post-quantum-support) |
-| Cloudflare One Appliance | ✅ Hybrid ML-KEM | Not yet | [PQC SASE](https://blog.cloudflare.com/post-quantum-sase/), [PQC and Cloudflare One](/ssl/post-quantum-cryptography/pqc-and-zero-trust/#cloudflare-ipsec) |
-| Cloudflare IPsec (third-party branch connectors) | ✅ ML-KEM-768 combined with ECDH in IKEv2 per [draft-ietf-ipsecme-ikev2-mlkem](https://datatracker.ietf.org/doc/draft-ietf-ipsecme-ikev2-mlkem/) (closed beta) | Not yet | [PQC SASE](https://blog.cloudflare.com/post-quantum-sase/) |
-| Cloudflare Access (clientless / agentless) | ✅ X25519MLKEM768 | Not yet | [PQC and Cloudflare One](/ssl/post-quantum-cryptography/pqc-and-zero-trust/#agentless-cloudflare-access) |
+## Visitor-facing TLS (HTTPS / TLS 1.3 / HTTP/3)
 
-:::note
-- ✅ means post-quantum cryptography is deployed across the product surface indicated.
+TLS connections terminated by Cloudflare's edge for any hostname proxied through Cloudflare. This is the transport layer every user-facing Cloudflare product inherits when end-users connect directly to a Cloudflare-proxied hostname.
+
+| Protection | Status |
+| --- | --- |
+| Key agreement | ✅ X25519MLKEM768 ([PQC for all websites and APIs](https://blog.cloudflare.com/post-quantum-for-all/)) |
+| Signatures | 🚧 via [Merkle Tree Certificates](https://blog.cloudflare.com/bootstrap-mtc/) |
+
+**Products that inherit this transport:** any proxied hostname, including Workers custom domains and `*.workers.dev`, R2 public buckets, Stream, Images, the Cloudflare API and dashboard, and any HTTPS application behind Cloudflare. [Cloudflare Access](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) agentless (clientless) onramp is also covered when end-users connect via a modern browser.
+
+## Cloudflare internal network
+
+Service-to-service TLS connections inside Cloudflare's global network, as traffic moves between data centers and between internal services.
+
+| Protection | Status |
+| --- | --- |
+| Key agreement | 🚧 X25519MLKEM768 — most connections migrated; a long tail of older services is still pending ([PQC generally available](https://blog.cloudflare.com/post-quantum-cryptography-ga/), [Roadmap](https://blog.cloudflare.com/post-quantum-roadmap/)) |
+| Signatures | Not yet |
+
+## Cloudflare to origin (TLS 1.3)
+
+TLS connections from Cloudflare's edge to customer origin servers.
+
+| Protection | Status |
+| --- | --- |
+| Key agreement | ✅ X25519MLKEM768, advertised by default; [immediate keyshare opt-in](/ssl/post-quantum-cryptography/pqc-to-origin/) available ([PQC to your origin](/ssl/post-quantum-cryptography/pqc-to-origin/)) |
+| Signatures | Not yet |
+
+## MASQUE over TLS 1.3 (Cloudflare One Client)
+
+MASQUE tunnel established by the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) (formerly WARP) from an end-user device to Cloudflare's global network.
+
+| Protection | Status |
+| --- | --- |
+| Key agreement | ✅ X25519MLKEM768 ([PQC and Cloudflare One](/ssl/post-quantum-cryptography/pqc-and-zero-trust/)) |
+| Signatures | Not yet |
+
+**Products that inherit this transport:** [Cloudflare Gateway](/cloudflare-one/traffic-policies/http-policies/tls-decryption/#post-quantum-support) (SWG) when traffic on-ramps via the Cloudflare One Client, [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) (mesh nodes and client devices both use the Cloudflare One Client underneath), and any Cloudflare One product that on-ramps through the client.
+
+## Cloudflare Tunnel (TLS 1.3, `cloudflared`)
+
+Outbound TLS tunnel from `cloudflared` on a customer origin to Cloudflare's global network.
+
+| Protection | Status |
+| --- | --- |
+| Key agreement | ✅ X25519MLKEM768 ([PQ Cloudflare Tunnel](https://blog.cloudflare.com/post-quantum-tunnel/)) |
+| Signatures | Not yet |
+
+**Products that inherit this transport:** [Workers VPC](/workers-vpc/) private-network access (which uses Cloudflare Tunnel as its connectivity layer) and any [Cloudflare One](/cloudflare-one/) off-ramp that egresses via `cloudflared`.
+
+## Cloudflare One Appliance (TLS 1.3 control plane)
+
+The [Cloudflare One Appliance](/cloudflare-wan/configuration/appliance/) uses a non-IKE control plane, secured over TLS 1.3, to establish the symmetric keys used by its dataplane IPsec ESP tunnels.
+
+| Protection | Status |
+| --- | --- |
+| Key agreement | ✅ Hybrid ML-KEM ([PQC SASE](https://blog.cloudflare.com/post-quantum-sase/), [PQC and Cloudflare One](/ssl/post-quantum-cryptography/pqc-and-zero-trust/#cloudflare-ipsec)) |
+| Signatures | Not yet |
+
+## Cloudflare IPsec (IKEv2 for third-party branch connectors, closed beta)
+
+IKEv2 key exchange for third-party IPsec branch connectors (distinct from the TLS control plane used by the Cloudflare One Appliance).
+
+| Protection | Status |
+| --- | --- |
+| Key agreement | ✅ ML-KEM-768 combined with ECDH in IKEv2 per [draft-ietf-ipsecme-ikev2-mlkem](https://datatracker.ietf.org/doc/draft-ietf-ipsecme-ikev2-mlkem/) (closed beta) ([PQC SASE](https://blog.cloudflare.com/post-quantum-sase/)) |
+| Signatures | Not yet |
+
+## Legend
+
+- ✅ means post-quantum cryptography is deployed across the transport layer indicated.
 - 🚧 means partial coverage — a migration is in progress and not all paths are post-quantum secured yet.
-- "Not yet" means the product does not yet use post-quantum cryptography of the indicated class. For signatures this means connections still rely on classical (RSA or ECDSA) signatures for authentication today. Refer to the [roadmap post](https://blog.cloudflare.com/post-quantum-roadmap/) for the intended migration order.
-:::
+- "Not yet" means the transport layer does not yet use post-quantum cryptography of the indicated class. For signatures this means connections still rely on classical (RSA or ECDSA) signatures for authentication today. Refer to the [roadmap post](https://blog.cloudflare.com/post-quantum-roadmap/) for the intended migration order.
 
 ## Contributing
 
