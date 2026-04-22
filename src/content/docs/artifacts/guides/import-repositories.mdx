@@ -3,7 +3,7 @@ title: Import repositories
 description: Import existing Git repos into Artifacts.
 pcx_content_type: how-to
 sidebar:
-  order: 3
+  order: 2
 products:
   - artifacts
 ---
@@ -18,26 +18,27 @@ This works well for:
 
 Artifacts imports public HTTPS remotes through the [REST API](/artifacts/api/rest-api/#import-a-public-https-remote) or the [Workers binding](/artifacts/api/workers-binding/#importparams). After import, the repo has a normal Artifacts remote URL and can be cloned, forked, or issued repo-scoped tokens like any other repo.
 
-Set up your namespace first. For more information, refer to [Namespaces](/artifacts/guides/namespaces/).
+Review [Namespaces](/artifacts/concepts/namespaces/) first, then use one namespace name consistently across your import workflow.
 
 ## Import a public HTTPS repo
 
 This example imports a public GitHub repo into the `default` namespace. You can use the same flow with other public HTTPS Git remotes.
 
-Use a gateway JWT that your Artifacts gateway accepts for `/v1/api/...` requests.
+Use a [Cloudflare API token](/fundamentals/api/get-started/create-token/) with **Artifacts** > **Edit**.
 
 This example uses `jq` to extract the returned fields.
 
 ```sh
+export ACCOUNT_ID="<YOUR_ACCOUNT_ID>"
 export ARTIFACTS_NAMESPACE="default"
 export ARTIFACTS_REPO="workers-sdk-baseline"
-export ARTIFACTS_JWT="<YOUR_ARTIFACTS_JWT>"
-export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.net/v1/api/namespaces/$ARTIFACTS_NAMESPACE"
+export CLOUDFLARE_API_TOKEN="<YOUR_API_TOKEN>"
+export ARTIFACTS_BASE_URL="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/artifacts/namespaces/$ARTIFACTS_NAMESPACE"
 ```
 
 ```bash
 IMPORT_RESPONSE=$(curl --silent --request POST "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO/import" \
-  --header "Authorization: Bearer $ARTIFACTS_JWT" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \
   --data '{
     "url": "https://github.com/cloudflare/workers-sdk",

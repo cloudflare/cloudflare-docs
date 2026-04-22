@@ -1,9 +1,9 @@
 ---
 title: Namespaces
 description: Organize repositories by environment or tenant.
-pcx_content_type: how-to
+pcx_content_type: concept
 sidebar:
-  order: 1
+  order: 2
 products:
   - artifacts
 ---
@@ -52,8 +52,9 @@ namespace = "default"
 Use that same namespace in your REST base URL:
 
 ```sh
+export ACCOUNT_ID="<YOUR_ACCOUNT_ID>"
 export ARTIFACTS_NAMESPACE="default"
-export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.net/v1/api/namespaces/$ARTIFACTS_NAMESPACE"
+export ARTIFACTS_BASE_URL="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/artifacts/namespaces/$ARTIFACTS_NAMESPACE"
 ```
 
 ## Split namespaces when needed

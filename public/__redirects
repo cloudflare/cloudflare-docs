@@ -27,6 +27,9 @@
 /billing/resolve-you-cannot-modify-this-subscription/ /billing/troubleshoot/resolve-you-cannot-modify-this-subscription/ 301
 /billing/resolve-cannot-remove-payment-method/ /billing/troubleshoot/resolve-cannot-remove-payment-method/ 301
 
+# artifacts
+/artifacts/guides/namespaces/ /artifacts/concepts/namespaces/ 301
+
 # homepage
 /cloudflare-one/identity/ /cloudflare-one/integrations/identity-providers/ 301
 /cloudflare-one/applications/ /cloudflare-one/access-controls/applications/http-apps/ 301
