@@ -1,7 +1,7 @@
 ---
-title: WAF Release - Scheduled changes for 2026-04-20
-description: WAF managed ruleset changes scheduled for 2026-04-20
-date: 2026-04-15
+title: WAF Release - Scheduled changes for 2026-04-27
+description: WAF managed ruleset changes scheduled for 2026-04-27
+date: 2026-04-21
 publish_future_dated_entry: true
 ---
 
@@ -21,209 +21,420 @@ import { RuleID } from "~/components";
 	</thead>
 	<tbody>
 		<tr>
-			<td>2026-04-15</td>
-			<td>2026-04-20</td>
+			<td>2026-04-21</td>
+			<td>2026-04-27</td>
 			<td>Log</td>
 			<td>N/A</td>
 			<td>
-				<RuleID id="ff8df24181aa4573a81be531ee159e2e" />
+				<RuleID id="d866f980582748568385b94480cec1dd" />
 			</td>
-			<td>Command Injection - Generic 8 - uri - Beta</td>
-			<td>This is a new detection.</td>
-		</tr>
-		<tr>
-			<td>2026-04-15</td>
-			<td>2026-04-20</td>
-			<td>Disabled</td>
-			<td>N/A</td>
-			<td>
-				<RuleID id="9429b63c137247faadeb8a29a15308cf" />
-			</td>
-			<td>Command Injection - Generic 8 - body - Beta</td>
+			<td>PostgreSQL - SQLi - COPY - Beta</td>
 			<td>
 				This is a new detection. This rule will be merged into the original rule
-				"Command Injection - Generic 8" (ID:{" "}
-				<RuleID id="5b3ce84c099040c6a25cee2d413592e2" />)
+				"PostgreSQL - SQLi - COPY" (ID:{" "}
+				<RuleID id="705a6b5569d5472596910e3ce7265a4e" />)
 			</td>
 		</tr>
 		<tr>
-			<td>2026-04-15</td>
-			<td>2026-04-20</td>
+			<td>2026-04-21</td>
+			<td>2026-04-27</td>
 			<td>Log</td>
 			<td>N/A</td>
 			<td>
-				<RuleID id="85aaf5db9e0c4237b87e837e958047ed" />
+				<RuleID id="71d133c374d94559aa9fdf042903de89" />
 			</td>
-			<td>MySQL - SQLi - Executable Comment - Beta</td>
+			<td>PostgreSQL - SQLi - COPY - Headers</td>
+			<td>This is a new detection.</td>
+		</tr>		
+		<tr>
+			<td>2026-04-21</td>
+			<td>2026-04-27</td>
+			<td>Log</td>
+			<td>N/A</td>
+			<td>
+				<RuleID id="9f1b1b7fd28a401b9d5c172d1036cfa6" />
+			</td>
+			<td>PostgreSQL - SQLi - COPY - URI</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>2026-04-21</td>
+			<td>2026-04-27</td>
+			<td>Log</td>
+			<td>N/A</td>
+			<td>
+				<RuleID id="700613b191d3479ea2782b4e9fe4eff5" />
+			</td>
+			<td>SQLi - Destructive Operations</td>
+			<td>
+				This is a new detection.
+			</td>
+		</tr>
+		<tr>
+			<td>2026-04-21</td>
+			<td>2026-04-27</td>
+			<td>Log</td>
+			<td>N/A</td>
+			<td>
+				<RuleID id="8e40416659334b8ba789365755ff389e" />
+			</td>
+			<td>SQLi - AND/OR MAKE_SET/ELT - Beta</td>
 			<td>
 				This is a new detection. This rule will be merged into the original rule
-				"MySQL - SQLi - Executable Comment" (ID:{" "}
-				<RuleID id="8629bb58defe4193ab4d493c7bd2d8fa" />)
+				"SQLi - AND/OR MAKE_SET/ELT" (ID:{" "}
+				<RuleID id="0f41a593c8fe42c38a26f709252d3934" />)
 			</td>
 		</tr>
 		<tr>
-			<td>2026-04-15</td>
-			<td>2026-04-20</td>
+			<td>2026-04-21</td>
+			<td>2026-04-27</td>
 			<td>Log</td>
 			<td>N/A</td>
 			<td>
-				<RuleID id="d19cd574c4644952881a6f3a582cc559" />
+				<RuleID id="1e0d4372ee1e41b9804b2d5c346487f9" />
 			</td>
-			<td>MySQL - SQLi - Executable Comment - Headers</td>
+			<td>SQLi - AND/OR MAKE_SET/ELT - Headers</td>
 			<td>This is a new detection.</td>
-		</tr>
+		</tr>		
 		<tr>
-			<td>2026-04-15</td>
-			<td>2026-04-20</td>
+			<td>2026-04-21</td>
+			<td>2026-04-27</td>
 			<td>Log</td>
 			<td>N/A</td>
 			<td>
-				<RuleID id=" " />
+				<RuleID id="d2c961a164a64cf6b871c9511ac6ceca" />
 			</td>
-			<td> </td>
+			<td>SQLi - AND/OR MAKE_SET/ELT - URI</td>
 			<td>This is a new detection.</td>
 		</tr>
 		<tr>
-			<td>2026-04-15</td>
-			<td>2026-04-20</td>
+			<td>2026-04-21</td>
+			<td>2026-04-27</td>
 			<td>Log</td>
 			<td>N/A</td>
 			<td>
-				<RuleID id="407f9ec8a17348dfba3b9450a16639d3" />
+				<RuleID id="4dacc0e6f32d4c5da3c2293edd471337" />
 			</td>
-			<td>MySQL - SQLi - Executable Comment - URI</td>
-			<td>This is a new detection.</td>
-		</tr>
-		<tr>
-			<td>2026-04-15</td>
-			<td>2026-04-20</td>
-			<td>Log</td>
-			<td>N/A</td>
-			<td>
-				<RuleID id="d07e6dbf15664b99b37b0d2544f24211" />
-			</td>
-			<td>Magento 2 - Unrestricted file upload - 2</td>
-			<td>This is a new detection.</td>
-		</tr>
-		<tr>
-			<td>2026-04-15</td>
-			<td>2026-04-20</td>
-			<td>Log</td>
-			<td>N/A</td>
-			<td>
-				<RuleID id="26ef21cb197b44fc8a98b7cebf170a17" />
-			</td>
-			<td>Apache ActiveMQ - Remote Code Execution - CVE:CVE-2026-34197</td>
-			<td>This is a new detection.</td>
-		</tr>
-		<tr>
-			<td>2026-04-15</td>
-			<td>2026-04-20</td>
-			<td>Log</td>
-			<td>N/A</td>
-			<td>
-				<RuleID id="7a40eed5a8654a50a2598a821dfa64df" />
-			</td>
-			<td>SQLi - Probing - uri - Beta</td>
-			<td>This is a new detection.</td>
-		</tr>
-		<tr>
-			<td>2026-04-15</td>
-			<td>2026-04-20</td>
-			<td>Log</td>
-			<td>N/A</td>
-			<td>
-				<RuleID id="15c6b2ce033949b2a1a9f9454c62e2e7" />
-			</td>
-			<td>SQLi - Probing - header - Beta</td>
-			<td>This is a new detection.</td>
-		</tr>
-		<tr>
-			<td>2026-04-15</td>
-			<td>2026-04-20</td>
-			<td>Disabled</td>
-			<td>N/A</td>
-			<td>
-				<RuleID id="fc9d800b7a724181af8d5650aab28ea1" />
-			</td>
-			<td>SQLi - Probing - body - Beta</td>
+			<td>SQLi - Common Patterns - Beta</td>
 			<td>
 				This is a new detection. This rule will be merged into the original rule
-				"SQLi - Probing" (ID: <RuleID id="2c20b5e8684043f48620ff77b4026c88" />)
+				"SQLi - Common Patterns" (ID:{" "}
+				<RuleID id="98f746d07a6d48ab9dae669acb5d0b9b" />)
 			</td>
 		</tr>
 		<tr>
-			<td>2026-04-15</td>
-			<td>2026-04-20</td>
+			<td>2026-04-21</td>
+			<td>2026-04-27</td>
 			<td>Log</td>
 			<td>N/A</td>
 			<td>
-				<RuleID id="7f7bc3d28a8e43bf97bd15d68c2ac1a7" />
+				<RuleID id="53a374379f2e41e9934791c1975c07b7" />
 			</td>
-			<td>SQLi - Sleep Function - Beta</td>
+			<td>SQLi - Common Patterns - Headers</td>
+			<td>This is a new detection.</td>
+		</tr>		
+		<tr>
+			<td>2026-04-21</td>
+			<td>2026-04-27</td>
+			<td>Log</td>
+			<td>N/A</td>
+			<td>
+				<RuleID id="9efedebfc371443f9fe7308605b1b06b" />
+			</td>
+			<td>SQLi - Common Patterns - URI</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>2026-04-21</td>
+			<td>2026-04-27</td>
+			<td>Log</td>
+			<td>N/A</td>
+			<td>
+				<RuleID id="d53a791496d64700870334f4dd0ba3c7" />
+			</td>
+			<td>SQLi - Equation - Beta</td>
 			<td>
 				This is a new detection. This rule will be merged into the original rule
-				"SQLi - Sleep Function" (ID:{" "}
-				<RuleID id="2c333735f7b24566b17cb64ef77e8d54" />)
+				"SQLi - Equation" (ID:{" "}
+				<RuleID id="e7691e1e4f4d4769909f3df6c2eb3e7f" />)
 			</td>
 		</tr>
 		<tr>
-			<td>2026-04-15</td>
-			<td>2026-04-20</td>
+			<td>2026-04-21</td>
+			<td>2026-04-27</td>
 			<td>Log</td>
 			<td>N/A</td>
 			<td>
-				<RuleID id="3872e5638bdf4bf0943a80394dacaeb8" />
+				<RuleID id="46efbd3496e64c3f902ad33d3d1c2384" />
 			</td>
-			<td>SQLi - Sleep Function - Headers</td>
+			<td>SQLi - Equation - Headers</td>
+			<td>This is a new detection.</td>
+		</tr>		
+		<tr>
+			<td>2026-04-21</td>
+			<td>2026-04-27</td>
+			<td>Log</td>
+			<td>N/A</td>
+			<td>
+				<RuleID id="46b937649a424b7ead90f6d0e1149ea6" />
+			</td>
+			<td>SQLi - Equation - URI</td>
 			<td>This is a new detection.</td>
 		</tr>
 		<tr>
-			<td>2026-04-15</td>
-			<td>2026-04-20</td>
+			<td>2026-04-21</td>
+			<td>2026-04-27</td>
 			<td>Log</td>
 			<td>N/A</td>
 			<td>
-				<RuleID id="bebce8fadfa94ccab09eb74fed4c9ece" />
+				<RuleID id="04d9182545f54ba8a4fa29fe205adbb0" />
 			</td>
-			<td>SQLi - Sleep Function - URI</td>
+			<td>SQLi - AND/OR Digit Operator Digit - Beta</td>
+			<td>
+				This is a new detection. This rule will be merged into the original rule
+				"SQLi - AND/OR Digit Operator Digit" (ID:{" "}
+				<RuleID id="762dd334ed0b4273816e3ff13893c564" />)
+			</td>
+		</tr>
+		<tr>
+			<td>2026-04-21</td>
+			<td>2026-04-27</td>
+			<td>Log</td>
+			<td>N/A</td>
+			<td>
+				<RuleID id="a24e7c15503948bc8766481aad2abbaa" />
+			</td>
+			<td>SQLi - AND/OR Digit Operator Digit - Headers</td>
+			<td>This is a new detection.</td>
+		</tr>		
+		<tr>
+			<td>2026-04-21</td>
+			<td>2026-04-27</td>
+			<td>Log</td>
+			<td>N/A</td>
+			<td>
+				<RuleID id="0c55eb362df64f92a85aa46753acbc0d" />
+			</td>
+			<td>SQLi - AND/OR Digit Operator Digit - URI</td>
 			<td>This is a new detection.</td>
 		</tr>
 		<tr>
-			<td>2026-04-15</td>
-			<td>2026-04-20</td>
+			<td>2026-04-21</td>
+			<td>2026-04-27</td>
 			<td>Log</td>
 			<td>N/A</td>
 			<td>
-				<RuleID id="2635275641bf44d4bad6a2e170282f38" />
+				<RuleID id="18c9879b7e184c559d23c1652b45a97d" />
 			</td>
-			<td>XSS, HTML Injection - Embed Tag - Headers (beta)</td>
+			<td>SQLi - Benchmark Function - Beta</td>
+			<td>
+				This is a new detection. This rule will be merged into the original rule
+				"SQLi - Benchmark Function" (ID:{" "}
+				<RuleID id="ac4e9ebfb43a4f3998f6072d2ebc44ad" />)
+			</td>
+		</tr>
+		<tr>
+			<td>2026-04-21</td>
+			<td>2026-04-27</td>
+			<td>Log</td>
+			<td>N/A</td>
+			<td>
+				<RuleID id="2adbc36c52324efcb4681b829889aadc" />
+			</td>
+			<td>SQLi - Benchmark Function - Headers</td>
+			<td>This is a new detection.</td>
+		</tr>		
+		<tr>
+			<td>2026-04-21</td>
+			<td>2026-04-27</td>
+			<td>Log</td>
+			<td>N/A</td>
+			<td>
+				<RuleID id="69564af3bc54406080deed72491b28e9" />
+			</td>
+			<td>SQLi - Benchmark Function - URI</td>
 			<td>This is a new detection.</td>
 		</tr>
 		<tr>
-			<td>2026-04-15</td>
-			<td>2026-04-20</td>
+			<td>2026-04-21</td>
+			<td>2026-04-27</td>
 			<td>Log</td>
 			<td>N/A</td>
 			<td>
-				<RuleID id="b3d033ea9f364574b0a2ec4223f4d718" />
+				<RuleID id="94b1646f0b0b46ec9b96f7742aa649de" />
 			</td>
+			<td>SQLi - Comparison - Beta</td>
 			<td>
-				XSS, HTML Injection - IFrame Tag - Src and Srcdoc Attributes - Headers
-				(beta)
+				This is a new detection. This rule will be merged into the original rule
+				"SQLi - Comparison" (ID:{" "}
+				<RuleID id="8166da327a614849bfa29317e7907480" />)
 			</td>
+		</tr>
+		<tr>
+			<td>2026-04-21</td>
+			<td>2026-04-27</td>
+			<td>Log</td>
+			<td>N/A</td>
+			<td>
+				<RuleID id="455ce87681bd4200bf53456c39e3e013" />
+			</td>
+			<td>SQLi - Comparison - Headers</td>
+			<td>This is a new detection.</td>
+		</tr>		
+		<tr>
+			<td>2026-04-21</td>
+			<td>2026-04-27</td>
+			<td>Log</td>
+			<td>N/A</td>
+			<td>
+				<RuleID id="8152816062ed47f69be0f907f4bdb492" />
+			</td>
+			<td>SQLi - Comparison - URI</td>
 			<td>This is a new detection.</td>
 		</tr>
 		<tr>
-			<td>2026-04-15</td>
-			<td>2026-04-20</td>
+			<td>2026-04-21</td>
+			<td>2026-04-27</td>
 			<td>Log</td>
 			<td>N/A</td>
 			<td>
-				<RuleID id="76c37816ef5c4997ab2080a36978def1" />
+				<RuleID id="d5afd403a0544248b829fe5da1ff3b34" />
 			</td>
-			<td>XSS, HTML Injection - Link Tag - Headers (beta)</td>
+			<td>SQLi - String Concatenation - Body - Beta</td>
+			<td>
+				This is a new detection. This rule will be merged into the original rule
+				"SQLi - String Concatenation - Headers" (ID:{" "}
+				<RuleID id="3b0c61407d0b4f7d87e516472116d2fe" />)
+			</td>
+		</tr>
+		<tr>
+			<td>2026-04-21</td>
+			<td>2026-04-27</td>
+			<td>Log</td>
+			<td>N/A</td>
+			<td>
+				<RuleID id="380099df2bb2469c91ebbb7b846d1940" />
+			</td>
+			<td>SQLi - String Concatenation - Headers</td>
+			<td>This is a new detection.</td>
+		</tr>		
+		<tr>
+			<td>2026-04-21</td>
+			<td>2026-04-27</td>
+			<td>Log</td>
+			<td>N/A</td>
+			<td>
+				<RuleID id="bd19397228404b85aa3797238fae8c84" />
+			</td>
+			<td>SQLi - String Concatenation - URI</td>
 			<td>This is a new detection.</td>
 		</tr>
+		<tr>
+			<td>2026-04-21</td>
+			<td>2026-04-27</td>
+			<td>Log</td>
+			<td>N/A</td>
+			<td>
+				<RuleID id="6542d36980cf4018b4d5e2bfeacc78ab" />
+			</td>
+			<td>SQLi - SELECT Expression - Beta</td>
+			<td>
+				This is a new detection. This rule will be merged into the original rule
+				"SQLi - SELECT Expression" (ID:{" "}
+				<RuleID id="00da180570d34b5bae2121acd0023a36" />)
+			</td>
+		</tr>
+		<tr>
+			<td>2026-04-21</td>
+			<td>2026-04-27</td>
+			<td>Log</td>
+			<td>N/A</td>
+			<td>
+				<RuleID id="4073f7b575ff45dfb7621b43630bb223" />
+			</td>
+			<td>SQLi - SELECT Expression - Headers</td>
+			<td>This is a new detection.</td>
+		</tr>		
+		<tr>
+			<td>2026-04-21</td>
+			<td>2026-04-27</td>
+			<td>Log</td>
+			<td>N/A</td>
+			<td>
+				<RuleID id="2721e3184d50466ea637e9afdcd6efb5" />
+			</td>
+			<td>SQLi - SELECT Expression - URI</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>2026-04-21</td>
+			<td>2026-04-27</td>
+			<td>Log</td>
+			<td>N/A</td>
+			<td>
+				<RuleID id="7ecca84c08aa4aad9b5a7bda18c47cea" />
+			</td>
+			<td>SQLi - ORD and ASCII - Beta</td>
+			<td>
+				This is a new detection. This rule will be merged into the original rule
+				"SQLi - ORD and ASCII" (ID:{" "}
+				<RuleID id="2fc38b34a9d744d2a3cbcc41d0d207f9" />)
+			</td>
+		</tr>
+		<tr>
+			<td>2026-04-21</td>
+			<td>2026-04-27</td>
+			<td>Log</td>
+			<td>N/A</td>
+			<td>
+				<RuleID id="60704f5c5513425c94cf77031d0906b6" />
+			</td>
+			<td>SQLi - ORD and ASCII - Headers</td>
+			<td>This is a new detection.</td>
+		</tr>		
+		<tr>
+			<td>2026-04-21</td>
+			<td>2026-04-27</td>
+			<td>Log</td>
+			<td>N/A</td>
+			<td>
+				<RuleID id="f6d10e10c9514eb49dcc2122bdb1618f" />
+			</td>
+			<td>SQLi - ORD and ASCII - URI</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>2026-04-21</td>
+			<td>2026-04-27</td>
+			<td>Log</td>
+			<td>N/A</td>
+			<td>
+				<RuleID id="607ec27233b54beb8b89386ef0884a68" />
+			</td>
+			<td>XSS, HTML Injection - Object Tag - Body (beta)</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>2026-04-21</td>
+			<td>2026-04-27</td>
+			<td>Log</td>
+			<td>N/A</td>
+			<td>
+				<RuleID id="0087c27420c54168a10bc05eff012303" />
+			</td>
+			<td>XSS, HTML Injection - Object Tag - Headers (beta)</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>2026-04-21</td>
+			<td>2026-04-27</td>
+			<td>Log</td>
+			<td>N/A</td>
+			<td>
+				<RuleID id="38dc97853ebf40ed9476ec7816f921d9" />
+			</td>
+			<td>XSS, HTML Injection - Object Tag - URI (beta)</td>
+			<td>This is a new detection.</td>
+		</tr>							
 	</tbody>
 </table>
