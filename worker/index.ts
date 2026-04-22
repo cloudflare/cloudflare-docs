@@ -88,7 +88,6 @@ export default class extends WorkerEntrypoint<Env> {
 				headers: {
 					"Content-Type":
 						'application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727"',
-					"Cache-Control": "public, max-age=3600",
 				},
 			});
 		}
@@ -103,7 +102,6 @@ export default class extends WorkerEntrypoint<Env> {
 			return new Response(object.body, {
 				headers: {
 					"Content-Type": "application/json; charset=utf-8",
-					"Cache-Control": "public, max-age=3600",
 				},
 			});
 		}
