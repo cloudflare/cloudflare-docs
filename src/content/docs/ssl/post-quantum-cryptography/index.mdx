@@ -40,7 +40,7 @@ With TLS 1.3, [X25519](https://en.wikipedia.org/wiki/Curve25519) - an Elliptic C
 
 It is urgent to migrate key agreement to post-quantum algorithms as soon as possible. The objective is to protect against an adversary capable of harvesting today's encrypted communications and storing it until some time in the future when they can gain access to a sufficiently powerful quantum computer to decrypt it.
 
-In response to this, Cloudflare is an early adopter of ML-KEM, the post-quantum key agreement selected by the US National Institute of Standards and Technology (NIST). For a detailed timeline and more background information refer to [State of the post-quantum Internet in 2025](https://blog.cloudflare.com/pq-2025/).
+In response to this, Cloudflare has deployed support for ML-KEM, the post-quantum key agreement selected by the US National Institute of Standards and Technology (NIST). Refer to [PQC in Cloudflare products](/ssl/post-quantum-cryptography/pqc-cloudflare-products/) for the current deployment status across products. For a detailed timeline and more background information refer to [State of the post-quantum Internet in 2025](https://blog.cloudflare.com/pq-2025/).
 
 Cloudflare has deployed the following hybrid key agreements:
 
@@ -55,7 +55,7 @@ A hybrid key agreement lays the groundwork as more and more [clients](#1-visitor
 
 Recent advances in quantum hardware and algorithms have accelerated the timeline on which a cryptographically relevant quantum computer might exist, which in turn elevates the priority of migrating authentication (signatures) to post-quantum algorithms. Refer to [Cloudflare targets 2029 for full post-quantum security](https://blog.cloudflare.com/post-quantum-roadmap/) for context.
 
-Cloudflare is an early adopter of [ML-DSA](https://csrc.nist.gov/pubs/fips/204/final), the post-quantum digital signature algorithm selected by NIST (FIPS 204), and is beginning to roll out support for ML-DSA in selected product surfaces. Software support for specific schemes is tracked on the [PQC support](/ssl/post-quantum-cryptography/pqc-support/) page.
+Cloudflare has deployed support for [ML-DSA](https://csrc.nist.gov/pubs/fips/204/final), the post-quantum digital signature algorithm selected by NIST (FIPS 204). Today this support covers authentication on the connection between Cloudflare and your origin server (see [PQC to your origin](/ssl/post-quantum-cryptography/pqc-to-origin/#post-quantum-signatures)). Post-quantum authentication on the connection from the visitor to Cloudflare's edge and for internal Cloudflare connections is still under development. Refer to [PQC in Cloudflare products](/ssl/post-quantum-cryptography/pqc-cloudflare-products/) for the products that support ML-DSA today.
 
 For background on the post-quantum signature landscape, refer to [A look at the latest post-quantum signature standardization candidates](https://blog.cloudflare.com/another-look-at-pq-signatures/).
 
