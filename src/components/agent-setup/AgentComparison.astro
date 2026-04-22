@@ -1,6 +1,6 @@
 ---
 import type { AgentData } from "./types";
-import { capabilityLabels } from "./definitions";
+import { capabilityLabels, capabilityTooltips } from "./definitions";
 
 interface Props {
 	agents: AgentData[];
@@ -122,6 +122,7 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" cl
 								{agent.pricing_model ? (
 									<span
 										class={`agent-setup-badge agent-token-badge agent-token-badge--${agent.pricing_model.replace("_", "-")}`}
+										data-agent-tooltip={capabilityTooltips[agent.pricing_model] ?? ""}
 									>
 										{capabilityLabels[
 											agent.pricing_model as keyof typeof capabilityLabels
@@ -135,6 +136,7 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" cl
 								{agent.model_flexibility ? (
 									<span
 										class={`agent-setup-badge agent-token-badge agent-token-badge--${agent.model_flexibility.replace("_", "-")}`}
+										data-agent-tooltip={capabilityTooltips[agent.model_flexibility] ?? ""}
 									>
 										{capabilityLabels[
 											agent.model_flexibility as keyof typeof capabilityLabels
@@ -148,6 +150,7 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" cl
 								{agent.context_approach ? (
 									<span
 										class={`agent-setup-badge agent-token-badge agent-token-badge--${agent.context_approach.replace("_", "-")}`}
+										data-agent-tooltip={capabilityTooltips[agent.context_approach] ?? ""}
 									>
 										{capabilityLabels[
 											agent.context_approach as keyof typeof capabilityLabels
@@ -172,6 +175,23 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" cl
 </div>
 
 <script>
+	import tippy from "tippy.js";
+
+	document
+		.querySelectorAll<HTMLElement>("[data-agent-tooltip]")
+		.forEach((el) => {
+			const content = el.dataset.agentTooltip;
+			if (!content) return;
+			tippy(el, {
+				content,
+				placement: "top",
+				appendTo: () => document.body,
+				arrow: true,
+				maxWidth: 280,
+				delay: [150, 0],
+			});
+		});
+
 	document
 		.querySelectorAll<HTMLTableElement>("[data-agent-table]")
 		.forEach((table) => {

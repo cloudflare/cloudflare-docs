@@ -55,7 +55,7 @@ export const AGENTS: AgentData[] = [
 		],
 		pricing_model: "hybrid",
 		model_flexibility: "locked",
-		context_approach: "session",
+		context_approach: "project_memory",
 		links: {
 			skills: "https://github.com/cloudflare/skills",
 			mcp_server: "https://github.com/cloudflare/mcp",
