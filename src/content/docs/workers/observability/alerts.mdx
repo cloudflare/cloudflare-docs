@@ -43,6 +43,8 @@ Alerts query the Workers Observability dataset, which requires [Workers Logs](/w
 4. Configure the alert settings described below.
 5. Select **Save Alert**.
 
+![Alert editor showing conditions, filters, group by, timings, notifications, and a live metrics preview](~/assets/images/workers-observability/wobs_edit_alert.png)
+
 You can also create an alert directly from a query in the [Query Builder](/workers/observability/query-builder/). The query's visualization, filters, and group-by fields will carry over into the alert configuration.
 
 ### Conditions
@@ -144,6 +146,8 @@ Selecting an alert from the alerts list opens the detail view, which provides th
 
 ### Metrics
 
+![Alert detail view showing the Metrics tab with a time-series chart, threshold line, and time range selector](~/assets/images/workers-observability/wobs_view_alert.png)
+
 The **Metrics** tab displays a time-series chart of the data being evaluated by the alert. Threshold lines are drawn on the chart to visualize your configured conditions. You can select different time ranges (15m, 1h, 24h, 3d, 7d) and brush-select a region to zoom in.
 
 The chart also shows:
@@ -152,6 +156,8 @@ The chart also shows:
 - **Checks** — Vertical markers showing when each check was evaluated and whether it passed or failed.
 
 ### Checks
+
+![Alert detail view showing the Checks tab with individual check evaluations and state transitions](~/assets/images/workers-observability/wobs_checks.png)
 
 The **Checks** tab shows a table of every evaluation performed by the alert, including:
 
@@ -163,6 +169,8 @@ The **Checks** tab shows a table of every evaluation performed by the alert, inc
 If your alert uses Group By, you can expand each check to see per-group results.
 
 ### Incidents
+
+![Alert detail view showing the Incidents tab with incident timeline, metrics chart, and resolved incidents](~/assets/images/workers-observability/wobs_incident_alert.png)
 
 The **Incidents** tab shows the history of all incidents created by the alert. Each incident includes:
 
