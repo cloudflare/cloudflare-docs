@@ -8,9 +8,7 @@ interface ToolAnnotations {
 }
 
 interface ModelContextClient {
-	requestUserInteraction(
-		callback: () => Promise<unknown>,
-	): Promise<unknown>;
+	requestUserInteraction(callback: () => Promise<unknown>): Promise<unknown>;
 }
 
 type ToolExecuteCallback = (

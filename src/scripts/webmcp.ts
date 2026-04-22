@@ -119,9 +119,7 @@ async function executeListDirectories(
 		}
 
 		// Product entries: "- [Name](url): description"
-		const entryMatch = /^-\s+\[([^\]]+)\]\(([^)]+)\)(?::\s+(.*))?$/.exec(
-			line,
-		);
+		const entryMatch = /^-\s+\[([^\]]+)\]\(([^)]+)\)(?::\s+(.*))?$/.exec(line);
 		if (entryMatch) {
 			const name = entryMatch[1].trim();
 			// Convert per-product llms.txt URL to the docs root URL
@@ -163,7 +161,8 @@ function registerTools(): void {
 					},
 					limit: {
 						type: "integer",
-						description: "Maximum number of results to return (1–20, default 5)",
+						description:
+							"Maximum number of results to return (1–20, default 5)",
 						default: 5,
 						minimum: 1,
 						maximum: 20,
