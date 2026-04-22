@@ -94,7 +94,7 @@ Cloudflare Network Firewall is available to Enterprise users only.
 
 To block TCP SYN packets to a specific destination:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Firewall policies** > **Custom policies**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Firewall policies** > **Custom policies**.
 2. Select **Add a policy**.
 3. Create a rule with the destination IP address or CIDR range you want to block. For example, to block all traffic to `10.0.0.0/8`, use the expression `ip.dst in {10.0.0.0/8}` with a **Block** action.
 4. Select **Add new policy**.
@@ -174,9 +174,9 @@ Order of precedence refers to the priority of individual policies within the DNS
 
 The order of precedence follows the first match principle. Once traffic matches an Allow or Block policy, evaluation stops and no subsequent policies can override the decision. Therefore, Cloudflare recommends assigning the most specific policies and exceptions with the highest precedence and the most general policies with the lowest precedence.
 
-#### Cloudflare One
+#### Cloudflare dashboard
 
-In Cloudflare One, policies are in order of precedence from top to bottom of the list. Policies begin with precedence `1` and count upward. You can modify the order of precedence by dragging and dropping individual policies in the dashboard.
+In the Cloudflare dashboard, policies are in order of precedence from top to bottom of the list. Policies begin with precedence `1` and count upward. You can modify the order of precedence by dragging and dropping individual policies in the dashboard.
 
 #### Cloudflare API
 
@@ -239,11 +239,11 @@ Therefore, the user is able to connect to `https://test.example.com`.
 
 ## Precedence calculations
 
-When arranging policies in [Cloudflare One](https://one.dash.cloudflare.com/), Gateway automatically calculates the precedence for rearranged policies.
+When arranging policies in the [Cloudflare dashboard](https://dash.cloudflare.com/), Gateway automatically calculates the precedence for rearranged policies.
 
 When using the API to create a policy, unless the precedence is explicitly defined in the policy, Gateway will assign precedence to policies starting at `1000`. Every time a new policy is added to the bottom of the order, Gateway will calculate the current highest precedence in the account and add a random integer between 1 and 100 to `1000` so that it now claims the maximum precedence in the account. To manually update a policy's precedence, use the [Update a Zero Trust Gateway rule](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/update/) endpoint. You can set a policy's precedence to any value that is not already in use.
 
-Changing the order within Cloudflare One or API may result in configuration issues when using [Terraform](#manage-precedence-with-terraform).
+Changing the order within the Cloudflare dashboard or API may result in configuration issues when using [Terraform](#manage-precedence-with-terraform).
 
 ## Manage precedence with Terraform
 
@@ -269,4 +269,4 @@ resource "cloudflare_zero_trust_gateway_policy" "policy_3" {
 }
 ```
 
-To avoid precedence calculation errors when reordering policies with Terraform, you should move one policy at a time before running `terraform plan` and `terraform apply`. If you use both Terraform and Cloudflare One or API, sync your polices with `terraform refresh` before reordering policies in Terraform. Alternatively, you can set your account to [read-only in Cloudflare One](/cloudflare-one/api-terraform/#set-dashboard-to-read-only), only allowing changes using the API or Terraform.
+To avoid precedence calculation errors when reordering policies with Terraform, you should move one policy at a time before running `terraform plan` and `terraform apply`. If you use both Terraform and the Cloudflare dashboard or API, sync your polices with `terraform refresh` before reordering policies in Terraform. Alternatively, you can set your account to [read-only in the Cloudflare dashboard](/cloudflare-one/api-terraform/#set-dashboard-to-read-only), only allowing changes using the API or Terraform.

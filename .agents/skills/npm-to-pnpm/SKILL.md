@@ -84,6 +84,15 @@ Run:
 corepack enable pnpm
 ```
 
-## Step 3: Inform the user
+## Step 3: Install dependencies with pnpm
 
-Let the user know that pnpm is now installed and ready. This repo currently uses npm, so they should continue using `npm` commands for this project — pnpm is installed for future use when the repo migrates.
+This repo uses pnpm. Delete the old npm lockfile and install with pnpm:
+
+```bash
+rm -f package-lock.json
+pnpm install --frozen-lockfile
+```
+
+## Step 4: Inform the user
+
+Let the user know that pnpm is now set up and they should use `pnpm` commands going forward (e.g. `pnpm install`, `pnpm run dev`, `pnpm run build`). The `package-lock.json` file has been removed — the repo uses `pnpm-lock.yaml` instead.

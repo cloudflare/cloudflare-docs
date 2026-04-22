@@ -151,11 +151,11 @@ Gateway allows you to send copies of entire HTTP requests matched in HTTP Allow 
 
 To set up the DLP Forensic Copy Logpush job:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Insights** >**Logs**, and select **Manage Logpush**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Insights** >**Logs**, and select **Manage Logpush**.
 2. In Logpush, select **Create a Logpush job**.
 3. Choose a [Logpush destination](/logs/logpush/logpush-job/enable-destinations/).
 4. In **Configure logpush job**, choose the _DLP forensic copies_ dataset. Select **Create Logpush job**.
-5. Return to Cloudflare One and go to **Traffic policies** > **Firewall policies** > **HTTP**.
+5. Return to **Zero Trust** and go to **Traffic policies** > **Firewall policies** > **HTTP**.
 6. Edit an existing Allow or Block policy, or [create a new policy](/cloudflare-one/data-loss-prevention/dlp-policies/#2-create-a-dlp-policy). Your policy does not need to include a DLP profile — any Gateway HTTP policy can send forensic copies.
 7. In the policy builder, scroll down to **Configure policy settings** and turn on **Send DLP forensic copies to storage**.
 8. Select a storage destination. Gateway will list any configured Logpush jobs or integrations that can receive HTTP requests.

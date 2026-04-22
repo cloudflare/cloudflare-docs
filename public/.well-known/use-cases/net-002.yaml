@@ -1,0 +1,103 @@
+id: net-002
+name: Connect all your offices and clouds over Cloudflare instead of expensive leased lines
+category: network-connectivity-wan
+description: >
+  Connect branch offices, data centers, and clouds over Cloudflare's network.
+aliases:
+  - "Replace MPLS with cloud WAN"
+  - "MPLS replacement"
+  - "Software-defined WAN"
+  - "SD-WAN"
+  - "Branch office connectivity"
+  - "Cisco SD-WAN integration"
+  - "Fortinet SD-WAN integration"
+  - "Palo Alto SD-WAN integration"
+products:
+  - Cloudflare WAN
+  - Cloudflare One Appliance
+  - CNI
+  - Cloudflare Network Firewall
+
+qualifying_questions:
+  - id: q1
+    text: "What are you connecting?"
+    options:
+      - label: "Branch offices to each other and headquarters"
+        sets: [branch-to-branch]
+      - label: "On-prem data centers to cloud environments"
+        sets: [dc-to-cloud]
+      - label: "All of the above"
+        sets: [branch-to-branch, dc-to-cloud]
+  - id: q2
+    text: "How do you want to connect your sites to Cloudflare?"
+    options:
+      - label: "Software connector (Cloudflare One Appliance or Cloudflare Mesh)"
+        sets: [software-connector]
+      - label: "Encrypted tunnels from existing routers or firewalls (IPsec/GRE)"
+        sets: [ipsec-gre]
+      - label: "Direct physical interconnect (CNI)"
+        sets: [cni]
+      - label: "Mix of methods"
+        sets: [software-connector, ipsec-gre]
+
+default_path: software-wan
+
+paths:
+  - id: software-wan
+    name: "Software-Based WAN Connectivity"
+    condition:
+      has_any: [software-connector]
+    steps:
+      - product: "Cloudflare WAN"
+        action: deploy-connector
+        description: "Deploy Cloudflare One Appliance (physical or virtual) at each site. Cloudflare Mesh is also supported for software-defined, agent-based deployments."
+      - product: "Cloudflare WAN"
+        action: configure-site-routing
+        description: "Configure private network routes for each site"
+      - product: "Cloudflare WAN"
+        action: configure-split-tunnels
+        description: "Define which traffic routes through Cloudflare"
+      - product: "Cloudflare Network Firewall"
+        action: create-firewall-rules
+        description: "Create network firewall policies for inter-site traffic"
+
+  - id: tunnel-wan
+    name: "Tunnel-Based WAN (IPsec/GRE)"
+    condition:
+      has_any: [ipsec-gre]
+    steps:
+      - product: "Cloudflare WAN"
+        action: follow-vendor-integration-guide
+        description: "Follow the integration guide for your network device (guides available for Cisco, Fortinet, Palo Alto, SonicWall, Juniper, and others)"
+      - product: "Cloudflare WAN"
+        action: create-ipsec-tunnels
+        description: "Establish IPsec or GRE tunnels from your routers/firewalls"
+      - product: "Cloudflare WAN"
+        action: configure-static-routes
+        description: "Configure static routes for site subnets"
+      - product: "Cloudflare WAN"
+        action: enable-health-checks
+        description: "Enable tunnel health checks and failover"
+      - product: "Cloudflare Network Firewall"
+        action: create-firewall-rules
+        description: "Create Cloudflare Network Firewall rules for traffic segmentation"
+
+  - id: cni-wan
+    name: "Direct Interconnect (CNI)"
+    condition:
+      has_any: [cni]
+    steps:
+      - product: "CNI"
+        action: provision-interconnect
+        description: "Provision physical or virtual interconnect at a peering facility"
+      - product: "CNI"
+        action: configure-bgp
+        description: "Establish BGP sessions over the interconnect"
+      - product: "Cloudflare WAN"
+        action: configure-static-routes
+        description: "Configure routing for connected networks"
+
+related_use_cases:
+  - net-004
+  - net-007
+  - net-001

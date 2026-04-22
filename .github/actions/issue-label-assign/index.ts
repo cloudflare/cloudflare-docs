@@ -1,5 +1,5 @@
 // NOTE: This is the source file!
-// ~> Run `npm run build` to produce `index.js`
+// ~> Run `pnpm run build` to produce `index.js`
 
 import * as core from "@actions/core";
 import * as github from "@actions/github";
