@@ -18,12 +18,17 @@ export type CapabilityKey = keyof typeof capabilityDefinitions;
 export const capabilityTooltips: Record<string, string> = {
 	subscription: "Fixed recurring fee billed monthly or annually.",
 	byok: "Bring Your Own Key — the tool is free; you pay your model provider directly.",
-	hybrid: "Combines multiple pricing models, for example a free tier plus BYOK.",
+	hybrid:
+		"Combines multiple pricing models, for example a free tier plus BYOK.",
 	locked: "Models from other providers are not supported.",
-	multi_provider: "Supports multiple model providers out of the box (OpenAI, Anthropic, Google, local models, etc.).",
-	session: "Context is limited to the current conversation. No memory between runs.",
-	project_memory: "Retains context about your project across runs — configuration files, past conversations, preferences.",
-	indexed_codebase: "Builds a semantic index of your whole codebase so the agent can reference any file.",
+	multi_provider:
+		"Supports multiple model providers out of the box (OpenAI, Anthropic, Google, local models, etc.).",
+	session:
+		"Context is limited to the current conversation. No memory between runs.",
+	project_memory:
+		"Retains context about your project across runs — configuration files, past conversations, preferences.",
+	indexed_codebase:
+		"Builds a semantic index of your whole codebase so the agent can reference any file.",
 };
 
 export const capabilityLabels: Record<string, string> = {
