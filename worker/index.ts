@@ -43,10 +43,6 @@ const API_CATALOG = JSON.stringify({
 	],
 });
 
-// The server card is served from the worker so it stays live — content is
-// fetched from the MIDDLECACHE R2 binding and reflects the current state of
-// Cloudflare's MCP servers without requiring a docs redeploy.
-
 /**
  * When a redirect response is returned for an index.md request, rewrite the
  * Location header so the agent stays in Markdown land instead of landing on
