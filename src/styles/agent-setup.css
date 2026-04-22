@@ -587,19 +587,6 @@
 	color: var(--color-cl1-gray-8);
 }
 
-/* Swap copy icon for checkmark when the chip is in the "copied" state. */
-.agent-setup-prompt-icon-check {
-	display: none;
-}
-
-.agent-setup-prompt[data-copied] .agent-setup-prompt-icon-copy {
-	display: none;
-}
-
-.agent-setup-prompt[data-copied] .agent-setup-prompt-icon-check {
-	display: block;
-}
-
 .agent-setup-prompt[data-copied] .agent-setup-prompt-icon,
 .agent-setup-prompt[data-copied]:hover .agent-setup-prompt-icon {
 	color: var(--color-cl1-green-4);

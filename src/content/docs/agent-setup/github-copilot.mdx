@@ -35,7 +35,7 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
 	3. **Configure Cloudflare MCP servers**
 
-		For VS Code, add to `.vscode/mcp.json`. For Copilot CLI, add to `~/.copilot/mcp-config.json`. See all available Cloudflare MCP servers on [GitHub](https://github.com/cloudflare/mcp-server-cloudflare).
+		For VS Code, add to `.vscode/mcp.json`. For Copilot CLI, add to `~/.copilot/mcp-config.json`. For a full list of available Cloudflare MCP servers, refer to the repository on [GitHub](https://github.com/cloudflare/mcp-server-cloudflare).
 
 		```json
 		{
@@ -57,20 +57,20 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
 <PlatformAccess
 	agentName="GitHub Copilot"
-	skillsExtraHtml="Copilot supports Agent Skills in VS Code agent mode, the Copilot CLI, and the cloud agent. Skills aren&rsquo;t used for inline code completion &mdash; switch Copilot Chat to agent mode to unlock them."
+	skillsExtraHtml="Copilot supports Agent Skills in VS Code agent mode, the Copilot CLI, and the cloud agent. Skills are not used for inline code completion &mdash; switch Copilot Chat to agent mode to unlock them."
 >
 	<Fragment slot="wrangler">
 		<div class="agent-platform-hint">
 			Copilot's deploy story runs through CI, not a local CLI.
 		</div>
 		<p>
-			Unlike terminal agents, Copilot doesn't have its own CLI that runs Wrangler
+			Unlike terminal agents, Copilot does not have its own CLI that runs Wrangler
 			directly. Instead, ask Copilot to generate a GitHub Actions workflow that runs
 			<a href="/workers/wrangler/">Wrangler</a> on every push — GitHub's ecosystem
 			is Copilot's native turf.
 		</p>
 		<p>
-			You'll also want to add <code>CLOUDFLARE_API_TOKEN</code> and <code>CLOUDFLARE_ACCOUNT_ID</code>
+			You will also want to add <code>CLOUDFLARE_API_TOKEN</code> and <code>CLOUDFLARE_ACCOUNT_ID</code>
 			as repository secrets. Copilot knows this pattern and will prompt you if you
 			forget.
 		</p>
@@ -136,7 +136,7 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 	<FAQItem question="Does Copilot support Cloudflare Skills?">
 		Yes. GitHub Copilot added Agent Skills support for VS Code agent mode, the
 		Copilot CLI, and the cloud agent. Run `npx skills add
-		https://github.com/cloudflare/skills` to install them. See the [About agent
+		https://github.com/cloudflare/skills` to install them. Refer to the [About agent
 		skills](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills)
 		guide for details on where Copilot looks for Skills.
 	</FAQItem>
@@ -162,10 +162,10 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 ## Troubleshooting
 
 <TroubleshootingList>
-	<TroubleshootingItem issue="Skills don't load in Copilot">
+	<TroubleshootingItem issue="Skills do not load in Copilot">
 		Skills only work in VS Code agent mode, the Copilot CLI, and the cloud agent
 		— not with inline completion or plain chat. Switch Copilot Chat to agent
-		mode. If Skills still aren't discovered, see [About agent
+		mode. If Skills are still not discovered, refer to [About agent
 		skills](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills)
 		for the paths Copilot checks.
 	</TroubleshootingItem>
