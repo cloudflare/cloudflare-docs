@@ -1,0 +1,159 @@
+id: ops-007
+name: Build and scale multi-tenant SaaS platforms
+category: developer-platform-operate
+description: >
+  Custom domains, tenant isolation, reduced egress, and global delivery for SaaS platforms built on Cloudflare.
+aliases:
+  - "Build multi-tenant SaaS platforms"
+  - "Scale SaaS platforms globally"
+  - "SaaS provider infrastructure"
+  - "Isolate customer data per tenant"
+  - "SaaS platform security"
+  - "Per-tenant usage analytics and billing"
+  - "Multi-tenant data isolation"
+products:
+  - Workers for Platforms
+  - Cloudflare for SaaS
+  - R2
+  - CDN
+  - D1
+  - Workers KV
+  - WAF
+  - DDoS Protection
+  - Workers Analytics Engine
+  - Bot Management
+  - Workers
+
+qualifying_questions:
+  - id: q1
+    text: "What multi-tenant capability do you need?"
+    options:
+      - label: "Let customers run their own code on my platform"
+        sets: [customer-code]
+      - label: "Custom domains and SSL for each customer"
+        sets: [custom-domains]
+      - label: "Reducing infrastructure and egress costs"
+        sets: [cost-reduction]
+      - label: "Application security and performance"
+        sets: [security-perf]
+      - label: "Storing and isolating data per customer"
+        sets: [data-isolation]
+      - label: "Tracking usage per customer for billing"
+        sets: [usage-analytics]
+      - label: "All of the above"
+        sets: [cost-reduction, custom-domains, customer-code, data-isolation, security-perf, usage-analytics]
+      - label: "I'm not sure"
+        sets: [custom-domains]
+
+default_path: workers-for-platforms
+
+paths:
+  - id: workers-for-platforms
+    name: "Workers for Platforms (Customer Code)"
+    condition:
+      has_any: [customer-code]
+    steps:
+      - product: "Workers for Platforms"
+        action: enable-dispatch-namespaces
+        description: "Enable dispatch namespaces for tenant isolation"
+      - product: "Workers for Platforms"
+        action: create-dispatch-namespace
+        description: "Create a dispatch namespace for customer Workers"
+      - product: "Workers for Platforms"
+        action: deploy-customer-workers
+        description: "Deploy individual customer Workers into the namespace"
+      - product: "Workers for Platforms"
+        action: configure-routing
+        description: "Route requests to the correct customer Worker"
+
+  - id: cloudflare-for-saas
+    name: "Cloudflare for SaaS (Custom Domains)"
+    condition:
+      has_any: [custom-domains]
+    steps:
+      - product: "Cloudflare for SaaS"
+        action: create-fallback-origin
+        description: "Configure your fallback origin"
+      - product: "Cloudflare for SaaS"
+        action: create-custom-hostnames
+        description: "Create custom hostnames for each customer domain"
+      - product: "Cloudflare for SaaS"
+        action: configure-ssl
+        description: "SSL certificates are automatically provisioned per hostname"
+      - product: "Cloudflare for SaaS"
+        action: configure-routing-rules
+        description: "Set up routing rules per custom hostname"
+
+  - id: saas-cost-reduction
+    name: "SaaS Cost Reduction"
+    condition:
+      has_any: [cost-reduction]
+    steps:
+      - product: "R2"
+        action: migrate-to-r2
+        description: "Migrate object storage to R2 (zero egress)"
+      - product: "CDN"
+        action: optimize-caching
+        description: "Maximize CDN cache hit ratio"
+      - product: "Workers"
+        action: move-compute-to-edge
+        description: "Move compute workloads to Workers for cost efficiency"
+
+  - id: tenant-data-isolation
+    name: "Store and Isolate Customer Data"
+    condition:
+      has_any: [data-isolation]
+    steps:
+      - product: "D1"
+        action: create-per-tenant-databases
+        description: "Create separate D1 databases per tenant for full data isolation"
+      - product: "Workers KV"
+        action: namespace-per-tenant
+        description: "Use KV namespaces to isolate tenant configuration and session data"
+      - product: "R2"
+        action: bucket-per-tenant
+        description: "Create R2 buckets or key prefixes per tenant for file and media storage"
+      - product: "Workers"
+        action: tenant-routing
+        description: "Route requests to the correct tenant's data based on hostname, header, or token"
+
+  - id: saas-platform-security
+    name: "Protect Your SaaS Platform and Customers"
+    condition:
+      has_any: [security-perf]
+    steps:
+      - product: "WAF"
+        action: configure-managed-rules
+        description: "Enable WAF managed rules to protect your platform from OWASP Top 10 attacks"
+      - product: "DDoS Protection"
+        action: configure-ddos-protection
+        description: "Configure DDoS protection for your platform endpoints"
+      - product: "Bot Management"
+        action: enable-bot-analytics
+        description: "Detect and block abusive bots targeting your platform or customer accounts"
+      - product: "WAF"
+        action: create-rate-limiting-rule
+        description: "Rate limit API endpoints to prevent abuse by individual tenants"
+
+  - id: tenant-usage-analytics
+    name: "Track Per-Tenant Usage for Billing and Insights"
+    condition:
+      has_any: [usage-analytics]
+    steps:
+      - product: "Workers Analytics Engine"
+        action: create-dataset
+        description: "Create a Workers Analytics Engine dataset to log per-tenant request counts, bandwidth, and compute usage"
+      - product: "Workers"
+        action: instrument-usage-logging
+        description: "Add usage logging to your Worker to record tenant-level metrics on every request"
+      - product: "Workers Analytics Engine"
+        action: query-usage
+        description: "Query usage data via SQL API to generate per-tenant billing reports"
+
+related_use_cases:
+  - dev-001
+  - sec-010
+  - ops-011
+  - ops-014
+  - sec-002
+  - obs-001

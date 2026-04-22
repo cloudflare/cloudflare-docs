@@ -1,0 +1,140 @@
+id: ind-002
+name: Secure and accelerate ecommerce
+category: industry-verticals
+description: >
+  Fast global storefronts, bot protection, PCI compliance, traffic surge management.
+aliases:
+  - "E-commerce analytics"
+  - "Observe ecommerce traffic patterns"
+  - "Online store security and performance"
+  - "Flash sale preparation"
+products:
+  - CDN
+  - WAF
+  - Bot Management
+  - Waiting Room
+  - DDoS Protection
+  - Analytics
+  - Client-Side Security
+  - Argo Smart Routing
+  - Images
+  - Load Balancing
+  - SSL/TLS
+  - Turnstile
+  - Web Analytics
+
+qualifying_questions:
+  - id: q1
+    text: "What is your primary ecommerce concern?"
+    options:
+      - label: "Page load speed and conversion optimization"
+        sets: [performance]
+      - label: "Bot attacks (scalping, scraping, credential stuffing)"
+        sets: [bots]
+      - label: "Flash sale or traffic surge management"
+        sets: [traffic-surge]
+      - label: "PCI DSS compliance"
+        sets: [pci]
+      - label: "Understanding my store traffic and analytics"
+        sets: [analytics]
+      - label: "Multiple concerns"
+        sets: [analytics, bots, pci, performance, traffic-surge]
+      - label: "I'm not sure"
+        sets: [performance]
+
+default_path: ecommerce-performance
+
+paths:
+  - id: ecommerce-performance
+    name: "Ecommerce Performance Optimization"
+    condition:
+      has_any: [performance]
+    steps:
+      - product: "CDN"
+        action: configure-caching
+        description: "Cache product images, CSS, JS globally"
+      - product: "CDN"
+        action: enable-tiered-cache
+        description: "Enable Tiered Cache for higher hit ratios"
+      - product: "Images"
+        action: enable-image-resizing
+        description: "Optimize product images dynamically"
+      - product: "Argo Smart Routing"
+        action: enable-argo-smart-routing
+        description: "Enable Argo Smart Routing for checkout speed"
+
+  - id: ecommerce-bot-protection
+    name: "Ecommerce Bot Protection"
+    condition:
+      has_any: [bots]
+    steps:
+      - product: "Bot Management"
+        action: enable-bot-analytics
+        description: "Analyze bot traffic on product and checkout pages"
+      - product: "Bot Management"
+        action: create-bot-score-rules
+        description: "Block automated purchasing and scraping bots"
+      - product: "Turnstile"
+        action: deploy-widget
+        description: "Add Turnstile to checkout and login flows"
+      - product: "WAF"
+        action: create-rate-limiting-rule
+        description: "Rate limit add-to-cart and checkout endpoints"
+
+  - id: flash-sale
+    name: "Flash Sale / Traffic Surge Management"
+    condition:
+      has_any: [traffic-surge]
+    steps:
+      - product: "Waiting Room"
+        action: create-waiting-room
+        description: "Create a Waiting Room for the sale landing page"
+      - product: "Waiting Room"
+        action: configure-thresholds
+        description: "Set user thresholds based on origin capacity"
+      - product: "CDN"
+        action: maximize-caching
+        description: "Pre-cache all static assets before the sale"
+      - product: "Load Balancing"
+        action: configure-failover
+        description: "Configure load balancer failover for origin resilience"
+
+  - id: pci-compliance
+    name: "PCI DSS Compliance"
+    condition:
+      has_any: [pci]
+    steps:
+      - product: "SSL/TLS"
+        action: enforce-tls
+        description: "Enforce TLS 1.2+ on all connections"
+      - product: "WAF"
+        action: enable-managed-rules
+        description: "Enable WAF managed rules for OWASP and known attack protection"
+      - product: "Client-Side Security"
+        action: enable-page-shield
+        description: "Enable Page Shield to monitor and control third-party scripts for PCI DSS browser security requirements"
+      - product: "CDN"
+        action: configure-security-headers
+        description: "Configure security headers (HSTS, CSP) for compliance"
+
+  - id: ecommerce-analytics
+    name: "Ecommerce Traffic Analytics"
+    condition:
+      has_any: [analytics]
+    steps:
+      - product: "Analytics"
+        action: review-zone-analytics
+        description: "Review traffic volume, geography, and device breakdowns for your storefront"
+      - product: "Web Analytics"
+        action: add-beacon
+        description: "Add Web Analytics for privacy-friendly visitor and conversion metrics"
+      - product: "Analytics"
+        action: configure-notifications
+        description: "Set up alerts for traffic anomalies, spikes, or drops"
+
+related_use_cases:
+  - sec-003
+  - perf-016
+  - perf-001
+  - sec-006
+  - obs-001

@@ -1,0 +1,132 @@
+id: aisec-001
+name: Govern workforce AI use with granular access, prompt redaction, and read-only policies
+category: ai-security
+description: >
+  Discover shadow AI tools, enforce usage controls, analyze prompt content/intent, block data leaks.
+aliases:
+  - "Enforce AI prompt protection and guardrails"
+  - "AI prompt security"
+products:
+  - Gateway
+  - DLP
+  - CASB
+  - AI Security for Apps
+  - Browser Isolation
+  - WAF
+
+qualifying_questions:
+  - id: q1
+    text: "What is your primary concern with workforce AI usage?"
+    options:
+      - label: "Employees leaking sensitive data into AI tools"
+        sets: [data-leak]
+      - label: "No visibility into which AI tools are being used"
+        sets: [shadow-ai]
+      - label: "Need to enforce acceptable use policies for AI"
+        sets: [policy]
+      - label: "All of the above"
+        sets: [data-leak, shadow-ai, policy]
+  - id: q2
+    text: "Have you sanctioned specific AI tools for employee use?"
+    options:
+      - label: "Yes, we have approved tools (e.g., ChatGPT Enterprise, Copilot)"
+        sets: [sanctioned-tools]
+      - label: "No, we haven't formalized an AI policy yet"
+        sets: [no-policy]
+
+default_path: shadow-ai-discovery
+
+paths:
+  - id: shadow-ai-discovery
+    name: "Discover and Govern Shadow AI"
+    condition:
+      has_any: [shadow-ai, no-policy]
+    steps:
+      - product: "Gateway"
+        action: enable-shadow-it-discovery
+        description: "Enable Shadow IT Discovery to catalog all AI tool usage"
+      - product: "CASB"
+        action: review-ai-app-scores
+        description: "Review confidence scores for discovered AI applications"
+      - product: "Gateway"
+        action: set-app-approval-statuses
+        description: "Mark applications as sanctioned, unsanctioned, or under review"
+      - product: "Gateway"
+        action: create-block-policy
+        description: "Block access to unsanctioned AI tools"
+
+  - id: data-leak-prevention
+    name: "Prevent Data Leaks to AI Tools"
+    condition:
+      has_any: [data-leak]
+    steps:
+      - product: "DLP"
+        action: create-dlp-profiles
+        description: "Create DLP profiles for PII, source code, financial data"
+      - product: "Gateway"
+        action: create-http-policy
+        description: "Create Gateway HTTP policy to inspect traffic to AI tools"
+      - product: "DLP"
+        action: enable-prompt-inspection
+        description: "Enable prompt content and intent analysis for AI tools"
+      - product: "Browser Isolation"
+        action: isolate-ai-tools
+        description: "Isolate AI tool sessions to control copy/paste/upload/download"
+
+  - id: ai-posture-management
+    name: "AI Security Posture Management"
+    condition:
+      has_any: [sanctioned-tools]
+    steps:
+      - product: "CASB"
+        action: integrate-sanctioned-ai
+        description: "Connect sanctioned AI tools (ChatGPT, Claude, Gemini) via API"
+      - product: "CASB"
+        action: scan-ai-misconfigurations
+        description: "Scan for misconfigurations and exposed data in AI tools"
+      - product: "DLP"
+        action: create-dlp-profiles
+        description: "Create DLP profiles to detect sensitive data in prompts"
+      - product: "Gateway"
+        action: create-tenant-policy
+        description: "Redirect employees to approved organizational AI tenants"
+
+  - id: workforce-prompt-protection
+    name: "Workforce Prompt Protection"
+    condition:
+      has_any: [data-leak, policy]
+    steps:
+      - product: "DLP"
+        action: create-ai-dlp-profiles
+        description: "Create DLP profiles targeting PII, source code, financial data"
+      - product: "DLP"
+        action: enable-intent-detection
+        description: "Enable intent detection for jailbreak, code abuse, PII extraction"
+      - product: "Gateway"
+        action: create-http-policy
+        description: "Create Gateway policy to inspect and block risky prompts"
+      - product: "Gateway"
+        action: enable-logging
+        description: "Log all blocked prompts for security review"
+
+  - id: customer-facing-guardrails
+    name: "Customer-Facing AI Guardrails"
+    steps:
+      - product: "AI Security for Apps"
+        action: enable-firewall-for-ai
+        description: "Enable Firewall for AI on your AI application endpoints"
+      - product: "AI Security for Apps"
+        action: configure-prompt-injection-detection
+        description: "Block prompt injection and jailbreak attempts"
+      - product: "AI Security for Apps"
+        action: configure-response-scanning
+        description: "Scan AI responses for PII and sensitive data before delivery"
+      - product: "WAF"
+        action: create-rate-limiting-rule
+        description: "Rate limit to prevent abuse of AI endpoints"
+
+related_use_cases:
+  - aisec-004
+  - aisec-002
+  - zt-008
+  - zt-009
