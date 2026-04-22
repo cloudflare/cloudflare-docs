@@ -10,6 +10,9 @@ const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 
 const LLMS_FULL_R2_PREFIX = "v1/cloudflare-docs-llms-full";
 
+// RFC 9727 requires the path to be exactly /.well-known/api-catalog with no
+// extension. The Cloudflare ASSETS binding cannot serve extensionless files
+// from dot-prefixed directories, so this must be handled directly in the worker.
 const API_CATALOG = JSON.stringify({
 	linkset: [
 		{
