@@ -10,6 +10,11 @@ const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 
 const LLMS_FULL_R2_PREFIX = "v1/cloudflare-docs-llms-full";
 
+// The Cloudflare ASSETS binding cannot serve files from dot-prefixed
+// directories, so /.well-known/* routes must be handled directly in the worker.
+const MCP_SERVER_CARD_URL =
+	"https://middlecache.ced.cloudflare.com/v1/cloudflare-mcps/server-card.json";
+
 /**
  * When a redirect response is returned for an index.md request, rewrite the
  * Location header so the agent stays in Markdown land instead of landing on
@@ -48,6 +53,19 @@ function rewriteRedirectForMarkdown(
 
 export default class extends WorkerEntrypoint<Env> {
 	override async fetch(request: Request) {
+		if (new URL(request.url).pathname === "/.well-known/mcp/server-card.json") {
+			const upstream = await fetch(MCP_SERVER_CARD_URL);
+			return new Response(upstream.body, {
+				status: upstream.status,
+				statusText: upstream.statusText,
+				headers: {
+					"Content-Type": "application/json; charset=utf-8",
+					"Cache-Control":
+						upstream.headers.get("Cache-Control") ?? "public, max-age=3600",
+				},
+			});
+		}
+
 		if (request.url.endsWith("/llms-full.txt")) {
 			const { pathname } = new URL(request.url);
 			// pathname is e.g. "/llms-full.txt" or "/workers/llms-full.txt"
