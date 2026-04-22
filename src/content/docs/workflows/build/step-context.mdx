@@ -1,8 +1,11 @@
 ---
 title: Step context
+description: Access runtime information in Workflows steps using the WorkflowStepContext object, including step name and retry attempt.
 pcx_content_type: concept
 sidebar:
   order: 5
+products:
+  - workflows
 ---
 
 Every `step.do` callback receives a **context object** (`WorkflowStepContext`) as its first argument. The context gives your step code runtime information about the step itself, the current retry attempt, and the resolved configuration for that step.
