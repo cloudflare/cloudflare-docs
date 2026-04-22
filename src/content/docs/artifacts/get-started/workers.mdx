@@ -34,7 +34,7 @@ Start by reading [Namespaces](/artifacts/concepts/namespaces/), then choose the 
 
 You also need:
 
-- Wrangler authenticated with `wrangler login`.
+- Wrangler installed and already authenticated. For local OAuth authentication or CI setup, refer to [`wrangler login`](/workers/wrangler/commands/general/#login) and [Running Wrangler in CI/CD](/workers/ci-cd/).
 - Access to Artifacts in your Cloudflare account.
 - A namespace name, for example `default`.
 - A local `git` client.
@@ -90,8 +90,6 @@ namespace = "default"
 </WranglerConfig>
 
 This exposes Artifacts as `env.ARTIFACTS` inside your Worker.
-
-If you authenticate with `wrangler login`, Wrangler requests `artifacts:write` by default.
 
 If you are using TypeScript, regenerate your local binding types:
 
@@ -176,11 +174,13 @@ The response resembles the following:
 ```json
 {
 	"name": "starter-repo",
-	"remote": "https://<ACCOUNT>.artifacts.cloudflare.net/git/default/starter-repo.git",
+	"remote": "https://{account_id}.artifacts.cloudflare.net/git/default/starter-repo.git",
 	"token": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000",
 	"tokenExpiresAt": "<ISO_TIMESTAMP>"
 }
 ```
+
+Use the exact `remote` value from the response. In that value, `{account_id}` is your Cloudflare account ID.
 
 Copy the `remote` and `token` values into local shell variables:
 

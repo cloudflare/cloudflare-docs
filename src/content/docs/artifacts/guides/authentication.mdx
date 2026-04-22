@@ -18,7 +18,7 @@ Review [Namespaces](/artifacts/concepts/namespaces/) first, then use one namespa
 
 | Interface | Authenticate with | Permissions or scopes | Use for |
 | --- | --- | --- | --- |
-| Workers binding | Wrangler authentication | `wrangler login` requests `artifacts:write` by default. | Worker code that calls `env.ARTIFACTS` |
+| Workers binding | Wrangler authentication | Use your existing Wrangler credentials. | Worker code that calls `env.ARTIFACTS` |
 | REST API | Cloudflare API token in `Authorization: Bearer ...` | **Artifacts** > **Read** for read routes and **Artifacts** > **Edit** for write routes. | Control-plane HTTP requests |
 | Git protocol | Repo-scoped Artifacts token | `read` for clone, fetch, and pull. `write` for push. | Standard Git over HTTPS |
 
@@ -44,7 +44,7 @@ namespace = "default"
 
 </WranglerConfig>
 
-For local development, `wrangler login` requests `artifacts:write` by default.
+Assume Wrangler is already authenticated before you use the binding. For local OAuth authentication, refer to [`wrangler login`](/workers/wrangler/commands/general/#login). For CI or headless environments, refer to [Running Wrangler in CI/CD](/workers/ci-cd/).
 
 ## Authenticate the REST API
 
@@ -84,16 +84,22 @@ Git uses repo-scoped Artifacts tokens, not Cloudflare API tokens. Mint these tok
 | `read` | `git clone`, `git fetch`, `git pull` |
 | `write` | `git clone`, `git fetch`, `git pull`, `git push` |
 
+Use the exact repo `remote` value returned by the Workers binding or REST API:
+
+```sh
+export ARTIFACTS_REMOTE="<PASTE_REMOTE_FROM_CREATE_OR_GET_RESPONSE>"
+```
+
 Use a read token to clone:
 
 ```sh
-git -c http.extraHeader="Authorization: Bearer <YOUR_READ_TOKEN>" clone "https://<ACCOUNT>.artifacts.cloudflare.net/git/default/starter-repo.git" artifacts-clone
+git -c http.extraHeader="Authorization: Bearer <YOUR_READ_TOKEN>" clone "$ARTIFACTS_REMOTE" artifacts-clone
 ```
 
 Use a write token to push:
 
 ```sh
-git -c http.extraHeader="Authorization: Bearer <YOUR_WRITE_TOKEN>" push "https://<ACCOUNT>.artifacts.cloudflare.net/git/default/starter-repo.git" HEAD:main
+git -c http.extraHeader="Authorization: Bearer <YOUR_WRITE_TOKEN>" push "$ARTIFACTS_REMOTE" HEAD:main
 ```
 
 For more information on token handling and authenticated remotes, refer to [Git protocol](/artifacts/api/git-protocol/).

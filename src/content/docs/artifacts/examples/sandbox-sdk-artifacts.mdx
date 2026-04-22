@@ -43,41 +43,28 @@ let defaultBranch: string;
 let remote: string;
 let token: string;
 
-let existingStatus: "ready" | "importing" | "forking" | undefined;
-let cursor: string | undefined;
-
-do {
-	const page = await env.ARTIFACTS.list({ limit: 100, cursor });
-	const existing = page.repos.find((repo) => repo.name === sandboxId);
-
-	if (existing) {
-		existingStatus = existing.status;
-		break;
-	}
-
-	cursor = page.cursor;
-} while (cursor);
-
-if (!existingStatus) {
-	const created = await env.ARTIFACTS.create(sandboxId);
-
-	defaultBranch = created.defaultBranch;
-	remote = created.remote;
-	token = created.token;
-} else if (existingStatus !== "ready") {
-	throw new Error(`Repo ${sandboxId} is ${existingStatus}. Retry shortly.`);
-} else {
+try {
 	const repo = await env.ARTIFACTS.get(sandboxId);
 
 	defaultBranch = repo.defaultBranch;
 	remote = repo.remote;
 	token = (await repo.createToken("write", 3600)).plaintext;
+} catch {
+	try {
+		const created = await env.ARTIFACTS.create(sandboxId);
+
+		defaultBranch = created.defaultBranch;
+		remote = created.remote;
+		token = created.token;
+	} catch {
+		throw new Error(`Repo ${sandboxId} is not ready yet. Retry shortly.`);
+	}
 }
 ```
 
 </TypeScriptExample>
 
-`get()` throws when the repo is missing or not ready yet. Check the listed repo `status` first when you need create-or-reuse behavior.
+The template already knows the repo name, so start with `get(sandboxId)` instead of scanning `list()` pages. If `get()` or `create()` fails because the repo is still provisioning, retry after a short delay.
 
 ## 2. Create or reuse the sandbox
 

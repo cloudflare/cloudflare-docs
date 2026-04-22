@@ -50,7 +50,7 @@ Wrangler generates the `Artifacts` type for consumers and binds it directly in y
 
 In named Wrangler environments, `artifacts` is non-inheritable. Repeat the binding in each environment where you need it.
 
-If you authenticate with `wrangler login`, Wrangler requests `artifacts:write` by default.
+Assume Wrangler is already authenticated before you use the binding. For local OAuth authentication, refer to [`wrangler login`](/workers/wrangler/commands/general/#login). For CI or headless environments, refer to [Running Wrangler in CI/CD](/workers/ci-cd/).
 
 ## Namespace methods
 
