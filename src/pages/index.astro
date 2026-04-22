@@ -236,23 +236,6 @@ const recommendedSection = {
 
 	<div class="hidden md:block">
 		<hr />
-		<TryItSection />
-		<hr />
-		{
-			featuredSections.map((section) => (
-				<>
-					<FeaturedContentSection
-						title={section.title}
-						text={section.text}
-						image={section.image}
-						imagePosition={section.imagePosition}
-						cards={section.cards}
-					/>
-					<hr />
-				</>
-			))
-		}
-
 		<!-- Agent Setup -->
 		<section class="agent-hero">
 			<div class="agent-hero-illustration">
@@ -294,6 +277,24 @@ const recommendedSection = {
 				</a>
 			</div>
 		</section>
+		<hr />
+
+		{
+			featuredSections.map((section) => (
+				<>
+					<FeaturedContentSection
+						title={section.title}
+						text={section.text}
+						image={section.image}
+						imagePosition={section.imagePosition}
+						cards={section.cards}
+					/>
+					<hr />
+				</>
+			))
+		}
+
+		<TryItSection />
 		<hr />
 
 		<RecommendedContentSection
