@@ -36,7 +36,6 @@ interface CatalogModel {
 	context_length: number | null;
 	max_output_tokens: number | null;
 	supports_async: boolean;
-	pricing: Record<string, number>;
 	examples: Array<{
 		name: string;
 		description?: string;

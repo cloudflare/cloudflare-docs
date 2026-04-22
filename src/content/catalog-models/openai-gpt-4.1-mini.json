@@ -12,11 +12,6 @@
 	"context_length": 1047576,
 	"max_output_tokens": 32768,
 	"schema_version": "1.0.0",
-	"pricing": {
-		"Input tokens (per 1M)": 0.4,
-		"Output tokens (per 1M)": 1.6,
-		"Cached input tokens (per 1M)": 0.1
-	},
 	"examples": [
 		{
 			"name": "Simple Question",
@@ -87,7 +82,7 @@
 				"max_completion_tokens": 2048
 			},
 			"output": {
-				"text": "Great! Here are some popular and scenic stops along the drive from San Francisco to Los Angeles:\n\n1. **Half Moon Bay** – Just south of San Francisco, it’s a charming coastal town with beautiful beaches and great spots for breakfast or coffee.\n2. **Santa Cruz** – Known for its classic boardwalk, beach vibes, and surfing culture.\n3. **Monterey** – Famous for the Monterey Bay Aquarium, Cannery Row, and stunning coastal views.\n4. **Carmel-by-the-Sea** – A picturesque town with art galleries, boutique shops, and beautiful beaches.\n5. **Big Sur** – One of the most scenic stretches of the California coast with dramatic cliffs, waterfalls (like McWay Falls), and state parks.\n6. **San Simeon** – Home to Hearst Castle, a historic mansion worth touring.\n7. **Pismo Beach** – Great for a beach break, known for its dunes and laid-back atmosphere.\n8. **Santa Barbara** – Often called the “American Riviera” for its Mediterranean climate, with beaches, shopping, and wine tasting.\n\nWould you like recommendations for dining, accommodations, or activities at any of these stops?"
+				"text": "Great! Here are some popular and scenic stops along the drive from San Francisco to Los Angeles:\n\n1. **Half Moon Bay** \u2013 Just south of San Francisco, it\u2019s a charming coastal town with beautiful beaches and great spots for breakfast or coffee.\n2. **Santa Cruz** \u2013 Known for its classic boardwalk, beach vibes, and surfing culture.\n3. **Monterey** \u2013 Famous for the Monterey Bay Aquarium, Cannery Row, and stunning coastal views.\n4. **Carmel-by-the-Sea** \u2013 A picturesque town with art galleries, boutique shops, and beautiful beaches.\n5. **Big Sur** \u2013 One of the most scenic stretches of the California coast with dramatic cliffs, waterfalls (like McWay Falls), and state parks.\n6. **San Simeon** \u2013 Home to Hearst Castle, a historic mansion worth touring.\n7. **Pismo Beach** \u2013 Great for a beach break, known for its dunes and laid-back atmosphere.\n8. **Santa Barbara** \u2013 Often called the \u201cAmerican Riviera\u201d for its Mediterranean climate, with beaches, shopping, and wine tasting.\n\nWould you like recommendations for dining, accommodations, or activities at any of these stops?"
 			},
 			"code_snippets": [
 				{
@@ -110,7 +105,7 @@
 				"max_completion_tokens": 2048
 			},
 			"output": {
-				"text": "Detective Elena Marsh crouched beside the shattered window, the cold wind tugging at her coat. Amid the splintered glass and upturned furniture, something caught her eye—a single, iridescent feather resting delicately on the floor. It shimmered with colors she couldn’t place, almost otherworldly. She reached down, careful not to disturb the scene further, and traced the feather’s fragile quill between her fingers. This wasn’t just a clue. It was a message. And Elena had a feeling it was about to rewrite everything she thought she knew about the case."
+				"text": "Detective Elena Marsh crouched beside the shattered window, the cold wind tugging at her coat. Amid the splintered glass and upturned furniture, something caught her eye\u2014a single, iridescent feather resting delicately on the floor. It shimmered with colors she couldn\u2019t place, almost otherworldly. She reached down, careful not to disturb the scene further, and traced the feather\u2019s fragile quill between her fingers. This wasn\u2019t just a clue. It was a message. And Elena had a feeling it was about to rewrite everything she thought she knew about the case."
 			},
 			"code_snippets": [
 				{

@@ -12,15 +12,6 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {
-		"@720p (per second)": 0.08,
-		"@1080p (per second)": 0.1,
-		"@4k (per second)": 0.25,
-		"@720p w/ audio (per second)": 0.1,
-		"@1080p w/ audio (per second)": 0.12,
-		"@4k w/ audio (per second)": 0.3,
-		"Default (per second)": 0.08
-	},
 	"examples": [
 		{
 			"name": "Quick Demo",

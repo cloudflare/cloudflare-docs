@@ -13,12 +13,6 @@
 	"context_length": 200000,
 	"max_output_tokens": 16000,
 	"schema_version": "1.0.0",
-	"pricing": {
-		"Input tokens (per 1M)": 3,
-		"Output tokens (per 1M)": 15,
-		"Cached input tokens (per 1M)": 0.3,
-		"Cache creation tokens (per 1M)": 3.75
-	},
 	"examples": [
 		{
 			"name": "Simple Question",
@@ -33,7 +27,7 @@
 				"max_tokens": 1024
 			},
 			"output": {
-				"text": "The three laws of thermodynamics are fundamental principles that govern energy and heat:\n\n## First Law of Thermodynamics\n**Energy cannot be created or destroyed, only converted from one form to another.**\n- Also known as the law of conservation of energy\n- The total energy of an isolated system remains constant\n- Mathematically: ΔU = Q - W (change in internal energy equals heat added minus work done by the system)\n\n## Second Law of Thermodynamics\n**The entropy (disorder) of an isolated system always increases over time.**\n- Heat flows naturally from hot to cold objects, never the reverse (without external work)\n- No heat engine can be 100% efficient\n- It's impossible to convert heat completely into work without some energy being lost as waste heat\n\n## Third Law of Thermodynamics\n**The entropy of a perfect crystal approaches zero as temperature approaches absolute zero.**\n- Absolute zero (0 Kelvin or -273.15°C) represents the theoretical point where molecular motion stops\n- It's impossible to reach absolute zero in a finite number of steps\n\n*Note: Some formulations include a \"zeroth law\" about thermal equilibrium, making it technically four laws, but the three above are the classical formulation.*"
+				"text": "The three laws of thermodynamics are fundamental principles that govern energy and heat:\n\n## First Law of Thermodynamics\n**Energy cannot be created or destroyed, only converted from one form to another.**\n- Also known as the law of conservation of energy\n- The total energy of an isolated system remains constant\n- Mathematically: \u0394U = Q - W (change in internal energy equals heat added minus work done by the system)\n\n## Second Law of Thermodynamics\n**The entropy (disorder) of an isolated system always increases over time.**\n- Heat flows naturally from hot to cold objects, never the reverse (without external work)\n- No heat engine can be 100% efficient\n- It's impossible to convert heat completely into work without some energy being lost as waste heat\n\n## Third Law of Thermodynamics\n**The entropy of a perfect crystal approaches zero as temperature approaches absolute zero.**\n- Absolute zero (0 Kelvin or -273.15\u00b0C) represents the theoretical point where molecular motion stops\n- It's impossible to reach absolute zero in a finite number of steps\n\n*Note: Some formulations include a \"zeroth law\" about thermal equilibrium, making it technically four laws, but the three above are the classical formulation.*"
 			},
 			"code_snippets": [
 				{
@@ -113,7 +107,7 @@
 				"temperature": 0.8
 			},
 			"output": {
-				"text": "Detective Sarah Chen crouched beside the mahogany desk, her latex gloves squeaking against the wood as she carefully lifted what appeared to be an ordinary paper clip. But this one was different—twisted into an intricate knot that seemed to defy the laws of physics, its metal curves flowing impossibly through themselves like a three-dimensional puzzle.\n\n\"Henderson, come look at this,\" she called to her partner, who was dusting for prints near the shattered window. The morning light caught the paper clip's surface, revealing tiny etchings along its length—symbols that looked almost like writing, but in no alphabet she recognized.\n\nThe victim, renowned mathematician Dr. Marcus Webb, lay slumped in his chair just inches away, no visible wounds, no signs of struggle. Just him, his cluttered study, and this impossible piece of bent metal that hurt her eyes to look at directly.\n\nHenderson whistled low as he peered over her shoulder. \"That's... that's not possible. Metal doesn't bend that way.\"\n\nSarah felt a chill run down her spine as she realized the paper clip was warm to the touch, despite the October morning air seeping through the broken window. Whatever had happened in this room last night, she was certain this strange little object held the key to understanding it."
+				"text": "Detective Sarah Chen crouched beside the mahogany desk, her latex gloves squeaking against the wood as she carefully lifted what appeared to be an ordinary paper clip. But this one was different\u2014twisted into an intricate knot that seemed to defy the laws of physics, its metal curves flowing impossibly through themselves like a three-dimensional puzzle.\n\n\"Henderson, come look at this,\" she called to her partner, who was dusting for prints near the shattered window. The morning light caught the paper clip's surface, revealing tiny etchings along its length\u2014symbols that looked almost like writing, but in no alphabet she recognized.\n\nThe victim, renowned mathematician Dr. Marcus Webb, lay slumped in his chair just inches away, no visible wounds, no signs of struggle. Just him, his cluttered study, and this impossible piece of bent metal that hurt her eyes to look at directly.\n\nHenderson whistled low as he peered over her shoulder. \"That's... that's not possible. Metal doesn't bend that way.\"\n\nSarah felt a chill run down her spine as she realized the paper clip was warm to the touch, despite the October morning air seeping through the broken window. Whatever had happened in this room last night, she was certain this strange little object held the key to understanding it."
 			},
 			"code_snippets": [
 				{
@@ -141,12 +135,12 @@
 					"#",
 					" Recursion Explained\n\n**Recursion** is a programming technique where a function calls itself to solve a problem by breaking it down into smaller, similar subproblems.\n\n## Key Components",
 					" of Recursion\n\n1. **Base case**: A condition that stops the recursion\n2. **Recursive case**: The function calling itself with a modified input\n\n## Simple",
-					" Example: Calculating Factorial\n\nLet's calculate the factorial of a number (n! = n × (n-1) × (n-2) × ... × 1):",
+					" Example: Calculating Factorial\n\nLet's calculate the factorial of a number (n! = n \u00d7 (n-1) \u00d7 (n-2) \u00d7 ... \u00d7 1):",
 					"\n\n```python\ndef factorial(n):\n    # Base case: stop the recursion\n    if n == 0 or n == 1:\n        return 1\n    ",
 					"\n    # Recursive case: function calls itself\n    else:\n        return n * factorial(n - 1)\n\n# Example usage\nprint(factorial(5))  # Output: 120\n```",
-					"\n\n## How it works step by step:\n\n```\nfactorial(5)\n├── 5 * factorial(4)\n    ├── 5",
-					" * 4 * factorial(3)\n        ├── 5 * 4 * 3 * factorial(2)\n            ├── 5 * 4 * 3 * 2 * factorial(1)\n                └",
-					"── 5 * 4 * 3 * 2 * 1 = 120\n```\n\n## Real-world Analogy\n\nThink of **",
+					"\n\n## How it works step by step:\n\n```\nfactorial(5)\n\u251c\u2500\u2500 5 * factorial(4)\n    \u251c\u2500\u2500 5",
+					" * 4 * factorial(3)\n        \u251c\u2500\u2500 5 * 4 * 3 * factorial(2)\n            \u251c\u2500\u2500 5 * 4 * 3 * 2 * factorial(1)\n                \u2514",
+					"\u2500\u2500 5 * 4 * 3 * 2 * 1 = 120\n```\n\n## Real-world Analogy\n\nThink of **",
 					"Russian nesting dolls**: To see what's inside,",
 					" you open one doll, then another smaller doll inside, and so on, until you reach",
 					" the smallest doll (base case). Then you put them back",

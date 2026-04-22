@@ -13,9 +13,6 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {
-		"Per image": 0.08
-	},
 	"examples": [
 		{
 			"name": "Simple Icon",

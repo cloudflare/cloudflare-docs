@@ -11,12 +11,6 @@
 	"context_length": 128000,
 	"max_output_tokens": 4096,
 	"schema_version": "1.0.0",
-	"pricing": {
-		"Input tokens (per 1M)": 0.3,
-		"Output tokens (per 1M)": 1.2,
-		"Cache write tokens (per 1M)": 0.375,
-		"Cache read tokens (per 1M)": 0.06
-	},
 	"examples": [
 		{
 			"name": "Simple Conversation",
@@ -59,7 +53,7 @@
 				"max_tokens": 2048
 			},
 			"output": {
-				"text": "# Pasta Aglio e Olio\n\n**Ingredients (2 servings):**\n\n- 200g spaghetti\n- 80ml extra virgin olive oil\n- 6 garlic cloves, thinly sliced\n- 1 tsp chili flakes (optional)\n- Fresh parsley, chopped\n- Salt to taste\n\n**Method:**\n\n1. Cook spaghetti in well-salted boiling water until al dente. Reserve 120ml pasta water.\n2. Heat olive oil in a pan over low-medium heat. Add garlic and chili flakes.\n3. Cook gently 2-3 minutes until garlic is golden (don't brown it).\n4. Add drained pasta to the pan. Toss with pasta water to create a light sauce.\n5. Finish with parsley and serve immediately.\n\n**Tips:**\n\n- Low heat is key—garlic burns easily\n- Pasta water starches help the sauce cling to the noodles\n- Best served immediately"
+				"text": "# Pasta Aglio e Olio\n\n**Ingredients (2 servings):**\n\n- 200g spaghetti\n- 80ml extra virgin olive oil\n- 6 garlic cloves, thinly sliced\n- 1 tsp chili flakes (optional)\n- Fresh parsley, chopped\n- Salt to taste\n\n**Method:**\n\n1. Cook spaghetti in well-salted boiling water until al dente. Reserve 120ml pasta water.\n2. Heat olive oil in a pan over low-medium heat. Add garlic and chili flakes.\n3. Cook gently 2-3 minutes until garlic is golden (don't brown it).\n4. Add drained pasta to the pan. Toss with pasta water to create a light sauce.\n5. Finish with parsley and serve immediately.\n\n**Tips:**\n\n- Low heat is key\u2014garlic burns easily\n- Pasta water starches help the sauce cling to the noodles\n- Best served immediately"
 			},
 			"code_snippets": [
 				{

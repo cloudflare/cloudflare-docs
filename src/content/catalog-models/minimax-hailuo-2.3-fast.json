@@ -12,12 +12,6 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {
-		"6s @768p": 0.19,
-		"10s @768p": 0.32,
-		"6s @1080p": 0.33,
-		"Default (per second)": 0.032
-	},
 	"examples": [
 		{
 			"name": "Basic I2V",

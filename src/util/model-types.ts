@@ -52,9 +52,6 @@ export interface ResolvedModel {
 	maxOutputTokens?: number;
 	supportsAsync: boolean;
 
-	// Pricing
-	pricing?: Record<string, number>;
-
 	// Enhanced fields (catalog only)
 	codeSnippets?: CodeSnippet[];
 	examples?: ModelExample[];

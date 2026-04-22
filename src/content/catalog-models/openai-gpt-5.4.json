@@ -13,11 +13,6 @@
 	"context_length": 128000,
 	"max_output_tokens": 16384,
 	"schema_version": "1.0.0",
-	"pricing": {
-		"Input tokens (per 1M)": 2.5,
-		"Output tokens (per 1M)": 15,
-		"Cached input tokens (per 1M)": 0.25
-	},
 	"examples": [
 		{
 			"name": "Simple Question",
@@ -31,7 +26,7 @@
 				]
 			},
 			"output": {
-				"text": "The **three laws of thermodynamics** are:\n\n1. **First Law of Thermodynamics** — **Energy is conserved**  \n   Energy cannot be created or destroyed, only transferred or transformed.  \n   In thermodynamic systems, this is often written as:  \n   **ΔU = Q - W**  \n   where:\n   - **ΔU** = change in internal energy  \n   - **Q** = heat added to the system  \n   - **W** = work done by the system  \n\n2. **Second Law of Thermodynamics** — **Entropy tends to increase**  \n   In any natural process, the total entropy of an isolated system never decreases.  \n   This means energy tends to spread out, and no heat engine can be 100% efficient.\n\n3. **Third Law of Thermodynamics** — **Entropy approaches a minimum at absolute zero**  \n   As the temperature of a perfect crystal approaches **0 Kelvin**, its entropy approaches **zero**.  \n   This also implies that absolute zero cannot be reached in a finite number of steps.\n\nThere is also a **Zeroth Law of Thermodynamics**, which is often listed before the first three:\n\n- If two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other.  \n- This is the basis for the concept of **temperature**.\n\nIf you want, I can also give a simple everyday explanation of each law."
+				"text": "The **three laws of thermodynamics** are:\n\n1. **First Law of Thermodynamics** \u2014 **Energy is conserved**  \n   Energy cannot be created or destroyed, only transferred or transformed.  \n   In thermodynamic systems, this is often written as:  \n   **\u0394U = Q - W**  \n   where:\n   - **\u0394U** = change in internal energy  \n   - **Q** = heat added to the system  \n   - **W** = work done by the system  \n\n2. **Second Law of Thermodynamics** \u2014 **Entropy tends to increase**  \n   In any natural process, the total entropy of an isolated system never decreases.  \n   This means energy tends to spread out, and no heat engine can be 100% efficient.\n\n3. **Third Law of Thermodynamics** \u2014 **Entropy approaches a minimum at absolute zero**  \n   As the temperature of a perfect crystal approaches **0 Kelvin**, its entropy approaches **zero**.  \n   This also implies that absolute zero cannot be reached in a finite number of steps.\n\nThere is also a **Zeroth Law of Thermodynamics**, which is often listed before the first three:\n\n- If two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other.  \n- This is the basis for the concept of **temperature**.\n\nIf you want, I can also give a simple everyday explanation of each law."
 			},
 			"code_snippets": [
 				{
@@ -57,7 +52,7 @@
 				]
 			},
 			"output": {
-				"text": "Use Python’s built-in `json` module.\n\n### Read a JSON file\n```python\nimport json\n\nwith open(\"data.json\", \"r\") as file:\n    data = json.load(file)\n\nprint(data)\n```\n\n### If the file contains:\n```json\n{\n  \"name\": \"Alice\",\n  \"age\": 25\n}\n```\n\n### Then `data` becomes:\n```python\n{'name': 'Alice', 'age': 25}\n```\n\n### Notes\n- `json.load(file)` reads JSON from a file and converts it to Python objects.\n- JSON objects become Python dictionaries.\n- JSON arrays become Python lists.\n\n### Read with UTF-8 encoding\n```python\nimport json\n\nwith open(\"data.json\", \"r\", encoding=\"utf-8\") as file:\n    data = json.load(file)\n```\n\n### Handle invalid JSON safely\n```python\nimport json\n\ntry:\n    with open(\"data.json\", \"r\", encoding=\"utf-8\") as file:\n        data = json.load(file)\n    print(data)\nexcept FileNotFoundError:\n    print(\"File not found.\")\nexcept json.JSONDecodeError:\n    print(\"Invalid JSON.\")\n```\n\nIf you want, I can also show:\n- how to read a JSON string\n- how to write JSON to a file\n- how to pretty-print JSON"
+				"text": "Use Python\u2019s built-in `json` module.\n\n### Read a JSON file\n```python\nimport json\n\nwith open(\"data.json\", \"r\") as file:\n    data = json.load(file)\n\nprint(data)\n```\n\n### If the file contains:\n```json\n{\n  \"name\": \"Alice\",\n  \"age\": 25\n}\n```\n\n### Then `data` becomes:\n```python\n{'name': 'Alice', 'age': 25}\n```\n\n### Notes\n- `json.load(file)` reads JSON from a file and converts it to Python objects.\n- JSON objects become Python dictionaries.\n- JSON arrays become Python lists.\n\n### Read with UTF-8 encoding\n```python\nimport json\n\nwith open(\"data.json\", \"r\", encoding=\"utf-8\") as file:\n    data = json.load(file)\n```\n\n### Handle invalid JSON safely\n```python\nimport json\n\ntry:\n    with open(\"data.json\", \"r\", encoding=\"utf-8\") as file:\n        data = json.load(file)\n    print(data)\nexcept FileNotFoundError:\n    print(\"File not found.\")\nexcept json.JSONDecodeError:\n    print(\"Invalid JSON.\")\n```\n\nIf you want, I can also show:\n- how to read a JSON string\n- how to write JSON to a file\n- how to pretty-print JSON"
 			},
 			"code_snippets": [
 				{
@@ -88,7 +83,7 @@
 				"max_completion_tokens": 2048
 			},
 			"output": {
-				"text": "Here are some popular stops if you take the scenic coastal route (Highway 1 / Pacific Coast Highway), which is much slower than I-5 but far more beautiful:\n\n### Great stops from San Francisco to Los Angeles\n- **Half Moon Bay** – Nice beaches, coastal views, and a good first stop.\n- **Santa Cruz** – Classic beach town with a boardwalk, pier, and cafes.\n- **Monterey** – Famous for Cannery Row and the Monterey Bay Aquarium.\n- **Carmel-by-the-Sea** – Charming small town with shops, galleries, and a beautiful beach.\n- **Big Sur** – One of the most scenic stretches of the drive, with cliffs, ocean views, and hiking spots.\n- **San Simeon** – Known for Hearst Castle and elephant seals nearby.\n- **Morro Bay** – Relaxed coastal town with the iconic Morro Rock.\n- **San Luis Obispo** – Cute downtown, restaurants, and a good overnight stop.\n- **Pismo Beach** – Good for a beach walk or seafood stop.\n- **Santa Barbara** – Beautiful Spanish-style architecture, beaches, and wine tasting.\n- **Malibu** – Scenic coastline before arriving in Los Angeles.\n\n### If you want the faster inland route (I-5)\nStops are less scenic, but you could consider:\n- **Gilroy** – Known for garlic-themed food.\n- **Harris Ranch** – Popular food/rest stop on I-5.\n- **Kettleman City** – Convenient midpoint break.\n- **Grapevine area** – Good place to pause before descending into LA.\n\nIf you want, I can also suggest:\n1. a **1-day fast itinerary**,  \n2. a **2-3 day scenic itinerary**, or  \n3. **food-focused stops**."
+				"text": "Here are some popular stops if you take the scenic coastal route (Highway 1 / Pacific Coast Highway), which is much slower than I-5 but far more beautiful:\n\n### Great stops from San Francisco to Los Angeles\n- **Half Moon Bay** \u2013 Nice beaches, coastal views, and a good first stop.\n- **Santa Cruz** \u2013 Classic beach town with a boardwalk, pier, and cafes.\n- **Monterey** \u2013 Famous for Cannery Row and the Monterey Bay Aquarium.\n- **Carmel-by-the-Sea** \u2013 Charming small town with shops, galleries, and a beautiful beach.\n- **Big Sur** \u2013 One of the most scenic stretches of the drive, with cliffs, ocean views, and hiking spots.\n- **San Simeon** \u2013 Known for Hearst Castle and elephant seals nearby.\n- **Morro Bay** \u2013 Relaxed coastal town with the iconic Morro Rock.\n- **San Luis Obispo** \u2013 Cute downtown, restaurants, and a good overnight stop.\n- **Pismo Beach** \u2013 Good for a beach walk or seafood stop.\n- **Santa Barbara** \u2013 Beautiful Spanish-style architecture, beaches, and wine tasting.\n- **Malibu** \u2013 Scenic coastline before arriving in Los Angeles.\n\n### If you want the faster inland route (I-5)\nStops are less scenic, but you could consider:\n- **Gilroy** \u2013 Known for garlic-themed food.\n- **Harris Ranch** \u2013 Popular food/rest stop on I-5.\n- **Kettleman City** \u2013 Convenient midpoint break.\n- **Grapevine area** \u2013 Good place to pause before descending into LA.\n\nIf you want, I can also suggest:\n1. a **1-day fast itinerary**,  \n2. a **2-3 day scenic itinerary**, or  \n3. **food-focused stops**."
 			},
 			"code_snippets": [
 				{
@@ -111,7 +106,7 @@
 				"max_completion_tokens": 2048
 			},
 			"output": {
-				"text": "Detective Mara Voss found the first clue where no clue had any business being.\n\nIt was tucked inside the mouth of a stone lion that guarded the steps of Blackwell Hall, a place better known for charity galas than murder. The victim lay inside, under a chandelier bright enough to make everyone look innocent. Guests whispered behind silk gloves. Police boots clicked across marble. But Mara stood outside in the rain, staring at the lion’s weather-dark teeth.\n\nSomeone had placed a single peach pit on its tongue.\n\nNot dropped. Placed.\n\nShe lifted it carefully with her handkerchief. The pit had been polished until it shone, and carved into its surface was the tiniest image of a key.\n\nMara looked up at the mansion windows. On the third floor, one curtain moved, though the glass behind it was black.\n\nA dead banker in the ballroom was ordinary, as far as her city was concerned. A carved peach pit hidden in a stone lion’s mouth was not.\n\nThat was when she began to suspect the murder had started long before the body hit the floor."
+				"text": "Detective Mara Voss found the first clue where no clue had any business being.\n\nIt was tucked inside the mouth of a stone lion that guarded the steps of Blackwell Hall, a place better known for charity galas than murder. The victim lay inside, under a chandelier bright enough to make everyone look innocent. Guests whispered behind silk gloves. Police boots clicked across marble. But Mara stood outside in the rain, staring at the lion\u2019s weather-dark teeth.\n\nSomeone had placed a single peach pit on its tongue.\n\nNot dropped. Placed.\n\nShe lifted it carefully with her handkerchief. The pit had been polished until it shone, and carved into its surface was the tiniest image of a key.\n\nMara looked up at the mansion windows. On the third floor, one curtain moved, though the glass behind it was black.\n\nA dead banker in the ballroom was ordinary, as far as her city was concerned. A carved peach pit hidden in a stone lion\u2019s mouth was not.\n\nThat was when she began to suspect the murder had started long before the body hit the floor."
 			},
 			"code_snippets": [
 				{
@@ -172,7 +167,7 @@
 					"Base",
 					" case",
 					"**",
-					" —",
+					" \u2014",
 					" the",
 					" condition",
 					" where",
@@ -188,7 +183,7 @@
 					"Recursive",
 					" case",
 					"**",
-					" —",
+					" \u2014",
 					" the",
 					" part",
 					" where",
@@ -221,16 +216,16 @@
 					" =",
 					" ",
 					"5",
-					" ×",
+					" \u00d7",
 					" ",
 					"4",
-					" ×",
+					" \u00d7",
 					" ",
 					"3",
-					" ×",
+					" \u00d7",
 					" ",
 					"2",
-					" ×",
+					" \u00d7",
 					" ",
 					"1",
 					"`\n",
@@ -318,7 +313,7 @@
 					"(",
 					"5",
 					")`",
-					" →",
+					" \u2192",
 					" `",
 					"5",
 					" *",
@@ -333,7 +328,7 @@
 					"(",
 					"4",
 					")`",
-					" →",
+					" \u2192",
 					" `",
 					"4",
 					" *",
@@ -348,7 +343,7 @@
 					"(",
 					"3",
 					")`",
-					" →",
+					" \u2192",
 					" `",
 					"3",
 					" *",
@@ -363,7 +358,7 @@
 					"(",
 					"2",
 					")`",
-					" →",
+					" \u2192",
 					" `",
 					"2",
 					" *",
@@ -378,11 +373,11 @@
 					"(",
 					"1",
 					")`",
-					" →",
+					" \u2192",
 					" `",
 					"1",
 					"`",
-					" ←",
+					" \u2190",
 					" base",
 					" case",
 					"\n\n",

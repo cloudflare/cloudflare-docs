@@ -11,12 +11,6 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {
-		"Input tokens (per 1M)": 0.3,
-		"Output tokens (per 1M)": 30,
-		"Cached input tokens (per 1M)": 0.03,
-		"Cache creation tokens (per 1M)": 0.083333
-	},
 	"examples": [
 		{
 			"name": "Cozy Coffee Shop",

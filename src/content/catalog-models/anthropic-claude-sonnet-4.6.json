@@ -13,12 +13,6 @@
 	"context_length": 200000,
 	"max_output_tokens": 128000,
 	"schema_version": "1.0.0",
-	"pricing": {
-		"Input tokens (per 1M)": 3,
-		"Output tokens (per 1M)": 15,
-		"Cached input tokens (per 1M)": 0.3,
-		"Cache creation tokens (per 1M)": 3.75
-	},
 	"examples": [
 		{
 			"name": "Simple Question",
@@ -33,7 +27,7 @@
 				"max_tokens": 1024
 			},
 			"output": {
-				"text": "There are actually **four laws of thermodynamics** (numbered 0–3), but the three *main* ones most commonly referenced are:\n\n## The Three Main Laws\n\n**1st Law – Conservation of Energy**\nEnergy cannot be created or destroyed, only converted from one form to another. The total energy of an isolated system remains constant.\n\n**2nd Law – Entropy**\nThe total entropy of an isolated system always increases over time. Heat flows naturally from hot to cold, and processes are irreversible in nature.\n\n**3rd Law – Absolute Zero**\nAs a system approaches absolute zero (0 Kelvin / -273.15°C), its entropy approaches a minimum or constant value. It is impossible to reach absolute zero in a finite number of steps.\n\n---\n\n## The Often-Forgotten Zeroth Law\n**0th Law – Thermal Equilibrium**\nIf two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other. This establishes the concept of **temperature**.\n\n---\n\nWould you like a deeper explanation of any of these?"
+				"text": "There are actually **four laws of thermodynamics** (numbered 0\u20133), but the three *main* ones most commonly referenced are:\n\n## The Three Main Laws\n\n**1st Law \u2013 Conservation of Energy**\nEnergy cannot be created or destroyed, only converted from one form to another. The total energy of an isolated system remains constant.\n\n**2nd Law \u2013 Entropy**\nThe total entropy of an isolated system always increases over time. Heat flows naturally from hot to cold, and processes are irreversible in nature.\n\n**3rd Law \u2013 Absolute Zero**\nAs a system approaches absolute zero (0 Kelvin / -273.15\u00b0C), its entropy approaches a minimum or constant value. It is impossible to reach absolute zero in a finite number of steps.\n\n---\n\n## The Often-Forgotten Zeroth Law\n**0th Law \u2013 Thermal Equilibrium**\nIf two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other. This establishes the concept of **temperature**.\n\n---\n\nWould you like a deeper explanation of any of these?"
 			},
 			"code_snippets": [
 				{
@@ -113,7 +107,7 @@
 				"temperature": 0.8
 			},
 			"output": {
-				"text": "# The Smell of Lavender\n\nDetective Mara Chen had seen a lot of crime scenes in fourteen years on the force. She had learned to read them the way other people read books — patiently, without skipping ahead.\n\nBut this one was giving her trouble.\n\nThe apartment was sparse and cold, its single window open to the November street below. The victim, a retired accountant named Gerald Foss, lay slumped at his kitchen table with no signs of forced entry, no signs of struggle, and — this was the part that nagged at her — no signs that anyone had been upset about anything at all.\n\nEverything was deliberate. Calm.\n\nShe almost missed it.\n\nShe was pulling on a fresh glove when the draft shifted, and there it was — faint, out of place, almost polite. *Lavender.* Not a cleaning product. Not a candle. Something more personal, like soap or a fabric softener pressed warm from a dryer.\n\nMara stood very still.\n\nGerald Foss, according to his neighbor, had been allergic to every flowering plant known to mankind. His medicine cabinet held three different antihistamines. There wasn't a single flower, real or artificial, anywhere in the apartment.\n\nSomeone had been here recently. Someone clean, careful, and completely unafraid.\n\nShe pulled out her notebook and wrote one word.\n\n*Lavender.*\n\nThen she circled it twice."
+				"text": "# The Smell of Lavender\n\nDetective Mara Chen had seen a lot of crime scenes in fourteen years on the force. She had learned to read them the way other people read books \u2014 patiently, without skipping ahead.\n\nBut this one was giving her trouble.\n\nThe apartment was sparse and cold, its single window open to the November street below. The victim, a retired accountant named Gerald Foss, lay slumped at his kitchen table with no signs of forced entry, no signs of struggle, and \u2014 this was the part that nagged at her \u2014 no signs that anyone had been upset about anything at all.\n\nEverything was deliberate. Calm.\n\nShe almost missed it.\n\nShe was pulling on a fresh glove when the draft shifted, and there it was \u2014 faint, out of place, almost polite. *Lavender.* Not a cleaning product. Not a candle. Something more personal, like soap or a fabric softener pressed warm from a dryer.\n\nMara stood very still.\n\nGerald Foss, according to his neighbor, had been allergic to every flowering plant known to mankind. His medicine cabinet held three different antihistamines. There wasn't a single flower, real or artificial, anywhere in the apartment.\n\nSomeone had been here recently. Someone clean, careful, and completely unafraid.\n\nShe pulled out her notebook and wrote one word.\n\n*Lavender.*\n\nThen she circled it twice."
 			},
 			"code_snippets": [
 				{
@@ -141,25 +135,25 @@
 					"#",
 					" Recursion\n\n## Core Concept\n\nRecursion is when a **function calls itself** to solve a smaller",
 					" version of the same problem, breaking it down until it reaches a simple base case.\n\nEvery recursive solution",
-					" needs:\n1. **Base case** — when to stop\n2. **Recursive case** — calling",
-					" itself with a simpler input\n\n---\n\n## Simple Example: Factorial\n\n`5! = 5 × ",
-					"4 × 3 × 2 × 1 = 120`\n\n```python\ndef factorial(n):\n    # Base case: stop here",
+					" needs:\n1. **Base case** \u2014 when to stop\n2. **Recursive case** \u2014 calling",
+					" itself with a simpler input\n\n---\n\n## Simple Example: Factorial\n\n`5! = 5 \u00d7 ",
+					"4 \u00d7 3 \u00d7 2 \u00d7 1 = 120`\n\n```python\ndef factorial(n):\n    # Base case: stop here",
 					"\n    if n == 0:\n        return 1\n\n    # Recursive case: call itself with a smaller value\n    return n * factorial(n - 1)\n\nprint",
-					"(factorial(5))  # Output: 120\n```\n\n---\n\n## How It Unfolds\n\n```\nfactorial(5)\n  └",
-					"── 5 * factorial(4)\n            └── 4 * factorial(3)\n                      └── 3 * factorial(2)\n                                ",
-					"└── 2 * factorial(1)\n                                          └── 1 * factorial(0)\n                                                    └── returns 1  ← base case",
+					"(factorial(5))  # Output: 120\n```\n\n---\n\n## How It Unfolds\n\n```\nfactorial(5)\n  \u2514",
+					"\u2500\u2500 5 * factorial(4)\n            \u2514\u2500\u2500 4 * factorial(3)\n                      \u2514\u2500\u2500 3 * factorial(2)\n                                ",
+					"\u2514\u2500\u2500 2 * factorial(1)\n                                          \u2514\u2500\u2500 1 * factorial(0)\n                                                    \u2514\u2500\u2500 returns 1  \u2190 base case",
 					"\n\n# Then it works back up:\n1 * 1 = 1\n2",
-					" * 1 = 2\n3 * 2 = 6\n4 * 6 = 24\n5 * 24 = 120 ✓\n```\n\n---\n\n## The",
+					" * 1 = 2\n3 * 2 = 6\n4 * 6 = 24\n5 * 24 = 120 \u2713\n```\n\n---\n\n## The",
 					" \"Thousand Clones\" Analogy\n\n> Imagine you're in",
 					" a long line and ask *\"what position am I in?\"*\n> You",
 					" ask the person in front, who asks the person in front of",
 					" them, and so on.\n> The person at the front says **\"I'm #",
 					"1\"** (base case), and the answer passes back",
-					" down the line.\n\n---\n\n## Key Warnings\n\n| ⚠️ Problem | ",
-					"✅ Solution |\n|---|---|\n| No base case → **infinite loop** | Always define a stopping condition |\n| Too",
-					" many calls → **stack overflow** | Ensure input gets smaller each time |\n| Can be",
+					" down the line.\n\n---\n\n## Key Warnings\n\n| \u26a0\ufe0f Problem | ",
+					"\u2705 Solution |\n|---|---|\n| No base case \u2192 **infinite loop** | Always define a stopping condition |\n| Too",
+					" many calls \u2192 **stack overflow** | Ensure input gets smaller each time |\n| Can be",
 					" slow with repeated work | Use memoization or iteration if needed |\n\n---\n\n##",
-					" Recursion vs. Iteration\n\nBoth solve the same problem — recursion is",
+					" Recursion vs. Iteration\n\nBoth solve the same problem \u2014 recursion is",
 					" often **more readable** for naturally nested problems (trees",
 					", folders, fractals), while iteration is more **memory efficient** for simple loops",
 					"."

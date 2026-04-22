@@ -12,9 +12,6 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {
-		"Per audio minute": 0.006
-	},
 	"examples": [
 		{
 			"name": "Basic Transcription",
