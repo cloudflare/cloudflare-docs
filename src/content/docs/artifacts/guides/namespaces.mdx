@@ -1,6 +1,6 @@
 ---
-title: Choose a namespace
-description: Pick the namespace used by your repos.
+title: Namespaces
+description: Organize repositories by environment or tenant.
 pcx_content_type: how-to
 sidebar:
   order: 1
@@ -10,11 +10,19 @@ products:
 
 import { WranglerConfig } from "~/components";
 
-Artifacts routes every repo through a namespace. The Workers binding and the REST API both require a namespace name.
+Artifacts uses namespaces as top-level containers for repositories. Use them to separate repositories by environment, such as `prod`, `staging`, and `dev`, or by tenant and shard.
 
-Artifacts does not expose a separate public namespace management route. In the public interfaces, you supply the namespace name in your Wrangler config or REST path, then create repos inside that namespace.
+For most users, creating a namespace is simple: choose a namespace name, then use that name in your Wrangler config or REST path when you create the first repo inside it.
 
-## Pick a name
+## Use namespaces as containers
+
+Start with one namespace per environment or tenant boundary.
+
+- Use environment namespaces such as `prod`, `staging`, or `dev`.
+- Use tenant or shard namespaces when one shared namespace would become too hot or too large.
+- Keep repository names unique within each namespace.
+
+## Create a namespace name
 
 Start with a stable name such as `default`, `staging`, or `agents-realtime`.
 
@@ -45,7 +53,7 @@ Use that same namespace in your REST base URL:
 
 ```sh
 export ARTIFACTS_NAMESPACE="default"
-export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.dev/v1/api/namespaces/$ARTIFACTS_NAMESPACE"
+export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.net/v1/api/namespaces/$ARTIFACTS_NAMESPACE"
 ```
 
 ## Split namespaces when needed

@@ -12,7 +12,7 @@ import { WranglerConfig } from "~/components";
 
 Artifacts uses a different authentication path for each interface. Choose auth based on how your code reaches the repo.
 
-Choose a namespace first. For more information, refer to [Choose a namespace](/artifacts/guides/choose-a-namespace/).
+Set up your namespace first. For more information, refer to [Namespaces](/artifacts/guides/namespaces/).
 
 ## Compare auth methods
 
@@ -53,7 +53,7 @@ The REST API uses a gateway JWT in the `Authorization` header for `/v1/api/...` 
 ```sh
 export ARTIFACTS_NAMESPACE="default"
 export ARTIFACTS_JWT="<YOUR_ARTIFACTS_JWT>"
-export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.dev/v1/api/namespaces/$ARTIFACTS_NAMESPACE"
+export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.net/v1/api/namespaces/$ARTIFACTS_NAMESPACE"
 ```
 
 Read repo metadata:
@@ -86,13 +86,13 @@ Git uses repo-scoped Artifacts tokens, not gateway JWTs. Mint these tokens from 
 Use a read token to clone:
 
 ```sh
-git -c http.extraHeader="Authorization: Bearer <YOUR_READ_TOKEN>" clone "https://<ACCOUNT>.artifacts.cloudflare.dev/git/default/starter-repo.git" artifacts-clone
+git -c http.extraHeader="Authorization: Bearer <YOUR_READ_TOKEN>" clone "https://<ACCOUNT>.artifacts.cloudflare.net/git/default/starter-repo.git" artifacts-clone
 ```
 
 Use a write token to push:
 
 ```sh
-git -c http.extraHeader="Authorization: Bearer <YOUR_WRITE_TOKEN>" push "https://<ACCOUNT>.artifacts.cloudflare.dev/git/default/starter-repo.git" HEAD:main
+git -c http.extraHeader="Authorization: Bearer <YOUR_WRITE_TOKEN>" push "https://<ACCOUNT>.artifacts.cloudflare.net/git/default/starter-repo.git" HEAD:main
 ```
 
 For more information on token handling and authenticated remotes, refer to [Git protocol](/artifacts/api/git-protocol/).

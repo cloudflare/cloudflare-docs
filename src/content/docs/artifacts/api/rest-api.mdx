@@ -15,20 +15,20 @@ import { LinkCard, MetaInfo, Type } from "~/components";
 
 Use the Artifacts REST API to manage repos, remotes, forks, imports, and tokens from external systems.
 
-Choose a namespace first. For more information, refer to [Choose a namespace](/artifacts/guides/choose-a-namespace/).
+Set up your namespace first. For more information, refer to [Namespaces](/artifacts/guides/namespaces/).
 
 ## Base URL and authentication
 
 Artifacts REST routes use this base path:
 
 ```txt
-https://artifacts.cloudflare.dev/v1/api/namespaces/$ARTIFACTS_NAMESPACE
+https://artifacts.cloudflare.net/v1/api/namespaces/$ARTIFACTS_NAMESPACE
 ```
 
 For edge-mediated routing, use:
 
 ```txt
-https://artifacts.cloudflare.dev/edge/v1/api/namespaces/$ARTIFACTS_NAMESPACE
+https://artifacts.cloudflare.net/edge/v1/api/namespaces/$ARTIFACTS_NAMESPACE
 ```
 
 Requests to `/v1/api/...` use a gateway JWT in the `Authorization` header:
@@ -49,7 +49,7 @@ The following examples assume:
 export ARTIFACTS_NAMESPACE="default"
 export ARTIFACTS_REPO="starter-repo"
 export ARTIFACTS_JWT="<YOUR_ARTIFACTS_JWT>"
-export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.dev/v1/api/namespaces/$ARTIFACTS_NAMESPACE"
+export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.net/v1/api/namespaces/$ARTIFACTS_NAMESPACE"
 ```
 
 All responses use the standard Cloudflare v4 envelope.
@@ -186,7 +186,7 @@ curl --request POST "$ARTIFACTS_BASE_URL/repos" \
 		"name": "starter-repo",
 		"description": "Repository for automation experiments",
 		"default_branch": "main",
-		"remote": "https://<ACCOUNT>.artifacts.cloudflare.dev/git/default/starter-repo.git",
+		"remote": "https://<ACCOUNT>.artifacts.cloudflare.net/git/default/starter-repo.git",
 		"token": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000",
 		"token_expires_at": "<ISO_TIMESTAMP>"
 	},
@@ -240,7 +240,7 @@ curl "$ARTIFACTS_BASE_URL/repos?limit=20&sort=updated_at&direction=desc" \
 			"last_push_at": "<ISO_TIMESTAMP>",
 			"source": null,
 			"read_only": false,
-			"remote": "https://<ACCOUNT>.artifacts.cloudflare.dev/git/default/starter-repo.git"
+			"remote": "https://<ACCOUNT>.artifacts.cloudflare.net/git/default/starter-repo.git"
 		}
 	],
 	"success": true,
@@ -281,7 +281,7 @@ curl "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO" \
 		"last_push_at": "<ISO_TIMESTAMP>",
 		"source": null,
 		"read_only": false,
-		"remote": "https://<ACCOUNT>.artifacts.cloudflare.dev/git/default/starter-repo.git"
+		"remote": "https://<ACCOUNT>.artifacts.cloudflare.net/git/default/starter-repo.git"
 	},
 	"success": true,
 	"errors": [],
@@ -368,7 +368,7 @@ curl --request POST "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO/fork" \
 		"name": "starter-repo-copy",
 		"description": "Repository for automation experiments",
 		"default_branch": "main",
-		"remote": "https://<ACCOUNT>.artifacts.cloudflare.dev/git/default/starter-repo-copy.git",
+		"remote": "https://<ACCOUNT>.artifacts.cloudflare.net/git/default/starter-repo-copy.git",
 		"token": "art_v1_89abcdef0123456789abcdef0123456789abcdef?expires=1760003600",
 		"token_expires_at": "<ISO_TIMESTAMP>",
 		"objects": 128
@@ -423,7 +423,7 @@ curl --request POST "$ARTIFACTS_BASE_URL/repos/react-mirror/import" \
 		"name": "react-mirror",
 		"description": null,
 		"default_branch": "main",
-		"remote": "https://<ACCOUNT>.artifacts.cloudflare.dev/git/default/react-mirror.git",
+		"remote": "https://<ACCOUNT>.artifacts.cloudflare.net/git/default/react-mirror.git",
 		"token": "art_v1_fedcba9876543210fedcba9876543210fedcba98?expires=1760007200",
 		"token_expires_at": "<ISO_TIMESTAMP>"
 	},

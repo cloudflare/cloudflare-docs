@@ -22,7 +22,7 @@ The example below uses `jq` to extract fields from the JSON responses.
 export ARTIFACTS_NAMESPACE="default"
 export ARTIFACTS_REPO="starter-repo"
 export ARTIFACTS_JWT="<YOUR_ARTIFACTS_JWT>"
-export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.dev/v1/api/namespaces/$ARTIFACTS_NAMESPACE"
+export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.net/v1/api/namespaces/$ARTIFACTS_NAMESPACE"
 
 REPO_JSON=$(curl --silent "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO" \
   --header "Authorization: Bearer $ARTIFACTS_JWT")

@@ -17,7 +17,7 @@ Create an Artifacts repo with the REST API, then use a regular Git client to pus
 
 By the end of this guide, you will create a repo inside a namespace, read back the repo remote URL, push a commit, and clone the same repo with a standard Git client.
 
-Start by [choosing a namespace](/artifacts/guides/choose-a-namespace/). This guide uses `default` in the examples.
+Start by setting up your namespace. For more information, refer to [Namespaces](/artifacts/guides/namespaces/). This guide uses `default` in the examples.
 
 ## Prerequisites
 
@@ -39,7 +39,7 @@ Set the variables used in the examples:
 export ARTIFACTS_NAMESPACE="default"
 export ARTIFACTS_REPO="starter-repo"
 export ARTIFACTS_JWT="<YOUR_ARTIFACTS_JWT>"
-export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.dev/v1/api/namespaces/$ARTIFACTS_NAMESPACE"
+export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.net/v1/api/namespaces/$ARTIFACTS_NAMESPACE"
 ```
 
 Use a unique repo name each time you run this guide.
@@ -73,7 +73,7 @@ The response resembles the following:
 		"name": "starter-repo",
 		"description": null,
 		"default_branch": "main",
-		"remote": "https://<ACCOUNT>.artifacts.cloudflare.dev/git/default/starter-repo.git",
+		"remote": "https://<ACCOUNT>.artifacts.cloudflare.net/git/default/starter-repo.git",
 		"token": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000",
 		"token_expires_at": "<ISO_TIMESTAMP>"
 	},
@@ -132,7 +132,7 @@ curl "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO" \
 		"last_push_at": null,
 		"source": null,
 		"read_only": false,
-		"remote": "https://<ACCOUNT>.artifacts.cloudflare.dev/git/default/starter-repo.git"
+		"remote": "https://<ACCOUNT>.artifacts.cloudflare.net/git/default/starter-repo.git"
 	},
 	"success": true,
 	"errors": [],
