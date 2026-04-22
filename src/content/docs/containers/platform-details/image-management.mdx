@@ -233,9 +233,9 @@ This will output an image registry URI that you can then use in your Wrangler co
 </WranglerConfig>
 
 :::note
-With `wrangler dev`, image references from the Cloudflare Registry, Docker Hub, and Amazon ECR are supported in local development.
+With both `wrangler dev` and `vite dev`, image references from the Cloudflare Registry, Docker Hub, and Amazon ECR are supported in local development.
 
-With `vite dev`, image references from external registries such as Docker Hub and Amazon ECR are supported, but `vite dev` cannot pull directly from the Cloudflare Registry.
+If you use a Cloudflare Registry image with `vite dev`, set the `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` environment variables. The API token requires **Containers:Edit** and **Workers Scripts:Edit** permissions.
 
 If you use a private Docker Hub or ECR image with `vite dev`, authenticate to that registry locally, for example with `docker login`.
 :::
