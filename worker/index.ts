@@ -81,7 +81,9 @@ function rewriteRedirectForMarkdown(
 
 export default class extends WorkerEntrypoint<Env> {
 	override async fetch(request: Request) {
-		if (new URL(request.url).pathname === "/.well-known/api-catalog") {
+		const { pathname } = new URL(request.url);
+
+		if (pathname === "/.well-known/api-catalog") {
 			return new Response(API_CATALOG, {
 				headers: {
 					"Content-Type":
@@ -91,8 +93,22 @@ export default class extends WorkerEntrypoint<Env> {
 			});
 		}
 
-		if (request.url.endsWith("/llms-full.txt")) {
-			const { pathname } = new URL(request.url);
+		if (pathname === "/openapi.json") {
+			const object = await this.env.MIDDLECACHE.get(
+				"v1/cloudflare-api-schemas/openapi.json",
+			);
+			if (!object) {
+				return new Response("openapi.json not found", { status: 404 });
+			}
+			return new Response(object.body, {
+				headers: {
+					"Content-Type": "application/json; charset=utf-8",
+					"Cache-Control": "public, max-age=3600",
+				},
+			});
+		}
+
+		if (pathname.endsWith("/llms-full.txt")) {
 			// pathname is e.g. "/llms-full.txt" or "/workers/llms-full.txt"
 			// R2 key: "v1/cloudflare-docs-llms-full/llms-full.txt" or
 			//         "v1/cloudflare-docs-llms-full/workers/llms-full.txt"
