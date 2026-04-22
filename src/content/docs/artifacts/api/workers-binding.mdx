@@ -21,6 +21,8 @@ import {
 
 Use the Artifacts Workers binding to create, import, inspect, fork, and delete repos directly from your Worker. The Artifacts binding returns repo handles that allow repo-scoped operations such as token management and forking.
 
+Choose a namespace first. For more information, refer to [Choose a namespace](/artifacts/guides/choose-a-namespace/).
+
 ## Configure the binding
 
 Add the Artifacts binding to your Wrangler config file:
@@ -30,7 +32,8 @@ Add the Artifacts binding to your Wrangler config file:
 ```toml title="wrangler.toml"
 [[artifacts]]
 binding = "ARTIFACTS"
-namespace = "default" # any name works — use namespaces to organise repos
+namespace = "default" # replace with your Artifacts namespace
+# remote = true # optional: use the remote Artifacts service in local dev
 ```
 
 </WranglerConfig>
@@ -44,6 +47,8 @@ export interface Env {
 ```
 
 Wrangler generates the `Artifacts` type for consumers and binds it directly in your environment.
+
+In named Wrangler environments, `artifacts` is non-inheritable. Repeat the binding in each environment where you need it.
 
 If you authenticate with `wrangler login`, Wrangler requests `artifacts:write` by default.
 
@@ -74,6 +79,7 @@ async function createRepo(artifacts: Artifacts) {
 		name: created.name,
 		remote: created.remote,
 		initialToken: created.token,
+		tokenExpiresAt: created.tokenExpiresAt,
 	};
 }
 ```
@@ -84,7 +90,7 @@ async function createRepo(artifacts: Artifacts) {
 
 - `name` <Type text="RepoName" /> <MetaInfo text="required" />
 - Returns <Type text="Promise<ArtifactsRepo>" />
-- Throws if the repo does not exist.
+- Throws if the repo does not exist or is not ready yet.
 
 <TypeScriptExample>
 
@@ -110,13 +116,18 @@ async function listRepos(artifacts: Artifacts) {
 	const page = await artifacts.list({ limit: 10 });
 
 	return {
-		names: page.repos.map((repo) => repo.name),
+		repos: page.repos.map((repo) => ({
+			name: repo.name,
+			status: repo.status,
+		})),
 		nextCursor: page.cursor ?? null,
 	};
 }
 ```
 
 </TypeScriptExample>
+
+Each listed repo includes a `status` value of `ready`, `importing`, or `forking`.
 
 ### `import(params)`
 
@@ -148,6 +159,7 @@ async function importFromGitHub(artifacts: Artifacts) {
 		name: imported.name,
 		remote: imported.remote,
 		token: imported.token,
+		tokenExpiresAt: imported.tokenExpiresAt,
 	};
 }
 ```

@@ -3,7 +3,7 @@ title: ArtifactFS
 description: Mount large repos without waiting for full clones.
 pcx_content_type: how-to
 sidebar:
-  order: 3
+  order: 4
 products:
   - artifacts
 ---
@@ -39,7 +39,7 @@ This example assumes you already have a working FUSE implementation on the host 
 ```bash
 go install github.com/cloudflare/artifact-fs/cmd/artifact-fs@latest
 
-export ARTIFACTS_REMOTE="https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/starter-repo.git"
+export ARTIFACTS_REMOTE="https://<ACCOUNT>.artifacts.cloudflare.dev/git/default/starter-repo.git"
 export ARTIFACTS_TOKEN="<YOUR_READ_TOKEN>"
 export ARTIFACTS_TOKEN_SECRET="${ARTIFACTS_TOKEN%%\?expires=*}"
 export ARTIFACTS_AUTH_REMOTE="https://x:${ARTIFACTS_TOKEN_SECRET}@${ARTIFACTS_REMOTE#https://}"

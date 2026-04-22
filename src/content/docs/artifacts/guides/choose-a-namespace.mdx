@@ -1,0 +1,55 @@
+---
+title: Choose a namespace
+description: Pick the namespace used by your repos.
+pcx_content_type: how-to
+sidebar:
+  order: 1
+products:
+  - artifacts
+---
+
+import { WranglerConfig } from "~/components";
+
+Artifacts routes every repo through a namespace. The Workers binding and the REST API both require a namespace name.
+
+Artifacts does not expose a separate public namespace management route. In the public interfaces, you supply the namespace name in your Wrangler config or REST path, then create repos inside that namespace.
+
+## Pick a name
+
+Start with a stable name such as `default`, `staging`, or `agents-realtime`.
+
+Namespace names follow the same public naming rules as repo names:
+
+- start with a letter or digit
+- use letters, digits, `.`, `_`, or `-` after the first character
+- keep the name to 63 characters or fewer
+- keep the name stable across your Workers, API clients, and Git workflows
+
+If you have not chosen a namespace strategy yet, use `default` in the examples throughout this docset.
+
+## Use the same namespace everywhere
+
+Use the same namespace name in your Wrangler binding:
+
+<WranglerConfig>
+
+```toml title="wrangler.toml"
+[[artifacts]]
+binding = "ARTIFACTS"
+namespace = "default"
+```
+
+</WranglerConfig>
+
+Use that same namespace in your REST base URL:
+
+```sh
+export ARTIFACTS_NAMESPACE="default"
+export ARTIFACTS_BASE_URL="https://artifacts.cloudflare.dev/v1/api/namespaces/$ARTIFACTS_NAMESPACE"
+```
+
+## Split namespaces when needed
+
+Start with one namespace when you are learning the product. Add more namespaces when you need clearer boundaries between environments, teams, or high-rate workloads.
+
+For more information, refer to [Best practices for Artifacts](/artifacts/concepts/best-practices/#partition-namespaces-deliberately).
