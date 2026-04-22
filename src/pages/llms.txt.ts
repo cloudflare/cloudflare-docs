@@ -109,14 +109,6 @@ export const GET: APIRoute = async ({ url }) => {
 		## Other
 
 		${otherLinks}
-
-		## Use Cases
-
-		Structured decision trees that help match customer goals to the right Cloudflare products and implementation steps. Each use case includes qualifying questions, conditional paths, and a default path for non-interactive agents.
-
-		- [Use Case Index](${base}/.well-known/use-cases/index.json): Machine-readable index of all use cases with names, categories, aliases, and default paths
-		- [Use Case Guide](${base}/.well-known/use-cases/SKILL.md): How to use the use case files
-		- [Use Case Schema](${base}/.well-known/use-cases/schema.yaml): YAML schema definition
 	`);
 
 	return new Response(markdown, {
