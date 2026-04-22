@@ -11,12 +11,18 @@ export async function GET() {
 				],
 				"service-doc": [
 					{
-						href: "https://developers.cloudflare.com/api/index.md",
-						type: "text/markdown",
+						href: "https://developers.cloudflare.com/api/",
+						type: "text/html",
 					},
 					{
 						href: "https://developers.cloudflare.com/api/",
-						type: "text/html",
+						type: "text/markdown",
+					},
+				],
+				status: [
+					{
+						href: "https://www.cloudflarestatus.com/api/v2/status.json",
+						type: "application/json",
 					},
 				],
 			},
