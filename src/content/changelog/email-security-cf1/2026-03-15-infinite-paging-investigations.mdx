@@ -1,0 +1,21 @@
+---
+title: Unlimited result paging in Investigations
+description: Page through complete result sets in the dashboard and API, up from the previous 1,000-record cap
+date: 2026-03-15T16:00:00Z
+---
+
+Investigations now support unlimited result paging in both the dashboard and the API, removing the previous 1,000-record cap. Security teams can page through complete result sets when searching across large mail volumes, giving SOC analysts and automated workflows deeper visibility for forensics and threat hunting.
+
+In the dashboard, infinite paging is now supported in the Investigations view. The 1,000-record ceiling has been removed, so you can navigate through the full result set directly in the UI. The [Investigations API](/api/resources/email_security/subresources/investigate/methods/list) now returns up to 10,000 records per page (up from 1,000), with no cap on total result volume across pages.
+
+For high-volume use cases, we recommend:
+
+-   **[Logpush](/cloudflare-one/insights/logs/logpush/email-security-logs/) to a SIEM** for full-fidelity datasets and long-term retention.
+-   **SOAR playbooks** against the async bulk action API for large-scale remediation. Bulk actions initiated from the dashboard remain capped at 1,000 messages per action.
+-   **The Investigations API** for report exports larger than 1,000 results, which is the dashboard download cap.
+
+This applies to all Email Security packages:
+
+-   **Advantage**
+-   **Enterprise**
+-   **Enterprise + PhishGuard**
