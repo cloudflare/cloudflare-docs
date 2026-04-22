@@ -7,7 +7,7 @@ export async function GET() {
 		status: response.status,
 		statusText: response.statusText,
 		headers: {
-			"Content-Type": "application/json",
+			"Content-Type": "application/json; charset=utf-8",
 		},
 	});
 }

@@ -248,17 +248,6 @@ export default defineConfig({
 		}),
 		react(),
 		skills(),
-		{
-			name: "api-catalog",
-			hooks: {
-				"astro:config:setup": ({ injectRoute }) => {
-					injectRoute({
-						pattern: "/.well-known/api-catalog",
-						entrypoint: "./src/pages/api-catalog.ts",
-					});
-				},
-			},
-		},
 	],
 	vite: {
 		resolve: {
