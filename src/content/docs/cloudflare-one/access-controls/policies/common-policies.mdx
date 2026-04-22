@@ -43,6 +43,31 @@ The most basic Access policy grants access to anyone who authenticates with an e
 	}}
 />
 
+</TabItem> <TabItem label="Terraform">
+
+<Details header="Required API token permissions">
+
+At least one of the following [token permissions](/fundamentals/api/reference/permissions/) is required:
+
+- `Access: Apps and Policies Write`
+
+</Details>
+
+Configure the [`cloudflare_zero_trust_access_policy`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_policy) resource:
+
+```tf
+resource "cloudflare_zero_trust_access_policy" "allow_employees_by_email_domain" {
+  account_id = var.cloudflare_account_id
+  name       = "Allow employees by email domain"
+  decision   = "allow"
+  include = [{
+    email_domain = {
+      domain = "example.com"
+    }
+  }]
+}
+```
+
 </TabItem> </Tabs>
 
 You can add multiple email domains to the Include rule if your organization uses more than one domain (for example, `@example.com` and `@example.co.uk`).
@@ -80,6 +105,37 @@ Because Require rules use AND logic, you cannot add multiple countries directly 
 		],
 	}}
 />
+
+</TabItem> <TabItem label="Terraform">
+
+<Details header="Required API token permissions">
+
+At least one of the following [token permissions](/fundamentals/api/reference/permissions/) is required:
+
+- `Access: Apps and Policies Write`
+
+</Details>
+
+Configure the [`cloudflare_zero_trust_access_group`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_group) resource:
+
+```tf
+resource "cloudflare_zero_trust_access_group" "approved_countries" {
+  account_id = var.cloudflare_account_id
+  name       = "Approved countries"
+  include = [
+    {
+      geo = {
+        country_code = "US"
+      }
+    },
+    {
+      geo = {
+        country_code = "PT"
+      }
+    },
+  ]
+}
+```
 
 </TabItem> </Tabs>
 
@@ -131,6 +187,50 @@ Then reference the rule group in your Access policy:
 />
 
 Replace `<APPROVED_COUNTRIES_GROUP_ID>` with the `id` returned when you created the rule group above. To look up existing groups, use the [List Access groups](/api/resources/zero_trust/subresources/access/subresources/groups/methods/list/) endpoint.
+
+</TabItem> <TabItem label="Terraform">
+
+<Details header="Required API token permissions">
+
+At least one of the following [token permissions](/fundamentals/api/reference/permissions/) is required:
+
+- `Access: Apps and Policies Write`
+
+</Details>
+
+Configure the [`cloudflare_zero_trust_access_policy`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_policy) resource:
+
+```tf
+resource "cloudflare_zero_trust_access_policy" "allow_employees_from_specific_countries" {
+  account_id = var.cloudflare_account_id
+  name       = "Allow employees from specific countries"
+  decision   = "allow"
+  include = [{
+    email_domain = {
+      domain = "example.com"
+    }
+  }]
+  require = [{
+    group = {
+      id = cloudflare_zero_trust_access_group.approved_countries.id
+    }
+  }]
+  exclude = [
+    {
+      email = {
+        email = "user-1@example.com"
+      }
+    },
+    {
+      email = {
+        email = "user-2@example.com"
+      }
+    },
+  ]
+}
+```
+
+The `cloudflare_zero_trust_access_group.approved_countries` reference points to the [`cloudflare_zero_trust_access_group`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_group) resource created above.
 
 </TabItem> </Tabs>
 
@@ -193,6 +293,57 @@ Before creating this policy, [create device posture checks](/cloudflare-one/reus
 
 Replace the `okta` rule with the [appropriate rule for your identity provider](/api/resources/zero_trust/subresources/access/subresources/policies/methods/create/). To get your identity provider ID, use the [List Access identity providers](/api/resources/zero_trust/subresources/access/subresources/identity_providers/methods/list/) endpoint. To get the integration UIDs for your device posture checks, use the [List device posture checks](/api/resources/zero_trust/subresources/devices/subresources/posture/methods/list/) endpoint.
 
+</TabItem> <TabItem label="Terraform">
+
+<Details header="Required API token permissions">
+
+At least one of the following [token permissions](/fundamentals/api/reference/permissions/) is required:
+
+- `Access: Apps and Policies Write`
+
+</Details>
+
+Configure the [`cloudflare_zero_trust_access_policy`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_policy) resource:
+
+```tf
+resource "cloudflare_zero_trust_access_policy" "require_device_posture" {
+  account_id = var.cloudflare_account_id
+  name       = "Require device posture for sensitive apps"
+  decision   = "allow"
+  include = [{
+    okta = {
+      name                 = "Full-Time Employees"
+      identity_provider_id = cloudflare_zero_trust_access_identity_provider.okta.id
+    }
+  }]
+  require = [
+    {
+      device_posture = {
+        integration_uid = cloudflare_zero_trust_device_posture_rule.gateway_check.id
+      }
+    },
+    {
+      device_posture = {
+        integration_uid = cloudflare_zero_trust_device_posture_rule.minimum_os_version.id
+      }
+    },
+    {
+      device_posture = {
+        integration_uid = cloudflare_zero_trust_device_posture_rule.disk_encryption.id
+      }
+    },
+    {
+      device_posture = {
+        integration_uid = cloudflare_zero_trust_device_posture_rule.firewall.id
+      }
+    },
+  ]
+}
+```
+
+- Replace the `okta` rule with the appropriate [`cloudflare_zero_trust_access_identity_provider`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_identity_provider) resource for your identity provider. To configure the identity provider resource, refer to [Identity providers](/cloudflare-one/integrations/identity-providers/).
+- To configure the [`cloudflare_zero_trust_device_posture_rule`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_device_posture_rule) resources referenced above, refer to [Device posture checks](/cloudflare-one/reusable-components/posture-checks/).
+
 </TabItem> </Tabs>
 
 To reuse these device requirements across multiple applications, create a [rule group](/cloudflare-one/access-controls/policies/groups/) called "Corporate device requirements" that contains the posture checks. You can then reference this rule group in the Require field of any policy.
@@ -248,6 +399,49 @@ If your identity provider reports the authentication method used during login, y
 
 The `auth_method` value uses [RFC 8176](https://datatracker.ietf.org/doc/html/rfc8176#section-2) authentication method reference values. For example, `swk` represents a software-secured key (security key). Replace the `okta` rule with the [appropriate rule for your identity provider](/api/resources/zero_trust/subresources/access/subresources/policies/methods/create/). To get your identity provider ID, use the [List Access identity providers](/api/resources/zero_trust/subresources/access/subresources/identity_providers/methods/list/) endpoint. To get `<GATEWAY_CHECK_ID>`, use the [List device posture checks](/api/resources/zero_trust/subresources/devices/subresources/posture/methods/list/) endpoint.
 
+</TabItem> <TabItem label="Terraform">
+
+<Details header="Required API token permissions">
+
+At least one of the following [token permissions](/fundamentals/api/reference/permissions/) is required:
+
+- `Access: Apps and Policies Write`
+
+</Details>
+
+Configure the [`cloudflare_zero_trust_access_policy`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_policy) resource:
+
+```tf
+resource "cloudflare_zero_trust_access_policy" "require_mfa" {
+  account_id = var.cloudflare_account_id
+  name       = "Require MFA for high-security apps"
+  decision   = "allow"
+  include = [{
+    okta = {
+      name                 = "Employees"
+      identity_provider_id = cloudflare_zero_trust_access_identity_provider.okta.id
+    }
+  }]
+  require = [
+    {
+      auth_method = {
+        auth_method = "swk"
+      }
+    },
+    {
+      device_posture = {
+        integration_uid = cloudflare_zero_trust_device_posture_rule.gateway_check.id
+      }
+    },
+  ]
+}
+```
+
+The `auth_method` value uses [RFC 8176](https://datatracker.ietf.org/doc/html/rfc8176#section-2) authentication method reference values. For example, `swk` represents a software-secured key (security key).
+
+- Replace the `okta` rule with the appropriate [`cloudflare_zero_trust_access_identity_provider`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_identity_provider) resource for your identity provider. To configure the identity provider resource, refer to [Identity providers](/cloudflare-one/integrations/identity-providers/).
+- To configure the [`cloudflare_zero_trust_device_posture_rule`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_device_posture_rule) resource referenced above, refer to [Device posture checks](/cloudflare-one/reusable-components/posture-checks/).
+
 </TabItem> </Tabs>
 
 ### Independent MFA
@@ -302,6 +496,45 @@ Before creating this policy, [enable OTP as a login method](/cloudflare-one/inte
 />
 
 To get the ID of your OTP identity provider, use the [List Access identity providers](/api/resources/zero_trust/subresources/access/subresources/identity_providers/methods/list/) endpoint.
+
+</TabItem> <TabItem label="Terraform">
+
+<Details header="Required API token permissions">
+
+At least one of the following [token permissions](/fundamentals/api/reference/permissions/) is required:
+
+- `Access: Apps and Policies Write`
+
+</Details>
+
+Configure the [`cloudflare_zero_trust_access_policy`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_policy) resource:
+
+```tf
+resource "cloudflare_zero_trust_access_policy" "allow_contractor_access_with_otp" {
+  account_id = var.cloudflare_account_id
+  name       = "Allow contractor access with OTP"
+  decision   = "allow"
+  include = [
+    {
+      email_domain = {
+        domain = "contractor-a.com"
+      }
+    },
+    {
+      email_domain = {
+        domain = "contractor-b.com"
+      }
+    },
+  ]
+  require = [{
+    login_method = {
+      id = cloudflare_zero_trust_access_identity_provider.otp.id
+    }
+  }]
+}
+```
+
+To configure the [`cloudflare_zero_trust_access_identity_provider`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_identity_provider) resource for OTP (configured with `type = "onetimepin"`), refer to [One-time PIN](/cloudflare-one/integrations/identity-providers/one-time-pin/).
 
 </TabItem> </Tabs>
 
@@ -364,6 +597,60 @@ Then, create the Access policy with `isolation_required` set to `true`:
 		isolation_required: true,
 	}}
 />
+
+</TabItem> <TabItem label="Terraform">
+
+First, configure the [`cloudflare_zero_trust_gateway_settings`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_gateway_settings) resource to enable Clientless Web Isolation on your account if you have not already:
+
+<Details header="Required API token permissions">
+
+At least one of the following [token permissions](/fundamentals/api/reference/permissions/) is required:
+
+- `Zero Trust Write`
+
+</Details>
+
+```tf
+resource "cloudflare_zero_trust_gateway_settings" "gateway_settings" {
+  account_id = var.cloudflare_account_id
+  settings = {
+    browser_isolation = {
+      url_browser_isolation_enabled = true
+    }
+  }
+}
+```
+
+Then, configure the [`cloudflare_zero_trust_access_policy`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_policy) resource with `isolation_required` set to `true`:
+
+<Details header="Required API token permissions">
+
+At least one of the following [token permissions](/fundamentals/api/reference/permissions/) is required:
+
+- `Access: Apps and Policies Write`
+
+</Details>
+
+```tf
+resource "cloudflare_zero_trust_access_policy" "isolate_contractor_access" {
+  account_id         = var.cloudflare_account_id
+  name               = "Isolate contractor access"
+  decision           = "allow"
+  isolation_required = true
+  include = [
+    {
+      email_domain = {
+        domain = "contractor-a.com"
+      }
+    },
+    {
+      email_domain = {
+        domain = "contractor-b.com"
+      }
+    },
+  ]
+}
+```
 
 </TabItem> </Tabs>
 
@@ -429,6 +716,38 @@ Before creating this policy, [create a list](/cloudflare-one/reusable-components
 
 To get the ID of your IP list, use the [List Zero Trust lists](/api/resources/zero_trust/subresources/gateway/subresources/lists/methods/list/) endpoint.
 
+</TabItem> <TabItem label="Terraform">
+
+<Details header="Required API token permissions">
+
+At least one of the following [token permissions](/fundamentals/api/reference/permissions/) is required:
+
+- `Access: Apps and Policies Write`
+
+</Details>
+
+Configure the [`cloudflare_zero_trust_access_policy`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_policy) resource:
+
+```tf
+resource "cloudflare_zero_trust_access_policy" "block_high_risk_countries" {
+  account_id = var.cloudflare_account_id
+  name       = "Block requests from high-risk countries"
+  decision   = "deny"
+  include = [{
+    geo = {
+      country_code = "RU"
+    }
+  }]
+  exclude = [{
+    ip_list = {
+      id = cloudflare_zero_trust_list.corporate_ip_allowlist.id
+    }
+  }]
+}
+```
+
+To configure the [`cloudflare_zero_trust_list`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_list) resource referenced above (configured with `type = "IP"`), refer to [Lists](/cloudflare-one/reusable-components/lists/).
+
 </TabItem> </Tabs>
 
 Block policies are best used together with [Allow policies](#allow-employees-by-email-domain) to carve out exceptions. Because Access denies all requests by default, users who do not match a Block policy are still denied unless they match an Allow policy.
@@ -465,6 +784,36 @@ If your organization uses [Cloudflare User Risk Scores](/cloudflare-one/team-and
 		],
 	}}
 />
+
+</TabItem> <TabItem label="Terraform">
+
+<Details header="Required API token permissions">
+
+At least one of the following [token permissions](/fundamentals/api/reference/permissions/) is required:
+
+- `Access: Apps and Policies Write`
+
+</Details>
+
+Configure the [`cloudflare_zero_trust_access_policy`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_policy) resource:
+
+```tf
+resource "cloudflare_zero_trust_access_policy" "exclude_high_risk_users" {
+  account_id = var.cloudflare_account_id
+  name       = "Exclude high-risk users"
+  decision   = "allow"
+  include = [{
+    email_domain = {
+      domain = "example.com"
+    }
+  }]
+  exclude = [{
+    user_risk_score = {
+      user_risk_score = ["high"]
+    }
+  }]
+}
+```
 
 </TabItem> </Tabs>
 
@@ -512,6 +861,38 @@ Before creating this policy, [create a service token](/cloudflare-one/access-con
 
 To get the ID of your service token, use the [List service tokens](/api/resources/zero_trust/subresources/access/subresources/service_tokens/methods/list/) endpoint.
 
+</TabItem> <TabItem label="Terraform">
+
+<Details header="Required API token permissions">
+
+At least one of the following [token permissions](/fundamentals/api/reference/permissions/) is required:
+
+- `Access: Apps and Policies Write`
+
+</Details>
+
+Configure the [`cloudflare_zero_trust_access_policy`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_policy) resource:
+
+```tf
+resource "cloudflare_zero_trust_access_policy" "authenticate_service_with_token" {
+  account_id = var.cloudflare_account_id
+  name       = "Authenticate service with service token"
+  decision   = "non_identity"
+  include = [{
+    service_token = {
+      token_id = cloudflare_zero_trust_access_service_token.my_service_token.id
+    }
+  }]
+  require = [{
+    ip = {
+      ip = "192.0.2.0/24"
+    }
+  }]
+}
+```
+
+To configure the [`cloudflare_zero_trust_access_service_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_service_token) resource referenced above, refer to [Service tokens](/cloudflare-one/access-controls/service-credentials/service-tokens/).
+
 </TabItem> </Tabs>
 
 ## Authenticate a service using mutual TLS
@@ -546,6 +927,31 @@ To restrict access to a specific client, use the **Common Name** selector to mat
 	}}
 />
 
+</TabItem> <TabItem label="Terraform">
+
+<Details header="Required API token permissions">
+
+At least one of the following [token permissions](/fundamentals/api/reference/permissions/) is required:
+
+- `Access: Apps and Policies Write`
+
+</Details>
+
+Configure the [`cloudflare_zero_trust_access_policy`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_policy) resource:
+
+```tf
+resource "cloudflare_zero_trust_access_policy" "authenticate_service_with_mtls" {
+  account_id = var.cloudflare_account_id
+  name       = "Authenticate service with mTLS"
+  decision   = "non_identity"
+  include = [{
+    common_name = {
+      common_name = "John Doe"
+    }
+  }]
+}
+```
+
 </TabItem> </Tabs>
 
 To allow any client presenting a valid certificate signed by your CA, use the **Valid Certificate** selector. This selector is useful when you trust all certificates issued by your CA and do not need to check a specific Common Name.
@@ -571,6 +977,29 @@ To allow any client presenting a valid certificate signed by your CA, use the **
 		],
 	}}
 />
+
+</TabItem> <TabItem label="Terraform">
+
+<Details header="Required API token permissions">
+
+At least one of the following [token permissions](/fundamentals/api/reference/permissions/) is required:
+
+- `Access: Apps and Policies Write`
+
+</Details>
+
+Configure the [`cloudflare_zero_trust_access_policy`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_policy) resource:
+
+```tf
+resource "cloudflare_zero_trust_access_policy" "authenticate_service_with_valid_certificate" {
+  account_id = var.cloudflare_account_id
+  name       = "Authenticate service with valid certificate"
+  decision   = "non_identity"
+  include = [{
+    certificate = {}
+  }]
+}
+```
 
 </TabItem> </Tabs>
 
@@ -628,6 +1057,54 @@ For applications such as database admin tools, production consoles, or HR system
 
 Replace the `okta` rule with the [appropriate rule for your identity provider](/api/resources/zero_trust/subresources/access/subresources/policies/methods/create/). To get your identity provider ID, use the [List Access identity providers](/api/resources/zero_trust/subresources/access/subresources/identity_providers/methods/list/) endpoint. To get the integration UIDs for your device posture checks, use the [List device posture checks](/api/resources/zero_trust/subresources/devices/subresources/posture/methods/list/) endpoint.
 
+</TabItem> <TabItem label="Terraform">
+
+<Details header="Required API token permissions">
+
+At least one of the following [token permissions](/fundamentals/api/reference/permissions/) is required:
+
+- `Access: Apps and Policies Write`
+
+</Details>
+
+Configure the [`cloudflare_zero_trust_access_policy`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_policy) resource:
+
+```tf
+resource "cloudflare_zero_trust_access_policy" "require_purpose_justification" {
+  account_id                      = var.cloudflare_account_id
+  name                            = "Require purpose justification for sensitive apps"
+  decision                        = "allow"
+  purpose_justification_required  = true
+  purpose_justification_prompt    = "Please enter a justification for accessing this application."
+  include = [{
+    okta = {
+      name                 = "IT Administrators"
+      identity_provider_id = cloudflare_zero_trust_access_identity_provider.okta.id
+    }
+  }]
+  require = [
+    {
+      device_posture = {
+        integration_uid = cloudflare_zero_trust_device_posture_rule.gateway_check.id
+      }
+    },
+    {
+      device_posture = {
+        integration_uid = cloudflare_zero_trust_device_posture_rule.windows_version.id
+      }
+    },
+    {
+      device_posture = {
+        integration_uid = cloudflare_zero_trust_device_posture_rule.windows_firewall.id
+      }
+    },
+  ]
+}
+```
+
+- Replace the `okta` rule with the appropriate [`cloudflare_zero_trust_access_identity_provider`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_identity_provider) resource for your identity provider. To configure the identity provider resource, refer to [Identity providers](/cloudflare-one/integrations/identity-providers/).
+- To configure the [`cloudflare_zero_trust_device_posture_rule`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_device_posture_rule) resources referenced above, refer to [Device posture checks](/cloudflare-one/reusable-components/posture-checks/).
+
 </TabItem> </Tabs>
 
 You can combine purpose justification with [temporary authentication](/cloudflare-one/access-controls/policies/temporary-auth/) to additionally require approval from a designated reviewer before granting access.
@@ -655,6 +1132,29 @@ Some applications have endpoints that must be publicly reachable, such as OAuth 
 		],
 	}}
 />
+
+</TabItem> <TabItem label="Terraform">
+
+<Details header="Required API token permissions">
+
+At least one of the following [token permissions](/fundamentals/api/reference/permissions/) is required:
+
+- `Access: Apps and Policies Write`
+
+</Details>
+
+Configure the [`cloudflare_zero_trust_access_policy`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_policy) resource:
+
+```tf
+resource "cloudflare_zero_trust_access_policy" "bypass_public_endpoint" {
+  account_id = var.cloudflare_account_id
+  name       = "Bypass public endpoint"
+  decision   = "bypass"
+  include = [{
+    everyone = {}
+  }]
+}
+```
 
 </TabItem> </Tabs>
 
