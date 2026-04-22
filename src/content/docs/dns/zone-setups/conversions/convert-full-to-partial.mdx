@@ -21,7 +21,11 @@ Make sure you consider the following:
 
 - It will not be possible to use Cloudflare's reverse proxy on the zone apex (`example.com`), only on subdomains.
 - On the dashboard, you will only be able to create A, AAAA, and CNAME records, which are the DNS record types that can be [proxied](/dns/proxy-status/).
-- You should plan for SSL/TLS certificates. If you are using [Universal SSL](/ssl/edge-certificates/universal-ssl/) prior to converting your zone, converting to a CNAME DNS setup will delete your existing Universal SSL certificates for proxied subdomains. New Universal SSL certificates will be provisioned for your proxied subdomains only after ownership of the zone is verified by your new authoritative DNS provider with the verification TXT record as instructed below and each of the proxied hostnames have CNAME records pointing to `{your-hostname}.cdn.cloudflare.net`. To avoid downtime of subdomains which Cloudflare is currently securing with Universal SSL, consider replacing your Universal SSL certificates with an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) which will persist during the transition and with which you will be able to configure [delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/#setup) after the conversion to a CNAME setup.
+- Plan for SSL/TLS certificates (see note below).
+
+:::caution[Universal SSL Certificates]
+If you are using [Universal SSL](/ssl/edge-certificates/universal-ssl/) prior to converting your zone, converting to a CNAME DNS setup will delete your existing Universal SSL certificates for proxied subdomains. New Universal SSL certificates will be provisioned for your proxied subdomains only after ownership of the zone is verified by your new authoritative DNS provider with the verification TXT record as instructed below and each of the proxied hostnames have CNAME records pointing to `{your-hostname}.cdn.cloudflare.net`. To avoid downtime of subdomains which Cloudflare is currently securing with Universal SSL, consider replacing your Universal SSL certificates with an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) which will persist during the transition and with which you will be able to configure [delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/#setup) after the conversion to a CNAME setup.
+:::
 
 ## 1. Prepare DNS records
 
