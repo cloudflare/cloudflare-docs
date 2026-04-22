@@ -10,6 +10,36 @@ const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 
 const LLMS_FULL_R2_PREFIX = "v1/cloudflare-docs-llms-full";
 
+const API_CATALOG = JSON.stringify({
+	linkset: [
+		{
+			anchor: "https://developers.cloudflare.com/api/",
+			"service-desc": [
+				{
+					href: "https://developers.cloudflare.com/openapi.json",
+					type: "application/json",
+				},
+			],
+			"service-doc": [
+				{
+					href: "https://developers.cloudflare.com/api/index.md",
+					type: "text/markdown",
+				},
+				{
+					href: "https://developers.cloudflare.com/api/",
+					type: "text/html",
+				},
+			],
+			status: [
+				{
+					href: "https://www.cloudflarestatus.com/api/v2/status.json",
+					type: "application/json",
+				},
+			],
+		},
+	],
+});
+
 /**
  * When a redirect response is returned for an index.md request, rewrite the
  * Location header so the agent stays in Markdown land instead of landing on
@@ -48,6 +78,16 @@ function rewriteRedirectForMarkdown(
 
 export default class extends WorkerEntrypoint<Env> {
 	override async fetch(request: Request) {
+		if (new URL(request.url).pathname === "/.well-known/api-catalog") {
+			return new Response(API_CATALOG, {
+				headers: {
+					"Content-Type":
+						'application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727"',
+					"Cache-Control": "public, max-age=3600",
+				},
+			});
+		}
+
 		if (request.url.endsWith("/llms-full.txt")) {
 			const { pathname } = new URL(request.url);
 			// pathname is e.g. "/llms-full.txt" or "/workers/llms-full.txt"
