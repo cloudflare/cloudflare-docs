@@ -38,6 +38,11 @@ The following table describes Cache Response Rules availability per plan.
 	params={{ rulesFeatureName: "Cache Response Rules" }}
 />
 
+:::warning
+Cache Response Rules requires the latest version of our CDN engine. The migration is still ongoing and a small percentage of Enterprise zone still haven't been upgraded. 
+Please contact your account team if your Cache Response Rules are not working on your Enterprise zone, it can be manually upgraded.
+:::
+
 ## Relationship with Cache Rules
 
 Cache Response Rules operate on the origin response, while [Cache Rules](/cache/how-to/cache-rules/) operate on the incoming request. When settings from both rule types conflict, Cache Response Rules take precedence.
