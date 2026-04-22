@@ -11,13 +11,13 @@ sidebar:
 
 import { WranglerConfig, DashButton } from "~/components";
 
-Alerts let you monitor your Workers' metrics and get notified when they exceed defined thresholds. You can set conditions on aggregated log data — such as request counts, error rates, CPU time, and execution duration — and receive notifications via email, webhooks, or PagerDuty when those conditions are violated.
+Alerts let you monitor your Workers and get notified when metrics like request counts, error rates, CPU time, or execution duration exceed thresholds you define. You can receive notifications via email, webhooks, or PagerDuty.
 
 <DashButton url="/?to=/:account/workers-and-pages/observability" />
 
 ## Prerequisites
 
-Alerts query the Workers Observability dataset, which requires [Workers Logs](/workers/observability/logs/workers-logs/) to be enabled. If you have not yet enabled Workers Logs, add the following to your Worker's Wrangler configuration and redeploy:
+Alerts require [Workers Logs](/workers/observability/logs/workers-logs/) to be enabled. If you have not yet enabled Workers Logs, add the following to your Worker's Wrangler configuration and redeploy:
 
 <WranglerConfig>
 
@@ -34,6 +34,8 @@ Alerts query the Workers Observability dataset, which requires [Workers Logs](/w
 ```
 
 </WranglerConfig>
+
+If you plan to send alert notifications via webhooks or PagerDuty, you must first set up those integrations in **Notifications** > **Destinations**. Refer to [Configure webhooks](/notifications/get-started/configure-webhooks/) or [Configure PagerDuty](/notifications/get-started/configure-pagerduty/).
 
 ## Create an alert
 
@@ -118,11 +120,15 @@ Timing parameters control how frequently the alert is checked and how state tran
 
 Alerts support three notification channels. You can configure any combination of these on a single alert.
 
+:::note
+To use webhooks or PagerDuty, you must first set up the integration in your account's **Notifications** > **Destinations** page. For setup instructions, refer to [Configure webhooks](/notifications/get-started/configure-webhooks/) or [Configure PagerDuty](/notifications/get-started/configure-pagerduty/).
+:::
+
 | Channel        | Description                                                                                                                          |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
 | **Email**      | Send notifications to one or more email addresses. Select **+ Add** to add recipients.                                               |
-| **Webhooks**   | Send notifications to a webhook endpoint. You must first [configure a webhook integration](/notifications/get-started/configure-webhooks/). |
-| **PagerDuty**  | Send notifications to PagerDuty. You must first [configure a PagerDuty integration](/notifications/get-started/configure-pagerduty/).       |
+| **Webhooks**   | Send notifications to a webhook endpoint. Select from webhooks configured in your account's notification destinations.                |
+| **PagerDuty**  | Send notifications to PagerDuty. Select from PagerDuty services connected in your account's notification destinations.               |
 
 You can control which state transitions trigger notifications:
 
