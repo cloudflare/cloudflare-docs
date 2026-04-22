@@ -1,8 +1,11 @@
 ---
 pcx_content_type: concept
 title: Known issues
+description: Current bugs and limitations for Cloudflare Pages builds, deployments, and configuration.
 sidebar:
   order: 4
+products:
+  - pages
 
 ---
 
@@ -95,31 +98,21 @@ If you have an issue that you do not see listed, let the team know in the Cloudf
 
 You may not be able to delete your Pages project if it has a high number (over 100) of deployments. The Cloudflare team is tracking this issue.
 
-As a workaround, review the following steps to delete all deployments in your Pages project. After you delete your deployments, you will be able to delete your Pages project.
-
-1. Download the `delete-all-deployments.zip` file by going to the following link: [https://pub-505c82ba1c844ba788b97b1ed9415e75.r2.dev/delete-all-deployments.zip](https://pub-505c82ba1c844ba788b97b1ed9415e75.r2.dev/delete-all-deployments.zip).
-2. Extract the `delete-all-deployments.zip` file.
-3. Open your terminal and `cd` into the `delete-all-deployments` directory.
-4. In the `delete-all-deployments` directory, run `npm install` to install dependencies.
-5. Review the following commands to decide which deletion you would like to proceed with:
-
-- To delete all deployments except for the live production deployment (excluding [aliased deployments](https://developers.cloudflare.com/pages/configuration/preview-deployments/#preview-aliases)):
+As a workaround, you can use [`wrangler pages deployment delete`](/workers/wrangler/commands/pages/#pages-deployment-delete) to delete deployments individually. After you delete your deployments, you will be able to delete your Pages project.
 
 ```sh
-CF_API_TOKEN=<YOUR_CF_API_TOKEN> CF_ACCOUNT_ID=<ACCOUNT_ID> CF_PAGES_PROJECT_NAME=<PROJECT_NAME> npm start
+npx wrangler pages deployment delete <DEPLOYMENT_ID> --project-name <PROJECT_NAME>
 ```
 
-- To delete all deployments except for the live production deployment (including [aliased deployments](https://developers.cloudflare.com/pages/configuration/preview-deployments/#preview-aliases), for example, `staging.example.pages.dev`):
+Use the `--force` flag to skip the confirmation prompt and to force deletion of aliased deployments.
+
+To delete _all_ your deployments for a particular project name, you could run the following shell script:
 
 ```sh
-CF_API_TOKEN=<YOUR_CF_API_TOKEN> CF_ACCOUNT_ID=<ACCOUNT_ID> CF_PAGES_PROJECT_NAME=<PROJECT_NAME> CF_DELETE_ALIASED_DEPLOYMENTS=true npm start
+npx wrangler pages deployment list --project-name <PROJECT_NAME> --json \
+  | jq -r '.[].Id' \
+  | xargs -I {} npx wrangler pages deployment delete {} --project-name <PROJECT_NAME> --force
 ```
-
-To find your Cloudflare API token, log in to the [Cloudflare dashboard](https://dash.cloudflare.com), select the user icon on the upper righthand side of your screen > go to **My Profile** > **API Tokens**.
-
-You need a token with `Cloudflare Pages Edit` permissions.
-
-To find your Account ID, refer to [Find your zone and account ID](/fundamentals/account/find-account-and-zone-ids/).
 
 ## Use Pages as Origin in Cloudflare Load Balancer
 

@@ -1,0 +1,110 @@
+---
+title: Cloudflare Flagship
+description: Ship features safely with Flagship, Cloudflare's feature flag service for controlling feature visibility without redeploying code.
+pcx_content_type: overview
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Overview
+products:
+  - flagship
+---
+
+import {
+	CardGrid,
+	Description,
+	Feature,
+	LinkTitleCard,
+	RelatedProduct,
+} from "~/components";
+
+<Description>
+
+Ship features safely with feature flags.
+
+</Description>
+
+Flagship is Cloudflare's feature flag service. It lets you control feature visibility in your applications without redeploying code. Define flags with targeting rules and percentage-based rollouts, then evaluate them directly inside your Workers through a [native binding](/flagship/binding/).
+
+[OpenFeature](https://openfeature.dev/) is the CNCF open standard for feature flag management. Flagship is compatible with OpenFeature, so you can use the [`@cloudflare/flagship`](https://www.npmjs.com/package/@cloudflare/flagship) SDK from any JavaScript runtime — Workers, Node.js, or the browser — and swap providers without changing evaluation code.
+
+Check out the [Get started guide](/flagship/get-started/) to create your first feature flag.
+
+## Features
+
+<Feature header="Worker binding" href="/flagship/binding/" cta="Binding reference">
+
+Evaluate flags with a native Workers binding. Type-safe methods with automatic fallback to defaults.
+
+</Feature>
+
+<Feature header="OpenFeature SDK" href="/flagship/sdk/" cta="View SDK docs">
+
+Use the [`@cloudflare/flagship`](https://www.npmjs.com/package/@cloudflare/flagship) OpenFeature provider to evaluate flags from Workers, Node.js, or browsers. Switch from another flag provider by changing one line of configuration.
+
+</Feature>
+
+<Feature header="Targeting rules" href="/flagship/targeting/" cta="Learn about targeting">
+
+Serve different flag values based on user attributes. Rules support 11 comparison operators, logical AND/OR grouping, and sequential evaluation.
+
+</Feature>
+
+<Feature header="Percentage rollouts" href="/flagship/targeting/percentage-rollouts/" cta="Learn about rollouts">
+
+Gradually release features to a percentage of users. Consistent hashing ensures the same user always receives the same flag value.
+
+</Feature>
+
+<Feature header="Multi-type variations" href="/flagship/concepts/">
+
+Flag variations can be booleans, strings, numbers, or structured JSON objects. Use object variations to deliver entire configuration blocks as a single flag.
+
+</Feature>
+
+<Feature header="Flag management" href="/flagship/get-started/">
+
+Create, update, and delete flags through the Cloudflare dashboard. Organize flags into apps that map to your projects or services.
+
+</Feature>
+
+---
+
+## Related products
+
+<RelatedProduct header="Workers" href="/workers/" product="workers">
+
+Build serverless applications on Cloudflare's global network. Flagship integrates natively with Workers through a binding.
+
+</RelatedProduct>
+
+<RelatedProduct header="KV" href="/kv/" product="kv">
+
+Store key-value data across Cloudflare's global network. Flagship uses this infrastructure to deliver flag configurations.
+
+</RelatedProduct>
+
+## More resources
+
+<CardGrid>
+
+<LinkTitleCard
+	title="Developer Discord"
+	href="https://discord.cloudflare.com"
+	icon="discord"
+>
+	Connect with the Workers community on Discord to ask questions, show what you
+	are building, and discuss the platform with other developers.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="@CloudflareDev"
+	href="https://x.com/cloudflaredev"
+	icon="x.com"
+>
+	Follow @CloudflareDev on Twitter to learn about product announcements and what
+	is new in Cloudflare Workers.
+</LinkTitleCard>
+
+</CardGrid>

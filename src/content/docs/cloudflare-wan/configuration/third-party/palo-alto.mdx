@@ -1,0 +1,22 @@
+---
+pcx_content_type: integration-guide
+description: Connect Palo Alto Networks NGFW to Cloudflare WAN.
+products:
+  - cloudflare-wan
+title: Palo Alto Networks NGFW
+head:
+  - tag: title
+    content: Palo Alto Networks Next-Generation Firewall
+tags:
+  - IPsec
+---
+
+import { Render } from "~/components";
+
+<Render file="cloudflare-wan/third-party/palo-alto"
+  product="networking-services"
+  params={{
+    mssClampingUrl: "/cloudflare-wan/reference/mtu-mss/#mss-clamping",
+    configureTunnelEndpointsUrl: "/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/",
+    configureStaticRoutesUrl: "/cloudflare-wan/configuration/how-to/configure-routes/"
+  }} />

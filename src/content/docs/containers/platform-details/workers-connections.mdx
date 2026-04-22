@@ -4,6 +4,8 @@ pcx_content_type: concept
 sidebar:
   order: 51
 description: Access KV, R2, Durable Objects, and other bindings from a container.
+products:
+  - containers
 ---
 
 Containers can access [Workers bindings](/workers/runtime-apis/bindings/) — KV, R2, D1, Durable Objects, and others — through [outbound handlers](/containers/platform-details/outbound-traffic/#define-outbound-handlers). An outbound handler intercepts HTTP requests from the container and runs inside the Workers runtime, where all of your configured bindings are available.

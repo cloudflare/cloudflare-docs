@@ -1,5 +1,8 @@
 ---
 pcx_content_type: concept
+description: How Quick Tunnels works in Zero Trust networking.
+products:
+  - cloudflare-one
 title: Quick Tunnels
 sidebar:
   order: 5
@@ -21,7 +24,7 @@ Developers can use the TryCloudflare tool to experiment with Cloudflare Tunnel w
 cloudflared tunnel --url http://localhost:8080
 ```
 
-`cloudflared` will generate a random subdomain when connecting to the Cloudflare network and print it in the terminal for you to use and share. The output will serve traffic from the server on your local machine to the public Internet, using Cloudflare's Argo Smart Routing, at a public URL.
+`cloudflared` will generate a random subdomain when connecting to the Cloudflare network and print it in the terminal for you to use and share. The output will serve traffic from the server on your local machine to the public Internet at a public URL.
 
 :::note
 
@@ -38,7 +41,7 @@ TryCloudflare quick tunnels are currently not supported if a `config.yaml` confi
 
 ### Why does Cloudflare provide this service for free?
 
-- We want more users to experience the speed and security improvements of Cloudflare Tunnel (and Argo Smart Routing). We hope you test it with TryCloudflare and decide to add it to your production sites.
+- We want more users to experience the speed and security improvements of Cloudflare Tunnel. We hope you test it with TryCloudflare and decide to add it to your production sites.
 - Cloudflare's features historically require you to own a domain, set that domain's DNS to Cloudflare's nameservers, and configure its DNS records before you can begin to use any services. We hope to make more and more of our products available to trial without that burden.
 - We don't guarantee any SLA or uptime of TryCloudflare - we plan to test new Cloudflare Tunnel features and improvements on these free tunnels. This provides us with a group of connections to test before we deploy to production customers. Free tunnels are meant to be used for testing and development, not for deploying a production website.
 

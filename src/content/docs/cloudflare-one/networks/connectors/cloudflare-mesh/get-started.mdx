@@ -1,5 +1,6 @@
 ---
 pcx_content_type: how-to
+description: Get started in Zero Trust networking.
 title: Get started
 products:
   - mesh
@@ -102,6 +103,7 @@ If your account already has a Cloudflare One deployment, the setup wizard will n
 - [ ] **Device profile for Mesh nodes** — Your Mesh nodes need a [device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) that uses **Include mode** with the Mesh IP range (`100.96.0.0/12`) included. If your nodes use Exclude mode instead, remove `100.64.0.0/10` (the default CGNAT exclusion) from the exclude list.
 - [ ] **Mesh connectivity** — In your device profile settings, enable [Allow all Cloudflare One traffic to reach enrolled devices](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#allow-all-cloudflare-one-traffic-to-reach-enrolled-devices).
 - [ ] **Unique device IPs** — Enable [Assign a unique IP address to each device](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#assign-a-unique-ip-address-to-each-device) so that each participant gets a routable Mesh IP.
+- [ ] **Client mode** — Mesh nodes must run in [Traffic and DNS mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/). DNS-only or proxy-only modes are not supported.
 - [ ] **Traffic proxying** — Enable the [Gateway proxy](/cloudflare-one/traffic-policies/proxy/) for TCP, UDP, and ICMP so that Mesh traffic can flow between devices.
 
 ## Troubleshooting

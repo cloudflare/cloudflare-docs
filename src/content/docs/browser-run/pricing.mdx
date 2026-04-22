@@ -1,8 +1,11 @@
 ---
 pcx_content_type: configuration
 title: Pricing
+description: Understand Browser Run pricing for Quick Actions and Browser Sessions, including browser hours and concurrent browser costs.
 sidebar:
   order: 13
+products:
+  - browser-run
 ---
 
 import { DashButton, Plan } from "~/components";
@@ -20,6 +23,10 @@ Browser hours are shared across all methods.
 | ------------------------------------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------- |
 | Browser hours                               | 10 minutes per day | 10 hours per month, then $0.09 per additional hour                                                                        |
 | Concurrent browsers (Browser Sessions only) | 3 browsers         | 10 browsers ([averaged monthly](#how-is-the-number-of-concurrent-browsers-calculated)), then $2.00 per additional browser |
+
+To view or change your plan, go to the **Workers plans** page in the Cloudflare dashboard:
+
+<DashButton url="/?to=/:account/workers/plans" />
 
 ## Examples of Workers Paid pricing
 

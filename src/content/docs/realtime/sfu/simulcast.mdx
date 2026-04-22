@@ -1,8 +1,11 @@
 ---
 pcx_content_type: get-started
 title: Simulcast
+description: Send multiple video quality levels with WebRTC simulcast on Realtime SFU.
 sidebar:
   order: 8
+products:
+  - realtime
 ---
 
 Simulcast is a feature of WebRTC that allows a publisher to send multiple video streams of the same media at different qualities. For example, this is useful for scenarios where you want to send a high quality stream for desktop users and a lower quality stream for mobile users.
@@ -35,7 +38,7 @@ The `simulcast` configuration object in the API call when you start pulling a re
   - `none`: Do nothing.
   - `asciibetical`: Switch to the next available RID based on the priority ordering, where 'a' is most desirable and 'z' is least desirable.
 
-  You will likely want to order the asciibetical RIDs based on your desired metric, such as higest resoltion to lowest or highest bandwidth to lowest.
+  You will likely want to order the asciibetical RIDs based on your desired metric, such as highest resolution to lowest or highest bandwidth to lowest.
 
 ### Bandwidth Management across media tracks
 

@@ -63,8 +63,17 @@ Cloudflare responds to DNS queries for pending zones on the assigned Cloudflare 
 
 - [Primary setup (Full)](/dns/zone-setups/full-setup/): You have either not [changed your authoritative nameservers](/dns/nameservers/update-nameservers/) or your change has not yet been authenticated by Cloudflare.
 - [CNAME setup (Partial)](/dns/zone-setups/partial-setup/): You have either not added the verification TXT record to your authoritative DNS provider or the record has not yet been authenticated by Cloudflare.
+- [Cloudflare as Secondary DNS provider](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/): When you have either not [changed your authoritative nameservers](/dns/nameservers/update-nameservers/) to include the Cloudflare Secondary nameservers or your change has not yet been authenticated by Cloudflare.
 
 After you add your domain, Cloudflare performs checks on a schedule to confirm you have updated your nameservers. The first check occurs after 60 seconds and the following attempts happen at gradually increased intervals. You can re-trigger the check [via API](/api/resources/zones/subresources/activation_check/methods/trigger/) or on the Dashboard, in the respective domain [Overview page](https://dash.cloudflare.com/?to=/:account/:zone/).
+
+The activation check behavior depends on your zone setup:
+
+| Zone setup                                                                                                                                                                                                                          | Activation requirement                                                                                                                            |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Primary setup (full)](/dns/zone-setups/full-setup/) without [multi-provider DNS](/dns/nameservers/nameserver-options/#multi-provider-dns)                                                                                           | At the registrar (or parent zone), only the assigned Cloudflare nameservers must be listed. Any nameservers from other DNS providers cause failure. |
+| [Primary setup (full)](/dns/zone-setups/full-setup/) with [multi-provider DNS](/dns/nameservers/nameserver-options/#multi-provider-dns) enabled, or [secondary setup](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/)      | At the registrar (or parent zone), the assigned Cloudflare nameservers must be present. Nameservers from other DNS providers are allowed.         |
+| [CNAME setup (partial)](/dns/zone-setups/partial-setup/)                                                                                                                                                                             | The verification TXT record must be present on your authoritative DNS provider. Nameservers at the registrar are not changed.                     |
 
 ### Expected behavior for different plans
 

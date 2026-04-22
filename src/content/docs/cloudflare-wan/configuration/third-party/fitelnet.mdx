@@ -1,0 +1,18 @@
+---
+pcx_content_type: integration-guide
+description: Connect Furukawa Electric FITELnet to Cloudflare WAN.
+products:
+  - cloudflare-wan
+title: Furukawa Electric FITELnet
+
+---
+
+import { Render } from "~/components";
+
+<Render file="cloudflare-wan/third-party/fitelnet"
+  product="networking-services"
+  params={{
+    addTunnelsUrl: "/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/#add-tunnels",
+    typeId_ipv4_addrUrl: "/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/",
+    configureStaticRoutesUrl: "/cloudflare-wan/configuration/how-to/configure-routes/#create-a-static-route"
+  }} />

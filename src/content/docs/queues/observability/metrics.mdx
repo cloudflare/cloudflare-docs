@@ -1,8 +1,11 @@
 ---
 pcx_content_type: concept
 title: Metrics
+description: Query Cloudflare Queues backlog, concurrency, and message operation metrics via GraphQL.
 sidebar:
   order: 20
+products:
+  - queues
 ---
 
 Queues expose metrics which allow you to measure the queue backlog, consumer concurrency, and message operations.
@@ -61,7 +64,7 @@ The `queueMessageOperationsAdaptiveGroups` dataset provides the following dimens
 - `queueID` - ID of the queue
 - `actionType` - The type of message operation. Can be `WriteMessage`, `ReadMessage` or `DeleteMessage`
 - `consumerType` - The queue consumer type. Can be `worker` or `http`. Only applicable for `ReadMessage` and `DeleteMessage` action types
-- `outcome` - The outcome of the mesage operation. Only applicable for `DeleteMessage` action types. Can be `success`, `dlq` or `fail`.
+- `outcome` - The outcome of the message operation. Only applicable for `DeleteMessage` action types. Can be `success`, `dlq` or `fail`.
 - `datetime` - Timestamp for the message operation
 - `date` - Timestamp for the message operation, truncated to the start of a day
 - `datetimeHour` - Timestamp for the message operation, truncated to the start of an hour

@@ -1,0 +1,19 @@
+---
+title: Aruba EdgeConnect Enterprise
+pcx_content_type: integration-guide
+description: Connect Aruba EdgeConnect to Cloudflare WAN.
+products:
+  - cloudflare-wan
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="cloudflare-wan/third-party/aruba-edgeconnect"
+	product="networking-services"
+	params={{
+		tunnelHealthCheckUrl: "/cloudflare-wan/reference/tunnel-health-checks/",
+		magicFirewallUrl: "/cloudflare-network-firewall/",
+		gatewayUrl: "/cloudflare-one/traffic-policies/",
+	}}
+/>

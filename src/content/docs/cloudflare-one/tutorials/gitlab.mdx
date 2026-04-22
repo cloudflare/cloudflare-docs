@@ -3,6 +3,8 @@ reviewed: 2020-12-10
 category: Zero Trust
 difficulty: Advanced
 pcx_content_type: tutorial
+products:
+  - cloudflare-one
 title: Zero Trust GitLab SSH & HTTP
 description: >-
   Learn how to add Zero Trust rules to a self-hosted instance of GitLab. This tutorial walks you through deploying GitLab in DigitalOcean.
@@ -75,8 +77,6 @@ sudo ss -lntup
 ```
 
 The result should be only the services currently active on the machine:
-
-{/* <!-- ![Just Services](/images/cloudflare-one/zero-trust-security/gitlab/just-services.png) --> */}
 
 ```bash
 sudo ss -lntup

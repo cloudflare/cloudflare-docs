@@ -44,10 +44,10 @@ AI Security for Apps (formerly Firewall for AI) is only available in the new [ap
 Enable the feature using a `PUT` request similar to the following:
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/firewall-for-ai/settings" \
+curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/ai-security/settings" \
 --request PUT \
 --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---json '{ "pii_detection_enabled": true }'
+--json '{ "enabled": true }'
 ```
 
 </TabItem> </Tabs>

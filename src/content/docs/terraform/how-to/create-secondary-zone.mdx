@@ -1,12 +1,15 @@
 ---
 pcx_content_type: how-to
 title: Create a subdomain zone using Terraform
+description: Automate the setup of a Cloudflare subdomain zone for Enterprise accounts using Terraform.
 sidebar:
   order: 2
   label: Create a subdomain zone
 head:
   - tag: title
     content: Create a subdomain zone using Terraform
+products:
+  - terraform
 ---
 
 A [subdomain zone](/dns/zone-setups/subdomain-setup/) lets you manage a subdomain in a separate Cloudflare zone from the parent domain. This is useful for access control and team management. This guide shows how to automate the setup using the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs). It is only available for Enterprise accounts

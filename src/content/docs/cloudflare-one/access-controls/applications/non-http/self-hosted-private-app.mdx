@@ -1,5 +1,8 @@
 ---
 pcx_content_type: how-to
+description: Secure a private IP or hostname in Access.
+products:
+  - cloudflare-one
 title: Secure a private IP or hostname
 tags:
   - Private networks
@@ -20,7 +23,7 @@ This feature replaces the legacy [private network app type](/cloudflare-one/acce
 
 - Private IPs and hostnames are reachable over the Cloudflare One Client, Cloudflare WAN (formerly Magic WAN) or Browser Isolation. For more details, refer to [Connect a private network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/).
 - Private hostnames route to your custom DNS resolver through [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/) or [Gateway resolver policies](/cloudflare-one/traffic-policies/resolver-policies/).
-- Public IPs and hostnames can be used to define a private application, however the IP or hostname must route through Cloudflare via [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/), [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/), or [Cloudflare WAN](/cloudflare-wan/configuration/manually/how-to/configure-routes/).
+- Public IPs and hostnames can be used to define a private application, however the IP or hostname must route through Cloudflare via [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/), [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/), or [Cloudflare WAN](/cloudflare-wan/configuration/how-to/configure-routes/).
 - (Optional) Turn on [Gateway TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) if you want to use Access JWTs to manage [HTTPS application sessions](#https-applications).
 
 ## Add your application to Access

@@ -1,8 +1,11 @@
 ---
 title: Agent class internals
+description: Explore how the Agent class extends Durable Objects to provide state, WebSockets, scheduling, and RPC.
 pcx_content_type: concept
 sidebar:
   order: 5
+products:
+  - agents
 ---
 
 The core of the `agents` library is the `Agent` class. You extend it, override a few methods, and get state management, WebSockets, scheduling, RPC, and more for free. This page explains how `Agent` is built, layer by layer, so you understand what is happening under the hood.

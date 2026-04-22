@@ -148,11 +148,6 @@
 			"name": "node",
 			"version": ">=24.0.0",
 			"onFail": "error"
-		},
-		"packageManager": {
-			"name": "npm",
-			"version": ">=11.0.0",
-			"onFail": "error"
 		}
 	}
 }
