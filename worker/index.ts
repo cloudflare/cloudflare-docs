@@ -10,8 +10,9 @@ const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 
 const LLMS_FULL_R2_PREFIX = "v1/cloudflare-docs-llms-full";
 
-// The Cloudflare ASSETS binding cannot serve files from dot-prefixed
-// directories, so /.well-known/* routes must be handled directly in the worker.
+// The server card is served from the worker so it stays live — content is
+// fetched from the MIDDLECACHE R2 binding and reflects the current state of
+// Cloudflare's MCP servers without requiring a docs redeploy.
 
 /**
  * When a redirect response is returned for an index.md request, rewrite the
