@@ -36,7 +36,7 @@ const reader = readable.getReader({ mode: 'byob' });
 
 * <code>readAtLeast(minElements, bufferArrayBufferView)</code> : Promise\<ReadableStreamBYOBReadResult>
 
-  * Returns a promise with the next available chunk of data read into a passed-in buffer. The promise will not resolve until at least `minElements` elements (where element size is determined by the typed array view, for example 4 bytes per element for a `Uint32Array`) have been read. However, fewer than `minElements` elements may be returned if the end of the stream is reached or the underlying stream is closed. Specifically:
+  * Returns a promise with the next available chunk of data read into a passed-in buffer. The promise will not resolve until at least `minElements` elements have been read.  The element size is determined by `bufferArrayBufferView`, for example 4 bytes per element for a `Uint32Array`. However, fewer than `minElements` elements may be returned if the end of the stream is reached or the underlying stream is closed. Specifically:
 
     * If `minElements` or more elements are available, the promise resolves with `{ value: <buffer view sized to bytes read>, done: false }`.
     * If the stream ends after some data has been read but fewer than `minElements` elements, the promise resolves with the partial data: `{ value: <buffer view sized to bytes actually read>, done: false }`. The next call to `read` or `readAtLeast` will then return `{ value: undefined, done: true }`.
