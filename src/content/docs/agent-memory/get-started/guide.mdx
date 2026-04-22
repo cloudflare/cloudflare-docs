@@ -9,7 +9,7 @@ sidebar:
   label: Guide
 ---
 
-import { TypeScriptExample, WranglerConfig, Steps } from "~/components";
+import { TypeScriptExample, WranglerConfig } from "~/components";
 
 This guide walks you through adding persistent memory to a Cloudflare Worker. By the end, your Worker will be able to ingest conversations, recall stored knowledge, and generate profile summaries.
 
@@ -32,7 +32,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/agent-m
   -d '{"name": "my-app"}'
 ```
 
-The response includes a `namespace_id` that you will use to configure your Worker binding.
+The response includes the namespace `name` that you will use to configure your Worker binding.
 
 ```json
 {
@@ -59,7 +59,7 @@ Select the default options when prompted.
 
 ## 3. Add the memory binding
 
-Add the `agent_memory` binding to your Wrangler configuration. Replace the `namespace` value with the `namespace_id` from step 1.
+Add the `agent_memory` binding to your Wrangler configuration. Replace the `namespace` value with the namespace name from step 1.
 
 <WranglerConfig>
 
