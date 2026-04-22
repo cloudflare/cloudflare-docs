@@ -1,5 +1,8 @@
 ---
 pcx_content_type: configuration
+description: Configure Host selectors in Gateway.
+products:
+  - cloudflare-one
 title: Host selectors
 sidebar:
   order: 2
@@ -41,7 +44,7 @@ To turn on the selectors for your account:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Traffic settings**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Traffic policies** > **Traffic settings**.
 2. In **Policy settings**, turn on **Allow egress policy host selectors**.
 
 </TabItem> <TabItem label="API">
@@ -96,13 +99,12 @@ To configure your Zero Trust organization to use Host selectors with Egress poli
     </array>
     ```
 
-{/* prettier-ignore-start */}
-
-2. <Render file="gateway/egress-selector-split-tunnels" product="cloudflare-one"/>
+2.  <Render
+    	file="gateway/egress-selector-split-tunnels"
+    	product="cloudflare-one"
+    />
 
 The Cloudflare One Client must be set to _Traffic and DNS mode_ for traffic affected by these selectors to route correctly.
-
-{/* prettier-ignore-end */}
 
 ## Known issues
 

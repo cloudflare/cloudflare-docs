@@ -1,8 +1,11 @@
 ---
 title: VPC Networks
+description: Bind Workers to an entire tunnel or Cloudflare Mesh without pre-registering hosts.
 pcx_content_type: concept
 sidebar:
   order: 2
+products:
+  - workers-vpc
 ---
 
 import { WranglerConfig } from "~/components";
@@ -18,6 +21,12 @@ Workers VPC is currently in beta. Features and APIs may change before general av
 :::
 
 ## Bind to a tunnel
+
+:::note
+
+Binding directly to a tunnel through a VPC Network binding requires the **Connectivity Directory Admin** role.
+
+:::
 
 Reference a specific Cloudflare Tunnel directly by its UUID:
 

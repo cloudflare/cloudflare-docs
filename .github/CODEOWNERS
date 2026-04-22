@@ -41,9 +41,9 @@ package.json @cloudflare/content-engineering
 
 # Analytics & Logs
 
-/src/content/docs/analytics/ @soheiokamoto @angelampcosta @rianvdm @cloudflare/pcx-technical-writing @cloudflare/product-owners
-/src/content/docs/data-localization/ @soheiokamoto @angelampcosta @cloudflare/pcx-technical-writing @cloudflare/product-owners
-/src/content/docs/logs/ @soheiokamoto @angelampcosta @rianvdm @cloudflare/pcx-technical-writing @cloudflare/product-owners
+/src/content/docs/analytics/ @soheiokamoto @angelampcosta @rianvdm @dcpena @cloudflare/pcx-technical-writing @cloudflare/product-owners
+/src/content/docs/data-localization/ @njones-cf @mathew-cf @aberglund-cf @cferike @cagrawal @Arkanayan @connect-avinash31 @umeshgtank @angelampcosta @dcpena @cloudflare/pcx-technical-writing @cloudflare/product-owners
+/src/content/docs/logs/ @soheiokamoto @angelampcosta @rianvdm @dcpena @cloudflare/pcx-technical-writing @cloudflare/product-owners
 
 # API & Zones
 
@@ -54,7 +54,7 @@ package.json @cloudflare/content-engineering
 
 # Browser Run
 
-/src/content/docs/browser-run/ @mchenco @cloudflare/pcx-technical-writing @cloudflare/product-owners @celso @kathayl @ToriLindsay
+/src/content/docs/browser-run/ @mchenco @cloudflare/pcx-technical-writing @cloudflare/product-owners @celso @kathayl @dcpena
 
 # Changelogs
 
@@ -101,10 +101,11 @@ package.json @cloudflare/content-engineering
 /src/content/docs/registrar/ @dcpena @cloudflare/pcx-technical-writing @cloudflare/product-owners
 /src/content/docs/rules/ @pedrosousa @cloudflare/pcx-technical-writing @cloudflare/product-owners
 /src/content/docs/ruleset-engine/ @pedrosousa @cloudflare/pcx-technical-writing @cloudflare/product-owners
-/src/content/docs/log-explorer/ @angelampcosta @cloudflare/pcx-technical-writing @cloudflare/product-owners
+/src/content/docs/log-explorer/ @angelampcosta @dcpena @cloudflare/pcx-technical-writing @cloudflare/product-owners
 
 # Developer Platform
 
+/src/content/docs/artifacts/ @elithrar @dmmulroy @mattzcarey @whoiskatrin @cloudflare/pcx-technical-writing @cloudflare/product-owners
 /src/content/docs/containers/ @mikenomitch @th0m @cloudflare/pcx-technical-writing @cloudflare/product-owners @cloudflare/cloudchamber
 /src/content/partials/containers/ @mikenomitch @th0m @cloudflare/pcx-technical-writing @cloudflare/product-owners @cloudflare/cloudchamber
 /src/content/docs/d1/ @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @harshil1712 @cloudflare/pcx-technical-writing @cloudflare/product-owners
@@ -119,7 +120,7 @@ package.json @cloudflare/content-engineering
 /src/content/release-notes/hyperdrive.yaml @elithrar @thomasgauvin @sejoker @oxyjun @cloudflare/pcx-technical-writing @cloudflare/product-owners
 /src/content/partials/hyperdrive/ @elithrar @thomasgauvin @sejoker @oxyjun @cloudflare/pcx-technical-writing @cloudflare/product-owners
 /src/content/release-notes/durable-objects.yaml @elithrar @vy-ton @joshthoward @oxyjun @cloudflare/pcx-technical-writing @cloudflare/product-owners
-/src/content/docs/images/ @ToriLindsay @cloudflare/pcx-technical-writing @cloudflare/product-owners @renandincer @third774
+/src/content/docs/images/ @dcpena @cloudflare/pcx-technical-writing @cloudflare/product-owners @renandincer @third774
 /src/content/docs/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @irvinebroque @cloudflare/pcx-technical-writing @cloudflare/product-owners
 /src/content/partials/pages/ @elithrar @rita3ko @irvinebroque @vy-ton @cloudflare/pcx-technical-writing @cloudflare/product-owners
 /src/assets/images/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @cloudflare/pcx-technical-writing @cloudflare/product-owners
@@ -137,13 +138,14 @@ package.json @cloudflare/content-engineering
 /src/assets/images/realtime/ @cloudflare/pcx-technical-writing @cloudflare/product-owners @cloudflare/realtime @cloudflare/RealtimeKit @roerohan @ravindra-cloudflare
 /src/content/partials/realtime/ @cloudflare/realtime @cloudflare/RealtimeKit @roerohan @ravindra-cloudflare @cloudflare/pcx-technical-writing @cloudflare/product-owners
 /public/realtime/ @cloudflare/pcx-technical-writing @cloudflare/product-owners @cloudflare/realtime @cloudflare/RealtimeKit @roerohan @ravindra-cloudflare
-/src/content/docs/stream/ @tsmith512 @ToriLindsay @cloudflare/pcx-technical-writing @cloudflare/product-owners @renandincer @third774
-/src/content/release-notes/stream.yaml @tsmith512 @ToriLindsay @cloudflare/pcx-technical-writing @cloudflare/product-owners
+/src/content/docs/stream/ @tsmith512 @dcpena @cloudflare/pcx-technical-writing @cloudflare/product-owners @renandincer @third774
+/src/content/release-notes/stream.yaml @tsmith512 @dcpena @cloudflare/pcx-technical-writing @cloudflare/product-owners
 /src/content/docs/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @korinne @WalshyDev @cloudflare/deploy-config @cloudflare/pcx-technical-writing @cloudflare/product-owners @cloudflare/wrangler @mattietk @cloudflare/dev-plat-leads
+/src/content/docs/dynamic-workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @korinne @WalshyDev @cloudflare/deploy-config @cloudflare/pcx-technical-writing @cloudflare/product-owners @cloudflare/wrangler @mattietk @cloudflare/dev-plat-leads
 /src/content/partials/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @WalshyDev @cloudflare/deploy-config @cloudflare/pcx-technical-writing @cloudflare/product-owners @cloudflare/wrangler @mattietk
 /src/assets/images/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @WalshyDev @cloudflare/deploy-config @cloudflare/pcx-technical-writing @cloudflare/product-owners @cloudflare/wrangler @mattietk
 /src/content/release-notes/workers.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @cloudflare/deploy-config @cloudflare/pcx-technical-writing @cloudflare/product-owners @irvinebroque @mikenomitch @mattietk
-/src/content/docs/zaraz/ @ToriLindsay @kathayl @jonnyparris @simonabadoiu @cloudflare/pcx-technical-writing @cloudflare/product-owners
+/src/content/docs/zaraz/ @dcpena @kathayl @jonnyparris @simonabadoiu @cloudflare/pcx-technical-writing @cloudflare/product-owners
 /src/content/release-notes/zaraz.yaml @jonnyparris @simonabadoiu @cloudflare/pcx-technical-writing @cloudflare/product-owners
 /src/content/docs/workers/ci-cd/ @irvinebroque @aninibread @GregBrimble @cloudflare/pcx-technical-writing @cloudflare/product-owners @yomna-shousha
 /src/content/compatibility-flags/ @irvinebroque @mikenomitch @GregBrimble @cloudflare/pcx-technical-writing @cloudflare/product-owners
@@ -160,6 +162,10 @@ package.json @cloudflare/content-engineering
 /src/content/docs/pipelines/ @Marcinthecloud @cmackenzie1 @oliy @garvit-gupta @sejoker @jonesphillip @elithrar @cloudflare/pcx-technical-writing @cloudflare/product-owners
 /src/content/docs/r2-sql/  @Marcinthecloud @netgusto @sesteves @sejoker @laplab @jonesphillip @elithrar @jonathanc-n @cloudflare/pcx-technical-writing @cloudflare/product-owners
 /src/content/docs/r2/data-catalog/ @Marcinthecloud @sejoker @jonesphillip @elithrar @laplab @vovacf201 @nagraham @cloudflare/pcx-technical-writing @cloudflare/product-owners
+/src/content/docs/flagship/ @roerohan @palashgo @akshitsinha @abhishekkankani @thebongy @cloudflare/pcx-technical-writing @cloudflare/product-owners
+/src/content/directory/flagship.yaml @roerohan @palashgo @akshitsinha @abhishekkankani @thebongy @cloudflare/pcx-technical-writing @cloudflare/product-owners
+/src/assets/images/flagship/ @roerohan @palashgo @akshitsinha @abhishekkankani @thebongy @cloudflare/pcx-technical-writing @cloudflare/product-owners
+/src/icons/flagship.svg @roerohan @palashgo @akshitsinha @abhishekkankani @thebongy @cloudflare/pcx-technical-writing @cloudflare/product-owners
 
 # DDoS Protection
 
@@ -173,7 +179,7 @@ package.json @cloudflare/content-engineering
 /src/content/docs/style-guide/ @dcpena @caley-b @cloudflare/pcx-technical-writing @cloudflare/product-owners
 
 # Google tag gateway
-/src/content/docs/google-tag-gateway/ @ToriLindsay @kathayl @simonabadoiu @jonnyparris @cloudflare/pcx-technical-writing @cloudflare/product-owners
+/src/content/docs/google-tag-gateway/ @dcpena @kathayl @simonabadoiu @jonnyparris @cloudflare/pcx-technical-writing @cloudflare/product-owners
 
 # Magic products
 
@@ -196,12 +202,12 @@ package.json @cloudflare/content-engineering
 
 /src/content/docs/argo-smart-routing/ @dcpena @cloudflare/pcx-technical-writing @cloudflare/product-owners
 /src/content/docs/automatic-platform-optimization/ @cloudflare/pcx-technical-writing @cloudflare/product-owners
-/src/content/docs/cache/ @angelampcosta @cloudflare/pcx-technical-writing @cloudflare/product-owners
-/src/content/docs/health-checks/ @angelampcosta @cloudflare/pcx-technical-writing @cloudflare/product-owners
-/src/content/docs/load-balancing/ @angelampcosta @cloudflare/pcx-technical-writing @cloudflare/product-owners
+/src/content/docs/cache/ @angelampcosta @dcpena @cloudflare/pcx-technical-writing @cloudflare/product-owners
+/src/content/docs/health-checks/ @angelampcosta @dcpena @cloudflare/pcx-technical-writing @cloudflare/product-owners
+/src/content/docs/load-balancing/ @angelampcosta @dcpena @cloudflare/pcx-technical-writing @cloudflare/product-owners
 src/content/docs/smart-shield/ @RebeccaTamachiro @cloudflare/pcx-technical-writing @cloudflare/product-owners
-/src/content/docs/spectrum/ @angelampcosta @cloudflare/pcx-technical-writing @cloudflare/product-owners
-/src/content/docs/speed/ @angelampcosta @cloudflare/pcx-technical-writing @cloudflare/product-owners
+/src/content/docs/spectrum/ @angelampcosta @dcpena @cloudflare/pcx-technical-writing @cloudflare/product-owners
+/src/content/docs/speed/ @angelampcosta @dcpena @cloudflare/pcx-technical-writing @cloudflare/product-owners
 /src/content/docs/web3/ @cloudflare/pcx-technical-writing @cloudflare/product-owners
 
 # Privacy
@@ -245,11 +251,11 @@ src/content/docs/smart-shield/ @RebeccaTamachiro @cloudflare/pcx-technical-writi
 
 # Waiting Room
 
-/src/content/docs/waiting-room/ @angelampcosta @cloudflare/pcx-technical-writing @cloudflare/product-owners
+/src/content/docs/waiting-room/ @angelampcosta @dcpena @cloudflare/pcx-technical-writing @cloudflare/product-owners
 
 # Web Analytics
 
-/src/content/docs/web-analytics/ @angelampcosta @cloudflare/pcx-technical-writing @cloudflare/product-owners
+/src/content/docs/web-analytics/ @angelampcosta @dcpena @cloudflare/pcx-technical-writing @cloudflare/product-owners
 
 # AI Prompts for Cloudflare Workers development
 /public/workers/prompts/ @jahands @Maximo-Guk @cloudflare/pcx-technical-writing @cloudflare/product-owners

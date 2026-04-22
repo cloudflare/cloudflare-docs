@@ -1,0 +1,26 @@
+---
+{}
+---
+
+import {DashButton} from "~/components";
+
+All requests require an API token with **AI Search:Edit** and **AI Search:Run** permissions.
+
+1. In the Cloudflare dashboard, go to **My Profile** > **API Tokens**.
+
+   <DashButton url="/profile/api-tokens" />
+
+2. Select **Create Token**.
+3. Select **Create Custom Token**.
+4. Enter a **Token name**, for example `AI Search Manager`.
+5. Under **Permissions**, add two permissions:
+   - **Account** > **AI Search:Edit**
+   - **Account** > **AI Search:Run**
+6. Select **Continue to summary**, then select **Create Token**.
+7. Copy and save the token value. This is your `API_TOKEN`.
+
+Include the token in the `Authorization` header for all requests:
+
+```txt
+Authorization: Bearer <API_TOKEN>
+```

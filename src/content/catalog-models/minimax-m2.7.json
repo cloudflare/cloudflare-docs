@@ -1,0 +1,527 @@
+{
+	"model_id": "minimax/m2.7",
+	"provider_id": "minimax",
+	"name": "M2.7",
+	"description": "MiniMax's M2.7 language model with multilingual capabilities.",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Multilingual"
+	],
+	"context_length": 128000,
+	"max_output_tokens": 4096,
+	"schema_version": "1.0.0",
+	"pricing": {},
+	"examples": [
+		{
+			"name": "Simple Conversation",
+			"description": "Basic chat completion request",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "What is the capital of France?"
+					}
+				],
+				"max_tokens": 100
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'minimax/m2.7',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'What is the capital of France?',\n      },\n    ],\n    max_tokens: 100,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "With System Prompt",
+			"description": "Using a system prompt to guide behavior",
+			"input": {
+				"messages": [
+					{
+						"role": "system",
+						"content": "You are a helpful cooking assistant. Give concise recipes with metric measurements."
+					},
+					{
+						"role": "user",
+						"content": "How do I make a simple pasta aglio e olio?"
+					}
+				],
+				"max_tokens": 500,
+				"temperature": 0.7
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'minimax/m2.7',\n  {\n    messages: [\n      {\n        role: 'system',\n        content:\n          'You are a helpful cooking assistant. Give concise recipes with metric measurements.',\n      },\n      {\n        role: 'user',\n        content: 'How do I make a simple pasta aglio e olio?',\n      },\n    ],\n    max_tokens: 500,\n    temperature: 0.7,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Multi-turn Conversation",
+			"description": "Continuing a conversation with context",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "What are the main differences between TCP and UDP?"
+					},
+					{
+						"role": "assistant",
+						"content": "TCP is connection-oriented and guarantees delivery, while UDP is connectionless and faster but without delivery guarantees."
+					},
+					{
+						"role": "user",
+						"content": "When would I choose UDP over TCP?"
+					}
+				],
+				"max_tokens": 500,
+				"temperature": 0.5
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'minimax/m2.7',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'What are the main differences between TCP and UDP?',\n      },\n      {\n        role: 'assistant',\n        content:\n          'TCP is connection-oriented and guarantees delivery, while UDP is connectionless and faster but without delivery guarantees.',\n      },\n      {\n        role: 'user',\n        content: 'When would I choose UDP over TCP?',\n      },\n    ],\n    max_tokens: 500,\n    temperature: 0.5,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Creative Writing",
+			"description": "Higher temperature for creative output",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "Write a haiku about programming."
+					}
+				],
+				"max_tokens": 100,
+				"temperature": 0.9
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'minimax/m2.7',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'Write a haiku about programming.',\n      },\n    ],\n    max_tokens: 100,\n    temperature: 0.9,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://www.minimaxi.com/",
+	"terms": "https://www.minimaxi.com/terms",
+	"cover_image_url": null,
+	"metadata": {
+		"Architecture": "Transformer"
+	},
+	"created_at": "2026-04-13 16:46:35",
+	"default_example": null,
+	"code_snippets": [],
+	"schema": {
+		"model_id": "minimax/m2.7",
+		"version": "1.0.0",
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"messages": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"role": {
+								"type": "string",
+								"enum": [
+									"system",
+									"user",
+									"assistant",
+									"tool"
+								]
+							},
+							"name": {
+								"type": "string"
+							},
+							"content": {
+								"anyOf": [
+									{
+										"type": "string"
+									},
+									{
+										"type": "array",
+										"items": {
+											"anyOf": [
+												{
+													"type": "object",
+													"properties": {
+														"type": {
+															"type": "string",
+															"const": "text"
+														},
+														"text": {
+															"type": "string"
+														}
+													},
+													"required": [
+														"type",
+														"text"
+													],
+													"additionalProperties": false
+												},
+												{
+													"type": "object",
+													"properties": {
+														"type": {
+															"type": "string",
+															"const": "image_url"
+														},
+														"image_url": {
+															"type": "object",
+															"properties": {
+																"url": {
+																	"type": "string"
+																}
+															},
+															"required": [
+																"url"
+															],
+															"additionalProperties": false
+														}
+													},
+													"required": [
+														"type",
+														"image_url"
+													],
+													"additionalProperties": false
+												}
+											]
+										}
+									}
+								]
+							},
+							"tool_calls": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string"
+										},
+										"type": {
+											"type": "string",
+											"const": "function"
+										},
+										"function": {
+											"type": "object",
+											"properties": {
+												"name": {
+													"type": "string"
+												},
+												"arguments": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"name",
+												"arguments"
+											],
+											"additionalProperties": false
+										}
+									},
+									"required": [
+										"id",
+										"type",
+										"function"
+									],
+									"additionalProperties": false
+								}
+							}
+						},
+						"required": [
+							"role",
+							"content"
+						],
+						"additionalProperties": {}
+					}
+				},
+				"temperature": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"max_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"max_completion_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"top_p": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"stream": {
+					"type": "boolean"
+				},
+				"stream_options": {
+					"type": "object",
+					"properties": {
+						"include_usage": {
+							"type": "boolean"
+						}
+					},
+					"additionalProperties": false
+				},
+				"tools": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"type": {
+								"type": "string",
+								"const": "function"
+							},
+							"function": {
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string"
+									},
+									"description": {
+										"type": "string"
+									},
+									"parameters": {}
+								},
+								"required": [
+									"name",
+									"description",
+									"parameters"
+								],
+								"additionalProperties": false
+							}
+						},
+						"required": [
+							"type",
+							"function"
+						],
+						"additionalProperties": false
+					}
+				},
+				"tool_choice": {
+					"type": "string",
+					"enum": [
+						"none",
+						"auto"
+					]
+				},
+				"response_format": {
+					"type": "object",
+					"properties": {
+						"type": {
+							"type": "string",
+							"const": "json_schema"
+						},
+						"json_schema": {
+							"type": "object",
+							"properties": {
+								"name": {
+									"type": "string",
+									"maxLength": 64
+								},
+								"description": {
+									"type": "string"
+								},
+								"schema": {
+									"type": "object",
+									"properties": {
+										"type": {
+											"type": "string",
+											"const": "object"
+										},
+										"properties": {}
+									},
+									"required": [
+										"type",
+										"properties"
+									],
+									"additionalProperties": false
+								}
+							},
+							"required": [
+								"name",
+								"schema"
+							],
+							"additionalProperties": false
+						}
+					},
+					"required": [
+						"type",
+						"json_schema"
+					],
+					"additionalProperties": false
+				},
+				"mask_sensitive_info": {
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"messages"
+			],
+			"additionalProperties": {}
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"choices": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"index": {
+								"type": "number"
+							},
+							"message": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string",
+										"const": "assistant"
+									},
+									"content": {
+										"type": "string"
+									},
+									"tool_calls": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"id": {
+													"type": "string"
+												},
+												"type": {
+													"type": "string",
+													"const": "function"
+												},
+												"function": {
+													"type": "object",
+													"properties": {
+														"name": {
+															"type": "string"
+														},
+														"arguments": {
+															"type": "string"
+														}
+													},
+													"required": [
+														"name",
+														"arguments"
+													],
+													"additionalProperties": false
+												}
+											},
+											"required": [
+												"id",
+												"type",
+												"function"
+											],
+											"additionalProperties": false
+										}
+									}
+								},
+								"required": [
+									"role",
+									"content"
+								],
+								"additionalProperties": {}
+							},
+							"finish_reason": {
+								"type": "string",
+								"enum": [
+									"stop",
+									"length",
+									"tool_calls"
+								]
+							}
+						},
+						"required": [
+							"index",
+							"message",
+							"finish_reason"
+						],
+						"additionalProperties": {}
+					}
+				},
+				"created": {
+					"type": "number"
+				},
+				"model": {
+					"type": "string"
+				},
+				"object": {
+					"type": "string",
+					"enum": [
+						"chat.completion",
+						"chat.completion.chunk"
+					]
+				},
+				"usage": {
+					"type": "object",
+					"properties": {
+						"total_tokens": {
+							"type": "number"
+						},
+						"prompt_tokens": {
+							"type": "number"
+						},
+						"completion_tokens": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"total_tokens",
+						"prompt_tokens",
+						"completion_tokens"
+					],
+					"additionalProperties": {}
+				},
+				"input_sensitive": {
+					"type": "boolean"
+				},
+				"output_sensitive": {
+					"type": "boolean"
+				},
+				"base_resp": {
+					"type": "object",
+					"properties": {
+						"status_code": {
+							"type": "number"
+						},
+						"status_msg": {
+							"type": "string"
+						}
+					},
+					"required": [
+						"status_code",
+						"status_msg"
+					],
+					"additionalProperties": false
+				}
+			},
+			"required": [
+				"id",
+				"choices",
+				"created",
+				"model",
+				"object"
+			],
+			"additionalProperties": {}
+		}
+	}
+}

@@ -1,8 +1,11 @@
 ---
 title: Workers API
+description: Reference for the Workflows Workers API, including WorkflowEntrypoint, step methods, and instance management.
 pcx_content_type: concept
 sidebar:
   order: 2
+products:
+  - workflows
 ---
 
 import {
@@ -74,12 +77,13 @@ Refer to the [events and parameters](/workflows/build/events-and-parameters/) do
 
 ### step
 
-- <code>step.do(name: string, callback: (): RpcSerializable): Promise&lt;T&gt;</code>
-- <code>step.do(name: string, config?: WorkflowStepConfig, callback: ():
-  RpcSerializable): Promise&lt;T&gt;</code>
+{/* prettier-ignore */}
+- <code>step.do(name: string, callback: (ctx: WorkflowStepContext): RpcSerializable): Promise&lt;T&gt;</code>
+- <code>step.do(name: string, config?: WorkflowStepConfig, callback: (ctx: WorkflowStepContext):
+	RpcSerializable): Promise&lt;T&gt;</code>
   - `name` - the name of the step, up to 256 characters.
   - `config` (optional) - an optional `WorkflowStepConfig` for configuring [step specific retry behaviour](/workflows/build/sleeping-and-retrying/).
-  - `callback` - an asynchronous function that optionally returns serializable state for the Workflow to persist. In JavaScript Workflows, this includes a fresh, unlocked `ReadableStream<Uint8Array>` for large binary output.
+  - `callback` - an asynchronous function that receives a [`WorkflowStepContext`](/workflows/build/step-context/) and optionally returns serializable state for the Workflow to persist. In JavaScript Workflows, this includes a fresh, unlocked `ReadableStream<Uint8Array>` for large binary output.
 
 :::note[Returning state]
 
@@ -188,6 +192,27 @@ export type WorkflowStepConfig = {
 - A `WorkflowStepConfig` is an optional argument to the `do` method of a `WorkflowStep` and defines properties that allow you to configure the retry behaviour of that step.
 
 Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how Workflows are retried.
+
+## WorkflowStepContext
+
+```ts
+export type WorkflowStepContext = {
+	step: {
+		name: string;
+		count: number;
+	};
+	attempt: number;
+	config: WorkflowStepConfig;
+};
+```
+
+- The `WorkflowStepContext` is passed as the first argument to the `step.do` callback function. It provides runtime information about the current step.
+  - `step.name` - the name of the step as passed to `step.do`.
+  - `step.count` - how many times `step.do` has been called with this name in the current Workflow run (1-indexed).
+  - `attempt` - the current attempt number (1-indexed). `1` on the first try, `2` on the first retry, and so on.
+  - `config` - the resolved `WorkflowStepConfig` for this step, including any defaults applied by the runtime.
+
+Refer to the [step context documentation](/workflows/build/step-context/) for usage examples.
 
 ## Workflow step limits
 

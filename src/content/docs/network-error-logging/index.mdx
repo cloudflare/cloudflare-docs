@@ -1,6 +1,9 @@
 ---
 title: Network Error Logging
 pcx_content_type: overview
+description: Collect reports about network errors affecting your visitors.
+products:
+  - network-error-logging
 sidebar:
   order: 1
 head:
@@ -58,4 +61,12 @@ Cloudflare uses internal lookups to associate the above data with a customer dom
 
 Cloudflare does not store any PII or user-specific data, and any IP data is only kept for the duration of the request as it is processed. After the report is processed through the NEL pipeline, all PII data is purged from the system.
 
-The client IP address is only stored in volatile memory for the lifetime of the request to Cloudflare’s NEL endpoint (order of milliseconds) and is dropped immediately after the request completes. Cloudflare does not log the client IP address anywhere in the Network Error Logging pipeline. Customers can opt out of having their end users consume the NEL headers by [contacting Cloudflare support](/support/contacting-cloudflare-support/).
+The client IP address is only stored in volatile memory for the lifetime of the request to Cloudflare’s NEL endpoint (order of milliseconds) and is dropped immediately after the request completes. Cloudflare does not log the client IP address anywhere in the Network Error Logging pipeline.
+
+NEL reports contain information about the end user's network conditions, which could be considered sensitive. Cloudflare takes privacy seriously and has implemented the following safeguards:
+* Reports are sent to Cloudflare's infrastructure and are not shared with third parties.
+* Reports do not contain personally identifiable information (PII).
+* Customers can opt out of having their end users consume the NEL headers using one of the following methods:
+  1. **Self-service (Zone setting)** — Use the dashboard toggle or API (`PATCH /zones/{zone_id}/settings/nel`) to disable NEL for your zone. This can be re-enabled by any zone administrator at any time.
+  2. **Permanent opt-out via Support** — Contact Cloudflare support to have the `nel___enable` feature flag disabled at the product level. This prevents NEL from being enabled on your zone entirely and cannot be reversed by zone administrators.
+For Free and Pro plans, the dashboard toggle is typically sufficient. Enterprise customers with strict privacy requirements may prefer the permanent support-level opt-out.

@@ -1,5 +1,8 @@
 ---
 pcx_content_type: how-to
+description: Tenant control in Gateway.
+products:
+  - cloudflare-one
 title: Tenant control
 sidebar:
   order: 7
@@ -15,7 +18,7 @@ Gateway implements tenant control by injecting custom HTTP headers into matching
 
 To create an HTTP policy with custom headers:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Traffic policies** > **Firewall policies** > **HTTP**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Traffic policies** > **Firewall policies** > **HTTP**.
 2. Select **Add a policy**.
 3. Build an expression to match the SaaS traffic you want to control.
 4. In **Action**, select _Allow_. In **Untrusted certificate action**, select _Block_.

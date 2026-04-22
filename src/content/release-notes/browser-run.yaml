@@ -4,6 +4,10 @@ productName: Browser Run
 productLink: "/browser-run/"
 entries:
   - publish_date: "2026-04-15"
+    title: "@cloudflare/playwright v1.3.0 released"
+    description: |-
+      * Released version 1.3.0 of [`@cloudflare/playwright`](https://github.com/cloudflare/playwright/releases/tag/v1.3.0). Starting with this version, the library uses the standard CDP (Chrome DevTools Protocol) internally to communicate with Browser Run, replacing the previous chunked protocol. This aligns with Browser Run's [full CDP support](/changelog/post/2026-04-10-browser-rendering-cdp-endpoint/) and prevents compatibility issues when using the latest compatibility dates. If you encounter any issues, you can downgrade by setting a `compatibility_date` prior to `2026-03-17` or by adding the `no_websocket_standard_binary_type` flag. Refer to the [`@cloudflare/playwright` README](https://github.com/cloudflare/playwright?tab=readme-ov-file#cdp-protocol-support) for details.
+  - publish_date: "2026-04-15"
     title: "Higher concurrency limits"
     description: |-
       * Increased the default [concurrent browser limit](/browser-run/limits/#workers-paid) for Workers Paid plans from 30 to **120 per account**.

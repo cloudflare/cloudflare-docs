@@ -1,8 +1,11 @@
 ---
 title: VPC Services
+description: Register private network resources as VPC Services that Workers can access through Cloudflare Tunnel.
 pcx_content_type: concept
 sidebar:
   order: 1
+products:
+  - workers-vpc
 ---
 
 import { Render, WranglerConfig } from "~/components";
@@ -13,7 +16,7 @@ You can use bindings to connect to VPC Services from Workers. Every request made
 
 VPC Services enforce that requests are routed to their intended service without exposing the entire network, securing your workloads and preventing server-side request forgery (SSRF).
 
-Members must possess **Connectivity Directory Bind** role to bind to existing VPC Services from Workers. Creating VPC Services requires members to possess the **Connectivity Directory Admin** role.
+Members with the **Connectivity Directory Bind** role can bind to existing VPC Services from Workers. Creating VPC Services requires the **Connectivity Directory Admin** role.
 
 :::note
 

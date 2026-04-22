@@ -1,8 +1,11 @@
 ---
 title: Cloudflare Tunnel
+description: Set up Cloudflare Tunnel to connect your private network to Workers VPC.
 pcx_content_type: concept
 sidebar:
   order: 3
+products:
+  - workers-vpc
 ---
 
 import { GlossaryTooltip, Tabs, TabItem, Example } from "~/components";
@@ -11,7 +14,7 @@ Cloudflare Tunnel creates secure connections from your infrastructure to Cloudfl
 
 When you create a VPC Service, you specify a tunnel ID and target service. Workers VPC then routes requests from your Worker to the specified tunnel, which establishes a connection to the specified hostname or IP address, such that the target service receives the request and returns a response back to your Worker.
 
-To allow members to create VPC Services that represent a target service reachable via a tunnel, you must assign them the **Connectivity Directory Admin** role. Members must possess **Connectivity Directory Bind** role to bind to existing VPC Services from worker.
+To allow members to create VPC Services that represent a target service reachable via a tunnel, you must assign them the **Connectivity Directory Admin** role. Members with the **Connectivity Directory Bind** role can bind to existing VPC Services from Workers. Binding directly to a tunnel through a VPC Network binding requires the **Connectivity Directory Admin** role.
 
 The tunnel maintains persistent connections to Cloudflare, eliminating the need for inbound firewall rules or public IP addresses.
 

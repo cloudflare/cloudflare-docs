@@ -1,0 +1,20 @@
+---
+pcx_content_type: integration-guide
+description: Integrate Google Cloud VPN with Zero Trust networking.
+products:
+  - cloudflare-one
+title: Google Cloud VPN
+
+tags:
+  - GCP
+  - IPsec
+---
+
+import { Render } from "~/components";
+
+<Render file="cloudflare-wan/third-party/google"
+  product="networking-services"
+  params={{
+    addTunnelsUrl: "/cloudflare-one/networks/connectors/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/#add-tunnels",
+    createAStaticRouteUrl: "/cloudflare-one/networks/connectors/cloudflare-wan/configuration/how-to/configure-routes/#create-a-static-route"
+  }} />

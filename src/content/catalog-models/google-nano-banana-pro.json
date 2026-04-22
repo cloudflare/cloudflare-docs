@@ -1,0 +1,172 @@
+{
+	"model_id": "google/nano-banana-pro",
+	"provider_id": "google",
+	"name": "Nano Banana Pro",
+	"description": "Google's higher-quality image generation model with improved detail and prompt adherence.",
+	"task": "Text-to-Image",
+	"tags": [
+		"Image Generation",
+		"High Quality"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {},
+	"examples": [
+		{
+			"name": "Product Photography",
+			"description": "Professional product shot",
+			"input": {
+				"prompt": "A sleek modern wireless headphone on a minimalist white marble surface with soft studio lighting and subtle shadows",
+				"aspect_ratio": "1:1",
+				"output_format": "png"
+			},
+			"output": {
+				"image": "https://replicate.delivery/xezq/pKxv2F52WJ5aH9RcN4mefOdxvfeeKUfiuxLrXBcziHDGaSNmF/tmp5dsx8j7h.png"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/nano-banana-pro',\n  {\n    prompt:\n      'A sleek modern wireless headphone on a minimalist white marble surface with soft studio lighting and subtle shadows',\n    aspect_ratio: '1:1',\n    output_format: 'png',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Fantasy Illustration",
+			"description": "Epic fantasy scene",
+			"input": {
+				"prompt": "An epic fantasy illustration of a wizard casting a spell in an ancient library, magical runes floating in the air, dust motes catching golden light streaming through stained glass windows",
+				"aspect_ratio": "16:9",
+				"image_size": "2K"
+			},
+			"output": {
+				"image": "https://replicate.delivery/xezq/upf6QxJsbj2DLiXFPheoWEpyYVKefseWbhQOqh3ZQ5G7XpGzC/tmp38w8fb13.jpeg"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/nano-banana-pro',\n  {\n    prompt:\n      'An epic fantasy illustration of a wizard casting a spell in an ancient library, magical runes floating in the air, dust motes catching golden light streaming through stained glass windows',\n    aspect_ratio: '16:9',\n    image_size: '2K',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Architectural Visualization",
+			"description": "Modern architecture render",
+			"input": {
+				"prompt": "A photorealistic architectural visualization of a modern glass house perched on a cliff overlooking the ocean at sunset",
+				"aspect_ratio": "16:9",
+				"image_size": "4K",
+				"output_format": "jpg"
+			},
+			"output": {
+				"image": "https://replicate.delivery/xezq/wVDir3Wl4zK6OZ2UdNZZUFfjxRnI0m6qMys09tpNFkiLmaMLA/tmpaeoibzxr.jpeg"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/nano-banana-pro',\n  {\n    prompt:\n      'A photorealistic architectural visualization of a modern glass house perched on a cliff overlooking the ocean at sunset',\n    aspect_ratio: '16:9',\n    image_size: '4K',\n    output_format: 'jpg',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Character Design",
+			"description": "Game character concept art",
+			"input": {
+				"prompt": "A detailed character design sheet for a steampunk inventor, showing front view, side view, and detail callouts for mechanical arm and goggles",
+				"aspect_ratio": "3:2"
+			},
+			"output": {
+				"image": "https://replicate.delivery/xezq/RvsT0pTkqOqcENng7XvcI3D0RPrYxpJzoh5WzbPz2FFiTNmF/tmpi_j7bnz0.jpeg"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/nano-banana-pro',\n  {\n    prompt:\n      'A detailed character design sheet for a steampunk inventor, showing front view, side view, and detail callouts for mechanical arm and goggles',\n    aspect_ratio: '3:2',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://deepmind.google/technologies/imagen/",
+	"terms": "https://ai.google.dev/gemini-api/terms",
+	"cover_image_url": "https://tjzk.replicate.delivery/models_models_featured_image/5ee636db-8712-442f-9644-63980f6786f4/banana2.png",
+	"metadata": {
+		"Output Format": "JPEG"
+	},
+	"created_at": "2026-04-08 22:01:25",
+	"default_example": null,
+	"code_snippets": [],
+	"schema": {
+		"model_id": "google/nano-banana-pro",
+		"version": "1.0.0",
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string"
+				},
+				"image_input": {
+					"maxItems": 3,
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"aspect_ratio": {
+					"type": "string",
+					"enum": [
+						"1:1",
+						"3:2",
+						"2:3",
+						"3:4",
+						"4:3",
+						"4:5",
+						"5:4",
+						"9:16",
+						"16:9",
+						"21:9"
+					]
+				},
+				"output_format": {
+					"type": "string",
+					"enum": [
+						"jpg",
+						"png",
+						"webp"
+					]
+				},
+				"image_size": {
+					"type": "string",
+					"enum": [
+						"1K",
+						"2K",
+						"4K"
+					]
+				}
+			},
+			"required": [
+				"prompt"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"type": "string",
+					"format": "uri"
+				}
+			},
+			"required": [
+				"image"
+			],
+			"additionalProperties": false
+		}
+	}
+}

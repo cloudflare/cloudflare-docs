@@ -1,0 +1,67 @@
+---
+pcx_content_type: reference
+title: Evaluation reasons and error codes
+description: Flagship evaluation reason values and error codes returned by binding details methods and the OpenFeature SDK.
+sidebar:
+  order: 2
+products:
+  - flagship
+---
+
+import { TypeScriptExample } from "~/components";
+
+When you evaluate a flag using the binding's `*Details` methods or the OpenFeature SDK, the response includes a `reason` field that explains why a particular value was returned. If an error occurs, the response includes an `errorCode` field.
+
+## Evaluation reasons
+
+| Reason            | Description                                                                                                                        |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `TARGETING_MATCH` | A targeting rule's conditions matched the evaluation context, and the rule's variation was returned.                               |
+| `SPLIT`           | A targeting rule with a percentage rollout matched. The user fell within the rollout percentage and received the rule's variation. |
+| `DEFAULT`         | No targeting rule matched the evaluation context. The flag's default variation was returned.                                       |
+| `DISABLED`        | The flag is disabled. The default variation was returned regardless of targeting rules.                                            |
+
+## Error codes
+
+When an evaluation error occurs, the method returns the default value you provided. The `*Details` methods include additional metadata about the error.
+
+| Error code       | Description                                                                                                                                                               |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `TYPE_MISMATCH`  | The flag's variation type does not match the requested type. For example, calling `getBooleanValue` on a flag whose variation is a string. The default value is returned. |
+| `GENERAL`        | An unexpected error occurred during evaluation (for example, a network failure). The default value is returned.                                                           |
+| `FLAG_NOT_FOUND` | The specified flag key does not exist in the app. The default value is returned.                                                                                          |
+
+## Example
+
+The following example inspects evaluation details returned by `getBooleanDetails`:
+
+<TypeScriptExample>
+
+```ts
+const details = await env.FLAGS.getBooleanDetails("my-feature", false, {
+	userId: "user-42",
+});
+
+switch (details.reason) {
+	case "TARGETING_MATCH":
+		console.log(`Matched targeting rule, variant: ${details.variant}`);
+		break;
+	case "SPLIT":
+		console.log(`Included in rollout, variant: ${details.variant}`);
+		break;
+	case "DEFAULT":
+		console.log("No rule matched, using default variation");
+		break;
+	case "DISABLED":
+		console.log("Flag is disabled");
+		break;
+}
+
+if (details.errorCode) {
+	console.error(
+		`Evaluation error: ${details.errorCode} - ${details.errorMessage}`,
+	);
+}
+```
+
+</TypeScriptExample>

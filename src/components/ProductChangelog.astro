@@ -64,7 +64,15 @@ const changelogs =
 
 <RSSButton href={rss} />
 
-{changelogs.length === 0 && <p>There are no scheduled entries at this time.</p>}
+{
+	changelogs.length === 0 && (
+		<>
+			<br />
+			<br />
+			<p>There are no scheduled entries at this time.</p>
+		</>
+	)
+}
 
 {
 	changelogs.map(async (entry) => {

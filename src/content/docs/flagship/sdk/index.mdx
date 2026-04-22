@@ -1,0 +1,53 @@
+---
+pcx_content_type: overview
+title: OpenFeature SDK
+description: Use the @cloudflare/flagship OpenFeature SDK to evaluate Flagship feature flags from Workers, Node.js, or the browser.
+sidebar:
+  order: 6
+products:
+  - flagship
+---
+
+import { Description, PackageManagers } from "~/components";
+
+<Description>
+
+Evaluate Flagship feature flags from any JavaScript runtime using OpenFeature.
+
+</Description>
+
+[OpenFeature](https://openfeature.dev/) is the CNCF standard for feature flag interfaces. It provides a vendor-neutral API so you can switch between flag providers without changing evaluation code.
+
+The [`@cloudflare/flagship`](https://www.npmjs.com/package/@cloudflare/flagship) package is an OpenFeature-compatible SDK for evaluating Flagship feature flags. The source code is available on [GitHub](https://github.com/cloudflare/flagship).
+
+The SDK includes two providers:
+
+- **FlagshipServerProvider** — For server-side runtimes such as [Cloudflare Workers](/workers/), Node.js, and other server-side JavaScript environments. Each evaluation call makes an asynchronous request to the Flagship evaluation endpoint.
+- **FlagshipClientProvider** — For browser applications. Pre-fetches all flag values on initialization and evaluates synchronously from an in-memory cache.
+
+:::note
+If you are running inside a Cloudflare Worker, the [binding](/flagship/binding/) is the recommended approach because it avoids HTTP overhead. You can also [pass the binding to the OpenFeature SDK](/flagship/sdk/server-provider/) to get the best of both. Use the SDK without a binding when running in non-Worker runtimes like Node.js or the browser.
+:::
+
+## Installation
+
+For server-side usage:
+
+<PackageManagers
+	type="add"
+	pkgManagers={["npm", "yarn", "pnpm", "bun"]}
+	pkg="@cloudflare/flagship @openfeature/server-sdk"
+/>
+
+For browser usage:
+
+<PackageManagers
+	type="add"
+	pkgManagers={["npm", "yarn", "pnpm", "bun"]}
+	pkg="@cloudflare/flagship @openfeature/web-sdk"
+/>
+
+## Next steps
+
+- Set up the [server provider](/flagship/sdk/server-provider/) for Workers, Node.js, or other server-side runtimes.
+- Set up the [client provider](/flagship/sdk/client-provider/) for browser applications.

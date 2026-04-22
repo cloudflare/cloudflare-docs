@@ -1,0 +1,92 @@
+id: sec-005
+name: Protect APIs from abuse and attack
+category: network-application-security
+description: >
+  Discover, validate, and secure API endpoints with schema validation and sequence enforcement.
+aliases:
+  - "API schema validation"
+  - "API sequence enforcement"
+  - "API discovery"
+products:
+  - API Shield
+  - API Gateway
+  - WAF
+
+qualifying_questions:
+  - id: q1
+    text: "Do you have an OpenAPI specification for your APIs?"
+    options:
+      - label: "Yes, I have an OpenAPI/Swagger spec"
+        sets: [has-schema]
+      - label: "No, I don't have a spec or use a different format"
+        sets: [needs-discovery]
+      - label: "I'm not sure what documentation exists for our APIs"
+        sets: [needs-discovery]
+  - id: q2
+    text: "What is your primary API security concern?"
+    options:
+      - label: "Unauthorized access and authentication"
+        sets: [auth]
+      - label: "Abuse and excessive usage"
+        sets: [abuse]
+      - label: "Data exfiltration via API"
+        sets: [data-exfil]
+
+default_path: api-discovery
+
+paths:
+  - id: schema-based-protection
+    name: "Schema-Based API Protection"
+    condition:
+      has_any: [has-schema]
+    steps:
+      - product: "API Shield"
+        action: upload-schema
+        description: "Upload your OpenAPI schema for validation"
+      - product: "API Shield"
+        action: enable-schema-validation
+        description: "Enable schema validation to block non-conforming requests"
+      - product: "API Shield"
+        action: enable-sequence-enforcement
+        description: "Define expected API call sequences"
+      - product: "WAF"
+        action: create-rate-limiting-rule
+        description: "Add per-endpoint rate limiting"
+
+  - id: api-discovery
+    name: "API Discovery and Protection"
+    condition:
+      has_any: [needs-discovery]
+    steps:
+      - product: "API Shield"
+        action: enable-api-discovery
+        description: "Enable API Discovery to map all endpoints"
+      - product: "API Shield"
+        action: review-discovered-endpoints
+        description: "Review discovered endpoints and mark as managed"
+      - product: "API Shield"
+        action: generate-schema
+        description: "Generate learned schema from traffic patterns"
+      - product: "WAF"
+        action: create-rate-limiting-rule
+        description: "Add rate limiting for discovered endpoints"
+
+  - id: api-auth
+    name: "API Authentication with mTLS"
+    condition:
+      has_any: [auth]
+    steps:
+      - product: "API Shield"
+        action: configure-mtls
+        description: "Set up mutual TLS for API authentication"
+      - product: "API Shield"
+        action: create-client-certificates
+        description: "Issue client certificates for authorized consumers"
+      - product: "WAF"
+        action: create-custom-rule
+        description: "Block requests without valid client certificates"
+
+related_use_cases:
+  - sec-002
+  - sec-004
+  - sec-011

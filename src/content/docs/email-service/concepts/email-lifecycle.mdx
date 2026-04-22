@@ -1,0 +1,60 @@
+---
+title: Email lifecycle
+description: The complete email processing flow from send request to final delivery status in Email Service.
+pcx_content_type: concept
+summary: |
+  Understand the complete email processing lifecycle from request received through final delivery status with Cloudflare Email Service
+sidebar:
+  order: 2
+products:
+  - email-service
+---
+
+import { Tabs, TabItem } from "~/components";
+
+The email lifecycle describes the complete journey of an email from the initial send request through final delivery status. Understanding this process helps you optimize your email implementation and troubleshoot delivery issues.
+
+## Email processing flow
+
+Every email sent through Cloudflare Email Service follows this processing pipeline:
+
+```mermaid
+flowchart LR
+    A[Request Received] --> B["Rate Limit, Authentication & Suppression Check"] --> E[Delivery Attempt]
+    E --> G{Success?}
+    G -->|Yes, successfully delivered| F[Final Status & Metrics]
+    G -->|No - Soft Bounce| H[Retry with Exponential Backoff]
+    G -->|No - Hard Bounce| F
+    H --> E
+    H -->|Max retries exceeded| F
+```
+
+### Stage Details:
+
+1. **Request received:** The system validates the email format, sender authorization, and message structure. Invalid requests are rejected immediately and do not proceed to the next stage.
+
+2. **Rate limit check:** The system checks sending [limits](/email-service/platform/limits) per account, domain, and recipient to prevent abuse. Requests that exceed these limits are temporarily rejected and must be retried later.
+
+3. **Authentication and reputation**: The system performs email authentication checks and evaluates sender reputation:
+   - **SPF (Sender Policy Framework)**: Verifies that the sending IP address is authorized to send emails for the domain by checking DNS TXT records. This prevents domain spoofing and improves deliverability.
+   - **DKIM (DomainKeys Identified Mail)**: Validates the email's cryptographic signature to ensure message integrity and authenticate the sender domain. This builds trust with recipient servers.
+   - **DMARC (Domain-based Message Authentication)**: Applies domain owner policies for handling emails that fail SPF or DKIM checks, helping prevent phishing and brand impersonation while providing feedback reports.
+
+   These authentication mechanisms work together to establish sender legitimacy and protect against email fraud. Senders with low reputation scores may experience throttling or delayed processing.
+
+4. **Suppression list check:** The system checks the recipient against your account's suppression list, which includes bounces, complaints, and unsubscribes. Recipients found on this list are blocked from receiving the email.
+
+5. **Delivery attempt:** The system connects to the recipient's mail server and attempts message delivery via SMTP. When delivery fails, the system applies different retry logic based on the failure type:
+   - **Soft bounces (4xx responses)**: The system retries delivery using exponential backoff timing
+   - **Hard bounces (5xx responses)**: The system marks the email as permanently failed with no retry attempts
+
+6. **Server response handling:** The system processes SMTP response codes from the recipient server to determine the final email status:
+   - **2xx codes**: The email was delivered successfully
+   - **4xx codes**: Temporary failure occurred and the email will be retried
+   - **5xx codes**: Permanent failure occurred and the email cannot be delivered
+
+7. **Final status and metrics:** Based on the server response, the system assigns emails one of these final statuses:
+   - **Delivered**: The email was successfully accepted by the recipient server
+   - **Delivery failed**: The email permanently failed delivery (hard bounce) or exceeded the maximum retry attempts (soft bounce). This status appears as `deliveryFailed` when querying the [GraphQL Analytics API](/email-service/observability/metrics-analytics/).
+
+Understanding the email lifecycle helps you build robust email applications that handle all possible outcomes and provide excellent user experiences through proper status tracking and error handling.

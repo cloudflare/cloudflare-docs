@@ -1,6 +1,9 @@
 ---
 pcx_content_type: concept
 title: Security Insights
+description: Scan your account for misconfigurations and potential security risks across all domains.
+products:
+  - security-center
 sidebar:
   order: 4
 ---
@@ -31,7 +34,7 @@ Listed below are the specific insights currently available:
 | [Increased body response size detected on API endpoints](/api-shield/management-and-monitoring/endpoint-labels/)                                     | Investigate changes, abuse, or successful attacks that may have led to this increase in response body size.                                                                                                                                            |
 | [Increased errors detected on API endpoints](/api-shield/management-and-monitoring/endpoint-labels/)                                                 | Investigate changes, abuse, or successful attacks that may have led to this increase in errors.                                                                                                                                                        |
 | [Increased latency detected on API endpoints](/api-shield/management-and-monitoring/endpoint-labels/)                                                | Investigate changes, abuse, or successful attacks that may have led to this increase in response latency.                                                                                                                                              |
-| [Managed Rules not deployed](/waf/managed-rules/reference/cloudflare-managed-ruleset/)                                                               | No managed rules deployed on a WAF protected domain.                                                                                                                                                                                                   |
+| [Managed Rules not deployed](/waf/managed-rules/)                                                                                                    | No managed rules deployed on a WAF protected domain. Refer to [Known limitations](#known-limitations).                                                                                                                                                 |
 | [Upgrade to new Managed Rules](/waf/reference/legacy/old-waf-managed-rules/upgrade/)                                                                 | Upgrade to new Managed Rules system required for optimal protection.                                                                                                                                                                                   |
 | [Mixed-authentication API endpoints detected](/api-shield/management-and-monitoring/endpoint-labels/#managed-labels)                                 | Not all of the successful requests against API endpoints carried session identifiers.                                                                                                                                                                  |
 | [New API endpoints detected](/api-shield/security/api-discovery/)                                                                                    | API Discovery detects new API endpoints in your zone's traffic.                                                                                                                                                                                        |
@@ -51,5 +54,17 @@ Listed below are the specific insights currently available:
 | [Users without MFA](/fundamentals/user-profiles/2fa/)                                                                                                | We detect that a Cloudflare administrative user has not enabled multifactor authentication.                                                                                                                                                            |
 | [Zones without WAF Managed Rules](/waf/managed-rules/)                                                                                               | We detect that this domain does not have the WAF's Managed Rules enabled. You are at risk from zero-day and other common vulnerabilities.                                                                                                              |
 | [No Turnstile enabled](/turnstile/)                                                                                                                  | We detect that there is no Turnstile widget configured on the account.                                                                                                                                                                                 |
+
+## Known limitations
+
+Security Insights scans run periodically and use heuristics to detect potential issues. In some cases, an insight may not accurately reflect your current configuration:
+
+- **_Managed Rules not deployed_ on zones with account-level managed rules**: If you deploy managed rules at the account level rather than the zone level, Security Center may not detect them and may report that managed rules are not deployed. If your account-level configuration is correct, you can [archive the insight](/security-center/security-insights/review-insights/#archive-insights) to dismiss it.
+
+- **Vulnerability insights for rules in log mode**: If you configure a managed rule with a _Log_ action (for example, to monitor traffic before enforcing), Security Center may still generate a vulnerability insight because the rule is not actively blocking traffic. This is expected behavior. You can archive the insight if you are intentionally using log mode.
+
+To remove a resolved or inaccurate insight from your dashboard, [archive the insight](/security-center/security-insights/review-insights/#archive-insights) or wait for the next automatic scan.
+
+## More resources
 
 For more information on available operations for Security Insights, refer to [Review Security Insights](/security-center/security-insights/review-insights/).

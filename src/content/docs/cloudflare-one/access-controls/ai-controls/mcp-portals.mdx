@@ -1,5 +1,8 @@
 ---
 pcx_content_type: how-to
+description: MCP server portals in Access.
+products:
+  - cloudflare-one
 title: MCP server portals
 tags:
   - MCP
@@ -16,19 +19,23 @@ An MCP server portal centralizes multiple [Model Context Protocol (MCP) servers]
 
 ![MCP clients connect through an MCP portal to access internal MCP servers and SaaS MCP servers.](~/assets/images/cloudflare-one/applications/mcp-portal.png)
 
-Key benefits include:
+This guide explains how to add MCP servers to Cloudflare Access, create an MCP portal with customized tools and policies, and connect users to the portal using an MCP client.
 
-- **Streamlined access to multiple MCP servers**: MCP server portals support both unauthenticated MCP servers and MCP servers secured using OAuth (for example, via [Access for SaaS](/cloudflare-one/access-controls/ai-controls/saas-mcp/) or a [third-party OAuth provider](/agents/model-context-protocol/authorization/)). Users log in to the portal URL through Cloudflare Access and are prompted to authenticate separately to each server that requires OAuth.
+## Key features
+
+MCP server portals provide the following capabilities:
+
+- **Streamlined access to multiple MCP servers**: MCP server portals support both unauthenticated MCP servers and MCP servers secured using OAuth (for example, via [Access for SaaS](/cloudflare-one/access-controls/ai-controls/secure-mcp-servers/) or a [third-party OAuth provider](/agents/model-context-protocol/authorization/)). Users log in to the portal URL through Cloudflare Access and are prompted to authenticate separately to each server that requires OAuth.
 
 - **Customized tools per portal**: Admins can tailor an MCP portal to a particular use case by choosing the specific tools and prompt templates that they want to make available to users through the portal. This allows users to access a curated set of tools and prompts — the less external context exposed to the AI model, the better the AI responses tend to be.
+
+- **Context optimization**: Portals support query parameter options that reduce context window usage by minimizing or hiding tool definitions. Refer to [Optimize context](#optimize-context) for details.
 
 - **Non-browser client support**: MCP clients authenticate to the portal using a standard OAuth 2.0 authorization code flow via [managed OAuth](/cloudflare-one/access-controls/applications/http-apps/managed-oauth/). Non-browser clients receive a `401` response with a `WWW-Authenticate` header pointing to Access's OAuth discovery endpoints, rather than a browser redirect.
 
 - **Code mode**: Code mode is available by default on all portals. It collapses all upstream tools into a single `code` tool. The AI agent writes JavaScript that calls typed methods for each tool, and the code runs in an isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/) environment. This keeps context window usage fixed regardless of how many tools are available. Refer to [code mode](#code-mode) for connection instructions.
 
 - **Observability**: Once the user's AI agent is connected to the portal, Cloudflare Access logs the individual requests made using the tools in the portal. You can optionally route portal traffic through [Cloudflare Gateway](#route-portal-traffic-through-gateway) for richer HTTP logging and data loss prevention (DLP) scanning.
-
-This guide explains how to add MCP servers to Cloudflare Access, create an MCP portal with customized tools and policies, and connect users to the portal using an MCP client.
 
 ## Prerequisites
 
@@ -51,7 +58,7 @@ To add an MCP server:
 7. Add [Access policies](/cloudflare-one/access-controls/policies/) to show or hide the server in an [MCP server portal](#create-a-portal). The MCP server link will only appear in the portal for users who match an Allow policy. Users who do not pass an Allow policy will not see this server through any portals.
 
    :::caution
-   Blocked users can still connect to the server (and bypass your Access policies) by using its direct URL. If you want to enforce authentication through Cloudflare Access, [configure Access as the server's OAuth provider](/cloudflare-one/access-controls/ai-controls/saas-mcp/).
+   Blocked users can still connect to the server (and bypass your Access policies) by using its direct URL. If you want to enforce authentication through Cloudflare Access, [configure Access as the server's OAuth provider](/cloudflare-one/access-controls/ai-controls/secure-mcp-servers/).
    :::
 
 8. Select **Save and connect server**.
@@ -259,15 +266,122 @@ For MCP clients with server configuration files, we recommend using the `npx` co
 
 We do not recommend using the `serverURL` parameter since it may cause issues with portal session creation and management.
 
-If you want to force your MCP client to reauthenticate, most MCP clients will refresh a session after removing the existing MCP OAuth sessions. To clear authentication credentials used by your MCP client, open a terminal and run the following command:
+## Optimize context
+
+MCP server portals support context optimization options that reduce how many tokens tool definitions consume in the model's context window. These options are useful when a portal aggregates many MCP servers or servers that expose a large number of tools.
+
+To use context optimization, append the `optimize_context` query parameter to your portal URL when connecting from an MCP client.
+
+### Minimize tools
+
+The `minimize_tools` option strips tool descriptions and input schemas from all upstream tools, leaving only their names. The portal exposes a special `query` tool that agents use to search and retrieve full tool definitions on demand. Agents can discover tools without loading all definitions upfront.
+
+This option provides up to 5x savings in token usage, though querying tool definitions before use adds a small amount of overhead.
+
+To connect with `minimize_tools`, use the following portal URL:
+
+```txt
+https://<subdomain>.<domain>/mcp?optimize_context=minimize_tools
+```
+
+For MCP clients with server configuration files:
+
+```json title="MCP client configuration with minimize_tools"
+{
+	"mcpServers": {
+		"example-portal": {
+			"command": "npx",
+			"args": [
+				"-y",
+				"mcp-remote@latest",
+				"https://<subdomain>.<domain>/mcp?optimize_context=minimize_tools"
+			]
+		}
+	}
+}
+```
+
+### Search and execute
+
+The `search_and_execute` option hides all upstream tools and exposes only two tools to the agent: `query` and `execute`. The `query` tool searches and retrieves tool definitions. The `execute` tool runs the upstream tools. The generated code runs in an isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/) environment, which keeps authentication credentials and environment variables out of the model context.
+
+This option reduces the initial token cost of portal tools to a small constant, regardless of how many tools are available. However, the agent becomes fully reliant on `query` to discover tools before it can call them.
+
+To connect with `search_and_execute`, use the following portal URL:
+
+```txt
+https://<subdomain>.<domain>/mcp?optimize_context=search_and_execute
+```
+
+For MCP clients with server configuration files:
+
+```json title="MCP client configuration with search_and_execute"
+{
+	"mcpServers": {
+		"example-portal": {
+			"command": "npx",
+			"args": [
+				"-y",
+				"mcp-remote@latest",
+				"https://<subdomain>.<domain>/mcp?optimize_context=search_and_execute"
+			]
+		}
+	}
+}
+```
+
+For more information on the code mode pattern behind `search_and_execute`, refer to the [Code mode SDK reference](/agents/api-reference/codemode/).
+
+## Manage portal sessions
+
+Once connected to a portal, users can manage their upstream MCP server sessions without leaving their MCP client. The portal uses [MCP elicitations](https://modelcontextprotocol.io/specification/2025-03-26/server/elicitation) to provide a server selection page where you can enable or disable servers, log out of individual servers, and reauthenticate.
+
+### Return to the server selection page
+
+To manage your server connections during an active session, ask your AI agent to take you back to the server selection page. For example, prompt your agent with:
+
+> Take me back to the server selection page.
+
+The portal returns an authorization URL. Open this URL in your web browser to access the server selection page:
+
+```txt
+https://<subdomain>.<domain>/authorize?elicitationId=<ELICITATION_ID>
+```
+
+From this page you can:
+
+- **Enable or disable servers** — Toggle individual upstream MCP servers on or off. Disabling a server removes its tools from the active session, which reduces context window usage.
+- **Log out and reauthenticate** — Log out of a server and log back in if you need to change which data the server has access to. For example, you may need to reauthenticate with different permissions.
+
+### Enable or disable a server inline
+
+You can also enable or disable a specific server directly from your MCP client without visiting the server selection page. For example:
+
+> Enable the wiki server.
+
+> Disable my Jira server.
+
+The portal toggles the server and updates the active tool list immediately. Disabling a server removes its tools from the session, which reduces context window usage.
+
+### Reauthenticate a server
+
+When an upstream MCP server token expires, the portal prompts you to reauthenticate from within your MCP client. Open the provided URL in your browser and complete the login to restore the session.
+
+If your MCP client does not display the reauthentication prompt, you can manually clear cached credentials:
 
 :::note
-This command will trigger all MCP servers using `mcp-remote@latest` to force reauthenticate, not just MCP portals.
+This command clears credentials for all MCP servers using `mcp-remote@latest`, not just MCP portals.
 :::
 
 ```sh
 rm -rf ~/.mcp-auth
 ```
+
+After clearing credentials, reconnect to the portal from your MCP client.
+
+### Authorize new servers
+
+When an admin adds a new upstream MCP server to a portal, the portal automatically prompts connected users to authorize the new server. The portal batches admin changes and redirects you to the authorization flow once, rather than interrupting for each individual server update.
 
 ## View portal logs
 

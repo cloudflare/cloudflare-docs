@@ -5,6 +5,9 @@ sidebar:
   order: 6
 head: []
 description: Learn what account API tokens are, when to use them, and what they currently work with
+products:
+  - fundamentals
+  - api
 ---
 
 While user tokens act on behalf of a particular user and inherit a subset of that user's permissions, account API tokens allow you to set up durable integrations that can act as service principals with their own specific set of permissions. This approach is ideal for scenarios like CI/CD, or building integrations with external services like SIEMs where it is important that the integration continues working, even long after the user who configured the integration may have left your organization altogether. User tokens are better for ad hoc tasks like scripting, where acting as the user is ideal and durability is less of a concern.
@@ -40,6 +43,7 @@ Account API tokens are generally available for all accounts. Some services may n
 | API Shield                                  | ✅            |
 | Argo                                        | ✅            |
 | Billing                                     | ✅            |
+| Browser Run                                 | ✅            |
 | Bulk Redirects                              | ✅            |
 | Cache                                       | ✅            |
 | Tiered Cache                                | ✅            |

@@ -29,22 +29,27 @@ jobs:
         with:
           fetch-depth: 1
 
+      - name: Set up pnpm
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+        with:
+          version: 10
+
       - name: Setup Node.js
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         id: setup-node
         with:
           node-version: 24.x
-          cache: npm
+          cache: pnpm
 
       - name: Restore node_modules (cache hit)
         id: node-modules-cache
         uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           path: node_modules
-          key: node-modules-${{ runner.os }}-node-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('package.json') }}
+          key: node-modules-${{ runner.os }}-node-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('package.json') }}
 
       - name: Install node_modules (cache miss)
-        run: npm ci
+        run: pnpm install --frozen-lockfile
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
       - name: Run Lil Bonk
@@ -54,7 +59,7 @@ jobs:
           CLOUDFLARE_GATEWAY_ID: ${{ secrets.CF_AI_GATEWAY_NAME }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_AI_GATEWAY_TOKEN }}
         with:
-          model: "cloudflare-ai-gateway/workers-ai/@cf/moonshotai/kimi-k2.5"
+          model: "cloudflare-ai-gateway/workers-ai/@cf/moonshotai/kimi-k2.6"
           agent: docs
           mentions: "/bonk"
           permissions: CODEOWNERS

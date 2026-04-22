@@ -1,8 +1,11 @@
 ---
 title: Configuration
+description: Configure Wrangler bindings, environment variables, and type generation for an Agents SDK project.
 pcx_content_type: concept
 sidebar:
   order: 3
+products:
+  - agents
 ---
 
 import {
@@ -19,19 +22,18 @@ This guide covers everything you need to configure agents for local development 
 
 The typical file structure for an Agent project created from `npm create cloudflare@latest agents-starter -- --template cloudflare/agents-starter` follows:
 
-{/* prettier-ignore */}
 <FileTree>
-- src/
-  - index.ts your Agent definition
-- public/
-  - index.html
-- test/
-  - index.spec.ts your tests
-- package.json
-- tsconfig.json
-- vitest.config.mts
-- worker-configuration.d.ts
-- wrangler.jsonc your Workers and Agent configuration
+	- src/
+		- index.ts your Agent definition
+	- public/
+		- index.html
+	- test/
+		- index.spec.ts your tests
+	- package.json
+	- tsconfig.json
+	- vitest.config.mts
+	- worker-configuration.d.ts
+	- wrangler.jsonc your Workers and Agent configuration
 </FileTree>
 
 ## Wrangler configuration file
@@ -541,7 +543,6 @@ npx wrangler dev
 
 Durable Object state is persisted locally in `.wrangler/state/`:
 
-{/* prettier-ignore */}
 <FileTree>
 - .wrangler/
   - state/

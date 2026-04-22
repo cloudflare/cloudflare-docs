@@ -15,7 +15,7 @@ node_modules/
 
 # lockfiles from other package managers
 yarn.lock
-pnpm-lock.yaml
+package-lock.json
 bun.lockb
 bun.lock
 
@@ -42,6 +42,7 @@ pnpm-debug.log*
 /worker/functions/
 
 .idea
+.ignore
 
 tools/relevant_changed_files.txt
 

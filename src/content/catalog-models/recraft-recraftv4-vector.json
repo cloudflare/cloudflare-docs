@@ -1,0 +1,214 @@
+{
+	"model_id": "recraft/recraftv4-vector",
+	"provider_id": "recraft",
+	"name": "Recraft V4 Vector",
+	"description": "Generate production-ready SVG vector graphics from text prompts with clean geometry, structured layers, and editable paths.",
+	"task": "Text-to-Image",
+	"tags": [
+		"Image Generation",
+		"SVG",
+		"Vector",
+		"Design"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {},
+	"examples": [
+		{
+			"name": "Simple Icon",
+			"description": "Generate a basic vector icon",
+			"input": {
+				"prompt": "A simple flat icon of a coffee cup with steam rising"
+			},
+			"output": {
+				"image": "https://replicate.delivery/xezq/pes8cFTAAT2bDaVZ1gSRHHvwjbqcwBWlcqDWTsfklrwehhzsA/tmp4ofj5lhy.svg"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-vector',\n  {\n    prompt: 'A simple flat icon of a coffee cup with steam rising',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "App Icon",
+			"description": "Mobile app icon in vector format",
+			"input": {
+				"prompt": "A colorful gradient app icon featuring a chat bubble with a sparkle effect",
+				"size": "1024x1024"
+			},
+			"output": {
+				"image": "https://replicate.delivery/xezq/oc9wcTceufn1fpWILJeVltIPx4RWwaNmqfhP1KKdKWxgJGOzC/tmpz1_sfxxs.svg"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-vector',\n  {\n    prompt:\n      'A colorful gradient app icon featuring a chat bubble with a sparkle effect',\n    size: '1024x1024',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Illustration",
+			"description": "Vector illustration for web use",
+			"input": {
+				"prompt": "A flat vector illustration of a person working at a desk with a computer, plants, and a window showing a city view",
+				"size": "1024x1024"
+			},
+			"output": {
+				"image": "https://replicate.delivery/xezq/bOTBQsRwbqIRINwtP19YZ688A0Z8ucKYVlsvfflntqTdxwZWA/tmpktw4d6n1.svg"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-vector',\n  {\n    prompt:\n      'A flat vector illustration of a person working at a desk with a computer, plants, and a window showing a city view',\n    size: '1024x1024',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "With Brand Colors",
+			"description": "Vector with specific color palette",
+			"input": {
+				"prompt": "A badge or seal design with a star in the center, suitable for a certification mark",
+				"controls": {
+					"colors": [
+						{
+							"rgb": [
+								0,
+								119,
+								182
+							]
+						},
+						{
+							"rgb": [
+								255,
+								209,
+								102
+							]
+						}
+					],
+					"background_color": {
+						"rgb": [
+							255,
+							255,
+							255
+						]
+					}
+				}
+			},
+			"output": {
+				"image": "https://replicate.delivery/xezq/rVnICquh4J4rFVKHCBdc2B9HYqCZgEQfTuSU7FpBcDi2Y4MLA/tmpdzrwcs_b.svg"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-vector',\n  {\n    prompt:\n      'A badge or seal design with a star in the center, suitable for a certification mark',\n    controls: {\n      colors: [\n        {\n          rgb: [0, 119, 182],\n        },\n        {\n          rgb: [255, 209, 102],\n        },\n      ],\n      background_color: {\n        rgb: [255, 255, 255],\n      },\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://www.recraft.ai/",
+	"terms": "https://www.recraft.ai/terms",
+	"cover_image_url": "https://replicate.delivery/xezq/GZWGe3cYG3xZUSlVYxKZbV0wjzKILnrDtgrmEPELIJed52IWA/tmp9xf39p1o.svg",
+	"metadata": {
+		"Output Format": "SVG",
+		"Resolution": "1024px"
+	},
+	"created_at": "2026-04-13 16:46:32",
+	"default_example": null,
+	"code_snippets": [],
+	"schema": {
+		"model_id": "recraft/recraftv4-vector",
+		"version": "1.0.0",
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string"
+				},
+				"size": {
+					"type": "string"
+				},
+				"style": {
+					"type": "string"
+				},
+				"substyle": {
+					"type": "string"
+				},
+				"controls": {
+					"type": "object",
+					"properties": {
+						"colors": {
+							"maxItems": 5,
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"rgb": {
+										"minItems": 3,
+										"maxItems": 3,
+										"type": "array",
+										"items": {
+											"type": "integer",
+											"minimum": 0,
+											"maximum": 255
+										}
+									}
+								},
+								"required": [
+									"rgb"
+								],
+								"additionalProperties": false
+							}
+						},
+						"background_color": {
+							"type": "object",
+							"properties": {
+								"rgb": {
+									"minItems": 3,
+									"maxItems": 3,
+									"type": "array",
+									"items": {
+										"type": "integer",
+										"minimum": 0,
+										"maximum": 255
+									}
+								}
+							},
+							"required": [
+								"rgb"
+							],
+							"additionalProperties": false
+						}
+					},
+					"additionalProperties": false
+				}
+			},
+			"required": [
+				"prompt"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"type": "string",
+					"format": "uri",
+					"contentMediaType": "image/svg+xml"
+				}
+			},
+			"required": [
+				"image"
+			],
+			"additionalProperties": false
+		}
+	}
+}

@@ -1,0 +1,31 @@
+---
+{}
+---
+
+import { DashButton } from "~/components";
+
+## Set up your domain
+
+Before using Cloudflare Email Service, you need to configure your domain for email sending and routing.
+
+### Onboard your domain
+
+1. In the Cloudflare dashboard, go to **Email Sending**.
+
+   <DashButton url="/?to=/:account/email-service/sending" />
+
+2. Select **Onboard Domain**.
+
+3. Choose a domain from your Cloudflare account.
+
+4. Select **Continue** to proceed with DNS configuration.
+
+5. Select **Add records and onboard**. This will add the following DNS records to your domain:
+   - **Sending records** on the `cf-bounce` subdomain: MX records for bounce handling, TXT records for SPF and DKIM authentication.
+   - **Routing records** on the root domain: MX records to route incoming emails to Cloudflare, TXT records for SPF and DKIM authentication.
+
+:::note[DNS Propagation]
+DNS changes can take up to 24 hours to propagate globally, but usually complete within 5-15 minutes for domains using Cloudflare DNS.
+:::
+
+Once your domain is verified, you can start sending and routing emails.

@@ -1,6 +1,9 @@
 ---
 pcx_content_type: how-to
 title: Live Instant Clipping
+description: Generate shareable clips from Cloudflare Stream live broadcasts and recordings without additional storage fees.
+products:
+  - stream
 ---
 
 Stream supports generating clips of live streams and recordings so creators and viewers alike can highlight short, engaging pieces of a longer broadcast or recording. Live instant clips can be created by end users and do not result in additional storage fees or new entries in the video library.
@@ -77,7 +80,7 @@ class pLoader extends Hls.DefaultConfig.loader {
           // Save the video ID in case the preview was loaded with an input ID
 
           onSuccess(response, stats, context);
-          // And fire the exisint success handler.
+          // And fire the existing success handler.
         };
       }
       load(context, config, callbacks);

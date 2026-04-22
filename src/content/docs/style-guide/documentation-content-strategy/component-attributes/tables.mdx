@@ -58,8 +58,70 @@ When using tables:
 
 * Check whether the tables work for both desktop and mobile users.
 * Limit tables to three columns (or four if the information is very condensed).
-* Avoid long sentences or information that is so dense that it defeats the purpose of having tabular displays
+* Avoid long sentences or information that is so dense that it defeats the purpose of having tabular displays.
 * <Render file="table-guidelines" product="style-guide" />
+* Do not merge cells. Merged cells break screen reader navigation and make content harder for AI systems to parse.
+* Sort rows in a logical order. If no logical order exists, use alphabetical order.
+
+### Introductory sentences
+
+<Render file="table-guidelines" product="style-guide" />
+
+When referring to a table, use a phrase like "the following table" or "the preceding table." Do not place a table in the middle of a sentence.
+
+### Column headings
+
+* Use sentence case for column headings.
+* Write concise headings that clearly describe the column content.
+* Do not end column headings with punctuation, including periods, ellipses, or colons.
+* Use headings for the first row only. Bold the first column values when they serve as row labels.
+
+### Table placement
+
+* Place each table directly after the sentence that introduces it.
+* Do not place a table in the middle of a numbered procedure. If a step requires tabular data, place the table immediately after the step, not between two steps.
+* If a table has footnotes, place them immediately after the table.
+
+### Table captions
+
+If a page contains only one table, it does not need a caption. Place the table adjacent to the text that refers to it.
+
+If a page contains more than one table in close proximity, add a caption to each table so readers (and AI systems) can distinguish between them. In Markdown, place the caption as a bold line immediately before the table. In HTML, use the `caption` element as the first child of the `table` element.
+
+Start the caption with a number in the form **Table NUMBER.** followed by a brief description. Use sentence case. Do not place a period at the end of the caption.
+
+When referring to a captioned table from text, refer to it by number — for example, "as shown in table 2." Do not capitalize "table" unless it starts a sentence.
+
+**Markdown example:**
+
+```markdown
+**Table 1.** Supported DNS record types
+
+| Type | Description |
+| --- | --- |
+| A | Maps a domain to an IPv4 address |
+| AAAA | Maps a domain to an IPv6 address |
+```
+
+**HTML example:**
+
+```html
+<table>
+  <caption><b>Table 1.</b> Supported DNS record types</caption>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>A</td>
+      <td>Maps a domain to an IPv4 address</td>
+    </tr>
+  </tbody>
+</table>
+```
 
 ### Alternatives
 

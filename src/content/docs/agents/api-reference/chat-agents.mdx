@@ -1,8 +1,11 @@
 ---
 title: Chat agents
+description: Build AI chat interfaces with AIChatAgent and useAgentChat, including message persistence, streaming, and tool support.
 pcx_content_type: reference
 sidebar:
   order: 4
+products:
+  - agents
 ---
 
 import { TypeScriptExample, LinkCard } from "~/components";
@@ -46,7 +49,7 @@ import { streamText, convertToModelMessages } from "ai";
 
 export class ChatAgent extends AIChatAgent {
 	async onChatMessage() {
-		// Use any provicer such as workers-ai-provider, openai, anthropic, google, etc.
+		// Use any provider such as workers-ai-provider, openai, anthropic, google, etc.
 		const workersai = createWorkersAI({ binding: this.env.AI });
 
 		const result = streamText({

@@ -1,0 +1,131 @@
+id: zt-003
+name: Protect users from web threats and enforce browsing policies
+category: zero-trust-secure-access
+aliases:
+  - "Enforce acceptable use policies for web and SaaS access"
+  - "Filter and protect web browsing"
+  - "Secure Web Gateway"
+  - "Secure guest WiFi"
+description: >
+  DNS and HTTP filtering to protect users from malware, phishing, and malicious
+  sites, plus acceptable use policy enforcement for web and SaaS access.
+products:
+  - Gateway
+  - Browser Isolation
+  - DLP
+
+qualifying_questions:
+  - id: q1
+    text: "What do you want to secure?"
+    options:
+      - label: "Employee Internet browsing"
+        sets: [browsing]
+      - label: "SaaS application access"
+        sets: [saas]
+      - label: "Guest WiFi network"
+        sets: [browsing]
+      - label: "Both employee and SaaS"
+        sets: [browsing, saas]
+  - id: q2
+    text: "What level of filtering do you need?"
+    options:
+      - label: "DNS-only filtering (block malicious domains)"
+        sets: [dns-only]
+      - label: "Full HTTP/HTTPS inspection"
+        sets: [full-inspection]
+      - label: "DNS filtering plus selective HTTP inspection"
+        sets: [dns-only, full-inspection]
+  - id: q3
+    text: "Do you need to isolate risky web content?"
+    options:
+      - label: "Yes, browser isolation is important"
+        sets: [isolation]
+      - label: "No, filtering and inspection is sufficient"
+        sets: [filtering-only]
+
+default_path: swg-deployment
+
+paths:
+  - id: swg-deployment
+    name: "Secure Web Gateway Deployment"
+    steps:
+      - product: "Gateway"
+        action: deploy-warp-client
+        description: "Deploy WARP client to route traffic through Gateway"
+      - product: "Gateway"
+        action: create-dns-policy
+        description: "Create DNS filtering policies to block malicious domains"
+      - product: "Gateway"
+        action: create-http-policy
+        description: "Create HTTP inspection policies for content filtering"
+      - product: "Gateway"
+        action: enable-tls-inspection
+        description: "Enable TLS decryption for HTTPS traffic inspection"
+      - product: "Gateway"
+        action: configure-do-not-inspect
+        description: "Add applications that should bypass TLS inspection"
+
+  - id: swg-with-isolation
+    name: "SWG with Browser Isolation"
+    condition:
+      has_any: [isolation]
+    steps:
+      - product: "Gateway"
+        action: deploy-warp-client
+        description: "Deploy WARP client"
+      - product: "Gateway"
+        action: create-dns-policy
+        description: "Create DNS filtering policies"
+      - product: "Gateway"
+        action: create-http-policy
+        description: "Create HTTP policies with isolate action for risky categories"
+      - product: "Browser Isolation"
+        action: configure-isolation-policies
+        description: "Configure which sites are isolated (uncategorized, risky, etc.)"
+      - product: "Browser Isolation"
+        action: configure-data-controls
+        description: "Set copy/paste, upload/download restrictions in isolated sessions"
+
+  - id: dns-only-filtering
+    name: "DNS-Only Filtering"
+    condition:
+      has_any: [dns-only]
+    steps:
+      - product: "Gateway"
+        action: configure-dns-locations
+        description: "Configure DNS locations or deploy WARP for DNS routing"
+      - product: "Gateway"
+        action: create-dns-policy
+        description: "Create DNS policies to block security threats"
+      - product: "Gateway"
+        action: block-content-categories
+        description: "Block content categories per acceptable use policy"
+
+  - id: full-swg
+    name: "Full Secure Web Gateway"
+    condition:
+      has_any: [full-inspection]
+    steps:
+      - product: "Gateway"
+        action: deploy-warp-client
+        description: "Deploy WARP client to user devices"
+      - product: "Gateway"
+        action: create-dns-policy
+        description: "Create DNS filtering policies"
+      - product: "Gateway"
+        action: create-http-policy
+        description: "Create HTTP inspection policies"
+      - product: "Gateway"
+        action: enable-tls-inspection
+        description: "Enable TLS decryption"
+      - product: "Gateway"
+        action: install-root-certificate
+        description: "Install Cloudflare root certificate on managed devices"
+      - product: "DLP"
+        action: create-dlp-profiles
+        description: "Enable DLP scanning for HTTP traffic"
+
+related_use_cases:
+  - zt-010
+  - zt-008
+  - zt-011

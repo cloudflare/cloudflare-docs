@@ -1,19 +1,27 @@
 ---
 pcx_content_type: concept
+description: How Remote browser isolation works in Browser Isolation.
+products:
+  - cloudflare-one
 title: Remote browser isolation
 sidebar:
   order: 13
+tags:
+  - Debugging
 ---
 
 import { Render } from "~/components";
 
-Cloudflare Browser Isolation complements the [Secure Web Gateway](/cloudflare-one/traffic-policies/) and [Zero Trust Network Access](/cloudflare-one/networks/connectors/cloudflare-tunnel/) solutions by executing active webpage content in a secure isolated browser. Executing active content remotely from the endpoint protects users from zero-day attacks and malware. In addition to protecting endpoints, Browser Isolation also protects users from phishing attacks by preventing user input on risky websites and controlling data transmission to sensitive web applications. You can further filter isolated traffic with Gateway [HTTP](/cloudflare-one/traffic-policies/http-policies/) and [DNS](/cloudflare-one/traffic-policies/dns-policies/) policies.
-
-Remote browsing is invisible to the user who continues to use their browser normally without changing their preferred browser and habits. Every open tab and window is automatically isolated. When the user closes the isolated browser, their session is automatically deleted.
 
 :::note
-Available as an add-on to Zero Trust Pay-as-you-go and Enterprise plans.
+Remote browser isolation is available as an add-on to Zero Trust Pay-as-you-go and Enterprise plans.
 :::
+
+Cloudflare Browser Isolation complements the [Secure Web Gateway](/cloudflare-one/traffic-policies/) (which inspects and filters HTTP/HTTPS traffic) and [Zero Trust Network Access](/cloudflare-one/networks/connectors/cloudflare-tunnel/) (which controls access to private applications) by executing active webpage content — executable code such as JavaScript and plugins — in a secure isolated browser. Because active content executes remotely instead of on the user's device, Browser Isolation protects users from zero-day attacks (attacks that exploit vulnerabilities with no available patch) and malware.
+
+Browser Isolation also protects users from phishing attacks by preventing user input on risky websites and controlling data transmission to sensitive web applications. You can further filter isolated traffic with Gateway [HTTP](/cloudflare-one/traffic-policies/http-policies/) and [DNS](/cloudflare-one/traffic-policies/dns-policies/) policies.
+
+Remote browsing is invisible to the user who continues to use their browser normally without changing their preferred browser and habits. Every open tab and window is automatically isolated. When the user closes the isolated browser, their session is automatically deleted.
 
 ## Privacy
 

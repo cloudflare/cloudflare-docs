@@ -1,0 +1,188 @@
+{
+	"model_id": "openai/gpt-image-1.5",
+	"provider_id": "openai",
+	"name": "GPT Image 1.5",
+	"description": "OpenAI's image generation model that creates and edits images from text prompts, supporting multiple quality levels and output sizes.",
+	"task": "Text-to-Image",
+	"tags": [
+		"Image Generation",
+		"Image Editing",
+		"Multimodal"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {},
+	"examples": [
+		{
+			"name": "Simple Generation",
+			"description": "Basic text-to-image with just a prompt",
+			"input": {
+				"prompt": "A golden retriever puppy playing in autumn leaves"
+			},
+			"output": {
+				"image": "https://replicate.delivery/xezq/e6OMSz5X7H1sDqhsR2iMNEmeYt6xKtz4dqOG3LDbz1l7CCbWA/tmprm99whd5.webp"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-image-1.5',\n  {\n    prompt: 'A golden retriever puppy playing in autumn leaves',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "High Quality",
+			"description": "Generate a high-quality detailed image",
+			"input": {
+				"prompt": "A detailed botanical illustration of exotic tropical flowers with fine line work and watercolor textures",
+				"quality": "high"
+			},
+			"output": {
+				"image": "https://replicate.delivery/xezq/rnBZiGNrfi02SiE14PNWfPLPkwpCG0U1itHlfqZtY0rOHE2sA/tmpbxd7pnlz.webp"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-image-1.5',\n  {\n    prompt:\n      'A detailed botanical illustration of exotic tropical flowers with fine line work and watercolor textures',\n    quality: 'high',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Custom Size",
+			"description": "Generate a widescreen image",
+			"input": {
+				"prompt": "A panoramic view of the northern lights over a snowy mountain range, vivid greens and purples dancing across the sky",
+				"size": "1792x1024"
+			},
+			"output": {
+				"image": "https://replicate.delivery/xezq/beYNKTX2VH21ViqZfKtHZV0SJra3P2jsUXHI4wshiwy5DCbWA/tmpg6k0o7rl.webp"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-image-1.5',\n  {\n    prompt:\n      'A panoramic view of the northern lights over a snowy mountain range, vivid greens and purples dancing across the sky',\n    size: '1792x1024',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Vivid Style",
+			"description": "Hyper-real, dramatic image style",
+			"input": {
+				"prompt": "A neon-lit cyberpunk cityscape at night with rain-slicked streets and holographic billboards",
+				"style": "vivid",
+				"quality": "high"
+			},
+			"output": {
+				"image": "https://replicate.delivery/xezq/qVMMM1dkCI6VHNUokpmXAKf4fjYeizd1qBTq7E6K4EsBJE2sA/tmpmeik2ps6.webp"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-image-1.5',\n  {\n    prompt:\n      'A neon-lit cyberpunk cityscape at night with rain-slicked streets and holographic billboards',\n    style: 'vivid',\n    quality: 'high',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Natural Style",
+			"description": "More natural, less hyper-real image style",
+			"input": {
+				"prompt": "A quiet Japanese garden in morning mist with a stone lantern and koi pond",
+				"style": "natural",
+				"size": "1024x1024"
+			},
+			"output": {
+				"image": "https://replicate.delivery/xezq/9Qss2QiMKqaxOx1en1jfhWTZ4I19P1HJcIdlh6BxFk9zECbWA/tmpcqc84swf.webp"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-image-1.5',\n  {\n    prompt:\n      'A quiet Japanese garden in morning mist with a stone lantern and koi pond',\n    style: 'natural',\n    size: '1024x1024',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://openai.com/",
+	"terms": "https://openai.com/policies/",
+	"cover_image_url": "https://replicate.delivery/xezq/e6OMSz5X7H1sDqhsR2iMNEmeYt6xKtz4dqOG3LDbz1l7CCbWA/tmprm99whd5.webp",
+	"metadata": {
+		"Image Editing": "Yes",
+		"Sizes": "256x256 to 1792x1024",
+		"Quality": "low, medium, high, auto",
+		"Styles": "vivid, natural"
+	},
+	"created_at": "2026-04-14 18:41:42",
+	"default_example": null,
+	"code_snippets": [],
+	"schema": {
+		"model_id": "openai/gpt-image-1.5",
+		"version": "1.0.0",
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"description": "Text prompt describing the image to generate or edit",
+					"type": "string"
+				},
+				"image": {
+					"description": "Base64-encoded input image for image editing",
+					"type": "string"
+				},
+				"quality": {
+					"description": "Quality of the generated image",
+					"type": "string",
+					"enum": [
+						"low",
+						"medium",
+						"high",
+						"auto"
+					]
+				},
+				"size": {
+					"description": "Size of the generated image",
+					"type": "string",
+					"enum": [
+						"256x256",
+						"512x512",
+						"1024x1024",
+						"1792x1024",
+						"1024x1792"
+					]
+				},
+				"style": {
+					"description": "Style of the generated image",
+					"type": "string",
+					"enum": [
+						"vivid",
+						"natural"
+					]
+				}
+			},
+			"required": [
+				"prompt"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"description": "URL to the generated image",
+					"type": "string",
+					"format": "uri"
+				}
+			},
+			"required": [
+				"image"
+			],
+			"additionalProperties": false
+		}
+	}
+}
