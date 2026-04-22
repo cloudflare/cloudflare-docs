@@ -12,9 +12,6 @@ canonical: /waf/rate-limiting-rules/
 
 import { DashButton } from "~/components";
 
-:::note[Were you blocked from accessing a website?]
-If you are a visitor who received an error while trying to access a website, the site owner has configured a limit on how many requests can be made to their site in a given time period. You can try accessing the website again later, or contact the website owner or the website's support team for help. Cloudflare does not control which visitors are rate limited, the site owner sets these rules.
-:::
 
 Cloudflare Rate Limiting automatically identifies and mitigates excessive request rates for specific URLs or for an entire domain.
 
@@ -24,6 +21,10 @@ The information in this page refers to the previous version of rate limiting rul
 
 Cloudflare has upgraded all rate limiting rules to the [new version of rate limiting rules](/waf/rate-limiting-rules/). For more information on what changed in the new version, refer to [Rate limiting (previous version) upgrade](/waf/reference/legacy/old-rate-limiting/upgrade/).
 
+:::
+
+:::note[Were you blocked from accessing a website?]
+If you are a visitor who received an error while trying to access a website, please refer to the [error 1015 documentation](support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1015).
 :::
 
 Request rates are calculated locally for individual Cloudflare data centers. The most common uses for Rate Limiting are:
