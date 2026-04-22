@@ -130,6 +130,27 @@ Cloud region hints are available on all plan types (Free, Pro, Business, and Ent
 2. Find your origin IP or hostname and select **Set Region Hint**.
 3. Select your cloud provider and region (for example, `aws:us-east-1` or `gcp:europe-west1`).
 
+#### List supported cloud regions via API
+
+To see all available cloud providers and regions, use the supported regions endpoint:
+
+<APIRequest
+  path="/zones/{zone_id}/cache/origin_cloud_regions/supported_regions"
+  method="GET"
+/>
+
+#### Set a cloud region hint via API
+
+<APIRequest
+  path="/zones/{zone_id}/cache/origin_cloud_regions"
+  method="PATCH"
+  json={{
+    ip: "203.0.113.1",
+    vendor: "aws",
+    region: "us-east-1"
+  }}
+/>
+
 :::note
 
 Custom Tiered Cache settings take precedence over cloud region hint mappings. If you have a custom topology configured, the cloud region hint will not override it.
