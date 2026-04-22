@@ -23,4 +23,4 @@
   Content-Type: application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727"
 
 /openapi.json
-  Content-Type: application/json
+  Content-Type: application/json; charset=utf-8
