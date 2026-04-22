@@ -8,6 +8,8 @@ export async function GET() {
 		statusText: response.statusText,
 		headers: {
 			"Content-Type": "application/json; charset=utf-8",
+			"Cache-Control":
+				response.headers.get("Cache-Control") ?? "public, max-age=3600",
 		},
 	});
 }
