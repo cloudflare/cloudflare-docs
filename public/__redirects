@@ -3,6 +3,9 @@
 # STATIC REDIRECTS
 # ============================================================================
 
+# Custom Dashboards (moved from log-explorer to analytics)
+/log-explorer/custom-dashboards/ /analytics/custom-dashboards/ 301
+
 # Solutions (moved from use-cases/application-security/bots/)
 /use-cases/application-security/bots/stop-malicious-bots/ /use-cases/solutions/stop-malicious-bots/ 301
 
