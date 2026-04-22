@@ -1,10 +1,14 @@
 ---
 pcx_content_type: how-to
 title: Bind to Workers API
+description: Bind the Media Transformations API to a Cloudflare Worker to transform videos programmatically.
 sidebar:
   badge:
     text: Beta
   order: 1
+products:
+  - stream
+  - workers
 ---
 
 import { WranglerConfig, InlineBadge } from "~/components";
@@ -49,7 +53,7 @@ Within your Worker code, you can interact with this binding by using `env.MEDIA.
 
 ## Methods
 
-The Media Transformations binding is similar to the [Images binding](/images/transform-images/bindings/), except the method chain order is fixed and the result of an `input()` cannot be reused across multiple transformations.
+The Media Transformations binding is similar to the [Images binding](/images/optimization/transformations/bindings/), except the method chain order is fixed and the result of an `input()` cannot be reused across multiple transformations.
 
 ### `.input()`
 

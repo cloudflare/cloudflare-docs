@@ -1,5 +1,8 @@
 ---
 pcx_content_type: concept
+description: Hide email addresses from bots while keeping them visible to visitors.
+products:
+  - waf
 source: https://support.cloudflare.com/hc/en-us/articles/200170016-What-is-Email-Address-Obfuscation-
 title: Email Address Obfuscation
 sidebar:
@@ -18,7 +21,9 @@ Web administrators have come up with clever ways to protect against this by writ
 
 ## How it works
 
-When Email Address Obfuscation is enabled, Cloudflare replaces visible email addresses in your HTML with links like `[email protected]`. If a visitor sees this obfuscated format, they can click the link to reveal the actual email address. This approach prevents bots from scraping email addresses while keeping them accessible to real users.
+When Email Address Obfuscation is enabled, Cloudflare replaces visible email addresses in your HTML with links like `[email protected]`. If a visitor sees this obfuscated format, they can click the link to reveal the actual email address. This approach prevents bots from scraping email addresses while keeping them accessible to real users.
+
+Cloudflare injects a small decode script (`email-decode.min.js`) into the page using the `defer` attribute. This means the script does not block page rendering. It downloads in parallel with HTML parsing and executes after the document is fully parsed. If you have custom JavaScript that interacts with obfuscated email elements, note that the decode script runs before the `DOMContentLoaded` event.
 
 ## Change Email Address Obfuscation setting
 

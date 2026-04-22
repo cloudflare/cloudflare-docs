@@ -1,12 +1,14 @@
 ---
 title: DNS records
+description: Check and manage the MX and SPF DNS records required for Email Routing to function correctly.
 pcx_content_type: reference
 sidebar:
   order: 2
 head:
   - tag: title
     content: Email DNS records
-
+products:
+  - email-routing
 ---
 
 You can check the status of your DNS records in the **Settings** section of Email Routing. This section also allows you to troubleshoot any potential problems you might have with DNS records.
@@ -33,3 +35,9 @@ Depending on your zone configuration, you might have your DNS records unlocked. 
 Select **View DNS records** for a list of the required `MX` and sender policy framework (SPF) records Email Routing is using.
 
 If you are having trouble with your account's DNS records, refer to the [Troubleshooting](/email-routing/troubleshooting/) section.
+
+## _dc-mx DNS responses
+
+If you see a DNS response with a `_dc-mx` prefix (for example, `_dc-mx.a1b2c3d4e5f6.example.com`), Cloudflare inserted it automatically. This response appears when your `MX` record points to a hostname that is [proxied](/dns/proxy-status/) through Cloudflare. The `_dc-mx` target itself resolves directly to your origin IP address so that mail traffic bypasses the proxy and reaches your mail server.
+
+For more information, refer to [_dc-mx and dc-##### subdomains](/dns/manage-dns-records/troubleshooting/unexpected-dns-records/#dc--and-_dc-mx-subdomains).

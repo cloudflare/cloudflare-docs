@@ -1,5 +1,4 @@
 ---
-
 summary: Transcode an image from Workers AI before uploading to R2
 pcx_content_type: example
 title: Transcode images
@@ -7,20 +6,19 @@ sidebar:
   order: 5
 description: Transcode an image from Workers AI before uploading to R2
 reviewed: 2025-04-03
+products:
+  - images
+  - r2
 ---
 
 ```js
-const stream = await env.AI.run(
-  "@cf/bytedance/stable-diffusion-xl-lightning",
-  {
-    prompt: YOUR_PROMPT_HERE
-  }
-);
+const stream = await env.AI.run("@cf/bytedance/stable-diffusion-xl-lightning", {
+	prompt: YOUR_PROMPT_HERE,
+});
 
 // Convert to AVIF
 const image = (
-  await env.IMAGES.input(stream)
-    .output({format: "image/avif"})
+	await env.IMAGES.input(stream).output({ format: "image/avif" })
 ).response();
 
 const fileName = "image.avif";

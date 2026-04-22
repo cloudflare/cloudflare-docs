@@ -1,0 +1,166 @@
+---
+title: Email sending
+description: Test Email Service sending Workers locally using wrangler dev with simulated email delivery.
+pcx_content_type: how-to
+summary: Test email sending Workers locally using wrangler dev with simulated email delivery
+sidebar:
+  order: 1
+products:
+  - email-service
+---
+
+import { WranglerConfig, Render } from "~/components";
+
+Test email sending functionality locally using `wrangler dev` to simulate email delivery and verify your sending logic before deploying.
+
+:::note
+If you are using the [REST API](/email-service/api/send-emails/rest-api/) instead of Workers, you can test by sending requests directly with `curl` or any HTTP client without a local development server. The rest of this page covers the Workers local development flow.
+:::
+
+## Prerequisites
+
+<Render file="prereqs" product="workers" />
+
+## Configuration
+
+Configure your Wrangler file with the email binding:
+
+<WranglerConfig>
+
+```toml
+name = "email-sending-worker"
+compatibility_date = "2024-01-01"
+
+[[send_email]]
+name = "EMAIL"
+```
+
+</WranglerConfig>
+
+## Remote bindings (recommended)
+
+Using [remote bindings](/workers/development-testing/#remote-bindings) is the recommended way to develop with Email Service locally. By default, `wrangler dev` simulates the email binding locally -- emails are logged to the console but not actually sent. With remote bindings, your Worker runs locally but sends real emails through Email Service.
+
+Set `remote: true` on the email binding in your Wrangler configuration:
+
+<WranglerConfig>
+
+```toml
+name = "email-sending-worker"
+compatibility_date = "$today"
+
+[[send_email]]
+name = "EMAIL"
+remote = true
+```
+
+</WranglerConfig>
+
+Then run `wrangler dev` as usual. Calls to `env.EMAIL.send()` will send actual emails through Email Service while your Worker code runs locally.
+
+:::caution
+Remote bindings send real emails to real recipients. Use test email addresses to avoid sending unintended emails during development.
+:::
+
+## Local simulation
+
+When running `wrangler dev` without remote bindings, the email binding is simulated locally. Emails are not sent -- instead, the email content is logged to the console and saved to local files for inspection.
+
+## Basic sending worker
+
+```javascript
+export default {
+	async fetch(request, env, ctx) {
+		if (request.method !== "POST") {
+			return new Response("Method not allowed", { status: 405 });
+		}
+
+		try {
+			const emailData = await request.json();
+
+			console.log("📤 Sending email:", {
+				to: emailData.to,
+				from: emailData.from,
+				subject: emailData.subject,
+			});
+
+			const response = await env.EMAIL.send(emailData);
+
+			return new Response(
+				JSON.stringify({
+					success: true,
+					id: response.messageId,
+				}),
+				{
+					headers: { "Content-Type": "application/json" },
+				},
+			);
+		} catch (error) {
+			return new Response(
+				JSON.stringify({
+					success: false,
+					error: error.message,
+				}),
+				{
+					status: 500,
+					headers: { "Content-Type": "application/json" },
+				},
+			);
+		}
+	},
+};
+```
+
+## Testing locally
+
+Start your development server:
+
+```bash
+npx wrangler dev
+```
+
+Send a test email:
+
+```bash
+curl -X POST http://localhost:8787/ \
+  -H "Content-Type: application/json" \
+  -d '{
+    "to": "recipient@example.com",
+    "from": "sender@yourdomain.com",
+    "subject": "Test Email",
+    "html": "<h1>Hello from Wrangler!</h1>",
+    "text": "Hello from Wrangler!"
+  }'
+```
+
+Wrangler will show output like:
+
+```txt
+[wrangler:info] send_email binding called with MessageBuilder:
+From: sender@yourdomain.com
+To: recipient@example.com
+Subject: Test Email
+
+Text: /tmp/miniflare-.../files/email-text/<message-id>.txt
+```
+
+The email content (text and HTML) is saved to local files that you can inspect to verify your email structure before deploying.
+
+## Known limitations
+
+### Binary attachments
+
+Local development simulates the `send_email` binding locally, but `ArrayBuffer` values in attachment `content` cannot be serialized by the local simulator. If you pass an `ArrayBuffer` (for example, for image or PDF attachments), you will see an error like:
+
+```
+Cannot serialize value: [object ArrayBuffer]
+```
+
+**Workaround:** Use string content for text-based attachments during local development. To test binary attachments (images, PDFs), deploy your Worker with `npx wrangler deploy` and test against the deployed version.
+
+This limitation only affects local development — `ArrayBuffer` content works correctly on deployed Workers.
+
+## Next steps
+
+- Deploy your sending worker: [Send emails get started](/email-service/get-started/send-emails/)
+- See advanced patterns: [Email sending examples](/email-service/examples/email-sending/)

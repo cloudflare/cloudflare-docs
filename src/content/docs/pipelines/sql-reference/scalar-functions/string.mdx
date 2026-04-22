@@ -1,6 +1,8 @@
 ---
 title: String functions
 description: Scalar functions for manipulating strings
+products:
+  - pipelines
 sidebar:
   order: 3
 ---
@@ -518,6 +520,7 @@ uuid()
 
 Returns the string which is replaced by another string from the specified position and specified count length.
 For example, `overlay('Txxxxas' placing 'hom' from 2 for 4) → Thomas`
+
 
 ```
 overlay(str PLACING substr FROM pos [FOR count])

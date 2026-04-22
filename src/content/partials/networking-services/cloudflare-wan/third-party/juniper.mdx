@@ -1,719 +1,518 @@
 ---
 params:
-  - creatingTheIpsecTunnelsUrl
-  - magicStaticRoutesUrl
-  - equalcostMultipathUrl
-  - phase1ConfigurationParametersUrl
-  - phase2ConfigurationParametersUrl
-  - antireplayUrl
+  - mssClampingUrl
+  - configureTunnelEndpointsUrl
+  - configureStaticRoutesUrl
 ---
 
-This tutorial provides information and examples of how to configure Juniper Networks SRX Series Firewalls with Cloudflare WAN (formerly Magic WAN).
+## Overview
 
-The configuration settings in this document are based on JUNOS 23.4R2.13.
+This guide provides step-by-step instructions for configuring HPE Juniper Networking SRX Series Firewalls to establish IPsec VPN tunnels to Cloudflare WAN. It is intended for network engineers who are familiar with HPE Juniper Networking SRX Series Firewalls administration and have an active Cloudflare WAN subscription.
 
-## Prerequisites
+This guide is a companion to the Cloudflare WAN IPsec VPN Reference Architecture, which defines the common IP addressing scheme, tunnel parameters, and design decisions used across all vendor guides. Readers should review that document before proceeding.
 
-Confirm that you have two Cloudflare anycast IPs allocated to your account, available in the Cloudflare dashboard under **Address Space** > [**Leased IPs**](https://dash.cloudflare.com/?to=/:account/ip-addresses/address-space). You will establish IPsec tunnels to the two anycast IPs irrespective of the location of your Juniper SRX devices (from now on referred to as endpoint) — traffic will be naturally attracted to the closest Cloudflare colocation facility via BGP anycast.
+## Test Environment
 
-Cloudflare recommends that customers configure two IPsec tunnels (one to each of the two anycast IPs allocated to your Cloudflare account) per Internet service provider per endpoint. This provides tunnel redundancy.
+| **Field**                          | **Value**                                      |
+| ---------------------------------- | ---------------------------------------------- |
+| Vendor                             | HPE Juniper Networking                         |
+| Model                              | SRX 320                                        |
+| Release                            | JUNOS 23.4R2-S3.9                              |
+| Date Tested                        | March 2026                                     |
 
-Equal-cost multi-path routing (ECMP) ensures traffic is load-balanced across the tunnels, and you can control traffic steering across the tunnels through route prioritization.
+## IKE/IPsec Crypto & Relevant Settings
 
-Cloudflare supports route-based site-to-site IPsec tunnels, which require the creation of virtual tunnel interfaces (VTIs). We recommend you select one subnet per IPsec tunnel with either a `/30` or `/31` netmask.
+| **Field**                          | **Value**                                      |
+| ---------------------------------- | ---------------------------------------------- |
+| Traffic Selection Criteria         | Route-Based VPN                                |
+| Routing                            | Static                                         |
+| Redundant Tunnels                  | Yes                                            |
+| Tunnel Load Balancing              | Active/Active                                  |
+| IKE Version                        | IKEv2                                          |
+| Authentication                     | Pre-Shared Key                                 |
+| Anti-Replay Protection             | Disabled                                       |
+| NAT Traversal (NAT-T)              | Not Tested                                     |
+| NAT-T Port                         | Not Applicable                                 |
+| Phase 1 - DH-Group                 | Group 20                                       |
+| Phase 1 - Encryption               | AES-256-CBC                                    |
+| Phase 1 - Authentication/Integrity | SHA-256                                        |
+| Phase 2 - DH-Group                 | Group 20                                       |
+| Phase 2 - Transport                | ESP                                            |
+| Phase 2 - Encryption               | AES-256-CBC                                    |
 
-Using a `/31` netmask is a more efficient use of IP addresses as it doubles the number of available subnets compared to a `/30`netmask. This is possible because with a `/31`netmask there is no need to reserve IP addresses for the subnet and broadcast addresses, as there would be if you opt to use a `/30` netmask. Additional details can be found in [RFC 3021 - Using 31-Bit Prefixes on IPv4 Point-to-Point Links](https://datatracker.ietf.org/doc/html/rfc3021).
+## Cloudflare WAN and HPE Juniper Networking SRX Series Firewalls - Configuration Settings
 
-## Cloudflare WAN configuration
+- While following these steps, ensure you update all object names and IP addresses to match your environment.
+- Aligning these elements with your actual naming conventions and network scheme ensures the configuration works correctly in your production setup.
+- Use Find and Replace to parse the examples below, update the names and addresses accordingly, and maintain consistency.
 
-This section of the document will cover the configuration of:
+### Cloudflare WAN - Tunnel 01 of 02
 
-- IPsec tunnels
-- Static routes
+| **Attribute**                        | **Value/Address**                              |
+| ------------------------------------ | ---------------------------------------------- |
+| Name (required)                      | CF_WAN_TUN_01                                  |
+| Description                          | ---                                            |
+| IPv4 Interface Address (required)    | 169.254.250.0/31                               |
+| IPv6 Interface Address               | ---                                            |
+| Customer Endpoint                    | 203.0.113.100                                  |
+| Cloudflare Endpoint                  | 162.159.135.1                                  |
+| Tunnel health checks                 | True                                           |
+| Rate                                 | Medium                                         |
+| **Type**                             | **Request**                                    |
+| **Direction**                        | **Bidirectional**                              |
+| Target                               | Default                                        |
+| ---                                  | ---                                            |
+| Turn on replay protection            | False                                          |
+| **Automatic return routing**         | **True**                                       |
 
-### Cloudflare WAN topology
+- IKE Identity and Pre-shared Key (obtained after tunnel creation):
 
-This documentation assumes there are two locations connected via Cloudflare WAN:
+| **Attribute**                        | **Value/Address**                              |
+| ------------------------------------ | ---------------------------------------------- |
+| FQDN ID                              | `bf6c493d03<REDACTED>.ipsec.cloudflare.com`      |
+| Pre-shared key                       | Cloudflare-WAN-T1-PSK-1234!                    |
 
-| Site | Local/Remote | Security Zone | Subnet        |
-| ---- | ------------ | ------------- | ------------- |
-| A    | Local        | trust         | `10.1.20.0/24`  |
-| B    | Remote       | Cloudflare    | `10.1.100.0/24` |
+### Cloudflare WAN - Tunnel 02 of 02
 
-### IPsec tunnels
+| **Attribute**                        | **Value/Address**                              |
+| ------------------------------------ | ---------------------------------------------- |
+| Name (required)                      | CF_WAN_TUN_02                                  |
+| Description                          | ---                                            |
+| IPv4 Interface Address (required)    | 169.254.250.2/31                               |
+| IPv6 Interface Address               | ---                                            |
+| Customer Endpoint                    | 203.0.113.100                                  |
+| Cloudflare Endpoint                  | 172.64.135.1                                   |
+| Tunnel health checks                 | True                                           |
+| Rate                                 | Medium                                         |
+| **Type**                             | **Request**                                    |
+| **Direction**                        | **Bidirectional**                              |
+| Target                               | Default                                        |
+| ---                                  | ---                                            |
+| Turn on replay protection            | False                                          |
+| **Automatic return routing**         | **True**                                       |
 
-1. Start by <a href={props.creatingTheIpsecTunnelsUrl}>creating the IPsec tunnels</a> in the Cloudflare dashboard with the following values:
-	- **Tunnel name**: Up to 15 characters (no spaces).
-	- **Description** (Optional).
-	- **Interface address**: This is the Virtual Tunnel Interface (VTI = `st0.x`) RFC 1918 address — the IP address specified in this dialog box is the address on the Cloudflare side of the tunnel.
-	- **Customer endpoint**: Specify the Internet IP address on the untrust side of the SRX firewall.
-	- **Cloudflare endpoint**: One of the two Cloudflare anycast IP addresses.
-	- **Pre-shared key**: Choose **Add pre-shared key later**.
-2. Select **Add IPsec Tunnel** and fill in the values for the second tunnel to the same Juniper SRX:
-	- Ensure you use a unique RFC 1918 IP address for the Interface Address (`/31` or `/30`).
-	- Once again, specify the Internet IP address on the untrust side of the SRX firewall for the **Customer Endpoint**.
-	- The **Cloudflare Endpoint** for the second tunnel will be the second Cloudflare anycast IP provisioned for your account.
-3. Select **Add Tunnels**. We also recommend selecting **Test Tunnels** to ensure that the settings do not conflict with any other tunnels defined in your account and that you specified the correct anycast IP addresses.
-4. You will see a warning indicator next to the tunnel names after creating them because we chose to add a pre-shared key later. This is expected behavior and indicates that a pre-shared key has not been generated yet for the associated tunnel.
-5. Select **Edit** next to one of the tunnels to generate a pre-shared key.
-6. Select **Generate a new pre-shared key** > **Update and generate a pre-shared key**. Make a note of the pre-shared key and store it somewhere safe.
-	:::note
-	You can update the pre-shared key at any time by repeating this step. Just make sure to add the new value of the new pre-shared key to the corresponding tunnel configuration on the Juniper device.
-	:::
-7. Repeat the previous step for the second tunnel.
-8. Expand the first tunnel's properties and note the **Tunnel ID** and **FQDN ID** values.
-9. Repeat the previous steps for the second tunnel.
-	:::note
-	The **Tunnel ID** and **FQDN ID** values are unique per tunnel and remain unchanged unless you delete and recreate the tunnel. Generating a new Pre-Shared Key will not change the values.
-	:::
+- IKE Identity and Pre-shared Key (obtained after tunnel creation):
 
-### Static routes
+| **Attribute**                        | **Value/Address**                              |
+| ------------------------------------ | ---------------------------------------------- |
+| FQDN ID                              | `0287844e9d<REDACTED>.ipsec.cloudflare.com`      |
+| Pre-shared key                       | Cloudflare-WAN-T2-PSK-1234!                    |
 
-Refer to the Cloudflare WAN Topology section above for more details on the IP subnet scheme.
+## Customer Premise Equipment - HPE Juniper Networking
 
-<a href={props.magicStaticRoutesUrl}>Static routes</a> effectively tell Cloudflare WAN which tunnels to route traffic destined for a given Cloudflare WAN site.
+| **WAN Interface**                   | **Tunnel 01 of 02**   | **Tunnel 02 of 02**   |
+| ----------------------------------- | --------------------- | --------------------- |
+| WAN Interface                       | ge-0/0/0.0            | ge-0/0/0.0            |
+| IP Address                          | 203.0.113.100/24      | 203.0.113.100/24      |
+| Security Zone                       | untrust               | untrust               |
 
-Since two tunnels are configured to each endpoint, it is necessary to configure two static routes.
+| **Virtual Tunnel Interface (VTI)**  | **Tunnel 01 of 02**   | **Tunnel 02 of 02**   |
+| ----------------------------------- | --------------------- | --------------------- |
+| Tunnel interface                    | st0.1                 | st0.2                 |
+| IP Address                          | 169.254.250.1/31      | 169.254.250.3/31      |
+| Security Zone                       | cloudflare            | cloudflare            |
 
-Cloudflare leverages <a href={props.equalcostMultipathUrl}>equal-cost multi-path</a> routing to control traffic steering across the tunnels. The default priority for each route is 100 — traffic will be load-balanced across the two tunnels equally via ECMP. You can modify the priorities as needed, however best practices dictate leaving the default values in place.
+| **LAN Interface**                   | **Tunnel 01 of 02**   | **Tunnel 02 of 02**   |
+| ----------------------------------- | --------------------- | --------------------- |
+| LAN Interface                       | ge-0/0/1.0            | ge-0/0/1.0            |
+| IP Address                          | 192.168.125.1/24      | 192.168.125.1/24      |
+| Security Zone                       | trust                 | trust                 |
 
-1. Create a static route with the following values. Make sure you select the first tunnel in **Tunnel/Next hop**:
-	- **Description:** The description for the static route assigned to your first tunnel.
-	- **Prefix**: Enter the destination subnet for which this route is intended. For this example, it is `10.1.20.0/24` as stated above.
-	- **Tunnel/Next hop**: Choose your first tunnel from the drop-down menu.
-	- **Priority**: The default value is `100`.
-	- **Region code**: Leave set to **All Regions** unless otherwise specified.
-2. Select **Add Static Route** to add a second route for the same subnet. Make sure the second tunnel is selected in **Tunnel/Next hop**.
-3. Select **Test Routes** to ensure the settings are accepted, then select **Add Routes**.
-4. Confirm the routes were added correctly in **Cloudflare WAN** > **Configuration** > **Static Routes**.
+### HPE Juniper Networking SRX Object Names
 
-## Juniper SRX configuration
+| **Element**                          | **Object Hierarchy**             | **Name**                        |
+| ------------------------------------ | -------------------------------- | ------------------------------- |
+| Security Zone - Trust                | [ security zones security-zone ] | trust                           |
+| Security Zone - Untrust              | [ security zones security-zone ] | untrust                         |
+| Security Zone - Cloudflare WAN       | [ security zones security-zone ] | cloudflare                      |
+| IKE Proposal (only one required)     | [ security ike proposal ]        | ike-aes256cbc-sha256-dh20       |
+| IKE Policy - Tunnel 1                | [ security ike policy ]          | cf-wan-ike-pol-01               |
+| IKE Policy - Tunnel 2                | [ security ike policy ]          | cf-wan-ike-pol-02               |
+| IKE Gateway - Tunnel 1               | [ security ike gateway ]         | cf-wan-ike-gw-01                |
+| IKE Gateway - Tunnel 2               | [ security ike gateway ]         | cf-wan-ike-gw-02                |
+| IPsec Proposal (only one required)   | [ security ipsec proposal ]      | esp-aes256cbc-sha256-128        |
+| IPsec Policy (only one required)     | [ security ipsec policy ]        | ipsec-aes256cbc-sha256-128-dh20 |
+| IPsec Tunnel - Tunnel 1              | [ security ipsec vpn ]           | cf-wan-ipsec-vpn-01             |
+| IPsec Tunnel - Tunnel 2              | [ security ipsec vpn ]           | cf-wan-ipsec-vpn-02             |
 
-There may be some differences in the syntax of the commands in the version on your SRX devices. However, the principles are the same. Refer to the Juniper product documentation for more information.
+## Assumptions
 
-The interface naming convention for VTI interfaces (also known as Secure Tunnel Interfaces) in Junos is `st0.x`.
+This guide assumes the following apply:
 
-[Secure Tunnel Interface in a Virtual Router - Juniper IPsec VPN User Guide](https://www.juniper.net/documentation/us/en/software/junos/vpn-ipsec/topics/topic-map/security-secure-tunnel-interface-in-a-virtual-router.html)
+- Already configured <a href={props.configureTunnelEndpointsUrl}>IPsec tunnels</a> and <a href={props.configureStaticRoutesUrl}>static routes</a> in the Cloudflare dashboard
+- Used the Cloudflare Dashboard to obtain the Local Identifier (FQDN/hostname) and generate a Pre-Shared Key for each of the IPsec tunnels
+- Understand the importance of <a href={props.mssClampingUrl}>MSS clamping</a> and adjusting it based on the traffic flows traversing the Cloudflare WAN IPsec Tunnels
 
-The following elements will be configured on the Juniper SRX firewall(s):
+## High-Level Steps
 
-- Ensure the LAN interface is in the `trust` zone
-- Add virtual tunnel Interfaces (`st0.0` and `st0.1`)
-- Assign tunnel interfaces to the `cloudflare` security zone
-- Allow required protocols to both the tunnel and untrust security zones
-- IKE configuration
-- IPsec configuration
-- Policy-based routing (filter-based forwarding)
-- Security policies
+- Add Virtual Tunnel Interfaces
+- Create a Security Zone (Recommended)
+- Add VTIs to Security Zone
+- Define IKE Policy and Proposals (Phase 1)
+- Add IKE Gateways
+- IPsec Policy and Proposal (Phase 2)
+- IPsec Tunnel Configuration
+- Define Security policy to permit traffic to/from Cloudflare WAN
+- Define Policy-Based Forwarding rules to selectively route traffic across the IPsec tunnels
 
-### Tunnel interfaces
+## HPE Juniper Networking SRX - Configuration
 
-1. Add two tunnel interfaces:
+All examples are provided via the Junos Command-Line Interface (CLI). J-Web examples are not provided.
+
+### Junos Modes
+
+Junos OS operates with two main command-line interface (CLI) modes, Operational Mode and Configuration Mode, which serve distinct purposes in managing Juniper network devices.
+
+#### Operational Mode (>)
+
+[Operational mode](https://www.juniper.net/documentation/us/en/software/junos/cli/topics/topic-map/junos-cli-operational-overview.html) is the default state upon logging into a Junos device, used for monitoring, troubleshooting, and displaying device status.
+
+- Prompt: `user@host>`
+- Purpose: View real-time information, check interface status, view routing tables, test connectivity (ping/traceroute), and restart processes.
+- Key Commands: show, monitor, ping, traceroute, request.
+- Action: Changes made here do not affect the persistent device configuration.
+
+#### Configuration Mode (#)
+
+[Configuration mode](https://www.juniper.net/documentation/us/en/software/junos/cli/topics/topic-map/cli-configuration.html) is used to make changes to the device's configuration, such as defining interfaces, routing protocols, and system properties.
+
+- Prompt: `user@host#`
+- Purpose: Edit, add, or remove configuration statements.
+- Key Commands: edit, set, delete, commit, rollback.
+- Action: Changes are made to a "candidate configuration" and are not active until explicitly committed at which point they become part of the "running configuration".
+
+Each section will indicate whether the commands are applicable to configuration mode or operational mode.
+
+### Virtual Tunnel Interfaces
+
+_Perform in Configuration Mode_
 
 ```txt
-set interfaces st0 unit 0 family inet address 10.252.2.21/31
-set interfaces st0 unit 1 family inet address 10.252.2.23/31
+set interfaces st0 unit 1 family inet address 169.254.250.1/31
+set interfaces st0 unit 2 family inet address 169.254.250.3/31
 ```
+
+### Security Zone
+
+_Perform in Configuration Mode_
+
+Add `st0.1` and `st0.2` to the Security Zone `cloudflare` and permit `system-services ping`. This is required to ensure the Cloudflare WAN IPsec Tunnel Health Checks are able to verify reachability across the Virtual Tunnel Interfaces.
 
 ```txt
-admin@srx300> show configuration interfaces st0
-```
-```txt output
-unit 0 {
-    family inet {
-        address 10.252.2.21/31;
-    }
-}
-unit 1 {
-    family inet {
-        address 10.252.2.23/31;
-    }
-}
-```
-
-### Security Zone (Cloudflare) - tunnel interfaces
-
-Define a security zone and add both tunnel interfaces to it. At a minimum, the interfaces should allow `ping`, but this zone only contains point-to-point connections between the firewall and the customer network namespace. Setting it to `all` for system-services and protocols should be fine.
-
-```txt
-set security zones security-zone cloudflare interfaces st0.0 host-inbound-traffic system-services all
-set security zones security-zone cloudflare interfaces st0.0 host-inbound-traffic
-set security zones security-zone cloudflare interfaces st0.1 host-inbound-traffic system-services all
-set security zones security-zone cloudflare interfaces st0.1 host-inbound-traffic
-```
-
-```txt
-admin@srx220> show configuration security zones security-zone cloudflare
-```
-```txt output
-interfaces {
-	st0.0 {
-		host-inbound-traffic {
-			system-services {
-				all;
-			}
-			protocols {
-				all;
-			}
-		}
-	}
-	st0.1 {
-		host-inbound-traffic {
-			system-services {
-				all;
-			}
-			protocols {
-				all;
-			}
-		}
-	}
-}
-```
-
-### Security zone (untrust) - `host-inbound-traffic`
-
-Add `ping` and `ike` to the security zone containing the external interface used to establish the IPsec tunnels to Cloudflare.
-
-```txt
-set security zones security-zone untrust interfaces ge-0/0/0.0 host-inbound-traffic system-services ike
-```
-
-```txt
-admin@srx300> show configuration security zones security-zone untrust
-```
-```txt output
-screen untrust-screen;
-interfaces {
-    ge-0/0/0.0 {
-        host-inbound-traffic {
-            system-services {
-                ike;
-            }
-        }
-    }
-}
+set security zones security-zone cloudflare interfaces st0.1 host-inbound-traffic system-services ping
+set security zones security-zone cloudflare interfaces st0.2 host-inbound-traffic system-services ping
 ```
 
 ### IKE - Phase 1
 
-#### IKE proposal
+_Perform in Configuration Mode_
 
-Add an IKE proposal that specifies the <a href={props.phase1ConfigurationParametersUrl}>Phase 1 Configuration Parameters</a>:
+Configure the following:
 
-```txt
-set security ike proposal cf_magic_wan_ike_prop authentication-method pre-shared-keys
-set security ike proposal cf_magic_wan_ike_prop dh-group group20
-set security ike proposal cf_magic_wan_ike_prop authentication-algorithm sha-256
-set security ike proposal cf_magic_wan_ike_prop encryption-algorithm aes-256-cbc
-set security ike proposal cf_magic_wan_ike_prop lifetime-seconds 86400
-```
+- IKE Proposal
+- IKE Policies (one required per Cloudflare WAN IPsec Tunnel)
+- IKE Gateways (one required per Cloudflare WAN IPsec Tunnel)
 
-```txt
-admin@srx300> show configuration security ike proposal cf_magic_wan_ike_prop
-```
-```txt output
-authentication-method pre-shared-keys;
-dh-group group20;
-authentication-algorithm sha-256;
-encryption-algorithm aes-256-cbc;
-lifetime-seconds 86400;
-```
+#### IKE Proposal
 
-#### IKE policies
+Define an IKE Proposal with the following settings:
 
-Define two IKE policies - one for each of the two IPsec tunnels:
-
-***Tunnel 1 (SRX300_IPSEC_01)**
+| **Attribute**            | **Value**       |
+| ------------------------ | ----------------|
+| authentication-method    | pre-shared-keys |
+| dh-group                 | group20         |
+| authentication-algorithm | sha256          |
+| encryption-algorithm     | aes-256-cbc     |
+| lifetime-seconds         | 28800           |
 
 ```txt
-set security ike policy cf_magic_wan_tun_01_pol mode main
-set security ike policy cf_magic_wan_tun_01_pol proposals cf_magic_wan_ike_prop
-set security ike policy cf_magic_wan_tun_01_pol pre-shared-key ascii-text "$9$GRjPTF<REDACTED>WZUjHPT"
+set security ike proposal ike-aes256cbc-sha256-dh20 authentication-method pre-shared-keys
+set security ike proposal ike-aes256cbc-sha256-dh20 dh-group group20
+set security ike proposal ike-aes256cbc-sha256-dh20 authentication-algorithm sha-256
+set security ike proposal ike-aes256cbc-sha256-dh20 encryption-algorithm aes-256-cbc
+set security ike proposal ike-aes256cbc-sha256-dh20 lifetime-seconds 28800
 ```
+
+#### IKE Policies
+
+Configure one IKE policy per IPsec tunnel:
+
+| **Attribute**             | **Value**                 |
+| ------------------------- | ------------------------- |
+| mode                      | main                      |
+| proposals                 | ike-aes256cbc-sha256-dh20 |
+| pre-shared-key ascii-text | _specify pre-shared-key_  |
 
 ```txt
-admin@srx300> show configuration security ike policy cf_magic_wan_tun_01_pol
-```
-```txt output
-mode main;
-proposals cf_magic_wan_ike_prop;
-pre-shared-key ascii-text "$9$GRjPTF<REDACTED>WZUjHPT"; ## SECRET-DATA
+set security ike policy cf-wan-ike-pol-01 mode main
+set security ike policy cf-wan-ike-pol-01 proposals ike-aes256cbc-sha256-dh20
+set security ike policy cf-wan-ike-pol-01 pre-shared-key ascii-text "Cloudflare-WAN-T1-PSK-1234!"
+
+set security ike policy cf-wan-ike-pol-02 mode main
+set security ike policy cf-wan-ike-pol-02 proposals ike-aes256cbc-sha256-dh20
+set security ike policy cf-wan-ike-pol-02 pre-shared-key ascii-text "Cloudflare-WAN-T2-PSK-1234!"
 ```
 
-**Tunnel 2 (SRX300_IPSEC_02)**
+#### IKE Gateways
+
+Configure one IKE Gateway per IPsec tunnel:
 
 ```txt
-set security ike policy cf_magic_wan_tun_02_pol mode main
-set security ike policy cf_magic_wan_tun_02_pol proposals cf_magic_wan_ike_prop
-set security ike policy cf_magic_wan_tun_02_pol pre-shared-key ascii-text "$9$f536tp<REDACTED>SrH.fT/9Lx7-bY"
+set security ike gateway cf-wan-ike-gw-01 ike-policy cf-wan-ike-pol-01
+set security ike gateway cf-wan-ike-gw-01 address 162.159.135.1
+set security ike gateway cf-wan-ike-gw-01 local-identity hostname bf6c493d03<REDACTED>.ipsec.cloudflare.com
+set security ike gateway cf-wan-ike-gw-01 external-interface ge-0/0/0.0
+set security ike gateway cf-wan-ike-gw-01 local-address 203.0.113.100
+set security ike gateway cf-wan-ike-gw-01 version v2-only
+
+set security ike gateway cf-wan-ike-gw-02 ike-policy cf-wan-ike-pol-02
+set security ike gateway cf-wan-ike-gw-02 address 172.64.135.1
+set security ike gateway cf-wan-ike-gw-02 local-identity hostname 0287844e9d<REDACTED>.ipsec.cloudflare.com
+set security ike gateway cf-wan-ike-gw-02 external-interface ge-0/0/0.0
+set security ike gateway cf-wan-ike-gw-02 local-address 203.0.113.100
+set security ike gateway cf-wan-ike-gw-02 version v2-only
 ```
+
+### IPsec - Phase 2
+
+_Perform in Configuration Mode_
+
+Configure the following:
+
+- IPsec Proposal
+- IPsec Policy
+- IPsec Tunnels (one required per Cloudflare WAN IPsec Tunnel)
+
+#### IPsec Proposal
+
+Define an IPsec Proposal with the following settings:
+
+| **Attribute**            | **Value**        |
+| ------------------------ | ---------------- |
+| protocol                 | esp              |
+| authentication-algorithm | hmac-sha-256-128 |
+| encryption-algorithm     | aes-256-cbc      |
+| lifetime-seconds         | 28800            |
 
 ```txt
-admin@srx300> show configuration security ike policy cf_magic_wan_tun_02_pol
-```
-```txt output
-mode main;
-proposals cf_magic_wan_ike_prop;
-pre-shared-key ascii-text "$9$f536tp<REDACTED>SrH.fT/9Lx7-bY"; ## SECRET-DATA
-```
-
-#### IKE gateways
-
-Define two IKE gateways — one for each of the two IPsec tunnels. In the examples below, note the use of the **FQDN ID** value obtained from the Cloudflare dashboard in the `local-identity` hostname setting.
-
-**Tunnel 1 (SRX300_IPSEC_01)**
-
-```txt
-set security ike gateway cf_magic_wan_gw_tun_01 ike-policy cf_magic_wan_tun_01_pol
-set security ike gateway cf_magic_wan_gw_tun_01 address 162.159.68.68
-set security ike gateway cf_magic_wan_gw_tun_01 local-identity hostname 1663e5e70<REDACTED>6555.ipsec.cloudflare.com
-set security ike gateway cf_magic_wan_gw_tun_01 external-interface ge-0/0/0.0
-set security ike gateway cf_magic_wan_gw_tun_01 version v2-only
-```
-
-```txt
-admin@srx300> show configuration security ike gateway cf_magic_wan_gw_tun_01
-```
-```txt output
-ike-policy cf_magic_wan_tun_01_pol;
-address 162.159.68.68;
-local-identity hostname 1663e5e70<REDACTED>6555.ipsec.cloudflare.com;
-external-interface ge-0/0/0.0;
-version v2-only;
-```
-
-**Tunnel 2 (SRX300_IPSEC_02)**
-
-```txt
-set security ike gateway cf_magic_wan_gw_tun_02 ike-policy cf_magic_wan_tun_02_pol
-set security ike gateway cf_magic_wan_gw_tun_02 address 172.64.244.68
-set security ike gateway cf_magic_wan_gw_tun_02 local-identity hostname b5ee5303<REDACTED>6555.ipsec.cloudflare.com
-set security ike gateway cf_magic_wan_gw_tun_02 external-interface ge-0/0/0.0
-set security ike gateway cf_magic_wan_gw_tun_02 version v2-only
-```
-
-```txt
-admin@srx300> show configuration security ike gateway cf_magic_wan_gw_tun_02
-```
-```txt output
-ike-policy cf_magic_wan_tun_02_pol;
-address 172.64.244.68;
-local-identity hostname b5ee5303<REDACTED>6555.ipsec.cloudflare.com;
-external-interface ge-0/0/0.0;
-version v2-only;
-```
-
-### Phase 2 - IPsec
-
-#### IPsec proposal
-
-Add an IPsec proposal that specifies the <a href={props.phase2ConfigurationParametersUrl}>Phase 2 Configuration Parameters</a>:
-
-```txt
-set security ipsec proposal cf_magic_wan_ipsec_prop protocol esp
-set security ipsec proposal cf_magic_wan_ipsec_prop authentication-algorithm hmac-sha-256-128
-set security ipsec proposal cf_magic_wan_ipsec_prop encryption-algorithm aes-256-cbc
-set security ipsec proposal cf_magic_wan_ipsec_prop lifetime-seconds 28800
-```
-
-```txt
-admin@srx300> show configuration security ipsec proposal cf_magic_wan_ipsec_prop
-```
-```txt output
-protocol esp;
-authentication-algorithm hmac-sha-256-128;
-encryption-algorithm aes-256-cbc;
-lifetime-seconds 28800;
+set security ipsec proposal esp-aes256cbc-sha256-128 protocol esp
+set security ipsec proposal esp-aes256cbc-sha256-128 authentication-algorithm hmac-sha-256-128
+set security ipsec proposal esp-aes256cbc-sha256-128 encryption-algorithm aes-256-cbc
+set security ipsec proposal esp-aes256cbc-sha256-128 lifetime-seconds 28800
 ```
 
 #### IPsec Policy
 
-Define one IPsec policy — reference the IPsec proposal created above.
+```txt
+set security ipsec policy ipsec-aes256cbc-sha256-128-dh20 perfect-forward-secrecy keys group20
+set security ipsec policy ipsec-aes256cbc-sha256-128-dh20 proposals esp-aes256cbc-sha256-128
+```
+
+#### IPsec VPN Tunnels
+
+Create two IPsec VPN tunnels - each corresponding to its respective IKE Gateway.
 
 ```txt
-set security ipsec policy cf_magic_wan_ipsec_pol proposals cf_magic_wan_ipsec_prop
+set security ipsec vpn cf-wan-ipsec-vpn-01 bind-interface st0.1
+set security ipsec vpn cf-wan-ipsec-vpn-01 ike gateway cf-wan-ike-gw-01
+set security ipsec vpn cf-wan-ipsec-vpn-01 ike no-anti-replay
+set security ipsec vpn cf-wan-ipsec-vpn-01 ike ipsec-policy ipsec-aes256cbc-sha256-128-dh20
+set security ipsec vpn cf-wan-ipsec-vpn-01 establish-tunnels immediately
+
+set security ipsec vpn cf-wan-ipsec-vpn-02 bind-interface st0.2
+set security ipsec vpn cf-wan-ipsec-vpn-02 ike gateway cf-wan-ike-gw-02
+set security ipsec vpn cf-wan-ipsec-vpn-02 ike no-anti-replay
+set security ipsec vpn cf-wan-ipsec-vpn-02 ike ipsec-policy ipsec-aes256cbc-sha256-128-dh20
+set security ipsec vpn cf-wan-ipsec-vpn-02 establish-tunnels immediately
 ```
-
-```txt
-admin@srx300> show configuration security ipsec policy cf_magic_wan_ipsec_pol
-```
-```txt output
-proposals cf_magic_wan_ipsec_prop;
-```
-
-#### IPsec VPN tunnels
-
-Define two IPsec policies - one for each of the two IPsec tunnels. It is crucial to ensure that:
-
-- <a href={props.antireplayUrl}>Anti-replay</a> protection is disabled.
-  - Use the [`no-anti-replay`](https://www.juniper.net/documentation/us/en/software/junos/interfaces-adaptive-services/topics/ref/statement/no-anti-replay-edit-services.html) option.
-- The SRX is the tunnel initiator:
-  - Cloudflare will not instantiate the tunnel
-  - If the SRX does not initiate the tunnel, then the tunnel will not be established until there is an attempt to connect to resources through the tunnel
-  - Use [`establish-tunnels immediately`](https://www.juniper.net/documentation/us/en/software/junos/interfaces-adaptive-services/topics/ref/statement/establish-tunnels-edit-services-ipsec-vpn.html) to ensure the SRX is the tunnel initiator.
-
-**VPN Tunnel 1 (cf_magic_wan_ipsec_tun_01)**
-
-```txt
-set security ipsec vpn cf_magic_wan_ipsec_tun_01 bind-interface st0.0
-set security ipsec vpn cf_magic_wan_ipsec_tun_01 ike gateway cf_magic_wan_gw_tun_01
-set security ipsec vpn cf_magic_wan_ipsec_tun_01 ike no-anti-replay
-set security ipsec vpn cf_magic_wan_ipsec_tun_01 ike ipsec-policy cf_magic_wan_ipsec_pol
-set security ipsec vpn cf_magic_wan_ipsec_tun_01 establish-tunnels immediately
-```
-
-```txt
-admin@srx300> show configuration security ipsec vpn cf_magic_wan_ipsec_tun_01
-```
-```txt output
-bind-interface st0.0;
-ike {
-    gateway cf_magic_wan_gw_tun_01;
-    no-anti-replay;
-    ipsec-policy cf_magic_wan_ipsec_pol;
-}
-establish-tunnels immediately;
-```
-
-**VPN Tunnel 2 (cf_magic_wan_ipsec_tun_02)**
-
-```txt
-set security ipsec vpn cf_magic_wan_ipsec_tun_02 bind-interface st0.1
-set security ipsec vpn cf_magic_wan_ipsec_tun_02 ike gateway cf_magic_wan_gw_tun_02
-set security ipsec vpn cf_magic_wan_ipsec_tun_02 ike no-anti-replay
-set security ipsec vpn cf_magic_wan_ipsec_tun_02 ike ipsec-policy cf_magic_wan_ipsec_pol
-set security ipsec vpn cf_magic_wan_ipsec_tun_02 establish-tunnels immediately
-```
-
-```txt
-admin@srx300> show configuration security ipsec vpn cf_magic_wan_ipsec_tun_02
-```
-```txt output
-bind-interface st0.1;
-ike {
-    gateway cf_magic_wan_gw_tun_02;
-    no-anti-replay;
-    ipsec-policy cf_magic_wan_ipsec_pol;
-}
-establish-tunnels immediately;
-```
-
-### Policy-Based Routing
-
-The SRX platform provides policy-based routing functionality, which Juniper refers to as [filter-based forwarding](https://www.juniper.net/documentation/us/en/software/junos/routing-policy/topics/concept/firewall-filter-option-filter-based-forwarding-overview.html).
-
-Filter-based forwarding is implemented by configuring the following:
-
-1. **Routing Instance**: Specify the routing table(s) to which a packet is forwarded and the destination to which the packet is forwarded at the [edit routing-instances] hierarchy level.
-2. **Firewall Filter**: Use a stateless firewall filter to specify the source and destination addresses in conjunction with a routing instance that forwards traffic across the IPsec tunnels, then bind the firewall filter to the ingress interface (trust zone).
-3. **RIB Group**: Share interface routes with the forwarding routing instances used in filter-based forwarding (FBF).
 
 :::note
-Firewall filters must incorporate at least two terms:
-
-- **Term 1**: Classify the traffic to forward to Cloudflare WAN
-- **Term 2**: Permit all other traffic — otherwise, the firewall filters will discard any traffic not intended for Cloudflare WAN destinations.
+Enabling `establish-tunnels-immediately` ensures the SRX is always the tunnel initiator. This is crucial as Cloudflare will never initiate the IPsec tunnel. If you do not enable this option, you will need to generate some traffic that will traverse the IPsec tunnels at which point the SRX will initiate the tunnel in an on-demand fashion.
 :::
 
-This configuration only factors in one local site (`10.1.20.0/24`). In this example, we assume devices in the trust zone must route traffic to a remote subnet at another Cloudflare WAN-protected site (`10.1.100.0/24`).
+### MSS Clamping
 
-Define a static route on the SRX to route traffic to `10.1.100.0/24` with redundant routes referencing each of the two tunnels.
+_Perform in Configuration Mode_
 
-**Routing Instance:**
+The SRX platform is unique in that it allows you to configure MSS Clamping that only applies to IPsec tunnels as opposed to per interface or globally.
 
-[Routing Instances](https://www.juniper.net/documentation/us/en/software/junos/routing-overview/topics/concept/routing-instances-overview.html) effectively add additional routing tables to the SRX platform.
+This ensures the overhead associated with IKE/IPsec packet headers is factored in and will minimize opportunities for fragmentation as traffic ingresses and egresses the IPsec tunnels.
 
-As mentioned earlier, any traffic destined for other Cloudflare WAN protected sites must be routed over the IPsec tunnels.
-
-The example includes two static routes - one to each of the two VTIs on the Cloudflare side of the IPsec Tunnels (`10.252.2.20` and `10.252.2.22`).
-
-While it is possible to be more prescriptive in terms of the destination subnets, we simply use `0.0.0.0/0` as the firewall filter ensures only traffic destined for `10.1.100.0/24` will be forwarded to the routing instance. Any other traffic not destined for `10.1.100.0/24` will continue to the primary routing table (`inet.0`) as it falls outside the scope of the firewall filter configured in the next section below.
-
-Leaving the destination subnet as `0.0.0.0/0` eases some administrative burden as you only need to modify the firewall filter to specify which traffic is destined for Cloudflare WAN.
+:::note
+The recommended MSS value 1360 may need to be adjusted based on the nature of the traffic traversing the Cloudflare WAN IPsec Tunnels.
+:::
 
 ```txt
-set routing-instances MAGIC_WAN_RI instance-type forwarding
-set routing-instances MAGIC_WAN_RI routing-options static route 0.0.0.0/0 next-hop 10.252.2.20
-set routing-instances MAGIC_WAN_RI routing-options static route 0.0.0.0/0 next-hop 10.252.2.22
+set security flow tcp-mss ipsec-vpn mss 1360
 ```
+
+See [How to change the MSS of TCP traffic passing through an IPsec VPN](https://supportportal.juniper.net/s/article/SRX-How-to-change-the-MSS-of-TCP-traffic-passing-through-an-IPsec-VPN) for more details.
+
+### Security Policies
+
+_Perform in Configuration Mode_
+
+- Security policies are required to permit traffic between zones
+- The Ethernet interface `ge-0/0/1.0` is in the `trust` security zone
+- The tunnel interfaces `st0.1` and `st0.2` are in the `cloudflare` security zone
+
+The following example allows all source & destination IPs, ports, and protocols/services between `cloudflare` and `trust` as well as between `trust` and `cloudflare`.
+
+| **Attribute**            | **Value**     |
+| ------------------------ | ------------- |
+| source-address           | any           |
+| destination-address      | any           |
+| application              | any           |
+| action                   | permit        |
+| log                      | session-close |
 
 ```txt
-admin@srx300> show configuration routing-instances
+set security policies from-zone cloudflare to-zone trust policy cloudflare-to-trust-permit match source-address any
+set security policies from-zone cloudflare to-zone trust policy cloudflare-to-trust-permit match destination-address any
+set security policies from-zone cloudflare to-zone trust policy cloudflare-to-trust-permit match application any
+set security policies from-zone cloudflare to-zone trust policy cloudflare-to-trust-permit then permit
+set security policies from-zone cloudflare to-zone trust policy cloudflare-to-trust-permit then log session-close
+
+set security policies from-zone trust to-zone cloudflare policy trust-to-cloudflare-permit match source-address any
+set security policies from-zone trust to-zone cloudflare policy trust-to-cloudflare-permit match destination-address any
+set security policies from-zone trust to-zone cloudflare policy trust-to-cloudflare-permit match application any
+set security policies from-zone trust to-zone cloudflare policy trust-to-cloudflare-permit then permit
+set security policies from-zone trust to-zone cloudflare policy trust-to-cloudflare-permit then log session-close
 ```
-```txt output
-MAGIC_WAN_RI {
-    instance-type forwarding;
-    routing-options {
-        static {
-            route 0.0.0.0/0 next-hop [ 10.252.2.20 10.252.2.22 ];
-        }
-    }
-}
-```
 
-**Firewall Filter:**
+### Filter-Based Forwarding - Policy-Based Routing
 
-In this step, we create a stateless firewall filter to ensure only packets from `10.1.20.0/24` destined for `10.1.100.0/24` are sent to the `MAGIC_WAN_RI` routing instance.
+_Perform in Configuration Mode_
 
-- **Term 1** - `MAGIC_WAN_NETS` ensures only packets from `10.1.20.0/24` destined for `10.1.100.0/24` are sent to the `MAGIC_WAN_RI` routing instance. Take note of the `count` statement defined in this term. [Count](https://www.juniper.net/documentation/us/en/software/junos/routing-policy/topics/example/firewall-filter-stateless-example-act-on-sampling.html) allows you to view how many packets are processed by this term in the firewall filter. An example of how to view the Counter is included below.
-- **Term 2** - `ALLOW_EVERYTHING_ELSE` ensures all other traffic continues to the primary routing table (`inet.0`).
+HPE Juniper Networking provides multiple methods for performing Policy-Based Routing. [Filter-Based Forwarding](https://www.juniper.net/documentation/us/en/software/junos/routing-policy/topics/concept/firewall-filter-option-filter-based-forwarding-overview.html) is the preferred method as it permits selectively routing traffic based on source, destination, protocol (and a wide variety of other matching criteria) through Cloudflare WAN or local Internet breakout with ease.
+
+This example assumes traffic originating from 192.168.125.0/24 (ingress interface `ge-0/0/1.0` zone `trust`) to any destination will be routed via the Cloudflare WAN IPsec Tunnels.
+
+Implementing Filter-Based Forwarding (FBF) requires four steps:
+
+1. Create a Forwarding Routing Instance
+    - Think of the Routing Instance as a "bucket" containing an alternate routing table
+    - The Routing Instance contains the destination prefix(es) and next hop addresses (VTI on Cloudflare side of the tunnels)
+2. Create a Firewall Filter
+    - Think of a Firewall Filter as the "brain" that determines which packets to send to the "bucket"
+    - The Firewall Filter acts as a "classifier" that identifies the traffic you want to divert to the Routing Instance
+3. Configure the RIB Group and Bind Routes
+    - Think of this as the "bridge" that copies interface routes to the "bucket"
+    - The Routing Instance is not part of the default routing table.
+    - This step instructs the SRX how to reach directly connected networks and resolve next-hops found in the main table (`inet.0`) and the Cloudflare WAN Routing Instance's routing table `CF_WAN_RI.inet.0`
+4. Apply the Firewall Filter to the ingress traffic interface(s)
+    - Think of this as the "trigger" that starts processing packets as they enter the ingress interface
+    - As traffic ingresses the interface(s) to which it is applied, traffic is processed in a top-down fashion
+
+#### Define a Routing Instance
+
+The Routing Instance defines the destination for your steered traffic. Unlike a standard VRF, FBF typically uses an instance type of `forwarding`.
+
+This example effectively sets the default gateway (0.0.0.0/0) for any traffic landing on this Routing Instance to get routed to the IP address of the VTIs on the Cloudflare side of the IPsec tunnels:
 
 ```txt
-set firewall family inet filter MAGIC_WAN_FBF term MAGIC_WAN_NETS from source-address 10.1.20.0/24
-set firewall family inet filter MAGIC_WAN_FBF term MAGIC_WAN_NETS from destination-address 10.1.100.0/24
-set firewall family inet filter MAGIC_WAN_FBF term MAGIC_WAN_NETS then count MAGIC_WAN_GATEWAY_FBF_count
-set firewall family inet filter MAGIC_WAN_FBF term MAGIC_WAN_NETS then routing-instance MAGIC_WAN_RI
-set firewall family inet filter MAGIC_WAN_FBF term ALLOW_EVERYTHING_ELSE then accept
+set routing-instances CF_WAN_RI instance-type forwarding
+set routing-instances CF_WAN_RI routing-options static route 0.0.0.0/0 next-hop 169.254.250.0
+set routing-instances CF_WAN_RI routing-options static route 0.0.0.0/0 next-hop 169.254.250.2
 ```
+
+#### Create a Firewall Filter
+
+Add a firewall filter called `CF_WAN_FBF_ALL` with two `terms` (rules):
+
+The first term `CF_WAN_FWD_RI` ensures any traffic originating from the LAN subnet (192.168.125.0/24) to any destination address (0.0.0.0/0) is processed against the `CF_WAN_RI` routing instance.
+
+The second term `EVERYTHING_ELSE` effectively instructs the SRX to continue processing any traffic not matching the term `CF_WAN_FWD_RI` via the default routing table (`inet.0`).
+
+Note the addition of the action `count` in both statements. This option defines a counter you can view to determine how many packets are processed on each `term`.
 
 ```txt
-admin@srx300> show configuration firewall
-```
-```txt output
-family inet {
-    filter MAGIC_WAN_FBF {
-        term MAGIC_WAN_NETS {
-            from {
-                source-address {
-                    10.1.20.0/24;
-                }
-                destination-address {
-                    10.1.100.0/24;
-                }
-            }
-            then {
-                count MAGIC_WAN_FBF_count;
-                routing-instance MAGIC_WAN_RI;
-            }
-        }
-        term ALLOW_EVERYTHING_ELSE {
-            then accept;
-        }
-    }
-}
+set firewall family inet filter CF_WAN_FBF_ALL term CF_WAN_FWD_RI from source-address 192.168.125.0/24
+set firewall family inet filter CF_WAN_FBF_ALL term CF_WAN_FWD_RI from destination-address 0.0.0.0/0
+set firewall family inet filter CF_WAN_FBF_ALL term CF_WAN_FWD_RI then count CF_WAN_FWD_RI_count
+set firewall family inet filter CF_WAN_FBF_ALL term CF_WAN_FWD_RI then routing-instance CF_WAN_RI
+set firewall family inet filter CF_WAN_FBF_ALL term EVERYTHING_ELSE then count EVERYTHING_ELSE_count
+set firewall family inet filter CF_WAN_FBF_ALL term EVERYTHING_ELSE then accept
 ```
 
-**View Firewall Filter Counters**
+#### Configure the RIB Group and Bind Interface Routes
 
-To view the firewall filter counter:
+Create a RIB Group and import both the default route table (`inet.0`) and the route table associated with the newly created Forwarding Routing Instance:
 
 ```txt
-admin@srx300> show firewall filter MAGIC_WAN_FBF counter MAGIC_WAN_FBF_count
-```
-```txt output
-Filter: MAGIC_WAN_FBF
-
-Counters:
-
-Name                                      Bytes       Packets
-MAGIC_WAN_FBF_count                       760174478   1940954
+set routing-options rib-groups CF_WAN_RG import-rib inet.0
+set routing-options rib-groups CF_WAN_RG import-rib CF_WAN_RI.inet.0
 ```
 
-**Bind Firewall Filter to the interface in the** **trust** **zone:**
+Bind the RIB Group to the Interface Routes:
 
 ```txt
-set interfaces ge-0/0/7 unit 0 family inet filter input MAGIC_WAN_FBF
-set interfaces ge-0/0/7 unit 0 family inet address 10.1.20.1/24
+set routing-options interface-routes rib-group inet CF_WAN_RG
 ```
+
+#### Apply the Firewall Filter to the Ingress Interface
+
+- Traffic originating on the LAN subnet will ingress interface `ge-0/0/1.0`
+- Apply the Firewall Filter `CF_WAN_FBF_ALL` as an `input` filter
 
 ```txt
-admin@srx300> show configuration interfaces ge-0/0/7 unit 0
-```
-```txt output
-family inet {
-    filter {
-        input MAGIC_WAN_FBF;
-    }
-    address 10.1.20.1/24;
-}
+set interfaces ge-0/0/1 unit 0 family inet filter input CF_WAN_FBF_ALL
 ```
 
-**RIB Group:**
+Commit changes, then test traffic from a host on the 192.168.125.0/24 subnet to ensure it is forwarded through the Cloudflare WAN IPsec Tunnels.
 
-RIB Groups allow you to concatenate the contents of multiple routing tables into a routing table group.
-
-The primary routing table in the RIB group should be `inet.0` followed by the secondary routing table `MAGIC_WAN_RI.inet.0`  which is the `MAGIC_WAN_RI` routing-instance created above.
-
-[Interface Routes](https://www.juniper.net/documentation/us/en/software/junos/cli-reference/topics/ref/statement/interface-routes-edit-routing-options.html) referenced below by the `interface-routes` statement determines which interfaces and Routing Instances are bound to the RIB Group.
-
-```txt
-set routing-options static route 0.0.0.0/0 next-hop <DEFAULT GATEWAY VIA ISP>
-set routing-options rib-groups MAGIC_WAN_RG import-rib [ inet.0 MAGIC_WAN_RI.inet.0 ]
-set routing-options interface-routes rib-group inet MAGIC_WAN_RG
-set routing-options interface-routes rib-group inet MAGIC_WAN_RG
-```
-
-```txt
-admin@srx300> show configuration routing-options
-```
-```txt output
-interface-routes {
-    rib-group inet MAGIC_WAN_GW_RG;
-}
-static {
-    route 0.0.0.0/0 next-hop <DEFAULT GATEWAY VIA ISP>;
-}
-rib-groups {
-    MAGIC_WAN_GW_RG {
-        import-rib [ inet.0 MAGIC_WAN_RI.inet.0 ];
-    }
-}
-```
-
-### Security policies
-
-Define security policies to permit traffic flows destined for Cloudflare WAN-protected resources. The source/destination zones must incorporate the zone containing the tunnel interfaces.
-
-There are two very simple rules to allow traffic bidirectionally — it is generally recommended to start with a similar policy and then add more stringent rules once general connectivity is established successfully.
-
-**From Zone:** *Cloudflare* **To Zone:** *trust*
-
-```txt
-set security policies from-zone cloudflare to-zone trust policy cloudflare_to_trust match source-address any
-set security policies from-zone cloudflare to-zone trust policy cloudflare_to_trust match destination-address any
-set security policies from-zone cloudflare to-zone trust policy cloudflare_to_trust match application any
-set security policies from-zone cloudflare to-zone trust policy cloudflare_to_trust then permit
-set security policies from-zone cloudflare to-zone trust policy cloudflare_to_trust then log session-close
-```
-
-```txt
-admin@srx300> show configuration security policies from-zone cloudflare to-zone trust
-```
-```txt output
-policy cloudflare_to_trust_permit {
-    match {
-        source-address any;
-        destination-address any;
-        application any;
-    }
-    then {
-        permit;
-        log {
-            session-close;
-        }
-    }
-}
-```
-
-**From Zone:** *trust* **To Zone:** *Cloudflare*
-
-```txt
-set security policies from-zone trust to-zone cloudflare policy trust_to_cloudflare_permit match source-address any
-set security policies from-zone trust to-zone cloudflare policy trust_to_cloudflare_permit match destination-address any
-set security policies from-zone trust to-zone cloudflare policy trust_to_cloudflare_permit match application any
-set security policies from-zone trust to-zone cloudflare policy trust_to_cloudflare_permit then permit
-set security policies from-zone trust to-zone cloudflare policy trust_to_cloudflare_permit then log session-close
-```
-
-```txt
-admin@srx300> show configuration security policies from-zone trust to-zone cloudflare
-```
-```txt output
-policy trust_to_cloudflare_permit {
-    match {
-        source-address any;
-        destination-address any;
-        application any;
-    }
-    then {
-        permit;
-        log {
-            session-close;
-        }
-    }
-}
-```
+:::note
+If you have Cloudflare One configured to perform [HTTPS traffic inspection](/cloudflare-one/traffic-policies/http-policies/tls-decryption/), ensure that you [install the Root CA certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) prior to testing connectivity to any HTTPS-based sites, otherwise you will receive untrusted certificate warning messages.
+:::
 
 ## Troubleshooting
 
-### Validate tunnel connectivity
+### Common issues
 
-There are several diagnostic commands available to view the status of IPsec tunnels.
+- Always check IKE Phase 1 & IPsec Phase 2 negotiated successfully - look for "no proposal chosen" in logs
+- Verify Pre-Shared-Key and/or Local-Identity values are accurate and assigned to the correct tunnel
+- Use ping to determine reachability between the CPE and Cloudflare sides of the VTI
+  - Tunnel 1: CPE VTI to Cloudflare VTI: `ping source 169.254.250.1 169.254.250.0`
+  - Tunnel 2: CPE VTI to Cloudflare VTI: `ping source 169.254.250.3 169.254.250.2`
 
-#### Ping across virtual tunnel interfaces
+### View IKE Security Associations
 
-Use ping to test connectivity from the SRX side of the tunnel to the Cloudflare side of the tunnel. Ensure you use the source option to specify the IP address associated with tunnel interfaces `st0.0` and `st0.1`, respectively:
+_Perform in Operational Mode_
 
-**Tunnel 1** - `st0.0 - 10.252.2.21`
-
-```txt
-admin@srx300> ping source 10.252.2.21 10.252.2.20
-```
-```txt output
-PING 10.252.2.20 (10.252.2.20): 56 data bytes
-64 bytes from 10.252.2.20: icmp_seq=0 ttl=64 time=8.429 ms
-64 bytes from 10.252.2.20: icmp_seq=1 ttl=64 time=4.134 ms
-64 bytes from 10.252.2.20: icmp_seq=2 ttl=64 time=4.028 ms
-64 bytes from 10.252.2.20: icmp_seq=3 ttl=64 time=3.855 ms
-64 bytes from 10.252.2.20: icmp_seq=4 ttl=64 time=3.811 ms
-```
-
-**Tunnel 2** - `st0.1 - 10.252.2.23`
+Use the CLI to verify IKE (Phase 1) and IPsec (Phase 2) security associations established.
 
 ```txt
-admin@srx300> ping source 10.252.2.23 10.252.2.22
-```
-```txt output
-PING 10.252.2.22 (10.252.2.22): 56 data bytes
-
-64 bytes from 10.252.2.22: icmp_seq=0 ttl=64 time=7.405 ms
-64 bytes from 10.252.2.22: icmp_seq=1 ttl=64 time=3.685 ms
-64 bytes from 10.252.2.22: icmp_seq=2 ttl=64 time=3.666 ms
-64 bytes from 10.252.2.22: icmp_seq=3 ttl=64 time=3.888 ms
-64 bytes from 10.252.2.22: icmp_seq=4 ttl=64 time=3.814 ms
+admin@srx> show security ike security-associations
+Index   State  Initiator cookie  Responder cookie  Mode           Remote Address
+403838  UP     a2d16e54c9d83ad5  873b1da714f0ca8f  IKEv2          162.159.135.1
+403839  UP     476288ac95d878e2  e72ef64e00b623e6  IKEv2          172.64.135.1
 ```
 
-#### Phase 1 - View Active Peers
+### View IPsec Security Associations
 
-[`show security ike active-peer`](https://www.juniper.net/documentation/us/en/software/junos/cli-reference/topics/ref/command/show-security-ike-active-peer.html)
+_Perform in Operational Mode_
 
 ```txt
-admin@srx300> show security ike active-peer
-```
-```txt output
-Remote Address            Port     Peer IKE-ID     XAUTH username    Assigned IP
-162.XXX.XX.164            500      162.XX.XXX.164  not available     0.0.0.0
-172.XX.XXX.164            500      172.XX.XXX.164  not available     0.0.0.0
-```
-
-#### Phase 1 - View IKE Security Associations
-
-[`show security ike security-associations`](https://www.juniper.net/documentation/us/en/software/junos/cli-reference/topics/ref/command/show-security-ike-security-associations.html)
-
-```txt
-admin@srx300> show security ike security-associations
-```
-```txt output
-Index  State Initiator cookie Responder cookie Mode      Remote Address
-3628774 UP   51078ae37b319d23 1475e3b48ca89a9a IKEv2     162.XXX.XX.164
-3628775 UP   b2d9a698b6224fc9 7fb1a9f81db0611c IKEv2     172.XX.XXX.164
+admin@srx> show ipsec security associations
+  Total active tunnels: 2
+  ID    Algorithm       SPI      Life:sec/kb  Mon lsys Port  Gateway
+  <131073 ESP:aes-cbc-256/sha256-96 9b429dd3 27739/unlim - root 500 162.159.135.1
+  >131073 ESP:aes-cbc-256/sha256-96 28931d57 27739/unlim - root 500 162.159.135.1
+  <131074 ESP:aes-cbc-256/sha256-96 eb2a275e 27739/unlim - root 500 172.64.135.1
+  >131074 ESP:aes-cbc-256/sha256-96 4134d7a8 27739/unlim - root 500 172.64.135.1
 ```
 
-#### Phase 2 - View IPsec Security Associations
+### Enable Debug Logging (traceoptions) for IKE (Phase 1) and IPsec (Phase 2)
 
-[`show security ipsec security-associations`](https://www.juniper.net/documentation/us/en/software/junos/vpn-ipsec/topics/ref/command/show-security-ipsec-security-associations.html)
+In the event you encounter issues with IPsec tunnel negotiation, you can enable `traceoptions` for IKE and/or IPsec.
 
-```txt
-admin@srx300> show security ipsec security-associations
-```
-```txt output
-Total active tunnels: 2
-ID    Algorithm       SPI      Life:sec/kb  Mon lsys Port  Gateway
-<131073 ESP:aes-cbc-256/sha256 d28e709e 28565/unlim - root 500 162.XXX.66.164
->131073 ESP:aes-cbc-256/sha256 25aed8ae 28565/unlim - root 500 162.XXX.XX.164
-<131074 ESP:aes-cbc-256/sha256 3f13176d 28566/unlim - root 500 172.XX.XXX.164
->131074 ESP:aes-cbc-256/sha256 965169e9 28566/unlim - root 500 172.XX.XXX.164
-```
+:::note
+Debug logging can create significant overhead on firewalls with high utilization. Ensure you monitor CPU and memory utilization closely and only enable debug logging when it is needed.
+:::
 
-### IKE `traceoptions`
+#### Enable IKE Traceoptions
 
-It can be very helpful to enable debug logging via traceoptions while setting up the tunnels. The log data can help determine if there are issues and, if so, where they might be occurring.
-
-Please note that some errors in the log are benign. The types of errors to look for are those related to authentication or encryption/integrity (that is, no proposal chosen).
-
-#### Enable IKE `traceoptions`
-
-[traceoptions (Security IKE)](https://www.juniper.net/documentation/us/en/software/junos/cli-reference/topics/ref/statement/security-edit-traceoptions-ike.html)
+_Perform in Configuration Mode_
 
 ```txt
 set security ike traceoptions file ike-debug.log
@@ -723,44 +522,30 @@ set security ike traceoptions file world-readable
 set security ike traceoptions flag all
 ```
 
-The log file can be viewed by doing the following:
+#### View IKE Debug Log
 
-1. From an operational mode, run **start shell**.
-2. Use the `tail` command to view the contents of the log file in real-time:
+_Perform in Operational Mode_
 
-	```txt
-	tail -f /var/log/ike-debug.log
-	```
-
-3. Press `CTRL + C` when finished.
-4. Type `exit` to return to the operational mode prompt.
-
-Either deactivate `traceoptions` or delete `traceoptions` once debugging is complete.
-
-#### Deactivate IKE `traceoptions`
+View the log with the following command:
 
 ```txt
-deactivate security ike traceoptions
+admin@srx> show log ike-debug.log
 ```
 
-Confirm `traceoptions` is deactivated with:
+Press `CTRL + C` to stop viewing the log.
+
+#### Disable IKE Traceoptions
+
+_Perform in Configuration Mode_
 
 ```txt
-admin@srx300> show configuration security ike traceoptions
-```
-```txt output
-##
-## inactive: security ike traceoptions
-##
-file ike-debug.log size 1m files 3 world-readable;
-flag all;
+delete security ike traceoptions
+commit
 ```
 
-### IPsec `traceoptions`
+#### Enable IPsec Traceoptions
 
-Refer to [traceoptions (Security IPsec)](https://www.juniper.net/documentation/us/en/software/junos/cli-reference/topics/ref/statement/security-edit-traceoptions-ipsec.html) for more information on this topic.
-
-#### Enable IPsec `traceoptions`
+_Perform in Configuration Mode_
 
 ```txt
 set security ipsec traceoptions file ipsec-debug.log
@@ -770,37 +555,248 @@ set security ipsec traceoptions file world-readable
 set security ipsec traceoptions flag all
 ```
 
-To view the log file:
+#### View IPsec Debug Logging
 
-1. From an operational mode, run `start shell`.
-2. Use the tail command to view the contents of the log file in real time:
-   `tail -f /var/log/ipsec-debug.log`
-3. Press `CTRL + C` when finished.
-4. Type `exit` to return to the operational mode prompt.
+_Perform in Operational Mode_
 
-Either deactivate `traceoptions` or delete `traceoptions` once debugging is complete.
+View the log with the following command:
 
-#### Delete IPsec `traceoptions`
+```txt
+admin@srx> show log ipsec-debug.log
+```
+
+Press `CTRL + C` to stop viewing the log.
+
+#### Disable IPsec Debug Logging
+
+_Perform in Configuration Mode_
 
 ```txt
 delete security ipsec traceoptions
+commit
 ```
 
-#### Deactivate IPsec `traceoptions`
+### Disable/Enable IKE Gateways and/or IPsec VPN Tunnels
+
+_Perform in Configuration Mode_
+
+Junos provides the ability to administratively enable/disable IKE gateways and IPsec tunnels independently. This allows you to forcefully set up and tear down VPN tunnels which can be very useful during troubleshooting.
+
+#### Deactivate IKE Gateway
 
 ```txt
-deactivate security ipsec traceoptions
+deactivate security ike gateway cf-wan-ike-gw-01
 ```
 
-Confirm `traceoptions` is deactivated:
+#### Deactivate IPsec VPN
 
 ```txt
-admin@srx300> show configuration security ipsec traceoptions
+deactivate security ipsec vpn cf-wan-ipsec-vpn-01
 ```
-```txt output
+
+Perform a `commit` to ensure the IKE Gateway and IPSec VPN objects are disabled.
+
+#### Verify Inactive State
+
+Note the presence of `inactive: security ike gateway cf-wan-ike-gw-01` at the top of the IKE gateway stanza:
+
+```txt
+admin@srx# show security ike gateway cf-wan-ike-gw-01
 ##
-## inactive: security ipsec traceoptions
+## inactive: security ike gateway cf-wan-ike-gw-01
 ##
-file ipsec-debug.log size 1m files 3 world-readable;
-flag all;
+ike-policy cf-wan-ike-pol-01;
+address 162.159.135.1;
+local-identity hostname bf6c493d03<REDACTED>.ipsec.cloudflare.com;
+external-interface ge-0/0/0.0;
+local-address 203.0.113.100;
+version v2-only;
 ```
+
+Note the presence of `inactive: security ipsec vpn cf-wan-ike-gw-01` at the top of the IPsec VPN stanza:
+
+```txt
+[edit]
+admin@srx# show security ipsec vpn cf-wan-ipsec-vpn-01
+##
+## inactive: security ipsec vpn cf-wan-ipsec-vpn-01
+##
+bind-interface st0.1;
+ike {
+    gateway cf-wan-ike-gw-01;
+    no-anti-replay;
+    ipsec-policy ipsec-aes256cbc-sha256-128-dh20;
+}
+establish-tunnels immediately;
+```
+
+#### Activate IKE Gateway and IPsec VPN Objects
+
+Reverse the process with the `activate` command:
+
+```txt
+activate security ike gateway cf-wan-ike-gw-01
+
+activate security ipsec vpn cf-wan-ipsec-vpn-01
+
+commit
+```
+
+### Restart IPsec Daemon
+
+_Perform in Operational Mode_
+
+The IKE and IPsec lifetimes are set to 28800 seconds (8 hours). You can force tunnel establishment by restarting the IPsec daemon (kmd). This will invalidate the IKE and IPsec security associations and forcefully reconnect the IPsec VPN tunnels.
+
+This can be accomplished with the following command:
+
+```txt
+admin@srx> restart ipsec-key-management
+```
+
+### Ensure Reachability Across IPsec Tunnels
+
+_Perform in Operational Mode_
+
+Use ping to verify connectivity to the Cloudflare side of the Virtual Tunnel Interface
+
+```txt
+admin@srx> ping 169.254.250.0 source 169.254.250.1
+admin@srx> ping 169.254.250.2 source 169.254.250.3
+```
+
+### Show Tunnel Event Statistics
+
+_Perform in Operational Mode_
+
+```txt
+admin@srx> show security ipsec tunnel-events-statistics
+```
+
+Resulting output:
+
+```txt
+External interface's zone received. Information updated                     : 2
+Bind-interface's zone received. Information updated                         : 2
+Bind-interface's address received. Information updated                      : 2
+IKE SA negotiation successfully completed                                   : 2
+IPSec SA negotiation successfully completed                                 : 2
+Tunnel is ready. Waiting for trigger event or peer to trigger negotiation   : 2
+```
+
+### Display Route Tables
+
+_Perform in Operational Mode_
+
+#### Default Route Table - inet.0
+
+```txt
+show route table inet.0
+
+inet.0: 11 destinations, 11 routes (11 active, 0 holddown, 0 hidden)
++ = Active Route, - = Last Active, * = Both
+
+169.254.247.0/31   *[Direct/0] 00:02:10
+                    > via st0.1
+169.254.247.1/32   *[Local/0] 1d 05:35:54
+                      Local via st0.1
+169.254.247.2/31   *[Direct/0] 00:02:09
+                    > via st0.2
+169.254.247.3/32   *[Local/0] 1d 05:35:54
+                      Local via st0.2
+169.254.250.0/31   *[Direct/0] 00:02:09
+                    > via st0.1
+169.254.250.1/32   *[Local/0] 00:02:09
+                      Local via st0.1
+169.254.250.2/31   *[Direct/0] 00:02:09
+                    > via st0.2
+169.254.250.3/32   *[Local/0] 00:02:09
+                      Local via st0.2
+192.168.125.0/24   *[Direct/0] 00:02:10
+                    > via ge-0/0/1.0
+192.168.125.1/32   *[Local/0] 00:02:10
+                      Local via ge-0/0/1.0
+203.0.113.100/32   *[Local/0] 00:02:10
+                      Reject
+```
+
+#### Routing Instance Route Table (CF_WAN_RI.inet.0)
+
+```txt
+show route table CF_WAN_RI.inet.0
+
+CF_WAN_RI.inet.0: 12 destinations, 12 routes (12 active, 0 holddown, 0 hidden)
++ = Active Route, - = Last Active, * = Both
+
+0.0.0.0/0          *[Static/5] 00:01:04
+                    > to 169.254.250.0 via st0.1
+                      to 169.254.250.2 via st0.2
+169.254.247.0/31   *[Direct/0] 00:02:58
+                    > via st0.1
+169.254.247.1/32   *[Local/0] 00:02:58
+                      Local via st0.1
+169.254.247.2/31   *[Direct/0] 00:02:57
+                    > via st0.2
+169.254.247.3/32   *[Local/0] 00:02:57
+                      Local via st0.2
+169.254.250.0/31   *[Direct/0] 00:02:57
+                    > via st0.1
+169.254.250.1/32   *[Local/0] 00:02:57
+                      Local via st0.1
+169.254.250.2/31   *[Direct/0] 00:02:57
+                    > via st0.2
+169.254.250.3/32   *[Local/0] 00:02:57
+                      Local via st0.2
+192.168.125.0/24   *[Direct/0] 00:02:58
+                    > via ge-0/0/1.0
+192.168.125.1/32   *[Local/0] 00:02:58
+                      Local via ge-0/0/1.0
+203.0.113.100/32   *[Local/0] 00:02:58
+                      Reject
+```
+
+### Display Firewall Filter Counters
+
+```txt
+admin@srx> show firewall counter filter CF_WAN_FBF_ALL CF_WAN_FWD_RI_count
+
+Filter: CF_WAN_FBF_ALL
+Counters:
+Name                                Bytes              Packets
+CF_WAN_FWD_RI_count                 14855935          189746
+```
+
+```txt
+admin@srx> show firewall counter filter CF_WAN_FBF_ALL EVERYTHING_ELSE_count
+
+Filter: CF_WAN_FBF_ALL
+Counters:
+Name                                Bytes              Packets
+EVERYTHING_ELSE_count               4371377            18732
+```
+
+## Resources - Juniper Product Documentation
+
+Refer to the CLI Reference Guide for further details on each command referenced within this document:
+
+- [CLI Reference Guide](https://www.juniper.net/documentation/us/en/software/junos/cli-reference/)
+
+- [Route-Based IPsec VPNs](https://www.juniper.net/documentation/us/en/software/junos/vpn-ipsec/topics/topic-map/security-route-based-ipsec-vpns.html)
+
+- [Route-Based VPN with IKEv2](https://www.juniper.net/documentation/us/en/software/junos/vpn-ipsec/topics/topic-map/security-vpns-for-ikev2.html)
+
+- [Route-Based and Policy-Based VPNs with NAT-T](https://www.juniper.net/documentation/us/en/software/junos/vpn-ipsec/topics/topic-map/security-route-based-and-policy-based-vpns-with-nat-t.html)
+
+- [Configuring Filter-Based Forwarding](https://www.juniper.net/documentation/us/en/software/junos/routing-policy/topics/example/filter-based-forwarding-example.html)
+
+## Resources - Juniper Knowledge Base
+
+Valid support credentials may be required to view some/all of the following documents:
+
+- [[SRX] How do I tell if a VPN Tunnel SA (Security Association) is active - KB10090](https://supportportal.juniper.net/s/article/SRX-How-do-I-tell-if-a-VPN-Tunnel-SA-Security-Association-is-active)
+
+- [[SRX] How to configure syslog to display VPN status messages - KB10097](https://supportportal.juniper.net/s/article/SRX-How-to-configure-syslog-to-display-VPN-status-messages)
+
+- [[SRX] How to troubleshoot IKE Phase 2 VPN connection issues - KB10099](https://supportportal.juniper.net/s/article/SRX-How-to-troubleshoot-IKE-Phase-2-VPN-connection-issues)
+
+- [[SRX] How to enable VPN (IKE/IPsec) traceoptions for specific SAs (Security Associations) - KB19943](https://supportportal.juniper.net/s/article/SRX-How-to-enable-VPN-IKE-IPsec-traceoptions-for-specific-SAs-Security-Associations)

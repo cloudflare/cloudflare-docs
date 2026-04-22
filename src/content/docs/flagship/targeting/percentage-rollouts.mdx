@@ -1,0 +1,43 @@
+---
+pcx_content_type: concept
+title: Percentage rollouts
+description: Gradually release features to a fraction of users with Flagship percentage rollouts and consistent hashing for sticky bucketing.
+sidebar:
+  order: 2
+products:
+  - flagship
+---
+
+Percentage rollouts let you gradually release a feature to a fraction of your users. Any [targeting rule](/flagship/targeting/) can include a rollout percentage between 0 and 100.
+
+## How percentage rollouts work
+
+When a rule has a percentage rollout, Flagship evaluates the rule's conditions first. If the conditions match, only the specified percentage of users receive the rule's variation. Users who do not fall into the rollout percentage continue to the next rule or receive the default variation if no further rules match.
+
+## Sticky bucketing
+
+Flagship uses consistent hashing on a configurable attribute to assign users to a rollout bucket. The same user always receives the same flag value for a given rollout configuration. This ensures a consistent experience across repeated evaluations.
+
+By default, the bucketing attribute is `targetingKey`. You can configure which attribute to use for bucketing when you set up the rollout in the dashboard.
+
+:::caution[Random assignment without targetingKey]
+If `targetingKey` is not present in the evaluation context and no alternative bucketing attribute is configured, Flagship cannot produce a stable hash. In this case the rollout bucket is assigned randomly on each evaluation, meaning the same user may receive different flag values across requests.
+
+Always provide a stable `targetingKey` (or configure a consistent bucketing attribute) to guarantee sticky bucketing.
+:::
+
+## Example
+
+Consider a flag `new-checkout` with the following rules:
+
+1. **Rule 1**: `plan equals "enterprise"` — serve variation `on`.
+2. **Rule 2**: 25% rollout on `userId` — serve variation `on`.
+3. **Default variation**: `off`.
+
+In this configuration:
+
+- All enterprise users see the new checkout.
+- 25% of all other users, determined by their `userId`, also see the new checkout.
+- The remaining 75% of non-enterprise users see the standard checkout.
+
+As you gain confidence, increase the rollout percentage until you reach 100%.

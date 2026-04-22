@@ -1,51 +1,127 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: how-to
 title: Build Your Own UI
+description: Build a custom meeting interface video UI using RealtimeKit SDK components and Core SDK.
 sidebar:
   order: 4
+products:
+  - realtime
 ---
 
 import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelector.astro";
 import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnippet.astro";
 
-This guide explains how to use Cloudflare RealtimeKit SDKs to build fully custom real-time video UIs.
+This guide explains how to use RealtimeKit UI Kit components to build a custom meeting interface instead of the default full-screen meeting view.
 
 ## Prerequisites
 
-This page builds upon the [Initialize SDK](/realtime/realtimekit/core/) and [Render Default Meeting UI](/realtime/realtimekit/ui-kit/) & [UI Kit States](/realtime/realtimekit/ui-kit/state-management/) guides. Make sure you've read those first.
+This page builds upon the [Initialize SDK](/realtime/realtimekit/core/), [Render Default Meeting UI](/realtime/realtimekit/ui-kit/), and [UI Kit States](/realtime/realtimekit/ui-kit/state-management/) guides. First refer to these pages to understand the core concepts.
 
-The code examples on this page assume you've already imported the necessary packages and initialized the SDK. We won't repeat those setup steps here for brevity.
+The code examples on this page assume you have already imported the necessary packages and initialized the SDK.
 
-## Building Your Own UI, With UI Kit
+## Build a custom UI with UI Kit
 
-If default meeting component is not enough, and you need more control over layout or behavior, use [UI Kit components](/realtime/realtimekit/ui-kit/component-library/) to build a custom interface. The UI Kit provides pre-built components that sit on top of the Core SDK, letting you mix and match pieces while saving time compared to building from scratch.
+If the default meeting component does not provide enough control over layout or behavior, use [UI Kit components](/realtime/realtimekit/ui-kit/component-library/) to build a custom interface. The UI Kit provides pre-built components on top of the Core SDK. You can mix and match pieces while saving time compared to building from scratch.
 
-Building a custom UI requires managing participant audio, notifications, dialogs, component layout, and screen transitions yourself.
+A custom UI requires you to manage participant audio, notifications, dialogs, component layout, and screen transitions.
 
 <RTKSDKSelector />
 
 <RTKCodeSnippet id="web-web-components">
-Similar to `rtk-meeting`, `rtk-ui-provider`, another ui-kit component that acts as a provider, also listens to [states](/realtime/realtimekit/ui-kit/state-management/) and syncs them with the UI Kit components.
+Similar to `rtk-meeting`, `rtk-ui-provider`, another UI Kit component that acts as a provider, also listens to [states](/realtime/realtimekit/ui-kit/state-management/) and syncs them with the UI Kit components.
 
-Unlike `rtk-meeting`, `rtk-ui-provider` allows you to pass any child components to it, if any one of the child components is a RealtimeKit component starting with `rtk-`, `rtk-ui-provider` will coordinate with the RealtimeKit component to sync the states.
+Unlike `rtk-meeting`, `rtk-ui-provider` allows you to pass any child components to it. If any child component is a RealtimeKit component starting with `rtk-`, `rtk-ui-provider` will coordinate with it to sync the states.
 
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-react">
-Similar to `RtkMeeting`, `RtkUiProvider`, another ui-kit component that acts as a provider, also listens to [states](/realtime/realtimekit/ui-kit/state-management/) and syncs them with the UI Kit components.
+Similar to `RtkMeeting`, `RtkUiProvider`, another UI Kit component that acts as a provider, also listens to [states](/realtime/realtimekit/ui-kit/state-management/) and syncs them with the UI Kit components.
 
-Unlike `RtkMeeting`, `RtkUiProvider` allows you to pass any child components to it. If any one of the child components is a RealtimeKit component starting with `Rtk`, `RtkUiProvider` will coordinate with the RealtimeKit component to sync the states.
+Unlike `RtkMeeting`, `RtkUiProvider` allows you to pass any child components to it. If any child component is a RealtimeKit component starting with `Rtk`, `RtkUiProvider` will coordinate with it to sync the states.
 
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-angular">
-Similar to `rtk-meeting`, `rtk-ui-provider`, another ui-kit component that acts as a provider, also listens to [states](/realtime/realtimekit/ui-kit/state-management/) and syncs them with the UI Kit components.
+Similar to `rtk-meeting`, `rtk-ui-provider`, another UI Kit component that acts as a provider, also listens to [states](/realtime/realtimekit/ui-kit/state-management/) and syncs them with the UI Kit components.
 
-Unlike `rtk-meeting`, `rtk-ui-provider` allows you to pass any child components to it, if any one of the child components is a RealtimeKit component starting with `rtk-`, `rtk-ui-provider` will coordinate with the RealtimeKit component to sync the states.
+Unlike `rtk-meeting`, `rtk-ui-provider` allows you to pass any child components to it. If any child component is a RealtimeKit component starting with `rtk-`, `rtk-ui-provider` will coordinate with it to sync the states.
 
 </RTKCodeSnippet>
 
-## Example Code
+<RTKCodeSnippet id="mobile-ios">
+The iOS SDK uses a **delegation pattern** for custom UIs. Instead of wrapping child views in a provider, you conform to `RtkUIFlowCoordinatorDelegate` and return your own view controllers for each screen in the meeting flow.
+
+There are two levels of customization:
+
+- **Replace entire screens** — Conform to `RtkUIFlowCoordinatorDelegate` and return your own `UIViewController` for the setup screen, group call screen, or webinar screen. Return `nil` to use the default screen.
+- **Replace sub-components** — Conform to `MeetingViewControllerDataSource` and swap the topbar, middle view (participant grid), or bottom control bar within the default `MeetingViewController`.
+
+```swift
+public protocol RtkUIFlowCoordinatorDelegate {
+    func showSetUpScreen(completion: () -> Void) -> SetupViewControllerDataSource?
+    func showGroupCallMeetingScreen(meeting: RealtimeKitClient, completion: @escaping () -> Void) -> UIViewController?
+    func showWebinarMeetingScreen(meeting: RealtimeKitClient, completion: @escaping () -> Void) -> UIViewController?
+}
+```
+
+When the user joins successfully, the SDK calls `showGroupCallMeetingScreen(meeting:completion:)` or `showWebinarMeetingScreen(meeting:completion:)`. Use the `RealtimeKitClient` parameter to bind individual UI Kit components (such as `RtkMeetingHeaderView`, `RtkMeetingControlBar`, or `RtkParticipantTileView`) to the meeting.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+The Android SDK does not use a provider/wrapper pattern. Instead, each individual View component has an `activate(meeting)` method that binds it to the meeting.
+
+The pattern is:
+
+1. Build a `RealtimeKitUI` instance with `RealtimeKitUIBuilder.build()`.
+2. Access the `RealtimeKitClient` via `rtkUI.meeting`.
+3. Place individual UI Kit views in your own XML layout or create them in code.
+4. Call `activate(meeting)` on each component to bind it to the meeting.
+
+Meeting-level components (grid, header, control bar) take a `RealtimeKitClient`:
+
+```kotlin
+gridView.activate(meeting)
+headerView.activate(meeting)
+controlBarView.activate(meeting)
+```
+
+Participant-level components (tile, avatar, name tag) take an `RtkMeetingParticipant`:
+
+```kotlin
+tileView.activate(meeting.localUser)
+tileView.activate(remoteParticipant)
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+The Flutter SDK provides `RtkProvider`, a wrapper widget that sets up dependency injection and theming for individual UI Kit widgets.
+
+Wrap your custom widget tree in `RtkProvider` and use individual exported widgets such as `RtkSelfAudioToggleButton`, `RtkSelfVideoToggleButton`, `RtkParticipantTile`, `RtkJoinButton`, and `RtkLeaveButton`.
+
+```dart
+RtkProvider(
+  meeting: meeting,
+  uiKitInfo: RealtimeKitUIInfo(meetingInfo),
+  child: YourCustomMeetingWidget(),
+)
+```
+
+Each widget that needs the meeting client accepts it as a required `meeting` parameter. Participant-level widgets such as `RtkParticipantTile` accept an `RtkMeetingParticipant` directly.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+Similar to `RtkMeeting`, `RtkUIProvider` is a wrapper component that provides the design system and UI state context to all child components.
+
+Unlike `RtkMeeting`, `RtkUIProvider` allows you to pass any child components to it. All RealtimeKit UI Kit components read from the `RtkUIContext` for design tokens and state.
+
+Use `useContext(RtkUIContext)` to read `storeStates.meeting` and determine which screen to render. When building without `RtkMeeting`, you must listen to SDK events and call `setStates` to drive state transitions yourself.
+
+</RTKCodeSnippet>
+
+## Example code
 
 <RTKCodeSnippet id="web-web-components">
 ```html
@@ -608,8 +684,543 @@ We have our UI Kit open source on GitHub, you can find it [here](https://github.
 Please note that you will need to manage the CSS for aligning these components, yourself. This was previously handled entirely by `rtk-meeting`. All these components can be styled using CSS.
 :::
 
+:::caution
+You must include `rtk-notifications`, `rtk-participants-audio`, and `rtk-dialog-manager`. If you leave them out, features like settings toggles and notifications will not work, and you will not hear other participants in the session.
+:::
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+The following example replaces the group call meeting screen with a custom view controller that uses individual UI Kit components:
+
+```swift
+import UIKit
+import RealtimeKit
+import RealtimeKitUI
+
+class CustomFlowDelegate: RtkUIFlowCoordinatorDelegate {
+    // Return nil to use the default setup screen
+    func showSetUpScreen(completion: () -> Void) -> SetupViewControllerDataSource? {
+        return nil
+    }
+
+    // Return a custom view controller for group calls
+    func showGroupCallMeetingScreen(
+        meeting: RealtimeKitClient,
+        completion: @escaping () -> Void
+    ) -> UIViewController? {
+        return CustomMeetingViewController(meeting: meeting, completion: completion)
+    }
+
+    // Return nil to use the default webinar screen
+    func showWebinarMeetingScreen(
+        meeting: RealtimeKitClient,
+        completion: @escaping () -> Void
+    ) -> UIViewController? {
+        return nil
+    }
+}
+
+class CustomMeetingViewController: UIViewController {
+    private let meeting: RealtimeKitClient
+    private let completion: () -> Void
+    private var selfListener: RtkEventSelfListener?
+
+    init(meeting: RealtimeKitClient, completion: @escaping () -> Void) {
+        self.meeting = meeting
+        self.completion = completion
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) { fatalError("init(coder:) not supported") }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .black
+
+        // Header
+        let header = RtkMeetingHeaderView(meeting: meeting)
+        header.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(header)
+
+        // Control bar
+        let controlBar = RtkMeetingControlBar(
+            meeting: meeting,
+            delegate: nil,
+            presentingViewController: self
+        )
+        controlBar.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(controlBar)
+
+        NSLayoutConstraint.activate([
+            header.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            header.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            header.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            header.heightAnchor.constraint(equalToConstant: 50),
+            controlBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            controlBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            controlBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            controlBar.heightAnchor.constraint(equalToConstant: 80),
+        ])
+
+        // Listen for meeting events
+        selfListener = RtkEventSelfListener(rtkClient: meeting)
+        selfListener?.observeSelfRemoved { [weak self] _ in
+            self?.dismiss(animated: true, completion: self?.completion)
+        }
+        selfListener?.observeSelfMeetingEndForAll { [weak self] _ in
+            self?.dismiss(animated: true, completion: self?.completion)
+        }
+    }
+}
+```
+
+Present the meeting with your custom flow delegate:
+
+```swift
+let delegate = CustomFlowDelegate()
+let rtkUI = RealtimeKitUI(
+    meetingInfo: RtkMeetingInfo(
+        authToken: "<auth-token>",
+        enableAudio: true,
+        enableVideo: true
+    ),
+    flowDelegate: delegate
+)
+
+let controller = rtkUI.startMeeting {
+    self.dismiss(animated: true)
+}
+controller.modalPresentationStyle = .fullScreen
+present(controller, animated: true)
+```
+
+Individual components available for custom meeting screens:
+
+| Component                       | Description                                                                  |
+| ------------------------------- | ---------------------------------------------------------------------------- |
+| `RtkMeetingHeaderView`          | Header with meeting title, participant count, clock, and recording indicator |
+| `RtkMeetingControlBar`          | Control bar with microphone, camera, and end meeting buttons                 |
+| `RtkParticipantTileView`        | Single participant video tile with avatar fallback and name tag              |
+| `RtkVideoView`                  | Raw video rendering view                                                     |
+| `RtkAvatarView`                 | Participant avatar with initials                                             |
+| `RtkNameTag`                    | Participant name with microphone status icon                                 |
+| `RtkAudioButtonControlBar`      | Standalone microphone toggle button                                          |
+| `RtkVideoButtonControlBar`      | Standalone camera toggle button                                              |
+| `RtkEndMeetingControlBarButton` | End/leave meeting button                                                     |
+| `RtkEventSelfListener`          | Observer for audio/video state, removal, reconnection, and permissions       |
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+
+The following example creates a custom meeting screen using individual UI Kit views in an XML layout with the `activate(meeting)` pattern:
+
+```xml title="activity_custom_meeting.xml"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#000000">
+
+    <com.cloudflare.realtimekit.ui.view.headers.RtkMeetingHeaderView
+        android:id="@+id/headerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.cloudflare.realtimekit.ui.view.grid.RtkGridView
+        android:id="@+id/gridView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <com.cloudflare.realtimekit.ui.view.controlbars.RtkMeetingControlBarView
+        android:id="@+id/controlBarView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
+```
+
+```kotlin title="CustomMeetingActivity.kt"
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.cloudflare.realtimekit.RealtimeKitClient
+import com.cloudflare.realtimekit.RtkMeetingRoomEventListener
+import com.cloudflare.realtimekit.models.RtkMeetingInfo
+import com.cloudflare.realtimekit.ui.RealtimeKitUIBuilder
+import com.cloudflare.realtimekit.ui.RealtimeKitUIInfo
+import com.cloudflare.realtimekit.ui.view.controlbars.RtkMeetingControlBarView
+import com.cloudflare.realtimekit.ui.view.grid.RtkGridView
+import com.cloudflare.realtimekit.ui.view.headers.RtkMeetingHeaderView
+
+class CustomMeetingActivity : AppCompatActivity() {
+    private lateinit var headerView: RtkMeetingHeaderView
+    private lateinit var gridView: RtkGridView
+    private lateinit var controlBarView: RtkMeetingControlBarView
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_custom_meeting)
+
+        headerView = findViewById(R.id.headerView)
+        gridView = findViewById(R.id.gridView)
+        controlBarView = findViewById(R.id.controlBarView)
+
+        val meetingInfo = RtkMeetingInfo(authToken = "<auth-token>")
+        val uiKitInfo = RealtimeKitUIInfo(
+            activity = this,
+            rtkMeetingInfo = meetingInfo,
+        )
+        val rtkUI = RealtimeKitUIBuilder.build(uiKitInfo)
+        val meeting: RealtimeKitClient = rtkUI.meeting
+
+        // Listen for meeting lifecycle events
+        meeting.addMeetingRoomEventListener(object : RtkMeetingRoomEventListener {
+            override fun onMeetingRoomJoinCompleted(meeting: RealtimeKitClient) {
+                runOnUiThread {
+                    // Activate all components once the meeting is joined
+                    headerView.activate(meeting)
+                    gridView.activate(meeting)
+                    controlBarView.activate(meeting)
+                }
+            }
+
+            override fun onMeetingEnded() {
+                finish()
+            }
+
+            override fun onMeetingRoomLeaveCompleted() {
+                finish()
+            }
+        })
+    }
+}
+```
+
+Individual components available for custom layouts:
+
+| Component                  | Activate with           | Description                                                          |
+| -------------------------- | ----------------------- | -------------------------------------------------------------------- |
+| `RtkGridView`              | `RealtimeKitClient`     | Paginated participant video grid                                     |
+| `RtkMeetingHeaderView`     | `RealtimeKitClient`     | Header with title, participant count, clock, and recording indicator |
+| `RtkMeetingControlBarView` | `RealtimeKitClient`     | Control bar with mic, camera, more, and leave buttons                |
+| `RtkParticipantTileView`   | `RtkMeetingParticipant` | Single participant video tile with avatar and name tag               |
+| `RtkMicToggleButton`       | `RealtimeKitClient`     | Standalone microphone toggle                                         |
+| `RtkCameraToggleButton`    | `RealtimeKitClient`     | Standalone camera toggle                                             |
+| `RtkLeaveButton`           | `RealtimeKitClient`     | Leave/end meeting button                                             |
+| `RtkAvatarView`            | `RtkMeetingParticipant` | Participant avatar                                                   |
+| `RtkNameTagView`           | `RtkMeetingParticipant` | Name tag with audio indicator                                        |
+| `RtkJoinButton`            | `RealtimeKitClient`     | Join meeting button for setup screens                                |
+
 :::note
-You must include `rtk-notifications`, `rtk-participants-audio`, and `rtk-dialog-manager`. If you leave them out, features like settings toggles and notifications won’t work, and you won’t hear other participants in the session.
+You must manage layout and sizing for these components yourself. Use standard Android layout techniques (XML, ConstraintLayout, LinearLayout) to position components.
+:::
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+The following example wraps a custom widget tree in `RtkProvider` and uses individual UI Kit widgets:
+
+```dart title="custom_meeting.dart"
+import 'package:flutter/material.dart';
+import 'package:realtimekit_ui/realtimekit_ui.dart';
+
+class CustomMeetingPage extends StatefulWidget {
+  final String authToken;
+  const CustomMeetingPage({required this.authToken, super.key});
+
+  @override
+  State<CustomMeetingPage> createState() => _CustomMeetingPageState();
+}
+
+class _CustomMeetingPageState extends State<CustomMeetingPage>
+    implements RtkMeetingRoomEventListener {
+  late final RealtimekitClient meeting;
+  late final RealtimeKitUIInfo uiKitInfo;
+  String meetingState = 'idle';
+
+  @override
+  void initState() {
+    super.initState();
+    meeting = RealtimekitClient();
+    uiKitInfo = RealtimeKitUIInfo(
+      RtkMeetingInfo(authToken: widget.authToken),
+    );
+    meeting.addMeetingRoomEventListener(this);
+    meeting.init(
+      RtkMeetingInfo(authToken: widget.authToken),
+      onSuccess: () => setState(() => meetingState = 'setup'),
+      onError: (error) => setState(() => meetingState = 'error'),
+    );
+  }
+
+  @override
+  void onMeetingRoomJoinCompleted() {
+    setState(() => meetingState = 'joined');
+  }
+
+  @override
+  void onMeetingEnded() {
+    setState(() => meetingState = 'ended');
+  }
+
+  @override
+  void onMeetingRoomLeaveCompleted() {
+    Navigator.of(context).pop();
+  }
+
+  // Required interface methods — no-op for this example
+  @override
+  void onMeetingInitCompleted() {}
+  @override
+  void onMeetingInitFailed(Exception exception) {}
+  @override
+  void onMeetingInitStarted() {}
+  @override
+  void onMeetingRoomJoinStarted() {}
+  @override
+  void onMeetingRoomJoinFailed(Exception exception) {}
+  @override
+  void onMeetingRoomLeaveStarted() {}
+  @override
+  void onActiveTabUpdate(ActiveTab? activeTab) {}
+  @override
+  void onSocketConnectionUpdate(SocketConnectionState state) {}
+
+  @override
+  Widget build(BuildContext context) {
+    return RtkProvider(
+      meeting: meeting,
+      uiKitInfo: uiKitInfo,
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: _buildForState(),
+      ),
+    );
+  }
+
+  Widget _buildForState() {
+    switch (meetingState) {
+      case 'setup':
+        return Column(
+          children: [
+            Expanded(
+              child: RtkParticipantTile(meeting.localUser, height: 300, width: 200),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                RtkSelfAudioToggleButton(meeting: meeting),
+                const SizedBox(width: 16),
+                RtkSelfVideoToggleButton(meeting: meeting),
+                const SizedBox(width: 16),
+                RtkJoinButton(meeting: meeting, onMeetingJoined: () {}),
+              ],
+            ),
+          ],
+        );
+      case 'joined':
+        return Column(
+          children: [
+            RtkMeetingTitle(meeting: meeting),
+            Expanded(
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 3 / 4,
+                ),
+                itemCount: meeting.participants.active.length + 1,
+                itemBuilder: (context, index) {
+                  final participant = index == 0
+                      ? meeting.localUser
+                      : meeting.participants.active[index - 1];
+                  return RtkParticipantTile(participant);
+                },
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                RtkSelfAudioToggleButton(meeting: meeting),
+                RtkSelfVideoToggleButton(meeting: meeting),
+                RtkLeaveButton(meeting: meeting),
+              ],
+            ),
+          ],
+        );
+      case 'ended':
+        return const Center(child: Text('Meeting ended', style: TextStyle(color: Colors.white)));
+      default:
+        return const Center(child: CircularProgressIndicator());
+    }
+  }
+
+  @override
+  void dispose() {
+    meeting.removeMeetingRoomEventListener(this);
+    super.dispose();
+  }
+}
+```
+
+Individual widgets available for custom UIs:
+
+| Widget                        | Required parameter      | Description                                                    |
+| ----------------------------- | ----------------------- | -------------------------------------------------------------- |
+| `RtkSelfAudioToggleButton`    | `RealtimekitClient`     | Microphone toggle with permission handling                     |
+| `RtkSelfVideoToggleButton`    | `RealtimekitClient`     | Camera toggle with permission handling                         |
+| `RtkJoinButton`               | `RealtimekitClient`     | Join meeting button with loading state                         |
+| `RtkLeaveButton`              | `RealtimekitClient`     | Leave meeting button with confirmation dialog                  |
+| `RtkParticipantTile`          | `RtkMeetingParticipant` | Video tile with avatar fallback, name tag, and audio indicator |
+| `RtkMeetingTitle`             | `RealtimekitClient`     | Meeting title text                                             |
+| `RtkNameTag`                  | `RtkMeetingParticipant` | Participant name label                                         |
+| `RtkAudioIndicatorIconWidget` | `RtkMeetingParticipant` | Microphone status icon                                         |
+
+:::note
+The Flutter SDK exports a focused set of composable widgets. For a complete meeting experience, combine these widgets with the Core SDK event listeners (`RtkMeetingRoomEventListener`, `RtkParticipantsEventListener`, `RtkSelfEventListener`) to manage meeting lifecycle and participant state.
+:::
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+The following example uses `RtkUIProvider` and individual components with state-based screen rendering, similar to the web React pattern:
+
+:::caution
+When building without `RtkMeeting`, you must manage state transitions yourself. Listen for `roomJoined`, `roomLeft`, and socket events on the meeting object, and call `setStates` to update `storeStates.meeting` between `idle`, `setup`, `waiting`, `joined`, and `ended`.
+:::
+
+```tsx title="CustomMeeting.tsx"
+import React, { useContext, useEffect } from "react";
+import { View, Text } from "react-native";
+import {
+	useRealtimeKitClient,
+	RealtimeKitProvider,
+} from "@cloudflare/realtimekit-react-native";
+import {
+	RtkUIProvider,
+	RtkUIContext,
+	RtkHeader,
+	RtkGrid,
+	RtkControlbar,
+	RtkSidebar,
+	RtkDialogManager,
+	RtkSetupScreen,
+	RtkWaitingScreen,
+	RtkEndedScreen,
+} from "@cloudflare/realtimekit-react-native-ui";
+
+function MeetingScreens({ meeting }) {
+	const { storeStates, setStates } = useContext(RtkUIContext);
+	const currentState = storeStates.meeting;
+
+	useEffect(() => {
+		// Listen for meeting events and drive state transitions
+		const onRoomJoined = () => {
+			setStates({ ...storeStates, meeting: "joined" });
+		};
+		const onRoomLeft = ({ state }) => {
+			if (state === "ended" || state === "left") {
+				setStates({ ...storeStates, meeting: "ended" });
+			}
+		};
+		meeting.self.addListener("roomJoined", onRoomJoined);
+		meeting.self.addListener("roomLeft", onRoomLeft);
+		return () => {
+			meeting.self.removeListener("roomJoined", onRoomJoined);
+			meeting.self.removeListener("roomLeft", onRoomLeft);
+		};
+	}, [meeting]);
+
+	if (currentState === "setup") {
+		return <RtkSetupScreen meeting={meeting} />;
+	}
+
+	if (currentState === "waiting") {
+		return <RtkWaitingScreen />;
+	}
+
+	if (currentState === "joined") {
+		return (
+			<View style={{ flex: 1 }}>
+				<RtkHeader meeting={meeting} />
+				<View style={{ flex: 1 }}>
+					<RtkGrid meeting={meeting} />
+					{storeStates.activeSidebar && <RtkSidebar meeting={meeting} />}
+				</View>
+				<RtkControlbar meeting={meeting} />
+				<RtkDialogManager meeting={meeting} />
+			</View>
+		);
+	}
+
+	if (currentState === "ended") {
+		return <RtkEndedScreen meeting={meeting} />;
+	}
+
+	return <Text>Loading...</Text>;
+}
+
+function CustomMeeting({ authToken }) {
+	const [meet, initMeeting] = useRealtimeKitClient();
+	const { setStates, storeStates } = useContext(RtkUIContext);
+
+	useEffect(() => {
+		initMeeting({
+			authToken,
+			defaults: { audio: true, video: true },
+		});
+	}, [authToken]);
+
+	useEffect(() => {
+		if (meet) {
+			setStates({ ...storeStates, meeting: "setup" });
+		}
+	}, [meet]);
+
+	if (!meet) return <Text>Initializing...</Text>;
+
+	return (
+		<RealtimeKitProvider value={meet}>
+			<MeetingScreens meeting={meet} />
+		</RealtimeKitProvider>
+	);
+}
+
+export default function App() {
+	return (
+		<RtkUIProvider>
+			<CustomMeeting authToken="<auth-token>" />
+		</RtkUIProvider>
+	);
+}
+```
+
+First level split of `RtkMeeting` has the following components:
+
+| Component            | Required prop            | Description                                                                  |
+| -------------------- | ------------------------ | ---------------------------------------------------------------------------- |
+| `RtkHeader`          | `meeting`                | Header with meeting title, participant count, clock, and recording indicator |
+| `RtkGrid`            | `meeting`                | Paginated participant video grid                                             |
+| `RtkControlbar`      | `meeting`                | Control bar with mic, camera, screenshare, and more toggles                  |
+| `RtkSidebar`         | `meeting`                | Sidebar with chat, polls, participants, and plugins panels                   |
+| `RtkDialogManager`   | `meeting`                | Manages all dialogs (settings, leave confirmation, join stage)               |
+| `RtkSetupScreen`     | `meeting`                | Pre-join screen with video preview and device selection                      |
+| `RtkWaitingScreen`   | —                        | Waiting room screen                                                          |
+| `RtkEndedScreen`     | `meeting`                | Meeting ended screen                                                         |
+| `RtkMicToggle`       | `meeting`                | Standalone microphone toggle button                                          |
+| `RtkCameraToggle`    | `meeting`                | Standalone camera toggle button                                              |
+| `RtkLeaveButton`     | —                        | Leave/end meeting button                                                     |
+| `RtkParticipantTile` | `meeting`, `participant` | Single participant video tile                                                |
+| `RtkNotifications`   | `meeting`                | Toast notifications for join/leave/chat events                               |
+
+:::note
+Wrap your component tree in `RtkUIProvider`. All UI Kit components read design tokens and state from `RtkUIContext`. Without `RtkUIProvider`, components will not render correctly.
 :::
 
 </RTKCodeSnippet>

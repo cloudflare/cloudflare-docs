@@ -1,4 +1,5 @@
 import type { WorkersAIModelsSchema } from "~/schemas";
+import type { ResolvedModel } from "~/util/model-types";
 import { CAPABILITY_PROPERTIES } from "~/util/model-properties";
 
 const CATEGORY_BADGE: Record<string, string> = {
@@ -6,7 +7,9 @@ const CATEGORY_BADGE: Record<string, string> = {
 	platform: "caution", // orange
 };
 
-const ModelBadges = ({ model }: { model: WorkersAIModelsSchema }) => {
+type ModelType = WorkersAIModelsSchema | ResolvedModel;
+
+const ModelBadges = ({ model }: { model: ModelType }) => {
 	const badges = model.properties.flatMap(({ property_id, value }) => {
 		// Boolean capability badges (data-driven)
 		if (property_id in CAPABILITY_PROPERTIES && value === "true") {

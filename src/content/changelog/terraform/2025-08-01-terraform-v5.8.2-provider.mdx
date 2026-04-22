@@ -1,23 +1,23 @@
 ---
 title: Terraform v5.8.2 now available
-description: Terraform v5.8.2 stablizes a number of resources and known issues
+description: Terraform v5.8.2 stabilizes a number of resources and known issues
 products:
   - fundamentals
 date: 2025-08-01
 ---
 
-Earlier this year, we announced the launch of the new [Terraform v5 Provider](/changelog/2025-02-03-terraform-v5-provider/). We are aware of the high mumber of [issues](https://github.com/cloudflare/terraform-provider-cloudflare) reported by the Cloudflare community related to the v5 release. We have committed to releasing improvements on a 2 week cadeance to ensure it's stability and reliability. We have also pivoted from an issue-to-issue approach to a resource-per-resource approach - we will be focusing on specific resources for every release, stablizing the release and closing all associated bugs with that resource before moving onto resolving migration issues.
+Earlier this year, we announced the launch of the new [Terraform v5 Provider](/changelog/2025-02-03-terraform-v5-provider/). We are aware of the high number of [issues](https://github.com/cloudflare/terraform-provider-cloudflare) reported by the Cloudflare community related to the v5 release. We have committed to releasing improvements on a 2 week cadeance to ensure it's stability and reliability. We have also pivoted from an issue-to-issue approach to a resource-per-resource approach - we will be focusing on specific resources for every release, stabilizing the release and closing all associated bugs with that resource before moving onto resolving migration issues.
 
 Thank you for continuing to raise issues. We triage them weekly and they help make our products stronger.
 
 ### Changes
-- Resources stablized:
+- Resources stabilized:
   - `cloudflare_custom_pages`
   - `cloudflare_page_rule`
   - `cloudflare_dns_record`
   - `cloudflare_argo_tiered_caching`
 - Addressed chronic drift issues in `cloudflare_logpush_job`, `cloudflare_zero_trust_dns_location`, `cloudflare_ruleset` & `cloudflare_api_token`
-- `cloudflare_zone_subscripton` returns expected values `rate_plan.id` from former versions
+- `cloudflare_zone_subscription` returns expected values `rate_plan.id` from former versions
 - `cloudflare_workers_script` can now successfully be destroyed with bindings & migration for Durable Objects now recorded in tfstate 
 - Ability to configure `add_headers` under `cloudflare_zero_trust_gateway_policy` 
 - Other bug fixes
@@ -45,7 +45,7 @@ If you have an unaddressed issue with the provider, we encourage you to check th
 
 ### Upgrading
 
-We suggest holding off on migration to v5 while we work on stablization. This help will you avoid any blocking issues while the Terraform resources are actively being stablized.
+We suggest holding off on migration to v5 while we work on stabilization. This help will you avoid any blocking issues while the Terraform resources are actively being stabilized.
 
 If you'd like more information on migrating from v4 to v5, please make use of the [migration guide](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/guides/version-5-upgrade). We have provided automated migration scripts using Grit which simplify the transition, although these do not support implementations which use Terraform modules, so customers making use of modules need to migrate manually. Please make use of `terraform plan` to test your changes before applying, and let us know if you encounter any additional issues by reporting to our [GitHub repository](https://github.com/cloudflare/terraform-provider-cloudflare).
 

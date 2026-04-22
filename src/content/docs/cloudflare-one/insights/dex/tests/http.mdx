@@ -1,5 +1,8 @@
 ---
 pcx_content_type: reference
+description: Reference information for HTTP test in Zero Trust analytics.
+products:
+  - cloudflare-one
 title: HTTP test
 sidebar:
   order: 1
@@ -30,6 +33,8 @@ import { Details, Render } from "~/components";
 
 <Render file="dex/http-test-intro" product="cloudflare-one" />
 
+HTTP tests run periodically from devices that have the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) installed and turned on. You can use them to verify that an internal application is reachable after a configuration change or to monitor a SaaS application for outages that affect your organization.
+
 ## Create a test
 
 <Render file="dex/http-test-create-steps" product="cloudflare-one" />
@@ -37,6 +42,8 @@ import { Details, Render } from "~/components";
 ## Test results
 
 <Render file="dex/http-test-results-metrics" product="cloudflare-one" />
+
+Use these metrics together to identify where in the connection a problem occurs. For example, a high DNS response time with a normal server response time points to a DNS resolution issue rather than a problem with the target server.
 
 ## Export DEX application test logs
 
@@ -48,4 +55,4 @@ import { Details, Render } from "~/components";
 
 ## Related resources
 
-- [DEX rules](/cloudflare-one/insights/dex/rules/) - Specify the target group of a test.
+- [DEX rules](/cloudflare-one/insights/dex/rules/) - Define which users or groups a test applies to, using selectors such as user email, user group, operating system, or managed network.

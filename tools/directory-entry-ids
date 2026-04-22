@@ -7,8 +7,30 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+// Parse CLI flags
+const fixMode = process.argv.includes("--fix");
+
 // Character set from the formula
 const charset = "abcdefghijkmnopqrstuvwxyzACDEFGHJKLMNPQRTUVWXY34679";
+const ID_LENGTH = 6;
+const charsetSet = new Set(charset);
+
+// Validate that an ID matches the expected length and character composition.
+// Returns an array of human-readable problems (empty if the ID is valid).
+function validateId(id) {
+	const problems = [];
+
+	if (id.length !== ID_LENGTH) {
+		problems.push(`length ${id.length} (expected ${ID_LENGTH})`);
+	}
+
+	const invalidChars = [...new Set([...id].filter((c) => !charsetSet.has(c)))];
+	if (invalidChars.length > 0) {
+		problems.push(`invalid character(s): ${invalidChars.join(", ")}`);
+	}
+
+	return problems;
+}
 
 // Generate a random 6-character ID
 function generateId(existingIds) {
@@ -18,7 +40,7 @@ function generateId(existingIds) {
 
 	do {
 		id = "";
-		for (let i = 0; i < 6; i++) {
+		for (let i = 0; i < ID_LENGTH; i++) {
 			const randomIndex = Math.floor(Math.random() * charset.length);
 			id += charset[randomIndex];
 		}
@@ -43,6 +65,21 @@ console.log(`Found ${files.length} .yaml files\n`);
 const existingIds = new Map(); // id -> filename
 const errors = [];
 let addedCount = 0;
+let fixedCount = 0;
+
+// Rewrite a file's first line with a new ID, replacing any existing `id:` line
+// (or prepending one if missing).
+function writeIdToFile(filePath, newId, content) {
+	const lines = content.split("\n");
+	let newContent;
+	if (lines[0].startsWith("id: ")) {
+		lines[0] = `id: ${newId}`;
+		newContent = lines.join("\n");
+	} else {
+		newContent = `id: ${newId}\n${content}`;
+	}
+	writeFileSync(filePath, newContent, "utf-8");
+}
 
 // First pass: collect existing IDs and check for issues
 for (const file of files) {
@@ -54,14 +91,41 @@ for (const file of files) {
 	if (lines[0].startsWith("id: ")) {
 		const id = lines[0].substring(4).trim();
 
-		// Check for duplicate IDs
-		if (existingIds.has(id)) {
-			errors.push(
-				`❌ ${file} - duplicate id "${id}" (also in ${existingIds.get(id)})`,
-			);
-		} else {
+		// Validate length and character composition
+		const problems = validateId(id);
+		const isDuplicate = existingIds.has(id);
+		const isMalformed = problems.length > 0;
+
+		if (!isDuplicate && !isMalformed) {
 			existingIds.set(id, file);
 			console.log(`✓ ${file} - has id: ${id}`);
+			continue;
+		}
+
+		// Build a reason string for logging/errors
+		const reasons = [];
+		if (isDuplicate) {
+			reasons.push(`duplicate of ${existingIds.get(id)}`);
+		}
+		if (isMalformed) {
+			reasons.push(`malformed (${problems.join("; ")})`);
+		}
+		const reason = reasons.join("; ");
+
+		if (fixMode) {
+			const newId = generateId(existingIds);
+			existingIds.set(newId, file);
+			writeIdToFile(filePath, newId, content);
+			console.log(
+				`🔧 ${file} - replaced id "${id}" with "${newId}" (${reason})`,
+			);
+			fixedCount++;
+		} else {
+			errors.push(`❌ ${file} - id "${id}" ${reason}`);
+			// Only track the first occurrence so later duplicates still flag.
+			if (!isDuplicate) {
+				existingIds.set(id, file);
+			}
 		}
 	}
 }
@@ -92,14 +156,20 @@ for (const file of files) {
 console.log(`\n${"=".repeat(50)}`);
 console.log(`Summary:`);
 console.log(`  Total files: ${files.length}`);
-console.log(`  Files with existing IDs: ${existingIds.size - addedCount}`);
+console.log(
+	`  Files with existing IDs: ${existingIds.size - addedCount - fixedCount}`,
+);
 console.log(`  Files with added IDs: ${addedCount}`);
+if (fixMode) {
+	console.log(`  Files with fixed IDs: ${fixedCount}`);
+}
 console.log(`  Unique IDs: ${existingIds.size}`);
 
 if (errors.length > 0) {
 	console.log(`\n${"=".repeat(50)}`);
 	console.log(`Errors found:`);
 	errors.forEach((error) => console.log(error));
+	console.log(`\nRe-run with --fix to regenerate problematic IDs.`);
 	process.exit(1);
 } else {
 	console.log(`  Errors: 0`);

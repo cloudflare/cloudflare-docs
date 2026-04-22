@@ -1,9 +1,35 @@
 ---
 {}
 ---
-import { Tabs, TabItem } from "~/components"
+import { Tabs, TabItem} from "~/components"
+import originalImg from "~/assets/images/images/examples/original.jpg";
+import rotateImg from "~/assets/images/images/examples/rotate-180.jpg";
 
-Number of degrees (`90`, `180`, or `270`) to rotate the image by. `width` and `height` options refer to axes after rotation.
+### `rotate`
+
+Rotates an image by a number of degrees. Accepts `90`, `180`, or `270`. The default is `0` (no rotation).
+
+Rotation is performed before resizing; `width` and `height` options will refer to the axes after the image is rotated.
+
+<table style="width:100%; table-layout:fixed; text-align:center; border:none">
+  <tr style="border:none; background:none">
+    <td style="width:50%; border:none; vertical-align:bottom">
+      <img src={originalImg.src} alt="Original image" style="width:100%; height:auto" />
+    </td>
+    <td style="width:50%; border:none; vertical-align:bottom">
+      <img src={rotateImg.src} alt="rotate=180 output" style="width:100%; height:auto" />
+    </td>
+  </tr>
+  <tr style="border:none; background:none">
+    <td style="border:none;">
+      <strong>Original</strong>
+    </td>
+    <td style="border:none;">
+      
+      <code>rotate=180</code>
+    </td>
+  </tr>
+</table>
 
 <Tabs>
   <TabItem label="URL format">

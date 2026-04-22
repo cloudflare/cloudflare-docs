@@ -1,0 +1,18 @@
+---
+title: Alibaba Cloud VPN Gateway
+pcx_content_type: integration-guide
+description: Connect Alibaba Cloud VPN Gateway to Cloudflare WAN.
+products:
+  - cloudflare-wan
+
+---
+
+import { Render } from "~/components";
+
+<Render file="cloudflare-wan/third-party/alibaba-cloud"
+  product="networking-services"
+  params={{
+    ipSecTunnelsUrl: "/cloudflare-wan/reference/gre-ipsec-tunnels/#supported-configuration-parameters",
+    addTunnelsUrl: "/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/#add-tunnels",
+    configureStaticRoutesUrl: "/cloudflare-wan/configuration/how-to/configure-routes/#create-a-static-route"
+  }} />
