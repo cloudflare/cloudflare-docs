@@ -1,0 +1,28 @@
+---
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import ModelCatalog from "~/components/ModelCatalog.tsx";
+import { Aside } from "~/components";
+
+const models = await import("~/util/model-resolver").then(m => m.getResolvedModels());
+---
+
+<StarlightPage frontmatter={{ title: "AI Model Pricing", tableOfContents: false }}>
+	<Aside type="tip" title="Pricing note">
+		All pricing is in USD. Neurons are our internal unit of measurement for AI compute, but billing is done in dollars.
+		Models may have different pricing structures based on input/output usage, context window size, and other factors.
+	</Aside>
+
+	<h2>AI Model Pricing</h2>
+	<p>
+		View all AI models available through Cloudflare Workers AI with their pricing information.
+		Models are organized by provider and task type.
+	</p>
+
+	<ModelCatalog models={models} basePath="/ai/pricing" />
+</StarlightPage>
+
+<style>
+	:root {
+		--sl-content-width: 1350px !important;
+	}
+</style>
