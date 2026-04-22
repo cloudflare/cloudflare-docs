@@ -2,12 +2,14 @@
 {}
 ---
 
+import { Markdown } from "~/components";
+
 {props.applicationTests ? (
   <>
-    <p>You can use <a href="/cloudflare-one/insights/logs/logpush/">Logpush</a> to export <a href="/logs/logpush/logpush-job/datasets/account/dex_application_tests/">DEX application test</a> data to <a href="/r2/">R2</a> (Cloudflare's object storage), a third-party cloud storage bucket, or a Security Information and Event Management (SIEM) tool. This is useful if you need to retain test data beyond the <a href="/cloudflare-one/insights/logs/#log-retention">7-day log retention period</a> or correlate DEX data with other log sources.</p>
+    <Markdown text={`You can use [Logpush](/cloudflare-one/insights/logs/logpush/) to export [DEX application test](/logs/logpush/logpush-job/datasets/account/dex_application_tests/) data to [R2](/r2/) (Cloudflare's object storage), a third-party cloud storage bucket, or a Security Information and Event Management (SIEM) tool. This is useful if you need to retain test data beyond the [7-day log retention period](/cloudflare-one/insights/logs/#log-retention) or correlate DEX data with other log sources.`} inline={false} />
   </>
 ) : (
   <>
-    <p>The log data for all <a href="/logs/logpush/logpush-job/datasets/account/dex_device_state_events/">DEX device state events</a> can be exported to <a href="/r2/">R2</a>, a cloud bucket, or a SIEM via <a href="/cloudflare-one/insights/logs/logpush/">Logpush</a>.</p>
+    <Markdown text={`The log data for all [DEX device state events](/logs/logpush/logpush-job/datasets/account/dex_device_state_events/) can be exported to [R2](/r2/), a cloud bucket, or a SIEM via [Logpush](/cloudflare-one/insights/logs/logpush/).`} inline={false} />
   </>
 )}
