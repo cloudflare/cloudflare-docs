@@ -11,11 +11,19 @@ head:
     content: Overview
 ---
 
-import { Description, Feature, FeatureTable, GlossaryTooltip, Plan, RelatedProduct } from "~/components"
+import {
+	Description,
+	Feature,
+	FeatureTable,
+	GlossaryTooltip,
+	Plan,
+	RelatedProduct,
+} from "~/components";
 
 <Description>
 
 Detect and mitigate distributed denial-of-service (DDoS) attacks automatically.
+
 </Description>
 
 <Plan type="all" />
@@ -29,23 +37,40 @@ These systems include multiple dynamic mitigation rules exposed as [DDoS attack 
 ## Features
 
 <Feature header="Managed rulesets" href="/ddos-protection/managed-rulesets/">
-Protect against a variety of DDoS attacks across layers 3/4 (network layer) and layer 7 (application layer) of the OSI model.
+	Protect against a variety of DDoS attacks across layers 3/4 (network layer)
+	and layer 7 (application layer) of the OSI model.
 </Feature>
 
-<Feature header="Adaptive DDoS Protection" href="/ddos-protection/managed-rulesets/adaptive-protection/">
-Get increased protection against sophisticated DDoS attacks on layer 7 and layers 3/4.
+<Feature
+	header="Adaptive DDoS Protection"
+	href="/ddos-protection/managed-rulesets/adaptive-protection/"
+>
+	Get increased protection against sophisticated DDoS attacks on layer 7 and
+	layers 3/4.
 </Feature>
 
-<Feature header="Advanced TCP Protection" href="/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/">
-Detect and mitigate sophisticated out-of-state TCP attacks such as randomized and spoofed ACK floods, or SYN and SYN-ACK floods.
+<Feature
+	header="Advanced TCP Protection"
+	href="/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/"
+>
+	Detect and mitigate sophisticated out-of-state TCP attacks such as randomized
+	and spoofed ACK floods, or SYN and SYN-ACK floods.
 </Feature>
 
-<Feature header="Advanced DNS Protection" href="/ddos-protection/advanced-ddos-systems/overview/advanced-dns-protection/">
-Protect against DNS-based DDoS attacks, specifically sophisticated and fully randomized DNS attacks such as random prefix attacks.
+<Feature
+	header="Advanced DNS Protection"
+	href="/ddos-protection/advanced-ddos-systems/overview/advanced-dns-protection/"
+>
+	Protect against DNS-based DDoS attacks, specifically sophisticated and fully
+	randomized DNS attacks such as random prefix attacks.
 </Feature>
 
-<Feature header="Programmable Flow Protection" href="/ddos-protection/advanced-ddos-systems/overview/programmable-flow-protection/">
-Deploy custom eBPF packet logic across Cloudflare's network to inspect and mitigate DDoS attacks against UDP-based Layer 7 protocols.
+<Feature
+	header="Programmable Flow Protection"
+	href="/ddos-protection/advanced-ddos-systems/overview/programmable-flow-protection/"
+>
+	Deploy custom eBPF packet logic across Cloudflare's network to inspect and
+	mitigate DDoS attacks against UDP-based Layer 7 protocols.
 </Feature>
 
 ---
@@ -63,13 +88,30 @@ Deploy custom eBPF packet logic across Cloudflare's network to inspect and mitig
 ## Related products
 
 <RelatedProduct header="Spectrum" href="/spectrum/" product="spectrum">
-Provides security and acceleration for any TCP or UDP based application.
+	Provides security and acceleration for any TCP or UDP based application.
 </RelatedProduct>
 
-<RelatedProduct header="Magic Transit" href="/magic-transit/" product="magic-transit">
-A network security and performance solution that offers DDoS protection, traffic acceleration, and more for on-premise, cloud-hosted, and hybrid networks.
+<RelatedProduct
+	header="Magic Transit"
+	href="/magic-transit/"
+	product="magic-transit"
+>
+	A network security and performance solution that offers DDoS protection,
+	traffic acceleration, and more for on-premise, cloud-hosted, and hybrid
+	networks.
 </RelatedProduct>
 
-<RelatedProduct header="Web Application Firewall (WAF)" href="/waf/" product="waf">
-Get automatic protection from vulnerabilities and the flexibility to create custom rules.
+<RelatedProduct
+	header="Web Application Firewall (WAF)"
+	href="/waf/"
+	product="waf"
+>
+	Get automatic protection from vulnerabilities and the flexibility to create
+	custom rules.
 </RelatedProduct>
+
+---
+
+## Use cases
+
+For a complete guide on Cloudflare's range of application security features, refer to [Application security](/use-cases/application-security/).
