@@ -5,8 +5,6 @@ sidebar:
   order: 3
 ---
 
-import { Details } from "~/components"
-
 This page outlines the SQL features supported by Log Explorer, including common aggregation functions, expressions, and query clauses.
 
 The diagram below illustrates the general shape of a valid query supported in Log Explorer. It shows how standard SQL clauses — such as `SELECT`, `WHERE`, `GROUP BY`, and `ORDER BY` — can be composed to form supported queries.
@@ -18,12 +16,12 @@ Examples of queries include:
 - `SELECT * FROM table WHERE (a = 1 OR b = "hello") AND c < 25.89`
 - `SELECT a, b, c FROM table WHERE d >= "GB" LIMIT 10`
 
-:::note 
-- A default `LIMIT` of 10,000 is applied if the `LIMIT` clause is omitted.
+:::note
+- A default `LIMIT` of 10,000 is applied if the `LIMIT` clause is omitted. The maximum `LIMIT` value is 10,000.
 - The `WHERE` clause supports up to 25 predicates, which can be grouped using parentheses.
 :::
 
-### SQL Clauses in detail
+### SQL clauses in detail
 
 The following SQL clauses define the structure and logic of queries in Log Explorer:
 
@@ -32,6 +30,7 @@ The following SQL clauses define the structure and logic of queries in Log Explo
 - `WHERE` - The `WHERE` clause filters the rows returned by a query based on specified conditions. It allows you to specify conditions that must be met for a row to be included in the result set.
 - `SELECT DISTINCT` - Removes duplicate rows from the result set.
 - `GROUP BY` - Groups rows for aggregation. The `GROUP BY` clause is used to group rows that have the same values into summary rows.
+- `HAVING` - Filters results after aggregation. Use `HAVING` to apply conditions to grouped results.
 - `ORDER BY` - Sorts the result set. The `ORDER BY` clause is used to sort the result set by one or more columns in ascending or descending order.
 - `LIMIT` - Restricts the number of rows returned. The `LIMIT` clause is used to constrain the number of rows returned by a query. It is often used in conjunction with the `ORDER BY` clause to retrieve the top `N` rows or to implement pagination.
 - `OFFSET` - Skips a specified number of rows before returning results.
@@ -40,97 +39,91 @@ The sections that follow break down the remaining components shown in the diagra
 
 ## Functions
 
-Log Explorer supports a range of SQL functions to transform, evaluate, or summarize data. These include scalar and aggregation functions. 
+Log Explorer supports a range of SQL functions to transform, evaluate, or summarize data. These include scalar and aggregation functions.
 
-### Scalar functions 
+### Scalar functions
 
-These help manipulate or evaluate values (often strings):
+#### String functions
 
-- `ARRAY_CONTAINS(array, element)` –  Checks if the array contains the element.
+| Function | Description | Example |
+| --- | --- | --- |
+| `length(string)` | Returns the length of the string | `SELECT length(ClientRequestPath) FROM logs` |
+| `lower(string)` | Converts to lowercase | `SELECT lower(ClientRequestUserAgent) FROM logs` |
+| `upper(string)` | Converts to uppercase | `SELECT upper(ClientCountry) FROM logs` |
+| `concat(s1, s2, ...)` | Concatenates strings | `SELECT concat(ClientRequestHost, ':', ClientRequestPath) FROM logs` |
+| `substr(string, start, length)` | Extracts a substring | `SELECT substr(ClientIP, 1, 7) FROM logs` |
+| `replace(string, old, new)` | Replaces occurrences in a string | `SELECT replace(ClientRequestURI, 'http', 'https') FROM logs` |
+| `trim(string)` | Removes leading and trailing whitespace | `SELECT trim(ClientRequestHost) FROM logs` |
+| `regexp_like(string, pattern)` | Checks if a string matches a regex pattern | `SELECT * FROM logs WHERE regexp_like(ClientRequestPath, '^/api')` |
+| `ARRAY_CONTAINS(array, element)` | Checks if the array contains the element | `ARRAY_CONTAINS(['US', 'CA'], ClientCountry)` |
 
-  <Details header="Example">
-  `ARRAY_CONTAINS(['US', 'CA'], ClientCountry)`
-  
-  Returns rows where `ClientCountry` is either `US` or `CA`.
-  </Details>
+#### Math functions
 
-- `SUBSTRING(string, from_number, for_number)` – Extracts part of a string.
+| Function | Description | Example |
+| --- | --- | --- |
+| `abs(number)` | Returns the absolute value | `SELECT abs(OriginResponseDurationMs) FROM logs` |
+| `round(number, decimals)` | Rounds to the specified decimal places | `SELECT round(OriginResponseDurationMs, 2) FROM logs` |
+| `floor(number)` | Rounds down to the nearest integer | `SELECT floor(EdgeResponseBytes) FROM logs` |
+| `ceil(number)` | Rounds up to the nearest integer | `SELECT ceil(EdgeResponseBytes) FROM logs` |
+| `power(base, exponent)` | Returns base raised to the exponent | `SELECT power(2, 10)` |
+| `random()` | Returns a random number between 0 and 1 | `SELECT random()` |
 
-  <Details header="Example">
-  `SUBSTRING(ClientRequestPath, 0, 5)`
-  
-  Extracts the first `5` characters from `ClientRequestPath`.
-  </Details>
+#### DateTime functions
 
-- `LOWER(string)` – Converts to lowercase.
-  
-  <Details header="Example">
-  `LOWER(ClientRequestUserAgent)`
-  
-  Converts the user agent string to lowercase.
-  </Details>
-
-- `UPPER(string)` – Converts to uppercase.
-  
-  <Details header="Example">
-  `UPPER(ClientCountry)`
-  
-  Converts the country code to uppercase.
-  </Details>
+| Function | Description | Example |
+| --- | --- | --- |
+| `date_trunc(unit, timestamp)` | Truncates timestamp to the specified unit | `SELECT date_trunc('day', EdgeStartTimestamp) FROM logs` |
+| `extract(unit FROM timestamp)` | Extracts a part of the timestamp | `SELECT extract(hour FROM EdgeStartTimestamp) FROM logs` |
+| `now()` | Returns the current timestamp | `SELECT now()` |
+| `to_timestamp(number)` | Converts a Unix timestamp to a timestamp | `SELECT to_timestamp(unix_timestamp) FROM logs` |
 
 ### Aggregation functions
 
-Used to perform calculations on sets of rows:
+#### Standard aggregates
 
-- `SUM(expression)` – Total of values.
+| Function | Description | Example |
+| --- | --- | --- |
+| `SUM(column)` | Calculates the sum of a numeric column | `SELECT SUM(EdgeResponseBytes) FROM logs` |
+| `COUNT(*)` | Counts all rows | `SELECT COUNT(*) FROM logs` |
+| `COUNT(DISTINCT column)` | Counts unique values in a column | `SELECT COUNT(DISTINCT ClientIP) FROM logs` |
+| `AVG(column)` | Calculates the average of a numeric column | `SELECT AVG(OriginResponseDurationMs) FROM logs` |
+| `MIN(column)` | Finds the minimum value | `SELECT MIN(EdgeStartTimestamp) FROM logs` |
+| `MAX(column)` | Finds the maximum value | `SELECT MAX(EdgeStartTimestamp) FROM logs` |
 
-  <Details header="Example">
-  `SUM(ClientRequestBytes)`
+#### Statistical aggregates
 
-  Adds up the total number of bytes requested by clients.
-  </Details>
+| Function | Description | Example |
+| --- | --- | --- |
+| `STDDEV(column)` | Calculates the standard deviation | `SELECT STDDEV(OriginResponseDurationMs) FROM logs` |
+| `STDDEV_POP(column)` | Calculates the population standard deviation | `SELECT STDDEV_POP(OriginResponseDurationMs) FROM logs` |
+| `VARIANCE(column)` | Calculates the variance | `SELECT VARIANCE(OriginResponseDurationMs) FROM logs` |
+| `VAR(column)` | Alias for variance | `SELECT VAR(OriginResponseDurationMs) FROM logs` |
+| `CORR(column1, column2)` | Calculates the correlation coefficient | `SELECT CORR(EdgeResponseBytes, OriginResponseDurationMs) FROM logs` |
+| `COVAR_SAMP(column1, column2)` | Calculates the sample covariance | `SELECT COVAR_SAMP(EdgeResponseBytes, OriginResponseDurationMs) FROM logs` |
+| `REGR_SLOPE(y, x)` | Calculates the linear regression slope | `SELECT REGR_SLOPE(OriginResponseDurationMs, EdgeResponseBytes) FROM logs` |
 
-- `MIN(expression)` – Minimum value.
+#### Approximate aggregates
 
-  <Details header="Example">
-  `MIN(OriginResponseDurationMs)`
-  
-  Finds the shortest response time from origin servers.
-  </Details>
+| Function | Description | Example |
+| --- | --- | --- |
+| `APPROX_DISTINCT(column)` | Approximate count of unique values | `SELECT APPROX_DISTINCT(ClientIP) FROM logs` |
+| `APPROX_MEDIAN(column)` | Approximate median value | `SELECT APPROX_MEDIAN(OriginResponseDurationMs) FROM logs` |
+| `APPROX_PERCENTILE_CONT(column, percentile)` | Approximate percentile (percentile is 0.0-1.0) | `SELECT APPROX_PERCENTILE_CONT(OriginResponseDurationMs, 0.95) FROM logs` |
 
-- `MAX(expression)` – Maximum value.
+#### Blocked aggregates
 
-   <Details header="Example">
-  `MAX(OriginResponseDurationMs)`
+The following aggregate functions are not supported to prevent Out-Of-Memory (OOM) errors or because exact versions are not yet available:
 
-  Finds the longest response time.
-  </Details>
+| Function | Reason | Recommended alternative |
+| --- | --- | --- |
+| `array_agg` | OOM risk on large tables | Avoid aggregating into arrays |
+| `string_agg` | OOM risk on large tables | Avoid aggregating into strings |
+| `median` | Exact percentiles unsupported | Use `APPROX_MEDIAN(column)` |
+| `percentile_cont` | Exact percentiles unsupported | Use `APPROX_PERCENTILE_CONT(column, percentile)` |
+| `percentile_disc` | Exact percentiles unsupported | Use `APPROX_PERCENTILE_CONT(column, percentile)` |
+| `quantile_cont` | Exact percentiles unsupported | Use `APPROX_PERCENTILE_CONT(column, percentile)` |
 
-- `COUNT(expression)` – Number of rows (can be all rows or non-null values).
-  
-  <Details header="Example">
-  `COUNT(ClientRequestUserAgent)`
-
-  Counts how many rows have a user agent value.
-  </Details>
-
-- `COUNT(DISTINCT expression)` – Number of distinct non-null values.
-  
-  <Details header="Example">
-  `COUNT(DISTINCT ClientIP)`
-
-  Counts how many unique client IPs made requests.
-  </Details>
-
-- `AVG(expression)` – Average of numeric values.
-  
-  <Details header="Example">
-  `AVG(OriginResponseDurationMs)`
-
-  Computes the average origin response time in milliseconds.
-  </Details>
-
-The diagram below represents the grammar for SQL expressions including  scalar and aggregate functions.
+The diagram below represents the grammar for SQL expressions including scalar and aggregate functions.
 
 ![Scalar and aggregate functions](~/assets/images/log-explorer/scalar-aggregate-functions.png)
 
@@ -138,11 +131,18 @@ The diagram below represents the grammar for SQL expressions including  scalar a
 
 Conditions or logic used in queries:
 
-- `CASE WHEN` – Conditional logic (like if-else).
+- `CASE WHEN ... THEN ... ELSE ... END` – Conditional logic (like if-else).
 - `AS` – Alias for columns or tables.
 - `LIKE` – Pattern matching.
 - `IN (list)` – Checks if a value is in a list.
 - `BETWEEN ... AND ...` – Checks if a value is within a range.
+- `IS NULL` / `IS NOT NULL` – Checks for null values.
+- `IS TRUE` / `IS FALSE` – Boolean tests.
+- `IS DISTINCT FROM` / `IS NOT DISTINCT FROM` – Null-safe comparison.
+- `CAST(expression AS type)` – Type casting.
+- `TRY_CAST(expression AS type)` – Type casting that returns null on failure.
+- `INTERVAL '1 day'` – Time interval expressions.
+- `AT TIME ZONE 'UTC'` – Time zone conversion.
 - `Unary operator` – Operates on one operand (for example, `-5`).
 - `Binary operator` – Operates on two operands (for example, `5 + 3`).
 - `Nested Expressions` – Expression wrapped with parentheses, like `( x > y )` or `( 1 )`.
@@ -158,13 +158,47 @@ The diagram below defines the grammar for unary operators, which operate on a si
 
 ![Grammar for unary operators](~/assets/images/log-explorer/not.png)
 
-## Binary Operators
+## Operators
 
-Used for arithmetic, comparison, logical operations:
+### Arithmetic operators
 
-- Arithmetic: `+`, `-`, `*`, `/`, `%` (modulo)
-- Comparison: `>`, `<`, `>=`, `<=`, `=`, `!=` (or `<>`)`
-- Logical: `AND`, `OR`, `XOR`
-- Bitwise: `&`, `|`, `^`, `>>`, `<<`
-- String concat: `||`
+`+`, `-`, `*`, `/`, `%` (modulo)
+
+### Comparison operators
+
+`=`, `!=`, `<>`, `>`, `<`, `>=`, `<=`
+
+### Logical operators
+
+`AND`, `OR`, `NOT`, `XOR`
+
+### Bitwise operators
+
+`|` (OR), `&` (AND), `^` (XOR), `<<` (left shift), `>>` (right shift)
+
+### String concatenation
+
+`||`
+
+### Pattern matching operators
+
+Log Explorer supports PostgreSQL-style pattern matching operators:
+
+| Operator | Description | Example |
+| --- | --- | --- |
+| `LIKE` or `~~` | Pattern matching | `WHERE ClientRequestPath LIKE '%/api%'` |
+| `ILIKE` or `~~*` | Case-insensitive pattern matching | `WHERE ClientRequestPath ILIKE '%/API%'` |
+| `~` | Regex match (case-sensitive) | `WHERE ClientRequestPath ~ '^/v1'` |
+| `~*` | Regex match (case-insensitive) | `WHERE ClientRequestPath ~* '^/V1'` |
+
+## Structural restrictions
+
+To maintain performance and stability, the following constructs are not supported:
+
+- **No joins** – Queries must target a single table.
+- **No subqueries** – Subqueries in `SELECT`, `FROM`, or `WHERE` are not allowed.
+- **No CTEs** – The `WITH` clause is not supported.
+- **No window functions** – Functions using the `OVER` clause are not supported.
+- **No set operations** – `UNION`, `INTERSECT`, and `EXCEPT` are not supported.
+- **No aggregate filters** – The `FILTER (WHERE ...)` clause on aggregates is not supported.
 
