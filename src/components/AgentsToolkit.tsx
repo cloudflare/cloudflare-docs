@@ -1,16 +1,145 @@
 import {
 	PiCopyDuotone,
 	PiArrowSquareOutLight,
-	PiLinkLight,
 	PiPlugsConnectedLight,
 	PiCheckCircleLight,
 } from "react-icons/pi";
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
+import { createPortal } from "react-dom";
 import ClaudeIcon from "./icons/ClaudeIcon";
 import ChatGPTIcon from "./icons/ChatGPTIcon";
 import { track } from "~/util/zaraz";
 
 type CopyFeedback = { key: string; state: "success" } | null;
+
+interface ListOption {
+	key: string;
+	label: string;
+	tooltip: string;
+	icon: React.ComponentType<{ className?: string }>;
+	onClick: () => void;
+}
+
+interface IconOption {
+	key: string;
+	tooltip: string;
+	icon: React.ComponentType<{ className?: string }>;
+	onClick: () => void;
+}
+
+function useTooltip() {
+	const [visible, setVisible] = useState(false);
+	const [position, setPosition] = useState({ top: 0, left: 0 });
+	const triggerRef = useRef<HTMLElement | null>(null);
+
+	const show = useCallback(() => {
+		if (triggerRef.current) {
+			const rect = triggerRef.current.getBoundingClientRect();
+			setPosition({
+				top: rect.top - 8,
+				left: rect.left + rect.width / 2,
+			});
+		}
+		setVisible(true);
+	}, []);
+
+	const hide = useCallback(() => {
+		setVisible(false);
+	}, []);
+
+	return { visible, position, triggerRef, show, hide };
+}
+
+function TooltipPortal({
+	text,
+	visible,
+	position,
+}: {
+	text: string;
+	visible: boolean;
+	position: { top: number; left: number };
+}) {
+	if (!visible) return null;
+
+	return createPortal(
+		<div
+			role="tooltip"
+			className="pointer-events-none fixed z-[99999] -translate-x-1/2 -translate-y-full rounded-md bg-[var(--sl-color-bg-nav)] px-3 py-2 text-center text-[12px] leading-snug text-[var(--sl-color-text)] shadow-lg ring-1 ring-[var(--sl-color-hairline)]"
+			style={{ top: position.top, left: position.left }}
+		>
+			{text}
+		</div>,
+		document.body,
+	);
+}
+
+function ListItem({
+	tooltip,
+	onClick,
+	justCopied,
+	icon: Icon,
+	label,
+}: {
+	tooltip: string;
+	onClick: () => void;
+	justCopied: boolean;
+	icon: React.ComponentType<{ className?: string }>;
+	label: string;
+}) {
+	const { visible, position, triggerRef, show, hide } = useTooltip();
+
+	return (
+		<li className="m-0 p-0">
+			<TooltipPortal text={tooltip} visible={visible} position={position} />
+			<button
+				ref={triggerRef as React.RefObject<HTMLButtonElement>}
+				onMouseEnter={show}
+				onMouseLeave={hide}
+				onFocus={show}
+				onBlur={hide}
+				onClick={onClick}
+				className="flex w-full cursor-pointer items-center gap-2.5 rounded-sm border-0 bg-transparent px-0 py-1 text-[13px] text-[var(--sl-color-gray-2)] shadow-none transition-colors duration-150 ease-out hover:text-[var(--sl-color-white)] focus-visible:ring-2 focus-visible:ring-[var(--sl-color-text-accent)] focus-visible:outline-none"
+			>
+				{justCopied ? (
+					<PiCheckCircleLight className="h-3.5 w-3.5 shrink-0 text-green-500" />
+				) : (
+					<Icon className="h-3.5 w-3.5 shrink-0" />
+				)}
+				<span>{justCopied ? "Copied!" : label}</span>
+			</button>
+		</li>
+	);
+}
+
+function IconButton({
+	tooltip,
+	onClick,
+	icon: Icon,
+}: {
+	tooltip: string;
+	onClick: () => void;
+	icon: React.ComponentType<{ className?: string }>;
+}) {
+	const { visible, position, triggerRef, show, hide } = useTooltip();
+
+	return (
+		<div>
+			<TooltipPortal text={tooltip} visible={visible} position={position} />
+			<button
+				ref={triggerRef as React.RefObject<HTMLButtonElement>}
+				onMouseEnter={show}
+				onMouseLeave={hide}
+				onFocus={show}
+				onBlur={hide}
+				onClick={onClick}
+				className="inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-md border-0 bg-transparent text-[var(--sl-color-gray-2)] shadow-none transition-colors duration-150 ease-out hover:bg-[var(--color-cl1-gray-9)] hover:text-[var(--sl-color-white)] focus-visible:ring-2 focus-visible:ring-[var(--sl-color-text-accent)] focus-visible:outline-none dark:hover:bg-[var(--color-cl1-gray-2)]"
+			>
+				<Icon className="h-4 w-4" />
+				<span className="sr-only">{tooltip}</span>
+			</button>
+		</div>
+	);
+}
 
 export default function AgentsToolkit() {
 	const [copyFeedback, setCopyFeedback] = useState<CopyFeedback>(null);
@@ -18,16 +147,6 @@ export default function AgentsToolkit() {
 	const showFeedback = (key: string) => {
 		setCopyFeedback({ key, state: "success" });
 		setTimeout(() => setCopyFeedback(null), 1500);
-	};
-
-	const handleCopyPageLink = async () => {
-		try {
-			await navigator.clipboard.writeText(window.location.href);
-			track("agents toolkit clicked", { value: "copy page link" });
-			showFeedback("copy-link");
-		} catch (error) {
-			console.error("Failed to copy page link:", error);
-		}
 	};
 
 	const handleCopyMarkdown = async () => {
@@ -67,40 +186,39 @@ export default function AgentsToolkit() {
 		window.open("/style-guide/ai-tooling/", "_blank");
 	};
 
-	const options = [
+	const listOptions: ListOption[] = [
 		{
 			key: "ai-options",
 			label: "Setup your agent",
+			tooltip: "Explore AI tooling options for Cloudflare docs",
 			icon: PiPlugsConnectedLight,
 			onClick: handleViewAIOptions,
 		},
 		{
-			key: "copy-link",
-			label: "Copy page link",
-			icon: PiLinkLight,
-			onClick: handleCopyPageLink,
-		},
-		{
 			key: "copy-md",
 			label: "Copy as Markdown",
+			tooltip: "Copy this page's Markdown source to clipboard",
 			icon: PiCopyDuotone,
 			onClick: handleCopyMarkdown,
 		},
+	];
+
+	const iconOptions: IconOption[] = [
 		{
 			key: "view-md",
-			label: "View as Markdown",
+			tooltip: "Open the Markdown file in a new tab",
 			icon: PiArrowSquareOutLight,
 			onClick: handleViewMarkdown,
 		},
 		{
 			key: "claude",
-			label: "Open in Claude",
+			tooltip: "Ask Claude about this page",
 			icon: ClaudeIcon,
 			onClick: () => handleExternalAI("https://claude.ai/new?q=", "claude"),
 		},
 		{
 			key: "chatgpt",
-			label: "Open in ChatGPT",
+			tooltip: "Ask ChatGPT about this page",
 			icon: ChatGPTIcon,
 			onClick: () =>
 				handleExternalAI("https://chat.openai.com/?prompt=", "chatgpt"),
@@ -113,28 +231,33 @@ export default function AgentsToolkit() {
 				Agents toolkit
 			</h3>
 			<ul className="m-0 flex list-none flex-col gap-0 p-0">
-				{options.map(({ key, label, icon: Icon, onClick }) => {
+				{listOptions.map(({ key, label, tooltip, icon: Icon, onClick }) => {
 					const justCopied =
-						copyFeedback?.key === key &&
-						copyFeedback.state === "success";
+						copyFeedback?.key === key && copyFeedback.state === "success";
 
 					return (
-						<li key={key} className="m-0 p-0">
-							<button
-								onClick={onClick}
-								className="group flex w-full cursor-pointer items-center gap-2.5 rounded-sm border-0 bg-transparent px-0 py-1 text-[13px] text-[var(--sl-color-gray-2)] shadow-none transition-colors duration-150 ease-out hover:text-[var(--sl-color-white)] focus-visible:ring-2 focus-visible:ring-[var(--sl-color-text-accent)] focus-visible:outline-none"
-							>
-								{justCopied ? (
-									<PiCheckCircleLight className="h-3.5 w-3.5 shrink-0 text-green-500" />
-								) : (
-									<Icon className="h-3.5 w-3.5 shrink-0" />
-								)}
-								<span>{justCopied ? "Copied!" : label}</span>
-							</button>
-						</li>
+						<ListItem
+							key={key}
+							tooltip={tooltip}
+							onClick={onClick}
+							justCopied={justCopied}
+							icon={Icon}
+							label={label}
+						/>
 					);
 				})}
 			</ul>
+
+			<div className="mt-2 flex items-center gap-1">
+				{iconOptions.map(({ key, tooltip, icon: Icon, onClick }) => (
+					<IconButton
+						key={key}
+						tooltip={tooltip}
+						onClick={onClick}
+						icon={Icon}
+					/>
+				))}
+			</div>
 		</div>
 	);
 }
