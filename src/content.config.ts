@@ -30,7 +30,7 @@ import {
 	partialsSchema,
 	streamSchema,
 	cloudflareSkillSchema,
-	mcpServerCardSchema,
+	mcpServerSchema,
 } from "~/schemas";
 
 function contentLoader(name: string) {
@@ -147,12 +147,15 @@ export const collections = {
 		}),
 		schema: cloudflareSkillSchema,
 	}),
-	"cloudflare-mcp-server-card": defineCollection({
-		loader: middlecacheLoader("v1/cloudflare-mcps/server-card.json", {
+	"cloudflare-mcps-manifest": defineCollection({
+		loader: middlecacheLoader("v1/cloudflare-mcps/mcps-manifest.json", {
 			parser: (fileContent: string) => {
-				return { "cloudflare-mcp": JSON.parse(fileContent) };
+				const data = JSON.parse(fileContent) as {
+					servers: Array<{ name: string; description: string; url: string }>;
+				};
+				return Object.fromEntries(data.servers.map((s) => [s.url, s]));
 			},
 		}),
-		schema: mcpServerCardSchema,
+		schema: mcpServerSchema,
 	}),
 };

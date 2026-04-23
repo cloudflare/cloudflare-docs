@@ -2236,6 +2236,8 @@
 	border-bottom: none;
 }
 
+
+
 :root[data-theme="dark"] .agent-simple-item {
 	border-color: var(--color-cl1-gray-2);
 	background: color-mix(in srgb, var(--color-cl1-gray-1) 50%, transparent);
@@ -2255,6 +2257,18 @@
 
 :root[data-theme="dark"] .agent-simple-desc {
 	color: var(--color-cl1-gray-6);
+}
+
+.agent-simple-url {
+	display: block;
+	font-family: var(--sl-font-mono, ui-monospace, monospace);
+	font-size: 0.7375rem;
+	color: var(--color-cl1-gray-6);
+	margin-top: 0.125rem;
+}
+
+:root[data-theme="dark"] .agent-simple-url {
+	color: var(--color-cl1-gray-4);
 }
 
 /* "bundled" tag shown on MCP servers that ship with the skills plugin. */
@@ -2278,6 +2292,8 @@
 	background: color-mix(in srgb, var(--color-cl1-orange-1) 30%, transparent);
 	border-color: var(--color-cl1-orange-2);
 }
+
+
 
 /* ────────────────────────────────────────────────────────────────────
    Agent detail page — Build agents ON Cloudflare footer callout

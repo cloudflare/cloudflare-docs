@@ -81,50 +81,7 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
 ## Cloudflare platform access
 
-<PlatformAccess agentName="OpenCode">
-	<Fragment slot="wrangler">
-		<div class="agent-platform-hint">
-			Local dev, deploys, and Workers-specific commands.
-		</div>
-		<p>
-			OpenCode runs <a href="/workers/wrangler/">Wrangler</a> directly in the terminal.
-			The bundled <strong>wrangler</strong> Skill teaches it when to reach for CLI
-			commands vs. the MCP API.
-		</p>
-	</Fragment>
-
-<Fragment slot="docs">
-	<div class="agent-platform-hint">
-		OpenCode requests markdown docs automatically.
-	</div>
-	<p>
-	OpenCode is one of the few agents that <a href="https://blog.cloudflare.com/agent-readiness/" target="_blank" rel="noopener noreferrer">sends <code>Accept: text/markdown</code> by default</a> when fetching Cloudflare docs, so it always gets the clean markdown version without any configuration. Useful URLs to reference explicitly:
-	</p>
-	<ul class="agent-platform-resources">
-		<li>
-			<a href="/llms.txt">developers.cloudflare.com/llms.txt</a> — directory of
-			every Cloudflare product.
-		</li>
-		<li>
-			<a href="/workers/llms.txt">developers.cloudflare.com/workers/llms.txt</a>
-		</li>
-		<li>
-			<a href="/agents/llms.txt">developers.cloudflare.com/agents/llms.txt</a>
-		</li>
-		<li>
-			<a href="/r2/llms.txt">developers.cloudflare.com/r2/llms.txt</a>
-		</li>
-		<li>
-			<a href="/d1/llms.txt">developers.cloudflare.com/d1/llms.txt</a>
-		</li>
-	</ul>
-	<p>
-		For a full overview of how these docs are structured for agents, refer to the{" "}
-		<a href="/style-guide/ai-tooling/">AI tooling guide</a>.
-	</p>
-</Fragment>
-
-</PlatformAccess>
+<PlatformAccess />
 
 ## Example prompts
 

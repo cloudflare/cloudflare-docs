@@ -55,49 +55,7 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
 ## Cloudflare platform access
 
-<PlatformAccess agentName="Windsurf">
-	<Fragment slot="wrangler">
-		<div class="agent-platform-hint">
-			Run deploys and platform commands from the integrated terminal.
-		</div>
-		<p>
-			Cascade runs <a href="/workers/wrangler/">Wrangler</a> in Windsurf's integrated
-			terminal. The bundled <strong>wrangler</strong> Skill teaches Cascade when to
-			reach for commands like <code>wrangler deploy</code> or <code>wrangler tail</code>.
-		</p>
-	</Fragment>
-
-    <Fragment slot="docs">
-    	<div class="agent-platform-hint">Use @-mentions and llms.txt to preload context.</div>
-    	<p>
-    		Cascade works best when you explicitly <code>@</code>-mention files and paste
-    		URLs. Useful Cloudflare docs URLs to reference:
-    	</p>
-    	<ul class="agent-platform-resources">
-    		<li>
-    			<a href="/llms.txt">developers.cloudflare.com/llms.txt</a> — directory of
-    			every Cloudflare product.
-    		</li>
-    		<li>
-    			<a href="/workers/llms.txt">developers.cloudflare.com/workers/llms.txt</a>
-    		</li>
-    		<li>
-    			<a href="/agents/llms.txt">developers.cloudflare.com/agents/llms.txt</a>
-    		</li>
-    		<li>
-    			<a href="/r2/llms.txt">developers.cloudflare.com/r2/llms.txt</a>
-    		</li>
-    		<li>
-    			<a href="/d1/llms.txt">developers.cloudflare.com/d1/llms.txt</a>
-    		</li>
-    	</ul>
-    	<p>
-    		For a full overview of how these docs are structured for agents, refer to the{" "}
-    		<a href="/style-guide/ai-tooling/">AI tooling guide</a>.
-    	</p>
-    </Fragment>
-
-</PlatformAccess>
+<PlatformAccess />
 
 ## Example prompts
 

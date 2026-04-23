@@ -63,50 +63,7 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
 ## Cloudflare platform access
 
-<PlatformAccess agentName="Codex">
-	<Fragment slot="wrangler">
-		<div class="agent-platform-hint">Sandbox-safe local dev and deploys.</div>
-		<p>
-			Codex runs in a sandboxed environment — it can safely execute <a href="/workers/wrangler/">Wrangler</a>
-			commands without affecting your host system. The bundled <strong>wrangler</strong>
-			Skill teaches Codex which commands to run for deploys, migrations, and log tailing.
-		</p>
-	</Fragment>
-
-    <Fragment slot="docs">
-    	<div class="agent-platform-hint">
-    		Codex also browses the web — pair with the docs MCP server.
-    	</div>
-    	<p>
-    		Codex supports web browsing natively. Combined with the docs MCP server, you
-    		get both fast indexed lookups and live browsing when needed. For offline or
-    		preloaded context:
-    	</p>
-    	<ul class="agent-platform-resources">
-    		<li>
-    			<a href="/llms.txt">developers.cloudflare.com/llms.txt</a> — directory of
-    			every Cloudflare product.
-    		</li>
-    		<li>
-    			<a href="/workers/llms.txt">developers.cloudflare.com/workers/llms.txt</a>
-    		</li>
-    		<li>
-    			<a href="/agents/llms.txt">developers.cloudflare.com/agents/llms.txt</a>
-    		</li>
-    		<li>
-    			<a href="/r2/llms.txt">developers.cloudflare.com/r2/llms.txt</a>
-    		</li>
-    		<li>
-    			<a href="/d1/llms.txt">developers.cloudflare.com/d1/llms.txt</a>
-    		</li>
-    	</ul>
-    	<p>
-    		For a full overview of how these docs are structured for agents, refer to the{" "}
-    		<a href="/style-guide/ai-tooling/">AI tooling guide</a>.
-    	</p>
-    </Fragment>
-
-</PlatformAccess>
+<PlatformAccess />
 
 ## Example prompts
 

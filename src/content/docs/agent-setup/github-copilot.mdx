@@ -55,66 +55,7 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
 ## Cloudflare platform access
 
-<PlatformAccess
-	agentName="GitHub Copilot"
-	skillsExtraHtml="Copilot supports Agent Skills in VS Code agent mode, the Copilot CLI, and the cloud agent. Skills are not used for inline code completion &mdash; switch Copilot Chat to agent mode to unlock them."
->
-	<Fragment slot="wrangler">
-		<div class="agent-platform-hint">
-			Copilot's deploy story runs through CI, not a local CLI.
-		</div>
-		<p>
-			Unlike terminal agents, Copilot does not have its own CLI that runs Wrangler
-			directly. Instead, ask Copilot to generate a GitHub Actions workflow that runs
-			<a href="/workers/wrangler/">Wrangler</a> on every push — GitHub's ecosystem
-			is Copilot's native turf.
-		</p>
-		<p>
-			You will also want to add <code>CLOUDFLARE_API_TOKEN</code> and <code>CLOUDFLARE_ACCOUNT_ID</code>
-			as repository secrets. Copilot knows this pattern and will prompt you if you
-			forget.
-		</p>
-	</Fragment>
-
-<Fragment slot="docs">
-	<div class="agent-platform-hint">
-		Pair Skills with repository custom instructions.
-	</div>
-	<p>
-		Skills load Cloudflare expertise on demand — use a <code>.github/copilot-instructions.md</code>
-		file for repository-wide conventions that should apply to every task (coding
-		standards, preferred libraries, project layout). GitHub recommends <a href="https://docs.github.com/en/copilot/concepts/agents/about-agent-skills#skills-versus-custom-instructions" target="_blank" rel="noopener noreferrer">both together</a>: instructions for the always-on basics, Skills for the situational
-		depth.
-	</p>
-	<ul class="agent-platform-resources">
-		<li>
-			<a href="/llms.txt">developers.cloudflare.com/llms.txt</a> — directory of
-			every Cloudflare product.
-		</li>
-		<li>
-			<a href="/workers/llms.txt">developers.cloudflare.com/workers/llms.txt</a>
-		</li>
-		<li>
-			<a href="/agents/llms.txt">developers.cloudflare.com/agents/llms.txt</a>
-		</li>
-		<li>
-			<a href="/r2/llms.txt">developers.cloudflare.com/r2/llms.txt</a>
-		</li>
-		<li>
-			<a href="/d1/llms.txt">developers.cloudflare.com/d1/llms.txt</a>
-		</li>
-		<li>
-			<a href="/workers/prompt.txt">/workers/prompt.txt</a> — Cloudflare's own Workers
-			context prompt, useful to include inside <code>copilot-instructions.md</code>.
-		</li>
-	</ul>
-	<p>
-		For a full overview of how these docs are structured for agents, refer to the{" "}
-		<a href="/style-guide/ai-tooling/">AI tooling guide</a>.
-	</p>
-</Fragment>
-
-</PlatformAccess>
+<PlatformAccess />
 
 ## Example prompts
 

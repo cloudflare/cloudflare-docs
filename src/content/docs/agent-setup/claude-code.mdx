@@ -57,54 +57,7 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
 ## Cloudflare platform access
 
-<PlatformAccess agentName="Claude Code">
-	<Fragment slot="wrangler">
-		<div class="agent-platform-hint">
-			Local dev, deploys, and Workers-specific commands.
-		</div>
-		<p>
-			Claude Code uses <a href="/workers/wrangler/">Wrangler</a> directly in the
-			terminal for local dev, deploys, and commands like <code>wrangler d1 migrations apply</code>
-			or <code>wrangler tail</code>. The bundled <strong>wrangler</strong> Skill teaches
-			Claude exactly when to reach for it.
-		</p>
-	</Fragment>
-
-<Fragment slot="docs">
-	<div class="agent-platform-hint">
-		Token-efficient references you can point Claude at.
-	</div>
-	<p>
-		Claude Code automatically sends <code>Accept: text/markdown</code> when fetching
-		Cloudflare docs, so it gets the clean markdown version by default. Every top-level
-		product section also has its own <code>llms.txt</code> — a page index sized for
-		a single context window. A few useful ones:
-	</p>
-	<ul class="agent-platform-resources">
-		<li>
-			<a href="/llms.txt">developers.cloudflare.com/llms.txt</a> — directory of
-			every Cloudflare product.
-		</li>
-		<li>
-			<a href="/workers/llms.txt">developers.cloudflare.com/workers/llms.txt</a>
-		</li>
-		<li>
-			<a href="/agents/llms.txt">developers.cloudflare.com/agents/llms.txt</a>
-		</li>
-		<li>
-			<a href="/r2/llms.txt">developers.cloudflare.com/r2/llms.txt</a>
-		</li>
-		<li>
-			<a href="/d1/llms.txt">developers.cloudflare.com/d1/llms.txt</a>
-		</li>
-	</ul>
-	<p>
-		For a full overview of how these docs are structured for agents, refer to the{" "}
-		<a href="/style-guide/ai-tooling/">AI tooling guide</a>.
-	</p>
-</Fragment>
-
-</PlatformAccess>
+<PlatformAccess />
 
 ## Example prompts
 

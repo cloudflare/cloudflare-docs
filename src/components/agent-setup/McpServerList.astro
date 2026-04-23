@@ -1,5 +1,5 @@
 ---
-import { getEntry } from "astro:content";
+import { getCollection } from "astro:content";
 
 interface Props {
 	/** Whether to show the "bundled" chip. Only relevant for plugin-based agents (Claude Code, Cursor). */
@@ -8,83 +8,41 @@ interface Props {
 
 const { showBundled = false } = Astro.props;
 
-const card = await getEntry("cloudflare-mcp-server-card", "cloudflare-mcp");
+const CODE_MODE_URL = "https://mcp.cloudflare.com/mcp";
+
+const allServers = await getCollection("cloudflare-mcps-manifest");
+
+// Code Mode first, then the rest in manifest order
+const servers = [
+	...allServers.filter((s) => s.data.url === CODE_MODE_URL),
+	...allServers.filter((s) => s.data.url !== CODE_MODE_URL),
+];
 
 /**
- * Descriptions are not available in the server-card spec, so they are
- * maintained here and keyed by the server name derived from the remote URL.
- *
- * Name derivation: the subdomain of *.mcp.cloudflare.com becomes the suffix
- * after "cloudflare-", except for the root mcp.cloudflare.com which maps to
- * "cloudflare-api" (the Code Mode server).
- */
-const DESCRIPTIONS: Record<string, string> = {
-	"cloudflare-api":
-		"Entire Cloudflare API (2,500+ endpoints) in ~1,000 tokens via Code Mode.",
-	"cloudflare-docs": "Up-to-date Cloudflare documentation and reference.",
-	"cloudflare-bindings":
-		"Build Workers applications with storage, AI, and compute primitives.",
-	"cloudflare-builds": "Manage and get insights into Workers builds.",
-	"cloudflare-observability":
-		"Debug and analyze application logs and analytics.",
-	"cloudflare-radar":
-		"Global Internet traffic insights, trends, URL scans, and utilities.",
-	"cloudflare-containers": "Spin up a sandbox development environment.",
-	"cloudflare-browser":
-		"Fetch web pages, convert them to markdown, and take screenshots.",
-	"cloudflare-logs": "Quick summaries for Logpush job health.",
-	"cloudflare-ai-gateway":
-		"Search AI Gateway logs and inspect prompts, responses, and token usage.",
-	"cloudflare-auditlogs":
-		"Query audit logs and generate reports for review.",
-	"cloudflare-dns-analytics":
-		"Optimize DNS performance and debug issues based on current setup.",
-	"cloudflare-dex":
-		"Digital Experience Monitoring — insights on critical applications.",
-	"cloudflare-casb":
-		"Cloudflare One CASB — identify SaaS security misconfigurations.",
-	"cloudflare-graphql":
-		"Query analytics data through Cloudflare's GraphQL API.",
-};
-
-/**
- * Servers included in the cloudflare/skills plugin bundle (Claude Code, Cursor).
+ * URLs of servers included in the cloudflare/skills plugin bundle
+ * (Claude Code, Cursor).
  */
 const BUNDLED = new Set([
-	"cloudflare-api",
-	"cloudflare-docs",
-	"cloudflare-bindings",
-	"cloudflare-builds",
-	"cloudflare-observability",
+	"https://mcp.cloudflare.com/mcp",
+	"https://docs.mcp.cloudflare.com/mcp",
+	"https://bindings.mcp.cloudflare.com/mcp",
+	"https://builds.mcp.cloudflare.com/mcp",
+	"https://observability.mcp.cloudflare.com/mcp",
 ]);
-
-/**
- * Derive a stable server name from a remote URL.
- *
- * https://mcp.cloudflare.com/mcp          → cloudflare-api
- * https://docs.mcp.cloudflare.com/mcp     → cloudflare-docs
- * https://ai-gateway.mcp.cloudflare.com   → cloudflare-ai-gateway
- */
-function nameFromUrl(url: string): string {
-	const { hostname } = new URL(url);
-	// hostname: "mcp.cloudflare.com" or "{sub}.mcp.cloudflare.com"
-	const sub = hostname.replace(/\.mcp\.cloudflare\.com$/, "");
-	return sub === "mcp" ? "cloudflare-api" : `cloudflare-${sub}`;
-}
-
-// Use only the streamable-http remotes to get one entry per logical server.
-const servers = (card?.data.remotes ?? [])
-	.filter((r) => r.type === "streamable-http")
-	.map((r) => nameFromUrl(r.url));
 ---
 
 <ul class="agent-simple-list">
 	{
-		servers.map((name) => (
+		servers.map((s) => (
 			<li class="agent-simple-item">
 				<span class="agent-simple-name">
-					{name}
-					{showBundled && BUNDLED.has(name) && (
+					{s.data.name}
+					{s.data.url === CODE_MODE_URL && (
+						<span class="agent-simple-tag agent-simple-tag--codemode">
+							code mode
+						</span>
+					)}
+					{showBundled && BUNDLED.has(s.data.url) && (
 						<span
 							class="agent-simple-tag"
 							title="Included in the cloudflare/skills plugin"
@@ -93,9 +51,8 @@ const servers = (card?.data.remotes ?? [])
 						</span>
 					)}
 				</span>
-				<span class="agent-simple-desc">
-					{DESCRIPTIONS[name] ?? ""}
-				</span>
+				<span class="agent-simple-desc">{s.data.description}</span>
+				<span class="agent-simple-url">{s.data.url}</span>
 			</li>
 		))
 	}
