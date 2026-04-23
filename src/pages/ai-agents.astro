@@ -2,6 +2,7 @@
 import StarlightPage, {
 	type StarlightPageProps,
 } from "@astrojs/starlight/components/StarlightPage.astro";
+import { Code } from "@astrojs/starlight/components";
 
 const props = {
 	frontmatter: {
@@ -93,14 +94,17 @@ const props = {
 			<strong>Manual configuration:</strong> Add the following to your MCP config:
 		</li>
 	</ul>
-	<pre><code>{`{
+	<Code
+		code={`{
   "mcpServers": {
     "cloudflare": {
       "command": "npx",
       "args": ["mcp-remote", "https://docs.mcp.cloudflare.com/mcp"]
     }
   }
-}`}</code></pre>
+}`}
+		lang="json"
+	/>
 	<p>
 		For other MCP servers offered by Cloudflare, refer to
 		<a href="/agents/model-context-protocol/mcp-servers-for-cloudflare/"
@@ -116,7 +120,7 @@ const props = {
 		<a href="https://github.com/cloudflare/skills">Cloudflare Skills repository</a>.
 	</p>
 	<p>To install them:</p>
-	<pre><code>npx skills add https://developers.cloudflare.com</code></pre>
+	<Code code="npx skills add https://developers.cloudflare.com" lang="sh" />
 
 	<h2 id="per-page-markdown">Per-page Markdown</h2>
 	<p>
@@ -131,7 +135,7 @@ const props = {
 		Add <code>/index.md</code> to the end of any page URL to get the Markdown version.
 		For example:
 	</p>
-	<pre><code>https://developers.cloudflare.com/workers/get-started/index.md</code></pre>
+	<Code code="https://developers.cloudflare.com/workers/get-started/index.md" lang="txt" />
 
 	<h3>
 		Send an <code>Accept: text/markdown</code> header
@@ -140,8 +144,11 @@ const props = {
 		Request any page with the <code>Accept: text/markdown</code> header. Cloudflare's
 		network converts the HTML to Markdown on the fly.
 	</p>
-	<pre><code>{`curl "https://developers.cloudflare.com/workers/get-started/" \\
-  --header "Accept: text/markdown"`}</code></pre>
+	<Code
+		code={`curl "https://developers.cloudflare.com/workers/get-started/" \\
+  --header "Accept: text/markdown"`}
+		lang="sh"
+	/>
 	<p>
 		The response includes an <code>x-markdown-tokens</code> header with the estimated
 		token count, useful for context window planning. For more details, refer to
