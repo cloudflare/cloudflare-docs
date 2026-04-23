@@ -227,7 +227,7 @@ export default function AgentsToolkit() {
 
 	return (
 		<div>
-			<h3 className="mb-3 mt-0 text-[11px] font-semibold tracking-widest text-[var(--sl-color-text-accent)] uppercase">
+			<h3 className="mt-0 mb-3 text-[11px] font-semibold tracking-widest text-[var(--sl-color-text-accent)] uppercase">
 				Agents toolkit
 			</h3>
 			<ul className="m-0 flex list-none flex-col gap-0 p-0">
