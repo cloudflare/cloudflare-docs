@@ -1,75 +1,30 @@
+name: Semgrep OSS scan
 on:
+  pull_request: {}
+  push:
+    branches: [main, master]
   workflow_dispatch: {}
   schedule:
-    - cron: "0 4 * * *"
-
-name: Semgrep rules checking results
+    - cron: '0 0 20 * *'
+concurrency:
+  group: semgrep-${{ github.event_name }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
 permissions:
   contents: read
-
 jobs:
   semgrep:
-    name: Semgrep
-    runs-on: ubuntu-latest
-    env:
-      SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
-      SEMGREP_URL: https://cloudflare.semgrep.dev
-      SEMGREP_APP_URL: https://cloudflare.semgrep.dev
-      SEMGREP_VERSION_CHECK_URL: https://cloudflare.semgrep.dev/api/check-version
-    container:
-      image: semgrep/semgrep
+    name: semgrep-oss
+    runs-on: ubuntu-slim
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: actions/checkout@v5
         with:
-          # fetch full history so Semgrep can compare against the base branch
-          fetch-depth: 0
-
-      # Configure
-      # add git safe directory to enable git commands on checkout path
-      # set COMMIT_MESSAGE environment variable to be able to skip semgrep if requested
-      - name: Configure
-        env:
-          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
-        run: |
-          git config --global --add safe.directory $PWD
-          echo "COMMIT_MESSAGE='$(git log --format=%B -n 1 "$PR_HEAD_SHA" | sed "s/\"/'/g" | tr "\n" " ") '" | tee /dev/stderr >> "$GITHUB_ENV"
-          echo "(if the last commit message contains '[skip style guide checks]' Semgrep style guide rule checks will be skipped)"
-
-      # Semgrep CI to run on Schedule (Cron) or Manual Dispatch
-      # scans using managed rules at cloudflare.semgrep.dev
-      - name: Semgrep managed rules (managed at cloudflare.semgrep.dev)
-        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-        run: semgrep ci
-
-      # Semgrep Scan to run on Pull Request events
-      # scans using rules inside the .semgrep/ folder and fails on error
-      # include [skip semgrep] in top-most commit message to skip scan
-      - name: Semgrep style guide rules (stored in .semgrep/)
-        shell: bash
-        if: github.event_name == 'pull_request' && !contains(env.COMMIT_MESSAGE, '[skip style guide checks]')
-        env:
-          COMMIT_MSG: ${{ env.COMMIT_MESSAGE }}
-        run: |
-
-          echo "Commit message: $COMMIT_MSG"
-
-          base_commit=$(git merge-base HEAD origin/$GITHUB_BASE_REF)
-          git diff $base_commit... --diff-filter=ACMRT --name-only | grep -E '\.(htm|html|yaml|yml|md|mdx)$' > tools/relevant_changed_files.txt || true
-
-          # Check if file list is empty to prevent errors
-          if [ -s tools/relevant_changed_files.txt ]; then
-            list_of_files=$(cat tools/relevant_changed_files.txt | tr '\n' ' ')
-
-            # when ready to show errors add back --error below
-            semgrep scan \
-              --config .semgrep --metrics=off \
-              --include "*.mdx" --include "*.mdx" \
-              --json \
-              $list_of_files \
-              | jq --raw-output ".results[] | \"::warning file=\(.path),line=\(.start.line),title=\(.check_id)::\(.extra.message)\""
-            #exit ${PIPESTATUS[0]}
-            # for the moment always return a successful run 
-            exit 0
-          else
-            echo "No relevant files changed"
-          fi
+          fetch-depth: 1
+      - id: cache-semgrep
+        uses: actions/cache@v5
+        with:
+          path: ~/.local
+          key: semgrep-1.160.0-${{ runner.os }}
+      - if: steps.cache-semgrep.outputs.cache-hit != 'true'
+        run: pip install --user semgrep==1.160.0
+      - run: echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+      - run: semgrep scan --config=auto
