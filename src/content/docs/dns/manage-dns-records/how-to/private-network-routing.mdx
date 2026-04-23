@@ -18,7 +18,7 @@ import { Tabs, TabItem, DashButton, Plan, APIRequest } from "~/components";
 Private network routing lets you proxy HTTP/HTTPS traffic from public hostnames to origins in your private network. When you enable this setting on a DNS record, Cloudflare routes traffic through your configured tunnel instead of over the public internet.
 
 :::note
-This feature is in closed beta. Contact your account team to request access and the **Private Origins Allowed** entitlement.
+This feature is in closed beta. Contact your account team to request access.
 :::
 
 ## Prerequisites
@@ -26,7 +26,6 @@ This feature is in closed beta. Contact your account team to request access and 
 Before you enable private network routing, you need:
 
 - An active tunnel connection to Cloudflare through one of the supported on-ramp methods ([Cloudflare WAN](/cloudflare-wan/), [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/), [IPsec](/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/), [GRE](/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/), or [CNI](/network-interconnect/)).
-- The **Private Origins Allowed** entitlement enabled on your account.
 
 ## Supported records and IP ranges
 
@@ -119,4 +118,4 @@ If traffic is not reaching your private origin:
 
 ### Error 1002: DNS points to prohibited IP
 
-This error occurs when you proxy a private IP address without the **Private Origins Allowed** entitlement. Contact your account team to enable this entitlement.
+This error occurs when you proxy a private IP address without the necessary entitlement. Contact your account team to request access.
