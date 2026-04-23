@@ -1,0 +1,113 @@
+---
+title: AI agent access
+description: Learn how AI agents and LLMs consume Cloudflare documentation
+pcx_content_type: navigation
+sidebar:
+  label: AI agent access
+hideChildren: true
+---
+
+Use this guide to grant AI coding assistants and LLMs access to Cloudflare documentation.
+
+## Quick start
+
+- **AI coding assistants (Claude Code, Cursor, Windsurf)**: Use the [Cloudflare Documentation MCP Server](#documentation-mcp-server) for a complete solution. It enables your assistant to search and retrieve documentation directly.
+- **Agent Skills**: Install [Cloudflare Skills](#skills) into any skills-compatible AI tool for structured, task-specific guidance.
+- **Chat interfaces (ChatGPT, Claude.ai)**: Append `/index.md` to any docs page URL and paste it into your conversation to receive Markdown instead of a full web page.
+- **Project rules and custom instructions**: Add a product-level [`llms.txt`](#per-product-endpoints) URL to your AI tool's rules file to give it an index of relevant Cloudflare pages.
+- **API-aware coding**: Download the [OpenAPI specification](#openapi-specification) and add it to your AI tool's context so it understands the full Cloudflare API surface when writing integration code.
+
+## Documentation MCP Server
+
+Cloudflare runs a catalog of managed remote MCP Servers which you can connect to using OAuth on clients like [Claude](https://modelcontextprotocol.io/quickstart/user), [Windsurf](https://docs.windsurf.com/windsurf/cascade/mcp), the Cloudflare [AI Playground](https://playground.ai.cloudflare.com/), or any [SDK that supports MCP](https://github.com/cloudflare/agents/tree/main/packages/agents/src/mcp).
+
+The [Documentation MCP Server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/docs-vectorize) gives your AI assistant direct access to up-to-date Cloudflare documentation.
+
+### Install
+
+- **Cursor**: Refer to [Installing MCP servers](https://cursor.com/docs/mcp#installing-mcp-servers)
+- **VSCode**: Refer to [Add and manage MCP servers in VS Code](https://code.visualstudio.com/docs/copilot/customization/mcp-servers)
+- **Manual configuration**: Add the following script to your MCP configuration file:
+
+```json
+{
+	"mcpServers": {
+		"cloudflare": {
+			"command": "npx",
+			"args": ["mcp-remote", "https://docs.mcp.cloudflare.com/mcp"]
+		}
+	}
+}
+```
+
+For other MCP servers offered by Cloudflare, refer to [Cloudflare's MCP servers](/agents/model-context-protocol/mcp-servers-for-cloudflare/).
+
+## Skills
+
+Cloudflare documentation supports [agent skills](https://agentskills.io/home). Agent skills are structured, task-specific guidance that AI tools can consume. Skills are defined in the [Cloudflare Skills repository](https://github.com/cloudflare/skills).
+
+To install them, run:
+
+```sh
+npx skills add https://developers.cloudflare.com
+```
+
+## Per-page Markdown
+
+Every documentation page is available as a lightweight Markdown page using one of the following methods. Both return the same output, powered by [Markdown for Agents](/fundamentals/reference/markdown-for-agents/).
+
+### Append `/index.md` to the URL
+
+Add `/index.md` to the end of any page URL to get the Markdown version. For example:
+
+```txt
+https://developers.cloudflare.com/workers/get-started/index.md
+```
+
+### Send an `Accept: text/markdown` header
+
+Request any page with the `Accept: text/markdown` header. Cloudflare's network converts the HTML to Markdown instantly:
+
+```sh
+curl "https://developers.cloudflare.com/workers/get-started/" \
+  --header "Accept: text/markdown"
+```
+
+The response includes an `x-markdown-tokens` header with the estimated token count, useful for context window planning. For more details, refer to [Markdown for Agents](/fundamentals/reference/markdown-for-agents/).
+
+## Site-wide endpoints
+
+These endpoints follow the [llms.txt standard](https://llmstxt.org/) and provide documentation content in Markdown format.
+
+| Endpoint                           | Description                                                                                                                          |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| [`/llms.txt`](/llms.txt)           | Page index grouped by product category, with links to each product's own `llms.txt`                                                  |
+| [`/llms-full.txt`](/llms-full.txt) | Full content of all documentation pages in a single file, intended for offline indexing, bulk vectorization, or large-context models |
+
+## Per-product endpoints
+
+Each product has its own scoped `llms.txt` and `llms-full.txt`. Use these for more targeted access when you only need documentation for a specific product.
+
+| Endpoint                                           | Description                                     |
+| -------------------------------------------------- | ----------------------------------------------- |
+| [`/workers/llms.txt`](/workers/llms.txt)           | Page index for Workers documentation            |
+| [`/workers/llms-full.txt`](/workers/llms-full.txt) | Full content of all Workers documentation pages |
+
+Replace `/workers/` with any product path. For the full list of available products, refer to [`/llms.txt`](/llms.txt).
+
+## OpenAPI specification
+
+The full Cloudflare API OpenAPI specification is available for use with AI coding tools, API clients, or code generators.
+
+| Endpoint                                               | Description                                                   |
+| ------------------------------------------------------ | ------------------------------------------------------------- |
+| [`/openapi.json`](/openapi.json)                       | Full Cloudflare API OpenAPI specification (JSON)              |
+| [`/.well-known/api-catalog`](/.well-known/api-catalog) | RFC 9727 API catalog with links to the spec and documentation |
+
+For the full API reference, refer to the [Cloudflare API documentation](/api/).
+
+## AGENTS.md
+
+The `cloudflare-docs` repository includes an [AGENTS.md](https://github.com/cloudflare/cloudflare-docs/blob/production/AGENTS.md) file that helps AI coding agents understand the structure, tooling, and conventions of the repository so they can make correct, buildable changes when contributing to documentation.
+
+AGENTS.md is a simple, open format for guiding coding agents. Refer to the [AGENTS.md](https://agents.md/) website for more information.

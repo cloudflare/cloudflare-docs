@@ -102,11 +102,15 @@ export async function generateSidebar(group: Group) {
 
 	group.entries.sort(sortBySidebarOrder);
 
-	if (group.entries[0].type === "link") {
+	const NO_LLM_RESOURCES = new Set(["ai-agents"]);
+
+	if (group.entries[0].type === "link" && !NO_LLM_RESOURCES.has(group.label)) {
 		group.entries[0].label = "Overview";
 	}
 
-	const product = directory.find((p) => p.id === group.label);
+	const product = NO_LLM_RESOURCES.has(group.label)
+		? undefined
+		: directory.find((p) => p.id === group.label);
 	if (product) {
 		const links = [
 			[`${product.data.name} llms.txt`, `${product.data.entry.url}llms.txt`],
