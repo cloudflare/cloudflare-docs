@@ -1,7 +1,7 @@
 import {
 	PiCopyDuotone,
 	PiArrowSquareOutLight,
-	PiPlugsConnectedLight,
+	PiSparkleDuotone,
 	PiCheckCircleLight,
 } from "react-icons/pi";
 import { useState, useRef, useCallback } from "react";
@@ -183,15 +183,15 @@ export default function AgentsToolkit() {
 
 	const handleViewAIOptions = () => {
 		track("agents toolkit clicked", { value: "view ai options" });
-		window.open("/style-guide/ai-tooling/", "_blank");
+		window.open("/agent-setup/", "_blank");
 	};
 
 	const listOptions: ListOption[] = [
 		{
 			key: "ai-options",
-			label: "Setup your agent",
-			tooltip: "Explore AI tooling options for Cloudflare docs",
-			icon: PiPlugsConnectedLight,
+			label: "Agent setup",
+			tooltip: "Setup your agent with the necessary tools to build on Cloudflare",
+			icon: PiSparkleDuotone,
 			onClick: handleViewAIOptions,
 		},
 		{
