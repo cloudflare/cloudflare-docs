@@ -112,7 +112,10 @@ export async function generateSidebar(group: Group) {
 			["Agent setup", "/agent-setup/"],
 			["Cloudflare Skills", "https://github.com/cloudflare/skills"],
 			["Code Mode MCP Server", "https://github.com/cloudflare/mcp"],
-			["Domain-specific MCP Servers", "https://github.com/cloudflare/mcp-server-cloudflare"],
+			[
+				"Domain-specific MCP Servers",
+				"https://github.com/cloudflare/mcp-server-cloudflare",
+			],
 			[`${product.data.name} llms.txt`, `${product.data.entry.url}llms.txt`],
 			[
 				`${product.data.name} llms-full.txt`,

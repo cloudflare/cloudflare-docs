@@ -190,7 +190,8 @@ export default function AgentsToolkit() {
 		{
 			key: "ai-options",
 			label: "Agent setup",
-			tooltip: "Setup your agent with the necessary tools to build on Cloudflare",
+			tooltip:
+				"Setup your agent with the necessary tools to build on Cloudflare",
 			icon: PiSparkleDuotone,
 			onClick: handleViewAIOptions,
 		},
