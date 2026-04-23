@@ -1,0 +1,266 @@
+---
+import StarlightPage, {
+	type StarlightPageProps,
+} from "@astrojs/starlight/components/StarlightPage.astro";
+
+const props = {
+	frontmatter: {
+		title: "AI agent access",
+		template: "splash",
+		description:
+			"Learn how AI agents and LLMs consume Cloudflare documentation",
+	},
+	hideBreadcrumbs: true,
+} as StarlightPageProps;
+---
+
+<StarlightPage {...props}>
+	<p>
+		Use this gude to grant AI coding assistants and LLMs access
+		to Cloudflare documentation.
+	</p>
+
+	<h2 id="quick-start">Quick start</h2>
+	<ul>
+		<li>
+			<strong>AI coding assistants (Claude Code, Cursor, Windsurf):</strong>
+			Use the <a href="#documentation-mcp-server"
+				>Cloudflare Documentation MCP Server</a
+			> for a complete. It enables your assistant to search and retrieve
+			documentation directly.
+		</li>
+		<li>
+			<strong>Agent Skills:</strong> Install
+			<a href="#skills">Cloudflare Skills</a> into any skills-compatible AI tool
+			for structured, task-specific guidance.
+		</li>
+		<li>
+			<strong>Chat interfaces (ChatGPT, Claude.ai):</strong> Append <code
+				>/index.md</code
+			> to any docs page URL and paste it into your conversation to receive
+			Markdown instead of a full web page.
+		</li>
+		<li>
+			<strong>Project rules and custom instructions:</strong> Add a product-level
+			<a href="#per-product-endpoints"><code>llms.txt</code></a> URL to your AI tool's
+			rules file to give it an index of relevant Cloudflare pages.
+		</li>
+		<li>
+			<strong>API-aware coding:</strong> Download the
+			<a href="#openapi-specification">OpenAPI spec</a> and add it to your AI tool's
+			context so it understands the full Cloudflare API surface when writing integration
+			code.
+		</li>
+	</ul>
+
+	<h2 id="documentation-mcp-server">Documentation MCP Server</h2>
+	<p>
+		Cloudflare runs a catalog of managed remote MCP Servers which you can
+		connect to using OAuth on clients like
+		<a href="https://modelcontextprotocol.io/quickstart/user">Claude</a>,
+		<a href="https://docs.windsurf.com/windsurf/cascade/mcp">Windsurf</a>,
+		the Cloudflare
+		<a href="https://playground.ai.cloudflare.com/">AI Playground</a>, or any
+		<a
+			href="https://github.com/cloudflare/agents/tree/main/packages/agents/src/mcp"
+			>SDK that supports MCP</a
+		>.
+	</p>
+	<p>
+		The <a
+			href="https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/docs-vectorize"
+			>Documentation MCP Server</a
+		> gives your AI assistant direct access to up-to-date Cloudflare documentation.
+	</p>
+
+	<h3>Install</h3>
+	<ul>
+		<li>
+			<strong>Cursor:</strong>
+			<a
+				href="https://cursor.com/en-US/install-mcp?name=cloudflare&config=eyJjb21tYW5kIjoibnB4IG1jcC1yZW1vdGUgaHR0cHM6Ly9kb2NzLm1jcC5jbG91ZGZsYXJlLmNvbS9zc2UifQ%3D%3D"
+				>Direct install link</a
+			>
+		</li>
+		<li>
+			<strong>VSCode:</strong>
+			<a
+				href="vscode:mcp/install?%7B%22name%22%3A%22cloudflare%22%2C%22url%22%3A%22https%3A%2F%2Fdocs.mcp.cloudflare.com%2Fmcp%22%7D"
+				>Direct install link</a
+			>
+		</li>
+		<li>
+			<strong>Manual configuration:</strong> Add the following to your MCP config:
+		</li>
+	</ul>
+	<pre><code>{`{
+  "mcpServers": {
+    "cloudflare": {
+      "command": "npx",
+      "args": ["mcp-remote", "https://docs.mcp.cloudflare.com/mcp"]
+    }
+  }
+}`}</code></pre>
+	<p>
+		For other MCP servers offered by Cloudflare, refer to
+		<a href="/agents/model-context-protocol/mcp-servers-for-cloudflare/"
+			>Cloudflare's MCP servers</a
+		>.
+	</p>
+
+	<h2 id="skills">Skills</h2>
+	<p>
+		Cloudflare documentation supports
+		<a href="https://agentskills.io/home">agent skills.</a> Agent skills are structured,
+		task-specific guidance that AI tools can consume. Skills are defined in the
+		<a href="https://github.com/cloudflare/skills">Cloudflare Skills repository</a>.
+	</p>
+	<p>To install them:</p>
+	<pre><code>npx skills add https://developers.cloudflare.com</code></pre>
+
+	<h2 id="per-page-markdown">Per-page Markdown</h2>
+	<p>
+		Every documentation page is available as a lightweight Markdown page using one
+		of the following methods. Both return the same output, powered by
+		<a href="/fundamentals/reference/markdown-for-agents/">Markdown for Agents</a
+		>.
+	</p>
+
+	<h3>Append <code>/index.md</code> to the URL</h3>
+	<p>
+		Add <code>/index.md</code> to the end of any page URL to get the Markdown version.
+		For example:
+	</p>
+	<pre><code>https://developers.cloudflare.com/workers/get-started/index.md</code></pre>
+
+	<h3>
+		Send an <code>Accept: text/markdown</code> header
+	</h3>
+	<p>
+		Request any page with the <code>Accept: text/markdown</code> header. Cloudflare's
+		network converts the HTML to Markdown on the fly.
+	</p>
+	<pre><code>{`curl "https://developers.cloudflare.com/workers/get-started/" \\
+  --header "Accept: text/markdown"`}</code></pre>
+	<p>
+		The response includes an <code>x-markdown-tokens</code> header with the estimated
+		token count, useful for context window planning. For more details, refer to
+		<a href="/fundamentals/reference/markdown-for-agents/">Markdown for Agents</a
+		>.
+	</p>
+
+	<h2 id="site-wide-endpoints">Site-wide endpoints</h2>
+	<p>
+		These endpoints follow the
+		<a href="https://llmstxt.org/">llms.txt standard</a> and provide documentation
+		content in Markdown format.
+	</p>
+	<table>
+		<thead>
+			<tr>
+				<th>Endpoint</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><a href="/llms.txt"><code>/llms.txt</code></a></td>
+				<td
+					>Page index grouped by product category, with links to each product's
+					own <code>llms.txt</code></td
+				>
+			</tr>
+			<tr>
+				<td><a href="/llms-full.txt"><code>/llms-full.txt</code></a></td>
+				<td
+					>Full content of all documentation pages in a single file, intended
+					for offline indexing, bulk vectorization, or large-context models</td
+				>
+			</tr>
+		</tbody>
+	</table>
+
+	<h2 id="per-product-endpoints">Per-product endpoints</h2>
+	<p>
+		Each product has its own scoped <code>llms.txt</code> and
+		<code>llms-full.txt</code>. Use these for more targeted access when you only
+		need documentation for a specific product.
+	</p>
+	<table>
+		<thead>
+			<tr>
+				<th>Endpoint</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td
+					><a href="/workers/llms.txt"><code>/workers/llms.txt</code></a></td
+				>
+				<td>Page index for Workers documentation</td>
+			</tr>
+			<tr>
+				<td
+					><a href="/workers/llms-full.txt"
+						><code>/workers/llms-full.txt</code></a
+					></td
+				>
+				<td>Full content of all Workers documentation pages</td>
+			</tr>
+		</tbody>
+	</table>
+	<p>
+		Replace <code>/workers/</code> with any product path. For the full list of available
+		products, refer to <a href="/llms.txt"><code>/llms.txt</code></a>.
+	</p>
+
+	<h2 id="openapi-specification">OpenAPI specification</h2>
+	<p>
+		The full Cloudflare API OpenAPI specification is available for use with AI
+		coding tools, API clients, or code generators.
+	</p>
+	<table>
+		<thead>
+			<tr>
+				<th>Endpoint</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td
+					><a href="/openapi.json"><code>/openapi.json</code></a></td
+				>
+				<td>Full Cloudflare API OpenAPI specification (JSON)</td>
+			</tr>
+			<tr>
+				<td
+					><a href="/.well-known/api-catalog"
+						><code>/.well-known/api-catalog</code></a
+					></td
+				>
+				<td>RFC 9727 API catalog with links to the spec and documentation</td>
+			</tr>
+		</tbody>
+	</table>
+	<p>
+		For the full API reference, refer to the
+		<a href="/api/">Cloudflare API documentation</a>.
+	</p>
+
+	<h2 id="agents-md">AGENTS.md</h2>
+	<p>
+		The <code>cloudflare-docs</code> repository includes an
+		<a
+			href="https://github.com/cloudflare/cloudflare-docs/blob/production/AGENTS.md"
+			>AGENTS.md</a
+		> file that helps AI coding agents understand the structure, tooling, and conventions
+		of the repository so they can make correct, buildable changes when contributing
+		to documentation.
+	</p>
+	<p>
+		AGENTS.md is a simple, open format for guiding coding agents. Refer to the
+		<a href="https://agents.md/">AGENTS.md</a> website for more information.
+	</p>
+</StarlightPage>
