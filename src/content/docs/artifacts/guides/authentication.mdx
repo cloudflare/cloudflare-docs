@@ -18,7 +18,7 @@ Review [Namespaces](/artifacts/concepts/namespaces/) first, then use one namespa
 
 | Interface | Authenticate with | Permissions or scopes | Use for |
 | --- | --- | --- | --- |
-| Workers binding | Wrangler authentication | Use your existing Wrangler credentials. | Worker code that calls `env.ARTIFACTS` |
+| Workers binding | Configured `artifacts` binding | Wrangler auth is only for local Wrangler commands such as `dev` and `deploy`. | Worker code that calls `env.ARTIFACTS` |
 | REST API | Cloudflare API token in `Authorization: Bearer ...` | **Artifacts** > **Read** for read routes and **Artifacts** > **Edit** for write routes. | Control-plane HTTP requests |
 | Git protocol | Repo-scoped Artifacts token | `read` for clone, fetch, and pull. `write` for push. | Standard Git over HTTPS |
 
@@ -26,7 +26,7 @@ Cloudflare API tokens authenticate control-plane access. Repo-scoped Artifacts t
 
 ## Authenticate the Workers binding
 
-The Workers binding uses your Wrangler authentication. Your Worker code does not pass a token when it calls `env.ARTIFACTS`.
+The Workers binding uses the `artifacts` binding you configure in Wrangler. Your Worker code does not pass a token when it calls `env.ARTIFACTS`.
 
 Add the binding in your Wrangler config:
 
@@ -44,7 +44,7 @@ namespace = "default"
 
 </WranglerConfig>
 
-Assume Wrangler is already authenticated before you use the binding. For local OAuth authentication, refer to [`wrangler login`](/workers/wrangler/commands/general/#login). For CI or headless environments, refer to [Running Wrangler in CI/CD](/workers/ci-cd/).
+At runtime, deployed Workers use the configured binding directly. For local Wrangler commands such as `wrangler dev`, `wrangler deploy`, or `wrangler types`, authenticate Wrangler first. For local OAuth authentication, refer to [`wrangler login`](/workers/wrangler/commands/general/#login). For CI or headless environments, refer to [Running Wrangler in CI/CD](/workers/ci-cd/).
 
 ## Authenticate the REST API
 

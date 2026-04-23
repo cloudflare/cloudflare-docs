@@ -50,7 +50,7 @@ Wrangler generates the `Artifacts` type for consumers and binds it directly in y
 
 In named Wrangler environments, `artifacts` is non-inheritable. Repeat the binding in each environment where you need it.
 
-Assume Wrangler is already authenticated before you use the binding. For local OAuth authentication, refer to [`wrangler login`](/workers/wrangler/commands/general/#login). For CI or headless environments, refer to [Running Wrangler in CI/CD](/workers/ci-cd/).
+At runtime, deployed Workers use the configured binding directly. For local Wrangler commands such as `wrangler dev`, `wrangler deploy`, or `wrangler types`, authenticate Wrangler first. For local OAuth authentication, refer to [`wrangler login`](/workers/wrangler/commands/general/#login). For CI or headless environments, refer to [Running Wrangler in CI/CD](/workers/ci-cd/).
 
 ## Namespace methods
 
@@ -214,6 +214,8 @@ async function mintReadToken(artifacts: Artifacts) {
 ```
 
 </TypeScriptExample>
+
+Unlike `create()` and `import()`, `repo.createToken()` returns a structured result with `plaintext` and `expiresAt`. The `plaintext` value is the Git token string.
 
 ### `listTokens()`
 

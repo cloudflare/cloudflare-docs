@@ -187,9 +187,7 @@ curl --request POST "$ARTIFACTS_BASE_URL/repos" \
 }
 ```
 
-The token encodes its expiry directly in the `?expires=` suffix.
-
-This change applies to create-style repo responses such as create, fork, and import. The separate `POST /tokens` route still returns `expires_at` alongside the plaintext token.
+Create, fork, and import responses return the token string only. The token encodes its expiry directly in the `?expires=` suffix. The separate `POST /tokens` route also returns `expires_at` alongside the plaintext token.
 
 ### List repos
 
