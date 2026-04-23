@@ -9,9 +9,13 @@ products:
   - workers
 ---
 
-import { Tabs, TabItem, WranglerConfig } from "~/components";
+import { Tabs, TabItem, WranglerConfig, Aside } from "~/components";
 
 The Workers API provides native email sending capabilities directly from your Cloudflare Workers through bindings. If you are not using Workers, you can send emails using the [REST API](/email-service/api/send-emails/rest-api/) instead.
+
+<Aside type="note" title="About messageId in response">
+The `messageId` returned by the Workers API is an internal tracking identifier, not the RFC 5322 `Message-ID` header that appears in the delivered email. Cloudflare generates the actual `Message-ID` header at send time, but this value is not exposed in the API response. If you need to track messages, use custom `X-` headers (such as `X-Message-ID` or `X-Tracking-ID`) that you generate and control.
+</Aside>
 
 ## Email binding
 
@@ -65,7 +69,7 @@ interface Attachment {
 }
 
 interface EmailSendResult {
-	messageId: string; // Unique email ID
+	messageId: string; // Internal tracking ID (not the RFC 5322 Message-ID header)
 }
 
 // Errors are thrown as standard Error objects with a `code` property

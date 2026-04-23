@@ -150,6 +150,10 @@ A successful response returns the delivery status for each recipient:
 - `permanent_bounces` - Email addresses that permanently bounced
 - `queued` - Email addresses for which delivery was queued for later
 
+:::note[Message-ID not included in response]
+The API response does not include the `Message-ID` or other platform-controlled headers that Cloudflare generates when sending the email. If you need to track individual messages, use custom `X-` headers (such as `X-Message-ID` or `X-Tracking-ID`) in your request that you can correlate with your own systems.
+:::
+
 ## Error handling
 
 The REST API returns standard Cloudflare API error responses. A failed request returns an `errors` array with numeric error codes and machine-readable messages:
