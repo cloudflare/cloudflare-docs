@@ -29,10 +29,6 @@ Controls how Cloudflare buffers HTTP response bodies before forwarding them to t
 Setting body buffering to **None** may break security functionality that requires body inspection, including the Web Application Firewall (WAF) and Bot Management. Ensure that any paths where you disable buffering do not require security inspection.
 :::
 
-:::note[Availability]
-These settings only take effect on zones running Cloudflare's [latest CDN proxy](https://blog.cloudflare.com/20-percent-internet-upgrade/). Enterprise customers can contact their account team to enable the latest proxy on their zones.
-:::
-
 ### API example
 
 ```json
