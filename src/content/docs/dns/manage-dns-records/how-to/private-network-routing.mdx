@@ -91,15 +91,19 @@ To enable private routing on an existing record, use a [PATCH request](/api/reso
 	}}
 />
 
+</TabItem> </Tabs>
+
+### API field behavior
+
+If you use the API to create or edit DNS records with private network routing, consider the following:
+
 | Scenario                                 | `private_routing` value |
 | ---------------------------------------- | ----------------------- |
-| New `A`/`AAAA` record with private IP    | Auto-set to `true`      |
-| New `A`/`AAAA` record with public IP     | Defaults to `false`     |
-| Private IP with `private_routing: false` | Returns error           |
+| Proxied `A`/`AAAA` record with private IP    | Auto-set to `true`      |
+| Proxied `A`/`AAAA` record with public IP     | Defaults to `false`     |
 | Non-`A`/`AAAA` record types              | Field not supported     |
-| Account without entitlement              | Field not visible       |
 
-</TabItem> </Tabs>
+Also, if you manually set `private_routing: false` on a proxied `A`/`AAAA` record with private IP, the API will return an error.
 
 ## Troubleshooting
 
