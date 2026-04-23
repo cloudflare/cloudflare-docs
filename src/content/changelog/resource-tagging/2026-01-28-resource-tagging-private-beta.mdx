@@ -1,23 +1,35 @@
 ---
 title: Resource Tagging enters public beta
-description: Cloudflare customers can now attach key-value metadata to resources via API.
+description: Attach key-value metadata to Cloudflare resources for organization, access control, and cost attribution -- available now via API on all plans.
 date: 2026-01-28
 ---
 
-Resource Tagging is now available in public beta. The feature enables attaching custom key-value metadata to Cloudflare resources for organization, access control, and billing attribution.
+Resource Tagging is now available in public beta across all Cloudflare plans. You can attach custom key-value metadata to your Cloudflare resources -- Workers scripts, zones, custom hostnames, Access application policies, and more -- giving you a consistent way to organize, query, and manage infrastructure at any scale.
+
+### Why tags matter
+
+As teams grow and resource counts climb, knowing what's running, who owns it, and why it exists becomes increasingly difficult. Resource Tagging gives you a single, API-first system to answer those questions. Tag a Worker with `team=payments` and `environment=production`, then filter across your entire account to find every production resource owned by the payments team -- regardless of resource type.
 
 ### What's included
 
-- **7 supported resource types** -- `account`, `workers_script`, `workers_script_version`, `zone`, `managed_client_certificates`, `custom_hostnames`, and `access_application_policy`.
-- **Tag filtering** -- Query tagged resources with AND/OR logic, negation, and key-only matching via the `tag` query parameter.
-- **Account and zone-level endpoints** -- Full CRUD operations for both scopes.
-- **Account Owned Token (AOT) authentication** -- Tags use account-level tokens independent of individual users, ensuring automation workflows survive user lifecycle changes.
+- **7 supported resource types** -- `account`, `workers_script`, `workers_script_version`, `zone`, `managed_client_certificates`, `custom_hostnames`, and `access_application_policy`, with more on the way.
+- **Powerful filtering** -- Query tagged resources using AND/OR logic, negation, and key-only matching. Combine up to 20 filters per query with up to 10 OR values per filter to build precise resource views.
+- **Account and zone-level endpoints** -- Full CRUD operations across both scopes, so you can tag account-wide resources and zone-specific resources with the same consistent API.
+- **Account Owned Tokens (AOTs)** -- Tagging uses account-level tokens that persist independently of individual users. When someone leaves your team or rotates credentials, your tagging automation keeps running. AOTs are provisioned on your behalf with the correct permissions out of the box.
+- **Flexible role support** -- Super Administrators, Workers Admins, and Tag Admins can all manage tags, giving you flexibility in how you delegate tagging responsibilities across your organization.
 
-### Limitations
+### API-first by design
 
-- API-only access (no Dashboard UI).
-- `PUT` replaces all tags on a resource (no partial update).
-- `DELETE` removes all tags (no single-tag delete).
-- Querying tags for an untagged resource returns `500` instead of `404`.
+The API is the primary interface for Resource Tagging and the recommended path for all workflows -- whether you're scripting one-off tag assignments, building CI/CD pipelines, or integrating tagging into your infrastructure-as-code toolchain. A Dashboard UI is under active development and will complement the API when available.
+
+### What's coming next
+
+Resource Tagging is the foundation for several capabilities we're building toward. In future releases, expect support for **additional resource types** across the Cloudflare platform, **tag-based access control policies** that let you scope user permissions to tagged resources, **billing and usage attribution** by tag so you can break down costs by team, project, or environment, and **Terraform provider support** for managing tags declaratively alongside the rest of your Cloudflare configuration.
+
+### Current limitations
+
+- `PUT` replaces all tags on a resource (no partial update). Use the [GET, merge, PUT workflow](/resource-tagging/how-to/manage-tags/#add-a-single-tag) to modify individual tags safely.
+- `DELETE` removes all tags from a resource. To remove a single tag, PUT the remaining tags back.
+- Querying tags for a resource that has never been tagged returns `500` instead of `404`. This is a known beta limitation.
 
 To get started, refer to the [Resource Tagging documentation](/resource-tagging/).
