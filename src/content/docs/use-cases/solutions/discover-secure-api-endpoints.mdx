@@ -405,8 +405,12 @@ The following rate limiting rule limits requests that contain a previously leake
 
 For the full expression including account takeover (ATO) detection IDs, refer to [Example mitigation rules](/waf/detections/leaked-credentials/examples/).
 
-:::tip[Sequence Analytics (Enterprise)]
+:::tip[Sequence Analytics and sequence mitigation custom rules (Enterprise)]
+
 API Shield tracks the order of API endpoint requests over time, grouping important user journeys (sequences) across your API. Sequences with high precedence scores indicate requests that are likely to occur together in order. Anomalous sequences may indicate automated abuse, such as a bot that calls `/auth`, then `/account`, then `/transfer` in rapid succession. For more information, refer to [Sequence Analytics](/api-shield/security/sequence-analytics/).
+
+Enterprise users with a Fraud Detection subscription can also create [sequence mitigation custom rules](/api-shield/security/sequence-mitigation/custom-rules/) to mitigate invalid sequences of API calls.
+
 :::
 
 ## Monitor your API traffic
