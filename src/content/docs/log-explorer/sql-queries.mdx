@@ -191,14 +191,5 @@ Log Explorer supports PostgreSQL-style pattern matching operators:
 | `~` | Regex match (case-sensitive) | `WHERE ClientRequestPath ~ '^/v1'` |
 | `~*` | Regex match (case-insensitive) | `WHERE ClientRequestPath ~* '^/V1'` |
 
-## Structural restrictions
 
-To maintain performance and stability, the following constructs are not supported:
-
-- **No joins** – Queries must target a single table.
-- **No subqueries** – Subqueries in `SELECT`, `FROM`, or `WHERE` are not allowed.
-- **No CTEs** – The `WITH` clause is not supported.
-- **No window functions** – Functions using the `OVER` clause are not supported.
-- **No set operations** – `UNION`, `INTERSECT`, and `EXCEPT` are not supported.
-- **No aggregate filters** – The `FILTER (WHERE ...)` clause on aggregates is not supported.
 
