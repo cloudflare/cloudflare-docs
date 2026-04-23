@@ -158,11 +158,11 @@ export const AGENTS: AgentData[] = [
 	},
 	{
 		name: "Windsurf",
-		vendor: "Codeium",
+		vendor: "Cognition",
 		slug: "windsurf",
 		icon: "windsurf",
 		description:
-			"Agentic IDE with Cascade context and Flows for multi-step tasks. Made by Codeium.",
+			"Agentic IDE with Cascade context and Flows for multi-step tasks. Made by Cognition.",
 		capabilities: {
 			ide: true,
 			terminal: false,
