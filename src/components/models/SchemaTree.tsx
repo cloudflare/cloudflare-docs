@@ -15,6 +15,7 @@ import type { SchemaRowData } from "./types";
 interface SchemaTreeProps {
 	rows: SchemaRowData[];
 	schemaId: string;
+	hideRequired?: boolean;
 }
 
 interface SchemaNodeProps {
@@ -24,6 +25,7 @@ interface SchemaNodeProps {
 	forceExpand: boolean;
 	expandedNodes: Set<string>;
 	onToggle: (id: string) => void;
+	hideRequired?: boolean;
 }
 
 // Highlight matching text in search
@@ -115,6 +117,7 @@ function SchemaNode({
 	forceExpand,
 	expandedNodes,
 	onToggle,
+	hideRequired,
 }: SchemaNodeProps) {
 	const hasChildren = row.children && row.children.length > 0;
 	const isExpanded = forceExpand || expandedNodes.has(row.id);
@@ -154,7 +157,16 @@ function SchemaNode({
 					}
 				>
 					<div
-						className={`py-3 ${hasChildren ? "cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50" : ""} ${hasChildren && isExpanded ? "border-b border-gray-100 dark:border-gray-800" : ""}`}
+						className={[
+							"py-3",
+							hasChildren &&
+								"cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50",
+							hasChildren &&
+								isExpanded &&
+								"border-b border-gray-100 dark:border-gray-800",
+						]
+							.filter(Boolean)
+							.join(" ")}
 						style={{ paddingLeft: indentPx }}
 						onClick={hasChildren ? handleToggle : undefined}
 						role={hasChildren ? "button" : undefined}
@@ -165,9 +177,12 @@ function SchemaNode({
 							<span className="w-4 flex-shrink-0 text-center">
 								{hasChildren && (
 									<span
-										className={`inline-block text-xs text-gray-400 transition-transform ${
-											isExpanded ? "rotate-90" : ""
-										}`}
+										className={[
+											"inline-block text-xs text-gray-400 transition-transform",
+											isExpanded && "rotate-90",
+										]
+											.filter(Boolean)
+											.join(" ")}
 									>
 										▶
 									</span>
@@ -225,6 +240,7 @@ function SchemaNode({
 									forceExpand={forceExpand}
 									expandedNodes={expandedNodes}
 									onToggle={onToggle}
+									hideRequired={hideRequired}
 								/>
 							))}
 						</div>
@@ -245,7 +261,16 @@ function SchemaNode({
 		>
 			{/* Clickable row */}
 			<div
-				className={`py-3 ${hasChildren ? "cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50" : ""} ${hasChildren && isExpanded ? "border-b border-gray-100 dark:border-gray-800" : ""}`}
+				className={[
+					"py-3",
+					hasChildren &&
+						"cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50",
+					hasChildren &&
+						isExpanded &&
+						"border-b border-gray-100 dark:border-gray-800",
+				]
+					.filter(Boolean)
+					.join(" ")}
 				style={{ paddingLeft: indentPx }}
 				onClick={hasChildren ? handleToggle : undefined}
 				role={hasChildren ? "button" : undefined}
@@ -256,9 +281,12 @@ function SchemaNode({
 					<span className="w-4 flex-shrink-0 text-center">
 						{hasChildren && (
 							<span
-								className={`inline-block text-xs text-gray-400 transition-transform ${
-									isExpanded ? "rotate-90" : ""
-								}`}
+								className={[
+									"inline-block text-xs text-gray-400 transition-transform",
+									isExpanded && "rotate-90",
+								]
+									.filter(Boolean)
+									.join(" ")}
 							>
 								▶
 							</span>
@@ -282,7 +310,7 @@ function SchemaNode({
 						<code className="text-xs text-gray-500 dark:text-gray-400">
 							{row.type}
 						</code>
-						{row.required && (
+						{row.required && !hideRequired && (
 							<span className="rounded border border-amber-200 bg-amber-100 px-1 py-0.5 text-xs leading-none text-amber-800 dark:border-amber-700 dark:bg-amber-900 dark:text-amber-200">
 								required
 							</span>
@@ -329,6 +357,7 @@ function SchemaNode({
 							forceExpand={forceExpand}
 							expandedNodes={expandedNodes}
 							onToggle={onToggle}
+							hideRequired={hideRequired}
 						/>
 					))}
 				</div>
@@ -337,7 +366,11 @@ function SchemaNode({
 	);
 }
 
-export default function SchemaTree({ rows, schemaId }: SchemaTreeProps) {
+export default function SchemaTree({
+	rows,
+	schemaId,
+	hideRequired,
+}: SchemaTreeProps) {
 	const [searchTerm, setSearchTerm] = useState("");
 	const [expandedNodes, setExpandedNodes] = useState<Set<string>>(new Set());
 
@@ -425,6 +458,7 @@ export default function SchemaTree({ rows, schemaId }: SchemaTreeProps) {
 								forceExpand={searchTerm.length > 0}
 								expandedNodes={mergedExpandedNodes}
 								onToggle={handleToggle}
+								hideRequired={hideRequired}
 							/>
 						))}
 					</div>

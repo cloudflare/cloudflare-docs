@@ -1,0 +1,40 @@
+---
+pcx_content_type: reference
+title: RtkJoinStage
+description: API reference for RtkJoinStage component (React Native Library)
+---
+
+Join stage confirmation dialog with video preview and mic/camera toggles for webinar/livestream participants.
+
+## Properties
+
+| Property   | Type                | Required | Default           | Description                      |
+| ---------- | ------------------- | -------- | ----------------- | -------------------------------- |
+| `meeting`  | `RealtimeKitClient` | ✅       | -                 | The RealtimeKit meeting instance |
+| `iconPack` | `IconPack`          | ❌       | `defaultIconPack` | Custom icon pack                 |
+| `states`   | `States`            | ❌       | -                 | UI state object                  |
+| `t`        | `RtkI18n`           | ❌       | -                 | i18n translation function        |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkJoinStage } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkJoinStage meeting={meeting} />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkJoinStage } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return (
+		<RtkJoinStage meeting={meeting} iconPack={customIconPack} states={states} />
+	);
+}
+```

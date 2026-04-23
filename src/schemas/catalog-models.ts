@@ -40,9 +40,6 @@ export const catalogModelsSchema = z.object({
 	max_output_tokens: z.number().nullable(),
 	supports_async: z.boolean(),
 
-	// Pricing (flexible structure: {input, output} or {per_image} etc)
-	pricing: z.record(z.string(), z.number()),
-
 	// Examples
 	examples: modelExampleSchema.array(),
 	default_example: defaultExampleSchema.nullable().optional(),

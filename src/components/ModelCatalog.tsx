@@ -114,15 +114,26 @@ const ModelCatalog = ({
 	}));
 
 	const tasks = [...new Set(models.map((model) => model.task.name))];
+	const getAuthorDisplayName = (id: string) => authorData[id]?.name ?? id;
 	const authors = [
-		...new Set(models.map((model) => getModelAuthor(model.name))),
-	];
+		...new Map(
+			models
+				.map((model) => getModelAuthor(model.name))
+				.map((id) => [getAuthorDisplayName(id), id] as const),
+		).values(),
+	].sort((a, b) =>
+		getAuthorDisplayName(a).localeCompare(getAuthorDisplayName(b)),
+	);
 	const modelProperties = getLabelsByCategory(models, "model");
 	const platformProperties = getLabelsByCategory(models, "platform");
 
 	const modelList = mapped.filter(({ model }) => {
 		if (filters.authors.length > 0) {
-			if (!filters.authors.includes(getModelAuthor(model.name))) {
+			const selectedAuthorNames = new Set(
+				filters.authors.map(getAuthorDisplayName),
+			);
+			const modelAuthorName = getAuthorDisplayName(getModelAuthor(model.name));
+			if (!selectedAuthorNames.has(modelAuthorName)) {
 				return false;
 			}
 		}

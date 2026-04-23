@@ -1,5 +1,8 @@
 ---
 pcx_content_type: how-to
+description: Connect a private hostname in Zero Trust networking.
+products:
+  - cloudflare-one
 title: Connect a private hostname
 tags:
   - Private networks
@@ -75,7 +78,7 @@ Configuration steps vary depending on your [device on-ramp](#device-connectivity
 
 <Details header="Cloudflare WAN">
 
-1. Ensure that the <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip> listed above [route through Cloudflare WAN](/cloudflare-wan/configuration/manually/how-to/configure-routes/) to Cloudflare.
+1. Ensure that the <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip> listed above [route through Cloudflare WAN](/cloudflare-wan/configuration/how-to/configure-routes/) to Cloudflare.
 2. [Point the DNS resolver](/cloudflare-wan/zero-trust/cloudflare-gateway/#dns-filtering) for your Cloudflare WAN network to Cloudflare Gateway.
 
 </Details>

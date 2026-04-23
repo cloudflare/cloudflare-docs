@@ -29,6 +29,7 @@ interface Props {
 }
 
 const { schema, title } = Astro.props;
+const hideRequired = title === "Output";
 
 // Check if schema is a flat/simple schema (no properties, no oneOf/anyOf with properties)
 // These are things like streaming output: { type: "string", contentType: "...", format: "binary" }
@@ -420,6 +421,7 @@ const variantRows =
 			<SchemaVariantSelector
 				variants={variantRows}
 				schemaId={schemaId}
+				hideRequired={hideRequired}
 				client:load
 			/>
 		) : rows.length === 0 ? (
@@ -427,7 +429,7 @@ const variantRows =
 				No parameters defined.
 			</p>
 		) : (
-			<SchemaTreeView rows={rows} schemaId={schemaId} client:load />
+			<SchemaTreeView rows={rows} schemaId={schemaId} hideRequired={hideRequired} client:load />
 		)
 	}
 </div>

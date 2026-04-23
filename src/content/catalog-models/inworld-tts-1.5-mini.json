@@ -14,22 +14,25 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {},
 	"examples": [
 		{
 			"name": "Simple Speech",
 			"description": "Generate speech with default settings",
 			"input": {
-				"text": "Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do."
+				"text": "Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do.",
+				"voice_id": "Dennis",
+				"output_format": "mp3",
+				"temperature": 1,
+				"timestamp_type": "none"
 			},
 			"output": {
-				"audio": "https://replicate.delivery/xezq/GgEkEHnChBLTLdm5AzNtC68PXx319kpr3LeaQVTUvcDgNSNLA/tmpayptakp7.mp3"
+				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/inworld__tts-1.5-mini/simple-speech.mp3"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'inworld/tts-1.5-mini',\n  {\n    text: 'Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do.',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'inworld/tts-1.5-mini',\n  {\n    text: 'Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do.',\n    voice_id: 'Dennis',\n    output_format: 'mp3',\n    temperature: 1,\n    timestamp_type: 'none',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -38,16 +41,20 @@
 			"description": "Speed up speech for quick playback",
 			"input": {
 				"text": "This is a fast-paced summary of the key findings from the quarterly report. Revenue is up fifteen percent and user growth exceeded expectations.",
-				"speaking_rate": 1.4
+				"voice_id": "Dennis",
+				"output_format": "mp3",
+				"speaking_rate": 1.4,
+				"temperature": 1,
+				"timestamp_type": "none"
 			},
 			"output": {
-				"audio": "https://replicate.delivery/xezq/VZw1SjSD0Y7oHpPAgqzT2fT9eeTIojoqeLqfRqmETFVTYjUzC/tmp5lw6ti6e.mp3"
+				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/inworld__tts-1.5-mini/fast-speech.mp3"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'inworld/tts-1.5-mini',\n  {\n    text: 'This is a fast-paced summary of the key findings from the quarterly report. Revenue is up fifteen percent and user growth exceeded expectations.',\n    speaking_rate: 1.4,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'inworld/tts-1.5-mini',\n  {\n    text: 'This is a fast-paced summary of the key findings from the quarterly report. Revenue is up fifteen percent and user growth exceeded expectations.',\n    voice_id: 'Dennis',\n    output_format: 'mp3',\n    speaking_rate: 1.4,\n    temperature: 1,\n    timestamp_type: 'none',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -56,16 +63,20 @@
 			"description": "Minimize latency by disabling text normalization",
 			"input": {
 				"text": "Quick response needed. The server is ready.",
+				"voice_id": "Dennis",
+				"output_format": "mp3",
+				"temperature": 1,
+				"timestamp_type": "none",
 				"apply_text_normalization": false
 			},
 			"output": {
-				"audio": "https://replicate.delivery/xezq/H6VDePeq5YrAg0OULmLgmdQkIz0VJJIRffFeBsklMlCewGpmF/tmpt1c_iw_l.mp3"
+				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/inworld__tts-1.5-mini/low-latency.mp3"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'inworld/tts-1.5-mini',\n  {\n    text: 'Quick response needed. The server is ready.',\n    apply_text_normalization: false,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'inworld/tts-1.5-mini',\n  {\n    text: 'Quick response needed. The server is ready.',\n    voice_id: 'Dennis',\n    output_format: 'mp3',\n    temperature: 1,\n    timestamp_type: 'none',\n    apply_text_normalization: false,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		}
@@ -73,7 +84,7 @@
 	"supports_async": false,
 	"external_info": "https://inworld.ai/",
 	"terms": "https://inworld.ai/terms",
-	"cover_image_url": "https://tjzk.replicate.delivery/models_models_cover_image/a6840701-0041-4a1f-a25b-77152468c505/tmpmk9wkimd.jpg",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/inworld/tts-1.5-mini.png",
 	"metadata": {
 		"Latency": "~120ms",
 		"Languages": "15"
@@ -81,9 +92,8 @@
 	"created_at": "2026-04-13 16:47:23",
 	"default_example": null,
 	"code_snippets": [],
+	"zdr": false,
 	"schema": {
-		"model_id": "inworld/tts-1.5-mini",
-		"version": "1.0.0",
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
 			"type": "object",
@@ -209,20 +219,14 @@
 				"bit_rate": {
 					"description": "Bits per second of the audio. Only for compressed audio formats (mp3, opus). The default is 128,000.",
 					"type": "integer",
-					"minimum": 0
+					"minimum": -9007199254740991,
+					"maximum": 9007199254740991
 				},
 				"sample_rate": {
 					"description": "The synthesis sample rate in hertz. Accepts: 8000, 16000, 22050, 24000, 32000, 44100, 48000. The default is 48,000.",
 					"type": "integer",
-					"enum": [
-						8000,
-						16000,
-						22050,
-						24000,
-						32000,
-						44100,
-						48000
-					]
+					"minimum": -9007199254740991,
+					"maximum": 9007199254740991
 				},
 				"speaking_rate": {
 					"description": "Speaking rate/speed, in the range [0.5, 1.5]. The default is 1.0. We recommend using values above 0.8 to ensure high quality.",
@@ -253,7 +257,11 @@
 				}
 			},
 			"required": [
-				"text"
+				"text",
+				"voice_id",
+				"output_format",
+				"temperature",
+				"timestamp_type"
 			],
 			"additionalProperties": false
 		},

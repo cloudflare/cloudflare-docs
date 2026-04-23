@@ -115,32 +115,11 @@ function detectApiModes(schema: {
 }
 
 /**
- * Normalize raw pricing unit keys (e.g. "per_image", "per_megapixel") into a
- * human-readable unit label (e.g. "per image", "per megapixel").
- */
-function normalizePricingUnit(unit: string): string {
-	if (unit.startsWith("per_")) {
-		return `per ${unit.slice(4).replace(/_/g, " ")}`;
-	}
-	return unit.replace(/_/g, " ");
-}
-
-/**
  * Convert catalog model to resolved model format.
  */
 function catalogToResolved(model: CatalogModelsSchema): ResolvedModel {
 	// Build legacy-compatible properties array from catalog fields
 	const properties: ResolvedModel["properties"] = [];
-
-	// Pricing
-	if (model.pricing && Object.keys(model.pricing).length > 0) {
-		const priceValue = Object.entries(model.pricing).map(([unit, price]) => ({
-			unit: normalizePricingUnit(unit),
-			price,
-			currency: "USD",
-		}));
-		properties.push({ property_id: "price", value: priceValue });
-	}
 
 	// Context window
 	if (model.context_length != null) {
@@ -219,7 +198,6 @@ function catalogToResolved(model: CatalogModelsSchema): ResolvedModel {
 		contextLength: model.context_length ?? undefined,
 		maxOutputTokens: model.max_output_tokens ?? undefined,
 		supportsAsync: model.supports_async,
-		pricing: model.pricing,
 		codeSnippets: model.code_snippets,
 		examples: model.examples,
 		defaultExample: model.default_example ?? undefined,

@@ -12,41 +12,23 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {},
 	"examples": [
 		{
 			"name": "Simple Text-to-Video",
 			"description": "Basic text-to-video with just a prompt",
 			"input": {
-				"prompt": "A golden retriever running through a sunlit meadow in slow motion"
+				"prompt": "A golden retriever running through a sunlit meadow in slow motion",
+				"duration": 5,
+				"resolution": "720p"
 			},
 			"output": {
-				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/vidu-q3-pro/simple-text-to-video.mp4"
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/vidu__q3-pro/simple-text-to-video.mp4"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    prompt: 'A golden retriever running through a sunlit meadow in slow motion',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
-				}
-			]
-		},
-		{
-			"name": "Custom Duration and Resolution",
-			"description": "Longer video at higher resolution",
-			"input": {
-				"prompt": "Aerial drone shot flying through a misty forest at dawn, rays of sunlight breaking through the trees",
-				"duration": 10,
-				"resolution": "1080p"
-			},
-			"output": {
-				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/vidu-q3-pro/custom-duration-and-resolution.mp4"
-			},
-			"code_snippets": [
-				{
-					"label": "typescript",
-					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    prompt:\n      'Aerial drone shot flying through a misty forest at dawn, rays of sunlight breaking through the trees',\n    duration: 10,\n    resolution: '1080p',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    prompt: 'A golden retriever running through a sunlit meadow in slow motion',\n    duration: 5,\n    resolution: '720p',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -55,17 +37,18 @@
 			"description": "Vertical video for social media",
 			"input": {
 				"prompt": "A busy street in Tokyo at night with neon signs reflecting on wet pavement, rain falling",
-				"aspect_ratio": "9:16",
-				"duration": 5
+				"duration": 5,
+				"resolution": "720p",
+				"aspect_ratio": "9:16"
 			},
 			"output": {
-				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/vidu-q3-pro/portrait-aspect-ratio.mp4"
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/vidu__q3-pro/portrait-aspect-ratio.mp4"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    prompt:\n      'A busy street in Tokyo at night with neon signs reflecting on wet pavement, rain falling',\n    aspect_ratio: '9:16',\n    duration: 5,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    prompt:\n      'A busy street in Tokyo at night with neon signs reflecting on wet pavement, rain falling',\n    duration: 5,\n    resolution: '720p',\n    aspect_ratio: '9:16',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -74,18 +57,18 @@
 			"description": "Generate video without audio",
 			"input": {
 				"prompt": "Abstract paint swirls slowly mixing in water, vivid blues and golds",
-				"audio": false,
 				"duration": 8,
-				"resolution": "720p"
+				"resolution": "720p",
+				"audio": false
 			},
 			"output": {
-				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/vidu-q3-pro/silent-video.mp4"
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/vidu__q3-pro/silent-video.mp4"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    prompt:\n      'Abstract paint swirls slowly mixing in water, vivid blues and golds',\n    audio: false,\n    duration: 8,\n    resolution: '720p',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    prompt:\n      'Abstract paint swirls slowly mixing in water, vivid blues and golds',\n    duration: 8,\n    resolution: '720p',\n    audio: false,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -94,18 +77,18 @@
 			"description": "Square video for product demos or social posts",
 			"input": {
 				"prompt": "A sleek wireless headphone rotating on a pedestal with soft studio lighting and a white background",
-				"aspect_ratio": "1:1",
 				"duration": 5,
-				"resolution": "720p"
+				"resolution": "720p",
+				"aspect_ratio": "1:1"
 			},
 			"output": {
-				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/vidu-q3-pro/square-format.mp4"
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/vidu__q3-pro/square-format.mp4"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    prompt:\n      'A sleek wireless headphone rotating on a pedestal with soft studio lighting and a white background',\n    aspect_ratio: '1:1',\n    duration: 5,\n    resolution: '720p',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'vidu/q3-pro',\n  {\n    prompt:\n      'A sleek wireless headphone rotating on a pedestal with soft studio lighting and a white background',\n    duration: 5,\n    resolution: '720p',\n    aspect_ratio: '1:1',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		}
@@ -113,7 +96,7 @@
 	"supports_async": false,
 	"external_info": "https://www.vidu.com/",
 	"terms": "https://www.vidu.com/terms",
-	"cover_image_url": null,
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/vidu/q3-pro.png",
 	"metadata": {
 		"Max Duration": "16 seconds",
 		"Resolutions": "540p, 720p, 1080p",
@@ -124,9 +107,8 @@
 	"created_at": "2026-04-15 01:37:32",
 	"default_example": null,
 	"code_snippets": [],
+	"zdr": false,
 	"schema": {
-		"model_id": "vidu/q3-pro",
-		"version": "1.0.0",
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
 			"type": "object",

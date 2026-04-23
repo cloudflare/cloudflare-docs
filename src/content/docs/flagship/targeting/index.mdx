@@ -1,0 +1,49 @@
+---
+pcx_content_type: overview
+title: Targeting rules
+description: Serve different Flagship flag values to different users based on attributes, conditions, and logical grouping.
+sidebar:
+  order: 7
+products:
+  - flagship
+---
+
+import { DirectoryListing } from "~/components";
+
+Targeting rules let you serve different flag values to different users based on their attributes. Each flag can have zero or more rules.
+
+Rules are evaluated in sequential order, from top to bottom. The first rule whose conditions match is used, and its configured variation is returned. If no rule matches, Flagship returns the flag's default variation.
+
+When a flag is disabled, the default variation is always returned regardless of rules.
+
+## How rules work
+
+A rule consists of:
+
+- **Conditions** — One or more attribute comparisons that must be satisfied. For example, `country equals "US"` or `plan in ["enterprise", "business"]`.
+- **Serve variation** — The variation to return when the rule matches.
+- **Rollout** (optional) — A percentage-based gradual release. Only the specified percentage of matching users receive the rule's variation. The rest continue to the next rule.
+
+## Condition structure
+
+Each condition compares an attribute from the evaluation context against a value using an operator:
+
+- **Attribute** — The context key to evaluate (for example, `userId`, `country`, `plan`).
+- **Operator** — The comparison to perform. Flagship supports [11 operators](/flagship/targeting/operators/).
+- **Value** — The value to compare against. Can be a string, number, or array depending on the operator.
+
+## Logical grouping
+
+Conditions within a rule can be grouped with `AND`/`OR` operators and nested up to six levels deep.
+
+For example, to target enterprise users in the US or Canada:
+
+- `AND`:
+  - `plan equals "enterprise"`
+  - `OR`:
+    - `country equals "US"`
+    - `country equals "CA"`
+
+## Learn more
+
+<DirectoryListing />

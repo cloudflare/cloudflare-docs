@@ -11,7 +11,6 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {},
 	"examples": [
 		{
 			"name": "Cozy Coffee Shop",
@@ -21,7 +20,7 @@
 				"aspect_ratio": "16:9"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/MQpUhqkESIIQDlWUxtNcsznZLfUTmhEbCV3vdAZGHGPwwaMLA/tmpgl4gvv5n.jpeg"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana/cozy-coffee-shop.png"
 			},
 			"code_snippets": [
 				{
@@ -39,7 +38,7 @@
 				"aspect_ratio": "9:16"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/IeNNble3XUqhpUZTd3CkYTUf8EgkFU1fl1Jnyive3B26MsGzC/tmp51dpln4i.jpeg"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana/vintage-tokyo-poster.png"
 			},
 			"code_snippets": [
 				{
@@ -57,7 +56,7 @@
 				"aspect_ratio": "1:1"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/jfh37lJpnDQhaKcAfCrxSCEh7HA7lv5cCWmJW284tYXwh1YWA/tmpw2i437qe.jpeg"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana/dewdrops-macro.png"
 			},
 			"code_snippets": [
 				{
@@ -75,7 +74,7 @@
 				"aspect_ratio": "1:1"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/pUAcLnl2KmpoChqQ7emXoyqpV3ZBUcV6tVyovozvl4N8waMLA/tmppjbe5cua.jpeg"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana/pixel-art-marketplace.png"
 			},
 			"code_snippets": [
 				{
@@ -91,17 +90,17 @@
 			"input": {
 				"prompt": "A dramatic mountain landscape at golden hour with snow-capped peaks and a crystal clear alpine lake",
 				"aspect_ratio": "16:9",
-				"image_size": "4K",
-				"output_format": "png"
+				"output_format": "png",
+				"image_size": "4K"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/Rh5vNXYjxVJeBqHfy1F11GQY7ppLFzIMeA1XOGFj9DvIErxsA/tmpm17f21_f.png"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana/high-resolution-landscape.png"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/nano-banana',\n  {\n    prompt:\n      'A dramatic mountain landscape at golden hour with snow-capped peaks and a crystal clear alpine lake',\n    aspect_ratio: '16:9',\n    image_size: '4K',\n    output_format: 'png',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/nano-banana',\n  {\n    prompt:\n      'A dramatic mountain landscape at golden hour with snow-capped peaks and a crystal clear alpine lake',\n    aspect_ratio: '16:9',\n    output_format: 'png',\n    image_size: '4K',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		}
@@ -109,16 +108,15 @@
 	"supports_async": false,
 	"external_info": "https://deepmind.google/technologies/imagen/",
 	"terms": "https://ai.google.dev/gemini-api/terms",
-	"cover_image_url": "https://tjzk.replicate.delivery/models_models_featured_image/ed879e99-71b5-4689-bed3-e7305e35a28a/this.png",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/google/nano-banana.png",
 	"metadata": {
 		"Output Format": "JPEG"
 	},
 	"created_at": "2026-04-08 21:58:29",
 	"default_example": null,
 	"code_snippets": [],
+	"zdr": false,
 	"schema": {
-		"model_id": "google/nano-banana",
-		"version": "1.0.0",
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
 			"type": "object",

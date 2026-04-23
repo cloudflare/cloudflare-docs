@@ -12,7 +12,6 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {},
 	"examples": [
 		{
 			"name": "Futuristic City",
@@ -22,7 +21,7 @@
 				"aspect_ratio": "16:9"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/pfgMVDPcly3NRadjHLSGX9IzjddIEUXOrngjjeUFhVk860YWA/tmpxll_idao.jpeg"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana-2/futuristic-city.png"
 			},
 			"code_snippets": [
 				{
@@ -41,7 +40,7 @@
 				"output_format": "png"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/fbCYosDwVy1gP6OXg7DnPiPafKKpe0lfuST3pMp7jcoSRWjZB/tmpydgbcajy.png"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana-2/abstract-art.png"
 			},
 			"code_snippets": [
 				{
@@ -60,7 +59,7 @@
 				"google_search": true
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/IhdWyniiCsIVMZlgmrxEi9lzSSMeBDCN0XIpRvvG3fWZH1YWA/tmp4kw10p2y.jpeg"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana-2/with-google-search.png"
 			},
 			"code_snippets": [
 				{
@@ -76,17 +75,17 @@
 			"input": {
 				"prompt": "A professional studio portrait of a woman with dramatic side lighting, wearing elegant jewelry",
 				"aspect_ratio": "3:4",
-				"resolution": "4K",
-				"output_format": "jpg"
+				"output_format": "jpg",
+				"resolution": "4K"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/blTBOLzoFe3tbabQ7LZSRfsEwLCeL0uAnZ6wofdHiuPQaWjZB/tmp5qfopy_p.jpeg"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana-2/high-resolution-portrait.jpg"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/nano-banana-2',\n  {\n    prompt:\n      'A professional studio portrait of a woman with dramatic side lighting, wearing elegant jewelry',\n    aspect_ratio: '3:4',\n    resolution: '4K',\n    output_format: 'jpg',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/nano-banana-2',\n  {\n    prompt:\n      'A professional studio portrait of a woman with dramatic side lighting, wearing elegant jewelry',\n    aspect_ratio: '3:4',\n    output_format: 'jpg',\n    resolution: '4K',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		}
@@ -94,16 +93,15 @@
 	"supports_async": false,
 	"external_info": "https://deepmind.google/technologies/imagen/",
 	"terms": "https://ai.google.dev/gemini-api/terms",
-	"cover_image_url": "https://tjzk.replicate.delivery/models_models_featured_image/80e7a89d-6163-4a92-927c-79ec74379079/nano-banana-2.png",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/google/nano-banana-2.png",
 	"metadata": {
 		"Output Format": "JPEG"
 	},
 	"created_at": "2026-04-08 22:03:11",
 	"default_example": null,
 	"code_snippets": [],
+	"zdr": false,
 	"schema": {
-		"model_id": "google/nano-banana-2",
-		"version": "1.0.0",
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
 			"type": "object",

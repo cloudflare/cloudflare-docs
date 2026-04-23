@@ -11,6 +11,7 @@ interface SchemaVariant {
 interface SchemaVariantSelectorProps {
 	variants: SchemaVariant[];
 	schemaId: string;
+	hideRequired?: boolean;
 }
 
 // Map variant titles to descriptions
@@ -23,6 +24,7 @@ const variantDescriptions: Record<string, string> = {
 export default function SchemaVariantSelector({
 	variants,
 	schemaId,
+	hideRequired,
 }: SchemaVariantSelectorProps) {
 	const [selectedIndex, setSelectedIndex] = useState(0);
 	const selectedVariant = variants[selectedIndex];
@@ -44,7 +46,7 @@ export default function SchemaVariantSelector({
 								className={`mt-0 flex flex-1 cursor-pointer flex-col justify-start rounded-lg border p-3 text-left transition-colors ${
 									isSelected
 										? "border-blue-500 bg-blue-50 dark:border-blue-400 dark:bg-blue-950"
-										: "border-gray-200 hover:border-gray-300 dark:border-gray-700 dark:hover:border-gray-600"
+										: "border-gray-200 bg-white hover:border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:hover:border-gray-600"
 								}`}
 							>
 								<span
@@ -74,6 +76,7 @@ export default function SchemaVariantSelector({
 				<SchemaTree
 					rows={selectedVariant.rows}
 					schemaId={`${schemaId}-${selectedVariant.title.toLowerCase().replace(/\s+/g, "-")}`}
+					hideRequired={hideRequired}
 				/>
 			)}
 		</div>

@@ -1,6 +1,9 @@
 ---
 pcx_content_type: how-to
 title: Debugging Pages
+description: Troubleshoot common Cloudflare Pages build errors and deployment failures.
+products:
+  - pages
 ---
 
 import { DashButton } from "~/components";
@@ -154,7 +157,7 @@ example.com.	300	IN	CAA	0 issue "amazon.com"
 ;; MSG SIZE  rcvd: 76
 ```
 
-In the above example, there is only a single CAA record which is allowing Amazon to issue ceritficates.
+In the above example, there is only a single CAA record which is allowing Amazon to issue certificates.
 
 To resolve this, you will need to add the following CAA records which allows all of the Certificate Authorities (CAs) Cloudflare uses to issue certificates:
 

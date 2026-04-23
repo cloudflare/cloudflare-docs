@@ -1,5 +1,8 @@
 ---
 pcx_content_type: reference
+description: Reference information for Browser Isolation with firewall in Browser Isolation.
+products:
+  - cloudflare-one
 title: Browser Isolation with firewall
 sidebar:
   order: 8
@@ -11,7 +14,7 @@ If your organization uses a firewall or other policies to restrict Internet traf
 
 ## Remoting client
 
-Isolated pages are served by the remoting client. This client communicates to Cloudflare's network via HTTPS and WebRTC.
+Isolated pages are served by the remoting client — the software component in the user's browser that loads, displays, and communicates with the remote browser session. This client communicates to Cloudflare's network via HTTPS and WebRTC.
 
 ### Remoting Client (Services)
 
@@ -27,7 +30,7 @@ Users connecting through Clientless Web Isolation also require connectivity to C
 
 ### WebRTC channel
 
-Browser Isolation uses WebRTC for low-latency communication between the local browser and the remote browser.
+Browser Isolation uses WebRTC (a real-time communication protocol) for low-latency communication between the local browser and the remote browser. WebRTC uses UDP rather than TCP, which means this traffic does not flow through standard HTTP/HTTPS proxy settings. The connecting device must have direct UDP connectivity to the IP ranges listed below.
 
 In order to pass WebRTC traffic, the remoting client must be able to connect to the following IP addresses:
 

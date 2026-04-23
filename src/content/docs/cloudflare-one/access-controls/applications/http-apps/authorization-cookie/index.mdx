@@ -1,5 +1,7 @@
 ---
 pcx_content_type: concept
+products:
+  - cloudflare-one
 title: Authorization cookie
 tags:
   - Cookies
@@ -136,7 +138,7 @@ The `CF_Authorization` cookie cannot be used without the associated binding cook
 Do not enable Binding Cookie if:
 
 - You are using the Access application for non-browser based tools (such as SSH or RDP).
-- You have enabled [incompatible Cloudflare products](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/#product-compatibility) on the application domain.
+- You have enabled [incompatible Cloudflare products](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/#product-compatibility) on the application domain, such as [Zaraz](/zaraz) or [Google tag gateway](/google-tag-gateway/). Enabling Binding Cookie alongside these products can cause an authentication redirect loop (`ERR_TOO_MANY_REDIRECTS`).
 - You have turned on [Device authentication identity](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/) for the application.
 
 ### Cookie Path Attribute

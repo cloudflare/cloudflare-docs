@@ -1,8 +1,11 @@
 ---
 title: Streams
+description: Durable, buffered queues that receive and store events for processing in Cloudflare Pipelines.
 pcx_content_type: navigation
 sidebar:
   order: 2
+products:
+  - pipelines
 ---
 
 import { LinkCard } from "~/components";
@@ -25,4 +28,10 @@ Streams currently accept events in JSON format and support both structured event
 	title="Writing to streams"
 	href="/pipelines/streams/writing-to-streams/"
 	description="Send events to streams via HTTP endpoints or Worker bindings."
+/>
+
+<LinkCard
+	title="Logpush as a source"
+	href="/pipelines/streams/logpush/"
+	description="Use Cloudflare Logpush to send logs from Cloudflare products to a Pipelines stream."
 />

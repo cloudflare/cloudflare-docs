@@ -17,7 +17,7 @@ Yes. Both enterprise and free customers can send encrypted network flow data to 
 Enterprise customers with Magic Transit or Cloudflare WAN (formerly Magic WAN) can send encrypted network flow data via an IPsec tunnel to Cloudflare's network. You can achieve this by:
 
 1. Configuring your [NetFlow](/network-flow/routers/netflow-ipfix-config/) or [sFlow](/network-flow/routers/sflow-config/) data to be sent to Cloudflare's network for parsing.
-2. Directing that network flow data to be sent over [Magic Transit IPsec tunnels](/magic-transit/how-to/configure-tunnel-endpoints/) or [Cloudflare WAN IPsec tunnels](/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/) to Cloudflare's network.
+2. Directing that network flow data to be sent over [Magic Transit IPsec tunnels](/magic-transit/how-to/configure-tunnel-endpoints/) or [Cloudflare WAN IPsec tunnels](/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/) to Cloudflare's network.
 
 Cloudflare identifies the flow traffic by its destination IP address and port, then forwards it to Network Flow for parsing.
 

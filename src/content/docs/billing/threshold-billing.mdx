@@ -8,14 +8,14 @@ sidebar:
 
 import { DashButton } from "~/components";
 
-Threshold billing is an automatic payment collection mechanism for Cloudflare's usage-based products. When your accumulated usage charges reach a certain level during a billing cycle, Cloudflare generates a mid-cycle invoice and charges your payment method on file.
+Threshold billing is an automatic payment collection mechanism for Cloudflare's usage-based products. When your combined usage charges across all usage-based products reach a certain level during a billing cycle, Cloudflare generates a mid-cycle invoice and charges your payment method on file.
 
 ## How threshold billing works
 
-1. **Usage accumulates** - As you use Cloudflare's usage-based products, charges accrue throughout your billing cycle.
-2. **Threshold reached** - When your accumulated usage charges reach the threshold, Cloudflare automatically generates a mid-cycle invoice.
+1. **Usage accumulates** - As you use Cloudflare's usage-based products (R2, Stream, Images, Workers), charges accrue throughout your billing cycle across all these products combined.
+2. **Threshold reached** - When your total accumulated usage charges reach the threshold, Cloudflare automatically generates a mid-cycle invoice.
 3. **Payment collected** - Your payment method on file is charged for the threshold invoice amount.
-4. **One-time trigger** - The threshold fires once per subscription. After a threshold invoice is generated, your subscription returns to standard end-of-cycle billing.
+4. **One-time trigger** - The threshold fires once per account. After a threshold invoice is generated, your account returns to standard end-of-cycle billing.
 5. **End-of-cycle invoice** - At the end of your billing cycle, you receive your regular invoice which includes only the remaining usage charges not already covered by the threshold invoice.
 
 :::note
@@ -26,30 +26,28 @@ You will never be double-charged. The threshold invoice and end-of-cycle invoice
 
 | Event | Charge |
 | --- | --- |
-| Usage reaches threshold mid-cycle | Threshold invoice charged (for example, $127.50) |
+| Combined usage reaches threshold mid-cycle | Threshold invoice charged (for example, $127.50) |
 | End of billing cycle (total usage was $180) | End-of-cycle invoice charged (for example, $52.50) |
 | **Total charged** | **$180** |
 
 ## Products subject to threshold billing
 
-Threshold billing applies to the following usage-based products:
+Threshold billing applies to combined usage across the following products:
 
 - [R2](/r2/)
 - [Stream](/stream/)
 - [Cloudflare Images](/images/)
 - [Workers](/workers/) (usage-based pricing)
 
+The threshold is based on your total combined usage across all of these products, not each product individually.
+
 ## Who is affected
 
 Threshold billing applies to self-serve accounts using the products listed above.
-## Affected accounts
+
 :::note
 Enterprise accounts and startup program participants are not subject to threshold billing.
 :::
-
-## Multiple subscriptions
-
-If you have multiple usage-based subscriptions (for example, both R2 and Workers on separate subscriptions), the threshold applies to each subscription independently. You may receive one threshold invoice per subscription if each reaches the threshold.
 
 ## What happens if payment fails
 
@@ -82,7 +80,7 @@ Threshold invoices are labeled to distinguish them from regular end-of-cycle inv
 
 ### Why did I receive a mid-cycle charge?
 
-Your usage-based charges reached the billing threshold before the end of your billing cycle. This is expected behavior for accounts with high usage of R2, Stream, Images, or Workers.
+Your combined usage-based charges across R2, Stream, Images, and Workers reached the billing threshold before the end of your billing cycle. This is expected behavior for accounts with high usage.
 
 ### Will I be charged twice for the same usage?
 
@@ -94,7 +92,7 @@ The threshold is automatically set by Cloudflare and cannot be modified.
 
 ### Will I get another threshold invoice next month?
 
-No. The threshold fires once per subscription. After the first threshold invoice, your subscription returns to standard end-of-cycle billing for all future cycles.
+The threshold can fire once per account. After the first threshold invoice, your account returns to standard end-of-cycle billing for future cycles.
 
 ### How do I avoid threshold invoices?
 
