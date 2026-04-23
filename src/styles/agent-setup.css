@@ -57,8 +57,6 @@
 	margin: 0;
 }
 
-
-
 .cf-banner-items {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
@@ -2236,8 +2234,6 @@
 	border-bottom: none;
 }
 
-
-
 :root[data-theme="dark"] .agent-simple-item {
 	border-color: var(--color-cl1-gray-2);
 	background: color-mix(in srgb, var(--color-cl1-gray-1) 50%, transparent);
@@ -2292,8 +2288,6 @@
 	background: color-mix(in srgb, var(--color-cl1-orange-1) 30%, transparent);
 	border-color: var(--color-cl1-orange-2);
 }
-
-
 
 /* ────────────────────────────────────────────────────────────────────
    Agent detail page — Build agents ON Cloudflare footer callout
