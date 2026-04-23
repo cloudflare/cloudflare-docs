@@ -101,6 +101,18 @@ Mesh nodes run in [Traffic and DNS mode](/cloudflare-one/team-and-resources/devi
 
 If your server runs a DNS service, do not install the Mesh node on that host. Instead, install the node on a separate machine on the same subnet and use [CIDR routes](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/) to make the DNS server reachable.
 
+## Running Mesh alongside other VPN or mesh software
+
+The Cloudflare One Client creates a virtual network interface and manages the system routing table. Other software that does the same — Tailscale, WireGuard, OpenVPN, Cisco AnyConnect, GlobalProtect, ZScaler, Netskope, or any traditional VPN client — will compete for control of routing. Running them simultaneously causes unpredictable behavior: traffic may flow through the wrong tunnel or fail entirely.
+
+If you are migrating to Cloudflare Mesh from another solution:
+
+1. Uninstall or disable the other client (for example, `sudo systemctl stop tailscaled && sudo systemctl disable tailscaled` on Linux, or quit the application from the system tray on macOS/Windows).
+2. Restart the machine so the Cloudflare One Client's virtual network interface takes priority in the routing table.
+3. Verify connectivity by running `warp-cli status` and pinging a Mesh IP.
+
+This applies to both Mesh nodes and client devices.
+
 ## Running Mesh with Cloudflare Tunnel
 
 A Mesh node (`warp-cli`) and [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) (`cloudflared`) can run on the same Linux host. This is useful when you want to use the Mesh node as a gateway for your private network while also using Cloudflare Tunnel to publish specific applications.
