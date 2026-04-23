@@ -34,8 +34,7 @@ const shouldChatbotDeprioritize =
 // For these sections, skip the `getEntry("directory", ...)` lookup to avoid
 // spurious "Entry directory → <section> was not found" warnings.
 //   - `changelog` resolves its product below from frontmatter.products[0].
-//   - `agent-setup` is a custom page collection with its own metadata shape.
-const SECTIONS_WITHOUT_DIRECTORY_ENTRY = ["changelog", "agent-setup"];
+const SECTIONS_WITHOUT_DIRECTORY_ENTRY = ["changelog"];
 
 // if not a top-level page, add metadata values from src/content/directory/ entries
 if (currentSection) {
