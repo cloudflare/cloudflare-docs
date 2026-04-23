@@ -1,0 +1,303 @@
+---
+title: Common API calls
+pcx_content_type: configuration
+description: Example API requests for managing Programmable Flow Protection programs and rules.
+products:
+  - ddos-protection
+sidebar:
+  order: 2
+
+---
+
+The following sections contain example requests for common API calls. For a list of available API endpoints, refer to [Endpoints](/ddos-protection/advanced-ddos-systems/api/programmable-flow-protection/#endpoints).
+
+## List all programs
+
+This example fetches all Programmable Flow Protection programs in the account.
+
+```bash title="Request"
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programmable_flow_protection/configs/programs" \
+--header "Authorization: Bearer <API_TOKEN>"
+```
+
+```json title="Response"
+{
+  "result": [
+    {
+      "id": "<PROGRAM_ID>",
+      "name": "rate-limiter",
+      "status": "success",
+      "created_on": "<TIMESTAMP>",
+      "modified_on": "<TIMESTAMP>"
+    }
+  ],
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+## Upload a program
+
+This example uploads a new eBPF program written in C. The program source code is sent as the request body with `Content-Type: text/plain`.
+
+```bash title="Request"
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programmable_flow_protection/configs/programs" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: text/plain" \
+--data-binary "@/path/to/program.c"
+```
+
+```json title="Response"
+{
+  "result": {
+    "id": "<PROGRAM_ID>",
+    "name": "program",
+    "status": "success",
+    "created_on": "<TIMESTAMP>",
+    "modified_on": "<TIMESTAMP>"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+If the program fails compilation or verification, the API returns a detailed error message:
+
+```json title="Example error response"
+{
+  "result": null,
+  "success": false,
+  "errors": [
+    {
+      "code": 1001,
+      "message": "Program verification failed: invalid memory access at line 42"
+    }
+  ],
+  "messages": []
+}
+```
+
+## Update a program
+
+This example updates an existing program with new source code. You can update a program even if it is currently in use by one or more rules. If the new program fails compilation or verification, the update fails and the existing program remains active.
+
+```bash title="Request"
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programmable_flow_protection/configs/programs/{program_id}" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: text/plain" \
+--data-binary "@/path/to/updated-program.c"
+```
+
+```json title="Response"
+{
+  "result": {
+    "id": "<PROGRAM_ID>",
+    "name": "program",
+    "status": "success",
+    "created_on": "<TIMESTAMP>",
+    "modified_on": "<TIMESTAMP>"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+## Delete a program
+
+This example deletes a program. You cannot delete a program that is currently referenced by an active rule.
+
+```bash title="Request"
+curl --request DELETE \
+"https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programmable_flow_protection/configs/programs/{program_id}" \
+--header "Authorization: Bearer <API_TOKEN>"
+```
+
+```json title="Response"
+{
+  "result": null,
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+## List all rules
+
+This example fetches all Programmable Flow Protection rules in the account.
+
+```bash title="Request"
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programmable_flow_protection/configs/rules" \
+--header "Authorization: Bearer <API_TOKEN>"
+```
+
+```json title="Response"
+{
+  "result": [
+    {
+      "id": "<RULE_ID>",
+      "program_id": "<PROGRAM_ID>",
+      "scope": "global",
+      "name": "global",
+      "mode": "enabled",
+      "expression": "",
+      "created_on": "<TIMESTAMP>",
+      "modified_on": "<TIMESTAMP>"
+    }
+  ],
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+## Create a rule
+
+This example creates a Programmable Flow Protection rule with a global scope in monitoring mode.
+
+```bash title="Request"
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programmable_flow_protection/configs/rules" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "program_id": "<PROGRAM_ID>",
+  "scope": "global",
+  "name": "global",
+  "mode": "monitoring"
+}'
+```
+
+```json title="Response"
+{
+  "result": {
+    "id": "<RULE_ID>",
+    "program_id": "<PROGRAM_ID>",
+    "scope": "global",
+    "name": "global",
+    "mode": "monitoring",
+    "expression": "",
+    "created_on": "<TIMESTAMP>",
+    "modified_on": "<TIMESTAMP>"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+Refer to [JSON objects](/ddos-protection/advanced-ddos-systems/api/programmable-flow-protection/json-objects/) for more information on the fields in the JSON body.
+
+## Create a rule with regional scope
+
+This example creates a rule scoped to the Western Europe region with an expression filter.
+
+```bash title="Request"
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programmable_flow_protection/configs/rules" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "program_id": "<PROGRAM_ID>",
+  "scope": "region",
+  "name": "WEUR",
+  "mode": "enabled",
+  "expression": "ip.dst in { 192.0.2.0/24 }"
+}'
+```
+
+```json title="Response"
+{
+  "result": {
+    "id": "<RULE_ID>",
+    "program_id": "<PROGRAM_ID>",
+    "scope": "region",
+    "name": "WEUR",
+    "mode": "enabled",
+    "expression": "ip.dst in { 192.0.2.0/24 }",
+    "created_on": "<TIMESTAMP>",
+    "modified_on": "<TIMESTAMP>"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+Refer to [JSON objects](/ddos-protection/advanced-ddos-systems/api/programmable-flow-protection/json-objects/) for more information on the fields in the JSON body.
+
+## Update a rule
+
+This example updates an existing rule. You can update the mode, scope, and expression, but not the program. To change the program, delete the rule and create a new one.
+
+```bash title="Request"
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programmable_flow_protection/configs/rules/{rule_id}" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "mode": "enabled"
+}'
+```
+
+```json title="Response"
+{
+  "result": {
+    "id": "<RULE_ID>",
+    "program_id": "<PROGRAM_ID>",
+    "scope": "global",
+    "name": "global",
+    "mode": "enabled",
+    "expression": "",
+    "created_on": "<TIMESTAMP>",
+    "modified_on": "<TIMESTAMP>"
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+Refer to [JSON objects](/ddos-protection/advanced-ddos-systems/api/programmable-flow-protection/json-objects/) for more information on the fields in the JSON body.
+
+## Delete a rule
+
+This example deletes an existing rule.
+
+```bash title="Request"
+curl --request DELETE \
+"https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programmable_flow_protection/configs/rules/{rule_id}" \
+--header "Authorization: Bearer <API_TOKEN>"
+```
+
+```json title="Response"
+{
+  "result": null,
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+## Debug a program with PCAP
+
+This example runs a program against a PCAP file for debugging. The API returns an annotated PCAP file with the program verdict for each packet.
+
+The request body must contain the PCAP file in binary format. The API automatically detects the IP header offset based on the input PCAP. To override automatic detection, use the optional `ip_offset` query parameter to specify the number of bytes the IP header is offset by in each packet (for example, `14` for Ethernet frames).
+
+```bash title="Request"
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programmable_flow_protection/configs/programs/{program_id}/pcap" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/vnd.tcpdump.pcap" \
+--data-binary "@/path/to/input.pcap" \
+--output output.pcap
+```
+
+The output PCAP file contains the same packets as the input file, but with annotations on each packet.
+The Packet Comment annotation may contain:
+
+- Program return value: `CF_EBPF_PASS` or `CF_EBPF_DROP`  
+- `Ignored`: if the incoming packet is not UDP
+- `Analytics tag`: the custom network analytics tag set by the program on this packet, if any
+- `Challenge packet`: the challenge packet emitted from the program back to the client, if any
