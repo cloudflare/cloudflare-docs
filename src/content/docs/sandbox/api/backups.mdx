@@ -261,7 +261,6 @@ interface BackupOptions {
 interface DirectoryBackup {
 	readonly id: string;
 	readonly dir: string;
-	readonly localBucket?: boolean;
 }
 ```
 
@@ -269,7 +268,6 @@ interface DirectoryBackup {
 
 - `id` - Unique backup identifier (UUID)
 - `dir` - Directory that was backed up
-- `localBucket` - Whether the backup was created using the local R2 binding path
 
 ### `RestoreBackupResult`
 
