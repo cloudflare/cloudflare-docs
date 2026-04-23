@@ -132,6 +132,15 @@
 	color: var(--color-cl1-gray-7);
 }
 
+.agent-setup-lede a {
+	color: var(--sl-color-text-accent);
+	text-decoration: none;
+}
+
+.agent-setup-lede a:hover {
+	text-decoration: underline;
+}
+
 .agent-setup-lede-highlight {
 	color: var(--sl-color-text);
 	font-weight: 600;
