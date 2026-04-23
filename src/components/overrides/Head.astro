@@ -30,15 +30,17 @@ const shouldChatbotDeprioritize =
 	frontmatter.sidebar.hidden ||
 	frontmatter.chatbot_deprioritize;
 
+// URL path prefixes that are not backed by a `directory` collection entry.
+// For these sections, skip the `getEntry("directory", ...)` lookup to avoid
+// spurious "Entry directory → <section> was not found" warnings.
+//   - `changelog` resolves its product below from frontmatter.products[0].
+const SECTIONS_WITHOUT_DIRECTORY_ENTRY = ["changelog"];
+
 // if not a top-level page, add metadata values from src/content/directory/ entries
 if (currentSection) {
-	// For changelog pages there is no directory entry for "changelog" itself; skip
-	// the lookup to avoid spurious "Entry directory → changelog was not found" warnings.
-	// The actual product is resolved below from frontmatter.products[0].
-	let product =
-		currentSection !== "changelog"
-			? await getEntry("directory", currentSection)
-			: undefined;
+	let product = !SECTIONS_WITHOUT_DIRECTORY_ENTRY.includes(currentSection)
+		? await getEntry("directory", currentSection)
+		: undefined;
 	// if entry for changelog, grab the first product value (which corresponds to the folder the entry is in) and use as the primary "product"
 	if (currentSection === "changelog") {
 		const originalEntry = Astro.locals.starlightRoute.originalEntry as
@@ -254,7 +256,10 @@ if (frontmatter.canonical) {
 	if (canonicalIdx !== -1) {
 		head[canonicalIdx].attrs!.href = canonicalHref;
 	} else {
-		head.push({ tag: "link", attrs: { rel: "canonical", href: canonicalHref } });
+		head.push({
+			tag: "link",
+			attrs: { rel: "canonical", href: canonicalHref },
+		});
 	}
 }
 
@@ -270,4 +275,5 @@ metaTags.map((attrs) => {
 <script src="src/scripts/mermaid.ts"></script>
 <script src="src/scripts/analytics.ts"></script>
 <script src="src/scripts/explain-code.ts"></script>
+<script src="src/scripts/webmcp.ts"></script>
 <Default><slot /></Default>

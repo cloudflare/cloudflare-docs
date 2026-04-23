@@ -1,0 +1,100 @@
+---
+// Top-of-page header for a single agent detail MDX page.
+// Renders the back button + icon + title + vendor block, the description or
+// a custom intro slot, the capability badge, and external links.
+//
+// Usage from an MDX page:
+//   <AgentHeader slug="claude-code" />
+//   <AgentHeader slug="opencode">custom intro markup here</AgentHeader>
+import { AGENTS } from "./agents";
+import AgentIcon from "./AgentIcon.astro";
+import CapabilityBadge from "./CapabilityBadge.astro";
+import "~/styles/agent-setup.css";
+
+interface Props {
+	slug: string;
+}
+
+const { slug } = Astro.props;
+
+const agent = AGENTS.find((a) => a.slug === slug);
+
+if (!agent) {
+	throw new Error(
+		`[AgentHeader] No agent found for slug="${slug}"`,
+	);
+}
+
+const externalLinks = [
+	agent.links.skills && { label: "Skills", href: agent.links.skills },
+	agent.links.mcp_server && {
+		label: "MCP Server",
+		href: agent.links.mcp_server,
+	},
+	agent.links.cli && { label: "CLI", href: agent.links.cli },
+	agent.links.docs && { label: `${agent.name} Docs`, href: agent.links.docs },
+].filter(Boolean) as { label: string; href: string }[];
+---
+
+<a href="/agent-setup/" class="agent-setup-back">
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		width="16"
+		height="16"
+		viewBox="0 0 24 24"
+		fill="none"
+		stroke="currentColor"
+		stroke-width="2"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+		aria-hidden="true"
+	>
+		<polyline points="15 18 9 12 15 6"></polyline>
+	</svg>
+	All agents
+</a>
+
+<div class="mb-6 flex items-center gap-4">
+	<AgentIcon icon={agent.icon} name={agent.name} size={48} />
+	<div>
+		<h1 id="_top" class="-mt-1! mb-0! text-3xl! leading-none! font-bold!">
+			{agent.name} + Cloudflare
+		</h1>
+		<span class="text-sm" style={`color: var(--color-cl1-gray-5)`}>
+			{agent.vendor}
+		</span>
+	</div>
+</div>
+
+{
+	Astro.slots.has("default") ? (
+		<div class="agent-setup-intro">
+			<slot />
+		</div>
+	) : (
+		<p class="mb-4 text-base" style={{ lineHeight: 1.6 }}>
+			{agent.description}
+		</p>
+	)
+}
+
+<div class="mb-4">
+	<CapabilityBadge capabilities={agent.capabilities} />
+</div>
+
+{
+	externalLinks.length > 0 && (
+		<div class="agent-setup-links">
+			{externalLinks.map((link) => (
+				<a
+					href={link.href}
+					class="agent-setup-link"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					{link.label} &nearr;
+				</a>
+			))}
+		</div>
+	)
+}

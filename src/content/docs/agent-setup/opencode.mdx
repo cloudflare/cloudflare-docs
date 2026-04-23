@@ -1,0 +1,189 @@
+---
+title: OpenCode + Cloudflare
+description: "Open-source terminal agent with a rich TUI that works with 75+ LLMs. Made by Anomaly."
+template: splash
+pcx_content_type: how-to
+---
+
+import { Steps } from "~/components";
+import AgentHeader from "~/components/agent-setup/AgentHeader.astro";
+import PlatformAccess from "~/components/agent-setup/PlatformAccessSection.astro";
+import ExamplePromptsList from "~/components/agent-setup/ExamplePromptsList.astro";
+import RandomPrompt from "~/components/agent-setup/RandomPrompt.astro";
+import TipsList from "~/components/agent-setup/TipsList.astro";
+import FAQList from "~/components/agent-setup/FAQList.astro";
+import FAQItem from "~/components/agent-setup/FAQItem.astro";
+import TroubleshootingList from "~/components/agent-setup/TroubleshootingList.astro";
+import TroubleshootingItem from "~/components/agent-setup/TroubleshootingItem.astro";
+import BuildAgentsCallout from "~/components/agent-setup/BuildAgentsCallout.astro";
+import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
+
+<AgentHeader slug="opencode">
+	<p>
+		Open-source terminal agent with a rich TUI that works with 75+ LLM
+		providers, including Cloudflare Workers AI. Made by Anomaly and used
+		internally at Cloudflare for{" "}
+		<a
+			href="https://blog.cloudflare.com/ai-code-review/"
+			target="_blank"
+			rel="noopener noreferrer"
+		>
+			CI-native AI code review
+		</a>
+		.
+	</p>
+</AgentHeader>
+
+## Quick start
+
+<Steps>
+	1. **Install OpenCode**
+
+		Install OpenCode. For npm, Homebrew, Bun, Scoop, or Windows options, see the [OpenCode install guide](https://opencode.ai/docs/).
+
+		```bash
+		curl -fsSL https://opencode.ai/install | bash
+		```
+
+	2. **Install Cloudflare Skills**
+
+		```bash
+		npx skills add https://github.com/cloudflare/skills
+		```
+
+	3. **Add Cloudflare MCP servers**
+
+		Add MCP servers to `.opencode.jsonc`. For a full list of available Cloudflare MCP servers, refer to the repository on [GitHub](https://github.com/cloudflare/mcp-server-cloudflare).
+
+		```json
+		{
+		  "mcp": {
+		    "cloudflare": { "type": "remote", "url": "https://mcp.cloudflare.com/mcp", "enabled": true },
+		    "cloudflare-docs": { "type": "remote", "url": "https://docs.mcp.cloudflare.com/mcp", "enabled": true }
+		  }
+		}
+		```
+
+	4. **Launch OpenCode**
+
+		Start OpenCode from the root of your project, where `wrangler.jsonc` lives (if it already exists).
+
+		```bash
+		opencode
+		```
+
+	5. **Try a prompt**
+
+		For example:
+
+		<RandomPrompt />
+</Steps>
+
+## Cloudflare platform access
+
+<PlatformAccess agentName="OpenCode">
+	<Fragment slot="wrangler">
+		<div class="agent-platform-hint">
+			Local dev, deploys, and Workers-specific commands.
+		</div>
+		<p>
+			OpenCode runs <a href="/workers/wrangler/">Wrangler</a> directly in the terminal.
+			The bundled <strong>wrangler</strong> Skill teaches it when to reach for CLI
+			commands vs. the MCP API.
+		</p>
+	</Fragment>
+
+<Fragment slot="docs">
+	<div class="agent-platform-hint">
+		OpenCode requests markdown docs automatically.
+	</div>
+	<p>
+	OpenCode is one of the few agents that <a href="https://blog.cloudflare.com/agent-readiness/" target="_blank" rel="noopener noreferrer">sends <code>Accept: text/markdown</code> by default</a> when fetching Cloudflare docs, so it always gets the clean markdown version without any configuration. Useful URLs to reference explicitly:
+	</p>
+	<ul class="agent-platform-resources">
+		<li>
+			<a href="/llms.txt">developers.cloudflare.com/llms.txt</a> — directory of
+			every Cloudflare product.
+		</li>
+		<li>
+			<a href="/workers/llms.txt">developers.cloudflare.com/workers/llms.txt</a>
+		</li>
+		<li>
+			<a href="/agents/llms.txt">developers.cloudflare.com/agents/llms.txt</a>
+		</li>
+		<li>
+			<a href="/r2/llms.txt">developers.cloudflare.com/r2/llms.txt</a>
+		</li>
+		<li>
+			<a href="/d1/llms.txt">developers.cloudflare.com/d1/llms.txt</a>
+		</li>
+	</ul>
+	<p>
+		For a full overview of how these docs are structured for agents, refer to the{" "}
+		<a href="/style-guide/ai-tooling/">AI tooling guide</a>.
+	</p>
+</Fragment>
+
+</PlatformAccess>
+
+## Example prompts
+
+<ExamplePromptsList />
+
+## Tips
+
+<TipsList>
+
+- The Cloudflare API MCP server uses Code Mode — OpenCode writes JavaScript to reach any of 2,500+ endpoints in ~1,000 tokens.
+- OpenCode supports 75+ LLMs — you can use Cloudflare Workers AI as the model provider for a fully Cloudflare-native workflow.
+- Use OpenCode's plan agent (Tab key) to break down complex Workers projects before coding — pair it with `/cloudflare:build-agent` or `/cloudflare:build-mcp` slash commands.
+
+</TipsList>
+
+## FAQ
+
+<FAQList>
+	<FAQItem question="Should I use Skills, the MCP server, Wrangler CLI, or all of them?">
+		All three. Skills provide persistent Cloudflare expertise so OpenCode knows
+		when to reach for Durable Objects vs KV, how to structure a Workers project,
+		and when to call CLI vs API. The Cloudflare API MCP server handles platform
+		operations (DNS, WAF, Zero Trust, R2 buckets). Wrangler handles local dev,
+		deploys, and Workers-specific commands. The bundled `wrangler` Skill teaches
+		OpenCode which to use.
+	</FAQItem>
+	<FAQItem question="How do I connect OpenCode to Cloudflare?">
+		The first time OpenCode calls a Cloudflare tool, you will be redirected to
+		authorize via OAuth and choose permissions.
+	</FAQItem>
+	<FAQItem question="Can I use Workers AI as the model provider in OpenCode?">
+		Yes. OpenCode supports 75+ model providers, including Cloudflare Workers AI.
+		Configure your model in `.opencode.jsonc`.
+	</FAQItem>
+	<FAQItem question="Is OpenCode open source?">
+		Yes. OpenCode is fully open source and available at <a href="https://github.com/anomalyco/opencode" target="_blank" rel="noopener noreferrer">github.com/anomalyco/opencode</a>.
+	</FAQItem>
+</FAQList>
+
+## Troubleshooting
+
+<TroubleshootingList>
+	<TroubleshootingItem issue="MCP server connection fails">
+		Verify the MCP configuration in `.opencode.jsonc` uses `"type": "remote"`
+		with the correct URL. Run `opencode mcp list` to check connected servers.
+	</TroubleshootingItem>
+	<TroubleshootingItem issue="Getting outdated information about Cloudflare products">
+		Enable the <a href="https://github.com/cloudflare/mcp-server-cloudflare" target="_blank" rel="noopener noreferrer">Cloudflare docs MCP server</a> so the agent can fetch
+		current documentation at runtime. If you prefer not to use the MCP server, point
+		the agent directly at <a href="/llms.txt">developers.cloudflare.com/llms.txt</a> for
+		a directory of every product, or <code>developers.cloudflare.com/&lt;product&gt;/llms.txt</code>
+		for a product-specific index.
+	</TroubleshootingItem>
+</TroubleshootingList>
+
+## Build agents on Cloudflare
+
+<BuildAgentsCallout />
+
+## Other agents
+
+<OtherAgents currentSlug="opencode" />

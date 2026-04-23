@@ -1,0 +1,129 @@
+---
+// Simple list of Cloudflare MCP servers.
+// Renders each server as an orange name (+ optional "bundled" tag) followed
+// by a short description.
+//
+// Sources:
+//   • Code Mode API server — https://github.com/cloudflare/mcp (README + /.mcp.json)
+//   • Domain-specific servers — https://github.com/cloudflare/mcp-server-cloudflare
+//   • Plugin bundle — https://github.com/cloudflare/skills (/.mcp.json)
+//
+// When new servers are added upstream, add them here.
+
+interface McpServer {
+	/** Server name as it appears in JSON config (e.g. `"cloudflare-api"`). */
+	name: string;
+	/** One-line purpose, sourced from the upstream README. */
+	description: string;
+	/** True if this server is pre-registered by the cloudflare/skills plugin. */
+	bundled?: boolean;
+}
+
+interface Props {
+	/** Whether to show the "bundled" chip. Only relevant for plugin-based agents (Claude Code, Cursor). */
+	showBundled?: boolean;
+}
+
+const { showBundled = false } = Astro.props;
+
+const SERVERS: McpServer[] = [
+	{
+		name: "cloudflare-api",
+		description:
+			"Entire Cloudflare API (2,500+ endpoints) in ~1,000 tokens via Code Mode.",
+		bundled: true,
+	},
+	{
+		name: "cloudflare-docs",
+		description: "Up-to-date Cloudflare documentation and reference.",
+		bundled: true,
+	},
+	{
+		name: "cloudflare-bindings",
+		description:
+			"Build Workers applications with storage, AI, and compute primitives.",
+		bundled: true,
+	},
+	{
+		name: "cloudflare-builds",
+		description: "Manage and get insights into Workers builds.",
+		bundled: true,
+	},
+	{
+		name: "cloudflare-observability",
+		description: "Debug and analyze application logs and analytics.",
+		bundled: true,
+	},
+	{
+		name: "cloudflare-radar",
+		description:
+			"Global Internet traffic insights, trends, URL scans, and utilities.",
+	},
+	{
+		name: "cloudflare-containers",
+		description: "Spin up a sandbox development environment.",
+	},
+	{
+		name: "cloudflare-browser",
+		description:
+			"Fetch web pages, convert them to markdown, and take screenshots.",
+	},
+	{
+		name: "cloudflare-logpush",
+		description: "Quick summaries for Logpush job health.",
+	},
+	{
+		name: "cloudflare-ai-gateway",
+		description:
+			"Search AI Gateway logs and inspect prompts, responses, and token usage.",
+	},
+	{
+		name: "cloudflare-autorag",
+		description: "List and search documents on your AutoRAGs.",
+	},
+	{
+		name: "cloudflare-auditlogs",
+		description: "Query audit logs and generate reports for review.",
+	},
+	{
+		name: "cloudflare-dns-analytics",
+		description:
+			"Optimize DNS performance and debug issues based on current setup.",
+	},
+	{
+		name: "cloudflare-dex",
+		description:
+			"Digital Experience Monitoring — insights on critical applications.",
+	},
+	{
+		name: "cloudflare-casb",
+		description:
+			"Cloudflare One CASB — identify SaaS security misconfigurations.",
+	},
+	{
+		name: "cloudflare-graphql",
+		description: "Query analytics data through Cloudflare's GraphQL API.",
+	},
+];
+---
+
+<ul class="agent-simple-list">
+	{
+		SERVERS.map((s) => (
+			<li class="agent-simple-item">
+				<span class="agent-simple-name">
+					{s.name}
+					{showBundled && s.bundled && (
+						<span
+							class="agent-simple-tag"
+							title="Included in the cloudflare/skills plugin"
+						>
+							bundled
+						</span>
+					)}
+				</span>
+				<span class="agent-simple-desc">{s.description}</span>
+			</li>
+		))
+	}
+</ul>

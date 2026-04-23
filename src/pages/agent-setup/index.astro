@@ -1,0 +1,53 @@
+---
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import type { StarlightPageProps } from "@astrojs/starlight/props";
+import CatalogWithFilter from "~/components/agent-setup/CatalogWithFilter.astro";
+import AgentComparison from "~/components/agent-setup/AgentComparison.astro";
+import AgentPrimer from "~/components/agent-setup/AgentPrimer.astro";
+import { AGENTS } from "~/components/agent-setup/agents";
+
+import "~/styles/agent-setup.css";
+
+const agents = AGENTS;
+
+const props = {
+	frontmatter: {
+		title: "Agent setup",
+		description:
+			"Install an agent of your choice, connect skills and MCP servers, and start deploying to Cloudflare — all from your editor or terminal.",
+		template: "splash",
+	},
+	hideBreadcrumbs: true,
+} as StarlightPageProps;
+---
+
+<StarlightPage {...props}>
+	<p class="agent-setup-lede">
+		Install an agent of your choice, connect Skills and MCP servers, and start
+		deploying to Cloudflare — all from your editor or terminal.
+	</p>
+
+	<CatalogWithFilter agents={agents} />
+
+	<div class="agent-setup-section" style="margin-top: 5.5rem;">
+		<div class="agent-setup-section-header">
+			<h2>Compare agents</h2>
+			<p>Capabilities, pricing, and context approaches compared.</p>
+		</div>
+		<AgentComparison agents={agents} />
+	</div>
+
+	<div class="agent-setup-section" style="margin-top: 5.5rem;">
+		<div class="agent-setup-section-header">
+			<h2>Understanding agents</h2>
+			<p>Common types, concepts, and tradeoffs.</p>
+		</div>
+		<AgentPrimer />
+	</div>
+</StarlightPage>
+
+<style>
+	:root {
+		--sl-content-width: 1200px !important;
+	}
+</style>

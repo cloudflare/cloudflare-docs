@@ -1,0 +1,38 @@
+---
+{}
+---
+
+import { Tabs, TabItem, Steps, DashButton } from "~/components";
+
+<Tabs syncKey="dashNewNav">
+  <TabItem label="New dashboard" icon="rocket">
+    <Steps>
+      1. In the Cloudflare dashboard, go to the **Security Settings** page.
+
+          <DashButton url="/?to=/:account/:zone/security/settings" />
+      2. Filter by **Bot traffic**.
+      3. Go to **Super Bot fight mode**.
+      4. Turn **Super Bot fight mode** on.
+      5. Choose how your domain should respond to various types of traffic by selecting the associated edit icon:
+
+          - For more details on verified bots, refer to [Verified Bots](/bots/concepts/bot/verified-bots/).
+          - For more details on supported file types, refer to [Static resource protection](/bots/additional-configurations/static-resources/).
+          - For more details on invisible code injection, refer to [JavaScript detections](/bots/additional-configurations/javascript-detections/).
+          - For more details on WordPress optimization, refer to [Super Bot Fight Mode for WordPress](/bots/troubleshooting/wordpress-loopback-issue/).
+
+    </Steps>
+  </TabItem>
+  <TabItem label="Old dashboard">
+    <Steps>
+      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
+      2. Go to **Security** > **Bots**.
+      3. Select **Configure Super Bot Fight Mode**.
+      4. Choose how your domain should respond to various types of traffic:
+
+          - For more details on verified bots, refer to [Verified Bots](/bots/concepts/bot/verified-bots/).
+          - For more details on supported file types, refer to [Static resource protection](/bots/additional-configurations/static-resources/).
+          - For more details on invisible code injection, refer to [JavaScript detections](/bots/additional-configurations/javascript-detections/).
+          - For more details on WordPress optimization, refer to [Super Bot Fight Mode for WordPress](/bots/troubleshooting/wordpress-loopback-issue/).
+    </Steps>
+  </TabItem>
+</Tabs>

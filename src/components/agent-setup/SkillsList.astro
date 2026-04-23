@@ -1,0 +1,67 @@
+---
+// Simple list of Cloudflare Skills shipped by the cloudflare/skills plugin.
+// Renders each Skill as an orange name followed by a short description.
+//
+// Descriptions are copied verbatim from the upstream README at
+// https://github.com/cloudflare/skills. Keep this list in sync with that file
+// when new Skills are added.
+
+interface Skill {
+	name: string;
+	description: string;
+}
+
+const SKILLS: Skill[] = [
+	{
+		name: "cloudflare",
+		description:
+			"Comprehensive platform skill covering Workers, Pages, storage (KV, D1, R2), AI (Workers AI, Vectorize, Agents SDK), networking (Tunnel, Spectrum), security (WAF, DDoS), and IaC (Terraform, Pulumi).",
+	},
+	{
+		name: "agents-sdk",
+		description:
+			"Building stateful AI agents with state, scheduling, RPC, MCP servers, email, and streaming chat.",
+	},
+	{
+		name: "durable-objects",
+		description:
+			"Stateful coordination (chat rooms, games, booking), RPC, SQLite, alarms, WebSockets.",
+	},
+	{
+		name: "sandbox-sdk",
+		description:
+			"Secure code execution for AI code execution, code interpreters, CI/CD systems, and interactive dev environments.",
+	},
+	{
+		name: "wrangler",
+		description:
+			"Deploying and managing Workers, KV, R2, D1, Vectorize, Queues, Workflows.",
+	},
+	{
+		name: "web-perf",
+		description:
+			"Auditing Core Web Vitals (FCP, LCP, TBT, CLS), render-blocking resources, network chains.",
+	},
+	{
+		name: "building-mcp-server-on-cloudflare",
+		description:
+			"Building remote MCP servers with tools, OAuth, and deployment.",
+	},
+	{
+		name: "building-ai-agent-on-cloudflare",
+		description:
+			"Building AI agents with state, WebSockets, and tool integration.",
+	},
+];
+---
+
+<ul class="agent-simple-list">
+	{
+		SKILLS.map((s) => (
+			<li class="agent-simple-item">
+				<span class="agent-simple-name">{s.name}</span>
+				<span class="agent-simple-desc">{s.description}</span>
+			</li>
+		))
+	}
+</ul>
