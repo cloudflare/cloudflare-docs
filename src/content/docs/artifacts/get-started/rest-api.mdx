@@ -75,8 +75,7 @@ The response resembles the following:
 		"description": null,
 		"default_branch": "main",
 		"remote": "https://{account_id}.artifacts.cloudflare.net/git/default/starter-repo.git",
-		"token": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000",
-		"token_expires_at": "<ISO_TIMESTAMP>"
+		"token": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000"
 	},
 	"success": true,
 	"errors": [],
@@ -85,6 +84,8 @@ The response resembles the following:
 ```
 
 The REST control-plane base URL and the returned Git remote use different hosts. Use the exact `result.remote` value for Git operations. In that value, `{account_id}` is your Cloudflare account ID.
+
+The returned token encodes its expiry directly in the `?expires=` suffix.
 
 Copy the `remote` and `token` values from `result` into local shell variables:
 

@@ -50,7 +50,9 @@ export ARTIFACTS_REMOTE=$(printf '%s' "$IMPORT_RESPONSE" | jq -r '.result.remote
 export ARTIFACTS_TOKEN=$(printf '%s' "$IMPORT_RESPONSE" | jq -r '.result.token')
 ```
 
-The response includes the new Artifacts repo metadata, including `result.remote`, `result.token`, and `result.token_expires_at`.
+The response includes the new Artifacts repo metadata, including `result.remote` and `result.token`.
+
+The token encodes its expiry directly in the `?expires=` suffix.
 
 Treat `result.token` as a secret. Do not log it or store it in a long-lived remote URL unless your workflow requires it.
 

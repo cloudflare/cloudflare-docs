@@ -79,12 +79,13 @@ async function createRepo(artifacts: Artifacts) {
 		name: created.name,
 		remote: created.remote,
 		initialToken: created.token,
-		tokenExpiresAt: created.tokenExpiresAt,
 	};
 }
 ```
 
 </TypeScriptExample>
+
+The returned token encodes its expiry directly in the `?expires=` suffix.
 
 ### `get(name)`
 
@@ -159,12 +160,13 @@ async function importFromGitHub(artifacts: Artifacts) {
 		name: imported.name,
 		remote: imported.remote,
 		token: imported.token,
-		tokenExpiresAt: imported.tokenExpiresAt,
 	};
 }
 ```
 
 </TypeScriptExample>
+
+Imported repos return the same create-style token format. The token encodes its expiry directly in the `?expires=` suffix.
 
 ### `delete(name)`
 

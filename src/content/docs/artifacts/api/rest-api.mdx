@@ -154,7 +154,6 @@ export interface CreateRepoResult {
 	default_branch: string;
 	remote: string;
 	token: ArtifactToken;
-	token_expires_at: string;
 }
 
 export type CreateRepoResponse = ApiEnvelope<CreateRepoResult>;
@@ -180,14 +179,17 @@ curl --request POST "$ARTIFACTS_BASE_URL/repos" \
 		"description": "Repository for automation experiments",
 		"default_branch": "main",
 		"remote": "https://{account_id}.artifacts.cloudflare.net/git/default/starter-repo.git",
-		"token": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000",
-		"token_expires_at": "<ISO_TIMESTAMP>"
+		"token": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000"
 	},
 	"success": true,
 	"errors": [],
 	"messages": []
 }
 ```
+
+The token encodes its expiry directly in the `?expires=` suffix.
+
+This change applies to create-style repo responses such as create, fork, and import. The separate `POST /tokens` route still returns `expires_at` alongside the plaintext token.
 
 ### List repos
 
@@ -363,7 +365,6 @@ curl --request POST "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO/fork" \
 		"default_branch": "main",
 		"remote": "https://{account_id}.artifacts.cloudflare.net/git/default/starter-repo-copy.git",
 		"token": "art_v1_89abcdef0123456789abcdef0123456789abcdef?expires=1760003600",
-		"token_expires_at": "<ISO_TIMESTAMP>",
 		"objects": 128
 	},
 	"success": true,
@@ -417,8 +418,7 @@ curl --request POST "$ARTIFACTS_BASE_URL/repos/react-mirror/import" \
 		"description": null,
 		"default_branch": "main",
 		"remote": "https://{account_id}.artifacts.cloudflare.net/git/default/react-mirror.git",
-		"token": "art_v1_fedcba9876543210fedcba9876543210fedcba98?expires=1760007200",
-		"token_expires_at": "<ISO_TIMESTAMP>"
+		"token": "art_v1_fedcba9876543210fedcba9876543210fedcba98?expires=1760007200"
 	},
 	"success": true,
 	"errors": [],

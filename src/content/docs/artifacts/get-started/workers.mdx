@@ -126,7 +126,6 @@ export default {
 				name: created.name,
 				remote: created.remote,
 				token: created.token,
-				tokenExpiresAt: created.tokenExpiresAt,
 			});
 		}
 
@@ -175,12 +174,13 @@ The response resembles the following:
 {
 	"name": "starter-repo",
 	"remote": "https://{account_id}.artifacts.cloudflare.net/git/default/starter-repo.git",
-	"token": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000",
-	"tokenExpiresAt": "<ISO_TIMESTAMP>"
+	"token": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000"
 }
 ```
 
 Use the exact `remote` value from the response. In that value, `{account_id}` is your Cloudflare account ID.
+
+The returned token encodes its expiry directly in the `?expires=` suffix.
 
 Copy the `remote` and `token` values into local shell variables:
 
