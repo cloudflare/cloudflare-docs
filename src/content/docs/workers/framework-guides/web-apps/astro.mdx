@@ -220,8 +220,6 @@ Wrangler automatically provisions a KV namespace named `SESSION` when you deploy
 ---
 export const prerender = false;
 const cart = await Astro.session?.get("cart");
-products:
-  - workers
 ---
 
 <a href="/checkout">{cart?.length ?? 0} items</a>
