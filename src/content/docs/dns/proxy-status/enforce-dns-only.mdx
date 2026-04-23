@@ -14,7 +14,6 @@ This setting is intended for emergency situations only, such as during an outage
 
 :::caution
 Enabling this setting exposes your origin IP addresses and removes all Cloudflare protections — including DDoS mitigation, WAF, caching, and all other proxy-based features — for every zone in your account. Use with extreme caution and only after proper [preparation](#preparation).
-
 :::
 
 ## Key characteristics
@@ -24,7 +23,7 @@ Enabling this setting exposes your origin IP addresses and removes all Cloudflar
 - API-only: Available through the API only, not in the Cloudflare dashboard.
 
 :::note[Auto TTL for proxied records]
-Due to DNS caching by recursive resolvers, the transitions from proxied to DNS-only and back may not be instantaneous. Since all proxied records have a TTL of **Auto**, this value (5 minutes by default) determines how long resolvers may continue to serve Cloudflare's anycast IPs or your origin IP addresses.
+Due to DNS caching by recursive resolvers, the transitions from proxied to DNS-only and back may not be instantaneous. Since all proxied records have a TTL of **Auto**, this value (five minutes by default) determines how long resolvers may continue to serve Cloudflare's anycast IPs or your origin IP addresses.
 :::
 
 ## Preparation
