@@ -1,0 +1,78 @@
+---
+title: Supported resource types
+pcx_content_type: reference
+sidebar:
+  order: 2
+description: Resource types that support tagging and their required fields.
+---
+
+The Tagging API supports 7 resource types across account-level and zone-level scopes.
+
+## Resource type table
+
+| Resource type | Scope | Required extra fields | Description |
+| --- | --- | --- | --- |
+| `account` | Account | None | The Cloudflare account itself |
+| `workers_script` | Account | None | Cloudflare Workers script |
+| `workers_script_version` | Account | `script_name` | Specific version of a Workers script |
+| `zone` | Zone | None | DNS zone |
+| `managed_client_certificates` | Zone | None | Managed client certificate |
+| `custom_hostnames` | Zone | None | Custom hostname (SSL for SaaS) |
+| `access_application_policy` | Zone | `access_application_id` | Cloudflare Access application policy |
+
+## Extra fields
+
+### `workers_script_version`
+
+Include the `script_name` field in both request bodies and query parameters:
+
+```bash
+# GET
+curl -X GET "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/tags?resource_type=workers_script_version&resource_id=$VERSION_ID&script_name=my-worker" \
+  -H "Authorization: Bearer $API_TOKEN"
+
+# PUT
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/tags" \
+  -H "Authorization: Bearer $API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "resource_type": "workers_script_version",
+    "resource_id": "'"$VERSION_ID"'",
+    "script_name": "my-worker",
+    "tags": {
+      "version": "1.2.3",
+      "environment": "staging"
+    }
+  }'
+```
+
+### `access_application_policy`
+
+Include the `access_application_id` field:
+
+```bash
+# GET
+curl -X GET "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/tags?resource_type=access_application_policy&resource_id=$POLICY_ID&access_application_id=$APP_ID" \
+  -H "Authorization: Bearer $API_TOKEN"
+
+# PUT
+curl -X PUT "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/tags" \
+  -H "Authorization: Bearer $API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "resource_type": "access_application_policy",
+    "resource_id": "'"$POLICY_ID"'",
+    "access_application_id": "'"$APP_ID"'",
+    "tags": {
+      "sensitivity": "high",
+      "team": "security"
+    }
+  }'
+```
+
+## Account-level vs zone-level
+
+- **Account-level** resources (`account`, `workers_script`, `workers_script_version`) use `/accounts/{account_id}/tags` endpoints.
+- **Zone-level** resources (`zone`, `managed_client_certificates`, `custom_hostnames`, `access_application_policy`) use `/zones/{zone_id}/tags` endpoints.
+
+The request body structure and tag filtering behavior are identical across both scopes.

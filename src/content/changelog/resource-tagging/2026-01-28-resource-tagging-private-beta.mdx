@@ -1,0 +1,23 @@
+---
+title: Resource Tagging enters private beta
+description: Enterprise customers can now attach key-value metadata to Cloudflare resources via API.
+date: 2026-01-28
+---
+
+Resource Tagging is now available in private beta for Enterprise customers. The feature enables attaching custom key-value metadata to Cloudflare resources for organization, access control, and billing attribution.
+
+### What's included
+
+- **7 supported resource types** -- `account`, `workers_script`, `workers_script_version`, `zone`, `managed_client_certificates`, `custom_hostnames`, and `access_application_policy`.
+- **Tag filtering** -- Query tagged resources with AND/OR logic, negation, and key-only matching via the `tag` query parameter.
+- **Account and zone-level endpoints** -- Full CRUD operations for both scopes.
+- **Account Owned Token (AOT) authentication** -- Tags use account-level tokens independent of individual users, ensuring automation workflows survive user lifecycle changes.
+
+### Limitations
+
+- API-only access (no Dashboard UI).
+- `PUT` replaces all tags on a resource (no partial update).
+- `DELETE` removes all tags (no single-tag delete).
+- Querying tags for an untagged resource returns `500` instead of `404`.
+
+To get started, refer to the [Resource Tagging documentation](/resource-tagging/).

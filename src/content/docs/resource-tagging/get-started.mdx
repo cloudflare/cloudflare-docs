@@ -1,0 +1,103 @@
+---
+title: Get started
+pcx_content_type: get-started
+sidebar:
+  order: 2
+description: Enable Resource Tagging for a customer account and make your first API calls.
+---
+
+This guide walks you through enabling tagging for an Enterprise account and verifying it works.
+
+## Prerequisites
+
+Before enabling Resource Tagging, ensure the account meets these requirements:
+
+- **Enterprise plan** -- Resource Tagging is only available to Enterprise customers.
+- **Super Admin access** -- At least one user with the Super Administrator, Workers Admin, or Tag Admin role. These roles can create, update, and delete tags.
+- **API familiarity** -- The feature is API-only during the private beta. Customers must be comfortable making authenticated HTTP requests.
+
+## 1. Request enablement
+
+Contact PM Wesley Evans to request tagging enablement for a customer account:
+
+- **G-Chat**: Join the "Tags for Cloudflare" space for real-time support
+- **Email**: wesley.evans@cloudflare.com
+
+Provide the following:
+
+- **Account ID** -- The customer's Cloudflare account ID, found in the Dashboard URL or via `GET /accounts`.
+- **Use case** -- A brief description of how the customer plans to use tagging (1-2 sentences).
+- **Products to be tagged** -- Which resource types the customer plans to tag initially (for example, `workers_script`, `zone`, `custom_hostnames`).
+
+Wesley will enable the feature via [gates.cloudflare.com](https://gates.cloudflare.com). Typical turnaround is 1-2 business days.
+
+## 2. Verify tagging is enabled
+
+After receiving enablement confirmation, test the API:
+
+```bash
+curl -X GET "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/tags/keys" \
+  -H "Authorization: Bearer $API_TOKEN" \
+  -H "Content-Type: application/json"
+```
+
+### Interpreting the response
+
+| Response | Meaning | Action |
+| --- | --- | --- |
+| **200 OK** with `{"success": true, "result": [...]}` | Tagging is enabled. An empty array is normal if no tags exist yet. | Proceed with onboarding. |
+| **403** mentioning "permission" or "role" | The caller lacks required permissions. This is not a gating issue. | Verify the caller has Super Admin role or the token has `#com.cloudflare.api.account.tag.list` scope. |
+| **403** mentioning "feature" or "gate" | Tagging is not enabled for this account. | Confirm the Account ID matches what was provided to Wesley. Contact the Tags for Cloudflare G-Chat space. |
+| **401 Unauthorized** | Authentication failed. | Verify the token is valid, not expired, and formatted correctly in the `Authorization: Bearer` header. |
+| Any other response | Unexpected error. | Capture the full response body and escalate to the Tags for Cloudflare G-Chat space with the Account ID, request details, and timestamp. |
+
+:::note
+Gate changes typically propagate within seconds, but may take up to 15 minutes in rare cases. If you receive a gating error immediately after enablement, wait briefly and retry.
+:::
+
+## 3. Create your first tags
+
+Set tags on a resource using `PUT`:
+
+```bash
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/tags" \
+  -H "Authorization: Bearer $API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "resource_type": "workers_script",
+    "resource_id": "'"$RESOURCE_ID"'",
+    "tags": {
+      "environment": "production",
+      "team": "platform"
+    }
+  }'
+```
+
+Then retrieve the tags:
+
+```bash
+curl -X GET "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/tags?resource_type=workers_script&resource_id=$RESOURCE_ID" \
+  -H "Authorization: Bearer $API_TOKEN" \
+  -H "Content-Type: application/json"
+```
+
+## 4. List tagged resources
+
+Query all tagged resources in the account, optionally filtering by tag:
+
+```bash
+# All tagged resources
+curl -X GET "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/tags/resources" \
+  -H "Authorization: Bearer $API_TOKEN"
+
+# Filter: only resources with environment=production
+curl -X GET "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/tags/resources?tag=environment=production" \
+  -H "Authorization: Bearer $API_TOKEN"
+```
+
+## Next steps
+
+- Learn the full [tag filtering syntax](/resource-tagging/how-to/filter-resources/) for complex queries.
+- Understand the [GET, merge, PUT workflow](/resource-tagging/how-to/manage-tags/#add-a-single-tag) for modifying individual tags.
+- Review [supported resource types](/resource-tagging/reference/resource-types/) and their required fields.
+- Review [API limits and validation rules](/resource-tagging/reference/limits/).
