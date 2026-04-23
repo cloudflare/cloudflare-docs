@@ -4,6 +4,8 @@ title: Fetch
 head: []
 description: An interface for asynchronously fetching resources via HTTP
   requests inside of a Worker.
+products:
+  - workers
 ---
 
 import { TabItem, Tabs } from "~/components";
@@ -88,6 +90,8 @@ class Default(WorkerEntrypoint):
       the origin before resonding.
   - An object that defines the content and behavior of the request.
 
+products:
+  - workers
 ---
 
 ## How the `Accept-Encoding` header is handled

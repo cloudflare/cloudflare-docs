@@ -5,6 +5,8 @@ sidebar:
   order: 2
 tags: ["ssg", "full-stack", "Astro"]
 description: Create an Astro application and deploy it to Cloudflare Workers with Workers Assets.
+products:
+  - workers
 ---
 
 import {
@@ -218,6 +220,8 @@ Wrangler automatically provisions a KV namespace named `SESSION` when you deploy
 ---
 export const prerender = false;
 const cart = await Astro.session?.get("cart");
+products:
+  - workers
 ---
 
 <a href="/checkout">{cart?.length ?? 0} items</a>
