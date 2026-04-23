@@ -25,7 +25,7 @@ Inbound TLS 1.3 (including QUIC) from end-user clients to Cloudflare's edge.
 | Protection | Status |
 | --- | --- |
 | Key agreement | ✅ X25519MLKEM768 |
-| Signatures | Not yet — planned via [Merkle Tree Certificates](https://blog.cloudflare.com/bootstrap-mtc/) |
+| Signatures | 📝 Planned via [Merkle Tree Certificates](https://datatracker.ietf.org/doc/draft-ietf-plants-merkle-tree-certs/) |
 
 Reference: [PQC for all websites and APIs](https://blog.cloudflare.com/post-quantum-for-all/).
 
@@ -41,6 +41,8 @@ Service-to-service TLS connections between Cloudflare data centers and internal 
 | Signatures | Not yet |
 
 Reference: [PQC generally available](https://blog.cloudflare.com/post-quantum-cryptography-ga/), [Roadmap](https://blog.cloudflare.com/post-quantum-roadmap/).
+
+Most internal connections have been migrated to X25519MLKEM768. A long tail of services is still in the process of being upgraded.
 
 ## Cloudflare to origin
 
@@ -102,12 +104,6 @@ IKEv2 key exchange for IPsec tunnels between third-party branch connectors and C
 | Signatures | Not yet |
 
 Reference: [PQC SASE](https://blog.cloudflare.com/post-quantum-sase/), [GRE and IPsec tunnels](/cloudflare-wan/reference/gre-ipsec-tunnels/), [draft-ietf-ipsecme-ikev2-mlkem](https://datatracker.ietf.org/doc/draft-ietf-ipsecme-ikev2-mlkem/).
-
-:::note
-- ✅ means post-quantum cryptography is deployed.
-- 🚧 means partial coverage — a migration is in progress and not all paths are post-quantum secured yet.
-- "Not yet" means post-quantum cryptography of the indicated class is not yet deployed. For signatures this means connections still rely on classical (RSA or ECDSA) signatures for authentication today. Refer to the [roadmap post](https://blog.cloudflare.com/post-quantum-roadmap/) for the intended migration order.
-:::
 
 ## Contributing
 

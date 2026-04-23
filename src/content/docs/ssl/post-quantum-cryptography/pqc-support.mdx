@@ -16,7 +16,7 @@ The sections below summarize third-party software support for the post-quantum a
 Two classes of algorithm are tracked:
 
 - **Key agreement** — the [X25519MLKEM768](https://datatracker.ietf.org/doc/draft-ietf-tls-ecdhe-mlkem/) hybrid, which protects against [harvest-now-decrypt-later](https://en.wikipedia.org/wiki/Harvest_now,_decrypt_later) attacks on encrypted traffic. Refer to [hybrid key agreement](/ssl/post-quantum-cryptography/#hybrid-key-agreement) for background.
-- **Signatures** — [ML-DSA](https://csrc.nist.gov/pubs/fips/204/final) (FIPS 204), the post-quantum digital signature algorithm standardized by NIST. Defined with three parameter sets (ML-DSA-44, ML-DSA-65, ML-DSA-87), of which **ML-DSA-44 is the variant Cloudflare is currently evaluating for deployment**. Refer to [post-quantum signatures](/ssl/post-quantum-cryptography/#post-quantum-signatures) for background.
+- **Signatures** — [ML-DSA](https://csrc.nist.gov/pubs/fips/204/final), the post-quantum digital signature algorithm standardized by NIST. Defined with three parameter sets (ML-DSA-44, ML-DSA-65, ML-DSA-87), of which **ML-DSA-44 is the variant Cloudflare is currently evaluating for deployment**. Refer to [post-quantum signatures](/ssl/post-quantum-cryptography/#post-quantum-signatures) for background.
 
 :::caution
 The listings below are for reference only. Responsibility for third-party software lies with their respective maintainers. Use them at your own discretion.
@@ -24,25 +24,39 @@ The listings below are for reference only. Responsibility for third-party softwa
 
 ## Browsers
 
-### Brave and Opera
+Browsers are grouped by the underlying rendering engine and TLS stack. Browsers sharing an engine generally share the same post-quantum support, but derivative browsers can lag the upstream engine or disable post-quantum features by policy. Verify behavior in the specific browser version you care about before assuming derivative support. [Cloudflare Radar's browser support check](https://radar.cloudflare.com/post-quantum#browser-support) is a quick way to confirm whether a given browser negotiates post-quantum key agreement with Cloudflare.
 
-- **Key agreement:** ✅ Default in recent versions
+### Chromium-based (BoringSSL)
+
+#### Brave
+
+- **Key agreement:** ✅ Default in Brave 1.73.86+ (Chromium 131)
 - **Signatures:** Not yet
-- **Reference:** [Brave](https://brave.com), [Opera](https://opera.com)
+- **Reference:** [Brave](https://brave.com)
 
-### Chrome
+#### Chrome
 
 - **Key agreement:** ✅ Default in Chrome 131+
-- **Signatures:** Not yet
-- **Reference:** [Chrome](https://www.google.com/chrome/)
+- **Signatures:** 📝 Planned via [Merkle Tree Certificates](https://datatracker.ietf.org/doc/draft-ietf-plants-merkle-tree-certs/)
+- **Reference:** [Chrome](https://www.google.com/chrome/), [Cultivating a robust and efficient quantum-safe HTTPS](https://security.googleblog.com/2026/02/cultivating-robust-and-efficient.html)
 
-### Edge
+Chrome is not planning to add traditional X.509 post-quantum certificates to the public Chrome Root Store. Instead, Chrome is developing MTCs in the IETF PLANTS working group, currently in a feasibility study phase with Cloudflare.
+
+#### Edge
 
 - **Key agreement:** ✅ Default in Edge 131+
 - **Signatures:** Not yet
 - **Reference:** [Edge](https://microsoft.com/edge/)
 
-### Firefox
+#### Opera
+
+- **Key agreement:** ✅ Default in Opera 116+ (Chromium 131)
+- **Signatures:** Not yet
+- **Reference:** [Opera](https://opera.com)
+
+### Gecko-based (Firefox / NSS)
+
+#### Firefox
 
 - **Key agreement:** ✅ Default in Firefox 132+ (Desktop), 145+ (Android)
 - **Signatures:** Not yet
@@ -50,7 +64,17 @@ The listings below are for reference only. Responsibility for third-party softwa
 
 For QUIC/HTTP3, Firefox 135+ (Desktop).
 
-### Safari
+#### Tor Browser
+
+- **Key agreement:** ✅ Default in Tor Browser 15.0+
+- **Signatures:** Not yet
+- **Reference:** [Tor Browser](https://www.torproject.org/)
+
+Based on Firefox ESR with additional hardening.
+
+### WebKit-based (Safari)
+
+#### Safari
 
 - **Key agreement:** ✅ Default in Safari 26+
 - **Signatures:** Not yet
@@ -58,61 +82,53 @@ For QUIC/HTTP3, Firefox 135+ (Desktop).
 
 System-wide in iOS 26, macOS Tahoe 26, and other [Apple operating systems](https://support.apple.com/122756).
 
-### Tor Browser
-
-- **Key agreement:** ✅ Default in Tor Browser 15.0+
-- **Signatures:** Not yet
-- **Reference:** [Tor Browser](https://www.torproject.org/)
-
 ## Libraries
 
-### BoringSSL
+This section splits into the foundational native libraries (written in C/C++) and the language bindings and higher-level libraries that build on top of them.
+
+### Native libraries
+
+#### AWS-LC
 
 - **Key agreement:** ✅
-- **Signatures:** ✅ (ML-DSA-44, 65, 87)
+- **Signatures:** ✅
+- **Reference:** [aws-lc](https://github.com/aws/aws-lc), [Post-Quantum Cryptography in AWS-LC](https://github.com/aws/aws-lc/blob/main/crypto/fipsmodule/PQREADME.md)
+
+ML-KEM-512/768/1024 and hybrids `X25519MLKEM768`, `SecP256r1MLKEM768`, `SecP384r1MLKEM1024`; ML-DSA-44/65/87.
+
+#### BoringSSL
+
+- **Key agreement:** ✅
+- **Signatures:** ✅
 - **Reference:** [BoringSSL](https://boringssl.googlesource.com/boringssl/)
 
-### Botan C++
+ML-DSA-44/65/87.
+
+#### Botan C++
 
 - **Key agreement:** ✅ Default in TLS since 3.7.0
-- **Signatures:** ✅ 3.6.0+ (ML-DSA-44, 65, 87)
+- **Signatures:** ✅ 3.6.0+
 - **Reference:** [Botan](https://botan.randombit.net/)
 
-### CIRCL (Cloudflare)
+ML-DSA-44/65/87.
 
-- **Key agreement:** ✅ (ML-KEM)
-- **Signatures:** ✅ 1.5.0+ via [`sign/mldsa`](https://github.com/cloudflare/circl/tree/main/sign/mldsa) (ML-DSA-44, 65, 87)
-- **Reference:** [CIRCL](https://github.com/cloudflare/circl)
-
-### GnuTLS
+#### GnuTLS
 
 - **Key agreement:** ✅ 3.8.9+ compiled with leancrypto 1.2.0+ (or 3.8.8–3.8.9 with liboqs 0.11.0+)
-- **Signatures:** ✅ 3.8.10+ — usable in TLS handshakes (ML-DSA-44, 65, 87)
+- **Signatures:** ✅ 3.8.10+ — usable in TLS handshakes
 - **Reference:** [GnuTLS](https://www.gnutls.org)
 
-Supports all three ML-DSA private key encodings (seed, expandedKey, both).
+Hybrids `X25519MLKEM768` and `SecP256r1MLKEM768` from 3.8.8+; `SecP384r1MLKEM1024` added in 3.8.9+. ML-DSA-44/65/87.
 
-### Go
+#### OpenSSL
 
-- **Key agreement:** ✅ Default in Go 1.24+
-- **Signatures:** ⚠️ Internal implementation in Go 1.26; public [`crypto/mldsa`](https://github.com/golang/go/issues/77626) proposed for Go 1.27
-- **Reference:** [Go](https://go.dev)
+- **Key agreement:** ✅ Default in 3.5.0+
+- **Signatures:** ✅ 3.5.0+
+- **Reference:** [OpenSSL](https://www.openssl.org/)
 
-Cloudflare's [fork of Go](https://github.com/cloudflare/go) also supports key agreement.
+Hybrid `X25519MLKEM768` in 3.5.0+; `SecP256r1MLKEM768` and `curveSM2MLKEM768` added in 3.6.0+. ML-DSA-44/65/87.
 
-### Java (OpenJDK)
-
-- **Key agreement:** ✅ Default in Java 27+ ([JEP 527](https://openjdk.org/jeps/527))
-- **Signatures:** ⚠️ Java 24+ provides ML-DSA APIs ([JEP 497](https://openjdk.org/jeps/497)) but they are not yet integrated into `javax.net.ssl` TLS
-- **Reference:** [OpenJDK](https://openjdk.org/)
-
-### Node.js
-
-- **Key agreement:** ✅ Default in 24.5.0+ and 22.20.0+ ([backported](https://nodejs.org/en/blog/release/v22.20.0#openssl-updated-to-352))
-- **Signatures:** ✅ 24.5.0+ (via bundled OpenSSL 3.5)
-- **Reference:** [Node.js](https://nodejs.org/)
-
-### Open Quantum Safe
+#### Open Quantum Safe
 
 - **Key agreement:** ✅ liboqs 0.10.0+, oqs-provider 0.7.0+
 - **Signatures:** ✅ liboqs 0.14.0+, oqs-provider 0.9.0+
@@ -120,27 +136,79 @@ Cloudflare's [fork of Go](https://github.com/cloudflare/go) also supports key ag
 
 Reference implementations, not recommended for production.
 
-### OpenSSL
+#### s2n-tls
 
-- **Key agreement:** ✅ Default in 3.5.0+
-- **Signatures:** ✅ 3.5.0+ (ML-DSA-44, 65, 87)
-- **Reference:** [OpenSSL](https://www.openssl.org/)
+- **Key agreement:** ✅
+- **Signatures:** Not yet
+- **Reference:** [s2n-tls](https://github.com/aws/s2n-tls)
 
-Included natively. No external provider required.
+AWS's open-source TLS implementation built on [AWS-LC](#aws-lc).
 
-### RustCrypto (Rust)
+### Language bindings and higher-level libraries
 
-- **Key agreement:** ✅ [`ml-kem`](https://crates.io/crates/ml-kem) (pure Rust)
-- **Signatures:** ✅ [`ml-dsa`](https://crates.io/crates/ml-dsa) (pure Rust, ML-DSA-44, 65, 87)
+#### aws-lc-rs (Rust)
+
+- **Key agreement:** ✅
+- **Signatures:** 🚧 Behind `unstable` feature
+- **Reference:** [aws-lc-rs](https://crates.io/crates/aws-lc-rs)
+
+Rust bindings around [AWS-LC](#aws-lc); underlies [`rustls-post-quantum`](#rustls-post-quantum-rust)'s ML-DSA support. ML-KEM via [`aws-lc-rs::kem`](https://docs.rs/aws-lc-rs/latest/aws_lc_rs/kem/); ML-DSA-44/65/87 via [`unstable::signature`](https://docs.rs/aws-lc-rs/latest/aws_lc_rs/unstable/signature/).
+
+#### CIRCL (Cloudflare)
+
+- **Key agreement:** ✅
+- **Signatures:** ✅ 1.5.0+ via [`sign/mldsa`](https://github.com/cloudflare/circl/tree/main/sign/mldsa)
+- **Reference:** [CIRCL](https://github.com/cloudflare/circl)
+
+Pure-Go cryptographic primitives library. ML-KEM-512/768/1024 and ML-DSA-44/65/87.
+
+#### Go
+
+- **Key agreement:** ✅ Default in Go 1.24+
+- **Signatures:** 🚧 Internal implementation in Go 1.26; public [`crypto/mldsa`](https://github.com/golang/go/issues/77626) proposed for Go 1.27
+- **Reference:** [Go](https://go.dev)
+
+Cloudflare's [fork of Go](https://github.com/cloudflare/go) also supports key agreement via [CIRCL](#circl-cloudflare).
+
+#### Java (OpenJDK)
+
+- **Key agreement:** ✅ Default in Java 27+ ([JEP 527](https://openjdk.org/jeps/527))
+- **Signatures:** 🚧 Java 24+ provides ML-DSA APIs ([JEP 497](https://openjdk.org/jeps/497)) but they are not yet integrated into `javax.net.ssl` TLS
+- **Reference:** [OpenJDK](https://openjdk.org/)
+
+#### Node.js
+
+- **Key agreement:** ✅ Default in 24.5.0+ and 22.20.0+ ([backported](https://nodejs.org/en/blog/release/v22.20.0#openssl-updated-to-352))
+- **Signatures:** ✅ 24.5.0+
+- **Reference:** [Node.js](https://nodejs.org/)
+
+Uses bundled [OpenSSL](#openssl) 3.5. ML-DSA-44/65/87.
+
+#### RustCrypto (Rust)
+
+- **Key agreement:** ✅ [`ml-kem`](https://crates.io/crates/ml-kem)
+- **Signatures:** ✅ [`ml-dsa`](https://crates.io/crates/ml-dsa)
 - **Reference:** [RustCrypto](https://github.com/RustCrypto)
 
-### rustls (Rust)
+Pure-Rust crates, independent of [AWS-LC](#aws-lc). ML-DSA-44/65/87.
 
-- **Key agreement:** ✅ Enabled by default since rustls 0.23.27 (via [`rustls-post-quantum`](https://crates.io/crates/rustls-post-quantum))
-- **Signatures:** ⚠️ Unstable ML-DSA support in `rustls-post-quantum` (behind `aws-lc-rs-unstable`)
+#### rustls (Rust)
+
+- **Key agreement:** ✅ Enabled by default since rustls 0.23.27
+- **Signatures:** 🚧 Unstable
 - **Reference:** [rustls](https://crates.io/crates/rustls)
 
-### Zig
+TLS library built on top of [`rustls-post-quantum`](#rustls-post-quantum-rust).
+
+#### rustls-post-quantum (Rust)
+
+- **Key agreement:** ✅ `X25519MLKEM768`
+- **Signatures:** 🚧 Unstable ML-DSA support (behind `aws-lc-rs-unstable` feature)
+- **Reference:** [rustls-post-quantum](https://crates.io/crates/rustls-post-quantum)
+
+Extension crate for [rustls](#rustls-rust) that provides post-quantum algorithms using [aws-lc-rs](#aws-lc-rs-rust) under the hood.
+
+#### Zig
 
 - **Key agreement:** ✅ Zig 0.14.0+ (client)
 - **Signatures:** Not yet
