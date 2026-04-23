@@ -1,0 +1,154 @@
+---
+title: Relay mode
+pcx_content_type: get-started
+sidebar:
+  order: 1
+---
+
+In Relay mode, Cloudflare acts as the **OHTTP relay** — the trusted third party that forwards encrypted requests between your client and your application gateway server (which you operate).
+
+---
+
+## Before you begin
+
+[Contact Cloudflare](https://www.cloudflare.com/lp/privacy-edge/) to complete your Privacy Gateway setup. During onboarding, provide:
+
+1. Your gateway server URL (for example, `https://gateway.example.com/gateway`).
+2. Your key configuration endpoint URL (for example, `https://gateway.example.com/ohttp-config`).
+3. Your preferred authentication method (mTLS or pre-shared key).
+
+Cloudflare will provision your relay endpoint and provide:
+
+- Your unique gateway identifier for the relay URL.
+- Relay client certificates (if using mTLS).
+
+Your relay URL will follow this format:
+
+```txt
+https://privacy-relay.cloudflare.com/<YOUR_GATEWAY_ID>
+```
+
+---
+
+## Step 1 - Configure your gateway server
+
+You need to implement an application gateway server with OHTTP support. The gateway server is responsible for:
+
+- Generating and advertising HPKE public key configuration for clients.
+- Decrypting incoming OHTTP-encapsulated requests from the Cloudflare relay.
+- Forwarding the inner plaintext requests to their destination.
+- Encrypting the corresponding response back through the relay to the client.
+
+### Generate key configuration
+
+Your gateway must generate an HPKE key pair and expose the public key configuration at a well-known endpoint. Cloudflare recommends using the following ciphersuite:
+
+- **KEM**: DHKEM(X25519, HKDF-SHA256)
+- **KDF**: HKDF-SHA256
+- **AEAD**: AES-128-GCM
+
+Expose the key configuration at a public endpoint, for example:
+
+```txt
+https://gateway.example.com/ohttp-config
+```
+
+The response must use the `application/ohttp-keys` media type and return the binary-encoded key configuration as specified in [RFC 9458](https://datatracker.ietf.org/doc/rfc9458/).
+
+### Implement the gateway endpoint
+
+Your gateway must accept OHTTP-encapsulated requests at a designated endpoint:
+
+```txt
+POST https://gateway.example.com/gateway
+Content-Type: message/ohttp-req
+```
+
+The gateway decrypts the request body, executes the inner HTTP request, encrypts the response, and returns it with `Content-Type: message/ohttp-res`.
+
+For full protocol details, refer to the OHTTP specification sections on [public key configuration](https://datatracker.ietf.org/doc/html/rfc9458#section-3), [message encryption and decryption](https://datatracker.ietf.org/doc/html/rfc9458#section-4), and [server-specific requirements](https://datatracker.ietf.org/doc/html/rfc9458#section-5).
+
+### Resources
+
+Use the following resources for help with server configuration:
+
+- **Go**: [Sample gateway server](https://github.com/cloudflare/privacy-gateway-server-go)
+- **Rust**: [Gateway library](https://github.com/martinthomson/ohttp/tree/main/ohttp-server)
+- **JavaScript / TypeScript**: [Gateway library](https://github.com/chris-wood/ohttp-js)
+
+---
+
+## Step 2 - Configure your client
+
+Clients must:
+
+1. Fetch the gateway's public key configuration.
+2. Encrypt outbound requests using OHTTP encapsulation.
+3. Send the encrypted request to the Cloudflare relay endpoint.
+4. Decrypt the corresponding encrypted response.
+
+### Fetch the gateway key configuration
+
+Before sending requests, your client must fetch the gateway's public key configuration:
+
+```bash
+curl -s https://gateway.example.com/ohttp-config \
+  -H "Accept: application/ohttp-keys" \
+  --output gateway-config.bin
+```
+
+Cache this configuration locally and refresh it periodically (Cloudflare recommends daily rotation).
+
+### Resources
+
+Use the following resources for help with client configuration:
+
+- **Objective C**: [Sample application](https://github.com/cloudflare/privacy-gateway-client-demo)
+- **Rust**: [Client library](https://github.com/martinthomson/ohttp/tree/main/ohttp-client)
+- **JavaScript / TypeScript**: [Client library](https://github.com/chris-wood/ohttp-js)
+
+---
+
+## Step 3 - Configure relay-to-gateway authentication
+
+The Cloudflare relay must authenticate with your gateway server. Choose one of the following options:
+
+### Option 1: mTLS (recommended)
+
+Configure your gateway to require client certificates from the Cloudflare relay. [Enable mTLS](/ssl/client-certificates/enable-mtls/) between the relay and your gateway server. Cloudflare will provide the relay's client certificate during onboarding.
+
+### Option 2: Pre-shared key (for testing purposes only)
+
+Share an application-layer secret with Cloudflare to use as a bearer token. The relay includes this token in requests to your gateway.
+
+---
+
+## Step 4 - Send an OHTTP request through the relay
+
+Once you have the gateway's key configuration, encrypt your HTTP request and send it to the Cloudflare relay. The following example shows the request format (you must use an OHTTP client library to perform the actual encryption):
+
+```bash
+curl -X POST https://privacy-relay.cloudflare.com/<YOUR_GATEWAY_ID> \
+  -H "Content-Type: message/ohttp-req" \
+  -H "Proxy-Authorization: PrivateToken token=<YOUR_PAT_TOKEN>" \
+  --data-binary @encrypted-request.bin \
+  --output encrypted-response.bin
+```
+
+Replace the following placeholders:
+
+- `<YOUR_GATEWAY_ID>`: The gateway identifier provided by Cloudflare during onboarding.
+- `<YOUR_PAT_TOKEN>`: Your Privacy Pass token for client authentication (if required).
+
+The relay forwards your encrypted request to your gateway server. Your client then decrypts the response using the OHTTP context established during encryption.
+
+---
+
+## Step 5 - Review your application
+
+After configuring your client and server, review your application to ensure you are only sending intended data through the relay. Application data must not contain anything unique to an end user, as this would negate the privacy properties OHTTP provides.
+
+- Scrub identifying user data (names, email addresses, phone numbers, and similar information) from requests forwarded through Privacy Gateway.
+- Encourage users to disable crash reporting when using Privacy Gateway. Crash reports can contain sensitive user data including email addresses.
+- Where possible, encrypt application data on the client device with a key known only to the client.
+

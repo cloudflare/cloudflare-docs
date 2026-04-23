@@ -1,0 +1,18 @@
+---
+title: Limitations
+pcx_content_type: reference
+sidebar:
+  order: 4
+---
+
+## Application data responsibility
+
+Cloudflare cannot ensure that your application gateway server will not send identifying user data in responses forwarded through the relay. This includes information such as names, email addresses, and phone numbers. You are responsible for scrubbing identifying data from your application layer.
+
+## Incompatible Cloudflare products
+
+When using Privacy Gateway in Relay mode, the following Cloudflare products are not compatible with your application because Cloudflare operates only the relay and cannot inspect encrypted payload content:
+
+- [API Shield](/api-shield/): [Schema Validation](/api-shield/security/schema-validation/) and [API Discovery](/api-shield/security/api-discovery/) are not possible because Cloudflare cannot see request URLs.
+- [Cache](/cache/): Caching of application content is not possible because each request between client and gateway is end-to-end encrypted.
+- [WAF](/waf/): Rules based on request or response content are not supported because Cloudflare cannot inspect the payload.

@@ -14,42 +14,64 @@ Implements the Oblivious HTTP IETF standard to improve client privacy.
 
 </Description>
 
+
+
+
+
 <Plan type="enterprise" />
 
-[Privacy Gateway](https://blog.cloudflare.com/building-privacy-into-internet-standards-and-how-to-make-your-app-more-private-today/) is a managed service deployed on Cloudflare’s global network that implements part of the [Oblivious HTTP (OHTTP) IETF](https://www.ietf.org/archive/id/draft-thomson-http-oblivious-01.html) standard. The goal of Privacy Gateway and Oblivious HTTP is to hide the client's IP address when interacting with an application backend.
+[Privacy Gateway](https://blog.cloudflare.com/building-privacy-into-internet-standards-and-how-to-make-your-app-more-private-today/) is a managed service deployed on Cloudflare's global network that implements the [Oblivious HTTP (OHTTP) IETF](https://www.ietf.org/archive/id/draft-thomson-http-oblivious-01.html) standard. The goal of Privacy Gateway and Oblivious HTTP is to obfuscate the client's IP address from the server it is being sent to, i.e. your application's backend.
 
-OHTTP introduces a trusted third party between client and server, called a relay, whose purpose is to forward encrypted requests and responses between client and server. These messages are encrypted between client and server such that the relay learns nothing of the application data, beyond the length of the encrypted message and the server the client is interacting with.
+OHTTP introduces a proxy between client and server, called a relay, whose purpose is to forward encrypted requests and responses between client and server. These messages are encrypted between client and server such that the relay learns nothing of the application data, beyond the length of the encrypted message and the server the client is interacting with.
+
+Privacy Gateway is currently in closed beta. If you are interested, [contact us](https://www.cloudflare.com/lp/privacy-edge/).
 
 ---
 
-## Availability
+## Choose your deployment mode
 
-Privacy Gateway is currently in closed beta – available to select privacy-oriented companies and partners. If you are interested, [contact us](https://www.cloudflare.com/lp/privacy-edge/).
+Cloudflare Privacy Gateway supports two deployment modes, but never operates both at the same time. If your application server or backend is not behind Cloudflare CDN, use Relay mode. If your application server is already behind Cloudflare CDN, use Gateway mode.
+
+### Relay mode
+
+In Relay mode, Cloudflare forwards encrypted OHTTP requests from your clients to your application gateway server (which you operate). Cloudflare cannot read the encrypted payload — it only sees the client IP address and your gateway server's address.
+
+```mermaid
+flowchart LR
+    accTitle: Relay mode
+    accDescr: Cloudflare acts as the OHTTP relay, forwarding encrypted requests to your gateway server.
+    A[Client] --> B((Cloudflare Relay)) --> C[Your Gateway Server] --> D[(Your Origin)]
+```
+
+Use Relay mode if your backend is not already behind the Cloudflare CDN.
+
+### Gateway mode
+
+In Gateway mode, Cloudflare decrypts OHTTP requests and forwards them to your origin, which is already behind the Cloudflare CDN. A third-party relay (not operated by Cloudflare) sits between the client and Cloudflare. Cloudflare can see the request content but not the client IP.
+
+```mermaid
+flowchart LR
+    accTitle: Gateway mode
+    accDescr: A third-party relay forwards encrypted requests to Cloudflare, which acts as the OHTTP gateway.
+    A[Client] --> B[Third-party Relay] --> C((Cloudflare Gateway)) --> D[(Your Origin)]
+```
+
+Use Gateway mode if your application is already proxied through Cloudflare.
 
 ---
 
 ## Features
 
 <Feature
-	header="Get started"
-	href="/privacy-gateway/get-started/"
+	header="Relay mode"
+	href="/privacy-gateway/relay-mode/"
 	cta="Get started"
 >
-	Learn how to set up Privacy Gateway for your application.
 </Feature>
 
 <Feature
-	header="Legal"
-	href="/privacy-gateway/reference/legal/"
-	cta="Learn more"
+	header="Gateway mode"
+	href="/privacy-gateway/gateway-mode/"
+	cta="Get started"
 >
-	Learn about the different parties and data shared in Privacy Gateway.
-</Feature>
-
-<Feature
-	header="Metrics"
-	href="/privacy-gateway/reference/metrics/"
-	cta="Learn more"
->
-	Learn about how to query Privacy Gateway metrics.
 </Feature>

@@ -2445,6 +2445,17 @@
 /cloudflare-one/insights/logs/use-logpush-with-ids/ /cloudflare-one/insights/logs/logpush/ids-logs/ 301
 /cloudflare-one/insights/logs/filter-views/ /cloudflare-one/insights/logs/logpush/network-firewall-log-filters/ 301
 
+# Privacy Gateway (restructured into relay-mode and gateway-mode)
+/privacy-gateway/get-started/ /privacy-gateway/ 301
+/privacy-gateway/reference/ /privacy-gateway/ 301
+/privacy-gateway/reference/legal/ /privacy-gateway/relay-mode/legal/ 301
+/privacy-gateway/legal/ /privacy-gateway/relay-mode/legal/ 301
+/privacy-gateway/reference/metrics/ /privacy-gateway/relay-mode/metrics/ 301
+/privacy-gateway/reference/limitations/ /privacy-gateway/relay-mode/limitations/ 301
+/privacy-gateway/reference/product-compatibility/ /privacy-gateway/relay-mode/limitations/ 301
+/privacy-gateway/relay-mode/get-started/ /privacy-gateway/relay-mode/ 301
+/privacy-gateway/gateway-mode/get-started/ /privacy-gateway/gateway-mode/ 301
+
 # ============================================================================
 # DYNAMIC REDIRECTS
 # ============================================================================
@@ -2675,4 +2686,3 @@
 /changelog/2024-* /changelog/post/2024-:splat 301
 /changelog/2025-* /changelog/post/2025-:splat 301
 /changelog/2026-* /changelog/post/2026-:splat 301
-
