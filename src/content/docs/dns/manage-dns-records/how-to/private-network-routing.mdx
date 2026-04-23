@@ -25,7 +25,7 @@ This feature is in closed beta. Contact your account team to request access.
 
 Before you enable private network routing, consider the following:
 
-- You need an active tunnel connection to Cloudflare through one of the supported on-ramp methods ([Cloudflare WAN](/cloudflare-wan/), [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/), [IPsec](/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/), [GRE](/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/), or [CNI](/network-interconnect/)).
+- You need an active tunnel connection to Cloudflare through one of the supported on-ramp methods. Refer to [Cloudflare WAN](/cloudflare-wan/on-ramps/) for further guidance.
 - Private network routing is available for `A` (IPv4) and `AAAA` (IPv6) records only. Records must be [proxied](/dns/proxy-status/).
 
 ### IP ranges
@@ -45,7 +45,7 @@ When you use an IP address from one of these ranges, the **Use private network r
 ## Enable private network routing
 
 :::note[Virtual networks]
-Traffic routes through your default [virtual network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/). Selecting a specific virtual network is not supported.
+Traffic routes through your default virtual network. Selecting a specific virtual network is not supported.
 :::
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
