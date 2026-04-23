@@ -1,0 +1,14 @@
+---
+import type { AgentData } from "./types";
+import AgentCard from "./AgentCard.astro";
+
+interface Props {
+	agents: AgentData[];
+}
+
+const { agents } = Astro.props;
+---
+
+<div class="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+	{agents.map((agent) => <AgentCard agent={agent} />)}
+</div>

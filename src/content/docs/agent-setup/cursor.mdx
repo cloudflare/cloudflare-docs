@@ -1,0 +1,156 @@
+---
+title: Cursor + Cloudflare
+description: "AI-first IDE built on VS Code with multi-file Composer edits and background agents. Made by Cursor."
+template: splash
+pcx_content_type: how-to
+---
+
+import { Steps } from "~/components";
+import AgentHeader from "~/components/agent-setup/AgentHeader.astro";
+import PlatformAccess from "~/components/agent-setup/PlatformAccessSection.astro";
+import ExamplePromptsList from "~/components/agent-setup/ExamplePromptsList.astro";
+import RandomPrompt from "~/components/agent-setup/RandomPrompt.astro";
+import TipsList from "~/components/agent-setup/TipsList.astro";
+import FAQList from "~/components/agent-setup/FAQList.astro";
+import FAQItem from "~/components/agent-setup/FAQItem.astro";
+import TroubleshootingList from "~/components/agent-setup/TroubleshootingList.astro";
+import TroubleshootingItem from "~/components/agent-setup/TroubleshootingItem.astro";
+import BuildAgentsCallout from "~/components/agent-setup/BuildAgentsCallout.astro";
+import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
+
+<AgentHeader slug="cursor" />
+
+## Quick start
+
+<Steps>
+	1. **Install Cursor**
+
+		Download Cursor for macOS, Windows, or Linux from the [Cursor downloads page](https://cursor.com/downloads). For additional information, see the [Cursor installation guide](https://cursor.com/docs/get-started/installation).
+
+	2. **Install the Cloudflare plugin**
+
+		In Cursor, install the Cloudflare Plugin which includes Cloudflare Skills and registers the Cloudflare MCP servers in one step. You can also install from the [Cursor Marketplace](https://cursor.com/marketplace/cloudflare).
+
+		```txt
+		/add-plugin cloudflare
+		```
+
+	3. **Try a prompt**
+
+		For example:
+
+		<RandomPrompt />
+</Steps>
+
+## Cloudflare platform access
+
+<PlatformAccess agentName="Cursor">
+	<Fragment slot="wrangler">
+		<div class="agent-platform-hint">
+			Local dev, deploys, and Workers-specific commands.
+		</div>
+		<p>
+			Cursor's integrated terminal runs <a href="/workers/wrangler/">Wrangler</a> for
+			local dev and deploys. The bundled <strong>wrangler</strong> Skill teaches Composer
+			when to call CLI commands vs. the MCP API.
+		</p>
+	</Fragment>
+
+    <Fragment slot="docs">
+    	<div class="agent-platform-hint">
+    		Token-efficient references for Composer context.
+    	</div>
+    	<p>
+    		Add Cloudflare docs to Composer context by @-mentioning files in your repo.
+    		For a global reference, point Composer at:
+    	</p>
+    	<ul class="agent-platform-resources">
+    		<li>
+    			<a href="/llms.txt">developers.cloudflare.com/llms.txt</a> — directory of
+    			every Cloudflare product.
+    		</li>
+    		<li>
+    			<a href="/workers/llms.txt">developers.cloudflare.com/workers/llms.txt</a>
+    		</li>
+    		<li>
+    			<a href="/agents/llms.txt">developers.cloudflare.com/agents/llms.txt</a>
+    		</li>
+    		<li>
+    			<a href="/r2/llms.txt">developers.cloudflare.com/r2/llms.txt</a>
+    		</li>
+    		<li>
+    			<a href="/d1/llms.txt">developers.cloudflare.com/d1/llms.txt</a>
+    		</li>
+    	</ul>
+    	<p>
+    		For a full overview of how these docs are structured for agents, refer to the{" "}
+    		<a href="/style-guide/ai-tooling/">AI tooling guide</a>.
+    	</p>
+    </Fragment>
+
+</PlatformAccess>
+
+## Example prompts
+
+<ExamplePromptsList />
+
+## Tips
+
+<TipsList>
+
+- The Cloudflare API MCP server uses Code Mode — Cursor writes JavaScript against a typed API to reach any of 2,500+ endpoints in ~1,000 tokens.
+- Add `@wrangler.jsonc` to your Composer prompts so Cursor sees your current bindings when generating or modifying code.
+- For more information on available MCP servers, or when to use Code Mode versus traditional MCP servers, refer to the [Cloudflare MCP server repository](https://github.com/cloudflare/mcp-server-cloudflare).
+
+</TipsList>
+
+## FAQ
+
+<FAQList>
+	<FAQItem question="Should I use Skills, the MCP server, Wrangler CLI, or all of them?">
+		All three work together. Skills give Cursor persistent Cloudflare knowledge
+		loaded into every Composer prompt. The Cloudflare API MCP server handles
+		platform operations (DNS, WAF, R2 buckets, Zero Trust). Wrangler runs local
+		dev and Workers-specific commands. The bundled `wrangler` Skill teaches
+		Cursor when to reach for which.
+	</FAQItem>
+	<FAQItem question="How do I give Cursor access to Cloudflare?">
+		Install the Skills plugin (from the Cursor Marketplace, or Settings > Rules
+		> Add Rule > Remote Rule with `cloudflare/skills`). The first time Cursor
+		calls a Cloudflare tool, you will be redirected to authorize via OAuth and
+		choose permissions.
+	</FAQItem>
+	<FAQItem question="Can Cursor deploy to Cloudflare without leaving the IDE?">
+		Yes. Ask Composer to deploy your project. Cursor runs Wrangler commands in
+		the integrated terminal and can also call the API MCP server for managed
+		deploys and resource creation.
+	</FAQItem>
+</FAQList>
+
+## Troubleshooting
+
+<TroubleshootingList>
+	<TroubleshootingItem issue="MCP server not connecting in Cursor">
+		Verify your `.cursor/mcp.json` configuration is valid JSON. Restart Cursor
+		after making changes to the MCP config.
+	</TroubleshootingItem>
+	<TroubleshootingItem issue="Getting outdated information about Cloudflare products">
+		Enable the <a href="https://github.com/cloudflare/mcp-server-cloudflare" target="_blank" rel="noopener noreferrer">Cloudflare docs MCP server</a> so the agent can fetch
+		current documentation at runtime. If you prefer not to use the MCP server, point
+		the agent directly at <a href="/llms.txt">developers.cloudflare.com/llms.txt</a> for
+		a directory of every product, or <code>developers.cloudflare.com/&lt;product&gt;/llms.txt</code>
+		for a product-specific index.
+	</TroubleshootingItem>
+	<TroubleshootingItem issue="Composer does not understand Workers APIs">
+		Add the Cloudflare docs MCP server and Workers documentation to your project
+		context. Use @-mentions to reference `wrangler.jsonc`.
+	</TroubleshootingItem>
+</TroubleshootingList>
+
+## Build agents on Cloudflare
+
+<BuildAgentsCallout />
+
+## Other agents
+
+<OtherAgents currentSlug="cursor" />

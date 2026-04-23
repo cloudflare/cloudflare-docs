@@ -71,6 +71,26 @@ main > .content-panel + .content-panel {
 	/* background: orange; */
 }
 
+/*
+ * Restore Starlight styles that Tailwind's preflight reset
+ * (`*, ::after, ::before { border: 0 solid }`) can beat on pages where CSS
+ * layer order flips. This happens when a page imports a Starlight
+ * user-component (like <Code> or <Tabs>) early enough in the page frontmatter
+ * that Starlight's component layers are declared *before* Tailwind's layer
+ * order statement. Unlayered rules with matching specificity always win.
+ */
+header.header {
+	border-bottom: 1px solid var(--sl-color-hairline-shade);
+}
+
+/*
+ * Starlight <Tabs> tablist gets a 2px bottom border as the tab rail.
+ * Scoping to `starlight-tabs` keeps this targeted at the intended element.
+ */
+starlight-tabs [role="tablist"] {
+	border-bottom: 2px solid var(--sl-color-gray-5);
+}
+
 .right-sidebar-panel .sl-container {
 	width: 100%;
 	max-width: var(--layout-toc-width);

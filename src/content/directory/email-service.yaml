@@ -1,0 +1,12 @@
+id: 37TMLK
+name: Email Service
+
+entry:
+  title: Email Service
+  url: /email-service/
+  group: Developer platform
+
+meta:
+  title: Cloudflare Email Service docs
+  description: Send transactional emails at scale with Cloudflare Email Service
+  author: "@cloudflare"

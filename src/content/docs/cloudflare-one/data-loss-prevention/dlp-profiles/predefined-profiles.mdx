@@ -1,8 +1,13 @@
 ---
 pcx_content_type: reference
+description: Reference information for Predefined profiles in Cloudflare One.
+products:
+  - cloudflare-one
 title: Predefined profiles
 sidebar:
   order: 2
+tags:
+  - Compliance
 ---
 
 import { Render } from "~/components";
@@ -25,10 +30,18 @@ For more information on included detection entries, refer to [AI prompt topics](
 
 The following secrets are validated with regex.
 
-- Google Cloud Platform keys
-- AWS keys
+- Amazon Web Services (AWS) keys
 - Azure API keys
+- Google Cloud Platform keys
 - SSH keys
+
+The following Cloudflare API credentials are validated algorithmically using a checksum. Only credentials generated after [Cloudflare's token format update](/fundamentals/api/get-started/token-formats/) will be matched by these entries.
+
+| Detection entry | Format |
+| --- | --- |
+| Cloudflare User API Key | `cfk_` followed by 40 alphanumeric characters and an 8-character hex checksum |
+| Cloudflare User API Token | `cfut_` followed by 40 alphanumeric characters and an 8-character hex checksum |
+| Cloudflare Account Owned API Token | `cfat_` followed by 40 alphanumeric characters and an 8-character hex checksum |
 
 ## Financial Information
 
@@ -38,6 +51,7 @@ The following secrets are validated with regex.
 />
 
 Credit card numbers begin with a six or eight-digit Issuer Identification Number (IIN) and are followed by up to 23 additional digits. Card verification values (CVVs) are not validated.
+
 
 In the table below, entries use one of three validation methods. [Luhn's algorithm](https://en.wikipedia.org/wiki/Luhn_algorithm) is a checksum formula used to verify credit card numbers. Entries validated "with checksum" use an arithmetic check specific to that number format. Entries validated "with regex" match a known text pattern without performing a mathematical check.
 
@@ -55,6 +69,16 @@ In the table below, entries use one of three validation methods. [Luhn's algorit
 | Visa Text                        | Text matching `visa`.                                                             |
 | United States ABA Routing Number | Validated algorithmically with checksum.                                          |
 | IBAN                             | Validated with checksum.                                                          |
+
+## HTTP Archive
+
+The **Unsanitized HAR** predefined profile detects HTTP Archive (HAR) files in traffic that have not been processed by Cloudflare's HAR sanitizer. HAR files frequently contain sensitive data such as session cookies, authorization headers, and other credentials.
+
+| Detection entry       | Notes                                                                                                                           |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| Unsanitized HAR file  | Detects HAR files that do not carry a Cloudflare sanitized marker. Files processed by the Cloudflare HAR sanitizer and unmodified since will not match this entry. |
+
+You can use this profile in a Gateway HTTP policy to block HAR file uploads or redirect users to `https://har-sanitizer.pages.dev/` to sanitize the file before uploading. For more information, refer to [common DLP policies](/cloudflare-one/data-loss-prevention/dlp-policies/common-policies/).
 
 ## Health Information
 

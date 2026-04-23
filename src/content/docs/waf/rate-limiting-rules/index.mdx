@@ -1,6 +1,9 @@
 ---
 pcx_content_type: concept
 title: Rate limiting rules
+description: Define rate limits for requests matching an expression and the action when limits are reached.
+products:
+  - rate-limiting
 sidebar:
   order: 6
 tableOfContents: false
@@ -9,6 +12,10 @@ tableOfContents: false
 import { Render } from "~/components";
 
 Rate limiting rules allow you to define rate limits for requests matching an expression, and the action to perform when those rate limits are reached. Use rate limiting rules to prevent abuse of your websites and APIs — for example, to protect a login endpoint from brute-force attacks or to cap how many API calls a single client can make in a given time window.
+
+:::note[Were you blocked from accessing a website?]
+If you are a visitor who received an error while trying to access a website, please refer to the [error 1015 documentation](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1015).
+:::
 
 In the [new security dashboard](/security/), rate limiting rules are one of the available types of [security rules](/security/rules/). Security rules perform security-related actions on incoming requests that match specified filters.
 

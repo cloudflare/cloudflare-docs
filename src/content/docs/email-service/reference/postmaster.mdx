@@ -1,0 +1,180 @@
+---
+pcx_content_type: reference
+title: Postmaster
+sidebar:
+  order: 1
+head: []
+description: Reference page with postmaster information for professionals, as
+  well as configuration details for Email Service.
+products:
+  - email-service
+---
+
+This page provides technical information about Email Service to professionals who administer email systems, and other email providers.
+
+Here you will find information regarding Email Service, along with best practices, rules, guidelines, troubleshooting tools, as well as configuration details for Email Service.
+
+## Postmaster
+
+### Contact information
+
+The best way to contact us is using our [community forum](https://community.cloudflare.com/new-topic?category=Feedback/Previews%20%26%20Betas&tags=email) or our [Discord server](https://discord.com/invite/cloudflaredev).
+
+### DKIM signature
+
+[DKIM (DomainKeys Identified Mail)](https://en.wikipedia.org/wiki/DomainKeys_Identified_Mail) ensures that email messages are not altered in transit between the sender and the recipient's SMTP servers through public-key cryptography.
+
+Through this standard, the sender publishes its public key to a domain's DNS once, and then signs the body of each message before it leaves the server. The recipient server reads the message, gets the domain public key from the domain's DNS, and validates the signature to ensure the message was not altered in transit.
+
+Email Service adds DKIM signatures to outgoing emails on behalf of the customer's sending domain to ensure email authenticity and improve deliverability.
+
+Email Sending and Email Routing use separate DKIM selectors. You can find the DKIM keys for your domain by querying the following:
+
+```sh
+# Email Sending DKIM
+dig TXT cf-bounce._domainkey.example.com +short
+
+# Email Routing DKIM
+dig TXT cf2024-1._domainkey.example.com +short
+```
+
+### DMARC enforcing
+
+Email Service supports Domain-based Message Authentication, Reporting & Conformance (DMARC). When sending emails, Email Service will ensure proper SPF and DKIM alignment to pass DMARC authentication. Refer to [dmarc.org](https://dmarc.org/) for more information on this protocol.
+
+It is recommended that all domains implement the DMARC protocol for optimal email deliverability.
+
+### Mail authentication requirement
+
+Cloudflare Email Service ensures all outbound emails are properly authenticated with both SPF and DKIM to maximize deliverability and maintain sender reputation.
+
+### IPv6 support
+
+Email Service supports IPv6 for outbound email delivery. When connecting to recipient SMTP servers, the service will use IPv6 if the recipient supports it (has AAAA records for their MX servers), and fall back to IPv4 if necessary.
+
+### MX and SPF records
+
+When using Email Service for sending emails, no special MX records are required on your domain. However, if you're also using [Email Routing](/email-routing/) for inbound emails, the appropriate MX records will be configured automatically.
+
+For SPF records, Email Service uses `_spf.mx.cloudflare.net`. Email Sending configures SPF on the `cf-bounce` subdomain, while Email Routing configures SPF on the root domain:
+
+```txt
+v=spf1 include:_spf.mx.cloudflare.net ~all
+```
+
+### Outbound prefixes
+
+Email Service sends its traffic using both IPv4 and IPv6 prefixes, when supported by the recipient SMTP server.
+
+If you are a postmaster and are having trouble receiving Email Service emails, allow the following outbound IP addresses in your server configuration:
+
+**IPv4**
+
+`104.30.0.0/19`
+
+**IPv6**
+
+`2405:8100:c000::/38`
+
+_Ranges last updated: December 13th, 2023_
+
+### Outbound hostnames
+
+Email Service will use the following outbound domains for the `HELO/EHLO` command:
+
+- `cloudflare-email.net`
+- `cloudflare-email.org`
+- `cloudflare-email.com`
+
+PTR records (reverse DNS) ensure that each hostname has a corresponding IP. For example:
+
+```sh
+dig a-h.cloudflare-email.net +short
+```
+
+```sh output
+104.30.0.7
+```
+
+```sh
+dig -x 104.30.0.7 +short
+```
+
+```sh output
+a-h.cloudflare-email.net.
+```
+
+### SMTP errors
+
+Email Service provides detailed SMTP error responses to help diagnose delivery issues.
+
+### Realtime Block Lists
+
+Email Service monitors sender reputation and may temporarily delay or block emails from IPs that appear on Realtime Block Lists (RBLs). This helps maintain the service's overall reputation and deliverability.
+
+If you believe your emails are being incorrectly blocked, please contact the RBL maintainer directly or reach out through our support channels.
+
+---
+
+## Configuration details
+
+### Sending domains
+
+To send emails through Email Service, domains must be verified and configured properly. This includes:
+
+- DNS verification of domain ownership
+- Proper SPF record configuration
+- DKIM key setup (handled automatically)
+- Optional DMARC policy configuration
+
+### Rate limiting
+
+Email Service implements rate limiting to prevent abuse and maintain service quality. Rate limits vary based on your Cloudflare plan and sending patterns.
+
+### Content filtering
+
+Email Service includes content filtering to prevent spam and abuse. Emails that don't meet content guidelines may be rejected or delayed.
+
+### Bounce handling
+
+Email Service automatically handles bounces and provides detailed bounce information through:
+
+- Dashboard analytics
+- API responses
+- Optional webhook notifications
+
+### Suppression lists
+
+Email Service maintains suppression lists to prevent sending to addresses that have bounced or complained. This helps maintain sender reputation and compliance with anti-spam regulations.
+
+---
+
+## Known limitations
+
+Below, you will find information regarding known limitations for Email Service, particularly Email Routing functionality.
+
+### Email address internationalization (EAI)
+
+Email Routing does not support [internationalized email addresses](https://en.wikipedia.org/wiki/International_email). Email Routing only supports [internationalized domain names](https://en.wikipedia.org/wiki/Internationalized_domain_name).
+
+This means that you can have email addresses with an internationalized domain, but not an internationalized local-part (the first part of your email address, before the @ symbol). Refer to the following examples:
+
+- `info@piñata.es` - **Supported**
+- `piñata@piñata.es` - **Not supported**
+
+### Non-delivery reports (NDRs)
+
+
+Email Routing does not forward non-delivery reports to the original sender. This means the sender will not receive a notification indicating that the email did not reach the intended destination.
+
+### Restrictive DMARC policies can make forwarded emails fail
+
+Due to the nature of email forwarding, restrictive DMARC policies might make forwarded emails fail to be delivered. Refer to [dmarc.org](https://dmarc.org/) for more information.
+
+### Sending or replying to an email from your Cloudflare domain
+
+Email Routing does not support sending or replying from your Cloudflare domain. When you reply to emails forwarded by Email Routing, the reply will be sent from your destination address (like `my-name@gmail.com`), not your custom address (like `info@my-company.com`).
+
+### "." is treated as normal characters for custom addresses
+
+The `.` character, which perform special actions in email providers like Gmail, is treated as a normal character on custom addresses.

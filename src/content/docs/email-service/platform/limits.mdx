@@ -1,0 +1,56 @@
+---
+title: Limits
+description: Email Service sending quotas, rate limits, message size limits, and compliance requirements.
+pcx_content_type: reference
+summary: Email sending quotas, rate limits, and how to request higher limits for production use
+sidebar:
+  order: 1
+products:
+  - email-service
+---
+
+import { Render } from "~/components";
+
+Cloudflare Email Service has the following limits to ensure optimal performance and prevent abuse. These limits apply to emails sent via both the [REST API](/email-service/api/send-emails/rest-api/) and the [Workers binding](/email-service/api/send-emails/workers-api/) unless noted otherwise.
+
+## Daily sending limits
+
+Your account may have daily sending limits based on Cloudflare's assessment of your account standing. These limits are applied on a per-account basis, may vary, and may be adjusted over time based on your sending behavior. If you need higher sending limits, contact [Cloudflare Support](https://dash.cloudflare.com/support) to request an increase.
+
+## Verified emails
+
+When you first start using Email Service, you can send emails to [verified email addresses](/email-service/configuration/email-routing-addresses/#destination-addresses) in your account. This allows you to test and develop your application before sending to arbitrary recipients.
+
+Accounts on a paid plan can send emails to any recipient, subject to daily sending limits.
+
+## Email content limits
+
+| Component                    | Limit          | Notes                                                                                |
+| ---------------------------- | -------------- | ------------------------------------------------------------------------------------ |
+| **Recipients (to, cc, bcc)** | 50 per email   | Combined across all recipient fields                                                 |
+| **Subject line**             | 998 characters | RFC 5322 compliant                                                                   |
+| **Total message size**       | 5 MiB          | Including attachments                                                                |
+| **Total message size**       | 25 MiB         | For [verified addresses](/email-service/configuration/email-routing-addresses/) only |
+| **Header size**              | 16 KB          | All custom headers combined                                                          |
+
+## Workers binding limits
+
+The following limits apply only when sending emails via the [Workers binding](/email-service/api/send-emails/workers-api/). They do not apply to the REST API.
+
+| Limit           | Value            | Notes                          |
+| --------------- | ---------------- | ------------------------------ |
+| **CPU time**    | 50ms per request | Standard Workers CPU limit     |
+| **Subrequests** | 50 per request   | Includes email send operations |
+| **Memory**      | 128MB            | Standard Workers memory limit  |
+
+## Compliance
+
+All email sending must follow applicable anti-spam laws and regulations to maintain good standing and deliverability.
+
+- **CAN-SPAM Act** (United States)
+- **GDPR** (European Union)
+- **CASL** (Canada)
+- Include proper unsubscribe mechanisms
+- Honor opt-out requests promptly
+
+<Render file="limits_increase" product="workers" />

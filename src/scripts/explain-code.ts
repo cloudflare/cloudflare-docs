@@ -10,7 +10,6 @@ function getCodeBlockPosition(button: HTMLElement): number {
 	while (currentBlock) {
 		if (currentBlock.tagName === "PRE") {
 			currentBlock = currentBlock.querySelector(codeSelector);
-			console.log(currentBlock);
 			break;
 		}
 		currentBlock = currentBlock.previousElementSibling;

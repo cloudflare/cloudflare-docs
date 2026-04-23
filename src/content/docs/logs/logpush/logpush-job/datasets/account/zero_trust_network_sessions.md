@@ -249,6 +249,12 @@ Type: `int`
 
 Source port of the network session.
 
+## TenantID
+
+Type: `string`
+
+The tenant ID of the network session, if exists.
+
 ## UserID
 
 Type: `string`

@@ -41,6 +41,11 @@ if (!raw) {
 
 raw = raw.replace(/\u007f/g, "\n");
 
+raw = raw.replaceAll(
+	/(?<=compatibilityDate:\s*)"\$today"/gi,
+	`"${new Date().toISOString().split("T")[0]}"`,
+);
+
 const js = await format(tsBlankSpace(raw), { parser: "babel", useTabs: true });
 
 const Wrapper = omitTabs ? Fragment : Tabs;

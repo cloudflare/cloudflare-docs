@@ -1,0 +1,187 @@
+{
+	"model_id": "google/veo-3.1-fast",
+	"provider_id": "google",
+	"name": "Veo 3.1 Fast",
+	"description": "A faster version of Veo 3.1 optimized for lower latency while maintaining high-quality video and audio output.",
+	"task": "Text-to-Video",
+	"tags": [
+		"Video Generation",
+		"Audio",
+		"Fast"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Quick Demo",
+			"description": "Fast video generation for testing",
+			"input": {
+				"prompt": "A butterfly landing on a colorful flower in a garden",
+				"duration": "6s",
+				"aspect_ratio": "16:9",
+				"resolution": "720p",
+				"generate_audio": true
+			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__veo-3.1-fast/quick-demo.mp4"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/veo-3.1-fast',\n  {\n    prompt: 'A butterfly landing on a colorful flower in a garden',\n    duration: '6s',\n    aspect_ratio: '16:9',\n    resolution: '720p',\n    generate_audio: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Social Content",
+			"description": "Quick vertical video for social media",
+			"input": {
+				"prompt": "Aesthetic morning routine: sun rays through curtains, coffee being poured",
+				"duration": "6s",
+				"aspect_ratio": "9:16",
+				"resolution": "720p",
+				"generate_audio": true
+			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__veo-3.1-fast/social-content.mp4"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/veo-3.1-fast',\n  {\n    prompt:\n      'Aesthetic morning routine: sun rays through curtains, coffee being poured',\n    duration: '6s',\n    aspect_ratio: '9:16',\n    resolution: '720p',\n    generate_audio: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Motion Graphics",
+			"description": "Quick animated graphics",
+			"input": {
+				"prompt": "Glowing neon lines forming geometric patterns on a dark background",
+				"duration": "4s",
+				"aspect_ratio": "16:9",
+				"resolution": "720p",
+				"generate_audio": false
+			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__veo-3.1-fast/motion-graphics.mp4"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/veo-3.1-fast',\n  {\n    prompt:\n      'Glowing neon lines forming geometric patterns on a dark background',\n    duration: '4s',\n    aspect_ratio: '16:9',\n    resolution: '720p',\n    generate_audio: false,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Ambient Scene",
+			"description": "Relaxing background video",
+			"input": {
+				"prompt": "Rain falling on a window with a blurred city skyline in the background at night",
+				"duration": "8s",
+				"aspect_ratio": "16:9",
+				"resolution": "720p",
+				"generate_audio": true
+			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__veo-3.1-fast/ambient-scene.mp4"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/veo-3.1-fast',\n  {\n    prompt:\n      'Rain falling on a window with a blurred city skyline in the background at night',\n    duration: '8s',\n    aspect_ratio: '16:9',\n    resolution: '720p',\n    generate_audio: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://deepmind.google/technologies/veo/",
+	"terms": "https://ai.google.dev/gemini-api/terms",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/google/veo-3.1-fast.png",
+	"metadata": {
+		"Max Duration": "8 seconds",
+		"Audio Generation": "Yes",
+		"Resolutions": "720p, 1080p"
+	},
+	"created_at": "2026-04-08 21:40:52",
+	"default_example": null,
+	"code_snippets": [],
+	"zdr": false,
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"description": "Text prompt describing the video to generate",
+					"type": "string"
+				},
+				"image_input": {
+					"description": "Base64-encoded reference image for i2v",
+					"type": "string"
+				},
+				"duration": {
+					"description": "Video duration",
+					"default": "6s",
+					"type": "string",
+					"enum": [
+						"4s",
+						"6s",
+						"8s"
+					]
+				},
+				"aspect_ratio": {
+					"description": "Video aspect ratio",
+					"default": "16:9",
+					"type": "string",
+					"enum": [
+						"16:9",
+						"9:16",
+						"1:1"
+					]
+				},
+				"resolution": {
+					"description": "Video resolution",
+					"default": "720p",
+					"type": "string",
+					"enum": [
+						"720p",
+						"1080p"
+					]
+				},
+				"generate_audio": {
+					"description": "Whether to generate audio with the video",
+					"default": true,
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"prompt",
+				"duration",
+				"aspect_ratio",
+				"resolution",
+				"generate_audio"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"video": {
+					"description": "URL to the generated video",
+					"type": "string",
+					"format": "uri"
+				}
+			},
+			"required": [
+				"video"
+			],
+			"additionalProperties": false
+		}
+	}
+}

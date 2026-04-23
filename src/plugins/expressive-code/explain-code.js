@@ -93,6 +93,17 @@ export default () => {
 				opacity: var(--ec-frm-inlBtnBgHoverOrFocusOpa);
 			}
 
+			@media (hover: hover) {
+				.expressive-code .explain button {
+					opacity: 0;
+				}
+			}
+
+			.expressive-code .frame:hover .explain button:not(:hover),
+			.expressive-code .frame:focus-within :focus-visible ~ .explain button:not(:hover) {
+				opacity: 0.75;
+			}
+
 			.expressive-code .explain button:active, .expressive-code .explain button:hover {
 				opacity: 1;
 			}

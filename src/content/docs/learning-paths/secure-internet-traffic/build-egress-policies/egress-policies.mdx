@@ -3,6 +3,13 @@ title: Use egress policies to deliver consistent egress IPs
 pcx_content_type: learning-unit
 sidebar:
   order: 3
+description: Create egress policies for IP consistency.
+products:
+  - gateway
+  - cloudflare-one
+  - dlp
+  - casb
+  - browser-isolation
 ---
 
 import { Render } from "~/components";
@@ -22,7 +29,7 @@ To create a new egress policy:
 
 3. Name the policy.
 
-4. Build a logical expression that defines the traffic you want to control egress for. For example, you can add a policy to configure all traffic destined for a thrid-party network to use a static source IP:
+4. Build a logical expression that defines the traffic you want to control egress for. For example, you can add a policy to configure all traffic destined for a third-party network to use a static source IP:
 
    <Render
    	file="gateway/policies/egress-destination-ip"

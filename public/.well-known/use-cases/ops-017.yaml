@@ -1,0 +1,113 @@
+id: ops-017
+name: Find and fix errors caused by your origin server
+category: developer-platform-operate
+description: >
+  Diagnose and resolve common origin misconfigurations — SSL mismatches, 5xx errors, timeouts, and DNS issues — so your site stops showing error pages.
+aliases:
+  - "Fix 502 Bad Gateway errors"
+  - "Fix 520 521 522 523 524 errors"
+  - "Origin server not responding"
+  - "SSL handshake failed"
+  - "Origin timeout troubleshooting"
+  - "Debug Cloudflare error pages"
+  - "Wikipedia of errors"
+  - "Why is my site showing an error"
+products:
+  - SSL/TLS
+  - DNS
+  - Health Checks
+  - Analytics
+  - Cache
+  - Troubleshooting
+
+qualifying_questions:
+  - id: q1
+    text: "What kind of error are you seeing?"
+    options:
+      - label: "5xx error page (502, 520, 521, 522, 523, 524)"
+        sets: [5xx-error]
+      - label: "SSL or certificate error"
+        sets: [ssl-error]
+      - label: "Site is slow or timing out"
+        sets: [timeout]
+      - label: "Site works sometimes but not always"
+        sets: [intermittent]
+      - label: "I'm not sure what the error means"
+        sets: [5xx-error, ssl-error, evaluating]
+  - id: q2
+    text: "When did the problem start?"
+    options:
+      - label: "Right after I added my site to Cloudflare"
+        sets: [post-onboarding]
+      - label: "After I changed DNS or SSL settings"
+        sets: [post-config-change]
+      - label: "It seems random"
+        sets: [intermittent]
+      - label: "I'm not sure"
+        sets: [evaluating]
+
+default_path: fix-5xx-errors
+
+paths:
+  - id: fix-5xx-errors
+    name: "Diagnose and Fix 5xx Error Pages"
+    condition:
+      has_any: [5xx-error, evaluating]
+    steps:
+      - product: "Analytics"
+        action: check-error-analytics
+        description: "Check Analytics to identify which error codes are most common and when they started"
+      - product: "Health Checks"
+        action: verify-origin-reachable
+        description: "Confirm your origin server is online and responding to requests"
+      - product: "DNS"
+        action: verify-origin-ip
+        description: "Confirm your DNS records point to the correct origin IP address"
+      - product: "SSL/TLS"
+        action: check-encryption-mode
+        description: "Ensure SSL/TLS encryption mode matches your origin setup (use Full strict if your origin has a valid certificate)"
+      - product: "Troubleshooting"
+        action: review-error-codes
+        description: "Look up your specific error code (520-524) for targeted troubleshooting steps"
+
+  - id: fix-ssl-errors
+    name: "Fix SSL and Certificate Errors"
+    condition:
+      has_any: [ssl-error, post-onboarding, post-config-change]
+    steps:
+      - product: "SSL/TLS"
+        action: check-encryption-mode
+        description: "Verify your SSL/TLS mode — mismatches between Flexible/Full/Full (strict) and your origin are the top cause of SSL errors"
+      - product: "SSL/TLS"
+        action: verify-origin-certificate
+        description: "Check that your origin has a valid certificate installed (use a Cloudflare Origin CA certificate if needed)"
+      - product: "SSL/TLS"
+        action: check-certificate-chain
+        description: "Make sure the full certificate chain is installed on your origin"
+      - product: "SSL/TLS"
+        action: enable-always-https
+        description: "Enable Always Use HTTPS to prevent mixed content issues"
+
+  - id: fix-timeouts
+    name: "Resolve Slow Responses and Timeouts"
+    condition:
+      has_any: [timeout, intermittent]
+    steps:
+      - product: "Health Checks"
+        action: configure-health-checks
+        description: "Set up Health Checks to monitor origin response time and availability"
+      - product: "Analytics"
+        action: review-origin-response-time
+        description: "Check Analytics for origin response time trends to identify when slowdowns occur"
+      - product: "Troubleshooting"
+        action: test-origin-directly
+        description: "Test your origin server directly (bypassing Cloudflare) to confirm the issue is origin-side"
+      - product: "Cache"
+        action: increase-cache-coverage
+        description: "Cache more content on Cloudflare to reduce the load on your origin server"
+
+related_use_cases:
+  - start-001
+  - sec-016
+  - sec-010
+  - perf-001

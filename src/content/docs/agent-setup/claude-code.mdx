@@ -1,0 +1,182 @@
+---
+title: Claude Code + Cloudflare
+description: "Terminal-based coding agent that understands your codebase, runs commands, edits files, and manages git. Made by Anthropic."
+template: splash
+pcx_content_type: how-to
+---
+
+import { Steps } from "~/components";
+import AgentHeader from "~/components/agent-setup/AgentHeader.astro";
+import PlatformAccess from "~/components/agent-setup/PlatformAccessSection.astro";
+import ExamplePromptsList from "~/components/agent-setup/ExamplePromptsList.astro";
+import RandomPrompt from "~/components/agent-setup/RandomPrompt.astro";
+import TipsList from "~/components/agent-setup/TipsList.astro";
+import FAQList from "~/components/agent-setup/FAQList.astro";
+import FAQItem from "~/components/agent-setup/FAQItem.astro";
+import TroubleshootingList from "~/components/agent-setup/TroubleshootingList.astro";
+import TroubleshootingItem from "~/components/agent-setup/TroubleshootingItem.astro";
+import BuildAgentsCallout from "~/components/agent-setup/BuildAgentsCallout.astro";
+import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
+
+<AgentHeader slug="claude-code" />
+
+## Quick start
+
+<Steps>
+	1. **Install Claude Code**
+
+		Install the Claude Code CLI. For Windows, Homebrew, WinGet, or npm, see the [Claude Code setup guide](https://docs.anthropic.com/en/docs/claude-code/setup).
+
+		```bash
+		curl -fsSL https://claude.ai/install.sh | bash
+		```
+
+	2. **Launch Claude Code in your project**
+
+		Start Claude Code from the root of your project, where `wrangler.jsonc` lives (if it already exists).
+
+		```bash
+		claude
+		```
+
+	3. **Install the Cloudflare Skills plugin**
+
+		In Claude Code, run these two slash commands. The plugin installs all 8 Cloudflare Skills and additionally registers the Cloudflare API, docs, bindings, builds, and observability MCP servers.
+
+		```txt
+		/plugin marketplace add cloudflare/skills
+		/plugin install cloudflare@cloudflare
+		```
+
+	4. **Try a prompt**
+
+		For example:
+
+		<RandomPrompt />
+</Steps>
+
+## Cloudflare platform access
+
+<PlatformAccess agentName="Claude Code">
+	<Fragment slot="wrangler">
+		<div class="agent-platform-hint">
+			Local dev, deploys, and Workers-specific commands.
+		</div>
+		<p>
+			Claude Code uses <a href="/workers/wrangler/">Wrangler</a> directly in the
+			terminal for local dev, deploys, and commands like <code>wrangler d1 migrations apply</code>
+			or <code>wrangler tail</code>. The bundled <strong>wrangler</strong> Skill teaches
+			Claude exactly when to reach for it.
+		</p>
+	</Fragment>
+
+<Fragment slot="docs">
+	<div class="agent-platform-hint">
+		Token-efficient references you can point Claude at.
+	</div>
+	<p>
+		Claude Code automatically sends <code>Accept: text/markdown</code> when fetching
+		Cloudflare docs, so it gets the clean markdown version by default. Every top-level
+		product section also has its own <code>llms.txt</code> — a page index sized for
+		a single context window. A few useful ones:
+	</p>
+	<ul class="agent-platform-resources">
+		<li>
+			<a href="/llms.txt">developers.cloudflare.com/llms.txt</a> — directory of
+			every Cloudflare product.
+		</li>
+		<li>
+			<a href="/workers/llms.txt">developers.cloudflare.com/workers/llms.txt</a>
+		</li>
+		<li>
+			<a href="/agents/llms.txt">developers.cloudflare.com/agents/llms.txt</a>
+		</li>
+		<li>
+			<a href="/r2/llms.txt">developers.cloudflare.com/r2/llms.txt</a>
+		</li>
+		<li>
+			<a href="/d1/llms.txt">developers.cloudflare.com/d1/llms.txt</a>
+		</li>
+	</ul>
+	<p>
+		For a full overview of how these docs are structured for agents, refer to the{" "}
+		<a href="/style-guide/ai-tooling/">AI tooling guide</a>.
+	</p>
+</Fragment>
+
+</PlatformAccess>
+
+## Example prompts
+
+<ExamplePromptsList />
+
+## Tips
+
+<TipsList>
+
+- The Skills plugin includes a wrangler Skill — Claude knows when to reach for `npx wrangler deploy`, `wrangler d1 migrations apply`, and other CLI commands automatically.
+- Try the `/cloudflare:build-agent` slash command to scaffold a complete Agents SDK project, or `/cloudflare:build-mcp` for a remote MCP server.
+- The Cloudflare API MCP server uses Code Mode — Claude writes JavaScript against a TypeScript API to hit any of 2,500+ endpoints in ~1,000 tokens.
+- Claude Code works best from the root of your Workers project where `wrangler.jsonc` lives — this is what the agent uses to understand your bindings.
+- Use `claude mcp list` to verify Cloudflare servers are connected. For CI/CD, skip OAuth by passing a Cloudflare API token as a bearer token instead.
+- For more information on installing additional MCP servers, or when to use Code Mode versus traditional MCP servers, refer to the [Cloudflare MCP server repository](https://github.com/cloudflare/mcp-server-cloudflare).
+
+</TipsList>
+
+## FAQ
+
+<FAQList>
+	<FAQItem question="Should I use Skills, the MCP server, Wrangler CLI, or all of them?">
+		All three — and the Skills plugin configures them together. Skills give
+		Claude persistent Cloudflare knowledge (when to use Durable Objects vs KV,
+		what a good Workers project layout looks like). The Cloudflare API MCP
+		server handles platform operations (DNS, WAF, R2 buckets, Zero Trust).
+		Wrangler runs local dev and Workers-specific commands. The `wrangler` Skill
+		teaches Claude when to reach for which.
+	</FAQItem>
+	<FAQItem question="How do I give Claude Code access to my Cloudflare account?">
+		The first time Claude calls a Cloudflare tool, you will be redirected to
+		authorize via OAuth and choose what permissions to grant.
+	</FAQItem>
+	<FAQItem question="Can Claude Code deploy to existing Workers projects?">
+		Yes. Run Claude Code from your existing project directory where
+		`wrangler.jsonc` is located, and it will understand your project
+		configuration and deploy accordingly.
+	</FAQItem>
+	<FAQItem question="What does Code Mode mean for MCP?">
+		Code Mode is how the Cloudflare API MCP server fits all 2,500+ API endpoints
+		into ~1,000 tokens. Instead of exposing every endpoint as a separate tool,
+		it exposes two — `search()` and `execute()` — and Claude writes JavaScript
+		to call them. [Learn more about Code Mode](/agents/api-reference/codemode/).
+	</FAQItem>
+</FAQList>
+
+## Troubleshooting
+
+<TroubleshootingList>
+	<TroubleshootingItem issue="MCP server connection fails or times out">
+		Run `claude mcp list` to verify the server is registered. Try removing and
+		re-adding: `claude mcp remove cloudflare` then re-add it. Ensure you have
+		`npx` and `mcp-remote` available.
+	</TroubleshootingItem>
+	<TroubleshootingItem issue="Claude cannot authenticate with Cloudflare">
+		The MCP server uses OAuth. When prompted, complete the authorization flow in
+		your browser. For CI/CD, create a Cloudflare API token and pass it as a
+		bearer token instead.
+	</TroubleshootingItem>
+	<TroubleshootingItem issue="Getting outdated information about Cloudflare products">
+		Enable the <a href="https://github.com/cloudflare/mcp-server-cloudflare" target="_blank" rel="noopener noreferrer">Cloudflare docs MCP server</a> so the agent can fetch
+		current documentation at runtime. If you prefer not to use the MCP server, point
+		the agent directly at <a href="/llms.txt">developers.cloudflare.com/llms.txt</a> for
+		a directory of every product, or <code>developers.cloudflare.com/&lt;product&gt;/llms.txt</code>
+		for a product-specific index.
+	</TroubleshootingItem>
+</TroubleshootingList>
+
+## Build agents on Cloudflare
+
+<BuildAgentsCallout />
+
+## Other agents
+
+<OtherAgents currentSlug="claude-code" />

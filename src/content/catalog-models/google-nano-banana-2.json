@@ -1,0 +1,177 @@
+{
+	"model_id": "google/nano-banana-2",
+	"provider_id": "google",
+	"name": "Nano Banana 2",
+	"description": "Google's second-generation image generation model with improved quality and speed.",
+	"task": "Text-to-Image",
+	"tags": [
+		"Image Generation",
+		"Fast",
+		"High Quality"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Futuristic City",
+			"description": "Sci-fi cityscape with neon lights",
+			"input": {
+				"prompt": "A futuristic cyberpunk city at night with towering skyscrapers, neon signs in Japanese and English, flying cars, and rain-slicked streets reflecting colorful lights",
+				"aspect_ratio": "16:9"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana-2/futuristic-city.png"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/nano-banana-2',\n  {\n    prompt:\n      'A futuristic cyberpunk city at night with towering skyscrapers, neon signs in Japanese and English, flying cars, and rain-slicked streets reflecting colorful lights',\n    aspect_ratio: '16:9',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Abstract Art",
+			"description": "Modern abstract expressionist painting",
+			"input": {
+				"prompt": "An abstract expressionist painting with bold splashes of cobalt blue, crimson red, and gold leaf accents on a large canvas",
+				"aspect_ratio": "1:1",
+				"output_format": "png"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana-2/abstract-art.png"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/nano-banana-2',\n  {\n    prompt:\n      'An abstract expressionist painting with bold splashes of cobalt blue, crimson red, and gold leaf accents on a large canvas',\n    aspect_ratio: '1:1',\n    output_format: 'png',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "With Google Search",
+			"description": "Use web search grounding for current events",
+			"input": {
+				"prompt": "An illustration of the latest Mars rover exploring the Martian surface",
+				"aspect_ratio": "16:9",
+				"google_search": true
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana-2/with-google-search.png"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/nano-banana-2',\n  {\n    prompt:\n      'An illustration of the latest Mars rover exploring the Martian surface',\n    aspect_ratio: '16:9',\n    google_search: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "High Resolution Portrait",
+			"description": "4K portrait with specific aspect ratio",
+			"input": {
+				"prompt": "A professional studio portrait of a woman with dramatic side lighting, wearing elegant jewelry",
+				"aspect_ratio": "3:4",
+				"output_format": "jpg",
+				"resolution": "4K"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana-2/high-resolution-portrait.jpg"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/nano-banana-2',\n  {\n    prompt:\n      'A professional studio portrait of a woman with dramatic side lighting, wearing elegant jewelry',\n    aspect_ratio: '3:4',\n    output_format: 'jpg',\n    resolution: '4K',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://deepmind.google/technologies/imagen/",
+	"terms": "https://ai.google.dev/gemini-api/terms",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/google/nano-banana-2.png",
+	"metadata": {
+		"Output Format": "JPEG"
+	},
+	"created_at": "2026-04-08 22:03:11",
+	"default_example": null,
+	"code_snippets": [],
+	"zdr": false,
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string"
+				},
+				"image_input": {
+					"maxItems": 3,
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"aspect_ratio": {
+					"type": "string",
+					"enum": [
+						"match_input_image",
+						"1:1",
+						"2:3",
+						"3:2",
+						"3:4",
+						"4:3",
+						"4:5",
+						"5:4",
+						"9:16",
+						"16:9",
+						"21:9"
+					]
+				},
+				"output_format": {
+					"type": "string",
+					"enum": [
+						"jpg",
+						"png"
+					]
+				},
+				"resolution": {
+					"type": "string",
+					"enum": [
+						"1K",
+						"2K",
+						"4K"
+					]
+				},
+				"google_search": {
+					"type": "boolean"
+				},
+				"image_search": {
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"prompt"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"type": "string",
+					"format": "uri"
+				}
+			},
+			"required": [
+				"image"
+			],
+			"additionalProperties": false
+		}
+	}
+}

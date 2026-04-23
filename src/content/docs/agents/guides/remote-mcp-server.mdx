@@ -1,10 +1,13 @@
 ---
 pcx_content_type: concept
 title: Build a Remote MCP server
+description: Deploy a remote MCP server on Cloudflare with optional authentication using Streamable HTTP transport.
 tags:
   - MCP
 sidebar:
   order: 7
+products:
+  - agents
 ---
 
 import { Details, Render, PackageManagers, LinkCard } from "~/components";
@@ -157,7 +160,7 @@ The public MCP server example you deployed earlier allows any client to connect 
 
 You can configure your MCP server to require user authentication through Cloudflare Access. Cloudflare Access acts as an identity aggregator and verifies user emails, signals from your existing [identity providers](/cloudflare-one/integrations/identity-providers/) (such as GitHub or Google), and other attributes such as IP address or device certificates. When users connect to the MCP server, they will be prompted to log in to the configured identity provider and are only granted access if they pass your [Access policies](/cloudflare-one/access-controls/policies/#selectors).
 
-For a step-by-step deployment guide, refer to [Secure MCP servers with Access for SaaS](/cloudflare-one/access-controls/ai-controls/saas-mcp/).
+For a step-by-step deployment guide, refer to [Secure MCP servers with Access for SaaS](/cloudflare-one/access-controls/ai-controls/secure-mcp-servers/).
 
 ### Third-party OAuth
 

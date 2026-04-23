@@ -1,8 +1,15 @@
 ---
 pcx_content_type: how-to
+description: Intune in Zero Trust.
+products:
+  - cloudflare-one
 title: Intune
 sidebar:
   order: 2
+tags:
+  - Microsoft
+  - XML
+  - PowerShell
 ---
 
 import { Render } from "~/components";
@@ -426,7 +433,7 @@ By completing this step, you deliver the Cloudflare One Client to targeted iOS d
 
    Replace `YOUR_TEAM_NAME_HERE` with your [team name](/cloudflare-one/faq/getting-started-faq/#what-is-a-team-domainteam-name). Review the definitions of the above parameters in the [Parameters documentation](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/).
 
-   :::tip[Successfuly complete your registration]
+   :::tip[Successfully complete your registration]
 
    You should set the [`auto_connect`](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/#auto_connect) parameter to `1` to ensure the Cloudflare One Client auto-connects to Cloudflare. If you set this parameter to `0` or exclude it, the client will not auto-connect, and registration will not complete successfully.
 

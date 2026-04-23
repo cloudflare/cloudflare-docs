@@ -1,8 +1,11 @@
 ---
 title: Workers API
+description: Reference for the Workflows Workers API, including WorkflowEntrypoint, step methods, and instance management.
 pcx_content_type: concept
 sidebar:
   order: 2
+products:
+  - workflows
 ---
 
 import {
@@ -29,7 +32,6 @@ export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 
 ### run
 
-{/* prettier-ignore */}
 - <code>run(event: WorkflowEvent&lt;T&gt;, step: WorkflowStep): Promise&lt;T&gt;</code>
   - `event` - the event passed to the Workflow, including an optional `payload` containing data (parameters)
   - `step` - the `WorkflowStep` type that provides the step methods for your Workflow
@@ -76,12 +78,12 @@ Refer to the [events and parameters](/workflows/build/events-and-parameters/) do
 ### step
 
 {/* prettier-ignore */}
-- <code>step.do(name: string, callback: (): RpcSerializable): Promise&lt;T&gt;</code>
-- <code>step.do(name: string, config?: WorkflowStepConfig, callback: ():
+- <code>step.do(name: string, callback: (ctx: WorkflowStepContext): RpcSerializable): Promise&lt;T&gt;</code>
+- <code>step.do(name: string, config?: WorkflowStepConfig, callback: (ctx: WorkflowStepContext):
 	RpcSerializable): Promise&lt;T&gt;</code>
   - `name` - the name of the step, up to 256 characters.
   - `config` (optional) - an optional `WorkflowStepConfig` for configuring [step specific retry behaviour](/workflows/build/sleeping-and-retrying/).
-  - `callback` - an asynchronous function that optionally returns serializable state for the Workflow to persist. In JavaScript Workflows, this includes a fresh, unlocked `ReadableStream<Uint8Array>` for large binary output.
+  - `callback` - an asynchronous function that receives a [`WorkflowStepContext`](/workflows/build/step-context/) and optionally returns serializable state for the Workflow to persist. In JavaScript Workflows, this includes a fresh, unlocked `ReadableStream<Uint8Array>` for large binary output.
 
 :::note[Returning state]
 
@@ -130,13 +132,11 @@ export class MyWorkflow extends WorkflowEntrypoint<Env> {
 
 </TypeScriptExample>
 
-{/* prettier-ignore */}
 - <code>step.sleep(name: string, duration: WorkflowDuration): Promise&lt;void&gt;</code>
   - `name` - the name of the step.
   - `duration` - the duration to sleep until, in either seconds or as a `WorkflowDuration` compatible string.
   - Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how Workflows are retried.
 
-{/* prettier-ignore */}
 - <code>step.sleepUntil(name: string, timestamp: Date | number): Promise&lt;void&gt;</code>
   - `name` - the name of the step.
   - `timestamp` - a JavaScript `Date` object or milliseconds from the Unix epoch to sleep the Workflow instance until.
@@ -193,6 +193,27 @@ export type WorkflowStepConfig = {
 
 Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how Workflows are retried.
 
+## WorkflowStepContext
+
+```ts
+export type WorkflowStepContext = {
+	step: {
+		name: string;
+		count: number;
+	};
+	attempt: number;
+	config: WorkflowStepConfig;
+};
+```
+
+- The `WorkflowStepContext` is passed as the first argument to the `step.do` callback function. It provides runtime information about the current step.
+  - `step.name` - the name of the step as passed to `step.do`.
+  - `step.count` - how many times `step.do` has been called with this name in the current Workflow run (1-indexed).
+  - `attempt` - the current attempt number (1-indexed). `1` on the first try, `2` on the first retry, and so on.
+  - `config` - the resolved `WorkflowStepConfig` for this step, including any defaults applied by the runtime.
+
+Refer to the [step context documentation](/workflows/build/step-context/) for usage examples.
+
 ## Workflow step limits
 
 Each workflow on Workers Paid supports 10,000 steps by default. You can increase this up to 25,000 steps by configuring `steps` within the `limits` property of your Workflow definition in your Wrangler configuration:
@@ -217,7 +238,6 @@ Note that Workflows on Workers Free have a limit of 1,024 steps. Refer to [Workf
 
 ## NonRetryableError
 
-{/* prettier-ignore */}
 - <code>throw new NonRetryableError(message: <Type text="string" />, name <Type text="string" /> <MetaInfo text="optional" />)</code>: <Type text="NonRetryableError" />
   - When thrown inside [`step.do()`](/workflows/build/workers-api/#step), this error stops step retries, propagating the error to the top level (the [run](/workflows/build/workers-api/#run) function). Any error not handled at this top level will cause the Workflow instance to fail.
   - Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how Workflows steps are retried.
@@ -317,7 +337,6 @@ The `Workflow` type exports the following methods:
 
 Create (trigger) a new instance of the given Workflow.
 
-{/* prettier-ignore */}
 - <code>create(options?: WorkflowInstanceCreateOptions): Promise&lt;WorkflowInstance&gt;</code>
   - `options` - optional properties to pass when creating an instance, including a user-provided ID and payload parameters.
 
@@ -381,7 +400,6 @@ Create (trigger) a batch of new instance of the given Workflow, up to 100 instan
 
 This is useful when you are scheduling multiple instances at once. A call to `createBatch` is treated the same as a call to `create` (for a single instance) and allows you to work within the [instance creation limit](/workflows/reference/limits/).
 
-{/* prettier-ignore */}
 - <code>createBatch(batch: WorkflowInstanceCreateOptions[]): Promise&lt;WorkflowInstance[]&gt;</code>
   - `batch` - list of Options to pass when creating an instance, including a user-provided ID and payload parameters.
 

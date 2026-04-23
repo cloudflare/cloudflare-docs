@@ -1,29 +1,73 @@
 ---
 title: Frontmatter
-description: |
-  You can customize individual Markdown and MDX pages in Starlight by setting values in their frontmatter.
-  For example, a regular page might set title and description fields.
+description: Required and optional frontmatter fields for Cloudflare docs pages, including title, description, pcx_content_type, sidebar, and tags.
 sidebar:
   order: 3
 ---
 
 Frontmatter contains the metadata for a page, such as the `title`. It is written as YAML, between `---`, at the top of the page.
 
-For example, this is the frontmatter for the page you're on now!
+For example:
 
-```mdx wrap
+```yaml
 ---
-title: Frontmatter
-description: |
-  You can customize individual Markdown and MDX pages in Starlight by setting values in their frontmatter.
-  For example, a regular page might set title and description fields.
+title: Create a Cloudflare Tunnel
+pcx_content_type: how-to
 products:
-  - product-a
-  - product-b
-  - product-c
+  - cloudflare-tunnel
+description: Create a Cloudflare Tunnel to securely connect your private network or application to Cloudflare without exposing a public IP address. Requires cloudflared and a Cloudflare account.
 sidebar:
-  order: 3
+  order: 2
 ---
 ```
+
+For more information on the available fields, refer to [Starlight's documentation](https://starlight.astro.build/reference/frontmatter/).
+
+## Required fields
+
+Every page with a `pcx_content_type` must include:
+
+| Field              | Description                                                                                                                    |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
+| `title`            | The page title. Plain text.                                                                                                    |
+| `pcx_content_type` | The content type of the page. Refer to [content types](/style-guide/documentation-content-strategy/content-types/).            |
+| `description`      | A 1-2 sentence summary used for the `<meta name="description">` tag. Refer to [writing a description](#writing-a-description). |
+
+## Writing a description
+
+The `description` field populates the `<meta name="description">` tag in the HTML head. This is the single most important metadata field for search engines, AI crawlers, and `llms.txt` consumers when deciding whether to surface or cite a page.
+
+A strong description:
+
+- Is 1-2 self-contained sentences (aim for 50-160 characters).
+- Names the product or feature.
+- States what the page helps the reader do or understand.
+- Works as a standalone answer snippet when extracted from the page.
+
+Do not start with generic openers like "This page describes...", "Learn more about...", or "This document explains...". These waste the most valuable metadata space without adding information.
+
+The existing `summary` field remains useful for the on-page experience but is secondary to `description` for AI and search purposes.
+
+### Examples
+
+```yaml title="Weak description (generic, not extractable)"
+description: This page explains how to create a Cloudflare Tunnel.
+```
+
+```yaml title="Strong description (self-contained, citable)"
+description: Create a Cloudflare Tunnel to securely connect your private network or application to Cloudflare without exposing a public IP address. Requires cloudflared and a Cloudflare account.
+```
+
+```yaml title="Weak description (repeats title)"
+description: Get started with Workers.
+```
+
+```yaml title="Strong description (adds value beyond the title)"
+description: Set up your first Cloudflare Worker by installing Wrangler, writing a Hello World script, and deploying it to the Cloudflare network.
+```
+
+## Optional fields
+
+For optional fields such as `sidebar`, `tags`, `products`, `difficulty`, and `reviewed`, refer to [Custom properties](/style-guide/frontmatter/custom-properties/).
 
 For more information on the available fields, please refer to [Starlight's documentation](https://starlight.astro.build/reference/frontmatter/).

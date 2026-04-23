@@ -1,0 +1,162 @@
+---
+title: Windsurf + Cloudflare
+description: "Agentic IDE with Cascade context and Flows for multi-step tasks. Made by Codeium."
+template: splash
+pcx_content_type: how-to
+---
+
+import { Steps } from "~/components";
+import AgentHeader from "~/components/agent-setup/AgentHeader.astro";
+import PlatformAccess from "~/components/agent-setup/PlatformAccessSection.astro";
+import ExamplePromptsList from "~/components/agent-setup/ExamplePromptsList.astro";
+import RandomPrompt from "~/components/agent-setup/RandomPrompt.astro";
+import TipsList from "~/components/agent-setup/TipsList.astro";
+import FAQList from "~/components/agent-setup/FAQList.astro";
+import FAQItem from "~/components/agent-setup/FAQItem.astro";
+import TroubleshootingList from "~/components/agent-setup/TroubleshootingList.astro";
+import TroubleshootingItem from "~/components/agent-setup/TroubleshootingItem.astro";
+import BuildAgentsCallout from "~/components/agent-setup/BuildAgentsCallout.astro";
+import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
+
+<AgentHeader slug="windsurf" />
+
+## Quick start
+
+<Steps>
+	1. **Download Windsurf**
+
+		Download Windsurf for macOS, Windows, or Linux from the [Windsurf downloads page](https://windsurf.com/download).
+
+	2. **Install Cloudflare Skills**
+
+		```bash
+		npx skills add https://github.com/cloudflare/skills
+		```
+
+	3. **Configure Cloudflare MCP servers**
+
+		Add the Cloudflare API and docs servers to `~/.codeium/windsurf/mcp_config.json`. For a full list of available Cloudflare MCP servers, refer to the repository on [GitHub](https://github.com/cloudflare/mcp-server-cloudflare).
+
+		```json
+		{
+		  "mcpServers": {
+		    "cloudflare": { "serverUrl": "https://mcp.cloudflare.com/mcp" },
+		    "cloudflare-docs": { "serverUrl": "https://docs.mcp.cloudflare.com/mcp" }
+		  }
+		}
+		```
+
+	4. **Try a prompt**
+
+		Open Cascade and try a prompt — for example:
+
+		<RandomPrompt />
+</Steps>
+
+## Cloudflare platform access
+
+<PlatformAccess agentName="Windsurf">
+	<Fragment slot="wrangler">
+		<div class="agent-platform-hint">
+			Run deploys and platform commands from the integrated terminal.
+		</div>
+		<p>
+			Cascade runs <a href="/workers/wrangler/">Wrangler</a> in Windsurf's integrated
+			terminal. The bundled <strong>wrangler</strong> Skill teaches Cascade when to
+			reach for commands like <code>wrangler deploy</code> or <code>wrangler tail</code>.
+		</p>
+	</Fragment>
+
+    <Fragment slot="docs">
+    	<div class="agent-platform-hint">Use @-mentions and llms.txt to preload context.</div>
+    	<p>
+    		Cascade works best when you explicitly <code>@</code>-mention files and paste
+    		URLs. Useful Cloudflare docs URLs to reference:
+    	</p>
+    	<ul class="agent-platform-resources">
+    		<li>
+    			<a href="/llms.txt">developers.cloudflare.com/llms.txt</a> — directory of
+    			every Cloudflare product.
+    		</li>
+    		<li>
+    			<a href="/workers/llms.txt">developers.cloudflare.com/workers/llms.txt</a>
+    		</li>
+    		<li>
+    			<a href="/agents/llms.txt">developers.cloudflare.com/agents/llms.txt</a>
+    		</li>
+    		<li>
+    			<a href="/r2/llms.txt">developers.cloudflare.com/r2/llms.txt</a>
+    		</li>
+    		<li>
+    			<a href="/d1/llms.txt">developers.cloudflare.com/d1/llms.txt</a>
+    		</li>
+    	</ul>
+    	<p>
+    		For a full overview of how these docs are structured for agents, refer to the{" "}
+    		<a href="/style-guide/ai-tooling/">AI tooling guide</a>.
+    	</p>
+    </Fragment>
+
+</PlatformAccess>
+
+## Example prompts
+
+<ExamplePromptsList />
+
+## Tips
+
+<TipsList>
+
+- The Cloudflare API MCP server uses Code Mode — Cascade writes JavaScript to reach any of 2,500+ endpoints in ~1,000 tokens.
+- Use `@`-mention to include your `wrangler.jsonc` in Cascade prompts — Cascade uses this to understand your current bindings when generating code.
+- Add the observability MCP server to let Cascade automatically check Workers logs and debug deployments without leaving the IDE.
+
+</TipsList>
+
+## FAQ
+
+<FAQList>
+	<FAQItem question="Does Windsurf support Cloudflare Skills?">
+		Yes. Windsurf supports Agent Skills in Cascade. Install the Cloudflare
+		Skills bundle from [cloudflare/skills](https://github.com/cloudflare/skills)
+		— see the [Windsurf Cascade Skills
+		documentation](https://docs.windsurf.com/windsurf/cascade/skills) for where
+		Cascade discovers and loads Skills.
+	</FAQItem>
+	<FAQItem question="Should I use Skills, the MCP server, Wrangler CLI, or all of them?">
+		All three complement each other. Cloudflare Skills teach Cascade the
+		patterns and conventions for Workers development. The Cloudflare API MCP
+		server handles platform operations (DNS, WAF, Zero Trust, R2 buckets).
+		Wrangler in Windsurf's integrated terminal covers local dev and deploys.
+		Cascade coordinates between them naturally.
+	</FAQItem>
+	<FAQItem question="Can Cascade deploy to Cloudflare?">
+		Yes. Cascade can run `npx wrangler deploy` in the integrated terminal, and
+		with the MCP server configured it can also call the Cloudflare API directly
+		for managed deploys and resource creation.
+	</FAQItem>
+</FAQList>
+
+## Troubleshooting
+
+<TroubleshootingList>
+	<TroubleshootingItem issue="MCP server not connecting">
+		Verify your `mcp_config.json` configuration. Restart Windsurf after making
+		changes. Ensure the MCP server URL ends with `/mcp`.
+	</TroubleshootingItem>
+	<TroubleshootingItem issue="Getting outdated information about Cloudflare products">
+		Enable the <a href="https://github.com/cloudflare/mcp-server-cloudflare" target="_blank" rel="noopener noreferrer">Cloudflare docs MCP server</a> so the agent can fetch
+		current documentation at runtime. If you prefer not to use the MCP server, point
+		the agent directly at <a href="/llms.txt">developers.cloudflare.com/llms.txt</a> for
+		a directory of every product, or <code>developers.cloudflare.com/&lt;product&gt;/llms.txt</code>
+		for a product-specific index.
+	</TroubleshootingItem>
+</TroubleshootingList>
+
+## Build agents on Cloudflare
+
+<BuildAgentsCallout />
+
+## Other agents
+
+<OtherAgents currentSlug="windsurf" />
