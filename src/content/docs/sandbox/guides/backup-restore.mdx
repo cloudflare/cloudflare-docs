@@ -307,7 +307,7 @@ console.log(`Restored: ${result.success}`);
 :::note
 You can use an environment variable to toggle `localBucket` between local development and production. Set an environment variable such as `LOCAL_DEV` in your Wrangler configuration using `vars` for local development, then reference it in your code:
 
-```typescript
+```ts
 const backup = await sandbox.createBackup({
 	dir: "/workspace",
 	localBucket: Boolean(env.LOCAL_DEV),
