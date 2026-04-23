@@ -28,6 +28,8 @@ Resource Tagging is the foundation for several capabilities we're building towar
 
 ### Current limitations
 
+- `PUT` replaces all tags on a resource (no partial update). Use the [GET, merge, PUT workflow](/resource-tagging/how-to/manage-tags/#add-a-single-tag) to modify individual tags safely.
+- `DELETE` removes all tags from a resource. To remove a single tag, PUT the remaining tags back.
 - Querying tags for a resource that has never been tagged returns `500` instead of `404`. This is a known beta limitation.
 
 To get started, refer to the [Resource Tagging documentation](/resource-tagging/).
