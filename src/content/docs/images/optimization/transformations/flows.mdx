@@ -45,7 +45,7 @@ When an image is requested on your zone, Cloudflare checks to see whether the re
 - To control priority, you can reorder flows in the dashboard.
 
 If the request matches a flow's conditions, then Cloudflare rewrites the URL to pass through the Images service with the specified parameters:
-- A custom flow triggers only on requests for [supported image types](/images/get-started/limits/). HTML pages, CSS files, and other non-images are never affected.
+- A custom flow triggers only on requests for [supported image extensions](/images/get-started/limits/). HTML pages, CSS files, and other non-images are never affected.
 - A provider flow evaluates requests based on provider-specific optimization parameters. For example, a Fastly provider flow triggers only when the request contains parameters like `?width`, `?height`, or `?fit`. Cloudflare will ignore any unrecognized parameters.
 
 In your request lifecycle, flows are evaluated after standard HTTP [redirect rules](/rules/url-forwarding/):
