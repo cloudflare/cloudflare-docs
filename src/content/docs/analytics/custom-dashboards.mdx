@@ -13,13 +13,13 @@ Custom dashboards allow you to build personalized views that highlight the metri
 
 ## What you can do
 
-**Monitor security threats** — Track WAF blocks, bot scores, and threat patterns across your zones. Combine HTTP traffic data with security events to correlate attack patterns with traffic spikes.
+Monitor security threats by tracking WAF blocks, bot scores, and threat patterns across your zones. Combine HTTP traffic data with security events to correlate attack patterns with traffic spikes.
 
-**Analyze application performance** — Visualize origin response times, cache hit ratios, and error rates. Identify slow endpoints and understand how latency varies by region or device type.
+Analyze application performance by visualizing origin response times, cache hit ratios, and error rates. Identify slow endpoints and understand how latency varies by region or device type.
 
-**Track business metrics** — Monitor API usage, bandwidth consumption, and traffic patterns. Build executive dashboards that surface the KPIs that matter to your organization.
+Track business metrics by monitoring API usage, bandwidth consumption, and traffic patterns. Build executive dashboards that surface the KPIs that matter to your organization.
 
-**Investigate incidents** — When something goes wrong, create focused dashboards that combine the specific signals relevant to your investigation. Log Explorer customers can turn log queries directly into dashboard charts for ongoing monitoring.
+Investigate incidents so that when something goes wrong, you can create focused dashboards that combine the specific signals relevant to your investigation. Log Explorer customers can turn log queries directly into dashboard charts for ongoing monitoring.
 
 ## Availability
 
@@ -30,7 +30,7 @@ Custom Dashboards are available to all Cloudflare customers.
 | All Cloudflare customers | Up to 25 dashboards |
 | Log Explorer customers | Up to 100 dashboards |
 
-## Getting started
+## Get started
 
 ### Start from a template
 
@@ -50,18 +50,18 @@ After selecting a template, you can customize it by adding, removing, or modifyi
 
 For specialized monitoring needs, create a blank dashboard and add charts that query exactly the data you need.
 
-Custom Dashboards support **100+ datasets** available via the Cloudflare GraphQL API, including HTTP traffic, security events, Workers analytics, R2 Storage metrics, Load Balancing health, Zero Trust logs, DNS queries, and more.
+Custom Dashboards support over 100 datasets available via the Cloudflare GraphQL API, including HTTP traffic, security events, Workers analytics, R2 Storage metrics, Load Balancing health, Zero Trust logs, DNS queries, and more.
 
-## Creating charts
+## Create charts
 
 ### Natural language prompts
 
 Describe what you want to see in plain English, and AI will construct the appropriate visualization:
 
-- "Show me error rates by country for the last 24 hours"
-- "Compare cached vs uncached requests over time"
+- "Show me error rates by country for the last 24 hours."
+- "Compare cached vs uncached requests over time."
 - "What are my top 10 paths by request volume?"
-- "Display WAF blocks grouped by rule ID"
+- "Display WAF blocks grouped by rule ID."
 
 This is the fastest way to explore your data when you have a question but are not sure which dataset or metric to use.
 
@@ -88,7 +88,7 @@ Choose the visualization that best fits your data:
 | **Percentage** | Ratios and rates — cache hit percentage, bot traffic proportion |
 | **Top N** | Rankings — busiest endpoints, most blocked IPs, top user agents |
 
-### Example: Building a security overview chart
+#### Example: Build a security overview chart
 
 To track blocked requests by WAF rule:
 
@@ -109,7 +109,7 @@ Common uses:
 - **Time range** — Zoom into a specific incident window across all charts
 - **Hostname** — Focus on a single domain when you manage multiple properties
 - **Country** — Analyze traffic patterns for a specific region
-- **Status code** — Investigate error spikes by filtering to 5xx responses
+- **Status code** — Investigate error spikes by filtering to `5xx` responses
 
 When you add a filter, every chart on the dashboard updates to reflect the narrowed scope.
 
@@ -132,7 +132,7 @@ Log Explorer data gives you charts built from every logged event, not a statisti
 
 When creating a chart, Log Explorer customers can select from Log Explorer datasets alongside the standard GraphQL analytics datasets.
 
-## Managing dashboards
+## Manage dashboards
 
 Dashboards are organized in a list view where you can see all dashboards in your account. From any dashboard, you can add, remove, or rearrange charts, and changes are saved automatically when you exit edit mode.
 
