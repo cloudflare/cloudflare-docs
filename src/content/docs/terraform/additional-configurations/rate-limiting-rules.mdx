@@ -73,6 +73,10 @@ resource "cloudflare_ruleset" "zone_rl" {
 />
 <br />
 
+:::tip[Use a single ruleset resource per phase]
+Each zone supports one [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) per phase. Define all your rate limiting rules for a given zone within a single `cloudflare_ruleset` resource with `kind = "zone"` and `phase = "http_ratelimit"`.
+:::
+
 ## Create a rate limiting rule at the account level
 
 :::note[Notes]
