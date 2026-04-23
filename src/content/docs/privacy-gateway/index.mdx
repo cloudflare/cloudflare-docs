@@ -9,17 +9,13 @@ products:
   - privacy-gateway
 ---
 
-import { Description, Feature, Plan } from "~/components";
+import { Description, Plan } from "~/components";
 
 <Description>
 
 Implements the Oblivious HTTP IETF standard to improve client privacy.
 
 </Description>
-
-
-
-
 
 <Plan type="enterprise" />
 
@@ -48,6 +44,8 @@ flowchart LR
 
 Use Relay mode if your backend is not already behind the Cloudflare CDN.
 
+[Get started with Relay mode](/privacy-gateway/relay-mode/)
+
 ### Gateway mode
 
 In Gateway mode, Cloudflare decrypts OHTTP requests and forwards them to your origin, which is already behind the Cloudflare CDN. A third-party relay (not operated by Cloudflare) sits between the client and Cloudflare. Cloudflare can see the request content but not the client IP.
@@ -61,20 +59,16 @@ flowchart LR
 
 Use Gateway mode if your application is already proxied through Cloudflare.
 
+[Get started with Gateway mode](/privacy-gateway/gateway-mode/)
+
 ---
 
-## Features
+## Chunked OHTTP
 
-<Feature
-	header="Relay mode"
-	href="/privacy-gateway/relay-mode/"
-	cta="Get started"
->
-</Feature>
+Privacy Gateway supports [Chunked Oblivious HTTP](https://datatracker.ietf.org/doc/draft-ietf-ohai-chunked-ohttp/), an extension to OHTTP that allows requests and responses to be encrypted and decrypted incrementally. Instead of waiting for the entire message to be processed, chunks can be sent and received as they become available.
 
-<Feature
-	header="Gateway mode"
-	href="/privacy-gateway/gateway-mode/"
-	cta="Get started"
->
-</Feature>
+Chunked OHTTP is useful for:
+
+- **Large messages**: Process multi-gigabyte uploads or downloads without buffering the entire payload in memory.
+- **Streaming responses**: Begin receiving response data before the server has finished generating the full response, reducing time-to-first-byte.
+- **Long-running requests**: Maintain privacy for requests that take significant time to process on the server.
