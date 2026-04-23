@@ -11,57 +11,163 @@ tags:
   - Post-quantum
 ---
 
-The tables below summarize third-party software support for the post-quantum algorithms Cloudflare has deployed, organized by software category. [Contributions](/style-guide/contributions/) to keep the listing up-to-date are welcome.
+The sections below summarize third-party software support for the post-quantum algorithms Cloudflare has deployed, organized by software category. [Contributions](/style-guide/contributions/) to keep the listing up-to-date are welcome.
 
 Two classes of algorithm are tracked:
 
 - **Key agreement** — the [X25519MLKEM768](https://datatracker.ietf.org/doc/draft-ietf-tls-ecdhe-mlkem/) hybrid, which protects against [harvest-now-decrypt-later](https://en.wikipedia.org/wiki/Harvest_now,_decrypt_later) attacks on encrypted traffic. Refer to [hybrid key agreement](/ssl/post-quantum-cryptography/#hybrid-key-agreement) for background.
-- **Signatures** — [ML-DSA](https://csrc.nist.gov/pubs/fips/204/final) (FIPS 204), the post-quantum digital signature algorithm standardized by NIST. Defined with three parameter sets: ML-DSA-44, ML-DSA-65, and ML-DSA-87. **ML-DSA-44 is the variant Cloudflare is currently evaluating for deployment.** Refer to [post-quantum signatures](/ssl/post-quantum-cryptography/#post-quantum-signatures) for background.
+- **Signatures** — [ML-DSA](https://csrc.nist.gov/pubs/fips/204/final) (FIPS 204), the post-quantum digital signature algorithm standardized by NIST. Defined with three parameter sets (ML-DSA-44, ML-DSA-65, ML-DSA-87), of which **ML-DSA-44 is the variant Cloudflare is currently evaluating for deployment**. Refer to [post-quantum signatures](/ssl/post-quantum-cryptography/#post-quantum-signatures) for background.
 
 :::caution
-The lists below are for reference only. Responsibility for third-party software lies with their respective maintainers. Use them at your own discretion.
+The listings below are for reference only. Responsibility for third-party software lies with their respective maintainers. Use them at your own discretion.
 :::
 
 ## Browsers
 
-| Software | Key agreement (X25519MLKEM768) | Signatures (ML-DSA) | Notes |
-| --- | --- | --- | --- |
-| [Firefox](https://www.mozilla.org/firefox/) | ✅ Default in Firefox 132+ (Desktop), 145+ (Android) | Not yet | For QUIC/HTTP3, Firefox 135+ (Desktop) |
-| [Chrome](https://www.google.com/chrome/) | ✅ Default in Chrome 131+ | Not yet | |
-| [Safari](https://www.apple.com/safari/) | ✅ Default in Safari 26+ | Not yet | System-wide in iOS 26, macOS Tahoe 26, and other [Apple operating systems](https://support.apple.com/122756) |
-| [Edge](https://microsoft.com/edge/) | ✅ Default in Edge 131+ | Not yet | |
-| [Opera](https://opera.com), [Brave](https://brave.com) | ✅ Default in recent versions | Not yet | |
-| [Tor Browser](https://www.torproject.org/) | ✅ Default in Tor Browser 15.0+ | Not yet | |
+### Brave and Opera
+
+- **Key agreement:** ✅ Default in recent versions
+- **Signatures:** Not yet
+- **Reference:** [Brave](https://brave.com), [Opera](https://opera.com)
+
+### Chrome
+
+- **Key agreement:** ✅ Default in Chrome 131+
+- **Signatures:** Not yet
+- **Reference:** [Chrome](https://www.google.com/chrome/)
+
+### Edge
+
+- **Key agreement:** ✅ Default in Edge 131+
+- **Signatures:** Not yet
+- **Reference:** [Edge](https://microsoft.com/edge/)
+
+### Firefox
+
+- **Key agreement:** ✅ Default in Firefox 132+ (Desktop), 145+ (Android)
+- **Signatures:** Not yet
+- **Reference:** [Firefox](https://www.mozilla.org/firefox/)
+
+For QUIC/HTTP3, Firefox 135+ (Desktop).
+
+### Safari
+
+- **Key agreement:** ✅ Default in Safari 26+
+- **Signatures:** Not yet
+- **Reference:** [Safari](https://www.apple.com/safari/)
+
+System-wide in iOS 26, macOS Tahoe 26, and other [Apple operating systems](https://support.apple.com/122756).
+
+### Tor Browser
+
+- **Key agreement:** ✅ Default in Tor Browser 15.0+
+- **Signatures:** Not yet
+- **Reference:** [Tor Browser](https://www.torproject.org/)
 
 ## Libraries
 
-| Software | Key agreement (X25519MLKEM768) | Signatures (ML-DSA) | Notes |
-| --- | --- | --- | --- |
-| [OpenSSL](https://www.openssl.org/) | ✅ Default in 3.5.0+ | ✅ 3.5.0+ (ML-DSA-44, 65, 87) | Included natively; no external provider required |
-| [BoringSSL](https://boringssl.googlesource.com/boringssl/) | ✅ | ✅ (ML-DSA-44, 65, 87) | |
-| [GnuTLS](https://www.gnutls.org) | ✅ 3.8.9+ compiled with leancrypto 1.2.0+ (or 3.8.8-3.8.9 with liboqs 0.11.0+) | ✅ 3.8.10+ — usable in TLS handshakes (ML-DSA-44, 65, 87) | Supports all three ML-DSA private key encodings (seed, expandedKey, both) |
-| [Go](https://go.dev) | ✅ Default in Go 1.24+ | ⚠️ Internal implementation in Go 1.26; public [`crypto/mldsa`](https://github.com/golang/go/issues/77626) proposed for Go 1.27 | Cloudflare's [fork of Go](https://github.com/cloudflare/go) also supports key agreement |
-| Cloudflare's [CIRCL](https://github.com/cloudflare/circl) | ✅ (ML-KEM) | ✅ 1.5.0+ via [`sign/mldsa`](https://github.com/cloudflare/circl/tree/main/sign/mldsa) (ML-DSA-44, 65, 87) | |
-| [Java (OpenJDK)](https://openjdk.org/) | ✅ Default in Java 27+ ([JEP 527](https://openjdk.org/jeps/527)) | ⚠️ Java 24+ provides ML-DSA APIs ([JEP 497](https://openjdk.org/jeps/497)) but they are not yet integrated into `javax.net.ssl` TLS | |
-| [Node.js](https://nodejs.org/) | ✅ Default in 24.5.0+ and 22.20.0+ ([backported](https://nodejs.org/en/blog/release/v22.20.0#openssl-updated-to-352)) | ✅ 24.5.0+ (via bundled OpenSSL 3.5) | |
-| Rust: [rustls](https://crates.io/crates/rustls) | ✅ Enabled by default since rustls 0.23.27 (via [`rustls-post-quantum`](https://crates.io/crates/rustls-post-quantum)) | ⚠️ Unstable ML-DSA support in `rustls-post-quantum` (behind `aws-lc-rs-unstable`) | |
-| Rust: [RustCrypto](https://github.com/RustCrypto) | ✅ [`ml-kem`](https://crates.io/crates/ml-kem) (pure Rust) | ✅ [`ml-dsa`](https://crates.io/crates/ml-dsa) (pure Rust, ML-DSA-44, 65, 87) | |
-| [Botan C++](https://botan.randombit.net/) | ✅ Default in TLS since 3.7.0 | ✅ 3.6.0+ (ML-DSA-44, 65, 87) | |
-| [Zig](https://ziglang.org/) | ✅ Zig 0.14.0+ (client) | Not yet | |
-| [Open Quantum Safe](https://openquantumsafe.org/) | ✅ liboqs 0.10.0+, oqs-provider 0.7.0+ | ✅ liboqs 0.14.0+, oqs-provider 0.9.0+ | Reference implementations, not recommended for production |
+### BoringSSL
+
+- **Key agreement:** ✅
+- **Signatures:** ✅ (ML-DSA-44, 65, 87)
+- **Reference:** [BoringSSL](https://boringssl.googlesource.com/boringssl/)
+
+### Botan C++
+
+- **Key agreement:** ✅ Default in TLS since 3.7.0
+- **Signatures:** ✅ 3.6.0+ (ML-DSA-44, 65, 87)
+- **Reference:** [Botan](https://botan.randombit.net/)
+
+### CIRCL (Cloudflare)
+
+- **Key agreement:** ✅ (ML-KEM)
+- **Signatures:** ✅ 1.5.0+ via [`sign/mldsa`](https://github.com/cloudflare/circl/tree/main/sign/mldsa) (ML-DSA-44, 65, 87)
+- **Reference:** [CIRCL](https://github.com/cloudflare/circl)
+
+### GnuTLS
+
+- **Key agreement:** ✅ 3.8.9+ compiled with leancrypto 1.2.0+ (or 3.8.8–3.8.9 with liboqs 0.11.0+)
+- **Signatures:** ✅ 3.8.10+ — usable in TLS handshakes (ML-DSA-44, 65, 87)
+- **Reference:** [GnuTLS](https://www.gnutls.org)
+
+Supports all three ML-DSA private key encodings (seed, expandedKey, both).
+
+### Go
+
+- **Key agreement:** ✅ Default in Go 1.24+
+- **Signatures:** ⚠️ Internal implementation in Go 1.26; public [`crypto/mldsa`](https://github.com/golang/go/issues/77626) proposed for Go 1.27
+- **Reference:** [Go](https://go.dev)
+
+Cloudflare's [fork of Go](https://github.com/cloudflare/go) also supports key agreement.
+
+### Java (OpenJDK)
+
+- **Key agreement:** ✅ Default in Java 27+ ([JEP 527](https://openjdk.org/jeps/527))
+- **Signatures:** ⚠️ Java 24+ provides ML-DSA APIs ([JEP 497](https://openjdk.org/jeps/497)) but they are not yet integrated into `javax.net.ssl` TLS
+- **Reference:** [OpenJDK](https://openjdk.org/)
+
+### Node.js
+
+- **Key agreement:** ✅ Default in 24.5.0+ and 22.20.0+ ([backported](https://nodejs.org/en/blog/release/v22.20.0#openssl-updated-to-352))
+- **Signatures:** ✅ 24.5.0+ (via bundled OpenSSL 3.5)
+- **Reference:** [Node.js](https://nodejs.org/)
+
+### Open Quantum Safe
+
+- **Key agreement:** ✅ liboqs 0.10.0+, oqs-provider 0.7.0+
+- **Signatures:** ✅ liboqs 0.14.0+, oqs-provider 0.9.0+
+- **Reference:** [Open Quantum Safe](https://openquantumsafe.org/)
+
+Reference implementations, not recommended for production.
+
+### OpenSSL
+
+- **Key agreement:** ✅ Default in 3.5.0+
+- **Signatures:** ✅ 3.5.0+ (ML-DSA-44, 65, 87)
+- **Reference:** [OpenSSL](https://www.openssl.org/)
+
+Included natively. No external provider required.
+
+### RustCrypto (Rust)
+
+- **Key agreement:** ✅ [`ml-kem`](https://crates.io/crates/ml-kem) (pure Rust)
+- **Signatures:** ✅ [`ml-dsa`](https://crates.io/crates/ml-dsa) (pure Rust, ML-DSA-44, 65, 87)
+- **Reference:** [RustCrypto](https://github.com/RustCrypto)
+
+### rustls (Rust)
+
+- **Key agreement:** ✅ Enabled by default since rustls 0.23.27 (via [`rustls-post-quantum`](https://crates.io/crates/rustls-post-quantum))
+- **Signatures:** ⚠️ Unstable ML-DSA support in `rustls-post-quantum` (behind `aws-lc-rs-unstable`)
+- **Reference:** [rustls](https://crates.io/crates/rustls)
+
+### Zig
+
+- **Key agreement:** ✅ Zig 0.14.0+ (client)
+- **Signatures:** Not yet
+- **Reference:** [Zig](https://ziglang.org/)
 
 ## Servers
 
-| Software | Key agreement (X25519MLKEM768) | Signatures (ML-DSA) | Notes |
-| --- | --- | --- | --- |
-| [NGINX](https://github.com/nginx/nginx) | ✅ Default when compiled with OpenSSL 3.5+ ([instructions](https://github.com/nginx/nginx/issues/288)) | ✅ When compiled with OpenSSL 3.5+ | |
-| [Caddy](https://caddyserver.com/) | ✅ Default in Caddy 2.10.0+ | Blocked on Go `crypto/mldsa` | |
-| [Traefik](https://traefik.io/traefik/) | ✅ Default in 3.4.2+, 2.11.26+ ([commit](https://github.com/traefik/traefik/commit/cd16321dd9c25bb47a2e9417b2a4a75959be63d0)); configurable via `curvePreferences` in 3.5.0-rc.1+ | Blocked on Go `crypto/mldsa` | |
-| [rpxy](https://github.com/junkurihara/rust-rpxy) | ✅ Default in 0.9.4+ | Blocked on Rust PQ signature support | |
+### Caddy
 
-:::note
-- ✅ means the feature is implemented and ready to use.
-- ⚠️ means partial or experimental support — refer to the Notes column.
-- "Not yet" means no post-quantum support for that class is available; traditional algorithms are still used.
-- "Blocked on …" indicates the software itself is ready but depends on an upstream component that has not yet shipped PQ support.
-:::
+- **Key agreement:** ✅ Default in Caddy 2.10.0+
+- **Signatures:** Blocked on Go `crypto/mldsa`
+- **Reference:** [Caddy](https://caddyserver.com/)
+
+### NGINX
+
+- **Key agreement:** ✅ Default when compiled with OpenSSL 3.5+ ([instructions](https://github.com/nginx/nginx/issues/288))
+- **Signatures:** ✅ When compiled with OpenSSL 3.5+
+- **Reference:** [NGINX](https://github.com/nginx/nginx)
+
+### rpxy
+
+- **Key agreement:** ✅ Default in 0.9.4+
+- **Signatures:** Blocked on Rust PQ signature support
+- **Reference:** [rpxy](https://github.com/junkurihara/rust-rpxy)
+
+### Traefik
+
+- **Key agreement:** ✅ Default in 3.4.2+, 2.11.26+ ([commit](https://github.com/traefik/traefik/commit/cd16321dd9c25bb47a2e9417b2a4a75959be63d0)); configurable via `curvePreferences` in 3.5.0-rc.1+
+- **Signatures:** Blocked on Go `crypto/mldsa`
+- **Reference:** [Traefik](https://traefik.io/traefik/)
