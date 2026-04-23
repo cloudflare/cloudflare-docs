@@ -2,6 +2,7 @@
 import Default from "@astrojs/starlight/components/TableOfContents.astro";
 import { Icon } from "@astrojs/starlight/components";
 import FeedbackPrompt from "../FeedbackPrompt.tsx";
+import AgentsToolkit from "../AgentsToolkit.tsx";
 
 const tags = Astro.locals.starlightRoute.entry.data.tags;
 const showFeedback = Astro.locals.starlightRoute.entry.data.feedback;
@@ -37,8 +38,12 @@ const { editUrl } = Astro.locals.starlightRoute;
 	{
 		(showFeedback || showActions) && (
 			<div class="mt-6 flex flex-col gap-5 border-t border-[var(--sidebar-border)] pt-6">
+				<div class="agents-toolkit-container">
+					<AgentsToolkit client:idle />
+				</div>
+
 				{showFeedback && (
-					<div class="feedback-container">
+					<div class="feedback-container border-t border-[var(--sidebar-border)] pt-5">
 						<FeedbackPrompt client:idle />
 					</div>
 				)}
