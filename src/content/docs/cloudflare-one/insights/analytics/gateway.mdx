@@ -31,7 +31,7 @@ To review Gateway analytics:
 
 Your [Gateway HTTP policies](/cloudflare-one/traffic-policies/http-policies/) power the HTTP request analytics dashboard. If you are not using Gateway HTTP policies, the dashboard will appear empty.
 
-The HTTP request analytics dashboard helps you identify trends in how your HTTP policies apply over time. By visualizing allowed, isolated, and do not inspect requests, the dashboard provides insights into traffic behavior and policy trends, making it easier to spot anomalies or shifts in usage patterns.
+The HTTP request analytics dashboard helps you identify trends in how your HTTP policies apply over time. By visualizing allowed, [isolated](/cloudflare-one/remote-browser-isolation/) (rendered in a remote browser), and [Do Not Inspect](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) (bypassing TLS decryption) requests, the dashboard provides insights into traffic behavior and policy trends, making it easier to spot anomalies or shifts in usage patterns.
 
 To review a detailed description of an HTTP request and its associated policy:
 
@@ -55,7 +55,7 @@ To review a detailed description of an HTTP request and its associated policy:
 
 Your [Gateway DNS policies](/cloudflare-one/traffic-policies/dns-policies/) power the DNS query analytics dashboard. If you are not using Gateway DNS policies, the dashboard will appear empty.
 
-The DNS query analytics dashboard helps you identify trends in how your DNS policies apply over time. By visualizing allowed, blocked, and overridden queries, the dashboard provides insights into traffic behavior and policy trends, making it easier to spot anomalies or shifts in usage patterns.
+The DNS query analytics dashboard helps you identify trends in how your DNS policies apply over time. By visualizing allowed, blocked, and overridden (DNS response replaced by a policy-defined address) queries, the dashboard provides insights into traffic behavior and policy trends, making it easier to spot anomalies or shifts in usage patterns.
 
 To review a detailed description of a DNS query and its associated policy:
 
@@ -78,7 +78,7 @@ To review a detailed description of a DNS query and its associated policy:
 
 Your [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/) power the Network policy analytics dashboard. If you are not using Gateway network policies, the dashboard will appear empty.
 
-The Network policy analytics dashboard helps you identify trends in how your Gateway network policies apply over time. By visualizing allowed, blocked, and overridden sessions, the dashboard provides insights into traffic behavior and policy trends, making it easier to spot anomalies or shifts in usage patterns.
+The Network policy analytics dashboard helps you identify trends in how your Gateway network policies apply over time. By visualizing allowed, blocked, and overridden (traffic rerouted by a policy-defined rule) sessions, the dashboard provides insights into traffic behavior and policy trends, making it easier to spot anomalies or shifts in usage patterns.
 
 To review a detailed description of a network session and its associated policy:
 
