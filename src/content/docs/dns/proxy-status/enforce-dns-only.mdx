@@ -33,7 +33,6 @@ Before relying on enforce DNS-only as part of your incident response plan, you s
 
 - Verify origin server capacity: Without Cloudflare proxying, your origin servers handle all traffic directly, including traffic that Cloudflare would normally cache or filter. Ensure your infrastructure can sustain this load.
 - Review exposed record content: When enforce DNS-only is active, all origin IPs configured in proxied `A` and `AAAA` records, as well as the targets of proxied `CNAME` records, become publicly visible through DNS queries. If your origins rely on IP obscurity for security, plan accordingly.
-- 
 - Test in advance: Use the API in a staging or test account to confirm that you understand the behavior before you need it in an emergency.
 
 ## Enable enforce DNS-only
@@ -74,12 +73,12 @@ Enforce DNS-only affects the following records:
 
 - [Load Balancing](/load-balancing/): proxied LB records visible on the DNS records table but managed through the [Load Balancing configurations](/load-balancing/load-balancers/create-load-balancer/).
 - Proxied DNS records that match a [Worker route](/workers/configuration/routing/routes/).
+- [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) fallback origin: The proxied DNS record you designate as the [fallback origin](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/#1-create-fallback-origin) for custom hostnames.
 
 ### Excluded
 
 Enforce DNS-only does not affect the following records:
 
-- [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) fallback origin: The proxied DNS record you designate as the [fallback origin](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/#1-create-fallback-origin) for custom hostnames.
 - [R2](/r2/) custom domains: Read-only proxied records added to the DNS records table when you set up [R2 custom domains](/r2/buckets/public-buckets/#connect-a-bucket-to-a-custom-domain).
 - [Spectrum](/spectrum/) applications: DNS records managed by the Spectrum application.
 - [Tunnel](/tunnel/): CNAME records pointing to a tunnel subdomain. Refer to [Tunnel routing](/tunnel/routing/#create-a-dns-record) or [Cloudflare One](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/dns/) for details.
