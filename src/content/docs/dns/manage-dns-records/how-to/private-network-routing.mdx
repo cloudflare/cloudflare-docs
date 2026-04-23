@@ -27,6 +27,7 @@ Before you enable private network routing, consider the following:
 
 - You need an active tunnel connection to Cloudflare through one of the supported on-ramp methods. Refer to [Cloudflare WAN](/cloudflare-wan/on-ramps/) for further guidance.
 - Private network routing is available for `A` (IPv4) and `AAAA` (IPv6) records only. Records must be [proxied](/dns/proxy-status/).
+- If you have multiple `A` or `AAAA` records on the same name and at least one of them has private network routing enabled, all records on that name will use private network routing. This is consistent with the [proxy status behavior](/dns/proxy-status/#mix-proxied-and-unproxied) in these cases.
 
 ### IP ranges
 
