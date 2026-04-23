@@ -107,9 +107,11 @@ To enable private routing on an existing record, use a [PATCH request](/api/reso
 
 This error occurs when you proxy a private IP address without the necessary entitlement. Contact your account team to request access.
 
-### Records on the same name
+### Setting seems off but traffic routes through tunnel
 
-[Check same partial as proxied behavior]
+Check for other records on the same name.
+
+Private network routing applies per name, not per record. If you have multiple `A` or `AAAA` records on the same name and at least one of them has private network routing enabled, all records on that name will use private network routing.
 
 ### Traffic not reaching origin
 
