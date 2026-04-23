@@ -52,6 +52,73 @@
 	display: inline;
 }
 
+/* ─── Cloudflare tools banner ─── */
+.cf-banner {
+	margin: 0;
+}
+
+
+
+.cf-banner-items {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 0.625rem;
+}
+
+@media (max-width: 640px) {
+	.cf-banner-items {
+		grid-template-columns: 1fr;
+	}
+}
+
+.cf-banner-item {
+	display: flex;
+	flex-direction: column;
+	gap: 0.375rem;
+	padding: 0.875rem 1rem;
+	border: 1px solid var(--color-cl1-gray-8);
+	border-radius: 10px;
+}
+
+:root[data-theme="dark"] .cf-banner-item {
+	border-color: var(--color-cl1-gray-2);
+}
+
+.cf-banner-item-title {
+	font-size: 0.9375rem;
+	font-weight: 600;
+	margin: 0;
+}
+
+.cf-banner-item-desc {
+	font-size: 0.8125rem;
+	line-height: 1.55;
+	color: var(--color-cl1-gray-5);
+	margin: 0;
+	flex: 1;
+}
+
+:root[data-theme="dark"] .cf-banner-item-desc {
+	color: var(--color-cl1-gray-6);
+}
+
+.cf-banner-item-desc a,
+.cf-banner-item-links a {
+	color: var(--sl-color-text-accent);
+	text-decoration: none;
+}
+
+.cf-banner-item-desc a:hover,
+.cf-banner-item-links a:hover {
+	text-decoration: underline;
+}
+
+.cf-banner-item-links {
+	font-size: 0.8125rem;
+	margin-top: auto;
+	padding-top: 0.125rem;
+}
+
 /* ─── Landing page hero ─── */
 .agent-setup-lede {
 	font-size: 1.0625rem;
@@ -63,6 +130,18 @@
 
 :root[data-theme="dark"] .agent-setup-lede {
 	color: var(--color-cl1-gray-7);
+}
+
+.agent-setup-lede-highlight {
+	color: var(--sl-color-text);
+	font-weight: 600;
+	background: color-mix(in srgb, var(--color-cl1-orange-5) 10%, transparent);
+	padding: 0.05em 0.3em;
+	border-radius: 4px;
+}
+
+:root[data-theme="dark"] .agent-setup-lede-highlight {
+	background: color-mix(in srgb, var(--color-cl1-orange-5) 15%, transparent);
 }
 
 /* ─── Agent cards (modernized) ─── */
@@ -907,6 +986,7 @@
 	font-weight: 700;
 	letter-spacing: -0.02em;
 	margin-bottom: 0.5rem;
+	color: var(--sl-color-white);
 }
 
 .agent-setup-section-header p {
@@ -1476,22 +1556,10 @@
 	border: 1px solid var(--color-cl1-gray-8);
 	border-radius: 12px;
 	background: var(--sl-color-bg);
-	transition:
-		border-color 0.2s ease,
-		transform 0.2s ease;
-}
-
-.agent-primer-type:hover {
-	border-color: var(--color-cl1-orange-6);
-	transform: translateY(-2px);
 }
 
 :root[data-theme="dark"] .agent-primer-type {
 	border-color: var(--color-cl1-gray-2);
-}
-
-:root[data-theme="dark"] .agent-primer-type:hover {
-	border-color: var(--color-cl1-orange-5);
 }
 
 .agent-primer-type-icon {

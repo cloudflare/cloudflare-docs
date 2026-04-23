@@ -4,6 +4,7 @@ import type { StarlightPageProps } from "@astrojs/starlight/props";
 import CatalogWithFilter from "~/components/agent-setup/CatalogWithFilter.astro";
 import AgentComparison from "~/components/agent-setup/AgentComparison.astro";
 import AgentPrimer from "~/components/agent-setup/AgentPrimer.astro";
+import CloudflareToolsBanner from "~/components/agent-setup/CloudflareToolsBanner.astro";
 import { AGENTS } from "~/components/agent-setup/agents";
 
 import "~/styles/agent-setup.css";
@@ -14,7 +15,7 @@ const props = {
 	frontmatter: {
 		title: "Agent setup",
 		description:
-			"Install an agent of your choice, connect skills and MCP servers, and start deploying to Cloudflare — all from your editor or terminal.",
+			"Cloudflare provides Skills and MCP servers so your agent can seamlessly build on the Cloudflare platform. Pick an agent below to get started.",
 		template: "splash",
 	},
 	hideBreadcrumbs: true,
@@ -26,6 +27,19 @@ const props = {
 		Install an agent of your choice, connect Skills and MCP servers, and start
 		deploying to Cloudflare — all from your editor or terminal.
 	</p>
+
+	<div class="agent-setup-section" style="margin-top: 3rem;">
+		<div class="agent-setup-section-header">
+			<h2>Tools for agents</h2>
+			<p>Cloudflare is built for agents. Give yours the tools to deploy, manage, and scale on the world's fastest network.</p>
+		</div>
+		<CloudflareToolsBanner />
+	</div>
+
+	<div class="agent-setup-section-header">
+		<h2>Pick your agent</h2>
+		<p>Select an agent to get step-by-step setup instructions.</p>
+	</div>
 
 	<CatalogWithFilter agents={agents} />
 
