@@ -13,7 +13,6 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {},
 	"examples": [
 		{
 			"name": "Simple Generation",
@@ -23,7 +22,7 @@
 			},
 			"output": {
 				"images": [
-					"https://replicate.delivery/xezq/P3tn7Cb6LqrVOJujUhMyW7vTVw2SjmzMtqgkCdicjR5sTNmF/tmp40gc10ey.png"
+					"https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-5-lite/simple-generation-0.jpeg"
 				]
 			},
 			"code_snippets": [
@@ -40,19 +39,19 @@
 			"input": {
 				"prompt": "A detailed technical blueprint of a futuristic spacecraft with annotations and measurements",
 				"size": "3K",
-				"output_format": "png",
-				"aspect_ratio": "16:9"
+				"aspect_ratio": "16:9",
+				"output_format": "png"
 			},
 			"output": {
 				"images": [
-					"https://replicate.delivery/xezq/v8WigeO3ss1bHCMcpejgxcSknPaKJre3f2sW9PJzyfrDeTNmF/tmpw9lduzh0.png"
+					"https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-5-lite/high-resolution-png-0.png"
 				]
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5-lite',\n  {\n    prompt:\n      'A detailed technical blueprint of a futuristic spacecraft with annotations and measurements',\n    size: '3K',\n    output_format: 'png',\n    aspect_ratio: '16:9',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5-lite',\n  {\n    prompt:\n      'A detailed technical blueprint of a futuristic spacecraft with annotations and measurements',\n    size: '3K',\n    aspect_ratio: '16:9',\n    output_format: 'png',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -62,19 +61,19 @@
 			"input": {
 				"prompt": "A professional headshot portrait with soft studio lighting and a neutral gray background",
 				"size": "2K",
-				"output_format": "jpeg",
-				"aspect_ratio": "3:4"
+				"aspect_ratio": "3:4",
+				"output_format": "jpeg"
 			},
 			"output": {
 				"images": [
-					"https://replicate.delivery/xezq/0hfH1l5S6fhF3EzDwZUFTfDPTaeAeJLFJNNpfwCWemTJDoaMLA/tmpb32_cbxa.jpg"
+					"https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-5-lite/portrait-photo-0.jpeg"
 				]
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5-lite',\n  {\n    prompt:\n      'A professional headshot portrait with soft studio lighting and a neutral gray background',\n    size: '2K',\n    output_format: 'jpeg',\n    aspect_ratio: '3:4',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5-lite',\n  {\n    prompt:\n      'A professional headshot portrait with soft studio lighting and a neutral gray background',\n    size: '2K',\n    aspect_ratio: '3:4',\n    output_format: 'jpeg',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -83,20 +82,20 @@
 			"description": "Generate sequential comic panels",
 			"input": {
 				"prompt": "A four-panel comic strip showing a cat discovering a cardboard box and deciding to sit in it",
+				"aspect_ratio": "4:3",
 				"sequential_image_generation": "auto",
-				"max_images": 4,
-				"aspect_ratio": "4:3"
+				"max_images": 4
 			},
 			"output": {
 				"images": [
-					"https://replicate.delivery/xezq/YH2RGRLXJ569JxZn52sdZdOqVY2ilGTqWOp3eJ7ekznvQ1YWA/tmp0_talk8q.png"
+					"https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-5-lite/sequential-comic-0.jpeg"
 				]
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5-lite',\n  {\n    prompt:\n      'A four-panel comic strip showing a cat discovering a cardboard box and deciding to sit in it',\n    sequential_image_generation: 'auto',\n    max_images: 4,\n    aspect_ratio: '4:3',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5-lite',\n  {\n    prompt:\n      'A four-panel comic strip showing a cat discovering a cardboard box and deciding to sit in it',\n    aspect_ratio: '4:3',\n    sequential_image_generation: 'auto',\n    max_images: 4,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -108,19 +107,19 @@
 				"image_input": [
 					"https://replicate.delivery/xezq/jCypj4MeXYUiRyq7nfgm8z1OvFZF81wh4FznutDsZOuJz0YWA/tmp1iukn307.jpg"
 				],
-				"aspect_ratio": "match_input_image",
-				"size": "2K"
+				"size": "2K",
+				"aspect_ratio": "match_input_image"
 			},
 			"output": {
 				"images": [
-					"https://replicate.delivery/xezq/WrzzelpFP52EVqaXrD8vFjYHv5yi5beRTbdefyhBKFCSlWjZB/tmpw2z1atr3.png"
+					"https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-5-lite/image-variation-0.jpeg"
 				]
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5-lite',\n  {\n    prompt: 'Create a variation of this image in a watercolor painting style',\n    image_input: [\n      'https://replicate.delivery/xezq/jCypj4MeXYUiRyq7nfgm8z1OvFZF81wh4FznutDsZOuJz0YWA/tmp1iukn307.jpg',\n    ],\n    aspect_ratio: 'match_input_image',\n    size: '2K',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5-lite',\n  {\n    prompt: 'Create a variation of this image in a watercolor painting style',\n    image_input: [\n      'https://replicate.delivery/xezq/jCypj4MeXYUiRyq7nfgm8z1OvFZF81wh4FznutDsZOuJz0YWA/tmp1iukn307.jpg',\n    ],\n    size: '2K',\n    aspect_ratio: 'match_input_image',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		}
@@ -128,7 +127,7 @@
 	"supports_async": false,
 	"external_info": "https://seed.bytedance.com/en/seedream5_0_lite",
 	"terms": null,
-	"cover_image_url": "https://tjzk.replicate.delivery/models_models_featured_image/a21f19af-c659-4598-a0f7-093d32011814/replicate-prediction-nmj3175dt.png",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/bytedance/seedream-5-lite.png",
 	"metadata": {
 		"Max Images": "15",
 		"Multi-Reference": "Yes",
@@ -137,9 +136,8 @@
 	"created_at": "2026-04-08 22:07:41",
 	"default_example": null,
 	"code_snippets": [],
+	"zdr": false,
 	"schema": {
-		"model_id": "bytedance/seedream-5-lite",
-		"version": "1.0.0",
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
 			"type": "object",

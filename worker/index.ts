@@ -10,6 +10,39 @@ const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 
 const LLMS_FULL_R2_PREFIX = "v1/cloudflare-docs-llms-full";
 
+// RFC 9727 requires the path to be exactly /.well-known/api-catalog with no
+// extension. The Cloudflare ASSETS binding cannot serve extensionless files
+// from dot-prefixed directories, so this must be handled directly in the worker.
+const API_CATALOG = JSON.stringify({
+	linkset: [
+		{
+			anchor: "https://developers.cloudflare.com/api/",
+			"service-desc": [
+				{
+					href: "https://developers.cloudflare.com/openapi.json",
+					type: "application/json",
+				},
+			],
+			"service-doc": [
+				{
+					href: "https://developers.cloudflare.com/api/index.md",
+					type: "text/markdown",
+				},
+				{
+					href: "https://developers.cloudflare.com/api/",
+					type: "text/html",
+				},
+			],
+			status: [
+				{
+					href: "https://www.cloudflarestatus.com/api/v2/status.json",
+					type: "application/json",
+				},
+			],
+		},
+	],
+});
+
 /**
  * When a redirect response is returned for an index.md request, rewrite the
  * Location header so the agent stays in Markdown land instead of landing on
@@ -48,8 +81,46 @@ function rewriteRedirectForMarkdown(
 
 export default class extends WorkerEntrypoint<Env> {
 	override async fetch(request: Request) {
-		if (request.url.endsWith("/llms-full.txt")) {
-			const { pathname } = new URL(request.url);
+		const { pathname } = new URL(request.url);
+
+		if (pathname === "/.well-known/api-catalog") {
+			return new Response(API_CATALOG, {
+				headers: {
+					"Content-Type":
+						'application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727"',
+				},
+			});
+		}
+
+		if (pathname === "/.well-known/mcp/server-card.json") {
+			const object = await this.env.MIDDLECACHE.get(
+				"v1/cloudflare-mcps/server-card.json",
+			);
+			if (!object) {
+				return new Response("server-card.json not found", { status: 404 });
+			}
+			return new Response(object.body, {
+				headers: {
+					"Content-Type": "application/json; charset=utf-8",
+				},
+			});
+		}
+
+		if (pathname === "/openapi.json") {
+			const object = await this.env.MIDDLECACHE.get(
+				"v1/cloudflare-api-schemas/openapi.json",
+			);
+			if (!object) {
+				return new Response("openapi.json not found", { status: 404 });
+			}
+			return new Response(object.body, {
+				headers: {
+					"Content-Type": "application/json; charset=utf-8",
+				},
+			});
+		}
+
+		if (pathname.endsWith("/llms-full.txt")) {
 			// pathname is e.g. "/llms-full.txt" or "/workers/llms-full.txt"
 			// R2 key: "v1/cloudflare-docs-llms-full/llms-full.txt" or
 			//         "v1/cloudflare-docs-llms-full/workers/llms-full.txt"

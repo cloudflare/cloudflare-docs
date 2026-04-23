@@ -5,6 +5,8 @@ head: []
 description: Review Wrangler's default bundling.
 ---
 
+import { PackageManagers } from "~/components";
+
 By default, Wrangler bundles your Worker code using [`esbuild`](https://esbuild.github.io/). This means that Wrangler has built-in support for importing modules from [npm](https://www.npmjs.com/) defined in your `package.json`. To review the exact code that Wrangler will upload to Cloudflare, run `npx wrangler deploy --dry-run --outdir dist`, which will show your Worker code after Wrangler's bundling.
 
 <details>
@@ -80,6 +82,34 @@ This approach is useful for supporting lazy loading of large or dynamically impo
 - Previously, variable based dynamic imports (for example, ``await import(`./lang/${language}.mjs`)``) would always fail at runtime because Wrangler had no way of knowing which modules to include in the upload.
   Providing a rule that matches all these files, such as `{ "type": "EsModule", "globs": ["./lang/**/*.mjs"], "fallthrough": true }`, will ensure this module is available at runtime.
 - "Partial bundling" is supported when `find_additional_modules` is `true`, and a source file matches one of the configured `rules`, since Wrangler will then treat it as "external" and not try to bundle it into the entry-point file.
+
+## `NODE_ENV`
+
+`process.env.NODE_ENV` is statically replaced at build time with one of the following values:
+
+| Context                               | Value           |
+| ------------------------------------- | --------------- |
+| `wrangler dev`                        | `"development"` |
+| `wrangler deploy` or `wrangler build` | `"production"`  |
+
+You can use `process.env.NODE_ENV` to conditionally run code based on the build context:
+
+```ts
+if (process.env.NODE_ENV === "development") {
+	console.log("Running in development mode");
+}
+```
+
+Because `process.env.NODE_ENV` is replaced at build time, development only code can be removed from the production bundle.
+
+You can override the default value by setting the `NODE_ENV` environment variable when running the command:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="dev"
+	prefix="NODE_ENV=staging"
+/>
 
 ## Conditional exports
 

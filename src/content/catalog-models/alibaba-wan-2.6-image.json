@@ -11,13 +11,15 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {},
 	"examples": [
 		{
 			"name": "Simple Generation",
 			"description": "Basic text-to-image generation",
 			"input": {
 				"prompt": "A golden retriever puppy playing in autumn leaves"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/alibaba__wan-2.6-image/simple-generation.png"
 			},
 			"code_snippets": [
 				{
@@ -34,6 +36,9 @@
 				"prompt": "A vast alien desert landscape with two suns setting on the horizon, ancient ruins in the foreground",
 				"size": "1024x768"
 			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/alibaba__wan-2.6-image/custom-dimensions.png"
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -48,6 +53,9 @@
 			"input": {
 				"prompt": "A sleek wireless headphone on a minimalist white marble surface with soft studio lighting",
 				"size": "1024x1024"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/alibaba__wan-2.6-image/square-format.png"
 			},
 			"code_snippets": [
 				{
@@ -64,6 +72,9 @@
 				"prompt": "A detailed oil painting portrait of a Renaissance nobleman with intricate lace collar",
 				"negative_prompt": "modern clothing, photograph, blurry, low quality"
 			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/alibaba__wan-2.6-image/negative-prompt.png"
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -79,6 +90,9 @@
 				"prompt": "An elegant Art Deco poster featuring a jazz singer under a spotlight",
 				"size": "768x1024"
 			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/alibaba__wan-2.6-image/portrait-format.png"
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -91,7 +105,7 @@
 	"supports_async": false,
 	"external_info": "https://wan.video/",
 	"terms": "https://www.alibabacloud.com/help/en/legal",
-	"cover_image_url": null,
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/alibaba/wan-2.6-image.png",
 	"metadata": {
 		"Size Format": "WxH (e.g. 1024x1024)",
 		"Negative Prompt": "Yes"
@@ -99,9 +113,8 @@
 	"created_at": "2026-04-14 18:41:46",
 	"default_example": null,
 	"code_snippets": [],
+	"zdr": false,
 	"schema": {
-		"model_id": "alibaba/wan-2.6-image",
-		"version": "1.0.0",
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
 			"type": "object",
@@ -115,10 +128,6 @@
 				},
 				"negative_prompt": {
 					"type": "string"
-				},
-				"n": {
-					"type": "number",
-					"const": 1
 				}
 			},
 			"required": [

@@ -1,0 +1,70 @@
+---
+params:
+  - sourceAppLabel
+  - downstreamAppLabel
+  - exampleValue
+  - policyName
+  - exampleName
+  - appType
+---
+
+import { Tabs, TabItem, APIRequest, Code } from "~/components";
+
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
+
+1. In the [Cloudflare dashboard](https://one.dash.cloudflare.com), go to **Zero Trust** > **Access controls** > **Applications**.
+2. Select {props.downstreamAppLabel} and select **Edit**.
+3. Go to the **Policies** tab and select **Create new policy**.
+4. Set the policy **Action** to _Service Auth_.
+   :::note
+   The Linked App Token selector only works with the [Service Auth](/cloudflare-one/access-controls/policies/#service-auth) action, similar to service token rules.
+   :::
+5. For **Selector**, select _Linked App Token_.
+6. For **Value**, select {props.sourceAppLabel}. For example,
+
+   | Action       | Rule type | Selector         | Value                             |
+   | ------------ | --------- | ---------------- | --------------------------------- |
+   | Service Auth | Include   | Linked App Token | <code>{props.exampleValue}</code> |
+
+7. Save the policy.
+8. In {props.downstreamAppLabel}, add the policy to the **Access policies** list.
+9. Save the application.
+
+</TabItem>
+<TabItem label="API">
+
+1. Get the `uid` of {props.sourceAppLabel}:
+
+   <APIRequest path="/accounts/{account_id}/access/apps" method="GET" />
+
+   <Code
+   	code={`{\n\t"id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",\n\t"uid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",\n\t"type": "${props.appType}",\n\t"name": "${props.exampleName}",\n\t...\n}`}
+   	lang="json"
+   	title="Response"
+   />
+
+2. Create an Access policy on the downstream application, replacing the `app_uid` value with the `uid` of {props.sourceAppLabel}:
+
+   <APIRequest
+   	path="/accounts/{account_id}/access/policies"
+   	method="POST"
+   	json={{
+   		name: props.policyName,
+   		decision: "non_identity",
+   		include: [
+   			{
+   				linked_app_token: {
+   					app_uid: "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+   				},
+   			},
+   		],
+   	}}
+   />
+
+   :::note
+   The `linked_app_token` rule type only works with [`non_identity` decisions](/cloudflare-one/access-controls/policies/#service-auth), similar to service token rules.
+   :::
+
+</TabItem>
+</Tabs>

@@ -11,7 +11,6 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {},
 	"examples": [
 		{
 			"name": "Simple Video Generation",
@@ -24,7 +23,7 @@
 				"generate_audio": true
 			},
 			"output": {
-				"video": "https://replicate.delivery/xezq/Qrv5liBE2jIQGRDApZX3a29JonqAVqG3t4G1ETv19P4NNNmF/tmp10j6l7kq.mp4"
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__veo-3/simple-video-generation.mp4"
 			},
 			"code_snippets": [
 				{
@@ -45,7 +44,7 @@
 				"generate_audio": true
 			},
 			"output": {
-				"video": "https://replicate.delivery/xezq/fdpQsMaH87WeGEWnkx1pYvjRHCFfIi3bVqbMBz9Am3BstpxsA/tmp8h2u1ex8.mp4"
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__veo-3/cinematic-scene.mp4"
 			},
 			"code_snippets": [
 				{
@@ -66,7 +65,7 @@
 				"generate_audio": true
 			},
 			"output": {
-				"video": "https://replicate.delivery/xezq/GNaLYGbrTnp0OFmybLHoLJORO1N9e79zOb0eB18ugD0t30YWA/tmpemweriil.mp4"
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__veo-3/vertical-video.mp4"
 			},
 			"code_snippets": [
 				{
@@ -87,7 +86,7 @@
 				"generate_audio": true
 			},
 			"output": {
-				"video": "https://replicate.delivery/xezq/YKF9m3T3f8UtTqHGD41RH7R3Rjet5fxDaTRMSbM8B7wwwpxsA/tmpj6sv2kzs.mp4"
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__veo-3/short-format.mp4"
 			},
 			"code_snippets": [
 				{
@@ -108,7 +107,7 @@
 				"generate_audio": false
 			},
 			"output": {
-				"video": "https://replicate.delivery/xezq/ohwJGobimexoHisdwlxKWMDGzsNA3kY5ol3Amcq4TW2tcaMLA/tmp8t9bgd34.mp4"
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__veo-3/silent-video.mp4"
 			},
 			"code_snippets": [
 				{
@@ -122,7 +121,7 @@
 	"supports_async": false,
 	"external_info": "https://deepmind.google/technologies/veo/",
 	"terms": "https://ai.google.dev/gemini-api/terms",
-	"cover_image_url": "https://tjzk.replicate.delivery/models_models_featured_image/0ca4ee69-0f6e-4dc8-9dc6-3063b97b0a50/replicate-prediction-whcj9787.webp",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/google/veo-3.png",
 	"metadata": {
 		"Max Duration": "8 seconds",
 		"Audio Generation": "Yes",
@@ -131,9 +130,8 @@
 	"created_at": "2026-04-08 21:34:32",
 	"default_example": null,
 	"code_snippets": [],
+	"zdr": false,
 	"schema": {
-		"model_id": "google/veo-3",
-		"version": "1.0.0",
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
 			"type": "object",

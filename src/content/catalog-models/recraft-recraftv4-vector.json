@@ -13,7 +13,6 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {},
 	"examples": [
 		{
 			"name": "Simple Icon",
@@ -22,7 +21,7 @@
 				"prompt": "A simple flat icon of a coffee cup with steam rising"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/pes8cFTAAT2bDaVZ1gSRHHvwjbqcwBWlcqDWTsfklrwehhzsA/tmp4ofj5lhy.svg"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-vector/simple-icon.jpg"
 			},
 			"code_snippets": [
 				{
@@ -40,7 +39,7 @@
 				"size": "1024x1024"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/oc9wcTceufn1fpWILJeVltIPx4RWwaNmqfhP1KKdKWxgJGOzC/tmpz1_sfxxs.svg"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-vector/app-icon.jpg"
 			},
 			"code_snippets": [
 				{
@@ -58,7 +57,7 @@
 				"size": "1024x1024"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/bOTBQsRwbqIRINwtP19YZ688A0Z8ucKYVlsvfflntqTdxwZWA/tmpktw4d6n1.svg"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-vector/illustration.jpg"
 			},
 			"code_snippets": [
 				{
@@ -100,7 +99,7 @@
 				}
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/rVnICquh4J4rFVKHCBdc2B9HYqCZgEQfTuSU7FpBcDi2Y4MLA/tmpdzrwcs_b.svg"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-vector/with-brand-colors.jpg"
 			},
 			"code_snippets": [
 				{
@@ -114,7 +113,7 @@
 	"supports_async": false,
 	"external_info": "https://www.recraft.ai/",
 	"terms": "https://www.recraft.ai/terms",
-	"cover_image_url": "https://replicate.delivery/xezq/GZWGe3cYG3xZUSlVYxKZbV0wjzKILnrDtgrmEPELIJed52IWA/tmp9xf39p1o.svg",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/recraft/recraftv4-vector.png",
 	"metadata": {
 		"Output Format": "SVG",
 		"Resolution": "1024px"
@@ -122,9 +121,8 @@
 	"created_at": "2026-04-13 16:46:32",
 	"default_example": null,
 	"code_snippets": [],
+	"zdr": false,
 	"schema": {
-		"model_id": "recraft/recraftv4-vector",
-		"version": "1.0.0",
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
 			"type": "object",
@@ -200,9 +198,7 @@
 			"type": "object",
 			"properties": {
 				"image": {
-					"type": "string",
-					"format": "uri",
-					"contentMediaType": "image/svg+xml"
+					"type": "string"
 				}
 			},
 			"required": [

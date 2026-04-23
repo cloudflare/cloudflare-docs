@@ -12,24 +12,25 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {},
 	"examples": [
 		{
 			"name": "Simple Video",
 			"description": "Basic text-to-video with default settings",
 			"input": {
 				"prompt": "A golden retriever playing fetch on a sandy beach at sunset",
+				"prompt_optimizer": true,
+				"fast_pretreatment": false,
 				"duration": 6,
 				"resolution": "768P"
 			},
 			"output": {
-				"video": "https://replicate.delivery/xezq/5vfUPx0OSvTVdCEs35GiKnCAZGrHCs9vXmUWRYvRH1vYc5MLA/tmpr30r9rfv.mp4"
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__hailuo-2.3/simple-video.mp4"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    prompt: 'A golden retriever playing fetch on a sandy beach at sunset',\n    duration: 6,\n    resolution: '768P',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    prompt: 'A golden retriever playing fetch on a sandy beach at sunset',\n    prompt_optimizer: true,\n    fast_pretreatment: false,\n    duration: 6,\n    resolution: '768P',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -38,18 +39,19 @@
 			"description": "1080P video for higher quality output",
 			"input": {
 				"prompt": "A professional chef preparing sushi in a traditional Japanese kitchen, detailed close-up shots",
+				"prompt_optimizer": true,
+				"fast_pretreatment": false,
 				"duration": 6,
-				"resolution": "1080P",
-				"prompt_optimizer": true
+				"resolution": "1080P"
 			},
 			"output": {
-				"video": "https://replicate.delivery/xezq/Q7fkGSQHJsw1Qqe7MixDPsA9v24WT0e5eTQkjCCD4V8JdMnZB/tmp9uhjq3vp.mp4"
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__hailuo-2.3/high-resolution.mp4"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    prompt:\n      'A professional chef preparing sushi in a traditional Japanese kitchen, detailed close-up shots',\n    duration: 6,\n    resolution: '1080P',\n    prompt_optimizer: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    prompt:\n      'A professional chef preparing sushi in a traditional Japanese kitchen, detailed close-up shots',\n    prompt_optimizer: true,\n    fast_pretreatment: false,\n    duration: 6,\n    resolution: '1080P',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -57,19 +59,21 @@
 			"name": "Image to Video",
 			"description": "Animate a still image with I2V",
 			"input": {
-				"first_frame_image": "https://replicate.delivery/xezq/MQpUhqkESIIQDlWUxtNcsznZLfUTmhEbCV3vdAZGHGPwwaMLA/tmpgl4gvv5n.jpeg",
 				"prompt": "Slowly zoom in with subtle parallax movement, gentle atmospheric motion",
+				"first_frame_image": "https://replicate.delivery/xezq/MQpUhqkESIIQDlWUxtNcsznZLfUTmhEbCV3vdAZGHGPwwaMLA/tmpgl4gvv5n.jpeg",
+				"prompt_optimizer": true,
+				"fast_pretreatment": false,
 				"duration": 6,
 				"resolution": "768P"
 			},
 			"output": {
-				"video": "https://replicate.delivery/xezq/Qg0LQ4sblmZ7ElAdCG5OVSzeUxMhN81vLuuwnScKDXnKd5MLA/tmppemgyhoq.mp4"
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__hailuo-2.3/image-to-video.mp4"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    first_frame_image:\n      'https://replicate.delivery/xezq/MQpUhqkESIIQDlWUxtNcsznZLfUTmhEbCV3vdAZGHGPwwaMLA/tmpgl4gvv5n.jpeg',\n    prompt:\n      'Slowly zoom in with subtle parallax movement, gentle atmospheric motion',\n    duration: 6,\n    resolution: '768P',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    prompt:\n      'Slowly zoom in with subtle parallax movement, gentle atmospheric motion',\n    first_frame_image:\n      'https://replicate.delivery/xezq/MQpUhqkESIIQDlWUxtNcsznZLfUTmhEbCV3vdAZGHGPwwaMLA/tmpgl4gvv5n.jpeg',\n    prompt_optimizer: true,\n    fast_pretreatment: false,\n    duration: 6,\n    resolution: '768P',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -78,18 +82,19 @@
 			"description": "Enable fast pretreatment for quicker results",
 			"input": {
 				"prompt": "Fireworks exploding over a city skyline at night, colorful reflections on water",
+				"prompt_optimizer": true,
+				"fast_pretreatment": true,
 				"duration": 6,
-				"resolution": "768P",
-				"fast_pretreatment": true
+				"resolution": "768P"
 			},
 			"output": {
-				"video": "https://replicate.delivery/xezq/kFbe4aBxx1V1DCGgnqDT6DjSAmZ1wHZLeBNMdZ5PMpqi7yZWA/tmp_bg01gno.mp4"
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__hailuo-2.3/fast-processing.mp4"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    prompt:\n      'Fireworks exploding over a city skyline at night, colorful reflections on water',\n    duration: 6,\n    resolution: '768P',\n    fast_pretreatment: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/hailuo-2.3',\n  {\n    prompt:\n      'Fireworks exploding over a city skyline at night, colorful reflections on water',\n    prompt_optimizer: true,\n    fast_pretreatment: true,\n    duration: 6,\n    resolution: '768P',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		}
@@ -97,16 +102,15 @@
 	"supports_async": false,
 	"external_info": "https://hailuoai.com/",
 	"terms": "https://hailuoai.com/terms",
-	"cover_image_url": null,
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/minimax/hailuo-2.3.png",
 	"metadata": {
 		"Resolutions": "540p, 720p, 1080p"
 	},
 	"created_at": "2026-04-13 16:46:33",
 	"default_example": null,
 	"code_snippets": [],
+	"zdr": false,
 	"schema": {
-		"model_id": "minimax/hailuo-2.3",
-		"version": "1.0.0",
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
 			"type": "object",
@@ -146,9 +150,6 @@
 						"768P",
 						"1080P"
 					]
-				},
-				"callback_url": {
-					"type": "string"
 				}
 			},
 			"required": [

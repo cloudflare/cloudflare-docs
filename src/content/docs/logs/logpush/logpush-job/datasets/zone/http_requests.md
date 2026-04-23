@@ -451,7 +451,7 @@ Time taken to send request headers to origin after establishing a connection. No
 
 Type: `int`
 
-Number of bytes returned by the origin server.
+Number of bytes returned by the origin server. Consider using CacheResponseBytes and filtering out OriginResponseStatus with values 0 and 304, which indicate a revalidated response. Read more [here](/logs/faq/common-calculations/#how-can-i-calculate-bytes-served-by-the-origin-from-cloudflare-logs).
 
 ## OriginResponseDurationMs
 

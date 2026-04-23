@@ -45,3 +45,24 @@ As a temporary workaround, you can set the affected DNS record to [DNS-only](/dn
   - Two [HAR files](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#generate-a-har-file):
     - One with Cloudflare enabled on your website.
     - Another with [Cloudflare temporarily disabled](/fundamentals/manage-domains/pause-cloudflare/).
+
+## Diagnosing origin connectivity using OriginResponseStatus in logs
+
+When reviewing Cloudflare Logs (via [Logpush](/logs/logpush/) `http_requests` dataset), the `OriginResponseStatus` field shows the HTTP status code returned by your origin.
+
+An `OriginResponseStatus` value of **`0`** has two distinct meanings depending on context:
+
+- **No origin contact (cache hit or revalidated response):** The request was served from cache and Cloudflare did not contact the origin. Filter these out when calculating origin error rates — they do not indicate an origin problem.
+- **Failed origin connection:** Cloudflare attempted to contact the origin but received no HTTP response. The origin either dropped the TCP connection before sending response headers, timed out before sending headers, or sent a malformed response that Cloudflare could not parse. Cloudflare generates the error page itself (typically a 520 or 500).
+
+To distinguish between the two, check the `CacheStatus` field in the same log record:
+
+- `CacheStatus` is `hit` or `revalidated` → no origin contact; `OriginResponseStatus = 0` is expected
+- `CacheStatus` is `miss` or `expired` → Cloudflare contacted the origin; `OriginResponseStatus = 0` indicates a failed connection
+
+:::caution
+
+Do not conclude your origin returned a 5xx error solely because `OriginResponseStatus = 0`. Always check `CacheStatus` first to determine whether Cloudflare contacted the origin at all.
+
+:::
+

@@ -12,22 +12,24 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {},
 	"examples": [
 		{
 			"name": "Simple Speech",
 			"description": "Generate high-definition speech with default settings",
 			"input": {
-				"text": "Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do."
+				"text": "Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do.",
+				"voice": "alloy",
+				"response_format": "mp3",
+				"speed": 1
 			},
 			"output": {
-				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/openai-tts-1-hd/simple-speech.mp3"
+				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/openai__tts-1-hd/simple-speech.mp3"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'openai/tts-1-hd',\n  {\n    text: 'Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do.',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'openai/tts-1-hd',\n  {\n    text: 'Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do.',\n    voice: 'alloy',\n    response_format: 'mp3',\n    speed: 1,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -37,16 +39,17 @@
 			"input": {
 				"text": "Once upon a time, in a kingdom beyond the clouds, there lived a young inventor who dreamed of building machines that could think.",
 				"voice": "fable",
+				"response_format": "mp3",
 				"speed": 0.9
 			},
 			"output": {
-				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/openai-tts-1-hd/storytelling.mp3"
+				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/openai__tts-1-hd/storytelling.mp3"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'openai/tts-1-hd',\n  {\n    text: 'Once upon a time, in a kingdom beyond the clouds, there lived a young inventor who dreamed of building machines that could think.',\n    voice: 'fable',\n    speed: 0.9,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'openai/tts-1-hd',\n  {\n    text: 'Once upon a time, in a kingdom beyond the clouds, there lived a young inventor who dreamed of building machines that could think.',\n    voice: 'fable',\n    response_format: 'mp3',\n    speed: 0.9,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -54,17 +57,19 @@
 			"name": "Podcast Style",
 			"description": "Conversational podcast narration",
 			"input": {
-				"text": "So here's the thing about large language models — they're not actually thinking. They're predicting the next token based on patterns in their training data. But the results can be surprisingly coherent.",
-				"voice": "echo"
+				"text": "So here's the thing about large language models \u2014 they're not actually thinking. They're predicting the next token based on patterns in their training data. But the results can be surprisingly coherent.",
+				"voice": "echo",
+				"response_format": "mp3",
+				"speed": 1
 			},
 			"output": {
-				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/openai-tts-1-hd/podcast-style.mp3"
+				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/openai__tts-1-hd/podcast-style.mp3"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'openai/tts-1-hd',\n  {\n    text: \"So here's the thing about large language models — they're not actually thinking. They're predicting the next token based on patterns in their training data. But the results can be surprisingly coherent.\",\n    voice: 'echo',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'openai/tts-1-hd',\n  {\n    text: \"So here's the thing about large language models \u2014 they're not actually thinking. They're predicting the next token based on patterns in their training data. But the results can be surprisingly coherent.\",\n    voice: 'echo',\n    response_format: 'mp3',\n    speed: 1,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -73,16 +78,18 @@
 			"description": "Bright and expressive voice",
 			"input": {
 				"text": "Breaking news: scientists have discovered a new species of deep-sea fish that produces its own light using bioluminescence.",
-				"voice": "shimmer"
+				"voice": "shimmer",
+				"response_format": "mp3",
+				"speed": 1
 			},
 			"output": {
-				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/openai-tts-1-hd/shimmer-voice.mp3"
+				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/openai__tts-1-hd/shimmer-voice.mp3"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'openai/tts-1-hd',\n  {\n    text: 'Breaking news: scientists have discovered a new species of deep-sea fish that produces its own light using bioluminescence.',\n    voice: 'shimmer',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'openai/tts-1-hd',\n  {\n    text: 'Breaking news: scientists have discovered a new species of deep-sea fish that produces its own light using bioluminescence.',\n    voice: 'shimmer',\n    response_format: 'mp3',\n    speed: 1,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		}
@@ -90,16 +97,15 @@
 	"supports_async": false,
 	"external_info": "https://platform.openai.com/docs/guides/text-to-speech",
 	"terms": "https://openai.com/policies/",
-	"cover_image_url": null,
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/openai/tts-1-hd.png",
 	"metadata": {
 		"Voices": "alloy, echo, fable, onyx, nova, shimmer"
 	},
 	"created_at": "2026-04-13 16:45:25",
 	"default_example": null,
 	"code_snippets": [],
+	"zdr": false,
 	"schema": {
-		"model_id": "openai/tts-1-hd",
-		"version": "1.0.0",
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
 			"type": "object",

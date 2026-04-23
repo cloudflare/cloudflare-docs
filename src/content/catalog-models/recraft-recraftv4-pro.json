@@ -13,7 +13,6 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {},
 	"examples": [
 		{
 			"name": "Print-Ready Illustration",
@@ -22,7 +21,7 @@
 				"prompt": "A detailed vintage botanical illustration of a rose with leaves and thorns, scientific illustration style"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/JrYNZOq5mNJfZKJyJBCUdD2YED51vRw9CVtA0EysOHQ3Q5MLA/tmp_z0l47_v.webp"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-pro/print-ready-illustration.png"
 			},
 			"code_snippets": [
 				{
@@ -37,17 +36,16 @@
 			"description": "Large canvas digital art",
 			"input": {
 				"prompt": "A sweeping fantasy landscape with floating islands, waterfalls cascading into clouds, and ancient stone bridges connecting the islands",
-				"size": "2048x2048",
-				"style": "digital_illustration"
+				"size": "2048x2048"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/z9CHBBfUrDRDSazHffYY2Jx8p9ZeRh57xmbsRHY1eQFISUOzC/tmpq27syd4a.webp"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-pro/large-format-art.png"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-pro',\n  {\n    prompt:\n      'A sweeping fantasy landscape with floating islands, waterfalls cascading into clouds, and ancient stone bridges connecting the islands',\n    size: '2048x2048',\n    style: 'digital_illustration',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-pro',\n  {\n    prompt:\n      'A sweeping fantasy landscape with floating islands, waterfalls cascading into clouds, and ancient stone bridges connecting the islands',\n    size: '2048x2048',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -84,7 +82,7 @@
 				}
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/RleNHzPW0AXCOKAqjNR7sIxCzF56BZzFAQwgfeWvLaghhhzsA/tmpwzh90xti.webp"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-pro/brand-asset.png"
 			},
 			"code_snippets": [
 				{
@@ -98,18 +96,16 @@
 			"name": "Editorial Illustration",
 			"description": "Magazine-quality editorial illustration",
 			"input": {
-				"prompt": "A conceptual illustration of artificial intelligence as a tree with circuit-board branches and glowing data leaves",
-				"style": "digital_illustration",
-				"substyle": "hand_drawn"
+				"prompt": "A conceptual illustration of artificial intelligence as a tree with circuit-board branches and glowing data leaves"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/eBRR8WuwPBXiXSKkw6bMKNfTrXK1cu0oEeZ2D9Un9qxnFlzsA/tmpo2sylxd4.webp"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-pro/editorial-illustration.png"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-pro',\n  {\n    prompt:\n      'A conceptual illustration of artificial intelligence as a tree with circuit-board branches and glowing data leaves',\n    style: 'digital_illustration',\n    substyle: 'hand_drawn',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-pro',\n  {\n    prompt:\n      'A conceptual illustration of artificial intelligence as a tree with circuit-board branches and glowing data leaves',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		}
@@ -117,7 +113,7 @@
 	"supports_async": false,
 	"external_info": "https://www.recraft.ai/",
 	"terms": "https://www.recraft.ai/terms",
-	"cover_image_url": "https://replicate.delivery/xezq/5dr6WJgJZx4WAJfTx9IR5C9sekPvCIjHk2eADCic6POkIuRsA/tmpwtqbnseq.webp",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/recraft/recraftv4-pro.png",
 	"metadata": {
 		"Resolution": "2048px+",
 		"Text Rendering": "Yes"
@@ -125,9 +121,8 @@
 	"created_at": "2026-04-13 16:46:31",
 	"default_example": null,
 	"code_snippets": [],
+	"zdr": false,
 	"schema": {
-		"model_id": "recraft/recraftv4-pro",
-		"version": "1.0.0",
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
 			"type": "object",
@@ -203,9 +198,7 @@
 			"type": "object",
 			"properties": {
 				"image": {
-					"type": "string",
-					"format": "uri",
-					"contentMediaType": "image/svg+xml"
+					"type": "string"
 				}
 			},
 			"required": [

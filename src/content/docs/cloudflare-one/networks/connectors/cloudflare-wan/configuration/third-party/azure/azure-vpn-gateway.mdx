@@ -1,0 +1,20 @@
+---
+pcx_content_type: integration-guide
+description: Integrate Microsoft Azure VPN Gateway with Zero Trust networking.
+products:
+  - cloudflare-one
+title: Microsoft Azure VPN Gateway
+tags:
+  - Azure
+---
+
+import { Render } from "~/components";
+
+<Render file="cloudflare-wan/third-party/azure-vpn-gateway"
+  product="networking-services"
+  params={{
+  ipsecTunnelUrl: "/cloudflare-one/networks/connectors/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/#add-tunnels",
+  tunnelEndpointsUrl: "/cloudflare-one/networks/connectors/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/",
+  staticRoutesUrl: "/cloudflare-one/networks/connectors/cloudflare-wan/configuration/how-to/configure-routes/#create-a-static-route",
+  tunnelHealthChecksUrl: "/cloudflare-one/networks/connectors/cloudflare-wan/reference/tunnel-health-checks/"
+  }} />

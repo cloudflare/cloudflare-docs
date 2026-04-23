@@ -1,0 +1,44 @@
+---
+pcx_content_type: reference
+title: RtkGridPagination
+description: API reference for RtkGridPagination component (React Native Library)
+---
+
+Pagination controls for navigating between pages of participants in the grid. Shows page numbers and navigation arrows.
+
+## Properties
+
+| Property   | Type                | Required | Default           | Description                      |
+| ---------- | ------------------- | -------- | ----------------- | -------------------------------- |
+| `meeting`  | `RealtimeKitClient` | ✅       | -                 | The RealtimeKit meeting instance |
+| `iconPack` | `IconPack`          | ❌       | `defaultIconPack` | Custom icon pack                 |
+| `states`   | `States`            | ❌       | -                 | UI state object                  |
+| `t`        | `RtkI18n`           | ❌       | -                 | i18n translation function        |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkGridPagination } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkGridPagination meeting={meeting} />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkGridPagination } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return (
+		<RtkGridPagination
+			meeting={meeting}
+			iconPack={customIconPack}
+			states={states}
+		/>
+	);
+}
+```

@@ -11,7 +11,6 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {},
 	"examples": [
 		{
 			"name": "Product Photography",
@@ -22,7 +21,7 @@
 				"output_format": "png"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/pKxv2F52WJ5aH9RcN4mefOdxvfeeKUfiuxLrXBcziHDGaSNmF/tmp5dsx8j7h.png"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana-pro/product-photography.png"
 			},
 			"code_snippets": [
 				{
@@ -41,7 +40,7 @@
 				"image_size": "2K"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/upf6QxJsbj2DLiXFPheoWEpyYVKefseWbhQOqh3ZQ5G7XpGzC/tmp38w8fb13.jpeg"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana-pro/fantasy-illustration.png"
 			},
 			"code_snippets": [
 				{
@@ -57,17 +56,17 @@
 			"input": {
 				"prompt": "A photorealistic architectural visualization of a modern glass house perched on a cliff overlooking the ocean at sunset",
 				"aspect_ratio": "16:9",
-				"image_size": "4K",
-				"output_format": "jpg"
+				"output_format": "jpg",
+				"image_size": "4K"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/wVDir3Wl4zK6OZ2UdNZZUFfjxRnI0m6qMys09tpNFkiLmaMLA/tmpaeoibzxr.jpeg"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana-pro/architectural-visualization.jpg"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/nano-banana-pro',\n  {\n    prompt:\n      'A photorealistic architectural visualization of a modern glass house perched on a cliff overlooking the ocean at sunset',\n    aspect_ratio: '16:9',\n    image_size: '4K',\n    output_format: 'jpg',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/nano-banana-pro',\n  {\n    prompt:\n      'A photorealistic architectural visualization of a modern glass house perched on a cliff overlooking the ocean at sunset',\n    aspect_ratio: '16:9',\n    output_format: 'jpg',\n    image_size: '4K',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -79,7 +78,7 @@
 				"aspect_ratio": "3:2"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/RvsT0pTkqOqcENng7XvcI3D0RPrYxpJzoh5WzbPz2FFiTNmF/tmpi_j7bnz0.jpeg"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana-pro/character-design.png"
 			},
 			"code_snippets": [
 				{
@@ -93,16 +92,15 @@
 	"supports_async": false,
 	"external_info": "https://deepmind.google/technologies/imagen/",
 	"terms": "https://ai.google.dev/gemini-api/terms",
-	"cover_image_url": "https://tjzk.replicate.delivery/models_models_featured_image/5ee636db-8712-442f-9644-63980f6786f4/banana2.png",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/google/nano-banana-pro.png",
 	"metadata": {
 		"Output Format": "JPEG"
 	},
 	"created_at": "2026-04-08 22:01:25",
 	"default_example": null,
 	"code_snippets": [],
+	"zdr": false,
 	"schema": {
-		"model_id": "google/nano-banana-pro",
-		"version": "1.0.0",
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
 			"type": "object",

@@ -29,3 +29,18 @@ If you are experiencing packet loss as a result of an upstream ISP implementing 
 Currently, BYOIP cannot be used with [legacy custom certificates](/ssl/edge-certificates/custom-certificates/uploading/) to support <GlossaryTooltip term="Server Name Indication (SNI)" link="/ssl/reference/browser-compatibility/#non-sni-support">non-SNI</GlossaryTooltip> requests.
 
 Instead, you can use Address Maps to set a default SNI for IPs on your account or zone. Refer to [Setup](/byoip/address-maps/setup/#non-sni-support) for further guidance.
+
+## Self-serve onboarding API errors
+
+When onboarding BYOIP prefixes via the API, you may encounter the following errors:
+
+| Error code | Meaning | Resolution |
+|---|---|---|
+| `prefix_not_valid_and_approved` | The prefix has not passed IRR validation, RPKI validation, and ownership verification (or manual approval). | Verify all three validation steps have completed. If one or more are failing, check prefix registration with your Regional Internet Registry (RIR) and your RPKI ROA configuration. If validation is passing but you are still seeing this error, contact support for manual approval. |
+| `incomplete_bgp_deployment` | Cannot create a BGP prefix without a default edge service binding configured. | Configure a default edge service binding before creating BGP prefixes. |
+| `advertise_state_locked` | Cannot create a BGP prefix — the default edge service binding is still deploying. | Wait for the edge service binding deployment to complete, then retry. |
+
+:::note
+Self-serve BYOIP onboarding is not supported when BYOIP is used as a Magic Transit on-ramp configuration. For more information, refer to [Magic Transit with CDN](/byoip/service-bindings/magic-transit-with-cdn/).
+:::
+

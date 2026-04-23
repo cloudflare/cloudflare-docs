@@ -12,7 +12,6 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {},
 	"examples": [
 		{
 			"name": "Simple Video",
@@ -21,16 +20,17 @@
 				"prompt": "A golden retriever running through a field of sunflowers on a sunny day",
 				"duration": 5,
 				"aspect_ratio": "16:9",
-				"quality": "720p"
+				"quality": "720p",
+				"generate_audio": true
 			},
 			"output": {
-				"video": "https://replicate.delivery/xezq/ftBFC4wshDVe7UmeHvwgLq2qCAiiu1mgDkEzcRRPlO2y4u2sA/tmp8ywx2ata.mp4"
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/pixverse__v5.6/simple-video.mp4"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'pixverse/v5.6',\n  {\n    prompt:\n      'A golden retriever running through a field of sunflowers on a sunny day',\n    duration: 5,\n    aspect_ratio: '16:9',\n    quality: '720p',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'pixverse/v5.6',\n  {\n    prompt:\n      'A golden retriever running through a field of sunflowers on a sunny day',\n    duration: 5,\n    aspect_ratio: '16:9',\n    quality: '720p',\n    generate_audio: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -45,7 +45,7 @@
 				"generate_audio": true
 			},
 			"output": {
-				"video": "https://replicate.delivery/xezq/evOlWfTxbVtVA0Qfa2ASfZkw68Ffmm36hw9rQdZR7eOUS31mF/tmp5q3qxiy7.mp4"
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/pixverse__v5.6/cinematic-scene-with-audio.mp4"
 			},
 			"code_snippets": [
 				{
@@ -62,16 +62,17 @@
 				"prompt": "A barista pouring latte art in a cozy coffee shop, close-up with shallow depth of field",
 				"duration": 5,
 				"aspect_ratio": "9:16",
-				"quality": "540p"
+				"quality": "540p",
+				"generate_audio": true
 			},
 			"output": {
-				"video": "https://replicate.delivery/xezq/kfhcLOJ2PyUxEy39RsRWznDlQ2ueaOhX2kpKxF4P64cidXbWA/tmpa0vfllky.mp4"
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/pixverse__v5.6/portrait-video.mp4"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'pixverse/v5.6',\n  {\n    prompt:\n      'A barista pouring latte art in a cozy coffee shop, close-up with shallow depth of field',\n    duration: 5,\n    aspect_ratio: '9:16',\n    quality: '540p',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'pixverse/v5.6',\n  {\n    prompt:\n      'A barista pouring latte art in a cozy coffee shop, close-up with shallow depth of field',\n    duration: 5,\n    aspect_ratio: '9:16',\n    quality: '540p',\n    generate_audio: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -84,16 +85,17 @@
 				"duration": 5,
 				"aspect_ratio": "1:1",
 				"quality": "1080p",
-				"seed": 12345
+				"seed": 12345,
+				"generate_audio": true
 			},
 			"output": {
-				"video": "https://replicate.delivery/xezq/sPDgW9BmoM7kN9UV1zfSwUz44xVI1t5fzoj5jM6j3zfvfdtZB/tmpvy5zlqvz.mp4"
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/pixverse__v5.6/high-quality-video.mp4"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'pixverse/v5.6',\n  {\n    prompt:\n      'Abstract ink drops spreading through water, vivid colors mixing in slow motion',\n    negative_prompt: 'blurry, low quality',\n    duration: 5,\n    aspect_ratio: '1:1',\n    quality: '1080p',\n    seed: 12345,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'pixverse/v5.6',\n  {\n    prompt:\n      'Abstract ink drops spreading through water, vivid colors mixing in slow motion',\n    negative_prompt: 'blurry, low quality',\n    duration: 5,\n    aspect_ratio: '1:1',\n    quality: '1080p',\n    seed: 12345,\n    generate_audio: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		}
@@ -101,7 +103,7 @@
 	"supports_async": false,
 	"external_info": "https://pixverse.ai/",
 	"terms": "https://pixverse.ai/terms",
-	"cover_image_url": null,
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/pixverse/v5.6.png",
 	"metadata": {
 		"Max Duration": "10 seconds",
 		"Resolutions": "360p, 540p, 720p, 1080p",
@@ -112,9 +114,8 @@
 	"created_at": "2026-04-15 22:29:12",
 	"default_example": null,
 	"code_snippets": [],
+	"zdr": false,
 	"schema": {
-		"model_id": "pixverse/v5.6",
-		"version": "1.0.0",
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
 			"type": "object",

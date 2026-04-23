@@ -62,7 +62,7 @@ The most important concept is [Gateway policy precedence](/cloudflare-one/traffi
 
 To resolve Gateway policy precedence issues:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Traffic policies** > **Firewall policies**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Traffic policies** > **Firewall policies**.
 2. Review the order of your DNS, Network, and HTTP policies.
 3. Ensure that your most specific Allow, Do Not Scan, or Do Not Inspect policies have a lower order number than your general Block policies.
 4. Drag and drop policies to reorder them as needed. An Allow policy for `teams.microsoft.com` should be placed before a general Block policy for all file sharing applications.

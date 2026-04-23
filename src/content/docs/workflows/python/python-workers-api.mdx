@@ -1,8 +1,11 @@
 ---
 title: Python Workers API
+description: Reference for the Python Workflows SDK, including WorkflowEntrypoint, step methods, and configuration options.
 pcx_content_type: concept
 sidebar:
   order: 2
+products:
+  - workflows
 ---
 
 This guide covers the Python Workflows SDK, with instructions on how to build and create workflows using Python.
@@ -151,6 +154,14 @@ class DemoWorkflowClass(WorkflowEntrypoint):
 
 ### Access step context (`ctx`)
 
+If you define a `ctx` parameter, the [step context](/workflows/build/step-context/) is injected into that argument. The context is a dictionary with the following keys:
+
+| Key       | Type   | Description                                                                                            |
+| --------- | ------ | ------------------------------------------------------------------------------------------------------ |
+| `step`    | `dict` | Contains `name` (the step name) and `count` (how many times `step.do` has been called with this name). |
+| `attempt` | `int`  | The current attempt number (1-indexed).                                                                |
+| `config`  | `dict` | The resolved retry and timeout configuration for this step.                                            |
+
 ```python
 from workers import WorkflowEntrypoint
 
@@ -158,6 +169,10 @@ class CtxWorkflow(WorkflowEntrypoint):
     async def run(self, event, step):
         @step.do()
         async def read_context(ctx):
+            print(ctx["step"]["name"])    # step name
+            print(ctx["step"]["count"])   # step count
+            print(ctx["attempt"])         # attempt number
+            print(ctx["config"])          # resolved step config
             return ctx["attempt"]
 
         return await read_context()
