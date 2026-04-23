@@ -21,15 +21,14 @@ Private network routing allows you to proxy HTTP/HTTPS traffic from public hostn
 This feature is in closed beta. Contact your account team to request access.
 :::
 
-## Prerequisites
+## Before you begin
 
-Before you enable private network routing, you need:
+Before you enable private network routing, consider the following:
 
-- An active tunnel connection to Cloudflare through one of the supported on-ramp methods ([Cloudflare WAN](/cloudflare-wan/), [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/), [IPsec](/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/), [GRE](/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/), or [CNI](/network-interconnect/)).
+- You need an active tunnel connection to Cloudflare through one of the supported on-ramp methods ([Cloudflare WAN](/cloudflare-wan/), [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/), [IPsec](/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/), [GRE](/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/), or [CNI](/network-interconnect/)).
+- Private network routing is available for `A` (IPv4) and `AAAA` (IPv6) records only. Records must be [proxied](/dns/proxy-status/).
 
-## Supported records and IP ranges
-
-Private network routing is available for `A` (IPv4) and `AAAA` (IPv6) records only. Records must be [proxied](/dns/proxy-status/).
+### IP ranges
 
 The following private address ranges are automatically detected:
 
@@ -45,6 +44,10 @@ When you use an IP address from one of these ranges, the **Use private network r
 
 ## Enable private network routing
 
+:::note[Virtual networks]
+Traffic routes through your default [virtual network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/). Selecting a specific virtual network is not supported.
+:::
+
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. In the Cloudflare dashboard, go to the **DNS Records** page.
@@ -55,11 +58,10 @@ When you use an IP address from one of these ranges, the **Use private network r
 3. Enter the origin IP address.
 4. Verify that **Proxy status** is enabled (orange cloud).
 5. Turn on **Use private network routing**.
-6. Select **Save**.
 
-:::note
-For private IP addresses (for example, `10.0.0.50`), the toggle turns on automatically. For public IP addresses used with private infrastructure, turn on the toggle manually.
-:::
+   For [private IP addresses](#ip-ranges) (for example, `10.0.0.50`), the toggle turns on automatically. For public IP addresses used with private infrastructure, turn on the toggle manually.
+
+6. Select **Save**.
 
 </TabItem>
 
@@ -89,10 +91,6 @@ To enable private routing on an existing record, use a [PATCH request](/api/reso
 	}}
 />
 
-</TabItem> </Tabs>
-
-## API field behavior
-
 | Scenario                                 | `private_routing` value |
 | ---------------------------------------- | ----------------------- |
 | New `A`/`AAAA` record with private IP    | Auto-set to `true`      |
@@ -101,13 +99,17 @@ To enable private routing on an existing record, use a [PATCH request](/api/reso
 | Non-`A`/`AAAA` record types              | Field not supported     |
 | Account without entitlement              | Field not visible       |
 
-## Limitations
-
-- **Record types**: Only `A` and `AAAA` records support private network routing.
-- **Proxy status**: Records must be proxied. DNS-only records cannot use private routing.
-- **Virtual networks**: Traffic routes through your default [virtual network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/). Selecting a specific virtual network is not supported.
+</TabItem> </Tabs>
 
 ## Troubleshooting
+
+### Error 1002: DNS points to prohibited IP
+
+This error occurs when you proxy a private IP address without the necessary entitlement. Contact your account team to request access.
+
+### Records on the same name
+
+[Check same partial as proxied behavior]
 
 ### Traffic not reaching origin
 
@@ -117,7 +119,3 @@ If traffic is not reaching your private origin:
 2. Confirm the origin IP is routable within your private network.
 3. Check that `private_routing` is set to `true` on the DNS record.
 4. Verify the record has proxy status enabled.
-
-### Error 1002: DNS points to prohibited IP
-
-This error occurs when you proxy a private IP address without the necessary entitlement. Contact your account team to request access.
