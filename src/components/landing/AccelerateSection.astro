@@ -3,12 +3,17 @@ import { Icon } from "astro-icon/components";
 import ProductCard from "./ProductCard.astro";
 import ProductCardGrid from "./ProductCardGrid.astro";
 
+/**
+ * Scale: 100% = 1600 ms → 1% = 16 ms.
+ * All offsets are 0 so bar widths map directly to the ruler:
+ *   400 ms tick = 25%, 800 ms = 50%, 1200 ms = 75%, 1600 ms = 100%.
+ */
 const phases = [
 	{
 		id: "dns",
 		phase: "DNS Lookup",
-		before: { offset: 0, width: 8.33 },
-		after: { offset: 0, width: 0.46 },
+		before: { offset: 0, width: 12.5 },
+		after: { offset: 0, width: 0.69 },
 		product: "DNS",
 		icon: "dns",
 		href: "/dns/",
@@ -23,8 +28,8 @@ const phases = [
 	{
 		id: "connect",
 		phase: "TCP + TLS",
-		before: { offset: 8.33, width: 16.67 },
-		after: { offset: 0.46, width: 2.04 },
+		before: { offset: 0, width: 25 },
+		after: { offset: 0, width: 3.06 },
 		product: "Argo Smart Routing",
 		icon: "argo-smart-routing",
 		href: "/argo-smart-routing/",
@@ -39,8 +44,8 @@ const phases = [
 	{
 		id: "wait",
 		phase: "Server Wait (TTFB)",
-		before: { offset: 25, width: 20.83 },
-		after: { offset: 2.5, width: 0.21 },
+		before: { offset: 0, width: 31.25 },
+		after: { offset: 0, width: 0.31 },
 		product: "Cache",
 		icon: "cache",
 		href: "/cache/get-started/",
@@ -54,8 +59,8 @@ const phases = [
 	{
 		id: "db",
 		phase: "Database Query",
-		before: { offset: 37.5, width: 58.33 },
-		after: { offset: 2.71, width: 9.71 },
+		before: { offset: 0, width: 87.5 },
+		after: { offset: 0, width: 14.56 },
 		product: "Hyperdrive",
 		icon: "hyperdrive",
 		href: "/hyperdrive/",
@@ -70,8 +75,8 @@ const phases = [
 	{
 		id: "assets",
 		phase: "Asset Optimization",
-		before: { offset: 25, width: 11.25 },
-		after: { offset: 2.5, width: 5.83 },
+		before: { offset: 0, width: 16.88 },
+		after: { offset: 0, width: 8.75 },
 		product: "Images",
 		icon: "images",
 		href: "/images/",
@@ -86,8 +91,8 @@ const phases = [
 	{
 		id: "scripts",
 		phase: "Third-party Scripts",
-		before: { offset: 37.5, width: 20.83 },
-		after: { offset: 12.42, width: 0 },
+		before: { offset: 0, width: 31.25 },
+		after: { offset: 0, width: 0 },
 		product: "Zaraz",
 		icon: "zaraz",
 		href: "/zaraz/",
@@ -226,10 +231,10 @@ const phases = [
 			<div></div>
 			<div class="relative h-full">
 				{
-					[0, 400, 800, 1200, 1600, 2000].map((ms) => (
+					[0, 400, 800, 1200, 1600].map((ms) => (
 						<div
 							class="absolute bottom-0 flex flex-col items-center"
-							style={`left: ${(ms / 2400) * 100}%`}
+							style={`left: ${(ms / 1600) * 100}%`}
 						>
 							<span
 								class="wf-ruler-label mb-1 font-mono text-[9px] tracking-wider text-zinc-400 tabular-nums dark:text-zinc-500"
@@ -242,7 +247,8 @@ const phases = [
 					))
 				}
 			</div>
-			<div></div>
+			<!-- Spacer matching the arrow column width in data rows so ticks align with bars -->
+			<div class="w-3.5"></div>
 		</div>
 
 		<!-- Waterfall rows -->
@@ -282,31 +288,31 @@ const phases = [
 					</div>
 
 					{/* Center: waterfall bar visualization */}
-					<div class="relative h-6 max-[600px]:h-5" aria-hidden="true">
+					<div class="relative self-stretch max-[600px]:h-5" aria-hidden="true">
 						{/* Background track */}
-						<div class="absolute inset-0 rounded-sm bg-zinc-100 dark:bg-zinc-800/50" />
+						<div class="absolute inset-0 rounded bg-zinc-100/80 dark:bg-zinc-800/40" />
 
-						{/* "Before" bar (slow) */}
+						{/* Time markers (behind the bar) */}
+						{[25, 50, 75].map((pct) => (
+							<div
+								class="absolute inset-y-0 border-l border-dashed border-zinc-200/50 dark:border-zinc-700/30"
+								style={`left: ${pct}%`}
+							/>
+						))}
+
+						{/* Colored bar — full row height */}
 						<div
-							class={`wf-bar wf-bar-before absolute top-1 bottom-1 rounded-sm transition-[left,width,box-shadow] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${p.color}`}
+							class={`wf-bar wf-bar-before absolute inset-y-0 rounded transition-[left,width,box-shadow] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${p.color}`}
 							style={`left: ${p.after.offset}%; width: ${p.after.width}%;`}
 							data-offset-before={p.before.offset}
 							data-width-before={p.before.width}
 							data-offset-after={p.after.offset}
 							data-width-after={p.after.width}
 						>
-							<span class="wf-bar-label absolute top-1/2 right-1.5 -translate-y-1/2 font-mono text-[9px] font-medium whitespace-nowrap text-white/90 tabular-nums drop-shadow-sm max-[456px]:hidden">
-								{Math.round(p.after.width * 24)}ms
+							<span class="wf-bar-label absolute top-1/2 right-2 -translate-y-1/2 font-mono text-[10px] font-medium whitespace-nowrap text-white/90 tabular-nums drop-shadow-sm max-[456px]:hidden">
+								{Math.round(p.after.width * 16)}ms
 							</span>
 						</div>
-
-						{/* Time markers (vertical dashed lines) */}
-						{[25, 50, 75].map((pct) => (
-							<div
-								class="absolute top-0 bottom-0 border-l border-dashed border-zinc-200/60 dark:border-zinc-700/40"
-								style={`left: ${pct}%`}
-							/>
-						))}
 					</div>
 
 					{/* Right: arrow */}
@@ -629,7 +635,7 @@ const phases = [
 				// Update label text
 				const label = bar.querySelector(".wf-bar-label");
 				if (label && width) {
-					const ms = Math.round(parseFloat(width) * 24);
+					const ms = Math.round(parseFloat(width) * 16);
 					label.textContent = `${ms}ms`;
 					// Hide label if bar too narrow
 					(label as HTMLElement).style.opacity =
