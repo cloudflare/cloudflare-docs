@@ -88,15 +88,7 @@ For details about working with certificates programmatically, refer to [API call
 
 1. Upload the Origin CA certificate to your origin web server.
 
-2. Update your web server configuration. Refer to the installation guide for your server:
-   - [Apache httpd](https://www.digicert.com/kb/csr-ssl-installation/apache-openssl.htm)
-   - [NGINX](https://www.digicert.com/kb/csr-ssl-installation/nginx-openssl.htm)
-   - [Microsoft IIS 7](https://knowledge.digicert.com/tutorials/iis7-create-csr-install-ssl-certificate)
-   - [Microsoft IIS 8 and 8.5](https://knowledge.digicert.com/tutorials/iis-8-create-csr-install-ssl-certificate)
-   - [Microsoft IIS 10](https://www.digicert.com/kb/csr-creation-ssl-installation-iis-10.htm)
-   - [Apache Tomcat](https://knowledge.digicert.com/tutorials/tomcat-install-your-ssl-certificate-on-a-tomcat-server)
-   - [Amazon Web Services](https://knowledge.digicert.com/tutorials/amazon-aws-create-csr-install-ssl-certificate)
-   - [Apache cPanel](https://www.digicert.com/kb/ssl-certificate-installation-apache-cpanel.htm)
+2. Update your web server configuration to use the certificate. For server-specific installation instructions, refer to [Origin CA certificates](/ssl/origin-configuration/origin-ca/).
 
 3. (Required for some servers) Upload the [Cloudflare CA root certificate](/ssl/origin-configuration/origin-ca/#cloudflare-origin-ca-root-certificate) to your origin server.
 
@@ -320,8 +312,6 @@ HTTPS encrypts data in transit, but third-party scripts loaded by your pages can
 
 ### Turn on script monitoring
 
-<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
-
 <Steps>
 
 1. In the Cloudflare dashboard, go to the Security **Settings** page.
@@ -334,29 +324,11 @@ HTTPS encrypts data in transit, but third-party scripts loaded by your pages can
 
 </Steps>
 
-</TabItem> <TabItem label="Old dashboard">
-
-<Steps>
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-
-2. Go to **Security** > **Client-side security**.
-
-3. Go to the **Settings** tab.
-
-4. Next to **Continuous monitoring and alerting**, select **Enable**.
-
-</Steps>
-
-</TabItem> </Tabs>
-
 {/* Source: /client-side-security/get-started/ — "1. Activate client-side resource monitoring" */}
 
 ### Review detected resources
 
 After turning on monitoring, it may take some time for Cloudflare to generate a list of detected scripts on your domain.
-
-<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
 <Steps>
 
@@ -369,20 +341,6 @@ After turning on monitoring, it may take some time for Cloudflare to generate a 
 3. Review the list of detected scripts. Check for unknown or unexpected scripts from domains you do not recognize.
 
 </Steps>
-
-</TabItem> <TabItem label="Old dashboard">
-
-<Steps>
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-
-2. Go to **Security** > **Client-side security**.
-
-3. Review the list of detected scripts. Check for unknown or unexpected scripts from domains you do not recognize.
-
-</Steps>
-
-</TabItem> </Tabs>
 
 {/* Source: /client-side-security/get-started/ — "2. Review detected resources" */}
 
@@ -432,27 +390,13 @@ For PCI DSS compliance, TLS 1.2 is the minimum required version. For FIPS 140-2 
 
 **SSL/TLS**
 
-- [SSL/TLS overview](/ssl/) — Product landing page for all SSL/TLS features
-- [Get started with SSL/TLS](/ssl/get-started/) — Onboarding guide for edge certificates, encryption modes, and HTTPS enforcement
-- [Encryption modes](/ssl/origin-configuration/ssl-modes/) — Detailed explanation of Off, Flexible, Full, and Full (strict) modes
-- [Cloudflare Origin CA](/ssl/origin-configuration/origin-ca/) — Create and manage free origin certificates trusted by Cloudflare
-- [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/) — Redirect all HTTP visitor traffic to HTTPS
-- [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/) — Fix mixed content by rewriting HTTP resource URLs to HTTPS
-- [HTTP Strict Transport Security (HSTS)](/ssl/edge-certificates/additional-options/http-strict-transport-security/) — Configure HSTS headers for downgrade attack protection
-- [Minimum TLS Version](/ssl/edge-certificates/additional-options/minimum-tls/) — Set the minimum TLS protocol version for visitor connections
-- [TLS 1.3](/ssl/edge-certificates/additional-options/tls-13/) — Turn on TLS 1.3 for faster handshakes and improved security
-- [TLS protocols](/ssl/reference/protocols/) — Guidance on choosing TLS versions
-- [Cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/) — Default and customizable cipher suite configurations
-- [Enforce HTTPS connections](/ssl/edge-certificates/encrypt-visitor-traffic/) — Three-step workflow for redirecting all traffic to HTTPS
-- [Universal SSL](/ssl/edge-certificates/universal-ssl/) — Free DV certificates issued automatically for proxied domains
-- [Edge certificates](/ssl/edge-certificates/) — Overview of certificate types and management options
-- [Mixed content errors](/ssl/troubleshooting/mixed-content-errors/) — Troubleshoot HTTP resources loaded on HTTPS pages
-- [ERR_TOO_MANY_REDIRECTS](/ssl/troubleshooting/too-many-redirects/) — Fix redirect loops caused by encryption mode misconfigurations
-- [Compliance and vulnerabilities](/ssl/reference/compliance-and-vulnerabilities/) — PCI DSS and FIPS 140-2 compliance information
+- [Get started with SSL/TLS](/ssl/get-started/) — onboarding guide for edge certificates, encryption modes, and HTTPS enforcement
+- [Encryption modes](/ssl/origin-configuration/ssl-modes/) — detailed explanation of Off, Flexible, Full, and Full (strict) modes
+- [Cloudflare Origin CA](/ssl/origin-configuration/origin-ca/) — create free origin certificates trusted by Cloudflare
+- [Mixed content errors](/ssl/troubleshooting/mixed-content-errors/) — troubleshoot HTTP resources loaded on HTTPS pages
+- [ERR_TOO_MANY_REDIRECTS](/ssl/troubleshooting/too-many-redirects/) — fix redirect loops caused by encryption mode misconfigurations
 
 **Client-side security**
 
-- [Client-side security overview](/client-side-security/) — Product landing page for script monitoring and content security rules
-- [Get started with client-side security](/client-side-security/get-started/) — Activate monitoring, review scripts, configure alerts, and create rules
-- [Content security rules](/client-side-security/rules/) — Create allowlist rules to block unauthorized scripts (Enterprise)
-- [Client-side security and PCI DSS compliance](/client-side-security/reference/pci-dss/) — How client-side security maps to PCI DSS v4 requirements 6.4.3 and 11.6.1
+- [Get started with client-side security](/client-side-security/get-started/) — activate monitoring, review scripts, configure alerts, and create rules
+- [Client-side security and PCI DSS compliance](/client-side-security/reference/pci-dss/) — how client-side security maps to PCI DSS v4 requirements
