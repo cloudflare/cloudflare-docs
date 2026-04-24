@@ -12,7 +12,9 @@ import { WranglerConfig } from "~/components";
 
 Artifacts uses namespaces as top-level containers for repositories. Use them to separate repositories by environment, such as `prod`, `staging`, and `dev`, or by tenant and shard.
 
-For most users, creating a namespace is simple: choose a namespace name, then use that name in your Wrangler config or REST path when you create the first repo inside it.
+You do not create namespaces separately.
+
+Choose a namespace name, then use that name in your Wrangler config or REST API path when you create the first repo. Artifacts creates the namespace implicitly at that point.
 
 ## Use namespaces as containers
 

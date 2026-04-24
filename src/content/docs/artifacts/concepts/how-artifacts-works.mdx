@@ -14,6 +14,8 @@ Artifacts creates Git repos on demand. Each repo is an isolated Git service with
 
 Namespaces are the top-level container for repos. A repo lives inside one namespace, and its name is unique within that namespace.
 
+Artifacts does not provision namespaces separately. When you create the first repo with a new namespace name, Artifacts creates that namespace implicitly.
+
 A namespace provides the naming and routing boundary for repos. Together, the namespace and repo name form the repo's stable address, and API responses also return a repo ID.
 
 Like [Durable Objects](/durable-objects/concepts/what-are-durable-objects/), a repo is a single logical instance that Cloudflare can route to from any region.
