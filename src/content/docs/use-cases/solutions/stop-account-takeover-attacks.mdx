@@ -240,17 +240,7 @@ Enterprise customers with Advanced Rate Limiting can rate limit by characteristi
 
 #### Escalating rate limits for persistent attackers
 
-For sites that experience sustained credential stuffing campaigns, consider deploying multiple rate limiting rules with increasing severity. The following pattern from the Application Security documentation uses three rules with separate counting expressions that track failed login responses (401/403 status codes):
-
-{/* Source: /waf/rate-limiting-rules/best-practices/ — escalating penalty pattern */}
-
-| Rule   | Rate                                    | Action            | Scope           |
-| ------ | --------------------------------------- | ----------------- | --------------- |
-| Rule 1 | 4 failed login requests per 1 minute    | Managed Challenge | Login path only |
-| Rule 2 | 10 failed login requests per 10 minutes | Managed Challenge | Login path only |
-| Rule 3 | 20 failed login requests per 1 hour     | Block for 1 day   | Entire domain   |
-
-Rule 1 handles short bursts. Rule 2 catches slower distributed attacks. Rule 3 blocks persistent attackers from the entire domain. The counting expressions use response status codes, so successful logins do not count against the limit. To create these rules, follow the same procedure as the rate limiting rule above but adjust the expression, rate, and action for each row. For the full configuration details, including expression syntax for response code counting, refer to [Rate limiting best practices](/waf/rate-limiting-rules/best-practices/).
+For sites that experience sustained credential stuffing campaigns, consider deploying multiple rate limiting rules with increasing severity. The [Rate limiting best practices](/waf/rate-limiting-rules/best-practices/) page describes an escalating penalty pattern that uses three rules: a short-window rule for quick bursts, a medium-window rule for slower distributed attacks, and a long-window rule that blocks persistent attackers from the entire domain. The counting expressions use response status codes, so successful logins do not count against the limit. Refer to the best practices page for the recommended thresholds and expression syntax.
 
 :::note
 These example rules require a Business plan or above because they use counting expressions that reference HTTP response codes.
