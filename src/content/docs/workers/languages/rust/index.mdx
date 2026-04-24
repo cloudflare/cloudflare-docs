@@ -182,7 +182,7 @@ To get the right JavaScript that `wasm-bindgen` emits:
 
 For example:
 
-```js
+```rust
 use web_sys::{Request, Response, Url};
 
 #[wasm_bindgen(js_name = "fetch", js_namespace = "default")]
@@ -191,6 +191,8 @@ pub async fn fetch(request: Request, env: JsValue) -> Result<Response, JsValue> 
   Response::new_with_opt_str(Some(&format!("Hello {}", name)))
 }
 ```
+
+:::
 
 ### Async (`wasm-bindgen-futures`)
 
