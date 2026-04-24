@@ -28,7 +28,7 @@ Most procedures in this guide are configured per domain. Select your domain in t
 
 ## Enforce HTTPS to protect credentials in transit
 
-Credentials sent over plain HTTP are visible to anyone on the network path between the visitor and your origin server. Cloudflare [SSL/TLS](/ssl/) provides two settings that enforce HTTPS connections: [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/) and [HTTP Strict Transport Security (HSTS)](/ssl/edge-certificates/additional-options/http-strict-transport-security/).
+Credentials sent over plain HTTP are visible to anyone on the network path between the visitor and your origin server. Cloudflare [SSL/TLS](/ssl/) provides two settings that enforce HTTPS connections: [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/) and [HTTP Strict Transport Security (HSTS)](/ssl/edge-certificates/additional-options/http-strict-transport-security/). For additional control over which encryption standards your domain accepts, refer to [Cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/).
 
 ### Turn on Always Use HTTPS
 
@@ -138,7 +138,7 @@ Both together provide the strongest coverage. Turnstile challenges automated sub
 
 ### Add Turnstile to your login form
 
-Implementing Turnstile involves three steps: create a widget, add the client-side snippet to your login form, and validate the token on your server.
+Implementing Turnstile involves three steps: create a widget, add the client-side snippet to your login form, and validate the token on your server. Turnstile supports multiple [rendering methods](/turnstile/get-started/client-side-rendering/) including explicit and implicit rendering. You can also [inject Turnstile into HTML using a Cloudflare Worker](/workers/examples/turnstile-html-rewriter/) if you do not control the login form source code.
 
 #### 1. Create a Turnstile widget
 
@@ -208,6 +208,8 @@ async function validateTurnstile(token, remoteip) {
 
 Replace `"your-secret-key"` with your Turnstile secret key. The endpoint returns a JSON object with a `success` field. Only process the form submission if `success` is `true`.
 
+For additional fraud detection, Turnstile supports [Ephemeral IDs](/turnstile/tutorials/fraud-detection-with-ephemeral-ids/) that provide a unique, temporary identifier for each visitor session without storing personal data.
+
 For the complete response format, error codes, and examples in other languages, refer to [Validate the token](/turnstile/get-started/server-side-validation/).
 
 #### Test your implementation
@@ -229,6 +231,10 @@ For the full list of test keys and expected behaviors, refer to [Test your Turns
 #### Create a rate limiting rule for your login endpoint
 
 The following example creates a rate limiting rule that issues a Managed Challenge after more than five POST requests to your login path from the same IP within one minute. Start with Managed Challenge rather than Block. Managed Challenge allows legitimate users who trigger the limit to pass by completing a challenge, while blocking automated traffic that cannot solve it. After monitoring [Security Events](/waf/analytics/security-events/) to confirm the rule is not producing false positives, switch to Block. Adjust the path (`/login`), threshold, and period for your site.
+
+:::caution
+Managed Challenge and other [challenge types](/cloudflare-challenges/challenge-types/challenge-pages/) require an HTML response to render. They do not work for non-HTML responses such as AJAX/XHR requests, which are common on login endpoints that use single-page applications (SPAs) or API-based authentication. If your login flow uses AJAX, consider using [Turnstile Pre-Clearance](/turnstile/tutorials/pre-clearance-support/) instead.
+:::
 
 {/* Source: /waf/rate-limiting-rules/best-practices/ — credential stuffing protection pattern. Navigation from /waf/custom-rules/create-dashboard/. Expression from source. Threshold (5 req/min) is guide-specific example. */}
 {/* UNTESTED: custom workflow combining sourced expression with guide-specific threshold. Validate syntax in dashboard. */}
@@ -433,7 +439,11 @@ For more information about the Skip action and available skip options, refer to 
 
 {/* UNTESTED: custom expression using documented fields. Validate syntax in dashboard. */}
 
-Credential stuffing tools often send requests without standard browser headers or with known-bad User-Agent patterns. Create a custom rule that issues a Managed Challenge for POST requests to your login path where the User-Agent is empty.
+Credential stuffing tools often send requests without standard browser headers or with known-bad User-Agent patterns. Create a custom rule that issues a Managed Challenge for POST requests to your login path where the User-Agent is empty. This targets direct POST requests from tools like `curl`, `python-requests`, or `undici` that do not set a User-Agent header.
+
+:::note
+The Application Security Managed Ruleset includes rules for empty user-agents (rule IDs `0fa48ed6287c4447b6cd89c4f59a8de9` and `b57df4f17f7f4ea4b8db33e20a6dbbd3`), but these are disabled by default and apply broadly. The custom rule below targets your login path specifically.
+:::
 
 <Tabs syncKey="dashNewNav">
 <TabItem label="New dashboard" icon="rocket">
@@ -569,6 +579,10 @@ Enterprise customers with Bot Management can create custom rules that combine `c
 Enterprise Bot Management customers can use account takeover detection IDs to monitor suspicious login volume and failure rates. Detection ID `201326592` flags suspicious login failure volume. Detection ID `201326593` flags suspicious login attempt volume. These detections can be used in custom rules and rate limiting rules. For more information, refer to [Account takeover detections](/bots/additional-configurations/detection-ids/account-takeover-detections/).
 :::
 
+:::note[Enterprise: Account Abuse Protection (Early Access)]
+Enterprise Bot Management customers can use [Account Abuse Protection](/bots/account-abuse-protection/) to detect and mitigate account fraud patterns beyond credential stuffing, including fake account creation and account enumeration.
+:::
+
 ## Monitor for ongoing compromise attempts
 
 After deploying the rules and configurations from the previous sections, monitor your login endpoint to verify the rules are working and to detect new attack patterns.
@@ -648,6 +662,8 @@ If you see sustained automated traffic reaching your login endpoint despite the 
 - [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/) — Pro and Business bot protection with configurable actions
 - [Bot Management](/bots/get-started/bot-management/) — Enterprise bot protection with ML-powered scoring and custom rules
 - [Account takeover detections](/bots/additional-configurations/detection-ids/account-takeover-detections/) — Enterprise detection IDs for suspicious login volume and failure rates
+- [Account Abuse Protection](/bots/account-abuse-protection/) — Enterprise Early Access feature for detecting account fraud patterns
+- [Verified Bots](/bots/concepts/bot/verified-bots/) — list of bots Cloudflare has verified as legitimate
 - [Bot scores](/bots/concepts/bot-score/) — how Cloudflare classifies automated traffic using scores from 1 to 99
 
 **Turnstile**
@@ -656,8 +672,11 @@ If you see sustained automated traffic reaching your login endpoint despite the 
 - [Server-side validation](/turnstile/get-started/server-side-validation/) — validate Turnstile tokens on your server
 - [Test your Turnstile implementation](/turnstile/troubleshooting/testing/) — test site keys for development and staging environments
 - [Integrate Turnstile, WAF, and Bot Management](/turnstile/tutorials/integrating-turnstile-waf-and-bot-management/) — tutorial for combining Turnstile with WAF rules
+- [Fraud detection with Ephemeral IDs](/turnstile/tutorials/fraud-detection-with-ephemeral-ids/) — temporary visitor identifiers for fraud detection without personal data
+- [Turnstile Pre-Clearance](/turnstile/tutorials/pre-clearance-support/) — pre-clear visitors for SPA and AJAX login flows
 
 **SSL/TLS**
 
 - [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/) — redirect all HTTP requests to HTTPS
 - [HTTP Strict Transport Security (HSTS)](/ssl/edge-certificates/additional-options/http-strict-transport-security/) — prevent browser downgrade attacks with HSTS headers
+- [Cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/) — configure which encryption standards your domain accepts
