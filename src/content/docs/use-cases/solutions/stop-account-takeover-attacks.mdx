@@ -362,11 +362,11 @@ Combine rate limiting with leaked credentials detection to throttle login attemp
 
    Replace `/login` with your login endpoint path.
 
-4. Under **With the same characteristics**, verify that _IP_ is selected.
+4. Under **With the same characteristics**, verify that _IP_ is selected. On Free plans, this is preset to _IP_.
 
-5. Under **When rate exceeds**, enter _3_ for **Requests** and select _1 minute_ for **Period**.
+5. Under **When rate exceeds**, enter _3_ for **Requests** and select a value for **Period**. On Free plans, select _10 seconds_.
 
-6. Under **Then take action**, select _Managed Challenge_.
+6. Under **Then take action**, select an action. On Free plans, select _Block_. On Pro and above, _Managed Challenge_ is recommended.
 
 7. Under **For duration**, select a duration for the action. On Free plans, select _10 seconds_.
 
