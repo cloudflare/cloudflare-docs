@@ -22,10 +22,12 @@ To view the Data security analytics dashboard:
 
 ## Prerequisites
 
-To populate this dashboard, you need at least one of the following:
+To populate this dashboard with partial data, you need at least one of the following:
 
-- [Data Loss Prevention (DLP)](/cloudflare-one/data-loss-prevention/) configured to generate detections from scanned web traffic or SaaS applications. DLP populates the **DLP matches in HTTP requests over time** panel.
-- At least one [Cloud Access Security Broker (CASB)](/cloudflare-one/integrations/cloud-and-saas/) integration connected to capture findings from your SaaS applications or cloud environments. CASB populates the **SaaS and Cloud findings** and **Posture findings** panels.
+- At least one HTTP policy that references a [DLP profile](/cloudflare-one/data-loss-prevention/dlp-policies/).
+- At least one SaaS integration enrolled in [CASB](/cloudflare-one/integrations/cloud-and-saas/).
+- At least one Cloud integration enrolled in [CASB](/cloudflare-one/integrations/cloud-and-saas/).
+- At least one SaaS or Cloud integration enrolled in [CASB](/cloudflare-one/integrations/cloud-and-saas/) and a DLP profile applied to it.
 
 ## Available insights
 
