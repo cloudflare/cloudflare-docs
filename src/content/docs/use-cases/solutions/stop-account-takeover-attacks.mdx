@@ -313,7 +313,7 @@ For more information about the Skip action and available skip options, refer to 
 Credential stuffing tools often send requests without standard browser headers or with known-bad User-Agent patterns. Create a custom rule that issues a Managed Challenge for POST requests to your login path where the User-Agent is empty. This targets direct POST requests from tools like `curl`, `python-requests`, or `undici` that do not set a User-Agent header.
 
 :::note
-The Application Security Managed Ruleset includes rules for empty user-agents (rule IDs `0fa48ed6287c4447b6cd89c4f59a8de9` and `b57df4f17f7f4ea4b8db33e20a6dbbd3`), but these are disabled by default and apply broadly. The custom rule below targets your login path specifically.
+The Application Security Managed Ruleset includes rules for empty user-agents, but these are disabled by default and apply broadly. The custom rule below targets your login path specifically.
 :::
 
 <Steps>
