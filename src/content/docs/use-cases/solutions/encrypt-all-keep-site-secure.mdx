@@ -186,7 +186,7 @@ Send a [`PATCH`](/api/resources/zones/subresources/settings/methods/edit/) reque
 {/* Source: /ssl/edge-certificates/additional-options/automatic-https-rewrites/ — "Enable Automatic HTTPS Rewrites" */}
 
 :::note
-Automatic HTTPS Rewrites only rewrites URLs that are known to be available over HTTPS, using data from EFF's HTTPS Everywhere and Chrome's HSTS preload list. Passive content such as images from domains not on these lists is not rewritten. For troubleshooting, refer to [Mixed content errors](/ssl/troubleshooting/mixed-content-errors/).
+Automatic HTTPS Rewrites does not rewrite all HTTP URLs. Some passive content (such as images) may not be rewritten, which can still cause mixed content warnings. For details on how rewrites work and troubleshooting, refer to [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/) and [Mixed content errors](/ssl/troubleshooting/mixed-content-errors/).
 :::
 
 ## Harden your HTTPS configuration
