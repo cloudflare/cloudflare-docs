@@ -174,7 +174,8 @@ If you are using `wasm-bindgen` without `workers-rs` / `worker-build`, then you 
 
 To get the right JavaScript that `wasm-bindgen` emits:
 
-1. Ensure the latest `wasm-bindgen`, `js-sys`, `wasm-bindgen-futures` and `web-sys` in the Cargo.toml file with a `[lib]` `crate-type: ["cdylib"]`.
+1. Ensure the latest `wasm-bindgen`, `js-sys`, `wasm-bindgen-futures` and `web-sys` in the `Cargo.toml` file with a `[lib]` `crate-type: ["cdylib"]`.
+
 2. Ensure handlers are defined using the correct `wasm-bindgen` namespace, as required by JS workers (like the example below).
 3. Run `cargo build --target wasm32-unknown-unknown`
 4. Then run `wasm-bindgen target/wasm32-unknown-unknown/debug/rustworker.wasm --target module --out-dir build`
