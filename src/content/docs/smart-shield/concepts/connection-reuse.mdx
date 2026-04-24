@@ -8,20 +8,27 @@ sidebar:
   order: 4
 ---
 
-import { Render } from "~/components";
+Smart Shield reduces the number of connections between Cloudflare and your origin server by batching multiple requests through shared connections. When requests from an [upper-tier data center](/smart-shield/configuration/smart-tiered-cache/) — the layer of Cloudflare's cache that sits closest to your origin — need to reach your server, Smart Shield sends them over a single connection instead of opening a new connection for each request. This reduces overall connections to your origin by 30% on average, which lowers resource consumption on your origin and reduces the risk of connection exhaustion under high traffic.
 
-Smart Shield leverages Cloudflare's optimized infrastructure to package multiple requests from an [upper-tier](/smart-shield/configuration/smart-tiered-cache/) into a single connection to your origin. This means overall connections to your origin are lowered by 30% on average. Refer to the [blog post](https://blog.cloudflare.com/introducing-observatory-and-smart-shield/#protecting-and-accelerating-origins-with-smart-connection-reuse) for details.
+For more information, refer to the [Smart Shield announcement blog post](https://blog.cloudflare.com/introducing-observatory-and-smart-shield/#protecting-and-accelerating-origins-with-smart-connection-reuse).
 
 ## About connection reuse
 
-Implemented by HTTP/1.1, connection reuse describes multiple requests passing through one same connection (between one source IP:port and one destination IP:port). It is commonly the case even for simple websites nowadays.
+Every HTTP request requires a TCP connection between a client and a server. Each connection is identified by a pair of network addresses: the source IP address and port, and the destination IP address and port. Opening a new TCP connection has overhead — it requires a handshake between client and server, and a TLS negotiation if the connection is encrypted.
 
-For example, when a connection is initiated for `shop.example.com`, several embedded subresources may be requested - CSS, image files, advertisement, etc. This can mean hundreds of requests just for the website to load. Instead of having a one to one ratio of request per connection, a single connection is used for multiple requests.
+Connection reuse (also called persistent connections or keep-alive) avoids this overhead by sending multiple HTTP requests over a single TCP connection instead of opening a new connection for each request. HTTP/1.1 made this the default behavior.
 
-With HTTP/2, requests can use the same connection even if they are for different domains (also known as connection coalescing).
+For example, when a browser opens a connection to `shop.example.com`, the page may reference dozens of additional resources — stylesheets, images, scripts, and other files. Without connection reuse, each resource would require its own TCP connection. With connection reuse, all of these requests flow through the same connection.
 
-For example, a connection initiated for `shop.example.com` can be used for requests for `blog.example.com` as well - as long as the requests have the same destination IP:port and the server TLS certificate is authoritative for both hostnames.
+### Connection coalescing (HTTP/2)
 
-## Egress IPs allocation
+With HTTP/2, connection reuse extends further through connection coalescing. This allows requests for different hostnames to share a single connection, as long as two conditions are met:
+
+- The hostnames resolve to the same destination IP address and port.
+- The TLS certificate on the server covers both hostnames (for example, a certificate that lists both `shop.example.com` and `blog.example.com` in its Subject Alternative Names).
+
+This means a connection originally opened for `shop.example.com` can also carry requests for `blog.example.com`, reducing the total number of connections to your origin even further.
+
+## Connection reuse and Dedicated CDN Egress IPs
 
 Connection reuse and connection coalescing are also considered when allocating your [Dedicated CDN Egress IPs](/smart-shield/configuration/dedicated-egress-ips/).
