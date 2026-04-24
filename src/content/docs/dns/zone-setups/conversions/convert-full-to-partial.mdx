@@ -78,4 +78,6 @@ Update the nameservers at your domain registrar to point to your new authoritati
 
 ## 5. Clean up DNS records on Cloudflare
 
-In Cloudflare, remove all records that are not of type `A`, `AAAA`, or `CNAME`, and also remove any `A`, `AAAA`, or `CNAME` records for hostnames you do not want to proxy after the conversion. After this cleanup, only the `A`, `AAAA`, or `CNAME` records for hostnames you want to proxy should remain in Cloudflare, and those same hostnames should have `CNAME` records pointing to `{your-hostname}.cdn.cloudflare.net` at your new authoritative DNS provider.
+In Cloudflare, remove all records that are not of type A, AAAA, or CNAME, and also remove any A, AAAA, or CNAME records for hostnames you do not want to proxy after the conversion.
+
+After this cleanup, only the A, AAAA, or CNAME records for hostnames you want to proxy should remain in Cloudflare, and those same hostnames should have CNAME records pointing to `{your-hostname}.cdn.cloudflare.net` at your new authoritative DNS provider.
