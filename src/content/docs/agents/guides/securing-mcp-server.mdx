@@ -56,14 +56,33 @@ function generateCSRFProtection() {
 	return { token, setCookie };
 }
 
+// IMPORTANT: do NOT use String.prototype.trim() when comparing a cookie name
+// to a prefix like __Host-. JavaScript's .trim() strips Unicode whitespace
+// per ECMAScript § 22.1.3.33 (U+00A0 NBSP, U+2000–U+200A, U+FEFF ZWNBSP, etc.),
+// which defeats the __Host- prefix guarantee: an attacker on a co-site context
+// can set a cookie whose stored name begins with Unicode whitespace (browsers
+// accept it without applying __Host- constraints) that the server then
+// normalizes back to __Host-NAME via .trim().
+// See: https://portswigger.net/research/cookie-chaos
+
+function readExactCookie(header: string, exactName: string): string | null {
+	for (const raw of header.split(";")) {
+		// RFC 6265 inter-pair separator is "; "; strip at most ONE leading
+		// ASCII space. Never String.trim().
+		const piece = raw.startsWith(" ") ? raw.slice(1) : raw;
+		const eqIdx = piece.indexOf("=");
+		if (eqIdx < 0) continue;
+		if (piece.substring(0, eqIdx) !== exactName) continue;
+		return piece.substring(eqIdx + 1);
+	}
+	return null;
+}
+
 // Validate CSRF token on form submission
 function validateCSRFToken(formData: FormData, request: Request) {
 	const tokenFromForm = formData.get("csrf_token");
 	const cookieHeader = request.headers.get("Cookie") || "";
-	const tokenFromCookie = cookieHeader
-		.split(";")
-		.find((c) => c.trim().startsWith("__Host-CSRF_TOKEN="))
-		?.split("=")[1];
+	const tokenFromCookie = readExactCookie(cookieHeader, "__Host-CSRF_TOKEN");
 
 	if (!tokenFromForm || !tokenFromCookie || tokenFromForm !== tokenFromCookie) {
 		throw new Error("CSRF token mismatch");
@@ -221,6 +240,16 @@ The `__Host-` prefix prevents subdomain attacks, which is especially important o
 - Must not have a `Domain` attribute
 
 Without `__Host-`, an attacker controlling `evil.workers.dev` could set cookies for your `mcp-server.workers.dev` domain.
+
+:::caution[The prefix is only as strong as your cookie parser]
+
+The browser enforces the `__Host-` constraints **only for the exact literal name** `__Host-NAME`. A cookie whose browser-stored name begins with Unicode whitespace (e.g. U+00A0 NBSP, U+2000 EN QUAD) is NOT recognized as `__Host-`-prefixed and therefore allows the browser to accept `Domain=` attributes and subdomain-scope cookies.
+
+If your server parses cookies with `String.prototype.trim()`, that Unicode-prefixed cookie will be normalized to `__Host-NAME` server-side and the prefix guarantee is defeated. Use strict-equality cookie-name matching (see the `readExactCookie` helper in the CSRF example above) and never `.trim()` a cookie-name fragment before comparing to a `__Host-` prefix.
+
+See: Gareth Heyes, ["Cookie Chaos: How to bypass __Host and __Secure cookie prefixes"](https://portswigger.net/research/cookie-chaos-how-to-bypass-host-and-secure-cookie-prefixes), PortSwigger Research, 2025.
+
+:::
 
 ### Multiple OAuth flows
 
