@@ -1,0 +1,77 @@
+---
+pcx_content_type: reference
+title: RtkPluginsView
+description: API reference for RtkPluginsView component (iOS Library)
+products:
+  - realtime
+---
+
+A composite view for displaying plugins and screen share content.
+Includes a tab selector, plugin content area, and a floating active speaker view.
+
+## Initializer parameters
+
+| Parameter            | Type                 | Required | Default | Description                                 |
+| -------------------- | -------------------- | -------- | ------- | ------------------------------------------- |
+| `videoPeerViewModel` | `VideoPeerViewModel` | ✅       | -       | The view model for the active speaker video |
+
+## Properties
+
+| Property          | Type                       | Required | Default | Description                                                      |
+| ----------------- | -------------------------- | -------- | ------- | ---------------------------------------------------------------- |
+| `activeListView`  | `RtkActiveTabSelectorView` | -        | -       | The tab selector for switching between plugins and screen shares |
+| `pluginVideoView` | `UIView`                   | -        | -       | The container view for plugin content                            |
+| `syncButton`      | `UIButton`                 | -        | -       | Button to sync the plugin view with the presenter                |
+
+## Methods
+
+| Method                                           | Return Type | Description                                                  |
+| ------------------------------------------------ | ----------- | ------------------------------------------------------------ |
+| `setButtons(buttons:selectedIndex:clickAction:)` | `Void`      | Configures the tab selector buttons with a selection handler |
+| `show(pluginView:)`                              | `Void`      | Displays a plugin view in the content area                   |
+| `showVideoView(participant:)`                    | `Void`      | Displays a participant's video in the content area           |
+| `showPinnedView(participant:)`                   | `Void`      | Displays a pinned participant's video                        |
+| `showActiveSpeakerView(participant:)`            | `Void`      | Shows the floating active speaker overlay                    |
+| `hideActiveSpeaker()`                            | `Void`      | Hides the floating active speaker overlay                    |
+
+## Usage Examples
+
+### Basic Usage
+
+```swift
+import RealtimeKitUI
+
+let viewModel = VideoPeerViewModel(
+    meeting: rtkClient,
+    participant: participant,
+    showSelfPreviewVideo: false
+)
+let pluginsView = RtkPluginsView(videoPeerViewModel: viewModel)
+view.addSubview(pluginsView)
+```
+
+### With tab buttons
+
+```swift
+import RealtimeKitUI
+
+let viewModel = VideoPeerViewModel(
+    meeting: rtkClient,
+    participant: participant,
+    showSelfPreviewVideo: false
+)
+let pluginsView = RtkPluginsView(videoPeerViewModel: viewModel)
+
+let buttons = [
+    RtkPluginScreenShareTabButton(image: nil, title: "Screen Share"),
+    RtkPluginScreenShareTabButton(image: nil, title: "Whiteboard")
+]
+pluginsView.setButtons(
+    buttons: buttons,
+    selectedIndex: 0,
+    clickAction: { index in
+        print("Selected tab: \(index)")
+    }
+)
+view.addSubview(pluginsView)
+```

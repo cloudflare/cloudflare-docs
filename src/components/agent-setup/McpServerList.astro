@@ -1,0 +1,59 @@
+---
+import { getCollection } from "astro:content";
+
+interface Props {
+	/** Whether to show the "bundled" chip. Only relevant for plugin-based agents (Claude Code, Cursor). */
+	showBundled?: boolean;
+}
+
+const { showBundled = false } = Astro.props;
+
+const CODE_MODE_URL = "https://mcp.cloudflare.com/mcp";
+
+const allServers = await getCollection("cloudflare-mcps-manifest");
+
+// Code Mode first, then the rest in manifest order
+const servers = [
+	...allServers.filter((s) => s.data.url === CODE_MODE_URL),
+	...allServers.filter((s) => s.data.url !== CODE_MODE_URL),
+];
+
+/**
+ * URLs of servers included in the cloudflare/skills plugin bundle
+ * (Claude Code, Cursor).
+ */
+const BUNDLED = new Set([
+	"https://mcp.cloudflare.com/mcp",
+	"https://docs.mcp.cloudflare.com/mcp",
+	"https://bindings.mcp.cloudflare.com/mcp",
+	"https://builds.mcp.cloudflare.com/mcp",
+	"https://observability.mcp.cloudflare.com/mcp",
+]);
+---
+
+<ul class="agent-simple-list">
+	{
+		servers.map((s) => (
+			<li class="agent-simple-item">
+				<span class="agent-simple-name">
+					{s.data.name}
+					{s.data.url === CODE_MODE_URL && (
+						<span class="agent-simple-tag agent-simple-tag--codemode">
+							code mode
+						</span>
+					)}
+					{showBundled && BUNDLED.has(s.data.url) && (
+						<span
+							class="agent-simple-tag"
+							title="Included in the cloudflare/skills plugin"
+						>
+							bundled
+						</span>
+					)}
+				</span>
+				<span class="agent-simple-desc">{s.data.description}</span>
+				<span class="agent-simple-url">{s.data.url}</span>
+			</li>
+		))
+	}
+</ul>

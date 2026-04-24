@@ -1,5 +1,7 @@
 ---
 pcx_content_type: get-started
+products:
+  - network-interconnect
 title: Get started
 description: Connect your network privately to Cloudflare
 sidebar:
@@ -97,7 +99,7 @@ The process of provisioning a CNI typically takes two to four weeks, depending o
 	- For a **Partner Interconnect**, you will use the provided details to order a virtual circuit from the partner's portal.
 4. **Configure network**: Both Cloudflare and your network team will configure the respective network devices according to the approved document.
 5. **Test and verify**: Once the connection is physically established, teams will perform basic connectivity tests (for example, ping) and, if applicable, verify that the BGP session can be established.
-6. Enable tunnel health checks for [Magic Transit](/magic-transit/how-to/configure-tunnel-endpoints/#add-tunnels) and/or [Cloudflare WAN](/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels).
+6. Enable tunnel health checks for [Magic Transit](/magic-transit/how-to/configure-tunnel-endpoints/#add-tunnels) and/or [Cloudflare WAN](/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/#add-tunnels).
 7. **Activate services**: Configure your Cloudflare products (for example, Magic Transit) to route traffic over the new CNI. The Implementation Manager will verify end-to-end traffic flow before marking the deployment as complete.
 8. [Add maintenance notifications](/network-interconnect/monitoring-and-alerts/#enable-cloudflare-status-maintenance-notification).
 
@@ -133,7 +135,7 @@ To connect to AWS Direct Connect:
 3. AWS will provide you a Letter of Authorization (LOA) and a VLAN ID that you need to send to your account team.
 4. Your account team will continue the process of provisioning your Cloud Interconnect with the AWS documents you have provided. Overall, this process should take around four weeks to finish.
 
-#### Google Cloud interconnect (beta)
+#### Google Cloud Interconnect
 
 1. In the Cloudflare dashboard, go to **Interconnects**.
 
@@ -158,7 +160,7 @@ You can now select **View interconnects** for a list of all interconnects on you
 After you have configured your Google Cloud Interconnect, you will need to add routes to use the interconnect:
 
 - To create routes in the Cloudflare Virtual Network routing table to direct traffic towards GCP:
-		- Add [static routes](/cloudflare-wan/configuration/manually/how-to/configure-routes/#configure-static-routes) to your Cloudflare WAN routing table with [legacy bidirectional tunnel health checks](/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/#legacy-bidirectional-health-checks) to detect failures and steer traffic to alternative paths.
+		- Add [static routes](/cloudflare-wan/configuration/how-to/configure-routes/#configure-static-routes) to your Cloudflare WAN routing table with [legacy bidirectional tunnel health checks](/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/#legacy-bidirectional-health-checks) to detect failures and steer traffic to alternative paths.
 		- Note that routes advertised by BGP from GCP Cloud Router will be ignored.
 - To create routes in GCP routing table to direct traffic towards Cloudflare, you must use the GCP Cloud Router:
 		- Add [custom learned routes to Cloud Router](https://cloud.google.com/network-connectivity/docs/router/how-to/configure-custom-learned-routes).

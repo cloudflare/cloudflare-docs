@@ -1,5 +1,6 @@
 ---
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import { Image } from "astro:assets";
 
 import HeroImageDark from "~/assets/Dev-Docs-Header-Illustration-Dark-Mode-cropped.svg";
 import HeroImageLight from "~/assets/Dev-Docs-Header-Illustration-Light-Mode-cropped.svg";
@@ -8,6 +9,7 @@ import SectionImageDeveloperPlatformDark from "~/assets/developer-platform-dark.
 import SectionImageDeveloperPlatformLight from "~/assets/developer-platform-light.svg";
 import SectionImageZeroTrustDark from "~/assets/zero-trust-dark.svg";
 import SectionImageZeroTrustLight from "~/assets/zero-trust-light.svg";
+import AgentsIllustration from "~/assets/agents.svg";
 
 import {
 	FourCardGrid,
@@ -231,10 +233,52 @@ const recommendedSection = {
 			))
 		}
 	</FourCardGrid>
+
 	<div class="hidden md:block">
 		<hr />
-		<TryItSection />
+		<!-- Agent Setup -->
+		<section class="agent-hero">
+			<div class="agent-hero-illustration">
+				<Image src={AgentsIllustration} alt="AI agents illustration" />
+			</div>
+			<div class="agent-hero-content">
+				<h2 class="agent-hero-title">Build with your favorite AI agent</h2>
+				<p class="agent-hero-lede">
+					Install an agent of your choice, connect skills and MCP servers, and start deploying to Cloudflare — all from your editor or terminal.
+				</p>
+				<div class="agent-hero-logos">
+					<a href="/agent-setup/claude-code/" title="Claude Code" class="agent-hero-logo">
+						<img src="/icons/agents/claude/light.svg" alt="Claude Code" class="agent-icon-light" />
+						<img src="/icons/agents/claude/dark.svg" alt="Claude Code" class="agent-icon-dark" />
+					</a>
+					<a href="/agent-setup/codex/" title="Codex" class="agent-hero-logo">
+						<img src="/icons/agents/codex/light.svg" alt="Codex" class="agent-icon-light" />
+						<img src="/icons/agents/codex/dark.svg" alt="Codex" class="agent-icon-dark" />
+					</a>
+					<a href="/agent-setup/cursor/" title="Cursor" class="agent-hero-logo">
+						<img src="/icons/agents/cursor/light.svg" alt="Cursor" class="agent-icon-light" />
+						<img src="/icons/agents/cursor/dark.svg" alt="Cursor" class="agent-icon-dark" />
+					</a>
+					<a href="/agent-setup/opencode/" title="OpenCode" class="agent-hero-logo">
+						<img src="/icons/agents/opencode/light.svg" alt="OpenCode" class="agent-icon-light" />
+						<img src="/icons/agents/opencode/dark.svg" alt="OpenCode" class="agent-icon-dark" />
+					</a>
+					<a href="/agent-setup/github-copilot/" title="GitHub Copilot" class="agent-hero-logo">
+						<img src="/icons/agents/copilot/light.svg" alt="GitHub Copilot" class="agent-icon-light" />
+						<img src="/icons/agents/copilot/dark.svg" alt="GitHub Copilot" class="agent-icon-dark" />
+					</a>
+					<a href="/agent-setup/windsurf/" title="Windsurf" class="agent-hero-logo">
+						<img src="/icons/agents/windsurf/light.svg" alt="Windsurf" class="agent-icon-light" />
+						<img src="/icons/agents/windsurf/dark.svg" alt="Windsurf" class="agent-icon-dark" />
+					</a>
+				</div>
+				<a href="/agent-setup/" class="agent-hero-cta">
+					Explore agent setup <span aria-hidden="true">&rarr;</span>
+				</a>
+			</div>
+		</section>
 		<hr />
+
 		{
 			featuredSections.map((section) => (
 				<>
@@ -249,6 +293,10 @@ const recommendedSection = {
 				</>
 			))
 		}
+
+		<TryItSection />
+		<hr />
+
 		<RecommendedContentSection
 			title={recommendedSection.title}
 			cards={recommendedSection.cards}
@@ -257,3 +305,141 @@ const recommendedSection = {
 		<FooterHeroBlock />
 	</div>
 </StarlightPage>
+
+<style>
+	.agent-hero {
+		display: flex;
+		align-items: center;
+		gap: 3rem;
+		padding: 3rem 0;
+	}
+
+	.agent-hero-content {
+		flex: 1 1 60%;
+		min-width: 0;
+	}
+
+	.agent-hero-illustration {
+		flex: 1 1 40%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.agent-hero-illustration :global(img) {
+		width: 266px;
+		height: auto;
+	}
+
+	@media (max-width: 900px) {
+		.agent-hero {
+			flex-direction: column;
+			gap: 2rem;
+		}
+	}
+
+	.agent-hero-logos {
+		display: flex;
+		align-items: center;
+		gap: 1.25rem;
+		margin: 2rem 0 2.5rem;
+		flex-wrap: wrap;
+	}
+
+	.agent-hero-logo {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 72px;
+		height: 72px;
+		line-height: 0;
+		border-radius: 14px;
+		overflow: hidden;
+		transition: transform 0.2s ease;
+		position: relative;
+		flex-shrink: 0;
+	}
+
+	.agent-hero-logo:hover {
+		transform: scale(1.08);
+	}
+
+	.agent-hero-logo img {
+		margin: 0;
+		width: 72px;
+		height: 72px;
+		max-width: 72px;
+		max-height: 72px;
+		object-fit: contain;
+		display: block;
+	}
+
+	.agent-hero-title {
+		font-size: 2rem !important;
+		font-weight: 700 !important;
+		letter-spacing: -0.02em;
+		line-height: 1.15 !important;
+		margin: 0 0 1rem !important;
+		max-width: 720px;
+		border: none !important;
+		padding: 0 !important;
+	}
+
+	.agent-hero-lede {
+		font-size: 1.0625rem;
+		line-height: 1.6;
+		max-width: 640px;
+		margin: 0;
+		color: var(--sl-color-gray-3);
+	}
+
+	:root[data-theme="dark"] .agent-hero-lede {
+		color: var(--sl-color-gray-3);
+	}
+
+	.agent-hero-cta {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.625rem 1.75rem;
+		font-size: 1rem;
+		font-weight: 500;
+		color: var(--color-cl1-black) !important;
+		background: var(--color-cl1-brand-orange);
+		border-radius: 4px;
+		text-decoration: none !important;
+		transition: opacity 0.15s ease;
+	}
+
+	.agent-hero-cta:hover {
+		opacity: 0.9;
+	}
+
+	img.agent-icon-dark {
+		display: none !important;
+	}
+
+	:root[data-theme="dark"] img.agent-icon-light {
+		display: none !important;
+	}
+
+	:root[data-theme="dark"] img.agent-icon-dark {
+		display: block !important;
+	}
+
+	@media (max-width: 640px) {
+		.agent-hero-logos {
+			gap: 1rem;
+		}
+		.agent-hero-logo,
+		.agent-hero-logo img {
+			width: 56px;
+			height: 56px;
+			max-width: 56px;
+			max-height: 56px;
+		}
+		.agent-hero-title {
+			font-size: 1.5rem !important;
+		}
+	}
+</style>

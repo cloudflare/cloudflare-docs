@@ -1,0 +1,51 @@
+---
+pcx_content_type: navigation
+title: RtkParticipantTile
+description: API reference for RtkParticipantTile component (Flutter Library)
+products:
+  - realtime
+---
+
+A widget that displays a participant's video or avatar within a meeting environment. Automatically shows the video feed when available and falls back to the participant's avatar.
+
+:::note
+[`RtkProvider`](/realtime/realtimekit/ui-kit/api-reference/flutter/rtk-provider/) must be an ancestor of this widget in the widget tree.
+:::
+
+## Properties
+
+| Property      | Type                    | Required | Default              | Description                                       |
+| ------------- | ----------------------- | -------- | -------------------- | ------------------------------------------------- |
+| `participant` | `RtkMeetingParticipant` | ✅       | -                    | The participant to display (positional parameter) |
+| `designToken` | `RtkDesignTokens?`      | ❌       | Global design tokens | Design tokens for customization                   |
+| `height`      | `double`                | ❌       | `240`                | Height of the tile                                |
+| `width`       | `double`                | ❌       | `180`                | Width of the tile                                 |
+
+:::note
+The `participant` parameter is positional. Pass it without a named argument: `RtkParticipantTile(participant)`.
+:::
+
+## Usage Examples
+
+### Basic Usage
+
+```dart
+import 'package:realtimekit_ui/realtimekit_ui.dart';
+
+RtkParticipantTile(
+  participant,
+)
+```
+
+### With Properties
+
+```dart
+import 'package:realtimekit_ui/realtimekit_ui.dart';
+
+RtkParticipantTile(
+  participant,
+  designToken: yourDesignToken,
+  height: 300,
+  width: 200,
+)
+```

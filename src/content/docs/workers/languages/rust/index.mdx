@@ -9,6 +9,8 @@ head:
   - tag: title
     content: Cloudflare Workers — Rust language support
 description: Write Workers in 100% Rust using the [`workers-rs` crate](https://github.com/cloudflare/workers-rs)
+products:
+  - workers
 ---
 
 import { WranglerConfig } from "~/components";
@@ -154,8 +156,7 @@ When pushing to your `*.workers.dev` subdomain for the first time, you may see [
 
 :::
 
-After completing these steps, you will have a basic Rust-based Worker deployed. From here, you can add crate
-dependencies and write code in Rust to implement your Worker application. If you would like to know more about the inner workings of how Rust compiled to Wasm is supported by Workers, the next section outlines the libraries and tools involved.
+After completing these steps, you will have a basic Rust-based Worker deployed. From here, you can add create dependencies and write code in Rust to implement your Worker application. If you would like to know more about the inner workings of how Rust compiled to Wasm is supported by Workers, the next section outlines the libraries and tools involved.
 
 ## How this deployment works
 
@@ -165,7 +166,7 @@ Wasm Workers are invoked from a JavaScript entrypoint script which is created au
 
 To access platform features such as bindings, Wasm Workers must be able to access methods from the JavaScript runtime API.
 
-This interoperability is achieved using [`wasm-bindgen`](https://rustwasm.github.io/wasm-bindgen/), which provides the glue code needed to import runtime APIs to, and export event handlers from, the Wasm module. `wasm-bindgen` also provides [`js-sys`](https://docs.rs/js-sys/latest/js_sys/), which implements types for interacting with JavaScript objects. In practice, this is an implementation detail, as `workers-rs`'s API handles conversion to and from JavaScript objects, and interaction with imported JavaScript runtime APIs for you.
+This interoperability is achieved using [`wasm-bindgen`](https://wasm-bindgen.github.io/wasm-bindgen/), which provides the glue code needed to import runtime APIs to, and export event handlers from, the Wasm module. `wasm-bindgen` also provides [`js-sys`](https://docs.rs/js-sys/latest/js_sys/), which implements types for interacting with JavaScript objects. In practice, this is an implementation detail, as `workers-rs`'s API handles conversion to and from JavaScript objects, and interaction with imported JavaScript runtime APIs for you.
 
 :::note
 
@@ -204,7 +205,7 @@ import { myFunction } from "path/to/mylib.js";
 
 ### Async (`wasm-bindgen-futures`)
 
-[`wasm-bindgen-futures`](https://rustwasm.github.io/wasm-bindgen/api/wasm_bindgen_futures/) (part of the `wasm-bindgen` project) provides interoperability between Rust
+[`wasm-bindgen-futures`](https://wasm-bindgen.github.io/wasm-bindgen/api/wasm_bindgen_futures/) (part of the `wasm-bindgen` project) provides interoperability between Rust
 Futures and JavaScript Promises. `workers-rs` invokes the entire event handler function using `spawn_local`, meaning that you can program using async Rust, which is turned
 into a single JavaScript Promise and run on the JavaScript event loop. Calls to imported JavaScript runtime APIs are automatically converted to Rust Futures that can be invoked from async Rust functions.
 

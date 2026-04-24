@@ -1,0 +1,47 @@
+---
+pcx_content_type: reference
+title: RtkImageMessage
+description: API reference for RtkImageMessage component (React Native Library)
+products:
+  - realtime
+---
+
+Renders an image message in chat with loading indicator and fullscreen support.
+
+## Properties
+
+| Property      | Type       | Required | Default           | Description                                         |
+| ------------- | ---------- | -------- | ----------------- | --------------------------------------------------- |
+| `message`     | `any`      | ✅       | -                 | The image message object with link property         |
+| `iconPack`    | `IconPack` | ❌       | `defaultIconPack` | Custom icon pack                                    |
+| `isContinued` | `boolean`  | ❌       | `false`           | Whether this message continues from the same sender |
+| `now`         | `Date`     | ❌       | `new Date()`      | Current time for relative timestamps                |
+| `t`           | `RtkI18n`  | ❌       | -                 | i18n translation function                           |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkImageMessage } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkImageMessage message={imageMessage} />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkImageMessage } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return (
+		<RtkImageMessage
+			message={imageMessage}
+			isContinued={false}
+			now={new Date()}
+		/>
+	);
+}
+```

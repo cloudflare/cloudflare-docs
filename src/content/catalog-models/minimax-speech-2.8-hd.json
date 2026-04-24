@@ -14,22 +14,26 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {},
 	"examples": [
 		{
 			"name": "Simple Speech",
 			"description": "Generate speech with default settings",
 			"input": {
-				"text": "Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do."
+				"text": "Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do.",
+				"voice_id": "English_expressive_narrator",
+				"speed": 1,
+				"volume": 1,
+				"pitch": 0,
+				"format": "mp3"
 			},
 			"output": {
-				"audio": "https://replicate.delivery/xezq/6LmtfnN9fZkh2kUagFi7WTCfxDIFtteACFVRrgf9nf5wtocmF/tmplklh683d.mp3"
+				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__speech-2.8-hd/simple-speech.mp3"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/speech-2.8-hd',\n  {\n    text: 'Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do.',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/speech-2.8-hd',\n  {\n    text: 'Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do.',\n    voice_id: 'English_expressive_narrator',\n    speed: 1,\n    volume: 1,\n    pitch: 0,\n    format: 'mp3',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -39,16 +43,19 @@
 			"input": {
 				"text": "The weather today is sunny with a high of 72 degrees. Perfect for a walk in the park.",
 				"voice_id": "English_expressive_narrator",
-				"speed": 0.9
+				"speed": 0.9,
+				"volume": 1,
+				"pitch": 0,
+				"format": "mp3"
 			},
 			"output": {
-				"audio": "https://replicate.delivery/xezq/auy0mgnY7E5GFBsC4wkcFFzQ7ZhJn7jYX94qARVjCRQuocmF/tmploeayosb.mp3"
+				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__speech-2.8-hd/custom-voice.mp3"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/speech-2.8-hd',\n  {\n    text: 'The weather today is sunny with a high of 72 degrees. Perfect for a walk in the park.',\n    voice_id: 'English_expressive_narrator',\n    speed: 0.9,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/speech-2.8-hd',\n  {\n    text: 'The weather today is sunny with a high of 72 degrees. Perfect for a walk in the park.',\n    voice_id: 'English_expressive_narrator',\n    speed: 0.9,\n    volume: 1,\n    pitch: 0,\n    format: 'mp3',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -58,16 +65,20 @@
 			"input": {
 				"text": "Congratulations! You've just won the grand prize! This is absolutely incredible news!",
 				"voice_id": "English_expressive_narrator",
-				"emotion": "happy"
+				"speed": 1,
+				"volume": 1,
+				"pitch": 0,
+				"emotion": "happy",
+				"format": "mp3"
 			},
 			"output": {
-				"audio": "https://replicate.delivery/xezq/NgKpXH9PCFraKFlWmBe1TCumeltUKpRIR81f729eXS1zLKnZB/tmpiql378fg.mp3"
+				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__speech-2.8-hd/with-emotion.mp3"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/speech-2.8-hd',\n  {\n    text: \"Congratulations! You've just won the grand prize! This is absolutely incredible news!\",\n    voice_id: 'English_expressive_narrator',\n    emotion: 'happy',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/speech-2.8-hd',\n  {\n    text: \"Congratulations! You've just won the grand prize! This is absolutely incredible news!\",\n    voice_id: 'English_expressive_narrator',\n    speed: 1,\n    volume: 1,\n    pitch: 0,\n    emotion: 'happy',\n    format: 'mp3',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -76,16 +87,21 @@
 			"description": "Studio quality at 44.1kHz sample rate",
 			"input": {
 				"text": "This recording is generated at studio quality sample rate for the highest possible audio fidelity.",
+				"voice_id": "English_expressive_narrator",
+				"speed": 1,
+				"volume": 1,
+				"pitch": 0,
+				"format": "mp3",
 				"sample_rate": 44100
 			},
 			"output": {
-				"audio": "https://replicate.delivery/xezq/X43oakewUq2bMaUeedNJN9zRMuNhfOf9kfHLHACiunCnhDpmF/tmpgz5bsv2c.mp3"
+				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__speech-2.8-hd/high-sample-rate.mp3"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/speech-2.8-hd',\n  {\n    text: 'This recording is generated at studio quality sample rate for the highest possible audio fidelity.',\n    sample_rate: 44100,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/speech-2.8-hd',\n  {\n    text: 'This recording is generated at studio quality sample rate for the highest possible audio fidelity.',\n    voice_id: 'English_expressive_narrator',\n    speed: 1,\n    volume: 1,\n    pitch: 0,\n    format: 'mp3',\n    sample_rate: 44100,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		}
@@ -93,7 +109,7 @@
 	"supports_async": false,
 	"external_info": "https://www.minimaxi.com/",
 	"terms": "https://www.minimaxi.com/terms",
-	"cover_image_url": "https://tjzk.replicate.delivery/models_models_cover_image/b3d383fc-aded-4d1c-956c-0930864c026d/replicate-prediction-9b1pktc169rm.jpg",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/minimax/speech-2.8-hd.png",
 	"metadata": {
 		"Languages": "40+",
 		"Voice Cloning": "Yes",
@@ -102,9 +118,8 @@
 	"created_at": "2026-04-13 16:46:35",
 	"default_example": null,
 	"code_snippets": [],
+	"zdr": false,
 	"schema": {
-		"model_id": "minimax/speech-2.8-hd",
-		"version": "1.0.0",
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
 			"type": "object",

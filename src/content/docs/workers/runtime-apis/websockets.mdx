@@ -4,6 +4,8 @@ title: WebSockets
 head: []
 description: Communicate in real time with your Cloudflare Workers.
 
+products:
+  - workers
 ---
 
 ## Background
@@ -140,6 +142,12 @@ let [client, server] = Object.values(new WebSocketPair());
     | `WebSocket.CLOSING` | `2` | The connection is in the process of closing. |
     | `WebSocket.CLOSED` | `3` | The connection is closed. |
 
+### binaryType
+
+* `binaryType` string
+
+  * Controls how binary frames received on this WebSocket are surfaced to the `message` event. Valid values are `"blob"` and `"arraybuffer"`. The value is consulted when each incoming binary frame is dispatched, so assigning a new value affects subsequent messages only. The default is controlled by the [`websocket_standard_binary_type`](/workers/configuration/compatibility-flags/#websocket-standard-binary-type) compatibility flag. Refer to [Binary messages](#binary-messages) for details.
+
 ***
 
 ## Events
@@ -215,6 +223,58 @@ WebSockets created with `new WebSocket(url)` always auto-reply to Close frames a
 ### Prior behavior
 
 On compatibility dates before `2026-04-07` (or with the `web_socket_manual_reply_to_close` flag), receiving a Close frame leaves the WebSocket in `CLOSING` state, and your code must call `close()` to complete the handshake. Failing to do so can result in `1006` abnormal closure errors on the client.
+
+***
+
+## Binary messages
+
+WebSocket frames carry either text or binary payloads, and the choice between the two is made by the sender at the time the frame is sent. Text frames are always delivered to the `message` event as JavaScript strings. Binary frames are delivered either as [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) or as [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer), depending on the WebSocket's `binaryType`.
+
+With the [`websocket_standard_binary_type`](/workers/configuration/compatibility-flags/#websocket-standard-binary-type) compatibility flag (enabled by default on compatibility dates on or after `2026-03-17`), `binaryType` defaults to `"blob"` and binary frames are delivered as `Blob` objects. This matches the [WebSocket specification](https://websockets.spec.whatwg.org/) and standard browser behavior. Without the flag, `binaryType` defaults to `"arraybuffer"` and binary frames are delivered as `ArrayBuffer`, matching the runtime's historical behavior.
+
+The `binaryType` property itself is always available. To opt back into `ArrayBuffer` delivery for a single WebSocket, assign `binaryType` before calling `accept()`:
+
+```js
+const resp = await fetch("https://example.com", {
+  headers: { Upgrade: "websocket" },
+});
+const ws = resp.webSocket;
+
+// Opt back into ArrayBuffer delivery for this WebSocket.
+ws.binaryType = "arraybuffer";
+ws.accept();
+
+ws.addEventListener("message", (event) => {
+  if (typeof event.data === "string") {
+    // Text frame.
+  } else {
+    // event.data is an ArrayBuffer because we set binaryType above.
+  }
+});
+```
+
+### Reading binary payloads
+
+An incoming binary frame is fully buffered before the `message` event fires, regardless of `binaryType`. The choice between `Blob` and `ArrayBuffer` does not change when or whether the frame is received — only how you access its bytes:
+
+- With `"arraybuffer"`, `event.data` is an [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer). You can inspect its size and read bytes synchronously (for example, `new Uint8Array(event.data)`).
+- With `"blob"`, `event.data` is a [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob). Reading the bytes is asynchronous — for example, `await event.data.arrayBuffer()` or `await event.data.bytes()`.
+
+Under the new default, a binary message handler must be `async` in order to read the payload. If you want to keep an existing synchronous handler, set `binaryType` to `"arraybuffer"` on the WebSocket.
+
+### When the value takes effect
+
+Per the [WebSocket specification](https://websockets.spec.whatwg.org/#feedback-from-the-protocol), `binaryType` is mutable: the value is consulted at the moment each binary frame is dispatched to the `message` event, so assigning a new value affects only subsequent messages. If you want every binary message on a WebSocket to be delivered as the same type, assign `binaryType` before calling `accept()`. That guarantees the setting is in place before the runtime starts dispatching any incoming frames.
+
+### Worker-wide opt-out
+
+If you are not ready to migrate and want to keep `ArrayBuffer` as the default for every WebSocket in your Worker, add the `no_websocket_standard_binary_type` flag to your [Wrangler configuration file](/workers/wrangler/configuration/). Individual WebSockets can still override the default by assigning `binaryType`.
+
+:::note
+
+This flag has no effect on the Durable Object hibernatable WebSocket [`webSocketMessage`](/durable-objects/best-practices/websockets/) handler. That handler always receives binary data as `ArrayBuffer`, since it operates outside the normal WebSocket read loop.
+
+:::
 
 ***
 

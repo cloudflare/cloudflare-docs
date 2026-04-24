@@ -1,0 +1,237 @@
+---
+import type { AgentData } from "./types";
+import {
+	capabilityDefinitions,
+	capabilityLabels,
+	type CapabilityKey,
+} from "./definitions";
+
+interface Props {
+	agents: AgentData[];
+}
+
+const { agents } = Astro.props;
+
+const FILTERS = [
+	{ key: "all", label: "All" },
+	{ key: "terminal", label: "Terminal" },
+	{ key: "ide", label: "IDE" },
+	{ key: "cloud", label: "Cloud" },
+	{ key: "extension", label: "Extension" },
+] as const;
+
+// Capabilities shown as chips on the card — Skills/MCP are excluded since
+// every listed agent supports them (mentioned in the table footnote instead).
+const CARD_CAPABILITY_KEYS: (keyof AgentData["capabilities"])[] = [
+	"terminal",
+	"ide",
+	"standalone",
+	"cloud",
+	"extension",
+	"open_source",
+];
+---
+
+<div class="not-content">
+	{/* Filter strip */}
+	<div class="agent-filter-strip">
+		<span class="agent-filter-label">Filter by workflow:</span>
+		<div class="agent-filter-chips" role="group" aria-label="Filter agents">
+			{
+				FILTERS.map((f, i) => (
+					<button
+						type="button"
+						class:list={["agent-filter-chip", { "is-active": i === 0 }]}
+						data-filter={f.key}
+						aria-pressed={i === 0 ? "true" : "false"}
+					>
+						{f.label}
+					</button>
+				))
+			}
+		</div>
+	</div>
+
+	{/* Grid */}
+	<div class="agent-setup-grid" data-agent-grid>
+		{
+			agents.map((agent) => {
+				const activeCaps = CARD_CAPABILITY_KEYS.filter(
+					(k) => agent.capabilities[k],
+				);
+				const matchKeys = [
+					...Object.entries(agent.capabilities)
+						.filter(([, v]) => v)
+						.map(([k]) => k),
+				]
+					.filter(Boolean)
+					.join(" ");
+
+				return (
+					<a
+						href={`/agent-setup/${agent.slug}/`}
+						class="agent-setup-card"
+						data-agent-card
+						data-match={matchKeys}
+					>
+						<div class="agent-setup-card-header">
+							<span
+								class="agent-setup-icon-wrap"
+								style="width: 36px; height: 36px;"
+							>
+								<img
+									src={`/icons/agents/${agent.icon}/light.svg`}
+									alt={`${agent.name} icon`}
+									width="36"
+									height="36"
+									class="agent-icon-light"
+								/>
+								<img
+									src={`/icons/agents/${agent.icon}/dark.svg`}
+									alt={`${agent.name} icon`}
+									width="36"
+									height="36"
+									class="agent-icon-dark"
+								/>
+							</span>
+							<div>
+								<div class="agent-setup-card-title">{agent.name}</div>
+								<div class="agent-setup-card-vendor">{agent.vendor}</div>
+							</div>
+						</div>
+
+						<div class="agent-setup-card-body">
+							<p class="agent-setup-card-description">{agent.description}</p>
+
+							<div class="flex flex-wrap gap-1.5">
+								{activeCaps.map((key) => {
+									const k = key as CapabilityKey;
+									const label = capabilityLabels[k] ?? key;
+									const tooltip = capabilityDefinitions[k] ?? "";
+									return (
+										<span
+											class={`agent-setup-badge agent-setup-badge--${key.replace("_", "-")}`}
+											data-agent-tooltip={tooltip}
+											aria-label={tooltip}
+										>
+											{label}
+										</span>
+									);
+								})}
+							</div>
+
+							<ul class="agent-setup-card-features">
+								{agent.features.slice(0, 4).map((feature) => (
+									<li>{feature}</li>
+								))}
+							</ul>
+
+							<span class="agent-setup-card-cta">
+								View guide <span aria-hidden="true">&rarr;</span>
+							</span>
+						</div>
+					</a>
+				);
+			})
+		}
+	</div>
+
+	{/* Empty state (hidden unless no cards match) */}
+	<div class="agent-filter-empty" data-filter-empty hidden>
+		<p>No agents match this filter.</p>
+		<button type="button" class="agent-filter-chip" data-clear-filter>
+			Clear filter
+		</button>
+	</div>
+</div>
+
+<script>
+	import tippy from "tippy.js";
+
+	// Scoped to each Catalog component on the page so multiple instances don't
+	// clash. Handles filter chip selection, URL sync, visibility toggling, and
+	// the empty state.
+	const FILTER_PARAM = "workflow";
+	const VALID_FILTERS = ["all", "terminal", "ide", "cloud", "extension"];
+
+	// Initialize tippy tooltips on all capability badges. Appending to body
+	// escapes the table's overflow clip.
+	document
+		.querySelectorAll<HTMLElement>("[data-agent-tooltip]")
+		.forEach((el) => {
+			const content = el.dataset.agentTooltip;
+			if (!content) return;
+			tippy(el, {
+				content,
+				placement: "top",
+				appendTo: () => document.body,
+				arrow: true,
+				maxWidth: 280,
+				delay: [150, 0],
+			});
+		});
+
+	function initCatalog(root: HTMLElement) {
+		const chips = root.querySelectorAll<HTMLButtonElement>(
+			".agent-filter-chip[data-filter]",
+		);
+		const cards = root.querySelectorAll<HTMLElement>("[data-agent-card]");
+		const emptyEl = root.querySelector<HTMLElement>("[data-filter-empty]");
+		const clearBtn = root.querySelector<HTMLButtonElement>(
+			"[data-clear-filter]",
+		);
+
+		const applyFilter = (filter: string) => {
+			let visible = 0;
+
+			cards.forEach((card) => {
+				const matches =
+					filter === "all" ||
+					(card.dataset.match?.split(/\s+/).includes(filter) ?? false);
+				card.hidden = !matches;
+				if (matches) visible++;
+			});
+
+			// Chip active state
+			chips.forEach((chip) => {
+				const isActive = chip.dataset.filter === filter;
+				chip.classList.toggle("is-active", isActive);
+				chip.setAttribute("aria-pressed", String(isActive));
+			});
+
+			// Empty state
+			if (emptyEl) emptyEl.hidden = visible > 0;
+
+			// URL sync
+			const url = new URL(window.location.href);
+			if (filter === "all") url.searchParams.delete(FILTER_PARAM);
+			else url.searchParams.set(FILTER_PARAM, filter);
+			window.history.replaceState({}, "", url.toString());
+		};
+
+		// Wire up chips
+		chips.forEach((chip) => {
+			chip.addEventListener("click", () => {
+				const filter = chip.dataset.filter;
+				if (filter) applyFilter(filter);
+			});
+		});
+
+		// "Clear filter" button in empty state
+		clearBtn?.addEventListener("click", () => applyFilter("all"));
+
+		// Read initial filter from URL
+		const params = new URLSearchParams(window.location.search);
+		const initial = params.get(FILTER_PARAM);
+		if (initial && VALID_FILTERS.includes(initial)) {
+			applyFilter(initial);
+		}
+	}
+
+	document
+		.querySelectorAll<HTMLElement>("[data-agent-grid]")
+		.forEach((grid) => {
+			const root = grid.closest(".not-content") as HTMLElement | null;
+			if (root) initCatalog(root);
+		});
+</script>

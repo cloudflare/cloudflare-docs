@@ -1,0 +1,55 @@
+---
+pcx_content_type: reference
+title: RtkUIProvider
+description: API reference for RtkUIProvider component (React Native Library)
+products:
+  - realtime
+---
+
+Context provider component that wraps the meeting UI. Provides SafeAreaView, state management, and back button handling. Must wrap all Rtk UI components.
+
+## Properties
+
+| Property   | Type        | Required | Default | Description              |
+| ---------- | ----------- | -------- | ------- | ------------------------ |
+| `children` | `ReactNode` | ✅       | -       | Child components to wrap |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import {
+	RtkUIProvider,
+	RtkMeeting,
+} from "@cloudflare/realtimekit-react-native-ui";
+
+function App() {
+	return (
+		<RtkUIProvider>
+			<RtkMeeting meeting={meeting} />
+		</RtkUIProvider>
+	);
+}
+```
+
+### With Properties
+
+```tsx
+import {
+	RtkUIProvider,
+	RtkGrid,
+	RtkControlbar,
+	RtkHeader,
+} from "@cloudflare/realtimekit-react-native-ui";
+
+function App() {
+	return (
+		<RtkUIProvider>
+			<RtkHeader meeting={meeting} />
+			<RtkGrid meeting={meeting} />
+			<RtkControlbar meeting={meeting} />
+		</RtkUIProvider>
+	);
+}
+```

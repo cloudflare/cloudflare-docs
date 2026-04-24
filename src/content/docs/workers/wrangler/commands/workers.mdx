@@ -4,6 +4,8 @@ title: Workers
 description: Wrangler commands for creating, developing, deploying, and managing Workers.
 sidebar:
   order: 1
+products:
+  - workers
 ---
 
 import {
@@ -208,6 +210,9 @@ None of the options for this command are required. Also, many can be set in your
 - `--routes`, `--route` string\[] optional
   - Routes where this Worker will be deployed.
   - For example: `--route example.com/*`.
+- `--domain` <Type text="string[]" /> <MetaInfo text="optional" />
+  - Custom domains where this Worker will be deployed.
+  - For example: `--domain example.com`.
 - `--tsconfig` <Type text="string" /> <MetaInfo text="optional" />
   - Path to a custom `tsconfig.json` file.
 - `--minify` <Type text="boolean" /> <MetaInfo text="optional" />
@@ -218,6 +223,8 @@ None of the options for this command are required. Also, many can be set in your
   - It is recommended best practice to treat your Wrangler developer environment as a source of truth for your Worker configuration, and avoid making changes via the Cloudflare dashboard.
   - If you change your environment variables in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behaviour set `keep-vars` to `true`.
   - Secrets are never deleted by a deployment whether this flag is true or false.
+- `--secrets-file` <Type text="string" /> <MetaInfo text="optional" />
+  - Path to a file containing secrets to upload alongside the deployment. Accepts JSON or `.env` format — the same formats used by [`wrangler secret bulk`](#secret-bulk). Existing secrets not included in the file are preserved from the previous version. Refer to [Secrets — Upload secrets alongside code](/workers/configuration/secrets/#upload-secrets-alongside-code) for more details.
 - `--dispatch-namespace` <Type text="string" /> <MetaInfo text="optional" />
   - Specify the [Workers for Platforms dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dispatch-namespace) to upload this Worker to.
 - `--metafile` <Type text="string" /> <MetaInfo text="optional" />

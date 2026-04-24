@@ -1,0 +1,51 @@
+---
+pcx_content_type: how-to
+title: Enable Cloudflare Pipelines
+sidebar:
+  order: 41
+description: Push Cloudflare logs to Cloudflare Pipelines.
+products:
+  - logpush
+  - pipelines
+---
+
+import { Steps, DashButton } from "~/components";
+
+[Cloudflare Pipelines](/pipelines/) ingests events, transforms them with [SQL](/pipelines/sql-reference/), and delivers them to [R2](/r2/) as [Iceberg](/r2/data-catalog/) tables or as Parquet and JSON files. Logpush can write data to Pipelines as a native destination.
+
+Instead of sending raw logs directly to a storage bucket as JSON, Logpush can route them to a Pipeline to filter, enrich, and transform your data into Parquet or Apache Iceberg tables managed by [R2 Data Catalog](/r2/data-catalog/). This allows the data to be much more compact and optimized for analytics such as querying with [R2 SQL](/r2-sql/).
+
+The Pipelines destination supports the following Logpush datasets:
+
+| Scope   | Datasets                                       |
+| ------- | ---------------------------------------------- |
+| Zone    | `http_requests`, `firewall_events`, `dns_logs` |
+| Account | `workers_trace_events`                         |
+
+For a full list of fields available in each dataset, refer to [Datasets](/logs/logpush/logpush-job/datasets/).
+
+## Manage via the Cloudflare dashboard
+
+<Steps>
+1. In the Cloudflare dashboard, go to the **Logpush** page at the account or domain (also known as zone) level.
+   - For account: <DashButton url="/?to=/:account/logs" />
+   - For domain (also known as zone): <DashButton url="/?to=/:account/:zone/analytics/logs" />
+2. Select **Create a Logpush job**.
+3. Select **Pipelines** as the destination.
+4. In the **Dataset** step, select the dataset from the dropdown.
+   - A Pipeline name is auto-generated, but you can edit it.
+5. In the **Destination** step, configure the destination:
+   - Select an existing R2 bucket or type a new name to create one during setup.
+   - Choose the storage format: Parquet, JSON, or [R2 Data Catalog (Apache Iceberg)](/r2/data-catalog/).
+   - If you select R2 Data Catalog, enter a catalog namespace and table name.
+   - Optionally, expand **Delivery settings** to configure roll size, roll interval, and other destination-specific settings. For more information about these settings, refer to the [Pipelines Sinks documentation](/pipelines/sinks/).
+6. In the **Transform** step, choose how to process logs before they are written to the Sink:
+   - **Simple** forwards all fields without modification (default).
+   - **Custom SQL** opens a SQL editor where you can filter, transform, and enrich your data. Refer to the [Pipelines SQL reference](/pipelines/sql-reference/) for a complete list of SQL functions.
+7. In the **Review** step, verify your configuration and select **Create**. This automatically creates all required resources, including the [Stream](/pipelines/streams/), [Sink](/pipelines/sinks/), R2 credentials or Data Catalog token, [Pipeline](/pipelines/), and the Logpush job.
+
+</Steps>
+
+:::note
+It can take a few minutes for the events to start streaming from the Logpush source.
+:::

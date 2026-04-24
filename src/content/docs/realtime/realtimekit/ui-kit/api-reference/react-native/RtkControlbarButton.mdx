@@ -1,0 +1,53 @@
+---
+pcx_content_type: reference
+title: RtkControlbarButton
+description: API reference for RtkControlbarButton component (React Native Library)
+products:
+  - realtime
+---
+
+A reusable button for the control bar with icon, label, loading state, and warning indicator support.
+
+## Properties
+
+| Property      | Type                           | Required | Default           | Description                          |
+| ------------- | ------------------------------ | -------- | ----------------- | ------------------------------------ |
+| `label`       | `string`                       | ✅       | `' '`             | Button label text                    |
+| `icon`        | `string`                       | ✅       | -                 | SVG icon string                      |
+| `iconPack`    | `IconPack`                     | ❌       | `defaultIconPack` | Custom icon pack                     |
+| `isLoading`   | `boolean`                      | ❌       | `false`           | Show loading spinner instead of icon |
+| `disabled`    | `boolean`                      | ❌       | `false`           | Whether the button is disabled       |
+| `onClick`     | `() => void`                   | ❌       | -                 | Press handler callback               |
+| `showWarning` | `boolean`                      | ❌       | `false`           | Show warning indicator               |
+| `variant`     | `'button' \| 'horizontal'`     | ❌       | `'button'`        | Layout variant                       |
+| `size`        | `'lg' \| 'md' \| 'sm' \| 'xl'` | ❌       | `'sm'`            | Icon size                            |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkControlbarButton } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkControlbarButton label="Mute" icon={muteIcon} />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkControlbarButton } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return (
+		<RtkControlbarButton
+			label="Mute"
+			icon={muteIcon}
+			variant="horizontal"
+			size="md"
+			onClick={() => console.log("pressed")}
+		/>
+	);
+}
+```

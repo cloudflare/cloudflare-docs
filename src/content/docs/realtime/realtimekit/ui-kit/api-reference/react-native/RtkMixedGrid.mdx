@@ -1,0 +1,68 @@
+---
+pcx_content_type: reference
+title: RtkMixedGrid
+description: API reference for RtkMixedGrid component (React Native Library)
+products:
+  - realtime
+---
+
+A grid layout that handles mixed content: participants, screenshares, plugins, and pinned participants. Automatically switches between simple, spotlight, and highlighted grid layouts.
+
+## Properties
+
+| Property                  | Type                           | Required | Default           | Description                                |
+| ------------------------- | ------------------------------ | -------- | ----------------- | ------------------------------------------ |
+| `meeting`                 | `RealtimeKitClient`            | ✅       | -                 | The RealtimeKit meeting instance           |
+| `participants`            | `Peer[]`                       | ✅       | `[]`              | Array of active participants               |
+| `pinnedParticipants`      | `Peer[]`                       | ✅       | `[]`              | Array of pinned participants               |
+| `screenShareParticipants` | `Peer[]`                       | ✅       | `[]`              | Array of participants sharing their screen |
+| `plugins`                 | `RTKPlugin[]`                  | ✅       | `[]`              | Array of active plugins                    |
+| `aspectRatio`             | `string`                       | ❌       | `'16:9'`          | Aspect ratio for grid tiles                |
+| `config`                  | `UIConfig`                     | ❌       | `defaultConfig`   | UI configuration object                    |
+| `gap`                     | `number`                       | ❌       | `8`               | Gap between grid tiles in pixels           |
+| `size`                    | `'lg' \| 'md' \| 'sm' \| 'xl'` | ❌       | `'sm'`            | Size variant                               |
+| `variant`                 | `'boxed' \| 'solid'`           | ❌       | `'solid'`         | Visual style variant                       |
+| `iconPack`                | `IconPack`                     | ❌       | `defaultIconPack` | Custom icon pack                           |
+| `states`                  | `States`                       | ❌       | -                 | UI state object                            |
+| `t`                       | `RtkI18n`                      | ❌       | -                 | i18n translation function                  |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkMixedGrid } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return (
+		<RtkMixedGrid
+			meeting={meeting}
+			participants={participants}
+			pinnedParticipants={[]}
+			screenShareParticipants={[]}
+			plugins={[]}
+		/>
+	);
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkMixedGrid } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return (
+		<RtkMixedGrid
+			meeting={meeting}
+			participants={participants}
+			pinnedParticipants={pinned}
+			screenShareParticipants={screenshares}
+			plugins={activePlugins}
+			aspectRatio="16:9"
+			gap={12}
+			size="md"
+		/>
+	);
+}
+```

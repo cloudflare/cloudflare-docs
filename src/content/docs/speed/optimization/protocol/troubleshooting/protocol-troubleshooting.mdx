@@ -13,17 +13,17 @@ This guide covers common HTTP/2 and HTTP/3 issues, including origin incompatibil
 
 ## H2 to Origin - Origin incompatibility
 
-- The origin's `max_concurrent_streams` is negotiated during the handshake process. 
+- The origin's `max_concurrent_streams` is negotiated during the handshake process.
 - If a `GOAWAY(0)` is received, it is likely due to a server restart or another reason causing the server to refuse new streams.
 - For more information, refer to [RFC 9113 - SETTINGS_MAX_CONCURRENT_STREAMS](https://datatracker.ietf.org/doc/html/rfc9113).
 
 ## H2 Multiplexing - Origin incompatibility/issues
 
-- Multiplexing issues can arise due to incorrect server configurations. 
+- Multiplexing issues can arise due to incorrect server configurations.
 - Use [netlogs](https://www.chromium.org/developers/design-documents/network-stack/netlog/) to identify `SETTINGS_MAX_CONCURRENT_STREAMS` violations or unexpected `GOAWAY` frames.
 - For more information, refer to [Stream Concurrency Issues](https://datatracker.ietf.org/doc/html/rfc9113#name-stream-concurrency).
 
-## Generic browser errors 
+## Generic browser errors
 
 Common browser errors include:
 
@@ -41,13 +41,15 @@ For more information, refer to [Chromium URL Request Header](https://chromium.go
 
 ## Chrome stalls or fails only on HTTP/3
 
-If the issue reproduces only in Chrome over HTTP/3 and disappears when HTTP/3 is disabled, the problem may be related to a browser-side QUIC handling issue rather than your origin server.
+If the issue reproduces only in Chrome over HTTP/3 and disappears when HTTP/3 is disabled, the problem may be related to a browser-side QUIC handling issue rather than your origin server. This is a known Chrome issue ([crbug.com/41161335](https://issues.chromium.org/issues/41161335)) — Cloudflare's QUIC implementation is not the cause.
 
 Symptoms can include:
 
 - Large downloads stall unexpectedly.
 - Pages with many concurrent requests hang for one to three minutes and then fail.
-- Chrome reports `ERR_QUIC_PROTOCOL_ERROR` or another QUIC-related browser error after the connection stops making progress.
+- Chrome reports `ERR_QUIC_PROTOCOL_ERROR` or `ERR_HTTP3_PROTOCOL_ERROR` after the connection stops making progress.
+- Issue does not reproduce in Firefox or Safari.
+- Issue resolves after disabling QUIC in `chrome://flags`.
 
 ### How to isolate the issue
 
@@ -55,8 +57,17 @@ Symptoms can include:
 2. Test the same request again over HTTP/2.
 3. If the issue disappears over HTTP/2, capture a NetLog for Chrome and compare the behavior.
 
+**Test immediately:** In Chrome, go to `chrome://flags`, search for "QUIC", set it to **Disabled**, then relaunch Chrome.
+
 ### Resolution
 
-If the issue is limited to specific hostnames, you can test a more targeted workaround such as removing the `Alt-Svc` header with a [response header transform rule](/rules/transform/response-header-modification/). However, proxied hostnames can also advertise HTTP/3 through generated HTTPS records. Disabling HTTP/3 for the zone is the most reliable way to force HTTP/2 while you troubleshoot.
+If the issue is limited to specific hostnames, you can apply a more targeted workaround: create a Response Header Modification Transform Rule to remove the `Alt-Svc` header for the affected hostname.
+
+1. In the Cloudflare dashboard, go to the Rules **Overview** page.
+2. Select **Create rule** > **Response Header Transform Rule**.
+3. Set the matching expression to your hostname: `(http.host eq "example.com")`.
+4. Under **Modify response header**, select **Remove** and enter `Alt-Svc` as the header name.
+
+This forces Chrome to use HTTP/2 for that hostname without disabling HTTP/3 globally. However, proxied hostnames can also advertise HTTP/3 through generated HTTPS records, so disabling HTTP/3 for the zone is the most reliable way to force HTTP/2 while you troubleshoot.
 
 After changing `Alt-Svc`, remember that browsers may cache the advertised alternative service for up to 24 hours.

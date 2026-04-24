@@ -9,6 +9,8 @@ tags:
   - Node.js
   - Docker
 reviewed: 2026-04-13
+products:
+  - sandbox
 ---
 
 import { Details, Tabs, TabItem } from "~/components";
@@ -46,7 +48,7 @@ If you prefer to deploy step by step, scaffold the project and deploy manually.
 1. Scaffold the bridge project:
 
 	```sh
-	npm create cloudflare sandbox-bridge --template=cloudflare/sandbox-sdk/bridge/worker
+	npm create cloudflare -- sandbox-bridge --template=cloudflare/sandbox-sdk/bridge/worker
 	cd sandbox-bridge
 	```
 

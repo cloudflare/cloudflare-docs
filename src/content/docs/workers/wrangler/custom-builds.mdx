@@ -3,6 +3,8 @@ pcx_content_type: configuration
 title: Custom builds
 head: []
 description: Customize how your code is compiled, before being processed by Wrangler.
+products:
+  - workers
 ---
 
 import { Render, Type, MetaInfo, WranglerConfig } from "~/components";
@@ -45,3 +47,29 @@ Example:
 ```
 
 </WranglerConfig>
+
+## `WRANGLER_COMMAND` environment variable
+
+When Wrangler runs your custom build command, it sets the `WRANGLER_COMMAND` environment variable so your build script can detect which Wrangler command triggered the build. This allows you to customize the build process based on the deployment context.
+
+The possible values are:
+
+| Value              | Wrangler command triggered               |
+| ------------------ | ---------------------------------------- |
+| `dev`              | `wrangler dev`                           |
+| `deploy`           | `wrangler deploy`                        |
+| `versions upload`  | `wrangler versions upload`               |
+| `types`            | `wrangler types`                         |
+
+For example, you can use this to apply different build settings for development and production:
+
+```bash
+#!/bin/bash
+if [ "$WRANGLER_COMMAND" = "dev" ]; then
+  echo "Building for development..."
+  # run a development build
+else
+  echo "Building for production..."
+  # run a production build
+fi
+```

@@ -12,7 +12,6 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {},
 	"examples": [
 		{
 			"name": "Simple Generation",
@@ -21,7 +20,7 @@
 				"prompt": "A serene mountain lake surrounded by pine trees at dawn"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/jCypj4MeXYUiRyq7nfgm8z1OvFZF81wh4FznutDsZOuJz0YWA/tmp1iukn307.jpg"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-4.0/simple-generation.jpeg"
 			},
 			"code_snippets": [
 				{
@@ -40,7 +39,7 @@
 				"aspect_ratio": "1:1"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/fMmA8cw0vv3eC0c3PYt2e1fymQEsD1bR1lpd5UnhTKqmNTjZB/tmpik3_vkq7.jpg"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-4.0/high-resolution.jpeg"
 			},
 			"code_snippets": [
 				{
@@ -59,7 +58,7 @@
 				"aspect_ratio": "21:9"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/0lxxNQSg3NabCZrDiQVAPGVmjP1Q2dd7TgYCOTfI9LpyZaMLA/tmp89gopylq.jpg"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-4.0/widescreen-landscape.jpeg"
 			},
 			"code_snippets": [
 				{
@@ -78,7 +77,7 @@
 				"enhance_prompt": true
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/TRYcLgNMrBpPJVq09ICKXWe4Z8d6olzpK5vtQPOB8O23ZaMLA/tmpaecga26m.jpg"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-4.0/portrait-format.jpeg"
 			},
 			"code_snippets": [
 				{
@@ -89,22 +88,21 @@
 			]
 		},
 		{
-			"name": "Custom Dimensions",
-			"description": "Specific width and height",
+			"name": "Detailed 4K",
+			"description": "High-resolution detailed botanical illustration",
 			"input": {
 				"prompt": "A detailed botanical illustration of exotic tropical flowers",
-				"size": "custom",
-				"width": 2048,
-				"height": 3072
+				"size": "4K",
+				"aspect_ratio": "3:4"
 			},
 			"output": {
-				"image": "https://replicate.delivery/xezq/1SbAc0aXYXbVD9doyrdCW78hYufVefMsaJXBrETN7Lu2npxsA/tmphvkx7emy.jpg"
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-4.0/detailed-4k.jpeg"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.0',\n  {\n    prompt: 'A detailed botanical illustration of exotic tropical flowers',\n    size: 'custom',\n    width: 2048,\n    height: 3072,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.0',\n  {\n    prompt: 'A detailed botanical illustration of exotic tropical flowers',\n    size: '4K',\n    aspect_ratio: '3:4',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		}
@@ -112,7 +110,7 @@
 	"supports_async": false,
 	"external_info": "https://seed.bytedance.com/en/seedream4_0",
 	"terms": null,
-	"cover_image_url": null,
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/bytedance/seedream-4.0.png",
 	"metadata": {
 		"Max Resolution": "4K",
 		"Editing": "Yes (single-sentence)"
@@ -120,9 +118,8 @@
 	"created_at": "2026-04-08 22:04:50",
 	"default_example": null,
 	"code_snippets": [],
+	"zdr": false,
 	"schema": {
-		"model_id": "bytedance/seedream-4.0",
-		"version": "1.0.0",
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
 			"type": "object",

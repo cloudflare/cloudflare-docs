@@ -1,0 +1,44 @@
+---
+pcx_content_type: reference
+title: RtkPluginScreenShareTabButton
+description: API reference for RtkPluginScreenShareTabButton component (iOS Library)
+products:
+  - realtime
+---
+
+A tab button used in the plugin and screen share tab selector.
+Represents a single tab in the `RtkActiveTabSelectorView`.
+
+## Initializer parameters
+
+| Parameter    | Type                                      | Required | Default | Description                                 |
+| ------------ | ----------------------------------------- | -------- | ------- | ------------------------------------------- |
+| `image`      | `RtkImage?`                               | ✅       | -       | The icon image for the tab button           |
+| `title`      | `String`                                  | ❌       | `""`    | The title text for the tab button           |
+| `id`         | `String`                                  | ❌       | `""`    | A unique identifier for the tab button      |
+| `appearance` | `RtkPluginScreenShareTabButtonAppearance` | ❌       | -       | Appearance configuration for the tab button |
+
+## Usage Examples
+
+### Basic Usage
+
+```swift
+import RealtimeKitUI
+
+let tabButton = RtkPluginScreenShareTabButton(
+    image: RtkImage(image: UIImage(systemName: "square.and.arrow.up")),
+    title: "Screen Share"
+)
+```
+
+### With identifier
+
+```swift
+import RealtimeKitUI
+
+let tabButton = RtkPluginScreenShareTabButton(
+    image: RtkImage(image: UIImage(systemName: "pencil.tip")),
+    title: "Whiteboard",
+    id: "whiteboard-plugin"
+)
+```

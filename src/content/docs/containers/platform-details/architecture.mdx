@@ -1,8 +1,11 @@
 ---
 pcx_content_type: reference
 title: Lifecycle of a Container
+description: Understand how a Container is deployed, started, routed, and shut down across Cloudflare's network.
 sidebar:
   order: 1
+products:
+  - containers
 ---
 
 ## Deployment
@@ -89,15 +92,29 @@ should be built for the `linux/amd64` architecture, and should stay within
 
 ### Container shutdown
 
-If you do not set [`sleepAfter`](https://github.com/cloudflare/containers/blob/main/README.md#properties)
+If you do not set [`sleepAfter`](/containers/container-class/#sleepafter)
 on your Container class, or stop the instance manually, the container will shut down soon after the container stops receiving requests.
 By setting `sleepAfter`, the container will stay alive for approximately the specified duration.
 
-You can manually shut down a container instance by calling `stop()` or `destroy()` on it. Refer to the [Container package docs](https://github.com/cloudflare/containers/blob/main/README.md#container-methods) for more details.
+You can manually shut down a container instance by calling [`stop()`](/containers/container-class/#stop) or [`destroy()`](/containers/container-class/#destroy) on it.
 
 When a container instance is going to be shut down, it is sent a `SIGTERM` signal,
 and then a `SIGKILL` signal after 15 minutes. You should perform any necessary
 cleanup to ensure a graceful shutdown in this time.
+
+### Lifecycle hooks
+
+The [`Container` class](/containers/container-class/) provides hooks that run Worker code when the container changes state:
+
+- [`onStart()`](/containers/container-class/#onstart) — Runs after the container has started.
+
+- [`onStop()`](/containers/container-class/#onstop) — Runs after the container process exits. Receives the exit code and reason for the stop.
+
+- [`onActivityExpired()`](/containers/container-class/#onactivityexpired) — Runs when the [`sleepAfter`](/containers/container-class/#sleepafter) timer expires with no incoming requests. The default implementation calls `stop()` to shut down the container. You can use this to only stop the container on certain conditions.
+
+- [`onError()`](/containers/container-class/#onerror) — Runs when the container exits with an error.
+
+Refer to the [status hooks example](/containers/examples/status-hooks/) for a full implementation.
 
 #### Persistent disk
 

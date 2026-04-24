@@ -22,12 +22,17 @@ jobs:
         with:
           fetch-depth: 1
 
+      - name: Set up pnpm
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+        with:
+          version: 10
+
       - name: Set up node
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         id: setup-node
         with:
           node-version: 24.x
-          cache: npm
+          cache: pnpm
 
       - name: Check for CRLF line endings
         run: |
@@ -60,37 +65,41 @@ jobs:
         uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           path: node_modules
-          key: node-modules-${{ runner.os }}-node-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('package.json') }}
+          key: node-modules-${{ runner.os }}-node-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('package.json') }}
 
       - name: Install node_modules (cache miss)
-        run: npm ci
+        run: pnpm install --frozen-lockfile
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
       - name: Post codeowners comment
-        run: npx tsx bin/post-codeowners-comment/index.ts
+        run: pnpm exec tsx bin/post-codeowners-comment/index.ts
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check Astro and CF Worker
-        run: npm run check
+        run: pnpm run check
+
+      - name: Set up reviewdog
+        uses: reviewdog/action-setup@d8a7baabd7f3e8544ee4dbde3ee41d0011c3a93f # v1.5.0
+        with:
+          reviewdog_version: v0.21.0
 
       - name: Run eslint
-        uses: reviewdog/action-eslint@556a3fdaf8b4201d4d74d406013386aa4f7dab96 # v1
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          reporter: github-pr-review
-          fail_level: error
-          filter_mode: nofilter
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          pnpm run lint --format eslint-formatter-checkstyle | \
+            reviewdog -f=checkstyle -name=eslint -reporter=github-pr-review -fail-level=error -filter-mode=nofilter
 
       - name: Check formatting (js,jsx,ts,tsx,mjs,css)
-        run: npm run format:core:check
+        run: pnpm run format:core:check
 
       - name: Validate redirects
-        run: npx tsm bin/validate-redirects.ts
+        run: pnpm exec tsm bin/validate-redirects.ts
 
       - name: Tests
-        run: npm run test:prebuild
+        run: pnpm run test:prebuild
 
   build:
     name: Build
@@ -107,22 +116,27 @@ jobs:
         with:
           fetch-depth: 1
 
+      - name: Set up pnpm
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+        with:
+          version: 10
+
       - name: Set up node
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         id: setup-node
         with:
           node-version: 24.x
-          cache: npm
+          cache: pnpm
 
       - name: Restore node_modules (cache hit)
         id: node-modules-cache
         uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           path: node_modules
-          key: node-modules-${{ runner.os }}-node-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('package.json') }}
+          key: node-modules-${{ runner.os }}-node-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('package.json') }}
 
       - name: Install node_modules (cache miss)
-        run: npm ci
+        run: pnpm install --frozen-lockfile
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
       - name: Restore Astro assets from cache
@@ -139,7 +153,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUN_LINK_CHECK: true
-        run: npm run build
+        run: |
+          set -o pipefail
+          pnpm run build 2>&1 | tee /tmp/build-output.log
 
       - name: Upload build artifact
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
@@ -167,22 +183,27 @@ jobs:
         with:
           fetch-depth: 1
 
+      - name: Set up pnpm
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+        with:
+          version: 10
+
       - name: Set up node
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         id: setup-node
         with:
           node-version: 24.x
-          cache: npm
+          cache: pnpm
 
       - name: Restore node_modules (cache hit)
         id: node-modules-cache
         uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           path: node_modules
-          key: node-modules-${{ runner.os }}-node-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('package.json') }}
+          key: node-modules-${{ runner.os }}-node-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('package.json') }}
 
       - name: Install node_modules (cache miss)
-        run: npm ci
+        run: pnpm install --frozen-lockfile
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
       - name: Download artifact
@@ -192,7 +213,7 @@ jobs:
           path: dist
 
       - name: Tests (Workers)
-        run: npm run test:postbuild
+        run: pnpm run test:postbuild
 
       - name: Download link validation report
         if: needs.build.outputs.link_validation_failed == 'true'
@@ -202,7 +223,7 @@ jobs:
           path: .starlight-links-validator
 
       - name: Link validation
-        run: npx tsx bin/check-link-validation/index.ts
+        run: pnpm exec tsx bin/check-link-validation/index.ts
 
   notify:
     name: Notify
@@ -218,29 +239,34 @@ jobs:
         with:
           fetch-depth: 1
 
+      - name: Set up pnpm
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+        with:
+          version: 10
+
       - name: Set up node
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         id: setup-node
         with:
           node-version: 24.x
-          cache: npm
+          cache: pnpm
 
       - name: Restore node_modules (cache hit)
         id: node-modules-cache
         uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           path: node_modules
-          key: node-modules-${{ runner.os }}-node-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('package.json') }}
+          key: node-modules-${{ runner.os }}-node-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('package.json') }}
 
       - name: Install node_modules (cache miss)
-        run: npm ci
+        run: pnpm install --frozen-lockfile
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
       - name: Post PR CI failure comment
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx tsx bin/post-pr-ci-failure-comment/index.ts
+        run: pnpm exec tsx bin/post-pr-ci-failure-comment/index.ts
 
       - name: Download link validation report
         if: needs.build.outputs.link_validation_failed == 'true' && github.event.pull_request.head.repo.full_name == github.repository
@@ -254,7 +280,7 @@ jobs:
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx tsx bin/post-link-validation-comment/index.ts
+        run: pnpm exec tsx bin/post-link-validation-comment/index.ts
 
   publish-preview:
     name: Deploy Preview
@@ -270,22 +296,27 @@ jobs:
         with:
           fetch-depth: 1
 
+      - name: Set up pnpm
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+        with:
+          version: 10
+
       - name: Set up node
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         id: setup-node
         with:
           node-version: 24.x
-          cache: npm
+          cache: pnpm
 
       - name: Restore node_modules (cache hit)
         id: node-modules-cache
         uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           path: node_modules
-          key: node-modules-${{ runner.os }}-node-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('package.json') }}
+          key: node-modules-${{ runner.os }}-node-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('package.json') }}
 
       - name: Install node_modules (cache miss)
-        run: npm ci
+        run: pnpm install --frozen-lockfile
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
       - name: Download artifact
@@ -306,12 +337,12 @@ jobs:
 
           echo "branch_slug=$BRANCH_SLUG" >> "$GITHUB_OUTPUT"
 
-          npx wrangler deploy --dispatch-namespace preview-deployments --name $SHORT_SHA
-          npx wrangler deploy --dispatch-namespace preview-deployments --name $BRANCH_SLUG
+          pnpm exec wrangler deploy --dispatch-namespace preview-deployments --name $SHORT_SHA
+          pnpm exec wrangler deploy --dispatch-namespace preview-deployments --name $BRANCH_SLUG
 
       - name: Post preview URL on PR
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH_SLUG: ${{ steps.deploy.outputs.branch_slug }}
-        run: npx tsx bin/post-preview-url-comment/index.ts
+        run: pnpm exec tsx bin/post-preview-url-comment/index.ts
         continue-on-error: true

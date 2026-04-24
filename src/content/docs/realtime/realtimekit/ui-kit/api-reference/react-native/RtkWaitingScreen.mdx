@@ -1,0 +1,38 @@
+---
+pcx_content_type: reference
+title: RtkWaitingScreen
+description: API reference for RtkWaitingScreen component (React Native Library)
+products:
+  - realtime
+---
+
+Screen displayed while waiting to join (waitlist, kicked, disconnected states).
+
+## Properties
+
+| Property | Type       | Required | Default | Description               |
+| -------- | ---------- | -------- | ------- | ------------------------- |
+| `config` | `UIConfig` | ❌       | -       | UI configuration object   |
+| `t`      | `RtkI18n`  | ❌       | -       | i18n translation function |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkWaitingScreen } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkWaitingScreen />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkWaitingScreen } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkWaitingScreen config={customConfig} />;
+}
+```

@@ -1,0 +1,41 @@
+---
+pcx_content_type: reference
+title: RtkSettingsToggle
+description: API reference for RtkSettingsToggle component (React Native Library)
+products:
+  - realtime
+---
+
+Toggle button to open the settings dialog. Hides if no audio or video permissions are available.
+
+## Properties
+
+| Property   | Type                           | Required | Default           | Description               |
+| ---------- | ------------------------------ | -------- | ----------------- | ------------------------- |
+| `size`     | `'lg' \| 'md' \| 'sm' \| 'xl'` | ❌       | -                 | Icon size                 |
+| `states`   | `States`                       | ❌       | -                 | UI state object           |
+| `variant`  | `'button' \| 'horizontal'`     | ❌       | -                 | Layout variant            |
+| `iconPack` | `IconPack`                     | ❌       | `defaultIconPack` | Custom icon pack          |
+| `t`        | `RtkI18n`                      | ❌       | -                 | i18n translation function |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkSettingsToggle } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkSettingsToggle />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkSettingsToggle } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkSettingsToggle size="md" variant="button" states={states} />;
+}
+```

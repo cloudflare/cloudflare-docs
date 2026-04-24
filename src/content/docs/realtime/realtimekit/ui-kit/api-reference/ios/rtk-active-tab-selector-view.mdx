@@ -1,0 +1,38 @@
+---
+pcx_content_type: reference
+title: RtkActiveTabSelectorView
+description: API reference for RtkActiveTabSelectorView component (iOS Library)
+products:
+  - realtime
+---
+
+A horizontally scrollable tab selector for switching between plugins and screen shares.
+
+## Properties
+
+| Property  | Type                              | Required | Default | Description                              |
+| --------- | --------------------------------- | -------- | ------- | ---------------------------------------- |
+| `buttons` | `[RtkPluginScreenShareTabButton]` | -        | -       | The array of tab buttons in the selector |
+
+## Methods
+
+| Method                     | Return Type | Description                                                   |
+| -------------------------- | ----------- | ------------------------------------------------------------- |
+| `scrollToVisible(button:)` | `Void`      | Scrolls the tab selector to make the specified button visible |
+| `setAndDisplayButtons(_:)` | `Void`      | Sets and displays the provided array of tab buttons           |
+
+## Usage Examples
+
+### Basic Usage
+
+```swift
+import RealtimeKitUI
+
+let tabSelector = RtkActiveTabSelectorView()
+let buttons = [
+    RtkPluginScreenShareTabButton(image: nil, title: "Screen Share"),
+    RtkPluginScreenShareTabButton(image: nil, title: "Whiteboard")
+]
+tabSelector.setAndDisplayButtons(buttons)
+view.addSubview(tabSelector)
+```

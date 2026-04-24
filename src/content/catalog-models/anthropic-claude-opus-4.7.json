@@ -16,7 +16,6 @@
 	"context_length": 1000000,
 	"max_output_tokens": 128000,
 	"schema_version": "1.0.0",
-	"pricing": {},
 	"examples": [
 		{
 			"name": "Simple Question",
@@ -42,7 +41,6 @@
 			"name": "With System Message",
 			"description": "Using a system message to set context",
 			"input": {
-				"system": "You are a helpful coding assistant specializing in Python.",
 				"messages": [
 					{
 						"role": "user",
@@ -50,13 +48,14 @@
 					}
 				],
 				"max_tokens": 1024,
+				"system": "You are a helpful coding assistant specializing in Python.",
 				"temperature": 0.3
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'anthropic/claude-opus-4.7',\n  {\n    system: 'You are a helpful coding assistant specializing in Python.',\n    messages: [\n      {\n        role: 'user',\n        content: 'How do I read a JSON file in Python?',\n      },\n    ],\n    max_tokens: 1024,\n    temperature: 0.3,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'anthropic/claude-opus-4.7',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'How do I read a JSON file in Python?',\n      },\n    ],\n    max_tokens: 1024,\n    system: 'You are a helpful coding assistant specializing in Python.',\n    temperature: 0.3,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -139,12 +138,11 @@
 		"Architecture": "Transformer",
 		"Extended Thinking": "Yes"
 	},
-	"created_at": "2026-04-16 19:12:00",
+	"created_at": "2026-04-16 16:00:53",
 	"default_example": null,
 	"code_snippets": [],
+	"zdr": false,
 	"schema": {
-		"model_id": "anthropic/claude-opus-4.7",
-		"version": "1.0.0",
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
 			"type": "object",

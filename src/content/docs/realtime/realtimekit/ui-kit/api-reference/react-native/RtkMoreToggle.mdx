@@ -1,0 +1,50 @@
+---
+pcx_content_type: reference
+title: RtkMoreToggle
+description: API reference for RtkMoreToggle component (React Native Library)
+products:
+  - realtime
+---
+
+Toggle button for the "more options" overflow menu in the control bar. Shows a notification badge for pending requests.
+
+## Properties
+
+| Property   | Type                           | Required | Default           | Description                      |
+| ---------- | ------------------------------ | -------- | ----------------- | -------------------------------- |
+| `meeting`  | `RealtimeKitClient`            | ✅       | -                 | The RealtimeKit meeting instance |
+| `size`     | `'lg' \| 'md' \| 'sm' \| 'xl'` | ❌       | -                 | Icon size                        |
+| `variant`  | `'button' \| 'horizontal'`     | ❌       | -                 | Layout variant                   |
+| `iconPack` | `IconPack`                     | ❌       | `defaultIconPack` | Custom icon pack                 |
+| `states`   | `States`                       | ❌       | -                 | UI state object                  |
+| `t`        | `RtkI18n`                      | ❌       | -                 | i18n translation function        |
+| `children` | `ReactNode`                    | ❌       | -                 | Additional content to render     |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkMoreToggle } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkMoreToggle meeting={meeting} />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkMoreToggle } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return (
+		<RtkMoreToggle
+			meeting={meeting}
+			size="md"
+			variant="button"
+			states={states}
+		/>
+	);
+}
+```

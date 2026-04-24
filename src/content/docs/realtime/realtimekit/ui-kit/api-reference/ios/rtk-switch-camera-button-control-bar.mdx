@@ -1,0 +1,26 @@
+---
+pcx_content_type: reference
+title: RtkSwitchCameraButtonControlBar
+description: API reference for RtkSwitchCameraButtonControlBar component (iOS Library)
+products:
+  - realtime
+---
+
+A control bar button that switches between the front and rear cameras.
+
+## Initializer parameters
+
+| Parameter | Type                | Required | Default | Description                     |
+| --------- | ------------------- | -------- | ------- | ------------------------------- |
+| `meeting` | `RealtimeKitClient` | ✅       | -       | The RealtimeKit client instance |
+
+## Usage Examples
+
+### Basic Usage
+
+```swift
+import RealtimeKitUI
+
+let switchCameraButton = RtkSwitchCameraButtonControlBar(meeting: rtkClient)
+view.addSubview(switchCameraButton)
+```

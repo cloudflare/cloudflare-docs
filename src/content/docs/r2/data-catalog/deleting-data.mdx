@@ -2,6 +2,8 @@
 pcx_content_type: concept
 title: Deleting data
 description: How to properly delete data from R2 Data Catalog
+products:
+  - r2
 sidebar:
   order: 5
 ---
@@ -14,7 +16,7 @@ Deleting data from R2 Data Catalog or any Apache Iceberg catalog requires that o
 
 ## Automatic table maintenance
 R2 Data Catalog can automatically manage table maintenance operations such as snapshot expiration and compaction. These continuous operations help keep latency and storage costs down.
- - **Snapshot expiration**: Automatically removes old snapshots. This reduces metadata overhead. Data files are not removed until orphan file removal is run.
+ - **Snapshot expiration**: Automatically removes old snapshots and the respective unreferenced data files. This reduces both metadata overhead and storage costs.
  - **Compaction**: Merges small data files into larger ones. This optimizes read performance and reduces the number of files read during queries.
 
  Without enabling automatic maintenance, you need to manually handle these operations.

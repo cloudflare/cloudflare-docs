@@ -1,0 +1,17 @@
+---
+pcx_content_type: integration-guide
+description: Connect Google Cloud VPN to Cloudflare WAN.
+products:
+  - cloudflare-wan
+title: Google Cloud VPN
+
+---
+
+import { Render } from "~/components";
+
+<Render file="cloudflare-wan/third-party/google"
+  product="networking-services"
+  params={{
+    addTunnelsUrl: "/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/#add-tunnels",
+    createAStaticRouteUrl: "/cloudflare-wan/configuration/how-to/configure-routes/#create-a-static-route"
+  }} />

@@ -5,7 +5,7 @@ description: Troubleshoot Troubleshoot DLP issues in Cloudflare One.
 products:
   - cloudflare-one
 sidebar:
-  order: 5
+  order: 6
 tags:
   - Debugging
 ---
@@ -59,7 +59,7 @@ You can also create policies that match trusted applications using the [**Do Not
 
 If DLP detects sensitive data in plain text but not within images or certain applications, check for the following issues:
 
-- **OCR is turned on**: For DLP to scan text within images (such as a picture of a credit card), you must turn on [Optical Character Recognition (OCR)](/cloudflare-one/data-loss-prevention/dlp-profiles/advanced-settings/#optical-character-recognition-ocr) in the corresponding DLP profile.
+- **OCR is turned on**: For DLP to scan text within images (such as a picture of a credit card), you must turn on [Optical Character Recognition (OCR)](/cloudflare-one/data-loss-prevention/dlp-settings/#optical-character-recognition-ocr) in DLP settings.
 - **Application-specific behavior**: Some applications, such as WhatsApp Web, use protocols or encryption methods (such as WebSocket connections) that Gateway may not be able to fully inspect with HTTP policies.
 - **Supported file types**: Content must be in a [supported file type](/cloudflare-one/data-loss-prevention/#supported-file-types) for DLP inspection.
 

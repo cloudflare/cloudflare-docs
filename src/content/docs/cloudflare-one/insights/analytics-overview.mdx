@@ -14,7 +14,7 @@ import { Render } from "~/components";
 
 The Cloudflare One Analytics overview provides a dashboard that reports on how Cloudflare One is protecting your organization and networks. Use this page to monitor usage and potential security concerns within your organization.
 
-To view the Analytics overview, log into [Cloudflare One](https://one.dash.cloudflare.com) and go to **Overview**.
+To view the Analytics overview, log in to [Cloudflare One](https://one.dash.cloudflare.com) and go to **Overview**.
 
 The Analytics overview includes reports and insights across the following products and categories:
 
@@ -37,9 +37,9 @@ In **Global status**, you can view a report on your organization's Cloudflare On
 - Gateway network policies
 - Gateway DNS policies
 - SaaS integrations
-- DLP profiles
+- Data Loss Prevention (DLP) profiles
 
-You can also view a report on your [seat usage](/cloudflare-one/team-and-resources/users/seat-management/) across your Zero Trust Organization that contains the following metrics:
+You can also view a report on your [seat usage](/cloudflare-one/team-and-resources/users/seat-management/) across your Zero Trust Organization that contains the following metrics. A seat is a billable unit consumed when a user authenticates to your Zero Trust organization.
 
 - Total seats
 - Used seats
@@ -47,14 +47,14 @@ You can also view a report on your [seat usage](/cloudflare-one/team-and-resourc
 
 ## Access
 
-In **Access**, you can view a report on your Access configuration that contains:
+In **Access**, you can view a report on your [Cloudflare Access](/cloudflare-one/access-controls/) configuration that contains:
 
 **Metrics:**
 
 - Total access attempts
 - Granted access
 - Denied (policy violation)
-- Active logins overtime
+- Active logins over time
 - Top applications with most logins
 
 **Filters:**
@@ -65,14 +65,14 @@ In **Access**, you can view a report on your Access configuration that contains:
 
 ### Proxy traffic
 
-In **Proxy traffic**, you can view a report on your Gateway HTTP traffic that contains:
+In **Proxy traffic**, you can view a report on your [Cloudflare Gateway](/cloudflare-one/traffic-policies/) HTTP traffic that contains:
 
 **Metrics:**
 
-- Total requests overtime
+- Total requests over time
 - Allowed requests
 - Blocked requests
-- Isolated requests
+- Isolated requests (served through [Browser Isolation](/cloudflare-one/remote-browser-isolation/))
 - Do not inspect requests
 - Top bandwidth consumers (GB)
 - Top denied users
@@ -130,7 +130,7 @@ In **Gateway insights**, you can view a report on your Gateway firewall policies
 
 ### CASB metrics
 
-In **CASB**, you can review instances of security issues found in your SaaS integrations.
+In **CASB**, you can review instances of security issues — such as misconfigurations, unauthorized user activity, and shadow IT — found in your SaaS integrations by [Cloudflare CASB](/cloudflare-one/cloud-and-saas-findings/).
 
 - Integrations by number of findings
-- DLP findings by profile name
+- [DLP](/cloudflare-one/data-loss-prevention/) findings by profile name

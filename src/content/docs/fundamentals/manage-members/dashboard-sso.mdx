@@ -1,8 +1,11 @@
 ---
 pcx_content_type: how-to
 title: Set up dashboard SSO
+description: Configure single sign-on (SSO) for the Cloudflare dashboard using your identity provider to enforce authenticated access for your email domain.
 tags:
   - SSO
+products:
+  - fundamentals
 ---
 
 import {
@@ -214,7 +217,7 @@ Configure an identity provider (IdP)-initiated single sign-on (SSO) session usin
 #### Configure Okta as the IdP
 
 1. Log in to your [Okta Admin Dashboard](https://login.okta.com/) and go to **Applications** > **Applications**.
-2. Select **Create App Integration** to start a new SAML integration to handle the IdP-initiated SSO flow.
+2. Select **Create App Integration** to start a new SAML integration to handle the IdP-initiated SSO flow. Note that this is a second, distinct Cloudflare-Okta integration, created separately from the [IdP integration with Zero Trust](/cloudflare-one/integrations/identity-providers/).
 3. In the pop-up, select **SAML 2.0** and select **Next**.
 4. Enter a name for the app and select **Next**.
 5. In the **Single Sign-On URL** field, paste the **SSO Endpoint URL** [you copied earlier](/fundamentals/manage-members/dashboard-sso/#prerequisites-1).

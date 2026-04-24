@@ -12,7 +12,6 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {},
 	"examples": [
 		{
 			"name": "Simple Text-to-Video",
@@ -23,7 +22,7 @@
 				"duration": 5
 			},
 			"output": {
-				"video": "https://replicate.delivery/xezq/C7zMCnrf7dxMUqAonkhC523DgcOZWcsEc0dWvZz0C7ffsD2sA/tmpow5qjpky.mp4"
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/runwayml__gen-4.5/simple-text-to-video.mp4"
 			},
 			"code_snippets": [
 				{
@@ -42,7 +41,7 @@
 				"duration": 5
 			},
 			"output": {
-				"video": "https://replicate.delivery/xezq/L9pJi8LFzNItE1bjB6YbeisngTPKATHUZLYKek3Gz1yM4BbWA/tmpeqpyadxk.mp4"
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/runwayml__gen-4.5/portrait-video.mp4"
 			},
 			"code_snippets": [
 				{
@@ -53,21 +52,21 @@
 			]
 		},
 		{
-			"name": "Square Video",
-			"description": "Square aspect ratio video",
+			"name": "Nature Close-up",
+			"description": "Close-up wildlife shot in 16:9",
 			"input": {
 				"prompt": "Close-up of a hummingbird feeding from a vibrant red flower, slow motion with soft bokeh background",
-				"ratio": "960:960",
+				"ratio": "1280:720",
 				"duration": 5
 			},
 			"output": {
-				"video": "https://replicate.delivery/xezq/a1lLcM1NZ575OZKeRltrVfHKUaNH3Y37Ifu6EUBtRqAtzD2sA/tmpiiga2jmt.mp4"
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/runwayml__gen-4.5/nature-close-up.mp4"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'runwayml/gen-4.5',\n  {\n    prompt:\n      'Close-up of a hummingbird feeding from a vibrant red flower, slow motion with soft bokeh background',\n    ratio: '960:960',\n    duration: 5,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'runwayml/gen-4.5',\n  {\n    prompt:\n      'Close-up of a hummingbird feeding from a vibrant red flower, slow motion with soft bokeh background',\n    ratio: '1280:720',\n    duration: 5,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -80,7 +79,7 @@
 				"duration": 10
 			},
 			"output": {
-				"video": "https://replicate.delivery/xezq/OMsy38wPwtIcDlI6kdLs6lHFjfeX4FfeHQlvznMSFd811HsZB/tmpg4e41nic.mp4"
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/runwayml__gen-4.5/cinematic-scene.mp4"
 			},
 			"code_snippets": [
 				{
@@ -100,7 +99,7 @@
 				"duration": 5
 			},
 			"output": {
-				"video": "https://replicate.delivery/xezq/koSy6O2LOrIcAlffSfdW72waterUzDFO5ZspTFqHOPtd8HsZB/tmp1pngzbrf.mp4"
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/runwayml__gen-4.5/image-to-video.mp4"
 			},
 			"code_snippets": [
 				{
@@ -120,7 +119,7 @@
 				"seed": 42
 			},
 			"output": {
-				"video": "https://replicate.delivery/xezq/eJuCdEyhjd2oDidTXJGJX7NcNjnYgtlhMemcOSAlpbSvACbWA/tmpfomomz22.mp4"
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/runwayml__gen-4.5/reproducible-generation.mp4"
 			},
 			"code_snippets": [
 				{
@@ -142,7 +141,7 @@
 				}
 			},
 			"output": {
-				"video": "https://replicate.delivery/xezq/qCjG1yvQWqp1CFg0MfxMNDUsduWQRNIcU0lyDOrDyGTLBhNLA/tmp9sz59vt6.mp4"
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/runwayml__gen-4.5/with-content-moderation.mp4"
 			},
 			"code_snippets": [
 				{
@@ -156,7 +155,7 @@
 	"supports_async": false,
 	"external_info": "https://runwayml.com/",
 	"terms": "https://runwayml.com/terms-of-use",
-	"cover_image_url": null,
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/runwayml/gen-4.5.png",
 	"metadata": {
 		"Max Duration": "10 seconds",
 		"Resolutions": "1280:720, 720:1280, 1104:832, 832:1104, 960:960, 1584:672",
@@ -165,9 +164,8 @@
 	"created_at": "2026-04-14 18:41:45",
 	"default_example": null,
 	"code_snippets": [],
+	"zdr": false,
 	"schema": {
-		"model_id": "runwayml/gen-4.5",
-		"version": "1.0.0",
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
 			"type": "object",

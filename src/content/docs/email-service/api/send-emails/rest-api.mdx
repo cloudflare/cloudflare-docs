@@ -1,8 +1,11 @@
 ---
 title: REST API
+description: Send emails from any application using the Email Service REST API with standard HTTP requests.
 pcx_content_type: concept
 sidebar:
   order: 2
+products:
+  - email-service
 ---
 
 import { Tabs, TabItem } from "~/components";
@@ -83,7 +86,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email/sending/s
 
 ## Attachments
 
-Send files by including base64-encoded content in the `attachments` array:
+Send files by including base64-encoded content in the `attachments` array. The total message size must not exceed **5 MiB** (including attachments).
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email/sending/send" \

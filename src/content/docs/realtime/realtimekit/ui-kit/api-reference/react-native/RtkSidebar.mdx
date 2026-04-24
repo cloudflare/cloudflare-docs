@@ -1,0 +1,51 @@
+---
+pcx_content_type: reference
+title: RtkSidebar
+description: API reference for RtkSidebar component (React Native Library)
+products:
+  - realtime
+---
+
+Full-screen sidebar modal with tabbed navigation for chat, participants, polls, and plugins panels.
+
+## Properties
+
+| Property          | Type                                                         | Required | Default                                        | Description                       |
+| ----------------- | ------------------------------------------------------------ | -------- | ---------------------------------------------- | --------------------------------- |
+| `meeting`         | `RealtimeKitClient`                                          | ✅       | -                                              | The RealtimeKit meeting instance  |
+| `config`          | `UIConfig`                                                   | ❌       | `defaultConfig`                                | UI configuration object           |
+| `iconPack`        | `IconPack`                                                   | ❌       | `defaultIconPack`                              | Custom icon pack                  |
+| `size`            | `'lg' \| 'md' \| 'sm' \| 'xl'`                               | ❌       | `'sm'`                                         | Size variant                      |
+| `states`          | `States`                                                     | ❌       | -                                              | UI state object                   |
+| `defaultSection`  | `'chat' \| 'none' \| 'participants' \| 'plugins' \| 'polls'` | ❌       | `'chat'`                                       | Default active tab                |
+| `enabledSections` | `SidebarSection[]`                                           | ❌       | `['chat', 'polls', 'participants', 'plugins']` | Which sidebar sections to display |
+| `t`               | `RtkI18n`                                                    | ❌       | -                                              | i18n translation function         |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkSidebar } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkSidebar meeting={meeting} />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkSidebar } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return (
+		<RtkSidebar
+			meeting={meeting}
+			defaultSection="chat"
+			enabledSections={["chat", "participants", "polls"]}
+			size="md"
+		/>
+	);
+}
+```

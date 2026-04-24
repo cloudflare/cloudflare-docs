@@ -3,6 +3,8 @@ pcx_content_type: configuration
 title: System environment variables
 head: []
 description: Local environment variables that can change Wrangler's behavior.
+products:
+  - workers
 ---
 
 import { Render, Type, MetaInfo } from "~/components";
@@ -36,58 +38,48 @@ See the [Environment variables and secrets](/workers/development-testing/environ
 Wrangler supports the following environment variables:
 
 - `CLOUDFLARE_ACCOUNT_ID` <Type text="string" /> <MetaInfo text="optional" />
-
   - The [account ID](/fundamentals/account/find-account-and-zone-ids/) for the Workers related account.
 
 - `CLOUDFLARE_API_TOKEN` <Type text="string" /> <MetaInfo text="optional" />
-
   - The [API token](/fundamentals/api/get-started/create-token/) for your Cloudflare account, can be used for authentication for situations like CI/CD, and other automation.
 
 - `CLOUDFLARE_API_KEY` <Type text="string" /> <MetaInfo text="optional" />
-
   - The API key for your Cloudflare account, usually used for older authentication method with `CLOUDFLARE_EMAIL=`.
 
 - `CLOUDFLARE_EMAIL` <Type text="string" /> <MetaInfo text="optional" />
-
   - The email address associated with your Cloudflare account, usually used for older authentication method with `CLOUDFLARE_API_KEY=`.
 
 - `CLOUDFLARE_ACCESS_CLIENT_ID` <Type text="string" /> <MetaInfo text="optional" />
-
   - The Client ID of a [Cloudflare Access Service Token](/cloudflare-one/access-controls/service-credentials/service-tokens/), used to authenticate with Access-protected domains in non-interactive environments such as CI/CD pipelines. Must be set together with `CLOUDFLARE_ACCESS_CLIENT_SECRET`. When both variables are set, Wrangler authenticates using the service token instead of launching `cloudflared access login`.
 
 - `CLOUDFLARE_ACCESS_CLIENT_SECRET` <Type text="string" /> <MetaInfo text="optional" />
-
   - The Client Secret of a [Cloudflare Access Service Token](/cloudflare-one/access-controls/service-credentials/service-tokens/), used together with `CLOUDFLARE_ACCESS_CLIENT_ID` to authenticate with Access-protected domains in non-interactive environments.
 
 - `CLOUDFLARE_ENV` <Type text="string" /> <MetaInfo text="optional" />
-
   - The [environment](/workers/wrangler/environments/) to use for Wrangler commands. This allows you to select an environment without using the `--env` flag. For example, `CLOUDFLARE_ENV=production wrangler deploy` will deploy to the `production` environment. The `--env` command line argument takes precedence over this environment variable.
 
-- `WRANGLER_SEND_METRICS` <Type text="string" /> <MetaInfo text="optional" />
+- `NODE_ENV` <Type text="string" /> <MetaInfo text="optional" />
+  - Sets the value of `process.env.NODE_ENV` in your Worker code. Defaults to `"development"` for `wrangler dev` and `"production"` for `wrangler deploy` and `wrangler versions upload`. Refer to [Bundling](/workers/wrangler/bundling/#node_env) for more information.
 
+- `WRANGLER_SEND_METRICS` <Type text="string" /> <MetaInfo text="optional" />
   - Options for this are `true` and `false`. Defaults to `true`. Controls whether Wrangler can send anonymous usage data to Cloudflare for this project. You can learn more about this in our [data policy](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md).
 
 - `CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>`<Type text="string" /> <MetaInfo text="optional" />
-
   - The [local connection string](/hyperdrive/configuration/local-development/) for your database to use in local development with [Hyperdrive](/hyperdrive/). For example, if the binding for your Hyperdrive is named `PROD_DB`, this would be `CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_PROD_DB="postgres://user:password@127.0.0.1:5432/testdb"`. Each Hyperdrive is uniquely distinguished by the binding name.
 
 - `CLOUDFLARE_API_BASE_URL` <Type text="string" /> <MetaInfo text="optional" />
-
   - The default value is `"https://api.cloudflare.com/client/v4"`.
 
 - `WRANGLER_LOG` <Type text="string" /> <MetaInfo text="optional" />
-
   - Options for Logging levels are `"none"`, `"error"`, `"warn"`, `"info"`, `"log"` and `"debug"`. Levels are case-insensitive and default to `"log"`. If an invalid level is specified, Wrangler will fallback to the default. Logs can include requests to Cloudflare's API, any usage data being collected, and more verbose error logs.
 
 - `WRANGLER_LOG_PATH` <Type text="string" /> <MetaInfo text="optional" />
-
   - A file or directory path where Wrangler will write debug logs. If the path ends in `.log`, Wrangler will consider this the path to a file where all logs will be written. Otherwise, Wrangler will treat the path as a directory where it will write one or more log files using a timestamp for the filenames.
 
 - `FORCE_COLOR` <Type text="string" /> <MetaInfo text="optional" />
   - By setting this to `0`, you can disable Wrangler's colorised output, which makes it easier to read with some terminal setups. For example, `FORCE_COLOR=0`.
 
 * `WRANGLER_HTTPS_KEY_PATH` <Type text="string" /> <MetaInfo text="optional" />
-
   - Path to a custom HTTPS certificate key when running `wrangler dev`, to be used with `WRANGLER_HTTPS_CERT_PATH`.
 
 * `WRANGLER_HTTPS_CERT_PATH` <Type text="string" /> <MetaInfo text="optional" />
@@ -100,12 +92,17 @@ Wrangler supports the following environment variables:
   - API token used for executing queries with [R2 SQL](/r2-sql).
 
 - `WRANGLER_OUTPUT_FILE_PATH` <Type text="string" /> <MetaInfo text="optional" />
-
   - Specifies a file path where Wrangler will write output data in [ND-JSON](https://github.com/ndjson/ndjson-spec) (newline-delimited JSON) format. Each line in the file is a separate JSON object containing information about Wrangler operations such as deployments, version uploads, and errors. This is useful for CI/CD pipelines and automation tools that need to programmatically access deployment information. If both `WRANGLER_OUTPUT_FILE_PATH` and `WRANGLER_OUTPUT_FILE_DIRECTORY` are set, `WRANGLER_OUTPUT_FILE_PATH` takes precedence.
 
 - `WRANGLER_OUTPUT_FILE_DIRECTORY` <Type text="string" /> <MetaInfo text="optional" />
-
   - Specifies a directory where Wrangler will create a randomly-named file (format: `wrangler-output-<timestamp>-<random>.json`) to write output data in [ND-JSON](https://github.com/ndjson/ndjson-spec) format. This is useful when you want to keep output files organized in a specific directory but do not need to control the exact filename. If both `WRANGLER_OUTPUT_FILE_PATH` and `WRANGLER_OUTPUT_FILE_DIRECTORY` are set, `WRANGLER_OUTPUT_FILE_PATH` takes precedence.
+
+- `WRANGLER_CACHE_DIR` <Type text="string" /> <MetaInfo text="optional" />
+  - Custom directory for Wrangler's cache files. When set, this overrides the default cache location (`node_modules/.cache/wrangler`). Useful for environments that do not use a traditional `node_modules` directory, such as Yarn PnP.
+
+- `MINIFLARE_CACHE_DIR` <Type text="string" /> <MetaInfo text="optional" />
+  - Custom directory for Miniflare's `cf.json` cache file, used during local development with `wrangler dev`. When set, this overrides the default cache location (`node_modules/.mf`). Useful for environments that do not use a traditional `node_modules` directory, such as Yarn PnP.
+
 
 ### Example output file
 
@@ -119,6 +116,7 @@ When these environment variables are set, Wrangler writes one JSON object per li
 The `wrangler-session` entry is written when Wrangler starts and contains information about the command being run. The `deploy` entry is written when a deployment completes successfully and includes the worker name, version ID, and deployment URLs.
 
 Other entry types include:
+
 - `version-upload` - Written by `wrangler versions upload` with version ID and preview URLs
 - `version-deploy` - Written by `wrangler versions deploy` with deployment information
 - `pages-deploy` - Written by `wrangler pages deploy` with Pages deployment details

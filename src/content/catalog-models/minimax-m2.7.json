@@ -11,7 +11,6 @@
 	"context_length": 128000,
 	"max_output_tokens": 4096,
 	"schema_version": "1.0.0",
-	"pricing": {},
 	"examples": [
 		{
 			"name": "Simple Conversation",
@@ -23,13 +22,16 @@
 						"content": "What is the capital of France?"
 					}
 				],
-				"max_tokens": 100
+				"max_tokens": 2048
+			},
+			"output": {
+				"text": "The capital of France is Paris."
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/m2.7',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'What is the capital of France?',\n      },\n    ],\n    max_tokens: 100,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/m2.7',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'What is the capital of France?',\n      },\n    ],\n    max_tokens: 2048,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -47,14 +49,17 @@
 						"content": "How do I make a simple pasta aglio e olio?"
 					}
 				],
-				"max_tokens": 500,
-				"temperature": 0.7
+				"temperature": 0.7,
+				"max_tokens": 2048
+			},
+			"output": {
+				"text": "# Pasta Aglio e Olio\n\n**Ingredients (2 servings):**\n\n- 200g spaghetti\n- 80ml extra virgin olive oil\n- 6 garlic cloves, thinly sliced\n- 1 tsp chili flakes (optional)\n- Fresh parsley, chopped\n- Salt to taste\n\n**Method:**\n\n1. Cook spaghetti in well-salted boiling water until al dente. Reserve 120ml pasta water.\n2. Heat olive oil in a pan over low-medium heat. Add garlic and chili flakes.\n3. Cook gently 2-3 minutes until garlic is golden (don't brown it).\n4. Add drained pasta to the pan. Toss with pasta water to create a light sauce.\n5. Finish with parsley and serve immediately.\n\n**Tips:**\n\n- Low heat is key\u2014garlic burns easily\n- Pasta water starches help the sauce cling to the noodles\n- Best served immediately"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/m2.7',\n  {\n    messages: [\n      {\n        role: 'system',\n        content:\n          'You are a helpful cooking assistant. Give concise recipes with metric measurements.',\n      },\n      {\n        role: 'user',\n        content: 'How do I make a simple pasta aglio e olio?',\n      },\n    ],\n    max_tokens: 500,\n    temperature: 0.7,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/m2.7',\n  {\n    messages: [\n      {\n        role: 'system',\n        content:\n          'You are a helpful cooking assistant. Give concise recipes with metric measurements.',\n      },\n      {\n        role: 'user',\n        content: 'How do I make a simple pasta aglio e olio?',\n      },\n    ],\n    temperature: 0.7,\n    max_tokens: 2048,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -76,14 +81,17 @@
 						"content": "When would I choose UDP over TCP?"
 					}
 				],
-				"max_tokens": 500,
-				"temperature": 0.5
+				"temperature": 0.5,
+				"max_tokens": 2048
+			},
+			"output": {
+				"text": "Choose UDP over TCP when:\n\n1. **Real-time performance matters more than reliability**\n   - Video/audio streaming\n   - VoIP calls\n   - Online gaming\n\n2. **Broadcasting or multicasting is needed**\n   - UDP supports these natively; TCP doesn't\n\n3. **Low latency is critical**\n   - Live sports streams\n   - Financial market data feeds\n\n4. **The application handles its own reliability**\n   - QUIC protocol (used by HTTP/3)\n   - Custom protocols with built-in error handling\n\n5. **Simple request/response where loss is tolerable**\n   - DNS queries (most use UDP)\n\n6. **Message sizes are small and frequent**\n   - Connection overhead would outweigh benefits\n\n**Bottom line:** If a dropped packet is preferable to a delayed packet, UDP is likely the better choice."
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/m2.7',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'What are the main differences between TCP and UDP?',\n      },\n      {\n        role: 'assistant',\n        content:\n          'TCP is connection-oriented and guarantees delivery, while UDP is connectionless and faster but without delivery guarantees.',\n      },\n      {\n        role: 'user',\n        content: 'When would I choose UDP over TCP?',\n      },\n    ],\n    max_tokens: 500,\n    temperature: 0.5,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/m2.7',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'What are the main differences between TCP and UDP?',\n      },\n      {\n        role: 'assistant',\n        content:\n          'TCP is connection-oriented and guarantees delivery, while UDP is connectionless and faster but without delivery guarantees.',\n      },\n      {\n        role: 'user',\n        content: 'When would I choose UDP over TCP?',\n      },\n    ],\n    temperature: 0.5,\n    max_tokens: 2048,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -97,14 +105,17 @@
 						"content": "Write a haiku about programming."
 					}
 				],
-				"max_tokens": 100,
-				"temperature": 0.9
+				"temperature": 0.9,
+				"max_tokens": 2048
+			},
+			"output": {
+				"text": "Code streams like soft rain  \nloops and functions cascade on  \nbugs fade into light"
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'minimax/m2.7',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'Write a haiku about programming.',\n      },\n    ],\n    max_tokens: 100,\n    temperature: 0.9,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'minimax/m2.7',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'Write a haiku about programming.',\n      },\n    ],\n    temperature: 0.9,\n    max_tokens: 2048,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		}
@@ -112,16 +123,15 @@
 	"supports_async": false,
 	"external_info": "https://www.minimaxi.com/",
 	"terms": "https://www.minimaxi.com/terms",
-	"cover_image_url": null,
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/minimax/m2.7.png",
 	"metadata": {
 		"Architecture": "Transformer"
 	},
 	"created_at": "2026-04-13 16:46:35",
 	"default_example": null,
 	"code_snippets": [],
+	"zdr": false,
 	"schema": {
-		"model_id": "minimax/m2.7",
-		"version": "1.0.0",
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
 			"type": "object",

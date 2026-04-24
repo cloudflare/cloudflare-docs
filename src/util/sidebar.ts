@@ -109,6 +109,13 @@ export async function generateSidebar(group: Group) {
 	const product = directory.find((p) => p.id === group.label);
 	if (product) {
 		const links = [
+			["Agent setup", "/agent-setup/"],
+			["Cloudflare Skills", "https://github.com/cloudflare/skills"],
+			["Code Mode MCP Server", "https://github.com/cloudflare/mcp"],
+			[
+				"Domain-specific MCP Servers",
+				"https://github.com/cloudflare/mcp-server-cloudflare",
+			],
 			[`${product.data.name} llms.txt`, `${product.data.entry.url}llms.txt`],
 			[
 				`${product.data.name} llms-full.txt`,
@@ -116,15 +123,14 @@ export async function generateSidebar(group: Group) {
 			],
 			["Cloudflare Docs llms.txt", "/llms.txt"],
 			["Cloudflare Docs llms-full.txt", "/llms-full.txt"],
-			["Cloudflare Skills", "/style-guide/ai-tooling/#skills"],
 		];
 
 		group.entries.push({
 			type: "group",
-			label: "LLM resources",
+			label: "Agent resources",
 			entries: links.map(([label, href]) => ({
 				type: "link",
-				label,
+				label: label.concat(externalLinkArrow),
 				href,
 				isCurrent: false,
 				attrs: {

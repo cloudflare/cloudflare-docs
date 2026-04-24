@@ -1,0 +1,93 @@
+---
+pcx_content_type: how-to
+title: DLP settings
+sidebar:
+  order: 5
+---
+
+DLP settings allow you to configure account-level settings that apply across all DLP profiles and policies. These settings are located in **Zero Trust** > **Data loss prevention** > **DLP settings** in the [Cloudflare dashboard](https://dash.cloudflare.com/).
+
+## Optical Character Recognition (OCR)
+
+Optical Character Recognition (OCR) analyzes and interprets text within image files. When turned on, OCR can detect sensitive data within images your users upload.
+
+OCR supports scanning `.jpg`/`.jpeg` and `.png` files between 4 KB and 1 MB in size. Text is encoded in UTF-8 format, including support for non-Latin characters.
+
+To turn on OCR:
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Data loss prevention** > **DLP settings**.
+2. Turn on **Optical Character Recognition (OCR)**.
+
+## AI context analysis
+
+:::note
+AI context analysis only supports Gateway HTTP and HTTPS traffic.
+:::
+
+AI context analysis uses a pretrained model to analyze surrounding context and adjust the confidence level of a detection. For example, a number that matches a credit card pattern may receive a lower confidence score if it appears in a context where credit card numbers are unlikely. DLP will log any matches that are above your confidence threshold.
+
+DLP redacts any matched text, then converts the surrounding context into a vector embedding and submits it to [Cloudflare Workers AI](/workers-ai/). Vector embeddings (not raw text) are stored in user-specific private namespaces for up to six months, along with hit count and the [false positive/negative report](/cloudflare-one/data-loss-prevention/dlp-policies/logging-options/#report-false-and-true-positives-to-ai-context-analysis).
+
+To turn on AI context analysis:
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Data loss prevention** > **DLP settings**.
+2. Turn on **AI context analysis**.
+3. [Add the profile](/cloudflare-one/data-loss-prevention/dlp-policies/#2-create-a-dlp-policy) to a DLP policy.
+4. When configuring the DLP policy, turn on [payload logging](/cloudflare-one/data-loss-prevention/dlp-policies/logging-options/#log-the-payload-of-matched-rules).
+
+AI context analysis results will appear in the payload section of your [DLP logs](/cloudflare-one/data-loss-prevention/dlp-policies/#4-view-dlp-logs). To improve future detections of sensitive data, you need to [report false and true positives](/cloudflare-one/data-loss-prevention/dlp-policies/logging-options/#report-false-and-true-positives-to-ai-context-analysis).
+
+## Payload encryption key
+
+Before you begin logging DLP payloads, you will need to set a DLP payload encryption public key. DLP uses public-key encryption so that matched sensitive data is readable only by you — Cloudflare does not have access to your private key and cannot decrypt your logs.
+
+### Generate a key pair
+
+You will generate two keys: a public key (uploaded to Cloudflare to encrypt log data) and a private key (kept by you to decrypt log data later).
+
+To generate a public/private key pair in the command line, refer to [Generate a key pair](/waf/managed-rules/payload-logging/command-line/generate-key-pair/).
+
+### Upload the public key to Cloudflare
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Data loss prevention** > **DLP settings**.
+2. In the **DLP Payload Encryption public key** field, paste your public key.
+3. Select **Save**.
+
+:::note
+The matching private key is required to view logs. If you lose your private key, you will need to [generate](#generate-a-key-pair) and [upload](#upload-the-public-key-to-cloudflare) a new public key. The payload of new requests will be encrypted with the new public key. Previously logged data encrypted with the old key will be permanently unreadable.
+:::
+
+## Payload log masking
+
+You can control how sensitive data appears in your DLP payload logs by selecting a masking level. This determines how much of the matched content is visible after decryption.
+
+To configure payload log masking:
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Data loss prevention** > **DLP settings**.
+2. Go to the **Payload log masking** card.
+3. Choose one of the following masking levels:
+   - **Full Mask (default):** Masks the match while preserving character count and visual formatting. For example, a Social Security Number appears as `***-**-****`.
+   - **Partial Mask:** Reveals 25% of the matched content while masking the remainder. For example, `***-**-6789`.
+   - **Clear Text:** Stores the full, unmasked match for detailed investigation. For example, `123-45-6789`.
+
+:::note
+The masking level is applied at detection time, before the payload is encrypted. Your team will see the selected format when they decrypt the log with your private key.
+:::
+
+:::caution
+The selected masking level applies to all sensitive data matches found within a payload window — not just the match that triggered the policy.
+:::
+
+## Migrate from profile-level settings
+
+OCR and AI context analysis are available at both the profile level (**Data loss prevention** > **Profiles**) and the account level (**Data loss prevention** > **DLP settings**) during the migration period. When both are configured, DLP uses OR logic for evaluation. A match occurs if either the profile-level or account-level setting would trigger a detection.
+
+Profile-level OCR and AI context analysis settings will be deprecated in a future release. We recommend migrating to account-level settings in **DLP settings** to ensure consistent behavior across all profiles.
+
+To migrate:
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Data loss prevention** > **DLP settings**.
+2. Turn on **Optical Character Recognition (OCR)** and/or **AI context analysis** as needed.
+3. Go to **Zero Trust** > **Data loss prevention** > **Profiles**.
+4. For each profile with OCR or AI context analysis enabled, edit the profile and turn off the profile-level settings.
+5. Select **Save profile**.

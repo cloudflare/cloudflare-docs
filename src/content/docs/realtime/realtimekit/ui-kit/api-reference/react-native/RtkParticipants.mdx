@@ -1,0 +1,42 @@
+---
+pcx_content_type: reference
+title: RtkParticipants
+description: API reference for RtkParticipants component (React Native Library)
+products:
+  - realtime
+---
+
+Full participants list panel showing on-stage participants, viewers, waitlisted users, and stage request management with accept/reject all functionality.
+
+## Properties
+
+| Property   | Type                           | Required | Default           | Description                      |
+| ---------- | ------------------------------ | -------- | ----------------- | -------------------------------- |
+| `meeting`  | `RealtimeKitClient`            | ✅       | -                 | The RealtimeKit meeting instance |
+| `config`   | `UIConfig`                     | ❌       | `defaultConfig`   | UI configuration object          |
+| `iconPack` | `IconPack`                     | ❌       | `defaultIconPack` | Custom icon pack                 |
+| `states`   | `States`                       | ❌       | -                 | UI state object                  |
+| `size`     | `'lg' \| 'md' \| 'sm' \| 'xl'` | ❌       | `'sm'`            | Size variant                     |
+| `t`        | `RtkI18n`                      | ❌       | -                 | i18n translation function        |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkParticipants } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkParticipants meeting={meeting} />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkParticipants } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkParticipants meeting={meeting} size="md" config={customConfig} />;
+}
+```

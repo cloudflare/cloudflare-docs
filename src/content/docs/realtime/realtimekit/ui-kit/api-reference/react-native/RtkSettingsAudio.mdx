@@ -1,0 +1,41 @@
+---
+pcx_content_type: reference
+title: RtkSettingsAudio
+description: API reference for RtkSettingsAudio component (React Native Library)
+products:
+  - realtime
+---
+
+Audio settings panel with device selection dropdown, audio visualizer preview, and notification sound toggle.
+
+## Properties
+
+| Property   | Type                           | Required | Default           | Description                      |
+| ---------- | ------------------------------ | -------- | ----------------- | -------------------------------- |
+| `meeting`  | `RealtimeKitClient`            | ✅       | -                 | The RealtimeKit meeting instance |
+| `iconPack` | `IconPack`                     | ❌       | `defaultIconPack` | Custom icon pack                 |
+| `size`     | `'lg' \| 'md' \| 'sm' \| 'xl'` | ❌       | `'sm'`            | Size variant                     |
+| `states`   | `States`                       | ❌       | -                 | UI state object                  |
+| `t`        | `RtkI18n`                      | ❌       | -                 | i18n translation function        |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkSettingsAudio } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkSettingsAudio meeting={meeting} />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkSettingsAudio } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkSettingsAudio meeting={meeting} size="md" states={states} />;
+}
+```
