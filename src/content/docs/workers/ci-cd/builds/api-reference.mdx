@@ -242,10 +242,8 @@ curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/trigg
   --header "Content-Type: application/json" \
   --request PATCH \
   --data '{
-    "variables": [
-      {"key": "NODE_ENV", "value": "production", "type": "text"},
-      {"key": "API_KEY", "value": "prod-secret-key", "type": "secret"}
-    ]
+    "NODE_ENV": { "value": "production", "is_secret": false },
+    "API_KEY": { "value": "prod-secret-key", "is_secret": true }
   }'
 ```
 
@@ -257,10 +255,8 @@ curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/trigg
   --header "Content-Type: application/json" \
   --request PATCH \
   --data '{
-    "variables": [
-      {"key": "NODE_ENV", "value": "development", "type": "text"},
-      {"key": "API_KEY", "value": "dev-secret-key", "type": "secret"}
-    ]
+    "NODE_ENV": { "value": "production", "is_secret": false },
+    "API_KEY": { "value": "prod-secret-key", "is_secret": true }
   }'
 ```
 
