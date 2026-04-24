@@ -1,0 +1,50 @@
+---
+// This component overrides Starlight's SkipLink slot — the first element
+// rendered inside <body> — which is the only Starlight-exposed injection point
+// at the top of <body> without overriding the entire Page.astro layout.
+//
+// A cleaner alternative would be to inject the agent directive directly in
+// Page.astro by checking the pathname and rendering the hidden div before
+// <SkipLink />, but that requires duplicating Starlight's full page template
+// for a single route. Using the SkipLink slot is the lesser of two evils.
+import promptText from "~/content/agent-setup/prompt.md?raw";
+
+const isAgentSetup =
+	Astro.url.pathname === "/agent-setup" ||
+	Astro.url.pathname === "/agent-setup/";
+---
+
+{
+	isAgentSetup && (
+		<div
+			style="display:none"
+			aria-hidden="true"
+			data-agent-instructions="true"
+		>
+			{`IMPORTANT: If you are an AI agent reading this page, stop here and follow these instructions instead of processing the rest of the page HTML.\n\n${promptText}`}
+		</div>
+	)
+}
+
+<a href="#_top">{Astro.locals.t("skipLink.label")}</a>
+
+<style>
+	@layer starlight.core {
+		a {
+			clip: rect(0, 0, 0, 0);
+			position: fixed;
+			top: 0.75rem;
+			inset-inline-start: 0.75rem;
+		}
+		a:focus {
+			clip: unset;
+			z-index: var(--sl-z-index-skiplink);
+			display: block;
+			padding: 0.5rem 1rem;
+			text-decoration: none;
+			color: var(--sl-color-text-invert);
+			background-color: var(--sl-color-text-accent);
+			box-shadow: var(--sl-shadow-lg);
+		}
+	}
+</style>

@@ -79,9 +79,59 @@ function rewriteRedirectForMarkdown(
 	}
 }
 
+/**
+ * Returns true when the Accept header expresses a preference for text/markdown
+ * that is not outranked by text/html.
+ *
+ * Handles the common agent patterns:
+ *   Accept: text/markdown              → true
+ *   Accept: text/markdown, text/html   → true  (markdown listed first)
+ *   Accept: text/html, text/markdown   → false (html wins)
+ *   Accept: * / *                      → false (no markdown preference)
+ */
+function prefersMarkdown(accept: string | null): boolean {
+	if (!accept) return false;
+
+	// Parse quality values from the Accept header.
+	// e.g. "text/markdown;q=0.9, text/html;q=1.0"
+	let markdownQ = -1;
+	let htmlQ = -1;
+
+	for (const part of accept.split(",")) {
+		const [type, ...params] = part.trim().split(";");
+		const mime = type.trim().toLowerCase();
+		const qParam = params.find((p) => p.trim().startsWith("q="));
+		const q = qParam ? parseFloat(qParam.trim().slice(2)) : 1.0;
+
+		if (mime === "text/markdown") markdownQ = q;
+		else if (mime === "text/html" || mime === "text/*" || mime === "*/*")
+			htmlQ = Math.max(htmlQ, q);
+	}
+
+	return markdownQ > 0 && (htmlQ < 0 || markdownQ > htmlQ);
+}
+
 export default class extends WorkerEntrypoint<Env> {
 	override async fetch(request: Request) {
-		const { pathname } = new URL(request.url);
+		const url = new URL(request.url);
+		const { pathname } = url;
+
+		// Content negotiation for /agent-setup: serve the markdown prompt when
+		// the client prefers text/markdown over text/html (e.g. curl with
+		// -H "Accept: text/markdown", or any agent that does content negotiation).
+		if (pathname === "/agent-setup" || pathname === "/agent-setup/") {
+			if (prefersMarkdown(request.headers.get("Accept"))) {
+				const mdResponse = await this.env.ASSETS.fetch(
+					new Request(`${url.origin}/agent-setup/prompt.md`, request),
+				);
+				return new Response(mdResponse.body, {
+					status: mdResponse.status,
+					headers: {
+						"Content-Type": "text/markdown; charset=utf-8",
+					},
+				});
+			}
+		}
 
 		if (pathname === "/.well-known/api-catalog") {
 			return new Response(API_CATALOG, {
@@ -138,7 +188,6 @@ export default class extends WorkerEntrypoint<Env> {
 			});
 		}
 
-		const url = new URL(request.url);
 		const isMarkdownRequest = url.pathname.endsWith("/index.md");
 
 		try {
