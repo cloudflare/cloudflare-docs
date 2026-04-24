@@ -168,7 +168,7 @@ Countries contributing traffic to this AS, and their relative contribution as pe
 
 HTTP origins trends provide visibility into the status of traffic between [Cloudflare's global network](https://www.cloudflare.com/network/) and cloud-based [origin infrastructure](https://www.cloudflare.com/learning/cdn/glossary/origin-server/). This data comes from requests sent by Cloudflare to origin servers. The metrics track key indicators such as HTTP status codes, response times, and traffic volume over time, allowing us to identify degradations, outages, or anomalies in origin server performance and availability.
 
-Measurements are aggregated across requests from all Cloudflare data centers made to cloud-based origin infrastructure. Performance data for specific regions is quartile-based, but averages are used for overall and provider-level views.
+Measurements are aggregated across requests from all Cloudflare data centers made to cloud-based origin infrastructure. Performance data is median-based (p50) for all views, including overall and provider-level breakdowns. Region-specific views additionally show quartile distributions (25th, 50th, and 75th percentiles).
 
 ## Internet outages
 
