@@ -390,7 +390,7 @@ After deploying the rules and configurations from the previous sections, monitor
 
 {/* Source: /waf/analytics/security-analytics/ — Security Analytics overview. Navigation (steps 1-2) validated against source. Steps 3-4 are guide-specific. */}
 
-[Security Events](/waf/analytics/security-events/) shows requests that Cloudflare security products acted on or flagged. Filter by your login path to see the volume of blocked and challenged attempts.
+[Security Events](/waf/analytics/security-events/) shows requests that Cloudflare security products acted on or flagged, including blocks, challenges, and skips.
 
 <Steps>
 
@@ -400,16 +400,17 @@ After deploying the rules and configurations from the previous sections, monitor
 
 2. Select the **Events** tab.
 
-3. Add a filter: set **URI Path** to your login endpoint path (for example, `/login`).
-
-4. Review the events to identify patterns:
-   - Are attacks concentrated from specific countries or Autonomous System Numbers (ASNs)?
-   - Are Application Security rate limiting rules triggering as expected?
-   - Are legitimate users being challenged or blocked?
-
 </Steps>
 
-If you see legitimate users being affected, adjust your rate limiting thresholds or add exceptions for specific IP ranges.
+Review the **Sampled logs** to inspect individual requests. Each log entry shows the action taken, the rule that triggered, the source IP, user agent, URI path, and country. Use the **Add filter** button to narrow results by action, source IP, ASN, or other fields.
+
+Look for false positives — legitimate traffic that your rules incorrectly challenged or blocked. Common signs include:
+
+- Requests from known monitoring services or payment processors appearing in blocked events
+- High volumes of challenged requests from countries where you have real users
+- Rate limiting rules triggering on legitimate users during peak traffic
+
+If you see legitimate users being affected, adjust your rate limiting thresholds or add skip rules for specific IP ranges.
 
 ### Set up notifications for security event spikes
 
