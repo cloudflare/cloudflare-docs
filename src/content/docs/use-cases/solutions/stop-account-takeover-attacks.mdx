@@ -202,7 +202,7 @@ Managed Challenge and other [challenge types](/cloudflare-challenges/challenge-t
 
 3. Enter a name for the rule (for example, "Rate limit login endpoint").
 
-4. In the expression editor, enter:
+4. Under **When incoming requests match**, enter the following expression:
 
    ```txt
    http.host eq "example.com" and http.request.uri.path eq "/login" and http.request.method eq "POST"
@@ -212,7 +212,16 @@ Managed Challenge and other [challenge types](/cloudflare-challenges/challenge-t
 
 5. Under **With the same characteristics**, verify that _IP_ is selected. On Free plans, this is preselected and cannot be changed.
 
-6. (Optional) Under **Increment counter when**, enter a counting expression to count only failed login attempts:
+6. Under **When rate exceeds**, enter _5_ for **Requests** and select _1 minute_ for **Period**.
+
+7. Under **Then take action**, select _Managed Challenge_ from the **Choose action** dropdown.
+
+8. Under **For duration**, select a duration for the action (for example, _1 minute_). This is how long the action applies after the rate limit is triggered.
+
+9. Select **Deploy**.
+
+   :::note
+   (Optional) To count only failed login attempts instead of all matching requests, Business plan and above users can add a separate counting expression under **Increment counter when**:
 
    ```txt
    http.request.uri.path eq "/login" and http.request.method eq "POST" and http.response.code in {401 403}
@@ -220,17 +229,8 @@ Managed Challenge and other [challenge types](/cloudflare-challenges/challenge-t
 
    This counts requests based on the response status code. Successful logins (200) do not increment the counter.
 
-   :::note
-   Using a counting expression separate from the matching expression requires a Business plan or above.
-
    {/* Confirmed: /waf/rate-limiting-rules/best-practices/ says "These example rules require a Business plan or above." */}
    :::
-
-7. Set **Rate** to _5 requests_ per _1 minute_.
-
-8. For **Action**, select _Managed Challenge_.
-
-9. Select **Deploy**.
 
 </Steps>
 
@@ -306,7 +306,7 @@ Before deploying rules that challenge or block login traffic, create a skip rule
 
    Replace `198.51.100.1` with the IP address of your monitoring service. Add additional conditions for other known clients.
 
-5. For **Action**, select _Skip_ and choose which security features to skip for matching requests.
+5. Under **Then take action**, select _Skip_ and choose which security features to skip for matching requests.
 
 6. Select **Deploy**.
 
@@ -344,7 +344,7 @@ The Application Security Managed Ruleset includes rules for empty user-agents (r
 
    Replace `/login` with your login endpoint path.
 
-5. For **Action**, select _Managed Challenge_.
+5. Under **Then take action**, select _Managed Challenge_.
 
 6. Select **Deploy**.
 
@@ -364,7 +364,7 @@ Combine rate limiting with leaked credentials detection to throttle login attemp
 
 2. Enter a name for the rule (for example, "Rate limit leaked credentials").
 
-3. In the expression editor, enter:
+3. Under **When incoming requests match**, enter the following expression:
 
    ```txt
    http.request.uri.path eq "/login" and http.request.method eq "POST" and cf.waf.credential_check.password_leaked
@@ -374,11 +374,13 @@ Combine rate limiting with leaked credentials detection to throttle login attemp
 
 4. Under **With the same characteristics**, verify that _IP_ is selected.
 
-5. Set **Rate** to _3 requests_ per _1 minute_.
+5. Under **When rate exceeds**, enter _3_ for **Requests** and select _1 minute_ for **Period**.
 
-6. For **Action**, select _Managed Challenge_.
+6. Under **Then take action**, select _Managed Challenge_.
 
-7. Select **Deploy**.
+7. Under **For duration**, select a duration for the action (for example, _1 minute_).
+
+8. Select **Deploy**.
 
 </Steps>
 
