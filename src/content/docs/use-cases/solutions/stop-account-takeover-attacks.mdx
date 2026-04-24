@@ -13,8 +13,6 @@ sidebar:
 
 import {
   Steps,
-  Tabs,
-  TabItem,
   DashButton,
   GlossaryTooltip,
   Render,
@@ -194,9 +192,6 @@ Managed Challenge and other [challenge types](/cloudflare-challenges/challenge-t
 {/* Source: /waf/rate-limiting-rules/best-practices/ — credential stuffing protection pattern. Navigation from /waf/custom-rules/create-dashboard/. Expression from source. Threshold (5 req/min) is guide-specific example. */}
 {/* UNTESTED: custom workflow combining sourced expression with guide-specific threshold. Validate syntax in dashboard. */}
 
-<Tabs syncKey="dashNewNav">
-<TabItem label="New dashboard" icon="rocket">
-
 <Steps>
 
 1. In the Cloudflare dashboard, go to the **Security rules** page.
@@ -238,40 +233,6 @@ Managed Challenge and other [challenge types](/cloudflare-challenges/challenge-t
 9. Select **Deploy**.
 
 </Steps>
-
-</TabItem>
-<TabItem label="Old dashboard">
-
-<Steps>
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-
-2. Go to **Security** > **WAF**.
-
-3. Under **Rate limiting rules**, select **Create rule**.
-
-4. Enter a name for the rule.
-
-5. In the expression editor, enter:
-
-   ```txt
-   http.host eq "example.com" and http.request.uri.path eq "/login" and http.request.method eq "POST"
-   ```
-
-   Replace `example.com` with your domain and `/login` with your login endpoint path.
-
-6. Under **With the same characteristics**, verify that _IP_ is selected.
-
-7. Set **Rate** to _5 requests_ per _1 minute_.
-
-8. For **Action**, select _Managed Challenge_.
-
-9. Select **Deploy**.
-
-</Steps>
-
-</TabItem>
-</Tabs>
 
 :::note[Advanced Rate Limiting on Business plan and above]
 Business and Enterprise plans support rate limiting by cookie, header, or other request characteristics beyond IP address. This is useful when attackers distribute attempts across many IP addresses. For more information on available characteristics, refer to [Rate limiting parameters](/waf/rate-limiting-rules/parameters/).
@@ -327,9 +288,6 @@ If your application uses non-standard credential field names, Enterprise custome
 
 Before deploying rules that challenge or block login traffic, create a skip rule that exempts known legitimate automated traffic. This prevents your monitoring tools, health checks, and partner integrations from being blocked by the rules that follow.
 
-<Tabs syncKey="dashNewNav">
-<TabItem label="New dashboard" icon="rocket">
-
 <Steps>
 
 1. In the Cloudflare dashboard, go to the **Security rules** page.
@@ -356,38 +314,6 @@ Before deploying rules that challenge or block login traffic, create a skip rule
 
 </Steps>
 
-</TabItem>
-<TabItem label="Old dashboard">
-
-<Steps>
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-
-2. Go to **Security** > **WAF**.
-
-3. Under **Custom rules**, select **Create rule**.
-
-4. Enter a name for the rule (for example, "Skip login rules for known clients").
-
-5. Select **Edit expression** and enter an expression that matches your legitimate automated traffic. For example:
-
-   ```txt
-   (cf.client.bot) or (ip.src eq 198.51.100.1)
-   ```
-
-   Replace `198.51.100.1` with the IP address of your monitoring service.
-
-6. For **Action**, select _Skip_ and choose which security features to skip.
-
-7. Select **Deploy**.
-
-8. Drag the rule above your blocking and challenge rules in the rule list.
-
-</Steps>
-
-</TabItem>
-</Tabs>
-
 For more information about the Skip action and available skip options, refer to [Skip action](/waf/custom-rules/skip/).
 
 ### Block requests with suspicious headers
@@ -399,9 +325,6 @@ Credential stuffing tools often send requests without standard browser headers o
 :::note
 The Application Security Managed Ruleset includes rules for empty user-agents (rule IDs `0fa48ed6287c4447b6cd89c4f59a8de9` and `b57df4f17f7f4ea4b8db33e20a6dbbd3`), but these are disabled by default and apply broadly. The custom rule below targets your login path specifically.
 :::
-
-<Tabs syncKey="dashNewNav">
-<TabItem label="New dashboard" icon="rocket">
 
 <Steps>
 
@@ -427,44 +350,11 @@ The Application Security Managed Ruleset includes rules for empty user-agents (r
 
 </Steps>
 
-</TabItem>
-<TabItem label="Old dashboard">
-
-<Steps>
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-
-2. Go to **Security** > **WAF**.
-
-3. Under **Custom rules**, select **Create rule**.
-
-4. Enter a name for the rule.
-
-5. Select **Edit expression** and enter:
-
-   ```txt
-   (http.request.uri.path eq "/login" and http.request.method eq "POST" and len(http.user_agent) eq 0)
-   ```
-
-   Replace `/login` with your login endpoint path.
-
-6. For **Action**, select _Managed Challenge_.
-
-7. Select **Deploy**.
-
-</Steps>
-
-</TabItem>
-</Tabs>
-
 ### Create a rate limiting rule with leaked credentials
 
 {/* UNTESTED: custom expression using documented fields. Validate syntax in dashboard. */}
 
 Combine rate limiting with leaked credentials detection to throttle login attempts that use known-compromised passwords. This rule issues a Managed Challenge when the same IP sends more than three requests with leaked passwords within one minute.
-
-<Tabs syncKey="dashNewNav">
-<TabItem label="New dashboard" icon="rocket">
 
 <Steps>
 
@@ -491,40 +381,6 @@ Combine rate limiting with leaked credentials detection to throttle login attemp
 7. Select **Deploy**.
 
 </Steps>
-
-</TabItem>
-<TabItem label="Old dashboard">
-
-<Steps>
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-
-2. Go to **Security** > **WAF**.
-
-3. Under **Rate limiting rules**, select **Create rule**.
-
-4. Enter a name for the rule.
-
-5. In the expression editor, enter:
-
-   ```txt
-   http.request.uri.path eq "/login" and http.request.method eq "POST" and cf.waf.credential_check.password_leaked
-   ```
-
-   Replace `/login` with your login endpoint path.
-
-6. Under **With the same characteristics**, verify that _IP_ is selected.
-
-7. Set **Rate** to _3 requests_ per _1 minute_.
-
-8. For **Action**, select _Managed Challenge_.
-
-9. Select **Deploy**.
-
-</Steps>
-
-</TabItem>
-</Tabs>
 
 :::note[Enterprise: Bot Management custom rules]
 Enterprise customers with Bot Management can create custom rules that combine `cf.bot_management.score` with login path matching to challenge or block automated traffic with more precision. For example, the expression `(cf.bot_management.score lt 30 and not cf.bot_management.verified_bot and http.request.uri.path eq "/login")` targets likely automated traffic on the login path specifically. For more information, refer to [Custom rules for bot protection](/bots/additional-configurations/custom-rules/).
