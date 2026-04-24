@@ -374,16 +374,12 @@ Combine rate limiting with leaked credentials detection to throttle login attemp
 
 </Steps>
 
-:::note[Enterprise: Bot Management custom rules]
-Enterprise customers with Bot Management can create custom rules that combine `cf.bot_management.score` with login path matching to challenge or block automated traffic with more precision. For example, the expression `(cf.bot_management.score lt 30 and not cf.bot_management.verified_bot and http.request.uri.path eq "/login")` targets likely automated traffic on the login path specifically. For more information, refer to [Custom rules for bot protection](/bots/additional-configurations/custom-rules/).
-:::
+:::note[Enterprise: Bot Management]
+Enterprise customers with Bot Management get additional tools for login protection:
 
-:::note[Enterprise: Account takeover detection IDs]
-Enterprise Bot Management customers can use account takeover detection IDs to monitor suspicious login volume and failure rates. Detection ID `201326592` flags suspicious login failure volume. Detection ID `201326593` flags suspicious login attempt volume. These detections can be used in custom rules and rate limiting rules. For more information, refer to [Account takeover detections](/bots/additional-configurations/detection-ids/account-takeover-detections/).
-:::
-
-:::note[Enterprise: Account Abuse Protection (Early Access)]
-Enterprise Bot Management customers can use [Account Abuse Protection](/bots/account-abuse-protection/) to detect and mitigate account fraud patterns beyond credential stuffing, including fake account creation and account enumeration.
+- **Custom rules with bot scores**: combine `cf.bot_management.score` with login path matching for precise control. Refer to [Custom rules for bot protection](/bots/additional-configurations/custom-rules/).
+- **Account takeover detections**: monitor suspicious login volume and failure rates using detection IDs in custom rules and rate limiting rules. Refer to [Account takeover detections](/bots/additional-configurations/detection-ids/account-takeover-detections/).
+- **Account Abuse Protection** (Early Access): detect account fraud patterns beyond credential stuffing. Refer to [Account Abuse Protection](/bots/account-abuse-protection/).
 :::
 
 ## Monitor for ongoing compromise attempts
