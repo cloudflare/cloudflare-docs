@@ -10,7 +10,7 @@
 	},
 	{
 		"name": "Custom dashboards",
-		"deeplink": "/?to=/:account/log-explorer/dashboards",
+		"deeplink": "/?to=/:account/analytics/dashboards",
 		"parent": ["Analytics & logs", "Log Explorer"]
 	},
 	{
@@ -470,7 +470,7 @@
 	},
 	{
 		"name": "Custom dashboards",
-		"deeplink": "/?to=/:account/:zone/log-explorer/dashboards",
+		"deeplink": "/?to=/:account/:zone/analytics/dashboards",
 		"parent": ["Log Explorer"]
 	},
 	{

@@ -3,6 +3,9 @@ pcx_content_type: how-to
 title: Enable Amazon Kinesis
 sidebar:
   order: 98
+description: Learn about enable amazon kinesis in Cloudflare Logs.
+products:
+  - logpush
 ---
 
 Logpush supports [Amazon Kinesis](https://aws.amazon.com/kinesis/) as a destination for all datasets. Each Kinesis record that Logpush sends will contain a batch of GZIP-compressed data in newline-delimited JSON format (by default), or in the format specified in the [`output_options`](/logs/logpush/logpush-job/log-output-options/) parameter when the job was created.

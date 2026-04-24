@@ -17,7 +17,7 @@ import {
 	DashButton,
 } from "~/components";
 
-<GlossaryTooltip term="JSON web token (JWT)">JSON web tokens (JWT)</GlossaryTooltip> are often used as part of an authentication component on many web applications today. Since JWTs are crucial to identifying users and their access, ensuring the token’s integrity is important.
+<GlossaryTooltip term="JSON web token (JWT)">JSON web tokens (JWT)</GlossaryTooltip> are often used as part of an authentication component on many web applications. Since JWTs are crucial to identifying users and their access, ensuring the token’s integrity is important.
 
 API Shield’s JWT validation stops JWT replay attacks and JWT tampering by cryptographically verifying incoming JWTs before they are passed to your API origin. JWT validation will also stop requests with expired tokens or tokens that are not yet valid.
 
@@ -25,7 +25,7 @@ API Shield’s JWT validation stops JWT replay attacks and JWT tampering by cryp
 
 Endpoints must be added to [Endpoint Management](/api-shield/management-and-monitoring/) for JWT validation to protect them.
 
-A JWT validation configuration consists of creating a token validation configuration by adding your JWT signer's public JSON Web Key Set (JWKS) and a JWT validation rule by specifying which hostnames and endpoints should be included for validation.
+A JWT validation configuration has two parts: a token validation configuration that contains your JWT signer's public JSON Web Key Set (JWKS), and a JWT validation rule that specifies which hostnames and endpoints to validate.
 
 ### Add a token validation configuration
 
@@ -114,13 +114,13 @@ If you expect to migrate between two different identity providers, you must crea
 
 ### JSON Web Tokens with the `Bearer` prefix
 
-API Shield will verify JSON Web Tokens regardless of whether or not they have the `Bearer` prefix.
+API Shield will verify JSON Web Tokens regardless of whether they have the `Bearer` prefix.
 
 <Render file="rate-limit-user" product="api-shield" />
 
 ### Ignore `OPTIONS` pre-flight CORS requests
 
-Due to cross-origin resource sharing (CORS) security, web browsers will send "pre-flight" requests using the `OPTIONS` verb to API endpoints before sending a `GET` (or other verb) request. By definition, `OPTIONS` requests do not include headers or cookies and are anonymous.
+Due to cross-origin resource sharing (CORS) security, web browsers will send "pre-flight" requests using the `OPTIONS` verb to API endpoints before sending a `GET` (or other verb) request. By definition, `OPTIONS` preflight requests do not include credentials (authentication headers or cookies) and are anonymous.
 
 If you expect web browsers to be valid clients of your API, and to prevent blocking `OPTIONS` requests from those browsers, Cloudflare recommends adding `or http.request.method eq "OPTIONS"` to your JWT validation rules.
 

@@ -7,7 +7,6 @@ import "astro-breadcrumbs/breadcrumbs.css";
 
 import Description from "~/components/Description.astro";
 import LastReviewed from "~/components/LastReviewed.astro";
-import CopyPageButton from "~/components/CopyPageButton.tsx";
 import ComponentUsage from "~/components/ComponentUsage.astro";
 
 import { getEntry } from "astro:content";
@@ -97,11 +96,7 @@ if (!hideBreadcrumbs) {
 		)
 	}
 
-	{
-		frontmatter.template !== "splash" && (
-			<CopyPageButton client:idle />
-		)
-	}
+
 </div>
 
 {!hideTitle && <Default />}

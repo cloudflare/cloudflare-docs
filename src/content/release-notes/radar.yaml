@@ -3,6 +3,11 @@ link: "/radar/release-notes/"
 productName: Radar
 productLink: "/radar/"
 entries:
+  - publish_date: "2026-04-24"
+    title: Add signature agent URL to bot details
+    description: |-
+      * Added `signatureAgentUrl` field to the [bot details](/api/resources/radar/subresources/bots/methods/get/) API endpoint. For agents verified via [Web Bot Auth](/bots/reference/bot-verification/web-bot-auth/), this field contains the URL to the agent's HTTP Message Signatures key directory. It is `null` for bots not verified via request signature.
+      * Added signature agent URL to the [bot detail page](https://radar.cloudflare.com/bots/directory) on Radar, with a modal to inspect the key directory JSON content.
   - publish_date: "2026-04-01"
     title: Promote Routing to a dedicated section with sub-pages
     description: |-

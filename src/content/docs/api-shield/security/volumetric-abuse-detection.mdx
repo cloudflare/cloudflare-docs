@@ -11,17 +11,17 @@ sidebar:
 
 import { GlossaryTooltip, Steps, Render, APIRequest } from "~/components"
 
-Cloudflare Volumetric Abuse Detection helps you set up a system of adaptive rate limiting.
+Cloudflare Volumetric Abuse Detection generates per-endpoint, per-session rate limit recommendations that adjust automatically as your traffic patterns change.
 
 Cloudflare looks for endpoint abuse based on user traffic to individual endpoints.
 
 For example, your API might see different levels of traffic to a `/reset-password` endpoint than a `/login` endpoint. Additionally, your `/login` endpoint might see higher than average traffic after a successful marketing campaign.
 
-These two scenarios speak to the limitations of traditional rate limiting. Not only does traffic vary between endpoints, but it also can vary over time for the same endpoint. Volumetric Abuse Detection solves these problems with unsupervised learning to develop separate baselines for each API and better adjust to changes in user behavior.
+These two scenarios speak to the limitations of traditional rate limiting. Not only does traffic vary between endpoints, but it also can vary over time for the same endpoint. Volumetric Abuse Detection solves these problems using unsupervised learning (analyzing traffic patterns without predefined rules) to develop separate baselines for each endpoint and adjust to changes in user behavior over time.
 
-Volumetric Abuse Detection rate limits are generated on a per-session basis. Unlike traditional rate limits, which are based on IP addresses, Volumetric Abuse Detection rate limits are not as susceptible to false positives when traffic to your API increases.
+Volumetric Abuse Detection rate limits are generated on a per-session basis rather than per IP address. This reduces false positives when traffic to your API increases, because rate limits track individual sessions rather than shared IP addresses.
 
-Volumetric Abuse Detection rate limits are a way to prevent blatant volumetric abuse while minimizing false positives. If you are trying to prevent abusive bot traffic altogether, refer to Cloudflare’s [Bot solutions](/bots/).
+Volumetric Abuse Detection rate limits are a way to prevent blatant volumetric abuse while minimizing false positives. If you are trying to prevent abusive bot traffic altogether, refer to Cloudflare's [Bot solutions](/bots/).
 
 ## Process
 
@@ -37,7 +37,7 @@ Recommendations will continue to update if your traffic pattern changes.
 
 ### Requirements
 
-Volumetric Abuse Detection generates rate limit thresholds only after collecting sufficient, statistically safe traffic data for an endpoint. If recommendations are missing for a discovered endpoint, the traffic likely failed to meet the necessary criteria.
+Volumetric Abuse Detection generates rate limit thresholds only after collecting enough traffic data to produce reliable recommendations. If recommendations are missing for a discovered endpoint, the traffic likely failed to meet the necessary criteria.
 
 Thresholds are suggested only for endpoints that satisfy all of the following requirements within the last seven days (or since initial discovery):
 
@@ -49,24 +49,24 @@ After adding a session identifier, allow 24 hours for rate limit recommendations
 
 ### Rate limiting recommendation calculation 
 
-Once rate limit recommendations appear in **Endpoints**, select the endpoint row to view more detail about the recommendation. You will see the overall recommended rate limit value, as well as p99, p90, and p50 rate limit values.
+Select an endpoint row in **Endpoints** to view its rate limit recommendation. The detail view shows the overall recommended value and percentile-based values (p50, p90, p99).
 
-We calculate the recommended rate limit value throughout the day, and the new calculation may equal the existing recommendation due to similar traffic profiles existing on your API. When we recalculate, we look at requests that happened in the last 24 hours.
+:::note[Percentile values]
 
-Cloudflare recommends choosing the overall rate limit recommendation, as our analysis includes the variance of the request rate distribution across your API sessions. Choosing a single p-value may cause false positives due to a high number of outliers.
-
-:::note[p-values]
-
-p-values describe what percentile of your traffic fits below the value. For example, if your p90 value is `83`, then 90% of your sessions had maximum request rates less than 83 requests per 10 minutes.
+Percentile values describe what portion of your traffic falls below a threshold. For example, if your p90 value is `83`, then 90% of your sessions had maximum request rates less than 83 requests per 10 minutes.
 :::
 
-In **Endpoints**, you can review our confidence in the recommendation and how many unique sessions we have seen over the last seven (7) days. In general, endpoints with fewer unique sessions and high variability of user behavior will have lower confidence scores.
+Cloudflare recalculates the recommended value throughout the day based on requests from the last 24 hours. The recommendation may not change if your traffic profile remains consistent.
 
-Implementing low confidence rate limits can still be helpful to prevent API abuse. If you are hesitant due to the recommendation’s confidence, we suggest starting your rate limit rule in `log` mode and observing violations of the rule for false positives.
+Cloudflare recommends using the overall rate limit recommendation rather than a single percentile value. The overall recommendation accounts for variation across all your API sessions. Choosing a single percentile value may cause false positives due to a high number of outliers.
+
+In **Endpoints**, you can review the confidence level for each recommendation and how many unique sessions were observed over the last seven days. In general, endpoints with fewer unique sessions and high variability of user behavior will have lower confidence scores.
+
+Implementing low confidence rate limits can still be helpful to prevent API abuse. If the confidence level is low, start your rate limit rule in `log` mode and observe violations for false positives before switching to `block`.
 
 ### Create rate limits
 
-Refer to the [Rules documentation](https://developers.cloudflare.com/waf/rate-limiting-rules/create-zone-dashboard/) for more information on how to create an Advanced Rate Limiting rule.
+Refer to the [Rules documentation](/waf/rate-limiting-rules/create-zone-dashboard/) for more information on how to create an Advanced Rate Limiting rule.
 
 ## API
 

@@ -1,7 +1,9 @@
 ---
 pcx_content_type: concept
 title: Custom Domains
-
+description: Connect a Cloudflare Worker to a domain or subdomain with automatic DNS and certificate management.
+products:
+  - workers
 ---
 
 import { WranglerConfig, DashButton, Steps } from "~/components";
@@ -156,6 +158,22 @@ export default {
 Creating a Custom Domain will also generate an [Advanced Certificate](/ssl/edge-certificates/advanced-certificate-manager/) on your target zone for your target hostname.
 
 These certificates are generated with default settings. To override these settings, delete the generated certificate and create your own certificate in the Cloudflare dashboard. Refer to [Manage advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/) for instructions.
+
+## Redirect between www and root domain
+
+Because Custom Domains require an exact hostname match, a Worker attached to `example.com` will not receive requests sent to `www.example.com`, and vice versa. To make both versions of your domain work, set up a redirect rule:
+
+- [Redirect from www to root](/rules/url-forwarding/examples/redirect-www-to-root/)
+- [Redirect from root to www](/rules/url-forwarding/examples/redirect-root-to-www/)
+
+You also need a [proxied DNS record](/dns/manage-dns-records/how-to/create-dns-records/) for the hostname you are redirecting *from*, so that Cloudflare can apply the redirect rule.
+
+  - For www to root: Add a proxied DNS `A` record for `www` pointing to `192.0.2.0`, or a proxied `AAAA` record pointing to `100::`
+  - For root to www: Add a proxied DNS `A` record for your root domain pointing to `192.0.2.0`, or a proxied `AAAA` record pointing to `100::`
+
+:::note
+`192.0.2.0` (A record) and `100::` (AAAA record) are [reserved placeholder addresses](/dns/manage-dns-records/how-to/create-dns-records/#originless-setups) for originless setups. Because the DNS record is proxied, requests never reach this address — Cloudflare intercepts them and applies your redirect rule.
+:::
 
 ## Migrate from Routes
 
