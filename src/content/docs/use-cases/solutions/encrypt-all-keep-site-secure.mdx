@@ -11,7 +11,7 @@ sidebar:
 
 import { DashButton, FeatureTable, GlossaryTooltip, Render, Steps, TabItem, Tabs } from "~/components";
 
-Configuring HTTPS for your domain on Cloudflare involves two separate connections: one between visitors and the Cloudflare edge, and one between the Cloudflare edge and your origin server. The padlock in a visitor's browser confirms only the first connection is encrypted. This guide walks through five stages: configure your SSL/TLS encryption mode, redirect all HTTP requests to HTTPS, harden your HTTPS setup with minimum TLS versions and HSTS, monitor third-party scripts on your pages, and verify your configuration. The core workflow is available on Free, Pro, and Business plans.
+HTTPS on Cloudflare involves two separate connections: visitor to Cloudflare, and Cloudflare to your origin server. Both must be encrypted for end-to-end security. This guide walks through five stages: configure your SSL/TLS encryption mode, redirect all HTTP requests to HTTPS, harden your HTTPS setup with minimum TLS versions and HSTS, monitor third-party scripts on your pages, and verify your configuration. The core workflow is available on Free, Pro, and Business plans.
 
 :::note
 Most procedures in this guide are configured per domain. Select your domain in the Cloudflare dashboard before starting. Client-side security is the exception, as it is configured at the account level.
@@ -19,14 +19,9 @@ Most procedures in this guide are configured per domain. Select your domain in t
 
 ## Configure your SSL/TLS encryption mode
 
-Your SSL/TLS encryption mode controls how Cloudflare connects to your origin server. Four modes are available:
+Your SSL/TLS encryption mode controls how Cloudflare connects to your origin server. For end-to-end encryption, use **Full (strict)** — it encrypts both connections and verifies your origin certificate. For a detailed comparison of all available modes, refer to [Encryption modes](/ssl/origin-configuration/ssl-modes/).
 
-- **Off** disables encryption entirely. Do not use this mode.
-- **Flexible** encrypts the visitor-to-Cloudflare connection but sends unencrypted traffic to your origin. Avoid this mode when your origin supports HTTPS.
-- **Full** encrypts both connections but does not verify your origin certificate.
-- **Full (strict)** encrypts both connections and verifies your origin certificate against a trusted certificate authority or a Cloudflare Origin CA certificate.
-
-For the strongest security, use Full (strict) whenever possible. For more information on each mode, refer to [Encryption modes](/ssl/origin-configuration/ssl-modes/). {/* Source: /ssl/origin-configuration/ssl-modes/full-strict/ — "Use Full (strict) whenever possible" */}
+{/* Source: /ssl/origin-configuration/ssl-modes/full-strict/ — "Use Full (strict) whenever possible" */}
 
 ### Check your current mode
 
