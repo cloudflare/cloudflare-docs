@@ -438,35 +438,24 @@ If you see sustained automated traffic reaching your login endpoint despite the 
 
 **Application Security**
 
-- [Rate limiting rules](/waf/rate-limiting-rules/) — overview of rate limiting rule parameters and availability
-- [Rate limiting best practices](/waf/rate-limiting-rules/best-practices/) — recommended rate limiting patterns for login protection and credential stuffing
+- [Rate limiting best practices](/waf/rate-limiting-rules/best-practices/) — recommended patterns for login protection and credential stuffing
 - [Custom rules](/waf/custom-rules/) — create rules using request fields including bot score and leaked credentials
 - [Leaked credentials detection](/waf/detections/leaked-credentials/) — scan incoming requests for credentials from known data breaches
-- [Security Analytics](/waf/analytics/security-analytics/) — review all incoming traffic and security detection results
 - [Security Events](/waf/analytics/security-events/) — review requests acted on by security products
-- [Security features interoperability](/waf/feature-interoperability/) — understand execution order between security features
 
 **Cloudflare Bots**
 
 - [Bot Fight Mode](/bots/get-started/bot-fight-mode/) — free bot protection that challenges known bot patterns
 - [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/) — Pro and Business bot protection with configurable actions
 - [Bot Management](/bots/get-started/bot-management/) — Enterprise bot protection with ML-powered scoring and custom rules
-- [Account takeover detections](/bots/additional-configurations/detection-ids/account-takeover-detections/) — Enterprise detection IDs for suspicious login volume and failure rates
-- [Account Abuse Protection](/bots/account-abuse-protection/) — Enterprise Early Access feature for detecting account fraud patterns
-- [Verified Bots](/bots/concepts/bot/verified-bots/) — list of bots Cloudflare has verified as legitimate
-- [Bot scores](/bots/concepts/bot-score/) — how Cloudflare classifies automated traffic using scores from 1 to 99
 
 **Turnstile**
 
 - [Get started with Turnstile](/turnstile/get-started/) — create widgets and implement client-side and server-side validation
 - [Server-side validation](/turnstile/get-started/server-side-validation/) — validate Turnstile tokens on your server
-- [Test your Turnstile implementation](/turnstile/troubleshooting/testing/) — test site keys for development and staging environments
-- [Integrate Turnstile, WAF, and Bot Management](/turnstile/tutorials/integrating-turnstile-waf-and-bot-management/) — tutorial for combining Turnstile with WAF rules
-- [Fraud detection with Ephemeral IDs](/turnstile/tutorials/fraud-detection-with-ephemeral-ids/) — temporary visitor identifiers for fraud detection without personal data
 - [Turnstile Pre-Clearance](/turnstile/additional-configuration/pre-clearance-support/) — pre-clear visitors for SPA and AJAX login flows
 
 **SSL/TLS**
 
 - [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/) — redirect all HTTP requests to HTTPS
 - [HTTP Strict Transport Security (HSTS)](/ssl/edge-certificates/additional-options/http-strict-transport-security/) — prevent browser downgrade attacks with HSTS headers
-- [Cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/) — configure which encryption standards your domain accepts
