@@ -15,6 +15,9 @@ export const modelExampleSchema = z.object({
 	description: z.string().optional(),
 	input: z.record(z.string(), z.unknown()),
 	output: z.record(z.string(), z.unknown()).optional(),
+	// Full provider response as returned by the upstream API. Shape varies by
+	// provider, so we accept any object and render it as JSON in the UI.
+	raw_response: z.record(z.string(), z.unknown()).optional(),
 	code_snippets: codeSnippetSchema.array().optional(),
 });
 
