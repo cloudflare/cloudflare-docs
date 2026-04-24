@@ -188,7 +188,7 @@ For the full list of test keys and expected behaviors, refer to [Test your Turns
 The following example creates a rate limiting rule that issues a Managed Challenge after more than five POST requests to your login path from the same IP within one minute. Start with Managed Challenge rather than Block. Managed Challenge allows legitimate users who trigger the limit to pass by completing a challenge, while blocking automated traffic that cannot solve it. After monitoring [Security Events](/waf/analytics/security-events/) to confirm the rule is not producing false positives, switch to Block. Adjust the path (`/login`), threshold, and period for your site.
 
 :::caution
-Managed Challenge and other [challenge types](/cloudflare-challenges/challenge-types/challenge-pages/) require an HTML response to render. They do not work for non-HTML responses such as AJAX/XHR requests, which are common on login endpoints that use single-page applications (SPAs) or API-based authentication. If your login flow uses AJAX, consider using [Turnstile Pre-Clearance](/turnstile/tutorials/pre-clearance-support/) instead.
+Managed Challenge and other [challenge types](/cloudflare-challenges/challenge-types/challenge-pages/) require an HTML response to render. They do not work for non-HTML responses such as AJAX/XHR requests, which are common on login endpoints that use single-page applications (SPAs) or API-based authentication. If your login flow uses AJAX, consider using [Turnstile Pre-Clearance](/turnstile/additional-configuration/pre-clearance-support/) instead.
 :::
 
 {/* Source: /waf/rate-limiting-rules/best-practices/ — credential stuffing protection pattern. Navigation from /waf/custom-rules/create-dashboard/. Expression from source. Threshold (5 req/min) is guide-specific example. */}
@@ -628,7 +628,7 @@ If you see sustained automated traffic reaching your login endpoint despite the 
 - [Test your Turnstile implementation](/turnstile/troubleshooting/testing/) — test site keys for development and staging environments
 - [Integrate Turnstile, WAF, and Bot Management](/turnstile/tutorials/integrating-turnstile-waf-and-bot-management/) — tutorial for combining Turnstile with WAF rules
 - [Fraud detection with Ephemeral IDs](/turnstile/tutorials/fraud-detection-with-ephemeral-ids/) — temporary visitor identifiers for fraud detection without personal data
-- [Turnstile Pre-Clearance](/turnstile/tutorials/pre-clearance-support/) — pre-clear visitors for SPA and AJAX login flows
+- [Turnstile Pre-Clearance](/turnstile/additional-configuration/pre-clearance-support/) — pre-clear visitors for SPA and AJAX login flows
 
 **SSL/TLS**
 
