@@ -226,10 +226,22 @@ function getLabel(label: string): string {
 		align-self: start;
 	}
 
-	/* Cap raw response JSON height — streaming arrays and verbose provider
-	   payloads can run hundreds of lines. */
-	.example-raw-response :global(.expressive-code pre) {
+	/* Cap raw response JSON to match the Output text panel height exactly.
+	   Expressive Code wraps the code block in a <figure> with its own margins
+	   and frame chrome; we zero those out and cap the outer figure so the
+	   two tabs render at the same overall size. */
+	.example-raw-response :global(.expressive-code) {
+		margin: 0;
+	}
+	.example-raw-response :global(.expressive-code figure) {
+		margin: 0;
 		max-height: 32rem;
+		display: flex;
+		flex-direction: column;
+	}
+	.example-raw-response :global(.expressive-code pre) {
+		flex: 1;
+		min-height: 0;
 		overflow: auto;
 	}
 </style>
