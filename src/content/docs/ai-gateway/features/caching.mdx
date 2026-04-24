@@ -59,7 +59,7 @@ To check whether a response comes from cache or not, **cf-aig-cache-status** wil
 
 ## How the cache key works
 
-By default, AI Gateway constructs the cache key by concatenating and hashing (SHA-256) the following:
+By default, AI Gateway constructs the cache key by concatenating the following and hashing the result with SHA-256:
 
 - **Provider** (for example, `openai`, `anthropic`)
 - **Endpoint** (the API path)
