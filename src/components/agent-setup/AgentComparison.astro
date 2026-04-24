@@ -1,0 +1,252 @@
+---
+import type { AgentData } from "./types";
+import { capabilityLabels, capabilityTooltips } from "./definitions";
+
+interface Props {
+	agents: AgentData[];
+}
+
+const { agents } = Astro.props;
+
+interface ColumnDef {
+	key: string;
+	label: string;
+	align?: "left" | "center";
+}
+
+const COLUMNS: ColumnDef[] = [
+	{ key: "name", label: "Agent", align: "left" },
+	{ key: "terminal", label: "Terminal" },
+	{ key: "ide", label: "IDE" },
+	{ key: "extension", label: "Extension" },
+	{ key: "cloud", label: "Cloud" },
+	{ key: "pricing_model", label: "Pricing" },
+	{ key: "model_flexibility", label: "Model" },
+	{ key: "context_approach", label: "Context" },
+	{ key: "open_source", label: "Open source" },
+];
+
+function sortValue(agent: AgentData, key: string): string {
+	switch (key) {
+		case "name":
+			return agent.name.toLowerCase();
+		case "terminal":
+		case "ide":
+		case "extension":
+		case "cloud":
+		case "open_source":
+			return agent.capabilities[key as keyof AgentData["capabilities"]]
+				? "0"
+				: "1";
+		case "pricing_model":
+			return agent.pricing_model ?? "~";
+		case "model_flexibility":
+			return agent.model_flexibility ?? "~";
+		case "context_approach":
+			return agent.context_approach ?? "~";
+		default:
+			return "";
+	}
+}
+
+const sorted = [...agents].sort((a, b) =>
+	sortValue(a, "name").localeCompare(sortValue(b, "name")),
+);
+
+type RowData = { agent: AgentData; sortKeys: Record<string, string> };
+
+const rows: RowData[] = sorted.map((agent) => {
+	const sortKeys: Record<string, string> = {};
+	for (const col of COLUMNS) sortKeys[col.key] = sortValue(agent, col.key);
+	return { agent, sortKeys };
+});
+
+const checkIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="check" aria-label="Yes"><path d="M3 8.5L6.5 12L13 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="dash" aria-label="No"><path d="M4 8H12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
+---
+
+<div class="not-content">
+	<div class="agent-table-scroll">
+		<table
+			class="agent-setup-table agent-setup-table--sticky-first"
+			data-agent-table
+		>
+			<thead>
+				<tr>
+					{
+						COLUMNS.map((col, i) => (
+							<th
+								data-align={col.align ?? "center"}
+								aria-sort={i === 0 ? "ascending" : "none"}
+							>
+								<button
+									type="button"
+									class:list={["agent-table-sort", { "is-active": i === 0 }]}
+									data-sort-key={col.key}
+								>
+									<span>{col.label}</span>
+									<span
+										class="agent-table-sort-indicator"
+										aria-hidden="true"
+										data-indicator
+									>
+										{i === 0 ? "↑" : ""}
+									</span>
+								</button>
+							</th>
+						))
+					}
+				</tr>
+			</thead>
+			<tbody data-agent-tbody>
+				{
+					rows.map(({ agent, sortKeys }) => (
+						<tr data-sort-keys={JSON.stringify(sortKeys)}>
+							<td data-align="left">
+								<a
+									href={`/agent-setup/${agent.slug}/`}
+									class="agent-table-name"
+								>
+									{agent.name}
+								</a>
+							</td>
+							<td
+								set:html={agent.capabilities.terminal ? checkIcon : dashIcon}
+							/>
+							<td set:html={agent.capabilities.ide ? checkIcon : dashIcon} />
+							<td
+								set:html={agent.capabilities.extension ? checkIcon : dashIcon}
+							/>
+							<td set:html={agent.capabilities.cloud ? checkIcon : dashIcon} />
+							<td>
+								{agent.pricing_model ? (
+									<span
+										class={`agent-setup-badge agent-token-badge agent-token-badge--${agent.pricing_model.replace("_", "-")}`}
+										data-agent-tooltip={capabilityTooltips[agent.pricing_model] ?? ""}
+									>
+										{capabilityLabels[
+											agent.pricing_model as keyof typeof capabilityLabels
+										] ?? agent.pricing_model}
+									</span>
+								) : (
+									<span class="agent-table-dim">—</span>
+								)}
+							</td>
+							<td>
+								{agent.model_flexibility ? (
+									<span
+										class={`agent-setup-badge agent-token-badge agent-token-badge--${agent.model_flexibility.replace("_", "-")}`}
+										data-agent-tooltip={capabilityTooltips[agent.model_flexibility] ?? ""}
+									>
+										{capabilityLabels[
+											agent.model_flexibility as keyof typeof capabilityLabels
+										] ?? agent.model_flexibility}
+									</span>
+								) : (
+									<span class="agent-table-dim">—</span>
+								)}
+							</td>
+							<td>
+								{agent.context_approach ? (
+									<span
+										class={`agent-setup-badge agent-token-badge agent-token-badge--${agent.context_approach.replace("_", "-")}`}
+										data-agent-tooltip={capabilityTooltips[agent.context_approach] ?? ""}
+									>
+										{capabilityLabels[
+											agent.context_approach as keyof typeof capabilityLabels
+										] ?? agent.context_approach}
+									</span>
+								) : (
+									<span class="agent-table-dim">—</span>
+								)}
+							</td>
+							<td
+								set:html={agent.capabilities.open_source ? checkIcon : dashIcon}
+							/>
+						</tr>
+					))
+				}
+			</tbody>
+		</table>
+	</div>
+	<p class="agent-table-footnote">
+		Every agent listed supports Skills and MCP.
+	</p>
+</div>
+
+<script>
+	import tippy from "tippy.js";
+
+	document
+		.querySelectorAll<HTMLElement>("[data-agent-tooltip]")
+		.forEach((el) => {
+			const content = el.dataset.agentTooltip;
+			if (!content) return;
+			tippy(el, {
+				content,
+				placement: "top",
+				appendTo: () => document.body,
+				arrow: true,
+				maxWidth: 280,
+				delay: [150, 0],
+			});
+		});
+
+	document
+		.querySelectorAll<HTMLTableElement>("[data-agent-table]")
+		.forEach((table) => {
+			const tbody = table.querySelector<HTMLElement>("[data-agent-tbody]");
+			if (!tbody) return;
+
+			const rows = Array.from(tbody.querySelectorAll("tr"));
+			const buttons = Array.from(
+				table.querySelectorAll<HTMLButtonElement>(".agent-table-sort"),
+			);
+
+			let currentKey = "name";
+			let currentDir: "asc" | "desc" = "asc";
+
+			const sortBy = (key: string, dir: "asc" | "desc") => {
+				const sorted = [...rows].sort((r1, r2) => {
+					const k1 = JSON.parse(r1.dataset.sortKeys ?? "{}")[key] ?? "";
+					const k2 = JSON.parse(r2.dataset.sortKeys ?? "{}")[key] ?? "";
+					const result = String(k1).localeCompare(String(k2));
+					return dir === "asc" ? result : -result;
+				});
+				const frag = document.createDocumentFragment();
+				sorted.forEach((row) => frag.appendChild(row));
+				tbody.appendChild(frag);
+			};
+
+			const updateHeaders = (key: string, dir: "asc" | "desc") => {
+				buttons.forEach((btn) => {
+					const isActive = btn.dataset.sortKey === key;
+					btn.classList.toggle("is-active", isActive);
+					const indicator = btn.querySelector<HTMLElement>("[data-indicator]");
+					if (indicator) {
+						indicator.textContent = isActive ? (dir === "asc" ? "↑" : "↓") : "";
+					}
+					const th = btn.closest("th");
+					th?.setAttribute(
+						"aria-sort",
+						isActive ? (dir === "asc" ? "ascending" : "descending") : "none",
+					);
+				});
+			};
+
+			buttons.forEach((btn) => {
+				btn.addEventListener("click", () => {
+					const key = btn.dataset.sortKey;
+					if (!key) return;
+					if (key === currentKey) {
+						currentDir = currentDir === "asc" ? "desc" : "asc";
+					} else {
+						currentKey = key;
+						currentDir = "asc";
+					}
+					sortBy(currentKey, currentDir);
+					updateHeaders(currentKey, currentDir);
+				});
+			});
+		});
+</script>

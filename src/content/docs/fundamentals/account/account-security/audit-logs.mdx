@@ -159,6 +159,20 @@ Reflect actions associated with a user's login (email) across multiple accounts.
 
 The `GET /memberships` endpoint supports cross-account access. To query memberships, use the parameter `resource_scope=memberships`.
 
+#### Organization Activity Logs
+
+Contain events scoped to specific Cloudflare organizations. These logs capture user-initiated actions performed by Org Admins through organization-level APIs and are retrievable via the Audit Logs v2 API.
+
+```bash
+GET https://api.cloudflare.com/client/v4/organizations/{organization_id}/logs/audit
+```
+
+:::note
+Organization-level audit logs are separate from account-level audit logs. Actions performed within a specific account continue to be available via the account-level Audit Logs UI, Audit Logs v2 API, and Logpush.
+
+This initial release covers user-initiated actions only. Support for system-initiated actions, a dashboard UI, and Logpush for organizations will be added in future releases.
+:::
+
 ## Example how to query Audit Logs
 
 Use the following example to get a list of audit logs for a user account.
