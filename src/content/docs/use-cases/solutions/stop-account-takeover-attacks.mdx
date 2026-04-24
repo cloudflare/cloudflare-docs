@@ -212,9 +212,9 @@ Managed Challenge and other [challenge types](/cloudflare-challenges/challenge-t
 
 5. Under **With the same characteristics**, verify that _IP_ is selected. On Free plans, this is preselected and cannot be changed.
 
-6. Under **When rate exceeds**, enter _5_ for **Requests** and select _1 minute_ for **Period**.
+6. Under **When rate exceeds**, enter _5_ for **Requests** and select a value for **Period**. On Free plans, the only available period is _10 seconds_. Pro and above plans offer additional period options including _1 minute_.
 
-7. Under **Then take action**, select _Managed Challenge_ from the **Choose action** dropdown.
+7. Under **Then take action**, select an action from the **Choose action** dropdown. On Free plans, _Block_ is the only available action. On Pro and above, _Managed Challenge_ is recommended as it allows legitimate users who trigger the limit to pass by completing a challenge.
 
 8. Under **For duration**, select a duration for the action (for example, _1 minute_). This is how long the action applies after the rate limit is triggered.
 
