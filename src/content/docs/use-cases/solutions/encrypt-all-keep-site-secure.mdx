@@ -116,7 +116,7 @@ After installing a valid certificate on your origin server, set the encryption m
 {/* Source: /ssl/origin-configuration/origin-ca/ — "3. Change SSL/TLS mode" */}
 
 :::caution
-If your site stops working after changing the encryption mode, your origin certificate may not meet the requirements for Full (strict). The certificate must be unexpired, issued by a trusted CA or Cloudflare Origin CA, and contain a Common Name (CN) or Subject Alternative Name (SAN) that matches your hostname. For troubleshooting redirect loops, refer to [ERR_TOO_MANY_REDIRECTS](/ssl/troubleshooting/too-many-redirects/).
+If your site shows a [526 error](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-526/) after changing the encryption mode, your origin certificate may not meet the requirements for Full (strict). The certificate must be unexpired, issued by a trusted CA or Cloudflare Origin CA, and contain a Common Name (CN) or Subject Alternative Name (SAN) that matches your hostname. For redirect loop issues, refer to [ERR_TOO_MANY_REDIRECTS](/ssl/troubleshooting/too-many-redirects/).
 :::
 
 ## Redirect all HTTP requests to HTTPS
