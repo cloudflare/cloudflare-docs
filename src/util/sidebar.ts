@@ -102,7 +102,7 @@ export async function generateSidebar(group: Group) {
 
 	group.entries.sort(sortBySidebarOrder);
 
-	const NO_LLM_RESOURCES = new Set(["ai-agents"]);
+	const NO_LLM_RESOURCES = new Set(["docs-for-agents"]);
 
 	if (group.entries[0].type === "link" && !NO_LLM_RESOURCES.has(group.label)) {
 		group.entries[0].label = "Overview";
