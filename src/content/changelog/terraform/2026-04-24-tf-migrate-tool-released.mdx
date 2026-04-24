@@ -24,7 +24,7 @@ Cloudflare uses tf-migrate to migrate our own infrastructure—the same tool we'
 - **Cross-file reference updates** – Automatically finds and updates all references to renamed resources across your entire configuration
 - **Dry-run mode** – Preview all changes before applying them to ensure safety
 
-Combined with the automatic state upgraders introduced in v5.19+, tf-migrate eliminates the manual work and risk that previously made v5 migrations challenging.
+Combined with the automatic state upgraders introduced in v5.19+, tf-migrate eliminates the manual work and risk that previously made v5 migrations challenging. Tf-migrate operates directly on the config, leaving the rest for the state upgraders to handle the rest!
 
 ## Supported resources
 
