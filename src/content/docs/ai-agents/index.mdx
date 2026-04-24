@@ -58,30 +58,31 @@ The [Documentation MCP Server](https://github.com/cloudflare/mcp-server-cloudfla
 <Tabs>
 	<TabItem label="Cursor">
 
-	To install in Cursor, use the [direct install link](https://cursor.com/en-US/install-mcp?name=cloudflare&config=eyJjb21tYW5kIjoibnB4IG1jcC1yZW1vdGUgaHR0cHM6Ly9kb2NzLm1jcC5jbG91ZGZsYXJlLmNvbS9zc2UifQ%3D%3D).
+    To install in Cursor, use the [direct install link](https://cursor.com/en-US/install-mcp?name=cloudflare&config=eyJjb21tYW5kIjoibnB4IG1jcC1yZW1vdGUgaHR0cHM6Ly9kb2NzLm1jcC5jbG91ZGZsYXJlLmNvbS9zc2UifQ%3D%3D).
 
-	</TabItem>
-	<TabItem label="VS Code">
+    </TabItem>
+    <TabItem label="VS Code">
 
-	To install in VS Code, use the [direct install link](vscode:mcp/install?%7B%22name%22%3A%22cloudflare%22%2C%22url%22%3A%22https%3A%2F%2Fdocs.mcp.cloudflare.com%2Fmcp%22%7D).
+    To install in VS Code, use the [direct install link](vscode:mcp/install?%7B%22name%22%3A%22cloudflare%22%2C%22url%22%3A%22https%3A%2F%2Fdocs.mcp.cloudflare.com%2Fmcp%22%7D).
 
-	</TabItem>
-	<TabItem label="Manual">
+    </TabItem>
+    <TabItem label="Manual">
 
-	Add the following to your MCP configuration file:
+    To install manually, add the following to your MCP configuration file:
 
-	```json
-	{
-		"mcpServers": {
-			"cloudflare": {
-				"command": "npx",
-				"args": ["mcp-remote", "https://docs.mcp.cloudflare.com/mcp"]
-			}
-		}
-	}
-	```
+    ```json
+    	{
+    		"mcpServers": {
+    				"cloudflare": {
+    				"command": "npx",
+    				"args": ["mcp-remote", "https://docs.mcp.cloudflare.com/mcp"]
+    			}
+    		}
+    	}
+    ```
 
-	</TabItem>
+    </TabItem>
+
 </Tabs>
 
 For the full list, refer to [MCP servers for Cloudflare](/agents/model-context-protocol/mcp-servers-for-cloudflare/).
