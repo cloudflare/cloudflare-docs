@@ -42,9 +42,9 @@ The template keeps one Artifacts repo per sandbox ID. Use your own source of tru
 let defaultBranch: string;
 let remote: string;
 let token: string;
-const shouldCreateRepo = false; // for example, set this when you create a new sandbox record
+const sandboxWasJustCreated = true; // for example, set this when you create a new sandbox record
 
-if (shouldCreateRepo) {
+if (sandboxWasJustCreated) {
 	const created = await env.ARTIFACTS.create(sandboxId);
 
 	defaultBranch = created.defaultBranch;

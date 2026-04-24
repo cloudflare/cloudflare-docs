@@ -74,7 +74,7 @@ The response resembles the following:
 		"name": "starter-repo",
 		"description": null,
 		"default_branch": "main",
-		"remote": "https://{account_id}.artifacts.cloudflare.net/git/default/starter-repo.git",
+		"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/starter-repo.git",
 		"token": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000"
 	},
 	"success": true,
@@ -83,7 +83,7 @@ The response resembles the following:
 }
 ```
 
-The REST control-plane base URL and the returned Git remote use different hosts. Use the exact `result.remote` value for Git operations. In that value, `{account_id}` is your Cloudflare account ID.
+The REST control-plane base URL and the returned Git remote use different hosts. Use the exact `result.remote` value for Git operations. In that value, the `<ACCOUNT_ID>` placeholder is your Cloudflare account ID.
 
 The returned token encodes its expiry directly in the `?expires=` suffix.
 
@@ -134,7 +134,7 @@ curl "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO" \
 		"last_push_at": null,
 		"source": null,
 		"read_only": false,
-		"remote": "https://{account_id}.artifacts.cloudflare.net/git/default/starter-repo.git"
+		"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/starter-repo.git"
 	},
 	"success": true,
 	"errors": [],

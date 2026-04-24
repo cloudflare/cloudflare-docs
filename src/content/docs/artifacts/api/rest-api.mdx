@@ -178,7 +178,7 @@ curl --request POST "$ARTIFACTS_BASE_URL/repos" \
 		"name": "starter-repo",
 		"description": "Repository for automation experiments",
 		"default_branch": "main",
-		"remote": "https://{account_id}.artifacts.cloudflare.net/git/default/starter-repo.git",
+		"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/starter-repo.git",
 		"token": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000"
 	},
 	"success": true,
@@ -233,7 +233,7 @@ curl "$ARTIFACTS_BASE_URL/repos?limit=20&sort=updated_at&direction=desc" \
 			"last_push_at": "<ISO_TIMESTAMP>",
 			"source": null,
 			"read_only": false,
-			"remote": "https://{account_id}.artifacts.cloudflare.net/git/default/starter-repo.git"
+			"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/starter-repo.git"
 		}
 	],
 	"success": true,
@@ -274,7 +274,7 @@ curl "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO" \
 		"last_push_at": "<ISO_TIMESTAMP>",
 		"source": null,
 		"read_only": false,
-		"remote": "https://{account_id}.artifacts.cloudflare.net/git/default/starter-repo.git"
+		"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/starter-repo.git"
 	},
 	"success": true,
 	"errors": [],
@@ -361,7 +361,7 @@ curl --request POST "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO/fork" \
 		"name": "starter-repo-copy",
 		"description": "Repository for automation experiments",
 		"default_branch": "main",
-		"remote": "https://{account_id}.artifacts.cloudflare.net/git/default/starter-repo-copy.git",
+		"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/starter-repo-copy.git",
 		"token": "art_v1_89abcdef0123456789abcdef0123456789abcdef?expires=1760003600",
 		"objects": 128
 	},
@@ -415,7 +415,7 @@ curl --request POST "$ARTIFACTS_BASE_URL/repos/react-mirror/import" \
 		"name": "react-mirror",
 		"description": null,
 		"default_branch": "main",
-		"remote": "https://{account_id}.artifacts.cloudflare.net/git/default/react-mirror.git",
+		"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/react-mirror.git",
 		"token": "art_v1_fedcba9876543210fedcba9876543210fedcba98?expires=1760007200"
 	},
 	"success": true,
@@ -542,11 +542,11 @@ Route: `DELETE /tokens/:id`
 Response type:
 
 ```ts
-export interface RevokeTokenResult {
+export interface DeleteTokenResult {
 	id: string;
 }
 
-export type RevokeTokenResponse = ApiEnvelope<RevokeTokenResult>;
+export type DeleteTokenResponse = ApiEnvelope<DeleteTokenResult>;
 ```
 
 ```bash

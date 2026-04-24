@@ -41,16 +41,23 @@ IMPORT_RESPONSE=$(curl --silent --request POST "$ARTIFACTS_BASE_URL/repos/$ARTIF
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \
   --data '{
-    "url": "https://github.com/cloudflare/workers-sdk",
-    "branch": "main",
-    "depth": 100
-  }')
+     "url": "https://github.com/cloudflare/workers-sdk",
+     "branch": "main",
+     "depth": 100
+   }')
+
+if ! printf '%s' "$IMPORT_RESPONSE" | jq -e '.success == true' > /dev/null; then
+  printf '%s\n' "$IMPORT_RESPONSE" | jq .
+  exit 1
+fi
 
 export ARTIFACTS_REMOTE=$(printf '%s' "$IMPORT_RESPONSE" | jq -r '.result.remote')
 export ARTIFACTS_TOKEN=$(printf '%s' "$IMPORT_RESPONSE" | jq -r '.result.token')
 ```
 
 The response includes the new Artifacts repo metadata, including `result.remote` and `result.token`.
+
+If the request fails, this check prints the API response and exits before it exports empty values.
 
 The token encodes its expiry directly in the `?expires=` suffix.
 
