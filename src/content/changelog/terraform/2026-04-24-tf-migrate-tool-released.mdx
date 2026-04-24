@@ -16,7 +16,7 @@ Cloudflare uses tf-migrate to migrate our own infrastructure — the same tool w
 
 ## What tf-migrate does
 
-**tf-migrate** automates the tedious and error-prone parts of v4 to v5 migration:
+**tf-migrate** automates the tedious and error-prone parts of the v4 to v5 migration process:
 
 - **Resource type renames** – Automatically updates `cloudflare_record` → `cloudflare_dns_record`, `cloudflare_access_application` → `cloudflare_zero_trust_access_application`, and 40+ other renamed resources
 - **Attribute transformations** – Updates field names (e.g., `value` → `content` for DNS records) and restructures nested blocks
