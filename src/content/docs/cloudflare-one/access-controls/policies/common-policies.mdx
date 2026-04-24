@@ -236,7 +236,7 @@ The `cloudflare_zero_trust_access_group.approved_countries` reference points to 
 
 ## Require device posture for sensitive applications
 
-For applications that contain sensitive data, you can verify that users connect from managed devices that meet your organization's security baseline. The following example combines identity verification with [device posture checks](/cloudflare-one/reusable-components/posture-checks/) to ensure that the device is running a supported [OS version](/cloudflare-one/reusable-components/posture-checks/client-checks/os-version/), has [disk encryption](/cloudflare-one/reusable-components/posture-checks/client-checks/disk-encryption/) turned on, and has an active [firewall](/cloudflare-one/reusable-components/posture-checks/client-checks/firewall/). Users must also be connected through the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/), which is enforced by the [Require Gateway check](/cloudflare-one/reusable-components/posture-checks/client-checks/require-gateway/).
+For applications that contain sensitive data, you can verify that users connect from managed devices that meet your organization's security baseline. The following example combines identity verification with [device posture checks](/cloudflare-one/reusable-components/posture-checks/) to ensure that the device is running a supported [OS version](/cloudflare-one/reusable-components/posture-checks/client-checks/os-version/) and is connected through the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/), which is enforced by the [Require Gateway check](/cloudflare-one/reusable-components/posture-checks/client-checks/require-gateway/).
 
 :::note
 Before creating this policy, [create device posture checks](/cloudflare-one/reusable-components/posture-checks/) for each requirement and [enable the Require Gateway posture check](/cloudflare-one/reusable-components/posture-checks/client-checks/require-gateway/).
@@ -247,8 +247,8 @@ Before creating this policy, [create device posture checks](/cloudflare-one/reus
 | Action | Rule type | Selector       | Value                                                    |
 | ------ | --------- | -------------- | -------------------------------------------------------- |
 | Allow  | Include   | Okta Groups    | `Full-Time Employees`                                    |
-|        | Require   | Gateway        | _(enabled)_                                              |
-|        | Require   | Device posture | `Minimum OS version`, `Disk encryption`, `Firewall`      |
+|        | Require   | Gateway        | `Gateway`                                              |
+|        | Require   | OS Version | `Latest version of Windows` |
 
 </TabItem> <TabItem label="API">
 
@@ -274,17 +274,7 @@ Before creating this policy, [create device posture checks](/cloudflare-one/reus
 			},
 			{
 				device_posture: {
-					integration_uid: "<MINIMUM_OS_VERSION_CHECK_ID>",
-				},
-			},
-			{
-				device_posture: {
-					integration_uid: "<DISK_ENCRYPTION_CHECK_ID>",
-				},
-			},
-			{
-				device_posture: {
-					integration_uid: "<FIREWALL_CHECK_ID>",
+					integration_uid: "<OS_VERSION_CHECK_ID>",
 				},
 			},
 		],
@@ -324,17 +314,7 @@ resource "cloudflare_zero_trust_access_policy" "require_device_posture" {
     },
     {
       device_posture = {
-        integration_uid = cloudflare_zero_trust_device_posture_rule.minimum_os_version.id
-      }
-    },
-    {
-      device_posture = {
-        integration_uid = cloudflare_zero_trust_device_posture_rule.disk_encryption.id
-      }
-    },
-    {
-      device_posture = {
-        integration_uid = cloudflare_zero_trust_device_posture_rule.firewall.id
+        integration_uid = cloudflare_zero_trust_device_posture_rule.os_version_check.id
       }
     },
   ]
@@ -1012,8 +992,8 @@ For applications such as database admin tools, production consoles, or HR system
 | Action | Rule type | Selector       | Value                                                 |
 | ------ | --------- | -------------- | ----------------------------------------------------- |
 | Allow  | Include   | Okta Groups    | `IT Administrators`                                   |
-|        | Require   | Gateway        | _(enabled)_                                           |
-|        | Require   | Device posture | `Latest version of Windows`, `Windows firewall`       |
+|        | Require   | Gateway        | `Gateway`                                         |
+|        | Require   | OS Version | `Latest version of Windows`       |
 
 **Additional settings**: Turn on **Purpose justification**.
 
@@ -1042,11 +1022,6 @@ For applications such as database admin tools, production consoles, or HR system
 			{
 				device_posture: {
 					integration_uid: "<WINDOWS_VERSION_CHECK_ID>",
-				},
-			},
-			{
-				device_posture: {
-					integration_uid: "<WINDOWS_FIREWALL_CHECK_ID>",
 				},
 			},
 		],
@@ -1091,11 +1066,6 @@ resource "cloudflare_zero_trust_access_policy" "require_purpose_justification" {
     {
       device_posture = {
         integration_uid = cloudflare_zero_trust_device_posture_rule.windows_version.id
-      }
-    },
-    {
-      device_posture = {
-        integration_uid = cloudflare_zero_trust_device_posture_rule.windows_firewall.id
       }
     },
   ]
