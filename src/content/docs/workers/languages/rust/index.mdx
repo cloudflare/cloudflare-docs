@@ -184,7 +184,8 @@ To get the right JavaScript that `wasm-bindgen` emits:
 For example:
 
 ```rust
-use web_sys::{Request, Response, Url};
+use web_sys::{Request, Response};
+
 
 #[wasm_bindgen(js_name = "fetch", js_namespace = "default")]
 pub async fn fetch(request: Request, env: JsValue) -> Result<Response, JsValue> {
