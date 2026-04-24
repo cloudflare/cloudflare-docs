@@ -210,13 +210,13 @@ Managed Challenge and other [challenge types](/cloudflare-challenges/challenge-t
 
    Replace `example.com` with your domain and `/login` with your login endpoint path.
 
-5. Under **With the same characteristics**, verify that _IP_ is selected. On Free plans, this is preselected and cannot be changed.
+5. Under **With the same characteristics**, verify that _IP_ is selected. On Free plans, this is preset to _IP_.
 
-6. Under **When rate exceeds**, enter _5_ for **Requests** and select a value for **Period**. On Free plans, the only available period is _10 seconds_. Pro and above plans offer additional period options including _1 minute_.
+6. Under **When rate exceeds**, enter _5_ for **Requests** and select a value for **Period**. On Free plans, select _10 seconds_. Pro and above plans offer additional periods. For available values by plan, refer to [Rate limiting parameters](/waf/rate-limiting-rules/parameters/).
 
-7. Under **Then take action**, select an action from the **Choose action** dropdown. On Free plans, _Block_ is the only available action. On Pro and above, _Managed Challenge_ is recommended as it allows legitimate users who trigger the limit to pass by completing a challenge.
+7. Under **Then take action**, select an action from the **Choose action** dropdown. On Free plans, select _Block_. On Pro and above, _Managed Challenge_ is recommended as it allows legitimate users who trigger the limit to pass by completing a challenge.
 
-8. Under **For duration**, select a duration for the action (for example, _1 minute_). This is how long the action applies after the rate limit is triggered.
+8. Under **For duration**, select a duration for the action. On Free plans, select _10 seconds_. Pro and above plans offer longer durations. This is how long the action applies after the rate limit is triggered.
 
 9. Select **Deploy**.
 
@@ -368,7 +368,7 @@ Combine rate limiting with leaked credentials detection to throttle login attemp
 
 6. Under **Then take action**, select _Managed Challenge_.
 
-7. Under **For duration**, select a duration for the action (for example, _1 minute_).
+7. Under **For duration**, select a duration for the action. On Free plans, select _10 seconds_.
 
 8. Select **Deploy**.
 
