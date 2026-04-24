@@ -118,7 +118,9 @@ function getLabel(label: string): string {
 							/>
 						</TabItem>
 						<TabItem label="Raw response">
-							<Code code={rawResponseJson} lang="json" />
+							<div class="example-raw-response">
+								<Code code={rawResponseJson} lang="json" />
+							</div>
 						</TabItem>
 					</Tabs>
 				) : hasOutput ? (
@@ -131,7 +133,9 @@ function getLabel(label: string): string {
 						audioUrl={audioUrl}
 					/>
 				) : (
-					<Code code={rawResponseJson} lang="json" />
+					<div class="example-raw-response">
+						<Code code={rawResponseJson} lang="json" />
+					</div>
 				)}
 			</div>
 		)
@@ -220,5 +224,12 @@ function getLabel(label: string): string {
 		position: sticky;
 		top: 5rem;
 		align-self: start;
+	}
+
+	/* Cap raw response JSON height — streaming arrays and verbose provider
+	   payloads can run hundreds of lines. */
+	.example-raw-response :global(.expressive-code pre) {
+		max-height: 32rem;
+		overflow: auto;
 	}
 </style>
