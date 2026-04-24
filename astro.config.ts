@@ -34,6 +34,7 @@ async function autogenSections() {
 		})
 	)
 		.filter((x) => x.isDirectory())
+		.filter((x) => !["agent-setup"].includes(x.name))
 		.map((x) => x.name);
 	return sections.map((x) => {
 		return {
