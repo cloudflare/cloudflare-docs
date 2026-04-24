@@ -142,7 +142,7 @@ You can look up AAGUIDs for common authenticators in the [FIDO Alliance Metadata
 3. Select an existing [AAGUID list](#create-an-aaguid-list).
 4. Select **Save**.
 
-After you save, only authenticators whose AAGUIDs appear in the list can be enrolled. Users with previously enrolled authenticators outside the list can continue to use them until an administrator deletes the device.
+After you save, only authenticators whose AAGUIDs appear in the list can be enrolled. Users with previously enrolled authenticators outside the list can continue to use them until they are [deleted by an administrator](#delete-a-user-authenticator).
 
 </TabItem> <TabItem label="API">
 
@@ -153,10 +153,16 @@ Send a `PATCH` request to assign the list. Set `mfa_config.required_aaguids` to 
 	method="PATCH"
 	json={{
 		mfa_config: {
+			allowed_authenticators: ["security_key", "totp", "biometrics"],
+			session_duration: "24h",
 			required_aaguids: "05ddacda-5131-41ab-9eeb-6763f8dce3be",
 		},
 	}}
 />
+
+:::note
+The `PATCH` request must include all existing `mfa_config` fields (such as `allowed_authenticators` and `session_duration`) in addition to `required_aaguids`. Omitting existing fields will overwrite your current MFA configuration.
+:::
 
 To remove the restriction, set `required_aaguids` to `null`.
 
@@ -220,9 +226,9 @@ Access does not apply AMR matching in the following cases:
 - [Required AAGUIDs](#restrict-authenticators-by-aaguid) is set at the organization level. AAGUID information is not present in the IdP's AMR claim, so Access cannot verify that the IdP's MFA came from an approved device.
 - The IdP does not return an `amr` claim.
 - The IdP returns only AMR values that do not map to an [allowed authenticator type](#supported-mfa-methods) for the application or policy.
-- The user's last IdP MFA is older than the configured AMR session duration.
+- The user's AMR matching session has expired because they last performed MFA via their IdP longer ago than the configured AMR session duration.
 
-In these cases, Access prompts the user to complete independent MFA.
+In these cases, Access falls back to checking for existing MFA sessions. If there are no valid MFA sessions, Access prompts the user to complete independent MFA.
 
 :::note
 Identity providers differ in how they populate the `amr` claim. Some providers, including Okta, may return provider-specific values such as `pop` that are not part of RFC 8176. Test the behavior with your IdP before relying on AMR matching for production applications.
