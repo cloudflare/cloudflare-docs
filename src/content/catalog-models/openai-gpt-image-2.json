@@ -1,7 +1,7 @@
 {
 	"model_id": "openai/gpt-image-2",
 	"provider_id": "openai",
-	"name": "OpenAI GPT Image 2",
+	"name": "GPT Image 2",
 	"description": "OpenAI's next-generation image model that creates and edits images from text prompts, with support for multiple quality levels, sizes, and output formats. Note: transparent backgrounds are not supported — use openai/gpt-image-1.5 for transparent PNGs.",
 	"task": "Text-to-Image",
 	"tags": ["Image Generation", "Image Editing", "Multimodal"],
