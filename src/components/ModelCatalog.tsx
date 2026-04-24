@@ -34,7 +34,7 @@ const ModelCatalog = ({
 
 	// List of model names to pin at the top
 	const pinnedModelNames = [
-		"@cf/moonshotai/kimi-k2.5",
+		"@cf/moonshotai/kimi-k2.6",
 		"@cf/zai-org/glm-4.7-flash",
 		"@cf/openai/gpt-oss-120b",
 		"@cf/meta/llama-4-scout-17b-16e-instruct",

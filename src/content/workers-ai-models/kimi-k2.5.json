@@ -13,23 +13,11 @@
     "properties": [
         {
             "property_id": "async_queue",
-            "value": "true"
+            "value": "false"
         },
         {
             "property_id": "context_window",
             "value": "256000"
-        },
-        {
-            "property_id": "function_calling",
-            "value": "true"
-        },
-        {
-            "property_id": "reasoning",
-            "value": "true"
-        },
-        {
-            "property_id": "vision",
-            "value": "true"
         },
         {
             "property_id": "price",
@@ -40,16 +28,32 @@
                     "currency": "USD"
                 },
                 {
-                    "unit": "per M cached input tokens",
-                    "price": 0.1,
+                    "unit": "per M output tokens",
+                    "price": 3,
                     "currency": "USD"
                 },
                 {
-                    "unit": "per M output tokens",
-                    "price": 3.0,
+                    "unit": "per M cached input tokens",
+                    "price": 0.1,
                     "currency": "USD"
                 }
             ]
+        },
+        {
+            "property_id": "function_calling",
+            "value": "true"
+        },
+        {
+            "property_id": "reasoning",
+            "value": "true"
+        },
+        {
+            "property_id": "terms",
+            "value": "https://github.com/MoonshotAI/Kimi-K2.5/blob/master/LICENSE"
+        },
+        {
+            "property_id": "vision",
+            "value": "true"
         }
     ],
     "schema": {
