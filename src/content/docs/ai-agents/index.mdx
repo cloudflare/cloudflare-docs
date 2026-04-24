@@ -1,60 +1,94 @@
 ---
 title: AI agent access
-description: Learn how AI agents and LLMs consume Cloudflare documentation
-pcx_content_type: navigation
+description: Connect AI agents and LLMs to Cloudflare docs
+pcx_content_type: overview
 sidebar:
   label: AI agent access
-hideChildren: true
 ---
 
-Use this guide to grant AI coding assistants and LLMs access to Cloudflare documentation.
+import { Tabs, TabItem } from "~/components";
+
+Use this guide to connect AI coding assistants and LLMs to Cloudflare documentation, APIs, and platform tools.
 
 ## Quick start
 
-- **AI coding assistants (Claude Code, Cursor, Windsurf)**: Use the [Cloudflare Documentation MCP Server](#documentation-mcp-server) for a complete solution. It enables your assistant to search and retrieve documentation directly.
-- **Agent Skills**: Install [Cloudflare Skills](#skills) into any skills-compatible AI tool for structured, task-specific guidance.
-- **Chat interfaces (ChatGPT, Claude.ai)**: Append `/index.md` to any docs page URL and paste it into your conversation to receive Markdown instead of a full web page.
-- **Project rules and custom instructions**: Add a product-level [`llms.txt`](#per-product-endpoints) URL to your AI tool's rules file to give it an index of relevant Cloudflare pages.
-- **API-aware coding**: Download the [OpenAPI specification](#openapi-specification) and add it to your AI tool's context so it understands the full Cloudflare API surface when writing integration code.
+- **AI coding agents**: Set up [Claude Code](/agent-setup/claude-code/), [Cursor](/agent-setup/cursor/), [Codex](/agent-setup/codex/), [GitHub Copilot](/agent-setup/github-copilot/), [OpenCode](/agent-setup/opencode/), or [Windsurf](/agent-setup/windsurf/) with Cloudflare [Skills](#skills) and [MCP servers](#mcp-servers).
+- **Chat interfaces (ChatGPT, Claude.ai)**: Append `/index.md` to any docs page URL and paste the Markdown into your conversation.
+- **Project rules and custom instructions**: Add a product-level [`llms.txt`](#per-product-endpoints) URL to your AI tool's rules file for an index of relevant pages.
+- **API-aware coding**: Add the [OpenAPI specification](#openapi-specification) to your AI tool's context for full Cloudflare API coverage.
 
-## Documentation MCP Server
+## Set up your agent
 
-Cloudflare runs a catalog of managed remote MCP Servers which you can connect to using OAuth on clients like [Claude](https://modelcontextprotocol.io/quickstart/user), [Windsurf](https://docs.windsurf.com/windsurf/cascade/mcp), the Cloudflare [AI Playground](https://playground.ai.cloudflare.com/), or any [SDK that supports MCP](https://github.com/cloudflare/agents/tree/main/packages/agents/src/mcp).
+Each supported agent has a dedicated setup guide covering installation, Skills, MCP server configuration, example prompts, tips, and troubleshooting.
 
-The [Documentation MCP Server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/docs-vectorize) gives your AI assistant direct access to up-to-date Cloudflare documentation.
+Select your agent to get started:
 
-### Install
-
-- **Cursor**: Refer to [Installing MCP servers](https://cursor.com/docs/mcp#installing-mcp-servers)
-- **VSCode**: Refer to [Add and manage MCP servers in VS Code](https://code.visualstudio.com/docs/copilot/customization/mcp-servers)
-- **Manual configuration**: Add the following script to your MCP configuration file:
-
-```json
-{
-	"mcpServers": {
-		"cloudflare": {
-			"command": "npx",
-			"args": ["mcp-remote", "https://docs.mcp.cloudflare.com/mcp"]
-		}
-	}
-}
-```
-
-For other MCP servers offered by Cloudflare, refer to [Cloudflare's MCP servers](/agents/model-context-protocol/mcp-servers-for-cloudflare/).
+- [Claude Code + Cloudflare](/agent-setup/claude-code/)
+- [Codex + Cloudflare](/agent-setup/codex/)
+- [Cursor + Cloudflare](/agent-setup/cursor/)
+- [GitHub Copilot + Cloudflare](/agent-setup/github-copilot/)
+- [OpenCode + Cloudflare](/agent-setup/opencode/)
+- [Windsurf + Cloudflare](/agent-setup/windsurf/)
 
 ## Skills
 
-Cloudflare documentation supports [agent skills](https://agentskills.io/home). Agent skills are structured, task-specific guidance that AI tools can consume. Skills are defined in the [Cloudflare Skills repository](https://github.com/cloudflare/skills).
+[Agent skills](https://agentskills.io/home) are structured, task-specific instructions that AI tools load on demand. Cloudflare publishes a skill bundle in the [Cloudflare Skills repository](https://github.com/cloudflare/skills) covering Workers, storage, AI, networking, security, and more.
 
-To install them, run:
+To install skills in any compatible agent, run:
 
 ```sh
 npx skills add https://developers.cloudflare.com
 ```
 
-## Per-page Markdown
+For agent-specific installation (plugins, slash commands, or marketplace), refer to the setup guide for your agent.
 
-Every documentation page is available as a lightweight Markdown page using one of the following methods. Both return the same output, powered by [Markdown for Agents](/fundamentals/reference/markdown-for-agents/).
+## MCP servers
+
+Cloudflare runs a catalog of managed remote [MCP](https://modelcontextprotocol.io/) servers. MCP servers give your agent typed tools to search documentation, call the Cloudflare API, and query observability data at runtime.
+
+There are two approaches:
+
+- **[Code Mode](/agents/api-reference/codemode/)**: A single MCP server covering the entire Cloudflare API.
+- **Domain-specific servers**: Focused servers for docs, observability, DNS analytics, and more. The full catalog is in the [cloudflare/mcp-server-cloudflare](https://github.com/cloudflare/mcp-server-cloudflare) repository.
+
+### Documentation MCP server
+
+The [Documentation MCP Server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/docs-vectorize) gives your agent direct access to up-to-date Cloudflare documentation.
+
+<Tabs>
+	<TabItem label="Cursor">
+
+	To install in Cursor, use the [direct install link](https://cursor.com/en-US/install-mcp?name=cloudflare&config=eyJjb21tYW5kIjoibnB4IG1jcC1yZW1vdGUgaHR0cHM6Ly9kb2NzLm1jcC5jbG91ZGZsYXJlLmNvbS9zc2UifQ%3D%3D).
+
+	</TabItem>
+	<TabItem label="VS Code">
+
+	To install in VS Code, use the [direct install link](vscode:mcp/install?%7B%22name%22%3A%22cloudflare%22%2C%22url%22%3A%22https%3A%2F%2Fdocs.mcp.cloudflare.com%2Fmcp%22%7D).
+
+	</TabItem>
+	<TabItem label="Manual">
+
+	Add the following to your MCP configuration file:
+
+	```json
+	{
+		"mcpServers": {
+			"cloudflare": {
+				"command": "npx",
+				"args": ["mcp-remote", "https://docs.mcp.cloudflare.com/mcp"]
+			}
+		}
+	}
+	```
+
+	</TabItem>
+</Tabs>
+
+For the full list, refer to [MCP servers for Cloudflare](/agents/model-context-protocol/mcp-servers-for-cloudflare/).
+
+## Markdown documentation for LLMs
+
+Every documentation page is available as lightweight Markdown using either of the following methods. Both return the same output, powered by [Markdown for Agents](/fundamentals/reference/markdown-for-agents/).
 
 ### Copy from the current page
 
@@ -62,7 +96,7 @@ On the right side of any documentation page, select **Copy as Markdown** to copy
 
 ### Append `/index.md` to the URL
 
-Add `/index.md` to the end of any page URL to get the Markdown version. For example:
+Add `/index.md` to the end of any page URL. For example:
 
 ```txt
 https://developers.cloudflare.com/workers/get-started/index.md
@@ -70,47 +104,106 @@ https://developers.cloudflare.com/workers/get-started/index.md
 
 ### Send an `Accept: text/markdown` header
 
-Request any page with the `Accept: text/markdown` header. Cloudflare's network converts the HTML to Markdown instantly:
+Request any page with the `Accept: text/markdown` header:
 
 ```sh
 curl "https://developers.cloudflare.com/workers/get-started/" \
   --header "Accept: text/markdown"
 ```
 
-The response includes an `x-markdown-tokens` header with the estimated token count, useful for context window planning. For more details, refer to [Markdown for Agents](/fundamentals/reference/markdown-for-agents/).
+The response includes an `x-markdown-tokens` header with the estimated token count, useful for context window planning.
 
-## Site-wide endpoints
+### Site-wide endpoints
 
-These endpoints follow the [llms.txt standard](https://llmstxt.org/) and provide documentation content in Markdown format.
+These endpoints follow the [llms.txt standard](https://llmstxt.org/) and provide documentation content in Markdown format:
 
-| Endpoint                           | Description                                                                                                                          |
-| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| [`/llms.txt`](/llms.txt)           | Page index grouped by product category, with links to each product's own `llms.txt`                                                  |
-| [`/llms-full.txt`](/llms-full.txt) | Full content of all documentation pages in a single file, intended for offline indexing, bulk vectorization, or large-context models |
+| Endpoint | Description |
+| --- | --- |
+| [`/llms.txt`](/llms.txt) | Page index grouped by product category, with links to each product's own `llms.txt` |
+| [`/llms-full.txt`](/llms-full.txt) | Full content of all documentation in a single file, for offline indexing, bulk vectorization, or large-context models |
 
-## Per-product endpoints
+### Per-product endpoints
 
-Each product has its own scoped `llms.txt` and `llms-full.txt`. Use these for more targeted access when you only need documentation for a specific product.
+Each product has its own scoped `llms.txt` and `llms-full.txt`. Use these when you only need documentation for a specific product.
 
-| Endpoint                                           | Description                                     |
-| -------------------------------------------------- | ----------------------------------------------- |
-| [`/workers/llms.txt`](/workers/llms.txt)           | Page index for Workers documentation            |
+| Endpoint | Description |
+| --- | --- |
+| [`/workers/llms.txt`](/workers/llms.txt) | Page index for Workers documentation |
 | [`/workers/llms-full.txt`](/workers/llms-full.txt) | Full content of all Workers documentation pages |
 
 Replace `/workers/` with any product path. For the full list of available products, refer to [`/llms.txt`](/llms.txt).
 
 ## OpenAPI specification
 
-The full Cloudflare API OpenAPI specification is available for use with AI coding tools, API clients, or code generators.
+The full Cloudflare API OpenAPI specification is available for AI coding tools, API clients, and code generators:
 
-| Endpoint                                               | Description                                                   |
-| ------------------------------------------------------ | ------------------------------------------------------------- |
-| [`/openapi.json`](https://github.com/cloudflare/api-schemas)                       | Full Cloudflare API OpenAPI specification (JSON)              |
+| Endpoint | Description |
+| --- | --- |
+| [`/openapi.json`](https://github.com/cloudflare/api-schemas) | Full Cloudflare API OpenAPI specification (JSON) |
 
 For the full API reference, refer to the [Cloudflare API documentation](/api/).
 
-## AGENTS.md
+## Contribute to Cloudflare documentation with AI
 
-The `cloudflare-docs` repository includes an [AGENTS.md](https://github.com/cloudflare/cloudflare-docs/blob/production/AGENTS.md) file that helps AI coding agents understand the structure, tooling, and conventions of the repository so they can make correct, buildable changes when contributing to documentation.
+The `cloudflare-docs` repository includes an [`AGENTS.md`](https://github.com/cloudflare/cloudflare-docs/blob/production/AGENTS.md) file that helps AI coding agents understand the structure, tooling, and conventions of the repository so they can make correct, buildable changes when contributing to documentation.
 
-AGENTS.md is a simple, open format for guiding coding agents. Refer to the [AGENTS.md](https://agents.md/) website for more information.
+[AGENTS.md](https://agents.md/) is a simple, open format for guiding coding agents.
+
+The repository also includes configuration for the following AI tools:
+
+- [OpenCode](https://opencode.ai/)
+- [Windsurf](https://windsurf.com/)
+
+To set up other AI tools (Claude Code, Cursor, or GitHub Copilot) for documentation contributions, use [`rulesync`](https://github.com/dyoshikawa/rulesync) to synchronize AI tool configurations:
+
+```sh
+# Configure Claude Code
+npm run ai-setup:claudecode
+
+# Configure Cursor
+npm run ai-setup:cursor
+
+# Configure GitHub Copilot
+npm run ai-setup:copilot
+```
+
+Each script imports AI tool components (commands and subagents) from the OpenCode configuration committed to the repository and generates configuration files in the expected locations for your selected AI tool.
+
+## Compare agents
+
+Every agent listed supports Skills and MCP. Capabilities, pricing, and context approaches vary:
+
+| Agent | Workflow | Pricing | Model | Context | Open source |
+| --- | --- | --- | --- | --- | --- |
+| [Claude Code](/agent-setup/claude-code/) | Terminal | Subscription | Locked | Project memory | No |
+| [Codex](/agent-setup/codex/) | Terminal | Hybrid | Locked | Project memory | Yes |
+| [Cursor](/agent-setup/cursor/) | IDE, Terminal | Subscription | Multi-provider | Indexed codebase | No |
+| [GitHub Copilot](/agent-setup/github-copilot/) | Extension, Terminal | Subscription | Multi-provider | Indexed codebase | No |
+| [OpenCode](/agent-setup/opencode/) | Terminal | BYOK | Multi-provider | Project memory | Yes |
+| [Windsurf](/agent-setup/windsurf/) | IDE | Subscription | Multi-provider | Indexed codebase | No |
+
+## Concepts
+
+### Agent skills
+
+Skills are reusable prompt packages that teach an agent about a specific domain. They act as plugins made of instructions and slash commands that the agent loads on demand.
+
+### Model Context Protocol (MCP)
+
+The [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) is an open standard that lets agents call external tools and APIs. Connect an MCP server and your agent can search docs, create DNS records, deploy Workers, and more.
+
+### Model flexibility
+
+How many foundation models you can use depends on the agent:
+
+- **Locked**: Only the vendor's own models are supported.
+- **BYOK** (Bring Your Own Key): You supply your own API key.
+- **Multi-provider**: Several providers supported out of the box.
+
+### Context approaches
+
+How the agent retains information about your project varies:
+
+- **Session**: Only remembers the current conversation.
+- **Project memory**: Persists across sessions.
+- **Indexed codebase**: Builds a searchable index of your repository.
