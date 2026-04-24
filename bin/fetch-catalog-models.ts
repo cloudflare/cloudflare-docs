@@ -62,6 +62,9 @@ interface CatalogModel {
 	private?: boolean;
 	created_at?: string;
 	updated_at?: string;
+	// Returned by the catalog API but not consumed by the docs site.
+	// Stripped before writing to disk.
+	pricing?: Record<string, unknown>;
 }
 
 interface CatalogListResponse {
@@ -317,6 +320,10 @@ function writeModels(models: CatalogModel[]): void {
 		// Trim string fields that may have leading/trailing whitespace
 		model.name = model.name.trim();
 		model.description = model.description.trim();
+
+		// Drop the `pricing` field — it's returned by the catalog API but is
+		// not consumed by the docs site and isn't declared in the schema.
+		delete model.pricing;
 
 		const fileName = getModelFileName(model.model_id);
 		const filePath = path.join(OUTPUT_DIR, `${fileName}.json`);
