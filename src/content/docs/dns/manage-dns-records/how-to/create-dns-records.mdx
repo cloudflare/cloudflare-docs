@@ -119,6 +119,10 @@ If you need a placeholder address for an originless setup (also referred to as p
 
 This allows you to route requests using products such as [Redirect Rules](/rules/url-forwarding/), [Page Rules](/rules/page-rules/), or [Workers](/workers/).
 
+:::note
+The addresses `192.0.2.0` and `100::` come from IP ranges reserved for documentation and testing ([RFC 5737](https://www.rfc-editor.org/rfc/rfc5737) and [RFC 6666](https://www.rfc-editor.org/rfc/rfc6666)). They are guaranteed to never route to a real server, which makes them safe to use as placeholder values. Because the DNS record is proxied, Cloudflare intercepts the request before it reaches the dummy address.
+:::
+
 ---
 
 ## Further guidance
