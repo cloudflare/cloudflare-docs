@@ -1,0 +1,42 @@
+---
+title: Introducing tf-migrate - Automated v4 to v5 Migration Tool
+description: tf-migrate automates Terraform Provider v4 to v5 migrations with resource renames, attribute transformations, and moved block generation.
+date: 2026-04-24
+products:
+  - terraform
+---
+
+We're excited to announce **tf-migrate**, a purpose-built CLI tool that simplifies migrating from Cloudflare Terraform Provider v4 to v5.
+
+## v5 is stable and ready for production
+
+**Terraform Provider v5 is stable and actively receiving updates.** We no longer make feature updates or minor bug fixes to v4, which is only patched for critical security reasons. We encourage all users to migrate to v5 to take advantage of ongoing enhancements and new capabilities.
+
+Cloudflare uses tf-migrate to migrate our own infrastructure—the same tool we're providing to the community—ensuring the best possible migration experience.
+
+## What tf-migrate does
+
+**tf-migrate** automates the tedious and error-prone parts of v4 to v5 migration:
+
+- **Resource type renames** – Automatically updates `cloudflare_record` → `cloudflare_dns_record`, `cloudflare_access_application` → `cloudflare_zero_trust_access_application`, and 40+ other renamed resources
+- **Attribute transformations** – Updates field names (e.g., `value` → `content` for DNS records) and restructures nested blocks
+- **Moved block generation** – Creates Terraform 1.8+ `moved` blocks to prevent resource replacements and ensure zero-downtime migrations
+- **Cross-file reference updates** – Automatically finds and updates all references to renamed resources across your entire configuration
+- **Dry-run mode** – Preview all changes before applying them to ensure safety
+
+Combined with the automatic state upgraders introduced in v5.19+, tf-migrate eliminates the manual work and risk that previously made v5 migrations challenging.
+
+## Supported resources
+
+**The tool does not work for all resources.** tf-migrate currently supports resources that have been stabilized and marked as migration-ready. We are actively working to expand coverage, with the most commonly used resources prioritized first.
+
+For the complete list of supported resources and their migration status, refer to the [v5 Stabilization Tracker](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6237). This list is updated regularly as additional resources are stabilized and migration support is added.
+
+Resources not yet supported by tf-migrate will need to be migrated manually using the [version 5 upgrade guide](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/guides/version-5-upgrade). The upgrade guide provides step-by-step instructions for handling resource renames, attribute changes, and state migrations.
+
+## Get started
+
+- [Download tf-migrate](https://github.com/cloudflare/tf-migrate/releases)
+- [Version 5 Migration Guide](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/guides/version-5-migration)
+- [Terraform Provider documentation](https://developers.cloudflare.com/terraform/)
+- [v5 Stabilization Tracker](https://github.com/cloudflare/terraform-provider-cloudflare/issues/6237)
