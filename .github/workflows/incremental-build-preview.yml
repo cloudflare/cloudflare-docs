@@ -47,6 +47,18 @@ jobs:
         run: pnpm install --frozen-lockfile
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
+      - name: Download previous build from R2
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.BUILD_CACHE_R2_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.BUILD_CACHE_R2_SECRET_KEY }}
+          AWS_DEFAULT_REGION: auto
+        run: |
+          aws s3 cp "s3://cloudflare-docs-production-build-cache/latest.tar.gz" /tmp/previous-build.tar.gz \
+            --endpoint-url ${{ secrets.BUILD_CACHE_R2_ENDPOINT }} || true
+          if [ -f /tmp/previous-build.tar.gz ]; then
+            tar -xzf /tmp/previous-build.tar.gz
+          fi
+
       - name: Restore Astro assets from cache
         uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
