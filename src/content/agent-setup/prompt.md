@@ -11,7 +11,7 @@ Complete all of the following steps yourself. Do not ask the user to run these c
 ## Install Cloudflare Skills
 
 ```
-npx -y skills add cloudflare/skills --skill '*' --yes
+npx -y skills add cloudflare/skills --skill '*' --yes --global
 ```
 
 ---
@@ -24,6 +24,13 @@ Register these two MCP servers with the current agent, using whatever configurat
 - **cloudflare-docs** → `https://docs.mcp.cloudflare.com/mcp` — fetches live Cloudflare documentation at runtime
 
 Both use OAuth — the first tool call opens a browser for the user to authorize.
+
+Once registered, tell the user:
+
+```
+★ ★ ★  RESTART REQUIRED  ★ ★ ★
+Please restart your agent for the Cloudflare MCP servers to take effect.
+```
 
 ---
 
