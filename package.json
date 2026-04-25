@@ -8,7 +8,7 @@
 		"prebuild": "tsx bin/fetch-skills.ts",
 		"build": "export NODE_OPTIONS='--max-old-space-size=8192' || set NODE_OPTIONS=\"--max-old-space-size=8192\" && astro build",
 		"build:cache": "rm -rf .previous-build && mkdir -p .previous-build && cp -R dist .previous-build/dist && cp -R dist-meta .previous-build/dist-meta",
-		"build:incremental": "INCREMENTAL_BUILD=1 pnpm run build",
+		"build:incremental": "rm -rf dist dist-meta && INCREMENTAL_BUILD=1 pnpm run build",
 		"typegen:worker": "wrangler types ./worker/worker-configuration.d.ts",
 		"check": "pnpm run check:astro && pnpm run check:worker",
 		"check:astro": "astro check",
