@@ -149,6 +149,9 @@ importers:
       dedent:
         specifier: 1.7.0
         version: 1.7.0(babel-plugin-macros@3.1.0)
+      devalue:
+        specifier: 5.1.1
+        version: 5.1.1
       dot-prop:
         specifier: 9.0.0
         version: 9.0.0
@@ -3749,6 +3752,9 @@ packages:
   detect-libc@2.1.2:
     resolution: {integrity: sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ==}
     engines: {node: '>=8'}
+
+  devalue@5.1.1:
+    resolution: {integrity: sha512-maua5KUiapvEwiEAe+XnlZ3Rh0GD+qI1J/nb9vrJc3muPXvcF/8gXYTWF76+5DAqHyDUtOIImEuo0YKE9mshVw==}
 
   devalue@5.6.4:
     resolution: {integrity: sha512-Gp6rDldRsFh/7XuouDbxMH3Mx8GMCcgzIb1pDTvNyn8pZGQ22u+Wa+lGV9dQCltFQ7uVw0MhRyb8XDskNFOReA==}
@@ -10755,6 +10761,8 @@ snapshots:
   destroy@1.2.0: {}
 
   detect-libc@2.1.2: {}
+
+  devalue@5.1.1: {}
 
   devalue@5.6.4: {}
 

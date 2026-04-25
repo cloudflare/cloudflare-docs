@@ -8,7 +8,7 @@ import starlightScrollToTop from "starlight-scroll-to-top";
 import icon from "astro-icon";
 import sitemap from "@astrojs/sitemap";
 import react from "@astrojs/react";
-import incrementalBuilds from "astro-incremental-builds";
+import incrementalBuilds from "./src/plugins/incremental-builds/index.ts";
 
 import { readdir, readFile } from "fs/promises";
 import { join } from "path";

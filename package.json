@@ -38,7 +38,6 @@
 	},
 	"devDependencies": {
 		"@actions/core": "3.0.0",
-		"astro-incremental-builds": "https://pub-1b369008db104e498f8cdab9abe838c8.r2.dev/latest.tgz",
 		"@actions/github": "9.0.0",
 		"@apidevtools/swagger-parser": "12.0.0",
 		"@astrojs/check": "0.9.8",
@@ -85,6 +84,7 @@
 		"codeowners-utils": "1.0.2",
 		"date-fns": "4.1.0",
 		"dedent": "1.7.0",
+		"devalue": "5.1.1",
 		"dot-prop": "9.0.0",
 		"eslint": "9.35.0",
 		"eslint-formatter-checkstyle": "9.0.1",
