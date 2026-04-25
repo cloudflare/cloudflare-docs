@@ -47,7 +47,7 @@ jobs:
             astro-assets-
 
       - name: Build
-        run: pnpm run build
+        run: INCREMENTAL_BUILD=1 pnpm run build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -62,6 +62,21 @@ jobs:
         run: pnpm exec wrangler deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+
+      - name: Upload build cache to R2
+        continue-on-error: true
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.BUILD_CACHE_R2_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.BUILD_CACHE_R2_SECRET_KEY }}
+          AWS_DEFAULT_REGION: auto
+          BUILD_CACHE_R2_ENDPOINT: ${{ secrets.BUILD_CACHE_R2_ENDPOINT }}
+        run: |
+          mkdir -p /tmp/build-cache-stage/.previous-build
+          cp -R dist /tmp/build-cache-stage/.previous-build/dist
+          cp -R dist-meta /tmp/build-cache-stage/.previous-build/dist-meta
+          tar -czf /tmp/build-cache.tar.gz -C /tmp/build-cache-stage .previous-build
+          aws s3 cp /tmp/build-cache.tar.gz "s3://cloudflare-docs-production-build-cache/latest.tar.gz" \
+            --endpoint-url "$BUILD_CACHE_R2_ENDPOINT"
 
       - name: Notify Google Chat on failure
         if: failure()
