@@ -18,12 +18,48 @@ npx -y skills add cloudflare/skills --skill '*' --yes --global
 
 ## Install Cloudflare MCP servers
 
-Register these two MCP servers with the current agent, using whatever configuration format the agent expects:
+Register these two servers using the method for your agent. Go directly to the config path — do not search the filesystem for it.
 
-- **cloudflare** → `https://mcp.cloudflare.com/mcp` — platform operations (DNS, WAF, R2, Zero Trust, Workers deployments) via Code Mode across 2,500+ API endpoints
-- **cloudflare-docs** → `https://docs.mcp.cloudflare.com/mcp` — fetches live Cloudflare documentation at runtime
+### Claude Code
 
-Both use OAuth — the first tool call opens a browser for the user to authorize.
+```
+claude mcp add --transport http --scope user cloudflare https://mcp.cloudflare.com/mcp
+claude mcp add --transport http --scope user cloudflare-docs https://docs.mcp.cloudflare.com/mcp
+```
+
+### Codex
+
+```
+codex mcp add cloudflare --url https://mcp.cloudflare.com/mcp
+codex mcp add cloudflare-docs --url https://docs.mcp.cloudflare.com/mcp
+```
+
+### OpenCode
+
+```
+opencode mcp add cloudflare --url https://mcp.cloudflare.com/mcp
+opencode mcp add cloudflare-docs --url https://docs.mcp.cloudflare.com/mcp
+```
+
+### Windsurf — `~/.codeium/windsurf/mcp_config.json`
+
+Add under `"mcpServers"` (note: `serverUrl`, not `url`):
+
+```json
+"cloudflare": { "serverUrl": "https://mcp.cloudflare.com/mcp" },
+"cloudflare-docs": { "serverUrl": "https://docs.mcp.cloudflare.com/mcp" }
+```
+
+### Cursor, GitHub Copilot, and all other agents
+
+Add to `.cursor/mcp.json` (Cursor), `.vscode/mcp.json` (Copilot), or your agent's MCP config file under `"mcpServers"`:
+
+```json
+"cloudflare": { "url": "https://mcp.cloudflare.com/mcp" },
+"cloudflare-docs": { "url": "https://docs.mcp.cloudflare.com/mcp" }
+```
+
+The `cloudflare` server uses OAuth — the first tool call opens a browser for the user to authorize. The `cloudflare-docs` server is public and requires no authentication.
 
 Once registered, tell the user:
 
