@@ -52,9 +52,10 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.BUILD_CACHE_R2_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.BUILD_CACHE_R2_SECRET_KEY }}
           AWS_DEFAULT_REGION: auto
+          BUILD_CACHE_R2_ENDPOINT: ${{ secrets.BUILD_CACHE_R2_ENDPOINT }}
         run: |
           aws s3 cp "s3://cloudflare-docs-production-build-cache/latest.tar.gz" /tmp/previous-build.tar.gz \
-            --endpoint-url ${{ secrets.BUILD_CACHE_R2_ENDPOINT }} || true
+            --endpoint-url "$BUILD_CACHE_R2_ENDPOINT" || true
           if [ -f /tmp/previous-build.tar.gz ]; then
             tar -xzf /tmp/previous-build.tar.gz
           fi
@@ -98,23 +99,24 @@ jobs:
         id: deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
-          SHORT_SHA="${{ github.event.pull_request.head.sha }}"
-          SHORT_SHA="${SHORT_SHA:0:8}"
+          SHORT_SHA="${PR_HEAD_SHA:0:8}"
           echo "short_sha=${SHORT_SHA}" >> "$GITHUB_OUTPUT"
           pnpm exec wrangler deploy --dispatch-namespace preview-deployments --name "incr-${SHORT_SHA}"
 
       - name: Post preview URL on PR
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SHORT_SHA: ${{ steps.deploy.outputs.short_sha }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          BUILD_DURATION: ${{ steps.build.outputs.duration }}
+          BUILD_TYPE: ${{ steps.build.outputs.build_type }}
+          PAGES_REBUILT: ${{ steps.build.outputs.pages_rebuilt }}
+          PAGES_COPIED: ${{ steps.build.outputs.pages_copied }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
-          SHORT_SHA="${{ steps.deploy.outputs.short_sha }}"
           PREVIEW_URL="https://incr-${SHORT_SHA}.preview.developers.cloudflare.com"
-          PR_NUMBER="${{ github.event.pull_request.number }}"
-          BUILD_DURATION="${{ steps.build.outputs.duration }}"
-          BUILD_TYPE="${{ steps.build.outputs.build_type }}"
-          PAGES_REBUILT="${{ steps.build.outputs.pages_rebuilt }}"
-          PAGES_COPIED="${{ steps.build.outputs.pages_copied }}"
 
           if [ "$BUILD_TYPE" = "incremental" ]; then
             BUILD_INFO="Incremental — ${PAGES_REBUILT} page(s) rebuilt, ${PAGES_COPIED} copied from cache"
@@ -138,16 +140,16 @@ jobs:
 
           # Check for existing incremental build comment
           EXISTING=$(gh api \
-            "repos/${{ github.repository }}/issues/${PR_NUMBER}/comments" \
+            "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" \
             --jq '.[] | select(.user.login == "github-actions[bot]" and (.body | contains("Incremental Build Preview"))) | .id' \
             | head -1)
 
           if [ -n "$EXISTING" ]; then
             gh api \
-              "repos/${{ github.repository }}/issues/comments/${EXISTING}" \
+              "repos/${GITHUB_REPOSITORY}/issues/comments/${EXISTING}" \
               -X PATCH -f body="$BODY"
           else
             gh api \
-              "repos/${{ github.repository }}/issues/${PR_NUMBER}/comments" \
+              "repos/${GITHUB_REPOSITORY}/issues/${PR_NUMBER}/comments" \
               -f body="$BODY"
           fi
