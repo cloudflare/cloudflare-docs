@@ -5,9 +5,6 @@ on:
     branches:
       - production
 
-env:
-  BUILD_CACHE_R2_BUCKET: cloudflare-docs-production-build-cache
-
 concurrency:
   group: incremental-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
@@ -22,44 +19,36 @@ jobs:
       contents: read
       pull-requests: write
     steps:
-      - uses: actions/checkout@v6
+      - name: Check out repo
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 1
 
-      - uses: actions/setup-node@v6
+      - name: Set up pnpm
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+        with:
+          version: 10
+
+      - name: Set up node
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
+        id: setup-node
         with:
           node-version: 24.x
-          cache: npm
+          cache: pnpm
 
-      # -- Install docs dependencies --
       - name: Restore node_modules (cache hit)
         id: node-modules-cache
-        uses: actions/cache@v5
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           path: node_modules
-          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('package.json') }}
+          key: node-modules-${{ runner.os }}-node-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('package.json') }}
 
       - name: Install node_modules (cache miss)
-        run: npm ci
+        run: pnpm install --frozen-lockfile
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
-      # -- Restore previous build from R2 --
-      - name: Download previous build from R2
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.BUILD_CACHE_R2_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.BUILD_CACHE_R2_SECRET_KEY }}
-          AWS_DEFAULT_REGION: auto
-        run: |
-          mkdir -p .previous-build
-          aws s3 cp "s3://${{ env.BUILD_CACHE_R2_BUCKET }}/latest.tar.gz" /tmp/previous-build.tar.gz \
-            --endpoint-url ${{ secrets.BUILD_CACHE_R2_ENDPOINT }} || true
-          if [ -f /tmp/previous-build.tar.gz ]; then
-            tar -xzf /tmp/previous-build.tar.gz -C .previous-build
-          fi
-
-      # -- Run the build --
       - name: Restore Astro assets from cache
-        uses: actions/cache@v5
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           path: |
             node_modules/.astro/assets
@@ -69,9 +58,11 @@ jobs:
 
       - name: Build
         id: build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           BUILD_START=$(date +%s)
-          INCREMENTAL_BUILD=1 npm run build 2>&1 | tee /tmp/build.log
+          INCREMENTAL_BUILD=1 pnpm run build 2>&1 | tee /tmp/build.log
           BUILD_END=$(date +%s)
           BUILD_DURATION=$((BUILD_END - BUILD_START))
           BUILD_MIN=$((BUILD_DURATION / 60))
@@ -90,10 +81,7 @@ jobs:
           else
             echo "build_type=full" >> "$GITHUB_OUTPUT"
           fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # -- Deploy preview --
       - name: Deploy to Cloudflare Workers
         id: deploy
         env:
@@ -102,7 +90,7 @@ jobs:
           SHORT_SHA="${{ github.event.pull_request.head.sha }}"
           SHORT_SHA="${SHORT_SHA:0:8}"
           echo "short_sha=${SHORT_SHA}" >> "$GITHUB_OUTPUT"
-          npx wrangler deploy --dispatch-namespace preview-deployments --name "incr-${SHORT_SHA}"
+          pnpm exec wrangler deploy --dispatch-namespace preview-deployments --name "incr-${SHORT_SHA}"
 
       - name: Post preview URL on PR
         env:
