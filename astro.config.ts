@@ -131,12 +131,12 @@ export default defineConfig({
 						pageCollections: ["docs"],
 						partialCollections: ["partials"],
 						ignoredCollections: [
-						"skills",
-						"product-availability",
-						"granular-control-applications",
-						"cloudflare-skills-manifest",
-						"cloudflare-mcps-manifest",
-					],
+							"skills",
+							"product-availability",
+							"granular-control-applications",
+							"cloudflare-skills-manifest",
+							"cloudflare-mcps-manifest",
+						],
 						partialResolver: (name: string, props: Record<string, string>) => {
 							if (name === "Render" && props.file && props.product) {
 								return `src/content/partials/${props.product}/${props.file}.mdx`;
