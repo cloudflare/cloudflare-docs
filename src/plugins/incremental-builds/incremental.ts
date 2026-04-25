@@ -103,8 +103,10 @@ export async function computeDirtyPathnames(opts: {
 
 		// 1. Load previous state
 		const prevDataStoreRaw = fs.readFileSync(prevDataStorePath, "utf-8");
-		const prevDataStore: Map<string, Map<string, DataEntry>> =
-			devalue.unflatten(JSON.parse(prevDataStoreRaw));
+		const prevDataStore: Map<
+			string,
+			Map<string, DataEntry>
+		> = devalue.unflatten(JSON.parse(prevDataStoreRaw));
 		const prevManifest: ComponentManifest = JSON.parse(
 			fs.readFileSync(prevManifestPath, "utf-8"),
 		);
@@ -119,8 +121,10 @@ export async function computeDirtyPathnames(opts: {
 			return null;
 		}
 		const currentDataStoreRaw = fs.readFileSync(currentDataStorePath, "utf-8");
-		const currentDataStore: Map<string, Map<string, DataEntry>> =
-			devalue.unflatten(JSON.parse(currentDataStoreRaw));
+		const currentDataStore: Map<
+			string,
+			Map<string, DataEntry>
+		> = devalue.unflatten(JSON.parse(currentDataStoreRaw));
 
 		// 3. Compute current component manifest
 		const srcDir = fileURLToPath(config.srcDir);
@@ -213,14 +217,11 @@ export async function computeDirtyPathnames(opts: {
 				if (changedPartialPaths.size > 0) {
 					const allAffected = expandTransitive(changedPartialPaths, depMap);
 					for (const partialPath of allAffected) {
-						const qualifiedPageIds =
-							depMap.partialToPages[partialPath] ?? [];
+						const qualifiedPageIds = depMap.partialToPages[partialPath] ?? [];
 						for (const qualifiedId of qualifiedPageIds) {
 							const sepIdx = qualifiedId.indexOf(":");
 							const col =
-								sepIdx >= 0
-									? qualifiedId.slice(0, sepIdx)
-									: pageCollections[0];
+								sepIdx >= 0 ? qualifiedId.slice(0, sepIdx) : pageCollections[0];
 							const eid =
 								sepIdx >= 0 ? qualifiedId.slice(sepIdx + 1) : qualifiedId;
 							dirtyPathnames.add(entryIdToPathname(col, eid));
@@ -280,9 +281,7 @@ export async function computeDirtyPathnames(opts: {
 						cleanupPathnames.add(entryIdToPathname(collectionName, entryId));
 					}
 				} else {
-					logger.info(
-						`Collection "${collectionName}" deleted — full rebuild.`,
-					);
+					logger.info(`Collection "${collectionName}" deleted — full rebuild.`);
 					return null;
 				}
 			}

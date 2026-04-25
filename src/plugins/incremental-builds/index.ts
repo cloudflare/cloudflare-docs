@@ -136,9 +136,7 @@ export default function incrementalBuilds(
 					...defaultPrerenderer,
 					async getStaticPaths() {
 						const all = await defaultPrerenderer.getStaticPaths();
-						return all.filter(({ pathname }) =>
-							dirtyPathnames.has(pathname),
-						);
+						return all.filter(({ pathname }) => dirtyPathnames.has(pathname));
 					},
 				}));
 			},
