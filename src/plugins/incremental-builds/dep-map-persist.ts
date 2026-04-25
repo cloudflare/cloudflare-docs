@@ -32,7 +32,6 @@ interface DepMap {
 const DEP_MAP_FILE = "dep-map.json";
 const DEP_MAP_VERSION = 2;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function buildDependencyMapForPersist(opts: {
 	root: string;
 	currentDataStore: Map<string, Map<string, any>>;

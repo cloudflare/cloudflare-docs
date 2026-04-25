@@ -145,7 +145,6 @@ export async function persistBuildMetadata(opts: {
 	// Build dep map if partialResolver is configured but no dep map was provided
 	if (!depMap && options.partialResolver) {
 		const currentDataStoreRaw = fs.readFileSync(currentDataStorePath, "utf-8");
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const currentDataStore = devalue.unflatten(
 			JSON.parse(currentDataStoreRaw),
 		) as Map<string, Map<string, any>>;
