@@ -10,7 +10,14 @@ import fs from "node:fs";
 import path from "node:path";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import { mdxFromMarkdown } from "mdast-util-mdx";
-import type { MdxJsxFlowElement, MdxJsxTextElement } from "mdast-util-mdx-jsx";
+interface MdxJsxNode {
+	name: string | null;
+	attributes: Array<{
+		type: string;
+		name: string;
+		value: unknown;
+	}>;
+}
 import { mdxjs } from "micromark-extension-mdxjs";
 import { visit } from "unist-util-visit";
 import type { AstroIntegrationLogger } from "astro";
@@ -199,7 +206,7 @@ function scanMdxDeps(
 	});
 
 	visit(tree, ["mdxJsxFlowElement", "mdxJsxTextElement"], (node) => {
-		const jsxNode = node as MdxJsxFlowElement | MdxJsxTextElement;
+		const jsxNode = node as MdxJsxNode;
 		if (!jsxNode.name) return;
 		const props: Record<string, string> = {};
 		for (const attr of jsxNode.attributes) {
