@@ -4,7 +4,6 @@ Complete all of the following steps yourself. Do not ask the user to run these c
 
 - Install Cloudflare Skills
 - Install the Cloudflare MCP servers
-- Identify what the user needs to build or deploy on Cloudflare next
 
 ---
 
@@ -18,7 +17,7 @@ npx -y skills add cloudflare/skills --skill '*' --yes --global
 
 ## Install Cloudflare MCP servers
 
-Register these two servers using the method for your agent. Go directly to the config path — do not search the filesystem for it.
+Register these two servers using the default config location for your agent:
 
 ### Claude Code
 
@@ -34,11 +33,13 @@ codex mcp add cloudflare --url https://mcp.cloudflare.com/mcp
 codex mcp add cloudflare-docs --url https://docs.mcp.cloudflare.com/mcp
 ```
 
-### OpenCode
+### OpenCode — `~/.config/opencode/opencode.jsonc`
 
-```
-opencode mcp add cloudflare --url https://mcp.cloudflare.com/mcp
-opencode mcp add cloudflare-docs --url https://docs.mcp.cloudflare.com/mcp
+Add under `"mcp"`:
+
+```json
+"cloudflare": { "type": "remote", "url": "https://mcp.cloudflare.com/mcp", "enabled": true },
+"cloudflare-docs": { "type": "remote", "url": "https://docs.mcp.cloudflare.com/mcp", "enabled": true }
 ```
 
 ### Windsurf — `~/.codeium/windsurf/mcp_config.json`
@@ -61,19 +62,28 @@ Add to `.cursor/mcp.json` (Cursor), `.vscode/mcp.json` (Copilot), or your agent'
 
 The `cloudflare` server uses OAuth — the first tool call opens a browser for the user to authorize. The `cloudflare-docs` server is public and requires no authentication.
 
-Once registered, tell the user:
+Once done, tell the user:
 
 ```
-★ ★ ★  RESTART REQUIRED  ★ ★ ★
-Please restart your agent for the Cloudflare MCP servers to take effect.
+┌─ Cloudflare Agent Setup Complete ────────────────────┐
+│  ✓ Skills  <path>                                    │
+│  ✓ MCPs    <path>                                    │
+│                                                      │
+│  ⚡ Restart your agent to load the MCP servers       │
+└──────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## After setup
+## Resources
 
-If you get stuck on install, refer to the official READMEs:
+For MCP setup guides and troubleshooting, refer to each agent's official documentation:
 
+- Claude Code: `https://docs.anthropic.com/en/docs/claude-code/mcp`
+- Cursor: `https://cursor.com/docs/mcp`
+- Windsurf: `https://docs.windsurf.com/windsurf/cascade/mcp`
+- OpenCode: `https://opencode.ai/docs/mcp-servers/`
+- GitHub Copilot (VS Code): `https://code.visualstudio.com/docs/copilot/customization/mcp-servers`
 - Skills: `https://github.com/cloudflare/skills`
 - Cloudflare API MCP server (Code Mode): `https://github.com/cloudflare/mcp`
 - Other Cloudflare MCP servers: `https://github.com/cloudflare/mcp-server-cloudflare`
