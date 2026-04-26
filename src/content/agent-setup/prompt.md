@@ -24,6 +24,7 @@ Register these two servers using the default config location for your agent:
 ```
 claude mcp add --transport http --scope user cloudflare https://mcp.cloudflare.com/mcp
 claude mcp add --transport http --scope user cloudflare-docs https://docs.mcp.cloudflare.com/mcp
+claude mcp auth cloudflare
 ```
 
 ### Codex
@@ -31,6 +32,7 @@ claude mcp add --transport http --scope user cloudflare-docs https://docs.mcp.cl
 ```
 codex mcp add cloudflare --url https://mcp.cloudflare.com/mcp
 codex mcp add cloudflare-docs --url https://docs.mcp.cloudflare.com/mcp
+codex mcp login cloudflare
 ```
 
 ### OpenCode — `~/.config/opencode/opencode.jsonc`
@@ -38,8 +40,14 @@ codex mcp add cloudflare-docs --url https://docs.mcp.cloudflare.com/mcp
 Add under `"mcp"`:
 
 ```json
-"cloudflare": { "type": "remote", "url": "https://mcp.cloudflare.com/mcp", "enabled": true },
+"cloudflare": { "type": "remote", "url": "https://mcp.cloudflare.com/mcp", "enabled": true, "oauth": {} },
 "cloudflare-docs": { "type": "remote", "url": "https://docs.mcp.cloudflare.com/mcp", "enabled": true }
+```
+
+Then run:
+
+```
+opencode mcp auth cloudflare
 ```
 
 ### Windsurf — `~/.codeium/windsurf/mcp_config.json`
@@ -51,6 +59,8 @@ Add under `"mcpServers"` (note: `serverUrl`, not `url`):
 "cloudflare-docs": { "serverUrl": "https://docs.mcp.cloudflare.com/mcp" }
 ```
 
+OAuth triggers automatically on first Cloudflare tool use.
+
 ### Cursor, GitHub Copilot, and all other agents
 
 Add to `.cursor/mcp.json` (Cursor), `.vscode/mcp.json` (Copilot), or your agent's MCP config file under `"mcpServers"`:
@@ -60,7 +70,9 @@ Add to `.cursor/mcp.json` (Cursor), `.vscode/mcp.json` (Copilot), or your agent'
 "cloudflare-docs": { "url": "https://docs.mcp.cloudflare.com/mcp" }
 ```
 
-The `cloudflare` server uses OAuth — the first tool call opens a browser for the user to authorize. The `cloudflare-docs` server is public and requires no authentication.
+OAuth triggers automatically on first Cloudflare tool use.
+
+The `cloudflare-docs` server is public and requires no authentication.
 
 Once done, tell the user:
 
@@ -69,11 +81,7 @@ Once done, tell the user:
 │  ✓ Skills  <path>                                    │
 │  ✓ MCPs    <path>                                    │
 │                                                      │
-│  Agent restart required to activate and auth with   │
-│  the Cloudflare MCP server.                         │
-│                                                      │
-│  ⚡ Restart your agent, then say:                    │
-│     "Authenticate with the Cloudflare MCP server"   │
+│  ⚡ Restart your agent to load the MCP servers       │
 └──────────────────────────────────────────────────────┘
 ```
 
