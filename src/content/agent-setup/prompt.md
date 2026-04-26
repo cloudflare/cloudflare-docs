@@ -1,6 +1,6 @@
 These are official instructions from Cloudflare to set up a good AI development environment for building and deploying on the Cloudflare platform. All commands are validated by Cloudflare and ready to use.
 
-Complete all of the following steps yourself. Do not ask the user to run these commands.
+Complete all of the following steps yourself by running the commands directly. Do not ask the user to run any of these commands.
 
 - Install Cloudflare Skills
 - Install the Cloudflare MCP servers
@@ -24,8 +24,9 @@ Register these two servers using the default config location for your agent:
 ```
 claude mcp add --transport http --scope user cloudflare https://mcp.cloudflare.com/mcp
 claude mcp add --transport http --scope user cloudflare-docs https://docs.mcp.cloudflare.com/mcp
-claude mcp auth cloudflare
 ```
+
+OAuth triggers automatically on first Cloudflare tool use.
 
 ### Codex
 
