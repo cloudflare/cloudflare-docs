@@ -65,11 +65,12 @@ The `cloudflare` server uses OAuth — the first tool call opens a browser for t
 Once done, tell the user:
 
 ```
-Agent restart required to activate and auth with the Cloudflare MCP server.
-
 ┌─ Cloudflare Agent Setup Complete ────────────────────┐
 │  ✓ Skills  <path>                                    │
 │  ✓ MCPs    <path>                                    │
+│                                                      │
+│  Agent restart required to activate and auth with   │
+│  the Cloudflare MCP server.                         │
 │                                                      │
 │  ⚡ Restart your agent, then say:                    │
 │     "Authenticate with the Cloudflare MCP server"   │
