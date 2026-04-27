@@ -1,8 +1,11 @@
 ---
 title: Query vectors
+description: Search a Vectorize index for similar vectors using queries, metadata filters, and namespaces.
 pcx_content_type: concept
 sidebar:
   order: 5
+products:
+  - vectorize
 ---
 
 Querying an index, or vector search, enables you to search an index by providing an input vector and returning the nearest vectors based on the [configured distance metric](/vectorize/best-practices/create-indexes/#distance-metrics).
@@ -85,7 +88,7 @@ High-precision scoring is enabled by setting `returnValues: true` on your query.
 
 ## Workers AI
 
-If you are generating embeddings from a [Workers AI](/workers-ai/models/#text-embeddings) text embedding model, the response type from `env.AI.run()` is an object that includes both the `shape` of the response vector - e.g. `[1,768]` - and the vector `data` as an array of vectors:
+If you are generating embeddings from a [Workers AI](/workers-ai/models/?tasks=Text+Embeddings) text embedding model, the response type from `env.AI.run()` is an object that includes both the `shape` of the response vector - e.g. `[1,768]` - and the vector `data` as an array of vectors:
 
 ```ts
 interface EmbeddingResponse {

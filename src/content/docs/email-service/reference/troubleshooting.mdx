@@ -1,0 +1,231 @@
+---
+title: Troubleshoot SPF, DKIM and DMARC
+description: Diagnose and fix SPF, DKIM, and DMARC authentication issues for Email Service delivery.
+pcx_content_type: troubleshooting
+sidebar:
+  order: 2
+head:
+  - tag: title
+    content: Troubleshooting email authentication (SPF, DKIM, DMARC)
+products:
+  - email-service
+---
+
+import { DashButton } from "~/components";
+
+Email authentication is critical for successful email delivery. This guide helps you troubleshoot common SPF, DKIM, and DMARC issues with Email Service.
+
+## SPF (Sender Policy Framework) issues
+
+### Multiple SPF records
+
+Having multiple SPF records on your domain is not allowed and will prevent Email Service from working properly. If your domain has multiple SPF records:
+
+1. Log in to the Cloudflare dashboard, select your account and domain, then go to **DNS** > **Records**.
+
+   <DashButton url="/?to=/:account/:zone/dns/records" />
+
+2. Look for multiple TXT records starting with `v=spf1`.
+3. Delete the incorrect SPF record.
+4. Ensure you have the correct SPF records:
+   - For **Email Routing** (root domain): `v=spf1 include:_spf.mx.cloudflare.net ~all`
+   - For **Email Sending** (`cf-bounce` subdomain): `v=spf1 include:_spf.mx.cloudflare.net ~all`
+
+### Missing SPF record
+
+If emails are being rejected due to SPF failures:
+
+1. Log in to the Cloudflare dashboard, select your account and domain, then go to **DNS** > **Records**.
+
+   <DashButton url="/?to=/:account/:zone/dns/records" />
+
+2. Add TXT records for the appropriate service:
+   - For **Email Routing**: **Name**: `@` (root domain), **Content**: `v=spf1 include:_spf.mx.cloudflare.net ~all`
+   - For **Email Sending**: **Name**: `cf-bounce`, **Content**: `v=spf1 include:_spf.mx.cloudflare.net ~all`
+3. If you already have an SPF record on the root domain, modify it to include `include:_spf.mx.cloudflare.net`
+
+### SPF record syntax errors
+
+Common SPF record syntax issues:
+
+- **Missing version**: SPF records must start with `v=spf1`
+- **Multiple includes**: Combine multiple services using separate `include:` statements
+- **Too many DNS lookups**: SPF records are limited to 10 DNS lookups total
+- **Incorrect all mechanism**: Use `~all` (SoftFail) or `-all` (Fail), not `+all`
+
+**Correct format:**
+
+```txt
+v=spf1 include:_spf.mx.cloudflare.net include:other-service.com ~all
+```
+
+### Checking SPF records
+
+Verify your SPF record is configured correctly:
+
+```sh
+dig TXT example.com +short | grep spf
+```
+
+Expected result should include:
+
+```txt
+"v=spf1 include:_spf.mx.cloudflare.net ~all"
+```
+
+## DKIM (DomainKeys Identified Mail) issues
+
+### Missing DKIM records
+
+Email Service automatically generates DKIM keys for your domain, but the DNS records must be properly configured. Email Sending and Email Routing use separate DKIM selectors:
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Compute** > **Email Service**.
+2. Select your domain.
+3. Check the **Settings** page for the appropriate service:
+   - **Email Sending**: Go to **Email Sending** > **Settings** to find the sending DKIM record (`cf-bounce._domainkey`).
+   - **Email Routing**: Go to **Email Routing** > **Settings** to find the routing DKIM record (`cf2024-1._domainkey`).
+4. Copy the DKIM record details.
+5. Go to **DNS** > **Records** and add the DKIM TXT record with the correct selector name and public key.
+
+### DKIM key rotation
+
+If you need to rotate DKIM keys:
+
+1. Contact Cloudflare support to request key rotation.
+2. Update your DNS records with the new DKIM key when provided.
+3. Monitor email delivery during the transition period.
+
+### Checking DKIM records
+
+Verify your DKIM records are configured correctly:
+
+```sh
+# Check Email Sending DKIM
+dig TXT cf-bounce._domainkey.example.com +short
+
+# Check Email Routing DKIM
+dig TXT cf2024-1._domainkey.example.com +short
+```
+
+Expected result for either:
+
+```txt
+"v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA..."
+```
+
+### DKIM signature validation failures
+
+If DKIM validation is failing:
+
+1. Verify the DKIM record exists in DNS
+2. Check that the record name matches the correct selector:
+   - Email Sending: `cf-bounce._domainkey.yourdomain.com`
+   - Email Routing: `cf2024-1._domainkey.yourdomain.com`
+3. Ensure there are no extra spaces or characters in the DNS record
+4. Wait for DNS propagation (up to 48 hours)
+5. Use online DKIM validators to test your configuration
+
+## DMARC (Domain-based Message Authentication, Reporting & Conformance) issues
+
+### Missing DMARC policy
+
+While not required, DMARC significantly improves email deliverability:
+
+1. Go to **DNS** > **Records** in the Cloudflare dashboard.
+
+   <DashButton url="/?to=/:account/:zone/dns/records" />
+
+2. Add a TXT record:
+   - **Name**: `_dmarc`
+   - **Content**: `v=DMARC1; p=quarantine; rua=mailto:dmarc@example.com`
+
+### DMARC policy too strict
+
+If a strict DMARC policy is causing delivery issues:
+
+1. Start with a lenient policy: `p=none` (monitor only)
+2. Monitor DMARC reports for several weeks
+3. Gradually increase strictness: `p=quarantine` then `p=reject`
+4. Ensure both SPF and DKIM are properly aligned
+
+### DMARC alignment issues
+
+DMARC requires either SPF or DKIM alignment:
+
+**SPF alignment**: The domain in the `Mail From` header must align with the domain in the `From` header
+**DKIM alignment**: The DKIM signature domain must align with the domain in the `From` header
+
+Email Service ensures proper alignment automatically.
+
+### Checking DMARC records
+
+Verify your DMARC record:
+
+```sh
+dig TXT _dmarc.example.com +short
+```
+
+Example result:
+
+```txt
+"v=DMARC1; p=quarantine; rua=mailto:dmarc@example.com; ruf=mailto:dmarc@example.com; sp=quarantine"
+```
+
+## Local development issues
+
+### "Cannot serialize value: [object ArrayBuffer]"
+
+This error occurs when passing `ArrayBuffer` content in attachment fields during local development with `wrangler dev`. The local email binding simulator cannot serialize `ArrayBuffer` values.
+
+**Solution:** Deploy your Worker with `npx wrangler deploy` and test binary attachments (images, PDFs) against the deployed version. String content for text-based attachments works normally in local development. Refer to [local development for email sending](/email-service/local-development/sending/#known-limitations) for more details.
+
+## Common delivery issues
+
+### Email going to spam
+
+If emails are going to spam folders:
+
+1. Check authentication: Ensure SPF, DKIM, and DMARC are properly configured
+2. Domain reputation: New domains may have lower reputation initially
+3. Content quality: Avoid spam trigger words and excessive HTML formatting
+4. Sender reputation: Monitor bounce rates and complaint rates
+5. List hygiene: Remove bounced and invalid email addresses
+
+### High bounce rates
+
+To reduce bounce rates:
+
+1. Validate email addresses: Use real-time validation
+2. Maintain clean lists: Remove hard bounces immediately
+3. Monitor feedback loops: Subscribe to ISP feedback loops
+4. Gradual warm-up: For new domains, start with small volumes
+
+### ISP-specific issues
+
+Different ISPs have specific requirements:
+
+- Gmail: Requires strong domain reputation and authentication
+- Outlook/Hotmail: Sensitive to content and sender reputation
+- Yahoo: Strict DMARC enforcement
+- Corporate: Often have strict filtering rules
+
+## Testing tools
+
+Use these tools to validate your email authentication setup:
+
+1. MX Toolbox: Check SPF, DKIM, and DMARC records
+2. DMARC Analyzer: Validate DMARC policy and alignment
+3. Mail Tester: Test email deliverability and authentication
+4. Google Admin Toolbox: Google's email authentication checker
+
+## Getting help
+
+If you continue to experience authentication issues:
+
+1. Check the [Email Service analytics](/email-service/observability/metrics-analytics/) for delivery metrics
+2. Review bounce messages for specific error codes
+3. Contact [Cloudflare Support](https://dash.cloudflare.com/?to=/:account/support) with:
+   - Domain name
+   - Example email headers
+   - Specific error messages
+   - SPF, DKIM, and DMARC record configurations

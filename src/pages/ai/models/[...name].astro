@@ -1,0 +1,20 @@
+---
+import type { GetStaticPaths } from "astro";
+import ModelDetailPage from "~/components/models/ModelDetailPage.astro";
+import { getResolvedModels } from "~/util/model-resolver";
+
+export const getStaticPaths = (async () => {
+	const models = await getResolvedModels();
+
+	// Generate pages at full model ID path only (e.g., "@cf/moonshotai/kimi-k2.5")
+	// Short slugs are handled by /workers-ai/models/[...name].astro for legacy URLs
+	return models.map((model) => ({
+		params: { name: model.slug },
+		props: { model },
+	}));
+}) satisfies GetStaticPaths;
+
+const { model } = Astro.props;
+---
+
+<ModelDetailPage model={model} />

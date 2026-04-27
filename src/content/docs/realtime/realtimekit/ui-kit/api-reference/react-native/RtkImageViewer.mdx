@@ -1,0 +1,40 @@
+---
+pcx_content_type: reference
+title: RtkImageViewer
+description: API reference for RtkImageViewer component (React Native Library)
+---
+
+Image viewer with fullscreen toggle and download functionality for chat images.
+
+## Properties
+
+| Property      | Type                           | Required | Default           | Description                                         |
+| ------------- | ------------------------------ | -------- | ----------------- | --------------------------------------------------- |
+| `image`       | `any`                          | ✅       | -                 | The image message object                            |
+| `size`        | `'lg' \| 'md' \| 'sm' \| 'xl'` | ❌       | -                 | Size variant                                        |
+| `iconPack`    | `IconPack`                     | ❌       | `defaultIconPack` | Custom icon pack                                    |
+| `t`           | `RtkI18n`                      | ❌       | -                 | i18n translation function                           |
+| `isContinued` | `boolean`                      | ❌       | `false`           | Whether this message continues from the same sender |
+| `_id`         | `string \| number`             | ❌       | -                 | Unique identifier for fullscreen tracking           |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkImageViewer } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkImageViewer image={imageMessage} />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkImageViewer } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkImageViewer image={imageMessage} size="md" _id="viewer-1" />;
+}
+```

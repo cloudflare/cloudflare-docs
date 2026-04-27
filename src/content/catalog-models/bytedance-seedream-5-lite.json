@@ -1,0 +1,221 @@
+{
+	"model_id": "bytedance/seedream-5-lite",
+	"provider_id": "bytedance",
+	"name": "Seedream 5 Lite",
+	"description": "Seedream 5 Lite is a lighter, faster version of the Seedream 5 family with multi-reference and batch generation support.",
+	"task": "Text-to-Image",
+	"tags": [
+		"Image Generation",
+		"Multi-Reference",
+		"Batch",
+		"Fast"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Generation",
+			"description": "Basic text-to-image generation",
+			"input": {
+				"prompt": "A cute robot watering plants in a sunny greenhouse"
+			},
+			"output": {
+				"images": [
+					"https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-5-lite/simple-generation-0.jpeg"
+				]
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5-lite',\n  {\n    prompt: 'A cute robot watering plants in a sunny greenhouse',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "High Resolution PNG",
+			"description": "3K quality with PNG output",
+			"input": {
+				"prompt": "A detailed technical blueprint of a futuristic spacecraft with annotations and measurements",
+				"size": "3K",
+				"aspect_ratio": "16:9",
+				"output_format": "png"
+			},
+			"output": {
+				"images": [
+					"https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-5-lite/high-resolution-png-0.png"
+				]
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5-lite',\n  {\n    prompt:\n      'A detailed technical blueprint of a futuristic spacecraft with annotations and measurements',\n    size: '3K',\n    aspect_ratio: '16:9',\n    output_format: 'png',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Portrait Photo",
+			"description": "JPEG output for photographs",
+			"input": {
+				"prompt": "A professional headshot portrait with soft studio lighting and a neutral gray background",
+				"size": "2K",
+				"aspect_ratio": "3:4",
+				"output_format": "jpeg"
+			},
+			"output": {
+				"images": [
+					"https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-5-lite/portrait-photo-0.jpeg"
+				]
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5-lite',\n  {\n    prompt:\n      'A professional headshot portrait with soft studio lighting and a neutral gray background',\n    size: '2K',\n    aspect_ratio: '3:4',\n    output_format: 'jpeg',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Sequential Comic",
+			"description": "Generate sequential comic panels",
+			"input": {
+				"prompt": "A four-panel comic strip showing a cat discovering a cardboard box and deciding to sit in it",
+				"aspect_ratio": "4:3",
+				"sequential_image_generation": "auto",
+				"max_images": 4
+			},
+			"output": {
+				"images": [
+					"https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-5-lite/sequential-comic-0.jpeg"
+				]
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5-lite',\n  {\n    prompt:\n      'A four-panel comic strip showing a cat discovering a cardboard box and deciding to sit in it',\n    aspect_ratio: '4:3',\n    sequential_image_generation: 'auto',\n    max_images: 4,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Image Variation",
+			"description": "Create variation from reference",
+			"input": {
+				"prompt": "Create a variation of this image in a watercolor painting style",
+				"image_input": [
+					"https://replicate.delivery/xezq/jCypj4MeXYUiRyq7nfgm8z1OvFZF81wh4FznutDsZOuJz0YWA/tmp1iukn307.jpg"
+				],
+				"size": "2K",
+				"aspect_ratio": "match_input_image"
+			},
+			"output": {
+				"images": [
+					"https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-5-lite/image-variation-0.jpeg"
+				]
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-5-lite',\n  {\n    prompt: 'Create a variation of this image in a watercolor painting style',\n    image_input: [\n      'https://replicate.delivery/xezq/jCypj4MeXYUiRyq7nfgm8z1OvFZF81wh4FznutDsZOuJz0YWA/tmp1iukn307.jpg',\n    ],\n    size: '2K',\n    aspect_ratio: 'match_input_image',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://seed.bytedance.com/en/seedream5_0_lite",
+	"terms": null,
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/bytedance/seedream-5-lite.png",
+	"metadata": {
+		"Max Images": "15",
+		"Multi-Reference": "Yes",
+		"Output Formats": "JPEG, PNG, WebP"
+	},
+	"created_at": "2026-04-08 22:07:41",
+	"default_example": null,
+	"code_snippets": [],
+	"zdr": false,
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string"
+				},
+				"image_input": {
+					"maxItems": 14,
+					"type": "array",
+					"items": {
+						"type": "string",
+						"format": "uri"
+					}
+				},
+				"size": {
+					"type": "string",
+					"enum": [
+						"2K",
+						"3K"
+					]
+				},
+				"aspect_ratio": {
+					"type": "string",
+					"enum": [
+						"match_input_image",
+						"1:1",
+						"4:3",
+						"3:4",
+						"16:9",
+						"9:16",
+						"3:2",
+						"2:3",
+						"21:9"
+					]
+				},
+				"sequential_image_generation": {
+					"type": "string",
+					"enum": [
+						"disabled",
+						"auto"
+					]
+				},
+				"max_images": {
+					"type": "integer",
+					"minimum": 1,
+					"maximum": 15
+				},
+				"output_format": {
+					"type": "string",
+					"enum": [
+						"png",
+						"jpeg"
+					]
+				}
+			},
+			"required": [
+				"prompt"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"images": {
+					"minItems": 1,
+					"type": "array",
+					"items": {
+						"type": "string",
+						"format": "uri"
+					}
+				}
+			},
+			"required": [
+				"images"
+			],
+			"additionalProperties": false
+		}
+	}
+}

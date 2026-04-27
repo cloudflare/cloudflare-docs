@@ -1,19 +1,23 @@
 import { reference, type SchemaContext } from "astro:content";
-import { z } from "astro:schema";
+import { z } from "astro/zod";
 
-export const changelogSchema = ({ image }: SchemaContext) =>
+export const changelogSchema = (_context: SchemaContext) =>
 	z.object({
 		title: z.string(),
 		description: z.string(),
 		date: z.coerce.date(),
-		scheduled: z.boolean().default(false),
+		publish_future_dated_entry: z
+			.boolean()
+			.default(false)
+			.describe(
+				"Boolean value to describe whether a future-dated entry is published. If false, the entry will only be published after the date in its frontmatter.",
+			),
 		products: z
 			.array(reference("directory"))
 			.default([])
 			.describe(
 				"An array of directory entries to associate this changelog entry with. You may omit the entry named after the folder this entry is in.",
 			),
-		preview_image: image().optional(),
 		hidden: z
 			.boolean()
 			.default(false)

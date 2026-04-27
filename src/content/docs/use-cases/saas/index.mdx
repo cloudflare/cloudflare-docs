@@ -1,0 +1,85 @@
+---
+pcx_content_type: overview
+title: SaaS platforms
+description: Build multi-tenant SaaS platforms with Cloudflare SSL for SaaS, Workers for Platforms, and per-tenant storage.
+head:
+  - tag: title
+    content: SaaS platforms · Use cases
+sidebar:
+  order: 7
+---
+
+import { CardGrid, DirectoryListing, LinkTitleCard } from "~/components";
+
+Build multi-tenant platforms with custom domains, isolated compute, and per-customer configuration. Cloudflare SSL for SaaS provisions and renews SSL certificates for every customer hostname. Workers for Platforms runs customer code in isolated V8 environments. D1, KV, and R2 provide per-tenant data storage. Workers Analytics Engine and Logpush track usage for billing and compliance.
+
+<DirectoryListing />
+
+## Architecture patterns
+
+### Custom domains with SSL
+
+Allow customers to use their own domains with automatic certificate management:
+
+- **SSL for SaaS** provisions and renews certificates for every custom hostname
+- **Cloudflare for Platforms** routes customer domains to your platform with per-tenant configuration
+
+### Multi-tenant compute
+
+Let customers deploy their own code on your platform:
+
+- **Workers for Platforms** runs customer code in isolated V8 environments
+- **Dispatch namespaces** route requests to the correct tenant Worker based on hostname or path
+- **SSL for SaaS** handles custom domains for each tenant
+
+### Full multi-tenant platform
+
+Combine custom domains, tenant compute, and isolated storage:
+
+- **SSL for SaaS** manages customer hostnames and certificates
+- **Workers for Platforms** runs per-tenant application logic
+- **D1** or **KV** stores per-tenant data with database-level or key-prefix isolation
+- **R2** stores per-tenant files and assets
+
+---
+
+## Prerequisites
+
+### Create a new application
+
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up).
+- A domain [added to Cloudflare](/fundamentals/manage-domains/add-site/) for your platform (for example, `yourplatform.com`). SSL for SaaS uses this as the provider domain against which customer custom hostnames are issued. Refer to [Enable Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/start/enable/).
+- A [Workers Paid plan](/workers/platform/pricing/) for Workers for Platforms. Dispatch namespaces, which route requests to customer-specific Workers, are not available on the free tier.
+- [Node.js](https://nodejs.org/) (version 16.17.0 or later) and [Wrangler](/workers/wrangler/install-and-update/) installed.
+
+### Use an existing application
+
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up).
+- A domain [added to Cloudflare](/fundamentals/manage-domains/add-site/) for your platform. This is your domain, not your customers' domains. SSL for SaaS issues customer custom hostnames against this provider domain. Refer to [Enable Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/start/enable/).
+- [Node.js](https://nodejs.org/) (version 16.17.0 or later) and [Wrangler](/workers/wrangler/install-and-update/) if you plan to add Workers for Platforms or manage bindings programmatically.
+
+---
+
+## Related resources
+
+<CardGrid>
+
+<LinkTitleCard title="SSL for SaaS documentation" href="/cloudflare-for-platforms/cloudflare-for-saas/" icon="ssl">
+
+Complete documentation for managing custom hostnames and certificates.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="Workers for Platforms" href="/cloudflare-for-platforms/workers-for-platforms/" icon="workers">
+
+Let customers deploy their own code on your platform.
+
+</LinkTitleCard>
+
+<LinkTitleCard title="SaaS case studies" href="https://www.cloudflare.com/case-studies/" icon="open-book">
+
+Explore how SaaS companies build on Cloudflare.
+
+</LinkTitleCard>
+
+</CardGrid>

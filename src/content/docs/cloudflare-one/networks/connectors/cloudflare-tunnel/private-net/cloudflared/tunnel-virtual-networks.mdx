@@ -1,6 +1,11 @@
 ---
 pcx_content_type: how-to
+description: Virtual networks in Zero Trust networking.
+products:
+  - cloudflare-one
 title: Virtual networks
+tags:
+  - Private networks
 sidebar:
   order: 5
 ---
@@ -9,7 +14,7 @@ import { Details, Render, Tabs, TabItem } from "~/components";
 
 <Details header="Feature availability">
 
-| [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| [Client modes](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | <ul><li> Traffic and DNS mode</li><li> Traffic only mode </li></ul>  | All plans                                                     |
 
@@ -39,7 +44,7 @@ Here are a few scenarios where virtual networks may prove useful:
 ## Prerequisites
 
 - [Install `cloudflared`](/cloudflare-one/networks/connectors/cloudflare-tunnel/downloads/) on each private network.
-- [Deploy the WARP client](/cloudflare-one/team-and-resources/devices/warp/deployment/) on user devices.
+- [Deploy the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/) on user devices.
 
 ## Create a virtual network
 
@@ -52,7 +57,7 @@ In this example, "private network" refers to a distinct environment (such as sta
       1. Create two unique virtual networks:
          1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Routes** > **Virtual networks**.
 				 :::note
-				 The **Virtual networks** card will only appear if a CIDR route exists in your account. If you do not already have a route, you can navigate to **Virtual networks** using this [direct link](https://one.dash.cloudflare.com/?to=/:account/networks/routes/cidr/vnets).
+				 The **Virtual networks** card will only appear if a CIDR route exists in your account. If you do not already have a route, you can navigate to **Virtual networks** using this [direct link](https://dash.cloudflare.com/?to=/:account/one/networks/routes/cidr/vnets).
 				 :::
          2. Select **Create virtual network**.
          3. Name your virtual network `staging-vnet` and select **Save**.
@@ -67,7 +72,7 @@ In this example, "private network" refers to a distinct environment (such as sta
          7. Save the tunnel.
          8. Repeat Steps 2a-2g to create another tunnel called `Production tunnel`. Be sure to install the connector within your production environment and assign the route to *production-vnet*.
 
-      We now have two overlapping IP addresses routed over `staging-vnet` and `production-vnet` respectively. You can use the Cloudflare WARP client to [switch between virtual networks](#connect-to-a-virtual-network).
+      We now have two overlapping IP addresses routed over `staging-vnet` and `production-vnet` respectively. You can use the Cloudflare One Client to [switch between virtual networks](#connect-to-a-virtual-network).
 
   </TabItem>
 
@@ -217,7 +222,7 @@ In this example, "private network" refers to a distinct environment (such as sta
 
           8. Within your production environment, repeat Steps 6 and 7 for `production-tunnel`.
 
-          You can use now the Cloudflare WARP client to [switch between virtual networks](#connect-to-a-virtual-network).
+          You can use now the Cloudflare One Client to [switch between virtual networks](#connect-to-a-virtual-network).
 
   </TabItem>
 </Tabs>
@@ -270,11 +275,24 @@ In this example, "private network" refers to a distinct environment (such as sta
 
 ### Windows, macOS, and Linux
 
-1. Open the WARP client.
+<Tabs>
+<TabItem label="Version 2026.2+">
+
+1. Open the Cloudflare One Client.
+2. Go to **Home**.
+3. In the **VNET** dropdown, choose the virtual network you want to connect to (for example, `staging-vnet`).
+
+</TabItem>
+<TabItem label="Version 2026.1 and earlier">
+
+1. Open the Cloudflare One Client.
 2. Go to **Settings** > **Traffic and DNS mode** > **Virtual Networks**.
 3. Choose the virtual network you want to connect to, for example `staging-vnet`.
 
-When you visit `10.128.0.3/32`, WARP will route your request to the staging environment.
+</TabItem>
+</Tabs>
+
+When you visit `10.128.0.3/32`, the Cloudflare One Client will route your request to the staging environment.
 
 ### iOS, Android, and ChromeOS
 
@@ -282,4 +300,4 @@ When you visit `10.128.0.3/32`, WARP will route your request to the staging envi
 2. Go to **Advanced** > **Connection options** > **Virtual networks**.
 3. Choose the virtual network you want to connect to, for example `staging-vnet`.
 
-When you visit `10.128.0.3/32`, WARP will route your request to the staging environment.
+When you visit `10.128.0.3/32`, the Cloudflare One Client will route your request to the staging environment.

@@ -1,0 +1,150 @@
+---
+title: Send emails
+description: Send your first email using the Cloudflare Email Service REST API or Workers binding.
+pcx_content_type: get-started
+summary: |
+  Send your first email using the REST API or Workers binding.
+sidebar:
+  order: 1
+products:
+  - email-service
+---
+
+import {
+	Render,
+	PackageManagers,
+	Steps,
+	Tabs,
+	TabItem,
+	WranglerConfig,
+} from "~/components";
+
+Send emails from your applications using Cloudflare Email Service. You can use the **REST API** from any platform or the **Workers binding** for applications built on Cloudflare Workers.
+
+:::note
+You must be using Cloudflare DNS to use Email Service.
+:::
+
+## Prerequisites
+
+<Render file="prereqs" product="workers" />
+
+## Set up your domain
+
+<Render file="domain-setup-sending" product="email-service" />
+
+## Send your first email with the REST API
+
+Send an email with a single `curl` command. Replace `<ACCOUNT_ID>` with your [Cloudflare account ID](/fundamentals/account/find-account-and-zone-ids/) and `<API_TOKEN>` with an [API token](/fundamentals/api/get-started/create-token/).
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/email/sending/send" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "to": "recipient@example.com",
+    "from": "welcome@yourdomain.com",
+    "subject": "Welcome to our service!",
+    "html": "<h1>Welcome!</h1><p>Thanks for signing up.</p>",
+    "text": "Welcome! Thanks for signing up."
+  }'
+```
+
+A successful response includes the delivery status for each recipient:
+
+```json
+{
+  "success": true,
+  "errors": [],
+  "messages": [],
+  "result": {
+    "delivered": ["recipient@example.com"],
+    "permanent_bounces": [],
+    "queued": []
+  }
+}
+```
+
+For more details, see the [REST API reference](/email-service/api/send-emails/rest-api/).
+
+## Send your first email with Workers
+
+If you are building on Cloudflare Workers, you can use the Workers binding for native email sending. Start by creating a new Worker project.
+
+1.  Create a new Worker project:
+
+    <PackageManagers
+    	type="create"
+    	pkg="cloudflare@latest"
+    	args="email-service-tutorial"
+    />
+
+    When prompted, select **"Hello World" Worker** as the template.
+
+2.  Add the email binding to your Wrangler configuration file:
+
+    <WranglerConfig>
+
+    ```toml
+    [[send_email]]
+    name = "EMAIL"
+    remote = true
+    ```
+
+    </WranglerConfig>
+
+3.  Create your Worker code in `src/index.ts`:
+
+    ```ts
+    // Configuration - Update these values
+    const YOUR_DOMAIN = "yourdomain.com"; // Replace with your verified domain
+    const RECIPIENT_EMAIL = "recipient@example.com"; // Replace with your email to receive test emails
+
+    export default {
+    	async fetch(request: Request, env: Env): Promise<Response> {
+    		// Send a welcome email
+    		const response = await env.EMAIL.send({
+    			to: RECIPIENT_EMAIL,
+    			from: `welcome@${YOUR_DOMAIN}`,
+    			subject: "Welcome to our service!",
+    			html: "<h1>Welcome!</h1><p>Thanks for signing up.</p>",
+    			text: "Welcome! Thanks for signing up.",
+    		});
+
+    		return new Response(`Email sent: ${response.messageId}`);
+    	},
+    } satisfies ExportedHandler<Env>;
+    ```
+
+4.  You can use `npx wrangler dev` to develop your Worker project and send emails. This runs your code locally while connecting to Cloudflare Email Service (using [remote bindings](/workers/development-testing/#remote-bindings)).
+
+        ```sh
+        npx wrangler dev
+        # ⎔ Starting remote preview...
+        # Total Upload: 24.96 KiB / gzip: 6.17 KiB
+        # [wrangler:info] Ready on http://localhost:8787
+        ```
+
+5.  Deploy your Worker:
+
+        ```sh
+        npm run deploy
+        ```
+
+## Test your email Worker
+
+After deploying, test that your Worker can send emails:
+
+1. Visit your Worker URL in a browser (shown in the deploy output, for example: `https://email-service-tutorial.<your-subdomain>.workers.dev`).
+
+2. You should see a response like `Email sent: <message-id>`.
+
+3. Check the inbox for the email address you specified in `RECIPIENT_EMAIL`. If you do not see the email, check your spam folder.
+
+## Next steps
+
+Now that you can send emails, explore advanced features:
+
+- **[Route incoming emails](/email-service/get-started/route-emails/)** - Process emails sent to your domain
+- **[API reference](/email-service/api/send-emails/)** - Complete API documentation
+- **[Examples](/email-service/examples/)** - Real-world implementation patterns

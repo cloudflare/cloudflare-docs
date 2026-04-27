@@ -1,9 +1,0 @@
-import { DashButton } from "~/components";
-
-If you receive a `Error processing the request: Unable to create new browser: code: 429: message: Browser time limit exceeded for today` error, it means you have hit the daily browser limit on the Workers Free plan. [Workers Free plan accounts are limited](/browser-rendering/limits/#workers-free) to 10 minutes of Browser Rendering usage per day. If you exceed that limit, you will see this `429` error until the next UTC day.
-
-To [increase your limits](/browser-rendering/limits/#workers-paid), upgrade to a Workers Paid plan on the **Workers plans** page of the Cloudflare dashboard:
-
-<DashButton url="/?to=/:account/workers/plans" />
-
-If you recently upgraded but still encounter the 10-minute per day limit, redeploy your Worker to ensure your usage is correctly associated with the new plan.

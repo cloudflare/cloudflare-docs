@@ -1,8 +1,13 @@
 ---
 pcx_content_type: how-to
+description: Add CAA DNS records to control which CAs can issue certificates.
+products:
+  - ssl
 title: Add CAA records
 sidebar:
   order: 6
+tags:
+  - DNS
 ---
 
 import { Render, TabItem, Tabs, DashButton } from "~/components";
@@ -57,3 +62,19 @@ To create a CAA record via the API, use this [POST endpoint](/api/resources/dns/
 </TabItem> </Tabs>
 
 Once you have finished creating all the records, you can review them in the list of records appearing under the DNS Records panel.
+
+## Certificate authorities and required CAA values
+
+If you have CAA records on your domain, they must permit the certificate authority (CA) that Cloudflare uses. For the required CAA values for each CA Cloudflare may use, refer to [Certificate authorities](/ssl/reference/certificate-authorities/#caa-records).
+
+### CNAME chain CAA records
+
+CAA records on a CNAME target also apply. If your hostname CNAMEs to a domain whose zone has restrictive CAA records, those records take precedence — even if your own domain has no CAA records.
+
+Check CAA at all levels of your CNAME chain:
+
+```sh
+dig yourdomain.com CAA +short
+dig cname-target.com CAA +short
+```
+

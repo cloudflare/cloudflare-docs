@@ -1,9 +1,23 @@
 ---
 {}
 ---
-import { Tabs, TabItem } from "~/components"
+import { Tabs, TabItem} from "~/components"
 
-Adds a border around the image. The border is added after resizing. Border width takes `dpr` into account, and can be specified either using a single `width` property, or individually for each side.
+### `border`
+
+Adds a border around the image.
+
+:::note
+This feature is available only in Workers.
+:::
+
+Accepts the following properties:
+
+- `color` — Sets the color of the border. Accepts any valid CSS color value, for example `#FF0000`, `rgb(0,0,0)`, or `red`.
+- `width` — Sets the uniform border, in pixels, on all four sides.
+- `top`, `right`, `bottom`, `left` — Sets the border width, in pixels, for individual sides.
+
+The border is applied after the image has been resized. The border width automatically scales with the [`dpr`](/images/optimization/features#dpr) parameter to ensure sharpness on high-resolution screens.
 
 <Tabs>
   <TabItem label="Workers">

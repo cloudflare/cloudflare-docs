@@ -1,0 +1,47 @@
+---
+title: Introducing Billable Usage dashboard and Budget alerts
+description: Pay-as-you-go customers can now monitor daily usage costs and set spend thresholds with proactive email notifications.
+products:
+  - fundamentals
+  - workers
+date: 2026-04-21
+---
+
+Pay-as-you-go customers can now monitor usage-based costs and configure spend alerts through two new features: the Billable Usage dashboard and Budget alerts.
+
+## Billable Usage dashboard
+
+The Billable Usage dashboard provides daily visibility into usage-based costs across your Cloudflare account. The data comes from the same system that generates your monthly invoice, so the figures match your bill.
+
+The dashboard displays:
+
+- A bar chart showing daily usage charges for your billing period
+- A sortable table breaking down usage by product, including total usage, billable usage, and cumulative costs
+- Ability to view previous billing periods
+
+Usage data aligns to your billing cycle, not the calendar month. The total usage cost shown at the end of a completed billing period matches the usage overage charges on your corresponding invoice.
+
+To access the dashboard, go to **Manage Account** > **Billing** > **Billable Usage**.
+
+![Screenshot of the Billable Usage dashboard in the Cloudflare dashboard](~/assets/images/changelog/fundamentals/2026-04-13-billable-usage-dashboard.png)
+
+## Budget alerts
+
+Budget alerts allow you to set dollar-based thresholds for your account-level usage spend. You receive an email notification when your projected monthly spend reaches your configured threshold, giving you proactive visibility into your bill before month-end.
+
+To configure a budget alert:
+
+1. Go to **Manage Account** > **Billing** > **Billable Usage**.
+2. Select **Set Budget Alert**.
+3. Enter a budget threshold amount greater than $0.
+4. Select **Create**.
+
+Alternatively, configure alerts via **Notifications** > **Add** > **Budget Alert**.
+
+![Create Budget Alert modal in the Cloudflare dashboard](~/assets/images/changelog/fundamentals/2026-04-13-budget-alert-modal.png)
+
+You can create multiple budget alerts at different dollar amounts. The notifications system automatically deduplicates alerts if multiple thresholds trigger at the same time. Budget alerts are calculated daily based on your usage trends and fire once per billing cycle when your projected spend first crosses your threshold.
+
+Both features are available to Pay-as-you-go accounts with usage-based products (Workers, R2, Images, etc.). Enterprise contract accounts are not supported.
+
+For more information, refer to the [Usage based billing documentation](/billing/understand/usage-based-billing/).

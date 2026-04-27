@@ -1,13 +1,18 @@
 ---
 pcx_content_type: how-to
+description: DNS over HTTPS (DoH) in Zero Trust networking.
+products:
+  - cloudflare-one
 title: DNS over HTTPS (DoH)
+tags:
+  - DNS
 sidebar:
   order: 3
 ---
 
 import { Details, GlossaryTooltip, Render } from "~/components";
 
-With Cloudflare Gateway, you can filter DNS over HTTPS (DoH) requests by [DNS location](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) or by user without needing to install the WARP client on your devices.
+With Cloudflare Gateway, you can filter DNS over HTTPS (DoH) requests by [DNS location](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) or by user without needing to install the Cloudflare One Client on your devices.
 
 Location-based policies require that you send DNS requests to a [location-specific DoH endpoint](#filter-doh-requests-by-location), while identity-based policies require that requests include a [user-specific DoH token](#filter-doh-requests-by-user).
 
@@ -306,4 +311,4 @@ If the site is blocked and you have turned on the [block page](/cloudflare-one/r
 
 </Details>
 
-You can verify that the request was associated with the correct user email by checking your [Gateway DNS logs](/cloudflare-one/insights/logs/gateway-logs/). To filter these requests, build a DNS policy using any of the Gateway [identity-based selectors](/cloudflare-one/traffic-policies/identity-selectors/).
+You can verify that the request was associated with the correct user email by checking your [Gateway DNS logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/). To filter these requests, build a DNS policy using any of the Gateway [identity-based selectors](/cloudflare-one/traffic-policies/identity-selectors/).

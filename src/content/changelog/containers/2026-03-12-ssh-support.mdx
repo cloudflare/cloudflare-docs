@@ -1,0 +1,51 @@
+---
+title: SSH into running Container instances
+description: Connect to running Container instances with SSH through Wrangler.
+products:
+  - containers
+date: 2026-03-12
+---
+
+import { WranglerConfig } from "~/components";
+
+You can now SSH into running Container instances using Wrangler. This is useful for debugging, inspecting running processes, or executing one-off commands inside a Container.
+
+To connect, enable `wrangler_ssh` in your Container configuration and add your `ssh-ed25519` public key to `authorized_keys`:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"containers": [
+		{
+			"wrangler_ssh": {
+				"enabled": true
+			},
+			"authorized_keys": [
+				{
+					"name": "<NAME>",
+					"public_key": "<YOUR_PUBLIC_KEY_HERE>"
+				}
+			]
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+Then connect with:
+
+```sh
+wrangler containers ssh <INSTANCE_ID>
+```
+
+You can also run a single command without opening an interactive shell:
+
+```sh
+wrangler containers ssh <INSTANCE_ID> -- ls -al
+```
+
+Use `wrangler containers instances <APPLICATION>` to find the instance ID for a running Container.
+
+For more information, refer to the [SSH documentation](/containers/ssh/).

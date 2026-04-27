@@ -1,0 +1,21 @@
+---
+pcx_content_type: navigation
+description: Manage tunnels from the command line without the Cloudflare dashboard.
+products:
+  - tunnel
+title: Locally-managed tunnels
+sidebar:
+  order: 1
+---
+
+import { DirectoryListing, Render } from "~/components";
+
+<Render
+	file="tunnel/locally-managed/overview"
+	product="cloudflare-one"
+	params={{
+		remoteTunnelURL: "/tunnel/setup/",
+	}}
+/>
+
+<DirectoryListing />

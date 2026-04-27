@@ -1,9 +1,14 @@
 ---
 pcx_content_type: how-to
 title: Transcription
+description: Enable real-time and post-meeting speech-to-text transcription in RealtimeKit.
 sidebar:
   order: 1
+products:
+  - realtime
 ---
+
+import { Render } from "~/components";
 
 RealtimeKit provides two transcription modes powered by Cloudflare Workers AI:
 
@@ -54,7 +59,9 @@ Pass `ai_config.transcription` when [creating a meeting](/realtime/realtimekit/c
 
 ### Supported languages
 
-Supports all languages available in [Deepgram Nova-3](/workers-ai/models/nova-3/)
+Real-time transcription is powered by [Deepgram Nova-3](/workers-ai/models/nova-3/) on Workers AI.
+
+<Render file="nova-3-supported-languages" product="workers-ai" />
 
 ### Consume transcripts
 
@@ -165,7 +172,7 @@ Configure `meeting.transcript` event in [webhooks](/api/resources/realtime_kit/s
 
 #### REST API
 
-Refer to [Fetch the complete transcript for a session](/api/resources/realtime_kit/subresources/sessions/#fetch-the-complete-transcript-for-a-session).
+Refer to [Fetch the complete transcript for a session](/api/resources/realtime_kit/subresources/sessions/methods/get_session_transcripts/).
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/accounts/{account_id}/realtime/kit/{app_id}/sessions/{session_id}/transcript" \

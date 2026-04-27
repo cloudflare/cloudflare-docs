@@ -1,0 +1,207 @@
+{
+	"model_id": "pixverse/v6",
+	"provider_id": "pixverse",
+	"name": "Pixverse v6",
+	"description": "Pixverse v6 is the latest Pixverse video model with support for up to 15-second videos, customizable duration from 1 to 15 seconds, and audio generation.",
+	"task": "Text-to-Video",
+	"tags": [
+		"Video Generation",
+		"Image-to-Video",
+		"Audio",
+		"Long Form"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Video",
+			"description": "Basic text-to-video with default settings",
+			"input": {
+				"prompt": "A golden retriever running through a field of sunflowers on a sunny day",
+				"duration": 5,
+				"aspect_ratio": "16:9",
+				"quality": "720p",
+				"generate_audio": true
+			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/pixverse__v6/simple-video.mp4"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'pixverse/v6',\n  {\n    prompt:\n      'A golden retriever running through a field of sunflowers on a sunny day',\n    duration: 5,\n    aspect_ratio: '16:9',\n    quality: '720p',\n    generate_audio: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Long Duration Video",
+			"description": "Extended 15-second video with audio (v6 supports 1-15 seconds)",
+			"input": {
+				"prompt": "A time-lapse of a bustling city street from dawn to dusk, showing the flow of people and vehicles",
+				"duration": 15,
+				"aspect_ratio": "16:9",
+				"quality": "720p",
+				"generate_audio": true
+			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/pixverse__v6/long-duration-video.mp4"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'pixverse/v6',\n  {\n    prompt:\n      'A time-lapse of a bustling city street from dawn to dusk, showing the flow of people and vehicles',\n    duration: 15,\n    aspect_ratio: '16:9',\n    quality: '720p',\n    generate_audio: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Ultra-wide Cinematic",
+			"description": "Cinematic 21:9 aspect ratio video",
+			"input": {
+				"prompt": "A dramatic aerial shot flying over misty mountain peaks at sunrise, cinematic lighting with volumetric fog",
+				"duration": 10,
+				"aspect_ratio": "21:9",
+				"quality": "720p",
+				"generate_audio": true
+			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/pixverse__v6/ultra-wide-cinematic.mp4"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'pixverse/v6',\n  {\n    prompt:\n      'A dramatic aerial shot flying over misty mountain peaks at sunrise, cinematic lighting with volumetric fog',\n    duration: 10,\n    aspect_ratio: '21:9',\n    quality: '720p',\n    generate_audio: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Silent Video",
+			"description": "Video without audio generation",
+			"input": {
+				"prompt": "Abstract ink drops spreading through water, vivid colors mixing in slow motion",
+				"negative_prompt": "blurry, low quality",
+				"duration": 3,
+				"aspect_ratio": "1:1",
+				"quality": "540p",
+				"generate_audio": false
+			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/pixverse__v6/silent-video.mp4"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'pixverse/v6',\n  {\n    prompt:\n      'Abstract ink drops spreading through water, vivid colors mixing in slow motion',\n    negative_prompt: 'blurry, low quality',\n    duration: 3,\n    aspect_ratio: '1:1',\n    quality: '540p',\n    generate_audio: false,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://pixverse.ai/",
+	"terms": "https://pixverse.ai/terms",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/pixverse/v6.png",
+	"metadata": {
+		"Max Duration": "15 seconds",
+		"Resolutions": "360p, 540p, 720p, 1080p",
+		"Aspect Ratios": "16:9, 4:3, 1:1, 3:4, 9:16, 2:3, 3:2, 21:9",
+		"Audio Generation": "Yes",
+		"Image-to-Video": "Yes"
+	},
+	"created_at": "2026-04-15 22:29:14",
+	"default_example": null,
+	"code_snippets": [],
+	"zdr": false,
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"description": "Text prompt describing the video to generate",
+					"type": "string",
+					"maxLength": 2048
+				},
+				"negative_prompt": {
+					"description": "Negative text prompt",
+					"type": "string",
+					"maxLength": 2048
+				},
+				"image_input": {
+					"description": "Base64-encoded reference image for image-to-video generation (data:image/...;base64,...). The image will be uploaded to Pixverse automatically.",
+					"type": "string"
+				},
+				"duration": {
+					"description": "Video duration in seconds (1 to 15)",
+					"default": 5,
+					"type": "integer",
+					"minimum": 1,
+					"maximum": 15
+				},
+				"aspect_ratio": {
+					"description": "Video aspect ratio",
+					"default": "16:9",
+					"type": "string",
+					"enum": [
+						"16:9",
+						"4:3",
+						"1:1",
+						"3:4",
+						"9:16",
+						"2:3",
+						"3:2",
+						"21:9"
+					]
+				},
+				"quality": {
+					"description": "Video quality",
+					"default": "720p",
+					"type": "string",
+					"enum": [
+						"360p",
+						"540p",
+						"720p",
+						"1080p"
+					]
+				},
+				"seed": {
+					"description": "Random seed for reproducibility",
+					"type": "integer",
+					"minimum": 0,
+					"maximum": 2147483647
+				},
+				"generate_audio": {
+					"description": "Whether to generate audio with the video",
+					"default": true,
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"prompt",
+				"duration",
+				"aspect_ratio",
+				"quality",
+				"generate_audio"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"video": {
+					"description": "URL to the generated video",
+					"type": "string",
+					"format": "uri"
+				}
+			},
+			"required": [
+				"video"
+			],
+			"additionalProperties": false
+		}
+	}
+}

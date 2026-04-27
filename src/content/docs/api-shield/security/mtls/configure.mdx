@@ -1,6 +1,9 @@
 ---
 title: Configure mTLS
 pcx_content_type: how-to
+description: Set up mTLS authentication rules to require client certificates for API hosts.
+products:
+  - api-shield
 sidebar:
   order: 2
 head:
@@ -25,7 +28,7 @@ Before you can protect your API or web application with mTLS rules, you need to:
 
 :::caution
 
-By default, API Shield mTLS uses client certificates issued by a Cloudflare-managed CA. If you need to use certificates issued by another CA, you can use the API to [bring your own CA for mTLS](/ssl/client-certificates/byo-ca/).
+By default, API Shield mTLS uses client certificates issued by a Cloudflare-managed CA. If you need to use certificates issued by another CA, refer to [Bring your own CA for mTLS](/ssl/client-certificates/byo-ca/).
 :::
 
 ## Create an mTLS rule via the Cloudflare dashboard
@@ -74,5 +77,5 @@ When a request includes a revoked certificate, the `cf.tls_client_auth.cert_revo
 
 :::caution
 
-This check only applies to client certificates issued by the Cloudflare managed CA. Cloudflare currently does not check certificate revocation lists (CRL) for [CAs that have been uploaded](/ssl/client-certificates/byo-ca/).
+This check only applies to client certificates issued by the Cloudflare-managed CA. Cloudflare currently does not check certificate revocation lists (CRL) for [CAs that have been uploaded](/ssl/client-certificates/byo-ca/).
 :::

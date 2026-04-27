@@ -1,6 +1,9 @@
 ---
 title: Product compatibility
 pcx_content_type: reference
+description: Compatibility of Cloudflare products with Data Localization Suite features.
+products:
+  - data-localization
 sidebar:
   order: 3
 head:
@@ -21,13 +24,13 @@ The table below provides a summary of the Data Localization Suite product's beha
 | ------------------------------------------ | --------------- | ----------------- | -------------------------- |
 | Caching/CDN                                | ✅              | ✅                | ✅                         |
 | Cache Reserve                              | ⚫️             | 🚧                | ✅ [^29]                   |
-| DNS                                        | ⚫️             | 🚧 [^33]          | 🚧 [^32]                   |
+| DNS                                        | ⚫️             | 🚧 [^33]          | ✅                         |
 | HTTP/3 (with QUIC)                         | ⚫️             | ✘                 | ⚫️                        |
 | Image Resizing                             | ✅              | ✅ [^6]           | 🚧 [^1]                    |
 | Load Balancing                             | ✅              | ✅                | 🚧 [^1]                    |
 | Network Error Logging (NEL)                | ⚫️             | ⚫️               | ✘                          |
 | Onion Routing                              | ✘               | ✘                 | ✘                          |
-| Orange-to-Orange (O2O)                     | ✘               | ✘                 | ✘                          |
+| O2O                                        | ✘               | ✘                 | ✘                          |
 | Stream Delivery                            | ✅              | ✅                | ✅                         |
 | Tiered Caching                             | ✅              | 🚧 [^2]           | 🚧 [^30]                   |
 | Trace                                      | ✘               | ✘                 | ✘                          |
@@ -39,20 +42,20 @@ The table below provides a summary of the Data Localization Suite product's beha
 
 ## Application Security
 
-| Product                      | Geo Key Manager | Regional Services | Customer Metadata Boundary |
-| ---------------------------- | --------------- | ----------------- | -------------------------- |
-| Advanced Certificate Manager | ⚫️             | ⚫️               | ⚫️                        |
-| Advanced DDoS Protection     | ✅              | ✅                | 🚧 [^3]                    |
-| API Shield                   | ✅              | ✅                | 🚧 [^4]                    |
-| Bot Management               | ✅              | ✅                | ✅                         |
-| DNS Firewall                 | ⚫️             | ⚫️               | 🚧 [^22]                   |
-| Page Shield                  | ✅              | ✅                | ✅                         |
-| Rate Limiting                | ✅              | ✅                | ✅ [^37]                   |
-| SSL                          | ✅              | ✅                | ✅                         |
-| Cloudflare for SaaS          | ✘               | ✅                | ✅                         |
-| Turnstile                    | ⚫️             | ✘                 | ✅ [^38]                   |
-| WAF/L7 Firewall              | ✅              | ✅                | ✅                         |
-| DMARC Management             | ⚫️             | ⚫️               | ✅                         |
+| Product                                     | Geo Key Manager | Regional Services | Customer Metadata Boundary |
+| ------------------------------------------- | --------------- | ----------------- | -------------------------- |
+| Advanced Certificate Manager                | ⚫️             | ⚫️               | ⚫️                        |
+| Advanced DDoS Protection                    | ✅              | ✅                | 🚧 [^3]                    |
+| API Shield                                  | ✅              | ✅                | 🚧 [^4]                    |
+| Bot Management                              | ✅              | ✅                | ✅                         |
+| Client-side security (formerly Page Shield) | ✅              | ✅                | ✅                         |
+| DNS Firewall                                | ⚫️             | ⚫️               | ✅                         |
+| Rate Limiting                               | ✅              | ✅                | ✅ [^37]                   |
+| SSL                                         | ✅              | ✅                | ✅                         |
+| Cloudflare for SaaS                         | ✘               | ✅                | ✅                         |
+| Turnstile                                   | ⚫️             | ✘                 | ✅ [^38]                   |
+| WAF/L7 Firewall                             | ✅              | ✅                | ✅                         |
+| DMARC Management                            | ⚫️             | ⚫️               | ✅                         |
 
 ---
 
@@ -63,11 +66,11 @@ The table below provides a summary of the Data Localization Suite product's beha
 | Cloudflare Images              | ⚫️             | ✅ [^36]          | 🚧 [^35]                   |
 | AI Gateway                     | ✘               | ✘                 | 🚧 [^39]                   |
 | AI Search                      | ✘ [^46]         | ✘ [^47]           | 🚧 [^48]                   |
+| AI Security for Apps           | ✘               | ✘                 | ✘                          |
 | Cloudflare Pages               | ✅ [^11]        | ✅ [^11]          | 🚧 [^1]                    |
 | Cloudflare D1                  | ⚫️             | ⚫️               | 🚧 [^40]                   |
 | Durable Objects                | ⚫️             | ✅ [^7]           | 🚧 [^1]                    |
 | Email Routing                  | ⚫️             | ⚫️               | ✅                         |
-| Firewall for AI                | ✘               | ✘                 | ✘                          |
 | Remote MCP Server              | ✅ [^44]        | ✅ [^45]          | 🚧 [^1]                    |
 | R2                             | ✅ [^27]        | ✅ [^8]           | ✅ [^28]                   |
 | Smart Placement                | ⚫️             | ✘                 | ✘                          |
@@ -89,7 +92,7 @@ The table below provides a summary of the Data Localization Suite product's beha
 | Static IP/BYOIP             | ⚫️             | ✅ [^26]          | ⚫️                        |
 | Cloudflare Network Firewall | ⚫️             | ⚫️               | ✅                         |
 | Network Flow                | ⚫️             | ⚫️               | 🚧 [^1]                    |
-| Magic Transit               | ⚫️             | ⚫️               | ✅                         |
+| Magic Transit               | ⚫️             | ⚫️               | ✅ [^3]                       |
 | Cloudflare WAN              | ⚫️             | ⚫️               | ✅                         |
 | Spectrum                    | ✅              | ✅ [^42]          | ✅                         |
 
@@ -107,16 +110,16 @@ The table below provides a summary of the Data Localization Suite product's beha
 
 ## Zero Trust
 
-| Product            | Geo Key Manager | Regional Services | Customer Metadata Boundary |
-| ------------------ | --------------- | ----------------- | -------------------------- |
-| Access             | 🚧 [^14]        | 🚧 [^15]          | ✅ [^16]                   |
-| Browser Isolation  | ⚫️             | 🚧 [^17]          | ✅                         |
-| CASB               | ⚫️             | ⚫️               | ✘                          |
-| Cloudflare Tunnel  | ⚫️             | 🚧 [^18]          | ⚫️                        |
-| Digital Experience | ⚫️             | ⚫️               | 🚧 [^49]                   |
-| DLP                | ⚫️ [^19]       | ⚫️ [^19]         | 🚧 [^31]                   |
-| Gateway            | 🚧 [^20]        | 🚧 [^21]          | 🚧 [^22]                   |
-| WARP               | ⚫️             | ⚫️               | 🚧 [^1]                    |
+| Product               | Geo Key Manager | Regional Services | Customer Metadata Boundary |
+| --------------------- | --------------- | ----------------- | -------------------------- |
+| Access                | 🚧 [^14]        | 🚧 [^15]          | ✅ [^16]                   |
+| Browser Isolation     | ⚫️             | 🚧 [^17]          | ✅                         |
+| CASB                  | ⚫️             | ⚫️               | ✘                          |
+| Cloudflare Tunnel     | ⚫️             | 🚧 [^18]          | ⚫️                        |
+| Digital Experience    | ⚫️             | ⚫️               | 🚧 [^49]                   |
+| DLP                   | ⚫️ [^19]       | ⚫️ [^19]         | 🚧 [^31]                   |
+| Gateway               | 🚧 [^20]        | 🚧 [^21]          | 🚧 [^22]                   |
+| Cloudflare One Client | ⚫️             | ⚫️               | 🚧 [^1]                    |
 
 [^1]: Logs / Analytics not available outside US region when using Customer Metadata Boundary.
 
@@ -126,7 +129,7 @@ The table below provides a summary of the Data Localization Suite product's beha
 
 [^4]: API Discovery, Volumetric Abuse Detection and [Sequence Analytics and Mitigation](/api-shield/security/sequence-analytics/) will not work with CMB = EU. All other features are available to all CMB regions.
 
-[^6]: Only when using a Custom Domain set to a region, either through Workers or [Transform Rules](/images/transform-images/serve-images-custom-paths/) within the same zone.
+[^6]: Only when using a Custom Domain set to a region, either through Workers or [Transform Rules](/images/optimization/transformations/rewrite-rules/) within the same zone.
 
 [^7]: [Jurisdiction restrictions for Durable Objects](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction).
 
@@ -150,13 +153,13 @@ The table below provides a summary of the Data Localization Suite product's beha
 
 [^17]: Currently may only be used with US FedRAMP region.
 
-[^18]: When Cloudflare Tunnel connects to Cloudflare, the connectivity options available are the Global Region (default) and [US FedRAMP Moderate Domestic region](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/#region). For incoming requests to the Cloudflare Edge, Regional Services only applies when using [published applications](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/). In this case, the region associated with the DNS record will apply.
+[^18]: When Cloudflare Tunnel connects to Cloudflare, the connectivity options available are the Global Region (default) and [US FedRAMP Moderate Domestic region](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#region). For incoming requests to the Cloudflare Edge, Regional Services only applies when using [published applications](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/). In this case, the region associated with the DNS record will apply.
 
 [^19]: Uses Gateway HTTP and CASB.
 
 [^20]: You can [bring your own certificate](https://blog.cloudflare.com/bring-your-certificates-cloudflare-gateway/) to Gateway but these cannot yet be restricted to a specific region.
 
-[^21]: Gateway HTTP supports Regional Services. Gateway DNS does not yet support regionalization. <br/> ICMP proxy and WARP-to-WARP proxy are not available to Regional Services users. [File Sandboxing](/cloudflare-one/traffic-policies/http-policies/file-sandboxing/) (add-on) is incompatible with DLS.
+[^21]: Gateway HTTP supports Regional Services. Gateway DNS does not yet support regionalization. <br/> ICMP proxy and Mesh proxy are not available to Regional Services users. [File Sandboxing](/cloudflare-one/traffic-policies/http-policies/file-sandboxing/) (add-on) is incompatible with DLS.
 
 [^22]: Dashboard Analytics and Logs are empty when using CMB outside the US region. Use Logpush instead.
 
@@ -174,15 +177,13 @@ The table below provides a summary of the Data Localization Suite product's beha
 
 [^31]: DLP is part of Gateway HTTP, however, [DLP detection entries](/cloudflare-one/data-loss-prevention/detection-entries/) are not available outside US region when using Customer Metadata Boundary.
 
-[^32]: Dashboard Analytics are empty when using CMB outside the US region. Use Logpush instead.
-
 [^33]: [Outgoing zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-primary/) will carry Earth region proxy IPs, thus making regional service dysfunctional when non-Cloudflare nameservers respond to the DNS queries.
 
 [^34]: Jurisdictional Restrictions (storage) for Workers KV pairs is not supported today.
 
-[^35]: Logs / Analytics not supported for CMB = EU. Jurisdictional Restrictions ([storage](/images/upload-images/)) options are not supported today. All other features are available to all CMB regions. Note that beta or future features may not be in scope and could be subject to change.
+[^35]: Logs / Analytics not supported for CMB = EU. Jurisdictional Restrictions ([storage](/images/storage/upload-images/methods/)) options are not supported today. All other features are available to all CMB regions. Note that beta or future features may not be in scope and could be subject to change.
 
-[^36]: Only when using a [Custom Domain](/images/manage-images/serve-images/serve-from-custom-domains/) set to a region.
+[^36]: Only when using a [Custom Domain](/images/optimization/hosted-images/serve-from-custom-domains/) set to a region.
 
 [^37]: Legacy Zone Analytics & Logs section not available outside US region when using CMB. Use [Security Analytics](/waf/analytics/security-analytics/) instead.
 
@@ -208,4 +209,4 @@ The table below provides a summary of the Data Localization Suite product's beha
 
 [^48]: The following are exceptions and are supported: AI Gateway Analytics (GraphQL Analytics datasets) and Logs (Logpush), R2 Dashboard Metrics & Analytics, Workers AI GraphQL Analytics datasets like aiInferenceAdaptive.
 
-[^49]: Digital Experience supports Cloudflare's [Customer Metadata Boundary](/data-localization/metadata-boundary/get-started) only for the 'EU' (European Union) option
+[^49]: Dashboard Analytics are empty when using CMB outside the US region. Use [Logpush](/logs/logpush/) instead.

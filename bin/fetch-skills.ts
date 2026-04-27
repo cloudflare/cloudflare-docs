@@ -35,7 +35,7 @@ const fail = (message: string): never => {
 
 if (fs.existsSync(SKILLS_DIR) && !force) {
 	console.log(
-		"/skills directory already exists, skipping fetch. (run `npx tsx bin/fetch-skills.ts --force` to re-fetch)",
+		"/skills directory already exists, skipping fetch. (run `pnpm tsx bin/fetch-skills.ts --force` to re-fetch)",
 	);
 	process.exit(0);
 }

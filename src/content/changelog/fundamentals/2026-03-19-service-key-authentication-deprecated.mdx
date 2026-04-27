@@ -1,0 +1,21 @@
+---
+title: Service Key authentication deprecated
+description: "Service Key authentication for the Cloudflare API is deprecated and will be removed on September 30, 2026. Migrate to API Tokens."
+products:
+  - fundamentals
+date: 2026-03-19
+---
+
+Service Key authentication for the Cloudflare API is deprecated. Service Keys will stop working on September 30, 2026.
+
+[API Tokens](/fundamentals/api/get-started/create-token/) replace Service Keys with fine-grained permissions, expiration, and revocation.
+
+## What you need to do
+
+Replace any use of the `X-Auth-User-Service-Key` header with an [API Token](/fundamentals/api/get-started/create-token/) scoped to the permissions your integration requires.
+
+If you use `cloudflared`, update to a version from November 2022 or later. These versions already use API Tokens.
+
+If you use [origin-ca-issuer](https://github.com/cloudflare/origin-ca-issuer), update to a version that supports API Token authentication.
+
+For more information, refer to [API deprecations](/fundamentals/api/reference/deprecations/).

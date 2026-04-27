@@ -2,13 +2,19 @@
 {}
 ---
 
-import { Tabs, TabItem } from "~/components";
+import { Tabs, TabItem} from "~/components";
 
-:::note[Note]
-This setting only works directly with [image transformations](/images/transform-images/) and does not support resizing with Cloudflare Workers.
+### `onerror`
+
+Redirects the end-user to the URL of the original source image when a fatal error prevents the image from being transformed. Accepts `redirect`. The default is none.
+
+:::note
+This feature is available only when optimizing remote images through the URL interface. This is not supported for hosted images.
 :::
 
-In case of a [fatal error](/images/reference/troubleshooting/#error-responses-from-resizing) that prevents the image from being resized, redirects to the unresized source image URL. This may be useful in case some images require user authentication and cannot be fetched anonymously via Worker. This option should not be used if there is a chance the source image is very large. This option is ignored if the image is from another domain, but you can use it with subdomains.
+This option works only if the image is in the same zone (subdomains are accepted). If the original image is from a different zone, then the option does not have any effect.
+
+This may be useful in cases where an image requires user authentication and the image cannot be fetched anonymously via Workers. However, this option is not recommended if the source image is very large.
 
 <Tabs>
 	<TabItem label="URL format">

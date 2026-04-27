@@ -1,0 +1,41 @@
+---
+pcx_content_type: how-to
+title: Handle traffic at scale
+description: Handle flash sales and traffic spikes for e-commerce stores with load balancing, visitor queuing, and smart routing.
+sidebar:
+  order: 4
+---
+
+Flash sales, seasonal peaks, and viral moments can overwhelm your origin infrastructure. Cloudflare Load Balancing distributes traffic across multiple origins with automatic failover, Waiting Room queues excess visitors to prevent overload, and Argo Smart Routing reduces latency between edge and origin.
+
+## Solutions
+
+### Load balancing
+
+Distribute traffic across origins with health checks and automatic failover. [Learn more about Load balancing](/load-balancing/).
+
+- **Origin protection** - Distribute traffic across origin servers and queue excess visitors to prevent overload during peak events
+- **Automatic failover** - Health checks detect unhealthy origins and reroute traffic automatically
+
+### Waiting Room
+
+Manage visitor queuing during traffic surges. [Learn more about Waiting Room](/waiting-room/).
+
+- **Flash sale readiness** - Queue visitors fairly during extreme demand, preserving a consistent experience without crashing the site
+
+### Argo Smart Routing
+
+Route traffic through the fastest paths across Cloudflare's network. [Learn more about Argo Smart Routing](/argo-smart-routing/).
+
+- **Reduced latency** - Route requests through the fastest available network paths between edge and origin
+
+## Get started
+
+1. [Set up Load Balancing](/load-balancing/get-started/)
+2. [Configure Waiting Room](/waiting-room/get-started/)
+3. [Create Health Checks](/health-checks/get-started/)
+
+## See also
+
+Cloudflare Smart Shield acts as an intermediate caching layer between Cloudflare's content delivery network and your origin server, consolidating multiple requests from various locations into a single request.
+[Learn more about Smart Shield](/smart-shield/).

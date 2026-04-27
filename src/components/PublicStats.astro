@@ -1,5 +1,5 @@
 ---
-import { z } from "astro:content";
+import { z } from "astro/zod";
 import { zodEnumFromObjKeys } from "~/util/helpers";
 
 type Props = z.infer<typeof props>;

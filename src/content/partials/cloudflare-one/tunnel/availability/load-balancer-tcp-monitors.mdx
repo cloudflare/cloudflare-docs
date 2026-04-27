@@ -1,0 +1,20 @@
+---
+params:
+  - publishedAppRouteURL
+---
+
+TCP monitors are not supported for tunnel endpoints. Instead, create a health check endpoint on the `cloudflared` host and use an HTTPS monitor. For example, you can use `cloudflared` to return a fixed HTTP status response:
+
+1. <a href={props.publishedAppRouteURL}>Add a published application route</a> for the health check:
+   - **Hostname**: `health-check.example.com`
+   - **Service Type**: _HTTP_STATUS_
+   - **HTTP Status Code**: `200`
+2. [Create a monitor](/load-balancing/monitors/create-monitor/) with these settings:
+   - **Type**: _HTTPS_
+   - **Path**: `/`
+   - **Port**: `443`
+   - **Expected Code(s)**: `200`
+   - **Header Name**: `Host`
+   - **Value**: `health-check.example.com`
+
+This monitor verifies that `cloudflared` is reachable. It does not check whether the upstream service is accepting requests.

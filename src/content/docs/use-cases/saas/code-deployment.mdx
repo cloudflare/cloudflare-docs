@@ -1,0 +1,25 @@
+---
+pcx_content_type: how-to
+title: Enable customer code deployment
+description: Let your customers deploy their own code on your platform with isolated execution environments.
+sidebar:
+  order: 2
+---
+
+SaaS platforms often need to let customers run their own code — custom logic, integrations, webhooks — without compromising tenant isolation or platform stability. Cloudflare Workers for Platforms runs each customer's code in a separate V8 isolate with dispatch routing based on hostname, path, or header.
+
+## Solutions
+
+### Workers for Platforms
+
+Deploy isolated Workers execution environments for your customers. [Learn more about Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/).
+
+- **Tenant isolation** - Each customer's code runs in a separate V8 isolate with no shared memory between tenants
+- **Custom logic** - Customers can deploy their own Workers to extend or customize your platform's behavior
+- **Dispatch routing** - Route incoming requests to the correct customer Worker based on hostname, path, or header
+- **Observability** - Tail Workers capture logs and errors across all tenant code from a single integration
+
+## Get started
+
+1. [Workers for Platforms get started](/cloudflare-for-platforms/workers-for-platforms/get-started/)
+2. [Configure Dispatch Namespaces](/cloudflare-for-platforms/workers-for-platforms/configuration/dynamic-dispatch/)

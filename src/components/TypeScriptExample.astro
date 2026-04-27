@@ -1,5 +1,5 @@
 ---
-import { z } from "astro:content";
+import { z } from "astro/zod";
 import tsBlankSpace from "ts-blank-space";
 import { format } from "prettier";
 import { parse } from "node-html-parser";
@@ -40,6 +40,11 @@ if (!raw) {
 }
 
 raw = raw.replace(/\u007f/g, "\n");
+
+raw = raw.replaceAll(
+	/(?<=compatibilityDate:\s*)"\$today"/gi,
+	`"${new Date().toISOString().split("T")[0]}"`,
+);
 
 const js = await format(tsBlankSpace(raw), { parser: "babel", useTabs: true });
 

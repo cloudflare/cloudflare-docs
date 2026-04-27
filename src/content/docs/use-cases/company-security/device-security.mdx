@@ -1,0 +1,31 @@
+---
+pcx_content_type: how-to
+title: Ensure device endpoint security
+description: Verify device posture before granting access.
+sidebar:
+  order: 5
+---
+
+Granting access to corporate applications without verifying device health creates risk. Cloudflare One checks OS version, disk encryption, and antivirus status before allowing a device to connect, and integrates with CrowdStrike, SentinelOne, and other Endpoint Detection and Response (EDR) tools.
+
+## Solutions
+
+### Cloudflare One
+
+Secure your organization with a cloud security platform that replaces legacy perimeters with Cloudflare's global network. [Learn more about Cloudflare One](/cloudflare-one/).
+
+- **Posture checks** - Verify OS version, disk encryption status, and antivirus presence before granting access
+- **Endpoint integration** - Pull real-time device health signals from CrowdStrike, SentinelOne, and other Endpoint Detection and Response (EDR) tools
+- **Conditional access** - Gate application access on device posture results, so only healthy devices can connect
+
+### Cloudflare One client
+
+Device agent that routes traffic through Cloudflare's network. [Learn more about Cloudflare One client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/).
+
+- **Always-on protection** - Route device traffic through Cloudflare One at all times, enforcing Gateway policies regardless of network
+
+## Get started
+
+1. [Deploy the Cloudflare One client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/)
+2. [Configure device posture checks](/cloudflare-one/team-and-resources/devices/)
+3. [Add posture checks to Access policies](/cloudflare-one/access-controls/policies/)

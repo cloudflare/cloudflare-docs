@@ -1,0 +1,73 @@
+---
+title: Errors
+pcx_content_type: reference
+sidebar:
+  order: 13
+products:
+  - browser-run
+---
+
+This page provides a reference for error codes you may encounter when using Browser Run.
+
+## Service-level errors
+
+Service-level errors occur when Browser Run cannot fulfill a request due to system availability, authentication, or resource constraints. These errors apply to [Quick Actions](/browser-run/quick-actions/), [Puppeteer](/browser-run/puppeteer/), [Playwright](/browser-run/playwright/), and [CDP](/browser-run/cdp/).
+
+| HTTP code | Internal code | Error | Description | Recommended fix |
+| --- | --- | --- | --- | --- |
+| `400` | - | `Bad Request` | The request is malformed or contains invalid parameters. | Check the required parameters for the endpoint you are using. Refer to the [Quick Actions API reference](/browser-run/quick-actions/api-reference/) or the [CDP documentation](/browser-run/cdp/). |
+| `401` | `10000` | `Authentication failed` | Authentication credentials are invalid or missing. | Verify your API token exists and has `Browser Rendering - Edit` permissions. Refer to [Quick Actions prerequisites](/browser-run/quick-actions/#before-you-begin). |
+| `408` | - | `Request timed out` | The request exceeded the allowed time limit. | Increase timeout settings. Refer to [Quick Actions timeouts](/browser-run/reference/timeouts/). |
+| `413` | - | `Error: request entity too large` | The request body exceeds the maximum allowed size (50 MB for PDF endpoint). | Reduce request payload size by hosting assets externally (such as on [R2](/r2/) or [Images](/images/)) and referencing via URLs instead of embedding them inline. Refer to [PDF endpoint request size limits](/browser-run/quick-actions/pdf-endpoint/#convert-custom-html-to-pdf). |
+| `422` | - | `Unprocessable Entity` | Browser Run could not complete the action because of an issue with the target site. | Refer to [422 Unprocessable Entity](/browser-run/faq/#error-422-unprocessable-entity). |
+| `429` | - | `Rate limit exceeded` | You have exceeded the [rate limit](/browser-run/limits/) for your plan. | Refer to [429 Too many requests](/browser-run/limits/#error-429-too-many-requests). |
+| `429` | - | `Browser time limit exceeded for today` | Daily browser time limit exceeded (10 minutes a day on the Workers Free plan). | Refer to [429 Browser time limit exceeded](/browser-run/limits/#error-429-browser-time-limit-exceeded-for-today). |
+| `500` | `2000` | `Internal Error` | An unexpected issue occurred on the Browser Run service. | Retry your request. If the issue persists, check [Cloudflare Status](https://www.cloudflarestatus.com) or [contact Cloudflare Support](/support/contacting-cloudflare-support/). |
+| `503` | - | `No browser available. Please try again in a few minutes.` | Browser Run cannot provision a browser instance. | Retry your request after a few minutes. If the issue persists, [contact Cloudflare Support](/support/contacting-cloudflare-support/). |
+
+## Chrome network errors
+
+Chrome network errors occur when the browser encounters issues loading the target website. These errors come directly from Chrome and use the `net::` prefix.
+
+| Internal code | Error | Description | Recommended fix |
+| --- | --- | --- | --- |
+| `5000` | `net::ERR_CERT_INVALID`, `net::ERR_CERT_COMMON_NAME_INVALID` | Certificate or SSL error. | Verify the target site has a valid SSL certificate with correct hostname. |
+| `5001` | `net::ERR_ADDRESS_UNREACHABLE` | The address is unreachable. | Check if the domain exists or if the site is blocked by firewalls or network policies. |
+| `5002` | `net::ERR_ABORTED` | The network connection was aborted. | Check if the site is blocked by firewalls or network policies. |
+| `5002` | `net::ERR_CONNECTION_TIMED_OUT`, `net::ERR_TIMED_OUT` | The connection timed out. | Verify the target site is responding and not experiencing performance issues. |
+| `5003` | `net::ERR_TOO_MANY_REDIRECTS` | The page has too many redirects. | If you control the site, fix the redirect configuration. |
+| `5004` | `net::ERR_HTTP2_PROTOCOL_ERROR` | HTTP/2 protocol error. | If you control the site, check server HTTP/2 configuration. |
+| `5005` | `net::ERR_NAME_NOT_RESOLVED`, `net::ERR_DNS_TIMED_OUT` | DNS resolution failed. | Verify the domain exists and DNS records are configured correctly. Check for typos in the URL. |
+| `5006` | `net::ERR_CONNECTION_CLOSED`, `net::ERR_CONNECTION_RESET`, `net::ERR_TUNNEL_CONNECTION_FAILED` | The network connection was closed. Can also happen due to DNS resolution failure or bot/WAF blocking. | Verify the target site is operational and not blocking automated requests. Check if the site has WAF or bot protection rules that may be blocking Browser Run. Also verify DNS records if the issue persists. |
+| `5007` | `net::ERR_HTTP_RESPONSE_CODE_FAILURE` | HTTP error with empty response body. | If you control the site, check server error page configuration. |
+| `5008` | `net::ERR_CONNECTION_REFUSED` | The server refused the connection. | Verify the web service is running and accessible. |
+| `5009` | `net::` errors | A general network error occurred when attempting to load the page. | Review the specific error message for details. Verify the target site is accessible and network connectivity is stable. |
+| `5010` | `net::ERR_INVALID_URL`, `net::ERR_BLOCKED_BY_ADMINISTRATOR`, `net::ERR_FILE` | The URL is invalid or blocked. | Verify the URL format is correct. Browser Run does not support `file://` URLs or URLs blocked by security policies. |
+| `5011` | `net::ERR_EMPTY_RESPONSE` | The server returned an empty response. | If you control the site, check server logs for crashes or configuration issues. |
+
+## Browser automation errors
+
+Browser automation errors occur during browser operations when using [Puppeteer](/browser-run/puppeteer/), [Playwright](/browser-run/playwright/), or [CDP](/browser-run/cdp/). These errors are related to the Chrome DevTools Protocol (CDP).
+
+| Internal code | Error | Description | Recommended fix |
+| --- | --- | --- | --- |
+| `6000` | `Execution context was destroyed`, `Navigating frame was detached` | The execution context was destroyed, most likely because of a navigation or page reload. | Add [wait conditions](/browser-run/reference/timeouts/) or retry logic to handle navigation timing. |
+| `6001` | `TargetCloseError` | The target closed due to user or site actions, or excessive memory consumption. | Check if the site calls `window.close()` or consumes excessive memory. Refer to [browser close reasons](/browser-run/reference/browser-close-reasons/). |
+| `6002` | `TimeoutError`, `Navigation timeout`, `timed out`, `Waiting failed: .* exceeded` | A timeout was reached during a browser operation. | Increase the relevant [timeout settings](/browser-run/reference/timeouts/) for your operation (page load, element wait, or action timeout). |
+| `6003` | `Page.captureScreenshot`, `Page.printToPDF`, `Page is too large`, `Unable to capture screenshot` | Failed to capture screenshot or generate PDF. The page may be too large or in an invalid state. | Reduce page size, simplify content, or adjust [screenshot](/browser-run/quick-actions/screenshot-endpoint/#advanced-usage) or [PDF](/browser-run/quick-actions/pdf-endpoint/#advanced-usage) parameters. |
+| - | `Page crashed!` | The browser instance crashed, often due to memory issues or page complexity. | Reduce page complexity, limit heavy JavaScript, or simplify the page to lower memory consumption. |
+
+## Platform errors
+
+Platform errors occur at the [Workers platform](/workers/) level before Browser Run code runs.
+
+| Error | Description | Recommended fix |
+| --- | --- | --- |
+| `Cannot read properties of undefined (reading 'fetch')` | The [browser binding](/browser-run/get-started/puppeteer/#2-configure-the-wrangler-configuration-file) was not passed to `puppeteer.launch()` or `playwright.launch()`. | Pass your browser binding to `puppeteer.launch()` or `playwright.launch()`. Refer to [Puppeteer](/browser-run/puppeteer/) or [Playwright](/browser-run/playwright/) setup. |
+| `No such module 'cloudflare:browser'` | Browser Run is not enabled on your account. | [Enable Browser Run](/browser-run/get-started/) by creating a [browser binding](/browser-run/get-started/puppeteer/#2-configure-the-wrangler-configuration-file) in your Worker configuration. |
+
+## Related resources
+
+- [Limits](/browser-run/limits/)
+- [Browser close reasons](/browser-run/reference/browser-close-reasons/)
+- [Quick Actions timeouts](/browser-run/reference/timeouts/)

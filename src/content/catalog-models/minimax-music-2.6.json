@@ -1,0 +1,229 @@
+{
+	"model_id": "minimax/music-2.6",
+	"provider_id": "minimax",
+	"name": "MiniMax Music 2.6",
+	"description": "MiniMax's music generation model that creates full-length songs with vocals from text prompts and lyrics, or instrumental tracks. Supports BPM/key control and auto-generated lyrics.",
+	"task": "Music Generation",
+	"tags": [
+		"Music",
+		"Audio Generation",
+		"Vocals",
+		"Instrumental"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Prompt",
+			"description": "Generate music from a style description with auto-generated lyrics",
+			"input": {
+				"prompt": "An upbeat electronic dance track with a catchy synth melody and driving beat",
+				"lyrics_optimizer": true,
+				"is_instrumental": false
+			},
+			"output": {
+				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__music-2.6/simple-prompt.mp3"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'minimax/music-2.6',\n  {\n    prompt:\n      'An upbeat electronic dance track with a catchy synth melody and driving beat',\n    lyrics_optimizer: true,\n    is_instrumental: false,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "With Lyrics",
+			"description": "Generate a song with custom lyrics",
+			"input": {
+				"prompt": "A warm acoustic folk ballad with fingerpicked guitar and gentle vocals",
+				"lyrics": "Walking down a dusty road\nWith the sunset painting gold\nEvery step a story told\nOf the places I call home",
+				"lyrics_optimizer": false,
+				"is_instrumental": false
+			},
+			"output": {
+				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__music-2.6/with-lyrics.mp3"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'minimax/music-2.6',\n  {\n    prompt:\n      'A warm acoustic folk ballad with fingerpicked guitar and gentle vocals',\n    lyrics:\n      'Walking down a dusty road\\nWith the sunset painting gold\\nEvery step a story told\\nOf the places I call home',\n    lyrics_optimizer: false,\n    is_instrumental: false,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Instrumental",
+			"description": "Generate instrumental music without vocals",
+			"input": {
+				"prompt": "A calm lo-fi hip hop instrumental with vinyl crackle and mellow piano chords",
+				"lyrics_optimizer": false,
+				"is_instrumental": true
+			},
+			"output": {
+				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__music-2.6/instrumental.mp3"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'minimax/music-2.6',\n  {\n    prompt:\n      'A calm lo-fi hip hop instrumental with vinyl crackle and mellow piano chords',\n    lyrics_optimizer: false,\n    is_instrumental: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "High Quality Audio",
+			"description": "Specify audio format and sample rate",
+			"input": {
+				"prompt": "An orchestral cinematic score building to an epic crescendo with full symphony",
+				"sample_rate": 44100,
+				"format": "wav",
+				"lyrics_optimizer": true,
+				"is_instrumental": false
+			},
+			"output": {
+				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__music-2.6/high-quality-audio.wav"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'minimax/music-2.6',\n  {\n    prompt:\n      'An orchestral cinematic score building to an epic crescendo with full symphony',\n    sample_rate: 44100,\n    format: 'wav',\n    lyrics_optimizer: true,\n    is_instrumental: false,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Auto-Generated Lyrics",
+			"description": "Let the model generate lyrics from the prompt",
+			"input": {
+				"prompt": "A cheerful pop song about a summer road trip with friends",
+				"lyrics_optimizer": true,
+				"is_instrumental": false
+			},
+			"output": {
+				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__music-2.6/auto-generated-lyrics.mp3"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'minimax/music-2.6',\n  {\n    prompt: 'A cheerful pop song about a summer road trip with friends',\n    lyrics_optimizer: true,\n    is_instrumental: false,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://www.minimaxi.com/",
+	"terms": "https://www.minimaxi.com/terms",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/minimax/music-2.6.png",
+	"metadata": {
+		"Max Duration": "~6 minutes",
+		"Modes": "Vocals, Instrumental, Auto-Lyrics",
+		"Audio Formats": "mp3, wav"
+	},
+	"created_at": "2026-04-14 18:41:44",
+	"default_example": null,
+	"code_snippets": [],
+	"zdr": false,
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"description": "Description of the music style, mood, and scenario",
+					"type": "string",
+					"maxLength": 2000
+				},
+				"lyrics": {
+					"description": "Song lyrics, using \\n to separate lines",
+					"type": "string",
+					"minLength": 1,
+					"maxLength": 3500
+				},
+				"sample_rate": {
+					"description": "Audio sample rate",
+					"anyOf": [
+						{
+							"type": "number",
+							"const": 16000
+						},
+						{
+							"type": "number",
+							"const": 24000
+						},
+						{
+							"type": "number",
+							"const": 32000
+						},
+						{
+							"type": "number",
+							"const": 44100
+						}
+					]
+				},
+				"bitrate": {
+					"description": "Audio bitrate",
+					"anyOf": [
+						{
+							"type": "number",
+							"const": 32000
+						},
+						{
+							"type": "number",
+							"const": 64000
+						},
+						{
+							"type": "number",
+							"const": 128000
+						},
+						{
+							"type": "number",
+							"const": 256000
+						}
+					]
+				},
+				"format": {
+					"description": "Audio format",
+					"type": "string",
+					"enum": [
+						"mp3",
+						"wav"
+					]
+				},
+				"lyrics_optimizer": {
+					"description": "Automatically generate lyrics based on the prompt description",
+					"default": false,
+					"type": "boolean"
+				},
+				"is_instrumental": {
+					"description": "Generate instrumental music (no vocals)",
+					"default": false,
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"prompt",
+				"lyrics_optimizer",
+				"is_instrumental"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"audio": {
+					"description": "URL to the generated audio file",
+					"type": "string",
+					"format": "uri"
+				}
+			},
+			"required": [
+				"audio"
+			],
+			"additionalProperties": false
+		}
+	}
+}

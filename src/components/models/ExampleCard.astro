@@ -1,0 +1,258 @@
+---
+import { Code, Tabs, TabItem } from "~/components";
+import type { ModelExample, CodeSnippet } from "~/schemas/catalog-models";
+
+interface Props {
+	example: ModelExample;
+	fallbackSnippets?: CodeSnippet[];
+	layout?: "stack" | "side-by-side";
+}
+
+const { example, fallbackSnippets, layout = "side-by-side" } = Astro.props;
+
+const snippets = example.code_snippets ?? fallbackSnippets ?? [];
+const hasSnippets = snippets.length > 0;
+
+const rawImageUrl = example.output?.image ?? example.output?.image_url;
+const imageUrl = typeof rawImageUrl === "string" ? rawImageUrl : undefined;
+const hasImage = !!imageUrl;
+
+const rawVideoUrl = example.output?.video ?? example.output?.video_url;
+const videoUrl = typeof rawVideoUrl === "string" ? rawVideoUrl : undefined;
+const hasVideo = !!videoUrl;
+
+const rawAudioUrl = example.output?.audio ?? example.output?.audio_url;
+const audioUrl = typeof rawAudioUrl === "string" ? rawAudioUrl : undefined;
+const hasAudio = !!audioUrl;
+
+const hasMedia = hasImage || hasVideo || hasAudio;
+
+const languageMap: Record<string, string> = {
+	typescript: "ts",
+	javascript: "js",
+	python: "python",
+	curl: "bash",
+	bash: "bash",
+	shell: "bash",
+	cURL: "bash",
+};
+
+const displayNames: Record<string, string> = {
+	typescript: "TypeScript",
+	javascript: "JavaScript",
+	python: "Python",
+	curl: "cURL",
+	cURL: "cURL",
+	bash: "Bash",
+};
+
+function getLang(label: string): string {
+	return languageMap[label] ?? languageMap[label.toLowerCase()] ?? "txt";
+}
+
+function getLabel(label: string): string {
+	return displayNames[label] ?? displayNames[label.toLowerCase()] ?? label;
+}
+---
+
+<div
+	class:list={[
+		"example-card",
+		{ "side-by-side": layout === "side-by-side" && hasMedia && hasSnippets },
+	]}
+>
+	{
+		hasSnippets && (
+			<div class="example-code">
+				{snippets.length === 1 ? (
+					<Code code={snippets[0].code} lang={getLang(snippets[0].label)} />
+				) : (
+					<Tabs>
+						{snippets.map((snippet) => (
+							<TabItem label={getLabel(snippet.label)}>
+								<Code code={snippet.code} lang={getLang(snippet.label)} />
+							</TabItem>
+						))}
+					</Tabs>
+				)}
+			</div>
+		)
+	}
+
+	{
+		hasMedia && (
+			<div class="example-output">
+				<span class="example-output-label">
+					Response
+					<span class="example-status-badge">200</span>
+				</span>
+				{hasImage && (
+					<img src={imageUrl} alt={example.name} loading="lazy" />
+				)}
+				{hasVideo && (
+					<video src={videoUrl} controls preload="metadata">
+						<track kind="captions" />
+					</video>
+				)}
+				{hasAudio && (
+					<audio src={audioUrl} controls preload="metadata">
+						<track kind="captions" />
+					</audio>
+				)}
+			</div>
+		)
+	}
+
+	{
+		!hasMedia && !hasSnippets && example.output && (
+			<Tabs>
+				<TabItem label="Input">
+					<Code code={JSON.stringify(example.input, null, 4)} lang="json" />
+				</TabItem>
+				<TabItem label="Output">
+					<Code code={JSON.stringify(example.output, null, 4)} lang="json" />
+				</TabItem>
+			</Tabs>
+		)
+	}
+
+	{
+		!hasMedia && !hasSnippets && !example.output && example.input && (
+			<Code code={JSON.stringify(example.input, null, 4)} lang="json" />
+		)
+	}
+
+	{
+		!hasMedia && hasSnippets && example.output && (
+			<details class="example-io">
+				<summary>Input / Output JSON</summary>
+				<Tabs>
+					<TabItem label="Input">
+						<Code code={JSON.stringify(example.input, null, 4)} lang="json" />
+					</TabItem>
+					<TabItem label="Output">
+						<Code
+							code={JSON.stringify(example.output, null, 4)}
+							lang="json"
+						/>
+					</TabItem>
+				</Tabs>
+			</details>
+		)
+	}
+</div>
+
+<style>
+	.example-card {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.example-card.side-by-side {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(200px, 1fr);
+		gap: 1rem;
+		align-items: stretch;
+	}
+
+	@media (max-width: 768px) {
+		.example-card.side-by-side {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.example-code {
+		min-width: 0;
+		min-height: 0;
+		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+	}
+
+	/* stretch the tabs element and its active panel */
+	.example-card.side-by-side .example-code :global(starlight-tabs) {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+	}
+
+	.example-card.side-by-side
+		.example-code
+		:global(starlight-tabs > [role="tabpanel"]:not([hidden])) {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+	}
+
+	.example-card.side-by-side .example-code :global(.expressive-code) {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+	}
+
+	.example-card.side-by-side .example-code :global(.expressive-code figure) {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+	}
+
+	.example-card.side-by-side .example-code :global(.expressive-code pre) {
+		flex: 1;
+		overflow: auto;
+	}
+
+	.example-output {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		margin-top: 0;
+	}
+
+	.example-card.side-by-side .example-output {
+		position: sticky;
+		top: 5rem;
+		align-self: start;
+	}
+
+	.example-output-label {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		height: 1.875rem; /* matches starlight tab bar height (~30px) */
+		font-size: 0.875rem;
+		font-weight: 600;
+		color: var(--sl-color-gray-10);
+		border-bottom: 2px solid var(--sl-color-gray-5);
+	}
+
+	.example-status-badge {
+		font-size: 0.75rem;
+		font-weight: 700;
+		font-family: var(--sl-font-mono);
+		color: var(--sl-color-green);
+		border: 1px solid var(--sl-color-green);
+		border-radius: 0.25rem;
+		padding: 0 0.3rem;
+		line-height: 1.4;
+	}
+
+	.example-output img,
+	.example-output video {
+		width: 100%;
+		border-radius: 0.5rem;
+		border: 1px solid var(--sl-color-gray-5);
+	}
+
+	.example-output audio {
+		width: 100%;
+	}
+
+	.example-io {
+		grid-column: 1 / -1;
+	}
+</style>

@@ -2,6 +2,8 @@
 pcx_content_type: configuration
 title: Manage catalogs
 description: Understand how to manage Iceberg REST catalogs associated with R2 buckets
+products:
+  - r2
 sidebar:
   order: 3
 ---
@@ -43,7 +45,7 @@ Enabling the catalog on a bucket turns on the REST catalog interface and provide
 
 </TabItem>
 <TabItem label='Wrangler CLI'>
-To enable the catalog on your bucket, run the [`r2 bucket catalog enable command`](/workers/wrangler/commands/#r2-bucket-catalog-enable):
+To enable the catalog on your bucket, run the [`r2 bucket catalog enable command`](/workers/wrangler/commands/r2/#r2-bucket-catalog-enable):
 
 ```bash
 npx wrangler r2 bucket catalog enable <BUCKET_NAME>
@@ -70,7 +72,7 @@ When you disable the catalog on a bucket, it immediately stops serving requests 
 
 </TabItem>
 <TabItem label='Wrangler CLI'>
-To disable the catalog on your bucket, run the [`r2 bucket catalog disable command`](/workers/wrangler/commands/#r2-bucket-catalog-disable):
+To disable the catalog on your bucket, run the [`r2 bucket catalog disable command`](/workers/wrangler/commands/r2/#r2-bucket-catalog-disable):
 
 ```bash
 npx wrangler r2 bucket catalog disable <BUCKET_NAME>
@@ -104,7 +106,7 @@ Refer to [Authenticate your Iceberg engine](#authenticate-your-iceberg-engine) f
 </TabItem>
 <TabItem label='Wrangler CLI'>
 
-To enable the compaction on your catalog, run the [`r2 bucket catalog compaction enable` command](/workers/wrangler/commands/#r2-bucket-catalog-compaction-enable):
+To enable the compaction on your catalog, run the [`r2 bucket catalog compaction enable` command](/workers/wrangler/commands/r2/#r2-bucket-catalog-compaction-enable):
 
 ```bash
 # Enable catalog-level compaction (all tables)
@@ -146,7 +148,7 @@ Disabling compaction will prevent the process from running for all tables (catal
 </TabItem>
 <TabItem label='Wrangler CLI'>
 
-To disable the compaction on your catalog, run the [`r2 bucket catalog compaction disable` command](/workers/wrangler/commands/#r2-bucket-catalog-compaction-disable):
+To disable the compaction on your catalog, run the [`r2 bucket catalog compaction disable` command](/workers/wrangler/commands/r2/#r2-bucket-catalog-compaction-disable):
 
 ```bash
 # Disable catalog-level compaction (all tables)
@@ -161,13 +163,13 @@ npx wrangler r2 bucket catalog compaction disable <BUCKET_NAME> <NAMESPACE> <TAB
 
 ## Enable snapshot expiration
 
-Snapshot expiration automatically removes old table snapshots to reduce metadata bloat and storage costs. For more information about snapshot expiration and why it is valuable, refer to [Table maintenance](/r2/data-catalog/table-maintenance/).
+Snapshot expiration automatically removes old table snapshots and any unreferenced data files to reduce metadata overhead and storage costs.
 
 :::note
 Snapshot expiration commands are available as of Wrangler version 4.56.0.
 :::
 
-To enable snapshot expiration on your catalog, run the [`r2 bucket catalog snapshot-expiration enable` command](/workers/wrangler/commands/#r2-bucket-catalog-snapshot-expiration-enable):
+To enable snapshot expiration on your catalog, run the [`r2 bucket catalog snapshot-expiration enable` command](/workers/wrangler/commands/r2/#r2-bucket-catalog-snapshot-expiration-enable):
 
 ```bash
 # Enable catalog-level snapshot expiration (all tables)

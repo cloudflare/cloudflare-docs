@@ -12,7 +12,7 @@ With Cloudflare Zero Trust, you can deliver actionable feedback to users when th
 There are two different ways to surface block messages:
 
 - [Custom block page](#custom-block-page)
-- [WARP client block notifications](#warp-client-block-notifications)
+- [Cloudflare One Client block notifications](#cloudflare-one-client-block-notifications)
 
 ## Custom block page
 
@@ -24,7 +24,7 @@ The custom block page has a few drawbacks:
 - The block page does not appear when users are blocked by a Gateway network policy.
 - The custom block page only displays when the user loads a site in a browser. If, for instance, the user is allowed to visit a site but not allowed to upload a file, the file upload would fail silently and the user would not get a block page.
 
-To work around these limitations, we recommend using [WARP client block notifications](#warp-client-block-notifications).
+To work around these limitations, we recommend using [Cloudflare One Client block notifications](#cloudflare-one-client-block-notifications).
 
 :::note
 
@@ -93,14 +93,14 @@ For DNS policies, you will need to enable the block page on a per-policy basis.
 
 <Render file="gateway/customize-block-page" product="cloudflare-one" />
 
-## WARP client block notifications
+## Cloudflare One Client block notifications
 
 :::note
 
 Only available on Enterprise plans.
 :::
 
-For more granular user feedback, you can enable WARP client block notifications on any Gateway DNS or Network _Block_ policy. Blocked users will receive an operating system notification from the WARP client with a custom message you set.
+For more granular user feedback, you can enable Cloudflare One Client block notifications on any Gateway DNS or Network _Block_ policy. Blocked users will receive an operating system notification from the Cloudflare One Client with a custom message you set.
 
 Client notifications provide additional functionality over the [custom block page](#custom-block-page):
 

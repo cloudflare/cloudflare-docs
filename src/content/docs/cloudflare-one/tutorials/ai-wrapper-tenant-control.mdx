@@ -3,6 +3,8 @@ reviewed: 2025-05-02
 category: Zero Trust
 difficulty: Advanced
 pcx_content_type: tutorial
+products:
+  - cloudflare-one
 title: Create and secure an AI agent wrapper using AI Gateway and Zero Trust
 tags:
   - AI
@@ -433,7 +435,7 @@ You can now block access to all unauthorized public AI agents with a Gateway [HT
 
 This ensures that public AI agents are not accessible using a managed endpoint.
 
-Alternatively, you can prevent users from using public AI agents by displaying a [custom block message](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/#customize-the-block-page), [redirect](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/#redirect-to-a-block-page), or a [user notification](/cloudflare-one/traffic-policies/http-policies/#warp-client-block-notifications) directing users to the AI agent wrapper.
+Alternatively, you can prevent users from using public AI agents by displaying a [custom block message](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/#customize-the-block-page), [redirect](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/#redirect-to-a-block-page), or a [user notification](/cloudflare-one/traffic-policies/http-policies/#cloudflare-one-client-block-notifications) directing users to the AI agent wrapper.
 
 ## 6. Enforce Data Loss Prevention and Clientless Browser Isolation
 
@@ -486,7 +488,7 @@ Organizations that adopt Cloudflare to secure access to AI agents will benefit f
 
 ### Visibility
 
-Zero Trust will log all [Access events](/cloudflare-one/insights/logs/audit-logs/) and [DLP detections](/cloudflare-one/insights/logs/gateway-logs/#http-logs). In addition, AI Gateway provides [visibility](/ai-gateway/observability/logging/) into user prompts, model response, token usage, and costs.
+Zero Trust will log all [Access events](/cloudflare-one/insights/logs/dashboard-logs/access-authentication-logs/) and [DLP detections](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/#http-logs). In addition, AI Gateway provides [visibility](/ai-gateway/observability/logging/) into user prompts, model response, token usage, and costs.
 
 Logs can be exported to external providers with [Logpush](/logs/logpush/).
 

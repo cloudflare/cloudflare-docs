@@ -1,22 +1,22 @@
 ---
 {}
 ---
-import { Tabs, TabItem } from "~/components"
+import { Tabs, TabItem} from "~/components"
 
-Specifies maximum height of the image in pixels. Exact behavior depends on the `fit` mode (described below).
+<a id="height"></a>
 
-**Alias:** `h`
+### `height` | `h`
+
+Sets the height of the output image in pixels using a positive integer value. By default, Cloudflare uses the original height of the input image.
+
+When `height` is set, the exact behavior depends on the `fit` parameter.
 
 <Tabs>
   <TabItem label="URL format">
     ```txt
     height=250
+    h=250
     ```
-  </TabItem>
-  <TabItem label="URL format alias">
-  ```txt
-  h=250
-  ```
   </TabItem>
   <TabItem label="Workers">
   ```js
