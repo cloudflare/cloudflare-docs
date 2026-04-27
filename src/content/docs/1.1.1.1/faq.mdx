@@ -69,6 +69,22 @@ Cloudflare minimizes privacy leakage by only sending minimal query name to autho
 
 For decreased latency, reduced privacy leakage of queries and lower load on the DNS system, 1.1.1.1 upstreams to [locally hosted root zone files](https://blog.cloudflare.com/f-root/).
 
+## How does 1.1.1.1 select which authoritative nameserver to query?
+
+When more than one authoritative nameserver is available for a zone (for example, multiple `NS` records at the root, TLD, or delegation level), 1.1.1.1 chooses between them based on measured performance rather than picking randomly or in list order. The resolver tracks per-upstream metrics — including round-trip time (RTT) and response quality — and prefers the nameserver that has historically been fastest and most reliable from the data center serving the query. A small share of queries is intentionally sent to other candidates so that latency measurements stay current and a previously slow server can be re-evaluated. For more background on the platform that powers this behavior, refer to the [BigPineapple architecture blog post](https://blog.cloudflare.com/big-pineapple-intro/).
+
+## What does 1.1.1.1 do when an authoritative nameserver times out or returns an error?
+
+If a chosen upstream nameserver does not respond in time or returns a transient error, 1.1.1.1 retries the query against another authoritative nameserver for the same zone. The temporarily unresponsive server is downranked so that subsequent queries prefer healthier alternatives, and it is periodically re-probed to detect recovery. Concurrent identical upstream queries are also deduplicated so that a single in-flight request serves multiple waiting clients. The exact retry parameters and ranking logic are tuned over time and may change.
+
+## When authoritative nameservers disagree, which response is returned to the client?
+
+For a given query, only one final answer is returned to the client. Which response is selected depends on whether the responses are authoritative answers or transient failures:
+
+- **`NOERROR` (with answer or `NODATA`) versus `NXDOMAIN`:** Both are valid authoritative answers. 1.1.1.1 returns the first valid response it receives and does not query the remaining authoritative nameservers to compare answers. Authoritative nameservers for the same zone are expected to be consistent — if one returns `NXDOMAIN` and another returns `NOERROR` for the same name, that indicates a misconfiguration on the authoritative side, and which answer reaches the client depends on which nameserver was queried.
+- **Timeout versus a valid response:** A timeout is not an answer. 1.1.1.1 retries against another authoritative nameserver and returns the first valid response (`NOERROR`, `NXDOMAIN`, or other) it receives.
+- **`SERVFAIL` or other transient failure versus a valid response:** Transient failures are treated as upstream errors rather than authoritative answers. 1.1.1.1 retries against another authoritative nameserver and returns the first valid response it receives. Only if all authoritative nameservers fail does the resolver return `SERVFAIL` to the client.
+
 ## Can IPs used by 1.1.1.1 be allowlisted?
 
 Authoritative DNS providers may want to allowlist IP's 1.1.1.1 uses to query upstream DNS providers. The comprehensive list of IP's to allowlist is available at [https://www.cloudflare.com/ips/](https://www.cloudflare.com/ips/).
