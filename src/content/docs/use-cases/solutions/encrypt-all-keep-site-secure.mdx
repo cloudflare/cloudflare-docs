@@ -11,7 +11,15 @@ sidebar:
 
 import { DashButton, FeatureTable, GlossaryTooltip, Render, Steps, TabItem, Tabs } from "~/components";
 
-HTTPS on Cloudflare involves two separate connections: visitor to Cloudflare, and Cloudflare to your origin server. Both must be encrypted for end-to-end security. This guide walks through five stages: configure your SSL/TLS encryption mode, redirect all HTTP requests to HTTPS, harden your HTTPS setup with minimum TLS versions and HSTS, monitor third-party scripts on your pages, and verify your configuration. The core workflow is available on Free, Pro, and Business plans.
+HTTPS on Cloudflare involves two separate connections: visitor to Cloudflare, and Cloudflare to your origin server. Both must be encrypted for end-to-end security. This guide walks through five stages: 
+
+1. Configure your SSL/TLS encryption mode.
+2. Redirect all HTTP requests to HTTPS.
+3. Harden your HTTPS setup with minimum TLS versions and HSTS.
+4. Monitor third-party scripts on your pages.
+5. Verify your configuration. 
+
+The core workflow is available on Free, Pro, and Business plans.
 
 :::note
 Most procedures in this guide are configured per domain. Select your domain in the Cloudflare dashboard before starting. Client-side security is the exception, as it is configured at the account level.
