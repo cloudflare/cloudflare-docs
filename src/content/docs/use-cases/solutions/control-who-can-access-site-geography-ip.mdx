@@ -149,13 +149,11 @@ Allowlist rules should be as specific as possible. Broad IP ranges or CIDR block
 
 5. Under **Then take action**, select _Skip_ > _All remaining custom rules_.
 
-6. Select **Deploy**.
+6. Under **Place at**, position the rule above your blocking rules. Custom rules are evaluated in order, so the skip rule must execute first.
+
+7. Select **Deploy**.
 
 </Steps>
-
-:::note
-Place skip rules before blocking rules in the custom rules list. Custom rules are evaluated in order, and a skip rule that appears after a blocking rule will not prevent that block from firing.
-:::
 {/* Source: /waf/custom-rules/skip/ — skip rules must appear before blocking rules */}
 
 ### Block specific IP addresses or CIDR ranges
@@ -242,7 +240,7 @@ Or select **Edit expression** and enter:
 
 Set the action to _Block_.
 
-Place the skip rule above the blocking rule in the custom rules list so allowed IPs are matched before the block fires.
+Under **Place at**, position the skip rule above the blocking rule so allowed IPs are matched before the block fires.
 
 ### Restrict API endpoints by IP range
 
