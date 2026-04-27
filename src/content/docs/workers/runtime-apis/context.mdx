@@ -184,6 +184,26 @@ If using TypeScript, you should use [the `wrangler types` command](/workers/wran
 
 When declaring an entrypoint class that accepts `props`, make sure to declare it as `extends WorkerEntrypoint<Env, Props>`, where `Props` is the type of `ctx.props`. See the example above.
 
+## `tracing`
+
+`ctx.tracing` provides access to the [custom spans API](/workers/observability/traces/custom-spans/) for creating user-defined trace spans. This is the same object available via `import { tracing } from "cloudflare:workers"`.
+
+[Tracing must be enabled](/workers/observability/traces/#how-to-enable-tracing) on your Worker for spans to be recorded.
+
+```js
+export default {
+	async fetch(request, env, ctx) {
+		return ctx.tracing.enterSpan("handleRequest", async (span) => {
+			span.setAttribute("url.path", new URL(request.url).pathname);
+			const data = await env.MY_KV.get("key");
+			return new Response(data);
+		});
+	},
+};
+```
+
+For full API details, refer to [Custom spans](/workers/observability/traces/custom-spans/).
+
 ## `waitUntil`
 
 `ctx.waitUntil()` extends the lifetime of your Worker, allowing you to perform work without blocking returning a response, and that may continue after a response is returned. It accepts a `Promise`, which the Workers runtime will continue executing, even after a response has been returned by the Worker's [handler](/workers/runtime-apis/handlers/).
