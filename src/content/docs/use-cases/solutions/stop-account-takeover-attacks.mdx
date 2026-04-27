@@ -163,6 +163,7 @@ Turnstile provides test site keys that return predictable results without contac
 For the full list of test keys and expected behaviors, refer to [Test your Turnstile implementation](/turnstile/troubleshooting/testing/).
 
 ### Rate limit your login endpoint
+
 #### Create a rate limiting rule for your login endpoint
 
 The following example creates a rate limiting rule that issues a Managed Challenge after more than five POST requests to your login path from the same IP within one minute. Start with Managed Challenge rather than Block. Managed Challenge allows legitimate users who trigger the limit to pass by completing a challenge, while blocking automated traffic that cannot solve it. After monitoring [Security Events](/waf/analytics/security-events/) to confirm the rule is not producing false positives, switch to Block. Adjust the path (`/login`), threshold, and period for your site.
