@@ -19,6 +19,14 @@ Choose the approach that matches how you use AI tools:
 
 ## Concepts
 
+### Agent skills
+
+Skills are reusable instruction sets that teach an agent about a specific domain — for example, how to deploy a Cloudflare Worker or configure a WAF rule. They act as plugins that the agent loads on demand when it encounters a relevant task.
+
+### Model Context Protocol (MCP)
+
+The [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) is an open standard that connects AI tools to external tools, data, and services. When you connect an MCP server to your agent, the agent can search documentation, create DNS records, deploy Workers, and more.
+
 ### Model flexibility
 
 AI agents use large language models (LLMs) to understand your requests and generate responses. How many models you can choose from depends on the agent:
@@ -49,13 +57,13 @@ Select your agent to get started. If you are not sure which agent to use, refer 
 
 ## Skills
 
-[Agent skills](https://agentskills.io/home) are reusable instruction sets that teach an agent about a specific domain. They act as plugins that the agent loads on demand when it encounters a relevant task — for example, a skill might teach your agent how to deploy a Cloudflare Worker or configure a WAF rule.
+[Agent skills](https://agentskills.io/home) are structured, task-specific instructions that AI tools load on demand — for example, a skill might teach your agent how to deploy a Cloudflare Worker or configure a WAF rule. Cloudflare publishes skills covering Workers, storage, AI, networking, security, and more in the [Cloudflare Skills repository](https://github.com/cloudflare/skills).
 
-Cloudflare publishes skills covering Workers, storage, AI, networking, security, and more in the [Cloudflare Skills repository](https://github.com/cloudflare/skills). Each agent has its own installation method for Skills. Refer to [Agent setup](#set-up-your-agent) for instructions.
+Each agent has its own installation method for Skills. Refer to [Agent setup](#set-up-your-agent) for installation instructions.
 
 ## MCP servers
 
-The [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) is an open standard that connects AI tools to external tools, data, and services. Cloudflare runs managed remote MCP servers that give your agent the ability to search documentation, call the Cloudflare API, and query logs and analytics while it works.
+Cloudflare runs managed remote MCP servers that give your agent the ability to search documentation, call the Cloudflare API, and query logs and analytics while it works.
 
 There are two approaches:
 
