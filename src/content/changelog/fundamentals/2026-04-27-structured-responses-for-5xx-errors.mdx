@@ -37,9 +37,13 @@ Available now for all zones on all plans.
 
 ## Get started
 
+Get JSON response for error 522:
+
 ```bash
 curl -s --compressed -H "Accept: application/json" -A "TestAgent/1.0" -H "Accept-Encoding: gzip, deflate" "<YOUR_DOMAIN>/cdn-cgi/error/522" | jq .
 ```
+
+Check presence of the `Retry-After` HTTP header associated with the JSON response for error 521:
 
 ```bash
 curl -s --compressed -D - -o /dev/null -H "Accept: application/json" -A "TestAgent/1.0" -H "Accept-Encoding: gzip, deflate" "<YOUR_DOMAIN>/cdn-cgi/error/521" | grep -i retry-after
