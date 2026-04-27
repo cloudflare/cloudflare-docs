@@ -5,7 +5,6 @@
 	"scripts": {
 		"preinstall": "pnpx only-allow pnpm",
 		"astro": "astro",
-		"catalog:build": "tsx bin/fetch-catalog-models.ts",
 		"prebuild": "tsx bin/fetch-skills.ts",
 		"build": "export NODE_OPTIONS='--max-old-space-size=8192' || set NODE_OPTIONS=\"--max-old-space-size=8192\" && astro build",
 		"typegen:worker": "wrangler types ./worker/worker-configuration.d.ts",
