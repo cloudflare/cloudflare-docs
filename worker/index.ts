@@ -43,7 +43,6 @@ const API_CATALOG = JSON.stringify({
 	],
 });
 
-
 /**
  * When a redirect response is returned for an index.md request, rewrite the
  * Location header so the agent stays in Markdown land instead of landing on
