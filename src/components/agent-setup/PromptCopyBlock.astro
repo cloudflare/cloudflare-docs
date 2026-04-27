@@ -14,7 +14,13 @@ const rest = match ? match[2] : text;
 ---
 
 <div class="pcb-root not-content">
-	{!hideLabel && 	<p class="pcb-label">Paste into any AI coding agent to install Cloudflare agent tooling:</p>}
+	{
+		!hideLabel && (
+			<p class="pcb-label">
+				Paste into any AI coding agent to install Cloudflare agent tooling:
+			</p>
+		)
+	}
 	<div class="pcb-shell" data-pcb>
 		<div class="pcb-body">
 			<code class="pcb-text">
@@ -122,24 +128,41 @@ const rest = match ? match[2] : text;
 		min-width: 0;
 		width: 100%;
 		overflow: hidden;
-		border: 1px solid color-mix(in srgb, var(--color-cl1-brand-orange) 45%, transparent);
+		border: 1px solid
+			color-mix(in srgb, var(--color-cl1-brand-orange) 45%, transparent);
 		background:
 			radial-gradient(circle, var(--sl-color-gray-6) 1px, transparent 1px),
 			var(--sl-color-gray-7);
-		background-size: 20px 20px, auto;
+		background-size:
+			20px 20px,
+			auto;
 
-		box-shadow: 0 0 8px color-mix(in srgb, var(--color-cl1-brand-orange) 15%, transparent);
-		transition: border-color 0.3s ease, box-shadow 0.3s ease;
+		box-shadow: 0 0 8px
+			color-mix(in srgb, var(--color-cl1-brand-orange) 15%, transparent);
+		transition:
+			border-color 0.3s ease,
+			box-shadow 0.3s ease;
+	}
+
+	:root[data-theme="dark"] .pcb-shell {
+		background: radial-gradient(circle, #333 1px, transparent 1px), #1a1a1a;
+		background-size:
+			20px 20px,
+			auto;
 	}
 
 	.pcb-shell:hover {
-		border-color: color-mix(in srgb, var(--color-cl1-brand-orange) 72%, transparent);
-		box-shadow: 0 0 16px color-mix(in srgb, var(--color-cl1-brand-orange) 25%, transparent);
+		border-color: color-mix(
+			in srgb,
+			var(--color-cl1-brand-orange) 72%,
+			transparent
+		);
 	}
 
 	.pcb-shell[data-copied] {
 		border-color: var(--color-cl1-brand-orange);
-		box-shadow: 0 0 16px color-mix(in srgb, var(--color-cl1-brand-orange) 25%, transparent);
+		box-shadow: 0 0 16px
+			color-mix(in srgb, var(--color-cl1-brand-orange) 25%, transparent);
 	}
 
 	/* ── Body row ── */
@@ -205,9 +228,17 @@ const rest = match ? match[2] : text;
 	}
 
 	.pcb-btn:hover .pcb-btn-inner {
-		border-color: color-mix(in srgb, var(--color-cl1-brand-orange) 65%, transparent);
+		border-color: color-mix(
+			in srgb,
+			var(--color-cl1-brand-orange) 65%,
+			transparent
+		);
 		color: var(--color-cl1-brand-orange);
-		background: color-mix(in srgb, var(--color-cl1-brand-orange) 10%, var(--sl-color-gray-6));
+		background: color-mix(
+			in srgb,
+			var(--color-cl1-brand-orange) 10%,
+			var(--sl-color-gray-6)
+		);
 	}
 
 	.pcb-btn:focus-visible {
@@ -230,9 +261,17 @@ const rest = match ? match[2] : text;
 	}
 
 	.pcb-btn[data-copied] .pcb-btn-inner {
-		border-color: color-mix(in srgb, var(--color-cl1-green-7, #86efac) 50%, transparent);
+		border-color: color-mix(
+			in srgb,
+			var(--color-cl1-green-7, #86efac) 50%,
+			transparent
+		);
 		color: var(--color-cl1-green-7, #86efac);
-		background: color-mix(in srgb, var(--color-cl1-green-7, #86efac) 8%, transparent);
+		background: color-mix(
+			in srgb,
+			var(--color-cl1-green-7, #86efac) 8%,
+			transparent
+		);
 	}
 
 	.pcb-btn:not([data-copied]) .pcb-btn-label::before {
