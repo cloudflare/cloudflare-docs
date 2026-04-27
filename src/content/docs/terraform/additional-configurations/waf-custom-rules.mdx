@@ -93,16 +93,17 @@ resource "cloudflare_ruleset" "zone_custom_firewall" {
     action      = "block"
   }
 }
-```
-
-</TabItem>
-</Tabs>
 
 <Render
 	file="add-new-rule"
 	product="terraform"
 	params={{ ruleType: "custom rule" }}
 />
+```
+
+</TabItem>
+</Tabs>
+
 <br />
 
 ## Create and deploy a custom ruleset
@@ -165,16 +166,17 @@ resource "cloudflare_ruleset" "account_firewall_custom_ruleset" {
     action      = "block"
   }
 }
-```
-
-</TabItem>
-</Tabs>
 
 <Render
 	file="add-new-rule"
 	product="terraform"
 	params={{ ruleType: "custom rule in the custom ruleset" }}
 />
+```
+
+</TabItem>
+</Tabs>
+
 <br />
 
 The following configuration deploys the custom ruleset at the account level. It defines a dependency on the `account_firewall_custom_ruleset` resource and uses the ID of the created custom ruleset in `action_parameters`:
