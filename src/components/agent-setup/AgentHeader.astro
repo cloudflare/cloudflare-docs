@@ -26,10 +26,17 @@ if (!agent) {
 }
 
 const externalLinks = [
-	agent.links.skills && { label: "Skills", href: agent.links.skills },
+	agent.links.skills && {
+		label: "Cloudflare Skills",
+		href: agent.links.skills,
+	},
 	agent.links.mcp_server && {
-		label: "MCP Server",
+		label: "Cloudflare Code Mode API MCP",
 		href: agent.links.mcp_server,
+	},
+	agent.links.mcp_server_domain && {
+		label: "Cloudflare Domain Specific MCPs",
+		href: agent.links.mcp_server_domain,
 	},
 	agent.links.cli && { label: "CLI", href: agent.links.cli },
 	agent.links.docs && { label: `${agent.name} Docs`, href: agent.links.docs },

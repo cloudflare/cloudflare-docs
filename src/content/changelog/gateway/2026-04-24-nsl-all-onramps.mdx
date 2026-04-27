@@ -1,0 +1,14 @@
+---
+title: Network Session Logs now available for all on-ramps
+description: Zero Trust Network Session Logs are now generated for all traffic proxied through Cloudflare Gateway, regardless of on-ramp type.
+products:
+  - gateway
+  - cloudflare-one
+date: 2026-04-24
+---
+
+[Zero Trust Network Session Logs](/logs/logpush/logpush-job/datasets/account/zero_trust_network_sessions/) are now generated for all traffic proxied through Cloudflare Gateway, regardless of on-ramp type. This includes traffic from [proxy endpoints (PAC files)](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) and [Browser Isolation](/cloudflare-one/remote-browser-isolation/) egress — on-ramps that previously did not generate session logs.
+
+Customers who already consume the `zero_trust_network_sessions` dataset via [Logpush](/cloudflare-one/insights/logs/logpush/) or [Log Explorer](/log-explorer/) may see increased log volume if they use these on-ramps.
+
+For field definitions, refer to [Zero Trust Network Session Logs](/logs/logpush/logpush-job/datasets/account/zero_trust_network_sessions/). For traffic analysis, refer to [Network session analytics](/cloudflare-one/insights/analytics/network-sessions/).

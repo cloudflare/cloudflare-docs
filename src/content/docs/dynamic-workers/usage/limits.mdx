@@ -4,6 +4,8 @@ description: Limit resource usage of dynamic Workers.
 pcx_content_type: how-to
 sidebar:
   order: 6
+products:
+  - dynamic-workers
 ---
 
 Custom limits allow you to programmatically enforce limits on the dynamic Worker's resource usage. You can set limits for the maximum CPU time and number of subrequests per invocation. If a dynamic Worker hits either of these limits, it will immediately throw an exception.

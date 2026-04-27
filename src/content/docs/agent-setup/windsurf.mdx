@@ -3,6 +3,8 @@ title: Windsurf + Cloudflare
 description: "Agentic IDE with Cascade context and Flows for multi-step tasks. Made by Cognition."
 template: splash
 pcx_content_type: how-to
+products:
+  - agent-setup
 ---
 
 import { Steps } from "~/components";
@@ -35,13 +37,16 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
 	3. **Configure Cloudflare MCP servers**
 
-		Add the Cloudflare API and docs servers to `~/.codeium/windsurf/mcp_config.json`. For a full list of available Cloudflare MCP servers, refer to the repository on [GitHub](https://github.com/cloudflare/mcp-server-cloudflare).
+		Add the Cloudflare API and docs servers to `~/.codeium/windsurf/mcp_config.json`. For domain-specific MCP servers, refer to [mcp-server-cloudflare](https://github.com/cloudflare/mcp-server-cloudflare). For the full Cloudflare API MCP server (Code Mode), refer to [cloudflare/mcp](https://github.com/cloudflare/mcp).
 
 		```json
 		{
 		  "mcpServers": {
 		    "cloudflare": { "serverUrl": "https://mcp.cloudflare.com/mcp" },
-		    "cloudflare-docs": { "serverUrl": "https://docs.mcp.cloudflare.com/mcp" }
+		    "cloudflare-docs": { "serverUrl": "https://docs.mcp.cloudflare.com/mcp" },
+		    "cloudflare-bindings": { "serverUrl": "https://bindings.mcp.cloudflare.com/mcp" },
+		    "cloudflare-builds": { "serverUrl": "https://builds.mcp.cloudflare.com/mcp" },
+		    "cloudflare-observability": { "serverUrl": "https://observability.mcp.cloudflare.com/mcp" }
 		  }
 		}
 		```

@@ -1,0 +1,222 @@
+{
+	"model_id": "openai/gpt-image-2",
+	"provider_id": "openai",
+	"name": "GPT Image 2",
+	"description": "OpenAI's next-generation image model that creates and edits images from text prompts, with support for multiple quality levels, sizes, and output formats. Note: transparent backgrounds are not supported — use openai/gpt-image-1.5 for transparent PNGs.",
+	"task": "Text-to-Image",
+	"tags": ["Image Generation", "Image Editing", "Multimodal"],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 5,
+		"Input image tokens (per 1M)": 8,
+		"Cached input tokens (per 1M)": 1.25,
+		"Cached input image tokens (per 1M)": 2,
+		"Output image tokens (per 1M)": 30,
+		"Output tokens (per 1M)": 10
+	},
+	"examples": [
+		{
+			"name": "Simple Generation",
+			"description": "Basic text-to-image with just a prompt",
+			"input": {
+				"prompt": "A golden retriever puppy playing in autumn leaves"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/openai__gpt-image-2/simple-generation.png"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/openai__gpt-image-2/simple-generation.png"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-image-2',\n  {\n    prompt: 'A golden retriever puppy playing in autumn leaves',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "High Quality",
+			"description": "Generate a high-quality detailed image",
+			"input": {
+				"prompt": "A detailed botanical illustration of exotic tropical flowers with fine line work and watercolor textures",
+				"quality": "high"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/openai__gpt-image-2/high-quality.png"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/openai__gpt-image-2/high-quality.png"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-image-2',\n  {\n    prompt:\n      'A detailed botanical illustration of exotic tropical flowers with fine line work and watercolor textures',\n    quality: 'high',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Custom Size",
+			"description": "Generate a portrait-oriented image",
+			"input": {
+				"prompt": "A towering redwood forest with sunbeams filtering through the canopy, misty atmosphere",
+				"size": "1024x1536"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/openai__gpt-image-2/custom-size.png"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/openai__gpt-image-2/custom-size.png"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-image-2',\n  {\n    prompt:\n      'A towering redwood forest with sunbeams filtering through the canopy, misty atmosphere',\n    size: '1024x1536',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "WebP Output",
+			"description": "Generate an image in WebP format for smaller file size",
+			"input": {
+				"prompt": "A neon-lit cyberpunk cityscape at night with rain-slicked streets and holographic billboards",
+				"quality": "high",
+				"output_format": "webp"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/openai__gpt-image-2/webp-output.webp"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/openai__gpt-image-2/webp-output.webp"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-image-2',\n  {\n    prompt:\n      'A neon-lit cyberpunk cityscape at night with rain-slicked streets and holographic billboards',\n    quality: 'high',\n    output_format: 'webp',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Image Edit",
+			"description": "Edit an existing image by providing it as base64 (a raw string or a data:image/{png|jpeg|webp};base64,... URI). This routes the call to OpenAI's /v1/images/edits endpoint. The example uses a tiny 32x32 smiley-face PNG - real inputs are the full base64 encoding of your source image.",
+			"input": {
+				"prompt": "Transform this cartoon smiley into a photorealistic 3D clay sculpture sitting on a marble pedestal, studio lighting",
+				"image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAnklEQVR42u2XQRLAIAgD8/839i/26qFCACm0ozPe1KwcQsAoXvgcAABxpwFowl4QWITHxW0LCBhxVngF4gKIirMQyBRnIJAtrkE8AuwWnyFEgKzfS1UA+3sWTju3BGAu7gKYIfBW+Q/AAQgBeMCkt1wVsLZjcwUYG2Z9wGLHZitWk1DEisubUYt2XB5IWkSyFqG0RSxvMZi0Gc1+Ox3fm00ZJ5mGVtkAAAAASUVORK5CYII="
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/openai__gpt-image-2/image-edit.png"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/openai__gpt-image-2/image-edit.png"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-image-2',\n  {\n    prompt:\n      'Transform this cartoon smiley into a photorealistic 3D clay sculpture sitting on a marble pedestal, studio lighting',\n    image:\n      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAnklEQVR42u2XQRLAIAgD8/839i/26qFCACm0ozPe1KwcQsAoXvgcAABxpwFowl4QWITHxW0LCBhxVngF4gKIirMQyBRnIJAtrkE8AuwWnyFEgKzfS1UA+3sWTju3BGAu7gKYIfBW+Q/AAQgBeMCkt1wVsLZjcwUYG2Z9wGLHZitWk1DEisubUYt2XB5IWkSyFqG0RSxvMZi0Gc1+Ox3fm00ZJ5mGVtkAAAAASUVORK5CYII=',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://openai.com/",
+	"terms": "https://openai.com/policies/",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/openai/gpt-image-2.png",
+	"metadata": {
+		"Image Editing": "Yes",
+		"Sizes": "1024x1024, 1024x1536, 1536x1024, auto",
+		"Quality": "low, medium, high, auto",
+		"Output Formats": "png, webp, jpeg"
+	},
+	"created_at": "2026-04-22 19:25:23",
+	"default_example": null,
+	"code_snippets": [],
+	"zdr": false,
+	"zdr_comment": null,
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"description": "Text prompt describing the image to generate or edit",
+					"type": "string"
+				},
+				"image": {
+					"description": "Base64-encoded input image for image editing",
+					"type": "string"
+				},
+				"quality": {
+					"description": "Quality of the generated image",
+					"type": "string",
+					"enum": ["low", "medium", "high", "auto"]
+				},
+				"size": {
+					"description": "Size of the generated image",
+					"type": "string",
+					"enum": ["1024x1024", "1024x1536", "1536x1024", "auto"]
+				},
+				"background": {
+					"description": "Background transparency setting. Use transparent for images with no background, opaque for a solid background, or auto to let the model decide.",
+					"type": "string",
+					"enum": ["transparent", "opaque", "auto"]
+				},
+				"output_format": {
+					"description": "Output format for the generated image",
+					"type": "string",
+					"enum": ["png", "webp", "jpeg"]
+				}
+			},
+			"required": ["prompt"],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"description": "URL to the generated image",
+					"type": "string",
+					"format": "uri"
+				}
+			},
+			"required": ["image"],
+			"additionalProperties": false
+		}
+	}
+}

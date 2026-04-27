@@ -3,6 +3,9 @@ pcx_content_type: concept
 title: Order and priority
 sidebar:
   order: 3
+products:
+  - firewall
+description: Understand firewall rule evaluation order and priority.
 ---
 
 Cloudflare Firewall Rules, now deprecated, is part of a larger evaluation chain for HTTP requests, as illustrated in the diagram below. For example, Firewall Rules only evaluates requests that first clear IP Access rules. If a request is blocked by a rule at any stage in the chain, Cloudflare does not evaluate the request further.

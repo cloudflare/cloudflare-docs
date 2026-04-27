@@ -34,12 +34,12 @@ ArtifactFS prioritizes files that usually unblock developer tools first, such as
 
 This example installs ArtifactFS, builds an authenticated Artifacts remote from a repo token, mounts the repo, and reads files from the mounted working tree.
 
-This example assumes you already have a working FUSE implementation on the host and a repo-scoped Artifacts token.
+This example assumes you already have a working FUSE implementation on the host, a repo-scoped Artifacts token, and the repo `remote` value from a create or get response.
 
 ```bash
 go install github.com/cloudflare/artifact-fs/cmd/artifact-fs@latest
 
-export ARTIFACTS_REMOTE="https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/starter-repo.git"
+export ARTIFACTS_REMOTE="<PASTE_REMOTE_FROM_CREATE_OR_GET_RESPONSE>"
 export ARTIFACTS_TOKEN="<YOUR_READ_TOKEN>"
 export ARTIFACTS_TOKEN_SECRET="${ARTIFACTS_TOKEN%%\?expires=*}"
 export ARTIFACTS_AUTH_REMOTE="https://x:${ARTIFACTS_TOKEN_SECRET}@${ARTIFACTS_REMOTE#https://}"

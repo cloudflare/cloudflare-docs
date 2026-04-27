@@ -12,7 +12,7 @@ tags:
 
 import { Render } from "~/components";
 
-Shadow IT SaaS analytics provides visibility into the SaaS applications your users are visiting. This information allows you to create identity and device-driven Cloudflare One policies to secure your users and data.
+Shadow IT SaaS analytics provides visibility into the SaaS applications your users are visiting. The dashboard aggregates data from Gateway HTTP traffic to track application usage across your organization. This information allows you to create identity and device-driven Cloudflare One policies to secure your users and data.
 
 To access Shadow IT SaaS analytics:
 
@@ -68,7 +68,16 @@ To create an HTTP status policy directly from Shadow IT Discovery:
 The Shadow IT SaaS analytics dashboard includes several insights to help you monitor and manage SaaS application usage.
 
 - **Number of applications by status**: A breakdown of how many applications have been categorized into each [approval status](#1-review-applications). The list of applications is available in the [App Library](/cloudflare-one/team-and-resources/app-library/).
-- **Data uploaded per application status**: A time-series graph showing the amount of data (in gigabytes) uploaded to an application in the given status.
-- **Data downloaded per application status**: A time-series graph showing the amount of data (in gigabytes) downloaded from an application in the given status.
-- **User count per application status**: A time-series graph showing the number of users who have interacted with at least one application in a given status. For example, a user can use an **Approved** application shortly followed by an **In review** application, contributing to counts for both of those statuses.
+- **Data uploaded per application status**: A time-series graph showing the amount of data uploaded to applications in the given status.
+- **Data downloaded per application status**: A time-series graph showing the amount of data downloaded from applications in the given status.
+- **User count per application status**: A time-series graph showing the number of unique users who have interacted with at least one application in a given status. A single user can appear in multiple status categories if they access applications with different statuses. For example, a user who accesses both an **Approved** application and an **Unapproved** application will be counted in both status categories.
 - **Top-N metrics**: A collection of metrics providing insights into top applications, users, devices, and countries.
+
+### Understanding user counts
+
+The user count chart displays unique users in two ways:
+
+- **Time-series bars**: Show unique users per time interval (for example, per hour or per day). The same user can appear in multiple time intervals if they were active during those periods.
+- **Legend totals**: Show unique users across the entire selected time range, deduplicated. Each user is counted only once per status, regardless of how many time intervals they appeared in.
+
+For example, if User A accesses an Approved application every hour for three hours, they will appear in each hourly bar but will only be counted once in the legend total.

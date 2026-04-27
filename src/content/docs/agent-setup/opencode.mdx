@@ -3,6 +3,8 @@ title: OpenCode + Cloudflare
 description: "Open-source terminal agent with a rich TUI that works with 75+ LLMs. Made by Anomaly."
 template: splash
 pcx_content_type: how-to
+products:
+  - agent-setup
 ---
 
 import { Steps } from "~/components";
@@ -18,21 +20,7 @@ import TroubleshootingItem from "~/components/agent-setup/TroubleshootingItem.as
 import BuildAgentsCallout from "~/components/agent-setup/BuildAgentsCallout.astro";
 import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
-<AgentHeader slug="opencode">
-	<p>
-		Open-source terminal agent with a rich TUI that works with 75+ LLM
-		providers, including Cloudflare Workers AI. Made by Anomaly and used
-		internally at Cloudflare for{" "}
-		<a
-			href="https://blog.cloudflare.com/ai-code-review/"
-			target="_blank"
-			rel="noopener noreferrer"
-		>
-			CI-native AI code review
-		</a>
-		.
-	</p>
-</AgentHeader>
+<AgentHeader slug="opencode" />
 
 ## Quick start
 
@@ -53,13 +41,16 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
 	3. **Add Cloudflare MCP servers**
 
-		Add MCP servers to `.opencode.jsonc`. For a full list of available Cloudflare MCP servers, refer to the repository on [GitHub](https://github.com/cloudflare/mcp-server-cloudflare).
+		Add MCP servers to `.opencode.jsonc`. For domain-specific MCP servers, refer to [mcp-server-cloudflare](https://github.com/cloudflare/mcp-server-cloudflare). For the full Cloudflare API MCP server (Code Mode), refer to [cloudflare/mcp](https://github.com/cloudflare/mcp).
 
 		```json
 		{
 		  "mcp": {
 		    "cloudflare": { "type": "remote", "url": "https://mcp.cloudflare.com/mcp", "enabled": true },
-		    "cloudflare-docs": { "type": "remote", "url": "https://docs.mcp.cloudflare.com/mcp", "enabled": true }
+		    "cloudflare-docs": { "type": "remote", "url": "https://docs.mcp.cloudflare.com/mcp", "enabled": true },
+		    "cloudflare-bindings": { "type": "remote", "url": "https://bindings.mcp.cloudflare.com/mcp", "enabled": true },
+		    "cloudflare-builds": { "type": "remote", "url": "https://builds.mcp.cloudflare.com/mcp", "enabled": true },
+		    "cloudflare-observability": { "type": "remote", "url": "https://observability.mcp.cloudflare.com/mcp", "enabled": true }
 		  }
 		}
 		```

@@ -1,0 +1,252 @@
+{
+	"model_id": "openai/gpt-5.5",
+	"provider_id": "openai",
+	"name": "GPT-5.5",
+	"description": "GPT-5.5 is OpenAI's flagship model with strong coding, reasoning, and multimodal capabilities.",
+	"task": "Text Generation",
+	"tags": ["LLM", "Coding", "Reasoning", "Multimodal"],
+	"context_length": 1000000,
+	"max_output_tokens": 16384,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Question",
+			"description": "Basic chat completion request",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "What are the three laws of thermodynamics?"
+					}
+				]
+			},
+			"output": {
+				"text": "The **three laws of thermodynamics** are:\n\n1. **First Law of Thermodynamics** — **Energy is conserved**  \n   Energy cannot be created or destroyed, only transferred or transformed.  \n   In thermodynamic systems, this is often written as:  \n   **ΔU = Q - W**  \n   where:\n   - **ΔU** = change in internal energy  \n   - **Q** = heat added to the system  \n   - **W** = work done by the system  \n\n2. **Second Law of Thermodynamics** — **Entropy tends to increase**  \n   In any natural process, the total entropy of an isolated system never decreases.  \n   This means energy tends to spread out, and no heat engine can be 100% efficient.\n\n3. **Third Law of Thermodynamics** — **Entropy approaches a minimum at absolute zero**  \n   As the temperature of a perfect crystal approaches **0 Kelvin**, its entropy approaches **zero**.  \n   This also implies that absolute zero cannot be reached in a finite number of steps.\n\nThere is also a **Zeroth Law of Thermodynamics**, which is often listed before the first three:\n\n- If two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other.  \n- This is the basis for the concept of **temperature**.\n\nIf you want, I can also give a simple everyday explanation of each law."
+			},
+			"raw_response": {
+				"id": "chatcmpl-DVnVIkT2U7hYs4iNW9G9MXRoaNGmZ",
+				"object": "chat.completion",
+				"created": 1776470832,
+				"model": "gpt-5.5",
+				"choices": [
+					{
+						"index": 0,
+						"message": {
+							"role": "assistant",
+							"content": "The **three laws of thermodynamics** are:\n\n1. **First Law of Thermodynamics** — **Energy is conserved**  \n   Energy cannot be created or destroyed, only transferred or transformed.  \n   In thermodynamic systems, this is often written as:  \n   **ΔU = Q - W**  \n   where:\n   - **ΔU** = change in internal energy  \n   - **Q** = heat added to the system  \n   - **W** = work done by the system  \n\n2. **Second Law of Thermodynamics** — **Entropy tends to increase**  \n   In any natural process, the total entropy of an isolated system never decreases.  \n   This means energy tends to spread out, and no heat engine can be 100% efficient.\n\n3. **Third Law of Thermodynamics** — **Entropy approaches a minimum at absolute zero**  \n   As the temperature of a perfect crystal approaches **0 Kelvin**, its entropy approaches **zero**.  \n   This also implies that absolute zero cannot be reached in a finite number of steps.\n\nThere is also a **Zeroth Law of Thermodynamics**, which is often listed before the first three:\n\n- If two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other.  \n- This is the basis for the concept of **temperature**.\n\nIf you want, I can also give a simple everyday explanation of each law.",
+							"refusal": null,
+							"annotations": []
+						},
+						"finish_reason": "stop"
+					}
+				],
+				"usage": {
+					"prompt_tokens": 15,
+					"completion_tokens": 292,
+					"total_tokens": 307,
+					"prompt_tokens_details": {
+						"cached_tokens": 0,
+						"audio_tokens": 0
+					},
+					"completion_tokens_details": {
+						"reasoning_tokens": 0,
+						"audio_tokens": 0,
+						"accepted_prediction_tokens": 0,
+						"rejected_prediction_tokens": 0
+					}
+				},
+				"service_tier": "default",
+				"system_fingerprint": null,
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5.5',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'What are the three laws of thermodynamics?',\n      },\n    ],\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://openai.com/",
+	"terms": "https://openai.com/policies/",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/openai/gpt-5.5.png",
+	"metadata": {
+		"Architecture": "Transformer"
+	},
+	"created_at": "2026-04-23 01:09:58",
+	"default_example": null,
+	"code_snippets": [],
+	"zdr": false,
+	"zdr_comment": null,
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"messages": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"role": {
+								"type": "string",
+								"enum": ["system", "developer", "user", "assistant", "tool"]
+							},
+							"content": {
+								"anyOf": [
+									{
+										"type": "string"
+									},
+									{
+										"type": "null"
+									},
+									{
+										"type": "array",
+										"items": {}
+									}
+								]
+							}
+						},
+						"required": ["role", "content"],
+						"additionalProperties": {}
+					}
+				},
+				"temperature": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 2
+				},
+				"max_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"max_completion_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"top_p": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"frequency_penalty": {
+					"type": "number",
+					"minimum": -2,
+					"maximum": 2
+				},
+				"presence_penalty": {
+					"type": "number",
+					"minimum": -2,
+					"maximum": 2
+				},
+				"stream": {
+					"type": "boolean"
+				},
+				"stream_options": {
+					"type": "object",
+					"properties": {
+						"include_usage": {
+							"type": "boolean"
+						}
+					},
+					"additionalProperties": false
+				},
+				"tools": {
+					"type": "array",
+					"items": {}
+				},
+				"tool_choice": {},
+				"response_format": {}
+			},
+			"required": ["messages"],
+			"additionalProperties": {}
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"object": {
+					"type": "string"
+				},
+				"created": {
+					"type": "number"
+				},
+				"model": {
+					"type": "string"
+				},
+				"choices": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"index": {
+								"type": "number"
+							},
+							"message": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string"
+									},
+									"content": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "null"
+											}
+										]
+									},
+									"tool_calls": {
+										"type": "array",
+										"items": {}
+									}
+								},
+								"required": ["role"],
+								"additionalProperties": {}
+							},
+							"finish_reason": {
+								"anyOf": [
+									{
+										"type": "string"
+									},
+									{
+										"type": "null"
+									}
+								]
+							}
+						},
+						"required": ["index", "message", "finish_reason"],
+						"additionalProperties": {}
+					}
+				},
+				"usage": {
+					"type": "object",
+					"properties": {
+						"prompt_tokens": {
+							"type": "number"
+						},
+						"completion_tokens": {
+							"type": "number"
+						},
+						"total_tokens": {
+							"type": "number"
+						}
+					},
+					"required": ["prompt_tokens", "completion_tokens", "total_tokens"],
+					"additionalProperties": {}
+				}
+			},
+			"required": ["id", "object", "created", "model", "choices"],
+			"additionalProperties": {}
+		}
+	}
+}

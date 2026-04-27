@@ -4,6 +4,7 @@ import type { StarlightPageProps } from "@astrojs/starlight/props";
 import CatalogWithFilter from "~/components/agent-setup/CatalogWithFilter.astro";
 import AgentComparison from "~/components/agent-setup/AgentComparison.astro";
 import AgentPrimer from "~/components/agent-setup/AgentPrimer.astro";
+import PromptCopyBlock from "~/components/agent-setup/PromptCopyBlock.astro";
 import { AGENTS } from "~/components/agent-setup/agents";
 
 import "~/styles/agent-setup.css";
@@ -23,11 +24,29 @@ const props = {
 
 <StarlightPage {...props}>
 	<p class="agent-setup-lede">
-		Install an agent of your choice, connect Cloudflare <a href="https://github.com/cloudflare/skills" target="_blank" rel="noopener noreferrer">Skills &nearr;</a> and <a href="https://github.com/cloudflare/mcp" target="_blank" rel="noopener noreferrer">MCP servers &nearr;</a>, and start
-		deploying to Cloudflare — all from your editor or terminal.
+		Install an agent of your choice, connect Cloudflare <a href="https://github.com/cloudflare/skills" target="_blank" rel="noopener noreferrer">Skills &nearr;</a> and <a href="https://blog.cloudflare.com/code-mode-mcp/" target="_blank" rel="noopener noreferrer">Code Mode API &nearr;</a> and <a href="https://github.com/cloudflare/mcp-server-cloudflare" target="_blank" rel="noopener noreferrer">domain-specific &nearr;</a> MCP servers, and start deploying to Cloudflare from your editor or terminal.
 	</p>
 
-	<div class="agent-setup-section-header">
+	<div class="agent-setup-paths not-content">
+		<!-- Left: quick path -->
+		<div class="agent-setup-path agent-setup-path--quick" style="flex-basis: 60%;">
+			<p class="agent-setup-path-eyebrow">Quick setup</p>
+			<p class="agent-setup-path-title">Already have an agent?</p>
+			<p class="agent-setup-path-desc">Paste this into any AI coding agent to install Cloudflare agent tooling in one step.</p>
+			<PromptCopyBlock text="Fetch https://developers.cloudflare.com/agent-setup/prompt.md" hideLabel />
+		</div>
+		<!-- Right: manual path -->
+		<div class="agent-setup-path agent-setup-path--manual">
+			<p class="agent-setup-path-eyebrow">Manual setup</p>
+			<p class="agent-setup-path-title">New to AI agents?</p>
+			<p class="agent-setup-path-desc">Pick an agent, follow step-by-step setup instructions, compare capabilities, and learn about the Cloudflare tools available to you.</p>
+			<a href="#pick-your-agent" class="agent-setup-path-cta">Browse agents &darr;</a>
+		</div>
+	</div>
+
+	<hr />
+
+	<div class="agent-setup-section-header" style="margin-top: 3.25rem;" id="pick-your-agent">
 		<h2>Pick your agent</h2>
 		<p>Select an agent to get step-by-step setup instructions.</p>
 	</div>
@@ -55,4 +74,83 @@ const props = {
 	:root {
 		--sl-content-width: 1200px !important;
 	}
+
+	.agent-setup-paths {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1.5rem;
+		margin: 3rem 0 3.25rem;
+		align-items: stretch;
+	}
+
+	.agent-setup-path {
+		flex: 1 1 340px;
+		min-width: 0;
+		align-self: stretch;
+	}
+
+	/* Remove PromptCopyBlock's own margin when nested inside a card */
+	.agent-setup-path :global(.pcb-root) {
+		margin: 0.5rem 0 0;
+	}
+
+	.agent-setup-path {
+		padding: 1.75rem;
+		border: 1px solid var(--color-cl1-gray-8);
+		border-radius: 12px;
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+		box-sizing: border-box;
+	}
+
+	:root[data-theme="dark"] .agent-setup-path {
+		border-color: var(--color-cl1-gray-2);
+	}
+
+
+
+
+
+	.agent-setup-path-eyebrow {
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--color-cl1-brand-orange);
+		margin: 0;
+	}
+
+	.agent-setup-path-title {
+		font-size: 1.25rem;
+		font-weight: 700;
+		letter-spacing: -0.01em;
+		margin: 0;
+		line-height: 1.2;
+	}
+
+	.agent-setup-path-desc {
+		font-size: 0.9375rem;
+		line-height: 1.6;
+		color: var(--sl-color-gray-3);
+		margin: 0;
+	}
+
+	.agent-setup-path-cta {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.375rem;
+		margin-top: auto;
+		padding-top: 0.5rem;
+		font-size: 0.9375rem;
+		font-weight: 500;
+		color: var(--color-cl1-brand-orange) !important;
+		text-decoration: none;
+	}
+
+	.agent-setup-path-cta:hover {
+		text-decoration: underline;
+		text-underline-offset: 2px;
+	}
+
 </style>

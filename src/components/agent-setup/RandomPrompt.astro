@@ -6,24 +6,7 @@
 // Use from MDX:
 //   <RandomPrompt />
 import { Code } from "@astrojs/starlight/components";
-
-const SHARED_PROMPTS = [
-	"Create a Cloudflare Workers application that serves as a backend API server.",
-	"Add a D1 database to my Worker and create a users table with CRUD endpoints.",
-	"Build an image upload service using R2 pre-signed URLs.",
-	"Set up a KV namespace and use it for session storage in my Worker.",
-	"Show me how to use Hyperdrive to connect my Worker to an existing Postgres database.",
-	"Create an AI chat agent using the Cloudflare Agents SDK that maintains conversation history.",
-	"Build a Workers AI chatbot with streaming responses.",
-	"Build a WebSocket-based pub/sub app using Durable Objects with hibernation.",
-	"Add a cron trigger to my Worker that runs every hour.",
-	"Add rate limiting and bot protection to my API endpoints.",
-	"Set up GitHub Actions to auto-deploy this Worker to Cloudflare.",
-	"Create separate staging and production environments for my Worker.",
-	"Generate Vitest tests for my Worker.",
-	"Check my deployment logs for errors and suggest fixes.",
-	"Deploy this project to Cloudflare Workers with a custom domain.",
-];
+import { SHARED_PROMPTS } from "./prompts";
 
 const prompt =
 	SHARED_PROMPTS[Math.floor(Math.random() * SHARED_PROMPTS.length)];
