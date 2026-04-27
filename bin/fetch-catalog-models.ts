@@ -347,11 +347,7 @@ function writeModels(models: CatalogModel[]): void {
 		const fileName = getModelFileName(model.model_id);
 		const filePath = path.join(OUTPUT_DIR, `${fileName}.json`);
 
-		fs.writeFileSync(
-			filePath,
-			stringifyAsciiSafe(model, "\t") + "\n",
-			"utf-8",
-		);
+		fs.writeFileSync(filePath, stringifyAsciiSafe(model, "\t") + "\n", "utf-8");
 		written++;
 	}
 
