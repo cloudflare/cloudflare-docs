@@ -17,8 +17,6 @@ Choose the approach that matches how you use AI tools:
 - [Understand key concepts](#concepts) such as agent skills and MCP (Model Context Protocol).
 - [Set up your agent](/agent-setup/) to effectively consume documentation and interact with Cloudflare products.
 - [Extract documentation in agent-friendly format](#markdown-documentation-for-llms) to minimize token usage while improving the accuracy of your agent's responses.
-- **Chat interfaces** (ChatGPT, Claude.ai, and similar): Append `/index.md` to any docs page URL and paste the Markdown into your conversation.
-- **API-aware coding**: Add the [OpenAPI specification](#openapi-specification) to your AI tool's context for full Cloudflare API coverage.
 
 ## Concepts
 
@@ -40,6 +38,7 @@ There are two approaches:
 - **Domain-specific servers**: Focused servers for documentation, observability, DNS analytics, and more. Use these when your agent only needs access to a specific area. The full catalog is in the [cloudflare/mcp-server-cloudflare](https://github.com/cloudflare/mcp-server-cloudflare) repository.
 
 Each agent's [Agent setup](#set-up-your-agent) guide includes MCP server installation as part of its Quick start. For the full list of available MCP servers, refer to [MCP servers for Cloudflare](/agents/model-context-protocol/mcp-servers-for-cloudflare/).
+
 
 ### Model flexibility
 
