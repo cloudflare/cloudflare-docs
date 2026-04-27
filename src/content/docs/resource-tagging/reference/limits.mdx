@@ -10,6 +10,7 @@ description: API limits, tag key validation rules, and pagination behavior.
 
 | Limit | Value | Error code |
 | --- | --- | --- |
+| Maximum tags per account | 10,000 (beta) | N/A |
 | Maximum tag key length | 256 characters | `1011` |
 | Maximum tag value length | 1,024 characters | `1012` |
 | Maximum tag filters per query | 20 | `1010` |
@@ -17,6 +18,12 @@ description: API limits, tag key validation rules, and pagination behavior.
 | Results per page | 100 (fixed) | N/A |
 
 When a limit is exceeded, the API returns `400 Bad Request` with the corresponding error code.
+
+During the beta, each account is limited to 10,000 total tags. If you need a higher limit, contact [Cloudflare support](/support/contacting-cloudflare-support/).
+
+## Case sensitivity
+
+Tag keys and values are **case-sensitive**. `Environment`, `environment`, and `ENVIRONMENT` are treated as three distinct keys. Be consistent with casing conventions across your organization to avoid duplicate keys.
 
 ## Tag key validation
 
