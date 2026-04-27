@@ -1,0 +1,425 @@
+---
+pcx_content_type: solution-guide
+title: Restrict access to your site by geography and IP (Free, Pro, and Business)
+description: Block or challenge traffic from specific countries, IP addresses, and ASN ranges using custom rules.
+products:
+  - waf
+  - api-shield
+  - ruleset-engine
+sidebar:
+  label: Restrict by geography and IP (Free, Pro, Business)
+---
+
+import { Details, Steps, Tabs, TabItem, DashButton, GlossaryTooltip } from "~/components";
+
+When your site receives unwanted traffic from specific countries, IP addresses, or network ranges, you need to decide which sources to block outright, which to challenge, and which to allow through. Common scenarios include restricting access to comply with legal requirements, reducing attack traffic from regions you do not serve, and locking down admin paths to known IP addresses. This guide covers four stages: block traffic by geography, block or allow specific IP addresses and ranges, protect specific paths with access rules, and review your rules for false positives. The core workflow uses Application Security (also known as Web Application Firewall or WAF) [custom rules](/waf/custom-rules/), available on all plans.
+{/* Source: /waf/custom-rules/ — custom rules available on all plans */}
+
+:::note
+The procedures in this guide are configured per domain. Select your domain in the Cloudflare dashboard before starting.
+:::
+
+## Block traffic by geography
+
+If you operate a service available only in specific countries, need to comply with legal or licensing restrictions, or observe attack traffic concentrated in specific regions, you can block or challenge requests based on the country, continent, or Autonomous System Number (ASN) of the source IP address. Application Security [custom rules](/waf/custom-rules/) match these geographic fields and apply an action you choose (Block, Managed Challenge, or others).
+
+:::caution
+Geographic blocking is imprecise. Visitors using VPNs or proxies can bypass country-based rules. Use geographic rules as one layer in a broader defense, not as a complete solution.
+:::
+
+### Block requests from specific countries
+
+This custom rule blocks all requests originating from specific countries using the `ip.src.country` field. Replace the country codes with the ones relevant to your situation. Country codes use the two-letter [ISO-3166-1 alpha-2](https://www.iso.org/iso-3166-country-codes.html) format.
+{/* Source: /waf/custom-rules/use-cases/block-traffic-from-specific-countries/ — ip.src.country field and expression syntax */}
+
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the **Security rules** page.
+
+   <DashButton url="/?to=/:account/:zone/security/security-rules" />
+
+2. Select **Create rule** > **Custom rules**.
+
+3. Enter a descriptive name for the rule (for example, `Block high-risk countries`).
+
+4. Under **When incoming requests match**, configure the following:
+
+   | Field   | Operator | Value                   |
+   | ------- | -------- | ----------------------- |
+   | Country | is in    | Select the countries to block |
+
+   If you are using the expression editor:
+
+   ```txt
+   (ip.src.country in {"KP" "SY"})
+   ```
+
+5. Under **Then take action**, select _Block_.
+
+6. Select **Deploy**.
+
+</Steps>
+
+</TabItem> <TabItem label="Old dashboard">
+
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
+
+2. Go to **Security** > **WAF** > **Custom rules**.
+
+3. Select **Create rule**.
+
+4. Enter a descriptive name for the rule (for example, `Block high-risk countries`).
+
+5. Under **When incoming requests match**, configure the following:
+
+   | Field   | Operator | Value                   |
+   | ------- | -------- | ----------------------- |
+   | Country | is in    | Select the countries to block |
+
+   If you are using the expression editor:
+
+   ```txt
+   (ip.src.country in {"KP" "SY"})
+   ```
+
+6. Under **Then take action**, select _Block_.
+
+7. Select **Deploy**.
+
+</Steps>
+
+</TabItem> </Tabs>
+
+### Allow traffic from specific countries only
+
+If you want to allow traffic only from a set of countries and block everything else, invert the logic. This rule blocks all requests where the country is not in your allowed list.
+{/* Source: /waf/custom-rules/use-cases/allow-traffic-from-specific-countries/ — inverted country expression */}
+
+Use the same procedure as the previous section, but configure these values instead:
+
+| Field   | Operator  | Value                                      |
+| ------- | --------- | ------------------------------------------ |
+| Country | is not in | Select the countries you want to allow |
+
+If you are using the expression editor:
+
+```txt
+(not ip.src.country in {"US" "MX"})
+```
+
+Set the action to _Block_.
+
+### Block by ASN, continent, or combined criteria
+
+You can block traffic by ASN, continent, or a combination of geographic criteria in a single rule. An ASN identifies a network operator, which is useful for blocking entire hosting providers or VPN networks that are sources of attack traffic.
+{/* Source: /waf/custom-rules/use-cases/block-by-geographical-location/ — combined ASN/continent/country expression */}
+
+Use the same custom rule creation procedure, but configure a compound expression:
+
+| Field     | Operator | Value          | Logic |
+| --------- | -------- | -------------- | ----- |
+| AS Num    | equals   | `131279`       | Or    |
+| Continent | equals   | `Asia`         | Or    |
+| Country   | equals   | `Korea, North` |       |
+
+If you are using the expression editor:
+
+```txt
+(ip.src.asnum eq 131279) or (ip.src.continent eq "AS") or (ip.src.country eq "KP")
+```
+
+:::caution
+Blocking an ASN affects all users on that network. Verify the ASN belongs to a hosting provider or VPN service before blocking, not a consumer Internet service provider (ISP) with legitimate users.
+:::
+
+### Challenge instead of block
+
+For regions where you have some legitimate traffic but high attack rates, use Managed Challenge instead of Block. Legitimate users pass the challenge; automated traffic does not.
+
+To apply this pattern, follow the same custom rule creation steps but select _Managed Challenge_ as the action instead of _Block_.
+
+## Block or allow specific IP addresses and ranges
+
+To allowlist trusted sources (your office IP, partner integrations) or blocklist known bad actors, create custom rules that target individual IP addresses, CIDR ranges, or ASNs.
+{/* Source: /waf/custom-rules/use-cases/update-rules-customers-partners/ — IP and ASN expression examples */}
+
+### Allowlist trusted IP addresses
+
+To allow traffic from a specific IP address and skip remaining custom rules, create a rule with the Skip action. This is useful for allowing your office IP to access an admin panel or allowing partner IP ranges for API access.
+
+:::caution
+Allowlist rules should be as specific as possible. Broad IP ranges or CIDR blocks can create security gaps by allowing unintended traffic through.
+:::
+
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the **Security rules** page.
+
+   <DashButton url="/?to=/:account/:zone/security/security-rules" />
+
+2. Select **Create rule** > **Custom rules**.
+
+3. Enter a descriptive name for the rule (for example, `Allow office IP`).
+
+4. Under **When incoming requests match**, configure the following:
+
+   | Field             | Operator | Value                     |
+   | ----------------- | -------- | ------------------------- |
+   | IP Source Address  | equals   | `203.0.113.1`             |
+
+   If you are using the expression editor:
+
+   ```txt
+   (ip.src eq 203.0.113.1)
+   ```
+
+   Replace `203.0.113.1` with your actual IP address.
+
+5. Under **Then take action**, select _Skip_ > _All remaining custom rules_.
+
+6. Select **Deploy**.
+
+</Steps>
+
+</TabItem> <TabItem label="Old dashboard">
+
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
+
+2. Go to **Security** > **WAF** > **Custom rules**.
+
+3. Select **Create rule**.
+
+4. Enter a descriptive name for the rule (for example, `Allow office IP`).
+
+5. Under **When incoming requests match**, configure the following:
+
+   | Field             | Operator | Value                     |
+   | ----------------- | -------- | ------------------------- |
+   | IP Source Address  | equals   | `203.0.113.1`             |
+
+   If you are using the expression editor:
+
+   ```txt
+   (ip.src eq 203.0.113.1)
+   ```
+
+   Replace `203.0.113.1` with your actual IP address.
+
+6. Under **Then take action**, select _Skip_ > _All remaining custom rules_.
+
+7. Select **Deploy**.
+
+</Steps>
+
+</TabItem> </Tabs>
+
+:::note
+Place skip rules before blocking rules in the custom rules list. Custom rules are evaluated in order, and a skip rule that appears after a blocking rule will not prevent that block from firing.
+:::
+{/* Source: /waf/custom-rules/skip/ — skip rules must appear before blocking rules */}
+
+### Block specific IP addresses or CIDR ranges
+
+To block traffic from IP addresses you have identified as sources of abuse, create a blocking rule.
+
+Use the same custom rule creation procedure, but configure these values:
+
+| Field             | Operator | Value                        |
+| ----------------- | -------- | ---------------------------- |
+| IP Source Address  | is in    | `192.0.2.0/24`, `198.51.100.0/24` |
+
+If you are using the expression editor:
+
+```txt
+(ip.src in {192.0.2.0/24 198.51.100.0/24})
+```
+
+Set the action to _Block_.
+
+To identify attacking IP addresses, review [Security Events](/waf/analytics/security-events/) in the dashboard or check your origin server logs.
+
+:::note
+Determined attackers rotate IP addresses. IP blocklisting is reactive, not preventive. Combine it with other rules (geographic blocking, path restrictions) for stronger protection.
+:::
+
+### Block by ASN
+
+To block all traffic from a specific network operator, use the `ip.src.asnum` field:
+{/* Source: /waf/custom-rules/use-cases/update-rules-customers-partners/ — ip.src.asnum field */}
+
+| Field  | Operator | Value    |
+| ------ | -------- | -------- |
+| AS Num | equals   | `64496`  |
+
+If you are using the expression editor:
+
+```txt
+(ip.src.asnum eq 64496)
+```
+
+Set the action to _Block_ or _Managed Challenge_ depending on your confidence level.
+
+### Use IP lists for reusable groups
+
+If you maintain a list of IP addresses or ASNs that you reference across multiple rules, create a custom [IP list](/waf/tools/lists/custom-lists/) instead of adding each address to individual rules. Lists are stored at the account level and update all referencing rules when modified.
+{/* Source: /waf/tools/lists/ — lists stored at account level, update all referencing rules */}
+
+## Protect specific paths with access rules
+
+Sensitive paths such as `/admin`, `/wp-admin`, or `/api/` should not be accessible from the public internet without restrictions. Combine path matching with IP or geographic conditions to limit who can reach these endpoints.
+
+### Restrict admin paths to known IP addresses
+
+This rule blocks all traffic to your admin path unless the request comes from a known IP address. Deploy the skip rule (allowlist) first, then the blocking rule.
+{/* Source: /waf/troubleshooting/phase-interactions/ — IP Access rules can bypass custom rules; rule ordering matters */}
+
+**Step 1: Create the skip rule (allowlist).** Follow the same custom rule creation procedure with these values:
+
+| Field             | Operator | Value             | Logic |
+| ----------------- | -------- | ----------------- | ----- |
+| URI Path          | starts with | `/admin`       | And   |
+| IP Source Address  | equals   | `203.0.113.1`     |       |
+
+If you are using the expression editor:
+
+```txt
+(starts_with(http.request.uri.path, "/admin") and ip.src eq 203.0.113.1)
+```
+
+Set the action to _Skip_ > _All remaining custom rules_.
+
+**Step 2: Create the blocking rule.** Create a second custom rule:
+
+| Field    | Operator    | Value    |
+| -------- | ----------- | -------- |
+| URI Path | starts with | `/admin` |
+
+If you are using the expression editor:
+
+```txt
+(starts_with(http.request.uri.path, "/admin"))
+```
+
+Set the action to _Block_.
+
+Place the skip rule above the blocking rule in the custom rules list so allowed IPs are matched before the block fires.
+
+### Restrict API endpoints by IP range
+
+If your API endpoints are only called by known servers (your own backend, partner integrations), restrict access to those IP ranges using the same skip-then-block pattern:
+
+Skip rule expression:
+
+```txt
+(starts_with(http.request.uri.path, "/api/") and ip.src in {203.0.113.0/24})
+```
+
+Blocking rule expression:
+
+```txt
+(starts_with(http.request.uri.path, "/api/"))
+```
+
+### Combine geography and path restrictions
+
+You can combine geographic and path conditions in a single rule for more precise control. For example, to restrict your admin path to a specific country while keeping the rest of the site open:
+
+```txt
+(starts_with(http.request.uri.path, "/admin") and not ip.src.country in {"US"})
+```
+
+Set the action to _Block_. This blocks requests to `/admin` from outside the United States while allowing all other traffic through.
+
+## Monitor and refine your rules
+
+After deploying geographic or IP-based rules, review Security Events to check for false positives and confirm your rules are working as intended.
+
+### Review Security Events
+
+[Security Events](/waf/analytics/security-events/) shows every request your rules acted on, including the rule name, action taken, source IP, country, and ASN. Use filters to find specific patterns:
+{/* Source: /waf/analytics/security-events/ — filter workflow for IP, ASN, and Country fields */}
+
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the **Security Events** page.
+
+   <DashButton url="/?to=/:account/:zone/security/analytics" />
+
+2. Select **Add filter**.
+
+3. To find blocked requests from a specific country, select _Country_ for the field, select _equals_ for the operator, and enter the country name.
+
+4. Select **Apply**.
+
+5. Review the sampled log entries. Look for legitimate traffic that was incorrectly blocked by your rules.
+
+</Steps>
+
+</TabItem> <TabItem label="Old dashboard">
+
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
+
+2. Go to **Security** > **Events**.
+
+3. Select **Add filter**.
+
+4. To find blocked requests from a specific country, select _Country_ for the field, select _equals_ for the operator, and enter the country name.
+
+5. Select **Apply**.
+
+6. Review the sampled log entries. Look for legitimate traffic that was incorrectly blocked by your rules.
+
+</Steps>
+
+</TabItem> </Tabs>
+
+When entering filter values, do not add quotes around values. Do not enter the `AS` prefix when filtering by ASN numbers (for example, enter `1423` instead of `AS1423`). Wildcards are not supported.
+
+### Fix false positives
+
+If legitimate users or services are being blocked, create a skip rule to exempt them. Refer to [Configure a rule with the Skip action](/waf/custom-rules/skip/) for the full procedure and available skip options.
+
+Common false positive patterns:
+
+- A partner's monitoring service is blocked by a country rule. Create a skip rule matching the service's IP address or ASN and place it before the blocking rule.
+- A customer in an allowed country is blocked because they use a VPN with an exit node in a blocked country. Consider using Managed Challenge instead of Block for that country so the user can pass the challenge.
+
+### Deploy with Managed Challenge first
+
+When adding new geographic or IP rules, start with Managed Challenge as the action to observe which requests would be affected. Review Security Events to confirm the rule matches the traffic you intend to block. After confirming accuracy, change the action to Block.
+
+:::note[Identity-based access control (Enterprise)]
+For access control beyond IP and geography, Enterprise customers can verify the identity of each client using mutual TLS (mTLS) certificates or JSON Web Token (JWT) validation through [API Shield](/api-shield/security/mtls/configure/). mTLS restricts API access to clients presenting a valid certificate. [JWT validation](/api-shield/security/jwt-validation/) restricts access to authenticated users with valid tokens. These complement geographic and IP-based rules by verifying who is making the request, not just where it comes from.
+:::
+
+## Related resources
+
+**Application Security (WAF)**
+
+- [Custom rules](/waf/custom-rules/) — Create rules to match and act on HTTP request properties
+- [IP access rules](/waf/tools/ip-access-rules/) — Legacy IP-based access control (custom rules recommended instead)
+- [Lists](/waf/tools/lists/) — Group IP addresses, hostnames, and ASNs into reusable lists for rule expressions
+- [Configure a rule with the Skip action](/waf/custom-rules/skip/) — Bypass security features for matching requests
+- [Security Events](/waf/analytics/security-events/) — Review requests acted on by your security rules
+- [Rule phase interactions](/waf/troubleshooting/phase-interactions/) — How IP Access rules, custom rules, and other features interact
+
+**Ruleset Engine**
+
+- [Rules language fields reference](/ruleset-engine/rules-language/fields/) — Available fields for rule expressions including `ip.src.country`, `ip.src.asnum`, and `ip.src`
+
+**API Shield**
+
+- [Configure mTLS](/api-shield/security/mtls/configure/) — Restrict API access to clients with valid certificates (Enterprise)
+- [JWT validation](/api-shield/security/jwt-validation/) — Restrict access to authenticated users with valid tokens (Enterprise)
