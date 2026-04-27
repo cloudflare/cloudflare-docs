@@ -147,7 +147,6 @@ export default defineConfig({
 			},
 			components: {
 				Banner: "./src/components/overrides/Banner.astro",
-				SkipLink: "./src/components/overrides/SkipLink.astro",
 				Footer: "./src/components/overrides/Footer.astro",
 				Head: "./src/components/overrides/Head.astro",
 				Header: "./src/components/overrides/Header.astro",
