@@ -14,7 +14,13 @@ import { Details, InlineBadge, Tabs, TabItem, DashButton } from "~/components";
 
 When browser automation fails or behaves unexpectedly, it can be difficult to understand what happened. Session recording captures DOM changes, mouse and keyboard events, and page navigation as structured JSON events — not a video — so it is lightweight and easy to inspect. Recordings are powered by [rrweb](https://github.com/rrweb-io/rrweb) and are opt-in per session.
 
-## Enable session recording
+## Enable from the dashboard
+
+You can create a session with recording enabled directly from the Cloudflare dashboard. Go to **Browser Run** > **Create Session** and toggle **Session Recording** on. The session starts with [Live View](/browser-run/features/live-view/) so you can interact with it in real time, and the recording is available under **Browser Run** > **Runs** after the session closes.
+
+<DashButton url="/?to=/:account/workers/browser-run" />
+
+## Enable in code
 
 Pass `recording: true` to `puppeteer.launch()` or `playwright.launch()`:
 
