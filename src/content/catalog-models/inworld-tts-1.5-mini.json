@@ -1,7 +1,7 @@
 {
 	"model_id": "inworld/tts-1.5-mini",
 	"provider_id": "inworld",
-	"name": "TTS 1.5 Mini",
+	"name": "Inworld TTS 1.5 Mini",
 	"description": "Ultra-fast, cost-efficient text-to-speech with approximately 120ms latency and 15-language support.",
 	"task": "Text-to-Speech",
 	"tags": [
@@ -28,6 +28,15 @@
 			"output": {
 				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/inworld__tts-1.5-mini/simple-speech.mp3"
 			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/inworld__tts-1.5-mini/simple-speech.mp3"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -49,6 +58,15 @@
 			},
 			"output": {
 				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/inworld__tts-1.5-mini/fast-speech.mp3"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/inworld__tts-1.5-mini/fast-speech.mp3"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
 			},
 			"code_snippets": [
 				{
@@ -72,6 +90,15 @@
 			"output": {
 				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/inworld__tts-1.5-mini/low-latency.mp3"
 			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/inworld__tts-1.5-mini/low-latency.mp3"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -93,6 +120,7 @@
 	"default_example": null,
 	"code_snippets": [],
 	"zdr": false,
+	"zdr_comment": null,
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",

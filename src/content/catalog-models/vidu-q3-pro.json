@@ -24,6 +24,15 @@
 			"output": {
 				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/vidu__q3-pro/simple-text-to-video.mp4"
 			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://video.cf.vidu.com/infer_64/tasks/26/0417/05/942597991691198464/creation-01/video.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -43,6 +52,15 @@
 			},
 			"output": {
 				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/vidu__q3-pro/portrait-aspect-ratio.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://video.cf.vidu.com/infer_88/tasks/26/0417/05/942598607041753088/creation-01/video.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
 			},
 			"code_snippets": [
 				{
@@ -64,6 +82,15 @@
 			"output": {
 				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/vidu__q3-pro/silent-video.mp4"
 			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://video.cf.vidu.com/infer_76/tasks/26/0417/05/942599305355595776/creation-01/final_video.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -83,6 +110,15 @@
 			},
 			"output": {
 				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/vidu__q3-pro/square-format.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://video.cf.vidu.com/infer_40/tasks/26/0417/05/942599364482723840/creation-01/video.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
 			},
 			"code_snippets": [
 				{
@@ -108,6 +144,7 @@
 	"default_example": null,
 	"code_snippets": [],
 	"zdr": false,
+	"zdr_comment": null,
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",

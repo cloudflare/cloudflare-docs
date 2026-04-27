@@ -1,21 +1,17 @@
 {
 	"model_id": "openai/gpt-image-2",
 	"provider_id": "openai",
-	"name": "GPT Image 2",
-	"description": "OpenAI's next-generation image model that creates and edits images from text prompts, with support for multiple quality levels, sizes, and output formats. Note: transparent backgrounds are not supported — use openai/gpt-image-1.5 for transparent PNGs.",
+	"name": "OpenAI GPT Image 2",
+	"description": "OpenAI's next-generation image model that creates and edits images from text prompts, with support for multiple quality levels, sizes, and output formats. Note: transparent backgrounds are not supported \u2014 use openai/gpt-image-1.5 for transparent PNGs.",
 	"task": "Text-to-Image",
-	"tags": ["Image Generation", "Image Editing", "Multimodal"],
+	"tags": [
+		"Image Generation",
+		"Image Editing",
+		"Multimodal"
+	],
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {
-		"Input tokens (per 1M)": 5,
-		"Input image tokens (per 1M)": 8,
-		"Cached input tokens (per 1M)": 1.25,
-		"Cached input image tokens (per 1M)": 2,
-		"Output image tokens (per 1M)": 30,
-		"Output tokens (per 1M)": 10
-	},
 	"examples": [
 		{
 			"name": "Simple Generation",
@@ -184,25 +180,45 @@
 				"quality": {
 					"description": "Quality of the generated image",
 					"type": "string",
-					"enum": ["low", "medium", "high", "auto"]
+					"enum": [
+						"low",
+						"medium",
+						"high",
+						"auto"
+					]
 				},
 				"size": {
 					"description": "Size of the generated image",
 					"type": "string",
-					"enum": ["1024x1024", "1024x1536", "1536x1024", "auto"]
+					"enum": [
+						"1024x1024",
+						"1024x1536",
+						"1536x1024",
+						"auto"
+					]
 				},
 				"background": {
 					"description": "Background transparency setting. Use transparent for images with no background, opaque for a solid background, or auto to let the model decide.",
 					"type": "string",
-					"enum": ["transparent", "opaque", "auto"]
+					"enum": [
+						"transparent",
+						"opaque",
+						"auto"
+					]
 				},
 				"output_format": {
 					"description": "Output format for the generated image",
 					"type": "string",
-					"enum": ["png", "webp", "jpeg"]
+					"enum": [
+						"png",
+						"webp",
+						"jpeg"
+					]
 				}
 			},
-			"required": ["prompt"],
+			"required": [
+				"prompt"
+			],
 			"additionalProperties": false
 		},
 		"output": {
@@ -215,7 +231,9 @@
 					"format": "uri"
 				}
 			},
-			"required": ["image"],
+			"required": [
+				"image"
+			],
 			"additionalProperties": false
 		}
 	}

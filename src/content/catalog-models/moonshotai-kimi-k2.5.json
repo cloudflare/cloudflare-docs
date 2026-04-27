@@ -28,6 +28,48 @@
 			"output": {
 				"text": " TCP (Transmission Control Protocol) and UDP (User Datagram Protocol) are both transport layer protocols used to send data over networks, but they serve fundamentally different purposes and trade-offs between reliability and speed.\n\n## **TCP: The Reliable Courier**\n\nTCP is **connection-oriented** and designed for reliability.\n\n**Key Characteristics:**\n- **Connection-based**: Establishes a connection via the \"three-way handshake\" (SYN, SYN-ACK, ACK) before transmitting data\n- **Guaranteed delivery**: Uses acknowledgments (ACKs) and retransmissions\u2014if a packet is lost, it\u2019s resent\n- **Ordered delivery**: Sequences packets so they arrive in the correct order (reconstructs them if they arrive out of sequence)\n- **Flow control**: Adjusts transmission speed based on network congestion and receiver capacity\n- **Error checking**: Validates data integrity using checksums\n\n**Trade-off**: All this reliability creates overhead, higher latency, and slower transmission speeds.\n\n## **UDP: The Speedy Postcard**\n\nUDP is **connectionless** and designed for speed.\n\n**Key Characteristics:**\n- **No connection**: Sends data immediately without handshakes or setup\n- **Best-effort delivery**: No acknowledgment of receipt\u2014if packets are lost, they\u2019re gone forever\n- **No ordering**: Packets may arrive out of order, duplicated, or not at all; the application must handle this if needed\n- **No congestion control**: Sends at a constant rate regardless of network conditions\n- **Lightweight**: Minimal header (8 bytes vs TCP\u2019s 20\u201360 bytes)\n\n**Trade-off**: Maximum speed and low latency, but with zero guarantee of delivery.\n\n## **Quick Comparison**\n\n| Feature | TCP | UDP |\n|---------|-----|-----|\n| **Connection** | Required (handshake) | None |\n| **Reliability** | Guaranteed | Best-effort |\n| **Ordering** | Maintained | Not guaranteed |\n| **Speed** | Slower | Faster |\n| **Header Size** | 20\u201360 bytes | 8 bytes |\n| **Data integrity** | High | Basic checksum only |\n| **Congestion control** | Yes | No |\n\n## **Real-World Analogies**\n\n- **TCP** is like a certified mail with tracking and delivery confirmation. You know it arrived, and you know the order in which letters were opened. It takes longer and costs more, but nothing is lost.\n- **UDP** is like shouting across a crowded room. It\u2019s immediate and fast, but some words might get drowned out by noise, and you won\u2019t know if the other person heard you unless they shout back.\n\n## **When to Use Which**\n\n**Use TCP when accuracy matters more than speed:**\n- Web browsing (HTTP/HTTPS)\n- File transfers (FTP)\n- Email (SMTP, IMAP, POP3)\n- Database queries\n\n**Use UDP when speed matters more than perfect accuracy:**\n- Live video/audio streaming (Netflix, Zoom, Twitch)\n- Online gaming (position updates, shooter games)\n- DNS queries (translating domain names to IPs)\n- Voice over IP (VoIP)\n- IoT sensor data (frequent small updates)\n\n## **Hybrid Approaches**\n\nSome applications use both: online games often use UDP for player movement (speed is critical) but TCP for chat messages and scoring (accuracy is critical).\n\n**Bottom line:** Choose TCP when you cannot afford to lose data; choose UDP when you cannot afford to wait."
 			},
+			"raw_response": {
+				"id": "chatcmpl-c494e785-b5bd-47a2-9c9b-2114797d5369",
+				"object": "chat.completion",
+				"created": 1776470454,
+				"model": "@cf/moonshotai/kimi-k2.5",
+				"choices": [
+					{
+						"index": 0,
+						"message": {
+							"role": "assistant",
+							"content": " TCP (Transmission Control Protocol) and UDP (User Datagram Protocol) are both transport layer protocols used to send data over networks, but they serve fundamentally different purposes and trade-offs between reliability and speed.\n\n## **TCP: The Reliable Courier**\n\nTCP is **connection-oriented** and designed for reliability.\n\n**Key Characteristics:**\n- **Connection-based**: Establishes a connection via the \"three-way handshake\" (SYN, SYN-ACK, ACK) before transmitting data\n- **Guaranteed delivery**: Uses acknowledgments (ACKs) and retransmissions\u2014if a packet is lost, it\u2019s resent\n- **Ordered delivery**: Sequences packets so they arrive in the correct order (reconstructs them if they arrive out of sequence)\n- **Flow control**: Adjusts transmission speed based on network congestion and receiver capacity\n- **Error checking**: Validates data integrity using checksums\n\n**Trade-off**: All this reliability creates overhead, higher latency, and slower transmission speeds.\n\n## **UDP: The Speedy Postcard**\n\nUDP is **connectionless** and designed for speed.\n\n**Key Characteristics:**\n- **No connection**: Sends data immediately without handshakes or setup\n- **Best-effort delivery**: No acknowledgment of receipt\u2014if packets are lost, they\u2019re gone forever\n- **No ordering**: Packets may arrive out of order, duplicated, or not at all; the application must handle this if needed\n- **No congestion control**: Sends at a constant rate regardless of network conditions\n- **Lightweight**: Minimal header (8 bytes vs TCP\u2019s 20\u201360 bytes)\n\n**Trade-off**: Maximum speed and low latency, but with zero guarantee of delivery.\n\n## **Quick Comparison**\n\n| Feature | TCP | UDP |\n|---------|-----|-----|\n| **Connection** | Required (handshake) | None |\n| **Reliability** | Guaranteed | Best-effort |\n| **Ordering** | Maintained | Not guaranteed |\n| **Speed** | Slower | Faster |\n| **Header Size** | 20\u201360 bytes | 8 bytes |\n| **Data integrity** | High | Basic checksum only |\n| **Congestion control** | Yes | No |\n\n## **Real-World Analogies**\n\n- **TCP** is like a certified mail with tracking and delivery confirmation. You know it arrived, and you know the order in which letters were opened. It takes longer and costs more, but nothing is lost.\n- **UDP** is like shouting across a crowded room. It\u2019s immediate and fast, but some words might get drowned out by noise, and you won\u2019t know if the other person heard you unless they shout back.\n\n## **When to Use Which**\n\n**Use TCP when accuracy matters more than speed:**\n- Web browsing (HTTP/HTTPS)\n- File transfers (FTP)\n- Email (SMTP, IMAP, POP3)\n- Database queries\n\n**Use UDP when speed matters more than perfect accuracy:**\n- Live video/audio streaming (Netflix, Zoom, Twitch)\n- Online gaming (position updates, shooter games)\n- DNS queries (translating domain names to IPs)\n- Voice over IP (VoIP)\n- IoT sensor data (frequent small updates)\n\n## **Hybrid Approaches**\n\nSome applications use both: online games often use UDP for player movement (speed is critical) but TCP for chat messages and scoring (accuracy is critical).\n\n**Bottom line:** Choose TCP when you cannot afford to lose data; choose UDP when you cannot afford to wait.",
+							"tool_calls": [],
+							"annotations": null,
+							"audio": null,
+							"function_call": null,
+							"reasoning": " The user is asking for an explanation of the difference between TCP (Transmission Control Protocol) and UDP (User Datagram Protocol). This is a fundamental networking question. I should provide a clear, structured comparison covering:\n\n 1. Basic definitions of both protocols\n 2. Key characteristics of each (reliability, connection, speed, etc.)\n 3. Major differences in a comparative format\n 4. Use cases/examples for each\n 5. When to use which\n\n Structure:\n - Introduction: Brief overview of both as transport layer protocols\n - TCP characteristics (connection-oriented, reliable, ordered, heavy)\n - UDP characteristics (connectionless, unreliable, unordered, light)\n - Side-by-side comparison table for quick reference\n - Detailed explanation of key differences (reliability, ordering, speed, overhead)\n - Real-world analogies to make it intuitive\n - Common use cases for each\n - Summary/conclusion\n\n Key points to cover:\n - Connection vs Connectionless\n - Reliability (ACKs, retransmission vs best effort)\n - Ordering (sequencing vs no sequencing)\n - Speed/Latency\n - Header size/overhead\n - Flow/Congestion control\n - Use cases (HTTP/FTP vs DNS/Streaming/Gaming)\n\n I should avoid overly technical jargon where possible, or explain it when necessary. The tone should be educational and accessible. ",
+							"reasoning_content": " The user is asking for an explanation of the difference between TCP (Transmission Control Protocol) and UDP (User Datagram Protocol). This is a fundamental networking question. I should provide a clear, structured comparison covering:\n\n 1. Basic definitions of both protocols\n 2. Key characteristics of each (reliability, connection, speed, etc.)\n 3. Major differences in a comparative format\n 4. Use cases/examples for each\n 5. When to use which\n\n Structure:\n - Introduction: Brief overview of both as transport layer protocols\n - TCP characteristics (connection-oriented, reliable, ordered, heavy)\n - UDP characteristics (connectionless, unreliable, unordered, light)\n - Side-by-side comparison table for quick reference\n - Detailed explanation of key differences (reliability, ordering, speed, overhead)\n - Real-world analogies to make it intuitive\n - Common use cases for each\n - Summary/conclusion\n\n Key points to cover:\n - Connection vs Connectionless\n - Reliability (ACKs, retransmission vs best effort)\n - Ordering (sequencing vs no sequencing)\n - Speed/Latency\n - Header size/overhead\n - Flow/Congestion control\n - Use cases (HTTP/FTP vs DNS/Streaming/Gaming)\n\n I should avoid overly technical jargon where possible, or explain it when necessary. The tone should be educational and accessible. ",
+							"refusal": null
+						},
+						"finish_reason": "stop",
+						"logprobs": null,
+						"stop_reason": 163586,
+						"token_ids": null
+					}
+				],
+				"usage": {
+					"prompt_tokens": 17,
+					"completion_tokens": 984,
+					"total_tokens": 1001,
+					"prompt_tokens_details": {
+						"cached_tokens": 0
+					}
+				},
+				"kv_transfer_params": null,
+				"prompt_logprobs": null,
+				"prompt_token_ids": null,
+				"service_tier": null,
+				"system_fingerprint": null,
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -55,6 +97,48 @@
 			"output": {
 				"text": " The **Silk Road** (\u7d72\u7da2\u4e4b\u8def) is perhaps history's greatest misnomer\u2014a term coined not by ancient traders, but by the German geographer **Ferdinand von Richthofen** in 1877. In reality, it was never a single \"road\" but a vast, shifting network of caravan routes spanning 4,000 miles, connecting Chang'an (modern Xi'an) to the Mediterranean for over 1,500 years.\n\n## The Han Dynasty Origins\n\nThe Silk Road was effectively born from imperial desperation. In 138 BCE, Emperor Wu of Han sent **Zhang Qian** on a diplomatic mission westward to find allies against the nomadic Xiongnu. Zhang was captured by the Xiongnu and held for ten years, married a Xiongnu wife (whom he later brought back to China), but eventually reached Central Asia. He returned with intelligence about Ferghana's \"heavenly horses\" (\u6c57\u8840\u99ac\u2014literally \"blood-sweating horses\") and the sophisticated civilizations of Bactria and Sogdiana, but no military allies.\n\nUndeterred, Zhang embarked on a second mission. Though he failed diplomatically, he accidentally established the commercial infrastructure that would transform Eurasian civilization. The Han court began trading silk\u2014a commodity so precious that Romans would later calculate its weight in gold\u2014for the Ferghana horses that could withstand the Xiongnu cavalry.\n\n## The Legend of the Silk Princess\n\nOne of my favorite anecdotes involves the transmission of silk technology itself. For centuries, China maintained a draconian monopoly on sericulture (silk production), with smuggling silkworm eggs punishable by death. According to the Tibetan *Li yul gyi lo rgyus* (Chronicle of the Kingdom of Li), a Chinese princess being married to the king of Khotan (in modern Xinjiang) around 440 CE could not bear to live without silk. She hid silkworm eggs in her elaborate coiffure\u2014specifically in the hollow of her hairpins\u2014and mulberry seeds in the lining of her cap. Thus, silk production spread westward, though it would take another six centuries to reach Byzantium (where Emperor Justinian's agents allegedly smuggled eggs in bamboo canes).\n\n## What Actually Traveled?\n\nWhile silk lent its name to the route, the traffic was astonishingly diverse:\n\n**Westward from China:** Paper (revolutionizing administration from Samarkand to Baghdad), cast iron technology, gunpowder, the compass, printing, peaches, and apricots.\n\n**Eastward to China:** Buddhism (which transformed from an Indian religion into distinct Chinese schools), Manichaeism, Nestorian Christianity, Zoroastrianism, glassware (unknown in China before this), lapis lazuli from Afghanistan, and the Persian lute (ancestor of the Chinese pipa).\n\nMost crucial were the **Sogdian merchants**\u2014an Iranian-speaking people from modern Uzbekistan who became the middlemen of the Silk Road. They established colonies in Chinese cities like Chang'an and Dunhuang, acting as translators, bankers, and cultural brokers. Archaeologists have discovered Sogdian letters from the 4th century describing trade in silver, pepper, and unfortunately, the chaos of the Jin Dynasty collapse.\n\n## The Dunhuang Caves: A Library in the Desert\n\nAt the western edge of Chinese territory lay **Dunhuang**, where the Mogao Caves contain the greatest repository of Silk Road artifacts. In 1900, a Taoist monk named Wang Yuanlu discovered a sealed cave (Cave 17) containing 50,000 manuscripts in 17 languages\u2014from Chinese and Sanskrit to Sogdian and Hebrew\u2014dating from the 5th to 11th centuries.\n\nOne poignant document is a Jewish merchant's letter in Judeo-Persian, found in Dandan Oilik, describing the sale of a slave girl and 32 sheep. Another is the *Diamond Sutra* (868 CE), the world's oldest dated printed book, showing that printing technology was already spreading westward along the routes.\n\n## The Tang Dynasty Golden Age\n\nThe Silk Road peaked during the **Tang Dynasty** (618\u2013907), when Chang'an became the world's first million-person city. The capital housed tens of thousands of foreign residents\u2014Persian princes, Arab merchants, Turkish generals, and Korean scholars. The poet **Li Bai**, arguably China's greatest literary figure, was likely born in Suyab (near modern Bishkek, Kyrgyzstan) to a Sogdian family.\n\nEmperor Xuanzong kept Central Asian dancing girls and musicians in his court, performing the \"Whirling Dance\" (\u80e1\u65cb\u821e) from Sogdiana\u2014much to the horror of Confucian officials who viewed these \"barbarian\" influences as corrupting.\n\n## The Decline\n\nThe route's decline began with the **An Lushan Rebellion** (755\u2013763), which devastated Tang China and severed control over the western regions. By the Song Dynasty (960\u20131279), maritime routes had largely replaced overland trade, and the Ming Dynasty (1368\u20131644) eventually abandoned the western territories, building the Great Wall not to keep people out, but to keep Chinese in\u2014preventing unauthorized trade.\n\nThe final blow came in the 15th century when Ottoman control of the eastern Mediterranean and Portuguese circumnavigation of Africa made the overland route economically obsolete.\n\n## Echoes Today\n\nWhen archaeologists excavated **Pompeii** (destroyed 79 CE), they found Chinese silk in the remains\u2014testament to how far these threads traveled. Similarly, Roman glass has been discovered in Han Dynasty tombs in coastal China, likely arriving via maritime Silk Road routes.\n\nToday, China's \"Belt and Road Initiative\" explicitly invokes this history, though ironically, the ancient Silk Road flourished precisely because no single empire controlled it entirely\u2014it was the competition between Tang, Tibetan, Turkic, and Arab powers that created the commercial ecosystem. The greatest irony of all? The term \"Silk Road\" would have meant nothing to the camel drivers and Sogdian bankers who actually traversed it; to them, it was simply *the road*, or perhaps just another Tuesday in the desert."
 			},
+			"raw_response": {
+				"id": "chatcmpl-a5450333-0658-4209-a5d4-a3fe435a938b",
+				"object": "chat.completion",
+				"created": 1776470449,
+				"model": "@cf/moonshotai/kimi-k2.5",
+				"choices": [
+					{
+						"index": 0,
+						"message": {
+							"role": "assistant",
+							"content": " The **Silk Road** (\u7d72\u7da2\u4e4b\u8def) is perhaps history's greatest misnomer\u2014a term coined not by ancient traders, but by the German geographer **Ferdinand von Richthofen** in 1877. In reality, it was never a single \"road\" but a vast, shifting network of caravan routes spanning 4,000 miles, connecting Chang'an (modern Xi'an) to the Mediterranean for over 1,500 years.\n\n## The Han Dynasty Origins\n\nThe Silk Road was effectively born from imperial desperation. In 138 BCE, Emperor Wu of Han sent **Zhang Qian** on a diplomatic mission westward to find allies against the nomadic Xiongnu. Zhang was captured by the Xiongnu and held for ten years, married a Xiongnu wife (whom he later brought back to China), but eventually reached Central Asia. He returned with intelligence about Ferghana's \"heavenly horses\" (\u6c57\u8840\u99ac\u2014literally \"blood-sweating horses\") and the sophisticated civilizations of Bactria and Sogdiana, but no military allies.\n\nUndeterred, Zhang embarked on a second mission. Though he failed diplomatically, he accidentally established the commercial infrastructure that would transform Eurasian civilization. The Han court began trading silk\u2014a commodity so precious that Romans would later calculate its weight in gold\u2014for the Ferghana horses that could withstand the Xiongnu cavalry.\n\n## The Legend of the Silk Princess\n\nOne of my favorite anecdotes involves the transmission of silk technology itself. For centuries, China maintained a draconian monopoly on sericulture (silk production), with smuggling silkworm eggs punishable by death. According to the Tibetan *Li yul gyi lo rgyus* (Chronicle of the Kingdom of Li), a Chinese princess being married to the king of Khotan (in modern Xinjiang) around 440 CE could not bear to live without silk. She hid silkworm eggs in her elaborate coiffure\u2014specifically in the hollow of her hairpins\u2014and mulberry seeds in the lining of her cap. Thus, silk production spread westward, though it would take another six centuries to reach Byzantium (where Emperor Justinian's agents allegedly smuggled eggs in bamboo canes).\n\n## What Actually Traveled?\n\nWhile silk lent its name to the route, the traffic was astonishingly diverse:\n\n**Westward from China:** Paper (revolutionizing administration from Samarkand to Baghdad), cast iron technology, gunpowder, the compass, printing, peaches, and apricots.\n\n**Eastward to China:** Buddhism (which transformed from an Indian religion into distinct Chinese schools), Manichaeism, Nestorian Christianity, Zoroastrianism, glassware (unknown in China before this), lapis lazuli from Afghanistan, and the Persian lute (ancestor of the Chinese pipa).\n\nMost crucial were the **Sogdian merchants**\u2014an Iranian-speaking people from modern Uzbekistan who became the middlemen of the Silk Road. They established colonies in Chinese cities like Chang'an and Dunhuang, acting as translators, bankers, and cultural brokers. Archaeologists have discovered Sogdian letters from the 4th century describing trade in silver, pepper, and unfortunately, the chaos of the Jin Dynasty collapse.\n\n## The Dunhuang Caves: A Library in the Desert\n\nAt the western edge of Chinese territory lay **Dunhuang**, where the Mogao Caves contain the greatest repository of Silk Road artifacts. In 1900, a Taoist monk named Wang Yuanlu discovered a sealed cave (Cave 17) containing 50,000 manuscripts in 17 languages\u2014from Chinese and Sanskrit to Sogdian and Hebrew\u2014dating from the 5th to 11th centuries.\n\nOne poignant document is a Jewish merchant's letter in Judeo-Persian, found in Dandan Oilik, describing the sale of a slave girl and 32 sheep. Another is the *Diamond Sutra* (868 CE), the world's oldest dated printed book, showing that printing technology was already spreading westward along the routes.\n\n## The Tang Dynasty Golden Age\n\nThe Silk Road peaked during the **Tang Dynasty** (618\u2013907), when Chang'an became the world's first million-person city. The capital housed tens of thousands of foreign residents\u2014Persian princes, Arab merchants, Turkish generals, and Korean scholars. The poet **Li Bai**, arguably China's greatest literary figure, was likely born in Suyab (near modern Bishkek, Kyrgyzstan) to a Sogdian family.\n\nEmperor Xuanzong kept Central Asian dancing girls and musicians in his court, performing the \"Whirling Dance\" (\u80e1\u65cb\u821e) from Sogdiana\u2014much to the horror of Confucian officials who viewed these \"barbarian\" influences as corrupting.\n\n## The Decline\n\nThe route's decline began with the **An Lushan Rebellion** (755\u2013763), which devastated Tang China and severed control over the western regions. By the Song Dynasty (960\u20131279), maritime routes had largely replaced overland trade, and the Ming Dynasty (1368\u20131644) eventually abandoned the western territories, building the Great Wall not to keep people out, but to keep Chinese in\u2014preventing unauthorized trade.\n\nThe final blow came in the 15th century when Ottoman control of the eastern Mediterranean and Portuguese circumnavigation of Africa made the overland route economically obsolete.\n\n## Echoes Today\n\nWhen archaeologists excavated **Pompeii** (destroyed 79 CE), they found Chinese silk in the remains\u2014testament to how far these threads traveled. Similarly, Roman glass has been discovered in Han Dynasty tombs in coastal China, likely arriving via maritime Silk Road routes.\n\nToday, China's \"Belt and Road Initiative\" explicitly invokes this history, though ironically, the ancient Silk Road flourished precisely because no single empire controlled it entirely\u2014it was the competition between Tang, Tibetan, Turkic, and Arab powers that created the commercial ecosystem. The greatest irony of all? The term \"Silk Road\" would have meant nothing to the camel drivers and Sogdian bankers who actually traversed it; to them, it was simply *the road*, or perhaps just another Tuesday in the desert.",
+							"tool_calls": [],
+							"annotations": null,
+							"audio": null,
+							"function_call": null,
+							"reasoning": " The user wants to know about the Silk Road. As an expert in Chinese history and culture, I should provide historical context and interesting anecdotes. I need to cover:\n\n1. Definition and origin of the term \"Silk Road\" (it's actually a 19th century term coined by Ferdinand von Richthofen, not ancient)\n2. Timeline - Han Dynasty establishment (Zhang Qian's missions), peak during Tang, decline during Ming/Mongol era, etc.\n3. Routes - Northern, Southern, and maritime routes\n4. Goods traded - silk obviously, but also jade, horses, Buddhism, paper, gunpowder, etc.\n5. Cultural exchange - not just commerce but religion, technology, art\n6. Key figures - Zhang Qian, Xuanzang, Marco Polo\n7. Interesting anecdotes:\n   - The \"Silk Princess\" legend (silkworm eggs smuggled to Khotan)\n   - The Pompeii silk remains\n   - The Dunhuang Mogao Caves\n   - The Sogdian merchants\n   - The \"heavenly horses\" of Ferghana\n\nStructure:\n- Introduction with the etymology (Richthofen)\n- Han Dynasty origins and Zhang Qian's \"pioneering\" \n- The network aspect (it's not one road)\n- Goods and cultural flow (both directions)\n- Specific anecdotes woven throughout\n- Decline and modern Belt and Road connection\n\nTone: scholarly but engaging, emphasizing the human stories behind the commerce. ",
+							"reasoning_content": " The user wants to know about the Silk Road. As an expert in Chinese history and culture, I should provide historical context and interesting anecdotes. I need to cover:\n\n1. Definition and origin of the term \"Silk Road\" (it's actually a 19th century term coined by Ferdinand von Richthofen, not ancient)\n2. Timeline - Han Dynasty establishment (Zhang Qian's missions), peak during Tang, decline during Ming/Mongol era, etc.\n3. Routes - Northern, Southern, and maritime routes\n4. Goods traded - silk obviously, but also jade, horses, Buddhism, paper, gunpowder, etc.\n5. Cultural exchange - not just commerce but religion, technology, art\n6. Key figures - Zhang Qian, Xuanzang, Marco Polo\n7. Interesting anecdotes:\n   - The \"Silk Princess\" legend (silkworm eggs smuggled to Khotan)\n   - The Pompeii silk remains\n   - The Dunhuang Mogao Caves\n   - The Sogdian merchants\n   - The \"heavenly horses\" of Ferghana\n\nStructure:\n- Introduction with the etymology (Richthofen)\n- Han Dynasty origins and Zhang Qian's \"pioneering\" \n- The network aspect (it's not one road)\n- Goods and cultural flow (both directions)\n- Specific anecdotes woven throughout\n- Decline and modern Belt and Road connection\n\nTone: scholarly but engaging, emphasizing the human stories behind the commerce. ",
+							"refusal": null
+						},
+						"finish_reason": "stop",
+						"logprobs": null,
+						"stop_reason": 163586,
+						"token_ids": null
+					}
+				],
+				"usage": {
+					"prompt_tokens": 37,
+					"completion_tokens": 1617,
+					"total_tokens": 1654,
+					"prompt_tokens_details": {
+						"cached_tokens": 0
+					}
+				},
+				"kv_transfer_params": null,
+				"prompt_logprobs": null,
+				"prompt_token_ids": null,
+				"service_tier": null,
+				"system_fingerprint": null,
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -77,6 +161,48 @@
 				"max_tokens": 2048
 			},
 			"output": {},
+			"raw_response": {
+				"id": "chatcmpl-5bfd4d50-9361-4dde-8b88-d54d167cd359",
+				"object": "chat.completion",
+				"created": 1776470468,
+				"model": "@cf/moonshotai/kimi-k2.5",
+				"choices": [
+					{
+						"index": 0,
+						"message": {
+							"role": "assistant",
+							"content": null,
+							"tool_calls": [],
+							"annotations": null,
+							"audio": null,
+							"function_call": null,
+							"reasoning": " The user wants a Python function to calculate the Fibonacci sequence using memoization. \n\nKey points:\n1. Fibonacci sequence: F(0) = 0, F(1) = 1, F(n) = F(n-1) + F(n-2) for n > 1\n2. Memoization: caching results to avoid redundant calculations\n3. Python implementation\n\nApproaches:\n1. Manual memoization using a dictionary\n2. Using `functools.lru_cache` decorator\n3. Using a class to maintain state\n\nI should provide a clean, efficient implementation. The `functools.lru_cache` approach is most Pythonic and concise, but a manual dictionary approach shows the concept clearly. I'll provide both or at least the manual one with explanation.\n\nLet me write a comprehensive solution:\n\nOption 1: Using `functools.lru_cache` (cleanest)\n```python\nfrom functools import lru_cache\n\n@lru_cache(maxsize=None)\ndef fibonacci(n):\n    if n < 0:\n        raise ValueError(\"n must be non-negative\")\n    if n < 2:\n        return n\n    return fibonacci(n - 1) + fibonacci(n - 2)\n```\n\nOption 2: Manual memoization (more explicit)\n```python\ndef fibonacci(n, memo=None):\n    if memo is None:\n        memo = {}\n    if n < 0:\n        raise ValueError(\"n must be non-negative\")\n    if n in memo:\n        return memo[n]\n    if n < 2:\n        return n\n    memo[n] = fibonacci(n - 1, memo) + fibonacci(n - 2, memo)\n    return memo[n]\n```\n\nOption 3: Class-based (maintains state)\n```python\nclass Fibonacci:\n    def __init__(self):\n        self.memo = {0: 0, 1: 1}\n    \n    def calculate(self, n):\n        if n < 0:\n            raise ValueError(\"n must be non-negative\")\n        if n not in self.memo:\n            self.memo[n] = self.calculate(n - 1) + self.calculate(n - 2)\n        return self.memo[n]\n```\n\nI think providing the manual dictionary approach as the primary solution is best because it clearly demonstrates how memoization works without hiding the implementation details. But I should mention `lru_cache` as an alternative.\n\nAlso,",
+							"reasoning_content": " The user wants a Python function to calculate the Fibonacci sequence using memoization. \n\nKey points:\n1. Fibonacci sequence: F(0) = 0, F(1) = 1, F(n) = F(n-1) + F(n-2) for n > 1\n2. Memoization: caching results to avoid redundant calculations\n3. Python implementation\n\nApproaches:\n1. Manual memoization using a dictionary\n2. Using `functools.lru_cache` decorator\n3. Using a class to maintain state\n\nI should provide a clean, efficient implementation. The `functools.lru_cache` approach is most Pythonic and concise, but a manual dictionary approach shows the concept clearly. I'll provide both or at least the manual one with explanation.\n\nLet me write a comprehensive solution:\n\nOption 1: Using `functools.lru_cache` (cleanest)\n```python\nfrom functools import lru_cache\n\n@lru_cache(maxsize=None)\ndef fibonacci(n):\n    if n < 0:\n        raise ValueError(\"n must be non-negative\")\n    if n < 2:\n        return n\n    return fibonacci(n - 1) + fibonacci(n - 2)\n```\n\nOption 2: Manual memoization (more explicit)\n```python\ndef fibonacci(n, memo=None):\n    if memo is None:\n        memo = {}\n    if n < 0:\n        raise ValueError(\"n must be non-negative\")\n    if n in memo:\n        return memo[n]\n    if n < 2:\n        return n\n    memo[n] = fibonacci(n - 1, memo) + fibonacci(n - 2, memo)\n    return memo[n]\n```\n\nOption 3: Class-based (maintains state)\n```python\nclass Fibonacci:\n    def __init__(self):\n        self.memo = {0: 0, 1: 1}\n    \n    def calculate(self, n):\n        if n < 0:\n            raise ValueError(\"n must be non-negative\")\n        if n not in self.memo:\n            self.memo[n] = self.calculate(n - 1) + self.calculate(n - 2)\n        return self.memo[n]\n```\n\nI think providing the manual dictionary approach as the primary solution is best because it clearly demonstrates how memoization works without hiding the implementation details. But I should mention `lru_cache` as an alternative.\n\nAlso,",
+							"refusal": null
+						},
+						"finish_reason": "length",
+						"logprobs": null,
+						"stop_reason": null,
+						"token_ids": null
+					}
+				],
+				"usage": {
+					"prompt_tokens": 22,
+					"completion_tokens": 500,
+					"total_tokens": 522,
+					"prompt_tokens_details": {
+						"cached_tokens": 0
+					}
+				},
+				"kv_transfer_params": null,
+				"prompt_logprobs": null,
+				"prompt_token_ids": null,
+				"service_tier": null,
+				"system_fingerprint": null,
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -108,6 +234,51 @@
 			"output": {
 				"text": " A **perceptron** is the simplest type of artificial neural network\u2014essentially a single neuron. Invented by Frank Rosenblatt in 1957, it's a binary classifier that decides whether an input belongs to one category or another (e.g., \"spam\" vs. \"not spam\").\n\n## How it works\n\nImagine a perceptron as a decision-making node that takes several inputs, processes them, and produces a single output (0 or 1).\n\n### The Structure\n1. **Inputs** ($x_1, x_2, ..., x_n$): Features of your data (e.g., pixel brightness, word frequency)\n2. **Weights** ($w_1, w_2, ..., w_n$): Importance values for each input\n3. **Bias** ($b$): A threshold that shifts the decision boundary\n4. **Activation Function**: A step function that converts the result to 0 or 1\n\n### The Math\nThe perceptron calculates the **weighted sum** of inputs:\n\n$$\\text{weighted sum} = (x_1 \\cdot w_1) + (x_2 \\cdot w_2) + ... + (x_n \\cdot w_n) + b$$\n\nOr simplified:\n$$\\text{output} = \\begin{cases} \n1 & \\text{if } \\sum(w_i x_i) + b > 0 \\\\\n0 & \\text{otherwise}\n\\end{cases}$$\n\n## Learning Process\n\nThe perceptron \"learns\" by adjusting weights when it makes mistakes:\n\n1. Start with random weights\n2. For each training example:\n   - Calculate prediction\n   - If wrong: Adjust weights toward the correct answer\n   - **Update rule**: $w_i \\leftarrow w_i + \\eta(y - \\hat{y})x_i$\n     - $\\eta$ = learning rate (how big the adjustment is)\n     - $y$ = true label (0 or 1)\n     - $\\hat{y}$ = prediction\n\n## The Big Limitation: XOR Problem\n\nPerceptrons can only solve **linearly separable** problems (data you can separate with a straight line). They famously **cannot** learn the XOR function (exclusive OR):\n\n| Input A | Input B | XOR Output |\n|---------|---------|------------|\n| 0 | 0 | 0 |\n| 0 | 1 | 1 |\n| 1 | 0 | 1 |\n| 1 | 1 | 0 |\n\nYou can't draw a single straight line to separate the 1s from the 0s. This limitation led to the development of **Multi-Layer Perceptrons (MLPs)**\u2014networks with hidden layers between input and output.\n\n**Next step**:"
 			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"id": "chatcmpl-ab471f0b-41f9-4f57-b8c4-87f4ace3a4de",
+					"object": "chat.completion",
+					"created": 1776470504,
+					"model": "@cf/moonshotai/kimi-k2.5",
+					"choices": [
+						{
+							"index": 0,
+							"message": {
+								"role": "assistant",
+								"content": " A **perceptron** is the simplest type of artificial neural network\u2014essentially a single neuron. Invented by Frank Rosenblatt in 1957, it's a binary classifier that decides whether an input belongs to one category or another (e.g., \"spam\" vs. \"not spam\").\n\n## How it works\n\nImagine a perceptron as a decision-making node that takes several inputs, processes them, and produces a single output (0 or 1).\n\n### The Structure\n1. **Inputs** ($x_1, x_2, ..., x_n$): Features of your data (e.g., pixel brightness, word frequency)\n2. **Weights** ($w_1, w_2, ..., w_n$): Importance values for each input\n3. **Bias** ($b$): A threshold that shifts the decision boundary\n4. **Activation Function**: A step function that converts the result to 0 or 1\n\n### The Math\nThe perceptron calculates the **weighted sum** of inputs:\n\n$$\\text{weighted sum} = (x_1 \\cdot w_1) + (x_2 \\cdot w_2) + ... + (x_n \\cdot w_n) + b$$\n\nOr simplified:\n$$\\text{output} = \\begin{cases} \n1 & \\text{if } \\sum(w_i x_i) + b > 0 \\\\\n0 & \\text{otherwise}\n\\end{cases}$$\n\n## Learning Process\n\nThe perceptron \"learns\" by adjusting weights when it makes mistakes:\n\n1. Start with random weights\n2. For each training example:\n   - Calculate prediction\n   - If wrong: Adjust weights toward the correct answer\n   - **Update rule**: $w_i \\leftarrow w_i + \\eta(y - \\hat{y})x_i$\n     - $\\eta$ = learning rate (how big the adjustment is)\n     - $y$ = true label (0 or 1)\n     - $\\hat{y}$ = prediction\n\n## The Big Limitation: XOR Problem\n\nPerceptrons can only solve **linearly separable** problems (data you can separate with a straight line). They famously **cannot** learn the XOR function (exclusive OR):\n\n| Input A | Input B | XOR Output |\n|---------|---------|------------|\n| 0 | 0 | 0 |\n| 0 | 1 | 1 |\n| 1 | 0 | 1 |\n| 1 | 1 | 0 |\n\nYou can't draw a single straight line to separate the 1s from the 0s. This limitation led to the development of **Multi-Layer Perceptrons (MLPs)**\u2014networks with hidden layers between input and output.\n\n**Next step**:",
+								"tool_calls": [],
+								"annotations": null,
+								"audio": null,
+								"function_call": null,
+								"reasoning": " The user wants to learn about neural networks and specifically asked to start with perceptrons. I need to explain what a perceptron is in a clear, structured way.\n\nKey points to cover:\n1. Definition - what is a perceptron?\n2. Biological inspiration (briefly)\n3. Mathematical structure (inputs, weights, bias, activation)\n4. The mathematical formula\n5. How it learns (weight updates)\n6. Limitations (XOR problem) to set up why we need multi-layer networks\n7. Simple example\n\nStructure:\n- Start with simple definition\n- Visual description\n- Mathematical formulation\n- Learning algorithm\n- Historical context/limitations\n- Transition to next topic\n\nI should keep it accessible but accurate. Use formatting to make the math clear. Avoid overly technical jargon where possible, but introduce necessary terms like \"weights,\" \"bias,\" and \"activation function.\"\n\nThe perceptron is the building block, so I need to emphasize that it's a binary classifier - it divides data into two regions with a linear boundary.\n\nLet me write this out step by step. ",
+								"reasoning_content": " The user wants to learn about neural networks and specifically asked to start with perceptrons. I need to explain what a perceptron is in a clear, structured way.\n\nKey points to cover:\n1. Definition - what is a perceptron?\n2. Biological inspiration (briefly)\n3. Mathematical structure (inputs, weights, bias, activation)\n4. The mathematical formula\n5. How it learns (weight updates)\n6. Limitations (XOR problem) to set up why we need multi-layer networks\n7. Simple example\n\nStructure:\n- Start with simple definition\n- Visual description\n- Mathematical formulation\n- Learning algorithm\n- Historical context/limitations\n- Transition to next topic\n\nI should keep it accessible but accurate. Use formatting to make the math clear. Avoid overly technical jargon where possible, but introduce necessary terms like \"weights,\" \"bias,\" and \"activation function.\"\n\nThe perceptron is the building block, so I need to emphasize that it's a binary classifier - it divides data into two regions with a linear boundary.\n\nLet me write this out step by step. ",
+								"refusal": null
+							},
+							"finish_reason": "length",
+							"logprobs": null,
+							"stop_reason": null,
+							"token_ids": null
+						}
+					],
+					"usage": {
+						"prompt_tokens": 69,
+						"completion_tokens": 800,
+						"total_tokens": 869,
+						"prompt_tokens_details": {
+							"cached_tokens": 0
+						}
+					},
+					"kv_transfer_params": null,
+					"prompt_logprobs": null,
+					"prompt_token_ids": null,
+					"service_tier": null,
+					"system_fingerprint": null
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -128,6 +299,7 @@
 	"default_example": null,
 	"code_snippets": [],
 	"zdr": false,
+	"zdr_comment": null,
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
