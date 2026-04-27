@@ -91,7 +91,7 @@ If you prefer to sign requests yourself, you can use the [`aws4fetch`](https://g
 
 ### cURL with BYOK
 
-With BYOK configured, requests are simple — no AWS signing required:
+With your AWS credentials [stored as a provider key](/ai-gateway/configuration/bring-your-own-keys/), requests are simple — no AWS signing required:
 
 ```bash
 curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/aws-bedrock/bedrock-runtime/us-east-1/model/anthropic.claude-3-haiku-20240307-v1:0/invoke" \
@@ -187,7 +187,7 @@ https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/compl
 
 ### cURL
 
-With BYOK configured, specify the model using the `aws-bedrock/{model}` format:
+With your AWS credentials [stored as a provider key](/ai-gateway/configuration/bring-your-own-keys/), specify the model using the `aws-bedrock/{model}` format:
 
 ```bash
 curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/completions" \
@@ -204,7 +204,7 @@ curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat
   }'
 ```
 
-### OpenAI SDK with BYOK
+### OpenAI SDK
 
 ```javascript
 import OpenAI from "openai";
