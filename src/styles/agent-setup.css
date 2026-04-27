@@ -2523,4 +2523,7 @@
 	color: var(--color-cl1-brand-orange);
 	text-decoration: underline;
 	text-underline-offset: 2px;
+	&:hover {
+		color: var(--sl-color-white);
+	}
 }

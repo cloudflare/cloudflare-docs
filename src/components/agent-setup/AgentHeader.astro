@@ -20,9 +20,7 @@ const { slug } = Astro.props;
 const agent = AGENTS.find((a) => a.slug === slug);
 
 if (!agent) {
-	throw new Error(
-		`[AgentHeader] No agent found for slug="${slug}"`,
-	);
+	throw new Error(`[AgentHeader] No agent found for slug="${slug}"`);
 }
 
 const externalLinks = [
@@ -60,7 +58,7 @@ const externalLinks = [
 		<h1 id="_top" class="-mt-1! mb-0! text-3xl! leading-none! font-bold!">
 			{agent.name} + Cloudflare
 		</h1>
-		<span class="text-sm" style={`color: var(--color-cl1-gray-5)`}>
+		<span class="text-cl1-gray-5 text-sm">
 			{agent.vendor}
 		</span>
 	</div>
@@ -72,9 +70,7 @@ const externalLinks = [
 			<slot />
 		</div>
 	) : (
-		<p class="mb-4 text-base" style={{ lineHeight: 1.6 }}>
-			{agent.description}
-		</p>
+		<p class="mb-4 text-base leading-[1.6]">{agent.description}</p>
 	)
 }
 
