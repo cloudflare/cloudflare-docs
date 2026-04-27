@@ -19,6 +19,31 @@ Choose the approach that matches how you use AI tools:
 - **Project rules and custom instructions**: Add a product-level [`llms.txt`](#per-product-endpoints) URL to your AI tool's configuration file for an index of relevant pages.
 - **API-aware coding**: Add the [OpenAPI specification](#openapi-specification) to your AI tool's context for full Cloudflare API coverage.
 
+## Concepts
+
+### Agent skills
+
+Skills are reusable instruction sets that teach an agent about a specific domain — for example, how to deploy a Cloudflare Worker or configure a WAF rule. They act as plugins that the agent loads on demand when it encounters a relevant task.
+
+### Model Context Protocol (MCP)
+
+The [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) is an open standard that connects AI tools to external tools, data, and services. When you connect an MCP server to your agent, the agent can search documentation, create DNS records, deploy Workers, and more.
+
+### Model flexibility
+
+AI agents use large language models (LLMs) to understand your requests and generate responses. How many models you can choose from depends on the agent:
+
+- **Locked**: Only the vendor's own models are supported.
+- **BYOK** (Bring Your Own Key): You supply your own API key for the model provider of your choice.
+- **Multi-provider**: Several model providers are supported out of the box.
+
+### Context approaches
+
+How the agent retains information about your project between conversations:
+
+- **Project memory**: The agent remembers context across sessions using stored files or memory.
+- **Indexed codebase**: The agent builds a searchable index of your repository for fast lookups.
+
 ## Set up your agent
 
 Each supported agent has a dedicated setup guide covering installation, Skills, MCP server configuration, example prompts, tips, and troubleshooting.
@@ -46,7 +71,7 @@ For agent-specific installation (plugins, slash commands, or marketplace), refer
 
 ## MCP servers
 
-The [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) is an open standard that connects AI tools to external tools, data, and services. Cloudflare runs managed remote MCP servers that give your agent the ability to search documentation, call the Cloudflare API, and query logs and analytics while it works.
+Cloudflare runs managed remote MCP servers that give your agent the ability to search documentation, call the Cloudflare API, and query logs and analytics while it works.
 
 There are two approaches:
 
@@ -88,6 +113,19 @@ The [Documentation MCP Server](https://github.com/cloudflare/mcp-server-cloudfla
 </Tabs>
 
 For the full list, refer to [MCP servers for Cloudflare](/agents/model-context-protocol/mcp-servers-for-cloudflare/).
+
+## Compare agents
+
+Every agent listed supports Skills and MCP. Capabilities, pricing, and context approaches vary:
+
+| Agent                                          | Workflow            | Pricing      | Model          | Context          | Open source |
+| ---------------------------------------------- | ------------------- | ------------ | -------------- | ---------------- | ----------- |
+| [Claude Code](/agent-setup/claude-code/)       | Terminal            | Subscription | Locked         | Project memory   | No          |
+| [Codex](/agent-setup/codex/)                   | Terminal            | Hybrid       | Locked         | Project memory   | Yes         |
+| [Cursor](/agent-setup/cursor/)                 | IDE, Terminal       | Subscription | Multi-provider | Indexed codebase | No          |
+| [GitHub Copilot](/agent-setup/github-copilot/) | Extension, Terminal | Subscription | Multi-provider | Indexed codebase | No          |
+| [OpenCode](/agent-setup/opencode/)             | Terminal            | BYOK         | Multi-provider | Project memory   | Yes         |
+| [Windsurf](/agent-setup/windsurf/)             | IDE                 | Subscription | Multi-provider | Indexed codebase | No          |
 
 ## Markdown documentation for LLMs
 
@@ -175,41 +213,3 @@ npm run ai-setup:copilot
 ```
 
 Each script imports AI tool components (commands and subagents) from the OpenCode configuration committed to the repository and generates configuration files in the expected locations for your selected AI tool.
-
-## Compare agents
-
-Every agent listed supports Skills and MCP. Capabilities, pricing, and context approaches vary. Refer to [Concepts](#concepts) below for definitions of terms used in this table.
-
-| Agent                                          | Workflow            | Pricing      | Model          | Context          | Open source |
-| ---------------------------------------------- | ------------------- | ------------ | -------------- | ---------------- | ----------- |
-| [Claude Code](/agent-setup/claude-code/)       | Terminal            | Subscription | Locked         | Project memory   | No          |
-| [Codex](/agent-setup/codex/)                   | Terminal            | Hybrid       | Locked         | Project memory   | Yes         |
-| [Cursor](/agent-setup/cursor/)                 | IDE, Terminal       | Subscription | Multi-provider | Indexed codebase | No          |
-| [GitHub Copilot](/agent-setup/github-copilot/) | Extension, Terminal | Subscription | Multi-provider | Indexed codebase | No          |
-| [OpenCode](/agent-setup/opencode/)             | Terminal            | BYOK         | Multi-provider | Project memory   | Yes         |
-| [Windsurf](/agent-setup/windsurf/)             | IDE                 | Subscription | Multi-provider | Indexed codebase | No          |
-
-## Concepts
-
-### Agent skills
-
-Skills are reusable instruction sets that teach an agent about a specific domain — for example, how to deploy a Cloudflare Worker or configure a WAF rule. They act as plugins that the agent loads on demand when it encounters a relevant task.
-
-### Model Context Protocol (MCP)
-
-The [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) is an open standard that connects AI tools to external tools, data, and services. When you connect an MCP server to your agent, the agent can search documentation, create DNS records, deploy Workers, and more.
-
-### Model flexibility
-
-AI agents use large language models (LLMs) to understand your requests and generate responses. How many models you can choose from depends on the agent:
-
-- **Locked**: Only the vendor's own models are supported.
-- **BYOK** (Bring Your Own Key): You supply your own API key for the model provider of your choice.
-- **Multi-provider**: Several model providers are supported out of the box.
-
-### Context approaches
-
-How the agent retains information about your project between conversations:
-
-- **Project memory**: The agent remembers context across sessions using stored files or memory.
-- **Indexed codebase**: The agent builds a searchable index of your repository for fast lookups.
