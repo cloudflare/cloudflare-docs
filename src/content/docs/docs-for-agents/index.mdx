@@ -6,26 +6,40 @@ sidebar:
   label: Docs for agents
 ---
 
-Use this guide to connect AI coding assistants and large language models (LLMs) to Cloudflare documentation, APIs, and platform tools.
+Cloudflare documentation provides multiple agentic tooling to help you use your own AI agents to effectively consume the information. This enables you to query your agent for your specific needs, as well as use Cloudflare skills and MCP servers to effectively interact with Cloudflare products and services.
+
+This page explains how you can use your agents on Cloudflare documentation.
 
 ## Quick start
 
 Choose the approach that matches how you use AI tools:
 
-- **AI coding agents** (tools that work with code in your project): Set up [Claude Code](/agent-setup/claude-code/), [Cursor](/agent-setup/cursor/), [Codex](/agent-setup/codex/), [GitHub Copilot](/agent-setup/github-copilot/), [OpenCode](/agent-setup/opencode/), or [Windsurf](/agent-setup/windsurf/) with Cloudflare [Skills](#skills) and [MCP servers](#mcp-servers).
-- **Chat interfaces** (ChatGPT, Claude.ai, and similar): Append `/index.md` to any docs page URL and paste the Markdown into your conversation.
-- **Project rules and custom instructions**: Add a product-level [`llms.txt`](#per-product-endpoints) URL to your AI tool's configuration file for an index of relevant pages.
-- **API-aware coding**: Add the [OpenAPI specification](#openapi-specification) to your AI tool's context for full Cloudflare API coverage.
+- Set up [Claude Code](/agent-setup/claude-code/), [Cursor](/agent-setup/cursor/), [Codex](/agent-setup/codex/), [GitHub Copilot](/agent-setup/github-copilot/), [OpenCode](/agent-setup/opencode/), or [Windsurf](/agent-setup/windsurf/) with Cloudflare [Skills](#skills) and [MCP servers](#mcp-servers).
+- Append `/index.md` to any docs page URL and paste the Markdown into your conversation.
+- Add a product-level [`llms.txt`](#per-product-endpoints) URL to your AI tool's configuration file for an index of relevant pages.
+- Add the [OpenAPI specification](#openapi-specification) to your AI tool's context for full Cloudflare API coverage.
 
 ## Concepts
 
 ### Agent skills
 
-Skills are reusable instruction sets that teach an agent about a specific domain — for example, how to deploy a Cloudflare Worker or configure a WAF rule. They act as plugins that the agent loads on demand when it encounters a relevant task.
+[Agent skills](https://agentskills.io/home) are structured, task-specific instructions that AI tools load on demand — for example, a skill might teach your agent how to deploy a Cloudflare Worker or configure a WAF rule. Cloudflare publishes skills covering Workers, storage, AI, networking, security, and more in the [Cloudflare Skills repository](https://github.com/cloudflare/skills).
+
+Each agent has its own installation method for Skills. Refer to [Agent setup](#set-up-your-agent) for installation instructions.
 
 ### Model Context Protocol (MCP)
 
 The [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) is an open standard that connects AI tools to external tools, data, and services. When you connect an MCP server to your agent, the agent can search documentation, create DNS records, deploy Workers, and more.
+
+Cloudflare runs managed remote MCP servers that give your agent the ability to search documentation, call the Cloudflare API, and query logs and analytics while it works.
+
+There are two approaches:
+
+- **[Code Mode](/agents/api-reference/codemode/)**: A single MCP server that covers the entire Cloudflare API (over 2,500 endpoints). Use this when your agent needs broad access across multiple Cloudflare products.
+- **Domain-specific servers**: Focused servers for documentation, observability, DNS analytics, and more. Use these when your agent only needs access to a specific area. The full catalog is in the [cloudflare/mcp-server-cloudflare](https://github.com/cloudflare/mcp-server-cloudflare) repository.
+
+Each agent's [Agent setup](#set-up-your-agent) guide includes MCP server installation as part of its Quick start. For the full list of available MCP servers, refer to [MCP servers for Cloudflare](/agents/model-context-protocol/mcp-servers-for-cloudflare/).
+
 
 ### Model flexibility
 
@@ -54,23 +68,6 @@ Select your agent to get started. If you are not sure which agent to use, refer 
 - [GitHub Copilot + Cloudflare](/agent-setup/github-copilot/)
 - [OpenCode + Cloudflare](/agent-setup/opencode/)
 - [Windsurf + Cloudflare](/agent-setup/windsurf/)
-
-## Skills
-
-[Agent skills](https://agentskills.io/home) are structured, task-specific instructions that AI tools load on demand — for example, a skill might teach your agent how to deploy a Cloudflare Worker or configure a WAF rule. Cloudflare publishes skills covering Workers, storage, AI, networking, security, and more in the [Cloudflare Skills repository](https://github.com/cloudflare/skills).
-
-Each agent has its own installation method for Skills. Refer to [Agent setup](#set-up-your-agent) for installation instructions.
-
-## MCP servers
-
-Cloudflare runs managed remote MCP servers that give your agent the ability to search documentation, call the Cloudflare API, and query logs and analytics while it works.
-
-There are two approaches:
-
-- **[Code Mode](/agents/api-reference/codemode/)**: A single MCP server that covers the entire Cloudflare API (over 2,500 endpoints). Use this when your agent needs broad access across multiple Cloudflare products.
-- **Domain-specific servers**: Focused servers for documentation, observability, DNS analytics, and more. Use these when your agent only needs access to a specific area. The full catalog is in the [cloudflare/mcp-server-cloudflare](https://github.com/cloudflare/mcp-server-cloudflare) repository.
-
-Each agent's [Agent setup](#set-up-your-agent) guide includes MCP server installation as part of its Quick start. For the full list of available MCP servers, refer to [MCP servers for Cloudflare](/agents/model-context-protocol/mcp-servers-for-cloudflare/).
 
 ## Compare agents
 
