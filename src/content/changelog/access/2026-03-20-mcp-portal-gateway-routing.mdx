@@ -1,0 +1,21 @@
+---
+title: Route MCP server portal traffic through Cloudflare Gateway
+description: Route MCP server portal traffic through Cloudflare Gateway for richer HTTP logging and DLP scanning.
+date: 2026-03-20
+products:
+  - access
+---
+
+[MCP server portals](/cloudflare-one/access-controls/ai-controls/mcp-portals/) can now route traffic through [Cloudflare Gateway](/cloudflare-one/traffic-policies/) for richer HTTP request logging and data loss prevention (DLP) scanning.
+
+When Gateway routing is turned on, portal traffic appears in your [Gateway HTTP logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/). You can create [Gateway HTTP policies](/cloudflare-one/traffic-policies/) with [DLP profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/) to detect and block sensitive data sent to upstream MCP servers.
+
+:::note
+DLP [AI prompt profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/predefined-profiles/#ai-prompt) do not apply to MCP server portal traffic.
+:::
+
+To enable Gateway routing, go to **Access controls** > **AI controls**, edit the portal, and turn on **Route traffic through Cloudflare Gateway** under **Basic information**.
+
+![Route MCP server portal traffic through Cloudflare Gateway](~/assets/images/changelog/access/portal-route-through-gateway.png)
+
+For more details, refer to [Route traffic through Gateway](/cloudflare-one/access-controls/ai-controls/mcp-portals/#route-portal-traffic-through-gateway).

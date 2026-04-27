@@ -1,0 +1,90 @@
+---
+pcx_content_type: configuration
+title: Configuration
+description: Add and configure a Flagship binding in your Wrangler configuration file to evaluate feature flags in a Worker.
+sidebar:
+  order: 4
+products:
+  - flagship
+---
+
+import { WranglerConfig, TypeScriptExample } from "~/components";
+
+To use Flagship in a Cloudflare Worker, add a Flagship binding to your Wrangler configuration file. The binding gives your Worker access to `env.FLAGS`, which provides methods to evaluate feature flags.
+
+## Add the binding
+
+Add the `flagship` block to your Wrangler configuration file with a binding name and your app ID.
+
+<WranglerConfig>
+
+```jsonc
+{
+	"flagship": {
+		"binding": "FLAGS",
+		"app_id": "<APP_ID>",
+	},
+}
+```
+
+</WranglerConfig>
+
+Replace `<APP_ID>` with the app ID from your Flagship app. If you have not created an app yet, refer to the [Get started guide](/flagship/get-started/#create-an-app-and-a-flag). The `binding` field sets the name you use to access Flagship in your Worker code (for example, `env.FLAGS`).
+
+## Bind to multiple apps
+
+A single Worker can bind to multiple Flagship apps. Use the array form to define more than one binding:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"flagship": [
+		{
+			"binding": "FLAGS",
+			"app_id": "<APP_ID_1>",
+		},
+		{
+			"binding": "EXPERIMENT_FLAGS",
+			"app_id": "<APP_ID_2>",
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+Each binding is available as a separate property on the `env` object (for example, `env.FLAGS` and `env.EXPERIMENT_FLAGS`).
+
+## Generate types
+
+After adding the binding, run `npx wrangler types` to generate TypeScript types. This creates the `Env` interface with each binding typed as `Flagship`.
+
+```ts
+interface Env {
+	FLAGS: Flagship;
+	EXPERIMENT_FLAGS: Flagship;
+}
+```
+
+## Use the binding
+
+Call evaluation methods on `env.FLAGS` to resolve flag values at runtime. Each method accepts a flag key, a default value, and an optional evaluation context.
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const isEnabled = await env.FLAGS.getBooleanValue("my-feature", false, {
+			userId: "user-42",
+		});
+
+		return new Response(isEnabled ? "Feature is on" : "Feature is off");
+	},
+};
+```
+
+</TypeScriptExample>
+
+Refer to the [binding API reference](/flagship/binding/) for the full list of methods.

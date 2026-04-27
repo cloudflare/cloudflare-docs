@@ -1,10 +1,14 @@
 ---
 pcx_content_type: reference
+products:
+  - ssl
 title: PQC support
 sidebar:
   order: 2
 head: []
 description: Consider information about post-quantum cryptography at Cloudflare - deployed key agreements and software support.
+tags:
+  - Post-quantum
 ---
 
 Cloudflare's deployment of post-quantum [hybrid key agreements](/ssl/post-quantum-cryptography/#hybrid-key-agreement) is supported by different software as listed below. [Contributions](/style-guide/contributions/) to keep the listing up-to-date are welcome.
@@ -24,6 +28,7 @@ The list below is for reference only. Responsibility for third-party software li
 - Default for [Tor Browser 15.0+](https://www.torproject.org/)
 - Cloudflare's [fork of Go](https://github.com/cloudflare/go)
 - Default for [Go 1.24+](https://go.dev/doc/go1.24#cryptotlspkgcryptotls)
+- Default for [Java 27+](https://openjdk.org/jeps/527)
 - Default for [OpenSSL 3.5.0+](https://www.openssl.org/)
 - Default for [Node 24.5.0+](https://nodejs.org/) and 22.20.0+ ([backported](https://nodejs.org/en/blog/release/v22.20.0#openssl-updated-to-352))
 - [BoringSSL](https://boringssl.googlesource.com/boringssl/)

@@ -105,11 +105,7 @@ To add a dynamic worker loader binding to your worker, add it to your Wrangler c
 
 ### `get`
 
-<code>
-	get(id <Type text="string" />, getCodeCallback{" "}
-	<Type text="() => Promise<WorkerCode>" />
-	): <Type text="WorkerStub" />
-</code>
+<code>get(id <Type text="string" />, getCodeCallback <Type text="() => Promise<WorkerCode>" /> ): <Type text="WorkerStub" /></code>
 
 Loads a Worker with the given ID, returning a `WorkerStub` which may be used to invoke the Worker.
 

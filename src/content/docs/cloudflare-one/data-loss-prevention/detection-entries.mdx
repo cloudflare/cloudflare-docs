@@ -1,15 +1,24 @@
 ---
 pcx_content_type: concept
+description: How Detection entries works in Cloudflare One.
+products:
+  - cloudflare-one
 title: Detection entries
 sidebar:
   order: 4
+tags:
+  - Compliance
 ---
 
 import { Details } from "~/components";
 
-Cloudflare DLP can scan your web traffic and SaaS applications for specific data defined in custom detection entries. Detection entries allow you to define custom data patterns for DLP to detect using [DLP profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/). Detection entries include custom [datasets](#datasets) with defined data, [document entries](#documents) with example fingerprints, and [AI prompt topics](#ai-prompt-topics).
+Detection entries are the data patterns that Cloudflare DLP looks for when scanning your web traffic and SaaS applications. You add detection entries to [DLP profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/), which define what DLP should detect. Detection entries include:
 
-You can configure sensitive data to be hashed before reaching Cloudflare and redacted from matches in [payload logs](/cloudflare-one/data-loss-prevention/dlp-policies/logging-options/#log-the-payload-of-matched-rules).
+- [Datasets](#datasets) — uploaded spreadsheets of specific values to match against (for example, credit card numbers or internal SKUs)
+- [Document entries](#documents) — fingerprints of example documents used to find similar content
+- [AI prompt topics](#ai-prompt-topics) — categories of prompts submitted to generative AI tools
+
+For datasets containing sensitive data, you can configure values to be hashed before reaching Cloudflare and redacted from matches in [payload logs](/cloudflare-one/data-loss-prevention/dlp-policies/logging-options/#log-the-payload-of-matched-rules).
 
 ## Datasets
 
@@ -21,13 +30,13 @@ You can create and upload custom datasets to scan for specific matching data.
 
 Exact Data Match (EDM) protects sensitive information, such as names, addresses, phone numbers, and credit card numbers.
 
-All data in uploaded EDM datasets is encrypted before reaching Cloudflare. To detect matches, Cloudflare hashes traffic and compares it to hashes from your dataset. Matched data will be redacted in payload logs.
+All EDM dataset data is encrypted before reaching Cloudflare. To detect matches, Cloudflare hashes traffic and compares it to hashes from your dataset. Matched data will be redacted in payload logs.
 
 #### Custom Wordlist
 
-Custom Wordlist (CWL) protects non-sensitive data, such as intellectual property and SKU numbers. Optionally, CWL can detect case-sensitive data.
+Custom Wordlist (CWL) protects non-sensitive data, such as intellectual property and SKU numbers.
 
-Cloudflare stores data from CWL datasets within DLP. Plaintext matches appear in payload logs.
+Unlike EDM, Cloudflare stores data from CWL datasets in plaintext within DLP. Plaintext matches appear in payload logs. Optionally, CWL can detect case-sensitive data.
 
 ### Prepare DLP datasets
 
@@ -51,7 +60,7 @@ To select which Exact Data Match columns to use, you will need to [reupload any 
 
 <Details header="Upload an Exact Data Match dataset">
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **Detection entries**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Data loss prevention** > **Detection entries**.
 2. From the **Datasets** tab, select **Add a dataset**.
 3. Select **Exact Data Match (EDM)**.
 4. Upload your dataset file. Select **Next**.
@@ -65,7 +74,7 @@ DLP will encrypt your dataset and save its hash.
 
 <Details header="Upload a Custom Wordlist dataset">
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **Detection entries**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Data loss prevention** > **Detection entries**.
 2. From the **Datasets** tab, select **Add a dataset**.
 3. Select **Custom Wordlist (CWL)**.
 4. Name your dataset. Optionally, add a description.
@@ -83,7 +92,7 @@ The dataset will appear in the list with an **Uploading** status. Once the uploa
 
 Uploaded DLP datasets are read-only. To update a dataset, you must upload a new file to replace the original.
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **Detection entries**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Data loss prevention** > **Detection entries**.
 2. From the **Datasets** tab, select the dataset you want to update.
 3. Select **Upload dataset** and choose your updated dataset. Select **Next**.
 4. If your select dataset is an Exact Data Match dataset, review and choose the new columns. Select **Next**.
@@ -97,7 +106,7 @@ If you want to update an Exact Data Match dataset to remove a column in use as a
 
 ## Documents
 
-You can upload example documents to scan for unstructured data or specific document types common to your organization. DLP will create a unique fingerprint of the document and detect patterns in your organization's traffic based on how similar it is to the original fingerprint.
+You can upload example documents to detect similar content in your organization's traffic. DLP creates a unique fingerprint of the document and compares traffic against it based on how similar it is to the original. This is useful for detecting specific document types common to your organization, such as contract templates or internal reports, where the content does not reduce to a list of individual values in a [dataset](#datasets).
 
 DLP stores uploaded documents encrypted at rest in a [Cloudflare R2](/r2/) bucket. To upload sensitive data that is only stored in memory, use [Exact Data Match](#exact-data-match).
 
@@ -109,7 +118,7 @@ DLP supports documents in `.docx` and `.txt` format. Documents must be under 10 
 
 To upload a new document entry to DLP:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **Detection entries**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Data loss prevention** > **Detection entries**.
 2. From the **Documents** tab, select **Add a document entry**.
 3. Name your document. Optionally, add a description.
 4. In **Minimum similarity for matches**, enter a value between 0% and 100%.
@@ -124,7 +133,7 @@ To use your uploaded document fingerprint, add it as an existing entry to a [cus
 
 Uploaded document entries are read-only. To update a document entry, you must upload a new file to replace the original.
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **Detection entries**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Data loss prevention** > **Detection entries**.
 2. From the **Documents** tab, choose the document you want to update and select **Edit**.
 3. (Optional) Update the name and minimum similarity for matches for your document entry. You can also open the existing uploaded document.
 4. In **Update document entry**, choose and upload your updated document file.
@@ -147,6 +156,11 @@ DLP uses [Application Granular Controls](/cloudflare-one/traffic-policies/http-p
 | Intent: Code Abuse and Malicious Code | Prompt requests malicious code for attacks, exploits, or harmful activities.                      |
 | Intent: Jailbreak                     | Prompt attempts to circumvent AI security policies.                                               |
 
-Each detection entry is categorized as either Content or Intent. Content focuses on the specific text or data the user provides the generative AI tool. It is the information the AI needs to process and analyze to generate a response. Intent focuses on the user's goal or objective for the AI's response. It dictates the type of output the user wants to receive. This category is particularly useful for customers who are using SaaS connectors or MCPs that provide the AI application access to internal data sources that contain sensitive information.
+Each detection entry is categorized as either **Content** or **Intent**:
+
+- **Content** — Detects specific text or data in the prompt itself (for example, a user pasting source code or a credit card number into a chat).
+- **Intent** — Detects the user's goal or objective for the AI's response (for example, a user asking an AI to generate malicious code or extract personal information).
+
+Intent detection is useful when AI applications have access to internal data sources containing sensitive information through SaaS connectors or Model Context Protocol (MCP) servers.
 
 To use an AI prompt topic, configure the corresponding [predefined DLP profile](/cloudflare-one/data-loss-prevention/dlp-profiles/predefined-profiles/#ai-prompt) or add it as an existing entry to a [custom DLP profile](/cloudflare-one/data-loss-prevention/dlp-profiles/#build-a-custom-profile). AI prompt protection is available for ChatGPT, Google Gemini, Perplexity, and Claude.

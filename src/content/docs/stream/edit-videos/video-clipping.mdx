@@ -1,6 +1,9 @@
 ---
 pcx_content_type: how-to
 title: Clip videos
+description: Trim Cloudflare Stream videos by setting start and end times to create new clips via the API.
+products:
+  - stream
 ---
 
 import { DashButton } from "~/components";
@@ -42,7 +45,7 @@ Clipped videos will not inherit the `scheduledDeletion` date. To set the deletio
 - **`endTimeSeconds`**: The timestamp from the existing video that indicates when the new video ends. <br/><br/>
 
 ```bash title="Example: Clip a video" {5,6,7}
-curl --location --request POST 'https://api.cloudflare.com/client/v4/accounts/<YOUR_ACCOUND_ID_HERE>/stream/clip' \
+curl --location --request POST 'https://api.cloudflare.com/client/v4/accounts/<YOUR_ACCOUNT_ID_HERE>/stream/clip' \
 --header 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
 --header 'Content-Type: application/json' \
 --data-raw '{

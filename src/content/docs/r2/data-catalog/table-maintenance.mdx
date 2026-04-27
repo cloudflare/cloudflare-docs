@@ -2,6 +2,8 @@
 pcx_content_type: configuration
 title: Table maintenance
 description: Learn how R2 Data Catalog automates table maintenance
+products:
+  - r2
 sidebar:
   order: 4
 ---
@@ -11,7 +13,7 @@ Table maintenance encompasses a set of operations that keep your Apache Iceberg 
 R2 Data Catalog automates two critical maintenance operations:
 
 - **Compaction**: Combines small data files into larger, more efficient files to improve query performance
-- **Snapshot expiration**: Removes old table snapshots to reduce metadata overhead and storage costs
+- **Snapshot expiration**: Removes old table snapshots and any unreferenced data files to reduce metadata overhead and storage costs
 
 Without regular maintenance, tables can suffer from:
 
@@ -73,7 +75,7 @@ Performance tradeoffs depend on your use case. For example, queries that return 
 Every write to an Iceberg table—whether an insert, update, or delete—creates a new snapshot. Over time, these snapshots can accumulate and cause performance issues:
 
 - **Metadata overhead**: Each snapshot adds entries to the table's metadata files. As the number of snapshots grows, metadata files become larger, slowing down query planning and table operations
-- **Increased storage costs**: Old snapshots reference data files that may no longer be needed, preventing them from being cleaned up and consuming unnecessary storage
+- **Increased storage costs**: Old snapshots reference data files that may no longer be needed. Without snapshot expiration, these files continue consuming unnecessary storage
 - **Slower table operations**: Operations like listing snapshots or accessing table history become slower over time
 
 ## R2 Data Catalog automatic snapshot expiration
@@ -127,5 +129,5 @@ These are generic recommendations, make sure to consider:
 
 - During open beta, compaction will compact up to 2 GB worth of files once per hour for each table.
 - Only data files stored in parquet format are currently supported with compaction.
-- Orphan file cleanup is not supported yet.
+- Files that were not previously referenced by a snapshot will not be cleaned up (orphaned files).
 - Minimum target file size for compaction is 64 MB and maximum is 512 MB.

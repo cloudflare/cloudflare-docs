@@ -1,0 +1,346 @@
+{
+	"model_id": "anthropic/claude-sonnet-4.6",
+	"provider_id": "anthropic",
+	"name": "Claude Sonnet 4.6",
+	"description": "Claude Sonnet 4.6 is Anthropic's latest balanced model offering strong coding, reasoning, and agentic capabilities with improved instruction following.",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Coding",
+		"Reasoning",
+		"Agentic"
+	],
+	"context_length": 200000,
+	"max_output_tokens": 128000,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Question",
+			"description": "Basic message request",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "What are the three laws of thermodynamics?"
+					}
+				],
+				"max_tokens": 1024
+			},
+			"output": {
+				"text": "There are actually **four laws of thermodynamics** (numbered 0\u20133), but the three *main* ones most commonly referenced are:\n\n## The Three Main Laws\n\n**1st Law \u2013 Conservation of Energy**\nEnergy cannot be created or destroyed, only converted from one form to another. The total energy of an isolated system remains constant.\n\n**2nd Law \u2013 Entropy**\nThe total entropy of an isolated system always increases over time. Heat flows naturally from hot to cold, and processes are irreversible in nature.\n\n**3rd Law \u2013 Absolute Zero**\nAs a system approaches absolute zero (0 Kelvin / -273.15\u00b0C), its entropy approaches a minimum or constant value. It is impossible to reach absolute zero in a finite number of steps.\n\n---\n\n## The Often-Forgotten Zeroth Law\n**0th Law \u2013 Thermal Equilibrium**\nIf two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other. This establishes the concept of **temperature**.\n\n---\n\nWould you like a deeper explanation of any of these?"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'anthropic/claude-sonnet-4.6',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'What are the three laws of thermodynamics?',\n      },\n    ],\n    max_tokens: 1024,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "With System Message",
+			"description": "Using a system message to set context",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "How do I read a JSON file in Python?"
+					}
+				],
+				"max_tokens": 1024,
+				"system": "You are a helpful coding assistant specializing in Python.",
+				"temperature": 0.3
+			},
+			"output": {
+				"text": "## Reading a JSON File in Python\n\n### Basic Method using `json` module\n\n```python\nimport json\n\n# Open and read the JSON file\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n\nprint(data)\n```\n\n### Common Approaches\n\n**1. Read as a dictionary/list**\n```python\nimport json\n\nwith open('data.json', 'r') as file:\n    data = json.load(file)  # Returns a Python dict or list\n\n# Access values\nprint(data['key'])\nprint(data['nested']['key'])\n```\n\n**2. Read a JSON string (not a file)**\n```python\nimport json\n\njson_string = '{\"name\": \"Alice\", \"age\": 30}'\ndata = json.loads(json_string)  # Note: loads() not load()\n\nprint(data['name'])  # Output: Alice\n```\n\n**3. Handle encoding explicitly**\n```python\nimport json\n\nwith open('data.json', 'r', encoding='utf-8') as file:\n    data = json.load(file)\n```\n\n### Error Handling\n\n```python\nimport json\n\ntry:\n    with open('data.json', 'r') as file:\n        data = json.load(file)\nexcept FileNotFoundError:\n    print(\"File not found\")\nexcept json.JSONDecodeError as e:\n    print(f\"Invalid JSON: {e}\")\n```\n\n### Key Functions Summary\n\n| Function | Use Case |\n|----------|----------|\n| `json.load(file)` | Read from a **file object** |\n| `json.loads(string)` | Read from a **string** |\n| `json.dump(data, file)` | Write to a **file** |\n| `json.dumps(data)` | Convert to a **string** |\n\n### Example JSON file (`data.json`)\n```json\n{\n    \"name\": \"Alice\",\n    \"age\": 30,\n    \"hobbies\": [\"reading\", \"coding\"]\n}\n```\n\n```python\nimport json\n\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n\nprint(data['name'])          # Alice\nprint(data['hobbies'][0])    # reading\n```\n\nThe `json` module is built into Python, so **no installation is needed**."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'anthropic/claude-sonnet-4.6',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'How do I read a JSON file in Python?',\n      },\n    ],\n    max_tokens: 1024,\n    system: 'You are a helpful coding assistant specializing in Python.',\n    temperature: 0.3,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Multi-turn Conversation",
+			"description": "Continuing a conversation with context",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "I need help planning a road trip from San Francisco to Los Angeles."
+					},
+					{
+						"role": "assistant",
+						"content": "I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?"
+					},
+					{
+						"role": "user",
+						"content": "Yes, what are some good places to stop?"
+					}
+				],
+				"max_tokens": 1024
+			},
+			"output": {
+				"text": "Here are some great stops depending on which route you take:\n\n**Coastal Route (Highway 1) - Scenic but longer**\n- **Santa Cruz** - Beach boardwalk and pier\n- **Monterey** - Famous aquarium and Cannery Row\n- **Big Sur** - Stunning coastal cliffs and views\n- **San Simeon** - Hearst Castle tours\n- **San Luis Obispo** - Charming college town with good food\n\n**Inland Route (Highway 101 or I-5) - Faster**\n- **Gilroy** - Known as the garlic capital of the world\n- **Paso Robles** - Great wine country\n- **Santa Barbara** - Beautiful beaches and Spanish architecture\n\n**Tips to consider:**\n- The coastal route adds several hours but is one of the most beautiful drives in the US\n- Big Sur can have road closures so check conditions before you go\n- Santa Barbara is worth a stop on either route\n- Try to avoid driving through LA during rush hour\n\n**How long do you have for the trip?** That would help narrow down how many stops make sense. Also, are you interested in:\n- Food and restaurants\n- Outdoor activities\n- History and culture\n- A mix of everything"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'anthropic/claude-sonnet-4.6',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'I need help planning a road trip from San Francisco to Los Angeles.',\n      },\n      {\n        role: 'assistant',\n        content:\n          \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n      },\n      {\n        role: 'user',\n        content: 'Yes, what are some good places to stop?',\n      },\n    ],\n    max_tokens: 1024,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Creative Writing",
+			"description": "Higher temperature for creative output",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "Write a short story opening about a detective finding an unusual clue."
+					}
+				],
+				"max_tokens": 512,
+				"temperature": 0.8
+			},
+			"output": {
+				"text": "# The Smell of Lavender\n\nDetective Mara Chen had seen a lot of crime scenes in fourteen years on the force. She had learned to read them the way other people read books \u2014 patiently, without skipping ahead.\n\nBut this one was giving her trouble.\n\nThe apartment was sparse and cold, its single window open to the November street below. The victim, a retired accountant named Gerald Foss, lay slumped at his kitchen table with no signs of forced entry, no signs of struggle, and \u2014 this was the part that nagged at her \u2014 no signs that anyone had been upset about anything at all.\n\nEverything was deliberate. Calm.\n\nShe almost missed it.\n\nShe was pulling on a fresh glove when the draft shifted, and there it was \u2014 faint, out of place, almost polite. *Lavender.* Not a cleaning product. Not a candle. Something more personal, like soap or a fabric softener pressed warm from a dryer.\n\nMara stood very still.\n\nGerald Foss, according to his neighbor, had been allergic to every flowering plant known to mankind. His medicine cabinet held three different antihistamines. There wasn't a single flower, real or artificial, anywhere in the apartment.\n\nSomeone had been here recently. Someone clean, careful, and completely unafraid.\n\nShe pulled out her notebook and wrote one word.\n\n*Lavender.*\n\nThen she circled it twice."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'anthropic/claude-sonnet-4.6',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'Write a short story opening about a detective finding an unusual clue.',\n      },\n    ],\n    max_tokens: 512,\n    temperature: 0.8,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Streaming Response",
+			"description": "Enable streaming for real-time output",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "Explain the concept of recursion with a simple example."
+					}
+				],
+				"max_tokens": 1024,
+				"stream": true
+			},
+			"output": {
+				"text": [
+					"#",
+					" Recursion\n\n## Core Concept\n\nRecursion is when a **function calls itself** to solve a smaller",
+					" version of the same problem, breaking it down until it reaches a simple base case.\n\nEvery recursive solution",
+					" needs:\n1. **Base case** \u2014 when to stop\n2. **Recursive case** \u2014 calling",
+					" itself with a simpler input\n\n---\n\n## Simple Example: Factorial\n\n`5! = 5 \u00d7 ",
+					"4 \u00d7 3 \u00d7 2 \u00d7 1 = 120`\n\n```python\ndef factorial(n):\n    # Base case: stop here",
+					"\n    if n == 0:\n        return 1\n\n    # Recursive case: call itself with a smaller value\n    return n * factorial(n - 1)\n\nprint",
+					"(factorial(5))  # Output: 120\n```\n\n---\n\n## How It Unfolds\n\n```\nfactorial(5)\n  \u2514",
+					"\u2500\u2500 5 * factorial(4)\n            \u2514\u2500\u2500 4 * factorial(3)\n                      \u2514\u2500\u2500 3 * factorial(2)\n                                ",
+					"\u2514\u2500\u2500 2 * factorial(1)\n                                          \u2514\u2500\u2500 1 * factorial(0)\n                                                    \u2514\u2500\u2500 returns 1  \u2190 base case",
+					"\n\n# Then it works back up:\n1 * 1 = 1\n2",
+					" * 1 = 2\n3 * 2 = 6\n4 * 6 = 24\n5 * 24 = 120 \u2713\n```\n\n---\n\n## The",
+					" \"Thousand Clones\" Analogy\n\n> Imagine you're in",
+					" a long line and ask *\"what position am I in?\"*\n> You",
+					" ask the person in front, who asks the person in front of",
+					" them, and so on.\n> The person at the front says **\"I'm #",
+					"1\"** (base case), and the answer passes back",
+					" down the line.\n\n---\n\n## Key Warnings\n\n| \u26a0\ufe0f Problem | ",
+					"\u2705 Solution |\n|---|---|\n| No base case \u2192 **infinite loop** | Always define a stopping condition |\n| Too",
+					" many calls \u2192 **stack overflow** | Ensure input gets smaller each time |\n| Can be",
+					" slow with repeated work | Use memoization or iteration if needed |\n\n---\n\n##",
+					" Recursion vs. Iteration\n\nBoth solve the same problem \u2014 recursion is",
+					" often **more readable** for naturally nested problems (trees",
+					", folders, fractals), while iteration is more **memory efficient** for simple loops",
+					"."
+				]
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'anthropic/claude-sonnet-4.6',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'Explain the concept of recursion with a simple example.',\n      },\n    ],\n    max_tokens: 1024,\n    stream: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://www.anthropic.com/claude/sonnet",
+	"terms": "https://www.anthropic.com/legal/commercial-terms",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/anthropic/claude-sonnet-4.6.png",
+	"metadata": {
+		"Architecture": "Transformer"
+	},
+	"created_at": "2026-04-13 16:44:14",
+	"default_example": null,
+	"code_snippets": [],
+	"zdr": false,
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"messages": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"role": {
+								"type": "string",
+								"enum": [
+									"user",
+									"assistant"
+								]
+							},
+							"content": {
+								"anyOf": [
+									{
+										"type": "string"
+									},
+									{
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"type": {
+													"type": "string"
+												},
+												"text": {
+													"type": "string"
+												},
+												"source": {}
+											},
+											"required": [
+												"type"
+											],
+											"additionalProperties": false
+										}
+									}
+								]
+							}
+						},
+						"required": [
+							"role",
+							"content"
+						],
+						"additionalProperties": false
+					}
+				},
+				"max_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"system": {
+					"type": "string"
+				},
+				"temperature": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"top_p": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"top_k": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"stream": {
+					"type": "boolean"
+				},
+				"metadata": {
+					"type": "object",
+					"propertyNames": {
+						"type": "string"
+					},
+					"additionalProperties": {}
+				}
+			},
+			"required": [
+				"messages",
+				"max_tokens"
+			],
+			"additionalProperties": {}
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"type": {
+					"type": "string",
+					"const": "message"
+				},
+				"role": {
+					"type": "string",
+					"const": "assistant"
+				},
+				"content": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"type": {
+								"type": "string"
+							},
+							"text": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"type"
+						],
+						"additionalProperties": {}
+					}
+				},
+				"model": {
+					"type": "string"
+				},
+				"stop_reason": {
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"usage": {
+					"type": "object",
+					"properties": {
+						"input_tokens": {
+							"type": "number"
+						},
+						"output_tokens": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"input_tokens",
+						"output_tokens"
+					],
+					"additionalProperties": false
+				}
+			},
+			"required": [
+				"id",
+				"type",
+				"role",
+				"content",
+				"model",
+				"stop_reason",
+				"usage"
+			],
+			"additionalProperties": {}
+		}
+	}
+}

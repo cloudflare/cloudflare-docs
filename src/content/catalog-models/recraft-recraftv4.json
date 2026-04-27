@@ -1,0 +1,228 @@
+{
+	"model_id": "recraft/recraftv4",
+	"provider_id": "recraft",
+	"name": "Recraft V4",
+	"description": "Recraft V4 generates art-directed images with strong composition, accurate text rendering, and design taste built in. Fast and cost-efficient at standard resolution.",
+	"task": "Text-to-Image",
+	"tags": [
+		"Image Generation",
+		"Design",
+		"Text Rendering"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Generation",
+			"description": "Basic text-to-image with just a prompt",
+			"input": {
+				"prompt": "A minimalist logo of a mountain range with a sun rising behind it"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4/simple-generation.png"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4',\n  {\n    prompt: 'A minimalist logo of a mountain range with a sun rising behind it',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Scene Composition",
+			"description": "Generate a complex compositional scene",
+			"input": {
+				"prompt": "A cozy cabin in the woods surrounded by tall pine trees, smoke rising from the chimney"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4/scene-composition.png"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4',\n  {\n    prompt:\n      'A cozy cabin in the woods surrounded by tall pine trees, smoke rising from the chimney',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Custom Size",
+			"description": "Specify output dimensions",
+			"input": {
+				"prompt": "A flat illustration of a workspace with a laptop, coffee cup, and potted plant",
+				"size": "1024x1024"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4/custom-size.png"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4',\n  {\n    prompt:\n      'A flat illustration of a workspace with a laptop, coffee cup, and potted plant',\n    size: '1024x1024',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "With Color Controls",
+			"description": "Guide generation with specific brand colors",
+			"input": {
+				"prompt": "An abstract geometric pattern suitable for a tech company brand identity",
+				"controls": {
+					"colors": [
+						{
+							"rgb": [
+								255,
+								107,
+								53
+							]
+						},
+						{
+							"rgb": [
+								0,
+								43,
+								91
+							]
+						}
+					]
+				}
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4/with-color-controls.png"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4',\n  {\n    prompt:\n      'An abstract geometric pattern suitable for a tech company brand identity',\n    controls: {\n      colors: [\n        {\n          rgb: [255, 107, 53],\n        },\n        {\n          rgb: [0, 43, 91],\n        },\n      ],\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Background Color",
+			"description": "Set a specific background color",
+			"input": {
+				"prompt": "A clean icon of a lightning bolt",
+				"size": "1024x1024",
+				"controls": {
+					"background_color": {
+						"rgb": [
+							245,
+							245,
+							245
+						]
+					}
+				}
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4/background-color.png"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4',\n  {\n    prompt: 'A clean icon of a lightning bolt',\n    size: '1024x1024',\n    controls: {\n      background_color: {\n        rgb: [245, 245, 245],\n      },\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://www.recraft.ai/",
+	"terms": "https://www.recraft.ai/terms",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/recraft/recraftv4.png",
+	"metadata": {
+		"Resolution": "1024px",
+		"Text Rendering": "Yes"
+	},
+	"created_at": "2026-04-13 16:46:31",
+	"default_example": null,
+	"code_snippets": [],
+	"zdr": false,
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string"
+				},
+				"size": {
+					"type": "string"
+				},
+				"style": {
+					"type": "string"
+				},
+				"substyle": {
+					"type": "string"
+				},
+				"controls": {
+					"type": "object",
+					"properties": {
+						"colors": {
+							"maxItems": 5,
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"rgb": {
+										"minItems": 3,
+										"maxItems": 3,
+										"type": "array",
+										"items": {
+											"type": "integer",
+											"minimum": 0,
+											"maximum": 255
+										}
+									}
+								},
+								"required": [
+									"rgb"
+								],
+								"additionalProperties": false
+							}
+						},
+						"background_color": {
+							"type": "object",
+							"properties": {
+								"rgb": {
+									"minItems": 3,
+									"maxItems": 3,
+									"type": "array",
+									"items": {
+										"type": "integer",
+										"minimum": 0,
+										"maximum": 255
+									}
+								}
+							},
+							"required": [
+								"rgb"
+							],
+							"additionalProperties": false
+						}
+					},
+					"additionalProperties": false
+				}
+			},
+			"required": [
+				"prompt"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"image"
+			],
+			"additionalProperties": false
+		}
+	}
+}

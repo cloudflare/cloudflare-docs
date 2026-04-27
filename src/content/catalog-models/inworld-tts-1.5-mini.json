@@ -1,0 +1,283 @@
+{
+	"model_id": "inworld/tts-1.5-mini",
+	"provider_id": "inworld",
+	"name": "TTS 1.5 Mini",
+	"description": "Ultra-fast, cost-efficient text-to-speech with approximately 120ms latency and 15-language support.",
+	"task": "Text-to-Speech",
+	"tags": [
+		"TTS",
+		"Speech Synthesis",
+		"Ultra-Low Latency",
+		"Multilingual",
+		"Cost-Efficient"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Speech",
+			"description": "Generate speech with default settings",
+			"input": {
+				"text": "Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do.",
+				"voice_id": "Dennis",
+				"output_format": "mp3",
+				"temperature": 1,
+				"timestamp_type": "none"
+			},
+			"output": {
+				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/inworld__tts-1.5-mini/simple-speech.mp3"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'inworld/tts-1.5-mini',\n  {\n    text: 'Hello! Welcome to Cloudflare AI Gateway. Let me show you what we can do.',\n    voice_id: 'Dennis',\n    output_format: 'mp3',\n    temperature: 1,\n    timestamp_type: 'none',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Fast Speech",
+			"description": "Speed up speech for quick playback",
+			"input": {
+				"text": "This is a fast-paced summary of the key findings from the quarterly report. Revenue is up fifteen percent and user growth exceeded expectations.",
+				"voice_id": "Dennis",
+				"output_format": "mp3",
+				"speaking_rate": 1.4,
+				"temperature": 1,
+				"timestamp_type": "none"
+			},
+			"output": {
+				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/inworld__tts-1.5-mini/fast-speech.mp3"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'inworld/tts-1.5-mini',\n  {\n    text: 'This is a fast-paced summary of the key findings from the quarterly report. Revenue is up fifteen percent and user growth exceeded expectations.',\n    voice_id: 'Dennis',\n    output_format: 'mp3',\n    speaking_rate: 1.4,\n    temperature: 1,\n    timestamp_type: 'none',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Low Latency",
+			"description": "Minimize latency by disabling text normalization",
+			"input": {
+				"text": "Quick response needed. The server is ready.",
+				"voice_id": "Dennis",
+				"output_format": "mp3",
+				"temperature": 1,
+				"timestamp_type": "none",
+				"apply_text_normalization": false
+			},
+			"output": {
+				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/inworld__tts-1.5-mini/low-latency.mp3"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'inworld/tts-1.5-mini',\n  {\n    text: 'Quick response needed. The server is ready.',\n    voice_id: 'Dennis',\n    output_format: 'mp3',\n    temperature: 1,\n    timestamp_type: 'none',\n    apply_text_normalization: false,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://inworld.ai/",
+	"terms": "https://inworld.ai/terms",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/inworld/tts-1.5-mini.png",
+	"metadata": {
+		"Latency": "~120ms",
+		"Languages": "15"
+	},
+	"created_at": "2026-04-13 16:47:23",
+	"default_example": null,
+	"code_snippets": [],
+	"zdr": false,
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"text": {
+					"description": "The text to be synthesized into speech. Maximum input of 2,000 characters.",
+					"type": "string",
+					"maxLength": 2000
+				},
+				"voice_id": {
+					"description": "The ID of the voice to use for synthesizing speech. Defaults to Dennis.",
+					"default": "Dennis",
+					"type": "string",
+					"enum": [
+						"Loretta",
+						"Darlene",
+						"Marlene",
+						"Hank",
+						"Evelyn",
+						"Celeste",
+						"Pippa",
+						"Tessa",
+						"Liam",
+						"Callum",
+						"Hamish",
+						"Abby",
+						"Graham",
+						"Rupert",
+						"Mortimer",
+						"Snik",
+						"Anjali",
+						"Saanvi",
+						"Arjun",
+						"Claire",
+						"Oliver",
+						"Simon",
+						"Elliot",
+						"James",
+						"Serena",
+						"Gareth",
+						"Vinny",
+						"Lauren",
+						"Jessica",
+						"Ethan",
+						"Tyler",
+						"Jason",
+						"Chloe",
+						"Veronica",
+						"Victoria",
+						"Miranda",
+						"Sebastian",
+						"Victor",
+						"Malcolm",
+						"Nate",
+						"Brian",
+						"Amina",
+						"Kelsey",
+						"Derek",
+						"Evan",
+						"Kayla",
+						"Jake",
+						"Grant",
+						"Tristan",
+						"Nadia",
+						"Selene",
+						"Marcus",
+						"Riley",
+						"Damon",
+						"Cedric",
+						"Mia",
+						"Naomi",
+						"Jonah",
+						"Levi",
+						"Avery",
+						"Brandon",
+						"Conrad",
+						"Bianca",
+						"Lucian",
+						"Trevor",
+						"Alex",
+						"Ashley",
+						"Craig",
+						"Deborah",
+						"Dennis",
+						"Edward",
+						"Elizabeth",
+						"Hades",
+						"Julia",
+						"Pixie",
+						"Mark",
+						"Olivia",
+						"Priya",
+						"Ronald",
+						"Sarah",
+						"Shaun",
+						"Theodore",
+						"Timothy",
+						"Wendy",
+						"Dominus",
+						"Hana",
+						"Clive",
+						"Carter",
+						"Blake",
+						"Luna",
+						"Reed",
+						"Duncan",
+						"Felix",
+						"Eleanor",
+						"Sophie"
+					]
+				},
+				"output_format": {
+					"description": "The output format for the audio. Supported formats are mp3, opus, wav, and flac. Defaults to mp3.",
+					"default": "mp3",
+					"type": "string",
+					"enum": [
+						"mp3",
+						"opus",
+						"wav",
+						"flac"
+					]
+				},
+				"bit_rate": {
+					"description": "Bits per second of the audio. Only for compressed audio formats (mp3, opus). The default is 128,000.",
+					"type": "integer",
+					"minimum": -9007199254740991,
+					"maximum": 9007199254740991
+				},
+				"sample_rate": {
+					"description": "The synthesis sample rate in hertz. Accepts: 8000, 16000, 22050, 24000, 32000, 44100, 48000. The default is 48,000.",
+					"type": "integer",
+					"minimum": -9007199254740991,
+					"maximum": 9007199254740991
+				},
+				"speaking_rate": {
+					"description": "Speaking rate/speed, in the range [0.5, 1.5]. The default is 1.0. We recommend using values above 0.8 to ensure high quality.",
+					"type": "number",
+					"minimum": 0.5,
+					"maximum": 1.5
+				},
+				"temperature": {
+					"description": "Determines the degree of randomness when sampling audio tokens. Defaults to 1.0. Accepts values between 0 (exclusive) and 2 (inclusive). Higher values = more expressive, lower values = more deterministic.",
+					"default": 1,
+					"type": "number",
+					"minimum": 0.01,
+					"maximum": 2
+				},
+				"timestamp_type": {
+					"description": "Controls timestamp metadata returned with the audio. \"word\" returns word-level timing, \"character\" returns character-level timing. Note: adds latency. Defaults to none.",
+					"default": "none",
+					"type": "string",
+					"enum": [
+						"none",
+						"word",
+						"character"
+					]
+				},
+				"apply_text_normalization": {
+					"description": "When enabled, text normalization expands numbers, dates, times, and abbreviations before converting to speech. Turning this off may reduce latency.",
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"text",
+				"voice_id",
+				"output_format",
+				"temperature",
+				"timestamp_type"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"audio": {
+					"description": "URL to the generated audio file",
+					"type": "string"
+				}
+			},
+			"required": [
+				"audio"
+			],
+			"additionalProperties": false
+		}
+	}
+}

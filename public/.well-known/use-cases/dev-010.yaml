@@ -1,0 +1,90 @@
+id: dev-010
+name: Build and manage AI agent workflows
+category: developer-platform-build
+description: >
+  Framework and orchestration tools for deploying agents, including remote MCP servers.
+aliases:
+  - "Build a ChatGPT app"
+  - "AI code executor"
+  - "Code review bot"
+  - "Remote MCP server"
+products:
+  - Agents
+  - Workflows
+  - Access
+
+qualifying_questions:
+  - id: q1
+    text: "What kind of AI agent are you building?"
+    options:
+      - label: "Conversational agent (chatbot with tool use)"
+        sets: [conversational]
+      - label: "Task automation agent"
+        sets: [task-automation]
+      - label: "MCP server for AI tool access"
+        sets: [mcp-server]
+
+default_path: conversational-agent
+
+paths:
+  - id: conversational-agent
+    name: "Conversational AI Agent"
+    condition:
+      has_any: [conversational]
+    steps:
+      - product: "Agents"
+        action: create-agent-project
+        description: "Create a new Agents project using the Agents SDK"
+      - product: "Agents"
+        action: define-tools
+        description: "Define tools the agent can call"
+      - product: "Agents"
+        action: configure-llm
+        description: "Configure the LLM backend (Workers AI or external)"
+      - product: "Agents"
+        action: add-state-management
+        description: "Use Durable Objects for conversation state"
+      - product: "Agents"
+        action: deploy
+        description: "Deploy the agent to Cloudflare's network"
+
+  - id: mcp-server
+    name: "Remote MCP Server"
+    condition:
+      has_any: [mcp-server]
+    steps:
+      - product: "Agents"
+        action: create-mcp-server
+        description: "Create an MCP server using the Agents SDK"
+      - product: "Agents"
+        action: define-mcp-tools
+        description: "Define MCP tools and resources"
+      - product: "Access"
+        action: configure-auth
+        description: "Configure OAuth/authentication for the MCP server"
+      - product: "Agents"
+        action: deploy
+        description: "Deploy the MCP server"
+
+  - id: task-automation
+    name: "Task Automation Agent"
+    condition:
+      has_any: [task-automation]
+    steps:
+      - product: "Workflows"
+        action: create-workflow
+        description: "Create a Workflow for multi-step task execution"
+      - product: "Workflows"
+        action: define-steps
+        description: "Define workflow steps with retry logic"
+      - product: "Agents"
+        action: integrate-llm
+        description: "Integrate LLM for decision-making within steps"
+      - product: "Agents"
+        action: deploy
+        description: "Deploy the automation agent"
+
+related_use_cases:
+  - aisec-003
+  - dev-009
+  - ops-002

@@ -1,6 +1,9 @@
 ---
 pcx_content_type: reference
 title: Rate limiting parameters
+description: Configurable parameters for rate limiting rules, including expressions and characteristics.
+products:
+  - rate-limiting
 sidebar:
   order: 18
 ---
@@ -28,6 +31,8 @@ Defines the criteria for the rate limiting rule to match a request.
 If this parameter is disabled (or when the `requests_to_origin` API field is set to `true`), only the requests going to the origin (that is, requests that are not cached) will be considered when determining the request rate.
 
 In some cases, you cannot disable the **Also apply rate limiting to cached assets** parameter due to configuration restrictions. Refer to [Configuration restrictions](#configuration-restrictions) for details.
+
+Depending on your [Cloudflare plan](/waf/rate-limiting-rules/#availability), this rule parameter might not be available. In that case, Cloudflare will also apply rate limiting to cached assets (the parameter is enabled by default).
 
 ### With the same characteristics
 

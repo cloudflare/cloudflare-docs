@@ -1,6 +1,9 @@
 ---
 pcx_content_type: how-to
 title: DVR for Live
+description: Enable DVR mode in Cloudflare Stream to let viewers rewind, resume, and fast-forward live broadcasts.
+products:
+  - stream
 ---
 
 Stream Live supports "DVR mode" on an opt-in basis to allow viewers to rewind,
@@ -69,7 +72,7 @@ DVR Mode on a Live Input ID URL:
   player may stall when trying to switch quality levels if a viewer is still
   watching after a broadcast has concluded.
 - Performance may be degraded for DVR-enabled broadcasts longer than three hours.
-  Manifests are limited to a maxiumum of 7,200 segments. Segment length is
+  Manifests are limited to a maximum of 7,200 segments. Segment length is
   determined by the keyframe interval, also called GOP size.
 - DVR Mode relies on Version 8 of the HLS manifest specification. Stream uses
   HLS Version 6 in all other contexts. HLS v8 offers extremely broad compatibility

@@ -72,7 +72,7 @@ When you are done entering the destination details, select **Continue**.
    - In **Send the following fields**, you can choose to either push all logs to your storage destination or selectively choose which logs you want to push.
 
 8. In **Advanced Options**, you can:
-   - Choose the format of timestamp fields in your logs (`RFC3339`(default),`Unix`, or `UnixNano`).
+   - Choose the format of timestamp fields in your logs (`RFC3339` (default), `Unix`, or `UnixNano`).
    - Select a [sampling rate](/logs/logpush/logpush-job/api-configuration/#sampling-rate) for your logs or push a randomly-sampled percentage of logs.
    - Enable redaction for `CVE-2021-44228`. This option will replace every occurrence of `${` with `x{`.
 
@@ -124,6 +124,33 @@ Example request using cURL:
 		enabled: true,
 	}}
 />
+
+Response:
+
+```json
+{
+  "errors": [],
+  "messages": [],
+  "result": {
+    "id": <JOB_ID>,
+    "dataset": "http_requests",
+    "kind": "",
+    "enabled": true,
+    "name": "<DOMAIN_NAME>",
+    "output_options": {
+      "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp", "EdgeResponseBytes", "EdgeResponseStatus" ,"EdgeStartTimestamp", "RayID"],
+      "timestamp_format": "rfc3339"
+    },
+    "destination_conf": "r2://<BUCKET_PATH>/{DATE}?account-id=<ACCOUNT_ID>&access-key-id=<R2_ACCESS_KEY_ID>&secret-access-key=<R2_SECRET_ACCESS_KEY>",
+    "last_complete": null,
+    "last_error": null,
+    "error_message": null
+  },
+  "success": true
+}
+```
+
+Refer to [Manage Logpush with cURL](/logs/logpush/examples/example-logpush-curl/) to update a job (including enabling and disabling).
 
 ## Download logs from R2
 

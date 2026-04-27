@@ -1,6 +1,9 @@
 ---
 pcx_content_type: concept
 title: REST API
+description: Manage Cloudflare Pages projects, deployments, and builds programmatically using the REST API.
+products:
+  - pages
 ---
 
 import { APIRequest, DashButton } from "~/components";
@@ -63,6 +66,10 @@ After you have deployed the JavaScript Worker, set a cron trigger in your Worker
 ### Deleting old deployments after a week
 
 Cloudflare Pages hosts and serves all project deployments on preview links. Suppose you want to keep your project private and prevent access to your old deployments. You can use the API to delete deployments after a month, so that they are no longer public online. The latest deployment for a branch cannot be deleted.
+
+:::note
+To delete individual deployments from the command line, you can use [`wrangler pages deployment delete`](/workers/wrangler/commands/pages/#pages-deployment-delete).
+:::
 
 ```js
 const endpoint =

@@ -1,9 +1,45 @@
 ---
 {}
 ---
-import { Tabs, TabItem } from "~/components"
+import { Tabs, TabItem} from "~/components"
+import originalImg from "~/assets/images/images/examples/original.jpg";
+import gammaLowImg from "~/assets/images/images/examples/gamma-0.5.jpg";
+import gammaHighImg from "~/assets/images/images/examples/gamma-2.jpg";
 
-Increase exposure by a factor. A value of `1.0` equals no change, a value of `0.5` darkens the image, and a value of `2.0` lightens the image. `0` is ignored.
+### `gamma`
+
+Adjusts the exposure of an image using a multiplier. Gamma controls the midtone brightness without affecting the darkest or lightest parts of the image.
+
+- `0` and `1` (default) — No change to the original gamma.
+- `< 1.0` — Increases midtone brightness, making the image appear lighter overall.
+- `> 1.0` — Decreases midtone brightness, making the image appear darker overall.
+
+<table style="width:100%; table-layout:fixed; text-align:center; border:none">
+  <tr style="border:none; background:none">
+    <td style="width:33%; border:none; vertical-align:bottom">
+      <img src={originalImg.src} alt="Original image" style="width:100%; height:auto" />
+    </td>
+    <td style="width:33%; border:none; vertical-align:bottom">
+      <img src={gammaLowImg.src} alt="gamma=0.5 output" style="width:100%; height:auto" />
+    </td>
+    <td style="width:33%; border:none; vertical-align:bottom">
+      <img src={gammaHighImg.src} alt="gamma=2 output" style="width:100%; height:auto" />
+    </td>
+  </tr>
+  <tr style="border:none; background:none">
+    <td style="border:none;">
+      <strong>Original</strong>
+    </td>
+    <td style="border:none;">
+      
+      <code>gamma=0.5</code>
+    </td>
+    <td style="border:none;">
+      
+      <code>gamma=2</code>
+    </td>
+  </tr>
+</table>
 
 <Tabs>
   <TabItem label="URL format">

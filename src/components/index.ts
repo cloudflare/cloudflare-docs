@@ -39,6 +39,7 @@ export { default as ListTutorials } from "./ListTutorials.astro";
 export { default as Markdown } from "./Markdown.astro";
 export { default as MetaInfo } from "./MetaInfo.astro";
 export { default as PackageManagers } from "./PackageManagers.astro";
+export { default as LayerCard } from "./LayerCard.astro";
 export { default as PagesBuildEnvironment } from "./PagesBuildEnvironment.astro";
 export { default as PagesBuildEnvironmentLanguages } from "./PagesBuildEnvironmentLanguages.astro";
 export { default as PagesBuildEnvironmentTools } from "./PagesBuildEnvironmentTools.astro";

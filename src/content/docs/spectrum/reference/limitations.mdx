@@ -1,8 +1,10 @@
 ---
 pcx_content_type: reference
 title: Limitations
+description: Protocol-specific limitations for Spectrum applications.
+products:
+  - spectrum
 weight: 0
-
 ---
 
 The following limitations apply to different protocols supported by Spectrum.
@@ -45,3 +47,9 @@ By default, Spectrum is configured to listen on all ports, which can raise conce
 When a TCP handshake is initiated to any port for a Spectrum IP, the handshake will always be completed. If there is a Spectrum application configured for the port, the connection will be proxied to origin. If no application is configured, the connection is immediately terminated and no origin connection will be opened.
 
 Spectrum will only ever proxy traffic to an origin if there is a Spectrum application configured for that port.
+
+## IP access control
+
+Currently, [custom rules](/waf/custom-rules/) do not work with Spectrum applications. Use [IP Access rules](/waf/tools/ip-access-rules/) to allowlist, block, and challenge traffic for Spectrum applications based on the request's IP address, Autonomous System Number (ASN), or country.
+
+Refer to [Configuration options](/spectrum/reference/configuration-options/#ip-access-rules) for more information.

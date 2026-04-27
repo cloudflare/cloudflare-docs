@@ -1,0 +1,673 @@
+{
+	"model_id": "openai/gpt-4.1-mini",
+	"provider_id": "openai",
+	"name": "GPT-4.1 Mini",
+	"description": "Fast, affordable version of GPT-4.1 with a million-token context window.",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Fast",
+		"Cost-Efficient"
+	],
+	"context_length": 1047576,
+	"max_output_tokens": 32768,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Question",
+			"description": "Basic chat completion request",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "What are the three laws of thermodynamics?"
+					}
+				]
+			},
+			"output": {
+				"text": "The three laws of thermodynamics are fundamental principles that describe how energy behaves in physical systems:\n\n1. **First Law of Thermodynamics (Law of Energy Conservation):**  \n   Energy cannot be created or destroyed; it can only be transferred or transformed from one form to another. In other words, the total energy of an isolated system remains constant. Mathematically, it is often expressed as:  \n   \\[\n   \\Delta U = Q - W\n   \\]  \n   where \\(\\Delta U\\) is the change in internal energy of the system, \\(Q\\) is the heat added to the system, and \\(W\\) is the work done by the system.\n\n2. **Second Law of Thermodynamics:**  \n   The total entropy of an isolated system can never decrease over time; it either increases or remains constant in ideal cases. Entropy is a measure of disorder or randomness. This law implies that natural processes tend to move toward a state of greater disorder, and it explains the direction of heat transfer (from hot to cold).  \n\n3. **Third Law of Thermodynamics:**  \n   As the temperature of a system approaches absolute zero (0 Kelvin), the entropy of a perfect crystal approaches a constant minimum, which can be taken as zero. This means it is impossible to reach absolute zero temperature through any finite series of processes.\n\nIf you need, I can also explain the Zeroth Law, which is foundational and often included when discussing thermodynamics."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-4.1-mini',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'What are the three laws of thermodynamics?',\n      },\n    ],\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "With System Message",
+			"description": "Using a system message to set context",
+			"input": {
+				"messages": [
+					{
+						"role": "system",
+						"content": "You are a helpful coding assistant specializing in Python."
+					},
+					{
+						"role": "user",
+						"content": "How do I read a JSON file in Python?"
+					}
+				]
+			},
+			"output": {
+				"text": "To read a JSON file in Python, you can use the built-in `json` module. Here's a simple example:\n\n```python\nimport json\n\n# Open the JSON file\nwith open('data.json', 'r') as file:\n    # Load the content of the file into a Python dictionary\n    data = json.load(file)\n\n# Now you can use `data` like a regular Python dictionary\nprint(data)\n```\n\n### Explanation:\n- `open('data.json', 'r')` opens the file in read mode.\n- `json.load(file)` reads the JSON content from the file and converts it into a Python dictionary (or list, depending on the JSON structure).\n\nMake sure your JSON file is properly formatted. If you want to handle errors, you can add a try-except block as well.\n\nLet me know if you need help with that!"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-4.1-mini',\n  {\n    messages: [\n      {\n        role: 'system',\n        content: 'You are a helpful coding assistant specializing in Python.',\n      },\n      {\n        role: 'user',\n        content: 'How do I read a JSON file in Python?',\n      },\n    ],\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Multi-turn Conversation",
+			"description": "Continuing a conversation with context",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "I need help planning a road trip from San Francisco to Los Angeles."
+					},
+					{
+						"role": "assistant",
+						"content": "I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?"
+					},
+					{
+						"role": "user",
+						"content": "Yes, what are some good places to stop?"
+					}
+				],
+				"max_completion_tokens": 2048
+			},
+			"output": {
+				"text": "Great! Here are some popular and scenic stops along the drive from San Francisco to Los Angeles:\n\n1. **Half Moon Bay** \u2013 Just south of San Francisco, it\u2019s a charming coastal town with beautiful beaches and great spots for breakfast or coffee.\n2. **Santa Cruz** \u2013 Known for its classic boardwalk, beach vibes, and surfing culture.\n3. **Monterey** \u2013 Famous for the Monterey Bay Aquarium, Cannery Row, and stunning coastal views.\n4. **Carmel-by-the-Sea** \u2013 A picturesque town with art galleries, boutique shops, and beautiful beaches.\n5. **Big Sur** \u2013 One of the most scenic stretches of the California coast with dramatic cliffs, waterfalls (like McWay Falls), and state parks.\n6. **San Simeon** \u2013 Home to Hearst Castle, a historic mansion worth touring.\n7. **Pismo Beach** \u2013 Great for a beach break, known for its dunes and laid-back atmosphere.\n8. **Santa Barbara** \u2013 Often called the \u201cAmerican Riviera\u201d for its Mediterranean climate, with beaches, shopping, and wine tasting.\n\nWould you like recommendations for dining, accommodations, or activities at any of these stops?"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-4.1-mini',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'I need help planning a road trip from San Francisco to Los Angeles.',\n      },\n      {\n        role: 'assistant',\n        content:\n          \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n      },\n      {\n        role: 'user',\n        content: 'Yes, what are some good places to stop?',\n      },\n    ],\n    max_completion_tokens: 2048,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Creative Writing",
+			"description": "Longer completion for creative output",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "Write a short story opening about a detective finding an unusual clue."
+					}
+				],
+				"max_completion_tokens": 2048
+			},
+			"output": {
+				"text": "Detective Elena Marsh crouched beside the shattered window, the cold wind tugging at her coat. Amid the splintered glass and upturned furniture, something caught her eye\u2014a single, iridescent feather resting delicately on the floor. It shimmered with colors she couldn\u2019t place, almost otherworldly. She reached down, careful not to disturb the scene further, and traced the feather\u2019s fragile quill between her fingers. This wasn\u2019t just a clue. It was a message. And Elena had a feeling it was about to rewrite everything she thought she knew about the case."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-4.1-mini',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'Write a short story opening about a detective finding an unusual clue.',\n      },\n    ],\n    max_completion_tokens: 2048,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Streaming Response",
+			"description": "Enable streaming for real-time output",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "Explain the concept of recursion with a simple example."
+					}
+				],
+				"stream": true,
+				"stream_options": {
+					"include_usage": true
+				}
+			},
+			"output": {
+				"text": [
+					"Rec",
+					"ursion",
+					" is",
+					" a",
+					" programming",
+					" concept",
+					" where",
+					" a",
+					" function",
+					" calls",
+					" itself",
+					" in",
+					" order",
+					" to",
+					" solve",
+					" a",
+					" problem",
+					".",
+					" A",
+					" recursive",
+					" function",
+					" typically",
+					" has",
+					" two",
+					" main",
+					" parts",
+					":\n\n",
+					"1",
+					".",
+					" **",
+					"Base",
+					" Case",
+					":**",
+					" The",
+					" condition",
+					" under",
+					" which",
+					" the",
+					" function",
+					" stops",
+					" calling",
+					" itself",
+					".",
+					" This",
+					" prevents",
+					" infinite",
+					" recursion",
+					".\n",
+					"2",
+					".",
+					" **",
+					"Recursive",
+					" Case",
+					":**",
+					" The",
+					" part",
+					" where",
+					" the",
+					" function",
+					" calls",
+					" itself",
+					" with",
+					" a",
+					" smaller",
+					" or",
+					" simpler",
+					" input",
+					",",
+					" gradually",
+					" approaching",
+					" the",
+					" base",
+					" case",
+					".\n\n",
+					"###",
+					" Simple",
+					" Example",
+					":",
+					" Factor",
+					"ial",
+					" of",
+					" a",
+					" Number",
+					"\n\n",
+					"The",
+					" factorial",
+					" of",
+					" a",
+					" number",
+					" \\(",
+					" n",
+					" \\",
+					")",
+					" (",
+					"written",
+					" as",
+					" \\(",
+					" n",
+					"!",
+					" \\",
+					"))",
+					" is",
+					" the",
+					" product",
+					" of",
+					" all",
+					" positive",
+					" integers",
+					" less",
+					" than",
+					" or",
+					" equal",
+					" to",
+					" \\(",
+					" n",
+					" \\",
+					").",
+					" It",
+					" can",
+					" be",
+					" defined",
+					" recursively",
+					" as",
+					":\n\n",
+					"-",
+					" \\(",
+					" ",
+					"0",
+					"!",
+					" =",
+					" ",
+					"1",
+					" \\",
+					")",
+					" (",
+					"Base",
+					" case",
+					")\n",
+					"-",
+					" \\(",
+					" n",
+					"!",
+					" =",
+					" n",
+					" \\",
+					"times",
+					" (",
+					"n",
+					"-",
+					"1",
+					")!",
+					" \\",
+					")",
+					" (",
+					"Recursive",
+					" case",
+					")\n\n",
+					"Here's",
+					" how",
+					" you",
+					" can",
+					" implement",
+					" factorial",
+					" recursively",
+					" in",
+					" Python",
+					":\n\n",
+					"```",
+					"python",
+					"\n",
+					"def",
+					" factorial",
+					"(n",
+					"):\n",
+					"   ",
+					" if",
+					" n",
+					" ==",
+					" ",
+					"0",
+					":\n",
+					"       ",
+					" return",
+					" ",
+					"1",
+					"                    ",
+					" #",
+					" Base",
+					" case",
+					"\n",
+					"   ",
+					" else",
+					":\n",
+					"       ",
+					" return",
+					" n",
+					" *",
+					" factorial",
+					"(n",
+					" -",
+					" ",
+					"1",
+					")",
+					" #",
+					" Recursive",
+					" case",
+					"\n\n",
+					"print",
+					"(f",
+					"actor",
+					"ial",
+					"(",
+					"5",
+					"))",
+					" ",
+					" #",
+					" Output",
+					":",
+					" ",
+					"120",
+					"\n",
+					"``",
+					"`\n\n",
+					"###",
+					" Explanation",
+					":\n\n",
+					"-",
+					" When",
+					" `",
+					"factor",
+					"ial",
+					"(",
+					"5",
+					")`",
+					" is",
+					" called",
+					",",
+					" it",
+					" returns",
+					" \\(",
+					" ",
+					"5",
+					" \\",
+					"times",
+					" factorial",
+					"(",
+					"4",
+					")",
+					" \\",
+					").\n",
+					"-",
+					" `",
+					"factor",
+					"ial",
+					"(",
+					"4",
+					")`",
+					" returns",
+					" \\(",
+					" ",
+					"4",
+					" \\",
+					"times",
+					" factorial",
+					"(",
+					"3",
+					")",
+					" \\",
+					"),",
+					" and",
+					" so",
+					" on",
+					".\n",
+					"-",
+					" Eventually",
+					",",
+					" `",
+					"factor",
+					"ial",
+					"(",
+					"0",
+					")`",
+					" returns",
+					" ",
+					"1",
+					",",
+					" stopping",
+					" the",
+					" recursion",
+					".\n",
+					"-",
+					" The",
+					" results",
+					" are",
+					" then",
+					" combined",
+					" back",
+					" up",
+					" to",
+					" give",
+					" the",
+					" final",
+					" answer",
+					".\n\n",
+					"This",
+					" shows",
+					" how",
+					" recursion",
+					" breaks",
+					" down",
+					" a",
+					" problem",
+					" into",
+					" smaller",
+					" identical",
+					" problems",
+					" until",
+					" reaching",
+					" the",
+					" simplest",
+					" one",
+					"."
+				]
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-4.1-mini',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'Explain the concept of recursion with a simple example.',\n      },\n    ],\n    stream: true,\n    stream_options: {\n      include_usage: true,\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://openai.com/index/gpt-4-1/",
+	"terms": "https://openai.com/policies/",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/openai/gpt-4.1-mini.png",
+	"metadata": {
+		"Architecture": "Transformer"
+	},
+	"created_at": "2026-04-13 16:45:21",
+	"default_example": null,
+	"code_snippets": [],
+	"zdr": false,
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"messages": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"role": {
+								"type": "string",
+								"enum": [
+									"system",
+									"developer",
+									"user",
+									"assistant",
+									"tool"
+								]
+							},
+							"content": {
+								"anyOf": [
+									{
+										"type": "string"
+									},
+									{
+										"type": "null"
+									},
+									{
+										"type": "array",
+										"items": {}
+									}
+								]
+							}
+						},
+						"required": [
+							"role",
+							"content"
+						],
+						"additionalProperties": {}
+					}
+				},
+				"temperature": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 2
+				},
+				"max_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"max_completion_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"top_p": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"frequency_penalty": {
+					"type": "number",
+					"minimum": -2,
+					"maximum": 2
+				},
+				"presence_penalty": {
+					"type": "number",
+					"minimum": -2,
+					"maximum": 2
+				},
+				"stream": {
+					"type": "boolean"
+				},
+				"stream_options": {
+					"type": "object",
+					"properties": {
+						"include_usage": {
+							"type": "boolean"
+						}
+					},
+					"additionalProperties": false
+				},
+				"tools": {
+					"type": "array",
+					"items": {}
+				},
+				"tool_choice": {},
+				"response_format": {}
+			},
+			"required": [
+				"messages"
+			],
+			"additionalProperties": {}
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"object": {
+					"type": "string"
+				},
+				"created": {
+					"type": "number"
+				},
+				"model": {
+					"type": "string"
+				},
+				"choices": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"index": {
+								"type": "number"
+							},
+							"message": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string"
+									},
+									"content": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "null"
+											}
+										]
+									},
+									"tool_calls": {
+										"type": "array",
+										"items": {}
+									}
+								},
+								"required": [
+									"role"
+								],
+								"additionalProperties": {}
+							},
+							"finish_reason": {
+								"anyOf": [
+									{
+										"type": "string"
+									},
+									{
+										"type": "null"
+									}
+								]
+							}
+						},
+						"required": [
+							"index",
+							"message",
+							"finish_reason"
+						],
+						"additionalProperties": {}
+					}
+				},
+				"usage": {
+					"type": "object",
+					"properties": {
+						"prompt_tokens": {
+							"type": "number"
+						},
+						"completion_tokens": {
+							"type": "number"
+						},
+						"total_tokens": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"prompt_tokens",
+						"completion_tokens",
+						"total_tokens"
+					],
+					"additionalProperties": {}
+				}
+			},
+			"required": [
+				"id",
+				"object",
+				"created",
+				"model",
+				"choices"
+			],
+			"additionalProperties": {}
+		}
+	}
+}

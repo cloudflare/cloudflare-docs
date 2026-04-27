@@ -1,8 +1,14 @@
 ---
 pcx_content_type: concept
+description: How HTTP/3 inspection works in Gateway.
+products:
+  - cloudflare-one
 title: HTTP/3 inspection
 sidebar:
   order: 3
+tags:
+  - QUIC
+  - UDP
 ---
 
 import { Details } from "~/components";
@@ -17,7 +23,7 @@ Before you can inspect any HTTPS traffic, you must deploy a [user-side certifica
 
 To turn on the Gateway proxy for UDP and TLS decryption:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Traffic policies** > **Traffic settings**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Traffic policies** > **Traffic settings**.
 2. In **Proxy and inspection**, turn on **Allow Secure Web Gateway to proxy traffic**.
 3. Select **TCP** and **UDP**.
 4. Turn on **TLS decryption**.

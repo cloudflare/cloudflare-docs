@@ -1,12 +1,17 @@
 ---
 title: Tiered Cache
 pcx_content_type: concept
-
+description: Reduce origin requests with tiered cache topology.
+products:
+  - cache
+tags:
+  - REST API
+  - Logging
 ---
 
 import { Details, FeatureTable, APIRequest, Render, DashButton } from "~/components";
 
-Tiered Cache uses the size of Cloudflare’s network to reduce requests to customer origins by dramatically increasing cache hit ratios. With data centers around the world, Cloudflare caches content very close to end users. However, if a piece of content is not in cache, the Cloudflare edge data centers must contact the origin server to receive the cacheable content.
+Tiered Cache uses the size of the Cloudflare network to reduce requests to customer origins by dramatically increasing cache hit ratios. With data centers around the world, Cloudflare caches content very close to end users. However, if a piece of content is not in cache, the Cloudflare edge data centers must contact the origin server to receive the cacheable content.
 
 Tiered Cache works by dividing Cloudflare’s data centers into a hierarchy of lower-tiers and upper-tiers. If content is not cached in lower-tier data centers (generally the ones closest to a visitor), the lower-tier must ask an upper-tier to see if it has the content. If the upper-tier does not have the content, only the upper-tier can ask the origin for content. This practice improves bandwidth efficiency by limiting the number of data centers that can ask the origin for content, which reduces origin load and makes websites more cost-effective to operate.
 
@@ -110,10 +115,52 @@ You can also configure Tiered Cache Topology via API, for instance:
 
 For more API examples and configuration options for Tiered Cache, refer to the [API documentation](/api/resources/argo/subresources/tiered_caching/methods/get/).
 
+### Set a cloud region hint
+
+If your origin is hosted on a public cloud provider, set a cloud region hint so Smart Tiered Cache can select the optimal upper tier for your cloud region. For background on why this is needed, refer to [Public cloud origins](/cache/how-to/tiered-cache/#smart-tiered-cache).
+
+Cloud region hints are available on all plan types (Free, Pro, Business, and Enterprise) at no additional cost. Supported providers: AWS, GCP, Azure, and Oracle Cloud.
+
+#### Set a cloud region hint in the dashboard
+
+1. Go to **Caching** > **Tiered Cache** > **Origin Configuration**.
+
+   <DashButton url="/?to=/:account/:zone/caching/tiered-cache" />
+
+2. Find your origin IP or hostname and select **Set Region Hint**.
+3. Select your cloud provider and region (for example, `aws:us-east-1` or `gcp:europe-west1`).
+
+#### List supported cloud regions via API
+
+To see all available cloud providers and regions, use the supported regions endpoint:
+
+<APIRequest
+  path="/zones/{zone_id}/cache/origin_cloud_regions/supported_regions"
+  method="GET"
+/>
+
+#### Set a cloud region hint via API
+
+<APIRequest
+  path="/zones/{zone_id}/cache/origin_cloud_regions"
+  method="PATCH"
+  json={{
+    ip: "203.0.113.1",
+    vendor: "aws",
+    region: "us-east-1"
+  }}
+/>
+
+:::note
+
+Custom Tiered Cache settings take precedence over cloud region hint mappings. If you have a custom topology configured, the cloud region hint will not override it.
+
+:::
+
 :::note
 
 
-To confirm that Tiered Cache is working, make sure you have the value of `[CacheTieredFill](/logs/logpush/logpush-job/datasets/zone/http_requests/#cachetieredfill)` in your http\_requests logs, this will indicate if Tiered Cache was used to serve the request.
+To confirm that Tiered Cache is working, make sure you have the value of [CacheTieredFill](/logs/logpush/logpush-job/datasets/zone/http_requests/#cachetieredfill) in your http\_requests logs, this will indicate if Tiered Cache was used to serve the request.
 
 
 :::

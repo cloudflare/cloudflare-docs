@@ -8,6 +8,7 @@ import pluginWorkersPlayground from "./src/plugins/expressive-code/workers-playg
 import pluginOutputFrame from "./src/plugins/expressive-code/output-frame.js";
 import pluginDefaultTitles from "./src/plugins/expressive-code/default-titles.js";
 import pluginGraphqlApiExplorer from "./src/plugins/expressive-code/graphql-api-explorer.js";
+import pluginExplainCode from "./src/plugins/expressive-code/explain-code.js";
 
 import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
@@ -20,6 +21,7 @@ export default defineEcConfig({
 		pluginCollapsibleSections(),
 		pluginGraphqlApiExplorer(),
 		pluginLineNumbers(),
+		pluginExplainCode(),
 	],
 	defaultProps: {
 		showLineNumbers: false,

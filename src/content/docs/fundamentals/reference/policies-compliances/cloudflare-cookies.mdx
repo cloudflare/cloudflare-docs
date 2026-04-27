@@ -1,6 +1,9 @@
 ---
 pcx_content_type: reference
 title: Cloudflare Cookies
+description: Review the cookies Cloudflare sets for load balancing, bot management, challenges, and other product features.
+products:
+  - fundamentals
 ---
 
 import { Render } from "~/components";
@@ -53,6 +56,8 @@ Bot Management is available to Enterprise customers as an add-on service. Contac
 ### cf_clearance cookie for Cloudflare bot products
 
 The `cf_clearance` cookie is required for [JavaScript detections](/bots/additional-configurations/javascript-detections/). JavaScript detections are stored in the `cf_clearance` cookie.
+
+The `cf_clearance` cookie is set with `SameSite=None; Secure; Partitioned` so that challenge state is preserved across cross-site requests while complying with [CHIPS ↗](https://developers.google.com/privacy-sandbox/cookies/chips). When the cookie is issued inside a third-party context, it is stored in a partition keyed to the top-level site and is not shared across embedding sites. For details, refer to [Partitioned cookies (CHIPS) and `cf_clearance`](/waf/troubleshooting/samesite-cookie-interaction/#partitioned-cookies-chips-and-cf_clearance).
 
 ### cf_ob_info and cf_use_ob cookie for Cloudflare Always Online
 

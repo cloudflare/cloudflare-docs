@@ -1,0 +1,248 @@
+{
+	"model_id": "runwayml/gen-4.5",
+	"provider_id": "runwayml",
+	"name": "RunwayML Gen-4.5",
+	"description": "RunwayML's video generation model supporting both text-to-video and image-to-video with customizable duration, aspect ratio, and content moderation controls.",
+	"task": "Text-to-Video",
+	"tags": [
+		"Video Generation",
+		"Image-to-Video",
+		"Cinematic"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Text-to-Video",
+			"description": "Basic text-to-video with default settings",
+			"input": {
+				"prompt": "A timelapse of the Eiffel Tower on a sunny day with clouds flying by",
+				"ratio": "1280:720",
+				"duration": 5
+			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/runwayml__gen-4.5/simple-text-to-video.mp4"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'runwayml/gen-4.5',\n  {\n    prompt:\n      'A timelapse of the Eiffel Tower on a sunny day with clouds flying by',\n    ratio: '1280:720',\n    duration: 5,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Portrait Video",
+			"description": "Vertical video for social media",
+			"input": {
+				"prompt": "A busy street in Tokyo at night with neon signs reflecting on wet pavement, rain falling",
+				"ratio": "720:1280",
+				"duration": 5
+			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/runwayml__gen-4.5/portrait-video.mp4"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'runwayml/gen-4.5',\n  {\n    prompt:\n      'A busy street in Tokyo at night with neon signs reflecting on wet pavement, rain falling',\n    ratio: '720:1280',\n    duration: 5,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Nature Close-up",
+			"description": "Close-up wildlife shot in 16:9",
+			"input": {
+				"prompt": "Close-up of a hummingbird feeding from a vibrant red flower, slow motion with soft bokeh background",
+				"ratio": "1280:720",
+				"duration": 5
+			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/runwayml__gen-4.5/nature-close-up.mp4"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'runwayml/gen-4.5',\n  {\n    prompt:\n      'Close-up of a hummingbird feeding from a vibrant red flower, slow motion with soft bokeh background',\n    ratio: '1280:720',\n    duration: 5,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Cinematic Scene",
+			"description": "Longer duration cinematic video",
+			"input": {
+				"prompt": "Aerial drone shot flying through a misty forest at dawn, rays of sunlight breaking through the trees",
+				"ratio": "1280:720",
+				"duration": 10
+			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/runwayml__gen-4.5/cinematic-scene.mp4"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'runwayml/gen-4.5',\n  {\n    prompt:\n      'Aerial drone shot flying through a misty forest at dawn, rays of sunlight breaking through the trees',\n    ratio: '1280:720',\n    duration: 10,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Image-to-Video",
+			"description": "Animate an existing image",
+			"input": {
+				"prompt": "Camera slowly pans across the scene, gentle wind blowing",
+				"image_input": "https://upload.wikimedia.org/wikipedia/commons/8/85/Tour_Eiffel_Wikimedia_Commons_(cropped).jpg",
+				"ratio": "1280:720",
+				"duration": 5
+			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/runwayml__gen-4.5/image-to-video.mp4"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'runwayml/gen-4.5',\n  {\n    prompt: 'Camera slowly pans across the scene, gentle wind blowing',\n    image_input:\n      'https://upload.wikimedia.org/wikipedia/commons/8/85/Tour_Eiffel_Wikimedia_Commons_(cropped).jpg',\n    ratio: '1280:720',\n    duration: 5,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Reproducible Generation",
+			"description": "Use seed for consistent results",
+			"input": {
+				"prompt": "A sailboat gliding across calm ocean waters at sunset",
+				"ratio": "1280:720",
+				"duration": 5,
+				"seed": 42
+			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/runwayml__gen-4.5/reproducible-generation.mp4"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'runwayml/gen-4.5',\n  {\n    prompt: 'A sailboat gliding across calm ocean waters at sunset',\n    ratio: '1280:720',\n    duration: 5,\n    seed: 42,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "With Content Moderation",
+			"description": "Adjust content moderation settings",
+			"input": {
+				"prompt": "A press conference with multiple speakers at podiums",
+				"ratio": "1280:720",
+				"duration": 5,
+				"content_moderation": {
+					"public_figure_threshold": "low"
+				}
+			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/runwayml__gen-4.5/with-content-moderation.mp4"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'runwayml/gen-4.5',\n  {\n    prompt: 'A press conference with multiple speakers at podiums',\n    ratio: '1280:720',\n    duration: 5,\n    content_moderation: {\n      public_figure_threshold: 'low',\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://runwayml.com/",
+	"terms": "https://runwayml.com/terms-of-use",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/runwayml/gen-4.5.png",
+	"metadata": {
+		"Max Duration": "10 seconds",
+		"Resolutions": "1280:720, 720:1280, 1104:832, 832:1104, 960:960, 1584:672",
+		"Image-to-Video": "Yes"
+	},
+	"created_at": "2026-04-14 18:41:45",
+	"default_example": null,
+	"code_snippets": [],
+	"zdr": false,
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"description": "Text prompt describing what should appear in the video",
+					"type": "string",
+					"minLength": 1,
+					"maxLength": 1000
+				},
+				"image_input": {
+					"description": "HTTPS URL, Runway URI, or data URI containing an image for image-to-video",
+					"type": "string"
+				},
+				"ratio": {
+					"description": "Resolution/aspect ratio of the output video",
+					"default": "1280:720",
+					"type": "string",
+					"enum": [
+						"1280:720",
+						"720:1280",
+						"1104:832",
+						"960:960",
+						"832:1104",
+						"1584:672"
+					]
+				},
+				"duration": {
+					"description": "Video duration in seconds",
+					"default": 5,
+					"type": "integer",
+					"minimum": 2,
+					"maximum": 10
+				},
+				"seed": {
+					"description": "Random seed for reproducible results",
+					"type": "integer",
+					"minimum": 0,
+					"maximum": 4294967295
+				},
+				"content_moderation": {
+					"description": "Content moderation settings",
+					"type": "object",
+					"properties": {
+						"public_figure_threshold": {
+							"description": "Content moderation strictness for public figures",
+							"type": "string",
+							"enum": [
+								"auto",
+								"low"
+							]
+						}
+					},
+					"additionalProperties": false
+				}
+			},
+			"required": [
+				"prompt",
+				"ratio",
+				"duration"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"video": {
+					"description": "URL to the generated video",
+					"type": "string",
+					"format": "uri"
+				}
+			},
+			"required": [
+				"video"
+			],
+			"additionalProperties": false
+		}
+	}
+}

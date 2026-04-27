@@ -1,0 +1,207 @@
+{
+	"model_id": "google/veo-3",
+	"provider_id": "google",
+	"name": "Veo 3",
+	"description": "Google's video generation model capable of producing high-quality videos with optional audio from text prompts.",
+	"task": "Text-to-Video",
+	"tags": [
+		"Video Generation",
+		"Audio"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Video Generation",
+			"description": "Basic text-to-video with default settings",
+			"input": {
+				"prompt": "A golden retriever running through a field of sunflowers on a sunny day",
+				"duration": "6s",
+				"aspect_ratio": "16:9",
+				"resolution": "720p",
+				"generate_audio": true
+			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__veo-3/simple-video-generation.mp4"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/veo-3',\n  {\n    prompt:\n      'A golden retriever running through a field of sunflowers on a sunny day',\n    duration: '6s',\n    aspect_ratio: '16:9',\n    resolution: '720p',\n    generate_audio: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Cinematic Scene",
+			"description": "Widescreen cinematic video in 1080p",
+			"input": {
+				"prompt": "A dramatic drone shot flying through misty mountain peaks at sunrise, with clouds rolling through valleys below",
+				"duration": "8s",
+				"aspect_ratio": "16:9",
+				"resolution": "1080p",
+				"generate_audio": true
+			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__veo-3/cinematic-scene.mp4"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/veo-3',\n  {\n    prompt:\n      'A dramatic drone shot flying through misty mountain peaks at sunrise, with clouds rolling through valleys below',\n    duration: '8s',\n    aspect_ratio: '16:9',\n    resolution: '1080p',\n    generate_audio: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Vertical Video",
+			"description": "Portrait orientation for social media",
+			"input": {
+				"prompt": "A barista expertly pouring latte art, close-up shot with shallow depth of field",
+				"duration": "6s",
+				"aspect_ratio": "9:16",
+				"resolution": "720p",
+				"generate_audio": true
+			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__veo-3/vertical-video.mp4"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/veo-3',\n  {\n    prompt:\n      'A barista expertly pouring latte art, close-up shot with shallow depth of field',\n    duration: '6s',\n    aspect_ratio: '9:16',\n    resolution: '720p',\n    generate_audio: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Short Format",
+			"description": "Short video for social media posts",
+			"input": {
+				"prompt": "A timelapse of a flower blooming, soft natural lighting",
+				"duration": "4s",
+				"aspect_ratio": "16:9",
+				"resolution": "720p",
+				"generate_audio": true
+			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__veo-3/short-format.mp4"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/veo-3',\n  {\n    prompt: 'A timelapse of a flower blooming, soft natural lighting',\n    duration: '4s',\n    aspect_ratio: '16:9',\n    resolution: '720p',\n    generate_audio: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Silent Video",
+			"description": "Video without audio generation",
+			"input": {
+				"prompt": "Abstract flowing liquid metal morphing into geometric shapes",
+				"duration": "6s",
+				"aspect_ratio": "16:9",
+				"resolution": "720p",
+				"generate_audio": false
+			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__veo-3/silent-video.mp4"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/veo-3',\n  {\n    prompt: 'Abstract flowing liquid metal morphing into geometric shapes',\n    duration: '6s',\n    aspect_ratio: '16:9',\n    resolution: '720p',\n    generate_audio: false,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://deepmind.google/technologies/veo/",
+	"terms": "https://ai.google.dev/gemini-api/terms",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/google/veo-3.png",
+	"metadata": {
+		"Max Duration": "8 seconds",
+		"Audio Generation": "Yes",
+		"Resolutions": "720p, 1080p"
+	},
+	"created_at": "2026-04-08 21:34:32",
+	"default_example": null,
+	"code_snippets": [],
+	"zdr": false,
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"description": "Text prompt describing the video to generate",
+					"type": "string"
+				},
+				"image_input": {
+					"description": "Base64-encoded reference image for i2v",
+					"type": "string"
+				},
+				"duration": {
+					"description": "Video duration",
+					"default": "6s",
+					"type": "string",
+					"enum": [
+						"4s",
+						"6s",
+						"8s"
+					]
+				},
+				"aspect_ratio": {
+					"description": "Video aspect ratio",
+					"default": "16:9",
+					"type": "string",
+					"enum": [
+						"16:9",
+						"9:16",
+						"1:1"
+					]
+				},
+				"resolution": {
+					"description": "Video resolution",
+					"default": "720p",
+					"type": "string",
+					"enum": [
+						"720p",
+						"1080p"
+					]
+				},
+				"generate_audio": {
+					"description": "Whether to generate audio with the video",
+					"default": true,
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"prompt",
+				"duration",
+				"aspect_ratio",
+				"resolution",
+				"generate_audio"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"video": {
+					"description": "URL to the generated video",
+					"type": "string",
+					"format": "uri"
+				}
+			},
+			"required": [
+				"video"
+			],
+			"additionalProperties": false
+		}
+	}
+}

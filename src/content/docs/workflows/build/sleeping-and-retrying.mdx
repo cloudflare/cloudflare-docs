@@ -1,8 +1,11 @@
 ---
 title: Sleeping and retrying
+description: Configure sleep durations and retry logic for Workflows steps, including relative and absolute sleep timers.
 pcx_content_type: concept
 sidebar:
   order: 4
+products:
+  - workflows
 ---
 
 This guide details how to sleep a Workflow and/or configure retries for a Workflow step.
@@ -92,17 +95,6 @@ let someState = await step.do(
 );
 ```
 
-## Access step context
-
-Workflow step callbacks receive a context object containing the current attempt number (1-indexed). This allows you to access which retry attempt is currently executing.
-
-```ts
-await step.do("my-step", async (ctx) => {
-	// ctx.attempt is 1 on first try, 2 on first retry, etc.
-	console.log(`Attempt ${ctx.attempt}`);
-});
-```
-
 ## Force a Workflow instance to fail
 
 You can also force a Workflow instance to fail and _not_ retry by throwing a `NonRetryableError` from within the step.
@@ -140,7 +132,7 @@ Any uncaught exceptions that propagate to the top level, or any steps that reach
 
 If you want to avoid this, you can catch exceptions emitted by a `step`. This can be useful if you need to trigger clean-up tasks or have conditional logic that triggers additional steps.
 
-To allow the Workflow to continue its execution, surround the intended steps that are allowed to fail with a `try-catch` block.
+To allow the Workflow to continue its execution, surround the intended steps that are allowed to fail with a `try...catch` block.
 
 ```ts
 ...

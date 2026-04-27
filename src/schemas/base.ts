@@ -3,13 +3,8 @@ import { reference, type SchemaContext } from "astro:content";
 
 import { sidebar } from "./types/sidebar";
 
-export const baseSchema = ({ image }: SchemaContext) =>
+export const baseSchema = (_context: SchemaContext) =>
 	z.object({
-		preview_image: z
-			.optional(image())
-			.describe(
-				"A `src` path to the image that you want to use as a custom preview image for social sharing.",
-			),
 		pcx_content_type: z
 			.string()
 			.optional()

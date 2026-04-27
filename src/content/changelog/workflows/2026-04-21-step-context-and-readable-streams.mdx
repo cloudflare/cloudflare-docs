@@ -1,0 +1,50 @@
+---
+title: Additional step context and ReadableStream support now available in Workflows step.do()
+description: Workflows now provides additional context inside step.do() callbacks and supports returning ReadableStream to handle larger step outputs.
+product: Workflows, Workers
+date: 2026-04-21 12:00:00 UTC
+---
+
+[Workflows](/workflows/) now provides additional context inside `step.do()` callbacks and supports returning `ReadableStream` to handle larger step outputs.
+
+### Step context properties
+
+The `step.do()` callback receives a context object with new properties [alongside](/changelog/post/2026-03-06-step-context-available/) `attempt`:
+
+- **`step.name`** — The name passed to `step.do()`
+- **`step.count`** — How many times a step with that name has been invoked in this instance (1-indexed)
+  - Useful when running the same step in a loop.
+- **`config`** — The resolved step configuration, including `timeout` and `retries` with defaults applied
+
+```ts
+type ResolvedStepConfig = {
+	retries: {
+		limit: number;
+		delay: WorkflowDelayDuration | number;
+		backoff?: "constant" | "linear" | "exponential";
+	};
+	timeout: WorkflowTimeoutDuration | number;
+};
+
+type WorkflowStepContext = {
+	step: {
+		name: string;
+		count: number;
+	};
+	attempt: number;
+	config: ResolvedStepConfig;
+};
+```
+
+### ReadableStream support in `step.do()`
+
+Steps can now return a `ReadableStream` directly. Although non-stream step outputs are [limited to 1 MiB](/workflows/reference/limits/), streamed outputs support much larger payloads.
+
+```ts
+const largePayload = await step.do("fetch-large-file", async () => {
+	const object = await env.MY_BUCKET.get("large-file.bin");
+	return object.body;
+});
+```
+
+Note that streamed outputs are still considered part of the Workflow instance storage limit.

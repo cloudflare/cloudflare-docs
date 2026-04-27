@@ -3,6 +3,13 @@ link: "/radar/release-notes/"
 productName: Radar
 productLink: "/radar/"
 entries:
+  - publish_date: "2026-04-01"
+    title: Promote Routing to a dedicated section with sub-pages
+    description: |-
+      * Expanded the Routing page into a full section with dedicated [Overview](https://radar.cloudflare.com/routing), [RPKI](https://radar.cloudflare.com/routing/rpki), and [Anomalies](https://radar.cloudflare.com/routing/anomalies) sub-pages.
+      * Added new **Top 100 ASes** widget to the routing overview, with rankings by customer cone, IPv4 address space, and IPv6 address space.
+      * Added new **RPKI prefix validation** widget showing per-ASN prefixes grouped by validation status (Valid, Invalid, Unknown).
+      * Improved the IP address space chart to display both IPv4 and IPv6 trends on all views including global.
   - publish_date: "2026-03-06"
     title: Add region filtering and AS/location dimensions to API
     description: |-

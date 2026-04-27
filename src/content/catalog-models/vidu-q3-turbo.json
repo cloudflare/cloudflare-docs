@@ -1,0 +1,202 @@
+{
+	"model_id": "vidu/q3-turbo",
+	"provider_id": "vidu",
+	"name": "Vidu Q3 Turbo",
+	"description": "Vidu Q3 Turbo is a faster version of Vidu Q3 optimized for lower latency video generation while maintaining audio support and up to 16-second clips.",
+	"task": "Text-to-Video",
+	"tags": [
+		"Video Generation",
+		"Image-to-Video",
+		"Audio",
+		"Fast"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Text-to-Video",
+			"description": "Basic text-to-video with just a prompt",
+			"input": {
+				"prompt": "A cat lazily stretching on a sunlit windowsill",
+				"duration": 5,
+				"resolution": "720p"
+			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/vidu__q3-turbo/simple-text-to-video.mp4"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'vidu/q3-turbo',\n  {\n    prompt: 'A cat lazily stretching on a sunlit windowsill',\n    duration: 5,\n    resolution: '720p',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "High Resolution",
+			"description": "Generate at 1080p",
+			"input": {
+				"prompt": "Close-up of a hummingbird feeding from a vibrant red flower, slow motion with soft bokeh background",
+				"duration": 5,
+				"resolution": "1080p"
+			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/vidu__q3-turbo/high-resolution.mp4"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'vidu/q3-turbo',\n  {\n    prompt:\n      'Close-up of a hummingbird feeding from a vibrant red flower, slow motion with soft bokeh background',\n    duration: 5,\n    resolution: '1080p',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Portrait Video",
+			"description": "Vertical video for mobile viewing",
+			"input": {
+				"prompt": "A waterfall cascading down mossy rocks in a tropical jungle, mist rising",
+				"duration": 5,
+				"resolution": "720p",
+				"aspect_ratio": "9:16"
+			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/vidu__q3-turbo/portrait-video.mp4"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'vidu/q3-turbo',\n  {\n    prompt:\n      'A waterfall cascading down mossy rocks in a tropical jungle, mist rising',\n    duration: 5,\n    resolution: '720p',\n    aspect_ratio: '9:16',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Extended Duration",
+			"description": "Longer video clip",
+			"input": {
+				"prompt": "Timelapse of clouds rolling over a mountain peak from sunrise to sunset, dramatic lighting",
+				"duration": 16,
+				"resolution": "720p"
+			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/vidu__q3-turbo/extended-duration.mp4"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'vidu/q3-turbo',\n  {\n    prompt:\n      'Timelapse of clouds rolling over a mountain peak from sunrise to sunset, dramatic lighting',\n    duration: 16,\n    resolution: '720p',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Low Resolution Fast Preview",
+			"description": "Quick preview at 540p",
+			"input": {
+				"prompt": "A sailboat gliding across calm ocean waters at sunset",
+				"duration": 3,
+				"resolution": "540p"
+			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/vidu__q3-turbo/low-resolution-fast-preview.mp4"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'vidu/q3-turbo',\n  {\n    prompt: 'A sailboat gliding across calm ocean waters at sunset',\n    duration: 3,\n    resolution: '540p',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://www.vidu.com/",
+	"terms": "https://www.vidu.com/terms",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/vidu/q3-turbo.png",
+	"metadata": {
+		"Max Duration": "16 seconds",
+		"Resolutions": "540p, 720p, 1080p",
+		"Aspect Ratios": "16:9, 9:16, 3:4, 4:3, 1:1",
+		"Audio Generation": "Yes",
+		"Image-to-Video": "Yes"
+	},
+	"created_at": "2026-04-15 01:37:34",
+	"default_example": null,
+	"code_snippets": [],
+	"zdr": false,
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"description": "Text prompt describing what should appear in the video",
+					"type": "string",
+					"maxLength": 5000
+				},
+				"start_image": {
+					"description": "Start image for video generation. Use alone for image-to-video, or with end_image for start/end-to-video. Accepts public URL or Base64 data URI (data:image/png;base64,...)",
+					"type": "string"
+				},
+				"end_image": {
+					"description": "End image for start/end-to-video generation. Must be used together with start_image. Accepts public URL or Base64 data URI (data:image/png;base64,...)",
+					"type": "string"
+				},
+				"duration": {
+					"description": "Video duration in seconds (1-16)",
+					"default": 5,
+					"type": "integer",
+					"minimum": 1,
+					"maximum": 16
+				},
+				"resolution": {
+					"description": "Video resolution",
+					"default": "720p",
+					"type": "string",
+					"enum": [
+						"540p",
+						"720p",
+						"1080p"
+					]
+				},
+				"audio": {
+					"description": "Enable audio-video synchronization. Default: true for Q3 models. When false, outputs silent video",
+					"type": "boolean"
+				},
+				"aspect_ratio": {
+					"description": "Video aspect ratio (text-to-video only). Default: 16:9",
+					"type": "string",
+					"enum": [
+						"16:9",
+						"9:16",
+						"3:4",
+						"4:3",
+						"1:1"
+					]
+				}
+			},
+			"required": [
+				"duration",
+				"resolution"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"video": {
+					"description": "URL to the generated video",
+					"type": "string",
+					"format": "uri"
+				}
+			},
+			"required": [
+				"video"
+			],
+			"additionalProperties": false
+		}
+	}
+}
