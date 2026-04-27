@@ -10,7 +10,7 @@ sidebar:
   label: Restrict by geography and IP
 ---
 
-import { Details, Steps, Tabs, TabItem, DashButton, GlossaryTooltip } from "~/components";
+import { Steps, DashButton } from "~/components";
 
 When your site receives unwanted traffic from specific countries, IP addresses, or network ranges, you need to decide which sources to block outright, which to challenge, and which to allow through. Common scenarios include restricting access to comply with legal requirements, reducing attack traffic from regions you do not serve, and locking down admin paths to known IP addresses. This guide covers four stages: block traffic by geography, block or allow specific IP addresses and ranges, protect specific paths with access rules, and review your rules for false positives. The core workflow uses Application Security (also known as Web Application Firewall or WAF) [custom rules](/waf/custom-rules/), available on all plans.
 {/* Source: /waf/custom-rules/ — custom rules available on all plans */}
@@ -31,8 +31,6 @@ Geographic blocking is imprecise. Visitors using VPNs or proxies can bypass coun
 
 This custom rule blocks all requests originating from specific countries using the `ip.src.country` field. Replace the country codes with the ones relevant to your situation. Country codes use the two-letter [ISO-3166-1 alpha-2](https://www.iso.org/iso-3166-country-codes.html) format.
 {/* Source: /waf/custom-rules/use-cases/block-traffic-from-specific-countries/ — ip.src.country field and expression syntax */}
-
-<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
 <Steps>
 
@@ -61,38 +59,6 @@ This custom rule blocks all requests originating from specific countries using t
 6. Select **Deploy**.
 
 </Steps>
-
-</TabItem> <TabItem label="Old dashboard">
-
-<Steps>
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
-
-2. Go to **Security** > **WAF** > **Custom rules**.
-
-3. Select **Create rule**.
-
-4. Enter a descriptive name for the rule (for example, `Block high-risk countries`).
-
-5. Under **When incoming requests match**, configure the following:
-
-   | Field   | Operator | Value                   |
-   | ------- | -------- | ----------------------- |
-   | Country | is in    | Select the countries to block |
-
-   If you are using the expression editor:
-
-   ```txt
-   (ip.src.country in {"KP" "SY"})
-   ```
-
-6. Under **Then take action**, select _Block_.
-
-7. Select **Deploy**.
-
-</Steps>
-
-</TabItem> </Tabs>
 
 ### Allow traffic from specific countries only
 
@@ -155,8 +121,6 @@ To allow traffic from a specific IP address and skip remaining custom rules, cre
 Allowlist rules should be as specific as possible. Broad IP ranges or CIDR blocks can create security gaps by allowing unintended traffic through.
 :::
 
-<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
-
 <Steps>
 
 1. In the Cloudflare dashboard, go to the **Security rules** page.
@@ -186,40 +150,6 @@ Allowlist rules should be as specific as possible. Broad IP ranges or CIDR block
 6. Select **Deploy**.
 
 </Steps>
-
-</TabItem> <TabItem label="Old dashboard">
-
-<Steps>
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
-
-2. Go to **Security** > **WAF** > **Custom rules**.
-
-3. Select **Create rule**.
-
-4. Enter a descriptive name for the rule (for example, `Allow office IP`).
-
-5. Under **When incoming requests match**, configure the following:
-
-   | Field             | Operator | Value                     |
-   | ----------------- | -------- | ------------------------- |
-   | IP Source Address  | equals   | `203.0.113.1`             |
-
-   If you are using the expression editor:
-
-   ```txt
-   (ip.src eq 203.0.113.1)
-   ```
-
-   Replace `203.0.113.1` with your actual IP address.
-
-6. Under **Then take action**, select _Skip_ > _All remaining custom rules_.
-
-7. Select **Deploy**.
-
-</Steps>
-
-</TabItem> </Tabs>
 
 :::note
 Place skip rules before blocking rules in the custom rules list. Custom rules are evaluated in order, and a skip rule that appears after a blocking rule will not prevent that block from firing.
@@ -347,43 +277,17 @@ After deploying geographic or IP-based rules, review Security Events to check fo
 [Security Events](/waf/analytics/security-events/) shows every request your rules acted on, including the rule name, action taken, source IP, country, and ASN. Use filters to find specific patterns:
 {/* Source: /waf/analytics/security-events/ — filter workflow for IP, ASN, and Country fields */}
 
-<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
-
 <Steps>
 
-1. In the Cloudflare dashboard, go to the **Security Events** page.
+1. In the Cloudflare dashboard, go to the **Analytics** page.
 
    <DashButton url="/?to=/:account/:zone/security/analytics" />
 
-2. Select **Add filter**.
-
-3. To find blocked requests from a specific country, select _Country_ for the field, select _equals_ for the operator, and enter the country name.
-
-4. Select **Apply**.
-
-5. Review the sampled log entries. Look for legitimate traffic that was incorrectly blocked by your rules.
+2. Select the **Events** tab.
 
 </Steps>
 
-</TabItem> <TabItem label="Old dashboard">
-
-<Steps>
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
-
-2. Go to **Security** > **Events**.
-
-3. Select **Add filter**.
-
-4. To find blocked requests from a specific country, select _Country_ for the field, select _equals_ for the operator, and enter the country name.
-
-5. Select **Apply**.
-
-6. Review the sampled log entries. Look for legitimate traffic that was incorrectly blocked by your rules.
-
-</Steps>
-
-</TabItem> </Tabs>
+Review the **Sampled logs** to inspect individual requests. Use the **Add filter** button to narrow results by country, IP, ASN, or action.
 
 When entering filter values, do not add quotes around values. Do not enter the `AS` prefix when filtering by ASN numbers (for example, enter `1423` instead of `AS1423`). Wildcards are not supported.
 
