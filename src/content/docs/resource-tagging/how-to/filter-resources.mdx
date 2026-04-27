@@ -6,7 +6,7 @@ sidebar:
 description: Query tagged resources using the tag filtering syntax.
 ---
 
-The `GET /accounts/{account_id}/tags/resources` endpoint supports tag filtering via the `tag` query parameter. Multiple `tag` parameters combine with **AND** logic. For the full endpoint specification, refer to the [Resource Tagging API reference](https://developers.cloudflare.com/api/resources/tags/).
+The `GET /accounts/{account_id}/tags/resources` endpoint supports tag filtering via the `tag` query parameter. Multiple `tag` parameters combine with AND logic. For the full endpoint specification, refer to the [Resource Tagging API reference](https://developers.cloudflare.com/api/resources/tags/).
 
 :::caution
 Use `=` as the separator in tag filters (for example, `tag=key=value`), not `:`. The API error message references `:` but the implementation uses `=`.

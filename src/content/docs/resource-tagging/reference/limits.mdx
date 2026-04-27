@@ -23,7 +23,7 @@ During the beta, each account is limited to 10,000 total tags. If you need a hig
 
 ## Case sensitivity
 
-Tag keys and values are **case-sensitive**. `Environment`, `environment`, and `ENVIRONMENT` are treated as three distinct keys. Be consistent with casing conventions across your organization to avoid duplicate keys.
+Tag keys and values are case-sensitive. `Environment`, `environment`, and `ENVIRONMENT` are treated as three distinct keys. Be consistent with casing conventions across your organization to avoid duplicate keys.
 
 ## Tag key validation
 
@@ -60,7 +60,7 @@ Invalid tag keys return `400 Bad Request` with error code `1014`.
 
 ## Pagination
 
-List endpoints use cursor-based pagination with a **fixed page size of 100**. The page size is not configurable.
+List endpoints use cursor-based pagination with a fixed page size of 100. The page size is not configurable.
 
 Paginated endpoints:
 - `GET /accounts/{account_id}/tags/keys`

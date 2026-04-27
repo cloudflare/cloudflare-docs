@@ -10,7 +10,7 @@ All tag operations use the Tagging API. Authentication requires an [account API 
 
 ## Set tags on a resource
 
-Use `PUT` to set tags on an account-level resource. This operation **replaces all existing tags** on the resource.
+Use `PUT` to set tags on an account-level resource. This operation replaces all existing tags on the resource.
 
 ```bash
 curl -X PUT "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/tags" \
@@ -60,9 +60,9 @@ In the current beta, querying tags for a resource that does not exist or has nev
 
 ## Add a single tag
 
-The API does not support partial updates -- `PUT` always replaces all tags. To add a tag without removing existing ones, use the GET, merge, PUT pattern:
+The API does not support partial updates — `PUT` always replaces all tags. To add a tag without removing existing ones, use the `GET`, merge, `PUT` pattern:
 
-**Step 1**: Get the current tags.
+1. `GET` the current tags.
 
 ```bash
 curl -X GET "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/tags?resource_type=workers_script&resource_id=$RESOURCE_ID" \
@@ -71,7 +71,7 @@ curl -X GET "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/tags?reso
 # Response: {"result": {"tags": {"environment": "production", "team": "platform"}}}
 ```
 
-**Step 2**: Merge the new tag into the existing set locally.
+2. Merge the new tag into the existing set locally.
 
 ```json
 {
@@ -81,7 +81,7 @@ curl -X GET "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/tags?reso
 }
 ```
 
-**Step 3**: PUT the complete merged tag set.
+3. `PUT` the complete merged tag set.
 
 ```bash
 curl -X PUT "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/tags" \
@@ -99,12 +99,12 @@ curl -X PUT "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/tags" \
 ```
 
 :::caution
-If you `PUT` only the new tag, all existing tags are deleted. Always GET first, merge locally, then PUT the complete set.
+If you `PUT` only the new tag, all existing tags are deleted. Always `GET` first, merge locally, then `PUT` the complete set.
 :::
 
 ## Remove a single tag
 
-Follow the same GET, merge, PUT pattern, but omit the tag you want to remove from the set before calling `PUT`.
+Follow the same `GET`, merge, `PUT` pattern, but omit the tag you want to remove from the set before calling `PUT`.
 
 ## Delete all tags
 
