@@ -6,7 +6,7 @@ sidebar:
   label: Docs for agents
 ---
 
-import { LinkButton } from "~/components";
+import { LinkButton, LinkCard } from "~/components";
 
 Cloudflare documentation provides features and tools to help you use your own AI agents to effectively consume the information. This enables you to query your agent for your specific needs, as well as use Cloudflare skills and MCP servers to effectively interact with Cloudflare products and services.
 
@@ -16,9 +16,23 @@ This page explains how you can use your agents on Cloudflare documentation.
 
 Choose the approach that matches how you use AI tools:
 
-- [Understand key concepts](#concepts) such as agent skills and MCP (Model Context Protocol).
-- [Set up your agent](/agent-setup/) to effectively consume documentation and interact with Cloudflare products.
-- [Extract documentation in agent-friendly format](#markdown-documentation-for-llms) to minimize token usage while improving the accuracy of your agent's responses.
+<LinkCard
+  title="Understand key concepts"
+  description="Learn about agent skills and MCP (Model Context Protocol)."
+  href="#concepts"
+/>
+
+<LinkCard
+  title="Set up your agent"
+  href="/agent-setup/"
+  description="Effectively consume documentation and interact with Cloudflare products."
+/>
+
+<LinkCard
+  title="Extract documentation in agent-friendly format"
+  href="#markdown-documentation-for-llms"
+  description="Minimize token usage while improving the accuracy of your agent's responses."
+/>
 
 ## Concepts
 
