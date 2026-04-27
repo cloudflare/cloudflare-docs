@@ -1,6 +1,6 @@
 ---
 title: Delete objects
-description: Delete objects from R2 using the dashboard, Workers API, S3 API, or CLI tools.
+description: Delete individual objects or folders from an R2 bucket.
 pcx_content_type: how-to
 sidebar:
   order: 5
@@ -8,19 +8,22 @@ products:
   - r2
 ---
 
-import { Render, Tabs, TabItem, DashButton } from "~/components";
+import { Tabs, TabItem, DashButton, LinkCard } from "~/components";
 
-You can delete objects from R2 using the dashboard, Workers API, S3 API, or command-line tools.
+You can delete objects from R2 using the dashboard, Workers API, S3 API, or command-line tools. To empty or delete an entire bucket, refer to [Delete buckets](/r2/buckets/delete-buckets/).
 
 ## Delete via dashboard
 
 1. In the Cloudflare dashboard, go to the **R2 object storage** page.
 
    <DashButton url="/?to=/:account/r2/overview" />
-2. Locate and select your bucket.
-3. Locate the object you want to delete. You can select multiple objects to delete at one time.
-4. Select your objects and select **Delete**.
-5. Confirm your choice by selecting **Delete**.
+2. Select your bucket.
+3. (Optional) Select the **View prefixes as directories** checkbox to view prefixes grouped as folders.
+4. Select the objects or folders you want to delete. You can select a mix of both in the same operation.
+5. Select **Delete**.
+6. Confirm your choice in the dialog that appears.
+
+To delete all objects in a bucket at once, refer to [Empty a bucket](/r2/buckets/delete-buckets/#empty-a-bucket).
 
 ## Delete via Workers API
 
@@ -103,3 +106,23 @@ Use [Wrangler](/workers/wrangler/install-and-update/) to delete objects. Run the
 ```sh
 wrangler r2 object delete test-bucket/image.png
 ```
+
+## Related resources
+
+<LinkCard
+  title="Delete buckets"
+  href="/r2/buckets/delete-buckets/"
+  description="Empty all objects from a bucket and permanently delete it."
+/>
+
+<LinkCard
+  title="Bucket locks"
+  href="/r2/buckets/bucket-locks/"
+  description="Protect objects from accidental deletion with retention policies."
+/>
+
+<LinkCard
+  title="Object lifecycles"
+  href="/r2/buckets/object-lifecycles/"
+  description="Automatically expire objects after a specified period."
+/>
