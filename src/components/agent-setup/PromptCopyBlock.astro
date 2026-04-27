@@ -1,9 +1,10 @@
 ---
 interface Props {
 	text: string;
+	hideLabel?: boolean;
 }
 
-const { text } = Astro.props;
+const { text, hideLabel = false } = Astro.props;
 
 // Split "Fetch <url>" into verb + url for syntax colouring.
 // Falls back to rendering the whole string unsplit if the pattern doesn't match.
@@ -13,9 +14,8 @@ const rest = match ? match[2] : text;
 ---
 
 <div class="pcb-root not-content">
-	<p class="pcb-label">Paste this into any AI coding agent to install Cloudflare agent tooling:</p>
+	{!hideLabel && <p class="pcb-label">Paste this into any AI coding agent to install Cloudflare agent tooling:</p>}
 	<div class="pcb-shell" data-pcb>
-		<div class="pcb-scanline" aria-hidden="true"></div>
 		<div class="pcb-body">
 			<code class="pcb-text">
 				{verb && <span class="pcb-verb">{verb}</span>}
@@ -97,8 +97,10 @@ const rest = match ? match[2] : text;
 	}
 
 	shell?.addEventListener("click", doCopy);
-	// Prevent the shell click from double-firing when the button itself is clicked
-	btn?.addEventListener("click", (e) => e.stopPropagation());
+	btn?.addEventListener("click", (e) => {
+		e.stopPropagation();
+		doCopy();
+	});
 </script>
 
 <style>
@@ -147,33 +149,6 @@ const rest = match ? match[2] : text;
 			0 0 0 1px color-mix(in srgb, var(--color-cl1-brand-orange) 35%, transparent),
 			0 0 48px color-mix(in srgb, var(--color-cl1-brand-orange) 30%, transparent),
 			0 8px 24px rgba(0, 0, 0, 0.55);
-	}
-
-	/* ── Scanline — animated gradient sweep across the top edge ── */
-	.pcb-scanline {
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		height: 1px;
-		background: linear-gradient(
-			90deg,
-			transparent 0%,
-			color-mix(in srgb, var(--color-cl1-brand-orange) 0%, transparent) 0%,
-			color-mix(in srgb, var(--color-cl1-brand-orange) 80%, transparent) 50%,
-			color-mix(in srgb, var(--color-cl1-brand-orange) 0%, transparent) 100%
-		);
-		background-size: 200% 100%;
-		background-position: -100% 0;
-		animation: pcb-scan 3.5s ease-in-out infinite;
-		pointer-events: none;
-	}
-
-	@keyframes pcb-scan {
-		0%   { background-position: -100% 0; opacity: 0; }
-		10%  { opacity: 1; }
-		90%  { opacity: 1; }
-		100% { background-position: 200% 0; opacity: 0; }
 	}
 
 	/* ── Body row ── */
@@ -268,11 +243,7 @@ const rest = match ? match[2] : text;
 		background: rgba(74, 222, 128, 0.08);
 	}
 
-	.pcb-btn[data-copied] .pcb-btn-label::before {
-		content: "Copied";
-	}
-
-	.pcb-btn:not([data-copied]) .pcb-btn-label::before {
+	.pcb-btn .pcb-btn-label::before {
 		content: "Copy";
 	}
 
