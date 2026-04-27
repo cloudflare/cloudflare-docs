@@ -28,6 +28,7 @@ export const AGENTS: AgentData[] = [
 		links: {
 			skills: "https://github.com/cloudflare/skills",
 			mcp_server: "https://github.com/cloudflare/mcp",
+			mcp_server_domain: "https://github.com/cloudflare/mcp-server-cloudflare",
 			docs: "https://docs.anthropic.com/en/docs/claude-code",
 			website: "https://claude.ai/code",
 		},
@@ -59,6 +60,7 @@ export const AGENTS: AgentData[] = [
 		links: {
 			skills: "https://github.com/cloudflare/skills",
 			mcp_server: "https://github.com/cloudflare/mcp",
+			mcp_server_domain: "https://github.com/cloudflare/mcp-server-cloudflare",
 			docs: "https://developers.openai.com/codex/",
 			website: "https://openai.com/codex",
 		},
@@ -90,6 +92,7 @@ export const AGENTS: AgentData[] = [
 		links: {
 			skills: "https://github.com/cloudflare/skills",
 			mcp_server: "https://github.com/cloudflare/mcp",
+			mcp_server_domain: "https://github.com/cloudflare/mcp-server-cloudflare",
 			docs: "https://docs.cursor.com",
 			website: "https://cursor.sh",
 		},
@@ -121,6 +124,7 @@ export const AGENTS: AgentData[] = [
 		links: {
 			skills: "https://github.com/cloudflare/skills",
 			mcp_server: "https://github.com/cloudflare/mcp",
+			mcp_server_domain: "https://github.com/cloudflare/mcp-server-cloudflare",
 			docs: "https://docs.github.com/en/copilot",
 			website: "https://github.com/features/copilot",
 		},
@@ -152,6 +156,7 @@ export const AGENTS: AgentData[] = [
 		links: {
 			skills: "https://github.com/cloudflare/skills",
 			mcp_server: "https://github.com/cloudflare/mcp",
+			mcp_server_domain: "https://github.com/cloudflare/mcp-server-cloudflare",
 			docs: "https://opencode.ai/docs",
 			website: "https://opencode.ai",
 		},
@@ -181,7 +186,9 @@ export const AGENTS: AgentData[] = [
 		model_flexibility: "multi_provider",
 		context_approach: "indexed_codebase",
 		links: {
+			skills: "https://github.com/cloudflare/skills",
 			mcp_server: "https://github.com/cloudflare/mcp",
+			mcp_server_domain: "https://github.com/cloudflare/mcp-server-cloudflare",
 			docs: "https://docs.windsurf.com",
 			website: "https://windsurf.com",
 		},

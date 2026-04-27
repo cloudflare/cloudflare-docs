@@ -3,15 +3,19 @@
 // anywhere on the chip copies the text (without surrounding quotes) to the
 // clipboard and swaps the copy icon for a checkmark for 1.5s.
 //
+// All prompts are rendered in the HTML but only 5 randomly-selected ones are
+// shown on each page load (client-side shuffle).
+//
 // Mirrors the inline-script copy pattern used in PackageManagers.astro.
 interface Props {
 	prompts: string[];
+	count?: number;
 }
 
-const { prompts } = Astro.props;
+const { prompts, count = 5 } = Astro.props;
 ---
 
-<div class="agent-setup-prompts">
+<div class="agent-setup-prompts" data-cfdocs-prompts-count={count}>
 	{
 		prompts.map((prompt) => (
 			<button
@@ -59,6 +63,31 @@ const { prompts } = Astro.props;
 </div>
 
 <script>
+	// For each prompts container, shuffle all buttons and hide all but `count`.
+	document
+		.querySelectorAll<HTMLElement>("[data-cfdocs-prompts-count]")
+		.forEach((container) => {
+			const count = parseInt(container.dataset.cfdocsPromptsCount ?? "5", 10);
+			const btns = Array.from(
+				container.querySelectorAll<HTMLButtonElement>(
+					"[data-cfdocs-copy-prompt]",
+				),
+			);
+
+			// Fisher-Yates shuffle
+			for (let i = btns.length - 1; i > 0; i--) {
+				const j = Math.floor(Math.random() * (i + 1));
+				[btns[i], btns[j]] = [btns[j], btns[i]];
+			}
+
+			// Reorder DOM and hide extras
+			btns.forEach((btn, i) => {
+				container.appendChild(btn);
+				if (i >= count) btn.style.display = "none";
+			});
+		});
+
+	// Copy-to-clipboard
 	document
 		.querySelectorAll<HTMLButtonElement>("[data-cfdocs-copy-prompt]")
 		.forEach((btn) => {

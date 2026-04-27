@@ -2,37 +2,45 @@ These are official instructions from Cloudflare to set up a good AI development 
 
 Complete all of the following steps yourself by running the commands directly. Do not ask the user to run any of these commands.
 
-- Install Cloudflare Skills
-- Install the Cloudflare MCP servers
+- Install Cloudflare Skills and MCP servers
 
 ---
 
-## Install Cloudflare Skills
+## Install Cloudflare Skills and MCP servers
+
+Use the correct section for your agent below.
+
+### Claude Code
+
+Run these two commands to install both Cloudflare skills and MCP servers in one step. Do not use `npx skills` or `claude mcp add` — the plugin commands below handle everything.
+
+```
+claude plugin marketplace add cloudflare/skills
+claude plugin install cloudflare@cloudflare
+```
+
+Then instruct the user to run `/reload-plugins` inside Claude to activate the new plugins.
+
+---
+
+## Install for other agents
+
+First, install skills:
 
 ```
 npx -y skills add cloudflare/skills --skill '*' --yes --global
 ```
 
----
-
-## Install Cloudflare MCP servers
-
-Register these two servers using the default config location for your agent:
-
-### Claude Code
-
-```
-claude mcp add --transport http --scope user cloudflare https://mcp.cloudflare.com/mcp
-claude mcp add --transport http --scope user cloudflare-docs https://docs.mcp.cloudflare.com/mcp
-```
-
-OAuth triggers automatically on first Cloudflare tool use.
+Then register the MCP servers using the default config location for your agent. OAuth triggers automatically on first Cloudflare tool use.
 
 ### Codex
 
 ```
 codex mcp add cloudflare --url https://mcp.cloudflare.com/mcp
 codex mcp add cloudflare-docs --url https://docs.mcp.cloudflare.com/mcp
+codex mcp add cloudflare-bindings --url https://bindings.mcp.cloudflare.com/mcp
+codex mcp add cloudflare-builds --url https://builds.mcp.cloudflare.com/mcp
+codex mcp add cloudflare-observability --url https://observability.mcp.cloudflare.com/mcp
 codex mcp login cloudflare
 ```
 
@@ -42,7 +50,10 @@ Add under `"mcp"`:
 
 ```json
 "cloudflare": { "type": "remote", "url": "https://mcp.cloudflare.com/mcp", "enabled": true, "oauth": {} },
-"cloudflare-docs": { "type": "remote", "url": "https://docs.mcp.cloudflare.com/mcp", "enabled": true }
+"cloudflare-docs": { "type": "remote", "url": "https://docs.mcp.cloudflare.com/mcp", "enabled": true },
+"cloudflare-bindings": { "type": "remote", "url": "https://bindings.mcp.cloudflare.com/mcp", "enabled": true, "oauth": {} },
+"cloudflare-builds": { "type": "remote", "url": "https://builds.mcp.cloudflare.com/mcp", "enabled": true, "oauth": {} },
+"cloudflare-observability": { "type": "remote", "url": "https://observability.mcp.cloudflare.com/mcp", "enabled": true, "oauth": {} }
 ```
 
 Then run:
@@ -57,7 +68,10 @@ Add under `"mcpServers"` (note: `serverUrl`, not `url`):
 
 ```json
 "cloudflare": { "serverUrl": "https://mcp.cloudflare.com/mcp" },
-"cloudflare-docs": { "serverUrl": "https://docs.mcp.cloudflare.com/mcp" }
+"cloudflare-docs": { "serverUrl": "https://docs.mcp.cloudflare.com/mcp" },
+"cloudflare-bindings": { "serverUrl": "https://bindings.mcp.cloudflare.com/mcp" },
+"cloudflare-builds": { "serverUrl": "https://builds.mcp.cloudflare.com/mcp" },
+"cloudflare-observability": { "serverUrl": "https://observability.mcp.cloudflare.com/mcp" }
 ```
 
 OAuth triggers automatically on first Cloudflare tool use.
@@ -68,7 +82,10 @@ Add to `.cursor/mcp.json` (Cursor), `.vscode/mcp.json` (Copilot), or your agent'
 
 ```json
 "cloudflare": { "url": "https://mcp.cloudflare.com/mcp" },
-"cloudflare-docs": { "url": "https://docs.mcp.cloudflare.com/mcp" }
+"cloudflare-docs": { "url": "https://docs.mcp.cloudflare.com/mcp" },
+"cloudflare-bindings": { "url": "https://bindings.mcp.cloudflare.com/mcp" },
+"cloudflare-builds": { "url": "https://builds.mcp.cloudflare.com/mcp" },
+"cloudflare-observability": { "url": "https://observability.mcp.cloudflare.com/mcp" }
 ```
 
 OAuth triggers automatically on first Cloudflare tool use.

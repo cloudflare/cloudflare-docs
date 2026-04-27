@@ -31,22 +31,7 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 		npm install -g @openai/codex
 		```
 
-	2. **Install Cloudflare Skills**
-
-		```bash
-		npx skills add https://github.com/cloudflare/skills
-		```
-
-	3. **Add Cloudflare MCP servers**
-
-		For a full list of available Cloudflare MCP servers, refer to the repository on [GitHub](https://github.com/cloudflare/mcp-server-cloudflare).
-
-		```bash
-		codex mcp add cloudflare --url https://mcp.cloudflare.com/mcp
-		codex mcp add cloudflare-docs --url https://docs.mcp.cloudflare.com/mcp
-		```
-
-	4. **Launch Codex**
+	2. **Launch Codex in your project**
 
 		Start Codex from the root of your project, where `wrangler.jsonc` lives (if it already exists).
 
@@ -54,7 +39,15 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 		codex
 		```
 
-	5. **Try a prompt**
+	3. **Install the Cloudflare plugin**
+
+		Inside Codex, run `/plugins`, then search for and install **Cloudflare**. This installs Cloudflare Skills and registers the Cloudflare MCP servers.
+
+		```txt
+		/plugins
+		```
+
+	4. **Try a prompt**
 
 		For example:
 

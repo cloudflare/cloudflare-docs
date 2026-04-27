@@ -39,9 +39,9 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 		claude
 		```
 
-	3. **Install the Cloudflare Skills plugin**
+	3. **Install the Cloudflare plugin**
 
-		In Claude Code, run these two slash commands. The plugin installs all 8 Cloudflare Skills and additionally registers the Cloudflare API, docs, bindings, builds, and observability MCP servers.
+		In Claude Code, run these two slash commands. This installs Cloudflare Skills and registers the Cloudflare MCP servers.
 
 		```txt
 		/plugin marketplace add cloudflare/skills
@@ -100,7 +100,7 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 		Code Mode is how the Cloudflare API MCP server fits all 2,500+ API endpoints
 		into ~1,000 tokens. Instead of exposing every endpoint as a separate tool,
 		it exposes two — `search()` and `execute()` — and Claude writes JavaScript
-		to call them. [Learn more about Code Mode](/agents/api-reference/codemode/).
+		to call them. [Learn more about Code Mode](https://blog.cloudflare.com/code-mode-mcp/).
 	</FAQItem>
 </FAQList>
 

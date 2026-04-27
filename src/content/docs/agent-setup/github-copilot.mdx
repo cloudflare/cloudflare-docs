@@ -35,13 +35,16 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
 	3. **Configure Cloudflare MCP servers**
 
-		For VS Code, add to `.vscode/mcp.json`. For Copilot CLI, add to `~/.copilot/mcp-config.json`. For a full list of available Cloudflare MCP servers, refer to the repository on [GitHub](https://github.com/cloudflare/mcp-server-cloudflare).
+		For VS Code, add to `.vscode/mcp.json`. For Copilot CLI, add to `~/.copilot/mcp-config.json`. For domain-specific MCP servers, refer to [mcp-server-cloudflare](https://github.com/cloudflare/mcp-server-cloudflare). For the full Cloudflare API MCP server (Code Mode), refer to [cloudflare/mcp](https://github.com/cloudflare/mcp).
 
 		```json
 		{
 		  "mcpServers": {
 		    "cloudflare": { "url": "https://mcp.cloudflare.com/mcp" },
-		    "cloudflare-docs": { "url": "https://docs.mcp.cloudflare.com/mcp" }
+		    "cloudflare-docs": { "url": "https://docs.mcp.cloudflare.com/mcp" },
+		    "cloudflare-bindings": { "url": "https://bindings.mcp.cloudflare.com/mcp" },
+		    "cloudflare-builds": { "url": "https://builds.mcp.cloudflare.com/mcp" },
+		    "cloudflare-observability": { "url": "https://observability.mcp.cloudflare.com/mcp" }
 		  }
 		}
 		```
