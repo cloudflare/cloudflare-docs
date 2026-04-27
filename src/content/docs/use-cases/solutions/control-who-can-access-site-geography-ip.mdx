@@ -29,7 +29,7 @@ Geographic blocking is imprecise. Visitors using VPNs or proxies can bypass coun
 
 ### Block requests from specific countries
 
-This custom rule blocks all requests originating from specific countries using the `ip.src.country` field. Replace the country codes with the ones relevant to your situation. Country codes use the two-letter [ISO-3166-1 alpha-2](https://www.iso.org/iso-3166-country-codes.html) format.
+This custom rule blocks all requests originating from specific countries using the `ip.src.country` field.
 {/* Source: /waf/custom-rules/use-cases/block-traffic-from-specific-countries/ — ip.src.country field and expression syntax */}
 
 <Steps>
@@ -48,11 +48,13 @@ This custom rule blocks all requests originating from specific countries using t
    | ------- | -------- | ----------------------- |
    | Country | is in    | Select the countries to block |
 
-   If you are using the expression editor:
+   Or select **Edit expression** and enter:
 
    ```txt
    (ip.src.country in {"KP" "SY"})
    ```
+
+   Replace `KP` and `SY` with the [ISO 3166-1 alpha-2](https://www.iso.org/iso-3166-country-codes.html) country codes you want to block.
 
 5. Under **Then take action**, select _Block_.
 
@@ -71,7 +73,7 @@ Use the same procedure as the previous section, but configure these values inste
 | ------- | --------- | ------------------------------------------ |
 | Country | is not in | Select the countries you want to allow |
 
-If you are using the expression editor:
+Or select **Edit expression** and enter:
 
 ```txt
 (not ip.src.country in {"US" "MX"})
@@ -92,7 +94,7 @@ Use the same custom rule creation procedure, but configure a compound expression
 | Continent | equals   | `Asia`         | Or    |
 | Country   | equals   | `Korea, North` |       |
 
-If you are using the expression editor:
+Or select **Edit expression** and enter:
 
 ```txt
 (ip.src.asnum eq 131279) or (ip.src.continent eq "AS") or (ip.src.country eq "KP")
@@ -137,7 +139,7 @@ Allowlist rules should be as specific as possible. Broad IP ranges or CIDR block
    | ----------------- | -------- | ------------------------- |
    | IP Source Address  | equals   | `203.0.113.1`             |
 
-   If you are using the expression editor:
+   Or select **Edit expression** and enter:
 
    ```txt
    (ip.src eq 203.0.113.1)
@@ -166,7 +168,7 @@ Use the same custom rule creation procedure, but configure these values:
 | ----------------- | -------- | ---------------------------- |
 | IP Source Address  | is in    | `192.0.2.0/24`, `198.51.100.0/24` |
 
-If you are using the expression editor:
+Or select **Edit expression** and enter:
 
 ```txt
 (ip.src in {192.0.2.0/24 198.51.100.0/24})
@@ -189,7 +191,7 @@ To block all traffic from a specific network operator, use the `ip.src.asnum` fi
 | ------ | -------- | -------- |
 | AS Num | equals   | `64496`  |
 
-If you are using the expression editor:
+Or select **Edit expression** and enter:
 
 ```txt
 (ip.src.asnum eq 64496)
@@ -218,7 +220,7 @@ This rule blocks all traffic to your admin path unless the request comes from a 
 | URI Path          | starts with | `/admin`       | And   |
 | IP Source Address  | equals   | `203.0.113.1`     |       |
 
-If you are using the expression editor:
+Or select **Edit expression** and enter:
 
 ```txt
 (starts_with(http.request.uri.path, "/admin") and ip.src eq 203.0.113.1)
@@ -232,7 +234,7 @@ Set the action to _Skip_ > _All remaining custom rules_.
 | -------- | ----------- | -------- |
 | URI Path | starts with | `/admin` |
 
-If you are using the expression editor:
+Or select **Edit expression** and enter:
 
 ```txt
 (starts_with(http.request.uri.path, "/admin"))
