@@ -313,6 +313,7 @@ The Application Security Managed Ruleset includes rules for empty user-agents, b
 </Steps>
 
 ### Create a rate limiting rule with leaked credentials
+
 Combine rate limiting with leaked credentials detection to throttle login attempts that use known-compromised passwords. This rule issues a Managed Challenge when the same IP sends more than three requests with leaked passwords within one minute.
 
 <Steps>
