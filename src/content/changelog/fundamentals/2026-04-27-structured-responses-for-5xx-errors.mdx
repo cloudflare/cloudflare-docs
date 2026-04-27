@@ -10,7 +10,7 @@ Cloudflare-generated 5xx error responses now return structured JSON and Markdown
 
 ## Changes
 
-**5xx coverage.** Ten Cloudflare-generated error codes (500, 502, 504, 520-526) now serve structured responses. These are errors Cloudflare itself generates when it cannot reach or understand the origin server — origin-generated 5xx responses that Cloudflare passes through are not affected.
+**5xx coverage.** Ten Cloudflare-generated error codes (500, 502, 504, 520-526) now serve structured responses. These are errors Cloudflare itself generates when it cannot reach or understand the origin server. Origin-generated 5xx responses that Cloudflare passes through are not affected.
 
 **Fault attribution.** The `error_category` field tells agents where the fault lies:
 
