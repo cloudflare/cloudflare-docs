@@ -173,15 +173,7 @@ async function handleOrder(env: Env, orderId: string) {
 
 </TypeScriptExample>
 
-The resulting trace looks like:
-
-```txt
-root (fetch handler)
-└── handleOrder
-    ├── kv_get (automatic)
-    ├── calculateTotal
-    └── fetch (automatic)
-```
+{/* TODO: Add screenshot of trace waterfall showing nested spans (root fetch handler → handleOrder → kv_get, calculateTotal, fetch) */}
 
 ## Logging within spans
 
