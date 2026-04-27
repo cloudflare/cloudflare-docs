@@ -231,6 +231,7 @@ These example rules require a Business plan or above because they use counting e
 Application Security [custom rules](/waf/custom-rules/) and [traffic detections](/waf/detections/) give you additional signals beyond request rate to identify and act on suspicious login traffic. Detections populate request fields (such as leaked credential status and bot score) that your custom rules can then reference.
 
 ### Turn on leaked credentials detection
+
 Leaked credentials detection scans incoming login requests for usernames and passwords that appear in known data breach databases. Cloudflare hashes credentials before comparison and does not store plaintext passwords. When a match is found, the detection populates fields you can use in custom rules and rate limiting rules.
 
 The `cf.waf.credential_check.password_leaked` field is available on all plans.
