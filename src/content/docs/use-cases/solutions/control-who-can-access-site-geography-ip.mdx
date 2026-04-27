@@ -21,7 +21,7 @@ The procedures in this guide are configured per domain. Select your domain in th
 
 ## Block traffic by geography
 
-If you operate a service available only in specific countries, need to comply with legal or licensing restrictions, or observe attack traffic concentrated in specific regions, you can block or challenge requests based on the country, continent, or Autonomous System Number (ASN) of the source IP address. Application Security [custom rules](/waf/custom-rules/) match these geographic fields and apply an action you choose (Block, Managed Challenge, or others).
+Application Security [custom rules](/waf/custom-rules/) can match the country, continent, or Autonomous System Number (ASN) of the source IP address and apply an action you choose (Block, Managed Challenge, or others).
 
 :::caution
 Geographic blocking is imprecise. Visitors using VPNs or proxies can bypass country-based rules. Use geographic rules as one layer in a broader defense, not as a complete solution.
