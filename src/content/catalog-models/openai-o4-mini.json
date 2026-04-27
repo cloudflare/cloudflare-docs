@@ -1,0 +1,823 @@
+{
+	"model_id": "openai/o4-mini",
+	"provider_id": "openai",
+	"name": "o4-mini",
+	"description": "OpenAI's fast, lightweight reasoning model optimized for multi-step problem solving at lower cost.",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Reasoning",
+		"Fast",
+		"Cost-Efficient"
+	],
+	"context_length": 200000,
+	"max_output_tokens": 100000,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Question",
+			"description": "Basic chat completion request",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "What are the three laws of thermodynamics?"
+					}
+				]
+			},
+			"output": {
+				"text": "Here are the three (classical) laws of thermodynamics:\n\n1. First Law (Conservation of Energy)  \n     \u2013 Statement: Energy can neither be created nor destroyed, only converted from one form to another.  \n     \u2013 Formulation: \u0394U = Q \u2013 W  \n      \u2022 \u0394U is the change in internal energy of the system  \n      \u2022 Q is heat added to the system  \n      \u2022 W is work done by the system  \n\n2. Second Law (Entropy Increase)  \n     \u2013 Statement: In any spontaneous process, the total entropy of an isolated system never decreases; it increases for irreversible processes and remains constant for reversible ones.  \n     \u2013 Key consequences:  \n      \u2022 Heat cannot spontaneously flow from cold to hot (Clausius statement)  \n      \u2022 No heat engine can be 100% efficient (Kelvin\u2013Planck statement)  \n\n3. Third Law (Unattainability of Absolute Zero)  \n     \u2013 Statement: As the temperature of a perfect crystalline substance approaches absolute zero (0 K), its entropy approaches a constant minimum (often taken as zero).  \n     \u2013 Consequence: It is impossible to reach absolute zero in a finite number of steps."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/o4-mini',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'What are the three laws of thermodynamics?',\n      },\n    ],\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "With System Message",
+			"description": "Using a system message to set context",
+			"input": {
+				"messages": [
+					{
+						"role": "system",
+						"content": "You are a helpful coding assistant specializing in Python."
+					},
+					{
+						"role": "user",
+						"content": "How do I read a JSON file in Python?"
+					}
+				]
+			},
+			"output": {
+				"text": "Here\u2019s the most common way, using Python\u2019s built-in json module:\n\n```python\nimport json\n\n# 1. Open the file\nwith open(\"data.json\", \"r\", encoding=\"utf-8\") as f:\n    # 2. Parse the JSON into a Python object (dict or list)\n    data = json.load(f)\n\n# 3. Now `data` is a normal Python dict/list\nprint(data)\nprint(type(data))      # e.g. <class 'dict'>\nprint(data[\"someKey\"]) # access fields as usual\n```\n\nExplanation:\n\n 1. `open(..., \"r\", encoding=\"utf-8\")` opens in read-mode.\n 2. `json.load(f)` reads the entire file and deserializes it to a Python object.\n 3. You can now work with it like any dict or list.\n\nIf you already have a JSON string in memory, use `json.loads()`:\n\n```python\nimport json\n\njson_str = '{\"name\": \"Alice\", \"age\": 30}'\ndata = json.loads(json_str)\n```\n\nError handling example:\n\n```python\nimport json\n\ntry:\n    with open(\"data.json\", encoding=\"utf-8\") as f:\n        data = json.load(f)\nexcept FileNotFoundError:\n    print(\"File not found\")\nexcept json.JSONDecodeError as e:\n    print(\"Invalid JSON:\", e)\nelse:\n    # success\n    print(data)\n```\n\nAlternative with pathlib:\n\n```python\nfrom pathlib import Path\nimport json\n\ntext = Path(\"data.json\").read_text(encoding=\"utf-8\")\ndata = json.loads(text)\n```\n\nThat\u2019s all you need to read JSON files in Python!"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/o4-mini',\n  {\n    messages: [\n      {\n        role: 'system',\n        content: 'You are a helpful coding assistant specializing in Python.',\n      },\n      {\n        role: 'user',\n        content: 'How do I read a JSON file in Python?',\n      },\n    ],\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Multi-turn Conversation",
+			"description": "Continuing a conversation with context",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "I need help planning a road trip from San Francisco to Los Angeles."
+					},
+					{
+						"role": "assistant",
+						"content": "I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?"
+					},
+					{
+						"role": "user",
+						"content": "Yes, what are some good places to stop?"
+					}
+				],
+				"max_completion_tokens": 2048
+			},
+			"output": {
+				"text": "Here are two popular ways to make the trip\u2014with suggested stops\u2014so you can pick the one that best fits your interests and schedule.  \n\n1. Coastal Highway (CA-1 / Pacific Coast Highway)  \n   Total driving time: ~8\u201310 hours (no major traffic), 450 miles  \n   Recommended pace: 2\u20133 days  \n\n   \u2022 Half Moon Bay (30 mi / 45 min from SF)  \n     \u2013 Stroll the beaches, grab coffee or seafood at the harbor.  \n     \u2013 Quick dune hike at Poplar Beach or Fitzgerald Marine Reserve.  \n\n   \u2022 Santa Cruz (50 mi / 1 hr from Half Moon Bay)  \n     \u2013 Santa Cruz Beach Boardwalk for rides & arcade.  \n     \u2013 Downtown Pacific Avenue for shops and local brews.  \n\n   \u2022 Capitola (5 mi / 10 min from Santa Cruz)  \n     \u2013 Colorful seaside village with boutique shops and caf\u00e9s.  \n     \u2013 Great spot for sunset on Capitola Beach.  \n\n   \u2022 Monterey & Carmel (45 mi / 1 hr from Capitola)  \n     \u2013 Monterey Bay Aquarium, Cannery Row, coastal bike path.  \n     \u2013 Carmel-by-the-Sea: fairy-tale cottages, art galleries, Carmel Mission.  \n     \u2013 17-Mile Drive (pebbled beaches, peacocks, iconic Lone Cypress).  \n\n   \u2022 Big Sur (30 mi / 1 hr from Carmel)  \n     \u2013 Bixby Creek Bridge photo-op.  \n     \u2013 Pfeiffer Beach (purple sand) and McWay Falls at Julia Pfeiffer Burns State Park.  \n     \u2013 Ragged Point for coastal vistas and snacks.  \n     Overnight option: Big Sur Lodge or camping.  \n\n   \u2022 San Simeon & Cambria (45 mi / 1 hr from Big Sur)  \n     \u2013 Hearst Castle tour.  \n     \u2013 Elephant Seal Vista Point just north of San Simeon.  \n     \u2013 Cambria\u2019s Moonstone Beach Boardwalk and quaint Main Street.  \n\n   \u2022 Morro Bay (25 mi / 35 min from Cambria)  \n     \u2013 Morro Rock, waterfront restaurants, kayaking and bird-watching.  \n\n   \u2022 San Luis Obispo (30 mi / 35 min from Morro Bay)  \n     \u2013 Mission San Luis Obispo de Tolosa.  \n     \u2013 Bubblegum Alley and bustling Higuera Street for dinner or a brew.  \n     Overnight option: downtown SLO.  \n\n   \u2022 Pismo Beach & Solvang (option)  \n     \u2013 Pismo: pier, ATV dunes at nearby Oceano Dunes.  \n     \u2013 Solvang: Danish-style village and bakeries (20 mi inland from Pismo).  \n\n   \u2022 Santa Barbara (100 mi / 2 hrs from SLO)  \n     \u2013 State Street shopping, Stearns Wharf, Mission Santa Barbara.  \n     \u2013 Wine tasting in the nearby Funk Zone or Santa Ynez Valley.  \n\n   \u2022 Malibu & Santa Monica (90 mi / 1\u00bd\u20132 hrs from SB)  \n     \u2013 Malibu\u2019s Zuma Beach or Point Dume.  \n     \u2013 Santa Monica Pier, Third Street Promenade.  \n\n   \u2022 Los Angeles (20 mi / 30 min from Santa Monica)  \n     \u2013 Welcome to LA!  \n\n2. Faster Inland Route (I-5)  \n   Total driving time: ~6 hrs, 380 miles  \n   Good if you\u2019re pressed for time;  fewer scenic overlooks but easier mileage.  \n\n   Key stops along I-5:  \n   \u2022 Gilroy (40 mi / 45 min from SF) \u2013 Home of the Garlic Festival; farm stands.  \n   \u2022 Kettleman City (160 mi / 2\u00bd hrs from Gilroy) \u2013 Bravo Farms for ice cream and picnic.  \n   \u2022 Harris Ranch (80 mi / 1 hr from Kettleman) \u2013 Large steakhouse, deli and wine shop.  \n   \u2022 Grapevine / Tejon Pass (65 mi / 1 hr from Harris) \u2013 Decent rest-stop restaurants and views as you descend into Southern California.  \n   \u2022 Valencia / Santa Clarita (30 mi / 30 min from Grapevine) \u2013 Valencia Town Center for shops.  \n   \u2022 Los Angeles (35 mi / 40 min from Valencia)  \n\n\u2014  \nTips:  \n\u2022 Plan fuel and rest stops in Big Sur \u2014 services are sparse.  \n\u2022 Book lodging early if traveling weekends or holidays (Big Sur, SLO, Santa Barbara are popular).  \n\u2022 Allow extra time for traffic, especially near Malibu, Santa Barbara, and LA.  \n\nEnjoy your trip! Let me know if you need more detail on any stop or lodging suggestions."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/o4-mini',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'I need help planning a road trip from San Francisco to Los Angeles.',\n      },\n      {\n        role: 'assistant',\n        content:\n          \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n      },\n      {\n        role: 'user',\n        content: 'Yes, what are some good places to stop?',\n      },\n    ],\n    max_completion_tokens: 2048,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Creative Writing",
+			"description": "Longer completion for creative output",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "Write a short story opening about a detective finding an unusual clue."
+					}
+				],
+				"max_completion_tokens": 2048
+			},
+			"output": {
+				"text": "Detective Mara Ellington crouched in the alley\u2019s muted glow, rain dripping from her brimmed hat. The city\u2019s midnight hush was deafening, broken only by distant sirens and the scurry of rats. She\u2019d come to inspect the scene of a daring daylight burglary at the old Currier estate, expecting shattered glass and empty safes. Instead, on the damp cobblestones, she found a single porcelain doll\u2019s head\u2014its cheek chipped, one glass eye staring blankly at the moon. \n\nHeat prickled her neck. No burglar would leave such a thing behind. She reached for it, careful of the spider-web crack snaking from its temple. The doll\u2019s painted lips were twisted into an unnatural grin, and tucked beneath its chin was a scrap of yellowed paper, edges singed. Mara unfolded it, breath catching as she read the single word scrawled in crimson ink: \u201cFound.\u201d"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/o4-mini',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'Write a short story opening about a detective finding an unusual clue.',\n      },\n    ],\n    max_completion_tokens: 2048,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Streaming Response",
+			"description": "Enable streaming for real-time output",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "Explain the concept of recursion with a simple example."
+					}
+				],
+				"stream": true,
+				"stream_options": {
+					"include_usage": true
+				}
+			},
+			"output": {
+				"text": [
+					"Rec",
+					"ursion",
+					" is",
+					" a",
+					" technique",
+					" where",
+					" a",
+					" function",
+					" (",
+					"or",
+					" routine",
+					")",
+					" calls",
+					" itself",
+					" in",
+					" order",
+					" to",
+					" break",
+					" a",
+					" problem",
+					" down",
+					" into",
+					" smaller",
+					",",
+					" more",
+					" manageable",
+					" pieces",
+					".",
+					" Every",
+					" recursive",
+					" solution",
+					" has",
+					" two",
+					" essential",
+					" parts",
+					":\n\n",
+					"1",
+					".",
+					" Base",
+					" Case",
+					"  \n",
+					"  ",
+					" ",
+					" ",
+					"\u2013",
+					" A",
+					" condition",
+					" under",
+					" which",
+					" the",
+					" function",
+					" returns",
+					" a",
+					" result",
+					" directly",
+					",",
+					" without",
+					" making",
+					" any",
+					" further",
+					" recursive",
+					" calls",
+					".",
+					"  \n",
+					"2",
+					".",
+					" Recursive",
+					" Case",
+					"  \n",
+					"  ",
+					" ",
+					" ",
+					"\u2013",
+					" The",
+					" part",
+					" of",
+					" the",
+					" function",
+					" that",
+					" calls",
+					" itself",
+					" with",
+					" a",
+					" smaller",
+					" or",
+					" simpler",
+					" input",
+					",",
+					" moving",
+					" the",
+					" overall",
+					" problem",
+					" toward",
+					" the",
+					" base",
+					" case",
+					".\n\n",
+					"Simple",
+					" Example",
+					":",
+					" Computing",
+					" Factor",
+					"ial",
+					"\n\n",
+					"The",
+					" factorial",
+					" of",
+					" a",
+					" non",
+					"-",
+					"negative",
+					" integer",
+					" n",
+					" (",
+					"written",
+					" n",
+					"!)",
+					" is",
+					" the",
+					" product",
+					" of",
+					" all",
+					" positive",
+					" integers",
+					" up",
+					" to",
+					" n",
+					".",
+					"  \n",
+					" ",
+					" \u2013",
+					" ",
+					"0",
+					"!",
+					" is",
+					" defined",
+					" as",
+					" ",
+					"1",
+					" (",
+					"this",
+					" will",
+					" be",
+					" our",
+					" base",
+					" case",
+					").",
+					"  \n",
+					" ",
+					" \u2013",
+					" For",
+					" n",
+					" >",
+					" ",
+					"0",
+					",",
+					" n",
+					"!",
+					" =",
+					" n",
+					" \u00d7",
+					" (",
+					"n",
+					" ",
+					"\u2013",
+					" ",
+					"1",
+					")!",
+					" \n\n",
+					"Here",
+					"\u2019s",
+					" how",
+					" you",
+					" could",
+					" write",
+					" it",
+					" in",
+					" Python",
+					":\n\n",
+					"``",
+					"`\n",
+					"def",
+					" factorial",
+					"(n",
+					"):\n",
+					"   ",
+					" #",
+					" Base",
+					" case",
+					"\n",
+					"   ",
+					" if",
+					" n",
+					" ==",
+					" ",
+					"0",
+					":\n",
+					"       ",
+					" return",
+					" ",
+					"1",
+					"\n",
+					"   ",
+					" #",
+					" Recursive",
+					" case",
+					"\n",
+					"   ",
+					" else",
+					":\n",
+					"       ",
+					" return",
+					" n",
+					" *",
+					" factorial",
+					"(n",
+					" -",
+					" ",
+					"1",
+					")\n",
+					"``",
+					"`\n\n",
+					"How",
+					" it",
+					" works",
+					" for",
+					" factorial",
+					"(",
+					"4",
+					"):\n",
+					" ",
+					"1",
+					".",
+					" factorial",
+					"(",
+					"4",
+					")",
+					"  \n",
+					"   ",
+					" \u2192",
+					" ",
+					"4",
+					" *",
+					" factorial",
+					"(",
+					"3",
+					")",
+					"  \n",
+					" ",
+					"2",
+					".",
+					" factorial",
+					"(",
+					"3",
+					")",
+					"  \n",
+					"   ",
+					" \u2192",
+					" ",
+					"3",
+					" *",
+					" factorial",
+					"(",
+					"2",
+					")",
+					"  \n",
+					" ",
+					"3",
+					".",
+					" factorial",
+					"(",
+					"2",
+					")",
+					"  \n",
+					"   ",
+					" \u2192",
+					" ",
+					"2",
+					" *",
+					" factorial",
+					"(",
+					"1",
+					")",
+					"  \n",
+					" ",
+					"4",
+					".",
+					" factorial",
+					"(",
+					"1",
+					")",
+					"  \n",
+					"   ",
+					" \u2192",
+					" ",
+					"1",
+					" *",
+					" factorial",
+					"(",
+					"0",
+					")",
+					"  \n",
+					" ",
+					"5",
+					".",
+					" factorial",
+					"(",
+					"0",
+					")",
+					"  \n",
+					"   ",
+					" \u2192",
+					" ",
+					"1",
+					"  ",
+					" (",
+					"base",
+					" case",
+					" reached",
+					")\n\n",
+					"Then",
+					" the",
+					" calls",
+					" \u201c",
+					"un",
+					"wind",
+					"\u201d",
+					":\n",
+					" ",
+					" \u2013",
+					" factorial",
+					"(",
+					"1",
+					")",
+					" returns",
+					" ",
+					"1",
+					" \u00d7",
+					" ",
+					"1",
+					" =",
+					" ",
+					"1",
+					"  \n",
+					" ",
+					" \u2013",
+					" factorial",
+					"(",
+					"2",
+					")",
+					" returns",
+					" ",
+					"2",
+					" \u00d7",
+					" ",
+					"1",
+					" =",
+					" ",
+					"2",
+					"  \n",
+					" ",
+					" \u2013",
+					" factorial",
+					"(",
+					"3",
+					")",
+					" returns",
+					" ",
+					"3",
+					" \u00d7",
+					" ",
+					"2",
+					" =",
+					" ",
+					"6",
+					"  \n",
+					" ",
+					" \u2013",
+					" factorial",
+					"(",
+					"4",
+					")",
+					" returns",
+					" ",
+					"4",
+					" \u00d7",
+					" ",
+					"6",
+					" =",
+					" ",
+					"24",
+					"  \n\n",
+					"Key",
+					" points",
+					" to",
+					" remember",
+					":\n",
+					"-",
+					" Always",
+					" define",
+					" a",
+					" clear",
+					" base",
+					" case",
+					",",
+					" or",
+					" the",
+					" recursion",
+					" will",
+					" never",
+					" stop",
+					".",
+					"  \n",
+					"-",
+					" Each",
+					" recursive",
+					" call",
+					" should",
+					" make",
+					" progress",
+					" toward",
+					" that",
+					" base",
+					" case",
+					" (",
+					"e",
+					".g",
+					".",
+					" decreasing",
+					" n",
+					" by",
+					" ",
+					"1",
+					").",
+					"  \n",
+					"-",
+					" Rec",
+					"ursion",
+					" is",
+					" especially",
+					" handy",
+					" for",
+					" problems",
+					" that",
+					" naturally",
+					" split",
+					" into",
+					" similar",
+					" sub",
+					"pro",
+					"blems",
+					" (",
+					"tree",
+					" travers",
+					"als",
+					",",
+					" divide",
+					"-",
+					"and",
+					"-",
+					"con",
+					"quer",
+					" algorithms",
+					",",
+					" combin",
+					"atorial",
+					" searches",
+					",",
+					" etc",
+					".)."
+				]
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/o4-mini',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'Explain the concept of recursion with a simple example.',\n      },\n    ],\n    stream: true,\n    stream_options: {\n      include_usage: true,\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://openai.com/",
+	"terms": "https://openai.com/policies/",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/openai/o4-mini.png",
+	"metadata": {
+		"Architecture": "Transformer",
+		"Reasoning": "Chain-of-thought"
+	},
+	"created_at": "2026-04-13 16:45:22",
+	"default_example": null,
+	"code_snippets": [],
+	"zdr": false,
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"messages": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"role": {
+								"type": "string",
+								"enum": [
+									"system",
+									"developer",
+									"user",
+									"assistant",
+									"tool"
+								]
+							},
+							"content": {
+								"anyOf": [
+									{
+										"type": "string"
+									},
+									{
+										"type": "null"
+									},
+									{
+										"type": "array",
+										"items": {}
+									}
+								]
+							}
+						},
+						"required": [
+							"role",
+							"content"
+						],
+						"additionalProperties": {}
+					}
+				},
+				"temperature": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 2
+				},
+				"max_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"max_completion_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"top_p": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"frequency_penalty": {
+					"type": "number",
+					"minimum": -2,
+					"maximum": 2
+				},
+				"presence_penalty": {
+					"type": "number",
+					"minimum": -2,
+					"maximum": 2
+				},
+				"stream": {
+					"type": "boolean"
+				},
+				"stream_options": {
+					"type": "object",
+					"properties": {
+						"include_usage": {
+							"type": "boolean"
+						}
+					},
+					"additionalProperties": false
+				},
+				"tools": {
+					"type": "array",
+					"items": {}
+				},
+				"tool_choice": {},
+				"response_format": {}
+			},
+			"required": [
+				"messages"
+			],
+			"additionalProperties": {}
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"object": {
+					"type": "string"
+				},
+				"created": {
+					"type": "number"
+				},
+				"model": {
+					"type": "string"
+				},
+				"choices": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"index": {
+								"type": "number"
+							},
+							"message": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string"
+									},
+									"content": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "null"
+											}
+										]
+									},
+									"tool_calls": {
+										"type": "array",
+										"items": {}
+									}
+								},
+								"required": [
+									"role"
+								],
+								"additionalProperties": {}
+							},
+							"finish_reason": {
+								"anyOf": [
+									{
+										"type": "string"
+									},
+									{
+										"type": "null"
+									}
+								]
+							}
+						},
+						"required": [
+							"index",
+							"message",
+							"finish_reason"
+						],
+						"additionalProperties": {}
+					}
+				},
+				"usage": {
+					"type": "object",
+					"properties": {
+						"prompt_tokens": {
+							"type": "number"
+						},
+						"completion_tokens": {
+							"type": "number"
+						},
+						"total_tokens": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"prompt_tokens",
+						"completion_tokens",
+						"total_tokens"
+					],
+					"additionalProperties": {}
+				}
+			},
+			"required": [
+				"id",
+				"object",
+				"created",
+				"model",
+				"choices"
+			],
+			"additionalProperties": {}
+		}
+	}
+}

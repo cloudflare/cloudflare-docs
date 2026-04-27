@@ -3,6 +3,9 @@ pcx_content_type: concept
 title: API configuration
 sidebar:
   order: 2
+description: Configure Logpush jobs via the API.
+products:
+  - logpush
 ---
 
 import { APIRequest } from "~/components";
@@ -179,7 +182,7 @@ The kind parameter cannot be used to update existing Logpush jobs. You can only 
     output_options: {
       field_names: [
         "ClientIP",
-        "ClientRequesrHost",
+        "ClientRequestHost",
         "ClientRequestMethod",
         " ClientRequestURI",
         "EdgeEndTimestamp",

@@ -1,0 +1,60 @@
+---
+pcx_content_type: reference
+title: RtkDialog
+description: API reference for RtkDialog component (React Native Library)
+products:
+  - realtime
+---
+
+A modal dialog overlay component with optional close button.
+
+## Properties
+
+| Property           | Type                           | Required | Default           | Description                      |
+| ------------------ | ------------------------------ | -------- | ----------------- | -------------------------------- |
+| `children`         | `ReactNode`                    | ✅       | -                 | Dialog content                   |
+| `meeting`          | `RealtimeKitClient`            | ✅       | -                 | The RealtimeKit meeting instance |
+| `onRtkDialogClose` | `any`                          | ✅       | -                 | Callback when dialog is closed   |
+| `config`           | `UIConfig`                     | ❌       | `defaultConfig`   | UI configuration object          |
+| `hideCloseButton`  | `boolean`                      | ❌       | `false`           | Hide the close button            |
+| `open`             | `boolean`                      | ❌       | -                 | Whether the dialog is visible    |
+| `size`             | `'lg' \| 'md' \| 'sm' \| 'xl'` | ❌       | -                 | Size variant                     |
+| `states`           | `States`                       | ❌       | -                 | UI state object                  |
+| `iconPack`         | `IconPack`                     | ❌       | `defaultIconPack` | Custom icon pack                 |
+| `t`                | `RtkI18n`                      | ❌       | -                 | i18n translation function        |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkDialog } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return (
+		<RtkDialog meeting={meeting} onRtkDialogClose={() => setOpen(false)}>
+			<Text>Dialog content</Text>
+		</RtkDialog>
+	);
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkDialog } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return (
+		<RtkDialog
+			meeting={meeting}
+			open={isOpen}
+			onRtkDialogClose={() => setOpen(false)}
+			hideCloseButton={false}
+			size="md"
+		>
+			<Text>Dialog content</Text>
+		</RtkDialog>
+	);
+}
+```

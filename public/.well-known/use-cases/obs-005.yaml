@@ -1,0 +1,108 @@
+id: obs-005
+name: See how your application is performing and what to fix
+category: observability-analytics
+description: >
+  Get a complete picture of your application's speed, availability, and errors in one place — without jumping between multiple product dashboards.
+aliases:
+  - "App performance overview"
+  - "Why is my site slow"
+  - "Performance monitoring dashboard"
+  - "What should I optimize"
+  - "End-to-end application health"
+  - "Single pane of glass for performance"
+products:
+  - Analytics
+  - Speed
+  - Cache
+  - Health Checks
+  - Load Balancing
+
+qualifying_questions:
+  - id: q1
+    text: "What are you trying to improve?"
+    options:
+      - label: "Page load speed for visitors"
+        sets: [speed]
+      - label: "Origin server response time and reliability"
+        sets: [origin-health]
+      - label: "Cache hit ratio — serve more from Cloudflare, less from my server"
+        sets: [cache-optimization]
+      - label: "All of the above — I want a full picture"
+        sets: [speed, origin-health, cache-optimization]
+      - label: "I'm not sure where to start"
+        sets: [speed, cache-optimization, evaluating]
+  - id: q2
+    text: "How many origin servers or endpoints does your application use?"
+    options:
+      - label: "One server"
+        sets: [single-origin]
+      - label: "Multiple servers or regions"
+        sets: [multi-origin]
+      - label: "I'm not sure"
+        sets: [single-origin]
+
+default_path: speed-diagnostics
+
+paths:
+  - id: speed-diagnostics
+    name: "Diagnose and Improve Page Load Speed"
+    condition:
+      has_any: [speed, evaluating]
+    steps:
+      - product: "Speed"
+        action: run-speed-test
+        description: "Run a speed test to measure your site's Core Web Vitals and loading performance"
+      - product: "Speed"
+        action: review-recommendations
+        description: "Review Cloudflare's automatic recommendations for what to turn on or adjust"
+      - product: "Cache"
+        action: check-cache-status
+        description: "Check which resources are being served from cache vs fetched from your origin"
+      - product: "Speed"
+        action: enable-early-hints
+        description: "Enable Early Hints and other speed features recommended for your setup"
+      - product: "Analytics"
+        action: monitor-web-vitals
+        description: "Set up monitoring to track Core Web Vitals over time"
+
+  - id: origin-health-monitoring
+    name: "Monitor and Improve Origin Health"
+    condition:
+      has_any: [origin-health, multi-origin]
+    steps:
+      - product: "Health Checks"
+        action: configure-health-checks
+        description: "Set up Health Checks to continuously monitor your origin servers"
+      - product: "Analytics"
+        action: review-origin-response-time
+        description: "Review origin response times in Analytics to spot slow endpoints"
+      - product: "Load Balancing"
+        action: configure-failover
+        description: "Set up Load Balancing to automatically route away from unhealthy origins"
+      - product: "Analytics"
+        action: set-alerts
+        description: "Configure alerts for origin downtime or response time spikes"
+
+  - id: cache-optimization
+    name: "Maximize Cache Hit Ratio"
+    condition:
+      has_any: [cache-optimization]
+    steps:
+      - product: "Analytics"
+        action: review-cache-analytics
+        description: "Check your current cache hit ratio and identify what's not being cached"
+      - product: "Cache"
+        action: create-cache-rules
+        description: "Create cache rules to cache more of your dynamic or static content"
+      - product: "Cache"
+        action: enable-tiered-cache
+        description: "Enable Tiered Cache to reduce origin requests by serving from nearby data centers"
+      - product: "Cache"
+        action: configure-cache-reserve
+        description: "Consider Cache Reserve for long-tail content that gets evicted too quickly"
+
+related_use_cases:
+  - obs-001
+  - perf-001
+  - perf-003
+  - ops-017

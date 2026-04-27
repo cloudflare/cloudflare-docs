@@ -6,13 +6,15 @@ sidebar:
 head: []
 description: Diagnose issues with Workers metrics, and review request data for a
   zone with Workers analytics.
+products:
+  - workers
 ---
 
 import { GlossaryTooltip, DashButton, Steps } from "~/components";
 
 There are two graphical sources of information about your Workers traffic at a given time: Workers metrics and zone-based Workers analytics.
 
-Workers metrics can help you diagnose issues and understand your Workers' workloads by showing performance and usage of your Workers. If your Worker runs on a route on a zone, or on a few zones, Workers metrics will show how much traffic your Worker is handling on a per-zone basis, and how many requests your site is getting.
+Workers metrics can help you diagnose issues and understand your Workers' workloads by showing the performance and usage of your Workers. If your Worker runs on a route on a zone, or on a few zones, Workers metrics will show how much traffic your Worker is handling on a per-zone basis, and how many requests your site is getting.
 
 Zone analytics show how much traffic all Workers assigned to a zone are handling.
 
@@ -91,7 +93,7 @@ To review invocation statuses:
 
 </Steps>
 
-Worker invocation statuses indicate whether a Worker executed successfully or failed to generate a response in the Workers runtime. Invocation statuses differ from HTTP status codes. In some cases, a Worker invocation succeeds but does not generate a successful HTTP status because of another error encountered outside of the Workers runtime. Some invocation statuses result in a [Workers error code](/workers/observability/errors/#error-pages-generated-by-workers) being returned to the client.
+Worker invocation statuses indicate whether a Worker executed successfully or failed to generate a response in the Workers runtime. Invocation statuses differ from [HTTP status codes](/support/troubleshooting/http-status-codes/). In some cases, a Worker invocation succeeds but does not generate a successful HTTP status because of another error encountered outside of the Workers runtime. Some invocation statuses result in a [Workers error code](/workers/observability/errors/#error-pages-generated-by-workers) being returned to the client.
 
 | Invocation status      | Definition                                                                   | Workers error code | GraphQL field          |
 | ---------------------- | ---------------------------------------------------------------------------- | ------------------ | ---------------------- |
@@ -101,11 +103,11 @@ Worker invocation statuses indicate whether a Worker executed successfully or fa
 | Exceeded resources¹    | Worker exceeded runtime limits                                               | 1102, 1027         | `exceededResources`    |
 | Internal error²        | Workers runtime encountered an error                                         |                    | `internalError`        |
 
-¹ The Exceeded Resources status may appear when the Worker exceeds a [runtime limit](/workers/platform/limits/#request-limits). The most common cause is excessive CPU time, but is also caused by a Worker exceeding startup time or free tier limits.
+¹ The Exceeded Resources status may appear when the Worker exceeds a [runtime limit](/workers/platform/limits/#request-and-response-limits). The most common cause is excessive CPU time, but is also caused by a Worker exceeding startup time or free tier limits.
 
 ² The Internal Error status may appear when the Workers runtime fails to process a request due to an internal failure in our system. These errors are not caused by any issue with the Worker code nor any resource limit. While requests with Internal Error status are rare, some may appear during normal operation. These requests are not counted towards usage for billing purposes. If you notice an elevated rate of requests with Internal Error status, review [www.cloudflarestatus.com](https://www.cloudflarestatus.com/).
 
-To further investigate exceptions, use [`wrangler tail`](/workers/wrangler/commands/#tail).
+To further investigate exceptions, use [`wrangler tail`](/workers/wrangler/commands/general/#tail).
 
 ### Request duration
 

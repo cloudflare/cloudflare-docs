@@ -1,0 +1,47 @@
+---
+pcx_content_type: reference
+title: RtkLogo
+description: API reference for RtkLogo component (React Native Library)
+products:
+  - realtime
+---
+
+Displays a logo from a URL (SVG format) in the meeting header.
+
+## Properties
+
+| Property  | Type         | Required | Default | Description                                 |
+| --------- | ------------ | -------- | ------- | ------------------------------------------- |
+| `meeting` | `any`        | ❌       | -       | The RealtimeKit meeting instance            |
+| `config`  | `UIConfig`   | ❌       | -       | UI configuration object                     |
+| `logoUrl` | `string`     | ❌       | -       | URL of the logo SVG to display              |
+| `style`   | `StyleProps` | ❌       | -       | Style object with width/height for the logo |
+| `t`       | `RtkI18n`    | ❌       | -       | i18n translation function                   |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkLogo } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkLogo logoUrl="https://example.com/logo.svg" />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkLogo } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return (
+		<RtkLogo
+			logoUrl="https://example.com/logo.svg"
+			style={{ width: 120, height: 40 }}
+			config={customConfig}
+		/>
+	);
+}
+```

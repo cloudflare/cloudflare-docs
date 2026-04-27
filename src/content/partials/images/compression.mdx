@@ -1,9 +1,15 @@
 ---
 {}
 ---
-import { Tabs, TabItem } from "~/components"
+import { Tabs, TabItem} from "~/components"
 
-Slightly reduces latency on a cache miss by selecting a quickest-to-compress file format, at a cost of increased file size and lower image quality. It will usually override the `format` option and choose JPEG over WebP or AVIF. We do not recommend using this option, except in unusual circumstances like resizing uncacheable dynamically-generated images.
+### `compression`
+
+Selects the output format that is quickest to compress. Accepts `fast`. The default is none.
+
+The `compression=fast` option prioritizes encoding speed over output quality and file size, and will usually override the `format` parameter to choose JPEG over more efficient formats like AVIF or WebP. This slightly reduces latency on a cache miss, but may result in increased file size and lower image quality.
+
+This option is not recommended, except in unusual circumstances like resizing uncacheable, dynamically-generated images.
 
 <Tabs>
   <TabItem label="URL format">

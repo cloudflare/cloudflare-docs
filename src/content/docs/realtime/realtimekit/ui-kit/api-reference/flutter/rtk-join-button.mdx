@@ -1,0 +1,48 @@
+---
+pcx_content_type: navigation
+title: RtkJoinButton
+description: API reference for RtkJoinButton component (Flutter Library)
+products:
+  - realtime
+---
+
+A button widget for joining a RealtimeKit meeting room. Provides visual feedback during the joining process.
+
+## Properties
+
+| Property          | Type                | Required | Default              | Description                                 |
+| ----------------- | ------------------- | -------- | -------------------- | ------------------------------------------- |
+| `meeting`         | `RealtimekitClient` | ✅       | -                    | Meeting client instance                     |
+| `onMeetingJoined` | `VoidCallback?`     | ❌       | -                    | Callback invoked when the meeting is joined |
+| `rtkDesignToken`  | `RtkDesignTokens?`  | ❌       | Global design tokens | Design tokens for customization             |
+| `height`          | `double?`           | ❌       | -                    | Height of the button                        |
+| `width`           | `double?`           | ❌       | -                    | Width of the button                         |
+| `isDisabled`      | `bool`              | ❌       | `false`              | Whether the button is disabled              |
+
+## Usage Examples
+
+### Basic Usage
+
+```dart
+import 'package:realtimekit_ui/realtimekit_ui.dart';
+
+RtkJoinButton(
+  meeting: yourMeetingInstance,
+)
+```
+
+### With Properties
+
+```dart
+import 'package:realtimekit_ui/realtimekit_ui.dart';
+
+RtkJoinButton(
+  meeting: yourMeetingInstance,
+  onMeetingJoined: () {
+    // Handle successful join
+  },
+  height: 50.0,
+  width: 200.0,
+  isDisabled: false,
+)
+```

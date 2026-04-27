@@ -5,6 +5,8 @@ sidebar:
   order: 9
 tags: ["full-stack"]
 description: Create a Vike application and deploy it to Cloudflare Workers
+products:
+  - workers
 ---
 
 import { AutoconfigDiagram, Steps, PackageManagers } from "~/components";
@@ -108,7 +110,7 @@ env.LOG_LEVEL
 
 ## TypeScript
 
-If you use TypeScript, run [`wrangler types`](/workers/wrangler/commands/#types) whenever you change your Cloudflare configuration to update the `worker-configuration.d.ts` file.
+If you use TypeScript, run [`wrangler types`](/workers/wrangler/commands/general/#types) whenever you change your Cloudflare configuration to update the `worker-configuration.d.ts` file.
 
 <PackageManagers
 	type="exec"

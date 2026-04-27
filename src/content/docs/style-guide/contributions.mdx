@@ -1,8 +1,10 @@
 ---
 title: Contributions
-description: |
+description: Learn how to contribute to the Cloudflare Docs.
 sidebar:
     order: 1
+products:
+  - style-guide
 ---
 import { Details } from "~/components";
 
@@ -43,19 +45,19 @@ To edit and create a pull request with the [full development workflow](https://d
 1. [Log in to GitHub](https://github.com/login) and [fork the cloudflare-docs repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo).
 2. If you are editing in your web browser (with [Codespaces](https://docs.github.com/en/codespaces)), move on to step 3.
 <br/>If you are editing on your local machine (with [Visual Studio Code](https://code.visualstudio.com/)):
-	* (Required) Install [Node.js](https://nodejs.org/en) (version 22 or later).
+	* (Required) Install [Node.js](https://nodejs.org/en) (version 24 or later).
 	* (Recommended, but not required) Install [Volta](https://volta.sh/) for easier package management.
 	* (Required) [Clone the fork to your local machine.](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
 3. Create a branch from your fork (or from your clone).
 3. Make your edits.
 :::note[Preview your edits]
-To preview your edits, you need to install `npm`.
+To preview your edits, you need to install `pnpm`.
  ```bash
- npm install
+ pnpm install
  ```
-Then, run `npm run dev`.
+Then, run `pnpm run dev`.
  ```bash
- npm run dev
+ pnpm run dev
  ```
 A link will appear in the terminal, `https://localhost:1111/`, where you can preview your edits. This link automatically updates with any new edits you make.
 :::

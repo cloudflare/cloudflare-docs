@@ -1,0 +1,131 @@
+---
+title: Codex + Cloudflare
+description: "Lightweight open-source terminal agent that reads and writes files, runs commands, and browses the web in a sandbox. Made by OpenAI."
+template: splash
+pcx_content_type: how-to
+products:
+  - agent-setup
+---
+
+import { Steps } from "~/components";
+import AgentHeader from "~/components/agent-setup/AgentHeader.astro";
+import PlatformAccess from "~/components/agent-setup/PlatformAccessSection.astro";
+import ExamplePromptsList from "~/components/agent-setup/ExamplePromptsList.astro";
+import RandomPrompt from "~/components/agent-setup/RandomPrompt.astro";
+import TipsList from "~/components/agent-setup/TipsList.astro";
+import FAQList from "~/components/agent-setup/FAQList.astro";
+import FAQItem from "~/components/agent-setup/FAQItem.astro";
+import TroubleshootingList from "~/components/agent-setup/TroubleshootingList.astro";
+import TroubleshootingItem from "~/components/agent-setup/TroubleshootingItem.astro";
+import BuildAgentsCallout from "~/components/agent-setup/BuildAgentsCallout.astro";
+import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
+
+<AgentHeader slug="codex" />
+
+## Quick start
+
+<Steps>
+	1. **Install Codex**
+
+		Install the Codex CLI. macOS and Linux are fully supported; use WSL2 on Windows. For Homebrew or other install methods, see the [Codex CLI setup guide](https://developers.openai.com/codex/cli/).
+
+		```bash
+		npm install -g @openai/codex
+		```
+
+	2. **Install Cloudflare Skills**
+
+		```bash
+		npx skills add https://github.com/cloudflare/skills
+		```
+
+	3. **Add Cloudflare MCP servers**
+
+		For a full list of available Cloudflare MCP servers, refer to the repository on [GitHub](https://github.com/cloudflare/mcp-server-cloudflare).
+
+		```bash
+		codex mcp add cloudflare --url https://mcp.cloudflare.com/mcp
+		codex mcp add cloudflare-docs --url https://docs.mcp.cloudflare.com/mcp
+		```
+
+	4. **Launch Codex**
+
+		Start Codex from the root of your project, where `wrangler.jsonc` lives (if it already exists).
+
+		```bash
+		codex
+		```
+
+	5. **Try a prompt**
+
+		For example:
+
+		<RandomPrompt />
+</Steps>
+
+## Cloudflare platform access
+
+<PlatformAccess />
+
+## Example prompts
+
+<ExamplePromptsList />
+
+## Tips
+
+<TipsList>
+
+- The Cloudflare API MCP server uses Code Mode — Codex writes JavaScript against a typed API to reach any of 2,500+ endpoints in ~1,000 tokens.
+- Try the `/cloudflare:build-agent` slash command to scaffold a complete Agents SDK project, or `/cloudflare:build-mcp` for a remote MCP server.
+- For more information on installing additional MCP servers, or when to use Code Mode versus traditional MCP servers, refer to the [Cloudflare MCP server repository](https://github.com/cloudflare/mcp-server-cloudflare).
+
+</TipsList>
+
+## FAQ
+
+<FAQList>
+	<FAQItem question="Should I use Skills, the MCP server, Wrangler CLI, or all of them?">
+		All three. Skills load Cloudflare knowledge into every Codex session (when
+		to use Durable Objects, how to structure a Workers project, etc.). The
+		Cloudflare API MCP server handles platform operations (DNS, WAF, Zero
+		Trust). Wrangler handles local dev, deploys, and migrations. The bundled
+		`wrangler` Skill teaches Codex when to run CLI commands vs. call the MCP
+		API.
+	</FAQItem>
+	<FAQItem question="How do I connect Codex to my Cloudflare account?">
+		The first time Codex calls a Cloudflare tool, you will be redirected to
+		authorize via OAuth and choose permissions.
+	</FAQItem>
+	<FAQItem question="Is Codex open source?">
+		Yes. Codex is open source and available on GitHub at
+		github.com/openai/codex.
+	</FAQItem>
+</FAQList>
+
+## Troubleshooting
+
+<TroubleshootingList>
+	<TroubleshootingItem issue="MCP server not connecting">
+		Verify the server was added with `codex mcp add cloudflare --url https://mcp.cloudflare.com/mcp`.
+		Run `codex mcp list` to confirm it appears, then use `/mcp` inside the Codex TUI to check its status.
+	</TroubleshootingItem>
+	<TroubleshootingItem issue="Getting outdated information about Cloudflare products">
+		Enable the <a href="https://github.com/cloudflare/mcp-server-cloudflare" target="_blank" rel="noopener noreferrer">Cloudflare docs MCP server</a> so the agent can fetch
+		current documentation at runtime. If you prefer not to use the MCP server, point
+		the agent directly at <a href="/llms.txt">developers.cloudflare.com/llms.txt</a> for
+		a directory of every product, or <code>developers.cloudflare.com/&lt;product&gt;/llms.txt</code>
+		for a product-specific index.
+	</TroubleshootingItem>
+	<TroubleshootingItem issue="MCP server authentication fails">
+		Remove and re-add the MCP server. Complete the OAuth flow in your browser
+		when prompted.
+	</TroubleshootingItem>
+</TroubleshootingList>
+
+## Build agents on Cloudflare
+
+<BuildAgentsCallout />
+
+## Other agents
+
+<OtherAgents currentSlug="codex" />

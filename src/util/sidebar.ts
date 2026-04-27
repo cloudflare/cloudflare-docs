@@ -9,6 +9,7 @@ type Link = Extract<StarlightRouteData["sidebar"][0], { type: "link" }> & {
 };
 type Group = Extract<StarlightRouteData["sidebar"][0], { type: "group" }> & {
 	order?: number;
+	hasActivePage?: boolean;
 };
 
 export type SidebarEntry = Link | Group;
@@ -106,23 +107,30 @@ export async function generateSidebar(group: Group) {
 	}
 
 	const product = directory.find((p) => p.id === group.label);
-	if (product && product.data.entry.group === "Developer platform") {
+	if (product) {
 		const links = [
-			["llms.txt", `${product.data.entry.url}llms.txt`],
-			["prompt.txt", "/workers/prompt.txt"],
+			["Agent setup", "/agent-setup/"],
+			["Cloudflare Skills", "https://github.com/cloudflare/skills"],
+			["Code Mode MCP Server", "https://github.com/cloudflare/mcp"],
+			[
+				"Domain-specific MCP Servers",
+				"https://github.com/cloudflare/mcp-server-cloudflare",
+			],
+			[`${product.data.name} llms.txt`, `${product.data.entry.url}llms.txt`],
 			[
 				`${product.data.name} llms-full.txt`,
 				`${product.data.entry.url}llms-full.txt`,
 			],
-			["Developer Platform llms-full.txt", "/developer-platform/llms-full.txt"],
+			["Cloudflare Docs llms.txt", "/llms.txt"],
+			["Cloudflare Docs llms-full.txt", "/llms-full.txt"],
 		];
 
 		group.entries.push({
 			type: "group",
-			label: "LLM resources",
+			label: "Agent resources",
 			entries: links.map(([label, href]) => ({
 				type: "link",
-				label,
+				label: label.concat(externalLinkArrow),
 				href,
 				isCurrent: false,
 				attrs: {
@@ -165,6 +173,7 @@ function setSidebarCurrentEntry(
 			entry.type === "group" &&
 			setSidebarCurrentEntry(entry.entries, pathname)
 		) {
+			entry.hasActivePage = true;
 			return true;
 		}
 

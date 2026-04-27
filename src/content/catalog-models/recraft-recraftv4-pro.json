@@ -1,0 +1,210 @@
+{
+	"model_id": "recraft/recraftv4-pro",
+	"provider_id": "recraft",
+	"name": "Recraft V4 Pro",
+	"description": "Recraft V4 Pro generates high-resolution, art-directed images at 2048px+ with strong composition, text rendering, and design taste. Built for print and production work.",
+	"task": "Text-to-Image",
+	"tags": [
+		"Image Generation",
+		"Design",
+		"Text Rendering",
+		"High Resolution"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Print-Ready Illustration",
+			"description": "High-resolution illustration for print",
+			"input": {
+				"prompt": "A detailed vintage botanical illustration of a rose with leaves and thorns, scientific illustration style"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-pro/print-ready-illustration.png"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-pro',\n  {\n    prompt:\n      'A detailed vintage botanical illustration of a rose with leaves and thorns, scientific illustration style',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Large Format Art",
+			"description": "Large canvas digital art",
+			"input": {
+				"prompt": "A sweeping fantasy landscape with floating islands, waterfalls cascading into clouds, and ancient stone bridges connecting the islands",
+				"size": "2048x2048"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-pro/large-format-art.png"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-pro',\n  {\n    prompt:\n      'A sweeping fantasy landscape with floating islands, waterfalls cascading into clouds, and ancient stone bridges connecting the islands',\n    size: '2048x2048',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Brand Asset",
+			"description": "Professional brand asset with controlled colors",
+			"input": {
+				"prompt": "A modern, clean illustration of a shield with a checkmark inside, representing security and trust",
+				"size": "2048x2048",
+				"controls": {
+					"colors": [
+						{
+							"rgb": [
+								46,
+								117,
+								182
+							]
+						},
+						{
+							"rgb": [
+								255,
+								255,
+								255
+							]
+						}
+					],
+					"background_color": {
+						"rgb": [
+							15,
+							23,
+							42
+						]
+					}
+				}
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-pro/brand-asset.png"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-pro',\n  {\n    prompt:\n      'A modern, clean illustration of a shield with a checkmark inside, representing security and trust',\n    size: '2048x2048',\n    controls: {\n      colors: [\n        {\n          rgb: [46, 117, 182],\n        },\n        {\n          rgb: [255, 255, 255],\n        },\n      ],\n      background_color: {\n        rgb: [15, 23, 42],\n      },\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Editorial Illustration",
+			"description": "Magazine-quality editorial illustration",
+			"input": {
+				"prompt": "A conceptual illustration of artificial intelligence as a tree with circuit-board branches and glowing data leaves"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-pro/editorial-illustration.png"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'recraft/recraftv4-pro',\n  {\n    prompt:\n      'A conceptual illustration of artificial intelligence as a tree with circuit-board branches and glowing data leaves',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://www.recraft.ai/",
+	"terms": "https://www.recraft.ai/terms",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/recraft/recraftv4-pro.png",
+	"metadata": {
+		"Resolution": "2048px+",
+		"Text Rendering": "Yes"
+	},
+	"created_at": "2026-04-13 16:46:31",
+	"default_example": null,
+	"code_snippets": [],
+	"zdr": false,
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string"
+				},
+				"size": {
+					"type": "string"
+				},
+				"style": {
+					"type": "string"
+				},
+				"substyle": {
+					"type": "string"
+				},
+				"controls": {
+					"type": "object",
+					"properties": {
+						"colors": {
+							"maxItems": 5,
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"rgb": {
+										"minItems": 3,
+										"maxItems": 3,
+										"type": "array",
+										"items": {
+											"type": "integer",
+											"minimum": 0,
+											"maximum": 255
+										}
+									}
+								},
+								"required": [
+									"rgb"
+								],
+								"additionalProperties": false
+							}
+						},
+						"background_color": {
+							"type": "object",
+							"properties": {
+								"rgb": {
+									"minItems": 3,
+									"maxItems": 3,
+									"type": "array",
+									"items": {
+										"type": "integer",
+										"minimum": 0,
+										"maximum": 255
+									}
+								}
+							},
+							"required": [
+								"rgb"
+							],
+							"additionalProperties": false
+						}
+					},
+					"additionalProperties": false
+				}
+			},
+			"required": [
+				"prompt"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"image"
+			],
+			"additionalProperties": false
+		}
+	}
+}

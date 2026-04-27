@@ -3,6 +3,9 @@ title: Security overview
 pcx_content_type: concept
 sidebar:
   order: 2
+description: Review your domain's security posture and action items.
+products:
+  - security
 ---
 
 import { DashButton } from "~/components";
@@ -48,8 +51,36 @@ The Security overview page displays:
     - Client-side abuse 
     - Fraud
 - **Review**: Review your security action items for more detailed information and recommended actions to resolve.
-- **Archiving**: You can archive security action items you do not wish to display in the main list.
 - **Load more**: View the full list of security action items.
+
+### Archive action items
+
+You can archive security action items that you do not want to display in the main list. The following archive options are available:
+
+- **False Positive**: Removes the action item from your active list and suppresses it indefinitely. Rationale text is optional.
+- **Accept Risk**: Removes the action item from your active list and suppresses it indefinitely. Rationale text is required.
+- **Other**: Removes the action item from your active list and suppresses it indefinitely. Rationale text is required.
+
+You can move an action item from the archive back to the active list at any time.
+
+:::note[Archiving suspicious activity]
+Archiving a detected suspicious activity will only archive that item from the security overview page. The suspicious activity will still appear in your security analytics dashboard.
+:::
+
+### Audit log API endpoints
+
+To view when an action item’s status was changed and the rationale provided for that change, use the following API commands to retrieve audit logs:
+
+| Method | Path | Description |
+| ------ | ---- | ----------- |
+| `GET` | `/api/accounts/{accountID}/insights/audit-log` | List all audit logs for an account |
+| `GET` | `/api/accounts/{accountID}/insights/{insightID}/audit-log` | List audit logs for a specific issue |
+| `GET` | `/api/accounts/{accountID}/issues/audit-log` | List all audit logs for account issues |
+| `GET` | `/api/accounts/{accountID}/issues/{insightID}/audit-log` | List all audit logs for a specific issue |
+| `GET` | `/api/accounts/{accountID}/zones/{zoneID}/insights/audit-log` | List all audit logs for a domain |
+| `GET` | `/api/accounts/{accountID}/zones/{zoneID}/insights/{insightID}/audit-log` | List audit logs for a specific issue in a domain |
+
+Refer to our [Security Center API documentation](/api/resources/security_center) to review the action item audit logs by account, domain, or a specific `issue_id`.
 
 ## Detection tools
 

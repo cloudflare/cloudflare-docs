@@ -6,22 +6,19 @@
  * https://github.com/withastro/starlight/blob/main/packages/starlight/schema.ts
  */
 
-import { z } from "astro:schema";
-import type { AstroBuiltinAttributes } from "astro";
-import type { HTMLAttributes } from "astro/types";
+import { z } from "astro/zod";
 
 /**
  * From https://github.com/withastro/starlight/blob/main/packages/starlight/schemas/badge.ts
  */
 
 const linkHTMLAttributesSchema = z.record(
+	z.string(),
 	z.union([z.string(), z.number(), z.boolean(), z.undefined()]),
-) as z.Schema<
-	Omit<HTMLAttributes<"a">, keyof AstroBuiltinAttributes | "children">
->;
+);
 
 const SidebarLinkItemHTMLAttributesSchema = () =>
-	linkHTMLAttributesSchema.default({});
+	linkHTMLAttributesSchema.prefault({});
 
 /**
  * https://github.com/withastro/starlight/blob/main/packages/starlight/schemas/sidebar.ts
@@ -74,7 +71,7 @@ export const sidebar = z
 			})
 			.optional(),
 	})
-	.default({})
+	.prefault({})
 	.describe(
 		"Used to configure various sidebar options. Refer to [Sidebar](/style-guide/frontmatter/sidebar/).",
 	);

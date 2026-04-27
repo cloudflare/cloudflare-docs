@@ -1,9 +1,11 @@
 ---
 title: Migrations
+description: Version your D1 database schema using SQL migration files that you create, list, and apply with Wrangler.
 pcx_content_type: concept
 sidebar:
   order: 1
-
+products:
+  - d1
 ---
 
 import { WranglerConfig } from "~/components";
@@ -14,9 +16,9 @@ Database migrations are a way of versioning your database. Each migration is sto
 
 Currently, the migrations system aims to be simple yet effective. With the current implementation, you can:
 
-* [Create](/workers/wrangler/commands/#d1-migrations-create) an empty migration file.
-* [List](/workers/wrangler/commands/#d1-migrations-list) unapplied migrations.
-* [Apply](/workers/wrangler/commands/#d1-migrations-apply) remaining migrations.
+* [Create](/workers/wrangler/commands/d1/#d1-migrations-create) an empty migration file.
+* [List](/workers/wrangler/commands/d1/#d1-migrations-list) unapplied migrations.
+* [Apply](/workers/wrangler/commands/d1/#d1-migrations-apply) remaining migrations.
 
 Every migration file in the `migrations` folder has a specified version number in the filename. Files are listed in sequential order. Every migration file is an SQL file where you can specify queries to be run.
 

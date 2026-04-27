@@ -1,0 +1,631 @@
+{
+	"model_id": "openai/gpt-5.4-nano",
+	"provider_id": "openai",
+	"name": "GPT-5.4 Nano",
+	"description": "GPT-5.4 Nano is OpenAI's smallest and fastest model, optimized for edge and low-latency use cases.",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Fast",
+		"Cost-Efficient",
+		"Edge"
+	],
+	"context_length": 128000,
+	"max_output_tokens": 16384,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Question",
+			"description": "Basic chat completion request",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "What are the three laws of thermodynamics?"
+					}
+				]
+			},
+			"output": {
+				"text": "The three laws of thermodynamics are:\n\n1. **Zeroth Law (thermal equilibrium):**  \n   If system A is in thermal equilibrium with system B, and system B is in thermal equilibrium with system C, then A is in thermal equilibrium with C.  \n   *This law justifies the concept of temperature.*\n\n2. **First Law (conservation of energy):**  \n   Energy cannot be created or destroyed. It can only be transferred or transformed.  \n   *In thermodynamics:* the change in internal energy of a system equals heat added to the system minus work done by the system.\n\n3. **Second Law (entropy and direction of processes):**  \n   Natural processes occur in a direction that increases the **total entropy** of the universe (or, equivalently, they tend to go from more ordered to less ordered forms).  \n   It also implies that **not all heat can be converted into work** in a cyclical process.\n\n*(There is also a \u201cThird Law,\u201d often presented alongside these as the third in the series.)*\n\n4. **Third Law (absolute zero):**  \n   As temperature approaches absolute zero (0 K), the entropy of a perfect crystal approaches a constant minimum value (typically zero).  \n   It is impossible to reach absolute zero in a finite number of steps."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5.4-nano',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'What are the three laws of thermodynamics?',\n      },\n    ],\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "With System Message",
+			"description": "Using a system message to set context",
+			"input": {
+				"messages": [
+					{
+						"role": "system",
+						"content": "You are a helpful coding assistant specializing in Python."
+					},
+					{
+						"role": "user",
+						"content": "How do I read a JSON file in Python?"
+					}
+				]
+			},
+			"output": {
+				"text": "You can read a JSON file in Python using the built-in `json` module.\n\n```python\nimport json\n\nwith open(\"data.json\", \"r\", encoding=\"utf-8\") as f:\n    data = json.load(f)\n\nprint(data)  # data is now a Python dict/list depending on the JSON\n```\n\n**Notes:**\n- Use `json.load(f)` to read from a file object.\n- If your JSON file is an array at the top level, `data` will be a `list`; if it\u2019s an object, it\u2019ll be a `dict`.\n\nIf you want to read a JSON string instead (not a file), use `json.loads(s)`."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5.4-nano',\n  {\n    messages: [\n      {\n        role: 'system',\n        content: 'You are a helpful coding assistant specializing in Python.',\n      },\n      {\n        role: 'user',\n        content: 'How do I read a JSON file in Python?',\n      },\n    ],\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Multi-turn Conversation",
+			"description": "Continuing a conversation with context",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "I need help planning a road trip from San Francisco to Los Angeles."
+					},
+					{
+						"role": "assistant",
+						"content": "I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?"
+					},
+					{
+						"role": "user",
+						"content": "Yes, what are some good places to stop?"
+					}
+				],
+				"max_completion_tokens": 2048
+			},
+			"output": {
+				"text": "Absolutely\u2014here are some great stop ideas on a typical San Francisco \u2192 Los Angeles road trip (assuming you\u2019ll mostly take **I\u20115 or US\u2011101**). I\u2019ll list them by region so you can mix and match based on time and interests.\n\n## Best quick stops (easy to add)\n### Along/near the coast (great views)\n- **Half Moon Bay** \u2013 beaches, scenic overlooks, quick coffee/food stops.\n- **Santa Cruz (if you take/near US\u2011101)** \u2013 boardwalk area, viewpoints; fun even for a short stop.\n- **Monterey Bay / Cannery Row** \u2013 aquarium area and coastal scenery.\n- **Big Sur viewpoints (if you do the coastal route)**  \n  - Common highlights: **Bixby Bridge**, **McWay Falls (if open)**, scenic pullouts along Highway 1.\n\n> Note: Big Sur can be slower and is weather-dependent (and Highway 1 sections can close occasionally), so plan with current conditions if you choose this.\n\n### Classic \u201cHollywood-adjacent\u201d vibes\n- **Santa Barbara** \u2013 charming downtown, good food, beach walk.\n- **Solvang** \u2013 Danish-style village theme; silly/fun stop for snacks and photos.\n\n## Major \u201cworth it\u201d detours (more time, bigger payoff)\n### Wine country (if you like food + views)\n- **Santa Rosa / Healdsburg (Sonoma County)** \u2013 wineries, farm stands, tastings.\n- **Napa Valley (if you want a big wine day)** \u2013 mostly if you\u2019re okay with a longer detour.\n\n### Redwood / nature stops\n- **Henry Cowell Redwoods State Park (near Santa Cruz)** \u2013 redwood trails without a huge detour.\n- **Giant redwoods near Monterey area / Big Basin (depending on route)** \u2013 more forest time.\n\n### Route/landscape highlights on inland routes\nIf you go more inland (often faster, less coastline):\n- **Gilroy** \u2013 quick stop for garlic-themed food or outlets.\n- **Central Valley roadside stops** \u2013 quick lunch breaks, but fewer \u201cmust-see\u201d landmarks.\n\n## A few \u201cchoose based on your route\u201d suggestions\n- **If you take US\u2011101 (often prettier / more towns):** Half Moon Bay \u2192 Santa Cruz \u2192 Monterey \u2192 Santa Barbara \u2192 LA.\n- **If you take I\u20115 (usually faster):** San Jose area \u2192 Paso Robles (good mid-way option) \u2192 Santa Barbara \u2192 LA.\n- **If you want the iconic scenery:** prioritize **Highway 1 / Big Sur** (best views, slower, more planning).\n\n---\n\n### Quick questions so I can tailor a perfect stop list + itinerary\n1. What month (or approximate dates) are you going?\n2. Do you prefer **coastal views (slower, scenic)** or **faster/inland (more driving, fewer views)**?\n3. How many days do you want (e.g., 1 long day vs 2\u20133 days)?\n4. Any interests: beaches, hiking, wine, kitschy towns, food stops, museums?\n\nAnswer those and I\u2019ll propose a specific route with 6\u201312 stops, estimated timing, and backup options."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5.4-nano',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'I need help planning a road trip from San Francisco to Los Angeles.',\n      },\n      {\n        role: 'assistant',\n        content:\n          \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n      },\n      {\n        role: 'user',\n        content: 'Yes, what are some good places to stop?',\n      },\n    ],\n    max_completion_tokens: 2048,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Creative Writing",
+			"description": "Longer completion for creative output",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "Write a short story opening about a detective finding an unusual clue."
+					}
+				],
+				"max_completion_tokens": 2048
+			},
+			"output": {
+				"text": "The rain had been falling long enough to turn the city\u2019s neon into smeared watercolor, but it hadn\u2019t softened the edges of the crime scene.\n\nDetective Mara Kincaid stood just inside the taped perimeter, her coat dark with moisture and her mind sharper than the puddles gathering at her feet. The victim\u2019s apartment sat above a shuttered bakery, its windows fogged from the inside, its hallway smelling faintly of citrus cleaner and burnt copper.\n\nA uniform officer hovered nearby, eager to be useful. \u201cNo signs of forced entry, Detective. The husband\u2014\u201d He stopped, corrected himself. \u201cThe occupant. He found them like this.\u201d\n\nMara didn\u2019t look up. She was kneeling by the threshold, letting her flashlight sweep the floorboards the way some people read scripture\u2014slow, patient, searching for the lines that didn\u2019t belong.\n\nSomething glittered against the worn grain of wood.\n\nIt wasn\u2019t glass. It wasn\u2019t glitter from a spilled drink. It didn\u2019t catch the light like coins or broken jewelry. It caught it like\u2026 breath.\n\nA thin, translucent flake\u2014no bigger than a fingernail clipping\u2014lay half-buried in the seam between two planks. When Mara tilted her beam, the flake didn\u2019t reflect so much as *remember*. The light seemed to sink into it and come back altered, as if the material were holding a picture just out of reach.\n\n\u201cDon\u2019t touch it,\u201d she said automatically, though she hadn\u2019t realized she\u2019d spoken until the officer flinched.\n\nMara held her breath. The flake had a faint curve, like the edge of a leaf, and a delicate pattern of lines that didn\u2019t resemble any natural vein. Under the flashlight, the pattern looked almost\u2026 intentional.\n\nShe lifted her gloved hand, stopped millimeters above it, and felt a temperature difference. The wood around it was cold with night air. The flake was warmer, as though it had just been pressed there.\n\nOn instinct, she slid a small evidence marker beside it without moving the flake itself. Then she leaned closer and listened\u2014because in her line of work, some things weren\u2019t just seen.\n\nAt first there was only the rain and the distant rumble of traffic.\n\nThen\u2014barely audible beneath it\u2014a soft, rhythmic *tick\u2026 tick\u2026 tick*, like a clock inside something too small to be a clock.\n\nMara straightened slowly, her stomach tightening. The unusual clue wasn\u2019t just out of place.\n\nIt was *alive* in a way she couldn\u2019t explain.\n\nBehind her, the officer cleared his throat. \u201cDetective? Should we\u2014uh\u2014call for your tech?\u201d\n\nMara didn\u2019t answer right away. She stared at the flake until her eyes began to ache, watching the light tremble within it like it was trying to form a message.\n\nFinally, she said, \u201cYeah. And bring two sets of gloves.\u201d\n\nShe stood, turning toward the apartment interior where the air felt heavy with everything that had already happened.\n\nWhatever left this behind didn\u2019t want to be caught.\n\nBut it had made sure she\u2019d look\u2014down at the seam between boards\u2014at the moment her flashlight found it.\n\nAs if it knew exactly where her curiosity would go next."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5.4-nano',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'Write a short story opening about a detective finding an unusual clue.',\n      },\n    ],\n    max_completion_tokens: 2048,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Streaming Response",
+			"description": "Enable streaming for real-time output",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "Explain the concept of recursion with a simple example."
+					}
+				],
+				"stream": true,
+				"stream_options": {
+					"include_usage": true
+				}
+			},
+			"output": {
+				"text": [
+					"Rec",
+					"ursion",
+					" is",
+					" a",
+					" programming",
+					" technique",
+					" where",
+					" a",
+					" function",
+					" solves",
+					" a",
+					" problem",
+					" by",
+					" calling",
+					" itself",
+					" on",
+					" smaller",
+					" versions",
+					" of",
+					" the",
+					" same",
+					" problem",
+					".\n\n",
+					"A",
+					" key",
+					" idea",
+					" is",
+					" that",
+					" recursion",
+					" usually",
+					" needs",
+					":\n",
+					"1",
+					".",
+					" **",
+					"A",
+					" base",
+					" case",
+					"**",
+					" (",
+					"when",
+					" to",
+					" stop",
+					").\n",
+					"2",
+					".",
+					" **",
+					"A",
+					" recursive",
+					" case",
+					"**",
+					" (",
+					"the",
+					" problem",
+					" broken",
+					" into",
+					" a",
+					" smaller",
+					" sub",
+					"problem",
+					").\n\n",
+					"###",
+					" Simple",
+					" Example",
+					":",
+					" Factor",
+					"ial",
+					"\n",
+					"The",
+					" factorial",
+					" of",
+					" a",
+					" number",
+					" *",
+					"n",
+					"*",
+					" (",
+					"written",
+					" `",
+					"n",
+					"!",
+					"`)",
+					" is",
+					":\n",
+					"-",
+					" `",
+					"n",
+					"!",
+					" =",
+					" n",
+					" \u00d7",
+					" (",
+					"n",
+					"-",
+					"1",
+					")!",
+					"`\n",
+					"-",
+					" with",
+					" the",
+					" base",
+					" case",
+					" `",
+					"0",
+					"!",
+					" =",
+					" ",
+					"1",
+					"`\n\n",
+					"####",
+					" Code",
+					" (",
+					"Python",
+					"-like",
+					" pseud",
+					"ocode",
+					")\n",
+					"```",
+					"python",
+					"\n",
+					"def",
+					" factorial",
+					"(n",
+					"):\n",
+					"   ",
+					" if",
+					" n",
+					" ==",
+					" ",
+					"0",
+					":",
+					"         ",
+					" #",
+					" base",
+					" case",
+					"\n",
+					"       ",
+					" return",
+					" ",
+					"1",
+					"\n",
+					"   ",
+					" return",
+					" n",
+					" *",
+					" factorial",
+					"(n",
+					" -",
+					" ",
+					"1",
+					")",
+					" ",
+					" #",
+					" recursive",
+					" case",
+					"\n",
+					"``",
+					"`\n\n",
+					"####",
+					" What",
+					" happens",
+					" for",
+					" `",
+					"factor",
+					"ial",
+					"(",
+					"4",
+					")`",
+					"?\n",
+					"-",
+					" `",
+					"factor",
+					"ial",
+					"(",
+					"4",
+					")",
+					" =",
+					" ",
+					"4",
+					" *",
+					" factorial",
+					"(",
+					"3",
+					")`\n",
+					"-",
+					" `",
+					"factor",
+					"ial",
+					"(",
+					"3",
+					")",
+					" =",
+					" ",
+					"3",
+					" *",
+					" factorial",
+					"(",
+					"2",
+					")`\n",
+					"-",
+					" `",
+					"factor",
+					"ial",
+					"(",
+					"2",
+					")",
+					" =",
+					" ",
+					"2",
+					" *",
+					" factorial",
+					"(",
+					"1",
+					")`\n",
+					"-",
+					" `",
+					"factor",
+					"ial",
+					"(",
+					"1",
+					")",
+					" =",
+					" ",
+					"1",
+					" *",
+					" factorial",
+					"(",
+					"0",
+					")`\n",
+					"-",
+					" `",
+					"factor",
+					"ial",
+					"(",
+					"0",
+					")",
+					" =",
+					" ",
+					"1",
+					"`\n\n",
+					"So",
+					":",
+					" `",
+					"4",
+					" *",
+					" ",
+					"3",
+					" *",
+					" ",
+					"2",
+					" *",
+					" ",
+					"1",
+					" =",
+					" ",
+					"24",
+					"`\n\n",
+					"If",
+					" you",
+					" want",
+					",",
+					" I",
+					" can",
+					" also",
+					" show",
+					" a",
+					" recursion",
+					" example",
+					" like",
+					" summ",
+					"ing",
+					" a",
+					" list",
+					" or",
+					" travers",
+					"ing",
+					" a",
+					" tree",
+					"."
+				]
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5.4-nano',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'Explain the concept of recursion with a simple example.',\n      },\n    ],\n    stream: true,\n    stream_options: {\n      include_usage: true,\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://openai.com/",
+	"terms": "https://openai.com/policies/",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/openai/gpt-5.4-nano.png",
+	"metadata": {
+		"Architecture": "Transformer"
+	},
+	"created_at": "2026-04-13 16:45:18",
+	"default_example": null,
+	"code_snippets": [],
+	"zdr": false,
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"messages": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"role": {
+								"type": "string",
+								"enum": [
+									"system",
+									"developer",
+									"user",
+									"assistant",
+									"tool"
+								]
+							},
+							"content": {
+								"anyOf": [
+									{
+										"type": "string"
+									},
+									{
+										"type": "null"
+									},
+									{
+										"type": "array",
+										"items": {}
+									}
+								]
+							}
+						},
+						"required": [
+							"role",
+							"content"
+						],
+						"additionalProperties": {}
+					}
+				},
+				"temperature": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 2
+				},
+				"max_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"max_completion_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"top_p": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"frequency_penalty": {
+					"type": "number",
+					"minimum": -2,
+					"maximum": 2
+				},
+				"presence_penalty": {
+					"type": "number",
+					"minimum": -2,
+					"maximum": 2
+				},
+				"stream": {
+					"type": "boolean"
+				},
+				"stream_options": {
+					"type": "object",
+					"properties": {
+						"include_usage": {
+							"type": "boolean"
+						}
+					},
+					"additionalProperties": false
+				},
+				"tools": {
+					"type": "array",
+					"items": {}
+				},
+				"tool_choice": {},
+				"response_format": {}
+			},
+			"required": [
+				"messages"
+			],
+			"additionalProperties": {}
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"object": {
+					"type": "string"
+				},
+				"created": {
+					"type": "number"
+				},
+				"model": {
+					"type": "string"
+				},
+				"choices": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"index": {
+								"type": "number"
+							},
+							"message": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string"
+									},
+									"content": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "null"
+											}
+										]
+									},
+									"tool_calls": {
+										"type": "array",
+										"items": {}
+									}
+								},
+								"required": [
+									"role"
+								],
+								"additionalProperties": {}
+							},
+							"finish_reason": {
+								"anyOf": [
+									{
+										"type": "string"
+									},
+									{
+										"type": "null"
+									}
+								]
+							}
+						},
+						"required": [
+							"index",
+							"message",
+							"finish_reason"
+						],
+						"additionalProperties": {}
+					}
+				},
+				"usage": {
+					"type": "object",
+					"properties": {
+						"prompt_tokens": {
+							"type": "number"
+						},
+						"completion_tokens": {
+							"type": "number"
+						},
+						"total_tokens": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"prompt_tokens",
+						"completion_tokens",
+						"total_tokens"
+					],
+					"additionalProperties": {}
+				}
+			},
+			"required": [
+				"id",
+				"object",
+				"created",
+				"model",
+				"choices"
+			],
+			"additionalProperties": {}
+		}
+	}
+}

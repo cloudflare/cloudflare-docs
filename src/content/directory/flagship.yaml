@@ -1,0 +1,12 @@
+id: suzHQm
+name: Flagship
+
+entry:
+  title: Flagship
+  url: /flagship/
+  group: Developer platform
+
+meta:
+  title: Cloudflare Flagship docs
+  description: Feature flags evaluated at the edge for Cloudflare Workers
+  author: "@cloudflare"

@@ -1,5 +1,6 @@
 ---
 pcx_content_type: how-to
+
 title: Linux
 sidebar:
   order: 8
@@ -7,6 +8,8 @@ head:
   - tag: title
     content: Set up 1.1.1.1 on Linux
 description: Learn how to set up 1.1.1.1 as your DNS resolver on a Linux system.
+products:
+  - 1.1.1.1
 slug: 1.1.1.1/setup/linux
 ---
 
@@ -53,6 +56,7 @@ sudo <EDITOR> /etc/systemd/resolved.conf
 [Resolve]
 DNS=1.1.1.1
 ```
+
 To use DNS over TLS, add `#one.one.one.one` and set `DNSOverTLS` to `yes`, as in the following example:
 
 ```txt

@@ -3,6 +3,9 @@ pcx_content_type: concept
 title: Reference architecture diagram
 meta:
   title: Content type - Reference architecture diagram
+description: Create reference architecture diagram pages.
+products:
+  - style-guide
 ---
 
 import { Render } from "~/components";
@@ -13,7 +16,7 @@ To provide a visual reference and explanation of using Cloudflare for a specific
 
 :::note[Disambiguation]
 
-This page describes the content strategy for a reference architecture diagram. For help with Cloudflare products, refer to [Reference archiectures diagrams](/reference-architecture/diagrams/).
+This page describes the content strategy for a reference architecture diagram. For help with Cloudflare products, refer to [Reference architectures diagrams](/reference-architecture/diagrams/).
 
 :::
 
@@ -25,6 +28,10 @@ instructional, straightforward
 
 ```yaml
 pcx_content_type: reference-architecture-diagram
+products:
+  - product-a
+  - product-b
+  - product-c
 ```
 
 For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-properties/#pcx_content_type).
@@ -53,7 +60,27 @@ For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-
 ## Template
 
 ```
+
+---
+pcx_content_type: reference-architecture-diagram
+title: Cloudflare Reference Architecture Diagram
+description: Architecture diagram showing how to <use case> with <Cloudflare products>. Includes component callouts and links to supporting documentation.
+---
+
 # Cloudflare Reference Architecture Diagram
+---
+title: Cloudflare Reference Architecture Diagram
+pcx_content_type: reference-architecture-diagram
+products:
+  - cloudflare-one
+  - cloudflare-wan
+  - cloudflare-network-firewall
+weight: 1
+meta:
+    title: "Reference Architecture Diagram: An example Cloudflare solution"
+---
+
+## Cloudflare Reference Architecture Diagram
 
 Provide a description as to what the diagram below contains.
 

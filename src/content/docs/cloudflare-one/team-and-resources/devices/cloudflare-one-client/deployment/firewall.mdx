@@ -1,9 +1,15 @@
 ---
 pcx_content_type: reference
+description: Reference information for Cloudflare One Client with firewall in Zero Trust.
+products:
+  - cloudflare-one
 title: Cloudflare One Client with firewall
 sidebar:
   order: 9
   label: Firewalls
+tags:
+  - Wireguard
+  - MASQUE
 ---
 
 import { Render, Details } from "~/components";
@@ -96,7 +102,7 @@ The Cloudflare One Client connects to the following IP addresses, depending on w
 
 :::note
 
-Before you [log in to your Cloudflare One organization](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/manual-deployment/), you may see the IPv4 range `162.159.192.0/24`. This IP is used for the consumer WARP client ([1.1.1.1 w/ WARP](/warp-client/)) and is not required for Zero Trust services.
+Before you [log in to your Cloudflare One organization](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/manual-deployment/), you may see the IPv4 range `162.159.192.0/24`. This IP is used for the consumer WARP client ([1.1.1.1 with WARP](/warp-client/)) and is not required for Zero Trust services.
 :::
 
 <Details header="FedRAMP High requirements">
@@ -151,7 +157,7 @@ Because this check happens inside of the tunnel, you do not need to add these IP
 
 ## NEL reporting (optional)
 
-The Cloudflare One Client reports connectivity issues to our NEL endpoint via `a.nel.cloudflare.com`. This is not technically required to operate but will result in errors in our logs if not excluded properly.
+The Cloudflare One Client reports connectivity issues to the Network Error Logging (NEL) endpoint via `a.nel.cloudflare.com`. This is not technically required to operate but will result in errors in our logs if not excluded properly.
 
 ## Latency statistics (optional)
 

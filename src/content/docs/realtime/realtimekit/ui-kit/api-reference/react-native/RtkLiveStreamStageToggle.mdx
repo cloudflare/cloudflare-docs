@@ -1,0 +1,43 @@
+---
+pcx_content_type: reference
+title: RtkLiveStreamStageToggle
+description: API reference for RtkLiveStreamStageToggle component (React Native Library)
+products:
+  - realtime
+---
+
+Toggle button for joining or leaving the livestream stage. Only visible in livestream mode.
+
+## Properties
+
+| Property   | Type                           | Required | Default           | Description                      |
+| ---------- | ------------------------------ | -------- | ----------------- | -------------------------------- |
+| `meeting`  | `RealtimeKitClient`            | ✅       | -                 | The RealtimeKit meeting instance |
+| `iconPack` | `IconPack`                     | ❌       | `defaultIconPack` | Custom icon pack                 |
+| `size`     | `'lg' \| 'md' \| 'sm' \| 'xl'` | ❌       | `'sm'`            | Size variant                     |
+| `variant`  | `'button' \| 'horizontal'`     | ❌       | `'button'`        | Layout variant                   |
+| `t`        | `RtkI18n`                      | ❌       | -                 | i18n translation function        |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkLiveStreamStageToggle } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkLiveStreamStageToggle meeting={meeting} />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkLiveStreamStageToggle } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return (
+		<RtkLiveStreamStageToggle meeting={meeting} size="md" variant="button" />
+	);
+}
+```

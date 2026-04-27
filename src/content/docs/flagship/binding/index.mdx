@@ -1,0 +1,53 @@
+---
+pcx_content_type: overview
+title: Binding API
+description: Evaluate Flagship feature flags directly in Cloudflare Workers using the native binding with type-safe methods and automatic fallback.
+sidebar:
+  order: 5
+products:
+  - flagship
+---
+
+import {
+	DirectoryListing,
+	WranglerConfig,
+	TypeScriptExample,
+} from "~/components";
+
+Workers access Flagship through a binding that you add to your Wrangler configuration file. The `binding` field sets the variable name you use in your Worker code.
+
+<WranglerConfig>
+
+```jsonc
+{
+	"flagship": {
+		"binding": "FLAGS",
+		"app_id": "<APP_ID>",
+	},
+}
+```
+
+</WranglerConfig>
+
+Replace `<APP_ID>` with the app ID from your Flagship app. If you have not created an app yet, refer to the [Get started guide](/flagship/get-started/#create-an-app-and-a-flag). With this configuration, the binding is available as `env.FLAGS`. Refer to [Configuration](/flagship/configuration/) for additional options such as binding to multiple apps.
+
+The binding provides type-safe methods for evaluating feature flags. If an evaluation fails or a flag is not found, the method returns the default value you provide.
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const enabled = await env.FLAGS.getBooleanValue("new-feature", false, {
+			userId: "user-42",
+		});
+		return new Response(enabled ? "Feature on" : "Feature off");
+	},
+};
+```
+
+</TypeScriptExample>
+
+The binding has the type `Flagship` from the `@cloudflare/workers-types` package.
+
+<DirectoryListing />

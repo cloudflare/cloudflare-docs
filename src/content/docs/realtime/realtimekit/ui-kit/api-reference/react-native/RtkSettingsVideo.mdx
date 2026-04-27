@@ -1,0 +1,41 @@
+---
+pcx_content_type: reference
+title: RtkSettingsVideo
+description: API reference for RtkSettingsVideo component (React Native Library)
+products:
+  - realtime
+---
+
+Video settings panel with camera selection dropdown and live video preview.
+
+## Properties
+
+| Property   | Type                           | Required | Default           | Description                      |
+| ---------- | ------------------------------ | -------- | ----------------- | -------------------------------- |
+| `meeting`  | `RealtimeKitClient`            | ✅       | -                 | The RealtimeKit meeting instance |
+| `iconPack` | `IconPack`                     | ❌       | `defaultIconPack` | Custom icon pack                 |
+| `size`     | `'lg' \| 'md' \| 'sm' \| 'xl'` | ❌       | `'sm'`            | Size variant                     |
+| `states`   | `States`                       | ❌       | -                 | UI state object                  |
+| `t`        | `RtkI18n`                      | ❌       | -                 | i18n translation function        |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkSettingsVideo } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkSettingsVideo meeting={meeting} />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkSettingsVideo } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkSettingsVideo meeting={meeting} size="md" states={states} />;
+}
+```

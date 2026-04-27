@@ -1,6 +1,9 @@
 ---
 title: Cloudflare Tunnel
 pcx_content_type: get-started
+description: Deploy Keyless SSL with Cloudflare Tunnel for private connectivity.
+products:
+  - ssl
 sidebar:
   order: 1
 head:
@@ -22,17 +25,17 @@ Through an integration with [Cloudflare Tunnel](/cloudflare-one/networks/connect
 
 First, install `cloudflared` on your key server.
 
-<Render file="keyless-tunnel-setup" product="ssl" /> <br />
+<Render file="keyless-tunnel-setup" product="ssl" />
 
-## 2. Create a Tunnel
+## 2. Create a tunnel and add a route
 
 Then, create a Cloudflare Tunnel.
 
-<Render file="keyless-tunnel-setup" product="ssl" /> <br />
+<Render file="keyless-tunnel-setup" product="ssl" />
 
-In these steps, you should choose the option to **Connect a network** and use the private IP address of your key server.
+During tunnel creation, go to the **CIDR** tab and enter the private IP address of your key server. You can also [add a CIDR route](/cloudflare-one/networks/routes/add-routes/#add-a-cidr-route) after creating the tunnel.
 
-After you create the Tunnel, use the Cloudflare API to [List tunnel routes](/api/resources/zero_trust/subresources/networks/subresources/routes/methods/list/), saving the following values for a future step:
+After you create the tunnel, use the Cloudflare API to [List tunnel routes](/api/resources/zero_trust/subresources/networks/subresources/routes/methods/list/), saving the following values for a future step:
 
 - `"virtual_network_id"`
 - `"network"`

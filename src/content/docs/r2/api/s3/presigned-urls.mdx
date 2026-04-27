@@ -1,6 +1,9 @@
 ---
 title: Presigned URLs
+description: Generate presigned URLs to grant temporary access to R2 objects without exposing credentials.
 pcx_content_type: concept
+products:
+  - r2
 ---
 
 import {Tabs, TabItem, LinkCard } from "~/components";
@@ -16,6 +19,15 @@ To generate a presigned URL, you specify:
 3. **Expiry**: Timeout from 1 second to 7 days (604,800 seconds)
 
 Presigned URLs are generated client-side with no communication with R2, requiring only your R2 API credentials and an implementation of the AWS Signature Version 4 signing algorithm.
+
+## Choosing an approach
+
+R2 supports two patterns for time-limited access. They overlap but have different trade-offs:
+
+| Pattern | Grants | Good for |
+| --- | --- | --- |
+| Presigned URLs (this page) | A single S3 operation on a single object | Granting direct HTTP access to a single object without an S3 client, such as a browser upload or a shareable download link |
+| [Temporary credentials](/r2/api/s3/temporary-credentials/) | Multiple S3 operations, scoped to a bucket and a set of permitted operations, and optionally to specific paths | Callers that use a standard S3 client or SDK to perform multiple operations in a scoped session |
 
 ## Generate a presigned URL
 

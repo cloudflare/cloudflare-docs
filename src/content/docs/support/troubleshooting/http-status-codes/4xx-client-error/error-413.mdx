@@ -2,6 +2,9 @@
 pcx_content_type: troubleshooting
 title: Error 413
 source: null
+description: Troubleshoot HTTP 413 error responses.
+products:
+  - support
 ---
 
 import { FeatureTable, Render } from "~/components";
@@ -24,4 +27,4 @@ The upload limit for the Cloudflare API depends on your plan. If you exceed this
 
 Keep in mind, customers can reduce the **Maximum Upload Size** from the zone's **Network** page which can cause a `413`.
 
-If you require a larger upload, break up requests into smaller chunks, change your DNS record to [DNS-only](/dns/proxy-status/#dns-only-records), or [upgrade your plan](/billing/change-plan/).
+If you require a larger upload, break up requests into smaller chunks, change your DNS record to [DNS-only](/dns/proxy-status/#dns-only-records), or [upgrade your plan](/billing/manage/change-plan/).

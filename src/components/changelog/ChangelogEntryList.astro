@@ -49,20 +49,19 @@ const { entries } = Astro.props;
 	})
 }
 
+<!--TODO: Solve DRY with what's in src/pages/changelog/post/[...slug].astro-->
 <style>
-	:root {
-		.sl-container {
-			--sl-content-width: 50rem !important;
-			margin-inline: auto !important;
-		}
+	:global(.sl-container) {
+		--sl-content-width: 50rem !important;
+		margin-inline: auto !important;
+	}
 
-		.feedback-prompt-content {
-			display: none !important;
-		}
+	:global(.feedback-prompt-content) {
+		display: none !important;
+	}
 
-		#footer-links {
-			justify-content: center;
-		}
+	:global(#footer-links) {
+		justify-content: center;
 	}
 
 	.sl-steps {

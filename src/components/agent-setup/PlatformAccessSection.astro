@@ -1,0 +1,116 @@
+---
+import PlatformAccessDetails from "./PlatformAccessDetails.astro";
+import McpServerList from "./McpServerList.astro";
+import SkillsList from "./SkillsList.astro";
+---
+
+<div class="agent-setup-platform-access">
+	<p class="agent-platform-lede">
+		Expand any section to learn more.
+	</p>
+
+	<PlatformAccessDetails header="Cloudflare Skills">
+		<p class="agent-platform-hint">
+			Persistent platform context that teaches the agent how Cloudflare works.
+		</p>
+		<p>
+			Skills are instructions the agent loads on demand. The{" "}
+			<a
+				href="https://github.com/cloudflare/skills"
+				target="_blank"
+				rel="noopener noreferrer"
+			>
+				cloudflare/skills
+			</a>{" "}
+			bundle covers every layer of the platform &mdash; so the agent knows your
+			conventions without you re-explaining them.
+		</p>
+		<SkillsList />
+	</PlatformAccessDetails>
+
+	<PlatformAccessDetails header="MCP servers">
+		<p class="agent-platform-hint">
+			Live access to the Cloudflare API, docs, and observability.
+		</p>
+		<p>
+			MCP servers provide typed tools to call into Cloudflare at runtime. There
+			are two options: <a href="/agents/api-reference/codemode/">Code Mode</a> —
+			a single server that covers the entire Cloudflare API (2,500+ endpoints in
+			~1,000 tokens) — or a set of focused, domain-specific servers hosted in
+			the{" "}
+			<a
+				href="https://github.com/cloudflare/mcp-server-cloudflare"
+				target="_blank"
+				rel="noopener noreferrer"
+			>
+				cloudflare/mcp-server-cloudflare
+			</a>{" "}
+			repo. The full catalog is also in the{" "}
+			<a href="/agents/model-context-protocol/mcp-servers-for-cloudflare/">
+				MCP servers for Cloudflare
+			</a>{" "}
+			docs.
+		</p>
+		<McpServerList />
+	</PlatformAccessDetails>
+
+	<PlatformAccessDetails header="Wrangler CLI">
+		<p class="agent-platform-hint">
+			Local dev, deploys, and Workers-specific commands.
+		</p>
+		<p>
+			Use <a href="/workers/wrangler/">Wrangler</a> for local development,
+			deploys, and product-specific commands like{" "}
+			<code>wrangler d1 migrations apply</code> or <code>wrangler tail</code>.
+			The bundled <strong>wrangler</strong> Skill teaches the agent when to reach
+			for it.
+		</p>
+		<aside class="agent-platform-note">
+			<p class="agent-platform-note-title">What&rsquo;s next</p>
+			<p>
+				The unified <code>cf</code> CLI is in technical preview &mdash; a
+				next-generation CLI that covers every Cloudflare product with consistent
+				verbs and ergonomic output for agents. Try it with <code>npx cf</code>.{" "}
+				<a
+					href="https://blog.cloudflare.com/cf-cli-local-explorer/"
+					target="_blank"
+					rel="noopener noreferrer">Read the announcement &rarr;</a
+				>
+			</p>
+		</aside>
+	</PlatformAccessDetails>
+
+	<PlatformAccessDetails header="Agent-friendly docs">
+		<p class="agent-platform-hint">
+			Token-efficient references optimized for agents.
+		</p>
+		<p>
+			Append <code>/index.md</code> to any Cloudflare docs URL for a clean
+			markdown version. Every top-level product section also has its own{" "}
+			<code>llms.txt</code> — a page index sized for a single context window. A
+			few useful ones:
+		</p>
+		<ul class="agent-platform-resources">
+			<li>
+				<a href="/llms.txt">developers.cloudflare.com/llms.txt</a> &mdash;
+				directory of every Cloudflare product.
+			</li>
+			<li>
+				<a href="/workers/llms.txt">developers.cloudflare.com/workers/llms.txt</a>
+			</li>
+			<li>
+				<a href="/agents/llms.txt">developers.cloudflare.com/agents/llms.txt</a>
+			</li>
+			<li>
+				<a href="/r2/llms.txt">developers.cloudflare.com/r2/llms.txt</a>
+			</li>
+			<li>
+				<a href="/d1/llms.txt">developers.cloudflare.com/d1/llms.txt</a>
+			</li>
+		</ul>
+		<p>
+			For a full overview of how these docs are structured for agents, refer to
+			the <a href="/style-guide/ai-tooling/">AI tooling guide</a>.
+		</p>
+	</PlatformAccessDetails>
+</div>

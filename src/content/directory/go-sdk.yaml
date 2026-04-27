@@ -1,0 +1,14 @@
+id: pRXwdu
+name: Go SDK
+
+entry:
+  title: Go SDK
+  url: /fundamentals/api/reference/sdks/
+  group: Core platform
+  additional_groups: [Developer platform]
+  show: false
+
+meta:
+  title: Cloudflare Go SDK
+  description: Go software development kit (SDK) to interact with the Cloudflare API
+  author: "@cloudflare"

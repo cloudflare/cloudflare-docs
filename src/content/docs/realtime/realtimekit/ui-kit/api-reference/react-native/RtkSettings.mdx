@@ -1,0 +1,48 @@
+---
+pcx_content_type: reference
+title: RtkSettings
+description: API reference for RtkSettings component (React Native Library)
+products:
+  - realtime
+---
+
+Settings dialog with audio device selection, video device selection, and network connection status.
+
+## Properties
+
+| Property   | Type                           | Required | Default           | Description                           |
+| ---------- | ------------------------------ | -------- | ----------------- | ------------------------------------- |
+| `meeting`  | `RealtimeKitClient`            | ✅       | -                 | The RealtimeKit meeting instance      |
+| `size`     | `'lg' \| 'md' \| 'sm' \| 'xl'` | ❌       | `'sm'`            | Size variant                          |
+| `states`   | `States`                       | ❌       | -                 | UI state object                       |
+| `iconPack` | `IconPack`                     | ❌       | `defaultIconPack` | Custom icon pack                      |
+| `t`        | `RtkI18n`                      | ❌       | -                 | i18n translation function             |
+| `onClose`  | `any`                          | ❌       | -                 | Callback to close the settings dialog |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkSettings } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkSettings meeting={meeting} />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkSettings } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return (
+		<RtkSettings
+			meeting={meeting}
+			size="md"
+			onClose={() => setSettingsOpen(false)}
+		/>
+	);
+}
+```

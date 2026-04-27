@@ -3,6 +3,9 @@ title: DNS filtering
 tags:
   - DNS
 pcx_content_type: how-to
+description: DNS filtering in Gateway.
+products:
+  - cloudflare-one
 sidebar:
   order: 1
 head:
@@ -35,7 +38,7 @@ You can filter DNS queries from individual devices (for example, employee laptop
 
 To filter DNS requests from an individual device such as a laptop or phone:
 
-1. [Install the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/) on your device. the Cloudflare One Client is a lightweight agent that routes the device's DNS queries through Cloudflare so Gateway can inspect and filter them.
+1. [Install the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/) on your device. The Cloudflare One Client is a lightweight agent that routes the device's DNS queries through Cloudflare so Gateway can inspect and filter them.
 2. [Enroll the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/manual-deployment/) in your organization's <GlossaryTooltip term="team name">Zero Trust instance</GlossaryTooltip> [^1]. This tells WARP which Gateway policies to enforce.
 3. (Optional) If you want to display a [custom block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/) instead of a generic browser error when a request is blocked, [install a Cloudflare root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on your device.
 
@@ -70,7 +73,7 @@ A DNS policy has two parts: a **traffic condition** that defines which queries t
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Firewall policies**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Traffic policies** > **Firewall policies**.
 2. In the **DNS** tab, select **Add a policy**.
 3. Name the policy.
 4. Under **Traffic**, use the condition builder to define which DNS queries this policy applies to. Select a selector (such as **Security Categories**), an operator (such as **in**), and one or more values.

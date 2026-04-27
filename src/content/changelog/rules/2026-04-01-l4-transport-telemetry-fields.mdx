@@ -1,0 +1,40 @@
+---
+title: New QUIC RTT and delivery rate fields
+description: Two new fields expose QUIC round-trip time and connection delivery rate, completing the set of L4 transport telemetry available in rule expressions.
+date: 2026-04-01
+---
+
+Two new fields are now available in rule expressions that surface Layer 4 transport telemetry from the client connection. Together with the existing [`cf.timings.client_tcp_rtt_msec`](/ruleset-engine/rules-language/fields/reference/) field, these fields give you a complete picture of connection quality for both TCP and QUIC traffic — enabling transport-aware rules without requiring any client-side changes.
+
+Previously, QUIC RTT and delivery rate data was only available via the `Server-Timing: cfL4` response header. These new fields make the same data available directly in rule expressions, so you can use them in Transform Rules, WAF Custom Rules, and other phases that support dynamic fields.
+
+### New fields
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `cf.timings.client_quic_rtt_msec` | Integer | The smoothed QUIC round-trip time (RTT) between Cloudflare and the client in milliseconds. Only populated for QUIC (HTTP/3) connections. Returns `0` for TCP connections. |
+| `cf.edge.l4.delivery_rate` | Integer | The most recent data delivery rate estimate for the client connection, in bytes per second. Returns `0` when L4 statistics are not available for the request. |
+
+### Example: Route slow connections to a lightweight origin
+
+Use a request header transform rule to tag requests from high-latency connections, so your origin can serve a lighter page variant:
+
+**Rule expression:**
+
+```txt
+cf.timings.client_tcp_rtt_msec > 200 or cf.timings.client_quic_rtt_msec > 200
+```
+
+**Header modifications:**
+
+| Operation | Header name | Value |
+| --- | --- | --- |
+| Set | `X-High-Latency` | `true` |
+
+### Example: Match low-bandwidth connections
+
+```txt
+cf.edge.l4.delivery_rate > 0 and cf.edge.l4.delivery_rate < 100000
+```
+
+For more information, refer to [Request Header Transform Rules](/rules/transform/request-header-modification/) and the [fields reference](/ruleset-engine/rules-language/fields/reference/).

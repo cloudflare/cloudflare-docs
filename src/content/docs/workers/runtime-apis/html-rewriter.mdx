@@ -3,6 +3,8 @@ pcx_content_type: configuration
 title: HTMLRewriter
 head: []
 description: Build comprehensive and expressive HTML parsers inside of a Worker application.
+products:
+  - workers
 ---
 
 import { Render, Type, MetaInfo } from "~/components";
@@ -135,8 +137,6 @@ The `element` argument, used only in element handlers, is a representation of a 
 
 #### Methods
 
-{/* prettier-ignore-start */}
-
 - <code>getAttribute(name <Type text="string" />)</code> : <Type text="string | null" />
   - Returns the value for a given attribute name on the element, or `null` if it is not found.
 
@@ -178,8 +178,6 @@ The `element` argument, used only in element handlers, is a representation of a 
 - <code>onEndTag(handler <Type text="Function&lt;void&gt;" />)</code> : <Type text="void" />
   - Registers a handler that is invoked when the end tag of the element is reached.
 
-{/* prettier-ignore-end */}
-
 ### EndTag
 
 The `endTag` argument, used only in handlers registered with `element.onEndTag`, is a limited representation of a DOM element.
@@ -191,8 +189,6 @@ The `endTag` argument, used only in handlers registered with `element.onEndTag`,
 
 #### Methods
 
-{/* prettier-ignore-start */}
-
 - <code>before(content <Type text="Content" />, contentOptions <Type text="ContentOptions" /> <MetaInfo text="optional" />)</code> : <Type text="EndTag" />
   - Inserts content right before the end tag.
 
@@ -203,8 +199,6 @@ The `endTag` argument, used only in handlers registered with `element.onEndTag`,
 
 - <code>remove()</code> : <Type text="EndTag" />
   - Removes the element with all its content.
-
-{/* prettier-ignore-end */}
 
 ### Text chunks
 
@@ -225,8 +219,6 @@ Consider the following markup: `<div>Hey. How are you?</div>`. It is possible th
 
 #### Methods
 
-{/* prettier-ignore-start */}
-
 - <code>before(content <Type text="Content" />, contentOptions <Type text="ContentOptions" /> <MetaInfo text="optional" />)</code> : <Type text="Element" />
   - Inserts content before the element.
 
@@ -240,8 +232,6 @@ Consider the following markup: `<div>Hey. How are you?</div>`. It is possible th
 
 - <code>remove()</code> : <Type text="Element" />
   - Removes the element with all its content.
-
-{/* prettier-ignore-end */}
 
 ### Comments
 
@@ -265,8 +255,6 @@ class ElementHandler {
 
 #### Methods
 
-{/* prettier-ignore-start */}
-
 - <code>before(content <Type text="Content" />, contentOptions <Type text="ContentOptions" /> <MetaInfo text="optional" />)</code> : <Type text="Element" />
   - Inserts content before the element.
 
@@ -280,8 +268,6 @@ class ElementHandler {
 
 - <code>remove()</code> : <Type text="Element" />
   - Removes the element with all its content.
-
-{/* prettier-ignore-end */}
 
 ### Doctype
 
@@ -321,14 +307,10 @@ class DocumentHandler {
 
 #### Methods
 
-{/* prettier-ignore-start */}
-
 - <code>append(content <Type text="Content" />, contentOptions <Type text="ContentOptions" /> <MetaInfo text="optional" />)</code> : <Type text="DocumentEnd" />
   - Inserts content after the end of the document.
 
   <Render file="content_and_contentoptions" product="workers" />
-
-{/* prettier-ignore-end */}
 
 ---
 

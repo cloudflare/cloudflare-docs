@@ -1,0 +1,187 @@
+{
+	"model_id": "bytedance/seedream-4.0",
+	"provider_id": "bytedance",
+	"name": "Seedream 4.0",
+	"description": "Seedream 4.0 is ByteDance's image creation model that combines text-to-image generation and image editing into a single architecture, offering fast, high-resolution output up to 4K.",
+	"task": "Text-to-Image",
+	"tags": [
+		"Image Generation",
+		"Image Editing",
+		"High Resolution"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Generation",
+			"description": "Basic text-to-image generation",
+			"input": {
+				"prompt": "A serene mountain lake surrounded by pine trees at dawn"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-4.0/simple-generation.jpeg"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.0',\n  {\n    prompt: 'A serene mountain lake surrounded by pine trees at dawn',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "High Resolution",
+			"description": "4K quality image generation",
+			"input": {
+				"prompt": "A detailed steampunk mechanical owl with brass gears and copper feathers, intricate clockwork visible",
+				"size": "4K",
+				"aspect_ratio": "1:1"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-4.0/high-resolution.jpeg"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.0',\n  {\n    prompt:\n      'A detailed steampunk mechanical owl with brass gears and copper feathers, intricate clockwork visible',\n    size: '4K',\n    aspect_ratio: '1:1',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Widescreen Landscape",
+			"description": "Cinematic aspect ratio image",
+			"input": {
+				"prompt": "A vast alien desert landscape with two suns setting on the horizon, ancient ruins in the foreground",
+				"size": "2K",
+				"aspect_ratio": "21:9"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-4.0/widescreen-landscape.jpeg"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.0',\n  {\n    prompt:\n      'A vast alien desert landscape with two suns setting on the horizon, ancient ruins in the foreground',\n    size: '2K',\n    aspect_ratio: '21:9',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Portrait Format",
+			"description": "Vertical image for portraits",
+			"input": {
+				"prompt": "An elegant Art Deco poster featuring a jazz singer under a spotlight",
+				"aspect_ratio": "9:16",
+				"enhance_prompt": true
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-4.0/portrait-format.jpeg"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.0',\n  {\n    prompt:\n      'An elegant Art Deco poster featuring a jazz singer under a spotlight',\n    aspect_ratio: '9:16',\n    enhance_prompt: true,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Detailed 4K",
+			"description": "High-resolution detailed botanical illustration",
+			"input": {
+				"prompt": "A detailed botanical illustration of exotic tropical flowers",
+				"size": "4K",
+				"aspect_ratio": "3:4"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-4.0/detailed-4k.jpeg"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.0',\n  {\n    prompt: 'A detailed botanical illustration of exotic tropical flowers',\n    size: '4K',\n    aspect_ratio: '3:4',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://seed.bytedance.com/en/seedream4_0",
+	"terms": null,
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/bytedance/seedream-4.0.png",
+	"metadata": {
+		"Max Resolution": "4K",
+		"Editing": "Yes (single-sentence)"
+	},
+	"created_at": "2026-04-08 22:04:50",
+	"default_example": null,
+	"code_snippets": [],
+	"zdr": false,
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string"
+				},
+				"size": {
+					"type": "string",
+					"enum": [
+						"1K",
+						"2K",
+						"4K",
+						"custom"
+					]
+				},
+				"aspect_ratio": {
+					"type": "string",
+					"enum": [
+						"match_input_image",
+						"1:1",
+						"4:3",
+						"3:4",
+						"16:9",
+						"9:16",
+						"3:2",
+						"2:3",
+						"21:9"
+					]
+				},
+				"width": {
+					"type": "integer",
+					"minimum": 1024,
+					"maximum": 4096
+				},
+				"height": {
+					"type": "integer",
+					"minimum": 1024,
+					"maximum": 4096
+				},
+				"enhance_prompt": {
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"prompt"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"type": "string",
+					"format": "uri"
+				}
+			},
+			"required": [
+				"image"
+			],
+			"additionalProperties": false
+		}
+	}
+}

@@ -1,0 +1,57 @@
+---
+pcx_content_type: reference
+title: RtkMeetingControlBar
+description: API reference for RtkMeetingControlBar component (iOS Library)
+products:
+  - realtime
+---
+
+Control bar for group calls that extends `RtkControlBar` with microphone and video toggle buttons.
+
+## Initializer parameters
+
+| Parameter                         | Type                      | Required | Default                          | Description                                                |
+| --------------------------------- | ------------------------- | -------- | -------------------------------- | ---------------------------------------------------------- |
+| `meeting`                         | `RealtimeKitClient`       | ✅       | -                                | The RealtimeKit client instance                            |
+| `delegate`                        | `RtkTabBarDelegate?`      | ✅       | -                                | Delegate for handling tab bar interactions                 |
+| `presentingViewController`        | `UIViewController`        | ✅       | -                                | View controller used for presenting modal screens          |
+| `appearance`                      | `RtkControlBarAppearance` | ❌       | `RtkControlBarAppearanceModel()` | Appearance configuration for the control bar               |
+| `settingViewControllerCompletion` | `(() -> Void)?`           | ❌       | `nil`                            | Closure called when the settings view controller dismisses |
+| `onLeaveMeetingCompletion`        | `(() -> Void)?`           | ❌       | `nil`                            | Closure called when the participant leaves the meeting     |
+
+## Properties
+
+| Property     | Type                              | Required | Default | Description                                     |
+| ------------ | --------------------------------- | -------- | ------- | ----------------------------------------------- |
+| `dataSource` | `RtkMeetingControlBarDataSource?` | ❌       | `nil`   | Data source for customizing control bar buttons |
+
+## Usage Examples
+
+### Basic Usage
+
+```swift
+import RealtimeKitUI
+
+let controlBar = RtkMeetingControlBar(
+    meeting: rtkClient,
+    delegate: self,
+    presentingViewController: self
+)
+view.addSubview(controlBar)
+```
+
+### With leave meeting handler
+
+```swift
+import RealtimeKitUI
+
+let controlBar = RtkMeetingControlBar(
+    meeting: rtkClient,
+    delegate: self,
+    presentingViewController: self,
+    onLeaveMeetingCompletion: {
+        self.navigationController?.popViewController(animated: true)
+    }
+)
+view.addSubview(controlBar)
+```

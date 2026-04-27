@@ -1,0 +1,49 @@
+---
+pcx_content_type: navigation
+title: RtkNameTag
+description: API reference for RtkNameTag component (Flutter Library)
+products:
+  - realtime
+---
+
+A widget that displays the name tag of a participant within a participant tile.
+
+:::note
+[`RtkProvider`](/realtime/realtimekit/ui-kit/api-reference/flutter/rtk-provider/) must be an ancestor of this widget in the widget tree.
+:::
+
+## Properties
+
+| Property      | Type                    | Required | Default | Description                                 |
+| ------------- | ----------------------- | -------- | ------- | ------------------------------------------- |
+| `participant` | `RtkMeetingParticipant` | ✅       | -       | The participant whose name to display       |
+| `size`        | `double`                | ✅       | -       | Size constraint for the name tag            |
+| `color`       | `Color`                 | ✅       | -       | Color of the name tag text                  |
+| `factor`      | `double`                | ❌       | `7`     | Font size factor (fontSize = size / factor) |
+
+## Usage Examples
+
+### Basic Usage
+
+```dart
+import 'package:realtimekit_ui/realtimekit_ui.dart';
+
+RtkNameTag(
+  participant: participant,
+  size: 14.0,
+  color: Colors.white,
+)
+```
+
+### With Properties
+
+```dart
+import 'package:realtimekit_ui/realtimekit_ui.dart';
+
+RtkNameTag(
+  participant: participant,
+  size: 20.0,
+  color: Colors.white,
+  factor: 5,
+)
+```

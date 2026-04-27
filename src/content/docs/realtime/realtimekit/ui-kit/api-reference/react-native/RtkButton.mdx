@@ -1,0 +1,53 @@
+---
+pcx_content_type: reference
+title: RtkButton
+description: API reference for RtkButton component (React Native Library)
+products:
+  - realtime
+---
+
+A general-purpose button component with multiple variants and sizes.
+
+## Properties
+
+| Property   | Type                                              | Required | Default    | Description                      |
+| ---------- | ------------------------------------------------- | -------- | ---------- | -------------------------------- |
+| `children` | `ReactNode`                                       | ❌       | -          | Button content/label             |
+| `onClick`  | `any`                                             | ✅       | -          | Press handler callback           |
+| `kind`     | `'button' \| 'icon' \| 'wide'`                    | ❌       | `'button'` | Button kind                      |
+| `variant`  | `'danger' \| 'ghost' \| 'primary' \| 'secondary'` | ❌       | -          | Visual style variant             |
+| `size`     | `'lg' \| 'md' \| 'sm' \| 'xl'`                    | ❌       | -          | Button size                      |
+| `reverse`  | `boolean`                                         | ❌       | `false`    | Reverse the button content order |
+| `disabled` | `boolean`                                         | ❌       | -          | Whether the button is disabled   |
+| `style`    | `StyleProp<any>`                                  | ❌       | -          | Custom React Native styles       |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkButton } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkButton onClick={() => console.log("pressed")}>Press Me</RtkButton>;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkButton } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return (
+		<RtkButton
+			onClick={() => console.log("pressed")}
+			variant="primary"
+			size="md"
+			kind="wide"
+		>
+			Join Meeting
+		</RtkButton>
+	);
+}
+```

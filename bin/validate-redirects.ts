@@ -19,6 +19,7 @@ async function main() {
 		".html",
 		".pdf",
 		".zip",
+		".yaml",
 	];
 
 	const redirectSourceUrls: string[] = [];

@@ -11,25 +11,33 @@ const presets = entry.data.build_configs;
 const entries = Object.values(presets);
 ---
 
-<table>
+<table class="not-content w-full text-left text-[var(--sl-color-text)]">
 	<thead>
-		<th>Framework/tool</th>
-		<th>Build command</th>
-		<th>Build directory</th>
+		<tr>
+			<th class="border-b border-[color:var(--color-table-fill)] bg-[var(--color-table-base)] px-4 py-3 text-[0.8125rem] font-semibold">Framework/tool</th>
+			<th class="border-b border-[color:var(--color-table-fill)] bg-[var(--color-table-base)] px-4 py-3 text-[0.8125rem] font-semibold">Build command</th>
+			<th class="border-b border-[color:var(--color-table-fill)] bg-[var(--color-table-base)] px-4 py-3 text-[0.8125rem] font-semibold">Build directory</th>
+		</tr>
 	</thead>
 	<tbody>
 		{
-			entries.map((value) => (
-				<tr>
-					<td>{value.display_name}</td>
-					<td>
-						<code>{value.build_command}</code>
-					</td>
-					<td>
-						<code>{value.build_output_directory}</code>
-					</td>
-				</tr>
-			))
+			entries.map((value, i) => {
+				const isLast = i === entries.length - 1;
+				const cellBorder = isLast
+					? ""
+					: "border-b border-[color:var(--color-table-fill)]";
+				return (
+					<tr>
+						<td class={`${cellBorder} px-4 py-3`}>{value.display_name}</td>
+						<td class={`${cellBorder} px-4 py-3`}>
+							<code>{value.build_command}</code>
+						</td>
+						<td class={`${cellBorder} px-4 py-3`}>
+							<code>{value.build_output_directory}</code>
+						</td>
+					</tr>
+				);
+			})
 		}
 	</tbody>
 </table>

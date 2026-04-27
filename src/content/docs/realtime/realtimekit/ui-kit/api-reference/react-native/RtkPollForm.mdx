@@ -1,0 +1,44 @@
+---
+pcx_content_type: reference
+title: RtkPollForm
+description: API reference for RtkPollForm component (React Native Library)
+products:
+  - realtime
+---
+
+Form for creating a new poll with question, dynamic options, anonymous voting, and hide results toggles.
+
+## Properties
+
+| Property          | Type       | Required | Default           | Description                                                                      |
+| ----------------- | ---------- | -------- | ----------------- | -------------------------------------------------------------------------------- |
+| `iconPack`        | `IconPack` | ❌       | `defaultIconPack` | Custom icon pack                                                                 |
+| `t`               | `RtkI18n`  | ❌       | -                 | i18n translation function                                                        |
+| `onRtkCreatePoll` | `any`      | ❌       | -                 | Callback when poll is created (receives question, options, anonymous, hideVotes) |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkPollForm } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkPollForm onRtkCreatePoll={(data) => handleCreatePoll(data)} />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkPollForm } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return (
+		<RtkPollForm
+			onRtkCreatePoll={(data) => handleCreatePoll(data)}
+			iconPack={customIconPack}
+		/>
+	);
+}
+```

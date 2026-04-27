@@ -5,9 +5,11 @@ sidebar:
   order: 2
 head: []
 description: Cloudflare Workers plan and platform limits.
+products:
+  - workers
 ---
 
-import { Render, WranglerConfig, DashButton } from "~/components";
+import { Render, WranglerConfig, DashButton, TypeScriptExample } from "~/components";
 
 ## Account plan limits
 
@@ -73,7 +75,7 @@ Most Workers consume very little CPU time. The average Worker uses approximately
 
 #### Error: exceeded CPU time limit {/* exceeded-cpu */}
 
-When a Worker exceeds its CPU time limit, Cloudflare returns **Error 1102** to the client with the message `Worker exceeded resource limits`. In the dashboard, this appears as `Exceeded CPU Time Limits` under **Metrics** > **Errors** > **Invocation Statuses**. In analytics and Logpush, the invocation outcome is `exceededCpu`.
+When a Worker exceeds its CPU time limit, Cloudflare returns [Error 1102](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1102/#error-1102-worker-exceeded-resource-limits) to the client with the message `Worker exceeded resource limits`. In the dashboard, this appears as `Exceeded CPU Time Limits` under **Metrics** > **Errors** > **Invocation Statuses**. In analytics and Logpush, the invocation outcome is `exceededCpu`.
 
 To resolve a CPU time limit error:
 
@@ -121,7 +123,7 @@ When an isolate exceeds 128 MB, the Workers runtime lets in-flight requests comp
 
 #### Error: exceeded memory limit {/* exceeded-memory */}
 
-When a Worker exceeds its memory limit, Cloudflare returns **Error 1102** to the client with the message `Worker exceeded resource limits`. In the dashboard, this appears as `Exceeded Memory` under **Metrics** > **Errors** > **Invocation Statuses**. In analytics and Logpush, the invocation outcome is `exceededMemory`.
+When a Worker exceeds its memory limit, Cloudflare returns [Error 1102](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1102/#error-1102-worker-exceeded-resource-limits) to the client with the message `Worker exceeded resource limits`. In the dashboard, this appears as `Exceeded Memory` under **Metrics** > **Errors** > **Invocation Statuses**. In analytics and Logpush, the invocation outcome is `exceededMemory`.
 
 You may also see the runtime error `Memory limit would be exceeded before EOF` when attempting to buffer a response body that exceeds the limit.
 
@@ -200,7 +202,7 @@ Using global [`fetch()`](/workers/runtime-apis/fetch/) to call another Worker on
 
 ## Simultaneous open connections
 
-Each Worker invocation can open up to six simultaneous connections. The following API calls count toward this limit:
+Each Worker invocation can have up to six connections simultaneously waiting for response headers. The following API calls count toward this limit while the initial connection is being established and the server has not yet responded:
 
 - `fetch()` method of the [Fetch API](/workers/runtime-apis/fetch/)
 - `get()`, `put()`, `list()`, and `delete()` methods of [Workers KV namespace objects](/kv/api/)
@@ -211,15 +213,17 @@ Each Worker invocation can open up to six simultaneous connections. The followin
 
 Outbound WebSocket connections also count toward this limit.
 
-Once six connections are open, the runtime queues additional attempts until an existing connection closes. The runtime may close stalled connections (those not actively reading or writing) with a `Response closed due to connection limit` exception.
+Once response headers arrive for a connection, it no longer counts toward the six-connection limit. This means a Worker can have many connections open simultaneously, as long as no more than six are in the initial "waiting for headers" phase at the same time. If a seventh connection is attempted while six are already waiting for headers, it is queued until one of the existing connections receives its response headers.
 
-If you use `fetch()` but do not need the response body, call `response.body.cancel()` to free the connection:
+If you use `fetch()` but do not need the response body, calling `response.body.cancel()` is still good practice to free memory:
+
+<TypeScriptExample filename="src/index.ts">
 
 ```ts
 const response = await fetch(url);
 
 // Only read the response body for successful responses
-if (response.statusCode <= 299) {
+if (response.status <= 299) {
 	// Call response.json(), response.text() or otherwise process the body
 } else {
 	// Explicitly cancel it
@@ -227,7 +231,7 @@ if (response.statusCode <= 299) {
 }
 ```
 
-If the system detects a deadlock (pending connection attempts with no in-progress reads or writes), it cancels the least-recently-used connection to unblock the Worker.
+</TypeScriptExample>
 
 :::note
 
@@ -281,7 +285,7 @@ To reduce Worker size:
 
 A Worker must parse and execute its global scope (top-level code outside of handlers) within 1 second. Larger bundles and expensive initialization code in global scope increase startup time.
 
-When the platform rejects a deployment because the Worker exceeds the startup time limit, the validation returns the error `Script startup exceeded CPU time limit` (error code `10021`). Wrangler automatically generates a CPU profile that you can import into Chrome DevTools or open in VS Code. Refer to [`wrangler check startup`](/workers/wrangler/commands/#startup) for more details.
+When the platform rejects a deployment because the Worker exceeds the startup time limit, the validation returns the error `Script startup exceeded CPU time limit` (error code `10021`). Wrangler automatically generates a CPU profile that you can import into Chrome DevTools or open in VS Code. Refer to [`wrangler check startup`](/workers/wrangler/commands/general/#startup) for more details.
 
 To measure startup time, run `npx wrangler@latest deploy` or `npx wrangler@latest versions upload`. Wrangler reports `startup_time_ms` in the output.
 
@@ -351,7 +355,7 @@ Refer to the [Workers Trace Event Logpush documentation](/workers/observability/
 
 ## Image Resizing with Workers
 
-Refer to the [Image Resizing documentation](/images/transform-images/) for limits that apply when using Image Resizing with Workers.
+Refer to the [Image Resizing documentation](/images/optimization/transformations/overview/) for limits that apply when using Image Resizing with Workers.
 
 ---
 

@@ -1,0 +1,12 @@
+id: uuyhj4
+name: Agent setup
+
+entry:
+  title: Agent setup
+  url: /agent-setup/
+  show: false
+
+meta:
+  title: Agent setup docs
+  description: Install an agent of your choice, connect skills and MCP servers, and start deploying to Cloudflare — all from your editor or terminal.
+  author: "@cloudflare"

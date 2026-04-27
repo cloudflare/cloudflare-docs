@@ -1,0 +1,280 @@
+---
+// Agent-neutral primer: explains what AI coding agents are, the common types,
+// key concepts like Skills and MCP, and the tradeoffs worth knowing about.
+// Organized visually rather than as a wall of text.
+---
+
+<section class="agent-primer not-content">
+	<!-- Workflow types: visual cards with icons -->
+	<div class="agent-primer-block">
+		<div class="agent-primer-block-header">
+			<h3>Workflow</h3>
+			<p>Where the agent runs changes how you interact with it.</p>
+		</div>
+		<div class="agent-primer-types">
+			<div class="agent-primer-type">
+				<div class="agent-primer-type-icon" aria-hidden="true">
+					<svg viewBox="0 0 24 24" fill="none" width="20" height="20">
+						<path
+							d="M4 5h16v14H4z"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linejoin="round"></path>
+						<path
+							d="M7 10l3 2-3 2M12 14h5"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"></path>
+					</svg>
+				</div>
+				<div class="agent-primer-type-label">Terminal</div>
+				<p>
+					Runs in a shell. Best for automation, scripting, and CI pipelines.
+				</p>
+			</div>
+
+			<div class="agent-primer-type">
+				<div class="agent-primer-type-icon" aria-hidden="true">
+					<svg viewBox="0 0 24 24" fill="none" width="20" height="20">
+						<path
+							d="M3 5h18v12H3z"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linejoin="round"></path>
+						<path
+							d="M8 21h8M12 17v4"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"></path>
+						<path
+							d="M7 9l-2 2 2 2M13 9l2 2-2 2M11 8l-2 6"
+							stroke="currentColor"
+							stroke-width="1.5"
+							stroke-linecap="round"
+							stroke-linejoin="round"></path>
+					</svg>
+				</div>
+				<div class="agent-primer-type-label">IDE</div>
+				<p>
+					Full code editor with AI first-class. Visual diffs, multi-file edits.
+				</p>
+			</div>
+
+			<div class="agent-primer-type">
+				<div class="agent-primer-type-icon" aria-hidden="true">
+					<svg viewBox="0 0 24 24" fill="none" width="20" height="20">
+						<path
+							d="M7 16a4 4 0 010-8 5 5 0 019.584 1.5A4 4 0 0118 16H7z"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linejoin="round"></path>
+					</svg>
+				</div>
+				<div class="agent-primer-type-label">Cloud</div>
+				<p>Hosted infrastructure. Ideal for async, long-running work.</p>
+			</div>
+
+			<div class="agent-primer-type">
+				<div class="agent-primer-type-icon" aria-hidden="true">
+					<svg viewBox="0 0 24 24" fill="none" width="20" height="20">
+						<path
+							d="M10 4h4v4h4v4h-4v4h-4v-4H6V8h4V4z"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linejoin="round"></path>
+					</svg>
+				</div>
+				<div class="agent-primer-type-label">Extension</div>
+				<p>
+					Plugs into an existing editor. Lightest install, keeps your setup.
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<!-- Key concepts: grid with icons + definitions -->
+	<div class="agent-primer-block">
+		<div class="agent-primer-block-header">
+			<h3>Key concepts</h3>
+			<p>The vocabulary you'll run into when comparing agents.</p>
+		</div>
+		<div class="agent-primer-concepts">
+			<div class="agent-primer-concept">
+				<div class="agent-primer-concept-term">
+					<span class="agent-primer-concept-icon" aria-hidden="true">
+						<svg viewBox="0 0 24 24" fill="none" width="16" height="16">
+							<path
+								d="M12 2L4 6v6c0 5 3.5 9 8 10 4.5-1 8-5 8-10V6l-8-4z"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linejoin="round"></path>
+							<path
+								d="M9 11l2 2 4-4"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"></path>
+						</svg>
+					</span>
+					Skills
+				</div>
+				<p>
+					Reusable prompt packages that teach an agent about a specific domain.
+					Think of them as plugins made of instructions plus slash commands.
+				</p>
+			</div>
+
+			<div class="agent-primer-concept">
+				<div class="agent-primer-concept-term">
+					<span class="agent-primer-concept-icon" aria-hidden="true">
+						<svg viewBox="0 0 24 24" fill="none" width="16" height="16">
+							<circle
+								cx="6"
+								cy="12"
+								r="2.5"
+								stroke="currentColor"
+								stroke-width="2"></circle>
+							<circle
+								cx="18"
+								cy="6"
+								r="2.5"
+								stroke="currentColor"
+								stroke-width="2"></circle>
+							<circle
+								cx="18"
+								cy="18"
+								r="2.5"
+								stroke="currentColor"
+								stroke-width="2"></circle>
+							<path
+								d="M8.5 10.5L16 7M8.5 13.5L16 17"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"></path>
+						</svg>
+					</span>
+					MCP
+				</div>
+				<p>
+					The Model Context Protocol — a standard that lets agents call external
+					tools and APIs. Connect an MCP server and the agent knows how to use
+					it.
+				</p>
+			</div>
+
+			<div class="agent-primer-concept">
+				<div class="agent-primer-concept-term">
+					<span class="agent-primer-concept-icon" aria-hidden="true">
+						<svg viewBox="0 0 24 24" fill="none" width="16" height="16">
+							<path
+								d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4"
+								stroke="currentColor"
+								stroke-width="1.75"
+								stroke-linecap="round"></path>
+							<circle cx="12" cy="12" r="3" fill="currentColor"></circle>
+						</svg>
+					</span>
+					Model flexibility
+				</div>
+				<p>
+					Which foundation models you can use. <strong>Locked</strong>
+					supports only the vendor's own models. <strong>BYOK</strong> (Bring Your Own Key) lets you bring
+					your own API key. <strong>Multi-provider</strong>
+					supports several providers out of the box.
+				</p>
+			</div>
+
+			<div class="agent-primer-concept">
+				<div class="agent-primer-concept-term">
+					<span class="agent-primer-concept-icon" aria-hidden="true">
+						<svg viewBox="0 0 24 24" fill="none" width="16" height="16">
+							<rect
+								x="4"
+								y="5"
+								width="16"
+								height="14"
+								rx="2"
+								stroke="currentColor"
+								stroke-width="2"></rect>
+							<path
+								d="M8 10h8M8 14h5"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"></path>
+						</svg>
+					</span>
+					Context
+				</div>
+				<p>
+					How the agent retains information about your project.
+					<strong>Session</strong> only remembers the current conversation.
+					<strong>Project memory</strong> persists across sessions.
+					<strong>Indexed codebase</strong> builds a searchable index of your whole
+					repository.
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<!-- Tradeoffs: literal differences -->
+	<div class="agent-primer-block">
+		<div class="agent-primer-block-header">
+			<h3>Common tradeoffs</h3>
+			<p>Decisions you'll make when picking an agent.</p>
+		</div>
+		<div class="agent-primer-tradeoff-grid">
+			<div class="agent-primer-tradeoff">
+				<div class="agent-primer-tradeoff-row">
+					<span class="agent-primer-tradeoff-opt">Cloud</span>
+					<span class="agent-primer-tradeoff-vs">vs.</span>
+					<span class="agent-primer-tradeoff-opt">Local</span>
+				</div>
+				<p>
+					Cloud agents run on hosted infrastructure and read your code over the
+					network. Local agents run on your own machine, with no code leaving
+					it.
+				</p>
+			</div>
+
+			<div class="agent-primer-tradeoff">
+				<div class="agent-primer-tradeoff-row">
+					<span class="agent-primer-tradeoff-opt">Proprietary</span>
+					<span class="agent-primer-tradeoff-vs">vs.</span>
+					<span class="agent-primer-tradeoff-opt">Open source</span>
+				</div>
+				<p>
+					Proprietary agents ship under a closed license you don't control.
+					Open-source agents publish their source under an open license, so you
+					can read, modify, or fork the code.
+				</p>
+			</div>
+
+			<div class="agent-primer-tradeoff">
+				<div class="agent-primer-tradeoff-row">
+					<span class="agent-primer-tradeoff-opt">Locked model</span>
+					<span class="agent-primer-tradeoff-vs">vs.</span>
+					<span class="agent-primer-tradeoff-opt">BYOK</span>
+				</div>
+				<p>
+					Locked agents only work with the vendor's own proprietary models. BYOK
+					agents let you bring your own API key and switch between providers and
+					models.
+				</p>
+			</div>
+
+			<div class="agent-primer-tradeoff">
+				<div class="agent-primer-tradeoff-row">
+					<span class="agent-primer-tradeoff-opt">Session</span>
+					<span class="agent-primer-tradeoff-vs">vs.</span>
+					<span class="agent-primer-tradeoff-opt">Indexed codebase</span>
+				</div>
+				<p>
+					Session context resets when you close the conversation. An indexed
+					codebase is built up front and persists, letting the agent retrieve
+					any file in the repo on demand.
+				</p>
+			</div>
+		</div>
+	</div>
+</section>

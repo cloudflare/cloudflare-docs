@@ -4,31 +4,29 @@
 
 import { Tabs, TabItem } from "~/components";
 
-To start logging and filtering network traffic, turn on the Gateway proxy:
-
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Go to **Traffic policies** > **Traffic settings**.
 2. In **Proxy and inspection**, turn on **Allow Secure Web Gateway to proxy traffic**.
 3. Select **TCP**.
-4. (Recommended) To proxy traffic to internal DNS resolvers, select **UDP**.
+4. Select **UDP** (required to proxy traffic to internal DNS resolvers).
 5. (Recommended) To proxy traffic for diagnostic tools such as `ping` and `traceroute`, select **ICMP**. You may also need to [update your system](/cloudflare-one/traffic-policies/proxy/#icmp) to allow ICMP traffic through `cloudflared`.
 
 </TabItem>
 <TabItem label="Terraform (v5)">
 
 1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
-	- `Zero Trust Write`
+   - `Zero Trust Write`
 
 2. Turn on the TCP and/or UDP proxy using the [`cloudflare_zero_trust_device_settings`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_device_settings) resource:
 
-	```tf
-	resource "cloudflare_zero_trust_device_settings "global_warp_settings" {
-		account_id            = var.cloudflare_account_id
-	  gateway_proxy_enabled = true
-		gateway_udp_proxy_enabled = true
-	}
-	```
+   ```tf
+   resource "cloudflare_zero_trust_device_settings "global_warp_settings" {
+   	account_id            = var.cloudflare_account_id
+     gateway_proxy_enabled = true
+   	gateway_udp_proxy_enabled = true
+   }
+   ```
 
 </TabItem>
 </Tabs>

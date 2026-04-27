@@ -247,7 +247,7 @@ List of content types.
 
 Type: `object`
 
-String key-value pairs for Cookies. This field is populated based on [Logpush Custom fields](/logs/logpush/logpush-job/custom-fields/), which need to be configured.
+String key-value pairs for cookies. This field is populated based on [Logpush Custom fields](/logs/logpush/logpush-job/custom-fields/), which need to be configured.
 
 ## EdgeCFConnectingO2O
 
@@ -345,6 +345,30 @@ Type: `int`
 
 Total view of Time To First Byte as measured at Cloudflare's edge. Starts after a TCP connection is established and ends when Cloudflare begins returning the first byte of a response to eyeballs. Includes TLS handshake time (for new connections) and origin response time.
 
+## FirewallForAIInjectionScore
+
+Type: `int`
+
+The score indicating the likelihood of a prompt injection attack in the request, as determined by Firewall for AI.
+
+## FirewallForAIPIICategories
+
+Type: `array[string]`
+
+List of PII categories detected in the request by Firewall for AI.
+
+## FirewallForAITokenCount
+
+Type: `int`
+
+The number of tokens in the request, as counted by Firewall for AI.
+
+## FirewallForAIUnsafeTopicCategories
+
+Type: `array[string]`
+
+List of unsafe topic categories detected in the request by Firewall for AI.
+
 ## FraudAttack
 
 Type: `string`
@@ -427,7 +451,7 @@ Time taken to send request headers to origin after establishing a connection. No
 
 Type: `int`
 
-Number of bytes returned by the origin server.
+Number of bytes returned by the origin server. Consider using CacheResponseBytes and filtering out OriginResponseStatus with values 0 and 304, which indicate a revalidated response. Read more [here](/logs/faq/common-calculations/#how-can-i-calculate-bytes-served-by-the-origin-from-cloudflare-logs).
 
 ## OriginResponseDurationMs
 
@@ -505,13 +529,13 @@ ID of the request.
 
 Type: `object`
 
-String key-value pairs for RequestHeaders. This field is populated based on [Logpush Custom fields](/logs/logpush/logpush-job/custom-fields/), which need to be configured.
+String key-value pairs for request headers. This field is populated based on [Logpush Custom fields](/logs/logpush/logpush-job/custom-fields/), which need to be configured.
 
 ## ResponseHeaders
 
 Type: `object`
 
-String key-value pairs for ResponseHeaders. This field is populated based on [Logpush Custom fields](/logs/logpush/logpush-job/custom-fields/), which need to be configured.
+String key-value pairs for response headers. This field is populated based on [Logpush Custom fields](/logs/logpush/logpush-job/custom-fields/), which need to be configured.
 
 ## SecurityAction
 
@@ -602,6 +626,18 @@ WAF score for an SQLi attack.
 Type: `int`
 
 WAF score for an XSS attack.
+
+## WebAssetsLabelsManaged
+
+Type: `array[string]`
+
+Cloudflare-defined labels matched for the request.
+
+## WebAssetsOperationID
+
+Type: `string`
+
+UUID of the matched web asset operation.
 
 ## WorkerCPUTime
 

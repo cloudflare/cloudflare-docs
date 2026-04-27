@@ -1,0 +1,723 @@
+{
+	"model_id": "openai/gpt-5.4",
+	"provider_id": "openai",
+	"name": "GPT-5.4",
+	"description": "GPT-5.4 is OpenAI's flagship model with strong coding, reasoning, and multimodal capabilities.",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Coding",
+		"Reasoning",
+		"Multimodal"
+	],
+	"context_length": 128000,
+	"max_output_tokens": 16384,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Question",
+			"description": "Basic chat completion request",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "What are the three laws of thermodynamics?"
+					}
+				]
+			},
+			"output": {
+				"text": "The **three laws of thermodynamics** are:\n\n1. **First Law of Thermodynamics** \u2014 **Energy is conserved**  \n   Energy cannot be created or destroyed, only transferred or transformed.  \n   In thermodynamic systems, this is often written as:  \n   **\u0394U = Q - W**  \n   where:\n   - **\u0394U** = change in internal energy  \n   - **Q** = heat added to the system  \n   - **W** = work done by the system  \n\n2. **Second Law of Thermodynamics** \u2014 **Entropy tends to increase**  \n   In any natural process, the total entropy of an isolated system never decreases.  \n   This means energy tends to spread out, and no heat engine can be 100% efficient.\n\n3. **Third Law of Thermodynamics** \u2014 **Entropy approaches a minimum at absolute zero**  \n   As the temperature of a perfect crystal approaches **0 Kelvin**, its entropy approaches **zero**.  \n   This also implies that absolute zero cannot be reached in a finite number of steps.\n\nThere is also a **Zeroth Law of Thermodynamics**, which is often listed before the first three:\n\n- If two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other.  \n- This is the basis for the concept of **temperature**.\n\nIf you want, I can also give a simple everyday explanation of each law."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5.4',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'What are the three laws of thermodynamics?',\n      },\n    ],\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "With System Message",
+			"description": "Using a system message to set context",
+			"input": {
+				"messages": [
+					{
+						"role": "system",
+						"content": "You are a helpful coding assistant specializing in Python."
+					},
+					{
+						"role": "user",
+						"content": "How do I read a JSON file in Python?"
+					}
+				]
+			},
+			"output": {
+				"text": "Use Python\u2019s built-in `json` module.\n\n### Read a JSON file\n```python\nimport json\n\nwith open(\"data.json\", \"r\") as file:\n    data = json.load(file)\n\nprint(data)\n```\n\n### If the file contains:\n```json\n{\n  \"name\": \"Alice\",\n  \"age\": 25\n}\n```\n\n### Then `data` becomes:\n```python\n{'name': 'Alice', 'age': 25}\n```\n\n### Notes\n- `json.load(file)` reads JSON from a file and converts it to Python objects.\n- JSON objects become Python dictionaries.\n- JSON arrays become Python lists.\n\n### Read with UTF-8 encoding\n```python\nimport json\n\nwith open(\"data.json\", \"r\", encoding=\"utf-8\") as file:\n    data = json.load(file)\n```\n\n### Handle invalid JSON safely\n```python\nimport json\n\ntry:\n    with open(\"data.json\", \"r\", encoding=\"utf-8\") as file:\n        data = json.load(file)\n    print(data)\nexcept FileNotFoundError:\n    print(\"File not found.\")\nexcept json.JSONDecodeError:\n    print(\"Invalid JSON.\")\n```\n\nIf you want, I can also show:\n- how to read a JSON string\n- how to write JSON to a file\n- how to pretty-print JSON"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5.4',\n  {\n    messages: [\n      {\n        role: 'system',\n        content: 'You are a helpful coding assistant specializing in Python.',\n      },\n      {\n        role: 'user',\n        content: 'How do I read a JSON file in Python?',\n      },\n    ],\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Multi-turn Conversation",
+			"description": "Continuing a conversation with context",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "I need help planning a road trip from San Francisco to Los Angeles."
+					},
+					{
+						"role": "assistant",
+						"content": "I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?"
+					},
+					{
+						"role": "user",
+						"content": "Yes, what are some good places to stop?"
+					}
+				],
+				"max_completion_tokens": 2048
+			},
+			"output": {
+				"text": "Here are some popular stops if you take the scenic coastal route (Highway 1 / Pacific Coast Highway), which is much slower than I-5 but far more beautiful:\n\n### Great stops from San Francisco to Los Angeles\n- **Half Moon Bay** \u2013 Nice beaches, coastal views, and a good first stop.\n- **Santa Cruz** \u2013 Classic beach town with a boardwalk, pier, and cafes.\n- **Monterey** \u2013 Famous for Cannery Row and the Monterey Bay Aquarium.\n- **Carmel-by-the-Sea** \u2013 Charming small town with shops, galleries, and a beautiful beach.\n- **Big Sur** \u2013 One of the most scenic stretches of the drive, with cliffs, ocean views, and hiking spots.\n- **San Simeon** \u2013 Known for Hearst Castle and elephant seals nearby.\n- **Morro Bay** \u2013 Relaxed coastal town with the iconic Morro Rock.\n- **San Luis Obispo** \u2013 Cute downtown, restaurants, and a good overnight stop.\n- **Pismo Beach** \u2013 Good for a beach walk or seafood stop.\n- **Santa Barbara** \u2013 Beautiful Spanish-style architecture, beaches, and wine tasting.\n- **Malibu** \u2013 Scenic coastline before arriving in Los Angeles.\n\n### If you want the faster inland route (I-5)\nStops are less scenic, but you could consider:\n- **Gilroy** \u2013 Known for garlic-themed food.\n- **Harris Ranch** \u2013 Popular food/rest stop on I-5.\n- **Kettleman City** \u2013 Convenient midpoint break.\n- **Grapevine area** \u2013 Good place to pause before descending into LA.\n\nIf you want, I can also suggest:\n1. a **1-day fast itinerary**,  \n2. a **2-3 day scenic itinerary**, or  \n3. **food-focused stops**."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5.4',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'I need help planning a road trip from San Francisco to Los Angeles.',\n      },\n      {\n        role: 'assistant',\n        content:\n          \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n      },\n      {\n        role: 'user',\n        content: 'Yes, what are some good places to stop?',\n      },\n    ],\n    max_completion_tokens: 2048,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Creative Writing",
+			"description": "Longer completion for creative output",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "Write a short story opening about a detective finding an unusual clue."
+					}
+				],
+				"max_completion_tokens": 2048
+			},
+			"output": {
+				"text": "Detective Mara Voss found the first clue where no clue had any business being.\n\nIt was tucked inside the mouth of a stone lion that guarded the steps of Blackwell Hall, a place better known for charity galas than murder. The victim lay inside, under a chandelier bright enough to make everyone look innocent. Guests whispered behind silk gloves. Police boots clicked across marble. But Mara stood outside in the rain, staring at the lion\u2019s weather-dark teeth.\n\nSomeone had placed a single peach pit on its tongue.\n\nNot dropped. Placed.\n\nShe lifted it carefully with her handkerchief. The pit had been polished until it shone, and carved into its surface was the tiniest image of a key.\n\nMara looked up at the mansion windows. On the third floor, one curtain moved, though the glass behind it was black.\n\nA dead banker in the ballroom was ordinary, as far as her city was concerned. A carved peach pit hidden in a stone lion\u2019s mouth was not.\n\nThat was when she began to suspect the murder had started long before the body hit the floor."
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5.4',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'Write a short story opening about a detective finding an unusual clue.',\n      },\n    ],\n    max_completion_tokens: 2048,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Streaming Response",
+			"description": "Enable streaming for real-time output",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "Explain the concept of recursion with a simple example."
+					}
+				],
+				"stream": true,
+				"stream_options": {
+					"include_usage": true
+				}
+			},
+			"output": {
+				"text": [
+					"Rec",
+					"ursion",
+					" is",
+					" when",
+					" a",
+					" function",
+					" solves",
+					" a",
+					" problem",
+					" by",
+					" calling",
+					" itself",
+					" on",
+					" a",
+					" smaller",
+					" version",
+					" of",
+					" the",
+					" same",
+					" problem",
+					".\n\n",
+					"It",
+					" usually",
+					" has",
+					" ",
+					"2",
+					" parts",
+					":\n\n",
+					"1",
+					".",
+					" **",
+					"Base",
+					" case",
+					"**",
+					" \u2014",
+					" the",
+					" condition",
+					" where",
+					" the",
+					" function",
+					" stops",
+					" calling",
+					" itself",
+					".\n",
+					"2",
+					".",
+					" **",
+					"Recursive",
+					" case",
+					"**",
+					" \u2014",
+					" the",
+					" part",
+					" where",
+					" the",
+					" function",
+					" calls",
+					" itself",
+					" with",
+					" a",
+					" smaller",
+					" input",
+					".\n\n",
+					"###",
+					" Simple",
+					" example",
+					":",
+					" factorial",
+					"\n\n",
+					"The",
+					" factorial",
+					" of",
+					" a",
+					" number",
+					" means",
+					":\n\n",
+					"-",
+					" `",
+					"5",
+					"!",
+					" =",
+					" ",
+					"5",
+					" \u00d7",
+					" ",
+					"4",
+					" \u00d7",
+					" ",
+					"3",
+					" \u00d7",
+					" ",
+					"2",
+					" \u00d7",
+					" ",
+					"1",
+					"`\n",
+					"-",
+					" `",
+					"1",
+					"!",
+					" =",
+					" ",
+					"1",
+					"`\n\n",
+					"A",
+					" recursive",
+					" version",
+					" looks",
+					" like",
+					" this",
+					" in",
+					" Python",
+					":\n\n",
+					"```",
+					"python",
+					"\n",
+					"def",
+					" factorial",
+					"(n",
+					"):\n",
+					"   ",
+					" if",
+					" n",
+					" ==",
+					" ",
+					"1",
+					":",
+					"         ",
+					" #",
+					" base",
+					" case",
+					"\n",
+					"       ",
+					" return",
+					" ",
+					"1",
+					"\n",
+					"   ",
+					" return",
+					" n",
+					" *",
+					" factorial",
+					"(n",
+					" -",
+					" ",
+					"1",
+					")",
+					"  ",
+					" #",
+					" recursive",
+					" case",
+					"\n\n",
+					"print",
+					"(f",
+					"actor",
+					"ial",
+					"(",
+					"5",
+					"))\n",
+					"``",
+					"`\n\n",
+					"###",
+					" How",
+					" it",
+					" works",
+					" for",
+					" `",
+					"factor",
+					"ial",
+					"(",
+					"5",
+					")",
+					"`\n\n",
+					"-",
+					" `",
+					"factor",
+					"ial",
+					"(",
+					"5",
+					")`",
+					" \u2192",
+					" `",
+					"5",
+					" *",
+					" factorial",
+					"(",
+					"4",
+					")`\n",
+					"-",
+					" `",
+					"factor",
+					"ial",
+					"(",
+					"4",
+					")`",
+					" \u2192",
+					" `",
+					"4",
+					" *",
+					" factorial",
+					"(",
+					"3",
+					")`\n",
+					"-",
+					" `",
+					"factor",
+					"ial",
+					"(",
+					"3",
+					")`",
+					" \u2192",
+					" `",
+					"3",
+					" *",
+					" factorial",
+					"(",
+					"2",
+					")`\n",
+					"-",
+					" `",
+					"factor",
+					"ial",
+					"(",
+					"2",
+					")`",
+					" \u2192",
+					" `",
+					"2",
+					" *",
+					" factorial",
+					"(",
+					"1",
+					")`\n",
+					"-",
+					" `",
+					"factor",
+					"ial",
+					"(",
+					"1",
+					")`",
+					" \u2192",
+					" `",
+					"1",
+					"`",
+					" \u2190",
+					" base",
+					" case",
+					"\n\n",
+					"Then",
+					" it",
+					" returns",
+					" back",
+					" up",
+					":\n\n",
+					"-",
+					" `",
+					"factor",
+					"ial",
+					"(",
+					"2",
+					")`",
+					" =",
+					" `",
+					"2",
+					" *",
+					" ",
+					"1",
+					" =",
+					" ",
+					"2",
+					"`\n",
+					"-",
+					" `",
+					"factor",
+					"ial",
+					"(",
+					"3",
+					")`",
+					" =",
+					" `",
+					"3",
+					" *",
+					" ",
+					"2",
+					" =",
+					" ",
+					"6",
+					"`\n",
+					"-",
+					" `",
+					"factor",
+					"ial",
+					"(",
+					"4",
+					")`",
+					" =",
+					" `",
+					"4",
+					" *",
+					" ",
+					"6",
+					" =",
+					" ",
+					"24",
+					"`\n",
+					"-",
+					" `",
+					"factor",
+					"ial",
+					"(",
+					"5",
+					")`",
+					" =",
+					" `",
+					"5",
+					" *",
+					" ",
+					"24",
+					" =",
+					" ",
+					"120",
+					"`\n\n",
+					"###",
+					" Key",
+					" idea",
+					"\n\n",
+					"Rec",
+					"ursion",
+					" works",
+					" by",
+					" breaking",
+					" a",
+					" big",
+					" problem",
+					" into",
+					" smaller",
+					",",
+					" similar",
+					" problems",
+					" until",
+					" it",
+					" reaches",
+					" a",
+					" simple",
+					" stopping",
+					" point",
+					".\n\n",
+					"If",
+					" you",
+					" want",
+					",",
+					" I",
+					" can",
+					" also",
+					" show",
+					" a",
+					" **",
+					"real",
+					"-life",
+					" analogy",
+					"**",
+					" or",
+					" a",
+					" **",
+					"non",
+					"-m",
+					"ath",
+					" recursion",
+					" example",
+					"**",
+					"."
+				]
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5.4',\n  {\n    messages: [\n      {\n        role: 'user',\n        content: 'Explain the concept of recursion with a simple example.',\n      },\n    ],\n    stream: true,\n    stream_options: {\n      include_usage: true,\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://openai.com/",
+	"terms": "https://openai.com/policies/",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/openai/gpt-5.4.png",
+	"metadata": {
+		"Architecture": "Transformer"
+	},
+	"created_at": "2026-04-08 21:29:08",
+	"default_example": null,
+	"code_snippets": [],
+	"zdr": false,
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"messages": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"role": {
+								"type": "string",
+								"enum": [
+									"system",
+									"developer",
+									"user",
+									"assistant",
+									"tool"
+								]
+							},
+							"content": {
+								"anyOf": [
+									{
+										"type": "string"
+									},
+									{
+										"type": "null"
+									},
+									{
+										"type": "array",
+										"items": {}
+									}
+								]
+							}
+						},
+						"required": [
+							"role",
+							"content"
+						],
+						"additionalProperties": {}
+					}
+				},
+				"temperature": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 2
+				},
+				"max_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"max_completion_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"top_p": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"frequency_penalty": {
+					"type": "number",
+					"minimum": -2,
+					"maximum": 2
+				},
+				"presence_penalty": {
+					"type": "number",
+					"minimum": -2,
+					"maximum": 2
+				},
+				"stream": {
+					"type": "boolean"
+				},
+				"stream_options": {
+					"type": "object",
+					"properties": {
+						"include_usage": {
+							"type": "boolean"
+						}
+					},
+					"additionalProperties": false
+				},
+				"tools": {
+					"type": "array",
+					"items": {}
+				},
+				"tool_choice": {},
+				"response_format": {}
+			},
+			"required": [
+				"messages"
+			],
+			"additionalProperties": {}
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"object": {
+					"type": "string"
+				},
+				"created": {
+					"type": "number"
+				},
+				"model": {
+					"type": "string"
+				},
+				"choices": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"index": {
+								"type": "number"
+							},
+							"message": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string"
+									},
+									"content": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "null"
+											}
+										]
+									},
+									"tool_calls": {
+										"type": "array",
+										"items": {}
+									}
+								},
+								"required": [
+									"role"
+								],
+								"additionalProperties": {}
+							},
+							"finish_reason": {
+								"anyOf": [
+									{
+										"type": "string"
+									},
+									{
+										"type": "null"
+									}
+								]
+							}
+						},
+						"required": [
+							"index",
+							"message",
+							"finish_reason"
+						],
+						"additionalProperties": {}
+					}
+				},
+				"usage": {
+					"type": "object",
+					"properties": {
+						"prompt_tokens": {
+							"type": "number"
+						},
+						"completion_tokens": {
+							"type": "number"
+						},
+						"total_tokens": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"prompt_tokens",
+						"completion_tokens",
+						"total_tokens"
+					],
+					"additionalProperties": {}
+				}
+			},
+			"required": [
+				"id",
+				"object",
+				"created",
+				"model",
+				"choices"
+			],
+			"additionalProperties": {}
+		}
+	}
+}

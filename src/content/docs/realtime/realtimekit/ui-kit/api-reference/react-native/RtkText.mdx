@@ -1,0 +1,45 @@
+---
+pcx_content_type: reference
+title: RtkText
+description: API reference for RtkText component (React Native Library)
+products:
+  - realtime
+---
+
+Themed text component that applies the design system's colors, font family, and font size.
+
+## Properties
+
+| Property     | Type                                                                                                  | Required | Default    | Description                                        |
+| ------------ | ----------------------------------------------------------------------------------------------------- | -------- | ---------- | -------------------------------------------------- |
+| `children`   | `ReactNode`                                                                                           | ✅       | -          | Text content                                       |
+| `size`       | `'sm' \| 'md' \| 'lg' \| 'xl'`                                                                        | ❌       | `'md'`     | Font size (sm=14, md=16, lg=18, xl=20)             |
+| `fontWeight` | `'normal' \| 'bold' \| '100' \| '200' \| '300' \| '400' \| '500' \| '600' \| '700' \| '800' \| '900'` | ❌       | `'normal'` | Font weight                                        |
+| `style`      | `StyleProp<TextStyle>`                                                                                | ❌       | `\{\}`     | Custom text styles                                 |
+| `onBrand`    | `boolean`                                                                                             | ❌       | `false`    | Use brand text color instead of default text color |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkText } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkText>Hello World</RtkText>;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkText } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return (
+		<RtkText size="lg" fontWeight="bold" onBrand={true}>
+			Meeting Title
+		</RtkText>
+	);
+}
+```

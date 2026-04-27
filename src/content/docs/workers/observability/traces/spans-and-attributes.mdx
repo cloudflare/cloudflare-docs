@@ -1,8 +1,11 @@
 ---
 pcx_content_type: concept
 title: Spans and attributes
+description: Review the spans and attributes automatically captured by Workers tracing, including fetch calls, bindings, and handler invocations.
 sidebar:
   order: 2
+products:
+  - workers
 ---
 
 import { Render } from "~/components";
@@ -113,7 +116,7 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 - `geo.country.code`
 - `geo.locality.name`
 - `geo.locality.region`
-- `user_agent.orginal`
+- `user_agent.original`
 - `user_agent.os.name`
 - `user_agent.os.version`
 - `user_agent.browser.name`
@@ -211,7 +214,7 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 
 ---
 
-### [Browser Rendering](/browser-rendering/)
+### [Browser Run](/browser-run/)
 
 #### `browser_rendering_fetch`
 
@@ -513,9 +516,9 @@ The legacy KV-backed API allows you to modify embedded storage within a Durable 
 
 ---
 
-### [Images](/images/transform-images/bindings/)
+### [Images](/images/optimization/transformations/bindings/)
 
-### [`images_output`](/images/transform-images/bindings/#output)
+### [`images_output`](/images/optimization/transformations/bindings/#output)
 
 - `cloudflare.binding.type`
 - `cloudflare.images.options.format`
@@ -525,7 +528,7 @@ The legacy KV-backed API allows you to modify embedded storage within a Durable 
 - `cloudflare.images.options.transforms`
 - `cloudflare.images.error.code`
 
-### [`images_info`](/images/transform-images/bindings/#info)
+### [`images_info`](/images/optimization/transformations/bindings/#info)
 
 - `cloudflare.binding.type`
 - `cloudflare.images.options.encoding`

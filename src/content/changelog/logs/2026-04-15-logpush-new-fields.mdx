@@ -1,0 +1,34 @@
+---
+title: New TenantID and Firewall for AI fields in Logpush datasets
+description: Logpush datasets now include TenantID and Firewall for AI fields for enhanced logging and security insights.
+date: 2026-04-15
+---
+
+Cloudflare has added new fields to multiple [Logpush datasets](/logs/logpush/logpush-job/datasets/):
+
+### TenantID field
+
+The following Gateway and Zero Trust datasets now include a `TenantID` field:
+
+- **[Gateway DNS](/logs/logpush/logpush-job/datasets/account/gateway_dns/#tenantid)**: Identifies the tenant ID of the DNS request, if it exists.
+- **[Gateway HTTP](/logs/logpush/logpush-job/datasets/account/gateway_http/#tenantid)**: Identifies the tenant ID of the HTTP request, if it exists.
+- **[Gateway Network](/logs/logpush/logpush-job/datasets/account/gateway_network/#tenantid)**: Identifies the tenant ID of the network session, if it exists.
+- **[Zero Trust Network Sessions](/logs/logpush/logpush-job/datasets/account/zero_trust_network_sessions/#tenantid)**: Identifies the tenant ID of the network session, if it exists.
+
+### Firewall for AI fields
+
+The following datasets now include [Firewall for AI](/api-shield/security/volumetric-abuse-detection/#firewall-for-ai) fields:
+
+- **[Firewall Events](/logs/logpush/logpush-job/datasets/zone/firewall_events/)**:
+  - `FirewallForAIInjectionScore`: The score indicating the likelihood of a prompt injection attack in the request.
+  - `FirewallForAIPIICategories`: List of PII categories detected in the request.
+  - `FirewallForAITokenCount`: The number of tokens in the request.
+  - `FirewallForAIUnsafeTopicCategories`: List of unsafe topic categories detected in the request.
+
+- **[HTTP Requests](/logs/logpush/logpush-job/datasets/zone/http_requests/)**:
+  - `FirewallForAIInjectionScore`: The score indicating the likelihood of a prompt injection attack in the request.
+  - `FirewallForAIPIICategories`: List of PII categories detected in the request.
+  - `FirewallForAITokenCount`: The number of tokens in the request.
+  - `FirewallForAIUnsafeTopicCategories`: List of unsafe topic categories detected in the request.
+
+For the complete field definitions for each dataset, refer to [Logpush datasets](/logs/logpush/logpush-job/datasets/).

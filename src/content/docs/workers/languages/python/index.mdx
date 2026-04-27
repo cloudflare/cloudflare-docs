@@ -9,6 +9,8 @@ head:
   - tag: title
     content: Write Cloudflare Workers in Python
 description: Write Workers in 100% Python
+products:
+  - workers
 ---
 
 import { WranglerConfig } from "~/components";
@@ -57,10 +59,8 @@ To set it up, first, ensure [uv](https://docs.astral.sh/uv/#installation) and [N
 
 Then set up your development environment:
 
-```
-uv init
-uv tool install workers-py
-uv run pywrangler init
+```bash
+uvx --from workers-py pywrangler init
 ```
 
 This will create a `pyproject.toml` file with `workers-py` as a development

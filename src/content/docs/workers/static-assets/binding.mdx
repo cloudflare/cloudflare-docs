@@ -7,6 +7,8 @@ sidebar:
   order: 2
 head: []
 description: Details on how to configure Workers static assets and its binding.
+products:
+  - workers
 ---
 
 import {
@@ -79,7 +81,7 @@ Controls whether to invoke the Worker script regardless of a request which would
 	"compatibility_date": "$today",
 	"main": "src/index.ts",
 	// The following configuration unconditionally invokes the Worker script at
-	// `src/index.ts`, which can programatically fetch assets via the ASSETS binding
+	// `src/index.ts`, which can programmatically fetch assets via the ASSETS binding
 	"assets": {
 		"directory": "./public/",
 		"binding": "ASSETS",

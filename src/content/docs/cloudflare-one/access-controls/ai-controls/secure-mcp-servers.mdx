@@ -1,0 +1,469 @@
+---
+pcx_content_type: how-to
+title: Secure MCP servers
+tags:
+  - MCP
+sidebar:
+  order: 2
+  label: Secure MCP servers
+products:
+  - cloudflare-one
+  - access
+description: Secure MCP servers with Cloudflare Access.
+---
+
+import {
+	Render,
+	GlossaryTooltip,
+	Tabs,
+	TabItem,
+	APIRequest,
+	DashButton,
+} from "~/components";
+
+You can secure [Model Context Protocol (MCP) servers](https://www.cloudflare.com/learning/ai/what-is-model-context-protocol-mcp/) with Cloudflare Access. There are two approaches depending on how your MCP server handles authentication:
+
+| Approach                                                        | Best for                                                                                           | Auth handled by                                        |
+| --------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| [Self-hosted application](#self-hosted-application-recommended) | MCP servers where you want Access to handle all authentication and authorization                   | Cloudflare Access                                      |
+| [Access for SaaS (OIDC)](#access-for-saas-application)          | MCP servers that implement their own OAuth flow and need Cloudflare as the identity/token provider | Your MCP server code, with Access as the OIDC provider |
+
+## Self-hosted application (recommended)
+
+The following guide deploys a remote <GlossaryTooltip term="MCP server">MCP server</GlossaryTooltip> on [Cloudflare Workers](/workers/) and protects it with a [self-hosted Access application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/). Cloudflare Access handles the full OAuth flow automatically — the MCP server does not need to implement any authorization logic. When users connect using an <GlossaryTooltip term="MCP client">MCP client</GlossaryTooltip>, Access prompts them to log in to your [identity provider](/cloudflare-one/integrations/identity-providers/) and only grants access if they pass your [Access policies](/cloudflare-one/access-controls/policies/#selectors).
+
+### Prerequisites
+
+- Create a [Zero Trust organization](/cloudflare-one/setup/#2-create-a-zero-trust-organization).
+- Configure [One-time PIN](/cloudflare-one/integrations/identity-providers/one-time-pin/) or connect a third-party [identity provider](/cloudflare-one/integrations/identity-providers/).
+
+### 1. Deploy an example MCP server
+
+To deploy our [example MCP server](https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-cf-access-self-hosted) to your Cloudflare account:
+
+<Tabs>
+<TabItem label="Dashboard">
+
+1. Select the following button to launch the quickstart flow:
+
+   [![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-cf-access-self-hosted)
+
+2. Select the account that contains your Zero Trust organization.
+3. On the **Create an application** page, configure the following fields:
+   - **Git account**: Select an existing account or connect a new GitHub or GitLab account.
+   - **Create private Git repository**: Choose whether the project repository should be public or private.
+   - **Project name**: `mcp-access-self-hosted`
+
+   We will configure `TEAM_DOMAIN` and `POLICY_AUD` in a later step.
+
+4. Select **Create and deploy**.
+
+The MCP server will be deployed to your `*.workers.dev` subdomain at `mcp-access-self-hosted.<YOUR_SUBDOMAIN>.workers.dev`. A new git repository will be set up on your GitHub or GitLab account for your MCP server, configured to automatically deploy to Cloudflare each time you push a change or merge a pull request to the main branch of the repository.
+
+</TabItem>
+<TabItem label="CLI">
+
+You can use the [Wrangler CLI](/workers/wrangler) to create the MCP server on your local machine and deploy it to Cloudflare.
+
+:::note[Prerequisites]
+
+- Install [npm](https://docs.npmjs.com/getting-started)
+- Install [Node.js](https://nodejs.org/en/)
+  :::
+
+1.  Open a terminal and clone our example project:
+
+        ```sh
+        npm create cloudflare@latest -- mcp-access-self-hosted --template=cloudflare/ai/demos/remote-mcp-cf-access-self-hosted
+        ```
+
+    During setup, select the following options: - For _Do you want to add an AGENTS.md file to help AI coding tools understand
+    Cloudflare APIs?_, choose `No`. - For _Do you want to use git for version control?_, choose `No`. - For _Do you want to deploy your application?_, choose `No` (we will be making some changes before deploying).
+
+2.  Go to the project directory:
+
+    ```sh
+    cd mcp-access-self-hosted
+    ```
+
+3.  You can now deploy the Worker to Cloudflare's global network:
+
+    ```sh
+    npx wrangler deploy
+    ```
+
+The Worker will be deployed to your `*.workers.dev` subdomain at `mcp-access-self-hosted.<YOUR_SUBDOMAIN>.workers.dev`.
+
+</TabItem>
+</Tabs>
+
+### 2. Create a self-hosted Access application
+
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Applications**.
+2. Select **Add an application**.
+3. Select **Self-hosted**.
+4. Enter a name for your application (for example, `MCP server`).
+5. In **Application domain**, enter your Worker URL (for example, `mcp-access-self-hosted.<YOUR_SUBDOMAIN>.workers.dev`).
+6. Configure [Access policies](/cloudflare-one/access-controls/policies/) to define the users who can access the MCP server (for example, allow emails ending in `@yourcompany.com`).
+7. <Render
+   	file="access/access-choose-idps"
+   	product="cloudflare-one"
+   	params={{ appType: "self-hosted" }}
+   />
+8. Save the application.
+9. On the application details page, copy the **AUD tag** value from **Basic information**. You will need this value to configure your MCP server.
+
+</TabItem>
+<TabItem label="API">
+
+1. Make a `POST` request to the [Access applications](/api/resources/zero_trust/subresources/access/subresources/applications/methods/create/) endpoint:
+
+   <APIRequest
+   	path="/accounts/{account_id}/access/apps"
+   	method="POST"
+   	json={{
+   		name: "MCP server",
+   		type: "self_hosted",
+   		domain: "mcp-access-self-hosted.<YOUR_SUBDOMAIN>.workers.dev",
+   		policies: ["f174e90a-fafe-4643-bbbc-4a0ed4fc8415"],
+   		allowed_idps: [],
+   	}}
+   />
+
+2. Copy the `aud` value returned in the response.
+
+</TabItem>
+</Tabs>
+
+### 3. Configure your MCP server
+
+The MCP server validates the `Cf-Access-Jwt-Assertion` header on each request by checking the JWT signature against your team's public keys and verifying the issuer and audience claims. You need to provide your team domain and the application's AUD tag so the server knows which keys to fetch and which audience to expect.
+
+To configure the environment variables for our [example MCP server](#1-deploy-an-example-mcp-server):
+
+<Tabs>
+<TabItem label="Dashboard">
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Select the `mcp-access-self-hosted` Worker.
+3. Go to **Settings**.
+4. Under **Variables and Secrets**, update each variable with the corresponding value:
+
+   | Workers variable | Value                                                                                         |
+   | ---------------- | --------------------------------------------------------------------------------------------- |
+   | `TEAM_DOMAIN`    | `https://<YOUR_TEAM_NAME>.cloudflareaccess.com`                                               |
+   | `POLICY_AUD`     | The AUD tag copied from your [Access application](#2-create-a-self-hosted-access-application) |
+
+</TabItem>
+<TabItem label="CLI">
+
+1.  Open `wrangler.jsonc` in an editor and update the `vars` section with your Access application details:
+
+    ```jsonc
+    "vars": {
+    	"TEAM_DOMAIN": "https://<YOUR_TEAM_NAME>.cloudflareaccess.com",
+    	"POLICY_AUD": "<YOUR_APPLICATION_AUD_TAG>"
+    }
+    ```
+
+2.  Redeploy the Worker:
+
+    ```sh
+    npx wrangler deploy
+    ```
+
+</TabItem>
+</Tabs>
+
+### 4. Test the connection
+
+You can now connect to your MCP server at `https://mcp-access-self-hosted.<YOUR_SUBDOMAIN>.workers.dev/mcp` using [Workers AI Playground](https://playground.ai.cloudflare.com/), [MCP inspector](https://github.com/modelcontextprotocol/inspector), or [other MCP clients](/agents/guides/remote-mcp-server/#connect-your-mcp-server-to-claude-and-other-mcp-clients) that support remote MCP servers.
+
+To test in Workers AI Playground:
+
+1. Go to [Workers AI Playground](https://playground.ai.cloudflare.com/).
+
+2. Under **MCP Servers**, enter `https://mcp-access-self-hosted.<YOUR_SUBDOMAIN>.workers.dev/mcp` for the MCP server URL.
+
+3. Select **Connect**.
+
+4. Follow the prompts to log in to your identity provider.
+
+Workers AI Playground will show a **Connected** status. Access will authenticate the user and inject the `Cf-Access-Jwt-Assertion` header, which the MCP server validates before serving requests.
+
+## Access for SaaS application
+
+If your MCP server needs to act as its own OAuth client — for example, because it runs outside of Cloudflare or needs to manage tokens directly — you can register it as an Access for SaaS OIDC application. In this setup, the MCP server implements the OAuth authorization code flow against Cloudflare Access and receives an `access_token` that it can use to call downstream services.
+
+The following guide walks through the Access for SaaS approach. It deploys a remote <GlossaryTooltip term="MCP server">MCP server</GlossaryTooltip> on [Cloudflare Workers](/workers/) that uses Cloudflare Access as an OAuth Single Sign-On (SSO) provider. When users connect to the MCP server using an <GlossaryTooltip term="MCP client">MCP client</GlossaryTooltip>, they will be prompted to log in to your [identity provider](/cloudflare-one/integrations/identity-providers/) and are only granted access if they pass your [Access policies](/cloudflare-one/access-controls/policies/#selectors).
+
+### Prerequisites
+
+- Create a [Zero Trust organization](/cloudflare-one/setup/#2-create-a-zero-trust-organization).
+- Configure [One-time PIN](/cloudflare-one/integrations/identity-providers/one-time-pin/) or connect a third-party [identity provider](/cloudflare-one/integrations/identity-providers/).
+
+### 1. Deploy an example MCP server
+
+To deploy our [example MCP server](https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-cf-access) to your Cloudflare account:
+
+<Tabs>
+<TabItem label="Dashboard">
+
+1. Select the following button to launch the quickstart flow:
+
+   [![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-cf-access)
+
+2. Select the account that contains your Zero Trust organization.
+3. On the **Create an application** page, configure the following fields:
+   - **Git account**: Select an existing account or connect a new GitHub or GitLab account.
+   - **Create private Git repository**: Choose whether the project repository should be public or private.
+   - **Project name**: `mcp-server-cf-access`
+   - **Select KV namespace**: _Create new_
+   - **Name your KV namespace**: `OAUTH_KV`
+
+   We will configure `ACCESS_CLIENT_ID` and the other secret values in a later step.
+
+4. Select **Create and deploy**.
+
+The MCP server will be deployed to your `*.workers.dev` subdomain at `mcp-server-cf-access.<YOUR_SUBDOMAIN>.workers.dev`. A new git repository will be set up on your GitHub or GitLab account for your MCP server, configured to automatically deploy to Cloudflare each time you push a change or merge a pull request to the main branch of the repository.
+
+</TabItem>
+<TabItem label = "CLI">
+
+You can use the [Wrangler CLI](/workers/wrangler) to create the MCP server on your local machine and deploy it to Cloudflare.
+
+:::note[Prerequisites]
+
+- Install [npm](https://docs.npmjs.com/getting-started)
+- Install [Node.js](https://nodejs.org/en/)
+  :::
+
+1.  Open a terminal and clone our example project:
+
+        ```sh
+        npm create cloudflare@latest -- mcp-server-cf-access --template=cloudflare/ai/demos/remote-mcp-cf-access
+        ```
+
+    During setup, select the following options: - For _Do you want to add an AGENTS.md file to help AI coding tools understand
+    Cloudflare APIs?_, choose `No`. - For _Do you want to use git for version control?_, choose `No`. - For _Do you want to deploy your application?_, choose `No` (we will be making some changes before deploying).
+
+2.  Go to the project directory:
+
+    ```sh
+    cd mcp-server-cf-access
+    ```
+
+3.  Create a [Workers KV namespace](/kv/concepts/kv-namespaces/) to store the key. The binding name should be `OAUTH_KV` if you want to run the example as written.
+
+    ```sh
+    npx wrangler kv namespace create "OAUTH_KV"
+    ```
+
+        The command will output the binding name and KV namespace ID:
+
+        ```sh output
+        {
+        	"kv_namespaces": [
+        		{
+        			"binding": "OAUTH_KV",
+        			"id": "<YOUR_KV_NAMESPACE_ID>"
+        		}
+        	]
+        }
+        ```
+
+4.  Open `wrangler.jsonc` in an editor and insert your `OAUTH_KV` namespace ID:
+
+    ```jsonc
+    "kv_namespaces": [
+    	{
+    		"binding": "OAUTH_KV",
+    		"id": "<YOUR_KV_NAMESPACE_ID>"
+    	}
+    ],
+    ```
+
+5.  You can now deploy the Worker to Cloudflare's global network:
+
+    ```sh
+    npx wrangler deploy
+    ```
+
+The Worker will be deployed to your `*.workers.dev` subdomain at `mcp-server-cf-access.<YOUR_SUBDOMAIN>.workers.dev`.
+
+</TabItem>
+</Tabs>
+
+### 2. Create an Access for SaaS app
+
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Applications**.
+2. Select **Add an application**.
+3. Select **SaaS**.
+4. In **Application**, enter a custom name (for example, `MCP server`) and select the textbox that appears below.
+5. Select **OIDC** as the authentication protocol.
+6. Select **Add application**.
+7. In **Redirect URLs**, enter the authorization callback URL for your MCP server. The callback URL for our [example MCP server](#1-deploy-an-example-mcp-server-1) is
+   `https://mcp-server-cf-access.<YOUR_SUBDOMAIN>.workers.dev/callback`.
+8. Copy the following values to input into our example MCP server. Other MCP servers may require different sets of input values.
+   - **Client secret**
+   - **Client ID**
+   - **Token endpoint**
+   - **Authorization endpoint**
+   - **Key endpoint**
+
+9. (Optional) Under **Advanced settings**, turn on [**Refresh tokens**](/cloudflare-one/access-controls/applications/http-apps/saas-apps/generic-oidc-saas/#advanced-settings) if you want to reduce the number of times a user needs to log in to the identity provider.
+10. Configure [Access policies](/cloudflare-one/access-controls/policies/) to define the users who can access the MCP server.
+11. <Render
+    	file="access/access-choose-idps"
+    	product="cloudflare-one"
+    	params={{ appType: "saas" }}
+    />
+12. Save the application.
+
+</TabItem>
+<TabItem label="API">
+
+1. Make a `POST` request to the [Access applications](/api/resources/zero_trust/subresources/access/subresources/applications/methods/create/) endpoint:
+
+   <APIRequest
+   	path="/accounts/{account_id}/access/apps"
+   	method="POST"
+   	json={{
+   		name: "MCP server",
+   		type: "saas",
+   		saas_app: {
+   			auth_type: "oidc",
+   			redirect_uris: [
+   				"https://mcp-server-cf-access.<YOUR_SUBDOMAIN>.workers.dev/callback",
+   			],
+   			grant_type: ["authorization_code", "refresh_tokens"],
+   			refresh_token_options: {
+   				lifetime: "90d",
+   			},
+   		},
+   		policies: ["f174e90a-fafe-4643-bbbc-4a0ed4fc8415"],
+   		allowed_idps: [],
+   	}}
+   />
+
+2. Copy the `client_id` and `client_secret` returned in the response.
+3. Build the OAuth endpoint URLs using your <GlossaryTooltip term="team name">team name</GlossaryTooltip> and the `client_id` returned in the response:
+
+   | Endpoint               | URL                                                                                          |
+   | ---------------------- | -------------------------------------------------------------------------------------------- |
+   | Token endpoint         | `https://<TEAM_NAME>.cloudflareaccess.com/cdn-cgi/access/sso/oidc/<CLIENT_ID>/token`         |
+   | Authorization endpoint | `https://<TEAM_NAME>.cloudflareaccess.com/cdn-cgi/access/sso/oidc/<CLIENT_ID>/authorization` |
+   | Key endpoint           | `https://<TEAM_NAME>.cloudflareaccess.com/cdn-cgi/access/sso/oidc/<CLIENT_ID>/jwks`          |
+
+</TabItem>
+</Tabs>
+
+### 3. Configure your MCP server
+
+Your MCP server needs to perform an OAuth 2.0 authorization flow to get an `access_token` from the SaaS app created in [Step 2](#2-create-an-access-for-saas-app). When setting up the OAuth client on your MCP server, you will need to paste in the OAuth endpoints and credentials from the Access for SaaS app.
+
+To add OAuth endpoints and credentials to our [example MCP server](#1-deploy-an-example-mcp-server-1):
+
+<Tabs>
+<TabItem label="Dashboard">
+
+1.  In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to the **Workers & Pages** page.
+
+    <DashButton url="/?to=/:account/workers-and-pages" />
+
+2.  Select the `mcp-server-cf-access` Worker.
+3.  Go to **Settings**.
+4.  Under **Variables and Secrets**, update each secret with the corresponding value obtained from the [Access for SaaS app](#2-create-an-access-for-saas-app).
+
+    | Workers secret             | SaaS app field         |
+    | -------------------------- | ---------------------- |
+    | `ACCESS_CLIENT_ID`         | Client ID              |
+    | `ACCESS_CLIENT_SECRET`     | Client secret          |
+    | `ACCESS_TOKEN_URL`         | Token endpoint         |
+    | `ACCESS_AUTHORIZATION_URL` | Authorization endpoint |
+    | `ACCESS_JWKS_URL`          | Key endpoint           |
+
+        :::note
+        Use the Client ID, Client secret, and OAuth endpoints copied from the Cloudflare One dashboard. Do not use the OAuth values from your [third-party identity provider](/cloudflare-one/integrations/identity-providers/generic-oidc/).
+        :::
+
+5.  For `COOKIE_ENCRYPTION_KEY`, you can use the following command to generate a random string:
+
+        ```sh
+        openssl rand -hex 32
+        ```
+
+    Enter the output of this command into `COOKIE_ENCRYPTION_KEY`.
+
+</TabItem>
+<TabItem label="CLI">
+
+1.  Create the following [Workers secrets](/workers/configuration/secrets/):
+
+    ```sh
+    npx wrangler secret put ACCESS_CLIENT_ID
+    npx wrangler secret put ACCESS_CLIENT_SECRET
+    npx wrangler secret put ACCESS_TOKEN_URL
+    npx wrangler secret put ACCESS_AUTHORIZATION_URL
+    npx wrangler secret put ACCESS_JWKS_URL
+    ```
+
+2.  When prompted to enter a secret value, paste the corresponding values obtained from the [Access for SaaS app](#2-create-an-access-for-saas-app).
+
+    | Workers secret             | SaaS app field         |
+    | -------------------------- | ---------------------- |
+    | `ACCESS_CLIENT_ID`         | Client ID              |
+    | `ACCESS_CLIENT_SECRET`     | Client secret          |
+    | `ACCESS_TOKEN_URL`         | Token endpoint         |
+    | `ACCESS_AUTHORIZATION_URL` | Authorization endpoint |
+    | `ACCESS_JWKS_URL`          | Key endpoint           |
+
+        :::note
+        Use the Client ID, Client secret, and OAuth endpoints copied from the Cloudflare One dashboard. Do not use the OAuth values from your [third-party identity provider](/cloudflare-one/integrations/identity-providers/generic-oidc/).
+        :::
+
+3.  Generate a random string for the cookie encryption key:
+
+    ```sh
+    openssl rand -hex 32
+    ```
+
+    Store the output of this command in a Workers secret:
+
+    ```sh
+    npx wrangler secret put COOKIE_ENCRYPTION_KEY
+    ```
+
+</TabItem>
+</Tabs>
+
+### 4. Test the connection
+
+You can now connect to your MCP server at `https://mcp-server-cf-access.<YOUR_SUBDOMAIN>.workers.dev/mcp` using [Workers AI Playground](https://playground.ai.cloudflare.com/), [MCP inspector](https://github.com/modelcontextprotocol/inspector), or [other MCP clients](/agents/guides/remote-mcp-server/#connect-your-mcp-server-to-claude-and-other-mcp-clients) that support remote MCP servers.
+
+To test in Workers AI Playground:
+
+1. Go to [Workers AI Playground](https://playground.ai.cloudflare.com/).
+
+2. Under **MCP Servers**, enter `https://mcp-server-cf-access.<YOUR_SUBDOMAIN>.workers.dev/mcp` for the MCP server URL.
+
+3. Select **Connect**.
+
+4. A popup window will appear requesting access to the MCP server. Select **Approve**.
+
+5. Follow the prompts to log in to your identity provider.
+
+Workers AI Playground will show a **Connected** status. The MCP server should successfully obtain an `access_token` from Cloudflare Access.
+
+## Next steps
+
+To allow the MCP server to make authenticated requests to other self-hosted applications on behalf of the user, create a [Linked App Token](/cloudflare-one/access-controls/ai-controls/linked-apps/) policy on the downstream application. The MCP server forwards the `Cf-Access-Jwt-Assertion` header it receives from Access as a `Cf-Access-Token` header to the downstream application.

@@ -1,0 +1,184 @@
+{
+	"model_id": "openai/gpt-image-1.5",
+	"provider_id": "openai",
+	"name": "GPT Image 1.5",
+	"description": "OpenAI's image generation model that creates and edits images from text prompts, supporting multiple quality levels and output sizes.",
+	"task": "Text-to-Image",
+	"tags": [
+		"Image Generation",
+		"Image Editing",
+		"Multimodal"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Generation",
+			"description": "Basic text-to-image with just a prompt",
+			"input": {
+				"prompt": "A golden retriever puppy playing in autumn leaves"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/openai__gpt-image-1.5/simple-generation.png"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-image-1.5',\n  {\n    prompt: 'A golden retriever puppy playing in autumn leaves',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "High Quality",
+			"description": "Generate a high-quality detailed image",
+			"input": {
+				"prompt": "A detailed botanical illustration of exotic tropical flowers with fine line work and watercolor textures",
+				"quality": "high"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/openai__gpt-image-1.5/high-quality.png"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-image-1.5',\n  {\n    prompt:\n      'A detailed botanical illustration of exotic tropical flowers with fine line work and watercolor textures',\n    quality: 'high',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Low Quality Draft",
+			"description": "Fast, rough draft for iteration",
+			"input": {
+				"prompt": "A quiet Japanese garden in morning mist with a stone lantern and koi pond",
+				"quality": "low"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/openai__gpt-image-1.5/low-quality-draft.png"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-image-1.5',\n  {\n    prompt:\n      'A quiet Japanese garden in morning mist with a stone lantern and koi pond',\n    quality: 'low',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Medium Quality",
+			"description": "Balanced quality for most uses",
+			"input": {
+				"prompt": "A neon-lit cyberpunk figure standing in the rain beneath a holographic billboard, cinematic lighting",
+				"quality": "medium"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/openai__gpt-image-1.5/medium-quality.png"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-image-1.5',\n  {\n    prompt:\n      'A neon-lit cyberpunk figure standing in the rain beneath a holographic billboard, cinematic lighting',\n    quality: 'medium',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Auto Quality",
+			"description": "Let the model pick an appropriate quality level",
+			"input": {
+				"prompt": "A panoramic view of the northern lights over a snowy mountain range, vivid greens and purples dancing across the sky",
+				"quality": "auto"
+			},
+			"output": {
+				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/openai__gpt-image-1.5/auto-quality.png"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-image-1.5',\n  {\n    prompt:\n      'A panoramic view of the northern lights over a snowy mountain range, vivid greens and purples dancing across the sky',\n    quality: 'auto',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://openai.com/",
+	"terms": "https://openai.com/policies/",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/openai/gpt-image-1.5.png",
+	"metadata": {
+		"Image Editing": "Yes",
+		"Sizes": "256x256 to 1792x1024",
+		"Quality": "low, medium, high, auto",
+		"Styles": "vivid, natural"
+	},
+	"created_at": "2026-04-14 18:41:42",
+	"default_example": null,
+	"code_snippets": [],
+	"zdr": false,
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"description": "Text prompt describing the image to generate or edit",
+					"type": "string"
+				},
+				"image": {
+					"description": "Base64-encoded input image for image editing",
+					"type": "string"
+				},
+				"quality": {
+					"description": "Quality of the generated image",
+					"type": "string",
+					"enum": [
+						"low",
+						"medium",
+						"high",
+						"auto"
+					]
+				},
+				"size": {
+					"description": "Size of the generated image",
+					"type": "string",
+					"enum": [
+						"256x256",
+						"512x512",
+						"1024x1024",
+						"1792x1024",
+						"1024x1792"
+					]
+				},
+				"style": {
+					"description": "Style of the generated image",
+					"type": "string",
+					"enum": [
+						"vivid",
+						"natural"
+					]
+				}
+			},
+			"required": [
+				"prompt"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"description": "URL to the generated image",
+					"type": "string",
+					"format": "uri"
+				}
+			},
+			"required": [
+				"image"
+			],
+			"additionalProperties": false
+		}
+	}
+}
