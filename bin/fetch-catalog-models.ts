@@ -282,6 +282,51 @@ async function fetchFromApi(): Promise<CatalogModel[]> {
 }
 
 /**
+ * Pre-signed URL query parameters that carry credentials or signatures.
+ * Catalog responses sometimes embed pre-signed delivery URLs (e.g. VolcEngine
+ * TOS, AWS S3, GCS, Runway CloudFront with `_jwt`) in `raw_response` fields.
+ * GitHub push protection blocks any commit containing those credentials, so
+ * we strip the entire query string when one of these parameters is present.
+ */
+const CREDENTIAL_QUERY_PARAMS = [
+	"X-Tos-Credential",
+	"X-Tos-Signature",
+	"X-Amz-Credential",
+	"X-Amz-Signature",
+	"X-Amz-Security-Token",
+	"X-Goog-Credential",
+	"X-Goog-Signature",
+	"Signature",
+	"_jwt",
+];
+
+const CREDENTIAL_QUERY_PATTERN = new RegExp(
+	`[?&](${CREDENTIAL_QUERY_PARAMS.join("|")})=`,
+	"i",
+);
+
+function redactCredentialUrls<T>(value: T): T {
+	if (typeof value === "string") {
+		if (value.startsWith("http") && CREDENTIAL_QUERY_PATTERN.test(value)) {
+			const queryIndex = value.indexOf("?");
+			return (queryIndex === -1 ? value : value.slice(0, queryIndex)) as T;
+		}
+		return value;
+	}
+	if (Array.isArray(value)) {
+		return value.map((item) => redactCredentialUrls(item)) as T;
+	}
+	if (value !== null && typeof value === "object") {
+		const out: Record<string, unknown> = {};
+		for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
+			out[k] = redactCredentialUrls(v);
+		}
+		return out as T;
+	}
+	return value;
+}
+
+/**
  * Serialize to JSON with all non-ASCII characters escaped as `\uXXXX`.
  *
  * Catalog API responses sometimes return non-ASCII characters as raw UTF-8
@@ -344,10 +389,17 @@ function writeModels(models: CatalogModel[]): void {
 		// not consumed by the docs site and isn't declared in the schema.
 		delete model.pricing;
 
+		// Strip credentials from any pre-signed URLs in the response.
+		const redacted = redactCredentialUrls(model);
+
 		const fileName = getModelFileName(model.model_id);
 		const filePath = path.join(OUTPUT_DIR, `${fileName}.json`);
 
-		fs.writeFileSync(filePath, stringifyAsciiSafe(model, "\t") + "\n", "utf-8");
+		fs.writeFileSync(
+			filePath,
+			stringifyAsciiSafe(redacted, "\t") + "\n",
+			"utf-8",
+		);
 		written++;
 	}
 
