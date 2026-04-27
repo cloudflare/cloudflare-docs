@@ -6,7 +6,9 @@ sidebar:
   label: Docs for agents
 ---
 
-Cloudflare documentation provides multiple agentic tooling to help you use your own AI agents to effectively consume the information. This enables you to query your agent for your specific needs, as well as use Cloudflare skills and MCP servers to effectively interact with Cloudflare products and services.
+import { LinkButton } from "~/components";
+
+Cloudflare documentation provides features and tools to help you use your own AI agents to effectively consume the information. This enables you to query your agent for your specific needs, as well as use Cloudflare skills and MCP servers to effectively interact with Cloudflare products and services.
 
 This page explains how you can use your agents on Cloudflare documentation.
 
@@ -59,27 +61,7 @@ How the agent retains information about your project between conversations:
 
 Each supported agent has a dedicated setup guide covering installation, Skills, MCP server configuration, example prompts, tips, and troubleshooting.
 
-Select your agent to get started. If you are not sure which agent to use, refer to the [comparison table](#compare-agents) below.
-
-- [Claude Code + Cloudflare](/agent-setup/claude-code/)
-- [Codex + Cloudflare](/agent-setup/codex/)
-- [Cursor + Cloudflare](/agent-setup/cursor/)
-- [GitHub Copilot + Cloudflare](/agent-setup/github-copilot/)
-- [OpenCode + Cloudflare](/agent-setup/opencode/)
-- [Windsurf + Cloudflare](/agent-setup/windsurf/)
-
-## Compare agents
-
-Every agent listed supports Skills and MCP. Capabilities, pricing, and context approaches vary:
-
-| Agent                                          | Workflow            | Pricing      | Model          | Context          | Open source |
-| ---------------------------------------------- | ------------------- | ------------ | -------------- | ---------------- | ----------- |
-| [Claude Code](/agent-setup/claude-code/)       | Terminal            | Subscription | Locked         | Project memory   | No          |
-| [Codex](/agent-setup/codex/)                   | Terminal            | Hybrid       | Locked         | Project memory   | Yes         |
-| [Cursor](/agent-setup/cursor/)                 | IDE, Terminal       | Subscription | Multi-provider | Indexed codebase | No          |
-| [GitHub Copilot](/agent-setup/github-copilot/) | Extension, Terminal | Subscription | Multi-provider | Indexed codebase | No          |
-| [OpenCode](/agent-setup/opencode/)             | Terminal            | BYOK         | Multi-provider | Project memory   | Yes         |
-| [Windsurf](/agent-setup/windsurf/)             | IDE                 | Subscription | Multi-provider | Indexed codebase | No          |
+<LinkButton href="/agent-setup/">Get started</LinkButton>
 
 ## Markdown documentation for LLMs
 
