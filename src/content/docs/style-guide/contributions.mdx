@@ -75,3 +75,29 @@ After you create an issue or PR, a member of the Cloudflare organization will re
 * If your suggestion is not approved, the Cloudflare member will respond with the reasoning and close your issue or PR.
 
 Thank you for contributing to our open-source ecosystem and being a part of the Cloudflare community.
+
+## Contribute to Cloudflare documentation with AI
+
+The `cloudflare-docs` repository includes an [`AGENTS.md`](https://github.com/cloudflare/cloudflare-docs/blob/production/AGENTS.md) file that helps AI coding agents understand the structure, tooling, and conventions of the repository so they can make correct, buildable changes when contributing to documentation.
+
+[AGENTS.md](https://agents.md/) is a simple, open format for guiding coding agents.
+
+The repository also includes configuration for the following AI tools:
+
+- [OpenCode](https://opencode.ai/)
+- [Windsurf](https://windsurf.com/)
+
+To set up other AI tools (Claude Code, Cursor, or GitHub Copilot) for documentation contributions, use [`rulesync`](https://github.com/dyoshikawa/rulesync) to synchronize AI tool configurations:
+
+```sh
+# Configure Claude Code
+npm run ai-setup:claudecode
+
+# Configure Cursor
+npm run ai-setup:cursor
+
+# Configure GitHub Copilot
+npm run ai-setup:copilot
+```
+
+Each script imports AI tool components (commands and subagents) from the OpenCode configuration committed to the repository and generates configuration files in the expected locations for your selected AI tool.
