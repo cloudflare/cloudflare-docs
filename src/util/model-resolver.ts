@@ -2,11 +2,11 @@ import { getCollection } from "astro:content";
 import type { CatalogModelsSchema } from "~/schemas/catalog-models";
 import type { WorkersAIModelsSchema } from "~/schemas/workers-ai-models";
 
-import type { ApiMode, ResolvedModel } from "./model-types";
+import type { ApiMode, ModelCardData, ResolvedModel } from "./model-types";
 
 // Re-export client-safe helpers and types for convenience
 export { getModelAuthor } from "./model-helpers";
-export type { ResolvedModel, ApiMode } from "./model-types";
+export type { ResolvedModel, ApiMode, ModelCardData } from "./model-types";
 
 /**
  * Detect and split a model's schema into logical API modes.
@@ -315,4 +315,31 @@ export async function getLegacyModels(): Promise<ResolvedModel[]> {
 	return legacyModels
 		.filter((entry) => !catalogSlugs.has(entry.data.name))
 		.map((entry) => legacyToResolved(entry.data));
+}
+
+/**
+ * Project a ResolvedModel to ModelCardData, stripping heavy fields
+ * (schema, apiModes, codeSnippets, examples, metadata, etc.) that are
+ * not needed by the catalog index pages. This avoids serializing
+ * megabytes of JSON Schema data into the page HTML as island props.
+ */
+export function toModelCardData(model: ResolvedModel): ModelCardData {
+	return {
+		name: model.name,
+		modelId: model.modelId,
+		slug: model.slug,
+		displayName: model.displayName,
+		description: model.description,
+		task: model.task,
+		tags: model.tags,
+		contextLength: model.contextLength,
+		maxOutputTokens: model.maxOutputTokens,
+		supportsAsync: model.supportsAsync,
+		id: model.id,
+		source: model.source,
+		created_at: model.created_at,
+		properties: model.properties,
+		dataSource: model.dataSource,
+		hosting: model.hosting,
+	};
 }
