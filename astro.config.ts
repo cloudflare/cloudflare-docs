@@ -155,6 +155,7 @@ export default defineConfig({
 				MarkdownContent: "./src/components/overrides/MarkdownContent.astro",
 				Sidebar: "./src/components/overrides/Sidebar.astro",
 				PageTitle: "./src/components/overrides/PageTitle.astro",
+				SkipLink: "./src/components/overrides/SkipLink.astro",
 				TableOfContents: "./src/components/overrides/TableOfContents.astro",
 			},
 			sidebar,
