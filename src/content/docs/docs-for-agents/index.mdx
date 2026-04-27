@@ -6,8 +6,6 @@ sidebar:
   label: Docs for agents
 ---
 
-import { Tabs, TabItem } from "~/components";
-
 Use this guide to connect AI coding assistants and large language models (LLMs) to Cloudflare documentation, APIs, and platform tools.
 
 ## Quick start
@@ -61,13 +59,7 @@ Select your agent to get started. If you are not sure which agent to use, refer 
 
 [Agent skills](https://agentskills.io/home) are structured, task-specific instructions that AI tools load on demand — for example, a skill might teach your agent how to deploy a Cloudflare Worker or configure a WAF rule. Cloudflare publishes skills covering Workers, storage, AI, networking, security, and more in the [Cloudflare Skills repository](https://github.com/cloudflare/skills).
 
-To install skills in any compatible agent, run the following command in your terminal:
-
-```sh
-npx skills add https://developers.cloudflare.com
-```
-
-For agent-specific installation (plugins, slash commands, or marketplace), refer to the setup guide for your agent.
+Each agent has its own installation method for Skills. Refer to the [setup guide for your agent](#set-up-your-agent) for installation instructions.
 
 ## MCP servers
 
@@ -78,41 +70,7 @@ There are two approaches:
 - **[Code Mode](/agents/api-reference/codemode/)**: A single MCP server that covers the entire Cloudflare API (over 2,500 endpoints). Use this when your agent needs broad access across multiple Cloudflare products.
 - **Domain-specific servers**: Focused servers for documentation, observability, DNS analytics, and more. Use these when your agent only needs access to a specific area. The full catalog is in the [cloudflare/mcp-server-cloudflare](https://github.com/cloudflare/mcp-server-cloudflare) repository.
 
-### Documentation MCP server
-
-The [Documentation MCP Server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/docs-vectorize) gives your agent direct access to up-to-date Cloudflare documentation.
-
-<Tabs>
-	<TabItem label="Cursor">
-
-    To install in Cursor, use the [direct install link](https://cursor.com/en-US/install-mcp?name=cloudflare&config=eyJjb21tYW5kIjoibnB4IG1jcC1yZW1vdGUgaHR0cHM6Ly9kb2NzLm1jcC5jbG91ZGZsYXJlLmNvbS9zc2UifQ%3D%3D).
-
-    </TabItem>
-    <TabItem label="VS Code">
-
-    To install in VS Code, use the [direct install link](vscode:mcp/install?%7B%22name%22%3A%22cloudflare%22%2C%22url%22%3A%22https%3A%2F%2Fdocs.mcp.cloudflare.com%2Fmcp%22%7D).
-
-    </TabItem>
-    <TabItem label="Manual">
-
-    To install manually, add the following to your MCP configuration file:
-
-    ```json
-    	{
-    		"mcpServers": {
-    			"cloudflare": {
-    				"command": "npx",
-    				"args": ["mcp-remote", "https://docs.mcp.cloudflare.com/mcp"]
-    			}
-    		}
-    	}
-    ```
-
-    </TabItem>
-
-</Tabs>
-
-For the full list, refer to [MCP servers for Cloudflare](/agents/model-context-protocol/mcp-servers-for-cloudflare/).
+Each agent's [setup guide](#set-up-your-agent) includes MCP server installation as part of its Quick start. For the full list of available MCP servers, refer to [MCP servers for Cloudflare](/agents/model-context-protocol/mcp-servers-for-cloudflare/).
 
 ## Compare agents
 
