@@ -28,9 +28,6 @@ Most procedures in this guide are configured per domain. Select your domain in t
 ## Configure your SSL/TLS encryption mode
 
 Your SSL/TLS encryption mode controls how Cloudflare connects to your origin server. For end-to-end encryption, use **Full (strict)** — it encrypts both connections and verifies your origin certificate. For a detailed comparison of all available modes, refer to [Encryption modes](/ssl/origin-configuration/ssl-modes/).
-
-{/* Source: /ssl/origin-configuration/ssl-modes/full-strict/ — "Use Full (strict) whenever possible" */}
-
 ### Check your current mode
 
 <Steps>
@@ -41,13 +38,13 @@ Your SSL/TLS encryption mode controls how Cloudflare connects to your origin ser
 
 2. Check the current encryption mode displayed on the page.
    - If the mode is already **Full (strict)**, skip to [Redirect all HTTP requests to HTTPS](#redirect-all-http-requests-to-https).
-   - If the mode is not **Full (strict)**, continue below to install an origin certificate (if needed) and change the mode. {/* Source: /ssl/get-started/ — "Choose your encryption mode" */}
+   - If the mode is not **Full (strict)**, continue below to install an origin certificate (if needed) and change the mode.
 
 </Steps>
 
 ### Install a Cloudflare Origin CA certificate
 
-If your origin server does not have a valid SSL certificate, install a free Cloudflare Origin CA certificate. Origin CA certificates are valid for up to 15 years and are trusted by Cloudflare, which means you can set your encryption mode to Full (strict) after installing one. {/* Source: /ssl/origin-configuration/origin-ca/ — "Deploy an Origin CA certificate" workflow */}
+If your origin server does not have a valid SSL certificate, install a free Cloudflare Origin CA certificate. Origin CA certificates are valid for up to 15 years and are trusted by Cloudflare, which means you can set your encryption mode to Full (strict) after installing one.
 
 If your origin already has a valid certificate from a publicly trusted certificate authority, skip to [Set your encryption mode to Full (strict)](#set-your-encryption-mode-to-full-strict).
 
@@ -80,9 +77,6 @@ If your origin already has a valid certificate from a publicly trusted certifica
 9. Select **OK**.
 
 </Steps>
-
-{/* Source: /ssl/origin-configuration/origin-ca/ — "1. Create an Origin CA certificate" */}
-
 :::note
 For details about working with certificates programmatically, refer to [API calls](/ssl/origin-configuration/origin-ca/#api-calls).
 :::
@@ -100,9 +94,6 @@ For details about working with certificates programmatically, refer to [API call
 4. Enable SSL and port `443` at your origin web server.
 
 </Steps>
-
-{/* Source: /ssl/origin-configuration/origin-ca/ — "2. Install Origin CA certificate on origin server" */}
-
 :::note
 If you do not see your server listed, search the [DigiCert documentation](https://www.digicert.com/search-results) or contact your hosting provider.
 :::
@@ -120,9 +111,6 @@ After installing a valid certificate on your origin server, set the encryption m
 <Render file="change-encryption-mode-api" product="ssl" />
 
 </TabItem> </Tabs>
-
-{/* Source: /ssl/origin-configuration/origin-ca/ — "3. Change SSL/TLS mode" */}
-
 :::caution
 If your site shows a [526 error](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-526/) after changing the encryption mode, your origin certificate may not meet the requirements for Full (strict). The certificate must be unexpired, issued by a trusted CA or Cloudflare Origin CA, and contain a Common Name (CN) or Subject Alternative Name (SAN) that matches your hostname. For redirect loop issues, refer to [ERR_TOO_MANY_REDIRECTS](/ssl/troubleshooting/too-many-redirects/).
 :::
@@ -131,7 +119,7 @@ If your site shows a [526 error](/support/troubleshooting/http-status-codes/clou
 
 Even with an active edge certificate, visitors can still access resources over unsecured HTTP connections. Two settings work together to fix this: 
 1. Always Use HTTPS redirects HTTP requests to HTTPS
-2. Automatic HTTPS Rewrites fixes mixed content references in your page HTML {/* Source: /ssl/edge-certificates/encrypt-visitor-traffic/ — "Even with an active SSL/TLS certificate, visitors can still access resources over unsecured HTTP connections" */}
+2. Automatic HTTPS Rewrites fixes mixed content references in your page HTML
 
 ### Turn on Always Use HTTPS
 
@@ -168,12 +156,9 @@ If only some parts of your application can support HTTPS traffic, do not turn on
 </Steps>
 
 </TabItem> </Tabs>
-
-{/* Source: /ssl/edge-certificates/additional-options/always-use-https/ — "Encrypt all visitor traffic" */}
-
 ### Turn on Automatic HTTPS Rewrites
 
-Automatic HTTPS Rewrites prevents mixed content errors by rewriting HTTP resource URLs in your page HTML to HTTPS. This is useful for sites where you do not control all asset URLs, such as CMS-hosted content or embedded third-party resources. {/* Source: /ssl/edge-certificates/additional-options/automatic-https-rewrites/ — opening paragraph */}
+Automatic HTTPS Rewrites prevents mixed content errors by rewriting HTTP resource URLs in your page HTML to HTTPS. This is useful for sites where you do not control all asset URLs, such as CMS-hosted content or embedded third-party resources.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -192,9 +177,6 @@ Automatic HTTPS Rewrites prevents mixed content errors by rewriting HTTP resourc
 Send a [`PATCH`](/api/resources/zones/subresources/settings/methods/edit/) request with `automatic_https_rewrites` as the setting name in the URI path, and the `value` parameter set to `"on"`.
 
 </TabItem> </Tabs>
-
-{/* Source: /ssl/edge-certificates/additional-options/automatic-https-rewrites/ — "Enable Automatic HTTPS Rewrites" */}
-
 :::note
 Automatic HTTPS Rewrites does not rewrite all HTTP URLs. Some passive content (such as images) may not be rewritten, which can still cause mixed content warnings. For details on how rewrites work and troubleshooting, refer to [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/) and [Mixed content errors](/ssl/troubleshooting/mixed-content-errors/).
 :::
@@ -205,7 +187,7 @@ After your encryption mode is set and HTTP traffic is redirected, strengthen you
 
 ### Set your minimum TLS version
 
-TLS 1.0 and 1.1 have known vulnerabilities and are no longer considered secure. Setting the minimum TLS version to 1.2 blocks connections from clients using older protocols. For guidance on which version to choose, refer to [TLS protocols](/ssl/reference/protocols/). {/* Source: /ssl/reference/protocols/ — "TLS 1.3 has become widely adopted. As a general rule, Cloudflare recommends setting TLS to 1.3" */}
+TLS 1.0 and 1.1 have known vulnerabilities and are no longer considered secure. Setting the minimum TLS version to 1.2 blocks connections from clients using older protocols. For guidance on which version to choose, refer to [TLS protocols](/ssl/reference/protocols/).
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -224,9 +206,6 @@ TLS 1.0 and 1.1 have known vulnerabilities and are no longer considered secure. 
 Send a [`PATCH`](/api/resources/zones/subresources/settings/methods/edit/) request with `min_tls_version` as the setting name in the URI path, and the `value` parameter set to `"1.2"`.
 
 </TabItem> </Tabs>
-
-{/* Source: /ssl/edge-certificates/additional-options/minimum-tls/ — "Zone-level" setup */}
-
 :::note[Per-hostname minimum TLS version requires Advanced Certificate Manager]
 To set minimum TLS versions for individual hostnames instead of the entire zone, refer to [Per-hostname setup](/ssl/edge-certificates/additional-options/minimum-tls/#per-hostname). This requires an [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) subscription.
 :::
@@ -252,18 +231,15 @@ TLS 1.3 provides faster handshakes and improved security over TLS 1.2.
 Send a [`PATCH`](/api/resources/zones/subresources/settings/methods/edit/) request with `tls_1_3` as the setting name in the URI path, and the `value` parameter set to `"on"`. To also turn on 0-RTT (Zero Round Trip Time Resumption), set the value to `"zrt"`.
 
 </TabItem> </Tabs>
-
-{/* Source: /ssl/edge-certificates/additional-options/tls-13/ — "Enable TLS 1.3" */}
-
 ### Turn on HSTS
 
-HTTP Strict Transport Security (HSTS) adds a response header that tells browsers to connect to your site over HTTPS only, even if a link or redirect tries to send them over HTTP. HSTS protects against protocol downgrade attacks. {/* Source: /ssl/edge-certificates/additional-options/http-strict-transport-security/ — opening paragraph */}
+HTTP Strict Transport Security (HSTS) adds a response header that tells browsers to connect to your site over HTTPS only, even if a link or redirect tries to send them over HTTP. HSTS protects against protocol downgrade attacks.
 
 :::caution
 Only turn on HSTS after your HTTPS configuration is fully working and tested. If you remove HTTPS before disabling HSTS or before waiting for the duration of the original **Max Age Header**, your website becomes inaccessible to visitors for the Max Age Header duration or until you re-enable HTTPS. Refer to [HTTP Strict Transport Security (HSTS)](/ssl/edge-certificates/additional-options/http-strict-transport-security/) before configuring.
 :::
 
-Before turning on HSTS, confirm these prerequisites: {/* Source: /ssl/edge-certificates/additional-options/http-strict-transport-security/ — "Requirements" */}
+Before turning on HSTS, confirm these prerequisites:
 
 - HTTPS is enabled and working on your domain.
 - Your DNS records are set to [Proxied](/dns/proxy-status/).
@@ -298,9 +274,6 @@ Before turning on HSTS, confirm these prerequisites: {/* Source: /ssl/edge-certi
 Send a [`PATCH`](/api/resources/zones/subresources/settings/methods/edit/) request with `security_header` as the setting name in the URI path, and specify the `value` object that includes your HSTS settings.
 
 </TabItem> </Tabs>
-
-{/* Source: /ssl/edge-certificates/additional-options/http-strict-transport-security/ — "Enable HSTS" */}
-
 ### Review your cipher suites
 
 Cloudflare's default cipher suites provide strong encryption for most sites. You do not need to change them unless a security audit or compliance requirement specifies particular cipher configurations.
@@ -313,7 +286,7 @@ Customizing cipher suites requires an [Advanced Certificate Manager](/ssl/edge-c
 
 ## Monitor third-party scripts with client-side security
 
-HTTPS encrypts data in transit, but third-party scripts loaded by your pages can still exfiltrate data from the browser. Client-side security monitors these scripts and alerts you to unexpected additions. {/* Source: /client-side-security/get-started/ — script monitoring purpose */}
+HTTPS encrypts data in transit, but third-party scripts loaded by your pages can still exfiltrate data from the browser. Client-side security monitors these scripts and alerts you to unexpected additions.
 
 ### Turn on script monitoring
 
@@ -328,9 +301,6 @@ HTTPS encrypts data in transit, but third-party scripts loaded by your pages can
 3. Turn on **Continuous script monitoring**.
 
 </Steps>
-
-{/* Source: /client-side-security/get-started/ — "1. Activate client-side resource monitoring" */}
-
 ### Review detected resources
 
 After turning on monitoring, it may take some time for Cloudflare to generate a list of detected scripts on your domain.
@@ -346,9 +316,6 @@ After turning on monitoring, it may take some time for Cloudflare to generate a 
 3. Review the list of detected scripts. Check for unknown or unexpected scripts from domains you do not recognize.
 
 </Steps>
-
-{/* Source: /client-side-security/get-started/ — "2. Review detected resources" */}
-
 Depending on your Cloudflare plan, you may also be able to review connections made by scripts and check them for malicious activity. For setup details, refer to [Get started with client-side security](/client-side-security/get-started/).
 
 :::note[Content security rules require Client-Side Security Advanced]
@@ -361,7 +328,7 @@ After completing the previous stages, verify that your HTTPS configuration works
 
 ### Use Automatic SSL/TLS
 
-Cloudflare's Automatic SSL/TLS analyzes your origin server and selects the most secure encryption mode your origin supports. If your zone uses Automatic SSL/TLS (the default for new zones), Cloudflare adjusts the mode automatically and will not downgrade to a less secure mode if your origin certificate expires. {/* Source: /ssl/origin-configuration/ssl-modes/ — "Automatic SSL/TLS (default)" */}
+Cloudflare's Automatic SSL/TLS analyzes your origin server and selects the most secure encryption mode your origin supports. If your zone uses Automatic SSL/TLS (the default for new zones), Cloudflare adjusts the mode automatically and will not downgrade to a less secure mode if your origin certificate expires.
 
 To check whether your zone uses Automatic SSL/TLS:
 
