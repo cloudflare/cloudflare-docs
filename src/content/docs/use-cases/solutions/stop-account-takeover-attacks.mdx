@@ -236,6 +236,7 @@ The `cf.waf.credential_check.password_leaked` field is available on all plans.
 :::note
 The `cf.waf.credential_check.username_and_password_leaked` field requires a Pro plan or above.
 :::
+
 <Render file="leaked-credentials-detection-enable" product="waf" />
 
 After turning on the detection, your origin server can receive leaked credential status via the `Exposed-Credential-Check` request header. To forward this header, turn on the [Add leaked credentials checks header](/rules/transform/managed-transforms/reference/#add-leaked-credentials-checks-header) managed transform. Your origin can then trigger a password reset for affected users.
