@@ -63,8 +63,8 @@ Platform errors occur at the [Workers platform](/workers/) level before Browser 
 
 | Error | Description | Recommended fix |
 | --- | --- | --- |
-| `Cannot read properties of undefined (reading 'fetch')` | The [browser binding](/browser-run/get-started/puppeteer/#2-configure-the-wrangler-configuration-file) was not passed to `puppeteer.launch()` or `playwright.launch()`. | Pass your browser binding to `puppeteer.launch()` or `playwright.launch()`. Refer to [Puppeteer](/browser-run/puppeteer/) or [Playwright](/browser-run/playwright/) setup. |
-| `No such module 'cloudflare:browser'` | Browser Run is not enabled on your account. | [Enable Browser Run](/browser-run/get-started/) by creating a [browser binding](/browser-run/get-started/puppeteer/#2-configure-the-wrangler-configuration-file) in your Worker configuration. |
+| `Cannot read properties of undefined (reading 'fetch')` | The [browser binding](/browser-run/reference/wrangler/#bindings) was not passed to `puppeteer.launch()` or `playwright.launch()`. | Pass your browser binding to `puppeteer.launch()` or `playwright.launch()`. Refer to [Puppeteer](/browser-run/puppeteer/) or [Playwright](/browser-run/playwright/) setup. |
+| `No such module 'cloudflare:browser'` | Browser Run is not enabled on your account. | [Enable Browser Run](/browser-run/get-started/) by creating a [browser binding](/browser-run/reference/wrangler/#bindings) in your Worker configuration. |
 
 ## Related resources
 
