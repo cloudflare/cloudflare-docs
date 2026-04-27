@@ -14,7 +14,7 @@ const rest = match ? match[2] : text;
 ---
 
 <div class="pcb-root not-content">
-	{!hideLabel && <p class="pcb-label">Paste this into any AI coding agent to install Cloudflare agent tooling:</p>}
+	{!hideLabel && 	<p class="pcb-label">Paste into any AI coding agent to install Cloudflare agent tooling:</p>}
 	<div class="pcb-shell" data-pcb>
 		<div class="pcb-body">
 			<code class="pcb-text">
@@ -105,12 +105,13 @@ const rest = match ? match[2] : text;
 
 <style>
 	.pcb-root {
-		margin: 1.75rem 0 0.5rem;
+		margin: 1.75rem 0 2rem;
 		width: 100%;
+		min-width: 0;
 	}
 
 	.pcb-label {
-		margin: 0 0 0.75rem;
+		margin: 0 0 1.25rem;
 	}
 
 	/* ── Shell ── */
@@ -118,6 +119,9 @@ const rest = match ? match[2] : text;
 		position: relative;
 		border-radius: 10px;
 		cursor: pointer;
+		min-width: 0;
+		width: 100%;
+		overflow: hidden;
 		border: 1px solid color-mix(in srgb, var(--color-cl1-brand-orange) 45%, transparent);
 		/* Dark surface, always — pops on the white/light homepage bg */
 		background:
@@ -157,6 +161,7 @@ const rest = match ? match[2] : text;
 		align-items: center;
 		gap: 0.625rem;
 		padding: 1rem 1rem 1rem 1.125rem;
+		min-width: 0;
 	}
 
 	.pcb-text {
@@ -171,7 +176,7 @@ const rest = match ? match[2] : text;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		min-width: 0;
-		user-select: all;
+		user-select: none;
 	}
 
 	.pcb-verb,
@@ -243,8 +248,12 @@ const rest = match ? match[2] : text;
 		background: rgba(74, 222, 128, 0.08);
 	}
 
-	.pcb-btn .pcb-btn-label::before {
+	.pcb-btn:not([data-copied]) .pcb-btn-label::before {
 		content: "Copy";
+	}
+
+	.pcb-btn[data-copied] .pcb-btn-label::before {
+		content: "Copied";
 	}
 
 	/* Suppress Starlight prose margin on SVGs */
