@@ -1,34 +1,36 @@
 ---
 import { stagger } from "./constants";
 
+// Copy mirrors workers.cloudflare.com verbatim where the slot allows.
+// See `landing-stats-decisions.md` at the repo root for sourcing rationale.
 const stats = [
 	{
 		value: 330,
 		suffix: "+",
 		unit: "cities",
-		label: "Global network",
-		detail: "Points of presence",
+		label: "Run everywhere",
+		detail: "Around the world",
 	},
 	{
 		value: 100,
 		suffix: "+",
 		unit: "products",
-		label: "Platform surface",
-		detail: "Developer primitives",
+		label: "Powerful primitives",
+		detail: "Seamlessly integrated",
 	},
 	{
-		value: 78,
+		value: 81,
 		suffix: "M+",
-		unit: "req/s",
-		label: "Average throughput",
-		detail: "Across the network",
+		unit: "HTTP requests/sec",
+		label: "Run at massive scale",
+		detail: "On Cloudflare's infrastructure",
 	},
 	{
-		value: 99.99,
+		value: 20,
 		suffix: "%",
-		unit: "uptime",
-		label: "Network SLA",
-		detail: "Contractual guarantee",
+		unit: "of the Internet",
+		label: "Internet scale",
+		detail: "1 in 5 sites on the Internet",
 	},
 ];
 ---
