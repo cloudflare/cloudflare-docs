@@ -28,7 +28,8 @@ Because you can [configure MFA at the application and policy level](/cloudflare-
 
 Before you can [enforce independent MFA on applications and policies](/cloudflare-one/access-controls/policies/mfa-requirements/#independent-mfa), you must turn on independent MFA at the organization level.
 
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Access settings**.
 2. Under **Allow multi-factor authentication (MFA)**, select the [MFA methods](#supported-mfa-methods) you want to allow in your organization.
@@ -39,7 +40,8 @@ Before you can [enforce independent MFA on applications and policies](/cloudflar
    :::
 5. Select **Save**.
 
-</TabItem> <TabItem label="API">
+</TabItem>
+<TabItem label="API">
 
 1. Get your existing Zero Trust organization configuration:
 
@@ -71,7 +73,8 @@ Before you can [enforce independent MFA on applications and policies](/cloudflar
 
    Set `session_duration` to a duration string (for example, `30m`, `1h`, `24h`). To require MFA on every access, use `0m`.
 
-</TabItem> </Tabs>
+</TabItem>
+</Tabs>
 
 After you turn on independent MFA, users can [enroll authenticators](#enroll-authenticators) through the [App Launcher](/cloudflare-one/access-controls/access-settings/app-launcher/).
 
@@ -90,27 +93,31 @@ Some authenticators do not send an AAGUID during WebAuthn registration, includin
 Users cannot enroll these authenticators when AAGUID restrictions are turned on. Before turning on AAGUID restrictions, confirm that your required authenticators are in the [FIDO Alliance Metadata Service](https://fidoalliance.org/metadata/).
 :::
 
-### Create an AAGUID list
+### 1. Create an AAGUID list
 
 AAGUIDs are managed using [Lists](/cloudflare-one/reusable-components/lists/). Create a list of type **AAGUID**, then reference the list in your organization's MFA configuration.
 
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Resources** > **Lists**.
 2. Select **Create new list**.
 3. Enter a **List name** (for example, `Approved security keys`) and an optional description.
-4. Set **List type** to **AAGUID**.
-5. Add one or more AAGUIDs. For each entry:
-   - **Value** — The AAGUID of the authenticator, in 32-character hexadecimal format without dashes (for example, `8c39ee867f9a4a959ba3f6b097e5c2ee`).
-   - **Description** — An optional label such as the authenticator's name and model.
+4. Set **List type** to **MFA AAGUIDs**.
+5. Add one or more AAGUID entries:
+   - To add predefined AAGUIDs, select authenticators from the **Known authenticators** list.
+   - To add a custom AAGUID, fill out the following fields:
+     - **MFA AAGUIDs** — The AAGUID of the authenticator, in 32-character hexadecimal format without dashes (for example, `8c39ee867f9a4a959ba3f6b097e5c2ee`).
+     - **Description** — An optional label such as the authenticator's name and model.
 6. Select **Save**.
 
-</TabItem> <TabItem label="API">
+</TabItem>
+<TabItem label="API">
 
 Send a `POST` request to create the list:
 
 <APIRequest
-	path="/accounts/{account_id}/access/lists"
+	path="/accounts/{account_id}/gateway/lists"
 	method="POST"
 	json={{
 		name: "Approved security keys",
@@ -127,49 +134,59 @@ Send a `POST` request to create the list:
 
 The response contains an `id` (UUID) for the list. Use this ID when you assign the list to your organization's MFA configuration.
 
-</TabItem> </Tabs>
+</TabItem>
+</Tabs>
 
 :::tip
 You can look up AAGUIDs for common authenticators in the [FIDO Alliance Metadata Service](https://fidoalliance.org/metadata/). Most vendors also publish AAGUIDs for their hardware on their support sites.
 :::
 
-### Assign an AAGUID list to your organization
+### 2. Assign an AAGUID list to your organization
 
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Access settings**.
-2. Under **Allow multi-factor authentication (MFA)**, go to **Required AAGUIDs**.
-3. Select an existing [AAGUID list](#create-an-aaguid-list).
+2. Under **Allow multi-factor authentication (MFA)**, go to **Limit MFA to specific authentication methods**.
+3. Select an existing [AAGUID list](#1-create-an-aaguid-list).
 4. Select **Save**.
 
 After you save, only authenticators whose AAGUIDs appear in the list can be enrolled. Users with previously enrolled authenticators outside the list can continue to use them until they are [deleted by an administrator](#delete-a-user-authenticator).
 
-</TabItem> <TabItem label="API">
+</TabItem>
+<TabItem label="API">
 
-Send a `PATCH` request to assign the list. Set `mfa_config.required_aaguids` to the ID of your AAGUID list.
+1. Get your existing Zero Trust organization configuration:
 
-<APIRequest
-	path="/accounts/{account_id}/access/organizations"
-	method="PATCH"
-	json={{
-		mfa_config: {
-			allowed_authenticators: ["security_key", "totp", "biometrics"],
-			session_duration: "24h",
-			required_aaguids: "05ddacda-5131-41ab-9eeb-6763f8dce3be",
-		},
-	}}
-/>
+   <APIRequest
+   	path="/accounts/{account_id}/access/organizations"
+   	method="GET"
+   />
+
+2. Send a `PUT` request to assign the list. To avoid overwriting your existing configuration, the `PUT` request body should contain all fields returned by the previous `GET` request. Set `mfa_config.required_aaguids` to the ID of your AAGUID list.
+
+   <APIRequest
+   	path="/accounts/{account_id}/access/organizations"
+   	method="PUT"
+   	json={{
+   		auth_domain: "your-team-name.cloudflareaccess.com",
+   		name: "Your Team Name",
+   		mfa_config: {
+   			allowed_authenticators: ["security_key", "totp", "biometrics"],
+   			session_duration: "24h",
+   			required_aaguids: "05ddacda-5131-41ab-9eeb-6763f8dce3be",
+   		},
+   	}}
+   	code={{ mark: ["required_aaguids"] }}
+   />
+
+   To remove the restriction, set `required_aaguids` to `null`.
+
+</TabItem>
+</Tabs>
 
 :::note
-The `PATCH` request must include all existing `mfa_config` fields (such as `allowed_authenticators` and `session_duration`) in addition to `required_aaguids`. Omitting existing fields will overwrite your current MFA configuration.
-:::
-
-To remove the restriction, set `required_aaguids` to `null`.
-
-</TabItem> </Tabs>
-
-:::note
-Required AAGUIDs and [AMR matching](#amr-matching) cannot both be turned on at the organization level. If required AAGUIDs is set, Access skips AMR matching even when the identity provider returns a matching AMR value.
+AAGUID requirements and [AMR matching](#amr-matching) cannot both be turned on at the organization level. If AAGUID requirements are turned on, Access skips AMR matching even when the identity provider returns a matching AMR value.
 :::
 
 ## AMR matching
@@ -182,51 +199,66 @@ Access uses the `amr` claim returned by the IdP, as defined in [RFC 8176](https:
 
 | AMR value | Matches Access authenticator type | Description                            |
 | --------- | --------------------------------- | -------------------------------------- |
-| `hwk`     | Security key                      | Proof-of-possession of a hardware key. |
-| `swk`     | Security key                      | Proof-of-possession of a software key. |
-| `otp`     | Authenticator application         | One-time password.                     |
-| `face`    | Biometrics                        | Facial recognition.                    |
-| `fpt`     | Biometrics                        | Fingerprint.                           |
-| `iris`    | Biometrics                        | Iris scan.                             |
-| `retina`  | Biometrics                        | Retina scan.                           |
-| `vbm`     | Biometrics                        | Voice biometric.                       |
+| `hwk`     | Security key                      | Proof-of-possession of a hardware key |
+| `swk`     | Security key                      | Proof-of-possession of a software key |
+| `otp`     | Authenticator application         | One-time password                     |
+| `face`    | Biometrics                        | Facial recognition                    |
+| `fpt`     | Biometrics                        | Fingerprint                           |
+| `iris`    | Biometrics                        | Iris scan                             |
+| `retina`  | Biometrics                        | Retina scan                           |
+| `vbm`     | Biometrics                        | Voice biometric                       |
 
 Access ignores AMR values that do not map to a supported authenticator type (for example, `pwd`, `sms`, `tel`, `geo`, `kba`, `sc`, `pin`, `user`, `mca`, `rba`, `wia`).
 
 ### Turn on AMR matching
 
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Access settings**.
-2. Under **Allow multi-factor authentication (MFA)**, turn on **Trust identity provider MFA (AMR matching)**.
-3. Set an **AMR session duration**. This determines how long a successful IdP MFA remains valid for AMR matching. Format: `5m`, `1h`, `24h`. Minimum: `5m`. Maximum: `720h`.
+2. Under **Allow multi-factor authentication (MFA)**, turn on **Use identity provider MFA**.
+3. Under **Authentication Method Reference (AMR) matching duration**, set how long a successful IdP MFA remains valid. During this period, users can log in to Access without an additional MFA prompt. You can set a custom duration (default 24 hours) or check for a [valid AMR value](#supported-amr-values) on every login.
 4. Select **Save**.
 
-</TabItem> <TabItem label="API">
+</TabItem>
+<TabItem label="API">
 
-Send a `PATCH` request to your organization:
+1. Get your existing Zero Trust organization configuration:
 
-<APIRequest
-	path="/accounts/{account_id}/access/organizations"
-	method="PATCH"
-	json={{
-		mfa_config: {
-			amr_matching_enabled: true,
-			amr_session_duration: "1h",
-		},
-	}}
-/>
+   <APIRequest
+   	path="/accounts/{account_id}/access/organizations"
+   	method="GET"
+   />
 
-</TabItem> </Tabs>
+2. Send a `PUT` request to update your organization's AMR matching settings. To avoid overwriting your existing configuration, the `PUT` request body should contain all fields returned by the previous `GET` request.
+
+   <APIRequest
+   	path="/accounts/{account_id}/access/organizations"
+   	method="PUT"
+   	json={{
+   		auth_domain: "your-team-name.cloudflareaccess.com",
+   		name: "Your Team Name",
+   		mfa_config: {
+   			allowed_authenticators: ["totp", "biometrics", "security_key"],
+   			session_duration: "24h",
+   			amr_matching_enabled: true,
+   			amr_session_duration: "1h",
+   		},
+   	}}
+   	code={{ mark: ["amr_matching_enabled", "amr_session_duration"] }}
+   />
+
+</TabItem>
+</Tabs>
 
 ### When AMR matching is skipped
 
 Access does not apply AMR matching in the following cases:
 
-- [Required AAGUIDs](#restrict-authenticators-by-aaguid) is set at the organization level. AAGUID information is not present in the IdP's AMR claim, so Access cannot verify that the IdP's MFA came from an approved device.
+- [AAGUID requirements](#restrict-authenticators-by-aaguid) are turned on at the organization level. AAGUID information is not present in the IdP's AMR claim, so Access cannot verify that the IdP's MFA came from an approved device.
 - The IdP does not return an `amr` claim.
 - The IdP returns only AMR values that do not map to an [allowed authenticator type](#supported-mfa-methods) for the application or policy.
-- The user's AMR matching session has expired because they last performed MFA via their IdP longer ago than the configured AMR session duration.
+- The user's AMR matching session has expired because they last performed MFA via their IdP longer ago than the configured AMR matching duration.
 
 In these cases, Access falls back to checking for existing MFA sessions. If there are no valid MFA sessions, Access prompts the user to complete independent MFA.
 
@@ -242,7 +274,8 @@ Turning off independent MFA removes MFA protection on all Access applications. B
 
 To turn off independent MFA for the organization:
 
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Access settings**.
 2. Under **Allow multi-factor authentication (MFA)**, turn off **Apply global MFA settings by default**.
@@ -250,7 +283,8 @@ To turn off independent MFA for the organization:
 
 If you get an error updating MFA settings, ensure that you have removed custom MFA settings from all applications and policies.
 
-</TabItem> <TabItem label="API">
+</TabItem>
+<TabItem label="API">
 
 1. Get your existing Zero Trust organization configuration:
 
@@ -273,7 +307,8 @@ If you get an error updating MFA settings, ensure that you have removed custom M
    	}}
    />
 
-</TabItem> </Tabs>
+</TabItem>
+</Tabs>
 
 ## Enroll authenticators
 
@@ -361,7 +396,8 @@ To view a user's enrolled authenticators:
 
 If a user is locked out or you need to revoke an authenticator for security reasons, you can delete it from the dashboard or API.
 
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Team & Resources** > **Users**.
 2. Select the user whose authenticator you want to delete.
@@ -369,7 +405,8 @@ If a user is locked out or you need to revoke an authenticator for security reas
 
 The user will need to enroll a new authenticator the next time they access an application that requires MFA.
 
-</TabItem> <TabItem label="API">
+</TabItem>
+<TabItem label="API">
 
 Send a `DELETE` request to remove a specific authenticator:
 
@@ -383,7 +420,8 @@ Parameters:
 - `user_id` — The UUID of the user. You can find this in the user details under **Team & Resources** > **Users**.
 - `authenticator_id` — The unique identifier for the authenticator.
 
-</TabItem> </Tabs>
+</TabItem>
+</Tabs>
 
 ### Lockout recovery
 
