@@ -1,5 +1,4 @@
 import { defineConfig } from "astro/config";
-import type { AstroIntegration } from "astro";
 import starlight from "@astrojs/starlight";
 import starlightDocSearch from "@astrojs/starlight-docsearch";
 import starlightImageZoom from "starlight-image-zoom";
@@ -92,24 +91,6 @@ const externalLinkPaths = await getExternalLinkPaths("src/content/docs");
 
 const RUN_LINK_CHECK =
 	process.env.RUN_LINK_CHECK?.toLowerCase() === "true" || false;
-
-function agentSkillsV02Routes(): AstroIntegration {
-	return {
-		name: "agent-skills-v02-routes",
-		hooks: {
-			"astro:config:setup": ({ injectRoute }) => {
-				injectRoute({
-					pattern: "/.well-known/agent-skills/index.json",
-					entrypoint: "astro-skills/routes/index-json",
-				});
-				injectRoute({
-					pattern: "/.well-known/agent-skills/[skill]/[...path]",
-					entrypoint: "astro-skills/routes/skill-files",
-				});
-			},
-		},
-	};
-}
 
 // https://astro.build/config
 export default defineConfig({
@@ -269,7 +250,6 @@ export default defineConfig({
 		}),
 		react(),
 		skills(),
-		agentSkillsV02Routes(),
 	],
 	vite: {
 		resolve: {

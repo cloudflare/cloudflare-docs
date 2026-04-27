@@ -2564,6 +2564,9 @@
 # DYNAMIC REDIRECTS
 # ============================================================================
 
+# Agent Skills legacy discovery path
+/.well-known/skills/* /.well-known/agent-skills/:splat 301
+
 /cloudflare-one/faq/troubleshooting/* /cloudflare-one/troubleshooting/ 301
 # Pub/Sub (removed product)
 /pub-sub/* / 301
