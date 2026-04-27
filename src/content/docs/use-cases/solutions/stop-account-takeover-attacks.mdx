@@ -281,6 +281,7 @@ Before deploying rules that challenge or block login traffic, create a skip rule
 For more information about the Skip action and available skip options, refer to [Skip action](/waf/custom-rules/skip/).
 
 ### Block requests with suspicious headers
+
 Credential stuffing tools often send requests without standard browser headers or with known-bad User-Agent patterns. Create a custom rule that issues a Managed Challenge for POST requests to your login path where the User-Agent is empty. This targets direct POST requests from tools like `curl`, `python-requests`, or `undici` that do not set a User-Agent header.
 
 :::note
