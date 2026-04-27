@@ -123,36 +123,23 @@ const rest = match ? match[2] : text;
 		width: 100%;
 		overflow: hidden;
 		border: 1px solid color-mix(in srgb, var(--color-cl1-brand-orange) 45%, transparent);
-		/* Dark surface, always — pops on the white/light homepage bg */
 		background:
-			/* Subtle dot-grid texture */
-			radial-gradient(circle, #2a2a2a 1px, transparent 1px),
-			#111;
+			radial-gradient(circle, var(--sl-color-gray-6) 1px, transparent 1px),
+			var(--sl-color-gray-7);
 		background-size: 20px 20px, auto;
-		overflow: hidden;
-		box-shadow:
-			0 0 0 1px color-mix(in srgb, var(--color-cl1-brand-orange) 10%, transparent),
-			0 0 28px color-mix(in srgb, var(--color-cl1-brand-orange) 12%, transparent),
-			0 8px 24px rgba(0, 0, 0, 0.5);
-		transition:
-			box-shadow 0.3s ease,
-			border-color 0.3s ease;
+
+		box-shadow: 0 0 8px color-mix(in srgb, var(--color-cl1-brand-orange) 15%, transparent);
+		transition: border-color 0.3s ease, box-shadow 0.3s ease;
 	}
 
 	.pcb-shell:hover {
 		border-color: color-mix(in srgb, var(--color-cl1-brand-orange) 72%, transparent);
-		box-shadow:
-			0 0 0 1px color-mix(in srgb, var(--color-cl1-brand-orange) 18%, transparent),
-			0 0 40px color-mix(in srgb, var(--color-cl1-brand-orange) 20%, transparent),
-			0 8px 24px rgba(0, 0, 0, 0.55);
+		box-shadow: 0 0 16px color-mix(in srgb, var(--color-cl1-brand-orange) 25%, transparent);
 	}
 
 	.pcb-shell[data-copied] {
 		border-color: var(--color-cl1-brand-orange);
-		box-shadow:
-			0 0 0 1px color-mix(in srgb, var(--color-cl1-brand-orange) 35%, transparent),
-			0 0 48px color-mix(in srgb, var(--color-cl1-brand-orange) 30%, transparent),
-			0 8px 24px rgba(0, 0, 0, 0.55);
+		box-shadow: 0 0 16px color-mix(in srgb, var(--color-cl1-brand-orange) 25%, transparent);
 	}
 
 	/* ── Body row ── */
@@ -181,7 +168,7 @@ const rest = match ? match[2] : text;
 
 	.pcb-verb,
 	.pcb-url {
-		color: #f0f0f0;
+		color: var(--sl-color-text);
 	}
 
 	/* ── Copy button ── */
@@ -202,14 +189,14 @@ const rest = match ? match[2] : text;
 		gap: 0.3rem;
 		padding: 0.3125rem 0.6875rem;
 		border-radius: 5px;
-		border: 1px solid rgba(255, 255, 255, 0.1);
-		background: rgba(255, 255, 255, 0.06);
+		border: 1px solid var(--sl-color-gray-5);
+		background: var(--sl-color-gray-6);
 		font-size: 0.8125rem;
 		font-weight: 600;
 		letter-spacing: 0.05em;
 		text-transform: uppercase;
 		font-family: inherit;
-		color: rgba(255, 255, 255, 0.45);
+		color: var(--sl-color-gray-3);
 		transition:
 			border-color 0.15s ease,
 			color 0.15s ease,
@@ -220,7 +207,7 @@ const rest = match ? match[2] : text;
 	.pcb-btn:hover .pcb-btn-inner {
 		border-color: color-mix(in srgb, var(--color-cl1-brand-orange) 65%, transparent);
 		color: var(--color-cl1-brand-orange);
-		background: color-mix(in srgb, var(--color-cl1-brand-orange) 10%, transparent);
+		background: color-mix(in srgb, var(--color-cl1-brand-orange) 10%, var(--sl-color-gray-6));
 	}
 
 	.pcb-btn:focus-visible {
@@ -243,9 +230,9 @@ const rest = match ? match[2] : text;
 	}
 
 	.pcb-btn[data-copied] .pcb-btn-inner {
-		border-color: rgba(74, 222, 128, 0.5);
-		color: #4ade80;
-		background: rgba(74, 222, 128, 0.08);
+		border-color: color-mix(in srgb, var(--color-cl1-green-7, #86efac) 50%, transparent);
+		color: var(--color-cl1-green-7, #86efac);
+		background: color-mix(in srgb, var(--color-cl1-green-7, #86efac) 8%, transparent);
 	}
 
 	.pcb-btn:not([data-copied]) .pcb-btn-label::before {
