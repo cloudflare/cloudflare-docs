@@ -171,6 +171,7 @@ The following example creates a rate limiting rule that issues a Managed Challen
 :::caution
 Managed Challenge and other [challenge types](/cloudflare-challenges/challenge-types/challenge-pages/) require an HTML response to render. They do not work for non-HTML responses such as AJAX/XHR requests, which are common on login endpoints that use single-page applications (SPAs) or API-based authentication. If your login flow uses AJAX, consider using [Turnstile Pre-Clearance](/turnstile/additional-configuration/pre-clearance-support/) instead.
 :::
+
 <Steps>
 
 1. In the Cloudflare dashboard, go to the **Security rules** page.
