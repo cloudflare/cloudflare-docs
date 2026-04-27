@@ -57,9 +57,7 @@ export function hasProperty(properties: Property[], id: string): boolean {
 }
 
 /** Get all unique capability labels across a set of models. */
-export function getAllCapabilityLabels(
-	models: WithProperties[],
-): string[] {
+export function getAllCapabilityLabels(models: WithProperties[]): string[] {
 	return [...new Set(models.flatMap((m) => getCapabilities(m.properties)))];
 }
 
