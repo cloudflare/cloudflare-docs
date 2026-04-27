@@ -281,6 +281,25 @@ async function fetchFromApi(): Promise<CatalogModel[]> {
 	return models;
 }
 
+/**
+ * Serialize to JSON with all non-ASCII characters escaped as `\uXXXX`.
+ *
+ * Catalog API responses sometimes return non-ASCII characters as raw UTF-8
+ * (`°`, `“`, `—`) and sometimes as already-escaped sequences (`\u00b0`,
+ * `\u201c`, `\u2014`), depending on the provider. `JSON.stringify` preserves
+ * whatever form is in memory, which means re-running the fetcher rewrites
+ * many model files with no real change — just an encoding flip.
+ *
+ * Forcing ASCII-safe output keeps on-disk content stable across re-runs and
+ * matches the form already checked in.
+ */
+function stringifyAsciiSafe(value: unknown, indent: string): string {
+	return JSON.stringify(value, null, indent).replace(
+		/[\u0080-\uffff]/g,
+		(c) => "\\u" + c.charCodeAt(0).toString(16).padStart(4, "0"),
+	);
+}
+
 function getModelFileName(modelId: string): string {
 	// model_id format: "@cf/author/model-name"
 	// Extract the model name (third segment)
@@ -330,7 +349,7 @@ function writeModels(models: CatalogModel[]): void {
 
 		fs.writeFileSync(
 			filePath,
-			JSON.stringify(model, null, "\t") + "\n",
+			stringifyAsciiSafe(model, "\t") + "\n",
 			"utf-8",
 		);
 		written++;
