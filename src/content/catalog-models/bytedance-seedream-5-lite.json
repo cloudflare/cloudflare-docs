@@ -25,6 +25,17 @@
 					"https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-5-lite/simple-generation-0.jpeg"
 				]
 			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"images": [
+						"https://ark-acg-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-5-0/021776405291656e8ad6f8fac80a9b78040141fa10ae51dc262e8_0.jpeg"
+					]
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -46,6 +57,17 @@
 				"images": [
 					"https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-5-lite/high-resolution-png-0.png"
 				]
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"images": [
+						"https://ark-acg-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-5-0/021776405293188e8ad6f8fac80a9b78040141fa10ae51d8ac521_0.png"
+					]
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
 			},
 			"code_snippets": [
 				{
@@ -69,6 +91,17 @@
 					"https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-5-lite/portrait-photo-0.jpeg"
 				]
 			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"images": [
+						"https://ark-acg-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-5-0/021776405322247e8ad6f8fac80a9b78040141fa10ae51db518ee_0.jpeg"
+					]
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -90,6 +123,17 @@
 				"images": [
 					"https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-5-lite/sequential-comic-0.jpeg"
 				]
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"images": [
+						"https://ark-acg-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-5-0/0217764053440971386b9a8ed856c57501cfa946ce34c987bb335_0.jpeg"
+					]
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
 			},
 			"code_snippets": [
 				{
@@ -115,6 +159,17 @@
 					"https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-5-lite/image-variation-0.jpeg"
 				]
 			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"images": [
+						"https://ark-acg-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-5-0/0217764053505731386b9a8ed856c57501cfa946ce34c989ba40c_0.jpeg"
+					]
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -126,7 +181,7 @@
 	],
 	"supports_async": false,
 	"external_info": "https://seed.bytedance.com/en/seedream5_0_lite",
-	"terms": null,
+	"terms": "",
 	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/bytedance/seedream-5-lite.png",
 	"metadata": {
 		"Max Images": "15",
@@ -137,6 +192,7 @@
 	"default_example": null,
 	"code_snippets": [],
 	"zdr": false,
+	"zdr_comment": null,
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",

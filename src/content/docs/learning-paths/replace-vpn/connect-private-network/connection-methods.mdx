@@ -3,6 +3,12 @@ title: Choose a connection method
 pcx_content_type: overview
 sidebar:
   order: 1
+description: Compare Cloudflare Mesh and Tunnel options.
+products:
+  - cloudflare-one
+  - access
+  - tunnel
+  - gateway
 ---
 
 There are [multiple ways](/reference-architecture/architectures/sase/#connecting-networks) to onramp traffic from your private networks to Cloudflare. This page covers the two software-based methods commonly used for VPN replacement: Cloudflare Mesh and Cloudflare Tunnel. Both involve installing lightweight software on a host machine in your network to create a secure connection to Cloudflare's global network.
@@ -35,14 +41,15 @@ There are [multiple ways](/reference-architecture/architectures/sase/#connecting
 | Host machine          | Linux (amd64, arm64)            | Linux, macOS, Windows       |
 | IPv4                  | ✅                              | ✅                          |
 | IPv6                  | ❌                              | ✅                          |
-| OSI layer             | L3                              | L4                          |
+| OSI layer             | L3                              | L7                          |
 | Protocol              | MASQUE                          | QUIC or HTTP/2              |
 | Protocols proxied     | TCP, UDP, ICMP                  | HTTP/S, TCP, SSH, RDP, SMB  |
+| Connection handling   | End-to-end — preserves long-lived TCP connections across the full path | Proxied — TCP connections are terminated and re-established at Cloudflare, which can interrupt long-lived sessions (for example, SAP transactions, database replication streams, or persistent RDP sessions may drop when `cloudflared` reconnects) |
 
 ## Recommendation
 
 For most VPN replacement scenarios, [Cloudflare Tunnel](/learning-paths/replace-vpn/connect-private-network/cloudflared/) is the easiest way to get started. It runs on all platforms (Linux, macOS, Windows, containers, Raspberry Pi), does not require return route configuration (traffic is source-NATed to the `cloudflared` host), and does not interfere with existing VPN software on the same machine.
 
-Use [Cloudflare Mesh](/learning-paths/replace-vpn/connect-private-network/cloudflare-mesh/) when you need bidirectional connectivity with server-initiated traffic (VoIP, SIP, AD updates, SCCM), site-to-site networking between multiple locations, or deployments where preserving the original source IP is important.
+Use [Cloudflare Mesh](/learning-paths/replace-vpn/connect-private-network/cloudflare-mesh/) when you need bidirectional connectivity with server-initiated traffic (VoIP, SIP, AD updates, SCCM), site-to-site networking between multiple locations, deployments where preserving the original source IP is important, or workloads with long-lived TCP connections sensitive to interruptions (SAP, database replication, ERP systems).
 
 Both methods can be used together. For example, use Tunnel for straightforward user-to-application access and add Mesh nodes where you need bidirectional or site-to-site connectivity.

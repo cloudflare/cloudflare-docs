@@ -1,0 +1,65 @@
+---
+title: Namespaces
+description: Organize repositories by environment or tenant.
+pcx_content_type: concept
+sidebar:
+  order: 2
+products:
+  - artifacts
+---
+
+import { WranglerConfig } from "~/components";
+
+Artifacts uses namespaces as top-level containers for repositories. Use them to separate repositories by environment, such as `prod`, `staging`, and `dev`, or by tenant and shard.
+
+You do not create namespaces separately.
+
+Choose a namespace name, then use that name in your Wrangler config or REST API path when you create the first repo. Artifacts creates the namespace implicitly at that point.
+
+## Use namespaces as containers
+
+Start with one namespace per environment or tenant boundary.
+
+- Use environment namespaces such as `prod`, `staging`, or `dev`.
+- Use tenant or shard namespaces when one shared namespace would become too hot or too large.
+- Keep repository names unique within each namespace.
+
+## Choose a namespace name
+
+Start with a stable name such as `default`, `staging`, or `agents-realtime`.
+
+Namespace names follow the same public naming rules as repo names:
+
+- start with a letter or digit
+- use letters, digits, `.`, `_`, or `-` after the first character
+- keep the name stable across your Workers, API clients, and Git workflows
+
+If you have not chosen a namespace strategy yet, use `default` in the examples throughout this docset.
+
+## Use the same namespace everywhere
+
+Use the same namespace name in your Wrangler binding:
+
+<WranglerConfig>
+
+```toml title="wrangler.toml"
+[[artifacts]]
+binding = "ARTIFACTS"
+namespace = "default"
+```
+
+</WranglerConfig>
+
+Use that same namespace in your REST base URL:
+
+```sh
+export ACCOUNT_ID="<YOUR_ACCOUNT_ID>"
+export ARTIFACTS_NAMESPACE="default"
+export ARTIFACTS_BASE_URL="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/artifacts/namespaces/$ARTIFACTS_NAMESPACE"
+```
+
+## Split namespaces when needed
+
+Start with one namespace when you are learning the product. Add more namespaces when you need clearer boundaries between environments, teams, or high-rate workloads.
+
+For more information, refer to [Best practices for Artifacts](/artifacts/concepts/best-practices/#partition-namespaces-deliberately).

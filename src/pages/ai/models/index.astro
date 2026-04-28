@@ -1,10 +1,10 @@
 ---
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import ModelCatalog from "~/components/ModelCatalog.tsx";
-import { getResolvedModels } from "~/util/model-resolver";
+import { getResolvedModels, toModelCardData } from "~/util/model-resolver";
 import { Aside } from "~/components";
 
-const models = await getResolvedModels();
+const models = (await getResolvedModels()).map(toModelCardData);
 ---
 
 <StarlightPage frontmatter={{ title: "Models", tableOfContents: false }}>

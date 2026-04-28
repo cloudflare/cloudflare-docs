@@ -81,7 +81,8 @@ function rewriteRedirectForMarkdown(
 
 export default class extends WorkerEntrypoint<Env> {
 	override async fetch(request: Request) {
-		const { pathname } = new URL(request.url);
+		const url = new URL(request.url);
+		const { pathname } = url;
 
 		if (pathname === "/.well-known/api-catalog") {
 			return new Response(API_CATALOG, {
@@ -138,7 +139,6 @@ export default class extends WorkerEntrypoint<Env> {
 			});
 		}
 
-		const url = new URL(request.url);
 		const isMarkdownRequest = url.pathname.endsWith("/index.md");
 
 		try {

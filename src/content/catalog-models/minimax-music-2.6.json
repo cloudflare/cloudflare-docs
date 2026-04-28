@@ -25,6 +25,15 @@
 			"output": {
 				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__music-2.6/simple-prompt.mp3"
 			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"audio": "https://minimax-algeng-chat-tts-us.oss-us-east-1.aliyuncs.com/music%2Fprod%2Ftts-20260417092034-QxSPMzdbiRxBSbDb.mp3"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -45,6 +54,15 @@
 			"output": {
 				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__music-2.6/with-lyrics.mp3"
 			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"audio": "https://minimax-algeng-chat-tts-us.oss-us-east-1.aliyuncs.com/music%2Fprod%2Ftts-20260417091919-YiIxwmvIqXtREDcu.mp3"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -63,6 +81,15 @@
 			},
 			"output": {
 				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__music-2.6/instrumental.mp3"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"audio": "https://minimax-algeng-chat-tts-us.oss-us-east-1.aliyuncs.com/music%2Fprod%2Ftts-20260417092057-LOwvBOOdyGvAyHkQ.mp3"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
 			},
 			"code_snippets": [
 				{
@@ -85,6 +112,15 @@
 			"output": {
 				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__music-2.6/high-quality-audio.wav"
 			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"audio": "https://minimax-algeng-chat-tts-us.oss-us-east-1.aliyuncs.com/music%2Fprod%2Ftts-20260417092208-UGTfqDggHaemCDAW.wav"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -103,6 +139,15 @@
 			},
 			"output": {
 				"audio": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__music-2.6/auto-generated-lyrics.mp3"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"audio": "https://minimax-algeng-chat-tts-us.oss-us-east-1.aliyuncs.com/music%2Fprod%2Ftts-20260417092245-UlqOBbhqSXtRPopt.mp3"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
 			},
 			"code_snippets": [
 				{
@@ -126,6 +171,7 @@
 	"default_example": null,
 	"code_snippets": [],
 	"zdr": false,
+	"zdr_comment": null,
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",

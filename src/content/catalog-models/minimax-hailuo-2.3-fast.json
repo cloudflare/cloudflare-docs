@@ -1,7 +1,7 @@
 {
 	"model_id": "minimax/hailuo-2.3-fast",
 	"provider_id": "minimax",
-	"name": "Hailuo 2.3 Fast",
+	"name": "MiniMax Hailuo 2.3 Fast",
 	"description": "A lower-latency version of Hailuo 2.3 that preserves core motion quality, visual consistency, and stylization while enabling faster iteration.",
 	"task": "Text-to-Video",
 	"tags": [
@@ -27,6 +27,17 @@
 			"output": {
 				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__hailuo-2.3-fast/basic-i2v.mp4"
 			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://video-product.cdn.minimax.io/inference_output/video/2026-04-17/eff40703-0339-4d1d-b66a-db050e878038/output.mp4",
+					"task_id": "388514752192863",
+					"status": "Success"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -48,6 +59,17 @@
 			},
 			"output": {
 				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__hailuo-2.3-fast/high-resolution-i2v.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://video-product.cdn.minimax.io/inference_output/video/2026-04-17/2b6251d2-d4ae-4d58-b12f-2609c50fadc2/output.mp4",
+					"task_id": "388515984507205",
+					"status": "Success"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
 			},
 			"code_snippets": [
 				{
@@ -71,6 +93,17 @@
 			"output": {
 				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/minimax__hailuo-2.3-fast/fast-processing.mp4"
 			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://video-product.cdn.minimax.io/inference_output/video/2026-04-17/b64303a0-0227-4d42-983a-dcaec397b6b1/output.mp4",
+					"task_id": "388515980755024",
+					"status": "Success"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -91,6 +124,7 @@
 	"default_example": null,
 	"code_snippets": [],
 	"zdr": false,
+	"zdr_comment": null,
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",

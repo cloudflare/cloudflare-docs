@@ -1,7 +1,7 @@
 {
 	"model_id": "minimax/m2.7",
 	"provider_id": "minimax",
-	"name": "M2.7",
+	"name": "MiniMax M2.7",
 	"description": "MiniMax's M2.7 language model with multilingual capabilities.",
 	"task": "Text Generation",
 	"tags": [
@@ -26,6 +26,58 @@
 			},
 			"output": {
 				"text": "The capital of France is Paris."
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"id": "0631ffc9d58c021caa67f029a1b2cfde",
+					"choices": [
+						{
+							"index": 0,
+							"message": {
+								"role": "assistant",
+								"content": "The capital of France is Paris.",
+								"name": "MiniMax AI",
+								"audio_content": "",
+								"reasoning_content": "The user asks: \"What is the capital of France?\" It's a simple factual question. The answer: Paris.\n\nWe should respond succinctly. Probably no need for extra context. Just answer.",
+								"reasoning_details": [
+									{
+										"type": "reasoning.text",
+										"id": "reasoning-text-1",
+										"format": "MiniMax-response-v1",
+										"index": 0,
+										"text": "The user asks: \"What is the capital of France?\" It's a simple factual question. The answer: Paris.\n\nWe should respond succinctly. Probably no need for extra context. Just answer."
+									}
+								]
+							},
+							"finish_reason": "stop"
+						}
+					],
+					"created": 1776471241,
+					"model": "MiniMax-M2.7",
+					"object": "chat.completion",
+					"usage": {
+						"total_tokens": 97,
+						"prompt_tokens": 48,
+						"completion_tokens": 49,
+						"total_characters": 0,
+						"completion_tokens_details": {
+							"reasoning_tokens": 42
+						}
+					},
+					"input_sensitive": false,
+					"output_sensitive": false,
+					"base_resp": {
+						"status_code": 0,
+						"status_msg": ""
+					},
+					"input_sensitive_type": 0,
+					"output_sensitive_type": 0,
+					"output_sensitive_int": 0
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
 			},
 			"code_snippets": [
 				{
@@ -54,6 +106,58 @@
 			},
 			"output": {
 				"text": "# Pasta Aglio e Olio\n\n**Ingredients (2 servings):**\n\n- 200g spaghetti\n- 80ml extra virgin olive oil\n- 6 garlic cloves, thinly sliced\n- 1 tsp chili flakes (optional)\n- Fresh parsley, chopped\n- Salt to taste\n\n**Method:**\n\n1. Cook spaghetti in well-salted boiling water until al dente. Reserve 120ml pasta water.\n2. Heat olive oil in a pan over low-medium heat. Add garlic and chili flakes.\n3. Cook gently 2-3 minutes until garlic is golden (don't brown it).\n4. Add drained pasta to the pan. Toss with pasta water to create a light sauce.\n5. Finish with parsley and serve immediately.\n\n**Tips:**\n\n- Low heat is key\u2014garlic burns easily\n- Pasta water starches help the sauce cling to the noodles\n- Best served immediately"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"id": "0631ffc9bee6dd1636ea41aa480eeabc",
+					"choices": [
+						{
+							"index": 0,
+							"message": {
+								"role": "assistant",
+								"content": "# Pasta Aglio e Olio\n\n**Ingredients (2 servings):**\n\n- 200g spaghetti\n- 80ml extra virgin olive oil\n- 6 garlic cloves, thinly sliced\n- 1 tsp chili flakes (optional)\n- Fresh parsley, chopped\n- Salt to taste\n\n**Method:**\n\n1. Cook spaghetti in well-salted boiling water until al dente. Reserve 120ml pasta water.\n2. Heat olive oil in a pan over low-medium heat. Add garlic and chili flakes.\n3. Cook gently 2-3 minutes until garlic is golden (don't brown it).\n4. Add drained pasta to the pan. Toss with pasta water to create a light sauce.\n5. Finish with parsley and serve immediately.\n\n**Tips:**\n\n- Low heat is key\u2014garlic burns easily\n- Pasta water starches help the sauce cling to the noodles\n- Best served immediately",
+								"name": "MiniMax AI",
+								"audio_content": "",
+								"reasoning_content": "The user wants a simple pasta aglio e olio recipe. This is a classic Italian dish - pasta with garlic and oil. I'll give a concise recipe with metric measurements.",
+								"reasoning_details": [
+									{
+										"type": "reasoning.text",
+										"id": "reasoning-text-1",
+										"format": "MiniMax-response-v1",
+										"index": 0,
+										"text": "The user wants a simple pasta aglio e olio recipe. This is a classic Italian dish - pasta with garlic and oil. I'll give a concise recipe with metric measurements."
+									}
+								]
+							},
+							"finish_reason": "stop"
+						}
+					],
+					"created": 1776471241,
+					"model": "MiniMax-M2.7",
+					"object": "chat.completion",
+					"usage": {
+						"total_tokens": 259,
+						"prompt_tokens": 41,
+						"completion_tokens": 218,
+						"total_characters": 0,
+						"completion_tokens_details": {
+							"reasoning_tokens": 39
+						}
+					},
+					"input_sensitive": false,
+					"output_sensitive": false,
+					"base_resp": {
+						"status_code": 0,
+						"status_msg": ""
+					},
+					"input_sensitive_type": 0,
+					"output_sensitive_type": 0,
+					"output_sensitive_int": 0
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
 			},
 			"code_snippets": [
 				{
@@ -87,6 +191,58 @@
 			"output": {
 				"text": "Choose UDP over TCP when:\n\n1. **Real-time performance matters more than reliability**\n   - Video/audio streaming\n   - VoIP calls\n   - Online gaming\n\n2. **Broadcasting or multicasting is needed**\n   - UDP supports these natively; TCP doesn't\n\n3. **Low latency is critical**\n   - Live sports streams\n   - Financial market data feeds\n\n4. **The application handles its own reliability**\n   - QUIC protocol (used by HTTP/3)\n   - Custom protocols with built-in error handling\n\n5. **Simple request/response where loss is tolerable**\n   - DNS queries (most use UDP)\n\n6. **Message sizes are small and frequent**\n   - Connection overhead would outweigh benefits\n\n**Bottom line:** If a dropped packet is preferable to a delayed packet, UDP is likely the better choice."
 			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"id": "0631ffcb908457a58edde3894c3dd42d",
+					"choices": [
+						{
+							"index": 0,
+							"message": {
+								"role": "assistant",
+								"content": "Choose UDP over TCP when:\n\n1. **Real-time performance matters more than reliability**\n   - Video/audio streaming\n   - VoIP calls\n   - Online gaming\n\n2. **Broadcasting or multicasting is needed**\n   - UDP supports these natively; TCP doesn't\n\n3. **Low latency is critical**\n   - Live sports streams\n   - Financial market data feeds\n\n4. **The application handles its own reliability**\n   - QUIC protocol (used by HTTP/3)\n   - Custom protocols with built-in error handling\n\n5. **Simple request/response where loss is tolerable**\n   - DNS queries (most use UDP)\n\n6. **Message sizes are small and frequent**\n   - Connection overhead would outweigh benefits\n\n**Bottom line:** If a dropped packet is preferable to a delayed packet, UDP is likely the better choice.",
+								"name": "MiniMax AI",
+								"audio_content": "",
+								"reasoning_content": "The user is asking about when to choose UDP over TCP. This is a follow-up question about networking protocols. Let me provide a comprehensive answer about use cases where UDP is preferred.\n\nKey scenarios for choosing UDP:\n1. Real-time applications where speed matters more than reliability (VoIP, video conferencing, online gaming)\n2. Broadcasting/multicasting (UDP supports these, TCP doesn't natively)\n3. Simple query-response protocols where occasional loss is acceptable (DNS queries)\n4. When you need low latency more than guaranteed delivery\n5. When the application layer handles its own reliability/ordering\n6. Small, frequent messages where connection overhead is costly\n7. Live streaming where missing a packet is better than waiting for retransmission\n\nLet me provide a clear, helpful answer.",
+								"reasoning_details": [
+									{
+										"type": "reasoning.text",
+										"id": "reasoning-text-1",
+										"format": "MiniMax-response-v1",
+										"index": 0,
+										"text": "The user is asking about when to choose UDP over TCP. This is a follow-up question about networking protocols. Let me provide a comprehensive answer about use cases where UDP is preferred.\n\nKey scenarios for choosing UDP:\n1. Real-time applications where speed matters more than reliability (VoIP, video conferencing, online gaming)\n2. Broadcasting/multicasting (UDP supports these, TCP doesn't natively)\n3. Simple query-response protocols where occasional loss is acceptable (DNS queries)\n4. When you need low latency more than guaranteed delivery\n5. When the application layer handles its own reliability/ordering\n6. Small, frequent messages where connection overhead is costly\n7. Live streaming where missing a packet is better than waiting for retransmission\n\nLet me provide a clear, helpful answer."
+									}
+								]
+							},
+							"finish_reason": "stop"
+						}
+					],
+					"created": 1776471243,
+					"model": "MiniMax-M2.7",
+					"object": "chat.completion",
+					"usage": {
+						"total_tokens": 417,
+						"prompt_tokens": 89,
+						"completion_tokens": 328,
+						"total_characters": 0,
+						"completion_tokens_details": {
+							"reasoning_tokens": 159
+						}
+					},
+					"input_sensitive": false,
+					"output_sensitive": false,
+					"base_resp": {
+						"status_code": 0,
+						"status_msg": ""
+					},
+					"input_sensitive_type": 0,
+					"output_sensitive_type": 0,
+					"output_sensitive_int": 0
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -111,6 +267,58 @@
 			"output": {
 				"text": "Code streams like soft rain  \nloops and functions cascade on  \nbugs fade into light"
 			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"id": "0631ffce4998ad3d775b54c22643a39a",
+					"choices": [
+						{
+							"index": 0,
+							"message": {
+								"role": "assistant",
+								"content": "Code streams like soft rain  \nloops and functions cascade on  \nbugs fade into light",
+								"name": "MiniMax AI",
+								"audio_content": "",
+								"reasoning_content": "The user wants a haiku about programming. The request is straightforward. We need to produce a haiku, which is a three-line poem with a 5-7-5 syllable structure. The theme: programming.\n\nWe can produce something like:\n\n\"Code streams like rain, // loops and functions cascade // bugs fade to light.\" Let's count syllables.\n\nFirst line: \"Code streams like rain,\" => \"Code\" (1), \"streams\" (1), \"like\" (1), \"rain\" (1) -> that's 4 syllables? Actually \"Code\" (1) \"streams\" (1) \"like\" (1) \"rain\" (1) = 4. Need 5 syllables. Could be \"Code streams like rain\" (4) add \"soft\"? \"Code streams like soft rain\" => \"Code\"1 \"streams\"1 \"like\"1 \"soft\"1 \"rain\"1 = 5. Good.\n\nSecond line: \"loops and functions cascade\" => loops(1) and(1) func-tions(2?) Actually \"functions\" = 2 syllables (func-tions). So loops(1), and(1), func(1) tions(1) => total 5? Wait let's count: loops (1), and (1), func (1), tions (1) = 4? Actually \"functions\" has two syllables: \"func-tions\". So loops (1) + and (1) + func (1) + tions (1) = 4. Need 7 syllables. Could be \"loops and functions cascade\" count: loops (1) and (1) functions (2) cascade (2) => total 6? Let's count: loops (1) = 1, and (1) = 2, func (1) = 3, tions (1) = 4, cas (1) = 5, cade (1) = 6. Need 7 syllables. Add \"softly\" maybe? \"loops and functions cascade softly\". Count: loops (1), and (1) =2, functions (2)=4, cascade (2)=6, softly (2)=8. That's 8. Remove something. Could be \"loops and functions cascade\" = 6. Need one more. Maybe \"loops and functions cascade on\". Count: loops(1), and(1)=2, functions(2)=4, cascade(2)=6, on(1)=7. Good.\n\nThird line: \"bugs fade to light\". Count: bugs(1) fade(1) to(1) light(1) =4, need 5 syllables. Could be \"bugs fade into light\". Count: bugs(1), fade(1), in(1), to(1), light(1) =5. Good. But \"into\" is two syllables? Actually \"in-to\" =2 syllables. So \"bugs fade into light\": bugs(1), fade(1), in(1), to(1), light(1) =5? Let's count: \"bugs\" (1), \"fade\" (1) ->2, \"in-to\" (2) ->4, \"light\" (1) ->5. That's correct.\n\nSo final haiku:\n\nCode streams like soft rain\nloops and functions cascade on\nbugs fade into light\n\nCheck each line syllable count:\n\nLine1: \"Code\"1 \"streams\"1 \"like\"1 \"soft\"1 \"rain\"1 =>5 correct.\n\nLine2: \"loops\"1 \"and\"1 \"func\"1 \"tions\"1 \"cas\"1 \"cade\"1 \"on\"1 =>7? Let's count: \"loops\" (1) \"and\" (2) \"func\" (3) \"tions\" (4) \"cas\" (5) \"cade\" (6) \"on\" (7). That's 7. Good.\n\nLine3: \"bugs\"1 \"fade\"2? Actually \"fade\" is one syllable, \"in\"1 \"to\"1 \"light\"1 = \"bugs\"(1), \"fade\"(2), \"in\"(3), \"to\"(4), \"light\"(5). Wait we need to count \"in\" and \"to\" each one syllable. So \"bugs fade into light\": bugs(1), fade(1) =2, in(1)=3, to(1)=4, light(1)=5. Actually we have \"bugs fade into light\": but we might need \"in\" and \"to\"? It's \"into\": \"in\"+\"to\"? \"into\" is two syllables: \"in\"+\"to\". So total: bugs(1) fade(2) in(3) to(4) light(5) =>5. Good.\n\nThus haiku meets format.\n\nWe can optionally include a title? The user didn't ask for title. Provide just the haiku. The style might be plain text.\n\nLet's output. Also ensure we comply with no disallowed content. It's fine.\n\nProceed.",
+								"reasoning_details": [
+									{
+										"type": "reasoning.text",
+										"id": "reasoning-text-1",
+										"format": "MiniMax-response-v1",
+										"index": 0,
+										"text": "The user wants a haiku about programming. The request is straightforward. We need to produce a haiku, which is a three-line poem with a 5-7-5 syllable structure. The theme: programming.\n\nWe can produce something like:\n\n\"Code streams like rain, // loops and functions cascade // bugs fade to light.\" Let's count syllables.\n\nFirst line: \"Code streams like rain,\" => \"Code\" (1), \"streams\" (1), \"like\" (1), \"rain\" (1) -> that's 4 syllables? Actually \"Code\" (1) \"streams\" (1) \"like\" (1) \"rain\" (1) = 4. Need 5 syllables. Could be \"Code streams like rain\" (4) add \"soft\"? \"Code streams like soft rain\" => \"Code\"1 \"streams\"1 \"like\"1 \"soft\"1 \"rain\"1 = 5. Good.\n\nSecond line: \"loops and functions cascade\" => loops(1) and(1) func-tions(2?) Actually \"functions\" = 2 syllables (func-tions). So loops(1), and(1), func(1) tions(1) => total 5? Wait let's count: loops (1), and (1), func (1), tions (1) = 4? Actually \"functions\" has two syllables: \"func-tions\". So loops (1) + and (1) + func (1) + tions (1) = 4. Need 7 syllables. Could be \"loops and functions cascade\" count: loops (1) and (1) functions (2) cascade (2) => total 6? Let's count: loops (1) = 1, and (1) = 2, func (1) = 3, tions (1) = 4, cas (1) = 5, cade (1) = 6. Need 7 syllables. Add \"softly\" maybe? \"loops and functions cascade softly\". Count: loops (1), and (1) =2, functions (2)=4, cascade (2)=6, softly (2)=8. That's 8. Remove something. Could be \"loops and functions cascade\" = 6. Need one more. Maybe \"loops and functions cascade on\". Count: loops(1), and(1)=2, functions(2)=4, cascade(2)=6, on(1)=7. Good.\n\nThird line: \"bugs fade to light\". Count: bugs(1) fade(1) to(1) light(1) =4, need 5 syllables. Could be \"bugs fade into light\". Count: bugs(1), fade(1), in(1), to(1), light(1) =5. Good. But \"into\" is two syllables? Actually \"in-to\" =2 syllables. So \"bugs fade into light\": bugs(1), fade(1), in(1), to(1), light(1) =5? Let's count: \"bugs\" (1), \"fade\" (1) ->2, \"in-to\" (2) ->4, \"light\" (1) ->5. That's correct.\n\nSo final haiku:\n\nCode streams like soft rain\nloops and functions cascade on\nbugs fade into light\n\nCheck each line syllable count:\n\nLine1: \"Code\"1 \"streams\"1 \"like\"1 \"soft\"1 \"rain\"1 =>5 correct.\n\nLine2: \"loops\"1 \"and\"1 \"func\"1 \"tions\"1 \"cas\"1 \"cade\"1 \"on\"1 =>7? Let's count: \"loops\" (1) \"and\" (2) \"func\" (3) \"tions\" (4) \"cas\" (5) \"cade\" (6) \"on\" (7). That's 7. Good.\n\nLine3: \"bugs\"1 \"fade\"2? Actually \"fade\" is one syllable, \"in\"1 \"to\"1 \"light\"1 = \"bugs\"(1), \"fade\"(2), \"in\"(3), \"to\"(4), \"light\"(5). Wait we need to count \"in\" and \"to\" each one syllable. So \"bugs fade into light\": bugs(1), fade(1) =2, in(1)=3, to(1)=4, light(1)=5. Actually we have \"bugs fade into light\": but we might need \"in\" and \"to\"? It's \"into\": \"in\"+\"to\"? \"into\" is two syllables: \"in\"+\"to\". So total: bugs(1) fade(2) in(3) to(4) light(5) =>5. Good.\n\nThus haiku meets format.\n\nWe can optionally include a title? The user didn't ask for title. Provide just the haiku. The style might be plain text.\n\nLet's output. Also ensure we comply with no disallowed content. It's fine.\n\nProceed."
+									}
+								]
+							},
+							"finish_reason": "stop"
+						}
+					],
+					"created": 1776471246,
+					"model": "MiniMax-M2.7",
+					"object": "chat.completion",
+					"usage": {
+						"total_tokens": 1124,
+						"prompt_tokens": 48,
+						"completion_tokens": 1076,
+						"total_characters": 0,
+						"completion_tokens_details": {
+							"reasoning_tokens": 1059
+						}
+					},
+					"input_sensitive": false,
+					"output_sensitive": false,
+					"base_resp": {
+						"status_code": 0,
+						"status_msg": ""
+					},
+					"input_sensitive_type": 0,
+					"output_sensitive_type": 0,
+					"output_sensitive_int": 0
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -131,6 +339,7 @@
 	"default_example": null,
 	"code_snippets": [],
 	"zdr": false,
+	"zdr_comment": null,
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",

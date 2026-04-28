@@ -32,6 +32,48 @@
 			"output": {
 				"text": "While there are actually four laws of thermodynamics (numbered 0 through 3), the \"Three Laws\" usually refer to the following fundamental principles that govern how energy, heat, and matter behave:\n\n### 1. The First Law: The Law of Conservation of Energy\n**\"Energy cannot be created or destroyed, only transformed from one form to another.\"**\n\nThis law states that the total amount of energy in an isolated system remains constant. In practical terms, if you add heat to a system, that energy must either increase the system's internal temperature or be used to do work on the surroundings.\n*   **The Equation:** $\\Delta U = Q - W$\n    *(Change in internal energy = Heat added - Work done by the system)*\n\n### 2. The Second Law: The Law of Entropy\n**\"The total entropy of an isolated system can never decrease over time; it can only remain constant or increase.\"**\n\nEntropy is a measure of \"disorder\" or randomness. This law explains why processes have a specific direction (the \"arrow of time\"). It tells us that heat will always flow spontaneously from a hot object to a cold object, and that no machine can ever be 100% efficient because some energy is always \"lost\" as waste heat.\n*   **Key takeaway:** Systems naturally progress toward a state of maximum disorder.\n\n### 3. The Third Law: The Law of Absolute Zero\n**\"As the temperature of a system approaches absolute zero, its entropy approaches a constant minimum.\"**\n\nAbsolute zero ($0$ Kelvin, or $-273.15^\\circ\\text{C}$) is the theoretical point where all molecular motion stops. This law implies that it is impossible to reach absolute zero in a finite number of steps. At this temperature, a perfect crystal would have zero entropy.\n*   **Key takeaway:** You can get very close to absolute zero, but you can never actually get there.\n\n***\n\n### Bonus: The Zeroth Law (The Law of Equilibrium)\nPhysicists realized they needed this law *after* the first three were already named, so they called it the \"Zeroth\" law because it is the most fundamental. \n*   **The Law:** If two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other. \n*   **Simplified:** This is the logic that allows us to use **thermometers**. If the thermometer says the water is $100^\\circ$ and the same thermometer says the tea is $100^\\circ$, then the water and the tea are the same temperature.\n\n***\n\n### A Common Way to Remember Them:\nScientists often use a cynical \"gambling\" analogy to remember the laws:\n1.  **First Law:** You can\u2019t win (you can\u2019t get more energy out than you put in).\n2.  **Second Law:** You can\u2019t even break even (entropy always increases; you always lose some energy to heat).\n3.  **Third Law:** You can\u2019t quit the game (you can\u2019t reach absolute zero)."
 			},
+			"raw_response": {
+				"candidates": [
+					{
+						"content": {
+							"role": "model",
+							"parts": [
+								{
+									"text": "While there are actually four laws of thermodynamics (numbered 0 through 3), the \"Three Laws\" usually refer to the following fundamental principles that govern how energy, heat, and matter behave:\n\n### 1. The First Law: The Law of Conservation of Energy\n**\"Energy cannot be created or destroyed, only transformed from one form to another.\"**\n\nThis law states that the total amount of energy in an isolated system remains constant. In practical terms, if you add heat to a system, that energy must either increase the system's internal temperature or be used to do work on the surroundings.\n*   **The Equation:** $\\Delta U = Q - W$\n    *(Change in internal energy = Heat added - Work done by the system)*\n\n### 2. The Second Law: The Law of Entropy\n**\"The total entropy of an isolated system can never decrease over time; it can only remain constant or increase.\"**\n\nEntropy is a measure of \"disorder\" or randomness. This law explains why processes have a specific direction (the \"arrow of time\"). It tells us that heat will always flow spontaneously from a hot object to a cold object, and that no machine can ever be 100% efficient because some energy is always \"lost\" as waste heat.\n*   **Key takeaway:** Systems naturally progress toward a state of maximum disorder.\n\n### 3. The Third Law: The Law of Absolute Zero\n**\"As the temperature of a system approaches absolute zero, its entropy approaches a constant minimum.\"**\n\nAbsolute zero ($0$ Kelvin, or $-273.15^\\circ\\text{C}$) is the theoretical point where all molecular motion stops. This law implies that it is impossible to reach absolute zero in a finite number of steps. At this temperature, a perfect crystal would have zero entropy.\n*   **Key takeaway:** You can get very close to absolute zero, but you can never actually get there.\n\n***\n\n### Bonus: The Zeroth Law (The Law of Equilibrium)\nPhysicists realized they needed this law *after* the first three were already named, so they called it the \"Zeroth\" law because it is the most fundamental. \n*   **The Law:** If two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other. \n*   **Simplified:** This is the logic that allows us to use **thermometers**. If the thermometer says the water is $100^\\circ$ and the same thermometer says the tea is $100^\\circ$, then the water and the tea are the same temperature.\n\n***\n\n### A Common Way to Remember Them:\nScientists often use a cynical \"gambling\" analogy to remember the laws:\n1.  **First Law:** You can\u2019t win (you can\u2019t get more energy out than you put in).\n2.  **Second Law:** You can\u2019t even break even (entropy always increases; you always lose some energy to heat).\n3.  **Third Law:** You can\u2019t quit the game (you can\u2019t reach absolute zero).",
+									"thoughtSignature": "CqkLAY89a19qCNl4uuKEEiZFrk/uT0hJLwMSmY8qnonXaWSr5n37N6xw9j45+UGCClhbVuK6cpRq7/oR4Tdzhsy6w7WWIspf2JBXYNOGo7i4L8638zGK5OGOvVcRpCuMXWsfrWhLS8fY9qC9WxEJqTsJR9gkNfO7A8h23/s2Ww2GhGvvRwYhA5L8uSaej/JdDd2rJdLn1QG0s8Hpf9Nhj7/mTRlfY5NYZv3r4UwIEurL3gE6Cqfk+kayL2/GEwcaRaGG3UbM74nSQmcldV2phXHuIDmNbUwoSNojDQteSPPG3NrGdW5A/qKz7W4dtTaq+Vq/dtEXleChH1Txf7hZtOfE62pxOEJK+Rm6E2hkXhOlkSry676UjrUHgLR23SfmmqgZ4Z9jdQ65DFAi3FA3Ww7Gw810tMasdXrdeeEGgDTXyjksTMmiG+DQ0ddw1npNb5v5Tnj6eEQpSxv57PpiAOkZF8pF8fk9E413eDCt6iRbZ3GToOeSplaN5z1ljhaKNMORBRDC7ZblLKzDJkES8vN2PGLGYlJdKA32pfT5Hmt82gkvC2udXwxsZH04TI4vb2wPfYfJQNgQRKv31n2jQryL9akJWjr1jwblk2P+DV1f+io5MYK0K/+V+b7FuOrDrzHRUuBqBm8OhJ5gNzThGTtjcMYNisw2tPgzddm9/uHd0mVYVHiRYGA7U8vlfZDFUTzQVD7A1B1LFEdhAkpbJ9z66xjS18bk4m/3GXfAIt8/QviFjmjAfeMZhylYNh2j7Cv8kEkIOAM3qApufLyuxbFrO/QRW2depUvJzD1M1qiTg139m9LQpQaEwao9PmzMxyUBKEUt6rV7cnycmvhjjAsG7MBn/WpQYzdUjHuzlAVF6ioDZEWu/co/FjYjnOzQjNfLCFjOy5TOuYgxANxAG3UtpLkLpwJdm6sAyn+gSyT8sRRofRa+cKYu5ZWmuziMC+2lbC4DEq/XMr/P6JCVYNJK2Ay9ZOsqWU0KpO17b6xynFZIeviXdPs3ODngRdE75u+SeJsFdsMUvsU0m+8WzmG76xGrX41/CprLlfax31xl6B7OxpsZvg1sl3D98+aPiTht5jJ9hQ9jSwl7GrKcOWKXCx98wYKPX4JIu78Yu0zBcpksgvbrQBJNRoVJJTQ06pT1oZQg0kPt6N7cbRqaZNbJun7ZRWb0lAIpUYO+P7jixDdMMr8sLtuYkbsd92Y/QlrDzSI5Dfb9Jg+5iPp+FvJappnXgjr3ZbdgV/4pXL7OznXMx+AWxrhldHVCmvW+qmlP8gJGovBfdR9t9rJSYlWP4M9UCjscUo/6Wl3xUEIdVtNf6gvfdb7LhT0e/AwIZmLEpvtbW8VTYtw7Ly4VWe0a/fkLP8d/L4p/nwb5PiARkbyLT0VIG5K3yZ+1F5d85ispp2szwjABH2yGgqQBbMUu4I/iae3VhFgOw24BabtdnH+QmogvA2Hi6wePJ4fmz2L+AVIwkGG7Z2ta6hde/8KEn38oM68LF6gJYvRkk1TFhSZlrYPZ+g1Ei+5gak37sbErhQ3qvkfxPIVBcuTRXQFR/a29L+Bcj4wvShU8PILtNaandlEQcMGfJzjU9cyM3EbJd1m/vIvHKL6gOjE2VUTqYfm8N0ELe/Kyvj1GJ1So3x2CMpYQJmNrrQBDA2SIJjdsXytkV5Ycaxt8cOCK9rkAkHHZ5lsujjjh2GgjJSWUKWeVWHCIfAwn8lsCIIZydTX1L515g7Rlz+hl29aZwf8F/cnBM68h5tu0zmfZAHCl3J6WuleW8ya1Ht6aOdb8Xe1xI+KKFJ+VnHjHU6Q7mLTWzaaNvboOBF5pW0dFDisDo+7YleHAtx5V9E3W3C2/V3pFrgjmfGAw3/tOR9h5ShpWdqAVJDWJCcZ4mYk3R0Wa7ezA2uTJpzKfl4Ya6XSisX9VN+EZfW4mglXB"
+								}
+							]
+						},
+						"finishReason": "STOP",
+						"avgLogprobs": -0.1735024595133252
+					}
+				],
+				"usageMetadata": {
+					"promptTokenCount": 8,
+					"candidatesTokenCount": 652,
+					"totalTokenCount": 1023,
+					"trafficType": "ON_DEMAND",
+					"promptTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 8
+						}
+					],
+					"candidatesTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 652
+						}
+					],
+					"thoughtsTokenCount": 363
+				},
+				"modelVersion": "gemini-3-flash-preview",
+				"createTime": "2026-04-17T05:47:50.289216Z",
+				"responseId": "hsnhacDTEYGPq8YPsdmS-Qc",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -67,6 +109,48 @@
 			},
 			"output": {
 				"text": "To read a JSON file in Python, you use the built-in **`json`** module.\n\nHere is the most common and recommended way to do it:\n\n### Basic Example\n```python\nimport json\n\n# Open the file and load the data\nwith open('data.json', 'r', encoding='utf-8') as file:\n    data = json.load(file)\n\n# Now 'data' is a Python dictionary (or list)\nprint(data)\n```\n\n---\n\n### Key Details to Remember\n\n#### 1. `json.load()` vs `json.loads()`\n*   **`json.load(file_object)`**: Used to read from a **file**.\n*   **`json.loads(json_string)`**: Used to parse a **string** that contains JSON data (the \"s\" stands for \"string\").\n\n#### 2. Using the `with` statement\nIt is best practice to use the `with` statement because it automatically closes the file for you, even if an error occurs during reading.\n\n#### 3. Handling Encoding\nIf your JSON file contains special characters (like emojis or non-English letters), it is safer to specify the encoding:\n```python\nwith open('data.json', 'r', encoding='utf-8') as file:\n    data = json.load(file)\n```\n\n---\n\n### Error Handling\nIf the file is missing or the JSON is formatted incorrectly, your program will crash. You can wrap it in a `try-except` block to handle these cases:\n\n```python\nimport json\n\ntry:\n    with open('data.json', 'r') as file:\n        data = json.load(file)\nexcept FileNotFoundError:\n    print(\"The file was not found.\")\nexcept json.JSONDecodeError:\n    print(\"The file is not a valid JSON format.\")\n```\n\n### Reading JSON from a URL\nIf you want to read JSON directly from the web, you can use the `requests` library:\n\n```python\nimport requests\n\nresponse = requests.get('https://api.example.com/data')\ndata = response.json()  # Automatically parses the JSON\nprint(data)\n```"
+			},
+			"raw_response": {
+				"candidates": [
+					{
+						"content": {
+							"role": "model",
+							"parts": [
+								{
+									"text": "To read a JSON file in Python, you use the built-in **`json`** module.\n\nHere is the most common and recommended way to do it:\n\n### Basic Example\n```python\nimport json\n\n# Open the file and load the data\nwith open('data.json', 'r', encoding='utf-8') as file:\n    data = json.load(file)\n\n# Now 'data' is a Python dictionary (or list)\nprint(data)\n```\n\n---\n\n### Key Details to Remember\n\n#### 1. `json.load()` vs `json.loads()`\n*   **`json.load(file_object)`**: Used to read from a **file**.\n*   **`json.loads(json_string)`**: Used to parse a **string** that contains JSON data (the \"s\" stands for \"string\").\n\n#### 2. Using the `with` statement\nIt is best practice to use the `with` statement because it automatically closes the file for you, even if an error occurs during reading.\n\n#### 3. Handling Encoding\nIf your JSON file contains special characters (like emojis or non-English letters), it is safer to specify the encoding:\n```python\nwith open('data.json', 'r', encoding='utf-8') as file:\n    data = json.load(file)\n```\n\n---\n\n### Error Handling\nIf the file is missing or the JSON is formatted incorrectly, your program will crash. You can wrap it in a `try-except` block to handle these cases:\n\n```python\nimport json\n\ntry:\n    with open('data.json', 'r') as file:\n        data = json.load(file)\nexcept FileNotFoundError:\n    print(\"The file was not found.\")\nexcept json.JSONDecodeError:\n    print(\"The file is not a valid JSON format.\")\n```\n\n### Reading JSON from a URL\nIf you want to read JSON directly from the web, you can use the `requests` library:\n\n```python\nimport requests\n\nresponse = requests.get('https://api.example.com/data')\ndata = response.json()  # Automatically parses the JSON\nprint(data)\n```",
+									"thoughtSignature": "CpoIAY89a18jqSNoAkdnLwrTiEVOfCWU2h+i0cF80VkEbpiDJonCd8buSMVdR/N8pVtqibgPP3INdZkmGbxBAer3Ojz/B+IvLyYtJEvr9Lj7q18FPXX1GOG10u3noKl3uyxQ2doaIGaJ+iV3c6SwqaB+AxhptZ5ht0utR6jdQuVwefyygMRgERQ5J24dX0YT3r2GR1ZYP0HnKwgtihUhP7yrl2wML1bnDNfz7/aQDQTr1h62ua2VC5HKJz1aP8OQ9g7qpMKrr0lgT5C1/He0Mtdl5jaFpms+/Qi0Z3kInqBwoJH0SmGiPGAWeOhq00VZuw2TmepnYBdXZUu90Z1FxJzkngyP2tSXiefd71CZ7LcnEDZiIw2uzLhOo0Sh+6JVcDd0uqAPfA4HDfA+GUGuFW3iJBOtFs3miOdID0I0tf5MD9CCEvUwsA9zk5YRtbZzZ81IWbwyXsMav6zqU9i1nNfd6nDx0Rb9rvi6Fczygy9qcXQVeWvD3K8Pcwr8IgnM42W4erRtxp/4vkAbRBHQqEr8ON0NSSCSK5jgfEenjfWT0f+1hXouaFD62HhKJjhfqjR/9EFntv6KxT3jut+6HFTmQbJgS/RqauJx4QhOekkSB9OB6tK59W1iEhZ4/32ifP1SajQGXAX+jaDfqb948NMWmSOaAGPAQeGoj6y/40s5sH3MUzTdrs1K5AWh+r9vuQmd2/ktKdhVGm1lwuQeUY2sGuLWoS+iFMtYin5CGGlzgJ1ptScvq6EZ5jHl+P0u7fPx67+u3fXvDSlQGy9JybVoJxfWCHYE91TDLC/nik0prPiRRa5RRqhWyP646TvGX7tY9xhcpq3JRRU+gauo+hKD/PLpgtjjpDa4LcYXPHHGEmcUChahRH865UocrqSOA1J1Z7R59+I5KYYpcFzQPheo+uv5MmYvWYtNB/4ek3UWNU9Y/tGCIFBk74S5+b5Xw+oKUt6dockpvnIfXeBhVRwWBkRLjFVQTCW+sEMRYM8ml8nzuc3uCFCk9VpgRpTccivx5aPAXCgtdoJ1I/RjKUHDQqRS2yFAX78mQw6bPTJl59niGIuiN7yTFfg2phsyFIctkiE1zJS2u82GYFfsUESqZ5utVFZuPpHDVHXcXFb665oFSwlIkTqI8Xhx65fNuBCIG+jFkn+Tx2v+CJlbTG5v+SlVN6mbkwdSya6LUNQeX+eoLK1o3qz7HtF7XJRvc7guEc01pRl4i0RUYZGjkVC3SdC55H1UrH6uYQ938j2FJhLgih2RqEKEfWENwYs20zxJTkJwxw9fBUcfob9Qakhay5CNLZQ9C29H3Y7YmSo7nIf72upvVFy8rMUXY4H7l9CU/ZMR+bxLWDEY+ly/RaOOAscpiGHdOtgvghnps8Jbqk9VaTTXZ9nhcujJ"
+								}
+							]
+						},
+						"finishReason": "STOP",
+						"avgLogprobs": -0.09832632964156421
+					}
+				],
+				"usageMetadata": {
+					"promptTokenCount": 20,
+					"candidatesTokenCount": 476,
+					"totalTokenCount": 792,
+					"trafficType": "ON_DEMAND",
+					"promptTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 20
+						}
+					],
+					"candidatesTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 476
+						}
+					],
+					"thoughtsTokenCount": 296
+				},
+				"modelVersion": "gemini-3-flash-preview",
+				"createTime": "2026-04-17T05:47:57.460588Z",
+				"responseId": "jcnhaayOHISRq8YP2o-ouQg",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
 			},
 			"code_snippets": [
 				{
@@ -113,6 +197,48 @@
 			"output": {
 				"text": "To give you the best recommendations, it helps to know how much time you have. The drive can"
 			},
+			"raw_response": {
+				"candidates": [
+					{
+						"content": {
+							"role": "model",
+							"parts": [
+								{
+									"text": "To give you the best recommendations, it helps to know how much time you have. The drive can",
+									"thoughtSignature": "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"
+								}
+							]
+						},
+						"finishReason": "MAX_TOKENS",
+						"avgLogprobs": -7.779651683751491
+					}
+				],
+				"usageMetadata": {
+					"promptTokenCount": 64,
+					"candidatesTokenCount": 20,
+					"totalTokenCount": 560,
+					"trafficType": "ON_DEMAND",
+					"promptTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 64
+						}
+					],
+					"candidatesTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 20
+						}
+					],
+					"thoughtsTokenCount": 476
+				},
+				"modelVersion": "gemini-3-flash-preview",
+				"createTime": "2026-04-17T05:48:02.222198Z",
+				"responseId": "ksnhafbHDZCeq8YPtfXXyQ4",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -143,6 +269,48 @@
 			"output": {
 				"text": "The yellow police tape hummed in the drafty"
 			},
+			"raw_response": {
+				"candidates": [
+					{
+						"content": {
+							"role": "model",
+							"parts": [
+								{
+									"text": "The yellow police tape hummed in the drafty",
+									"thoughtSignature": "CvAIAY89a184jaSQCZEM4oHqR38/9rVamPb8K209g7cY61/Q3OxFivZwmOKnowcQMnAxvVGTaxxuDlXAqiNS70l3UPnk+3GPr8wExttqJyoSzP/k1E1UpMurGT/CEhXJnmfAaf3ChjjPztJVM/Mb94nkIjh284U1w0KQOHh/T1Za3F3KUlkPVcIPOoctReIMhsI1Z/Do/LZykKPYMZtDp73oJU6ADi+Yo6DZH1Voc56qKXmJTCadmNjsNXzTkklCXdwspIvfdeh3MeT/DY3wbu8SseGNxp8JQx6v+6hry8KL9G0EjP478Zz2iYmV58hdWvmhSvioQtJ9wGN2CEK4v2vpmGmlO4Xzh908uu3YA6pHevmPrgkWjYwJ/vZ27kVFCL2pfXNNQBWcX9rQuGueSfkLYjBr90c6iyVJcM/saAbmBbBfKHko5rfkwwKjPFoj9y8kXQ7lBl3H9YRVjvkfJNxaDVxz+IygwHB52H1h78mZmc27g9faKAwzxn/GNhIG3r18TVKy6liAsebOVKpeC1bPuFIGEo6nwdzIBdsJP7/ngU9+4mCZ60/n3293iPJxff4zA+7tRTfjDTjtSuPW2Ta6phZ2NfnKwKWbwuwqxDdSAK9N8RRugb6hn2o7lIoG1BEQ+T3W728uzpDFhEpa0P9RBiYAV1oDJ5kDCZBdC7JqWS1RjxfOqe8Mh6KgMD8eMEImYF4dHU8Ppt4BANexgK3rSHSauW3Ykb0r8KxTIjKmd6mJ/ImJLuqwVshwjx8Ovbt38D9cag4MiNbq5rwjAgTk1BbFF0XQvTRef2LHYEqIBIvYYxKLH6eYFhrAWG/TT9tp7R/TZD2pfs+fGqMzyehGEFOUjMyhphgK5o0hKsXe/xHGeQsTdu3kFySVlc+bvzV5ve0T2hau1xXD+tnBNFpCaHlS25amUdTXJluWuF2iDfzet648bckCQTxQRBEGT5QiF7CKdvu+l3x/Jct5l9ZynwMcr0rHhkm+7iL74QFykS1lZT+9GiJO7bj2Onz6RUdAIAEg7PWp/zvwX8P+uSeXMMX0hBuRZ69oR1z9EfUFBsravP/XwxWpbFi2QCk2RhbaBolrzPkNq5C1Fnk7H1YWFvDkRnQ+vCVdWitRVhIJSJ/MCuH2ryewJ1eywlVLPddlu/mGtTqAMJSZJz+f6h9BUrRffA8EDL10L2lVb+IpwvVrwvaVqCoFiRYmYmtyrm+ckJMR/8LRsM5aCoJyKGgt/QmhLrDI9br/r6ghkxj4IhS4K03+rcDpG6aZ/W6WKw5tnq/gaZNG7ZhV6PXSxuKdTBMnw6waSqFc2d1UhLTbSwJDxhUn3seOWltq6rBRxJNLRxn/rB0aM3G0chiHQxMwKZxoXBhmc+Lph07RZlSs/IGdn1tvPNhDbAKEVCBwRUrvouCYNdOqS5UCkLwnTFOpm5XX3G+I/hFPgBgZksGu7ylh298RfWUaojbDBd5rWjs6/vDyNKT8/M80B3B+anLSgpoGl+Emv0ocdKJbVf5OBCo="
+								}
+							]
+						},
+						"finishReason": "MAX_TOKENS",
+						"avgLogprobs": -15.592795781649631
+					}
+				],
+				"usageMetadata": {
+					"promptTokenCount": 13,
+					"candidatesTokenCount": 10,
+					"totalTokenCount": 309,
+					"trafficType": "ON_DEMAND",
+					"promptTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 13
+						}
+					],
+					"candidatesTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 10
+						}
+					],
+					"thoughtsTokenCount": 286
+				},
+				"modelVersion": "gemini-3-flash-preview",
+				"createTime": "2026-04-17T05:48:06.216204Z",
+				"responseId": "lsnhaYyZDd-jq8YPlobFmAo",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -164,6 +332,7 @@
 	"default_example": null,
 	"code_snippets": [],
 	"zdr": false,
+	"zdr_comment": null,
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",

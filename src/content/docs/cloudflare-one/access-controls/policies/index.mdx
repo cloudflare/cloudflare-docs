@@ -32,9 +32,7 @@ The Allow action in Cloudflare Access allows users that meet certain criteria to
 
 The following table shows an example Cloudflare Access Allow policy that lets any user with an `@example.com` email address, as validated against an IdP, reach the application:
 
-| Action | Rule type | Selector          | Value          |
-| ------ | --------- | ----------------- | -------------- |
-| Allow  | Include   | Emails Ending In: | `@example.com` |
+<Render file="access/example-allow-email-domain" product="cloudflare-one" />
 
 You can add a Require rule in the same policy action to enforce additional checks. Finally, if the policy contains an Exclude rule, users meeting that definition are prevented from reaching the application.
 
@@ -50,10 +48,7 @@ For example, the following table shows an Allow policy with Require and Exclude 
 
 The Block action in Cloudflare Access prevents users who meet certain criteria from reaching an application. For example, the following table shows a Block policy that blocks requests from Russian source IPs that are not on your [list of approved IPs](/cloudflare-one/reusable-components/lists/).
 
-| Action | Rule type | Selector | Value                    |
-| ------ | --------- | -------- | ------------------------ |
-| Block  | Include   | Country  | `Russian Federation`     |
-|        | Exclude   | IP list  | `Corporate IP allowlist` |
+<Render file="access/example-block-country" product="cloudflare-one" />
 
 Block policies are best used in conjunction with [Allow policies](#allow) as a way to carve out exceptions in those Allow policies. Since Access is deny by default, users who do not match a Block policy will still be denied access unless they explicitly match an Allow policy.
 
@@ -73,9 +68,7 @@ The Bypass action disables any Access enforcement for traffic that meets the def
 
 For example, some applications have an endpoint under the `/admin` route that must be publicly routable. In this situation, you could create an Access application for the domain `test.example.com/admin/<your-url>` and add the Bypass policy shown in the following table:
 
-| Action | Rule type | Selector | Value      |
-| ------ | --------- | -------- | ---------- |
-| Bypass | Include   | Everyone | `Everyone` |
+<Render file="access/example-bypass-everyone" product="cloudflare-one" />
 
 As part of implementing a Zero Trust security model, Cloudflare does not recommend using Bypass to grant direct permanent access to your internal applications. To enable seamless and secure access for on-network employees, use Cloudflare Tunnel to [connect your private network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/) and have users connect through the Cloudflare One Client.
 

@@ -26,15 +26,17 @@ Create an Artifacts repo from a Worker and use a standard Git client to push and
 
 By the end of this guide, you will create a Worker, bind it to Artifacts, create a repo through the Workers binding, push a commit, and clone the same repo back with a standard Git client.
 
+Start by reading [Namespaces](/artifacts/concepts/namespaces/), then choose the namespace name you will use. This guide uses `default` in the examples.
+
 ## Prerequisites
 
 <Render file="prereqs" product="workers" />
 
 You also need:
 
-- Wrangler authenticated with `wrangler login`.
+- Wrangler installed. If you use local Wrangler commands in this guide, authenticate Wrangler first. For local OAuth authentication or CI setup, refer to [`wrangler login`](/workers/wrangler/commands/general/#login) and [Running Wrangler in CI/CD](/workers/ci-cd/).
 - Access to Artifacts in your Cloudflare account.
-- An existing Artifacts namespace, for example `default`.
+- A namespace name, for example `default`.
 - A local `git` client.
 - `jq`, if you want to extract response fields automatically.
 
@@ -82,13 +84,12 @@ compatibility_date = "$today"
 [[artifacts]]
 binding = "ARTIFACTS"
 namespace = "default"
+# Set remote = true if you want Wrangler to use the remote Artifacts service in local dev.
 ```
 
 </WranglerConfig>
 
 This exposes Artifacts as `env.ARTIFACTS` inside your Worker.
-
-If you authenticate with `wrangler login`, Wrangler requests `artifacts:write` by default.
 
 If you are using TypeScript, regenerate your local binding types:
 
@@ -177,6 +178,10 @@ The response resembles the following:
 }
 ```
 
+Use the exact `remote` value from the response. The example above uses `<ACCOUNT_ID>` as a placeholder for your Cloudflare account ID.
+
+The returned token encodes its expiry directly in the `?expires=` suffix.
+
 Copy the `remote` and `token` values into local shell variables:
 
 ```sh
@@ -191,8 +196,6 @@ export ARTIFACTS_TOKEN="<PASTE_TOKEN_FROM_RESPONSE>"
 RESPONSE=$(curl --silent http://localhost:8787/repos \
   --header "Content-Type: application/json" \
   --data '{"name":"starter-repo"}')
-
-printf '%s\n' "$RESPONSE"
 
 export ARTIFACTS_REMOTE=$(printf '%s' "$RESPONSE" | jq -r '.remote')
 export ARTIFACTS_TOKEN=$(printf '%s' "$RESPONSE" | jq -r '.token')

@@ -1,0 +1,54 @@
+---
+import {
+	capabilityDefinitions,
+	capabilityLabels,
+	type CapabilityKey,
+} from "./definitions";
+
+interface Props {
+	capabilities: Record<string, boolean>;
+}
+
+const { capabilities } = Astro.props;
+const active = Object.entries(capabilities).filter(([, v]) => v);
+---
+
+{
+	active.length > 0 && (
+		<div class="flex flex-wrap gap-1.5">
+			{active.map(([key]) => {
+				const k = key as CapabilityKey;
+				const label = capabilityLabels[k] ?? key;
+				const tooltip = capabilityDefinitions[k] ?? "";
+				return (
+					<span
+						class={`agent-setup-badge agent-setup-badge--${key.replace("_", "-")}`}
+						data-agent-tooltip={tooltip}
+						aria-label={tooltip}
+					>
+						{label}
+					</span>
+				);
+			})}
+		</div>
+	)
+}
+
+<script>
+	import tippy from "tippy.js";
+
+	document
+		.querySelectorAll<HTMLElement>("[data-agent-tooltip]")
+		.forEach((el) => {
+			const content = el.dataset.agentTooltip;
+			if (!content) return;
+			tippy(el, {
+				content,
+				placement: "top",
+				appendTo: () => document.body,
+				arrow: true,
+				maxWidth: 280,
+				delay: [150, 0],
+			});
+		});
+</script>

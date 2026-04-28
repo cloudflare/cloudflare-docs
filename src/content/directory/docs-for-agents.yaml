@@ -1,0 +1,12 @@
+id: aIagnt
+name: Docs for agents
+
+entry:
+  title: Docs for agents
+  url: /docs-for-agents/
+  show: false
+
+meta:
+  title: Docs for agents docs
+  description: Learn how AI agents and LLMs consume Cloudflare documentation
+  author: "@cloudflare"

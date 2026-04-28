@@ -7,6 +7,8 @@ head: []
 description: Migrate from the
   [`unstable_dev`](/workers/wrangler/api/#unstable_dev) API to writing tests
   with the Workers Vitest integration.
+products:
+  - workers
 ---
 
 The [`unstable_dev`](/workers/wrangler/api/#unstable_dev) API has been a recommended approach to run integration tests. The `@cloudflare/vitest-pool-workers` package integrates directly with Vitest for fast re-runs, supports both unit and integration tests, all whilst providing isolated per-test storage.

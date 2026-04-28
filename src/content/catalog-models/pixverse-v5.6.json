@@ -26,6 +26,15 @@
 			"output": {
 				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/pixverse__v5.6/simple-video.mp4"
 			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://media.pixverse.ai/pixverse%2Fmp4%2Fmedia%2Fweb%2Fori%2F83ca9c7f-6387-4a2c-8d92-bb90a3d519e7_seed1453814635.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -47,6 +56,15 @@
 			"output": {
 				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/pixverse__v5.6/cinematic-scene-with-audio.mp4"
 			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://media.pixverse.ai/pixverse%2Fmp4%2Fmedia%2Fweb%2Fori%2F77e1e5bd-4be9-4b7b-961a-36328e90d7e0_seed735995758.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -67,6 +85,15 @@
 			},
 			"output": {
 				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/pixverse__v5.6/portrait-video.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://media.pixverse.ai/pixverse%2Fmp4%2Fmedia%2Fweb%2Fori%2Fa95971bd-798d-431e-8c78-8062b839742c_seed1048220235.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
 			},
 			"code_snippets": [
 				{
@@ -90,6 +117,15 @@
 			},
 			"output": {
 				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/pixverse__v5.6/high-quality-video.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://media.pixverse.ai/pixverse%2Fmp4%2Fmedia%2Fweb%2Fori%2F557c18df-6c50-409c-a5e5-291bb2086d3f_seed12345.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
 			},
 			"code_snippets": [
 				{
@@ -115,6 +151,7 @@
 	"default_example": null,
 	"code_snippets": [],
 	"zdr": false,
+	"zdr_comment": null,
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",

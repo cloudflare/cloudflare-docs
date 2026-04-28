@@ -6,6 +6,38 @@
 import type { CodeSnippet, ModelExample } from "~/schemas/catalog-models";
 
 /**
+ * Slimmed model type for the catalog index pages.
+ * Only includes the fields needed to render model cards and run filters.
+ * schema, apiModes, codeSnippets, examples, metadata, etc. are stripped
+ * to avoid serializing megabytes of JSON Schema data into the page HTML.
+ */
+export interface ModelCardData {
+	name: string;
+	modelId: string;
+	slug: string;
+	displayName: string;
+	description: string;
+	task: {
+		id: string;
+		name: string;
+		description: string;
+	};
+	tags: string[];
+	contextLength?: number;
+	maxOutputTokens?: number;
+	supportsAsync: boolean;
+	id: string;
+	source: number;
+	created_at?: string;
+	properties: Array<{
+		property_id: string;
+		value: string | Array<Record<string, unknown>>;
+	}>;
+	dataSource: "catalog" | "legacy";
+	hosting: "proxied" | "hosted";
+}
+
+/**
  * Represents a distinct API mode for a model (e.g., sync, streaming, batch).
  * Each mode has its own input/output schema derived from the combined schema.
  */

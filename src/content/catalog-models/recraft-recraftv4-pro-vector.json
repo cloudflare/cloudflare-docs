@@ -1,7 +1,7 @@
 {
 	"model_id": "recraft/recraftv4-pro-vector",
 	"provider_id": "recraft",
-	"name": "Recraft V4 Pro Vector",
+	"name": "Recraft V4 Pro SVG",
 	"description": "Generate detailed, production-ready SVG vector graphics from text prompts with fine geometry, scalable to any size for print and design work.",
 	"task": "Text-to-Image",
 	"tags": [
@@ -24,6 +24,15 @@
 			"output": {
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-pro-vector/logo-design.jpg"
 			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-pro-vector/logo-design.jpg"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -42,6 +51,15 @@
 			"output": {
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-pro-vector/icon-set.jpg"
 			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-pro-vector/icon-set.jpg"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -59,6 +77,15 @@
 			},
 			"output": {
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-pro-vector/print-ready-vector.jpg"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-pro-vector/print-ready-vector.jpg"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
 			},
 			"code_snippets": [
 				{
@@ -102,6 +129,15 @@
 			"output": {
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-pro-vector/brand-illustration.jpg"
 			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-pro-vector/brand-illustration.jpg"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -123,6 +159,7 @@
 	"default_example": null,
 	"code_snippets": [],
 	"zdr": false,
+	"zdr_comment": null,
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",

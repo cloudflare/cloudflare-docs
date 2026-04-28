@@ -86,7 +86,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email/sending/s
 
 ## Attachments
 
-Send files by including base64-encoded content in the `attachments` array:
+Send files by including base64-encoded content in the `attachments` array. The total message size must not exceed **5 MiB** (including attachments).
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email/sending/send" \

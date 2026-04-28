@@ -29,6 +29,30 @@ A wildcard URL redirect has the following configuration parameters:
 
 - **Preserve query string**: Whether to preserve the query string when redirecting (disabled by default).
 
+<Details header="API information">
+
+Wildcard URL redirects are regular [dynamic URL redirects](#dynamic-url-redirect) that use the [`wildcard_replace()`](/ruleset-engine/rules-language/functions/#wildcard_replace) function in the `target_url.expression` parameter.
+
+The full syntax of the `"action_parameters"` field for a redirect rule performing a wildcard URL redirect is the following:
+
+```json
+"action_parameters": {
+  "from_value": {
+    "target_url": {
+      "expression": "wildcard_replace(http.request.full_uri, r\"<REQUEST_URL_PATTERN>\", r\"<TARGET_URL_PATTERN>\")"
+    },
+    "status_code": <STATUS_CODE>,
+    "preserve_query_string": <BOOLEAN_VALUE>
+  }
+}
+```
+
+The required parameters are `<REQUEST_URL_PATTERN>` and `<TARGET_URL_PATTERN>`.
+
+<Render file="url-forwarding/optional-parameters" product="rules" />
+
+</Details>
+
 ## Static URL redirect
 
 Performs a static URL redirect with a given HTTP status code and optionally preserves the query string.

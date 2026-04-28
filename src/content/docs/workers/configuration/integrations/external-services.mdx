@@ -1,6 +1,9 @@
 ---
 pcx_content_type: concept
 title: External Services
+description: Connect Cloudflare Workers to external services using libraries, SDKs, and secure authentication.
+products:
+  - workers
 ---
 
 Many external services provide libraries and SDKs to interact with their APIs. While many Node-compatible libraries work on Workers right out of the box, some, which implement `fs`, `http/net`, or access the browser `window` do not directly translate to the Workers runtime, which is v8-based.

@@ -16,7 +16,7 @@
 /*/index.md:
   Content-Type: text/markdown; charset=utf-8
 
-/.well-known/skills/index.json
+/.well-known/agent-skills/index.json
   Content-Type: application/json; charset=utf-8
 
 /.well-known/mcp/server-card.json

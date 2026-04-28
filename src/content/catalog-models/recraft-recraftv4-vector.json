@@ -1,7 +1,7 @@
 {
 	"model_id": "recraft/recraftv4-vector",
 	"provider_id": "recraft",
-	"name": "Recraft V4 Vector",
+	"name": "Recraft V4 SVG",
 	"description": "Generate production-ready SVG vector graphics from text prompts with clean geometry, structured layers, and editable paths.",
 	"task": "Text-to-Image",
 	"tags": [
@@ -23,6 +23,15 @@
 			"output": {
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-vector/simple-icon.jpg"
 			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-vector/simple-icon.jpg"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -41,6 +50,15 @@
 			"output": {
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-vector/app-icon.jpg"
 			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-vector/app-icon.jpg"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -58,6 +76,15 @@
 			},
 			"output": {
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-vector/illustration.jpg"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-vector/illustration.jpg"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
 			},
 			"code_snippets": [
 				{
@@ -101,6 +128,15 @@
 			"output": {
 				"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-vector/with-brand-colors.jpg"
 			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/recraft__recraftv4-vector/with-brand-colors.jpg"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
 			"code_snippets": [
 				{
 					"label": "typescript",
@@ -122,6 +158,7 @@
 	"default_example": null,
 	"code_snippets": [],
 	"zdr": false,
+	"zdr_comment": null,
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",

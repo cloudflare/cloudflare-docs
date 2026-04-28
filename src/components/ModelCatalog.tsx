@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 import ModelInfo from "./models/ModelInfo";
 import ModelBadges from "./models/ModelBadges";
 import { authorData } from "./models/data";
-import type { ResolvedModel } from "~/util/model-types";
+import type { ModelCardData } from "~/util/model-types";
 import { getModelAuthor } from "~/util/model-helpers";
 import { setSearchParams } from "~/util/url";
 import {
@@ -22,7 +22,7 @@ const ModelCatalog = ({
 	models,
 	basePath = "/ai/models",
 }: {
-	models: ResolvedModel[];
+	models: ModelCardData[];
 	basePath?: string;
 }) => {
 	const [filters, setFilters] = useState<Filters>({
@@ -34,7 +34,7 @@ const ModelCatalog = ({
 
 	// List of model names to pin at the top
 	const pinnedModelNames = [
-		"@cf/moonshotai/kimi-k2.5",
+		"@cf/moonshotai/kimi-k2.6",
 		"@cf/zai-org/glm-4.7-flash",
 		"@cf/openai/gpt-oss-120b",
 		"@cf/meta/llama-4-scout-17b-16e-instruct",
