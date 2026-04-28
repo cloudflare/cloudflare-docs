@@ -28,7 +28,7 @@ Packet captures are available for Cloudflare Advanced Network Firewall users. Fo
 
 ## Send a packet capture request
 
-Currently, when a packet capture is requested, packets flowing at Cloudflare's global network through the Magic Transit system are captured. The default API field for this is `"system": "magic-transit"`, both for the request and response.
+Currently, when a packet capture is requested, packets flowing through Cloudflare's global network via the Magic Transit system are captured. The default API field for this is `"system": "magic-transit"`, both for the request and response.
 
 :::note[Note]
 
@@ -40,12 +40,12 @@ For help determining which data center to select for a packet capture, go to [ht
 
 **Sample and full**
 
-- `time_limit`: The minimum value is `1` seconds and maximum value is `300` seconds.
+- `time_limit`: The minimum value is `1` second and maximum value is `300` seconds.
 - `packet_limit`: The minimum value is `1` packet and maximum value is `10000` packets.
 
 **Full**
 
-- `byte_limit`: The minimum value is `1` byte and maximum value is `1000000000` bytes.
+- `byte_limit`: The minimum value is `1` byte and maximum value is `1000000000` bytes (1 GB).
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -120,7 +120,7 @@ While the collection is in progress, the response returns the `status` field as 
 
 To create a sample PCAP request, send a JSON body with the required parameter listed at [Create sample PCAP request](/api/resources/magic_transit/subresources/pcaps/methods/create/).
 
-Leave `filter_v1` to collect all packets without any filtering.
+Leave `filter_v1` empty to collect all packets without any filtering.
 
 ```bash title="Sample PCAP example request"
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps \
