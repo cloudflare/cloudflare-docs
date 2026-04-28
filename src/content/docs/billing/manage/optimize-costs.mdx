@@ -1,12 +1,10 @@
 ---
 title: Optimize costs
-pcx_content_type: reference
+pcx_content_type: concept
 sidebar:
   order: 3
 description: Strategies for reducing usage-based charges across Cloudflare products.
 ---
-
-import { Details } from "~/components";
 
 Reducing usage-based charges starts with understanding where your consumption comes from. Use the [billable usage dashboard](/billing/manage/billable-usage/) to identify which products are driving costs, then apply the strategies below.
 
@@ -31,14 +29,12 @@ Cached responses are the cheapest path through Cloudflare. Every cache hit avoid
 | Use [tiered caching](/cache/how-to/tiered-cache/) to reduce origin pulls | Origin bandwidth and Argo transfer between Cloudflare data centers |
 | Configure [cache rules](/cache/how-to/cache-rules/) to cache more static content by default | Overall cache hit ratio |
 
-### Workers
+### Workers & Durable Objects
 
 | Strategy | What it reduces |
 |---|---|
-| Use [Workers Smart Placement](/workers/configuration/smart-placement/) for data-dependent Workers | CPU time — runs the Worker closer to your data instead of the user |
-| Avoid unnecessary subrequests inside Workers | Each `fetch()` call can trigger additional metered operations |
-| Use [Service Bindings](/workers/runtime-apis/bindings/service-bindings/) for Worker-to-Worker calls instead of HTTP | Request count — service bindings do not count as separate invocations |
-| Set up [tail Workers](/workers/observability/logs/tail-workers/) instead of Logpush for log processing where possible | Logpush-enabled Workers requests |
+| Use [Workers Logs](/workers/observability/logs/workers-logs/) for log retention instead of Logpush | Logpush-enabled Workers requests and Logpush data transfer |
+| Use the [WebSocket Hibernation API](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api) for Durable Objects with idle WebSocket connections | Duration (GB-s) charges — billing pauses while the Durable Object is hibernated |
 
 ### R2
 
@@ -48,13 +44,6 @@ Cached responses are the cheapest path through Cloudflare. Every cache hit avoid
 | Batch R2 operations where possible instead of per-object reads | Class B operation count |
 | Use [presigned URLs](/r2/api/s3/presigned-urls/) for direct client access instead of proxying through Workers | Workers invocations and CPU time |
 | Enable [Cache-Control headers on R2 objects](/r2/buckets/public-buckets/) to leverage Cloudflare's CDN cache | Class B reads — cached objects do not hit R2 |
-
-### Argo Smart Routing
-
-| Strategy | What it reduces |
-|---|---|
-| Increase cache hit ratio to reduce origin-bound traffic | Argo data transfer — only cache misses are routed via Argo |
-| Compress responses at the origin | Transfer volume in bytes |
 
 ### Stream and Images
 
