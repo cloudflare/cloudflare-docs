@@ -12,23 +12,21 @@ tags:
 
 import { DashButton } from "~/components";
 
-Email security allows you to configure Logpush to send detection data to an endpoint of your choice.
+Email security allows you to configure Logpush to export two types of log data: detection logs (records of threats identified in email traffic) and user action logs (records of administrative actions taken via the API or the dashboard). Each log type requires separate configuration.
 
 ## Enable detection logs
 
-Detection logs generate logs made by Email security and some of the metadata associated with the detection.
+Detection logs record each threat identified by Email security, including metadata such as the message sender, recipient, and detection verdict.
 
-To enable detection logs, refer to [Enable destinations](/logs/logpush/logpush-job/enable-destinations/).
-
-If you enable detection logs using [R2](/r2/), choose **Email security alerts** when configuring the **Dataset**.
+To enable detection logs, refer to [Enable destinations](/logs/logpush/logpush-job/enable-destinations/). When configuring the Logpush job, select **Email security alerts** as the dataset.
 
 ## Enable user action logs
 
-User action logs allow you to view logs regarding all actions taken via the [API](/api/resources/email_security/) or the dashboard.
+User action logs record all administrative actions taken via the [API](/api/resources/email_security/) or the dashboard.
 
-Before you can enable audit logs for Email security, you will have to enable logpush jobs to your storage destination. Refer to [Enable destinations](/logs/logpush/logpush-job/enable-destinations/) to enable logs on destinations such as Cloudflare R2, HTTP, Amazon S3, and more.
+Before you can enable user action logs for Email security, you must have a Logpush job configured for your storage destination. Refer to [Enable destinations](/logs/logpush/logpush-job/enable-destinations/) to enable logs on destinations such as Cloudflare R2, HTTP, Amazon S3, and more.
 
-Once you have configured your destination, you can set up audit logs for user action:
+Once you have configured your destination, you can set up user action logs:
 
 1. In the Cloudflare dashboard, go to the **Logpush** page.
 
@@ -39,8 +37,8 @@ Once you have configured your destination, you can set up audit logs for user ac
 4. Under **Configure logpush job**:
 
 - **Job name**: Enter the job name, if it is not already prepopulated.
-- **If logs match** > Select **Filtered logs**:
-  - **Field**: Choose `ResourceType`.
+- **If logs match** > Select **Filtered logs** to capture only Email security events:
+  - **Field**: Choose `ResourceType` (the type of resource that was changed).
   - **Operator**: Choose `starts with`.
   - **Value**: Enter `email_security`.
 
