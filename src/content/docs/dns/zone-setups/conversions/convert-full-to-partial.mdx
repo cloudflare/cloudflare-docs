@@ -20,9 +20,9 @@ Make sure you consider the following:
 
 - A CNAME setup requires a CNAME record for each proxied hostname but, following [RFC 1912](https://datatracker.ietf.org/doc/html/rfc1912#section-2.4), CNAME records are not allowed on the zone apex (`example.com`). With a CNAME setup, you can only proxy the zone apex if your authoritative DNS provider supports [CNAME flattening](https://blog.cloudflare.com/introducing-cname-flattening-rfc-compliant-cnames-at-a-domains-root/) (or an equivalent like ALIAS/ANAME records), or if you create A/AAAA records pointing the apex directly to Cloudflare [anycast IP addresses](/fundamentals/concepts/cloudflare-ip-addresses/). Otherwise, you can only proxy subdomains.
 
-   :::caution
-   Cloudflare only recommends the A/AAAA approach if you use [Static IPs](/byoip/concepts/static-ips/) or [Bring Your Own IP (BYOIP)](/byoip/), because standard Cloudflare anycast IPs can change.
-   :::
+  :::caution
+  Cloudflare only recommends the A/AAAA approach if you use [Static IPs](/byoip/concepts/static-ips/) or [Bring Your Own IP (BYOIP)](/byoip/), because standard Cloudflare anycast IPs can change.
+  :::
 
 - Once your zone is using CNAME setup, on the dashboard, you will only be able to create A, AAAA, and CNAME records, which are the DNS record types that can be [proxied](/dns/proxy-status/).
 - You should plan for SSL/TLS certificates. If you are only using [Universal SSL](/ssl/edge-certificates/universal-ssl/) prior to converting your zone, a certificate will be provisioned for your subdomains only after each of the respective DNS records are proxied. If your domain is sensitive to downtime, instead of using Universal SSL, consider using an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) with [delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/#setup).
@@ -53,29 +53,49 @@ Make sure you consider the following:
 
     1. On the Cloudflare dashboard, go to the zone's **Overview** page.
     2. Select **Convert to CNAME DNS Setup** and then **Convert** to confirm.
-    3. Save the information from the **Verification TXT Record**. If you lose the information, you can also access it on the [**DNS Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) page, under **Verification TXT Record**.
+    3. Save the information from the **Verification TXT Record** and add the record at your new authoritative DNS provider. If you lose the information, you can also access it on the [**DNS Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) page, under **Verification TXT Record**.
+
+       <Details header="Example verification record">
+
+       A verification record for `example.com` might be:
+
+       | Type | Name                            | Content             |
+       | ---- | ------------------------------- | ------------------- |
+       | TXT  | `cloudflare-verify.example.com` | 966215192-518620144 |
+
+       </Details>
 
   </TabItem>
   <TabItem label="API">
 
     1. Use the [Edit Zone endpoint](/api/resources/zones/methods/edit/) with `type` set to `partial` to convert the zone type.
-    2. Take note of the value returned under `verification_key` in the API response. This will be used in the next step.
+    2. Take note of the value returned under `verification_key` in the API response and add the corresponding TXT record at your new authoritative DNS provider.
+
+       <Details header="Example verification record">
+
+       A verification record for `example.com` might be:
+
+       | Type | Name                            | Content             |
+       | ---- | ------------------------------- | ------------------- |
+       | TXT  | `cloudflare-verify.example.com` | 966215192-518620144 |
+
+       </Details>
 
   </TabItem>
 </Tabs>
 
-## 3. Verify domain ownership
+:::note
 
-<Render
-	file="partial-setup-verification-record"
-	product="dns"
-	params={{ context: "conversion" }}
-/>
+If your authoritative DNS provider automatically appends DNS record `name` fields with your domain, make sure to only insert `cloudflare-verify` as the record name. Otherwise, it may result in an incorrect record name, such as `cloudflare-verify.example.com.example.com`.
 
-## 4. Update your nameservers
+The verification record must remain in place for as long as your domain is active on a CNAME setup on Cloudflare.
+
+:::
+
+## 3. Update your nameservers
 
 Update the nameservers at your domain registrar to point to your new authoritative DNS provider. Make sure to remove the Cloudflare nameservers.
 
-## 5. Clean up DNS records on Cloudflare
+## 4. Clean up DNS records on Cloudflare
 
 In Cloudflare, remove all records that are not of type A, AAAA, or CNAME, and also remove any A, AAAA, or CNAME records for hostnames you do not want to proxy after the conversion. After this cleanup, only the A, AAAA, or CNAME records for hostnames you want to proxy should remain in Cloudflare, and those same hostnames should have CNAME records pointing to `{your-hostname}.cdn.cloudflare.net` at your new authoritative DNS provider.
