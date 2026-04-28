@@ -9,40 +9,206 @@ import { Render } from "~/components";
 
 <Render file="idp-group-deprecation" product="fundamentals" />
 
-Once you have [gathered the required data](/fundamentals/account/account-security/scim-setup/#gather-the-required-data), the following steps will be required to finish the provisioning with Okta.
+The Cloudflare Dashboard integration in the [Okta Integration Network (OIN)](https://www.okta.com/integrations/) allows you to automate user lifecycle management for your Cloudflare account using the SCIM 2.0 protocol. When connected, Okta can create and deactivate Cloudflare account members and push groups that map to Cloudflare User Groups, giving you centralized control over who has access and what permissions they hold.
 
-## Set up your Okta SCIM application
+## Prerequisites
 
-1. In the Okta dashboard, go to **Applications** > **Applications**.
-2. Select **Browse App Catalog**.
-3. Locate and select **SCIM 2.0 Test App (OAuth Bearer Token)**.
-4. Select **Add Integration** and name your integration.
-5. Enable the following options:
-   - **Do not display application icon to users**
-   - **Do not display application icon in the Okta Mobile App**
-6. Disable **Automatically log in when user lands on login page**.
-7. Select **Next**, then select **Done**.
+Before you begin, confirm the following:
 
-## Integrate the Cloudflare API
+- **Cloudflare Enterprise plan.** Dashboard SCIM provisioning is only available to Enterprise customers.
+- **Super Administrator role.** You must be a Super Administrator on the Cloudflare account to perform the initial setup.
+- **SSO configured.** Single Sign-On must already be enabled for your Cloudflare account. If it is not, complete the [Dashboard SSO setup](/cloudflare-one/applications/configure-apps/dash-sso-apps/) first.
+- **Okta admin access.** You need administrator permissions in your Okta tenant with the ability to add OIN applications, create groups, and manage provisioning.
+- **Cloudflare Account ID.** You will enter this value during setup. Refer to [Get the Account ID](#get-the-account-id) below.
+- **Cloudflare API token.** A dedicated token scoped to SCIM provisioning. Refer to [Create an API token](#create-an-api-token) below.
+
+### Get the Account ID
+
+1. Sign in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. Select the account you want to provision.
+3. The **Account ID** is displayed on the right side of the **Account Home** page, under **API**. You can also find it in the URL: `https://dash.cloudflare.com/<ACCOUNT_ID>`.
+4. Copy the Account ID and save it for use in Okta.
+
+For more details, refer to [Find account and zone IDs](/fundamentals/account/find-account-and-zone-ids/).
+
+### Create an API token
+
+1. In the Cloudflare dashboard, go to **Manage Account** > **Account API Tokens**.
+2. Select **Create Token**.
+3. Scroll to the bottom of the page and select **Create Custom Token**, then select **Get Started**.
+4. Name the token (for example, `Okta SCIM Provisioning`).
+5. Set the following permission:
+
+   | Type    | Item              | Permission |
+   | ------- | ----------------- | ---------- |
+   | Account | SCIM Provisioning | Edit       |
+
+6. Under **Account Resources**, select the specific account to include.
+7. Select **Continue to summary**, then **Create Token**.
+8. Copy the token value immediately and store it securely. You will not be able to view it again.
 
 :::note
-The **Update User Attributes** option is not supported.
+Account API tokens are recommended for SCIM Provisioning. User-owned API tokens, while supported, may result in a broken SCIM connection if the user's policies are revoked or [API access](/fundamentals/api/how-to/control-api-access/) is unexpectedly disabled. Learn more about [Account API tokens](/fundamentals/api/get-started/account-owned-tokens/).
 :::
 
-1. In your integration page, go to **Provisioning** > **Configure API Integration**.
-2. Enable **Enable API Integration**.
-3. In SCIM 2.0 Base URL, enter: `https://api.cloudflare.com/client/v4/accounts/<accountID>/scim/v2`, substituting `accountID` for your [Cloudflare Account ID](/fundamentals/account/account-security/scim-setup/#get-your-account-id).
-4. In the **OAuth Bearer Token** field, enter your API token value.
-5. Deselect **Import Groups**.
+---
 
-## Configure user & group sync in Okta
+## Supported features
 
-1. In **Provisioning to App**, select **Edit**.
-2. Enable **Create Users** and **Deactivate Users**. Select **Save**.
-3. Select **Done**.
-4. In the Assignments tab, add the users you want to synchronize with Cloudflare dashboard. You can add users in batches by assigning a group. If a user is removed from the application assignment via either direct user assignment or removed from the group that was assigned to the app, this will trigger a deprovisioning event from Okta to Cloudflare.
-5. In the Push Groups tab, add the Okta groups you want to synchronize with Cloudflare dashboard. View these Okta groups in the dashboard under Manage Account > Manage members > Members > User Groups.
+The following table lists the Okta provisioning features and whether the Cloudflare Dashboard integration supports them.
 
-To verify the integration, select **View Logs** in the Okta SCIM application, and check the Audit Logs in the Cloudflare dashboard by navigating to **Manage Account** > **Audit Log**.
+| Feature | Supported |
+| ------- | --------- |
+| Push New Users (Create Users) | Yes |
+| Push User Deactivation (Deactivate Users) | Yes |
+| Reactivate Users | Yes |
+| Group Push | Yes |
+| Push Profile Updates (Update User Attributes) | No |
+| Import New Users (App to Okta) | No |
+| Import Profile Updates (App to Okta) | No |
+| Sync Password | No |
+| Profile Sourcing | No |
 
-This will provision all of the users in the group(s) affected to your Cloudflare account with "minimal account access."
+:::note
+Import New Users and Import Profile Updates (App to Okta direction) are default capabilities enabled for all OIN applications. The Cloudflare Dashboard integration does not support these features. Users and profiles are managed in Okta and pushed to Cloudflare, not the reverse.
+:::
+
+For more information on these features, refer to the [Okta Glossary](https://help.okta.com/okta_help.htm?type=oie&id=ext_glossary).
+
+---
+
+## Default attributes
+
+Cloudflare Dashboard accepts the following SCIM user attributes:
+
+| SCIM attribute | Description | Required |
+| -------------- | ----------- | -------- |
+| `userName` | The user's email address. Must be in email format. | Yes |
+| `name.givenName` | First name | Yes |
+| `name.familyName` | Last name | Yes |
+| `emails` (primary) | Primary email address | Yes |
+| `active` | Whether the user is active (`true`) or deactivated (`false`) | Yes |
+| `externalId` | Unique identifier from Okta | Yes |
+
+:::note
+Because the `userName` attribute follows an email address format, select **Email** for the **Application username format** on the **Sign On** tab in Okta when configuring the integration.
+:::
+
+---
+
+## Configuration steps
+
+### Step 1 — Add the Cloudflare Dashboard integration in Okta
+
+1. Sign in to the Okta Admin Console.
+2. Go to **Applications** > **Applications**.
+3. Select **Browse App Catalog**.
+4. Search for **Cloudflare Dashboard** and select it.
+5. Select **Add Integration**.
+6. On the **General Settings** tab, name the integration (for example, `Cloudflare Dashboard - Production`).
+7. In the **Account ID** field, enter the Cloudflare Account ID you copied in [Get the Account ID](#get-the-account-id).
+8. Select **Next**, then select **Done**.
+
+### Step 2 — Configure API integration
+
+1. In your Cloudflare Dashboard integration, go to **Provisioning** > **Configure API Integration**.
+2. Check **Enable API Integration**.
+3. In the **API Token** field, paste the Cloudflare API token you created in [Create an API token](#create-an-api-token).
+4. Select **Test API Credentials** to verify the connection.
+5. Select **Save**.
+
+### Step 3 — Configure provisioning settings
+
+1. Under **Provisioning** > **To App**, select **Edit**.
+2. Enable the following:
+   - **Create Users**
+   - **Deactivate Users**
+3. Do **not** enable **Update User Attributes** — this feature is not supported by the Cloudflare Dashboard integration.
+4. Select **Save**.
+
+### Step 4 — Configure the Sign On tab
+
+1. Select the **Sign On** tab for the Cloudflare Dashboard integration.
+2. Under **Application username format**, select **Email**.
+3. Select **Save**.
+
+### Step 5 — Assign users
+
+1. Go to the **Assignments** tab.
+2. Assign individual users or groups to the Cloudflare Dashboard integration.
+3. Assigned users are provisioned into the Cloudflare account with the **Minimal Account Access** role. Actual permissions are granted through User Groups and permission policies (refer to [Group Push](#group-push)).
+
+:::note
+If a user is removed from the application assignment (either directly or by being removed from an assigned group), Okta sends a deprovisioning event to Cloudflare.
+:::
+
+### Step 6 — Push groups
+
+Refer to the [Group Push](#group-push) section below for detailed instructions.
+
+### Step 7 — Verify the integration
+
+1. In Okta, select **View Logs** in the Cloudflare Dashboard application to check for provisioning events.
+2. In the Cloudflare dashboard, go to **Manage Account** > **Audit Log** to confirm that users and groups appear correctly.
+
+---
+
+## Group Push
+
+Group Push allows you to synchronize Okta groups with Cloudflare User Groups. When a group is pushed, Cloudflare creates a corresponding User Group. You then assign permission policies to that group in the Cloudflare dashboard to control what the group members can do.
+
+### How it works
+
+1. Create a group in Okta and add members to it.
+2. In the Cloudflare Dashboard Okta integration, go to the **Push Groups** tab.
+3. Select **Push Groups** > **Find groups by name** (or by rule).
+4. Select the group and confirm.
+5. Okta pushes the group to Cloudflare, creating a User Group under **Manage Account** > **Members** > **User Groups**.
+6. In the Cloudflare dashboard, open the synced User Group and attach one or more **permission policies** that define the roles and resource scopes for all members of that group. Refer to [Roles](/fundamentals/manage-members/roles/) and [Policies](/fundamentals/manage-members/policies/) for more information.
+
+### Important details
+
+- **Users must be both assigned to the app and in a pushed group.** A user who is assigned to the Cloudflare Dashboard integration but not a member of any pushed group will only have the **Minimal Account Access** role. Conversely, adding a user to a pushed Okta group without also assigning them to the application will not provision them into Cloudflare.
+- **Permission policies are managed in Cloudflare, not in Okta.** SCIM controls group membership (which users belong to which groups). The actual permissions attached to each group are configured in the Cloudflare dashboard.
+- **Group naming restrictions.** SCIM group names cannot begin with the reserved prefix `CF`. Choose a different naming convention (for example, `Cloudflare-Admins` instead of `CF-Admins`).
+- **Empty groups are not pushed.** If an Okta group has no members, Okta will not push it to Cloudflare. As a workaround, create the group directly in the Cloudflare dashboard first; Okta will then sync membership changes when members are added.
+- **Groups synced via SCIM are locked in Cloudflare.** Membership for SCIM-synced groups can only be edited in Okta (or via the SCIM API). The Cloudflare dashboard will not allow direct member additions or removals for these groups.
+
+### Migration from legacy virtual groups
+
+If you previously used the `CF-<accountID> - <Role Name>` naming convention to assign Cloudflare roles via SCIM, migrate to the User Groups model before December 2, 2025. To migrate:
+
+1. Create new Okta groups with non-reserved names (for example, `Cloudflare-SuperAdmin`).
+2. Push the new groups to Cloudflare using Group Push.
+3. In the Cloudflare dashboard, assign the appropriate permission policies to each new User Group.
+4. Move users from the legacy `CF-*` groups into the new groups.
+5. Remove the legacy `CF-*` groups from Okta once all users have been migrated.
+
+---
+
+## Troubleshoot
+
+**Update User Attributes is not supported.**
+Cloudflare's SCIM API does not support updating user profile attributes (name, email) after initial provisioning. If you need to change a user's name or email, deactivate (deprovision) the user and then reprovision them with the updated attributes.
+
+**Users appear in Cloudflare but have no permissions.**
+Verify that the user is a member of a pushed Okta group **and** that the corresponding Cloudflare User Group has at least one permission policy attached in the Cloudflare dashboard.
+
+**Super Administrator cannot be deprovisioned.**
+If a user is the only Super Administrator on an Enterprise account, Cloudflare will not remove them via SCIM. This is a safety guardrail to prevent account lockout.
+
+**401 Unauthorized errors in Okta provisioning logs.**
+The API token has likely been rotated, revoked, or expired. Create a new token in the Cloudflare dashboard (refer to [Create an API token](#create-an-api-token)) and update the token value in the Okta integration under **Provisioning** > **Configure API Integration**.
+
+**Empty groups are not syncing.**
+Okta does not push groups that have zero members. Add at least one member to the Okta group, or create the group directly in the Cloudflare dashboard and let Okta sync the membership delta.
+
+**Where to find logs:**
+- **Okta:** In the Cloudflare Dashboard application, select **View Logs** to see provisioning events.
+- **Cloudflare:** Go to **Manage Account** > **Audit Log** to review SCIM-related events. Refer to [Review audit logs](/fundamentals/account/account-security/review-audit-logs/) for more information.
+
+---
+
+## Support
+
+For issues with the Cloudflare Dashboard SCIM integration, contact Cloudflare support through the [Support portal](https://support.cloudflare.com).
