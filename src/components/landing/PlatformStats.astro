@@ -40,8 +40,8 @@ const stats = [
 	class={`pt-10 pb-12 max-[900px]:pt-8 max-[900px]:pb-8 ${stagger(0.42)}`}
 	aria-labelledby="stats-heading"
 >
-	<div class="mb-3">
-		<span class="text-accent font-mono text-xs tracking-widest uppercase"
+	<div class="mb-4">
+		<span class="text-accent font-mono text-[13px] tracking-widest uppercase"
 			>Platform at a Glance</span
 		>
 	</div>
@@ -153,7 +153,7 @@ const stats = [
 
 					{/* Index */}
 					<div
-						class="mb-2.5 font-mono text-[10px] text-zinc-400 uppercase tabular-nums select-none dark:text-zinc-600"
+						class="mb-2.5 font-mono text-[11px] text-zinc-400 uppercase tabular-nums select-none dark:text-zinc-600"
 						aria-hidden="true"
 					>
 						{String(i + 1).padStart(2, "0")}
@@ -175,17 +175,17 @@ const stats = [
 					</p>
 
 					{/* Unit */}
-					<p class="text-accent mb-3 font-mono text-xs tracking-wide uppercase">
+					<p class="text-accent mb-3 font-mono text-[12px] tracking-wide uppercase">
 						{stat.unit}
 					</p>
 
 					{/* Label + detail */}
 					<div class="border-t border-dashed border-[#e8e8e8] pt-3 dark:border-[#2a2a2a]">
 						<div class="space-y-0.5">
-							<p class="text-sm leading-tight font-medium text-zinc-900 dark:text-zinc-50">
+							<p class="text-[15px] leading-snug font-medium text-pretty text-zinc-900 dark:text-zinc-50">
 								{stat.label}
 							</p>
-							<p class="text-xs text-zinc-500 dark:text-zinc-400">
+							<p class="text-[13px] leading-snug text-pretty text-zinc-500 dark:text-zinc-400">
 								{stat.detail}
 							</p>
 						</div>
