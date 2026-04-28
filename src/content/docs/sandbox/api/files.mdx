@@ -41,6 +41,16 @@ await sandbox.writeFile('/tmp/image.png', base64Data, { encoding: 'base64' });
 When using `encoding: 'base64'`, content must contain only valid base64 characters (A-Z, a-z, 0-9, +, /, =). Invalid base64 content returns a validation error.
 :::
 
+#### Large files and binary data
+
+When using the [`rpc` transport](/sandbox/configuration/transport/) the `writeFile()` method supports passing a `ReadableStream` as the `content` parameter. This allows binary data and files greater than [32 MiB](/workers/runtime-apis/rpc/#limitations) to be written to the sandbox. It replaces the `"base64"` encoding option.
+
+```js
+// Requires SANDBOX_TRANSPORT to be "rpc" in wrangler.jsonc
+const req = await fetch("https://example.com/archive.tar.gz");
+await sandbox.writeFile('/workspace/archive.tar.gz', req.body);
+```
+
 ### `readFile()`
 
 Read a file from the sandbox.
