@@ -18,9 +18,13 @@ Make sure you consider the following:
 
 - This guide assumes your zone is already in an [active status](/dns/zone-setups/reference/domain-status/#active).
 
-- A CNAME setup requires a CNAME record for each proxied hostname, but [CNAME records are not allowed on the zone apex](https://datatracker.ietf.org/doc/html/rfc1912#section-2.4) (`example.com`). You can only proxy the zone apex if your authoritative DNS provider supports [CNAME Flattening](https://blog.cloudflare.com/introducing-cname-flattening-rfc-compliant-cnames-at-a-domains-root/) (or an equivalent like ALIAS/ANAME records), or if you create A/AAAA records pointing the apex directly to Cloudflare [anycast IP addresses](/fundamentals/concepts/cloudflare-ip-addresses/). Cloudflare only recommends the A/AAAA approach if you use [Static IPs](/byoip/concepts/static-ips/) or [Bring Your Own IP (BYOIP)](/byoip/), because standard Cloudflare anycast IPs can change. Otherwise, you can only proxy subdomains.
+- A CNAME setup requires a CNAME record for each proxied hostname but, following [RFC 1912](https://datatracker.ietf.org/doc/html/rfc1912#section-2.4), CNAME records are not allowed on the zone apex (`example.com`). With a CNAME setup, you can only proxy the zone apex if your authoritative DNS provider supports [CNAME flattening](https://blog.cloudflare.com/introducing-cname-flattening-rfc-compliant-cnames-at-a-domains-root/) (or an equivalent like ALIAS/ANAME records), or if you create A/AAAA records pointing the apex directly to Cloudflare [anycast IP addresses](/fundamentals/concepts/cloudflare-ip-addresses/). Otherwise, you can only proxy subdomains.
 
-- On the dashboard, you will only be able to create A, AAAA, and CNAME records, which are the DNS record types that can be [proxied](/dns/proxy-status/).
+   :::caution
+   Cloudflare only recommends the A/AAAA approach if you use [Static IPs](/byoip/concepts/static-ips/) or [Bring Your Own IP (BYOIP)](/byoip/), because standard Cloudflare anycast IPs can change.
+   :::
+
+- Once your zone is using CNAME setup, on the dashboard, you will only be able to create A, AAAA, and CNAME records, which are the DNS record types that can be [proxied](/dns/proxy-status/).
 - You should plan for SSL/TLS certificates. If you are only using [Universal SSL](/ssl/edge-certificates/universal-ssl/) prior to converting your zone, a certificate will be provisioned for your subdomains only after each of the respective DNS records are proxied. If your domain is sensitive to downtime, instead of using Universal SSL, consider using an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) with [delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/#setup).
 
 ## 1. Prepare new DNS provider
