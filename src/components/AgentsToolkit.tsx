@@ -8,6 +8,7 @@ import { useState, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
 import ClaudeIcon from "./icons/ClaudeIcon";
 import ChatGPTIcon from "./icons/ChatGPTIcon";
+import DocsForAgentsIcon from "./icons/DocsForAgentsIcon";
 import { track } from "~/util/zaraz";
 
 type CopyFeedback = { key: string; state: "success" } | null;
@@ -186,6 +187,11 @@ export default function AgentsToolkit() {
 		window.open("/agent-setup/", "_blank");
 	};
 
+	const handleViewDocsForAgents = () => {
+		track("agents toolkit clicked", { value: "docs for agents" });
+		window.open("/docs-for-agents/", "_blank");
+	};
+
 	const listOptions: ListOption[] = [
 		{
 			key: "ai-options",
@@ -194,6 +200,14 @@ export default function AgentsToolkit() {
 				"Setup your agent with the necessary tools to build on Cloudflare",
 			icon: PiSparkleDuotone,
 			onClick: handleViewAIOptions,
+		},
+		{
+			key: "docs-for-agents",
+			label: "Docs for agents",
+			tooltip:
+				"Connect AI agents and LLMs to Cloudflare docs",
+			icon: DocsForAgentsIcon,
+			onClick: handleViewDocsForAgents,
 		},
 		{
 			key: "copy-md",
