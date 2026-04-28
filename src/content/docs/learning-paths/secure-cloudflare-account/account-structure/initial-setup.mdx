@@ -5,13 +5,11 @@ sidebar:
   order: 3
 ---
 
-## Why this matters
-
 Account takeovers typically exploit three things: weak credentials, no second factor, and super admin access tied to an individual who eventually leaves. Addressing these before you add team members takes minutes and prevents incidents that take days to recover from.
 
-## Our recommendation
+## Recommendations
 
-### Authentication: prefer SSO over 2FA
+### Use SSO over 2FA
 
 The strongest authentication setup for teams is SSO connected to your identity provider (IdP). SSO enforces your organization's authentication policies — including MFA — for all dashboard users, and integrates with your existing identity lifecycle management.
 
@@ -36,7 +34,7 @@ Some organizations use a shared mailbox (for example, `cloudflare-admin@yourcomp
 
 For Enterprise customers using SCIM, the account owner email matters less because member management — including super admin assignment — is automated through the IdP. Prioritize getting SCIM configured over setting up a shared mailbox.
 
-For Organizations (Enterprise beta), each organization has its own super admin role that spans all member accounts. For more information, refer to [Cloudflare organizations](/fundamentals/organizations/).
+For Organizations (Enterprise beta), each organization has its own super admin role that spans all member accounts. For more information, refer to [Cloudflare Organizations](/fundamentals/organizations/).
 
 ## Key considerations
 

@@ -5,19 +5,17 @@ sidebar:
   order: 2
 ---
 
-## Why this matters
-
 Cloudflare's permission model is more granular than most teams realize. Misunderstanding it leads to over-permissioning: giving members account-wide access when zone-specific access would do, or using the Administrator role when a narrower product role is sufficient.
 
-## Our recommendation
+## Recommendations
 
 Think of every permission assignment as three things combined: **who** (the actor), **where** (the scope), and **what** (the role). Always narrow the scope before picking the role.
 
 The model works like this:
 
-- **Actor** — the member or service token being granted access.
-- **Scope** — the boundary within which the role applies. Scopes can be the entire account, a specific domain (zone), a named group of domains, or a specific resource (for example, a single Worker or R2 bucket).
-- **Role** — the set of permissions the actor has within that scope.
+- **Actor** — The member or service token being granted access.
+- **Scope** — The boundary within which the role applies. Scopes can be the entire account, a specific domain (zone), a named group of domains, or a specific resource (for example, a single Worker or R2 bucket).
+- **Role** — The set of permissions the actor has within that scope.
 
 Roles are **additive**. A member can have multiple roles with different scopes. For example, a member can be DNS administrator for `example.com` and have read-only access for everything else. There is no "deny" mechanism. Design your assignments so that each role covers only what the member needs.
 
@@ -30,6 +28,6 @@ Roles are **additive**. A member can have multiple roles with different scopes. 
 
 ## Next steps
 
-- [Roles reference](/fundamentals/manage-members/roles/) — full list of available roles
-- [Policies and scopes](/fundamentals/manage-members/policies/) — how actor, scope, and role combine
-- [Scope types](/fundamentals/manage-members/scope/) — account, domain, domain group, and resource scopes
+- [Roles reference](/fundamentals/manage-members/roles/) — Review the full list of available roles.
+- [Policies and scopes](/fundamentals/manage-members/policies/) — Understand how actor, scope, and role combine.
+- [Scope types](/fundamentals/manage-members/scope/) — Learn about account, domain, domain group, and resource scopes.
