@@ -42,7 +42,11 @@ List buckets in the current account with the [`r2 bucket list`](/workers/wrangle
 wrangler r2 bucket list
 ```
 
-To delete a bucket, you must first empty it and then delete it. For detailed instructions, refer to [Delete buckets](/r2/buckets/delete-buckets/).
+Delete a bucket with the [`r2 bucket delete`](/workers/wrangler/commands/r2/#r2-bucket-delete) command. Note that the bucket must be empty and all objects must be deleted.
+
+```sh
+wrangler r2 bucket delete BUCKET_TO_DELETE
+```
 
 ## Notes
 

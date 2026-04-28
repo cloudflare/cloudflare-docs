@@ -3,9 +3,6 @@ link: "/r2/platform/release-notes/"
 productName: R2
 productLink: "/r2/"
 entries:
-  - publish_date: "2026-04-27"
-    description: |-
-      - You can now [empty a bucket](/r2/buckets/delete-buckets/) or [delete folders](/r2/objects/delete-objects/#delete-a-folder) directly from the R2 dashboard without writing scripts or configuring lifecycle rules.
   - publish_date: "2025-09-23"
     description: |-
       - Fixed a bug where you could attempt to delete objects even if they had a bucket lock rule applied on the dashboard. Previously, they would momentarily vanish from the table but reappear after a page refresh. Now, the delete action is disabled on locked objects in the dashboard.
