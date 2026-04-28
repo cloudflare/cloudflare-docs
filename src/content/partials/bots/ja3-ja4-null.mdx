@@ -8,5 +8,6 @@ The JA3 or JA4 fingerprint is an SSL/TLS-based identifier and can be null or emp
 - Since JA3 and JA4 are calculated during the TLS (SSL) handshake, they will not be present for non-encrypted HTTP traffic.
 - The field may be empty when a [Worker](/workers/) sends a request to a zone that is either internal to Cloudflare's network (O2O traffic that is not proxied) or to a third-party origin, or when a Worker is routing traffic to the target zone.
 - The fingerprints may be absent when Bot Management itself is skipped for a request, as the feature is responsible for calculating and populating these values.
+- With [TLS Session Resumption](https://blog.cloudflare.com/tls-session-resumption-full-speed-and-secure/), once the initial TLS handshake is successfully completed, subsequent connections will be streamlined. This results in no further fingerprint calculation.
 
 Generally, [O2O traffic](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/) should include JA3 or JA4 fingerprints unless a Worker is used to route traffic from the eyeball (client-facing) zone to the target zone.
