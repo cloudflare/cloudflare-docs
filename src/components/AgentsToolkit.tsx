@@ -204,8 +204,7 @@ export default function AgentsToolkit() {
 		{
 			key: "docs-for-agents",
 			label: "Docs for agents",
-			tooltip:
-				"Connect AI agents and LLMs to Cloudflare docs",
+			tooltip: "Connect AI agents and LLMs to Cloudflare docs",
 			icon: DocsForAgentsIcon,
 			onClick: handleViewDocsForAgents,
 		},
