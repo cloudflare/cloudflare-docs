@@ -1,0 +1,13 @@
+---
+title: Workers VPC support for TCP services
+description: Create TCP-type Workers VPC services to connect to databases and other non-HTTP origins, with configurable TLS certificate verification.
+date: 2026-04-29
+---
+
+Workers VPC services now support **TCP** as a service type, in addition to HTTP. TCP services let you connect to databases, message brokers, and other non-HTTP origins on your private network through a Cloudflare Tunnel.
+
+When creating a VPC service in the Cloudflare dashboard, choose **TCP** as the service type and provide the origin host and TCP port. You can also configure the TLS certificate verification mode (`verify_full`, `verify_ca`, or `disabled`) to match how your origin presents its certificate.
+
+TCP services are the foundation for [Hyperdrive's Workers VPC integration](/hyperdrive/configuration/connect-to-private-database-vpc/), and can be bound directly to Workers using the same `vpc_services` binding syntax used for HTTP services.
+
+To get started, refer to the [Workers VPC documentation](/workers-vpc/).
