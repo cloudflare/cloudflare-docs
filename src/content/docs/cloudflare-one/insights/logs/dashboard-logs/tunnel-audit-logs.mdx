@@ -10,10 +10,12 @@ tags:
   - Logging
 ---
 
-Audit logs for Tunnel are available in the [account section of the Cloudflare dashboard](https://dash.cloudflare.com/?account=audit-log) which you can find by selecting your name or email in the upper right-hand corner of the dashboard. The following actions are logged:
+[Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) creates outbound-only connections between your infrastructure and Cloudflare. Tunnel audit logs record when these connections start, stop, or register new DNS records.
 
-| Action       | Description                                                                                         |
-| ------------ | --------------------------------------------------------------------------------------------------- |
-| Registered   | This is logged when Tunnel is started and connects to the Cloudflare edge.                          |
-| Unregistered | This is logged when Tunnel is disconnected from the Cloudflare edge.                                |
-| CNAME add    | This is logged when Tunnel registers a new DNS (CNAME or AAAA) record for the tunneled application. |
+Audit logs for Tunnel are available in the [account section of the Cloudflare dashboard](https://dash.cloudflare.com/?account=audit-log), which you can find by selecting your name or email in the upper right-hand corner of the dashboard. For general audit log features such as filtering and retention, refer to [Audit Logs](/fundamentals/account/account-security/audit-logs/). The following actions are logged:
+
+| Action       | Description                                                                                                |
+| ------------ | ---------------------------------------------------------------------------------------------------------- |
+| Registered   | A tunnel connector (`cloudflared`) started and connected to Cloudflare's global network.                   |
+| Unregistered | A tunnel connector disconnected from Cloudflare's global network.                                          |
+| CNAME add    | A tunnel registered a new DNS record (CNAME or AAAA) to route traffic to an application behind the tunnel. |
