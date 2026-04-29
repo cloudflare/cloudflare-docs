@@ -18,6 +18,8 @@ Emptying a bucket deletes every object inside it. The bucket itself and its conf
 
 Objects removed during this process cannot be recovered. If your bucket has [bucket lock rules](/r2/buckets/bucket-locks/), you must remove them before emptying the bucket.
 
+You can empty a bucket in various ways.
+
 ### Dashboard
 
 The dashboard provides an **Empty Bucket** action that handles this for you, regardless of how many objects the bucket contains. For large buckets, the operation runs in the background and the dashboard displays progress until all objects have been removed.
@@ -76,6 +78,8 @@ You can also write a script that lists and deletes objects in batches using the 
 ## Delete a bucket
 
 Once a bucket is empty, you can permanently delete it. Deleting a bucket removes the bucket and all of its configuration, including lifecycle rules, CORS settings, event notifications, and custom domains.
+
+You can delete a bucket in various ways.
 
 ### Dashboard
 
