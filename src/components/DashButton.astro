@@ -40,11 +40,8 @@ if (!route) {
 */
 
 const name = buttonName ?? route.name;
-const baseUrl = zeroTrust
-	? "https://one.dash.cloudflare.com"
-	: "https://dash.cloudflare.com";
 
-let { href } = new URL(route.deeplink, baseUrl);
+let { href } = new URL(route.deeplink, "https://dash.cloudflare.com");
 ---
 
 <LinkButton href={href} icon="external" target="_blank"
