@@ -1,0 +1,100 @@
+---
+title: Instant Bank Payments via Link
+pcx_content_type: concept
+sidebar:
+  order: 12
+  description: Pay for Cloudflare services directly from your bank account through Link
+description: Understand Instant Bank Payments via Link for Cloudflare services.
+products:
+  - billing
+---
+
+import { DashButton } from "~/components";
+
+Instant Bank Payments (IBP) via Link lets you pay for Cloudflare services directly from your bank account through [Link](https://link.co/), Stripe's one-click checkout wallet. If you already use Link and have a bank account saved, you can select it as a payment method during checkout for a faster, simpler payment experience.
+
+## How Instant Bank Payments works
+
+1. **Checkout** - During checkout, Cloudflare presents your saved Link payment methods.
+2. **Select bank account** - If you have a bank account saved in Link, it appears as a payment option alongside your existing cards.
+3. **Confirm payment** - Select your bank account and confirm the payment.
+4. **Processing** - Stripe handles the authentication and processing on your behalf.
+
+The experience is the same as any other Link payment. You authenticate once with Link, then your bank account is available for future purchases without re-entering details.
+
+:::note
+Instant Bank Payments is an additional payment option. Your existing cards saved in Link remain fully available. You choose which payment method to use at checkout.
+:::
+
+## Eligibility
+
+Instant Bank Payments via Link is available to self-serve accounts that meet the following requirements:
+
+| Requirement | Details |
+| --- | --- |
+| Location | US-based customers |
+| Link status | Link must be enabled on your account |
+| Bank account | You must have a bank account saved in your Link wallet |
+| Products | Available across all self-serve Cloudflare products |
+
+If you don't have a bank account saved in Link, you can add one through the Link wallet during checkout.
+
+## Identifying bank payments
+
+Bank-based Link payments are displayed in your billing history with the following identifiers:
+
+| Field | Value |
+| --- | --- |
+| Payment method | `link` |
+| Last four digits | `0000` |
+
+Card-based Link payments show your card's actual last four digits, which distinguishes them from bank payments.
+
+## Viewing your payment history
+
+To view your payment methods and billing history:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
+2. Go to **Manage Account** > **Billing**.
+
+   <DashButton url="/?to=/:account/billing" />
+
+3. Select **Invoices** to view your invoice and payment history.
+
+## What happens if a bank payment fails
+
+If a bank payment cannot be processed:
+
+1. **Retry or switch** - You will be prompted to select a different payment method. You can retry with the same bank account or choose a card instead.
+2. **No account impact** - Failed payments do not immediately affect your Cloudflare account or services.
+3. **Update payment method** - If the issue persists, update your payment method in your billing settings.
+
+   <DashButton url="/?to=/:account/billing" />
+
+To avoid payment issues, ensure your bank account has sufficient funds and supports instant payments.
+
+## FAQ
+
+### How do I know if I paid via Instant Bank Payments?
+
+Your payment method will show as "link" in your billing history. The last four digits displayed will be "0000" for bank-based Link payments, which distinguishes them from card-based Link payments that show your card's last four digits.
+
+### Is my bank account secure?
+
+Yes. Link uses bank-grade encryption and multi-factor authentication to protect your bank account information. Stripe, the payment processor, never shares your raw bank details with Cloudflare. Your bank credentials are stored securely within the Link wallet and are not accessible to merchants.
+
+### Can I still pay with a card?
+
+Yes. Instant Bank Payments is an additional payment option. Your existing cards saved in Link or added manually remain fully available. You choose which payment method to use at checkout.
+
+### Is there any difference in processing time?
+
+Bank payments through Link are processed in the same checkout flow as card payments. The checkout experience is the same, and your purchase is confirmed immediately.
+
+### Can I remove my bank account from Link?
+
+Yes. You can manage your saved payment methods, including bank accounts, through the [Link wallet](https://link.co/). Removing a bank account from Link does not affect any previously completed payments.
+
+### What if I think I was charged incorrectly?
+
+If you believe there is an error with a payment made via Instant Bank Payments, [contact Cloudflare support](/support/contacting-cloudflare-support/) with your invoice details.
