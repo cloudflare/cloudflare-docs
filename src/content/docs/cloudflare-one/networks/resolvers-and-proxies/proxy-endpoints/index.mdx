@@ -498,10 +498,6 @@ Each user who authenticates through an authorization proxy endpoint occupies a [
 
 When using [authorization endpoints](#authorization-endpoint), be aware of the following limitations.
 
-#### Domain bypassing and certificate pinning
-
-You must bypass domains you do not intend to inspect with your PAC file. Gateway will still apply [Do Not Inspect (DNI) policies](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) when using authorization endpoints, but this will not bypass certificate pinning errors.
-
 #### Plaintext HTTP traffic
 
 Authorization endpoints do not support plaintext HTTP traffic unless the traffic is configured through an [Access application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) or bypassed with the PAC file.
