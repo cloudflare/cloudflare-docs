@@ -30,6 +30,10 @@ function handleExplainButtonClick(this: HTMLButtonElement, e: MouseEvent) {
 }
 
 const tippyInstances: Instance[] = [];
+const copyClickListeners: Array<{
+	button: HTMLButtonElement;
+	listener: () => void;
+}> = [];
 let initialized = false;
 
 function init() {
@@ -62,13 +66,15 @@ function init() {
 		});
 		tippyInstances.push(instance);
 
-		button.addEventListener("click", () => {
+		const listener = () => {
 			instance.setContent("Copied!");
 			instance.show();
 			setTimeout(() => {
 				instance.setContent("Copy to clipboard");
 			}, 2500);
-		});
+		};
+		button.addEventListener("click", listener);
+		copyClickListeners.push({ button, listener });
 	});
 }
 
@@ -81,6 +87,10 @@ function cleanup() {
 	});
 	tippyInstances.forEach((instance) => instance.destroy());
 	tippyInstances.length = 0;
+	copyClickListeners.forEach(({ button, listener }) =>
+		button.removeEventListener("click", listener),
+	);
+	copyClickListeners.length = 0;
 	initialized = false;
 }
 
