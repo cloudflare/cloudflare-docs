@@ -3,7 +3,7 @@ title: Connect to a private database
 pcx_content_type: example
 ---
 
-import { Render, Steps } from "~/components";
+import { Render } from "~/components";
 
 This example demonstrates how to query a private PostgreSQL database from a Worker using [Workers VPC](/workers-vpc/) and [Hyperdrive](/hyperdrive/). The Worker connects to a database that is not exposed to the public Internet, with Hyperdrive providing connection pooling and query acceleration.
 
@@ -17,17 +17,7 @@ This example demonstrates how to query a private PostgreSQL database from a Work
 
 If you do not already have a tunnel running in the same network as your database, create one.
 
-<Steps>
-
-1. Go to the [Workers VPC dashboard](https://dash.cloudflare.com/?to=/:account/workers/vpc/tunnels) and select the **Tunnels** tab.
-
-2. Select **Create** to create a tunnel.
-
-3. Enter a name for your tunnel and select **Save tunnel**.
-
-4. Choose your operating system and architecture, then follow the provided commands to install and run `cloudflared` with your unique token.
-
-</Steps>
+<Render file="create-tunnel-steps" product="workers-vpc" />
 
 The tunnel must be able to reach your database host and port from within the private network. For full tunnel documentation, refer to [Cloudflare Tunnel for Workers VPC](/workers-vpc/configuration/tunnel/).
 

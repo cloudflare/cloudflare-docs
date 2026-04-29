@@ -7,7 +7,7 @@ sidebar:
     text: Beta
 ---
 
-import { Render, Tabs, TabItem, Steps } from "~/components";
+import { Render, Tabs, TabItem } from "~/components";
 
 [Workers VPC](/workers-vpc/) provides a way to connect Hyperdrive to a private database without configuring Cloudflare Access applications or service tokens. Instead, you create a TCP [VPC Service](/workers-vpc/configuration/vpc-services/) that points to your database and pass its service ID to Hyperdrive.
 
@@ -39,21 +39,9 @@ flowchart LR
 
 If you do not already have a tunnel running in the same network as your database, create one.
 
-<Steps>
+<Render file="create-tunnel-steps" product="workers-vpc" />
 
-1. Go to the [Workers VPC dashboard](https://dash.cloudflare.com/?to=/:account/workers/vpc/tunnels) and select the **Tunnels** tab.
-
-2. Select **Create** to create a tunnel.
-
-3. Enter a name for your tunnel and select **Save tunnel**.
-
-4. Choose your operating system and architecture. The dashboard will provide installation instructions.
-
-5. Follow the provided commands to download, install, and run `cloudflared` with your unique token.
-
-</Steps>
-
-The dashboard will confirm when the tunnel is connected. The tunnel must be able to reach your database host and port from within the private network.
+The tunnel must be able to reach your database host and port from within the private network.
 
 For full tunnel documentation, refer to [Cloudflare Tunnel for Workers VPC](/workers-vpc/configuration/tunnel/).
 
