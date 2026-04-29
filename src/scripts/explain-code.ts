@@ -30,8 +30,12 @@ function handleExplainButtonClick(this: HTMLButtonElement, e: MouseEvent) {
 }
 
 const tippyInstances: Instance[] = [];
+let initialized = false;
 
 function init() {
+	if (initialized) return;
+	initialized = true;
+
 	const explainButtons = document.querySelectorAll<HTMLButtonElement>(
 		"button[data-explain-code]",
 	);
@@ -77,6 +81,7 @@ function cleanup() {
 	});
 	tippyInstances.forEach((instance) => instance.destroy());
 	tippyInstances.length = 0;
+	initialized = false;
 }
 
 document.addEventListener("astro:before-swap", cleanup);
