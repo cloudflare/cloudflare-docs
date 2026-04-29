@@ -479,13 +479,21 @@ declare abstract class WorkflowInstance {
 	 */
 	public terminate(): Promise<void>;
 	/**
-	 * Restart the instance.
+	 * Restart the instance. Pass `options.from` to restart from a specific step.
 	 */
-	public restart(): Promise<void>;
+	public restart(options?: WorkflowInstanceRestartOptions): Promise<void>;
 	/**
 	 * Returns the current status of the instance.
 	 */
 	public status(): Promise<InstanceStatus>;
+}
+
+interface WorkflowInstanceRestartOptions {
+	from?: {
+		name: string;
+		count?: number;
+		type?: "do" | "sleep" | "waitForEvent";
+	};
 }
 ```
 
@@ -515,9 +523,19 @@ Resume a paused Workflow instance.
 
 ### restart
 
-Restart a Workflow instance.
+Restart a Workflow instance from the beginning, or from a specific step.
 
-- <code>restart(): Promise&lt;void&gt;</code>
+- <code>restart(options?: WorkflowInstanceRestartOptions): Promise&lt;void&gt;</code>
+
+```ts
+let instance = await env.MY_WORKFLOW.get("abc-123");
+
+await instance.restart(); // From the beginning
+await instance.restart({ from: { name: "aggregate" } }); // From a specific step
+await instance.restart({ from: { name: "process", count: 3 } }); // 3rd occurrence
+```
+
+When restarting from a step, all earlier steps replay from cache; the target step and everything after it re-execute. `from.name` is required; `from.count` (1-based, defaults to `1`) targets a specific occurrence when the name repeats; `from.type` (`"do" | "sleep" | "waitForEvent"`) disambiguates when the same name is used across kinds. Throws if the step is not found in the instance's execution history.
 
 ### terminate
 
