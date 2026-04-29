@@ -223,7 +223,7 @@ if (
 
 ### Apps with certificate pinning
 
-Some applications and services use certificate pinning to validate connections. These apps reject the Cloudflare-injected certificate used for HTTPS inspection and fail to load when routed through the proxy. Bypass these domains in your PAC file:
+When HTTPS inspection is enabled, applications and services that use certificate pinning reject the Cloudflare-injected certificate and fail to load when routed through the proxy. Bypass these domains in your PAC file:
 
 ```js
 // Bypass certificate-pinned apps
@@ -235,7 +235,7 @@ if (
 }
 ```
 
-When using [authorization endpoints](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/#authorization-endpoint), bypassing certificate-pinned apps in the PAC file is required. [Do Not Inspect (DNI) policies](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) will not prevent certificate pinning errors on these connections.
+[Do Not Inspect (DNI) policies](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) will not prevent certificate pinning errors on these connections — bypassing certificate-pinned apps in the PAC file is required.
 
 ## Test PAC files
 
