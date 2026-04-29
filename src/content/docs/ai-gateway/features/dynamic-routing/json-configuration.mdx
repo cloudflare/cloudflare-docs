@@ -49,13 +49,15 @@ Evaluates a condition based on request parameters and routes the request accordi
   - `true`: Forwards request to provided element if condition evaluates to true
   - `false`: Forwards request to provided element if condition evaluates to false
 
+`conditions` supports MongoDB-like operators such as `$eq`, `$ne`, `$in`, `$and`, and `$or`.
+
 ```json
 {
 	"id": "<id>",
 	"type": "conditional",
 	"properties": {
 		"conditions": {
-			"metadata.plan": { "$eq": "free" } // Supports MongoDB-like operators
+			"metadata.plan": { "$eq": "free" }
 		}
 	},
 	"outputs": {
@@ -71,7 +73,7 @@ Routes requests probabilistically across multiple outputs, useful for A/B testin
 
 - **Inputs**: Request
 - **Outputs**: Up to 5 named percentage outputs
-  - Each output has a fractional probability and the values must total 100%
+  - Each output key (for example, `"10%"`) is the probability for that branch, and the keys must sum to 100%
 
 ```json
 {
