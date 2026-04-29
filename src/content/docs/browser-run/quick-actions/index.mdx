@@ -10,7 +10,10 @@ products:
 
 import { DashButton, DirectoryListing } from "~/components";
 
-Quick Actions provide simple HTTP endpoints for common browser tasks like capturing screenshots, extracting HTML content, generating PDFs, and more.
+Quick Actions provide simple interfaces for common browser tasks like capturing screenshots, extracting HTML content, generating PDFs, and more. You can use Quick Actions in two ways:
+
+- **REST API** — HTTP endpoints for one-off requests or external integration
+- **Browser binding** — Call Quick Actions directly from a Cloudflare Worker using `env.BROWSER.quickAction()`
 
 The following are the available options:
 
@@ -20,9 +23,40 @@ Use Quick Actions when you need a fast, simple way to perform common browser tas
 
 ## Before you begin
 
-Before you begin, make sure you [create a custom API Token](/fundamentals/api/get-started/create-token/) with the following permissions:
+### REST API
+
+To use Quick Actions via the REST API, [create a custom API Token](/fundamentals/api/get-started/create-token/) with the following permissions:
 
 - `Browser Rendering - Edit`
+
+### Browser binding
+
+To use Quick Actions from a Worker, configure a [browser binding](/browser-run/reference/wrangler/#bindings) in your `wrangler.json`:
+
+```jsonc
+{
+  "browser": {
+    "binding": "BROWSER"
+  }
+}
+```
+
+No API token is needed when using the browser binding.
+
+:::caution[Compatibility date requirement]
+
+Using the `.quickAction()` method requires setting your Worker's compatibility date to `2026-03-24` or later in your `wrangler.json`:
+
+```jsonc
+{
+  "compatibility_date": "2026-03-24",
+  "browser": {
+    "binding": "BROWSER"
+  }
+}
+```
+
+:::
 
 :::note[Note]
 

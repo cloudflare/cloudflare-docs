@@ -1,0 +1,41 @@
+---
+title: Browser binding quickAction() method
+description: Execute Quick Actions directly from Workers using the browser binding quickAction() method.
+products:
+  - browser-run
+date: 2026-05-19
+---
+
+The browser binding now includes a `quickAction()` method to execute Browser Run Quick Actions directly from Cloudflare Workers. This eliminates the need for API tokens when using Quick Actions within Workers.
+
+The `quickAction()` method provides a simpler alternative to the REST API for common browser automation tasks. Call it with an action name and parameters to capture screenshots, extract content, generate PDFs, and perform other browser operations.
+
+```typescript
+interface Env {
+	BROWSER: BrowserRun;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		// Take a screenshot
+		return await env.BROWSER.quickAction("screenshot", {
+			url: "https://example.com"
+		});
+		
+		// Extract content as Markdown
+		return await env.BROWSER.quickAction("markdown", {
+			url: "https://example.com"
+		});
+		
+		// Generate structured data with AI
+		return await env.BROWSER.quickAction("json", {
+			url: "https://example.com",
+			prompt: "Extract product information"
+		});
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+Using the `quickAction()` method requires updating your Worker's compatibility date to `2026-03-24` or later. This requirement ensures your Worker has access to the latest Browser Run features.
+
+For more information, refer to [Browser Run Quick Actions](/browser-run/quick-actions/).

@@ -119,6 +119,86 @@ curl --request POST 'https://api.cloudflare.com/client/v4/accounts/CF_ACCOUNT_ID
 }
 ```
 
+</TabItem> <TabItem label="TypeScript SDK">
+
+Below is an example using the TypeScript SDK:
+
+```typescript
+import Cloudflare from "cloudflare";
+
+const client = new Cloudflare({
+	apiToken: process.env["CLOUDFLARE_API_TOKEN"], // This is the default and can be omitted
+});
+
+const json = await client.browserRendering.json.create({
+	account_id: process.env["CLOUDFLARE_ACCOUNT_ID"],
+	url: "https://developers.cloudflare.com/",
+	prompt: "Get me the list of AI products",
+	response_format: {
+		type: "json_schema",
+		schema: {
+			type: "object",
+			properties: {
+				products: {
+					type: "array",
+					items: {
+						type: "object",
+						properties: {
+							name: {
+								type: "string",
+							},
+							link: {
+								type: "string",
+							},
+						},
+						required: ["name"],
+					},
+				},
+			},
+		},
+	},
+});
+console.log(json);
+```
+
+</TabItem> <TabItem label="Browser binding">
+
+```typescript
+interface Env {
+	BROWSER: BrowserRun;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		return await env.BROWSER.quickAction("json", {
+			url: "https://developers.cloudflare.com/",
+			prompt: "Get me the list of AI products",
+			response_format: {
+				type: "json_schema",
+				schema: {
+					type: "object",
+					properties: {
+						products: {
+							type: "array",
+							items: {
+								type: "object",
+								properties: {
+									name: { type: "string" },
+									link: { type: "string" },
+								},
+								required: ["name"],
+							},
+						},
+					},
+				},
+			},
+		});
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TabItem> </Tabs>
+
 ### With only a prompt
 
 In this example, only a prompt is provided. The endpoint will use the prompt to extract the data, but the response will not be structured according to a JSON schema.
@@ -253,50 +333,6 @@ curl --request POST 'https://api.cloudflare.com/client/v4/accounts/CF_ACCOUNT_ID
 	}
 }
 ```
-
-</TabItem> <TabItem label="TypeScript SDK">
-
-Below is an example using the TypeScript SDK:
-
-```typescript
-import Cloudflare from "cloudflare";
-
-const client = new Cloudflare({
-	apiToken: process.env["CLOUDFLARE_API_TOKEN"], // This is the default and can be omitted
-});
-
-const json = await client.browserRendering.json.create({
-	account_id: process.env["CLOUDFLARE_ACCOUNT_ID"],
-	url: "https://developers.cloudflare.com/",
-	prompt: "Get me the list of AI products",
-	response_format: {
-		type: "json_schema",
-		schema: {
-			type: "object",
-			properties: {
-				products: {
-					type: "array",
-					items: {
-						type: "object",
-						properties: {
-							name: {
-								type: "string",
-							},
-							link: {
-								type: "string",
-							},
-						},
-						required: ["name"],
-					},
-				},
-			},
-		},
-	},
-});
-console.log(json);
-```
-
-</TabItem> </Tabs>
 
 ## Advanced Usage
 
