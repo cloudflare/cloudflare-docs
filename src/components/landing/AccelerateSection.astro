@@ -134,7 +134,7 @@ const phases = [
 
 	<!-- Toggle: Without / With Cloudflare -->
 	<div
-		class="mb-5 flex flex-wrap items-center justify-between gap-4 max-[600px]:gap-3"
+		class="mb-5 flex flex-wrap items-center justify-between gap-3 sm:gap-4"
 		role="radiogroup"
 		aria-label="Comparison mode"
 	>
@@ -151,7 +151,7 @@ const phases = [
 				role="radio"
 				aria-checked="true"
 				tabindex="0"
-				class="wf-toggle-btn wf-toggle-active focus-visible:outline-accent relative z-10 flex min-h-[40px] cursor-pointer items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors duration-200 focus-visible:outline-2 focus-visible:-outline-offset-2 max-[600px]:px-2.5"
+				class="wf-toggle-btn wf-toggle-active focus-visible:outline-accent relative z-10 flex min-h-[40px] cursor-pointer items-center gap-2 rounded-lg px-2.5 py-2 text-sm font-medium transition-colors duration-200 focus-visible:outline-2 focus-visible:-outline-offset-2 sm:px-4"
 			>
 				<span
 					class="wf-toggle-dot size-2 shrink-0 rounded-full transition-colors duration-200"
@@ -164,7 +164,7 @@ const phases = [
 				role="radio"
 				aria-checked="false"
 				tabindex="-1"
-				class="wf-toggle-btn focus-visible:outline-accent relative z-10 flex min-h-[40px] cursor-pointer items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors duration-200 focus-visible:outline-2 focus-visible:-outline-offset-2 max-[600px]:px-2.5"
+				class="wf-toggle-btn focus-visible:outline-accent relative z-10 flex min-h-[40px] cursor-pointer items-center gap-2 rounded-lg px-2.5 py-2 text-sm font-medium transition-colors duration-200 focus-visible:outline-2 focus-visible:-outline-offset-2 sm:px-4"
 			>
 				<span
 					class="wf-toggle-dot size-2 shrink-0 rounded-full transition-colors duration-200"
@@ -225,8 +225,7 @@ const phases = [
 
 		<!-- Timescale ruler — uses the same grid as waterfall rows so ticks align with bars -->
 		<div
-			class="bg-l-card dark:bg-l-card-dark grid h-7 items-end gap-4 border-b border-zinc-200 px-5 max-[600px]:hidden dark:border-[#2a2a2a]"
-			style="grid-template-columns: minmax(220px, 1.1fr) minmax(0, 3fr) auto;"
+			class="bg-l-card dark:bg-l-card-dark hidden h-7 items-end gap-4 border-b border-zinc-200 px-5 sm:grid sm:grid-cols-[minmax(220px,1.1fr)_minmax(0,3fr)_auto] dark:border-[#2a2a2a]"
 			aria-hidden="true"
 		>
 			<div></div>
@@ -258,13 +257,12 @@ const phases = [
 				<a
 					href={p.href}
 					class:list={[
-						"wf-row group relative grid items-center gap-4 px-5 py-3 no-underline transition-colors duration-150",
+						"wf-row group relative grid grid-cols-[1fr] items-center gap-2 px-3 py-3 no-underline transition-colors duration-150",
+						"sm:grid-cols-[minmax(220px,1.1fr)_minmax(0,3fr)_auto] sm:gap-4 sm:px-5",
 						"bg-l-card hover:bg-l-card-hover dark:bg-l-card-dark dark:hover:bg-l-card-hover-dark",
 						"focus-visible:outline-accent focus-visible:outline-2 focus-visible:-outline-offset-2",
-						"max-[600px]:grid-cols-[1fr] max-[600px]:gap-2 max-[600px]:px-3 max-[600px]:py-3",
 						i > 0 && "border-t border-zinc-200 dark:border-[#2a2a2a]",
 					]}
-					style="grid-template-columns: minmax(220px, 1.1fr) minmax(0, 3fr) auto;"
 					data-phase={p.id}
 				>
 					{/* Accent bar — bottom reveal on hover */}
@@ -274,7 +272,7 @@ const phases = [
 					/>
 
 					{/* Left: phase name + product */}
-					<div class="flex min-w-0 items-center gap-3 max-[600px]:gap-2">
+					<div class="flex min-w-0 items-center gap-2 sm:gap-3">
 						<span class="group-hover:border-accent/30 group-hover:bg-accent/5 group-hover:text-accent flex size-8 shrink-0 items-center justify-center rounded border border-zinc-200 bg-zinc-100 text-zinc-400 transition-colors duration-150 dark:border-[#2a2a2a] dark:bg-zinc-800 dark:text-zinc-500">
 							<Icon name={p.icon} size="16px" />
 						</span>
@@ -289,7 +287,7 @@ const phases = [
 					</div>
 
 					{/* Center: waterfall bar visualization */}
-					<div class="relative self-stretch max-[600px]:h-5" aria-hidden="true">
+					<div class="relative h-5 sm:h-auto sm:self-stretch" aria-hidden="true">
 						{/* Background track */}
 						<div class="absolute inset-0 rounded bg-zinc-100/80 dark:bg-zinc-800/40" />
 
@@ -310,14 +308,14 @@ const phases = [
 							data-offset-after={p.after.offset}
 							data-width-after={p.after.width}
 						>
-							<span class="wf-bar-label absolute top-1/2 right-2 -translate-y-1/2 font-mono text-[10px] font-medium whitespace-nowrap text-white/90 tabular-nums drop-shadow-sm max-[456px]:hidden">
+							<span class="wf-bar-label absolute top-1/2 right-2 hidden -translate-y-1/2 font-mono text-[10px] font-medium whitespace-nowrap text-white/90 tabular-nums drop-shadow-sm sm:inline">
 								{Math.round(p.after.width * 16)}ms
 							</span>
 						</div>
 					</div>
 
 					{/* Right: arrow */}
-					<div class="group-hover:text-accent flex items-center text-zinc-300 transition-colors duration-150 max-[600px]:hidden dark:text-zinc-600">
+					<div class="group-hover:text-accent hidden items-center text-zinc-300 transition-colors duration-150 sm:flex dark:text-zinc-600">
 						<svg
 							width="14"
 							height="14"
@@ -352,7 +350,7 @@ const phases = [
 				>
 					<span class="tracking-widest uppercase">Total latency</span>
 					<div
-						class="relative h-1.5 w-48 overflow-hidden rounded-full bg-zinc-100 max-[600px]:w-28 dark:bg-zinc-800/60"
+						class="relative h-1.5 w-28 overflow-hidden rounded-full bg-zinc-100 sm:w-48 dark:bg-zinc-800/60"
 						role="presentation"
 					>
 						<div
@@ -369,7 +367,7 @@ const phases = [
 				}
 				<div
 					id="wf-savings-group"
-					class="flex items-baseline gap-2 font-mono text-xs text-zinc-500 tabular-nums transition-opacity duration-300 max-[500px]:hidden dark:text-zinc-400"
+					class="hidden items-baseline gap-2 font-mono text-xs text-zinc-500 tabular-nums transition-opacity duration-300 sm:flex dark:text-zinc-400"
 				>
 					<span class="tracking-widest uppercase">Savings</span>
 					<span
@@ -536,12 +534,6 @@ const phases = [
 		}
 	}
 
-	/* Responsive: on mobile, switch waterfall row to stacked layout */
-	@media (max-width: 600px) {
-		.wf-row {
-			grid-template-columns: 1fr !important;
-		}
-	}
 </style>
 
 <script>

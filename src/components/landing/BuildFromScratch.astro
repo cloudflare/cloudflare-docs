@@ -1,18 +1,6 @@
 ---
-/**
- * Steelmanned Minimal Tabs
- *
- * Improvements over base:
- * - Icons restored in tab bar (product identity)
- * - Tab bar has subtle background differentiation from panel
- * - Active tab gets bg fill, not just underline
- * - Command block has segmented $ | command | copy layout (matching PlatformStats precision)
- * - CTA is a bordered button, not naked text
- * - Tags rendered as low-contrast text links (less noise)
- * - Plus marks on outer container (structural language from PlatformStats)
- * - Consistent border/bg tokens throughout
- */
 import { Icon } from "astro-icon/components";
+import CommandBlock from "./CommandBlock.astro";
 
 const primitives = [
 	{
@@ -24,7 +12,7 @@ const primitives = [
 		iconBgDark: "rgba(10, 149, 255, 0.16)",
 		heading: "Deploy with one command",
 		description:
-			"Deploy serverless functions and full-stack apps on Cloudflare's global network. No servers to manage. No cold starts or region complexity. Run code in 330+ cities around the world, within 50ms of 95% of the world's population.",
+			"Deploy serverless functions and full-stack apps on Cloudflare's global network. No servers to manage. No cold starts or region complexity.",
 		command: "npx wrangler init my-app",
 		cta: {
 			label: "Create your first Worker",
@@ -99,7 +87,7 @@ const primitives = [
 ---
 
 <section
-	class="pt-14 pb-6 max-[900px]:pt-10 max-[900px]:pb-6"
+	class="pt-10 pb-6 lg:pt-14"
 	aria-labelledby="build-heading"
 	id="build"
 >
@@ -197,7 +185,7 @@ const primitives = [
 					id={`build-panel-${p.id}`}
 					aria-labelledby={`build-tab-${p.id}`}
 					hidden={i !== 0}
-					class="bg-l-card dark:bg-l-card-dark p-8 max-[600px]:p-5"
+					class="bg-l-card dark:bg-l-card-dark p-5 sm:p-8"
 				>
 					<div class="w-full">
 						<div class="mb-4 flex items-center gap-3">
@@ -215,35 +203,16 @@ const primitives = [
 							{p.description}
 						</p>
 
-						{/* Command block — segmented */}
-						<div class="mb-6 flex max-w-[680px] items-stretch overflow-hidden rounded border border-zinc-200 dark:border-[#2a2a2a]">
-							<code
-								id={`build-cmd-${p.id}`}
-								class="bg-l-card dark:bg-l-card-dark min-w-0 flex-1 truncate px-3 py-4 font-mono text-sm leading-none text-zinc-700 select-all dark:text-zinc-300"
-							>
-								{p.command}
-							</code>
-							<button
-								type="button"
-								data-copy-target={`build-cmd-${p.id}`}
-								aria-label="Copy to clipboard"
-								class="build-copy-btn focus-visible:outline-accent flex w-10 shrink-0 cursor-pointer items-center justify-center border-l border-zinc-200 text-zinc-500 transition-colors duration-150 hover:bg-zinc-200 hover:text-zinc-700 focus-visible:outline-2 focus-visible:-outline-offset-2 dark:border-[#2a2a2a] dark:text-zinc-400 dark:hover:bg-zinc-700 dark:hover:text-zinc-100"
-							>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									width="18"
-									height="18"
-									fill="currentColor"
-									viewBox="0 0 256 256"
-									aria-hidden="true"
-								>
-									<path d="M216,32H88a8,8,0,0,0-8,8V80H40a8,8,0,0,0-8,8V216a8,8,0,0,0,8,8H168a8,8,0,0,0,8-8V176h40a8,8,0,0,0,8-8V40A8,8,0,0,0,216,32ZM160,208H48V96H160Zm48-48H176V88a8,8,0,0,0-8-8H96V48H208Z" />
-								</svg>
-							</button>
-						</div>
+						{/* Command block — shared CommandBlock component */}
+						<CommandBlock
+							id={`build-cmd-${p.id}`}
+							command={p.command}
+							rounded
+							class="mb-6 max-w-[680px]"
+						/>
 
 						{/* CTA + tags row */}
-						<div class="flex w-full items-center gap-6 max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-4">
+						<div class="flex w-full flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
 							<a
 								href={p.cta.href}
 								class="focus-visible:outline-accent inline-flex shrink-0 cursor-pointer items-center gap-2 rounded-md bg-[#18181b] px-4 py-2 text-sm font-medium text-white no-underline transition-colors duration-150 hover:bg-[#f56500] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 dark:bg-[#fafafa] dark:text-[#09090b] dark:hover:bg-[#e4e4e7] dark:hover:text-[#09090b]"
@@ -374,27 +343,5 @@ const primitives = [
 			});
 		});
 	}
-
-	// Copy buttons
-	document
-		.querySelectorAll<HTMLButtonElement>(".build-copy-btn")
-		.forEach((btn) => {
-			btn.addEventListener("click", async () => {
-				const targetId = btn.dataset.copyTarget;
-				if (!targetId) return;
-				const codeEl = document.getElementById(targetId);
-				if (!codeEl) return;
-				const text = codeEl.textContent?.trim() ?? "";
-				try {
-					await navigator.clipboard.writeText(text);
-				} catch {
-					return;
-				}
-				const prev = btn.innerHTML;
-				btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34Z"/></svg>`;
-				setTimeout(() => {
-					btn.innerHTML = prev;
-				}, 1500);
-			});
-		});
+	// Copy behavior is now owned by CommandBlock.astro — see ./CommandBlock.astro
 </script>

@@ -8,6 +8,7 @@ import PlatformStats from "../components/landing/PlatformStats.astro";
 import BuildFromScratch from "../components/landing/BuildFromScratch.astro";
 import SecureSection from "../components/landing/SecureSection.astro";
 import AccelerateSection from "../components/landing/AccelerateSection.astro";
+import AgentSetup from "../components/landing/AgentSetup.astro";
 import ChangelogSection from "../components/landing/ChangelogSection.astro";
 import "../styles/landing.css";
 
@@ -42,7 +43,7 @@ const sidebar = [
 				collapsed: true,
 				items: [
 					{ label: "Learning paths", link: "/learning-paths/" },
-					{ label: "Directory", link: "/directory/" },
+					{ label: "Use cases", link: "/use-cases/" },
 					{ label: "Terraform", link: "/terraform/" },
 					{ label: "Pulumi", link: "/pulumi/" },
 					{ label: "Reference architecture", link: "/reference-architecture/" },
@@ -242,13 +243,15 @@ const props = {
 				style="padding-inline: var(--l-section-pad); padding-top: var(--l-pad-top);"
 			>
 				<Hero />
-				<PlatformStats />
 
 				<BuildFromScratch />
+
+				<AgentSetup />
 
 				<SecureSection />
 
 				<AccelerateSection />
+				<PlatformStats />
 
 				<ChangelogSection />
 			</main>

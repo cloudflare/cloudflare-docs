@@ -82,12 +82,12 @@ const quickLinks = [
 ---
 
 <section
-	class="px-8 pt-16 pb-12 max-[900px]:px-4 max-[900px]:pt-10"
+	class="px-4 pt-10 pb-12 lg:px-8 lg:pt-16"
 	aria-labelledby="protect-heading"
 >
 	<!-- Section header -->
 	<div
-		class="mb-10 flex items-end justify-between gap-6 max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-4"
+		class="mb-10 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end sm:gap-6"
 	>
 		<div>
 			<div class="mb-3 flex items-center gap-2">
@@ -113,7 +113,7 @@ const quickLinks = [
 		</div>
 		<a
 			href="/cloudflare-one/"
-			class="inline-flex shrink-0 items-center gap-2 rounded-lg border border-black/10 bg-black/2 px-4 py-2 font-mono text-[0.625rem] tracking-widest text-[#6b6b74] uppercase no-underline transition-colors duration-100 hover:bg-black/5 hover:text-[#1a1a1e] max-[600px]:hidden"
+			class="hidden shrink-0 items-center gap-2 rounded-lg border border-black/10 bg-black/2 px-4 py-2 font-mono text-[0.625rem] tracking-widest text-[#6b6b74] uppercase no-underline transition-colors duration-100 hover:bg-black/5 hover:text-[#1a1a1e] sm:inline-flex"
 		>
 			Explore Zero Trust
 			<svg
@@ -139,7 +139,7 @@ const quickLinks = [
 			products.map((p) => (
 				<a
 					href={p.href}
-					class="group focus-visible:outline-accent relative flex items-center gap-6 bg-white/90 px-6 py-5 text-inherit no-underline transition-colors duration-100 hover:bg-zinc-50 focus-visible:outline-2 focus-visible:-outline-offset-2 max-[600px]:flex-col max-[600px]:items-start max-[600px]:gap-2 max-[600px]:px-4 max-[600px]:py-4"
+					class="group focus-visible:outline-accent relative flex flex-col items-start gap-2 bg-white/90 px-4 py-4 text-inherit no-underline transition-colors duration-100 hover:bg-zinc-50 focus-visible:outline-2 focus-visible:-outline-offset-2 sm:flex-row sm:items-center sm:gap-6 sm:px-6 sm:py-5"
 				>
 					{/* Left accent reveal */}
 					<span
@@ -148,7 +148,7 @@ const quickLinks = [
 					/>
 
 					{/* Product name */}
-					<div class="w-[140px] shrink-0 max-[600px]:w-auto">
+					<div class="w-auto shrink-0 sm:w-[140px]">
 						<span class="text-[0.9375rem] leading-tight font-medium text-[#1a1a1e]">
 							{p.name}
 						</span>
@@ -160,12 +160,12 @@ const quickLinks = [
 					</p>
 
 					{/* Detail tags */}
-					<div class="max-w-[200px] shrink-0 text-right font-mono text-[0.5625rem] leading-relaxed tracking-wide text-[#9b9ba4] max-[900px]:hidden">
+					<div class="hidden max-w-[200px] shrink-0 text-right font-mono text-[0.5625rem] leading-relaxed tracking-wide text-[#9b9ba4] lg:block">
 						{p.detail}
 					</div>
 
 					{/* Arrow */}
-					<div class="flex shrink-0 -translate-x-1 items-center opacity-0 transition-[opacity,transform] duration-100 group-hover:translate-x-0 group-hover:opacity-100 max-[600px]:hidden">
+					<div class="hidden shrink-0 -translate-x-1 items-center opacity-0 transition-[opacity,transform] duration-100 group-hover:translate-x-0 group-hover:opacity-100 sm:flex">
 						<svg
 							width="11"
 							height="11"

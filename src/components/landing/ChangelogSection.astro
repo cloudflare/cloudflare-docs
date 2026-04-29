@@ -87,11 +87,11 @@ const CORNERS = [
 	entries.length > 0 && (
 		<section
 			id="changelog"
-			class="pt-14 pb-12 max-[900px]:pt-10 max-[900px]:pb-10"
+			class="pt-10 pb-10 lg:pt-14 lg:pb-12"
 			aria-labelledby="cl-heading"
 		>
 			{/* ── Header ─────────────────────────────────────────── */}
-			<div class="mb-8 flex items-end justify-between max-[600px]:mb-6">
+			<div class="mb-6 flex items-end justify-between sm:mb-8">
 				<div>
 					<div class="mb-3">
 						<span class="text-accent font-mono text-[13px] tracking-widest uppercase">
@@ -174,9 +174,6 @@ const CORNERS = [
 									<span class="cl-ring" />
 									<span class="cl-ring cl-ring--delay" />
 									<span class="cl-core" />
-								</span>
-								<span class="text-accent font-mono text-xs font-medium tracking-widest uppercase">
-									Latest
 								</span>
 								<time class="font-mono text-xs text-zinc-500 tabular-nums dark:text-zinc-400">
 									{featured.dateFormatted}
@@ -302,42 +299,48 @@ const CORNERS = [
 }
 
 <style>
-	/* ── Grid layout ───────────────────────────────────────────────── */
+	/* ── Grid layout (mobile-first) ────────────────────────────────── */
 	.cl-grid {
-		grid-template-columns: 5fr 3fr 3fr;
+		grid-template-columns: 1fr;
 	}
 	.cl-featured {
-		grid-row: 1 / 3;
+		grid-row: auto;
 		text-decoration: none;
 	}
 	.cl-grid > a:not(.cl-featured) {
 		text-decoration: none;
 	}
 
-	/* Hover: CTA goes accent + underline (small cards) — mirrors ProductCard */
-	.cl-card:hover .group\/cta,
-	.cl-card:focus-within .group\/cta {
-		color: var(--color-accent);
-		text-decoration: underline;
-		text-underline-offset: 4px;
-		text-decoration-color: color-mix(in srgb, #f56500 40%, transparent);
-	}
-
-	/* Hover: CTA text goes accent + underline (featured card) */
-	.cl-featured:hover .group\/cta {
-		color: var(--color-accent);
-		text-decoration: underline;
-		text-underline-offset: 4px;
-		text-decoration-color: color-mix(in srgb, #f56500 40%, transparent);
-	}
-
-	@media (max-width: 768px) {
+	/* Medium: featured full-width, smaller cards in 2 columns */
+	@media (min-width: 768px) {
 		.cl-grid {
-			grid-template-columns: 1fr;
+			grid-template-columns: 1fr 1fr;
 		}
 		.cl-featured {
-			grid-row: auto;
+			grid-column: 1 / -1;
 		}
+	}
+
+	/* Large: 3-column bento with featured spanning 2 rows */
+	@media (min-width: 1200px) {
+		.cl-grid {
+			grid-template-columns: 5fr 3fr 3fr;
+		}
+		.cl-featured {
+			grid-column: auto;
+			grid-row: 1 / 3;
+		}
+	}
+
+	/* Hover: CTA gets underline on card hover — mirrors ProductCard.
+	 * Colour intentionally stays zinc so it matches the canonical inline-link
+	 * pattern (BuildFromScratch tags, Hero nav). Underline-only on hover. */
+	.cl-card:hover .group\/cta,
+	.cl-card:focus-within .group\/cta,
+	.cl-featured:hover .group\/cta,
+	.cl-featured:focus-within .group\/cta {
+		text-decoration: underline;
+		text-underline-offset: 4px;
 	}
 
 	/* ── Broadcast ring animation ──────────────────────────────────── */

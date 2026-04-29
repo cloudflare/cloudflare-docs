@@ -1,0 +1,231 @@
+---
+
+import CommandBlock from "./CommandBlock.astro";
+
+const PROMPT = "Fetch https://developers.cloudflare.com/agent-setup/prompt.md";
+
+const ALL_GUIDES_HREF = "/agent-setup/";
+
+const AGENTS = [
+	{ id: "claude", label: "Claude Code", href: "/agent-setup/claude-code/" },
+	{ id: "codex", label: "Codex", href: "/agent-setup/codex/" },
+	{ id: "cursor", label: "Cursor", href: "/agent-setup/cursor/" },
+	{ id: "opencode", label: "OpenCode", href: "/agent-setup/opencode/" },
+	{
+		id: "copilot",
+		label: "GitHub Copilot",
+		href: "/agent-setup/github-copilot/",
+	},
+	{ id: "windsurf", label: "Windsurf", href: "/agent-setup/windsurf/" },
+];
+
+const CORNERS = [
+	"-top-[5.5px] -left-[5.5px]",
+	"-top-[5.5px] -right-[5.5px]",
+	"-bottom-[5.5px] -left-[5.5px]",
+	"-right-[5.5px] -bottom-[5.5px]",
+];
+---
+
+<section
+	id="agents"
+	class="pt-10 pb-6 lg:pt-14"
+	aria-labelledby="agents-heading"
+>
+	<div class="mb-5">
+		<span class="text-accent font-mono text-[13px] tracking-[0.18em] uppercase">
+			Agents
+		</span>
+	</div>
+
+	<div class="relative border border-zinc-200 dark:border-[#2a2a2a]">
+		{
+			CORNERS.map((pos) => (
+				<svg
+					width="10"
+					height="10"
+					viewBox="0 0 10 10"
+					class={`pointer-events-none absolute ${pos} z-10`}
+					aria-hidden="true"
+				>
+					<line
+						x1="0"
+						y1="5"
+						x2="10"
+						y2="5"
+						stroke-width="1"
+						class="l-corner-stroke"
+					/>
+					<line
+						x1="5"
+						y1="0"
+						x2="5"
+						y2="10"
+						stroke-width="1"
+						class="l-corner-stroke"
+					/>
+				</svg>
+			))
+		}
+
+		<div class="grid grid-cols-12 gap-px bg-zinc-200 dark:bg-[#2a2a2a]">
+			<div
+				class="bg-l-card dark:bg-l-card-dark col-span-12 flex min-w-0 flex-col gap-3 p-8 lg:col-span-8"
+			>
+				<h2
+					id="agents-heading"
+					class="mb-1 text-2xl leading-[1.1] font-medium -tracking-[0.035em] text-balance text-zinc-900 md:text-3xl dark:text-zinc-50"
+				>
+					Build with your favorite AI agent
+				</h2>
+				<p
+					class="mt-0 mb-2 max-w-[50ch] text-sm leading-relaxed text-pretty text-zinc-500 md:text-lg dark:text-zinc-400"
+				>
+					Paste this prompt into any AI coding agent to install Cloudflare's
+					official tooling.
+				</p>
+				<CommandBlock
+					id="agents-setup-prompt"
+					command={PROMPT}
+					rounded
+					class="mt-auto min-w-0"
+				/>
+			</div>
+
+			{/* Top row, cols 9-12: CTA */}
+			<a
+				href={ALL_GUIDES_HREF}
+				class="agent-setup-cta bg-l-card dark:bg-l-card-dark hover:bg-l-card-hover dark:hover:bg-l-card-hover-dark group relative col-span-12 flex min-w-0 flex-row items-center justify-between overflow-hidden px-8 py-6 no-underline transition-colors duration-150 focus-visible:outline-none lg:col-span-4 lg:flex-col lg:items-stretch lg:p-8"
+			>
+				<div class="relative z-[1] flex flex-col gap-2.5">
+					<span
+						class="font-mono text-xs tracking-[0.18em] text-zinc-500 uppercase dark:text-zinc-400"
+					>
+						More
+					</span>
+					<span
+						class="max-w-[12ch] text-base leading-tight font-medium -tracking-[0.018em] text-zinc-900 md:text-xl dark:text-zinc-50"
+					>
+						Browse all setup guides
+					</span>
+				</div>
+				<svg
+					class="agent-setup-cta-arrow absolute right-3 top-1/2 aspect-square h-[78%] -translate-y-1/2 text-zinc-200 dark:text-[#2a2a2a] lg:right-4 lg:h-auto lg:w-1/2"
+					viewBox="-0.293 -0.501 102 102"
+					fill="#FFF"
+					stroke="currentColor"
+					stroke-width="1.25"
+					stroke-linejoin="miter"
+					stroke-linecap="butt"
+					aria-hidden="true"
+				>
+					<path
+						vector-effect="non-scaling-stroke"
+						d="M0.707092 79.3255L21.97 100.489L70.7071 51.5225L70.7071 100.499L100.707 100.499L100.707 0.499451L0.707149 0.499448L0.707145 30.4994L49.3046 30.4994L0.707092 79.3255Z"
+					></path>
+				</svg>
+			</a>
+
+			{/* Bottom row: 6 agent tiles */}
+			{
+				AGENTS.map((agent) => (
+					<a
+						href={agent.href}
+						class="agent-setup-tile bg-l-card dark:bg-l-card-dark hover:bg-l-card-hover dark:hover:bg-l-card-hover-dark group relative col-span-6 flex min-h-[9.5rem] min-w-0 flex-col items-start justify-between gap-5 px-5 py-6 no-underline transition-colors duration-150 focus-visible:outline-none sm:col-span-4 lg:col-span-2"
+						aria-label={`${agent.label} setup guide`}
+					>
+						<span
+							class="inline-flex h-8 w-8 items-center justify-center"
+							aria-hidden="true"
+						>
+							<img
+								src={`/icons/agents/${agent.id}/light.svg`}
+								alt=""
+								class="block h-full w-full object-contain dark:hidden"
+								loading="lazy"
+								decoding="async"
+							/>
+							<img
+								src={`/icons/agents/${agent.id}/dark.svg`}
+								alt=""
+								class="hidden h-full w-full object-contain dark:block"
+								loading="lazy"
+								decoding="async"
+							/>
+						</span>
+						<div class="flex flex-col gap-1">
+							<span class="text-[15px] leading-snug font-medium -tracking-[0.012em] text-zinc-900 dark:text-zinc-50">
+								{agent.label}
+							</span>
+						</div>
+						<svg
+							class="absolute top-5 right-5 text-zinc-300 transition duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-[2px] group-hover:text-zinc-900 group-focus-visible:translate-x-[2px] group-focus-visible:text-zinc-900 motion-reduce:transition-none dark:text-zinc-600 dark:group-hover:text-zinc-50 dark:group-focus-visible:text-zinc-50"
+							width="14"
+							height="14"
+							viewBox="0 0 24 24"
+							fill="none"
+							aria-hidden="true"
+						>
+							<polyline
+								points="9 6 15 12 9 18"
+								stroke="currentColor"
+								stroke-width="1.7"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							/>
+						</svg>
+					</a>
+				))
+			}
+		</div>
+	</div>
+</section>
+
+<style>
+	/*
+	 * Hide the decorative diagonal arrow between 1024px and 1399px.
+	 * In that range the CTA card is in flex-col mode but the column is
+	 * narrow enough that the arrow either crowds the text or sits in
+	 * awkward whitespace. Below 1024px the card is in flex-row mode
+	 * (arrow is height-sized and looks balanced); at 1400px+ the
+	 * column is wide enough for the half-width decoration to land
+	 * cleanly. Using a plain @media rule here so the cascade is
+	 * predictable regardless of Tailwind utility ordering.
+	 */
+	@media (min-width: 1024px) and (max-width: 1399.98px) {
+		.agent-setup-cta-arrow {
+			display: none;
+		}
+	}
+
+	/*
+	 * Hover affordance — a 1px accent rail along the bottom edge of each
+	 * cell that grows from centre on hover or focus-visible. Reuses the
+	 * rail vocabulary already used in AccelerateSection so this section
+	 * speaks the same hover language as the rest of the landing page.
+	 */
+	.agent-setup-tile::after,
+	.agent-setup-cta::after {
+		content: "";
+		position: absolute;
+		inset: auto 0 0 0;
+		height: 1px;
+		background: var(--color-accent, #f56500);
+		transform: scaleX(0);
+		transform-origin: center;
+		transition: transform 280ms cubic-bezier(0.23, 1, 0.32, 1);
+		pointer-events: none;
+	}
+	.agent-setup-tile:hover::after,
+	.agent-setup-tile:focus-visible::after,
+	.agent-setup-cta:hover::after,
+	.agent-setup-cta:focus-visible::after {
+		transform: scaleX(1);
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.agent-setup-tile::after,
+		.agent-setup-cta::after {
+			transition: none;
+		}
+	}
+</style>

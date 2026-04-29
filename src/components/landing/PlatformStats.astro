@@ -1,8 +1,6 @@
 ---
 import { stagger } from "./constants";
 
-// Copy mirrors workers.cloudflare.com verbatim where the slot allows.
-// See `landing-stats-decisions.md` at the repo root for sourcing rationale.
 const stats = [
 	{
 		value: 330,
@@ -37,7 +35,7 @@ const stats = [
 
 <section
 	id="platform"
-	class={`pt-10 pb-12 max-[900px]:pt-8 max-[900px]:pb-8 ${stagger(0.42)}`}
+	class={`pt-8 pb-8 lg:pt-10 lg:pb-12 ${stagger(0.42)}`}
 	aria-labelledby="stats-heading"
 >
 	<div class="mb-4">
@@ -47,12 +45,12 @@ const stats = [
 	</div>
 
 	<div
-		class="grid grid-cols-4 gap-px overflow-visible border border-[#e8e8e8] bg-[#e8e8e8] max-[768px]:grid-cols-2 dark:border-[#2a2a2a] dark:bg-[#2a2a2a]"
+		class="grid grid-cols-2 lg:grid-cols-4 gap-px overflow-visible border border-[#e8e8e8] bg-[#e8e8e8] dark:border-[#2a2a2a] dark:bg-[#2a2a2a]"
 		id="stats-grid"
 	>
 		{
 			stats.map((stat, i) => (
-				<div class="bg-l-card hover:bg-l-card-hover dark:bg-l-card-dark dark:hover:bg-l-card-hover-dark relative flex flex-col justify-between px-5 py-5 transition-colors duration-150">
+				<div class="stat-card bg-l-card hover:bg-l-card-hover dark:bg-l-card-dark dark:hover:bg-l-card-hover-dark relative flex flex-col px-4 py-4 transition-colors duration-150 sm:px-5 sm:py-5">
 					{/* Corner plus marks — all four corners */}
 					<svg
 						width="10"
@@ -174,15 +172,15 @@ const stats = [
 						</span>
 					</p>
 
-					{/* Unit */}
-					<p class="text-accent mb-3 font-mono text-[12px] tracking-wide uppercase">
+					{/* Unit — min-h reserves 2-line height so the divider below lands at the same Y across all cards. text-balance prevents awkward orphan wraps like "REQUESTS/SE | C". */}
+					<p class="text-accent stat-unit mb-3 min-h-[2.4em] text-balance font-mono text-[12px] tracking-wide uppercase">
 						{stat.unit}
 					</p>
 
-					{/* Label + detail */}
+					{/* Label + detail. text-balance on the (1-3 word) label balances the wrap evenly; text-pretty on the longer detail prevents orphans without rebalancing. */}
 					<div class="border-t border-dashed border-[#e8e8e8] pt-3 dark:border-[#2a2a2a]">
 						<div class="space-y-0.5">
-							<p class="text-[15px] leading-snug font-medium text-pretty text-zinc-900 dark:text-zinc-50">
+							<p class="text-[15px] leading-snug font-medium text-balance text-zinc-900 dark:text-zinc-50">
 								{stat.label}
 							</p>
 							<p class="text-[13px] leading-snug text-pretty text-zinc-500 dark:text-zinc-400">
