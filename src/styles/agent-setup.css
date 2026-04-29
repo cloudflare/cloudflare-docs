@@ -1104,9 +1104,6 @@
 	border-color: var(--color-cl1-gray-5);
 }
 
-/* ─── Tooltip (shared) ─── */
-/* Tooltips use tippy.js (see component scripts). The visual style is
-   inherited from the site-wide footnote tippy styles in footnotes.css. */
 [data-agent-tooltip] {
 	cursor: help;
 }

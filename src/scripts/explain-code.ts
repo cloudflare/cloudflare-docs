@@ -1,4 +1,5 @@
 import "../components/explain-code-sheet/explain-code-sheet";
+import tippy, { type Instance } from "tippy.js";
 
 function getCodeBlockPosition(button: HTMLElement): number {
 	const wrapperSelector = ".explain";
@@ -28,22 +29,54 @@ function handleExplainButtonClick(this: HTMLButtonElement, e: MouseEvent) {
 	document.body.appendChild(sheet);
 }
 
+const tippyInstances: Instance[] = [];
+
 function init() {
-	const buttons = document.querySelectorAll<HTMLButtonElement>(
+	const explainButtons = document.querySelectorAll<HTMLButtonElement>(
 		"button[data-explain-code]",
 	);
-	buttons.forEach((button) => {
+	explainButtons.forEach((button) => {
 		button.addEventListener("click", handleExplainButtonClick);
+		const instance = tippy(button, {
+			content: "Explain Code",
+			placement: "top",
+			arrow: false,
+			appendTo: () => document.body,
+		});
+		tippyInstances.push(instance);
+	});
+
+	const copyButtons = document.querySelectorAll<HTMLButtonElement>(
+		".expressive-code .copy > button",
+	);
+	copyButtons.forEach((button) => {
+		const instance = tippy(button, {
+			content: "Copy to clipboard",
+			placement: "top",
+			arrow: false,
+			appendTo: () => document.body,
+		});
+		tippyInstances.push(instance);
+
+		button.addEventListener("click", () => {
+			instance.setContent("Copied!");
+			instance.show();
+			setTimeout(() => {
+				instance.setContent("Copy to clipboard");
+			}, 2500);
+		});
 	});
 }
 
 function cleanup() {
-	const buttons = document.querySelectorAll<HTMLButtonElement>(
+	const explainButtons = document.querySelectorAll<HTMLButtonElement>(
 		"button[data-explain-code]",
 	);
-	buttons.forEach((button) => {
+	explainButtons.forEach((button) => {
 		button.removeEventListener("click", handleExplainButtonClick);
 	});
+	tippyInstances.forEach((instance) => instance.destroy());
+	tippyInstances.length = 0;
 }
 
 document.addEventListener("astro:before-swap", cleanup);
