@@ -23,14 +23,13 @@ const {
 	{imageUrl && <img src={imageUrl} alt={alt} loading="lazy" />}
 	{imageUrls.map((url) => <img src={url} alt={alt} loading="lazy" />)}
 	{
-		videoUrl && (
-			<video src={videoUrl} controls preload="metadata" />
-		)
+		/* AI-generated outputs do not ship caption tracks. */
+		/* eslint-disable-next-line astro/jsx-a11y/media-has-caption */
+		videoUrl && <video src={videoUrl} controls preload="metadata" />
 	}
 	{
-		audioUrl && (
-			<audio src={audioUrl} controls preload="metadata" />
-		)
+		/* eslint-disable-next-line astro/jsx-a11y/media-has-caption */
+		audioUrl && <audio src={audioUrl} controls preload="metadata" />
 	}
 </div>
 
