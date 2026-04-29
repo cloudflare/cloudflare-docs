@@ -47,10 +47,10 @@ The following methods are available on the `env.STREAM` binding directly.
 
 #### `upload(url, params?)`
 
-Upload a video from a URL. Returns `Promise<`[StreamVideo](#streamvideo)`>`.
+Upload a video from a URL. Returns `Promise<`[`StreamVideo`](#streamvideo)`>`.
 
 - `url` (required): The URL of the video to upload.
-- `params` (optional): A [StreamUrlUploadParams](#streamurluploadparams) object with the following properties:
+- `params` (optional): A [`StreamUrlUploadParams`](#streamurluploadparams) object with the following properties:
   - `allowedOrigins`: Array of allowed origins for the video.
   - `creator`: Creator identifier.
   - `meta`: Arbitrary metadata object.
@@ -63,9 +63,11 @@ Throws: `BadRequestError`, `QuotaReachedError`, `MaxFileSizeError`, `RateLimited
 
 #### `createDirectUpload(params)`
 
-Create a direct upload URL for client-side uploads without an API key. Returns `Promise<`[StreamDirectUpload](#streamdirectupload)`>` with `uploadURL` and `id`.
+Create a basic direct upload URL for client-side uploads without an API key. Returns `Promise<`[`StreamDirectUpload`](#streamdirectupload)`>` with `uploadURL` and `id`.
 
-- `params` (required): A [StreamDirectUploadCreateParams](#streamdirectuploadcreateparams) object with the following properties:
+_This method does not currently support files over 200MB._ For larger direct uploads, refer to the [API request for provisioning a TUS endpoint](http://localhost:1111/stream/uploading-videos/direct-creator-uploads/#direct-creator-uploads-with-tus-protocol)._
+
+- `params` (required): A [`StreamDirectUploadCreateParams`](#streamdirectuploadcreateparams) object with the following properties:
   - `maxDurationSeconds` (required): Maximum duration of the uploaded video in seconds.
   - `expiry` (optional): ISO 8601 timestamp when the upload URL expires.
   - `creator` (optional): Creator identifier.
@@ -78,9 +80,9 @@ Create a direct upload URL for client-side uploads without an API key. Returns `
 
 #### `videos.list(params?)`
 
-List all videos in the account. Returns `Promise<`[StreamVideo](#streamvideo)`[]>`.
+List all videos in the account. Returns `Promise<`[`StreamVideo`](#streamvideo)`[]>`.
 
-- `params` (optional): A [StreamVideosListParams](#streamvideoslistparams) object with the following properties:
+- `params` (optional): A [`StreamVideosListParams`](#streamvideoslistparams) object with the following properties:
   - `limit`: Maximum number of videos to return.
   - `before`: Return videos created before this ISO 8601 timestamp.
   - `beforeComp`: Comparison operator for `before` — `eq`, `gt`, `gte`, `lt`, or `lte`.
@@ -93,13 +95,13 @@ Calling `env.STREAM.video(id)` returns a handle scoped to a single video, with t
 
 #### `details()`
 
-Get full video details. Returns `Promise<`[StreamVideo](#streamvideo)`>`.
+Get full video details. Returns `Promise<`[`StreamVideo`](#streamvideo)`>`.
 
 #### `update(params)`
 
-Update video metadata. Returns `Promise<`[StreamVideo](#streamvideo)`>`.
+Update video metadata. Returns `Promise<`[`StreamVideo`](#streamvideo)`>`.
 
-- `params` (required): A [StreamUpdateVideoParams](#streamupdatevideoparams) object with the following properties:
+- `params` (required): A [`StreamUpdateVideoParams`](#streamupdatevideoparams) object with the following properties:
   - `allowedOrigins`: Array of allowed origins for the video.
   - `creator`: Creator identifier.
   - `maxDurationSeconds`: Maximum duration in seconds.
@@ -120,17 +122,17 @@ Create a signed URL token for a video. Returns `Promise<string>`.
 
 Namespace for download operations on a video.
 
-- `generate(downloadType?)`: Generate a download. `downloadType` is a [StreamDownloadType](#streamdownloadtype) of `default` or `audio`. Defaults to `default`. Returns `Promise<`[StreamDownloadGetResponse](#streamdownloadgetresponse)`>`.
-- `get()`: List existing downloads. Returns `Promise<`[StreamDownloadGetResponse](#streamdownloadgetresponse)`>`.
+- `generate(downloadType?)`: Generate a download. `downloadType` is a [`StreamDownloadType`](#streamdownloadtype) of `default` or `audio`. Defaults to `default`. Returns `Promise<`[`StreamDownloadGetResponse`](#streamdownloadgetresponse)`>`.
+- `get()`: List existing downloads. Returns `Promise<`[`StreamDownloadGetResponse`](#streamdownloadgetresponse)`>`.
 - `delete(downloadType?)`: Delete downloads. `downloadType` is `default` or `audio`.
 
 #### `captions`
 
 Namespace for caption operations on a video.
 
-- `upload(language, input)`: Upload a caption file for a BCP 47 language tag. `input` is a `ReadableStream`. Returns `Promise<`[StreamCaption](#streamcaption)`>`.
-- `generate(language)`: Generate captions via AI for a BCP 47 language tag. Returns `Promise<`[StreamCaption](#streamcaption)`>`.
-- `list(language?)`: List captions, optionally filtered by language. Returns `Promise<`[StreamCaption](#streamcaption)`[]>`.
+- `upload(language, input)`: Upload a caption file for a BCP 47 language tag. `input` is a `ReadableStream`. Returns `Promise<`[`StreamCaption`](#streamcaption)`>`.
+- `generate(language)`: Generate captions via AI for a BCP 47 language tag. Returns `Promise<`[`StreamCaption`](#streamcaption)`>`.
+- `list(language?)`: List captions, optionally filtered by language. Returns `Promise<`[`StreamCaption`](#streamcaption)`[]>`.
 - `delete(language)`: Delete captions for a language. Returns `Promise<void>`.
 
 ### Watermark methods
@@ -139,10 +141,10 @@ The following methods are available on the `env.STREAM.watermarks` namespace.
 
 #### `watermarks.generate(input, params)`
 
-Create a watermark profile. Accepts either a `ReadableStream` or a URL string. Returns `Promise<`[StreamWatermark](#streamwatermark)`>`.
+Create a watermark profile. Accepts either a `ReadableStream` or a URL string. Returns `Promise<`[`StreamWatermark`](#streamwatermark)`>`.
 
 - `input` (required): A `ReadableStream` or URL string of the watermark image.
-- `params` (optional): A [StreamWatermarkCreateParams](#streamwatermarkcreateparams) object with the following properties:
+- `params` (optional): A [`StreamWatermarkCreateParams`](#streamwatermarkcreateparams) object with the following properties:
   - `name`: Name of the watermark profile.
   - `opacity`: Opacity of the watermark (0.0 to 1.0).
   - `padding`: Padding around the watermark as a proportion of the video resolution.
@@ -151,11 +153,11 @@ Create a watermark profile. Accepts either a `ReadableStream` or a URL string. R
 
 #### `watermarks.list()`
 
-List all watermark profiles. Returns `Promise<`[StreamWatermark](#streamwatermark)`[]>`.
+List all watermark profiles. Returns `Promise<`[`StreamWatermark`](#streamwatermark)`[]>`.
 
 #### `watermarks.get(watermarkId)`
 
-Get a single watermark profile. Returns `Promise<`[StreamWatermark](#streamwatermark)`>`.
+Get a single watermark profile. Returns `Promise<`[`StreamWatermark`](#streamwatermark)`>`.
 
 - `watermarkId` (required): The ID of the watermark profile.
 
