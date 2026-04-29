@@ -2,10 +2,9 @@
 {}
 ---
 
-
 {props.applicationTests ? (
   <>
-    <p>The log data for all <a href="/logs/logpush/logpush-job/datasets/account/dex_application_tests/">DEX application tests</a> (including HTTP tests) can be exported to <a href="/r2/">R2</a>, a cloud bucket, or a SIEM via <a href="/cloudflare-one/insights/logs/logpush/">Logpush</a>.</p>
+    <p>You can use <a href="/cloudflare-one/insights/logs/logpush/">Logpush</a> to export <a href="/logs/logpush/logpush-job/datasets/account/dex_application_tests/">DEX application test</a> data to <a href="/r2/">R2</a> (Cloudflare's object storage), a third-party cloud storage bucket, or a Security Information and Event Management (SIEM) tool. This is useful if you need to retain test data beyond the <a href="/cloudflare-one/insights/logs/#log-retention">7-day log retention period</a> or correlate DEX data with other log sources.</p>
   </>
 ) : (
   <>

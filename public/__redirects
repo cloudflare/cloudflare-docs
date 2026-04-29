@@ -3,6 +3,9 @@
 # STATIC REDIRECTS
 # ============================================================================
 
+# Custom Dashboards (moved from log-explorer to analytics)
+/log-explorer/custom-dashboards/ /analytics/custom-dashboards/ 301
+
 # Solutions (moved from use-cases/application-security/bots/)
 /use-cases/application-security/bots/stop-malicious-bots/ /use-cases/solutions/stop-malicious-bots/ 301
 
@@ -26,6 +29,9 @@
 /billing/troubleshoot/resolve-zone-cannot-be-ugpraded/ /billing/troubleshoot/resolve-zone-cannot-be-upgraded/ 301
 /billing/resolve-you-cannot-modify-this-subscription/ /billing/troubleshoot/resolve-you-cannot-modify-this-subscription/ 301
 /billing/resolve-cannot-remove-payment-method/ /billing/troubleshoot/resolve-cannot-remove-payment-method/ 301
+
+# artifacts
+/artifacts/guides/namespaces/ /artifacts/concepts/namespaces/ 301
 
 # homepage
 /cloudflare-one/identity/ /cloudflare-one/integrations/identity-providers/ 301
@@ -359,6 +365,7 @@
 /browser-rendering/workers-bindings/screenshots/ /browser-run/how-to/deploy-worker/ 301
 /browser-rendering/workers-bindings/ /browser-run/get-started/#browser-sessions 301
 /browser-rendering/how-to/browser-rendering-with-do/ /browser-run/how-to/browser-run-with-do/ 301
+/browser-run/how-to/ai/ /browser-run/quick-actions/json-endpoint/ 301
 
 # byoip
 /byoip/about/dynamic-advertisement/ /byoip/concepts/dynamic-advertisement/ 301
@@ -593,6 +600,7 @@
 /dns/foundation-dns/graphql-analytics/ /dns/additional-options/analytics/ 301
 /dns/manage-dns-records/how-to/dns-load-balancing/ /dns/manage-dns-records/how-to/round-robin-dns/ 301
 /dns/manage-dns-records/how-to/create-root-domain/ /dns/manage-dns-records/how-to/create-zone-apex/ 301
+/dns/manage-dns-records/how-to/private-network-routing/ /dns/manage-dns-records/how-to/private-origins/private-network-routing/ 301
 /dns/manage-dns-records/reference/proxied-dns-records/ /dns/proxy-status/ 301
 /dns/manage-dns-records/troubleshooting/acme-challenge-txt-record/ /dns/manage-dns-records/troubleshooting/unexpected-dns-records/#acme_challenge-txt-records 301
 /dns/reference/troubleshooting/ /dns/reference/recommended-third-party-tools/ 301
@@ -1608,6 +1616,7 @@
 /style-guide/components/last-reviewed/ /style-guide/frontmatter/custom-properties/#reviewed 301
 /style-guide/components/mermaid/ /style-guide/documentation-content-strategy/component-attributes/diagrams/#mermaid-diagrams 301
 /style-guide/components/workers-templates/ /style-guide/components/index/ 301
+/style-guide/ai-tooling/ /docs-for-agents/ 301
 
 # support
 /support/about-cloudflare/getting-started/troubleshooting-faq-for-new-cloudflare-customers/ /fundamentals/reference/troubleshooting/ 301
@@ -2554,6 +2563,9 @@
 # ============================================================================
 # DYNAMIC REDIRECTS
 # ============================================================================
+
+# Agent Skills legacy discovery path
+/.well-known/skills/* /.well-known/agent-skills/:splat 301
 
 /cloudflare-one/faq/troubleshooting/* /cloudflare-one/troubleshooting/ 301
 # Pub/Sub (removed product)

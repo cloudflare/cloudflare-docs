@@ -70,6 +70,20 @@ The `queueMessageOperationsAdaptiveGroups` dataset provides the following dimens
 - `datetimeHour` - Timestamp for the message operation, truncated to the start of an hour
 - `datetimeMinute` - Timestamp for the message operation, truncated to the start of a minute
 
+### Realtime backlog
+
+You can access realtime backlog metrics via the [Queues REST API](/api/resources/queues/) and [JavaScript API](/queues/configuration/javascript-apis/). These metrics provide point-in-time values rather than aggregated data.
+
+| Metric                   | Field Name                 | Description                                                    |
+| ------------------------ | -------------------------- | -------------------------------------------------------------- |
+| Backlog count            | `backlog_count`            | Number of messages currently in the queue                      |
+| Backlog bytes            | `backlog_bytes`            | Total size of messages in the queue, in bytes                  |
+| Oldest message timestamp | `oldest_message_timestamp_ms` | Timestamp (in milliseconds) of the oldest message in the queue |
+
+To retrieve these metrics via the REST API, use the metrics endpoint (`/accounts/{account_id}/queues/{queue_id}/metrics`).
+
+These fields are also included in `metadata.metrics` when calling `send()`, `sendBatch()`, or `metrics()` via the JavaScript API.
+
 ## Example GraphQL Queries
 
 ### Get average queue backlog over time period

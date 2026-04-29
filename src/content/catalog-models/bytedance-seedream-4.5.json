@@ -12,7 +12,6 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {},
 	"examples": [
 		{
 			"name": "Simple Generation",
@@ -22,8 +21,19 @@
 			},
 			"output": {
 				"images": [
-					"https://replicate.delivery/xezq/v9yfL5jL43WoPK3Cbac7MnfkO1YxGSbqea3rfOO06fOJIsGzC/tmp17mjrmct.jpg"
+					"https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-4.5/simple-generation-0.jpeg"
 				]
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"images": [
+						"https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-4-5/0217764052077481386b9a8ed856c57501cfa946ce34c9865285c_0.jpeg"
+					]
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
 			},
 			"code_snippets": [
 				{
@@ -43,8 +53,19 @@
 			},
 			"output": {
 				"images": [
-					"https://replicate.delivery/xezq/XgK4QxmepmyhMSOG0Jb05jAhIAxeIVleoxytNLjAQqeDFWjZB/tmp5vwo098k.jpg"
+					"https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-4.5/high-resolution-0.jpeg"
 				]
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"images": [
+						"https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-4-5/0217764052077581386b9a8ed856c57501cfa946ce34c985dabe3_0.jpeg"
+					]
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
 			},
 			"code_snippets": [
 				{
@@ -66,8 +87,19 @@
 			},
 			"output": {
 				"images": [
-					"https://replicate.delivery/xezq/A8YsG3WmRgp5OV3XS47jJyMfrIMBIRRRYVYaWEUSicZy0aMLA/tmpgbcs879h.jpg"
+					"https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-4.5/image-to-image-0.jpeg"
 				]
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"images": [
+						"https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-4-5/0217764052176861386b9a8ed856c57501cfa946ce34c98846458_0.jpeg"
+					]
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
 			},
 			"code_snippets": [
 				{
@@ -82,20 +114,31 @@
 			"description": "Generate multiple related images",
 			"input": {
 				"prompt": "A character design sheet for a fantasy warrior: front view, side view, and back view",
+				"aspect_ratio": "16:9",
 				"sequential_image_generation": "auto",
-				"max_images": 3,
-				"aspect_ratio": "16:9"
+				"max_images": 3
 			},
 			"output": {
 				"images": [
-					"https://replicate.delivery/xezq/GhUtCYpyffvUGkI5gyiHfG6XsgZKM47veek1eExlta8lWYNmF/tmpcv5bwg8h.jpg"
+					"https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-4.5/sequential-generation-0.jpeg"
 				]
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"images": [
+						"https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-4-5/0217764052291261386b9a8ed856c57501cfa946ce34c98481db1_0.jpeg"
+					]
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.5',\n  {\n    prompt:\n      'A character design sheet for a fantasy warrior: front view, side view, and back view',\n    sequential_image_generation: 'auto',\n    max_images: 3,\n    aspect_ratio: '16:9',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'bytedance/seedream-4.5',\n  {\n    prompt:\n      'A character design sheet for a fantasy warrior: front view, side view, and back view',\n    aspect_ratio: '16:9',\n    sequential_image_generation: 'auto',\n    max_images: 3,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
 				}
 			]
 		},
@@ -112,8 +155,19 @@
 			},
 			"output": {
 				"images": [
-					"https://replicate.delivery/xezq/jgYAANfEfZsrTE9p7mtEOssRRcZua7p3s1H6VWPRAey6TrxsA/tmpxntp4kc5.jpg"
+					"https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/bytedance__seedream-4.5/multi-image-edit-0.jpeg"
 				]
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"images": [
+						"https://ark-content-generation-v2-ap-southeast-1.tos-ap-southeast-1.volces.com/seedream-4-5/0217764052323791386b9a8ed856c57501cfa946ce34c98b2f132_0.jpeg"
+					]
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
 			},
 			"code_snippets": [
 				{
@@ -126,8 +180,8 @@
 	],
 	"supports_async": false,
 	"external_info": "https://seed.bytedance.com/en/seedream4_5",
-	"terms": null,
-	"cover_image_url": "https://tjzk.replicate.delivery/models_models_featured_image/2e35026c-1f46-4bbe-a314-e27079e943fa/seedream-45-sm.jpg",
+	"terms": "",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/bytedance/seedream-4.5.png",
 	"metadata": {
 		"Max Images": "15",
 		"Multi-Reference": "Yes",
@@ -136,9 +190,9 @@
 	"created_at": "2026-04-08 22:06:07",
 	"default_example": null,
 	"code_snippets": [],
+	"zdr": false,
+	"zdr_comment": null,
 	"schema": {
-		"model_id": "bytedance/seedream-4.5",
-		"version": "1.0.0",
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
 			"type": "object",

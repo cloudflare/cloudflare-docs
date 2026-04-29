@@ -4,6 +4,8 @@ title: API
 sidebar:
   order: 3
 description: Vite plugin API
+products:
+  - workers
 ---
 
 import { Type, MetaInfo } from "~/components";
@@ -66,6 +68,12 @@ It accepts an optional `PluginConfig` parameter.
   A custom port can be provided or, alternatively, setting this to `false` will disable the debugging inspector.
 
   See [Debugging](/workers/vite-plugin/reference/debugging/) for more information.
+
+- `tunnel` <Type text='boolean' /> <MetaInfo text='optional' />
+
+  Open a publicly reachable Cloudflare Quick Tunnel for sharing a preview, testing webhooks, or accessing the app from another device.
+
+  See [Share a local dev server](/workers/development-testing/local-dev-tunnels/) for more information.
 
 - `auxiliaryWorkers` <Type text='Array<AuxiliaryWorkerConfig>' /> <MetaInfo text='optional' />
 

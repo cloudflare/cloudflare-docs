@@ -15,6 +15,8 @@ import { LinkCard, MetaInfo, Type } from "~/components";
 
 Use the Artifacts REST API to manage repos, remotes, forks, imports, and tokens from external systems.
 
+Review [Namespaces](/artifacts/concepts/namespaces/) first, then choose the namespace name you will use in these API paths.
+
 ## Base URL and authentication
 
 Artifacts REST routes use this base path:
@@ -23,10 +25,10 @@ Artifacts REST routes use this base path:
 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/artifacts/namespaces/$ARTIFACTS_NAMESPACE
 ```
 
-Requests to `/v1/api/...` use Bearer authentication:
+Requests use Bearer authentication:
 
 ```txt
-Authorization: Bearer <CLOUDFLARE_API_TOKEN>
+Authorization: Bearer $CLOUDFLARE_API_TOKEN
 ```
 
 All routes below are relative to this base URL.
@@ -109,7 +111,7 @@ export interface RepoInfo {
 	read_only: boolean;
 }
 
-export interface RemoteRepoInfo extends RepoInfo {
+export interface RepoWithRemote extends RepoInfo {
 	remote: string;
 }
 
@@ -185,6 +187,8 @@ curl --request POST "$ARTIFACTS_BASE_URL/repos" \
 }
 ```
 
+Create, fork, and import responses return the token string only. The token encodes its expiry directly in the `?expires=` suffix. The separate `POST /tokens` route also returns `expires_at` alongside the plaintext token.
+
 ### List repos
 
 Route: `GET /repos?limit=&cursor=&search=&sort=&direction=`
@@ -208,7 +212,7 @@ export interface ListReposQuery {
 	direction?: SortDirection;
 }
 
-export type ListReposResponse = ApiEnvelope<RepoInfo[]>;
+export type ListReposResponse = ApiEnvelope<RepoWithRemote[]>;
 ```
 
 ```bash
@@ -228,7 +232,8 @@ curl "$ARTIFACTS_BASE_URL/repos?limit=20&sort=updated_at&direction=desc" \
 			"updated_at": "<ISO_TIMESTAMP>",
 			"last_push_at": "<ISO_TIMESTAMP>",
 			"source": null,
-			"read_only": false
+			"read_only": false,
+			"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/starter-repo.git"
 		}
 	],
 	"success": true,
@@ -249,7 +254,7 @@ Route: `GET /repos/:name`
 Response type:
 
 ```ts
-export type GetRepoResponse = ApiEnvelope<RemoteRepoInfo>;
+export type GetRepoResponse = ApiEnvelope<RepoWithRemote>;
 ```
 
 ```bash
@@ -394,7 +399,7 @@ Pass a full HTTPS Git remote URL, for example `https://github.com/facebook/react
 
 ```bash
 curl --request POST "$ARTIFACTS_BASE_URL/repos/react-mirror/import" \
-  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 	--header "Content-Type: application/json" \
 	--data '{
 	  "url": "https://github.com/facebook/react",
@@ -418,6 +423,8 @@ curl --request POST "$ARTIFACTS_BASE_URL/repos/react-mirror/import" \
 	"messages": []
 }
 ```
+
+If a repo exists but is still importing or forking, this route can return `409 Conflict` with a retriable error message.
 
 ## Tokens
 
@@ -535,11 +542,11 @@ Route: `DELETE /tokens/:id`
 Response type:
 
 ```ts
-export interface RevokeTokenResult {
+export interface DeleteTokenResult {
 	id: string;
 }
 
-export type RevokeTokenResponse = ApiEnvelope<RevokeTokenResult>;
+export type DeleteTokenResponse = ApiEnvelope<DeleteTokenResult>;
 ```
 
 ```bash

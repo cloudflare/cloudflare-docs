@@ -33,6 +33,8 @@ package.json @cloudflare/content-engineering
 /src/content/release-notes/ai-gateway.yaml @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @bfirsh @mattrothenberg @ethulia @cloudflare/pcx-technical-writing @cloudflare/product-owners
 /src/content/release-notes/vectorize.yaml @elithrar @mchenco @sejoker @cloudflare/pcx-technical-writing @cloudflare/product-owners
 /src/content/docs/ai-search/ @rita3ko @irvinebroque @aninibread @cloudflare/pcx-technical-writing @cloudflare/product-owners
+/src/content/catalog-models/ @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @bfirsh @mattrothenberg @ethulia @cloudflare/content-engineering @cloudflare/pcx-technical-writing @cloudflare/product-owners
+/bin/fetch-catalog-models.ts @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @bfirsh @mattrothenberg @ethulia @cloudflare/content-engineering @cloudflare/pcx-technical-writing @cloudflare/product-owners @kodster28
 
 # AI Crawl Control
 /src/content/docs/ai-crawl-control/ @cloudflare/pcx-technical-writing @cloudflare/product-owners @CameronWhiteside

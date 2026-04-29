@@ -34,6 +34,7 @@ async function autogenSections() {
 		})
 	)
 		.filter((x) => x.isDirectory())
+		.filter((x) => !["agent-setup"].includes(x.name))
 		.map((x) => x.name);
 	return sections.map((x) => {
 		return {
@@ -154,6 +155,7 @@ export default defineConfig({
 				MarkdownContent: "./src/components/overrides/MarkdownContent.astro",
 				Sidebar: "./src/components/overrides/Sidebar.astro",
 				PageTitle: "./src/components/overrides/PageTitle.astro",
+				SkipLink: "./src/components/overrides/SkipLink.astro",
 				TableOfContents: "./src/components/overrides/TableOfContents.astro",
 			},
 			sidebar,
@@ -193,6 +195,7 @@ export default defineConfig({
 									"/style-guide/index.md",
 									"/videos/**",
 									"/search/**",
+									"/agent-setup/",
 								],
 							}),
 						]

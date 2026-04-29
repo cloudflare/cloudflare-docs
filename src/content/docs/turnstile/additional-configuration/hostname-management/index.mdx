@@ -28,7 +28,7 @@ By default, every widget requires at least one hostname to be configured. You ca
 When adding hostnames, follow these requirements:
 
 - The hostname must be fully qualified domain names (FQDNs): `example.com` or `subdomain.example.com`
-- No wildcards are supported. You must specify each hostname individually.
+- Wildcard characters (such as `*`) are not supported in the hostname field. However, adding a hostname automatically authorizes all of its subdomains.
 
 :::caution[Invalid formats]
 The following formats are not valid and will not be accepted:
@@ -40,18 +40,33 @@ The following formats are not valid and will not be accepted:
 
 ### Subdomain behavior
 
-Specifying a subdomain provides additional security by restricting widget usage. 
+When you add a hostname, the widget will work on that exact hostname and all of its subdomains. This means adding a root domain covers all subdomains beneath it, while adding a specific subdomain restricts the widget to only that subdomain and its children.
 
-For example, adding `www.example.com` as a hostname will allow widgets to work on:
+#### Example: Root domain
+
+Adding `example.com` as a hostname will allow the widget to work on:
+
+- `example.com`
+- `www.example.com`
+- `shop.example.com`
+- `any.sub.example.com`
+
+#### Example: Specific subdomain
+
+Adding `www.example.com` as a hostname provides more restrictive control. The widget will work on:
 
 - `www.example.com`
-- `abc.www.example.com:8080` (subdomains of the specified hostname). 
+- `abc.www.example.com` (subdomains of the specified hostname)
 
-However, it will not work on:
+However, it will **not** work on:
 
 - `example.com` (parent domain)
 - `dash.example.com` (sibling subdomain)
 - `cloudflare.com` (unrelated domain)
+
+:::note
+Use a specific subdomain when you want to restrict the widget to a narrower scope. For example, if you only want the widget on your checkout flow, add `checkout.example.com` rather than `example.com`.
+:::
 
 ## Add hostnames
 

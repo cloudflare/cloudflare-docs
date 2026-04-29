@@ -422,14 +422,14 @@ const variantRows =
 				variants={variantRows}
 				schemaId={schemaId}
 				hideRequired={hideRequired}
-				client:load
+				client:visible
 			/>
 		) : rows.length === 0 ? (
 			<p class="text-sm text-gray-500 dark:text-gray-400">
 				No parameters defined.
 			</p>
 		) : (
-			<SchemaTreeView rows={rows} schemaId={schemaId} hideRequired={hideRequired} client:load />
+			<SchemaTreeView rows={rows} schemaId={schemaId} hideRequired={hideRequired} client:visible />
 		)
 	}
 </div>

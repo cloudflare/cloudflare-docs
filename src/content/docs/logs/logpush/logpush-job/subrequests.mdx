@@ -3,6 +3,9 @@ pcx_content_type: how-to
 title: Subrequests
 sidebar:
   order: 8
+description: Control how Worker subrequests appear in Logpush.
+products:
+  - logpush
 ---
 
 import { DashButton } from "~/components";
@@ -34,6 +37,9 @@ Subrequest merging is an opt-in feature on the http_requests dataset. With subre
 ## Merging Eligibility
 - A maximum of 50 subrequests are merged per parent request. Subrequests beyond this limit are passed through unmodified as individual log entries.
 - Subrequests must complete within 5 minutes of the visitor request. Subrequests that exceed this window are passed through unmodified.
+:::note
+Subrequest merging is being gradually rolled out and is not yet available on all zones. Contact your account team for concerns or to ensure it is enabled for your zone.
+:::
 
 ## New log field
 When subrequest merging is enabled, a `Subrequests` field (`array<object>`) is added to each parent request log record. Each element in the array contains the standard http_requests fields for that subrequest.

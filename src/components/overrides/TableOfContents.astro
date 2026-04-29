@@ -2,6 +2,7 @@
 import Default from "@astrojs/starlight/components/TableOfContents.astro";
 import { Icon } from "@astrojs/starlight/components";
 import FeedbackPrompt from "../FeedbackPrompt.tsx";
+import AgentsToolkit from "../AgentsToolkit.tsx";
 
 const tags = Astro.locals.starlightRoute.entry.data.tags;
 const showFeedback = Astro.locals.starlightRoute.entry.data.feedback;
@@ -37,19 +38,24 @@ const { editUrl } = Astro.locals.starlightRoute;
 	{
 		(showFeedback || showActions) && (
 			<div class="mt-6 flex flex-col gap-5 border-t border-[var(--sidebar-border)] pt-6">
+				<nav class="agents-toolkit-container" aria-label="Agents toolkit">
+					<AgentsToolkit client:only="react" />
+				</nav>
+
 				{showFeedback && (
-					<div class="feedback-container">
-						<FeedbackPrompt client:idle />
+					<div class="feedback-container border-t border-[var(--sidebar-border)] pt-5">
+						<FeedbackPrompt client:only="react" />
 					</div>
 				)}
 
 				{showActions && (
-					<div class="flex flex-col gap-3">
+					<nav class="flex flex-col gap-3" aria-label="Page actions">
 						{editUrl && (
-							<a
-								href={editUrl}
-							class="group flex items-center gap-2.5 rounded-sm text-[13px] text-[var(--sl-color-gray-2)] transition-colors duration-150 ease-out hover:text-[var(--sl-color-white)] focus-visible:ring-2 focus-visible:ring-[var(--sl-color-text-accent)] focus-visible:outline-none"
-						>
+						<a
+							href={editUrl}
+							target="_blank"
+						class="group flex items-center gap-2.5 rounded-sm text-[13px] text-[var(--sl-color-gray-2)] transition-colors duration-150 ease-out hover:text-[var(--sl-color-white)] focus-visible:ring-2 focus-visible:ring-[var(--sl-color-text-accent)] focus-visible:outline-none"
+					>
 							<Icon
 								name="pencil"
 								class="h-3.5 w-3.5"
@@ -58,10 +64,11 @@ const { editUrl } = Astro.locals.starlightRoute;
 							<span>Edit page</span>
 						</a>
 					)}
-					<a
-						href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose"
-						class="group flex items-center gap-2.5 rounded-sm text-[13px] text-[var(--sl-color-gray-2)] transition-colors duration-150 ease-out hover:text-[var(--sl-color-white)] focus-visible:ring-2 focus-visible:ring-[var(--sl-color-text-accent)] focus-visible:outline-none"
-					>
+				<a
+					href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose"
+					target="_blank"
+					class="group flex items-center gap-2.5 rounded-sm text-[13px] text-[var(--sl-color-gray-2)] transition-colors duration-150 ease-out hover:text-[var(--sl-color-white)] focus-visible:ring-2 focus-visible:ring-[var(--sl-color-text-accent)] focus-visible:outline-none"
+				>
 						<Icon
 							name="github"
 							class="h-3.5 w-3.5"
@@ -69,7 +76,7 @@ const { editUrl } = Astro.locals.starlightRoute;
 							/>
 							<span>Report issue</span>
 						</a>
-					</div>
+					</nav>
 				)}
 			</div>
 		)

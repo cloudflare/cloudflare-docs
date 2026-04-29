@@ -1,0 +1,176 @@
+{
+	"model_id": "alibaba/hh1-t2v",
+	"provider_id": "alibaba",
+	"name": "HappyHorse 1.0 T2V",
+	"description": "Alibaba's HappyHorse 1.0 text-to-video model. Generates videos from a text prompt with configurable resolution, aspect ratio, and duration (3-15s).",
+	"task": "Text-to-Video",
+	"tags": [
+		"Text-to-Video",
+		"Video Generation"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Text-to-Video",
+			"description": "Generate a short video from a text prompt",
+			"input": {
+				"prompt": "A little girl walking on the road"
+			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/alibaba__hh1-t2v/simple-text-to-video.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/alibaba__hh1-t2v/simple-text-to-video.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "BYOK"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'alibaba/hh1-t2v',\n  {\n    prompt: 'A little girl walking on the road',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Vertical 1080P",
+			"description": "Vertical 9:16 output at 1080P for social media",
+			"input": {
+				"prompt": "A dog running through a field of tall grass, slow motion, golden hour",
+				"resolution": "1080P",
+				"ratio": "9:16",
+				"duration": 6
+			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/alibaba__hh1-t2v/vertical-1080p.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/alibaba__hh1-t2v/vertical-1080p.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "BYOK"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'alibaba/hh1-t2v',\n  {\n    prompt:\n      'A dog running through a field of tall grass, slow motion, golden hour',\n    resolution: '1080P',\n    ratio: '9:16',\n    duration: 6,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Reproducible Output",
+			"description": "Use a fixed seed for reproducibility",
+			"input": {
+				"prompt": "Clouds drifting across a mountain range, time-lapse style",
+				"resolution": "720P",
+				"ratio": "16:9",
+				"duration": 5,
+				"seed": 42
+			},
+			"output": {
+				"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/alibaba__hh1-t2v/reproducible-output.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/alibaba__hh1-t2v/reproducible-output.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "BYOK"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'alibaba/hh1-t2v',\n  {\n    prompt: 'Clouds drifting across a mountain range, time-lapse style',\n    resolution: '720P',\n    ratio: '16:9',\n    duration: 5,\n    seed: 42,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://modelstudio.console.alibabacloud.com/",
+	"terms": "https://www.alibabacloud.com/help/en/legal",
+	"cover_image_url": null,
+	"metadata": {
+		"Resolutions": "720P, 1080P",
+		"Aspect Ratios": "16:9, 9:16, 1:1, 4:3, 3:4",
+		"Max Duration": "15 seconds"
+	},
+	"created_at": "2026-04-27 16:27:55",
+	"default_example": null,
+	"code_snippets": [],
+	"zdr": false,
+	"zdr_comment": null,
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string",
+					"minLength": 1,
+					"maxLength": 2500
+				},
+				"resolution": {
+					"type": "string",
+					"enum": [
+						"720P",
+						"1080P"
+					]
+				},
+				"ratio": {
+					"type": "string",
+					"enum": [
+						"16:9",
+						"9:16",
+						"1:1",
+						"4:3",
+						"3:4"
+					]
+				},
+				"duration": {
+					"type": "integer",
+					"minimum": 3,
+					"maximum": 15
+				},
+				"seed": {
+					"type": "integer",
+					"minimum": 0,
+					"maximum": 2147483647
+				},
+				"watermark": {
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"prompt"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"video": {
+					"type": "string",
+					"format": "uri"
+				}
+			},
+			"required": [
+				"video"
+			],
+			"additionalProperties": false
+		}
+	}
+}

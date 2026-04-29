@@ -23,7 +23,7 @@ sudo warp-cli connector new <TOKEN> && sudo warp-cli connect
 <TabItem label="RedHat / CentOS">
 
 ```sh
-sudo rpm -ivh https://pkg.cloudflareclient.com/cloudflare-release-el8.rpm &&
+curl -fsSl https://pkg.cloudflareclient.com/cloudflare-warp-ascii.repo | sudo tee /etc/yum.repos.d/cloudflare-warp.repo &&
 sudo yum install -y cloudflare-warp &&
 printf 'net.ipv4.ip_forward = 1\nnet.ipv6.conf.all.forwarding = 1\nnet.ipv6.conf.all.accept_ra = 2\n' | sudo tee /etc/sysctl.d/99-zzz-cloudflare-warp-connector.conf &&
 sudo sysctl --system

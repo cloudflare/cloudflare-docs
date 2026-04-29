@@ -34,7 +34,7 @@ cd repo-per-sandbox
 
 ## 1. Create or reuse the repo
 
-The template keeps one Artifacts repo per sandbox ID:
+The template keeps one Artifacts repo per sandbox ID. Use your own source of truth to decide whether this request should create a new repo or load an existing one.
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -42,24 +42,28 @@ The template keeps one Artifacts repo per sandbox ID:
 let defaultBranch: string;
 let remote: string;
 let token: string;
+const sandboxWasJustCreated = true; // for example, set this when you create a new sandbox record
 
-try {
-	const repo = await env.ARTIFACTS.get(sandboxId);
-
-	defaultBranch = repo.defaultBranch;
-	remote = repo.remote;
-	token = (await repo.createToken("write", 3600)).plaintext;
-} catch {
-	// Repo doesn't exist yet — create it.
+if (sandboxWasJustCreated) {
 	const created = await env.ARTIFACTS.create(sandboxId);
 
 	defaultBranch = created.defaultBranch;
 	remote = created.remote;
 	token = created.token;
+} else {
+	const repo = await env.ARTIFACTS.get(sandboxId);
+
+	defaultBranch = repo.defaultBranch;
+	remote = repo.remote;
+	token = (await repo.createToken("write", 3600)).plaintext;
 }
 ```
 
 </TypeScriptExample>
+
+The template already knows the repo name, so start with direct lookup instead of scanning `list()` pages. Avoid broad `catch` blocks here. They can hide missing-repo, auth, and validation failures behind the same retry message.
+
+If your flow can race with repo creation, handle that retry at the application level after you inspect the thrown error.
 
 ## 2. Create or reuse the sandbox
 

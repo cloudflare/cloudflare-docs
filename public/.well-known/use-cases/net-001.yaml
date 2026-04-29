@@ -1,0 +1,107 @@
+id: net-001
+name: Consolidate your network and security into one cloud platform
+category: network-connectivity-wan
+description: >
+  Migrate from legacy perimeter security to unified SASE with one control plane.
+products:
+  - Cloudflare One
+  - Access
+  - CASB
+  - Cloudflare Network Firewall
+  - Cloudflare Tunnel
+  - Cloudflare WAN
+  - DLP
+  - Gateway
+
+qualifying_questions:
+  - id: q1
+    text: "Where are you in your SASE journey?"
+    options:
+      - label: "Just starting — evaluating cloud-delivered security and networking (SASE)"
+        sets: [greenfield]
+      - label: "Migrating from existing point solutions"
+        sets: [migration]
+      - label: "Extending an existing partial SASE setup"
+        sets: [extension]
+      - label: "I'm not sure"
+        sets: [extension]
+  - id: q2
+    text: "What is your highest priority?"
+    options:
+      - label: "Secure remote/hybrid workforce"
+        sets: [workforce]
+      - label: "Connect and protect branch offices"
+        sets: [branches]
+      - label: "Secure SaaS and Internet access"
+        sets: [saas-internet]
+      - label: "All of the above"
+        sets: [workforce, branches, saas-internet]
+
+default_path: workforce-first
+
+paths:
+  - id: workforce-first
+    name: "Workforce-First SASE Rollout"
+    condition:
+      has_any: [workforce, greenfield]
+    steps:
+      - product: "Access"
+        action: configure-idp
+        description: "Connect identity providers to Cloudflare Access"
+      - product: "Access"
+        action: deploy-ztna
+        description: "Deploy ZTNA to replace VPN for application access"
+      - product: "Gateway"
+        action: deploy-swg
+        description: "Deploy Secure Web Gateway for Internet traffic"
+      - product: "DLP"
+        action: create-dlp-profiles
+        description: "Enable DLP for data protection"
+      - product: "CASB"
+        action: add-integration
+        description: "Connect critical SaaS apps via CASB"
+
+  - id: branch-first
+    name: "Branch-First SASE Rollout"
+    condition:
+      has_any: [branches]
+    steps:
+      - product: "Cloudflare WAN"
+        action: connect-sites
+        description: "Connect branch offices via Cloudflare WAN (IPsec/GRE or connector)"
+      - product: "Cloudflare Network Firewall"
+        action: configure-fwaas
+        description: "Deploy firewall-as-a-service for branch traffic"
+      - product: "Gateway"
+        action: deploy-swg
+        description: "Deploy SWG for branch Internet breakout"
+      - product: "Access"
+        action: deploy-ztna
+        description: "Layer on ZTNA for application-level access control"
+
+  - id: migration-path
+    name: "Migrate from Existing Point Solutions"
+    condition:
+      has_any: [migration]
+    steps:
+      - product: "Access"
+        action: configure-idp
+        description: "Connect identity providers"
+      - product: "Cloudflare Tunnel"
+        action: create-tunnel
+        description: "Create tunnels to replace existing VPN concentrators"
+      - product: "Gateway"
+        action: migrate-swg-policies
+        description: "Recreate existing SWG/proxy policies in Gateway"
+      - product: "CASB"
+        action: migrate-casb-integrations
+        description: "Connect SaaS apps previously monitored by other CASB"
+      - product: "DLP"
+        action: migrate-dlp-profiles
+        description: "Recreate DLP detection profiles"
+
+related_use_cases:
+  - zt-001
+  - zt-003
+  - net-002
+  - zt-016

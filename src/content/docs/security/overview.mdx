@@ -3,6 +3,9 @@ title: Security overview
 pcx_content_type: concept
 sidebar:
   order: 2
+description: Review your domain's security posture and action items.
+products:
+  - security
 ---
 
 import { DashButton } from "~/components";
@@ -76,6 +79,8 @@ To view when an action item’s status was changed and the rationale provided fo
 | `GET` | `/api/accounts/{accountID}/issues/{insightID}/audit-log` | List all audit logs for a specific issue |
 | `GET` | `/api/accounts/{accountID}/zones/{zoneID}/insights/audit-log` | List all audit logs for a domain |
 | `GET` | `/api/accounts/{accountID}/zones/{zoneID}/insights/{insightID}/audit-log` | List audit logs for a specific issue in a domain |
+
+Refer to our [Security Center API documentation](/api/resources/security_center) to review the action item audit logs by account, domain, or a specific `issue_id`.
 
 ## Detection tools
 

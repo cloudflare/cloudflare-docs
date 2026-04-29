@@ -15,4 +15,5 @@ When a Cloudflare Worker intercepts a visitor request, it can dispatch additiona
 - A maximum of 50 subrequests are merged per parent request. Subrequests beyond this limit are passed through unmodified as individual log entries.
 - Subrequests must complete within 5 minutes of the visitor request. Subrequests that exceed this window are passed through unmodified.
 - Subrequests that do not qualify appear as separate log entries — no data is lost.
+- Subrequest merging is being gradually rolled out and is not yet available on all zones. Contact your account team for concerns or to ensure it is enabled for your zone.
 - For more information, refer to [Subrequests](/logs/logpush/logpush-job/subrequests/).

@@ -158,6 +158,14 @@ const hasSupportedLanguages = model.name === "@cf/deepgram/nova-3";
 const hasSchema =
 	model.schema.input && Object.keys(model.schema.input).length > 0;
 
+// Base path for the static schema JSON endpoints.
+// workers-ai models use the short slug (last segment of model name).
+// catalog models use the full slug as-is (may be multi-segment, e.g. "openai/gpt-5.4-mini").
+const schemaBasePath =
+	model.dataSource === "legacy"
+		? `/workers-ai/models/${model.name.split("/").at(-1)}`
+		: `/ai/models/${model.slug}`;
+
 const authorName = author?.name ?? authorId;
 const pageTitle = `${displayName} (${authorName}) · Cloudflare AI docs`;
 
@@ -180,7 +188,7 @@ const starlightPageProps = {
 			? { depth: 2, slug: "Examples", text: "Examples" }
 			: false,
 		hasSchema ? { depth: 2, slug: "Parameters", text: "Parameters" } : false,
-		hasSchema ? { depth: 2, slug: "API-Schemas", text: "API Schemas" } : false,
+		hasSchema ? { depth: 2, slug: "API-Schemas", text: "API Schemas (Raw)" } : false,
 	].filter((v) => Boolean(v)) as MarkdownHeading[],
 	hideTitle: true,
 } as StarlightPageProps;
@@ -341,65 +349,100 @@ const starlightPageProps = {
 			<>
 				<h2 id="Parameters">Parameters</h2>
 
-				<div class="space-y-3">
-					{model.apiModes.map((mode) => (
-						<details class="group rounded-lg border border-gray-200 p-0 py-3 dark:border-gray-700">
-							<summary class="cursor-pointer px-8 font-medium text-gray-900 dark:text-gray-100">
-								<span>{mode.name}</span>
-								{mode.description && (
-									<span class="text-sm font-normal text-gray-500 dark:text-gray-400">
-										— {mode.description}
-									</span>
-								)}
-							</summary>
-							<div class="border-t border-gray-200 p-4 pb-1 dark:border-gray-700">
-								<Tabs syncKey={`schema-${mode.id}`}>
-									<TabItem label="Input">
-										<SchemaDisplay schema={mode.input} title="Input" />
-									</TabItem>
-									<TabItem label="Output">
-										<SchemaDisplay schema={mode.output} title="Output" />
-									</TabItem>
-								</Tabs>
+				{/*
+				 * Render input schema once (shared across all modes), then
+				 * render per-mode output sections. This avoids duplicating the
+				 * processed SchemaRowData tree in the HTML for every mode.
+				 *
+				 * Sync and streaming always share the same input; batch may differ.
+				 * We detect shared input by comparing JSON serialisation.
+				 */}
+				{(() => {
+					// Detect which modes share the same input as the first mode
+					const firstInputJson = JSON.stringify(model.apiModes[0].input);
+					const allInputsIdentical = model.apiModes.every(
+						(mode) => JSON.stringify(mode.input) === firstInputJson,
+					);
+
+					return allInputsIdentical ? (
+						<>
+							{/* Input rendered once */}
+							<h3 class="mt-4! mb-2! text-base font-semibold">Input</h3>
+							<SchemaDisplay schema={model.apiModes[0].input} title="Input" />
+
+							{/* Output per mode */}
+							<h3 class="mt-6! mb-2! text-base font-semibold">Output</h3>
+							<div class="space-y-3">
+								{model.apiModes.map((mode) => (
+									<details class="group rounded-lg border border-gray-200 p-0 py-3 dark:border-gray-700">
+										<summary class="cursor-pointer px-8 font-medium text-gray-900 dark:text-gray-100">
+											<span>{mode.name}</span>
+											{mode.description && (
+												<span class="text-sm font-normal text-gray-500 dark:text-gray-400">
+													— {mode.description}
+												</span>
+											)}
+										</summary>
+										<div class="border-t border-gray-200 p-4 pb-1 dark:border-gray-700">
+											<SchemaDisplay schema={mode.output} title="Output" />
+										</div>
+									</details>
+								))}
 							</div>
-						</details>
-					))}
-				</div>
+						</>
+					) : (
+						/* Inputs differ (e.g. batch has different input) — show per-mode tabs */
+						<div class="space-y-3">
+							{model.apiModes.map((mode) => (
+								<details class="group rounded-lg border border-gray-200 p-0 py-3 dark:border-gray-700">
+									<summary class="cursor-pointer px-8 font-medium text-gray-900 dark:text-gray-100">
+										<span>{mode.name}</span>
+										{mode.description && (
+											<span class="text-sm font-normal text-gray-500 dark:text-gray-400">
+												— {mode.description}
+											</span>
+										)}
+									</summary>
+									<div class="border-t border-gray-200 p-4 pb-1 dark:border-gray-700">
+										<Tabs syncKey={`schema-${mode.id}`}>
+											<TabItem label="Input">
+												<SchemaDisplay schema={mode.input} title="Input" />
+											</TabItem>
+											<TabItem label="Output">
+												<SchemaDisplay schema={mode.output} title="Output" />
+											</TabItem>
+										</Tabs>
+									</div>
+								</details>
+							))}
+						</div>
+					);
+				})()}
 
 				<h2 id="API-Schemas">API Schemas (Raw)</h2>
-				<div class="space-y-3">
-					{model.apiModes.map((mode) => (
-						<details class="group rounded-lg border border-gray-200 p-0 py-3 dark:border-gray-700">
-							<summary class="cursor-pointer px-8 font-medium text-gray-900 dark:text-gray-100">
-								<span>{mode.name}</span>
-								{mode.description && (
-									<span class="ml-2 text-sm font-normal text-gray-500 dark:text-gray-400">
-										— {mode.description}
-									</span>
-								)}
-							</summary>
-							<div class="px-4 py-2">
-								<Tabs syncKey={`raw-schema-${mode.id}`}>
-									<TabItem label="Input">
-										<div class="[&_pre]:max-h-[500px] [&_pre]:overflow-y-scroll">
-											<Code
-												code={JSON.stringify(mode.input, null, 2)}
-												lang="json"
-											/>
-										</div>
-									</TabItem>
-									<TabItem label="Output">
-										<div class="[&_pre]:max-h-[500px] [&_pre]:overflow-y-scroll">
-											<Code
-												code={JSON.stringify(mode.output, null, 2)}
-												lang="json"
-											/>
-										</div>
-									</TabItem>
-								</Tabs>
-							</div>
-						</details>
-					))}
+				<div class="not-content grid grid-cols-1 gap-2 sm:grid-cols-2">
+					{model.apiModes.flatMap((mode) => [
+						<div class="flex items-center justify-between rounded-lg border border-gray-200 px-4 py-1.5 dark:border-gray-700">
+							<span class="text-sm">
+								<span class="font-medium text-gray-900 dark:text-gray-100">{mode.name}</span>
+								<span class="ml-2 text-gray-500 dark:text-gray-400">Input</span>
+							</span>
+							<span class="flex items-center gap-1">
+								<a href={`${schemaBasePath}/${mode.id}-input.json`} target="_blank" rel="noopener noreferrer" title="Open" class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+								<a href={`${schemaBasePath}/${mode.id}-input.json`} download={`${mode.id}-input.json`} title="Download" class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></a>
+							</span>
+						</div>,
+						<div class="flex items-center justify-between rounded-lg border border-gray-200 px-4 py-1.5 dark:border-gray-700">
+							<span class="text-sm">
+								<span class="font-medium text-gray-900 dark:text-gray-100">{mode.name}</span>
+								<span class="ml-2 text-gray-500 dark:text-gray-400">Output</span>
+							</span>
+							<span class="flex items-center gap-1">
+								<a href={`${schemaBasePath}/${mode.id}-output.json`} target="_blank" rel="noopener noreferrer" title="Open" class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+								<a href={`${schemaBasePath}/${mode.id}-output.json`} download={`${mode.id}-output.json`} title="Download" class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></a>
+							</span>
+						</div>,
+					])}
 				</div>
 			</>
 		) : (
@@ -437,25 +480,23 @@ const starlightPageProps = {
 						</TabItem>
 					</Tabs>
 
-					<h2 id="API-Schemas">API Schemas</h2>
-					<Tabs syncKey="schema-tab">
-						<TabItem label="Input">
-							<div class="[&_pre]:max-h-[500px] [&_pre]:overflow-y-auto">
-								<Code
-									code={JSON.stringify(model.schema.input, null, 2)}
-									lang="json"
-								/>
-							</div>
-						</TabItem>
-						<TabItem label="Output">
-							<div class="[&_pre]:max-h-[500px] [&_pre]:overflow-y-auto">
-								<Code
-									code={JSON.stringify(model.schema.output, null, 2)}
-									lang="json"
-								/>
-							</div>
-						</TabItem>
-					</Tabs>
+					<h2 id="API-Schemas">API Schemas (Raw)</h2>
+					<div class="not-content grid grid-cols-1 gap-2 sm:grid-cols-2">
+						<div class="flex items-center justify-between rounded-lg border border-gray-200 px-4 py-1.5 dark:border-gray-700">
+							<span class="text-sm font-medium text-gray-900 dark:text-gray-100">Input</span>
+							<span class="flex items-center gap-1">
+								<a href={`${schemaBasePath}/schema-input.json`} target="_blank" rel="noopener noreferrer" title="Open" class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+								<a href={`${schemaBasePath}/schema-input.json`} download="schema-input.json" title="Download" class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></a>
+							</span>
+						</div>
+						<div class="flex items-center justify-between rounded-lg border border-gray-200 px-4 py-1.5 dark:border-gray-700">
+							<span class="text-sm font-medium text-gray-900 dark:text-gray-100">Output</span>
+							<span class="flex items-center gap-1">
+								<a href={`${schemaBasePath}/schema-output.json`} target="_blank" rel="noopener noreferrer" title="Open" class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+								<a href={`${schemaBasePath}/schema-output.json`} download="schema-output.json" title="Download" class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></a>
+							</span>
+						</div>
+					</div>
 				</>
 			)
 		)

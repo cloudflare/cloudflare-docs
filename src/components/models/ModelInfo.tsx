@@ -1,9 +1,9 @@
 import type { WorkersAIModelsSchema } from "~/schemas";
-import type { ResolvedModel } from "~/util/model-types";
+import type { ModelCardData, ResolvedModel } from "~/util/model-types";
 import { getModelAuthor } from "~/util/model-helpers";
 import { authorData } from "./data";
 
-type ModelType = WorkersAIModelsSchema | ResolvedModel;
+type ModelType = WorkersAIModelsSchema | ResolvedModel | ModelCardData;
 
 const ModelInfo = ({ model }: { model: ModelType }) => {
 	const authorId = getModelAuthor(model.name);

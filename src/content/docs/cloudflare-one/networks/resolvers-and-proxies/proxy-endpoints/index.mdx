@@ -39,6 +39,10 @@ Proxy endpoints are designed for environments where deploying the Cloudflare One
 - **Compliance-restricted endpoints**: Environments where you are legally or technically prohibited from installing software on the endpoint.
 - **Legacy SWG migration**: Organizations transitioning from legacy Secure Web Gateways that use PAC files.
 
+### Logging
+
+Traffic sent through proxy endpoints generates [Zero Trust Network Session Logs](/logs/logpush/logpush-job/datasets/account/zero_trust_network_sessions/), which are available via [Logpush](/cloudflare-one/insights/logs/logpush/) and [Log Explorer](/log-explorer/).
+
 ### What is a PAC file
 
 <GlossaryDefinition term="PAC file" prepend="A PAC file is " />

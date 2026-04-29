@@ -6,8 +6,8 @@ This file helps AI agents understand the structure, tooling, and conventions of 
 
 This is the source for [developers.cloudflare.com](https://developers.cloudflare.com). It is an **Astro** site using the **Starlight** documentation framework. Content is authored in **MDX** (Markdown + JSX). The site is deployed as a Cloudflare Worker.
 
-- **Node.js**: 22.x (pinned via Volta)
-- **Package manager**: npm (use `npm ci` to install)
+- **Node.js**: 24.x
+- **Package manager**: pnpm (use `pnpm install --frozen-lockfile` to install)
 - **Primary branch**: `production` (not `main`)
 
 ## Directory structure
@@ -243,22 +243,22 @@ For the full component list and their props, see `src/components/index.ts` (barr
 
 ## Validation — what to run after making changes
 
-> **CI note:** `npm run build` will time out in CI environments (GitHub Actions, etc. where `CI=true`). When running in CI, use `npm run check` and linters only — do **not** run a full build. The full build is only practical in local development environments.
+> **CI note:** `pnpm run build` will time out in CI environments (GitHub Actions, etc. where `CI=true`). When running in CI, use `pnpm run check` and linters only — do **not** run a full build. The full build is only practical in local development environments.
 
 ### Minimum validation for content changes (MDX edits)
 
 ```bash
-npm run check          # Type-check (validates frontmatter schemas + Astro types)
-npm run build          # Full build (validates MDX parsing, image paths, internal links) — LOCAL ONLY, skip in CI
+pnpm run check          # Type-check (validates frontmatter schemas + Astro types)
+pnpm run build          # Full build (validates MDX parsing, image paths, internal links) — LOCAL ONLY, skip in CI
 ```
 
 ### Minimum validation for code changes (.ts/.tsx/.astro/.js)
 
 ```bash
-npm run check          # Type-check (Astro + Worker)
-npm run lint           # ESLint
-npm run format:core:check  # Prettier formatting check
-npm run test           # Vitest (Workers, Node, and Astro suites)
+pnpm run check          # Type-check (Astro + Worker)
+pnpm run lint           # ESLint
+pnpm run format:core:check  # Prettier formatting check
+pnpm run test           # Vitest (Workers, Node, and Astro suites)
 ```
 
 ### CI-only validation (when `CI=true`)
@@ -266,33 +266,33 @@ npm run test           # Vitest (Workers, Node, and Astro suites)
 Use this reduced set when running as a GitHub Action or in any CI environment:
 
 ```bash
-npm run check              # Type-check (validates frontmatter schemas + Astro types)
-npm run lint               # ESLint
-npm run format:core:check  # Prettier formatting check
+pnpm run check              # Type-check (validates frontmatter schemas + Astro types)
+pnpm run lint               # ESLint
+pnpm run format:core:check  # Prettier formatting check
 ```
 
 ### Full validation (matches CI pipeline, local only)
 
 ```bash
-npm run check              # Astro + Worker type checking
-npm run lint               # ESLint
-npm run format:core:check  # Prettier formatting check
-npm run build              # Full build with link checking (set RUN_LINK_CHECK=true)
-npm run test               # All test suites
-npx tsm bin/validate-redirects.ts  # Only if public/__redirects was modified
+pnpm run check              # Astro + Worker type checking
+pnpm run lint               # ESLint
+pnpm run format:core:check  # Prettier formatting check
+pnpm run build              # Full build with link checking (set RUN_LINK_CHECK=true)
+pnpm run test               # All test suites
+pnpm exec tsm bin/validate-redirects.ts  # Only if public/__redirects was modified
 ```
 
 ### Fixing formatting
 
 ```bash
-npm run format             # Auto-fix code + data files
-npm run format:content     # Auto-fix MDX/MD/Astro files
+pnpm run format             # Auto-fix code + data files
+pnpm run format:content     # Auto-fix MDX/MD/Astro files
 ```
 
 ### Syncing types after content collection changes
 
 ```bash
-npm run sync               # Regenerate Astro content collection types
+pnpm run sync               # Regenerate Astro content collection types
 ```
 
 ## CI pipeline
@@ -300,12 +300,12 @@ npm run sync               # Regenerate Astro content collection types
 The CI workflow (`.github/workflows/ci.yml`) runs on PRs to `production` and checks in order:
 
 1. File extension validation (only allowed types in `src/content/`)
-2. `npm run check` (Astro + Worker type checking)
+2. `pnpm run check` (Astro + Worker type checking)
 3. ESLint (reported inline on PR via reviewdog)
-4. `npm run format:core:check` (Prettier formatting)
-5. `npm run build` with `RUN_LINK_CHECK=true` (full build + internal link validation)
+4. `pnpm run format:core:check` (Prettier formatting)
+5. `pnpm run build` with `RUN_LINK_CHECK=true` (full build + internal link validation)
 6. Redirect validation (`bin/validate-redirects.ts`)
-7. `npm run test` (all Vitest suites)
+7. `pnpm run test` (all Vitest suites)
 
 A separate Semgrep workflow checks style guide compliance (dates, "coming soon" phrases) and produces warnings.
 
@@ -350,7 +350,7 @@ Tests use Vitest with three workspace projects (`vitest.workspace.ts`):
 | Node    | `*.node.test.ts`   | Node.js                           |
 | Astro   | `*.astro.test.ts`  | Astro Vite config                 |
 
-Run all tests: `npm run test`
+Run all tests: `pnpm run test`
 
 ## Web components
 

@@ -10,9 +10,9 @@ sidebar:
 
 import { Render, Tabs, TabItem, GlossaryTooltip } from "~/components";
 
-JavaScript Detections is a type of challenge separate from Cloudflare’s Challenge Pages or Turnstile. Javascript Detections helps Cloudflare's [bot solutions](/bots/) identify automated requests.
+JavaScript Detections is a type of challenge separate from Cloudflare’s Challenge Pages or Turnstile. JavaScript Detections helps Cloudflare's [bot solutions](/bots/) identify automated requests.
 
-While Challenge Pages and Turnstile rely on client-side signals to determine the authenticity of a request, Bot Management’s JavaScript Detections relies on client-side signals and run on every single request made to your website.
+While Challenge Pages and Turnstile rely on client-side signals to determine the authenticity of a request, Bot Management’s JavaScript Detections relies on client-side signals and runs on every single request made to your website.
 
 ## Process
 
@@ -117,7 +117,7 @@ It is not recommended to combine both approaches (zone-wide toggle and the manua
 
 The following script must be added to every page that you wish to have JavaScript Detections enabled:
 
-```js wrap
+```html wrap
 <script>
 
 function jsdOnload(){
@@ -125,6 +125,7 @@ function jsdOnload(){
     {
       callback: function(result){
         console.log('jsd outcome', result);
+      }
     }
   );
 }
@@ -162,3 +163,9 @@ Subsequent requests can include a `cf_clearance` cookie if JavaScript ran succes
 ### If you have ETags
 
 Enabling JavaScript Detections (JSD) will strip [ETags](/cache/reference/etag-headers/) from HTML responses where JSD is injected.
+
+### If your origin sends a `no-transform` header
+
+If the origin response includes a `Cache-Control: no-transform` directive, Cloudflare does not inject the JavaScript Detections script. The `cf.bot_management.js_detection.passed` field will show as `missing` for these requests.
+
+To use JavaScript Detections, remove the `no-transform` directive from `Cache-Control` response headers on pages where you want JavaScript Detections to run. For more information, refer to [Cache-Control directives](/cache/concepts/cache-control/#interaction-with-other-cloudflare-features).

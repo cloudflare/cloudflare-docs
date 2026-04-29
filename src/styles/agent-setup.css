@@ -1,0 +1,2526 @@
+/*
+ * Agent Setup — Kumo-inspired styles
+ *
+ * Uses existing --color-cl1-* tokens from tailwind.css
+ * and Starlight --sl-color-* variables. Scoped to .agent-setup-*
+ * classes to avoid conflicts with the rest of the docs.
+ */
+
+/* ─── Back button ─── */
+.agent-setup-back {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25rem;
+	margin-bottom: 1.5rem;
+	font-size: 0.875rem;
+	font-weight: 500;
+	color: var(--color-cl1-gray-5);
+	text-decoration: none;
+}
+
+.agent-setup-back:hover {
+	color: var(--sl-color-text-accent);
+}
+
+/* ─── Agent icon light/dark switching ─── */
+.agent-setup-icon-wrap {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 8px;
+	overflow: hidden;
+	line-height: 0;
+}
+
+.agent-setup-icon-wrap img,
+.agent-setup-card-header img,
+.agent-setup-related img {
+	margin: 0;
+	padding: 0;
+	border-radius: 8px;
+}
+
+.agent-icon-dark {
+	display: none;
+}
+
+:root[data-theme="dark"] .agent-icon-light {
+	display: none;
+}
+
+:root[data-theme="dark"] .agent-icon-dark {
+	display: inline;
+}
+
+/* ─── Cloudflare tools banner ─── */
+.cf-banner {
+	margin: 0;
+}
+
+.cf-banner-items {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 0.625rem;
+}
+
+@media (max-width: 640px) {
+	.cf-banner-items {
+		grid-template-columns: 1fr;
+	}
+}
+
+.cf-banner-item {
+	display: flex;
+	flex-direction: column;
+	gap: 0.375rem;
+	padding: 0.875rem 1rem;
+	border: 1px solid var(--color-cl1-gray-8);
+	border-radius: 10px;
+}
+
+:root[data-theme="dark"] .cf-banner-item {
+	border-color: var(--color-cl1-gray-2);
+}
+
+.cf-banner-item-title {
+	font-size: 0.9375rem;
+	font-weight: 600;
+	margin: 0;
+}
+
+.cf-banner-item-desc {
+	font-size: 0.8125rem;
+	line-height: 1.55;
+	color: var(--color-cl1-gray-5);
+	margin: 0;
+	flex: 1;
+}
+
+:root[data-theme="dark"] .cf-banner-item-desc {
+	color: var(--color-cl1-gray-6);
+}
+
+.cf-banner-item-desc a,
+.cf-banner-item-links a {
+	color: var(--sl-color-text-accent);
+	text-decoration: none;
+}
+
+.cf-banner-item-desc a:hover,
+.cf-banner-item-links a:hover {
+	text-decoration: underline;
+}
+
+.cf-banner-item-links {
+	font-size: 0.8125rem;
+	margin-top: auto;
+	padding-top: 0.125rem;
+}
+
+/* ─── Landing page hero ─── */
+.agent-setup-lede {
+	font-size: 1.0625rem;
+	line-height: 1.6;
+	color: var(--color-cl1-gray-5);
+	margin: -0.5rem 0 2rem;
+	max-width: 640px;
+}
+
+:root[data-theme="dark"] .agent-setup-lede {
+	color: var(--color-cl1-gray-7);
+}
+
+.agent-setup-lede a {
+	color: var(--sl-color-text-accent);
+	text-decoration: none;
+}
+
+.agent-setup-lede a:hover {
+	text-decoration: underline;
+}
+
+.agent-setup-lede-highlight {
+	color: var(--sl-color-text);
+	font-weight: 600;
+	background: color-mix(in srgb, var(--color-cl1-orange-5) 10%, transparent);
+	padding: 0.05em 0.3em;
+	border-radius: 4px;
+}
+
+:root[data-theme="dark"] .agent-setup-lede-highlight {
+	background: color-mix(in srgb, var(--color-cl1-orange-5) 15%, transparent);
+}
+
+/* ─── Agent cards (modernized) ─── */
+.agent-setup-card {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	padding: 1.25rem;
+	border: 1px solid var(--color-cl1-gray-8);
+	border-radius: 14px;
+	background: var(--sl-color-bg);
+	text-decoration: none;
+	color: inherit;
+	overflow: hidden;
+	transition:
+		transform 0.2s ease,
+		border-color 0.2s ease;
+}
+
+.agent-setup-card:hover {
+	transform: translateY(-2px);
+	border-color: var(--color-cl1-orange-6);
+}
+
+:root[data-theme="dark"] .agent-setup-card {
+	border-color: var(--color-cl1-gray-2);
+}
+
+:root[data-theme="dark"] .agent-setup-card:hover {
+	border-color: var(--color-cl1-orange-5);
+}
+
+.agent-setup-card-header {
+	display: flex;
+	align-items: center;
+	gap: 0.875rem;
+}
+
+.agent-setup-card-icon {
+	width: 44px;
+	height: 44px;
+	border-radius: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 700;
+	font-size: 1.125rem;
+	background: var(--color-cl1-orange-9);
+	color: var(--color-cl1-orange-5);
+	flex-shrink: 0;
+}
+
+:root[data-theme="dark"] .agent-setup-card-icon {
+	background: var(--color-cl1-orange-1);
+	color: var(--color-cl1-orange-6);
+}
+
+.agent-setup-card-title {
+	font-weight: 600;
+	font-size: 1.0625rem;
+	line-height: 1.2;
+	margin: 0;
+	padding: 0;
+	letter-spacing: -0.01em;
+}
+
+.agent-setup-card-vendor {
+	font-size: 0.8125rem;
+	line-height: 1.3;
+	margin: 0.1875rem 0 0;
+	padding: 0;
+	color: var(--color-cl1-gray-5);
+}
+
+:root[data-theme="dark"] .agent-setup-card-vendor {
+	color: var(--color-cl1-gray-6);
+}
+
+.agent-setup-card-body {
+	display: flex;
+	flex-direction: column;
+	gap: 0.875rem;
+	flex: 1;
+}
+
+.agent-setup-card-description {
+	font-size: 0.875rem;
+	line-height: 1.55;
+	color: var(--color-cl1-gray-4);
+	margin: 0;
+}
+
+:root[data-theme="dark"] .agent-setup-card-description {
+	color: var(--color-cl1-gray-7);
+}
+
+.agent-setup-card-features {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	font-size: 0.8125rem;
+	color: var(--color-cl1-gray-4);
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+}
+
+:root[data-theme="dark"] .agent-setup-card-features {
+	color: var(--color-cl1-gray-6);
+}
+
+.agent-setup-card-features li {
+	padding: 0;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.agent-setup-card-features li::before {
+	content: "";
+	width: 4px;
+	height: 4px;
+	border-radius: 50%;
+	background: var(--color-cl1-orange-5);
+	flex-shrink: 0;
+	margin: 0;
+}
+
+:root[data-theme="dark"] .agent-setup-card-features li::before {
+	background: var(--color-cl1-orange-6);
+}
+
+.agent-setup-card-cta {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+	font-size: 0.8125rem;
+	font-weight: 600;
+	color: var(--color-cl1-orange-5);
+	margin-top: auto;
+	transition: gap 0.2s ease;
+}
+
+.agent-setup-card:hover .agent-setup-card-cta {
+	gap: 0.625rem;
+}
+
+:root[data-theme="dark"] .agent-setup-card-cta {
+	color: var(--color-cl1-orange-6);
+}
+
+/* ─── Capability badges ─── */
+.agent-setup-badge {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.125rem 0.5rem;
+	border-radius: 9999px;
+	font-size: 0.6875rem;
+	font-weight: 600;
+	letter-spacing: 0.01em;
+	line-height: 1.6;
+	white-space: nowrap;
+}
+
+.agent-setup-badge--ide {
+	background: var(--color-cl1-blue-9);
+	color: var(--color-cl1-blue-3);
+}
+:root[data-theme="dark"] .agent-setup-badge--ide {
+	background: var(--color-cl1-blue-1);
+	color: var(--color-cl1-blue-7);
+}
+
+.agent-setup-badge--terminal {
+	background: var(--color-cl1-pink-9);
+	color: var(--color-cl1-pink-3);
+}
+:root[data-theme="dark"] .agent-setup-badge--terminal {
+	background: var(--color-cl1-pink-1);
+	color: var(--color-cl1-pink-7);
+}
+
+.agent-setup-badge--standalone {
+	background: var(--color-cl1-cyan-9);
+	color: var(--color-cl1-cyan-3);
+}
+:root[data-theme="dark"] .agent-setup-badge--standalone {
+	background: var(--color-cl1-cyan-1);
+	color: var(--color-cl1-cyan-7);
+}
+
+.agent-setup-badge--cloud {
+	background: var(--color-cl1-violet-9);
+	color: var(--color-cl1-violet-3);
+}
+:root[data-theme="dark"] .agent-setup-badge--cloud {
+	background: var(--color-cl1-violet-1);
+	color: var(--color-cl1-violet-7);
+}
+
+.agent-setup-badge--extension {
+	background: var(--color-cl1-indigo-9);
+	color: var(--color-cl1-indigo-3);
+}
+:root[data-theme="dark"] .agent-setup-badge--extension {
+	background: var(--color-cl1-indigo-1);
+	color: var(--color-cl1-indigo-7);
+}
+
+.agent-setup-badge--mcp {
+	background: var(--color-cl1-orange-9);
+	color: var(--color-cl1-orange-3);
+}
+:root[data-theme="dark"] .agent-setup-badge--mcp {
+	background: var(--color-cl1-orange-1);
+	color: var(--color-cl1-orange-7);
+}
+
+.agent-setup-badge--skills {
+	background: var(--color-cl1-green-9);
+	color: var(--color-cl1-green-3);
+}
+:root[data-theme="dark"] .agent-setup-badge--skills {
+	background: var(--color-cl1-green-1);
+	color: var(--color-cl1-green-7);
+}
+
+.agent-setup-badge--open-source {
+	background: var(--color-cl1-green-9);
+	color: var(--color-cl1-green-3);
+}
+:root[data-theme="dark"] .agent-setup-badge--open-source {
+	background: var(--color-cl1-green-1);
+	color: var(--color-cl1-green-7);
+}
+
+/* ─── Comparison table ─── */
+.agent-table-scroll {
+	width: 100%;
+	overflow-x: auto;
+	overflow-y: visible;
+	border: 1px solid var(--color-cl1-gray-8);
+	border-radius: 12px;
+	background: var(--sl-color-bg);
+}
+
+:root[data-theme="dark"] .agent-table-scroll {
+	border-color: var(--color-cl1-gray-2);
+}
+
+.agent-setup-table {
+	display: table;
+	width: 100%;
+	min-width: 900px;
+	border-collapse: separate;
+	border-spacing: 0;
+	font-size: 0.875rem;
+	table-layout: auto;
+}
+
+/* Sticky first column so the agent name stays visible while scrolling
+   horizontally on smaller viewports. */
+.agent-setup-table--sticky-first thead th:first-child,
+.agent-setup-table--sticky-first tbody td:first-child {
+	position: sticky;
+	left: 0;
+	z-index: 2;
+	background: var(--sl-color-bg);
+	border-right: 1px solid var(--sl-color-gray-6);
+}
+
+.agent-setup-table--sticky-first thead th:first-child {
+	background: var(--sl-color-gray-7, #f5f5f5);
+	z-index: 3;
+}
+
+:root[data-theme="dark"] .agent-setup-table--sticky-first thead th:first-child {
+	background: var(--color-cl1-gray-1);
+}
+
+.agent-setup-table th {
+	padding: 0.875rem 0.75rem;
+	font-weight: 600;
+	font-size: 0.75rem;
+	letter-spacing: 0.03em;
+	text-transform: uppercase;
+	color: var(--color-cl1-gray-5);
+	background: var(--sl-color-gray-7, #f5f5f5);
+	border-bottom: 1px solid var(--color-cl1-gray-8);
+	text-align: center;
+	vertical-align: middle;
+}
+
+.agent-setup-table th[data-align="left"] {
+	text-align: left;
+}
+
+.agent-setup-table th:first-child {
+	width: 140px;
+	border-top-left-radius: 12px;
+}
+
+.agent-setup-table th:last-child {
+	border-top-right-radius: 12px;
+}
+
+:root[data-theme="dark"] .agent-setup-table th {
+	color: var(--color-cl1-gray-6);
+	background: var(--color-cl1-gray-1);
+	border-bottom-color: var(--color-cl1-gray-2);
+}
+
+.agent-setup-table td {
+	padding: 0.75rem 0.75rem;
+	border-bottom: 1px solid var(--color-cl1-gray-9);
+	text-align: center;
+	vertical-align: middle;
+}
+
+.agent-setup-table td[data-align="left"] {
+	text-align: left;
+}
+
+.agent-setup-table tbody tr:last-child td {
+	border-bottom: none;
+}
+
+:root[data-theme="dark"] .agent-setup-table td {
+	border-bottom-color: var(--color-cl1-gray-2);
+}
+
+.agent-setup-table td svg {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.agent-setup-table tbody tr td {
+	transition: background-color 0.12s ease;
+}
+
+.agent-setup-table tbody tr:hover td {
+	background-color: var(--sl-color-gray-7, #f5f5f5);
+}
+
+:root[data-theme="dark"] .agent-setup-table tbody tr:hover td {
+	background-color: var(--color-cl1-gray-1);
+}
+
+.agent-table-name {
+	font-weight: 600;
+	color: inherit;
+	text-decoration: none;
+	transition: color 0.15s ease;
+}
+
+.agent-table-name:hover {
+	color: var(--color-cl1-orange-5);
+}
+
+:root[data-theme="dark"] .agent-table-name:hover {
+	color: var(--color-cl1-orange-6);
+}
+
+.agent-setup-table .check {
+	color: var(--color-cl1-green-5);
+}
+
+.agent-setup-table .dash {
+	color: var(--color-cl1-gray-7);
+}
+
+:root[data-theme="dark"] .agent-setup-table .dash {
+	color: var(--color-cl1-gray-3);
+}
+
+/* ─── Quick start steps ───
+ * Uses Starlight's native `.sl-steps` styling (24px counter bullets with
+ * hairline guide) — see node_modules/@astrojs/starlight/user-components/Steps.astro.
+ * These overrides tighten spacing and typography to match the rest of the
+ * agent-setup design system.
+ */
+.agent-setup-steps.sl-steps > li {
+	padding-bottom: 1rem;
+}
+
+.agent-setup-steps.sl-steps > li:last-child {
+	padding-bottom: 1px;
+}
+
+.agent-setup-step-title {
+	font-weight: 600;
+	font-size: 0.9375rem;
+	margin: 0 0 0.125rem 0;
+	line-height: 1.4;
+}
+
+.agent-setup-step-description {
+	font-size: 0.875rem;
+	color: var(--color-cl1-gray-5);
+	margin: 0 0 0.5rem 0;
+	line-height: 1.5;
+}
+
+:root[data-theme="dark"] .agent-setup-step-description {
+	color: var(--color-cl1-gray-6);
+}
+
+/* Keep code blocks snug under their step description */
+.agent-setup-steps.sl-steps > li .expressive-code {
+	margin-top: 0.375rem;
+}
+
+.agent-setup-inline-code {
+	background-color: var(--sl-color-bg-inline-code);
+	font-family: var(--sl-font-mono, monospace);
+	font-size: var(--sl-text-code-sm);
+	padding: 0.125rem 0.375rem;
+	border-radius: 4px;
+}
+
+/* ─── Example prompts ─── */
+.agent-setup-prompts {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	column-gap: 0.5rem;
+	row-gap: 0.3rem;
+}
+
+/* The whole chip is a button that copies the prompt text on click. */
+@media (max-width: 50rem) {
+	.agent-setup-prompt {
+		width: 100%;
+	}
+}
+
+.agent-setup-prompt {
+	margin: 0 !important;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.5rem 0.75rem 0.5rem 0.875rem;
+	border-radius: 8px;
+	font-size: 0.8125rem;
+	line-height: 1.4;
+	font-family: inherit;
+	background: var(--color-cl1-gray-9);
+	border: 1px solid var(--color-cl1-gray-8);
+	color: inherit;
+	cursor: pointer;
+	text-align: left;
+	transition:
+		border-color 0.15s ease,
+		background-color 0.15s ease;
+}
+
+.agent-setup-prompt:hover {
+	border-color: var(--color-cl1-gray-5);
+}
+
+.agent-setup-prompt:focus-visible {
+	outline: 2px solid var(--color-cl1-brand-orange);
+	outline-offset: 2px;
+}
+
+:root[data-theme="dark"] .agent-setup-prompt {
+	background: var(--color-cl1-gray-1);
+	border-color: var(--color-cl1-gray-2);
+}
+
+:root[data-theme="dark"] .agent-setup-prompt:hover {
+	border-color: var(--color-cl1-gray-4);
+}
+
+.agent-setup-prompt-text {
+	flex: 1;
+	min-width: 0;
+}
+
+.agent-setup-prompt-icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: 16px;
+	height: 16px;
+	vertical-align: middle;
+	color: var(--color-cl1-gray-5);
+	transition: color 0.15s ease;
+}
+
+.agent-setup-prompt-icon svg {
+	width: 16px;
+	height: 16px;
+	vertical-align: middle;
+	margin: 0 !important;
+}
+
+/* Swap copy icon for checkmark when the chip is in the "copied" state. */
+.agent-setup-prompt-icon-check {
+	display: none !important;
+}
+
+.agent-setup-prompt[data-copied] .agent-setup-prompt-icon-copy {
+	display: none !important;
+}
+
+.agent-setup-prompt[data-copied] .agent-setup-prompt-icon-check {
+	display: block !important;
+}
+
+.agent-setup-prompt:hover .agent-setup-prompt-icon {
+	color: var(--color-cl1-gray-3);
+}
+
+:root[data-theme="dark"] .agent-setup-prompt-icon {
+	color: var(--color-cl1-gray-6);
+}
+
+:root[data-theme="dark"] .agent-setup-prompt:hover .agent-setup-prompt-icon {
+	color: var(--color-cl1-gray-8);
+}
+
+.agent-setup-prompt[data-copied] .agent-setup-prompt-icon,
+.agent-setup-prompt[data-copied]:hover .agent-setup-prompt-icon {
+	color: var(--color-cl1-green-4);
+}
+
+:root[data-theme="dark"]
+	.agent-setup-prompt[data-copied]
+	.agent-setup-prompt-icon,
+:root[data-theme="dark"]
+	.agent-setup-prompt[data-copied]:hover
+	.agent-setup-prompt-icon {
+	color: var(--color-cl1-green-7);
+}
+
+/* ─── Workflows ─── */
+.agent-setup-workflow {
+	margin-bottom: 1.5rem;
+	border: 1px solid var(--color-cl1-gray-8);
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+:root[data-theme="dark"] .agent-setup-workflow {
+	border-color: var(--color-cl1-gray-2);
+}
+
+.agent-setup-workflow-header {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.75rem 1rem;
+	background: var(--sl-color-gray-7, #f5f5f5);
+	border-bottom: 1px solid var(--color-cl1-gray-8);
+	font-weight: 600;
+	font-size: 0.9375rem;
+}
+
+:root[data-theme="dark"] .agent-setup-workflow-header {
+	background: var(--color-cl1-gray-1);
+	border-bottom-color: var(--color-cl1-gray-2);
+}
+
+.agent-setup-workflow-steps {
+	padding: 0.75rem 1rem;
+	list-style: decimal;
+	list-style-position: inside;
+	margin: 0;
+	font-size: 0.875rem;
+}
+
+.agent-setup-workflow-steps li {
+	padding: 0.375rem 0;
+	color: var(--color-cl1-gray-4);
+}
+
+:root[data-theme="dark"] .agent-setup-workflow-steps li {
+	color: var(--color-cl1-gray-7);
+}
+
+/* ─── FAQ ─── */
+.sl-markdown-content .agent-setup-faq-item,
+.agent-setup-faq-item {
+	border-bottom: 1px solid var(--color-cl1-gray-8);
+	padding: 0;
+	margin: 0;
+	/* Override Starlight's orange accent — no left border on FAQ rows */
+	border-inline-start: 0 none;
+	padding-inline-start: 0;
+}
+
+:root[data-theme="dark"] .agent-setup-faq-item {
+	border-bottom-color: var(--color-cl1-gray-2);
+}
+
+.sl-markdown-content .agent-setup-faq-item summary,
+.agent-setup-faq-item summary {
+	padding: 0.875rem 0;
+	margin: 0;
+	font-weight: 600;
+	font-size: 0.9375rem;
+	cursor: pointer;
+	list-style: none;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	color: inherit;
+}
+
+/* Hide Starlight's default disclosure marker and browser defaults */
+.sl-markdown-content .agent-setup-faq-item summary::-webkit-details-marker,
+.agent-setup-faq-item summary::-webkit-details-marker {
+	display: none;
+}
+
+.sl-markdown-content .agent-setup-faq-item summary::marker,
+.agent-setup-faq-item summary::marker {
+	content: "";
+}
+
+/* Override Starlight's default summary::before chevron */
+.sl-markdown-content .agent-setup-faq-item summary::before,
+.agent-setup-faq-item summary::before {
+	content: none;
+	display: none;
+}
+
+.sl-markdown-content .agent-setup-faq-item summary::after,
+.agent-setup-faq-item summary::after {
+	content: "+";
+	font-size: 1.25rem;
+	color: var(--color-cl1-gray-5);
+	transition: transform 0.2s ease;
+}
+
+.sl-markdown-content .agent-setup-faq-item[open] summary::after,
+.agent-setup-faq-item[open] summary::after {
+	content: "−";
+}
+
+.sl-markdown-content .agent-setup-faq-answer,
+.agent-setup-faq-answer {
+	padding: 0 0 1rem;
+	font-size: 0.875rem;
+	line-height: 1.6;
+	color: var(--color-cl1-gray-4);
+}
+
+:root[data-theme="dark"] .agent-setup-faq-answer {
+	color: var(--color-cl1-gray-7);
+}
+
+/* Tighten prose spacing inside FAQ answers */
+.sl-markdown-content .agent-setup-faq-answer > * + * {
+	margin-top: 0.75rem;
+}
+
+.sl-markdown-content .agent-setup-faq-answer p {
+	margin: 0;
+	line-height: 1.6;
+}
+
+/* ─── Troubleshooting ─── */
+.sl-markdown-content .agent-setup-troubleshooting,
+.agent-setup-troubleshooting {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.sl-markdown-content .agent-setup-troubleshooting-item,
+.agent-setup-troubleshooting-item {
+	border: 1px solid var(--color-cl1-gray-8);
+	border-radius: 8px;
+	background: transparent;
+	overflow: hidden;
+	transition: border-color 120ms ease;
+	/* Override Starlight's orange accent — restore uniform 1px border */
+	border-inline-start: 1px solid var(--color-cl1-gray-8);
+	padding-inline-start: 0;
+	margin: 0;
+}
+
+:root[data-theme="dark"] .agent-setup-troubleshooting-item {
+	border-color: var(--color-cl1-gray-2);
+}
+
+.sl-markdown-content .agent-setup-troubleshooting-item:hover,
+.agent-setup-troubleshooting-item:hover {
+	border-color: var(--color-cl1-gray-5);
+}
+
+.sl-markdown-content .agent-setup-troubleshooting-item[open],
+.agent-setup-troubleshooting-item[open] {
+	border-color: var(--color-cl1-gray-5);
+	background: var(--color-cl1-gray-9);
+}
+
+:root[data-theme="dark"] .agent-setup-troubleshooting-item[open] {
+	background: var(--color-cl1-gray-1);
+}
+
+.sl-markdown-content .agent-setup-troubleshooting-item > summary,
+.agent-setup-troubleshooting-item > summary {
+	display: flex;
+	align-items: center;
+	gap: 0.625rem;
+	padding: 0.75rem 1rem;
+	margin: 0;
+	font-size: 0.9375rem;
+	font-weight: 500;
+	color: var(--color-cl1-gray-3);
+	cursor: pointer;
+	list-style: none;
+	user-select: none;
+}
+
+:root[data-theme="dark"] .agent-setup-troubleshooting-item > summary {
+	color: var(--color-cl1-gray-8);
+}
+
+.sl-markdown-content
+	.agent-setup-troubleshooting-item
+	> summary::-webkit-details-marker,
+.agent-setup-troubleshooting-item > summary::-webkit-details-marker {
+	display: none;
+}
+
+.sl-markdown-content .agent-setup-troubleshooting-item > summary:focus-visible,
+.agent-setup-troubleshooting-item > summary:focus-visible {
+	outline: 2px solid var(--color-cl1-brand-orange);
+	outline-offset: -2px;
+}
+
+.agent-setup-troubleshooting-dot {
+	flex-shrink: 0;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: var(--color-cl1-brand-orange);
+	box-shadow: 0 0 0 3px
+		color-mix(in oklab, var(--color-cl1-brand-orange) 20%, transparent);
+}
+
+.agent-setup-troubleshooting-issue-text {
+	flex: 1;
+	line-height: 1.45;
+}
+
+.agent-setup-troubleshooting-chevron {
+	flex-shrink: 0;
+	color: var(--color-cl1-gray-5);
+	transition: transform 180ms ease;
+}
+
+.sl-markdown-content
+	.agent-setup-troubleshooting-item[open]
+	.agent-setup-troubleshooting-chevron,
+.agent-setup-troubleshooting-item[open] .agent-setup-troubleshooting-chevron {
+	transform: rotate(-180deg);
+}
+
+.sl-markdown-content .agent-setup-troubleshooting-solution,
+.agent-setup-troubleshooting-solution {
+	padding: 0 1rem 0.875rem calc(1rem + 8px + 0.625rem);
+	/* Align with issue text after the dot + gap on the summary row */
+	font-size: 0.875rem;
+	line-height: 1.6;
+	color: var(--color-cl1-gray-4);
+}
+
+:root[data-theme="dark"] .agent-setup-troubleshooting-solution {
+	color: var(--color-cl1-gray-7);
+}
+
+.sl-markdown-content .agent-setup-troubleshooting-solution-label,
+.agent-setup-troubleshooting-solution-label {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25rem;
+	font-size: 0.6875rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	color: var(--color-cl1-green-4);
+	margin-bottom: 0.375rem;
+}
+
+:root[data-theme="dark"] .agent-setup-troubleshooting-solution-label {
+	/* Light palette token reads better as "accent" on dark backgrounds. */
+	color: var(--color-cl1-green-7);
+}
+
+/* Tighten prose spacing inside troubleshooting solution body */
+.sl-markdown-content .agent-setup-troubleshooting-solution-body > * + * {
+	margin-top: 0.75rem;
+}
+
+.sl-markdown-content .agent-setup-troubleshooting-solution-body p {
+	margin: 0;
+	line-height: 1.6;
+}
+
+.agent-setup-troubleshooting-solution-body :global(code) {
+	background-color: var(--sl-color-bg-inline-code);
+	font-family: var(--sl-font-mono, monospace);
+	font-size: var(--sl-text-code-sm);
+	padding: 0.125rem 0.375rem;
+	border-radius: 4px;
+}
+
+/* ─── Related agents ─── */
+.agent-setup-related {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+	gap: 1rem;
+}
+
+/* ─── Section spacing ─── */
+.agent-setup-section {
+	margin-bottom: 3rem;
+}
+
+.agent-setup-section h2 {
+	font-size: 1.5rem;
+	font-weight: 700;
+	margin-bottom: 1rem;
+	letter-spacing: -0.01em;
+}
+
+/* ─── Landing page section headers ─── */
+.agent-setup-section-header {
+	text-align: center;
+	margin-bottom: 2rem;
+}
+
+.agent-setup-section-header h2 {
+	font-size: 1.75rem;
+	font-weight: 700;
+	letter-spacing: -0.02em;
+	margin-bottom: 0.5rem;
+	color: var(--sl-color-white);
+}
+
+.agent-setup-section-header p {
+	font-size: 1rem;
+	color: var(--color-cl1-gray-5);
+}
+
+:root[data-theme="dark"] .agent-setup-section-header p {
+	color: var(--color-cl1-gray-6);
+}
+
+/* ─── Why Cloudflare grid ─── */
+.agent-setup-features {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+	gap: 1.25rem;
+}
+
+.agent-setup-feature {
+	padding: 1.25rem;
+	border: 1px solid var(--color-cl1-gray-8);
+	border-radius: 10px;
+	background: var(--sl-color-bg);
+}
+
+:root[data-theme="dark"] .agent-setup-feature {
+	border-color: var(--color-cl1-gray-2);
+}
+
+.agent-setup-feature h3 {
+	font-size: 0.9375rem;
+	font-weight: 600;
+	margin-bottom: 0.375rem;
+}
+
+.agent-setup-feature p {
+	font-size: 0.8125rem;
+	line-height: 1.5;
+	color: var(--color-cl1-gray-5);
+	margin: 0;
+}
+
+:root[data-theme="dark"] .agent-setup-feature p {
+	color: var(--color-cl1-gray-6);
+}
+
+/* ─── Tips list ─── */
+.agent-setup-tips {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.agent-setup-tips li {
+	position: relative;
+	padding: 0.625rem 0 0.625rem 1.5rem;
+	font-size: 0.875rem;
+	line-height: 1.6;
+	border-bottom: 1px solid var(--color-cl1-gray-9);
+}
+
+:root[data-theme="dark"] .agent-setup-tips li {
+	border-bottom-color: var(--color-cl1-gray-2);
+}
+
+.agent-setup-tips li::before {
+	content: "→";
+	position: absolute;
+	left: 0;
+	color: var(--color-cl1-orange-5);
+}
+
+:root[data-theme="dark"] .agent-setup-tips li::before {
+	color: var(--color-cl1-orange-6);
+}
+
+/* ─── External links row ─── */
+.agent-setup-links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin-bottom: 2rem;
+}
+
+.agent-setup-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+	padding: 0.375rem 0.75rem;
+	border-radius: 6px;
+	font-size: 0.8125rem;
+	font-weight: 500;
+	border: 1px solid var(--color-cl1-gray-8);
+	color: inherit;
+	text-decoration: none;
+	transition: border-color 0.15s ease;
+}
+
+.agent-setup-link:hover {
+	border-color: var(--color-cl1-gray-5);
+}
+
+:root[data-theme="dark"] .agent-setup-link {
+	border-color: var(--color-cl1-gray-3);
+}
+
+:root[data-theme="dark"] .agent-setup-link:hover {
+	border-color: var(--color-cl1-gray-5);
+}
+
+/* ─── Tooltip (shared) ─── */
+/* Tooltips use tippy.js (see component scripts). The visual style is
+   inherited from the site-wide footnote tippy styles in footnotes.css. */
+[data-agent-tooltip] {
+	cursor: help;
+}
+
+/* ─── Workflow filter strip ─── */
+.agent-filter-strip {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	margin: 0 0 1.5rem;
+	padding: 0.75rem 0;
+}
+
+.agent-filter-label {
+	font-size: 0.8125rem;
+	font-weight: 500;
+	color: var(--color-cl1-gray-5);
+}
+
+:root[data-theme="dark"] .agent-filter-label {
+	color: var(--color-cl1-gray-6);
+}
+
+.agent-filter-chips {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.agent-filter-chip {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+	height: 34px;
+	min-width: 88px;
+	padding: 0 1rem;
+	border-radius: 9999px;
+	font-size: 0.8125rem;
+	font-weight: 500;
+	line-height: 1;
+	background: var(--sl-color-bg);
+	border: 1px solid var(--color-cl1-gray-8);
+	color: var(--color-cl1-gray-4);
+	cursor: pointer;
+	transition:
+		border-color 0.15s ease,
+		background 0.15s ease,
+		color 0.15s ease;
+	font-family: inherit;
+	white-space: nowrap;
+}
+
+.agent-filter-chip:hover {
+	border-color: var(--color-cl1-orange-5);
+	color: var(--color-cl1-gray-2);
+}
+
+.agent-filter-chip.is-active {
+	background: var(--color-cl1-brand-orange);
+	border-color: var(--color-cl1-brand-orange);
+	color: var(--color-cl1-black);
+}
+
+.agent-filter-chip.is-active:hover {
+	opacity: 0.9;
+}
+
+:root[data-theme="dark"] .agent-filter-chip {
+	border-color: var(--color-cl1-gray-3);
+	color: var(--color-cl1-gray-7);
+}
+
+:root[data-theme="dark"] .agent-filter-chip:hover {
+	border-color: var(--color-cl1-orange-6);
+	color: var(--color-cl1-gray-9);
+}
+
+:root[data-theme="dark"] .agent-filter-chip.is-active {
+	background: var(--color-cl1-brand-orange);
+	border-color: var(--color-cl1-brand-orange);
+	color: var(--color-cl1-black);
+}
+
+.agent-filter-count {
+	margin-left: auto;
+	font-size: 0.8125rem;
+	color: var(--color-cl1-gray-5);
+}
+
+:root[data-theme="dark"] .agent-filter-count {
+	color: var(--color-cl1-gray-6);
+}
+
+.agent-filter-empty {
+	padding: 2rem;
+	border-radius: 10px;
+	background: var(--sl-color-gray-7, #f5f5f5);
+	text-align: center;
+}
+
+:root[data-theme="dark"] .agent-filter-empty {
+	background: var(--color-cl1-gray-1);
+}
+
+.agent-filter-empty p {
+	margin: 0 0 0.75rem;
+	color: var(--color-cl1-gray-4);
+}
+
+:root[data-theme="dark"] .agent-filter-empty p {
+	color: var(--color-cl1-gray-7);
+}
+
+/* ─── Catalog grid ─── */
+.agent-setup-grid {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 1rem;
+}
+
+@media (min-width: 40rem) {
+	.agent-setup-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (min-width: 64rem) {
+	.agent-setup-grid {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+/* ─── Card "best for" line ─── */
+.agent-setup-card-bestfor {
+	font-size: 0.8125rem;
+	line-height: 1.5;
+	margin: 0;
+	padding: 0.625rem 0.75rem;
+	border-radius: 6px;
+	background: var(--sl-color-gray-7, #f5f5f5);
+	color: var(--color-cl1-gray-4);
+}
+
+.agent-setup-card-bestfor strong {
+	color: var(--color-cl1-gray-3);
+	font-weight: 600;
+}
+
+:root[data-theme="dark"] .agent-setup-card-bestfor {
+	background: var(--color-cl1-gray-1);
+	color: var(--color-cl1-gray-7);
+}
+
+:root[data-theme="dark"] .agent-setup-card-bestfor strong {
+	color: var(--color-cl1-gray-8);
+}
+
+/* ─── Comparison table controls ─── */
+.agent-table-controls {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 1rem;
+	margin-bottom: 0.75rem;
+}
+
+.agent-table-hint {
+	font-size: 0.75rem;
+	color: var(--color-cl1-gray-6);
+}
+
+/* ─── Sortable column headers ─── */
+.agent-table-sort,
+.agent-table-sort:hover,
+.agent-table-sort:focus,
+.agent-table-sort:active {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+	background: none !important;
+	background-color: transparent !important;
+	border: none !important;
+	outline: none !important;
+	box-shadow: none !important;
+	padding: 0;
+	margin: 0;
+	font: inherit;
+	font-size: inherit;
+	font-weight: inherit;
+	letter-spacing: inherit;
+	text-transform: inherit;
+	cursor: pointer;
+	font-family: inherit;
+	text-decoration: none;
+}
+
+.agent-table-sort {
+	color: inherit;
+	transition: color 0.15s ease;
+}
+
+.agent-table-sort:hover {
+	color: var(--color-cl1-orange-5);
+}
+
+:root[data-theme="dark"] .agent-table-sort:hover {
+	color: var(--color-cl1-orange-6);
+}
+
+.agent-table-sort.is-active {
+	color: var(--color-cl1-orange-5);
+}
+
+:root[data-theme="dark"] .agent-table-sort.is-active {
+	color: var(--color-cl1-orange-6);
+}
+
+.agent-table-sort:focus-visible {
+	outline: 2px solid var(--color-cl1-orange-5) !important;
+	outline-offset: 2px;
+	border-radius: 3px;
+}
+
+.agent-table-sort-indicator {
+	font-size: 0.75rem;
+	opacity: 0.9;
+	font-weight: 700;
+}
+
+/* ─── Comparison table cells ─── */
+.agent-table-bestfor {
+	font-size: 0.8125rem;
+	line-height: 1.4;
+	max-width: 240px;
+	color: var(--color-cl1-gray-4);
+}
+
+:root[data-theme="dark"] .agent-table-bestfor {
+	color: var(--color-cl1-gray-7);
+}
+
+.agent-table-dim {
+	color: var(--color-cl1-gray-6);
+}
+
+/* ─── Additional badge color variants ─── */
+.agent-setup-badge--free {
+	background: var(--color-cl1-green-9);
+	color: var(--color-cl1-green-3);
+}
+
+:root[data-theme="dark"] .agent-setup-badge--free {
+	background: var(--color-cl1-green-1);
+	color: var(--color-cl1-green-7);
+}
+
+.agent-setup-badge--subscription {
+	background: var(--color-cl1-blue-9);
+	color: var(--color-cl1-blue-3);
+}
+
+:root[data-theme="dark"] .agent-setup-badge--subscription {
+	background: var(--color-cl1-blue-1);
+	color: var(--color-cl1-blue-7);
+}
+
+.agent-setup-badge--usage-based {
+	background: var(--color-cl1-violet-9);
+	color: var(--color-cl1-violet-3);
+}
+
+:root[data-theme="dark"] .agent-setup-badge--usage-based {
+	background: var(--color-cl1-violet-1);
+	color: var(--color-cl1-violet-7);
+}
+
+.agent-setup-badge--byok {
+	background: var(--color-cl1-cyan-9);
+	color: var(--color-cl1-cyan-3);
+}
+
+:root[data-theme="dark"] .agent-setup-badge--byok {
+	background: var(--color-cl1-cyan-1);
+	color: var(--color-cl1-cyan-7);
+}
+
+.agent-setup-badge--hybrid {
+	background: var(--color-cl1-orange-9);
+	color: var(--color-cl1-orange-3);
+}
+
+:root[data-theme="dark"] .agent-setup-badge--hybrid {
+	background: var(--color-cl1-orange-1);
+	color: var(--color-cl1-orange-7);
+}
+
+.agent-setup-badge--locked {
+	background: var(--color-cl1-gray-9);
+	color: var(--color-cl1-gray-3);
+}
+
+:root[data-theme="dark"] .agent-setup-badge--locked {
+	background: var(--color-cl1-gray-1);
+	color: var(--color-cl1-gray-7);
+}
+
+.agent-setup-badge--byo-provider {
+	background: var(--color-cl1-cyan-9);
+	color: var(--color-cl1-cyan-3);
+}
+
+:root[data-theme="dark"] .agent-setup-badge--byo-provider {
+	background: var(--color-cl1-cyan-1);
+	color: var(--color-cl1-cyan-7);
+}
+
+.agent-setup-badge--multi-provider {
+	background: var(--color-cl1-green-9);
+	color: var(--color-cl1-green-3);
+}
+
+:root[data-theme="dark"] .agent-setup-badge--multi-provider {
+	background: var(--color-cl1-green-1);
+	color: var(--color-cl1-green-7);
+}
+
+.agent-setup-badge--suggest {
+	background: var(--color-cl1-gray-9);
+	color: var(--color-cl1-gray-3);
+}
+
+:root[data-theme="dark"] .agent-setup-badge--suggest {
+	background: var(--color-cl1-gray-1);
+	color: var(--color-cl1-gray-7);
+}
+
+.agent-setup-badge--approve {
+	background: var(--color-cl1-blue-9);
+	color: var(--color-cl1-blue-3);
+}
+
+:root[data-theme="dark"] .agent-setup-badge--approve {
+	background: var(--color-cl1-blue-1);
+	color: var(--color-cl1-blue-7);
+}
+
+.agent-setup-badge--autonomous {
+	background: var(--color-cl1-violet-9);
+	color: var(--color-cl1-violet-3);
+}
+
+:root[data-theme="dark"] .agent-setup-badge--autonomous {
+	background: var(--color-cl1-violet-1);
+	color: var(--color-cl1-violet-7);
+}
+
+.agent-setup-badge--session {
+	background: var(--color-cl1-gray-9);
+	color: var(--color-cl1-gray-3);
+}
+
+:root[data-theme="dark"] .agent-setup-badge--session {
+	background: var(--color-cl1-gray-1);
+	color: var(--color-cl1-gray-7);
+}
+
+.agent-setup-badge--project-memory {
+	background: var(--color-cl1-blue-9);
+	color: var(--color-cl1-blue-3);
+}
+
+:root[data-theme="dark"] .agent-setup-badge--project-memory {
+	background: var(--color-cl1-blue-1);
+	color: var(--color-cl1-blue-7);
+}
+
+.agent-setup-badge--indexed-codebase {
+	background: var(--color-cl1-green-9);
+	color: var(--color-cl1-green-3);
+}
+
+:root[data-theme="dark"] .agent-setup-badge--indexed-codebase {
+	background: var(--color-cl1-green-1);
+	color: var(--color-cl1-green-7);
+}
+
+/* ─── Agent primer ─── */
+.agent-primer {
+	display: flex;
+	flex-direction: column;
+	gap: 2.5rem;
+}
+
+.agent-primer-intro {
+	font-size: 1rem;
+	line-height: 1.7;
+	color: var(--color-cl1-gray-4);
+	max-width: 780px;
+	margin: 0;
+}
+
+:root[data-theme="dark"] .agent-primer-intro {
+	color: var(--color-cl1-gray-7);
+}
+
+.agent-primer-block {
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
+}
+
+.agent-primer-block-header h3 {
+	font-size: 1.125rem;
+	font-weight: 600;
+	margin: 0 0 0.25rem;
+	letter-spacing: -0.01em;
+}
+
+.agent-primer-block-header p {
+	margin: 0;
+	font-size: 0.875rem;
+	color: var(--color-cl1-gray-5);
+}
+
+:root[data-theme="dark"] .agent-primer-block-header p {
+	color: var(--color-cl1-gray-6);
+}
+
+/* ─── Agent types grid ─── */
+.agent-primer-types {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 0.875rem;
+}
+
+@media (min-width: 40rem) {
+	.agent-primer-types {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (min-width: 64rem) {
+	.agent-primer-types {
+		grid-template-columns: repeat(4, 1fr);
+	}
+}
+
+.agent-primer-type {
+	position: relative;
+	padding: 1.25rem;
+	border: 1px solid var(--color-cl1-gray-8);
+	border-radius: 12px;
+	background: var(--sl-color-bg);
+}
+
+:root[data-theme="dark"] .agent-primer-type {
+	border-color: var(--color-cl1-gray-2);
+}
+
+.agent-primer-type-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	border-radius: 10px;
+	background: var(--color-cl1-orange-9);
+	color: var(--color-cl1-orange-5);
+	margin-bottom: 0.875rem;
+}
+
+:root[data-theme="dark"] .agent-primer-type-icon {
+	background: var(--color-cl1-orange-1);
+	color: var(--color-cl1-orange-6);
+}
+
+.agent-primer-type-label {
+	font-size: 0.9375rem;
+	font-weight: 600;
+	letter-spacing: -0.01em;
+	margin-bottom: 0.375rem;
+	color: var(--color-cl1-gray-2);
+}
+
+:root[data-theme="dark"] .agent-primer-type-label {
+	color: var(--color-cl1-gray-9);
+}
+
+.agent-primer-type p {
+	font-size: 0.8125rem;
+	line-height: 1.5;
+	margin: 0;
+	color: var(--color-cl1-gray-5);
+}
+
+:root[data-theme="dark"] .agent-primer-type p {
+	color: var(--color-cl1-gray-7);
+}
+
+/* ─── Key concepts grid ─── */
+.agent-primer-concepts {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 0;
+	border: 1px solid var(--color-cl1-gray-8);
+	border-radius: 12px;
+	overflow: hidden;
+	background: var(--sl-color-bg);
+}
+
+:root[data-theme="dark"] .agent-primer-concepts {
+	border-color: var(--color-cl1-gray-2);
+}
+
+@media (min-width: 40rem) {
+	.agent-primer-concepts {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+.agent-primer-concept {
+	padding: 1.25rem;
+	border-bottom: 1px solid var(--color-cl1-gray-8);
+}
+
+.agent-primer-concept:last-child {
+	border-bottom: none;
+}
+
+:root[data-theme="dark"] .agent-primer-concept {
+	border-bottom-color: var(--color-cl1-gray-2);
+}
+
+@media (min-width: 40rem) {
+	.agent-primer-concept {
+		border-right: 1px solid var(--color-cl1-gray-8);
+	}
+
+	.agent-primer-concept:nth-child(2n) {
+		border-right: none;
+	}
+
+	.agent-primer-concept:nth-last-child(-n + 2) {
+		border-bottom: none;
+	}
+
+	:root[data-theme="dark"] .agent-primer-concept {
+		border-right-color: var(--color-cl1-gray-2);
+	}
+}
+
+.agent-primer-concept-term {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-size: 0.9375rem;
+	font-weight: 600;
+	margin-bottom: 0.5rem;
+	color: var(--color-cl1-gray-2);
+}
+
+:root[data-theme="dark"] .agent-primer-concept-term {
+	color: var(--color-cl1-gray-9);
+}
+
+.agent-primer-concept-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 26px;
+	height: 26px;
+	border-radius: 6px;
+	background: var(--color-cl1-orange-9);
+	color: var(--color-cl1-orange-5);
+	flex-shrink: 0;
+}
+
+:root[data-theme="dark"] .agent-primer-concept-icon {
+	background: var(--color-cl1-orange-1);
+	color: var(--color-cl1-orange-6);
+}
+
+.agent-primer-concept p {
+	font-size: 0.875rem;
+	line-height: 1.6;
+	margin: 0;
+	color: var(--color-cl1-gray-4);
+}
+
+:root[data-theme="dark"] .agent-primer-concept p {
+	color: var(--color-cl1-gray-7);
+}
+
+.agent-primer-concept strong {
+	font-weight: 600;
+	color: var(--color-cl1-gray-2);
+}
+
+:root[data-theme="dark"] .agent-primer-concept strong {
+	color: var(--color-cl1-gray-8);
+}
+
+/* ─── Tradeoffs grid ─── */
+.agent-primer-tradeoff-grid {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 0.875rem;
+}
+
+@media (min-width: 40rem) {
+	.agent-primer-tradeoff-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+.agent-primer-tradeoff {
+	padding: 1.125rem 1.25rem;
+	border: 1px solid var(--color-cl1-gray-8);
+	border-radius: 12px;
+	background: var(--sl-color-bg);
+}
+
+:root[data-theme="dark"] .agent-primer-tradeoff {
+	border-color: var(--color-cl1-gray-2);
+}
+
+.agent-primer-tradeoff-row {
+	margin-bottom: 0.625rem;
+	font-size: 0.9375rem;
+	font-weight: 600;
+	letter-spacing: -0.01em;
+	color: var(--color-cl1-gray-2);
+}
+
+:root[data-theme="dark"] .agent-primer-tradeoff-row {
+	color: var(--color-cl1-gray-9);
+}
+
+.agent-primer-tradeoff-opt {
+	color: inherit;
+}
+
+.agent-primer-tradeoff-vs {
+	font-weight: 400;
+	color: var(--color-cl1-gray-5);
+	margin: 0 0.25rem;
+}
+
+:root[data-theme="dark"] .agent-primer-tradeoff-vs {
+	color: var(--color-cl1-gray-6);
+}
+
+.agent-primer-tradeoff p {
+	font-size: 0.875rem;
+	line-height: 1.6;
+	margin: 0;
+	color: var(--color-cl1-gray-4);
+}
+
+:root[data-theme="dark"] .agent-primer-tradeoff p {
+	color: var(--color-cl1-gray-7);
+}
+
+/* ─── Per-token badge colors for the comparison table ─────────────
+   Each value in Pricing / Model / Context gets its own unique color
+   so they can be distinguished at a glance — and no two values
+   across all three columns share a color. These overrides win the
+   cascade because .agent-token-badge is applied alongside
+   .agent-setup-badge--{token}. */
+
+/* Pricing — subscription: blue */
+.agent-token-badge--subscription {
+	background: var(--color-cl1-blue-9);
+	color: var(--color-cl1-blue-3);
+}
+:root[data-theme="dark"] .agent-token-badge--subscription {
+	background: var(--color-cl1-blue-1);
+	color: var(--color-cl1-blue-7);
+}
+
+/* Pricing — hybrid: violet */
+.agent-token-badge--hybrid {
+	background: var(--color-cl1-violet-9);
+	color: var(--color-cl1-violet-3);
+}
+:root[data-theme="dark"] .agent-token-badge--hybrid {
+	background: var(--color-cl1-violet-1);
+	color: var(--color-cl1-violet-7);
+}
+
+/* Pricing — BYOK: cyan */
+.agent-token-badge--byok {
+	background: var(--color-cl1-cyan-9);
+	color: var(--color-cl1-cyan-3);
+}
+:root[data-theme="dark"] .agent-token-badge--byok {
+	background: var(--color-cl1-cyan-1);
+	color: var(--color-cl1-cyan-7);
+}
+
+/* Model — locked: gold */
+.agent-token-badge--locked {
+	background: var(--color-cl1-gold-9);
+	color: var(--color-cl1-gold-3);
+}
+:root[data-theme="dark"] .agent-token-badge--locked {
+	background: var(--color-cl1-gold-1);
+	color: var(--color-cl1-gold-7);
+}
+
+/* Model — multi-provider: orange (brand accent) */
+.agent-token-badge--multi-provider {
+	background: var(--color-cl1-orange-9);
+	color: var(--color-cl1-orange-3);
+}
+:root[data-theme="dark"] .agent-token-badge--multi-provider {
+	background: var(--color-cl1-orange-1);
+	color: var(--color-cl1-orange-6);
+}
+
+/* Context — project memory: green */
+.agent-token-badge--project-memory {
+	background: var(--color-cl1-green-9);
+	color: var(--color-cl1-green-3);
+}
+:root[data-theme="dark"] .agent-token-badge--project-memory {
+	background: var(--color-cl1-green-1);
+	color: var(--color-cl1-green-7);
+}
+
+/* Context — session: gray */
+.agent-token-badge--session {
+	background: var(--color-cl1-gray-9);
+	color: var(--color-cl1-gray-3);
+}
+:root[data-theme="dark"] .agent-token-badge--session {
+	background: var(--color-cl1-gray-2);
+	color: var(--color-cl1-gray-7);
+}
+
+/* Context — indexed codebase: indigo */
+.agent-token-badge--indexed-codebase {
+	background: var(--color-cl1-indigo-9);
+	color: var(--color-cl1-indigo-3);
+}
+:root[data-theme="dark"] .agent-token-badge--indexed-codebase {
+	background: var(--color-cl1-indigo-1);
+	color: var(--color-cl1-indigo-7);
+}
+
+/* Hidden attribute needs an explicit override when its element is a flex/grid
+   item — browsers don't always apply display:none over display:flex. */
+.agent-setup-card[hidden],
+[data-filter-empty][hidden],
+[data-filter-count][hidden] {
+	display: none !important;
+}
+
+/* ─── Footnote below the comparison table ─── */
+.agent-table-footnote {
+	margin: 0.75rem 0 0;
+	font-size: 0.8125rem;
+	color: var(--color-cl1-gray-5);
+	text-align: center;
+}
+
+:root[data-theme="dark"] .agent-table-footnote {
+	color: var(--color-cl1-gray-6);
+}
+
+/* ────────────────────────────────────────────────────────────────────
+   Agent detail page — Platform access deep-dive
+
+   Each block is a bespoke <PlatformAccessDetails> (.agent-platform-card)
+   styled as a bordered card so it reads as a discrete "area" rather than
+   a run of indented headings.
+
+   Uses high-specificity selectors (.sl-markdown-content .agent-platform-card)
+   so our card styling beats Starlight's default prose styling for <details>
+   and <summary> WITHOUT needing a `.not-content` wrapper. That keeps inline
+   <code>, hyperlinks, and other prose elements inside the body correctly
+   themed by Starlight's markdown styles.
+   ──────────────────────────────────────────────────────────────────── */
+.agent-setup-platform-access {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+}
+
+/* Short intro sentence above the four Details cards. */
+.agent-setup-platform-access .agent-platform-lede {
+	margin: 0 !important;
+	padding: 0 !important;
+	font-size: 0.875rem;
+	line-height: 1.5;
+	color: var(--color-cl1-gray-4);
+}
+
+/*
+ * Card reset + border. The `:where()` selectors in Starlight's
+ * `.sl-markdown-content details` rules have zero specificity, so a single
+ * class selector here is enough to beat them without !important.
+ */
+.sl-markdown-content .agent-platform-card,
+.agent-platform-card {
+	margin: 0;
+	padding: 0;
+	border: 1px solid var(--color-cl1-gray-8);
+	border-radius: 10px;
+	background: var(--color-cl1-gray-9);
+	overflow: hidden;
+	transition:
+		border-color 0.15s ease,
+		background-color 0.15s ease;
+	/* Cancel Starlight's `border-inline-start: 2px solid` + `padding-inline-start: 1rem` */
+	border-inline-start-width: 1px;
+	padding-inline-start: 0;
+}
+
+:root[data-theme="dark"] .agent-platform-card {
+	border-color: var(--color-cl1-gray-2);
+	background: var(--color-cl1-gray-1);
+}
+
+/* Closed state: subtle hover on the whole card. */
+.agent-platform-card:not([open]):hover {
+	border-color: var(--color-cl1-gray-5);
+}
+
+:root[data-theme="dark"] .agent-platform-card:not([open]):hover {
+	border-color: var(--color-cl1-gray-4);
+}
+
+/* Open state: stronger border + slightly different bg so it stands out. */
+.agent-platform-card[open] {
+	border-color: var(--color-cl1-gray-6);
+	background: var(--sl-color-bg);
+	/* Card owns the side padding — children get zero horizontal padding. */
+	padding: 0 1rem 1rem;
+}
+
+:root[data-theme="dark"] .agent-platform-card[open] {
+	border-color: var(--color-cl1-gray-3);
+	background: var(--color-cl1-gray-1);
+}
+
+/*
+ * The <summary>. Uses its own class so we can beat Starlight's
+ * `.sl-markdown-content summary` rule without !important or `.not-content`.
+ */
+.sl-markdown-content .agent-platform-card-summary,
+.agent-platform-card-summary {
+	padding: 0.875rem 1rem 0.875rem 1.75rem;
+	margin: 0;
+	list-style: none;
+	font-weight: 600;
+	font-size: 0.9375rem;
+	line-height: 1.5;
+	position: relative;
+	cursor: pointer;
+	color: inherit;
+}
+
+.agent-platform-card-summary::-webkit-details-marker,
+.agent-platform-card-summary::marker {
+	display: none;
+	content: "";
+}
+
+/*
+ * Custom chevron — overrides Starlight's default `summary::before` marker
+ * (which would show a larger arrow icon on the left). We replace its
+ * mask-image with our own chevron SVG and position it absolutely inside the
+ * summary's left padding. High specificity (`.sl-markdown-content ...`)
+ * ensures we beat Starlight's default `.sl-markdown-content summary::before`.
+ */
+.sl-markdown-content .agent-platform-card-summary::before,
+.agent-platform-card-summary::before {
+	content: "";
+	position: absolute;
+	left: 0.625rem;
+	top: 50%;
+	width: 16px;
+	height: 16px;
+	background: currentColor;
+	opacity: 0.6;
+	transform: translateY(-50%);
+	transition: transform 0.2s ease;
+	mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='9 18 15 12 9 6'/></svg>");
+	-webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='9 18 15 12 9 6'/></svg>");
+	mask-repeat: no-repeat;
+	-webkit-mask-repeat: no-repeat;
+	mask-position: center;
+	-webkit-mask-position: center;
+	/* Reset Starlight's default marker sizing + inline positioning — we use absolute */
+	--sl-details-marker-size: 16px;
+	display: block;
+	margin-inline: 0;
+	vertical-align: baseline;
+}
+
+.agent-platform-card[open] > .agent-platform-card-summary::before {
+	transform: translateY(-50%) rotate(90deg);
+	opacity: 1;
+}
+
+/* Open body gets a top divider between summary and content. */
+.sl-markdown-content .agent-platform-card[open] > .agent-platform-card-summary,
+.agent-platform-card[open] > .agent-platform-card-summary {
+	border-bottom: 1px solid var(--color-cl1-gray-8);
+	margin-bottom: 0;
+}
+
+:root[data-theme="dark"]
+	.agent-platform-card[open]
+	> .agent-platform-card-summary {
+	border-bottom-color: var(--color-cl1-gray-2);
+}
+
+/* The body wrapper — everything inside the card after <summary>. */
+.agent-platform-card-body {
+	font-size: 0.875rem;
+	line-height: 1.55;
+}
+
+/*
+ * Tighten prose spacing inside the card. Starlight's default
+ * `.sl-markdown-content :not(...) + :not(...) { margin-top: var(--sl-content-gap-y) }`
+ * uses ~1.5rem which is too spacious for a compact card.
+ */
+.sl-markdown-content .agent-platform-card-body > * + * {
+	margin-top: 0.75rem;
+}
+
+.sl-markdown-content .agent-platform-card-body p {
+	margin: 0;
+	line-height: 1.55;
+}
+
+/*
+ * Hint line directly under the summary — small + muted.
+ * Force zero top-margin regardless of whether the hint is the first element
+ * (Astro-authored) or arrives via an MDX slot (where Starlight's > * + *
+ * rule would otherwise add spacing).
+ */
+.sl-markdown-content .agent-platform-card .agent-platform-hint,
+.agent-platform-card .agent-platform-hint,
+.sl-markdown-content .agent-platform-card .agent-platform-hint p,
+.agent-platform-card .agent-platform-hint p {
+	margin: 0 !important;
+	margin-top: 0 !important;
+	padding: 0;
+	font-size: 0.8125rem;
+	color: var(--color-cl1-gray-5);
+}
+
+.sl-markdown-content .agent-platform-card .agent-platform-hint + *,
+.agent-platform-card .agent-platform-hint + * {
+	margin-top: 0.625rem !important;
+}
+
+/*
+ * Code blocks inside platform-access cards. Tailwind preflight resets
+ * `border: 0px solid` on all elements, which wins against Expressive Code's
+ * layered `.frame { border: 1px solid }` when Starlight's user-components are
+ * imported in an Astro page (CSS layer flip). We restore the border here,
+ * unlayered, so the <Code> frame is visible inside these cards.
+ */
+.agent-platform-card .expressive-code figure.frame {
+	border: 1px solid var(--color-cl1-gray-8);
+	border-radius: 6px;
+	overflow: hidden;
+}
+
+:root[data-theme="dark"] .agent-platform-card .expressive-code figure.frame {
+	border-color: var(--color-cl1-gray-2);
+}
+
+/* Also restore the copy-button hover state — same issue as above. */
+.agent-platform-card .expressive-code .copy button {
+	border: 1px solid transparent;
+}
+
+.agent-platform-card .expressive-code .copy button:hover {
+	border-color: var(--color-cl1-gray-6);
+}
+
+/*
+ * "What's next" inline note inside a platform card. Rendered as an <aside>
+ * with a thin left-border accent and an inline label — no heavy pill or
+ * full-width orange fill. Stays inset from the card edges via the outer
+ * padding rule.
+ */
+/*
+ * Orange "What's next" note — styled like the MDX :::note callout but with
+ * Cloudflare brand orange. Has a distinct title line then body text below it.
+ */
+.agent-platform-note {
+	margin: 1.25rem 0 0 !important;
+	padding: 0.75rem 1rem !important;
+	border-left: 3px solid var(--color-cl1-brand-orange);
+	background: var(--color-cl1-orange-8);
+	border-radius: 0 6px 6px 0;
+	font-size: 0.875rem;
+	line-height: 1.55;
+}
+
+:root[data-theme="dark"] .agent-platform-note {
+	background: color-mix(in srgb, var(--color-cl1-orange-1) 35%, transparent);
+}
+
+.agent-platform-note-title {
+	display: block !important;
+	margin: 0 0 0.25rem !important;
+	padding: 0 !important;
+	font-size: 0.6875rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--color-cl1-brand-orange) !important;
+}
+
+.agent-platform-note > p:not(.agent-platform-note-title) {
+	display: block;
+	margin: 0 !important;
+	padding: 0 !important;
+	color: var(--color-cl1-gray-3);
+}
+
+:root[data-theme="dark"]
+	.agent-platform-note
+	> p:not(.agent-platform-note-title) {
+	color: var(--color-cl1-gray-7);
+}
+
+/*
+ * Bulleted "resources" list used under Skills / MCP / Agent-friendly docs.
+ * Card owns the 1rem side inset; this list just needs 1rem for the bullet.
+ */
+.agent-platform-resources {
+	margin: 0 !important;
+	list-style: disc outside;
+	font-size: 0.875rem;
+	line-height: 1.6;
+	padding-left: 1rem !important;
+	padding-right: 0 !important;
+}
+
+.agent-platform-resources li {
+	margin: 0.25rem 0;
+}
+
+.agent-platform-resources li::marker {
+	color: var(--color-cl1-gray-6);
+}
+
+:root[data-theme="dark"] .agent-platform-resources li::marker {
+	color: var(--color-cl1-gray-3);
+}
+
+/* Unify paragraph spacing inside platform-access cards. */
+.agent-setup-platform-access > details[open] > p {
+	margin: 0 !important;
+	font-size: 0.9375rem;
+	line-height: 1.6;
+}
+
+.agent-setup-platform-access > details[open] > p + p,
+.agent-setup-platform-access > details[open] > p + ul,
+.agent-setup-platform-access > details[open] > p + aside,
+.agent-setup-platform-access > details[open] > p + .expressive-code,
+.agent-setup-platform-access > details[open] > ul + p,
+.agent-setup-platform-access > details[open] > ul + ul,
+.agent-setup-platform-access > details[open] > ul + aside,
+.agent-setup-platform-access > details[open] > .expressive-code + p {
+	margin-top: 0.875rem !important;
+}
+
+.agent-platform-docs-note {
+	margin: 0 !important;
+	padding-top: 0.875rem;
+	border-top: 1px solid var(--color-cl1-gray-8);
+	font-size: 0.8125rem !important;
+	color: var(--color-cl1-gray-5) !important;
+}
+
+:root[data-theme="dark"] .agent-platform-docs-note {
+	border-top-color: var(--color-cl1-gray-2);
+}
+
+/*
+ * Simple list used for both the Skills list and the MCP servers list inside
+ * platform-access cards. Each item renders as:
+ *
+ *   orange-name [bundled?]  description text
+ *
+ * The list sits in a subtle rounded container to visually separate it from
+ * the prose above without taking extra vertical space.
+ */
+.agent-simple-list {
+	margin: 1rem 0 0 !important;
+	padding: 0 !important;
+	list-style: none !important;
+	border: 1px solid var(--color-cl1-gray-8);
+	border-radius: 6px;
+	overflow: hidden;
+}
+
+:root[data-theme="dark"] .agent-simple-list {
+	border-color: var(--color-cl1-gray-2);
+}
+
+.agent-simple-item {
+	padding: 0.375rem 0.625rem;
+	border-bottom: 1px solid var(--color-cl1-gray-8);
+	font-size: 0.8125rem;
+	line-height: 1.55;
+	background: var(--sl-color-bg);
+}
+
+.agent-simple-item:last-child {
+	border-bottom: none;
+}
+
+:root[data-theme="dark"] .agent-simple-item {
+	border-color: var(--color-cl1-gray-2);
+	background: color-mix(in srgb, var(--color-cl1-gray-1) 50%, transparent);
+}
+
+.agent-simple-name {
+	font-family: var(--sl-font-mono, ui-monospace, monospace);
+	font-size: 0.8rem;
+	font-weight: 500;
+	color: var(--color-cl1-brand-orange);
+	margin-right: 0.5rem;
+}
+
+.agent-simple-desc {
+	color: var(--color-cl1-gray-4);
+}
+
+:root[data-theme="dark"] .agent-simple-desc {
+	color: var(--color-cl1-gray-6);
+}
+
+.agent-simple-url {
+	display: block;
+	font-family: var(--sl-font-mono, ui-monospace, monospace);
+	font-size: 0.7375rem;
+	color: var(--color-cl1-gray-6);
+	margin-top: 0.125rem;
+}
+
+:root[data-theme="dark"] .agent-simple-url {
+	color: var(--color-cl1-gray-4);
+}
+
+/* "bundled" tag shown on MCP servers that ship with the skills plugin. */
+.agent-simple-tag {
+	display: inline-block;
+	margin-left: 0.25rem;
+	padding: 0.0625rem 0.375rem;
+	border-radius: 999px;
+	font-size: 0.625rem;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	font-family: inherit;
+	color: var(--color-cl1-brand-orange);
+	background: var(--color-cl1-orange-9);
+	border: 1px solid var(--color-cl1-orange-8);
+	vertical-align: middle;
+}
+
+:root[data-theme="dark"] .agent-simple-tag {
+	background: color-mix(in srgb, var(--color-cl1-orange-1) 30%, transparent);
+	border-color: var(--color-cl1-orange-2);
+}
+
+/* ────────────────────────────────────────────────────────────────────
+   Agent detail page — Build agents ON Cloudflare footer callout
+   ──────────────────────────────────────────────────────────────────── */
+.agent-build-callout {
+	padding: 2rem;
+	border: 1px solid var(--color-cl1-gray-8);
+	border-radius: 14px;
+	background: var(--sl-color-bg);
+}
+
+:root[data-theme="dark"] .agent-build-callout {
+	border-color: var(--color-cl1-gray-2);
+}
+
+.agent-build-callout-header {
+	max-width: 60ch;
+	margin-bottom: 1.5rem;
+}
+
+.agent-build-callout-eyebrow {
+	display: inline-block;
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	color: var(--color-cl1-brand-orange);
+	margin-bottom: 0.5rem;
+}
+
+.agent-build-callout-title {
+	margin: 0 0 0.5rem !important;
+	font-size: 1.375rem !important;
+	font-weight: 700 !important;
+	line-height: 1.2 !important;
+	color: var(--sl-color-text) !important;
+}
+
+.agent-build-callout-lede {
+	margin: 0;
+	font-size: 0.9375rem;
+	line-height: 1.6;
+	color: var(--color-cl1-gray-5);
+}
+
+:root[data-theme="dark"] .agent-build-callout-lede {
+	color: var(--color-cl1-gray-6);
+}
+
+.agent-build-callout-grid {
+	display: grid;
+	gap: 0.75rem;
+	grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+	.agent-build-callout-grid {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+
+.agent-build-callout-card {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	padding: 1rem 1.25rem;
+	border: 1px solid var(--color-cl1-gray-8);
+	border-radius: 10px;
+	background: var(--sl-color-bg);
+	text-decoration: none !important;
+	color: inherit;
+	transition:
+		transform 0.2s ease,
+		border-color 0.2s ease;
+}
+
+.agent-build-callout-card:hover {
+	transform: translateY(-1px);
+	border-color: var(--color-cl1-orange-6);
+}
+
+:root[data-theme="dark"] .agent-build-callout-card {
+	border-color: var(--color-cl1-gray-2);
+}
+
+:root[data-theme="dark"] .agent-build-callout-card:hover {
+	border-color: var(--color-cl1-orange-5);
+}
+
+.agent-build-callout-card-title {
+	font-weight: 600;
+	font-size: 0.9375rem;
+	color: var(--sl-color-text);
+}
+
+.agent-build-callout-card p {
+	margin: 0;
+	font-size: 0.8125rem;
+	line-height: 1.5;
+	color: var(--color-cl1-gray-5);
+}
+
+:root[data-theme="dark"] .agent-build-callout-card p {
+	color: var(--color-cl1-gray-6);
+}
+
+.agent-build-callout-card-link {
+	font-size: 0.8125rem;
+	font-weight: 500;
+	color: var(--color-cl1-brand-orange);
+	margin-top: auto;
+}
+
+/* Screen-reader-only headings (for TOC entries that have their own component title) */
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+/* ────────────────────────────────────────────────────────────────────
+   Agent detail page — "MCP servers and Skills" reference listing
+   ──────────────────────────────────────────────────────────────────── */
+.agent-what-you-get {
+	padding: 1.5rem;
+	border: 1px solid var(--color-cl1-gray-8);
+	border-radius: 12px;
+	background: var(--sl-color-bg);
+}
+
+:root[data-theme="dark"] .agent-what-you-get {
+	border-color: var(--color-cl1-gray-2);
+}
+
+.agent-what-you-get-grid {
+	display: grid;
+	gap: 1.5rem;
+	grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+	.agent-what-you-get-grid {
+		grid-template-columns: 1fr 1fr;
+		gap: 2rem;
+	}
+}
+
+.agent-what-you-get-col-header {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-size: 0.875rem;
+	font-weight: 600;
+	color: var(--color-cl1-brand-orange);
+	margin-bottom: 0.75rem;
+}
+
+.agent-what-you-get-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	font-size: 0.8125rem;
+	line-height: 1.65;
+	color: var(--color-cl1-gray-5);
+}
+
+:root[data-theme="dark"] .agent-what-you-get-list {
+	color: var(--color-cl1-gray-6);
+}
+
+.agent-what-you-get-list li {
+	padding: 0.25rem 0;
+}
+
+.agent-what-you-get-list strong {
+	color: var(--sl-color-text);
+	font-weight: 600;
+	font-family: var(
+		--sl-font-system-mono,
+		ui-monospace,
+		"SF Mono",
+		Menlo,
+		monospace
+	);
+	font-size: 0.8125rem;
+}
+
+.agent-what-you-get-list a {
+	color: var(--color-cl1-brand-orange);
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+
+.agent-what-you-get-footnote {
+	margin: 1rem 0 0 !important;
+	font-size: 0.8125rem !important;
+}
+
+.agent-what-you-get-footnote a {
+	color: var(--color-cl1-brand-orange);
+	font-weight: 500;
+	text-decoration: none;
+}
+
+.agent-what-you-get-footnote a:hover {
+	text-decoration: underline;
+}
+
+/* ────────────────────────────────────────────────────────────────────
+   Agent detail page — intro paragraph (custom "intro" slot)
+   ──────────────────────────────────────────────────────────────────── */
+.agent-setup-intro {
+	margin-bottom: 1rem;
+	font-size: 1rem;
+	line-height: 1.6;
+}
+
+.agent-setup-intro > p {
+	margin: 0 0 0.75rem;
+}
+
+.agent-setup-intro > p:last-child {
+	margin-bottom: 0;
+}
+
+.agent-setup-intro a {
+	color: var(--color-cl1-brand-orange);
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}

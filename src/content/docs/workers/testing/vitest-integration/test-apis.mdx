@@ -6,6 +6,8 @@ sidebar:
 head: []
 description: Runtime helpers for writing tests, exported from `cloudflare:workers` and `cloudflare:test`.
 
+products:
+  - workers
 ---
 
 The Workers Vitest integration provides runtime helpers for writing tests. Some helpers are exported from the `cloudflare:workers` module, and others from the `cloudflare:test` module. Both modules are provided by the `@cloudflare/vitest-pool-workers` package, but can only be imported from test files that execute in the Workers runtime.
@@ -341,6 +343,7 @@ Available in `@cloudflare/vitest-pool-workers` version **0.9.0**!
 * `WorkflowInstanceModifier`
     * This object is provided to the `modify` and `modifyAll` callbacks to mock or alter the behavior of a Workflow instance's steps, events, and sleeps.
         * `disableSleeps(steps?: { name: string; index?: number }[])`: Disables sleeps, causing `step.sleep()` and `step.sleepUntil()` to resolve immediately. If `steps` is omitted, all sleeps are disabled.
+        * `disableRetryDelays(steps?: { name: string; index?: number }[])`: Disables retry backoff delays, causing retry attempts of a failing `step.do()` to execute immediately without waiting. The retries still happen — only the delay between them is removed. If `steps` is omitted, all retry delays are disabled.
         * `mockStepResult(step: { name: string; index?: number }, stepResult: unknown)`: Mocks the result of a `step.do()`, causing it to return the specified value instantly without executing the step's implementation.
         * `mockStepError(step: { name: string; index?: number }, error: Error, times?: number)`: Forces a `step.do()` to throw an error, simulating a failure. `times` is an optional number that sets how many times the step should error. If `times` is omitted, the step will error on every attempt, making the Workflow instance fail.
         * `forceStepTimeout(step: { name: string; index?: number }, times?: number)`: Forces a `step.do()` to fail by timing out immediately. `times` is an optional number that sets how many times the step should timeout. If `times` is omitted, the step will timeout on every attempt, making the Workflow instance fail.
@@ -362,6 +365,9 @@ Available in `@cloudflare/vitest-pool-workers` version **0.9.0**!
             await instance.modify(async (m) => {
               // Disables all sleeps to make the test run instantly
               await m.disableSleeps();
+
+              // Disables retry backoff delays so retries execute without waiting
+              await m.disableRetryDelays();
 
               // Mocks the successful result of a data-fetching step
               await m.mockStepResult(

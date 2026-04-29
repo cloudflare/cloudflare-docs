@@ -1,0 +1,290 @@
+---
+interface Props {
+	text: string;
+	hideLabel?: boolean;
+}
+
+const { text, hideLabel = false } = Astro.props;
+
+// Split "Fetch <url>" into verb + url for syntax colouring.
+// Falls back to rendering the whole string unsplit if the pattern doesn't match.
+const match = text.match(/^(\S+)\s+(.+)$/);
+const verb = match ? match[1] : null;
+const rest = match ? match[2] : text;
+---
+
+<div class="pcb-root not-content">
+	{
+		!hideLabel && (
+			<p class="pcb-label">
+				Paste into any AI coding agent to install Cloudflare agent tooling:
+			</p>
+		)
+	}
+	<div class="pcb-shell" data-pcb>
+		<div class="pcb-body">
+			<code class="pcb-text">
+				{verb && <span class="pcb-verb">{verb}</span>}
+				{verb && " "}
+				<span class="pcb-url">{rest}</span>
+			</code>
+			<button
+				class="pcb-btn"
+				data-pcb-btn
+				data-text={text}
+				aria-label="Copy to clipboard"
+			>
+				<span class="pcb-btn-inner">
+					<svg
+						class="pcb-icon pcb-icon-copy"
+						viewBox="0 0 24 24"
+						fill="none"
+						width="13"
+						height="13"
+						aria-hidden="true"
+					>
+						<rect
+							x="9"
+							y="9"
+							width="13"
+							height="13"
+							rx="2"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linejoin="round"></rect>
+						<path
+							d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"></path>
+					</svg>
+					<svg
+						class="pcb-icon pcb-icon-check"
+						viewBox="0 0 24 24"
+						fill="none"
+						width="13"
+						height="13"
+						aria-hidden="true"
+					>
+						<polyline
+							points="20 6 9 17 4 12"
+							stroke="currentColor"
+							stroke-width="2.5"
+							stroke-linecap="round"
+							stroke-linejoin="round"></polyline>
+					</svg>
+					<span class="pcb-btn-label"></span>
+				</span>
+			</button>
+		</div>
+	</div>
+</div>
+
+<script>
+	const shell = document.querySelector<HTMLElement>("[data-pcb]");
+	const btn = document.querySelector<HTMLButtonElement>("[data-pcb-btn]");
+
+	async function doCopy() {
+		if (!btn || !shell) return;
+		const text = btn.dataset.text ?? "";
+		try {
+			await navigator.clipboard.writeText(text);
+			btn.dataset.copied = "true";
+			shell.dataset.copied = "true";
+			btn.setAttribute("aria-label", "Copied!");
+			setTimeout(() => {
+				delete btn.dataset.copied;
+				delete shell.dataset.copied;
+				btn.setAttribute("aria-label", "Copy to clipboard");
+			}, 2000);
+		} catch {
+			// clipboard unavailable — silently ignore
+		}
+	}
+
+	shell?.addEventListener("click", doCopy);
+	btn?.addEventListener("click", (e) => {
+		e.stopPropagation();
+		doCopy();
+	});
+</script>
+
+<style>
+	.pcb-root {
+		margin: 1.75rem 0 2rem;
+		width: 100%;
+		min-width: 0;
+	}
+
+	.pcb-label {
+		margin: 0 0 1.25rem;
+	}
+
+	/* ── Shell ── */
+	.pcb-shell {
+		position: relative;
+		border-radius: 10px;
+		cursor: pointer;
+		min-width: 0;
+		width: 100%;
+		overflow: hidden;
+		border: 1px solid
+			color-mix(in srgb, var(--color-cl1-brand-orange) 45%, transparent);
+		background:
+			radial-gradient(circle, var(--sl-color-gray-6) 1px, transparent 1px),
+			var(--sl-color-gray-7);
+		background-size:
+			20px 20px,
+			auto;
+
+		box-shadow: 0 0 8px
+			color-mix(in srgb, var(--color-cl1-brand-orange) 15%, transparent);
+		transition:
+			border-color 0.3s ease,
+			box-shadow 0.3s ease;
+	}
+
+	:root[data-theme="dark"] .pcb-shell {
+		background: radial-gradient(circle, #333 1px, transparent 1px), #1a1a1a;
+		background-size:
+			20px 20px,
+			auto;
+	}
+
+	.pcb-shell:hover {
+		border-color: color-mix(
+			in srgb,
+			var(--color-cl1-brand-orange) 72%,
+			transparent
+		);
+	}
+
+	.pcb-shell[data-copied] {
+		border-color: var(--color-cl1-brand-orange);
+		box-shadow: 0 0 16px
+			color-mix(in srgb, var(--color-cl1-brand-orange) 25%, transparent);
+	}
+
+	/* ── Body row ── */
+	.pcb-body {
+		display: flex;
+		align-items: center;
+		gap: 0.625rem;
+		padding: 1rem 1rem 1rem 1.125rem;
+		min-width: 0;
+	}
+
+	.pcb-text {
+		flex: 1;
+		font-family: var(--sl-font-mono, ui-monospace, "SF Mono", Menlo, monospace);
+		font-size: 0.9375rem;
+		line-height: 1.4;
+		background: transparent;
+		border: none;
+		padding: 0;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		min-width: 0;
+		user-select: none;
+	}
+
+	.pcb-verb,
+	.pcb-url {
+		color: var(--sl-color-text);
+	}
+
+	/* ── Copy button ── */
+	.pcb-btn {
+		flex-shrink: 0;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0;
+		background: transparent;
+		border: none;
+		cursor: pointer;
+	}
+
+	.pcb-btn-inner {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.3rem;
+		padding: 0.3125rem 0.6875rem;
+		border-radius: 5px;
+		border: 1px solid var(--sl-color-gray-5);
+		background: var(--sl-color-gray-6);
+		font-size: 0.8125rem;
+		font-weight: 600;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		font-family: inherit;
+		color: var(--sl-color-gray-3);
+		transition:
+			border-color 0.15s ease,
+			color 0.15s ease,
+			background-color 0.15s ease;
+		line-height: 1;
+	}
+
+	.pcb-btn:hover .pcb-btn-inner {
+		border-color: color-mix(
+			in srgb,
+			var(--color-cl1-brand-orange) 65%,
+			transparent
+		);
+		color: var(--color-cl1-brand-orange);
+		background: color-mix(
+			in srgb,
+			var(--color-cl1-brand-orange) 10%,
+			var(--sl-color-gray-6)
+		);
+	}
+
+	.pcb-btn:focus-visible {
+		outline: 2px solid var(--color-cl1-brand-orange);
+		outline-offset: 3px;
+		border-radius: 5px;
+	}
+
+	/* ── Icon swap ── */
+	.pcb-icon-check {
+		display: none;
+	}
+
+	.pcb-btn[data-copied] .pcb-icon-copy {
+		display: none;
+	}
+
+	.pcb-btn[data-copied] .pcb-icon-check {
+		display: block;
+	}
+
+	.pcb-btn[data-copied] .pcb-btn-inner {
+		border-color: color-mix(
+			in srgb,
+			var(--color-cl1-green-7, #86efac) 50%,
+			transparent
+		);
+		color: var(--color-cl1-green-7, #86efac);
+		background: color-mix(
+			in srgb,
+			var(--color-cl1-green-7, #86efac) 8%,
+			transparent
+		);
+	}
+
+	.pcb-btn:not([data-copied]) .pcb-btn-label::before {
+		content: "Copy";
+	}
+
+	.pcb-btn[data-copied] .pcb-btn-label::before {
+		content: "Copied";
+	}
+
+	/* Suppress Starlight prose margin on SVGs */
+	.pcb-root :global(svg) {
+		margin: 0 !important;
+		vertical-align: middle;
+	}
+</style>

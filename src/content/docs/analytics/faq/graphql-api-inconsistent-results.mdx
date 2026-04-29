@@ -3,6 +3,9 @@ pcx_content_type: faq
 title: GraphQL API inconsistent results
 sidebar:
   order: 5
+description: Understand why GraphQL API results may vary slightly.
+products:
+  - analytics
 ---
 
 If you run the same GraphQL Analytics API query multiple times and receive slightly different results, this is caused by Adaptive Bit Rate (ABR) sampling. ABR dynamically adjusts data resolution based on query complexity and timing, which can result in slight variations between query runs.

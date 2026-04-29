@@ -1,0 +1,52 @@
+---
+// Wrapper for tips, authored as a plain Markdown list:
+//
+//   <TipsList>
+//     - Tip one with `code` and [links](...)
+//     - Tip two
+//   </TipsList>
+//
+// MDX renders the list as <ul><li>…</li></ul>. The global `.agent-setup-tips`
+// styling is applied to that inner <ul> via the `:global` selector below.
+---
+
+<div class="agent-setup-tips-wrap">
+	<slot />
+</div>
+
+<style>
+	.agent-setup-tips-wrap :global(ul) {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	.agent-setup-tips-wrap :global(ul > li) {
+		position: relative;
+		padding: 0.625rem 0 0.625rem 1.5rem;
+		font-size: 0.875rem;
+		line-height: 1.6;
+		border-bottom: 1px solid var(--color-cl1-gray-9);
+		margin: 0;
+	}
+
+	:root[data-theme="dark"] .agent-setup-tips-wrap :global(ul > li) {
+		border-bottom-color: var(--color-cl1-gray-2);
+	}
+
+	.agent-setup-tips-wrap :global(ul > li::before) {
+		content: "→";
+		position: absolute;
+		left: 0;
+		color: var(--color-cl1-orange-5);
+	}
+
+	:root[data-theme="dark"] .agent-setup-tips-wrap :global(ul > li::before) {
+		color: var(--color-cl1-orange-6);
+	}
+
+	/* Ensure li::marker dot doesn't render alongside our arrow. */
+	.agent-setup-tips-wrap :global(ul > li)::marker {
+		content: "";
+	}
+</style>

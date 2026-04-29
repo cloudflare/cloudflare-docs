@@ -2,128 +2,13 @@ import { getCollection } from "astro:content";
 import type { CatalogModelsSchema } from "~/schemas/catalog-models";
 import type { WorkersAIModelsSchema } from "~/schemas/workers-ai-models";
 
-import type { ApiMode, ResolvedModel } from "./model-types";
+import type { ModelCardData, ResolvedModel } from "./model-types";
+import { detectApiModes } from "./model-schema";
 
 // Re-export client-safe helpers and types for convenience
 export { getModelAuthor } from "./model-helpers";
-export type { ResolvedModel, ApiMode } from "./model-types";
-
-/**
- * Detect and split a model's schema into logical API modes.
- * Handles common patterns like:
- * - Sync vs Batch (anyOf with requests array)
- * - Prompt vs Messages input formats
- * - JSON vs Streaming output
- */
-function detectApiModes(schema: {
-	input: Record<string, unknown>;
-	output: Record<string, unknown>;
-}): ApiMode[] | undefined {
-	const { input, output } = schema;
-	const modes: ApiMode[] = [];
-
-	// Check for anyOf/oneOf at the input level
-	const inputVariants =
-		(input.anyOf as Record<string, unknown>[]) ||
-		(input.oneOf as Record<string, unknown>[]);
-
-	// Check for anyOf/oneOf at the output level
-	const outputVariants =
-		(output.anyOf as Record<string, unknown>[]) ||
-		(output.oneOf as Record<string, unknown>[]);
-
-	if (!inputVariants || inputVariants.length === 0) {
-		// No variants to split - return undefined to use combined schema
-		return undefined;
-	}
-
-	// Find batch input (has "requests" property)
-	const batchInputIndex = inputVariants.findIndex((v) => {
-		const props = v.properties as Record<string, unknown> | undefined;
-		return props && "requests" in props;
-	});
-
-	// Find sync input (not batch)
-	const syncInputIndex = inputVariants.findIndex(
-		(_, i) => i !== batchInputIndex,
-	);
-
-	// Find JSON output (contentType: application/json or has properties)
-	const jsonOutputIndex =
-		outputVariants?.findIndex((v) => {
-			return (
-				v.contentType === "application/json" ||
-				(v.type === "object" && v.properties)
-			);
-		}) ?? -1;
-
-	// Find streaming output (type: string, or format: binary for SSE)
-	const streamOutputIndex =
-		outputVariants?.findIndex((v) => {
-			return v.type === "string" || v.format === "binary";
-		}) ?? -1;
-
-	// Build sync mode
-	if (syncInputIndex !== -1) {
-		const syncInput = inputVariants[syncInputIndex];
-		const syncOutput =
-			jsonOutputIndex !== -1 && outputVariants
-				? outputVariants[jsonOutputIndex]
-				: output;
-
-		modes.push({
-			id: "sync",
-			name: "Synchronous",
-			description: "Send a request and receive a complete response",
-			input: syncInput,
-			output: syncOutput,
-		});
-
-		// Build streaming mode (same input as sync, different output)
-		if (streamOutputIndex !== -1 && outputVariants) {
-			modes.push({
-				id: "streaming",
-				name: "Streaming",
-				description:
-					"Send a request with `stream: true` and receive server-sent events",
-				input: syncInput,
-				output: outputVariants[streamOutputIndex],
-			});
-		}
-	}
-
-	// Build batch mode
-	if (batchInputIndex !== -1) {
-		const batchInput = inputVariants[batchInputIndex];
-		// Batch typically uses the same JSON output format
-		const batchOutput =
-			jsonOutputIndex !== -1 && outputVariants
-				? outputVariants[jsonOutputIndex]
-				: output;
-
-		modes.push({
-			id: "batch",
-			name: "Batch",
-			description: "Send multiple requests in a single API call",
-			input: batchInput,
-			output: batchOutput,
-		});
-	}
-
-	// Only return modes if we found meaningful splits
-	return modes.length > 1 ? modes : undefined;
-}
-
-/**
- * Normalize raw pricing unit keys (e.g. "per_image", "per_megapixel") into a
- * human-readable unit label (e.g. "per image", "per megapixel").
- */
-function normalizePricingUnit(unit: string): string {
-	if (unit.startsWith("per_")) {
-		return `per ${unit.slice(4).replace(/_/g, " ")}`;
-	}
-	return unit.replace(/_/g, " ");
-}
+export type { ResolvedModel, ModelCardData } from "./model-types";
+export type { ApiMode } from "./model-types";
 
 /**
  * Convert catalog model to resolved model format.
@@ -131,16 +16,6 @@ function normalizePricingUnit(unit: string): string {
 function catalogToResolved(model: CatalogModelsSchema): ResolvedModel {
 	// Build legacy-compatible properties array from catalog fields
 	const properties: ResolvedModel["properties"] = [];
-
-	// Pricing
-	if (model.pricing && Object.keys(model.pricing).length > 0) {
-		const priceValue = Object.entries(model.pricing).map(([unit, price]) => ({
-			unit: normalizePricingUnit(unit),
-			price,
-			currency: "USD",
-		}));
-		properties.push({ property_id: "price", value: priceValue });
-	}
 
 	// Context window
 	if (model.context_length != null) {
@@ -219,7 +94,6 @@ function catalogToResolved(model: CatalogModelsSchema): ResolvedModel {
 		contextLength: model.context_length ?? undefined,
 		maxOutputTokens: model.max_output_tokens ?? undefined,
 		supportsAsync: model.supports_async,
-		pricing: model.pricing,
 		codeSnippets: model.code_snippets,
 		examples: model.examples,
 		defaultExample: model.default_example ?? undefined,
@@ -337,4 +211,31 @@ export async function getLegacyModels(): Promise<ResolvedModel[]> {
 	return legacyModels
 		.filter((entry) => !catalogSlugs.has(entry.data.name))
 		.map((entry) => legacyToResolved(entry.data));
+}
+
+/**
+ * Project a ResolvedModel to ModelCardData, stripping heavy fields
+ * (schema, apiModes, codeSnippets, examples, metadata, etc.) that are
+ * not needed by the catalog index pages. This avoids serializing
+ * megabytes of JSON Schema data into the page HTML as island props.
+ */
+export function toModelCardData(model: ResolvedModel): ModelCardData {
+	return {
+		name: model.name,
+		modelId: model.modelId,
+		slug: model.slug,
+		displayName: model.displayName,
+		description: model.description,
+		task: model.task,
+		tags: model.tags,
+		contextLength: model.contextLength,
+		maxOutputTokens: model.maxOutputTokens,
+		supportsAsync: model.supportsAsync,
+		id: model.id,
+		source: model.source,
+		created_at: model.created_at,
+		properties: model.properties,
+		dataSource: model.dataSource,
+		hosting: model.hosting,
+	};
 }

@@ -1,0 +1,101 @@
+---
+title: Supported resource types
+pcx_content_type: reference
+sidebar:
+  order: 2
+description: Resource types that support tagging and their required fields.
+---
+
+The Tagging API supports the following resource types across account-level and zone-level scopes.
+
+## Account-level resources
+
+Use `/accounts/{account_id}/tags` endpoints for these resource types.
+
+| Resource type | Required extra fields | Description |
+| --- | --- | --- |
+| `account` | None | The Cloudflare account itself |
+| `access_application` | None | Access application |
+| `access_group` | None | Access group |
+| `ai_gateway` | None | AI Gateway |
+| `alerting_policy` | None | Notification policy |
+| `alerting_webhook` | None | Notification webhook destination |
+| `cloudflared_tunnel` | None | Cloudflare Tunnel |
+| `d1_database` | None | D1 database |
+| `durable_object_namespace` | None | Durable Objects namespace |
+| `gateway_list` | None | Gateway list |
+| `gateway_rule` | None | Gateway rule |
+| `image` | None | Cloudflare Image |
+| `kv_namespace` | None | Workers KV namespace |
+| `queue` | None | Queue |
+| `r2_bucket` | None | R2 bucket |
+| `stream_live_input` | None | Stream live input |
+| `stream_video` | None | Stream video |
+| `workers_script` | None | Workers script |
+| `workers_script_version` | `script_name` | Specific version of a Workers script |
+
+## Zone-level resources
+
+Use `/zones/{zone_id}/tags` endpoints for these resource types.
+
+| Resource type | Required extra fields | Description |
+| --- | --- | --- |
+| `access_application_policy` | `access_application_id` | Access application policy |
+| `api_gateway_operation` | None | API Gateway operation |
+| `custom_certificate` | None | Custom SSL certificate |
+| `custom_hostname` | None | Custom hostname (SSL for SaaS) |
+| `dns_record` | None | DNS record |
+| `managed_client_certificate` | None | Managed client certificate (mTLS) |
+| `zone` | None | DNS zone |
+
+## Extra fields
+
+Most resource types only require `resource_type` and `resource_id`. Two types require an additional field in both request bodies and query parameters.
+
+### `workers_script_version`
+
+Include the `script_name` field:
+
+```bash
+# GET
+curl -X GET "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/tags?resource_type=workers_script_version&resource_id=$VERSION_ID&script_name=my-worker" \
+  -H "Authorization: Bearer $API_TOKEN"
+
+# PUT
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/tags" \
+  -H "Authorization: Bearer $API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "resource_type": "workers_script_version",
+    "resource_id": "'"$VERSION_ID"'",
+    "script_name": "my-worker",
+    "tags": {
+      "version": "1.2.3",
+      "environment": "staging"
+    }
+  }'
+```
+
+### `access_application_policy`
+
+Include the `access_application_id` field:
+
+```bash
+# GET
+curl -X GET "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/tags?resource_type=access_application_policy&resource_id=$POLICY_ID&access_application_id=$APP_ID" \
+  -H "Authorization: Bearer $API_TOKEN"
+
+# PUT
+curl -X PUT "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/tags" \
+  -H "Authorization: Bearer $API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "resource_type": "access_application_policy",
+    "resource_id": "'"$POLICY_ID"'",
+    "access_application_id": "'"$APP_ID"'",
+    "tags": {
+      "sensitivity": "high",
+      "team": "security"
+    }
+  }'
+```

@@ -1,0 +1,123 @@
+---
+title: Manage tags
+pcx_content_type: how-to
+sidebar:
+  order: 1
+description: Create, update, and delete tags on Cloudflare resources.
+---
+
+All tag operations use the Tagging API. Authentication requires an [account API token](/fundamentals/api/get-started/account-owned-tokens/) or user API token with appropriate permissions.
+
+## Set tags on a resource
+
+Use `PUT` to set tags on an account-level resource. This operation replaces all existing tags on the resource.
+
+```bash
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/tags" \
+  -H "Authorization: Bearer $API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "resource_type": "workers_script",
+    "resource_id": "'"$RESOURCE_ID"'",
+    "tags": {
+      "environment": "production",
+      "team": "platform",
+      "cost-center": "engineering"
+    }
+  }'
+```
+
+For zone-level resources, use the zone endpoint:
+
+```bash
+curl -X PUT "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/tags" \
+  -H "Authorization: Bearer $API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "resource_type": "zone",
+    "resource_id": "'"$ZONE_ID"'",
+    "tags": {
+      "environment": "production",
+      "customer": "acme-corp"
+    }
+  }'
+```
+
+Some resource types require additional fields. Refer to [supported resource types](/resource-tagging/reference/resource-types/) for details.
+
+## Get tags for a resource
+
+Retrieve tags for a specific resource:
+
+```bash
+curl -X GET "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/tags?resource_type=workers_script&resource_id=$RESOURCE_ID" \
+  -H "Authorization: Bearer $API_TOKEN"
+```
+
+:::note
+In the current beta, querying tags for a resource that does not exist or has never been tagged returns a `500` error instead of `404`. Verify the resource exists and has been tagged at least once.
+:::
+
+## Add a single tag
+
+The API does not support partial updates — `PUT` always replaces all tags. To add a tag without removing existing ones, use the `GET`, merge, `PUT` pattern:
+
+1. `GET` the current tags.
+
+```bash
+curl -X GET "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/tags?resource_type=workers_script&resource_id=$RESOURCE_ID" \
+  -H "Authorization: Bearer $API_TOKEN"
+
+# Response: {"result": {"tags": {"environment": "production", "team": "platform"}}}
+```
+
+2. Merge the new tag into the existing set locally.
+
+```json
+{
+  "environment": "production",
+  "team": "platform",
+  "cost-center": "engineering"
+}
+```
+
+3. `PUT` the complete merged tag set.
+
+```bash
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/tags" \
+  -H "Authorization: Bearer $API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "resource_type": "workers_script",
+    "resource_id": "'"$RESOURCE_ID"'",
+    "tags": {
+      "environment": "production",
+      "team": "platform",
+      "cost-center": "engineering"
+    }
+  }'
+```
+
+:::caution
+If you `PUT` only the new tag, all existing tags are deleted. Always `GET` first, merge locally, then `PUT` the complete set.
+:::
+
+## Remove a single tag
+
+Follow the same `GET`, merge, `PUT` pattern, but omit the tag you want to remove from the set before calling `PUT`.
+
+## Delete all tags
+
+To remove all tags from a resource:
+
+```bash
+curl -X DELETE "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/tags" \
+  -H "Authorization: Bearer $API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "resource_type": "workers_script",
+    "resource_id": "'"$RESOURCE_ID"'"
+  }'
+```
+
+This returns `204 No Content` on success. Only use `DELETE` when you want to remove all tags from a resource (for example, when decommissioning it).

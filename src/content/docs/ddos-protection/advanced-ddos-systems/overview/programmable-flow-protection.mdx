@@ -268,7 +268,7 @@ cf_ebpf_main(void *state)
 ```
 
 
-### Write a complex program
+### Write a complex program: challenge-based response
 
 The example program below implements a UDP-based challenge-response mechanism using helper functions to maintain state between packets from the same source IP. This is useful for mitigating DDoS attacks by requiring clients to prove they can receive and respond to challenges before allowing their traffic through.
 
@@ -511,6 +511,247 @@ This program demonstrates several key concepts:
 - **Cryptographic verification**: Using a shared secret to verify that the client correctly responded to the challenge.
 - **Expiry handling**: Using timestamps to expire stale state entries.
 
+### Write a complex program: rate limiting
+
+The example program below implements a per-source-IP rate limiter using a fixed window algorithm. This is useful for mitigating volumetric DDoS attacks by limiting how many packets a single source IP can send within a time window.
+
+The rate limiting mechanism works as follows:
+
+When a packet arrives, the program retrieves the stored state for that source IP. The state contains a window start timestamp and a packet counter, packed into a single 64-bit value. If the current time is still within the window, the counter increments. If the counter exceeds the configured limit, the packet is dropped. When the window expires, the counter resets.
+
+<Steps>
+1. Include the Cloudflare eBPF header files and define the helper version.
+
+   ```c
+   #include <cf_ebpf_defs.h>
+   #define CF_EBPF_HELPER_V0
+   #include <cf_ebpf_helper.h>
+   ```
+
+2. Define constants for the rate limit configuration.
+
+   `RATE_LIMIT` sets the maximum number of packets allowed per window. `WINDOW_SECONDS` defines the duration of each time window in seconds.
+
+   ```c
+   #define RATE_LIMIT 100         // Maximum packets allowed per window
+   #define WINDOW_SECONDS 60      // Time window in seconds
+   ```
+
+3. Define macros to pack and unpack state data.
+
+   The source IP state table stores a single `u64` value per source IP. To track both a timestamp and a counter, pack them into this value: the timestamp in the upper 32 bits and the counter in the lower 32 bits.
+
+   ```c
+   #define PACK_STATE(ts, count) (((uint64_t)(ts) << 32) | ((uint64_t)(count) & 0xFFFFFFFF))
+   #define UNPACK_TIMESTAMP(data) ((uint32_t)((data) >> 32))
+   #define UNPACK_COUNTER(data) ((uint32_t)((data) & 0xFFFFFFFF))
+   ```
+
+4. Define the entry function and get the current timestamp.
+
+   If the timestamp helper fails, allow the packet to avoid false positives.
+
+   ```c
+   uint64_t cf_ebpf_main(void *state)
+   {
+       // Get current timestamp
+       int64_t now = timestamp();
+       if (now < 0) {
+           return CF_EBPF_PASS; // If timestamp fails, allow the packet
+       }
+       uint32_t now_secs = (uint32_t)now;
+   ```
+
+5. Retrieve the existing state for this source IP.
+
+   Use `get_src_ip_data` to look up whether this source IP has been seen before.
+
+   ```c
+       // Try to get existing state for this source IP
+       uint64_t data;
+       int ret = get_src_ip_data(&data);
+       uint32_t window_start;
+       uint32_t counter;
+   ```
+
+6. Handle the case where this is a new source IP.
+
+   If no entry exists (return value is `-1`), this is the first packet from this source IP. Initialize the window to start now with a counter of 1.
+
+   ```c
+       if (ret == -1) {
+           // No existing entry - first packet from this IP
+           // Initialize: window starts now, counter = 1
+           window_start = now_secs;
+           counter = 1;
+       }
+   ```
+
+7. Handle existing source IPs and check the time window.
+
+   If an entry exists, unpack the stored timestamp and counter. If the window has expired, reset both values. Otherwise, increment the counter and check if it exceeds the rate limit.
+
+   ```c
+       } else if (ret != 0) {
+           // If there's other unknown error with getting src_ip_data, pass packet
+           return CF_EBPF_PASS;
+       } else {
+           // Entry exists - unpack the state
+           window_start = UNPACK_TIMESTAMP(data);
+           counter = UNPACK_COUNTER(data);
+           // Check if we're still in the same time window
+           if (now_secs - window_start >= WINDOW_SECONDS) {
+               // Window expired - reset counter and start new window
+               window_start = now_secs;
+               counter = 1;
+           } else {
+               // Still in same window - increment counter
+               counter++;
+               // Check if rate limit exceeded
+               if (counter > RATE_LIMIT) {
+                   // Drop packet without updating state
+                   return CF_EBPF_DROP;
+               }
+           }
+       }
+   ```
+
+8. Store the updated state and allow the packet.
+
+   Pack the window start timestamp and counter back into a single value and store it in the source IP state table.
+
+   ```c
+       // Store updated state
+       uint64_t new_data = PACK_STATE(window_start, counter);
+       set_src_ip_data(new_data);
+       return CF_EBPF_PASS;
+   }
+   ```
+
+</Steps>
+
+For reference, the example below is the rate limiting program in its entirety:
+
+```c
+#include <cf_ebpf_defs.h>
+#define CF_EBPF_HELPER_V0
+#include <cf_ebpf_helper.h>
+
+// Rate limit configuration
+// This program implements a fixed (not sliding) window ratelimit.
+#define RATE_LIMIT 100         // Maximum packets allowed per window
+#define WINDOW_SECONDS 60      // Time window in seconds
+
+// The source IP table holds a mapping from source IP -> custom u64. We will make the custom u64 value in the 
+// table hold a timestamp and a counter to accomplish a ratelimit.
+// 
+// NOTE: the source IP table is effectively a LRU cache. If it is full, old values will be evicted. 
+// Values are also garbage collected from the table every 1hr.
+// 
+// The macros below pack the timestamp (upper 32 bits) and counter (lower 32 bits) into 64-bit data
+// into a value that we can store into the source IP table.
+#define PACK_STATE(ts, count) (((uint64_t)(ts) << 32) | ((uint64_t)(count) & 0xFFFFFFFF))
+#define UNPACK_TIMESTAMP(data) ((uint32_t)((data) >> 32))
+#define UNPACK_COUNTER(data) ((uint32_t)((data) & 0xFFFFFFFF))
+
+uint64_t cf_ebpf_main(void *state)
+{
+    // Get current timestamp
+    int64_t now = timestamp();
+    if (now < 0) {
+        return CF_EBPF_PASS; // If timestamp fails, allow the packet
+    }
+    uint32_t now_secs = (uint32_t)now;
+
+    // Try to get existing state for this source IP
+    uint64_t data;
+    int ret = get_src_ip_data(&data);
+    uint32_t window_start;
+    uint32_t counter;
+
+    if (ret == -1) {
+        // No existing entry - first packet from this IP
+        // Initialize: window starts now, counter = 1
+        window_start = now_secs;
+        counter = 1;
+    } else if (ret != 0) {
+        // If there's other unknown error with getting src_ip_data, pass packet
+        return CF_EBPF_PASS;
+    } else {
+        // Entry exists - unpack the state
+        window_start = UNPACK_TIMESTAMP(data);
+        counter = UNPACK_COUNTER(data);
+        // Check if we're still in the same time window
+        if (now_secs - window_start >= WINDOW_SECONDS) {
+            // Window expired - reset counter and start new window
+            window_start = now_secs;
+            counter = 1;
+        } else {
+            // Still in same window - increment counter
+            counter++;
+            // Check if rate limit exceeded
+            if (counter > RATE_LIMIT) {
+                // Drop packet without updating state
+                // Here is where the actual ratelimit occurs.
+                return CF_EBPF_DROP;
+            }
+        }
+    }
+    // Store updated state
+    uint64_t new_data = PACK_STATE(window_start, counter);
+    set_src_ip_data(new_data);
+    return CF_EBPF_PASS;
+}
+```
+
+This program demonstrates several key concepts:
+
+- **Bit packing**: Storing multiple values (timestamp and counter) in a single `u64` using bit shifting.
+- **Fixed window rate limiting**: Tracking packet counts within discrete time windows and resetting when the window expires.
+- **Graceful error handling**: Allowing packets through when helper functions fail to avoid false positives during edge cases.
+- **State table behavior**: The source IP state table is an LRU cache. If it reaches capacity, old entries are evicted. Entries are also garbage collected after one hour of inactivity.
+
+---
+
+## State
+
+Each program has access to its own local state. State is local to each server and is not shared between datacenters. There are two state tables available to your program.
+
+:::caution
+If an incoming packet's source IP is blocklisted in the source IP state table, the packet is immediately dropped and your program does not run.
+:::
+
+### Source IP state table
+
+The source IP state table stores state keyed by source IP address. Each entry contains:
+
+| Field | Type | Description |
+| --- | --- | --- |
+| Status | Enum | The status of the source IP: `None` (0), `Challenged` (1), `Verified` (2), or `Blocklisted` (3). |
+| User data | `u64` | A user-defined value you can set for any purpose. |
+
+The default maximum capacity is 1,000 entries.
+
+Use the following helper functions to interact with this table:
+- `get_src_ip_status` — Retrieve the status of the current packet's source IP.
+- `set_src_ip_status` — Set the status of the current packet's source IP.
+- `get_src_ip_data` — Retrieve the user data for the current packet's source IP.
+- `set_src_ip_data` — Store user data for the current packet's source IP.
+
+### Flow state table
+
+The flow state table stores state keyed by the 4-tuple: source IP, source port, destination IP, and destination port. Each entry contains a `u64` value you can set for any purpose.
+
+The default maximum capacity is 10,000 entries.
+
+Use the following helper functions to interact with this table:
+- `get_flow_data` — Retrieve the user data for the current flow.
+- `set_flow_data` — Store user data for the current flow.
+
+### Cache behavior
+
+Both state tables are LRU (least recently used) caches. If a table reaches its maximum capacity, the oldest entry is evicted to make room for new entries. Entries are also garbage collected if they have not been accessed in one hour.
+
 ---
 
 ## Helper functions
@@ -535,7 +776,7 @@ The table below provides a list of currently supported helper functions:
 | `hash_crc32` | `int hash_crc32(uint8_t *src, size_t src_len, uint8_t *dst)` | Computes CRC32 hash of the source buffer and stores result in destination buffer. |
 | `hmac_sha256` | `int hmac_sha256(uint8_t *key, size_t key_len, uint8_t *msg, size_t msg_len, uint8_t *dst)` | Computes HMAC-SHA256 of the message using the provided key and stores result in destination buffer. |
 | `hmac_sha512` | `int hmac_sha512(uint8_t *key, size_t key_len, uint8_t *msg, size_t msg_len, uint8_t *dst)` | Computes HMAC-SHA512 of the message using the provided key and stores result in destination buffer. |
-| `set_challenge` | `int set_challenge(uint8_t *src, size_t src_len)` | Sets challenge data for the current packet. |
+| `set_challenge` | `int set_challenge(uint8_t *src, size_t src_len)` | Sets challenge data for the current packet. If src_len is 0, challenge buffer is reset. |
 | `get_src_ip_status` | `uint64_t get_src_ip_status(void)` | Retrieves the status value associated with the source IP address from the state table. |
 | `set_src_ip_status` | `int set_src_ip_status(uint64_t status)` | Sets the status value associated with the source IP address in the state table. |
 | `get_src_ip_data` | `int get_src_ip_data(uint8_t *dst, size_t dst_len)` | Retrieves custom data associated with the source IP address from the state table. |
@@ -543,7 +784,7 @@ The table below provides a list of currently supported helper functions:
 | `get_flow_data` | `int get_flow_data(uint8_t *dst, size_t dst_len)` | Retrieves custom data associated with the current flow from the state table. |
 | `set_flow_data` | `int set_flow_data(uint8_t *src, size_t src_len)` | Stores custom data associated with the current flow in the state table. |
 | `entropy` | `double entropy(uint8_t *src, size_t src_len)` | Calculates the entropy of the source buffer. |
-| `set_network_analytics_tag` | `int set_network_analytics_tag(Tag value)` | Sets a custom tag for network analytics reporting. |
+| `set_network_analytics_tag` | `int set_network_analytics_tag(Tag value)` | Sets a custom tag for network analytics reporting. Defaults to `0` if not set. |
 | `ntohs` | `uint16_t ntohs(uint16_t netshort)` | Converts a 16-bit integer from network byte order to host byte order. |
 | `htons` | `uint16_t htons(uint16_t hostshort)` | Converts a 16-bit integer from host byte order to network byte order. |
 | `ntohl` | `uint32_t ntohl(uint32_t netlong)` | Converts a 32-bit integer from network byte order to host byte order. |
@@ -556,7 +797,7 @@ The table below provides a list of currently supported helper functions:
 
 With the exception of `rand`, `timestamp`, `ntohs`, `htons`, `ntohl`, `htonl`, `ntohll`, and `htonll`, all helper functions return a `0` on success and non-zero value on failure.
 
-## Program API endpoints
+## Program endpoints
 
 ### Upload a program
 
@@ -585,6 +826,7 @@ It is possible to update and overwrite a program that is currently in use by one
 
 To view all uploaded programs and their success statuses, view the table under the section entitled **Programs**.
 
+A link icon next to the program name indicates that the program is currently in use in an active rule and may not be deleted.
 
 ### Delete a program
 
@@ -596,60 +838,29 @@ Note that programs that have a "failed" status (meaning they failed to compile o
 
 ---
 
-## Rule API endpoints
+## Rules
+
+Only one rule executes per packet. If your account has multiple rules configured, the rule with the most specific [scope](/ddos-protection/advanced-ddos-systems/concepts/#scope) executes. For example, a rule scoped to a specific colo takes precedence over a rule scoped to a region, which takes precedence over a global rule. This is why you cannot create more than one global rule.
+
+### List all rules
+
+To view rules and their associated rule IDs, go to **Networking** > **L3/4 DDoS protection** > **Advanced Protection** in the Cloudflare dashboard. Then, select **Programmable Flow Protection**.
 
 ### Create a rule
 
 To create a rule, go to **Networking** > **L3/4 DDoS protection** > **Advanced Protection** in the Cloudflare dashboard. Then, select **Programmable Flow Protection**.
 
-Under **Rules**, select **Create rule**. Fill out the corresponding fields of your new rule.
-
-### List all rules
-
-To view rules and their associated rule IDs, use the following `GET` endpoint.
-
-```bash wrap title="Request"
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/rules \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
-```
+Under **Rules**, select **Create rule**. Fill out the corresponding fields of your new rule. You will be prompted to select a program, mode, and scope for the rule.
 
 ### Update a rule
 
-To update an existing rule, use the following `PATCH` endpoint.
+To update an existing rule, navigate to the Rules section. Click the three dots next to the rule and select **Edit**.
 
-You can modify the mode, scope, and expression of an existing rule. The example below modifies an existing rule to make it run in `disabled` mode.
-
-```bash wrap title="Request"
-curl --request PATCH \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/rules/$RULE_ID \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---header "Content-Type: application/json" \
---data '{
-  "mode": "disabled"
-}'
-```
+You will be prompted to edit the mode and scope of the rule. You may not edit the program of the rule because that is an unsafe rollout pattern.
 
 ### Delete a rule
 
-To delete an existing rule, use the following `DELETE` endpoint.
-
-This does not delete the referenced program, but deletes the directive to execute the program.
-
-```bash wrap title="Request"
-curl --request DELETE \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/rules/$RULE_ID \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
-```
-
-To delete all rules for an account, use the following `DELETE` endpoint.
-
-This does not delete the referenced programs, but deletes the directive to execute all referenced programs.
-
-```bash wrap title="Request"
-curl --request DELETE \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmable_flow_protection/configs/rules \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
-```
+To delete an existing rule, navigate to the Rules section. Click the three dots next to the rule and select **Delete**.
 
 ---
 
@@ -674,10 +885,10 @@ curl 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/magic/programmab
 
 The Packet Comment annotation may contain:
 
-- Program return value: `<value>`.  
-  `CF_EBPF_PASS` correlates to `0` and `CF_EBPF_DROP` correlates to `1`.  
-- Ignored, if it is not UDP.
-
+- Program return value: `CF_EBPF_PASS` or `CF_EBPF_DROP`  
+- `Ignored`: if the incoming packet is not UDP
+- `Analytics tag`: the custom network analytics tag set by the program on this packet, if any
+- `Challenge packet`: the challenge packet emitted from the program back to the client, if any
 ---
 
 ## Safe program and rule deployment best practices
@@ -888,7 +1099,7 @@ int hmac_sha256(uint8_t *key, size_t key_len, uint8_t *msg, size_t msg_len, uint
 /* Computes HMAC-SHA512 of the message using the provided key and stores result in destination buffer. */
 int hmac_sha512(uint8_t *key, size_t key_len, uint8_t *msg, size_t msg_len, uint8_t *dst);
 
-/* Sets challenge data for the current packet. */
+/* Sets challenge data for the current packet. If src_len is 0, challenge buffer is reset. */
 int set_challenge(uint8_t *src, size_t src_len);
 
 /* Retrieves the status value associated with the source IP address from the state table. */
