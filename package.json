@@ -49,7 +49,7 @@
 		"@base-ui/react": "1.4.0",
 		"@cloudflare/vitest-pool-workers": "0.14.9",
 		"@cloudflare/workers-types": "4.20260413.1",
-		"@eslint/js": "9.35.0",
+		"@eslint/js": "9.39.4",
 		"@expressive-code/core": "0.41.7",
 		"@expressive-code/plugin-collapsible-sections": "0.41.3",
 		"@expressive-code/plugin-line-numbers": "0.41.7",
