@@ -42,7 +42,12 @@ If your end user's video is under 200 MB and their connection is reliable, we re
 
 To enable direct creator uploads with a `POST` request:
 
-1. Generate a unique, one-time upload URL using the [Direct upload API](/api/resources/stream/subresources/direct_upload/methods/create/).
+### Step 1: Generate a unique, one-time upload URL
+
+<Tabs>
+<TabItem label="REST API">
+
+Generate a unique, one-time upload URL using the [Direct upload API](/api/resources/stream/subresources/direct_upload/methods/create/).
 
 ```sh title="Generate upload"
 curl https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/direct_upload \
@@ -66,7 +71,50 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/direct_up
 }
 ```
 
-2. With the `uploadURL` from the previous step, users can upload video files that are limited to 200 MB in size. Refer to the example request below.
+See the full Stream [REST API and SDK reference](/api/resources/stream/) for details on using REST API from external applications, with pre-generated SDK's for external TypeScript, Python, or Go applications.
+
+</TabItem>
+<TabItem label="Workers Binding API">
+	<Tabs>
+	<TabItem label="index.ts">
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const directUpload = await env.STREAM.createDirectUpload({
+			maxDurationSeconds: 3600,
+		});
+
+		return new Response(JSON.stringify(directUpload));
+	},
+} satisfies ExportedHandler<{ STREAM: StreamBinding }>;
+```
+	</TabItem>
+	<TabItem label="wrangler.jsonc">
+```json
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "<ENTER_WORKER_NAME>",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"observability": {
+		"enabled": true
+	},
+	"stream": {
+		"binding": "STREAM"
+	}
+}
+```
+	</TabItem>
+	</Tabs>
+
+See the full [Workers Stream binding API reference](/stream/manage-video-library/bindings/).
+
+</TabItem>
+</Tabs>
+
+### Step 2: Upload the video to the one-time URL
+
+With the `uploadURL` from the previous step, users can upload video files that are limited to 200 MB in size. Refer to the example request below.
 
 {/* <!-- videodelivery.net is correct domain. See STREAM-4364 --> */}
 
@@ -109,37 +157,7 @@ Before provisioning the one-time upload URL, your backend must obtain the file s
 
 :::
 
-The examples below show how to provision a one-time upload URL for your end users.
-
-<Tabs>
-<TabItem label="REST API">
-
-    <Tabs>
-    	<TabItem label="cURL">
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/direct_upload \
---header 'Authorization: Bearer <API_TOKEN>' \
- --data '{
-    "maxDurationSeconds": 3600
- }'
-```
-    	</TabItem>
-    	<TabItem label="TypeScript">
-```ts
-const client = new Cloudflare({
-	apiEmail: process.env['CLOUDFLARE_EMAIL'],
-	apiKey: process.env['CLOUDFLARE_API_KEY'],
-});
-
-const directUpload = await client.stream.directUpload.create({
-	account_id: '<ACCOUNT_ID>',
-	maxDurationSeconds: 3600,
-});
-```
-    	</TabItem>
-    </Tabs>
-
-For tus protocol uploads, your backend must pass the `Tus-Resumable`, `Upload-Length`, and `Upload-Metadata` headers. The one-time upload URL is returned in the `Location` header of the response, not in the response body.
+The example below shows how to build a Worker that returns a one-time upload URL to your end users. For tus protocol uploads, your backend must pass the `Tus-Resumable`, `Upload-Length`, and `Upload-Metadata` headers. The one-time upload URL is returned in the `Location` header of the response, not in the response body.
 
 ```javascript title="Example tus API endpoint"
 export async function onRequest(context) {
@@ -170,52 +188,11 @@ export async function onRequest(context) {
 }
 ```
 
-See the full Stream [REST API and SDK reference](/api/resources/stream/) for details on using REST API from external applications, with pre-generated SDK's for external TypeScript, Python, or Go applications.
-
-</TabItem>
-<TabItem label="Workers Binding API">
-	<Tabs>
-	<TabItem label="index.ts">
-```ts
-export default {
-	async fetch(request, env, ctx): Promise<Response> {
-		const directUpload = await env.STREAM.createDirectUpload({
-			maxDurationSeconds: 3600,
-		});
-
-		return new Response(JSON.stringify(directUpload));
-	},
-} satisfies ExportedHandler<{ STREAM: StreamBinding }>;
-```
-	</TabItem>
-	<TabItem label="wrangler.jsonc">
-```json
-{
-	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "<ENTER_WORKER_NAME>",
-	"main": "src/index.ts",
-	"compatibility_date": "$today",
-	"observability": {
-		"enabled": true
-	},
-	"stream": {
-		"binding": "STREAM"
-	}
-}
-```
-	</TabItem>
-	</Tabs>
-
 :::note
 
-The Workers Binding API creates a basic POST direct upload URL. For tus protocol uploads that require custom headers, use the REST API approach.
+The Workers Binding API creates a basic POST direct upload URL. For tus protocol uploads that require custom headers like `Tus-Resumable`, `Upload-Length`, and `Upload-Metadata`, use the REST API approach shown above.
 
 :::
-
-See the full [Workers Stream binding API reference](/kv/api/read-key-value-pairs/).
-
-</TabItem>
-</Tabs>
 
 ### Step 2: Your end user's client uploads directly to Stream
 
