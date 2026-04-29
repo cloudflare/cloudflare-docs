@@ -1,0 +1,50 @@
+---
+title: Stream Worker binding (beta)
+description: Interact with Cloudflare Stream directly from Workers without API tokens or HTTP requests.
+products:
+  - stream
+date: 2026-04-29
+---
+
+import { WranglerConfig, TypeScriptExample } from "~/components";
+
+You can now bind Cloudflare Stream to a Worker and manage videos without API tokens or REST calls. The binding exposes `env.STREAM` with methods for uploading, listing, updating, deleting, and securing videos — all from your Worker code.
+
+Use the Stream binding when you want to:
+
+- Upload videos from URLs or create direct upload links for end users
+- Generate signed playback tokens without managing signing keys
+- Manage video metadata, captions, downloads, and watermarks
+- Build video pipelines entirely within Workers
+
+To get started, add the Stream binding to your Wrangler configuration:
+
+<WranglerConfig>
+
+```toml
+[stream]
+binding = "STREAM"
+```
+
+</WranglerConfig>
+
+Then use the binding in your Worker:
+
+<TypeScriptExample>
+
+```ts
+export default {
+  async fetch(request, env): Promise<Response> {
+    const video = await env.STREAM.upload(
+      "https://storage.googleapis.com/stream-example-bucket/video.mp4",
+      { meta: { name: "My First Stream Video" } }
+    );
+
+    return Response.json(video);
+  },
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+For setup instructions and the full API reference, refer to [Bind to Workers API](/stream/manage-video-library/bindings/).
