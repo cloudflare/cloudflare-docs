@@ -22,64 +22,37 @@ import {
 
 Wrangler offers APIs to programmatically interact with your Cloudflare Workers.
 
+- [`experimental_generateTypes`](#experimental_generatetypes) - Generate TypeScript type definitions from your Worker configuration.
 - [`unstable_startWorker`](#unstable_startworker) - Start a server for running integration tests against your Worker.
-- [`unstable_generateTypes`](#unstable_generatetypes) - Generate TypeScript type definitions from your Worker configuration.
 - [`unstable_dev`](#unstable_dev) - Start a server for running either end-to-end (e2e) or integration tests against your Worker.
 - [`getPlatformProxy`](#getplatformproxy) - Get proxies and values for emulating the Cloudflare Workers platform in a Node.js process.
 
-## `unstable_startWorker`
-
-This API exposes the internals of Wrangler's dev server, and allows you to customise how it runs. For example, you could use `unstable_startWorker()` to run integration tests against your Worker. This example uses `node:test`, but should apply to any testing framework:
-
-```js
-import assert from "node:assert";
-import test, { after, before, describe } from "node:test";
-import { unstable_startWorker } from "wrangler";
-
-describe("worker", () => {
-	let worker;
-
-	before(async () => {
-		worker = await unstable_startWorker({ config: "wrangler.json" });
-	});
-
-	test("hello world", async () => {
-		assert.strictEqual(
-			await (await worker.fetch("http://example.com")).text(),
-			"Hello world",
-		);
-	});
-
-	after(async () => {
-		await worker.dispose();
-	});
-});
-```
-
-## `unstable_generateTypes`
+## `experimental_generateTypes`
 
 Generate TypeScript type definitions from your Worker configuration. This API uses the same core logic as the `wrangler types` CLI command, so outputs stay aligned between the CLI and programmatic API.
 
-Unlike the CLI command, `unstable_generateTypes` does not write to disk automatically. Instead, it returns the generated type content as structured strings for you to handle as needed.
+Unlike the CLI command, `experimental_generateTypes` does not write to disk automatically. Instead, it returns the generated type content as structured strings for you to handle as needed.
 
 :::note
 
-The `unstable_generateTypes()` function has an `unstable_` prefix because the API is experimental and may change in the future.
+The `experimental_generateTypes()` function has an `experimental_` prefix because the API is experimental and may change in the future.
 
 :::
 
 ### Syntax
 
 ```ts
-import { unstable_generateTypes } from "wrangler";
+import { experimental_generateTypes } from "wrangler";
 
-const generated = await unstable_generateTypes(options);
+const result = await experimental_generateTypes(options);
 ```
 
 ### Parameters
 
 - `options` <Type text="object" /> <MetaInfo text="optional" />
+
   - Optional options object mirroring the `wrangler types` CLI flags:
+
     - `config` `string | string[]`
 
       Path to the Wrangler configuration file to use. Can be an array for multi-config type resolution.
@@ -114,42 +87,46 @@ const generated = await unstable_generateTypes(options);
 
 ### Return Type
 
-`unstable_generateTypes()` returns a `Promise` resolving to an object containing the following fields:
+`experimental_generateTypes()` returns a `Promise` resolving to an object containing the following fields:
 
 - `content` `string`
+
   - Combined formatted output containing all generated sections, including headers and both env and runtime types.
 
 - `env` `string | null`
+
   - Generated environment and bindings types, or `null` when env types are excluded.
 
 - `path` `string`
+
   - Target declaration file path associated with this generation run.
 
 - `runtime` `string | null`
+
   - Generated runtime types, or `null` when runtime types are excluded.
 
 ### Usage
 
-You can use `unstable_generateTypes` to generate types programmatically and write them to disk yourself, or pass them to other tools:
+You can use `experimental_generateTypes` to generate types programmatically and write them to disk yourself, or pass them to other tools:
 
 ```ts
-import { unstable_generateTypes } from "wrangler";
+import { experimental_generateTypes } from "wrangler";
 import * as fs from "node:fs";
 
-const generated = await unstable_generateTypes({
+const result = await experimental_generateTypes({
 	config: "wrangler.json",
 	includeRuntime: true,
 	includeEnv: true,
 });
 
 // Write the combined content to the path specified in options
-fs.writeFileSync(generated.path, generated.content, "utf-8");
+fs.writeFileSync(result.path, result.content, "utf-8");
 ```
 
 To generate only env types without runtime types:
 
 ```ts
-const generated = await unstable_generateTypes({
+const result = await experimental_generateTypes({
 	includeRuntime: false,
 });
 ```
@@ -157,10 +134,39 @@ const generated = await unstable_generateTypes({
 To generate types for a specific environment with a custom interface name:
 
 ```ts
-const generated = await unstable_generateTypes({
+const result = await experimental_generateTypes({
 	env: "staging",
 	envInterface: "StagingEnv",
 	path: "./types/staging.d.ts",
+});
+```
+
+## `unstable_startWorker`
+
+This API exposes the internals of Wrangler's dev server, and allows you to customise how it runs. For example, you could use `unstable_startWorker()` to run integration tests against your Worker. This example uses `node:test`, but should apply to any testing framework:
+
+```js
+import assert from "node:assert";
+import test, { after, before, describe } from "node:test";
+import { unstable_startWorker } from "wrangler";
+
+describe("worker", () => {
+	let worker;
+
+	before(async () => {
+		worker = await unstable_startWorker({ config: "wrangler.json" });
+	});
+
+	test("hello world", async () => {
+		assert.strictEqual(
+			await (await worker.fetch("http://example.com")).text(),
+			"Hello world",
+		);
+	});
+
+	after(async () => {
+		await worker.dispose();
+	});
 });
 ```
 
