@@ -49,8 +49,10 @@ For each scoped alert, Cloudflare does the following:
 
 When you create a scoped alert you will not receive notifications for resources that are not allowed by a content security rule (either [in allow or in log mode](/client-side-security/rules/#rule-actions)). These are [rule violations](/client-side-security/rules/violations/) that you can review in the dashboard, through GraphQL, or via Logpush.
 
+If your content security rule uses the `'self'` keyword, note that `'self'` is evaluated per request hostname. On an [SSL for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) root zone, this means scoped alerts can fire for resources detected on any custom hostname served under the root zone. For more information, refer to [I get scoped alerts for hostnames I do not manage on a SaaS root zone](/client-side-security/troubleshooting/#i-get-scoped-alerts-for-hostnames-i-do-not-manage-on-a-saas-root-zone).
+
 :::note
 Scoped alerts only fire if the zone has at least one enabled content security rule.
 :::
 
-For unscoped alerts, you will receive alerts for resources detected in all your zones, and you may receive alerts about resources that violate your configured content security rules.
+For unscoped alerts, you will receive notifications for all resources detected across your zones. Some of these resources may also violate your configured content security rules — for the authoritative list of rule violations, refer to [Rule violations](/client-side-security/rules/violations/) and review them in the dashboard, through GraphQL, or via Logpush.
