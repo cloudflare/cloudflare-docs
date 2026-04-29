@@ -125,7 +125,12 @@ resource "cloudflare_connectivity_directory_service" "my_database" {
 }
 ```
 
-Valid values for `cert_verification_mode` are `verify_full` (default), `verify_ca`, and `disabled`. Refer to [TLS certificate verification mode](/workers-vpc/configuration/vpc-services/#tls-certificate-verification-mode) for details.
+Valid values for `cert_verification_mode` are:
+- `verify_full` (default)
+- `verify_ca`
+- `disabled`
+
+Refer to [TLS certificate verification mode](/workers-vpc/configuration/vpc-services/#tls-certificate-verification-mode) for details.
 
 ### Port configuration
 
