@@ -1,0 +1,265 @@
+---
+title: Event subscriptions
+description: Subscribe to Artifacts events for repo lifecycle and Git operations.
+pcx_content_type: how-to
+sidebar:
+  order: 4
+products:
+  - artifacts
+---
+
+import { Render } from "~/components";
+
+Artifacts emits structured events for every repository lifecycle change — pushes, clones, fetches, forks, imports, and more. By subscribing to these events through [event subscriptions](event-subscriptions/), you can consume them with a Worker or HTTP pull consumer to build commit-driven automation.
+
+For example:
+- Trigger a review agent on every push
+- Mirror repositories to an external provider
+- Run custom lint or deploy workflows when code changes
+
+## Artifacts events
+
+### Account-level events
+
+Subscribe to the `artifacts` source to receive events for any repository in your account.
+
+#### `repo.created`
+
+Triggered when a repository is created.
+
+**Example:**
+
+```json
+{
+  "type": "cf.artifacts.repo.created",
+  "source": {
+    "type": "artifacts",
+    "namespace": "my-namespace",
+    "repoName": "my-repo",
+    "user": {
+      "id": "user-id",
+      "email": "user@example.com"
+    }
+  },
+  "payload": {
+    "repoId": "repo-12345678-90ab-cdef-1234-567890abcdef",
+    "defaultBranch": "main",
+    "description": "My Artifacts repository",
+    "readOnly": false
+  },
+  "metadata": {
+    "accountId": "f9f79265f388666de8122cfb508d7776",
+    "eventSubscriptionId": "1830c4bb612e43c3af7f4cada31fbf3f",
+    "eventSchemaVersion": 1,
+    "eventTimestamp": "2025-05-01T02:48:57.132Z"
+  }
+}
+```
+
+#### `repo.deleted`
+
+Triggered when a repository is deleted.
+
+**Example:**
+
+```json
+{
+  "type": "cf.artifacts.repo.deleted",
+  "source": {
+    "type": "artifacts",
+    "namespace": "my-namespace",
+    "repoName": "my-repo",
+    "user": {
+      "id": "user-id",
+      "email": "user@example.com"
+    }
+  },
+  "payload": {
+    "repoId": "repo-12345678-90ab-cdef-1234-567890abcdef",
+    "defaultBranch": "main",
+    "description": "My Artifacts repository",
+    "readOnly": false
+  },
+  "metadata": {
+    "accountId": "f9f79265f388666de8122cfb508d7776",
+    "eventSubscriptionId": "1830c4bb612e43c3af7f4cada31fbf3f",
+    "eventSchemaVersion": 1,
+    "eventTimestamp": "2025-05-01T02:48:57.132Z"
+  }
+}
+```
+
+#### `repo.forked`
+
+Triggered when a repository is forked. The source identifies the original repository; the payload contains the target repository.
+
+**Example:**
+
+```json
+{
+  "type": "cf.artifacts.repo.forked",
+  "source": {
+    "type": "artifacts",
+    "namespace": "source-namespace",
+    "repoName": "source-repo",
+    "user": {
+      "id": "user-id",
+      "email": "user@example.com"
+    }
+  },
+  "payload": {
+    "namespace": "target-namespace",
+    "repoName": "target-repo",
+    "repoId": "repo-12345678-90ab-cdef-1234-567890abcdef",
+    "defaultBranch": "main",
+    "description": "Fork of source-repo",
+    "readOnly": false
+  },
+  "metadata": {
+    "accountId": "f9f79265f388666de8122cfb508d7776",
+    "eventSubscriptionId": "1830c4bb612e43c3af7f4cada31fbf3f",
+    "eventSchemaVersion": 1,
+    "eventTimestamp": "2025-05-01T02:48:57.132Z"
+  }
+}
+```
+
+#### `repo.imported`
+
+Triggered when a repository is imported from an external Git remote.
+
+**Example:**
+
+```json
+{
+  "type": "cf.artifacts.repo.imported",
+  "source": {
+    "type": "artifacts",
+    "namespace": "my-namespace",
+    "repoName": "my-repo",
+    "user": {
+      "id": "user-id",
+      "email": "user@example.com"
+    }
+  },
+  "payload": {
+    "repoId": "repo-12345678-90ab-cdef-1234-567890abcdef",
+    "defaultBranch": "main",
+    "description": "Imported repository",
+    "readOnly": false,
+    "sourceUrl": "https://github.com/example/repo.git",
+    "branch": "main"
+  },
+  "metadata": {
+    "accountId": "f9f79265f388666de8122cfb508d7776",
+    "eventSubscriptionId": "1830c4bb612e43c3af7f4cada31fbf3f",
+    "eventSchemaVersion": 1,
+    "eventTimestamp": "2025-05-01T02:48:57.132Z"
+  }
+}
+```
+
+### Repository-level events
+
+Subscribe to the `artifacts.repo` source and provide a `namespace` and `repo_name` to receive events scoped to a single repository.
+
+#### `pushed`
+
+Triggered when a ref is pushed to a repository.
+
+**Example:**
+
+```json
+{
+  "type": "cf.artifacts.repo.pushed",
+  "source": {
+    "type": "artifacts.repo",
+    "namespace": "my-namespace",
+    "repoName": "my-repo",
+    "user": {
+      "id": "user-id",
+      "email": "user@example.com"
+    }
+  },
+  "payload": {
+    "ref": "refs/heads/main",
+    "before": "abc123def456",
+    "after": "def789ghi012",
+    "commits": [
+      {
+        "id": "def789ghi012",
+        "message": "Fix bug in authentication",
+        "truncated": false,
+        "timestamp": 1714522137,
+        "author": {
+          "name": "Developer Name",
+          "email": "developer@example.com"
+        }
+      }
+    ],
+    "totalCommitsCount": 1
+  },
+  "metadata": {
+    "accountId": "f9f79265f388666de8122cfb508d7776",
+    "eventSubscriptionId": "1830c4bb612e43c3af7f4cada31fbf3f",
+    "eventSchemaVersion": 1,
+    "eventTimestamp": "2025-05-01T02:48:57.132Z"
+  }
+}
+```
+
+#### `cloned`
+
+Triggered when a repository is cloned (full fetch with no existing objects). The payload is empty.
+
+**Example:**
+
+```json
+{
+  "type": "cf.artifacts.repo.cloned",
+  "source": {
+    "type": "artifacts.repo",
+    "namespace": "my-namespace",
+    "repoName": "my-repo",
+    "user": {
+      "id": "user-id",
+      "email": "user@example.com"
+    }
+  },
+  "payload": {},
+  "metadata": {
+    "accountId": "f9f79265f388666de8122cfb508d7776",
+    "eventSubscriptionId": "1830c4bb612e43c3af7f4cada31fbf3f",
+    "eventSchemaVersion": 1,
+    "eventTimestamp": "2025-05-01T02:48:57.132Z"
+  }
+}
+```
+
+#### `fetched`
+
+Triggered when incremental updates are fetched from a repository. The payload is empty.
+
+**Example:**
+
+```json
+{
+  "type": "cf.artifacts.repo.fetched",
+  "source": {
+    "type": "artifacts.repo",
+    "namespace": "my-namespace",
+    "repoName": "my-repo",
+    "user": {
+      "id": "user-id",
+      "email": "user@example.com"
+    }
+  },
+  "payload": {},
+  "metadata": {
+    "accountId": "f9f79265f388666de8122cfb508d7776",
+    "eventSubscriptionId": "1830c4bb612e43c3af7f4cada31fbf3f",
+    "eventSchemaVersion": 1,
+    "eventTimestamp": "2025-05-01T02:48:57.132Z"
+  }
+}
+```
