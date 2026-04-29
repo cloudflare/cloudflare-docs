@@ -142,7 +142,7 @@ class Default(WorkerEntrypoint):
 
 - `listMultipartUploads` <Type text="(options?: R2ListMultipartUploadsOptions): Promise<R2MultipartUploads>" />
 
-  - Returns an `R2MultipartUploads` containing a list of in-progress multipart uploads in the bucket.
+  - Returns an `R2MultipartUploads` object containing a list of in-progress multipart uploads in the bucket.
   - The returned list of multipart uploads is ordered lexicographically by key.
   - Refer to [R2ListMultipartUploadsOptions](#r2listmultipartuploadsoptions) for available options.
 
@@ -273,7 +273,7 @@ A multipart upload can be completed or aborted at any time, either through the S
 
 - `listParts` <Type text="(options?: R2ListPartsOptions): Promise<R2UploadedParts>" />
 
-  - Returns an `R2UploadedParts` containing a list of parts that have been uploaded to this multipart upload.
+  - Returns an `R2UploadedParts` object containing a list of parts that have been uploaded to this multipart upload.
   - Parts are returned in ascending order by part number.
   - Refer to [R2ListPartsOptions](#r2listpartsoptions) for available options.
 
@@ -484,7 +484,7 @@ An object containing an `R2Object` array, returned by `BUCKET_BINDING.list()`.
 
 - `startAfter` <Type text="string" /> <MetaInfo text="optional" />
 
-  - A key to start listing multipart uploads after. Used for pagination in combination with cursor.
+  - A key to start listing multipart uploads after. Used for pagination in combination with `cursor`.
 
 ### R2MultipartUploads
 
@@ -500,7 +500,7 @@ An object containing an array of `R2MultipartUploadListing` objects, returned by
 
 - `cursor` <Type text="string" /> <MetaInfo text="optional" />
 
-  - A token that can be passed to future `listMultipartUploads` calls to resume listing from that point. Only present if truncated is true.
+  - A token that can be passed to future `listMultipartUploads` calls to resume listing from that point. Only present if `truncated` is `true`.
 
 - `delimitedPrefixes` <Type text="Array<string>" />
 
@@ -518,13 +518,13 @@ An object representing a single multipart upload in the list returned by `listMu
 
   - The unique identifier for this multipart upload.
 
-- `initiated` <Type text="Date" /> <MetaInfo text="optional" />
+- `initiated` <Type text="Date" />
 
   - A Date object representing when the multipart upload was initiated.
 
-- `storageClass` <Type text="string" /> <MetaInfo text="optional" />
+- `storageClass` <Type text="'Standard' | 'InfrequentAccess'" /> <MetaInfo text="optional" />
 
-  - The storage class associated with this multipart upload.
+  - The storage class associated with this multipart upload. Refer to [Storage Classes](#storage-class).
 
 ### R2ListPartsOptions
 
@@ -550,7 +550,7 @@ An object containing an array of uploaded parts, returned by `multipartUpload.li
 
 - `partNumberMarker` <Type text="number" /> <MetaInfo text="optional" />
 
-  - A part number marker that can be passed to future `listParts` calls to resume listing from that point. Only present if truncated is true.
+  - A `partNumberMarker` that can be passed to future `listParts` calls to resume listing from that point. Only present if `truncated` is `true`.
 
 ### R2UploadedPartInfo
 

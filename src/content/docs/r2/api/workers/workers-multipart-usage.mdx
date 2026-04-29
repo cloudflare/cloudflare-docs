@@ -274,25 +274,23 @@ upload_file(worker_endpoint, filename, partsize)
 You can list all in-progress multipart uploads in a bucket using the `listMultipartUploads` method. This is useful for managing and cleaning up incomplete uploads.
 
 ```js
-// List all in-progress multipart uploads
-const uploads = await env.MY_BUCKET.listMultipartUploads();
-
-for (const upload of uploads.uploads) {
-	console.log(`Upload: ${upload.key}, ID: ${upload.uploadId}, Started: ${upload.initiated}`);
-}
-
-// Handle pagination for large results
-let cursor = uploads.cursor;
-while (uploads.truncated) {
-	const moreUploads = await env.MY_BUCKET.listMultipartUploads({ cursor });
-	for (const upload of moreUploads.uploads) {
-		console.log(`Upload: ${upload.key}, ID: ${upload.uploadId}`);
+// List all in-progress multipart uploads, paginating through every page.
+const allUploads = [];
+let cursor;
+let truncated = true;
+while (truncated) {
+	const page = await env.MY_BUCKET.listMultipartUploads({ cursor });
+	for (const upload of page.uploads) {
+		allUploads.push(upload);
+		console.log(
+			`Upload: ${upload.key}, ID: ${upload.uploadId}, started: ${upload.initiated.toISOString()}`,
+		);
 	}
-	cursor = moreUploads.cursor;
-	uploads.truncated = moreUploads.truncated;
+	truncated = page.truncated;
+	cursor = page.truncated ? page.cursor : undefined;
 }
 
-// Filter by prefix
+// Filter by prefix.
 const filteredUploads = await env.MY_BUCKET.listMultipartUploads({
 	prefix: "uploads/",
 	delimiter: "/",
@@ -304,27 +302,23 @@ const filteredUploads = await env.MY_BUCKET.listMultipartUploads({
 You can list all parts that have been uploaded to a multipart upload using the `listParts` method. This is useful for resuming uploads or verifying which parts have been uploaded.
 
 ```js
-// Resume an existing multipart upload
+// Resume an existing multipart upload.
 const multipartUpload = env.MY_BUCKET.resumeMultipartUpload(key, uploadId);
 
-// List all uploaded parts
-const result = await multipartUpload.listParts();
-
-for (const part of result.parts) {
-	console.log(
-		`Part ${part.partNumber}: etag=${part.etag}, size=${part.size}, uploaded=${part.uploaded}`
-	);
-}
-
-// Handle pagination for uploads with many parts
-let partNumberMarker = result.partNumberMarker;
-while (result.truncated) {
-	const moreParts = await multipartUpload.listParts({ partNumberMarker });
-	for (const part of moreParts.parts) {
-		console.log(`Part ${part.partNumber}: size=${part.size}`);
+// List all uploaded parts, paginating through every page.
+const allParts = [];
+let partNumberMarker;
+let truncated = true;
+while (truncated) {
+	const page = await multipartUpload.listParts({ partNumberMarker });
+	for (const part of page.parts) {
+		allParts.push(part);
+		console.log(
+			`Part ${part.partNumber}: etag=${part.etag}, size=${part.size}, uploaded=${part.uploaded.toISOString()}`,
+		);
 	}
-	partNumberMarker = moreParts.partNumberMarker;
-	result.truncated = moreParts.truncated;
+	truncated = page.truncated;
+	partNumberMarker = page.truncated ? page.partNumberMarker : undefined;
 }
 ```
 
