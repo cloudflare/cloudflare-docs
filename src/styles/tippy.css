@@ -2,15 +2,13 @@
 	background-color: #3d3d3d !important;
 	border: 1px solid #595959 !important;
 	color: #e6e6e6 !important;
-	border-radius: 0.2rem;
 	font-size: 0.75rem !important;
-	line-height: 1.65;
 }
 
 .tippy-box .tippy-content {
-	padding: 2px 7px;
+	padding: 2px 7px !important;
 }
 
 .tippy-box .tippy-arrow {
-	display: none;
+	display: none !important;
 }
