@@ -105,6 +105,41 @@ You can review abuse reports against your zones and any mitigations taken agains
 
 You can also **Request review** of most mitigations.
 
+## Cease and Desist a domain
+
+Cease and Desist (C&D) allows you to take immediate action against infringing domains. Instead of manually drafting legal notices, you can generate professional, pre-filled C&D letters directly from the Cloudflare dashboard to streamline your enforcement workflow.
+
+Cease and Desist is available for domains that are not hosted on Cloudflare. For domains using Cloudflare IP addresses or Registrar, use the [report abuse](#report-abuse) flow.
+
+### Manage templates
+
+You can customize the C&D experience by managing your own templates:
+
+1. Go to **Brand Protection** > **Settings** > **C&D Templates**.
+
+<DashButton url="/?to=/:account/security-center/brand-protection" />
+
+2. Upload your branded templates in PDF format.
+3. Define your default Sender Details (name, title, and company) to be used across all generated letters.
+
+### How to generate a C&D letter
+
+1. Go to **Brand Protection**.
+
+<DashButton url="/?to=/:account/security-center/brand-protection" />
+2. Go to **Monitor Strings** or **Monitor Logos** and select a query to view matches.
+3. Identify a domain that is infringing on your trademark.
+      Note: The C&D option will appear for matches with a character distance of 0 or 1.
+4. Select **Generate C&D**.
+5. Select a Template: Choose the template that best fits the situation:
+      - Exact Match: A formal demand for domains identical to your trademark.
+      - Similar Match: A standard notice for confusingly similar domains.
+      - Friendly Tone: An initial outreach for potentially unintentional infringements.
+6. **Review and Edit**: The system automatically pre-fills the letter with WHOIS data (registrar, discovery date, and registrant email). You can manually edit any text within the letter at this stage to ensure legal accuracy.
+7. **Identify Recipient**: The dashboard will display the recommended contact (either the registrant email or the registrar's abuse contact).
+8. Download the PDF.
+
+
 ## Brand Protection API
 
 The [Brand Protection API](/api/resources/brand_protection/) allows for programmatic management and integration with your [SOC](https://www.cloudflare.com/en-gb/learning/security/glossary/what-is-a-security-operations-center-soc/) or [SIEM](https://www.cloudflare.com/en-gb/learning/security/what-is-siem/). Using the Brand Protection API, you can:
