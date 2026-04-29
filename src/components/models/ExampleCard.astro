@@ -17,8 +17,14 @@ const hasSnippets = snippets.length > 0;
 const output = example.output;
 
 // Text output (e.g. LLM responses): { text: "..." } or { response: "..." }.
+// Some examples provide streaming-style chunks as a string array.
 const rawText = output?.text ?? output?.response;
-const textOutput = typeof rawText === "string" ? rawText : undefined;
+const textOutput =
+	typeof rawText === "string"
+		? rawText
+		: Array.isArray(rawText)
+			? rawText.filter((v): v is string => typeof v === "string").join("")
+			: undefined;
 
 const rawImageUrl = output?.image ?? output?.image_url;
 const imageUrl = typeof rawImageUrl === "string" ? rawImageUrl : undefined;
