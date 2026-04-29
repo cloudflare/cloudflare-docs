@@ -212,10 +212,11 @@ The Child SA. Documentation sometimes refers to this as Phase 2 as per IKEv1 lan
 
 The following third-party vendors have been tested and validated to interoperate with Cloudflare IPsec for post-quantum key agreement:
 
-| Vendor   | Product / Version | ML-KEM variant | DH group | Notes                                                         |
-| -------- | ----------------- | -------------- | -------- | ------------------------------------------------------------- |
-| Fortinet | FortiOS 7.6.6+    | ML-KEM-768     | Group 20 | Requires RFC 9370 and draft-ietf-ipsecme-ikev2-mlkem support. |
-| Fortinet | FortiOS 7.6.6+    | ML-KEM-1024    | Group 20 | Requires RFC 9370 and draft-ietf-ipsecme-ikev2-mlkem support. |
+| Vendor   | Product / Version                                            | ML-KEM variant | DH group | Notes                                                         |
+| -------- | ------------------------------------------------------------ | -------------- | -------- | ------------------------------------------------------------- |
+| Cisco    | Cisco 8000 Series Secure Routers with IOS XR Release 26.1.1 | ML-KEM-1024    | Group 20 | Requires RFC 9370 and draft-ietf-ipsecme-ikev2-mlkem support. |
+| Fortinet | FortiOS 7.6.6+                                               | ML-KEM-768     | Group 20 | Requires RFC 9370 and draft-ietf-ipsecme-ikev2-mlkem support. |
+| Fortinet | FortiOS 7.6.6+                                               | ML-KEM-1024    | Group 20 | Requires RFC 9370 and draft-ietf-ipsecme-ikev2-mlkem support. |
 
 Cloudflare continues to test and validate additional third-party devices. If you have successfully configured post-quantum IPsec with a vendor not listed here, contact your account team.
 
