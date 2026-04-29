@@ -500,22 +500,22 @@ The bindings supported by `getPlatformProxy` are:
     For example, you might have the following binding in a Wrangler configuration file read by `getPlatformProxy`.
 
     <WranglerConfig>
-        
-            ```jsonc
-            {
-              "durable_objects": {
-                "bindings": [
-                  {
-                    "name": "MyDurableObject",
-                    "class_name": "MyDurableObject",
-                    "script_name": "external-do-worker"
+            
+                ```jsonc
+                {
+                  "durable_objects": {
+                    "bindings": [
+                      {
+                        "name": "MyDurableObject",
+                        "class_name": "MyDurableObject",
+                        "script_name": "external-do-worker"
+                      }
+                    ]
                   }
-                ]
-              }
-            }
-            ```
-        
-            </WranglerConfig>
+                }
+                ```
+            
+                </WranglerConfig>
 
     You will need to declare your Durable Object `"MyDurableObject"` in another Worker, called `external-do-worker` in this example.
 
@@ -535,14 +535,14 @@ The bindings supported by `getPlatformProxy` are:
     That Worker also needs a Wrangler configuration file that looks like this:
 
     <WranglerConfig>
-                ```json
-                {
-                	"name": "external-do-worker",
-                	"main": "src/index.ts",
-                	"compatibility_date": "XXXX-XX-XX"
-                }
-                ```
-                </WranglerConfig>
+                    ```json
+                    {
+                    	"name": "external-do-worker",
+                    	"main": "src/index.ts",
+                    	"compatibility_date": "XXXX-XX-XX"
+                    }
+                    ```
+                    </WranglerConfig>
 
     If you are not using RPC with your Durable Object, you can run a separate Wrangler dev session alongside your framework development server.
 
