@@ -18,7 +18,7 @@ With Cache Response Rules you can:
 - Modify cache tags on responses for targeted [cache purging](/cache/how-to/purge-cache/).
 - Strip headers (`ETag`, `Set-Cookie`, `Last-Modified`) from origin responses before caching.
 
-Cache Response Rules apply to both cached and non-cached (dynamic) responses from the origin. For example, you can strip Set-Cookie headers from responses that are not eligible for caching.
+Cache Response Rules apply to both cached and non-cached ([DYNAMIC](/cache/concepts/cache-responses/#dynamic)) responses from the origin. For example, you can strip Set-Cookie headers from responses that are not eligible for caching.
 
 Cache Response Rules can be created in the [dashboard](/cache/how-to/cache-response-rules/create-dashboard/), via [API](/cache/how-to/cache-response-rules/create-api/), or [Terraform](/cache/how-to/cache-response-rules/terraform-example/).
 
