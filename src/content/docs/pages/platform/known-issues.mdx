@@ -111,7 +111,7 @@ To delete _all_ your deployments for a particular project name, you could run th
 ```sh
 prod_id=""
 while :; do
-  ids=$(npx wrangler pages deployment list --project-name research-cloudflare-com --json | jq -r '.[].Id')
+  ids=$(npx wrangler pages deployment list --project-name <PROJECT_NAME> --json | jq -r '.[].Id')
   to_delete=$(echo "$ids" | grep -v -F -x "$prod_id" | grep .)
   [ -z "$to_delete" ] && { echo "Done. Production: $prod_id"; break; }
   echo "Deleting $(echo "$to_delete" | wc -l | tr -d ' ') deployments..."
