@@ -22,6 +22,10 @@ With this type of footnote, you can add the numbers to the MDX file in any order
 
 The hover ability of this type of footnote is powered by [tippy.js](https://atomiks.github.io/tippyjs/).
 
+:::caution
+Do not use this syntax inside `<Tabs>` blocks or in partials included inside `<Tabs>` blocks. It generates a `## Footnotes` heading inside each tab panel, which repeats across tabs and breaks agent-readable documentation. Use plain text footnotes or inline the text instead.
+:::
+
 ### Plain text footnotes
 
 To add plain text footnotes, use the syntax in this example:
@@ -30,6 +34,6 @@ To add plain text footnotes, use the syntax in this example:
 This is a sentence with a footnote.<sup>1</sup>
 
 <sup>1</sup> A footnote adds details or context.
-
 ```
+
 With this type of footnote, you can add the footnote note anywhere on the page. We recommend adding it to the bottom of the section or table where the footnote is referenced or to the bottom of the page.
