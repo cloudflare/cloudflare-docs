@@ -2434,6 +2434,7 @@
 /cloudflare-one/analytics/logs/activity-log/ /cloudflare-one/insights/logs/dashboard-logs/gateway-logs/ 301
 /cloudflare-one/identity/devices/os-version/ /cloudflare-one/reusable-components/posture-checks/client-checks/os-version/ 301
 /cloudflare-one/insights/dex/fleet-status/ /cloudflare-one/insights/dex/monitoring/ 301
+/cloudflare-one/insights/dex/remote-captures/ /cloudflare-one/insights/dex/diagnostics/client-packet-capture/ 301
 /cloudflare-one/policies/zero-trust/cors/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/cors/ 301
 /cloudflare-one/identity/users/groups/ /cloudflare-one/policies/access/groups/ 301
 /cloudflare-one/analytics/private-network-discovery/ /cloudflare-one/insights/analytics/shadow-it-discovery/#private-network-origins 301
