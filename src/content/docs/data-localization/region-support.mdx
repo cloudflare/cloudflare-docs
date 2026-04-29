@@ -11,45 +11,60 @@ head:
     content: Region support
 ---
 
+The Data Localization Suite allows you to restrict where your data is processed and stored. The table below shows which regions are available for each DLS feature:
+
+- **Geo Key Manager** — restricts where your TLS private keys are stored.
+- **Regional Services** — restricts which Cloudflare data centers can decrypt and inspect your HTTPS traffic.
+- **Customer Metadata Boundary (CMB)** — restricts where your logs and analytics data are stored.
+
+Some regions are defined by geography (for example, "Germany"), while others are defined by compliance frameworks:
+
+- **FedRAMP Moderate** — the US Federal Risk and Authorization Management Program, a government security certification standard. "Domestic" means only US-based certified data centers. "International" includes certified data centers outside the US.
+- **IRAP Protected** — the Australian government's Information Security Registered Assessors Program. This region includes IRAP-assessed data centers, which may be located outside Australia.
+- **ISO 27001 Certified European Union** — restricts traffic to EU data centers that hold ISO 27001 certification, an international standard for information security management.
+- **Cloudflare Green Energy** — restricts traffic to data centers powered by renewable energy sources. This is an energy-sourcing constraint, not a geographic one.
+
+"Exclusive of" regions work in reverse — they exclude specific countries rather than restricting to them. For example, "Exclusive of Russia and Belarus" means Cloudflare will use any data center worldwide except those in Russia and Belarus.
+
 Support by product and region is summarized in the following table:
 
-| Region                                     | Geo Key Manager | Regional Services | Customer Metadata Boundary    |
-| ------------------------------------------ | --------------- | ------------------ | ----------------------------- |
-| Australia                                  | ✅ [^1]         | ✅                | ✘                            |
-| Austria                                    | ✘               | ✅                | Can use EU metadata boundary. |
-| Brazil                                     | ✘               | ✅                | ✘                             |
-| Canada                                     | ✅ [^1]         | ✅                | ✘                             |
-| Cloudflare Green Energy                    | ✘               | ✅                | ✘                             |
-| European Union                             | ✅              | ✅                | ✅                            |
-| Exclusive of Hong Kong and Macau           | ✘               | ✅                | ✘                             |
-| Exclusive of Russia and Belarus            | ✘               | ✅                | ✘                             |
-| FedRAMP Moderate Compliant (Domestic)      | ✅ [^1]         | ✅                | ✅                            |
-| FedRAMP Moderate Compliant (International) | ✘               | ✅                | ✅                            |
-| France                                     | ✘               | ✅                | Can use EU metadata boundary. |
-| Germany                                    | ✅ [^1]         | ✅                | Can use EU metadata boundary. |
-| Hong Kong                                  | ✘               | ✅                | ✘                             |
-| India                                      | ✅ [^1]         | ✅                | ✘                             |
-| [IRAP](https://www.cloudflare.com/cloudflare-for-government/australia/irap/) Protected                             | ✘               | ✅                | ✘                            |
-| ISO 27001 Certified European Union         | ✘               | ✅                | Can use EU metadata boundary. |
-| Italy                                      | ✘               | ✅                | Can use EU metadata boundary. |
-| Japan                                      | ✅ [^1]         | ✅                | ✘                             |
-| NATO                                       | ✘               | ✅                | ✘                             |
-| Netherlands                                | ✘               | ✅                | Can use EU metadata boundary. |
-| Russia                                     | ✘               | ✅                | ✘                             |
-| Saudi Arabia                               | ✘               | ✅                | ✘                             |
-| Singapore                                  | ✅ [^1]         | ✅                | ✘                             |
-| South Africa                               | ✘               | ✅                | ✘                             |
-| South Korea                                | ✅ [^1]         | ✅                | ✘                             |
-| Spain                                      | ✘               | ✅                | Can use EU metadata boundary. |
-| Switzerland                                | ✘               | ✅                | ✘                             |
-| Taiwan                                     | ✘               | ✅                | ✘                             |
-| Turkey                                     | ✘               | ✅                | ✘                             |
-| United Arab Emirates                       | ✘               | ✅                | ✘                             |
-| United Kingdom                             | ✅ [^1]         | ✅                | Can use EU metadata boundary. |
-| United States of America                   | ✅              | ✅                | ✅                            |
-| US State of California                     | ✘               | ✅                | ✘                             |
-| US State of Florida                        | ✘               | ✅                | ✘                             |
-| US State of Texas                          | ✘               | ✅                | ✘                             |
+| Region                                                                                 | Geo Key Manager | Regional Services | Customer Metadata Boundary    |
+| -------------------------------------------------------------------------------------- | --------------- | ----------------- | ----------------------------- |
+| Australia                                                                              | ✅ [^1]         | ✅                | ✘                             |
+| Austria                                                                                | ✘               | ✅                | Can use EU metadata boundary. |
+| Brazil                                                                                 | ✘               | ✅                | ✘                             |
+| Canada                                                                                 | ✅ [^1]         | ✅                | ✘                             |
+| Cloudflare Green Energy                                                                | ✘               | ✅                | ✘                             |
+| European Union                                                                         | ✅              | ✅                | ✅                            |
+| Exclusive of Hong Kong and Macau                                                       | ✘               | ✅                | ✘                             |
+| Exclusive of Russia and Belarus                                                        | ✘               | ✅                | ✘                             |
+| FedRAMP Moderate Compliant (Domestic)                                                  | ✅ [^1]         | ✅                | ✅                            |
+| FedRAMP Moderate Compliant (International)                                             | ✘               | ✅                | ✅                            |
+| France                                                                                 | ✘               | ✅                | Can use EU metadata boundary. |
+| Germany                                                                                | ✅ [^1]         | ✅                | Can use EU metadata boundary. |
+| Hong Kong                                                                              | ✘               | ✅                | ✘                             |
+| India                                                                                  | ✅ [^1]         | ✅                | ✘                             |
+| [IRAP](https://www.cloudflare.com/cloudflare-for-government/australia/irap/) Protected | ✘               | ✅                | ✘                             |
+| ISO 27001 Certified European Union                                                     | ✘               | ✅                | Can use EU metadata boundary. |
+| Italy                                                                                  | ✘               | ✅                | Can use EU metadata boundary. |
+| Japan                                                                                  | ✅ [^1]         | ✅                | ✘                             |
+| NATO                                                                                   | ✘               | ✅                | ✘                             |
+| Netherlands                                                                            | ✘               | ✅                | Can use EU metadata boundary. |
+| Russia                                                                                 | ✘               | ✅                | ✘                             |
+| Saudi Arabia                                                                           | ✘               | ✅                | ✘                             |
+| Singapore                                                                              | ✅ [^1]         | ✅                | ✘                             |
+| South Africa                                                                           | ✘               | ✅                | ✘                             |
+| South Korea                                                                            | ✅ [^1]         | ✅                | ✘                             |
+| Spain                                                                                  | ✘               | ✅                | Can use EU metadata boundary. |
+| Switzerland                                                                            | ✘               | ✅                | ✘                             |
+| Taiwan                                                                                 | ✘               | ✅                | ✘                             |
+| Turkey                                                                                 | ✘               | ✅                | ✘                             |
+| United Arab Emirates                                                                   | ✘               | ✅                | ✘                             |
+| United Kingdom                                                                         | ✅ [^1]         | ✅                | Can use EU metadata boundary. |
+| United States of America                                                               | ✅              | ✅                | ✅                            |
+| US State of California                                                                 | ✘               | ✅                | ✘                             |
+| US State of Florida                                                                    | ✘               | ✅                | ✘                             |
+| US State of Texas                                                                      | ✘               | ✅                | ✘                             |
 
 Refer to the table below for the complete list of available regions and their definitions.
 
@@ -91,4 +106,4 @@ Refer to the table below for the complete list of available regions and their de
 | US State of Florida                        | Cloudflare will only use data centers that are physically located within the US State of Florida to decrypt and service HTTPS traffic.                                                                                                             |
 | US State of Texas                          | Cloudflare will only use data centers that are physically located within the US State of Texas to decrypt and service HTTPS traffic.                                                                                                               |
 
-[^1]: Only supported in [Geo Key Manager v2](/ssl/edge-certificates/geokey-manager/).
+[^1]: Only supported in [Geo Key Manager v2](/ssl/edge-certificates/geokey-manager/), the current version with expanded region support.

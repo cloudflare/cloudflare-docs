@@ -9,10 +9,9 @@ sidebar:
 head:
   - tag: title
     content: Limitations
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 There are some caveats and limitations when deploying Data Localization Suite features.
 
@@ -20,9 +19,9 @@ Cloudflare is working hard to improve this offering and fill the gaps. If you ha
 
 ## Key Management
 
-When using Geo Key Manager or Keyless SSL, some caveats may apply.
+When using Geo Key Manager or Keyless SSL (a service where your private key stays on your own infrastructure), some caveats may apply.
 
-The remote procedure call from the server to the key server can add latency to the handshake, slowing down connection establishment. The additional latency cost corresponds to the round-trip time from the server to the key server, which can be as much as a second if the key server is on the other side of the world. Luckily, this latency cost only applies to the first time you connect to a server. Once the handshake is complete, the key server is not involved. Furthermore, if you reconnect to a site you do not have to pay the latency cost either because resuming a connection with TLS Session Resumption does not require the private key. Hence, latency is only added for the initial connection.
+When a visitor first connects to your site, Cloudflare must complete a TLS handshake (the initial negotiation that establishes an encrypted connection). If the data center handling the connection does not hold your private key, it must contact a key server in an authorized region. This extra step adds latency corresponding to the round-trip time between the two locations, which can be as much as a second if the key server is on the other side of the world. Once the handshake is complete, the key server is not involved. Furthermore, if the visitor reconnects within the TLS Session Resumption window (a mechanism that reuses previous connection parameters), the private key is not required. Hence, latency is only added for the initial connection establishment.
 
 Learn more about how it works in our [blog post](https://blog.cloudflare.com/geo-key-manager-how-it-works/).
 
@@ -32,24 +31,24 @@ When using Regional Services, some caveats and limitations may apply.
 
 For product-specific caveats, refer to [Cloudflare product compatibility](/data-localization/compatibility/) page.
 
-The following features and protocols are not supported by Regional Services and might not work on regionalized hostnames:
+The following features and protocols are not supported by Regional Services and will not work on regionalized hostnames:
 
-* [ICMP](https://www.cloudflare.com/learning/ddos/glossary/internet-control-message-protocol-icmp/)
-* [Encrypted Client Hello (ECH)](/ssl/edge-certificates/ech/)
-* [O2O](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/)
-* [Onion Routing (Tor)](/network/onion-routing/)
+- [ICMP](https://www.cloudflare.com/learning/ddos/glossary/internet-control-message-protocol-icmp/) — Internet Control Message Protocol, used for network diagnostics like `ping`
+- [Encrypted Client Hello (ECH)](/ssl/edge-certificates/ech/) — a privacy feature that encrypts the initial part of a TLS connection
+- [O2O](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/) — origin-to-origin, a Cloudflare for SaaS setup
+- [Onion Routing (Tor)](/network/onion-routing/)
 
-Since Regional Services leverages Spectrum in the background, [Spectrum limitations](/spectrum/reference/limitations/) apply.
+Since Regional Services leverages Spectrum (Cloudflare's Layer 4 proxy service) in the background, [Spectrum limitations](/spectrum/reference/limitations/) apply.
 
-Regional Services does not apply to [Subrequests](/workers/platform/limits/#subrequests). Regional Services operates on your hostname's IPs. We recommend using [DNSSEC](/learning-paths/application-security/default-traffic-security/dnssec/) and/or [DNS over HTTPS](/1.1.1.1/encryption/dns-over-https/) to ensure that DNS responses are secure and correct.
+Regional Services does not apply to [subrequests](/workers/platform/limits/#subrequests) (secondary HTTP requests that your Cloudflare Workers make to other services). Regional Services operates on your hostname's IPs. We recommend using [DNSSEC](/learning-paths/application-security/default-traffic-security/dnssec/) (which cryptographically signs DNS records to prevent tampering) and/or [DNS over HTTPS](/1.1.1.1/encryption/dns-over-https/) (which encrypts DNS queries) to ensure that DNS responses are secure and correct.
 
 ## Customer Metadata Boundary
 
 There are certain limitations and caveats when using Customer Metadata Boundary.
 
-Specifically most of the Zone Analytics & Logs UI Tabs will be showing up as empty, when configuring Customer Metadata Boundary to EU only. It is recommended to use the UI [Security Analytics](/waf/analytics/security-analytics/) instead, or the [HTTP request](/logs/logpush/logpush-job/datasets/zone/http_requests/) logs via [Logpush](/logs/logpush/).
+When you configure Customer Metadata Boundary to EU, most of the analytics and logging sections in the Cloudflare dashboard will show no data. To view your data, use [Security Analytics](/waf/analytics/security-analytics/) (which respects CMB) or set up [Logpush](/logs/logpush/) to export [HTTP request](/logs/logpush/logpush-job/datasets/zone/http_requests/) logs to a storage destination you control.
 
-To configure Customer Metadata Boundary to EU only, you must disable Log Retention for all zones within your account. Log Retention is a legacy feature of [Logpull](/logs/logpull/).
+To configure Customer Metadata Boundary to EU, you must disable Log Retention for all zones within your account. Log Retention is a legacy feature of [Logpull](/logs/logpull/) (an older API for downloading logs, now superseded by Logpush).
 
 For product-specific caveats, refer to [Cloudflare product compatibility](/data-localization/compatibility/) page.
 
