@@ -90,16 +90,14 @@ function IconButton({
 	const ref = useTippy(tooltip);
 
 	return (
-		<div>
-			<button
-				ref={ref}
-				onClick={onClick}
-				className="inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-md border-0 bg-transparent text-[var(--sl-color-gray-2)] shadow-none transition-colors duration-150 ease-out hover:bg-[var(--color-cl1-gray-9)] hover:text-[var(--sl-color-white)] focus-visible:ring-2 focus-visible:ring-[var(--sl-color-text-accent)] focus-visible:outline-none dark:hover:bg-[var(--color-cl1-gray-2)]"
-			>
-				<Icon className="h-4 w-4" />
-				<span className="sr-only">{tooltip}</span>
-			</button>
-		</div>
+		<button
+			ref={ref}
+			onClick={onClick}
+			aria-label={tooltip}
+			className="inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-md border-0 bg-transparent text-[var(--sl-color-gray-2)] shadow-none transition-colors duration-150 ease-out hover:bg-[var(--color-cl1-gray-9)] hover:text-[var(--sl-color-white)] focus-visible:ring-2 focus-visible:ring-[var(--sl-color-text-accent)] focus-visible:outline-none dark:hover:bg-[var(--color-cl1-gray-2)]"
+		>
+			<Icon className="h-4 w-4" aria-hidden="true" />
+		</button>
 	);
 }
 
