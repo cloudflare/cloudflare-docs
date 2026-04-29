@@ -15,7 +15,7 @@ Instant Bank Payments (IBP) via Link lets you pay for Cloudflare services direct
 
 ## How Instant Bank Payments works
 
-1. **Checkout** - During checkout, Cloudflare presents your saved Link payment methods.
+1. **Checkout** - During checkout, Cloudflare presents your saved Link payment methods. You can also connect your bank with Link if not already set up.
 2. **Select bank account** - If you have a bank account saved in Link, it appears as a payment option alongside your existing cards.
 3. **Confirm payment** - Select your bank account and confirm the payment.
 4. **Processing** - Stripe handles the authentication and processing on your behalf.
@@ -33,11 +33,9 @@ Instant Bank Payments via Link is available to self-serve accounts that meet the
 | Requirement | Details |
 | --- | --- |
 | Location | US-based customers |
-| Link status | Link must be enabled on your account |
-| Bank account | You must have a bank account saved in your Link wallet |
 | Products | Available across all self-serve Cloudflare products |
 
-If you don't have a bank account saved in Link, you can add one through the Link wallet during checkout.
+You can connect your bank account through Link during checkout if you haven't already.
 
 ## Identifying bank payments
 
@@ -66,8 +64,7 @@ To view your payment methods and billing history:
 If a bank payment cannot be processed:
 
 1. **Retry or switch** - You will be prompted to select a different payment method. You can retry with the same bank account or choose a card instead.
-2. **No account impact** - Failed payments do not immediately affect your Cloudflare account or services.
-3. **Update payment method** - If the issue persists, update your payment method in your billing settings.
+2. **Update payment method** - If the issue persists, update your payment method in your billing settings.
 
    <DashButton url="/?to=/:account/billing" />
 
