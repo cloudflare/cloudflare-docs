@@ -73,7 +73,7 @@
 		"@types/unist": "3.0.3",
 		"@typescript-eslint/parser": "8.44.0",
 		"algoliasearch": "5.37.0",
-		"astro": "6.1.9",
+		"astro": "6.1.10",
 		"astro-breadcrumbs": "3.4.0",
 		"astro-expressive-code": "0.41.7",
 		"astro-icon": "1.1.5",
