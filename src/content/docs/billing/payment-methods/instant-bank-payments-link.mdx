@@ -11,14 +11,14 @@ products:
 
 import { DashButton } from "~/components";
 
-Instant Bank Payments (IBP) via [Link](https://link.co/) lets you pay for Cloudflare services directly from your bank account. Link is Stripe's one-click checkout wallet. If you already have a bank account saved in Link, it appears as a payment option at checkout. If not, you can connect one during the checkout flow.
+Instant Bank Payments (IBP) via [Link](https://link.co/) lets you pay for Cloudflare services directly from your bank account. Link is a one-click checkout wallet that remembers your payment details. If you already have a bank account saved in Link, it appears as a payment option at checkout. If not, you can connect one during the checkout flow.
 
 ## How Instant Bank Payments works
 
 1. **Checkout** - Cloudflare presents your saved Link payment methods. You can also connect your bank with Link if not already set up.
 2. **Select bank account** - Your bank account appears as a payment option alongside your existing cards.
 3. **Confirm payment** - Select your bank account and confirm.
-4. **Processing** - Stripe authenticates and processes the payment.
+4. **Processing** - The payment is authenticated and processed on your behalf.
 
 After your first Link authentication, your bank account is available for future purchases without re-entering details.
 
@@ -69,7 +69,7 @@ Your billing history shows the payment method as `link` with last four digits `0
 
 ### Is my bank account secure?
 
-Stripe stores your bank credentials in the Link wallet using encryption and multi-factor authentication. Your raw bank details are never shared with Cloudflare or other merchants.
+Your bank credentials are stored in the Link wallet using encryption and multi-factor authentication. Your raw bank details are never shared with Cloudflare or other merchants.
 
 ### Can I still pay with a card?
 
