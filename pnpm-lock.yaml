@@ -60,8 +60,8 @@ importers:
         specifier: 0.41.3
         version: 0.41.3
       '@expressive-code/plugin-line-numbers':
-        specifier: 0.41.3
-        version: 0.41.3
+        specifier: 0.41.7
+        version: 0.41.7
       '@floating-ui/react':
         specifier: 0.27.19
         version: 0.27.19(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -1455,8 +1455,8 @@ packages:
   '@expressive-code/plugin-frames@0.41.7':
     resolution: {integrity: sha512-diKtxjQw/979cTglRFaMCY/sR6hWF0kSMg8jsKLXaZBSfGS0I/Hoe7Qds3vVEgeoW+GHHQzMcwvgx/MOIXhrTA==}
 
-  '@expressive-code/plugin-line-numbers@0.41.3':
-    resolution: {integrity: sha512-eig82a4CRC3XgVPQ2S/TMDcLiHJokOCD/mAdNVImpD3segVewxfjGgtj5DXQRo0E0q6f0R0EH34YzTFl5CEPqg==}
+  '@expressive-code/plugin-line-numbers@0.41.7':
+    resolution: {integrity: sha512-wI9D5NBcgE9ksiJJV8YfOC0RPI3283+9AYWIb8pBUM5TSM8msIs1YRPDt8c8Ub0XGQvbjJKtB+f9fAl2RiHJ2A==}
 
   '@expressive-code/plugin-shiki@0.41.7':
     resolution: {integrity: sha512-DL605bLrUOgqTdZ0Ot5MlTaWzppRkzzqzeGEu7ODnHF39IkEBbFdsC7pbl3LbUQ1DFtnfx6rD54k/cdofbW6KQ==}
@@ -8077,7 +8077,7 @@ snapshots:
     dependencies:
       '@expressive-code/core': 0.41.7
 
-  '@expressive-code/plugin-line-numbers@0.41.3':
+  '@expressive-code/plugin-line-numbers@0.41.7':
     dependencies:
       '@expressive-code/core': 0.41.7
 
