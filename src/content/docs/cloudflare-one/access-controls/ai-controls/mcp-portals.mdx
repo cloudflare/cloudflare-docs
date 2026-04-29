@@ -266,6 +266,26 @@ For MCP clients with server configuration files, we recommend using the `npx` co
 
 We do not recommend using the `serverURL` parameter since it may cause issues with portal session creation and management.
 
+## Portal homepage
+
+When users visit the portal domain in a browser, the portal displays a homepage with connection details and setup instructions. The homepage shows:
+
+- The portal name and your organization branding (if configured in Cloudflare Access)
+- The MCP endpoint URL with a copy button
+- Per-client connection instructions for Claude Desktop, Workers AI Playground, OpenCode, Windsurf, and other MCP clients with OS-specific file paths
+
+Authenticated users see their email address and a **Sign out** button in the session bar. Users who are not authenticated can still view the homepage and connection instructions.
+
+## Sign out of a portal
+
+To end a portal session, select **Sign out** from the portal homepage session bar. The sign-out flow:
+
+1. Revokes all portal-level OAuth grants for your user.
+2. Deletes all upstream MCP server OAuth states associated with your session.
+3. Redirects through Cloudflare Access logout.
+
+After sign-out, the portal displays a confirmation page with a summary of the revoked sessions. To reconnect, visit the portal homepage and authenticate again.
+
 ## Optimize context
 
 MCP server portals support context optimization options that reduce how many tokens tool definitions consume in the model's context window. These options are useful when a portal aggregates many MCP servers or servers that expose a large number of tools.
