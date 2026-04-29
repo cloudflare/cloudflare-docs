@@ -346,7 +346,7 @@ To create a profile:
 { props.dashName === "CF1 Cloudflare WAN" && (
 	<>
 		<ol>
-			<li>Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to <strong>Networks</strong>.</li>
+			<li>Log in to <a href="https://dash.cloudflare.com/one/">Cloudflare One</a>, and go to <strong>Networks</strong>.</li>
 			<li>Go to <strong>Connectors</strong> &gt; <strong>Appliances</strong> &gt; <strong>Create a profile</strong>.</li>
 		</ol>
 	</>
@@ -580,7 +580,7 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 	<>
 		<Markdown
 	text={`
-		1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
+		1. Log in to <a href="https://dash.cloudflare.com/one/">Cloudflare One</a>, and go to **Networks**.
 		2. Go to **Connectors** > **Appliances**.
 		3. Find the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } you want to activate, select the three dots next to it > **Edit**. Make sure you verify the serial number to choose the right ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } you want to activate.
 		4. In the new window, the **Status** dropdown will show as **Deactivated**. Select it to change the status to **Activated**.
@@ -862,7 +862,7 @@ To check the IPsec tunnels and static routes created by your { props.magicWord =
 	<>
 		<Markdown
 	text={`
-		1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Connectors**.
+		1. Log in to <a href="https://dash.cloudflare.com/one/">Cloudflare One</a>, and go to **Connectors**.
 		2. In **Cloudflare WAN** you can inspect the IPsec tunnels created by your ${props.magicWord === "virtual" ? props.productNameVirtual : props.productName }.
 		3. In **Routes** you can inspect the static routes created by your ${props.magicWord === "virtual" ? props.productNameVirtual : props.productName }.
 
