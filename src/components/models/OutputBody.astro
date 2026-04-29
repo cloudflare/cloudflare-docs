@@ -24,16 +24,12 @@ const {
 	{imageUrls.map((url) => <img src={url} alt={alt} loading="lazy" />)}
 	{
 		videoUrl && (
-			<video src={videoUrl} controls preload="metadata">
-				<track kind="captions" />
-			</video>
+			<video src={videoUrl} controls preload="metadata" />
 		)
 	}
 	{
 		audioUrl && (
-			<audio src={audioUrl} controls preload="metadata">
-				<track kind="captions" />
-			</audio>
+			<audio src={audioUrl} controls preload="metadata" />
 		)
 	}
 </div>
