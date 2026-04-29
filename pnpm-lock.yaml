@@ -240,8 +240,8 @@ importers:
         specifier: 12.1.3
         version: 12.1.3
       parse-duration:
-        specifier: 2.1.4
-        version: 2.1.4
+        specifier: 2.1.6
+        version: 2.1.6
       patch-package:
         specifier: 8.0.1
         version: 8.0.1
@@ -5331,8 +5331,8 @@ packages:
     resolution: {integrity: sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==}
     engines: {node: '>=6'}
 
-  parse-duration@2.1.4:
-    resolution: {integrity: sha512-b98m6MsCh+akxfyoz9w9dt0AlH2dfYLOBss5SdDsr9pkhKNvkWBXU/r8A4ahmIGByBOLV2+4YwfCuFxbDDaGyg==}
+  parse-duration@2.1.6:
+    resolution: {integrity: sha512-1/A2Exg3NcJGcYdgV/dn4frR7vO2hOW/ohQ4KIgbT4W3raVcpYSszPWiL6I6cKufi4jQM5NbGRXLBj8AoLM4iQ==}
 
   parse-entities@4.0.2:
     resolution: {integrity: sha512-GG2AQYWoLgL877gQIKeRPGO1xF9+eG1ujIb5soS5gPvLQ1y2o8FL90w2QWNdf9I361Mpp7726c+lj3U0qK1uGw==}
@@ -12785,7 +12785,7 @@ snapshots:
     dependencies:
       callsites: 3.1.0
 
-  parse-duration@2.1.4: {}
+  parse-duration@2.1.6: {}
 
   parse-entities@4.0.2:
     dependencies:
