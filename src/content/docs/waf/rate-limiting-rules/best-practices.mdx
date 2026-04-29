@@ -171,7 +171,7 @@ The following example rule protects an OTP validation endpoint by counting only 
 | Rate (Requests / Period) | 5 requests / 1 minute                                                                                                |
 | Action                   | Block for 10 minutes                                                                                                 |
 
-_This example rule requires a Business plan or above._
+_The above example rule requires a Business plan or higher._
 
 If your OTP endpoint returns `200` for both valid and invalid codes (with the result in the response body), use request-based counting with a lower threshold instead:
 
