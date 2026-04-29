@@ -1,0 +1,480 @@
+---
+title: Rules of Browser Run
+description: Design guidelines for building reliable, performant, and cost-effective Browser Run applications.
+pcx_content_type: concept
+sidebar:
+  order: 1
+products:
+  - browser-run
+---
+
+Browser Run gives you headless Chrome instances on Cloudflare's global network. Each browser session is an isolated, ephemeral environment that can close at any time due to crashes, infrastructure maintenance, or inactivity. Understanding how to design around these properties is essential for building reliable applications.
+
+This is a guidebook on how to build more effective Browser Run applications.
+
+## Choosing an integration method
+
+### Use Quick Actions for simple tasks, Browser Sessions for complex automation
+
+Browser Run offers two categories of integration methods with different tradeoffs:
+
+**[Quick Actions](/browser-run/quick-actions/)** are stateless HTTP endpoints. You send a request, Browser Run handles the entire browser lifecycle (launch, navigate, capture, close), and returns the result. No code deployment needed.
+
+Use Quick Actions when you need:
+
+- **Single-page captures** --- screenshots, PDFs, HTML content, or markdown from a URL
+- **Structured data extraction** --- scrape elements or extract JSON with AI
+- **Multi-page crawling** --- the `/crawl` endpoint handles following links, rate limiting, and caching automatically
+- **Minimal setup** --- a single `curl` command or HTTP request with no Workers deployment
+
+**Browser Sessions** ([Puppeteer](/browser-run/puppeteer/), [Playwright](/browser-run/playwright/), [CDP](/browser-run/cdp/), [Stagehand](/browser-run/stagehand/)) give you direct control over a browser instance. You write code that interacts with the browser step by step.
+
+Use Browser Sessions when you need:
+
+- **Multi-step workflows** --- login, navigate, fill forms, click buttons, then capture
+- **Custom interaction logic** --- hover to reveal elements, scroll to load content, handle popups
+- **Real-time control** --- AI agents that decide what to do based on what they see
+- **Long-running sessions** --- keep a browser alive across multiple requests using [session reuse](/browser-run/features/reuse-sessions/)
+
+| Scenario | Recommended | Why |
+| --- | --- | --- |
+| Screenshot of a public page | Quick Actions | One HTTP request, no code needed |
+| Screenshot after login | Browser Sessions | Requires multi-step interaction |
+| Scrape product prices from 100 URLs | Quick Actions `/crawl` | Handles concurrency and rate limiting |
+| Fill out a form and submit it | Browser Sessions | Requires interaction with page elements |
+| AI agent browsing the web | Browser Sessions (CDP or Stagehand) | Agent needs real-time decision making |
+| Convert HTML string to PDF | Quick Actions `/pdf` | Pass `html` parameter, no URL needed |
+
+### Choose the right Browser Sessions library for your environment
+
+If you need Browser Sessions, the next decision is which library to use:
+
+| Library | Best for | Environment |
+| --- | --- | --- |
+| [Puppeteer](/browser-run/puppeteer/) | Existing Puppeteer scripts, Workers-native deployment | Cloudflare Workers |
+| [Playwright](/browser-run/playwright/) | Existing Playwright scripts, Workers-native deployment | Cloudflare Workers |
+| [CDP](/browser-run/cdp/) | Connecting from any environment (local machines, CI/CD, external servers), AI agent frameworks | Any environment with WebSocket support |
+| [Stagehand](/browser-run/stagehand/) | AI-powered element finding that survives UI changes | Cloudflare Workers |
+
+:::note
+When using Puppeteer or Playwright inside Cloudflare Workers, use Cloudflare's forked versions (`@cloudflare/puppeteer` and `@cloudflare/playwright`). When connecting from external environments via CDP, use the standard upstream libraries.
+
+For more details, refer to [Puppeteer via CDP](/browser-run/cdp/puppeteer/) and [Playwright via CDP](/browser-run/cdp/playwright/).
+:::
+
+## Session management
+
+### Always close or disconnect your browser when done
+
+This is the most common mistake developers make with Browser Run. If you do not explicitly end your session, the browser stays alive, consuming [browser hours](/browser-run/pricing/) and counting toward your [concurrency limit](/browser-run/limits/) until the inactivity timeout closes it.
+
+There are two ways to end a session, and they behave differently:
+
+- **`browser.close()`** --- Terminates the browser completely. The session cannot be reused.
+- **`browser.disconnect()`** --- Releases your connection but keeps the browser alive. Another request can [reconnect](/browser-run/features/reuse-sessions/) to the same session.
+
+```js
+// ✅ Good: Always close in a finally block
+let browser;
+try {
+  browser = await puppeteer.launch(env.MYBROWSER);
+  const page = await browser.newPage();
+  await page.goto("https://example.com");
+  const screenshot = await page.screenshot();
+  return new Response(screenshot);
+} catch (error) {
+  return new Response("Browser error: " + error.message, { status: 500 });
+} finally {
+  await browser?.close();
+}
+```
+
+```js
+// 🔴 Bad: Browser stays open if an error occurs before close()
+const browser = await puppeteer.launch(env.MYBROWSER);
+const page = await browser.newPage();
+await page.goto("https://example.com"); // If this throws, browser leaks
+const screenshot = await page.screenshot();
+await browser.close();
+return new Response(screenshot);
+```
+
+:::caution
+If your Worker throws an exception before reaching `browser.close()`, the browser session remains open until the inactivity timeout (60 seconds by default). Always wrap browser operations in a `try...finally` block.
+:::
+
+### Use tabs instead of new browsers for parallel work
+
+Each browser session counts toward your concurrency limit and incurs a cold-start cost. If you need to capture multiple pages, open them as tabs within a single browser instead of launching separate browser instances.
+
+```js
+// ✅ Good: One browser, multiple tabs
+const browser = await puppeteer.launch(env.MYBROWSER);
+try {
+  const urls = ["https://example.com", "https://example.org", "https://example.net"];
+  const results = await Promise.all(
+    urls.map(async (url) => {
+      const page = await browser.newPage();
+      await page.goto(url);
+      const title = await page.title();
+      await page.close(); // Close each tab when done
+      return { url, title };
+    })
+  );
+  return Response.json(results);
+} finally {
+  await browser.close();
+}
+```
+
+```js
+// 🔴 Bad: A new browser for each URL wastes concurrency and costs more
+const urls = ["https://example.com", "https://example.org", "https://example.net"];
+const results = await Promise.all(
+  urls.map(async (url) => {
+    const browser = await puppeteer.launch(env.MYBROWSER); // 3 browsers!
+    const page = await browser.newPage();
+    await page.goto(url);
+    const title = await page.title();
+    await browser.close();
+    return { url, title };
+  })
+);
+```
+
+:::note
+Close pages (`page.close()`) as you finish with them. Each open page consumes memory in the browser, and too many open pages can cause [Chromium crashes](/browser-run/reference/browser-close-reasons/).
+:::
+
+{/* REVIEW: Eng team - is there a recommended max number of concurrent tabs per browser session? If so, add guidance here. */}
+
+### Reuse sessions to avoid cold starts
+
+Launching a new browser takes 2-4 seconds. If your application handles frequent requests, [reuse browser sessions](/browser-run/features/reuse-sessions/) to eliminate this cold-start overhead.
+
+The pattern is straightforward: call `browser.disconnect()` instead of `browser.close()`, then reconnect to an available session on the next request.
+
+```js
+// Check for available sessions first
+const sessions = await puppeteer.sessions(env.MYBROWSER);
+const freeSessions = sessions.filter((s) => !s.connectionId);
+
+let browser;
+if (freeSessions.length > 0) {
+  try {
+    browser = await puppeteer.connect(env.MYBROWSER, freeSessions[0].sessionId);
+  } catch (e) {
+    // Another worker may have connected first, fall back to new session
+  }
+}
+
+if (!browser) {
+  browser = await puppeteer.launch(env.MYBROWSER);
+}
+
+// ... do your work ...
+
+// Keep the browser alive for the next request
+browser.disconnect();
+```
+
+:::note
+An idle browser session closes after 60 seconds by default. You can extend this to up to 10 minutes using the [`keep_alive`](/browser-run/puppeteer/#keep-alive) option. The browser still consumes [browser hours](/browser-run/pricing/) while idle.
+:::
+
+For stateful use cases where specific users need to be routed to specific browser sessions, use [Durable Objects with Browser Run](/browser-run/how-to/browser-run-with-do/) to persist session mappings.
+
+### Design for browser crashes --- sessions are ephemeral
+
+Browser sessions can close at any time due to Chromium crashes, infrastructure maintenance, network issues, or your Worker hitting its CPU time limit. Your code must handle these cases gracefully.
+
+```js
+async function withRetry(env, task, maxRetries = 3) {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    let browser;
+    try {
+      browser = await puppeteer.launch(env.MYBROWSER);
+      return await task(browser);
+    } catch (error) {
+      console.error(`Attempt ${attempt} failed: ${error.message}`);
+      if (attempt === maxRetries) throw error;
+    } finally {
+      await browser?.close();
+    }
+  }
+}
+
+// Usage
+const screenshot = await withRetry(env, async (browser) => {
+  const page = await browser.newPage();
+  await page.goto("https://example.com");
+  return await page.screenshot();
+});
+```
+
+Refer to [Browser close reasons](/browser-run/reference/browser-close-reasons/) for a complete list of why sessions end and how to handle each case.
+
+## Performance
+
+### Understand cold starts versus warm sessions
+
+{/* REVIEW: Eng team - please verify these numbers. They're based on internal debug docs observations. */}
+
+The first request to a browser session takes longer than subsequent requests because the underlying infrastructure needs to provision the browser:
+
+| Request type | Typical latency |
+| --- | --- |
+| First request (cold start) | 2-4 seconds |
+| Subsequent requests (warm session) | Under 1 second |
+
+To minimize the impact of cold starts:
+
+- **Reuse sessions** when your application handles frequent requests (see [Reuse sessions](#reuse-sessions-to-avoid-cold-starts) above).
+- **Use Durable Objects** for long-lived sessions that persist across requests ([guide](/browser-run/how-to/browser-run-with-do/)).
+- **Use Quick Actions** for stateless tasks --- the managed browser pool handles session reuse internally.
+
+### Use `cacheTTL` with Quick Actions to avoid redundant rendering
+
+Quick Actions cache results by default for 5 seconds. If you are requesting the same URL repeatedly, increase `cacheTTL` to avoid re-rendering:
+
+```bash
+# Cache the screenshot for 1 hour (3600 seconds)
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/screenshot" \
+  -H "Authorization: Bearer {api_token}" \
+  -H "Content-Type: application/json" \
+  -d '{"url": "https://example.com", "cacheTTL": 3600}'
+```
+
+| `cacheTTL` value | Behavior |
+| --- | --- |
+| `0` | No caching. Every request renders a fresh browser session. |
+| `5` (default) | Cache for 5 seconds. Protects against accidental duplicate requests. |
+| Up to `86400` | Cache for up to 1 day. Good for pages that change infrequently. |
+
+:::note
+Caching is scoped to your account and the specific URL. Different accounts requesting the same URL each get their own cached copy.
+:::
+
+### Understand what counts as browser time
+
+{/* REVIEW: Eng team - please verify this billing model description is accurate, especially for Quick Actions. */}
+
+Browser Run bills based on browser time --- the duration a browser session is alive, whether or not it is actively processing commands. This has practical implications:
+
+- **An idle browser still costs money.** If you `disconnect()` to reuse a session but no request arrives for 60 seconds, you have paid for 60 seconds of idle time.
+- **Quick Actions handle billing automatically.** The browser is created, the task runs, and the browser closes. You pay for the rendering time only.
+- **Browser Sessions give you control.** You decide when to close or disconnect. Shorter sessions cost less.
+
+For a complete breakdown, refer to [Pricing](/browser-run/pricing/).
+
+{/* REVIEW: Eng team - would it be helpful to include a formula or example? e.g., "A Worker that launches a browser, takes a screenshot in 3 seconds, and closes it uses 3 seconds of browser time. A Worker that keeps a browser alive for session reuse with keep_alive=600 uses up to 10 minutes of browser time per idle session." */}
+
+### Close pages you are done with to manage memory
+
+{/* REVIEW: Eng team - are there specific memory limits per browser session that would be useful to document? e.g., "Each browser session has X MB of memory available" */}
+
+Each open page consumes memory inside the browser. Heavy pages (large DOMs, lots of JavaScript, embedded media) use more. If the browser runs out of memory, Chromium crashes and the session ends with a [Chromium crashed](/browser-run/reference/browser-close-reasons/) close reason.
+
+```js
+const browser = await puppeteer.launch(env.MYBROWSER);
+try {
+  for (const url of urls) {
+    const page = await browser.newPage();
+    await page.goto(url);
+    // ... process the page ...
+    await page.close(); // ✅ Free memory before opening the next page
+  }
+} finally {
+  await browser.close();
+}
+```
+
+Tips for managing memory:
+
+- **Close pages** as soon as you are done with them.
+- **Block unnecessary resources** to reduce page weight. In Puppeteer, use `page.setRequestInterception(true)` to block images, fonts, or stylesheets you do not need. In Quick Actions, use the `rejectResourceTypes` parameter.
+- **Process pages sequentially** rather than opening many pages at once if working with heavy pages.
+
+## Rendering and content capture
+
+### Wait for dynamic content before capturing
+
+JavaScript-heavy pages and single-page applications (SPAs) load content after the initial HTML is parsed. By default, Browser Run waits for `domcontentloaded`, which fires before JavaScript finishes rendering.
+
+Use `goToOptions.waitUntil` to control when Browser Run considers the page "loaded":
+
+| Value | Use when |
+| --- | --- |
+| `domcontentloaded` (default) | Static pages or server-rendered HTML |
+| `networkidle2` | Most dynamic pages (allows up to 2 ongoing connections like analytics) |
+| `networkidle0` | Pages that must be completely idle before capture |
+
+```json
+{
+  "url": "https://example.com",
+  "goToOptions": {
+    "waitUntil": "networkidle2"
+  }
+}
+```
+
+If content is still missing after adjusting `waitUntil`:
+
+- Use **`waitForSelector`** to wait for a specific element to appear (for example, `.product-list` or `#main-content`).
+- Increase **`goToOptions.timeout`** (up to 60 seconds) for slow-loading pages.
+- Check if the site **serves different content to bots**. Browser Run is [identified as bot traffic](/browser-run/faq/#will-browser-run-be-detected-by-bot-management) by Cloudflare.
+
+For a full reference on timeout configuration, see [Quick Actions timeouts](/browser-run/reference/timeouts/).
+
+### Handle authenticated pages correctly
+
+If the page you need to render requires authentication, the approach depends on your integration method.
+
+**Quick Actions** support three authentication methods in the request body:
+
+```json title="HTTP Basic Auth"
+{
+  "url": "https://example.com/dashboard",
+  "authenticate": {
+    "username": "user",
+    "password": "pass"
+  }
+}
+```
+
+```json title="Cookie-based auth"
+{
+  "url": "https://example.com/dashboard",
+  "cookies": [
+    {
+      "name": "session_id",
+      "value": "abc123",
+      "domain": "example.com"
+    }
+  ]
+}
+```
+
+```json title="Token-based auth"
+{
+  "url": "https://example.com/dashboard",
+  "setExtraHTTPHeaders": {
+    "Authorization": "Bearer your-token"
+  }
+}
+```
+
+**Browser Sessions** can handle interactive login flows:
+
+```js
+const page = await browser.newPage();
+await page.goto("https://example.com/login");
+await page.type("#username", "user");
+await page.type("#password", "pass");
+await page.click("#login-button");
+await page.waitForNavigation();
+// Now navigate to the authenticated page
+await page.goto("https://example.com/dashboard");
+```
+
+For workflows where automation cannot handle a login step (CAPTCHAs, MFA, SSO), use [Human in the Loop](/browser-run/features/human-in-the-loop/) to hand control to a human temporarily.
+
+## Crawling
+
+### Use the `/crawl` endpoint instead of building your own crawler
+
+{/* REVIEW: Eng team - anything else to add about when building a custom crawler still makes sense? */}
+
+The [`/crawl` endpoint](/browser-run/quick-actions/crawl-endpoint/) handles the hard parts of web crawling out of the box:
+
+- **Rate limiting** --- respects `robots.txt` and `crawl-delay`, with a default delay of 0.5 seconds between requests per domain
+- **Caching** --- results are cached via `maxAge` (default 24 hours) to avoid re-crawling
+- **Depth and page limits** --- configurable `depth` and `limit` parameters
+- **robots.txt compliance** --- blocked URLs are returned as `"status": "disallowed"` instead of silently skipped
+- **Multiple output formats** --- get results as markdown, HTML, links, or plain text
+
+Before building a custom crawler with Browser Sessions, check if `/crawl` meets your needs. You still need a custom solution if you require interactive steps during crawling (login, form submission) or custom JavaScript execution on each page.
+
+### Respect rate limits when crawling external sites
+
+Whether using `/crawl` or a custom Browser Sessions crawler, respect the sites you are crawling:
+
+- **Check `robots.txt`** before crawling. The `/crawl` endpoint does this automatically. For custom crawlers, check manually or use a `robots.txt` parser.
+- **Add delays between requests** to the same domain. The `/crawl` endpoint defaults to 0.5 seconds. For custom crawlers, use `await new Promise(r => setTimeout(r, 500))` between navigations.
+- **Set reasonable limits** on depth and page count. Starting with `depth: 2` and `limit: 50` is a good default for most use cases.
+
+{/* PLACEHOLDER: Eng team - should we document the User-Agent string that Browser Run uses for crawling? The internal wiki notes it's "CloudflareBrowserRenderingCrawler/1.0" and not customizable. Is this accurate and should it be public? */}
+
+## Debugging
+
+### Use Session Recording and Live View to understand failures
+
+When your automation is not working as expected, visual debugging is faster than log analysis:
+
+- **[Session Recording](/browser-run/features/session-recording/)** --- Enable with `enableSessionRecording: true` to record every session. Replay recordings later to see exactly what happened.
+- **[Live View](/browser-run/features/live-view/)** --- Watch a browser session in real time as your code runs. See what the page looks like at each step.
+
+These features are particularly valuable when:
+
+- A page renders differently than expected (layout changes, missing elements)
+- An element is not found by a selector
+- A site serves a CAPTCHA, login wall, or cookie banner that blocks your automation
+- Your script works locally but fails in production
+
+### Check the Browser Run dashboard for session history
+
+The [Browser Run dashboard](https://dash.cloudflare.com/?to=/:account/workers/browser-run) shows all browser sessions with status, duration, and [close reasons](/browser-run/reference/browser-close-reasons/). Use it to:
+
+- Identify sessions that closed unexpectedly (look for `Chromium crashed` or `Connection error`)
+- Find sessions that ran longer than expected (possible missing `browser.close()`)
+- Monitor your concurrency and browser-hour usage
+
+{/* PLACEHOLDER: Eng team - are there specific log fields or Worker log patterns that are useful for debugging Browser Run issues? If so, add a section on "Check your Worker logs for Browser Run errors" with examples of what to look for. */}
+
+## Error handling
+
+### Handle common error codes
+
+| HTTP status | Meaning | What to do |
+| --- | --- | --- |
+| `422` | Unprocessable Entity --- the page crashed, timed out, or consumed too much memory | Check [timeout configuration](/browser-run/reference/timeouts/). Try with a simpler page or increase timeouts. |
+| `429` | Rate limit or daily usage limit exceeded | Check your [plan limits](/browser-run/limits/). Free plans are capped at 10 minutes/day. Upgrade or wait until the next UTC day. |
+| `503` | No browser available | The browser pool is temporarily at capacity. Retry with exponential backoff. |
+
+{/* REVIEW: Eng team - are there other error codes that should be documented here? The Cloudspeaker feedback mentioned users struggling with error code 6002 and "No browser available" without clear explanations. */}
+
+For `503` errors, retry with exponential backoff:
+
+```js
+async function launchWithRetry(env, maxRetries = 3) {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      return await puppeteer.launch(env.MYBROWSER);
+    } catch (error) {
+      if (attempt === maxRetries) throw error;
+      // Exponential backoff: 1s, 2s, 4s
+      await new Promise((r) => setTimeout(r, 1000 * Math.pow(2, attempt - 1)));
+    }
+  }
+}
+```
+
+### Avoid silent failures
+
+Always check the result of your browser operations. A page navigation can succeed (HTTP 200) but the page might not contain the content you expect.
+
+```js
+const page = await browser.newPage();
+const response = await page.goto("https://example.com");
+
+// ✅ Good: Check the response status
+if (!response || response.status() >= 400) {
+  throw new Error(`Page returned status ${response?.status()}`);
+}
+
+// ✅ Good: Verify expected content exists
+const element = await page.$(".product-list");
+if (!element) {
+  throw new Error("Product list not found on page");
+}
+```
