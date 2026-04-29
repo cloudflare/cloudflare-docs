@@ -65,7 +65,7 @@ function ListItem({
 			<button
 				ref={ref}
 				onClick={onClick}
-				className="flex w-full cursor-pointer items-center gap-2.5 border-0 bg-transparent px-0 py-1.5 text-[13px] leading-snug text-[var(--sidebar-text)] shadow-none transition-colors duration-150 ease-out hover:text-[var(--sidebar-text-strong)] focus-visible:ring-2 focus-visible:ring-[var(--sl-color-text-accent)] focus-visible:outline-none rounded-none"
+				className="flex w-full cursor-pointer items-center gap-2.5 rounded-none border-0 bg-transparent px-0 py-1.5 text-[13px] leading-snug text-[var(--sidebar-text)] shadow-none transition-colors duration-150 ease-out hover:text-[var(--sidebar-text-strong)] focus-visible:ring-2 focus-visible:ring-[var(--sl-color-text-accent)] focus-visible:outline-none"
 			>
 				{justCopied ? (
 					<PiCheckCircleLight className="h-3.5 w-3.5 shrink-0 text-green-500" />
