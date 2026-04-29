@@ -124,7 +124,6 @@ const worker = env.LOADER.get("hello-v1", async () => {
 	};
 });
 ```
-
 </TypeScriptExample>
 
 ## Supported languages
@@ -133,12 +132,35 @@ Dynamic Workers support JavaScript (ES modules and CommonJS) and Python. The cod
 
 For the full list of supported module types, refer to the [API reference](/dynamic-workers/api-reference/#modules).
 
+### Python Workers
+To run Python code in a Dynamic Worker, you must include the `python_workers` compatibility flag. Without this flag, the Dynamic Worker will fail to load the Python runtime.
+
+<TypeScriptExample>
+
+```ts
+const worker = env.LOADER.load({
+  compatibilityDate: "$today",
+  compatibilityFlags: ["python_workers"],
+  mainModule: "worker.py",
+  modules: {
+    "worker.py": `
+      from workers import Response
+
+      def on_fetch(request):
+          return Response("Hello from Python!")
+    `,
+  },
+});
+```
+</TypeScriptExample>
+
 ### Using TypeScript and npm dependencies
 
 If your Dynamic Worker needs TypeScript compilation or npm dependencies, the code must be transpiled and bundled before passing to the Worker Loader.
 
 [`@cloudflare/worker-bundler`](https://www.npmjs.com/package/@cloudflare/worker-bundler) is a library that handles this for you. Use it to bundle source files into a format that `load()` and `get()` accept:
 
+<TypeScriptExample>
 ```ts
 import { createWorker } from "@cloudflare/worker-bundler";
 
@@ -157,8 +179,9 @@ const worker = env.LOADER.get("my-worker", async () => {
 		},
 	});
 
-	return { mainModule, modules, compatibilityDate: "2026-01-01" };
+	return { mainModule, modules, compatibilityDate: "$today" };
 });
 ```
+</TypeScriptExample>
 
 `createWorker()` handles TypeScript compilation, dependency resolution from npm, and bundling. It returns `mainModule` and `modules` ready to pass directly to `load()` or `get()`.

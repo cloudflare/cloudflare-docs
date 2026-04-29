@@ -138,15 +138,7 @@ return worker.getEntrypoint("Agent").run();
 ```
 The agent just calls `this.env.CHAT_ROOM.post("Hello!")`. It has no way to post to a different room, see or use the API key, or change the bot name attached to its messages. 
 
-## Capability-based Sandboxing
-
-Custom bindings follow a capability-based security model — a Dynamic Worker can only access what you explicitly give it.  If it hasn't received a stub for something, it can't access it. 
-
-This is powered by Workers RPC, also known as [Cap'n Web](https://github.com/cloudflare/capnweb), an RPC system designed to pass object references across security boundaries. When a Dynamic Worker receives a stub, it can call that object's methods and each call is an RPC back to the original object in your loader Worker.
-
-Capability-based security is essential to the design of most successful sandboxes, though it's usually hidden as an implementation detail — Android has Binder, Chrome has Mojo, and Cloudflare Workers has Cap'n Web. Dynamic Workers directly expose this power to you, the developer, so that you can build your own strong sandbox.
-
-## Tip: Tell your agent about the types
+### Tip: Tell your agent about the types
 
 For an AI agent to write code against your bindings, it needs to know the interface. Give your agent TypeScript type declarations with doc comments describing each method. Modern LLMs understand TypeScript well, making it the most concise way to describe a JavaScript API. This works even if the agent is writing plain JavaScript.
 
@@ -202,3 +194,11 @@ await this.env.STORAGE.put("settings", "dark-mode");
 This same pattern works for any resource your loader Worker has access to — [R2](/r2/) buckets or [D1](/d1/) databases. Bind the resource to your loader Worker, export a class that uses it, and pass the stub to the Dynamic Worker.
 
 For persistent storage that lives with each Dynamic Worker, see [Durable Object Facets](/dynamic-workers/usage/durable-object-facets/).
+
+## Capability-based Sandboxing
+
+Custom bindings follow a capability-based security model — a Dynamic Worker can only access what you explicitly give it.  If it hasn't received a stub for something, it can't access it. 
+
+This is powered by Workers RPC, also known as [Cap'n Web](https://github.com/cloudflare/capnweb), an RPC system designed to pass object references across security boundaries. When a Dynamic Worker receives a stub, it can call that object's methods and each call is an RPC back to the original object in your loader Worker. Stubs have no global identifier and cannot be forged, the only way to obtain one is to receive it.
+
+Capability-based security is essential to the design of most successful sandboxes, though it's usually hidden as an implementation detail — Android has Binder, Chrome has Mojo, and Cloudflare Workers has Cap'n Web. Dynamic Workers directly expose this power to you, the developer, so that you can build your own strong sandbox.
