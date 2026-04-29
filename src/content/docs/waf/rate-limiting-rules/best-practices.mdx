@@ -166,7 +166,7 @@ The following example rule protects an OTP validation endpoint by counting only 
 | Matching criteria        | URI Path equals `/api/otp/validate` and Request Method equals `POST`                                                 |
 | Expression               | `http.request.uri.path eq "/api/otp/validate" and http.request.method eq "POST"`                                     |
 | Counting characteristics | IP                                                                                                                   |
-| Increment counter when   | Response Status Code is in (401, 403)                                                                                |
+| Increment counter when   | URI Path equals `/api/otp/validate` and Request Method equals `POST` and Response Status Code is in (401, 403)       |
 | Counting expression      | `http.request.uri.path eq "/api/otp/validate" and http.request.method eq "POST" and http.response.code in {401 403}` |
 | Rate (Requests / Period) | 5 requests / 1 minute                                                                                                |
 | Action                   | Block for 10 minutes                                                                                                 |
