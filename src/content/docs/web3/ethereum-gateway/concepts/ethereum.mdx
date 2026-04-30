@@ -6,64 +6,35 @@ products:
 title: Ethereum network
 sidebar:
   order: 2
-
 ---
 
-The Ethereum network is a distributed consensus platform that allows users to
-write and compute smart contracts in a distributed manner. Smart contracts are
-essentially Turing complete programs that are available at a unique address of
-the network. When the smart contract is run as part of a transaction, the result
-and the current state of the contract are stored in a verifiable consensus that
-is agreed upon by the entire network of nodes.
+The Ethereum network is a decentralized platform for running programs called smart contracts. A smart contract is a program stored at a unique address on the network that executes automatically when triggered by a transaction. Because smart contracts run on Ethereum, they can handle any computation that a general-purpose programming language can express.
+
+When a smart contract runs, every node in the network independently verifies the result. The network then reaches consensus — all nodes agree on the outcome — and the result becomes part of the permanent record.
 
 ## Smart contracts
 
-When a user wants to run a smart contract on some desired inputs, they provide
-currency known as ETH with their command. This currency is allocated to a
-specific set of nodes that contribute to adding the transaction to the
-distributed consensus.
+Running a smart contract requires paying a fee in Ethereum's currency, ETH. This fee (called "gas") compensates the network's validators for the computational work of executing your transaction and adding it to the blockchain.
 
-If the smart contract involves moving monetary amounts to different individuals
-in the network then this is also recorded in the consensus. As such, this
-consensus represents the current state of the network along with exactly how
-much Ethereum currency is owned by each individual.
+If the smart contract transfers ETH between accounts, those balance changes are also recorded in the blockchain. The blockchain therefore represents a complete, verifiable record of the network's current state — including every account balance and every smart contract's stored data.
 
 ## Addressing
 
-All transactions on the network are stored in 'blocks' that make up the entire
-consensus. In brief, the consensus is a single sequence of blocks with
-increasing unique identifiers that represent all the transactions in the entire
-history of the Ethereum platform.
+Transactions are grouped into blocks, and blocks are chained together in sequence to form the blockchain — a complete history of every transaction since the network started.
 
-Each block also has a unique hash identifier (a long hexadecimal string like
-`0xd4e56740f876aef8c010b86a40d5f56745a118d0906a34e69aec8c0db1cb8fa3q`) that can
-be used to retrieve and inspect the block. Each transaction within a block also
-has a unique hash identifier that can be used to retrieve individual
-transactions. When any new transaction is uploaded to the consensus as part of a
-block, this update is sent around the entire network and anyone can read the
-nature of the transaction that took place. This makes the entire state of the
-network accountable.
+Each block has a unique hash identifier (a long hexadecimal string like `0xd4e56740f876aef8c010b86a40d5f56745a118d0906a34e69aec8c0db1cb8fa3q`), and each transaction within a block has its own hash as well. You can use either hash to look up and inspect specific blocks or transactions.
+
+When a new block is added, it is broadcast to every node in the network. Because all transactions are public and verifiable, the blockchain provides a transparent and accountable record of the network's state.
 
 ## Read and write content
 
-To read content, a user needs to interact with a working Ethereum node. Such
-nodes can be run locally on a user's machine as daemons (such as:
-[https://github.com/ethereum/go-ethereum/](https://github.com/ethereum/go-ethereum/)). When the user accesses such a node,
-they can use the official JSONRPC API to send queries to the network, and learn
-about specific aspects of the consensus.
+To read data from Ethereum — such as checking account balances or querying smart contract state — you need access to an Ethereum node. You can run a node yourself (for example, using [go-ethereum](https://github.com/ethereum/go-ethereum/)) or use a gateway like Cloudflare's. Reads are performed through the [JSON-RPC API](https://github.com/ethereum/wiki/wiki/JSON-RPC), a standard interface for sending queries to the network.
 
-Writing content is just as simple, and can be done using a [single JSON
-command](https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_sendrawtransaction).
-However, writing transactions also requires supplying a certain amount of
-currency along with a secret key for an [Ethereum
-wallet](https://www.ethereum.org/use/#_3-what-is-a-wallet-and-which-one-should-i-use)
-that holds that currency. If this can be provided, then the write transaction is
-sent to the wider network and added to the consensus.
+To write data — such as sending a transaction or deploying a smart contract — you also use the JSON-RPC API, but you must additionally provide ETH to pay for the transaction fee and sign the transaction with the private key from your [Ethereum wallet](https://www.ethereum.org/use/#_3-what-is-a-wallet-and-which-one-should-i-use). Once submitted, the transaction is broadcast to the network and included in the blockchain.
 
 ## Connect your website to the gateway
 
-If you want to be able to access the Ethereum network accessible from a custom
-domain name, you can do that by [creating a new Ethereum Gateway](/web3/how-to/manage-gateways/#create-a-gateway).
+To access the Ethereum network from a custom domain name — without running your own node — you can [create an Ethereum Gateway](/web3/how-to/manage-gateways/#create-a-gateway) through Cloudflare.
 
 ## Related resources
 

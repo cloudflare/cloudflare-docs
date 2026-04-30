@@ -9,31 +9,30 @@ sidebar:
 head:
   - tag: title
     content: Node types | Ethereum
-
 ---
 
-There are three widely known Ethereum nodes that are used: Full nodes, Archive nodes, and Light nodes.
+Ethereum nodes are the computers that store blockchain data and process queries. There are three types, each with different trade-offs between storage requirements and query capabilities.
 
 ## Full nodes
 
-Full nodes store all the blockchain’s data and participate in block validation. Validating the blockchain includes keeping track of new blocks and computing and maintaining state changes. Full nodes, once fully synced with the network, can query all Ethereum blockchain data.
+Full nodes store the current state of the blockchain and validate new blocks as they are produced. Once fully synced with the network, a full node can answer queries about any current blockchain data. Full nodes do not retain every historical state — they can recalculate past states when needed, but this requires additional computation.
 
 ## Light nodes
 
-A light node is much smaller than a full node and does not participate in block validation in the same way. The node can query the Ethereum network but does not store the state of the chain. Because of this limitation, it relies on peering with full nodes to get accurate chain data.
+Light nodes store only block headers (summaries of each block) rather than the full blockchain state. They can query the Ethereum network but rely on full nodes to provide and verify the underlying data. This makes them much smaller and faster to set up, but less self-sufficient.
 
 ## Archive nodes
 
-An archive node is a full node that additionally maintains storage of historical blockchain states. While a full node can calculate a historical state, an archive node readily has the information in local storage and has better performance for these types of requests.
+Archive nodes are full nodes that also store every historical state of the blockchain. Because they keep this data readily available in local storage, they can answer queries about past states (such as "what was this account's balance at block 5,000,000?") much faster than a full node, which would need to recalculate that state.
 
 ## Nodes at Cloudflare
 
 Cloudflare's Ethereum Gateway provides access to full and archive nodes.
 
-The archive nodes serve requests for the following [RPC state methods](https://ethereum.org/en/developers/docs/apis/json-rpc/#state_methods) when the block number parameter is before the most recent 128 blocks or the default block parameter is set to “earliest”:
+The archive nodes serve requests for the following [RPC state methods](https://ethereum.org/en/developers/docs/apis/json-rpc/#state_methods) when the block number parameter is before the most recent 128 blocks or the default block parameter is set to `earliest`:
 
-* [eth\_getBalance](https://ethereum.org/en/developers/docs/apis/json-rpc/#eth_getbalance)
-* [eth\_getCode](https://ethereum.org/en/developers/docs/apis/json-rpc/#eth_getcode)
-* [eth\_getTransactionCount](https://ethereum.org/en/developers/docs/apis/json-rpc/#eth_gettransactioncount)
-* [eth\_getStorageAt](https://ethereum.org/en/developers/docs/apis/json-rpc/#eth_getstorageat)
-* [eth\_call](https://ethereum.org/en/developers/docs/apis/json-rpc/#eth_call)
+- [eth_getBalance](https://ethereum.org/en/developers/docs/apis/json-rpc/#eth_getbalance)
+- [eth_getCode](https://ethereum.org/en/developers/docs/apis/json-rpc/#eth_getcode)
+- [eth_getTransactionCount](https://ethereum.org/en/developers/docs/apis/json-rpc/#eth_gettransactioncount)
+- [eth_getStorageAt](https://ethereum.org/en/developers/docs/apis/json-rpc/#eth_getstorageat)
+- [eth_call](https://ethereum.org/en/developers/docs/apis/json-rpc/#eth_call)
