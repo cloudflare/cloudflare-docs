@@ -119,7 +119,7 @@ The widget renders inside the `div` and produces a token when the visitor passes
 
 Before processing the form submission, send the token to the Turnstile siteverify endpoint to confirm the visitor passed the challenge.
 ```js title="server.js"
-const SECRET_KEY = "your-secret-key";
+const SECRET_KEY = "<YOUR-SECRET-KEY>";
 
 async function validateTurnstile(token, remoteip) {
 	try {
@@ -147,7 +147,7 @@ async function validateTurnstile(token, remoteip) {
 }
 ```
 
-Replace `"your-secret-key"` with your Turnstile secret key. The endpoint returns a JSON object with a `success` field. Only process the form submission if `success` is `true`.
+Replace `"<YOUR-SECRET-KEY>"` with your Turnstile secret key. The endpoint returns a JSON object with a `success` field. Only process the form submission if `success` is `true`.
 
 For additional fraud detection, Turnstile supports [Ephemeral IDs](/turnstile/tutorials/fraud-detection-with-ephemeral-ids/) that provide a unique, temporary identifier for each visitor session without storing personal data.
 

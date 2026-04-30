@@ -13,7 +13,7 @@ sidebar:
 
 import { Render, Steps, DashButton } from "~/components";
 
-When your site has forms that accept user input, you need to decide how to verify that visitors are human, how aggressively to limit repeated submissions, and which request patterns to block outright. The core workflow uses features available on all plans. Pro and Business plan features are included as callouts.
+Contact, registration, and checkout forms are common targets for automated abuse. This guide covers form protection: verifying that visitors are human, limiting repeated submissions, and blocking known attack patterns. The core workflow uses features available on all plans. Pro and Business plan features are included as callouts.
 
 <Render file="domain-scope-note" product="use-cases" params={{ exception: "Turnstile is the exception: widgets are configured at the account level." }} />
 
@@ -105,6 +105,8 @@ Before creating a rate limiting rule, check the normal submission rate for your 
 4. Note the typical request rate per IP address. Your rate limit should be above this baseline.
 
 </Steps>
+
+If you do not have enough traffic data to establish a baseline, start with a conservative threshold and adjust based on Security Events after deployment.
 
 :::note[Enterprise: Request rate analysis]
 The **Request rate analysis** tab in Security Analytics displays request rate distributions for your top unique clients. For details, refer to [Find appropriate rate limit](/waf/rate-limiting-rules/find-rate-limit/).
