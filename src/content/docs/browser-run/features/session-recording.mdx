@@ -112,9 +112,11 @@ The recording is only available after the browser session closes. CDP sessions t
 
 ## View recordings
 
-After a session closes, its recording is available in the Cloudflare dashboard under **Browser Run** > **Runs**. Select a session to open the recording viewer, where you can scrub through the timeline and replay what happened during the session.
+After a session closes, its recording is available in the Cloudflare dashboard under **Browser Run** > **Runs**. Select the recording icon next to a session to open the recording viewer, where you can scrub through the timeline and replay what happened during the session.
 
-<DashButton url="/?to=/:account/workers/browser-run/logs" />
+If a session opened multiple tabs, the recording viewer shows a tab selector dropdown in the top-right corner of the replay area. Use it to switch between the recorded tabs and view the activity for each one individually.
+
+<DashButton url="/?to=/:account/workers/browser-run/runs" />
 
 ## Retrieve a recording via API
 
