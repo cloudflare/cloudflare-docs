@@ -102,7 +102,7 @@ Traffic leaves the Cloudflare network over a post-quantum Cloudflare IPsec link 
 
 [Cloudflare IPsec](/cloudflare-wan/reference/gre-ipsec-tunnels/) also supports post-quantum key agreement with compatible third-party network devices using standard IKEv2. This extends post-quantum protection to organizations that connect their own routers and firewalls to Cloudflare's global network instead of using the Cloudflare One Appliance.
 
-The hybrid key agreement is negotiated using ML-KEM in parallel with classical Diffie-Hellman during the IKEv2 handshake, as defined in [RFC 9370](https://datatracker.ietf.org/doc/rfc9370/) and [draft-ietf-ipsecme-ikev2-mlkem](https://datatracker.ietf.org/doc/draft-ietf-ipsecme-ikev2-mlkem/). For the list of validated third-party platforms and their supported parameters, refer to [Tested third-party vendor interoperability](/cloudflare-wan/reference/gre-ipsec-tunnels/#tested-third-party-vendor-interoperability).
+The hybrid key agreement is negotiated using ML-KEM as an additional Key Exchange to classical Diffie-Hellman during the IKEv2 handshake, as defined in [RFC 9370](https://datatracker.ietf.org/doc/rfc9370/) and [draft-ietf-ipsecme-ikev2-mlkem](https://datatracker.ietf.org/doc/draft-ietf-ipsecme-ikev2-mlkem/). For the list of validated third-party platforms and their supported parameters, refer to [Tested third-party vendor interoperability](/cloudflare-wan/reference/gre-ipsec-tunnels/#tested-third-party-vendor-interoperability).
 
 ## Secure Web Gateway
 
