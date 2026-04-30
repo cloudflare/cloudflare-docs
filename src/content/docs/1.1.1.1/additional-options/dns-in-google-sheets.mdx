@@ -3,7 +3,7 @@ pcx_content_type: tutorial
 
 title: DNS in Google Sheets
 slug: 1.1.1.1/additional-options/dns-in-google-sheets
-description: Cloudflare 1.1.1 works directly inside Google Sheets. To get started, create a Google Function with the following code.
+description: Look up DNS records directly inside Google Sheets using Cloudflare's 1.1.1.1 DNS resolver and a custom Google Apps Script function.
 products:
   - 1.1.1.1
 ---
@@ -12,10 +12,13 @@ import { Details } from "~/components";
 
 ## Create a function
 
-1.1.1.1 works directly inside Google Sheets. To get started, create a [Google Function](https://developers.google.com/apps-script/guides/sheets/functions) with the following code:
+This tutorial creates a custom Google Sheets function that queries Cloudflare's 1.1.1.1 DNS resolver using DNS over HTTPS (DoH) — a protocol that encrypts DNS lookups over HTTPS. Once set up, you can type a formula like `=NSLookup("A", "example.com")` in any cell to retrieve DNS records without leaving your spreadsheet. This is useful for bulk domain audits, migration planning, or monitoring DNS changes across many domains at once.
+
+To get started, open your Google Sheet and create a [custom function in Google Apps Script](https://developers.google.com/apps-script/guides/sheets/functions) with the following code:
 
 ```js
 function NSLookup(type, domain, useCache = false, minCacheTTL = 30) {
+	// --- Parameter validation ---
 	if (typeof type == "undefined") {
 		throw new Error("Missing parameter 1 dns type");
 	}
@@ -35,6 +38,7 @@ function NSLookup(type, domain, useCache = false, minCacheTTL = 30) {
 	type = type.toUpperCase();
 	domain = domain.toLowerCase();
 
+	// --- Optional caching layer (uses Google Apps Script CacheService) ---
 	let cache = null;
 	if (useCache) {
 		// Cache key and hash
@@ -49,6 +53,7 @@ function NSLookup(type, domain, useCache = false, minCacheTTL = 30) {
 		}
 	}
 
+	// --- DNS-over-HTTPS query to Cloudflare's 1.1.1.1 resolver ---
 	const url =
 		"https://cloudflare-dns.com/dns-query?name=" +
 		encodeURIComponent(domain) +
@@ -69,6 +74,7 @@ function NSLookup(type, domain, useCache = false, minCacheTTL = 30) {
 		throw new Error(rc);
 	}
 
+	// --- Standard DNS response codes ---
 	const errors = [
 		{ name: "NoError", description: "No Error" }, // 0
 		{ name: "FormErr", description: "Format Error" }, // 1
@@ -88,6 +94,7 @@ function NSLookup(type, domain, useCache = false, minCacheTTL = 30) {
 		return errors[response.Status].name;
 	}
 
+	// --- Extract answer records and determine cache TTL ---
 	const outputData = [];
 	let cacheTTL = 0;
 
@@ -109,9 +116,18 @@ function NSLookup(type, domain, useCache = false, minCacheTTL = 30) {
 
 ## Using 1.1.1.1
 
-When you feed the function `NSLookup` a record type and a domain, you will get a DNS record value in the cell you called `NSLookup`.
+When you call the `NSLookup` function with a record type and a domain, the cell displays the corresponding DNS record value — the data (such as an IP address) that DNS returns for that domain and record type.
 
-To limit the number of DNS lookups and speed up the results (especially in larger Google Sheets), you can cache the returned DNS record value. Both the cache usage and the cache TTL can be controlled in arguments 3 and 4, respectively.
+The full function signature is:
+
+`=NSLookup(type, domain, useCache, minCacheTTL)`
+
+| Parameter | Required | Default | Description |
+| --- | --- | --- | --- |
+| `type` | Yes | — | DNS record type to query (for example, `A`, `AAAA`, `MX`). |
+| `domain` | Yes | — | The domain name to look up. |
+| `useCache` | No | `false` | Set to `true` to cache results using Google Apps Script's CacheService, which reduces repeated DNS lookups in large spreadsheets. |
+| `minCacheTTL` | No | `30` | Minimum cache duration in seconds. The actual TTL is the higher of this value or the TTL returned by the DNS response. |
 
 <Details header="Supported DNS record types">
 
@@ -131,27 +147,27 @@ To limit the number of DNS lookups and speed up the results (especially in large
 
 </Details>
 
-For example, typing:
+For example, if cell `B1` contains `A` (the record type) and `B2` contains `example.com` (the domain), typing the following formula in another cell:
 
 ```txt
-NSLookup(B1, B2)
+=NSLookup(B1, B2)
 ```
 
-Or - depending on your regional settings - you may have to use this formula:
+Depending on your regional settings, you may need to use a semicolon as the argument separator:
 
 ```txt
-NSLookup(B1; B2)
+=NSLookup(B1; B2)
 ```
 
 <div class="medium-img">
 
-![Google sheets function](~/assets/images/1.1.1.1/google-sheet-function.png)
+![Google Sheets cell containing the NSLookup formula](~/assets/images/1.1.1.1/google-sheet-function.png)
 
 </div>
 
 <br />
 
-Returns
+Returns the `A` record for that domain:
 
 ```txt
 198.41.214.162, 198.41.215.162
@@ -159,6 +175,6 @@ Returns
 
 <div class="medium-img">
 
-![Google sheets function](~/assets/images/1.1.1.1/google-sheet-result.png)
+![Google Sheets cell displaying the DNS lookup result](~/assets/images/1.1.1.1/google-sheet-result.png)
 
 </div>
