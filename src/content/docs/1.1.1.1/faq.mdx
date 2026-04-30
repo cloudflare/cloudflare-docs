@@ -17,11 +17,11 @@ Below you will find answers to our most commonly asked questions. If you cannot 
 
 ## What is 1.1.1.1?
 
-1.1.1.1 is Cloudflare's fast and secure DNS resolver. When you request to visit an application like `cloudflare.com`, your computer needs to know which server to connect you to so that it can load the application. Computers do not know how to do this name to address translation, so they ask a specialized server to do it for them.
+1.1.1.1 is Cloudflare's fast and secure DNS resolver. When you visit a website like `cloudflare.com`, your computer needs to find the IP address of the server that hosts it. Your computer cannot perform this translation on its own, so it sends the request to a DNS resolver.
 
-This specialized server is called a DNS recursive resolver. The resolver's job is to find the address for a given name, like `2400:cb00:2048:1::c629:d7a2` for `cloudflare.com`, and return it to the computer that asked for it.
+A DNS resolver looks up the IP address for a given domain name (for example, `2400:cb00:2048:1::c629:d7a2` for `cloudflare.com`) and returns it to the requesting device.
 
-Computers are configured to talk to specific DNS resolvers, identified by IP address. Usually the configuration is managed by your ISP (like Comcast or AT\&T) if you are on your home or wireless Internet, and by your network administrator if you are connected to the office Internet. You can also change the configured DNS resolver your computer talks to yourself.
+Your device is usually configured to use a DNS resolver chosen by your ISP (such as Comcast or AT&T) for home or wireless Internet, or by your network administrator for office networks. You can change which DNS resolver your device uses at any time. Refer to [Set up 1.1.1.1](/1.1.1.1/setup/) for instructions.
 
 ## How can I check if my computer / smartphone / tablet is connected to 1.1.1.1?
 
@@ -29,33 +29,35 @@ Visit [1.1.1.1/help](https://one.one.one.one/help) to make sure your system is c
 
 ## What do DNS resolvers do?
 
-DNS resolvers are like address books for the Internet. They translate the name of places to addresses so that your browser can figure out how to get there. DNS resolvers do this by working backwards from the top until they find the website you are looking for.
+DNS resolvers are like address books for the Internet. They translate domain names into IP addresses so that your browser knows which server to contact. A resolver does this by working backwards from the top of the domain name hierarchy.
 
-Every resolver knows how to find the invisible `.` at the end of domain names (for example, `cloudflare.com.`). There are [hundreds of root servers](http://www.root-servers.org/) all over the world that host the `.` file, and resolvers are [hard coded to know the IP addresses](http://www.internic.net/domain/named.root) of those servers. Cloudflare itself hosts [that file](http://www.internic.net/domain/root.zone) on all of its servers around the world through a [partnership with ISC](https://blog.cloudflare.com/f-root/).
+Every resolver knows how to find the invisible `.` at the end of domain names (for example, `cloudflare.com.`). There are [hundreds of root servers](http://www.root-servers.org/) all over the world that host the `.` file. Resolvers come preconfigured with the [IP addresses of those root servers](http://www.internic.net/domain/named.root). Cloudflare itself hosts [that file](http://www.internic.net/domain/root.zone) on all of its servers around the world through a [partnership with ISC](https://blog.cloudflare.com/f-root/).
 
-The resolver asks one of the root servers where to find the next link in the chain — the top-level domain (abbreviated to TLD) or domain ending. An example of a TLD is `.com` or `.org`. Luckily, the root servers store the locations of all the TLD servers, so they can return which IP address the DNS resolver should go ask next.
+The resolver asks one of the root servers where to find the next link in the chain — the top-level domain (TLD), which is the domain ending like `.com` or `.org`. The root servers return the address of the TLD server responsible for that ending.
 
-The resolver then asks the TLD's servers where it can find the domain it is looking for. For example, a resolver might ask `.com` where to find `cloudflare.com`. TLDs host a file containing the location of every domain using the TLD.
+The resolver then asks the TLD server where to find the specific domain. For example, a resolver might ask `.com` where to find `cloudflare.com`. The TLD server responds with the address of the authoritative nameserver that holds the records for that domain.
 
-Once the resolver has the final IP address, it returns the answer to the computer that asked.
+Once the resolver has the final IP address, it returns the answer to the device that asked.
 
-This whole system is called the [Domain Name System (DNS)](https://www.cloudflare.com/learning/dns/what-is-dns/). This system includes the servers that host the information (called [authoritative DNS](https://www.cloudflare.com/learning/dns/dns-server-types/)) and the servers that seek the information (the DNS resolvers).
+This whole system is called the [Domain Name System (DNS)](https://www.cloudflare.com/learning/dns/what-is-dns/). It includes the servers that host domain records (called [authoritative DNS servers](https://www.cloudflare.com/learning/dns/dns-server-types/)) and the servers that look up those records on behalf of users (DNS resolvers).
 
 ## Does 1.1.1.1 support ANY?
 
-Cloudflare [stopped supporting the ANY query](https://blog.cloudflare.com/deprecating-dns-any-meta-query-type/) in 2015 as ANY queries are more often used to perpetuate large volumetric attacks against the DNS system than valid use. 1.1.1.1 returns `NOTIMPL` when asked for `qtype==ANY`.
+No. Cloudflare [stopped supporting the ANY query type](https://blog.cloudflare.com/deprecating-dns-any-meta-query-type/) in 2015. The `ANY` query asks a DNS server to return all record types for a domain at once. In practice, `ANY` is more often used to amplify denial-of-service attacks than for legitimate purposes. When 1.1.1.1 receives an `ANY` query, it responds with `NOTIMPL` (not implemented).
 
 ## How does 1.1.1.1 work with DNSSEC?
 
-1.1.1.1 is a DNSSEC validating resolver. 1.1.1.1 sends the `DO` (`DNSSEC OK`) bit on every query to convey to the authoritative server that it wishes to receive signed answers if available. 1.1.1.1 supports the signature algorithms specified in [Supported DNSKEY signature algorithms](/1.1.1.1/encryption/dnskey/).
+DNSSEC (Domain Name System Security Extensions) lets domain owners cryptographically sign their DNS records. A DNSSEC-validating resolver checks these signatures to confirm that a DNS response is authentic and has not been modified.
 
-## ​Does 1.1.1.1 send EDNS Client Subnet header?
+1.1.1.1 is a DNSSEC-validating resolver. On every query, it sends the `DO` (DNSSEC OK) flag to signal that it can accept signed responses. If the authoritative server provides signed records, 1.1.1.1 validates the signatures before returning the answer. 1.1.1.1 supports the signature algorithms listed in [Supported DNSKEY signature algorithms](/1.1.1.1/encryption/dnskey/).
 
-1.1.1.1 is a privacy centric resolver so it does not send any client IP information and does not send the <GlossaryTooltip term="EDNS Client Subnet (ECS)">EDNS Client Subnet (ECS)</GlossaryTooltip> header to authoritative servers. The exception is the single Akamai debug domain `whoami.ds.akahelp.net` to aid in cross-provider debugging. However, Cloudflare does not send ECS to any of Akamai's production domains, such as `akamaihd.net` or similar.
+## Does 1.1.1.1 send EDNS Client Subnet header?
+
+No. 1.1.1.1 is a privacy-focused resolver and does not include client IP information in its queries to authoritative servers. It does not send the <GlossaryTooltip term="EDNS Client Subnet (ECS)">EDNS Client Subnet (ECS)</GlossaryTooltip> header. The only exception is the Akamai debug domain `whoami.ds.akahelp.net`, which is used for cross-provider debugging. Cloudflare does not send ECS to any of Akamai's production domains, such as `akamaihd.net`.
 
 ## Does 1.1.1.1 support IPv6?
 
-1.1.1.1 has full IPv6 support.
+Yes. 1.1.1.1 has full IPv6 support. Refer to [IP addresses](/1.1.1.1/ip-addresses/) for the IPv6 addresses you can use.
 
 ## What is Purge Cache?
 
@@ -63,4 +65,4 @@ Cloudflare [stopped supporting the ANY query](https://blog.cloudflare.com/deprec
 
 ## Can IPs used by 1.1.1.1 be allowlisted?
 
-Authoritative DNS providers may want to allowlist IP's 1.1.1.1 uses to query upstream DNS providers. The comprehensive list of IP's to allowlist is available at [https://www.cloudflare.com/ips/](https://www.cloudflare.com/ips/).
+Authoritative DNS providers may want to allowlist the IP addresses that 1.1.1.1 uses when querying upstream nameservers. The full list of Cloudflare IP addresses is available at [https://www.cloudflare.com/ips/](https://www.cloudflare.com/ips/).
