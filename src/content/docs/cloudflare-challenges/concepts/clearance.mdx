@@ -118,9 +118,7 @@ For more details on managing hostnames, refer to the [Hostname Management docume
 
 ### Protect your APIs with pre-clearance
 
-This example shows the pre-clearance flow for sites where API endpoints are protected by WAF rules. API requests cannot render challenge pages, so pre-clearance lets a visitor solve a Turnstile widget on an HTML page and then access protected endpoints without interruption.
-
-When a visitor loads a page with a Turnstile widget (for example, a login form), Turnstile issues a `cf_clearance` cookie to the visitor's browser. Then, subsequent API requests from the browser now include the cookie to bypass WAF challenges.
+You can also use pre-clearance for sites where API endpoints are protected by WAF rules. API requests cannot render challenge pages, so when a visitor loads a page with a Turnstile widget (for example, a login form) and Turnstile issues a `cf_clearance` cookie to the visitor's browser, subsequent API requests from the browser now include the cookie to bypass WAF challenges.
 
 #### Process
 
@@ -188,5 +186,6 @@ When a visitor loads a page with a Turnstile widget (for example, a login form),
       const data = await dataResponse.json();
     });
     ```
-    The browser includes the `cf_clearance` cookie in requests to the same domain automatically. No additional client-side code is needed to attach the cookie.
 </Steps>
+
+The browser includes the `cf_clearance` cookie in requests to the same domain automatically. No additional client-side code is needed to attach the cookie.
