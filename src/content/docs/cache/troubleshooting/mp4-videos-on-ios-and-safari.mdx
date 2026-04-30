@@ -13,7 +13,7 @@ import { DashButton } from "~/components";
 When traffic is proxied through Cloudflare, Safari on macOS and iOS devices may fail to load MP4 video files.
 This issue occurs because Safari handles HTTP range requests differently than other browsers, particularly in how it processes ETags during video streaming.
 
-Safari and iOS devices rely on HTTP range requests to support essential video features such as seeking to specific timestamps, adaptive bitrate streaming, and resuming interrupted downloads.
+Safari and iOS devices rely on HTTP range requests to support video features such as seeking to specific timestamps and resuming interrupted downloads.
 When Cloudflare's caching layer processes these range requests with weak ETags, Safari may reject the cached response entirely, resulting in videos that fail to load or display as black screens.
 
 To resolve this issue, configure two cache rules in the following order.
@@ -49,6 +49,6 @@ Create another cache rule that applies to all MP4 files and bypasses cache entir
 
 ## Why this order matters
 
-The first rule preserves strong ETags for MP4 files, which satisfies Safari's requirements for range request handling. The second rule bypasses Cloudflare's cache, allowing Safari to communicate directly with the origin server for correct range request negotiation.
+The first rule preserves strong ETags for MP4 files, which satisfies Safari's requirements for range request handling. The second rule bypasses cache so that Cloudflare forwards range requests to the origin server instead of serving cached responses with potentially mismatched ETags.
 
 The first rule must appear above the second rule in the Cache Rules list.
