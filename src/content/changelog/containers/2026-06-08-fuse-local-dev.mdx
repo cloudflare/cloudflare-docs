@@ -1,0 +1,13 @@
+---
+title: Enable FUSE in local development
+description: Opt in to FUSE mounts in `wrangler dev` with the `privileged_containers` flag
+products:
+  - containers
+date: 2026-06-08
+---
+
+Containers in `wrangler dev` can now opt into the kernel permissions FUSE mounts require.
+
+Set `dev.privileged_containers: true` in your [Wrangler configuration](/workers/wrangler/configuration/), or pass `--privileged-containers` to `wrangler dev`. The flag adds `CAP_SYS_ADMIN`, mounts `/dev/fuse`, and runs the container with AppArmor unconfined.
+
+Refer to [Mount R2 buckets with FUSE](/containers/examples/r2-fuse-mount/) and [Local development](/containers/local-dev/).

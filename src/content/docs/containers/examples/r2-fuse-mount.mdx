@@ -30,6 +30,14 @@ Common use cases where this tradeoff is acceptable include reading shared assets
 
 :::
 
+:::caution[FUSE in local development]
+
+By default, `wrangler dev` launches containers without the elevated permissions FUSE requires (`CAP_SYS_ADMIN`, access to `/dev/fuse`, and an unconfined AppArmor profile), so a FUSE mount inside the container will fail.
+
+To opt in to FUSE locally, set `dev.privileged_containers: true` in your [Wrangler configuration](/workers/wrangler/configuration/), or pass `--privileged-containers` to `wrangler dev`.
+
+:::
+
 ## Mounting buckets
 
 To mount an R2 bucket, install a FUSE adapter in your Dockerfile and configure it to run at container startup.
