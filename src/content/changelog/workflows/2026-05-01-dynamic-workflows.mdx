@@ -26,21 +26,41 @@ import {
 	createDynamicWorkflowEntrypoint,
 	DynamicWorkflowBinding,
 	wrapWorkflowBinding,
+	type WorkflowRunner,
 } from "@cloudflare/dynamic-workflows";
 
 export { DynamicWorkflowBinding };
 
+interface Env {
+	WORKFLOWS: Workflow;
+	LOADER: WorkerLoader;
+}
+
+function loadTenant(env: Env, tenantId: string) {
+	return env.LOADER.get(tenantId, async () => ({
+		compatibilityDate: "2026-01-01",
+		mainModule: "index.js",
+		modules: { "index.js": await fetchTenantCode(tenantId) },
+		// The Dynamic Worker uses this exactly like a real Workflow binding;
+		// every create() is tagged with { tenantId } automatically.
+		env: { WORKFLOWS: wrapWorkflowBinding({ tenantId }) },
+	}));
+}
+
+// The entrypoint name must match `class_name` in the workflows binding of your Wrangler config file.
 export const DynamicWorkflow = createDynamicWorkflowEntrypoint<Env>(
 	async ({ env, metadata }) => {
-		const stub = env.LOADER.get(metadata.tenantId as string, async () => ({
-			compatibilityDate: "2026-01-01",
-			mainModule: "index.js",
-			modules: { "index.js": await fetchTenantCode(metadata.tenantId) },
-			env: { WORKFLOWS: wrapWorkflowBinding({ tenantId: metadata.tenantId }) },
-		}));
-		return stub.getEntrypoint("TenantWorkflow");
+		const stub = loadTenant(env, metadata.tenantId as string);
+		return stub.getEntrypoint("TenantWorkflow") as unknown as WorkflowRunner;
 	},
 );
+
+export default {
+	fetch(request: Request, env: Env) {
+		const tenantId = request.headers.get("x-tenant-id")!;
+		return loadTenant(env, tenantId).getEntrypoint().fetch(request);
+	},
+};
 ```
 
 For a full walkthrough, refer to the [Dynamic Workflows example](/dynamic-workers/examples/dynamic-workflows/).
