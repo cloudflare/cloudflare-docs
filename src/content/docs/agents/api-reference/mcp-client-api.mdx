@@ -309,6 +309,7 @@ const state = this.getMcpServers();
 for (const tool of state.tools) {
 	console.log(`Tool: ${tool.name}`);
 	console.log(`  From server: ${tool.serverId}`);
+	console.log(`  Title: ${tool.title ?? tool.name}`);
 	console.log(`  Description: ${tool.description}`);
 }
 ```

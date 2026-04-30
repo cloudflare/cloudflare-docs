@@ -366,7 +366,28 @@ await this.saveMessages((messages) => [
 
 </TypeScriptExample>
 
-`saveMessages` returns `{ requestId, status }` where `status` is `"completed"` if the turn ran, or `"skipped"` if the chat was cleared before it started.
+`saveMessages` returns `{ requestId, status }` where `status` is `"completed"` if the turn ran, `"skipped"` if the chat was cleared before it started, or `"aborted"` if an external `AbortSignal` cancelled it before completion.
+
+Pass `options.signal` to cancel a programmatic turn from outside the chat agent. This is useful when a parent tool call needs to cancel a child agent turn without knowing the internally generated request ID:
+
+<TypeScriptExample>
+
+```ts
+const controller = new AbortController();
+
+const result = await this.saveMessages(
+	(messages) => [...messages, syntheticUserMessage],
+	{ signal: controller.signal },
+);
+
+if (result.status === "aborted") {
+	// Partial chunks already streamed are persisted.
+}
+```
+
+</TypeScriptExample>
+
+`continueLastTurn()` accepts the same `options.signal` argument. `AbortSignal` objects cannot cross Durable Object RPC boundaries, so construct the controller inside the Durable Object that calls `saveMessages()` or `continueLastTurn()`. The signal is in memory only; if the Durable Object hibernates mid-turn and `chatRecovery` is enabled, the recovered turn runs without the original signal.
 
 ### `onChatResponse`
 
@@ -556,7 +577,10 @@ Override to implement provider-specific recovery. The default behavior persists 
 <TypeScriptExample>
 
 ```ts
-import type { ChatRecoveryContext, ChatRecoveryOptions } from "@cloudflare/ai-chat";
+import type {
+	ChatRecoveryContext,
+	ChatRecoveryOptions,
+} from "@cloudflare/ai-chat";
 
 export class ChatAgent extends AIChatAgent {
 	override chatRecovery = true;
@@ -586,6 +610,7 @@ export class ChatAgent extends AIChatAgent {
 | `messages`        | `ChatMessage[]`                        | Full conversation history                                             |
 | `lastBody`        | `Record<string, unknown> \| undefined` | The original request body                                             |
 | `lastClientTools` | `ClientToolSchema[] \| undefined`      | Client tool schemas from the original request                         |
+| `createdAt`       | `number`                               | Epoch milliseconds when the interrupted turn started                  |
 
 **`ChatRecoveryOptions`:**
 
@@ -600,12 +625,32 @@ Common return values:
 - `{ continue: false }` — persist partial but do not auto-continue (handle continuation yourself)
 - `{ persist: false, continue: false }` — handle everything yourself (for example, retrieve a completed response from the provider)
 
+Use `ctx.createdAt` to skip stale recoveries:
+
+<TypeScriptExample>
+
+```ts
+override async onChatRecovery(
+	ctx: ChatRecoveryContext,
+): Promise<ChatRecoveryOptions> {
+	if (Date.now() - ctx.createdAt > 2 * 60 * 1000) {
+		return { continue: false };
+	}
+	return {};
+}
+```
+
+</TypeScriptExample>
+
 #### `continueLastTurn`
 
 Appends to the last assistant message by re-calling `onChatMessage` with the saved request body. The response is streamed as a continuation — appended to the existing assistant message, not a new one. No synthetic user message is created.
 
 ```ts
-protected continueLastTurn(body?: Record<string, unknown>): Promise<SaveMessagesResult>;
+protected continueLastTurn(
+	body?: Record<string, unknown>,
+	options?: SaveMessagesOptions,
+): Promise<SaveMessagesResult>;
 ```
 
 Called automatically by the default recovery path. Can also be called manually from scheduled callbacks or other entry points. The optional `body` parameter merges with the saved `_lastBody`.
@@ -679,6 +724,9 @@ function Chat() {
 		addToolApprovalResponse,
 		setMessages,
 		status,
+		isStreaming,
+		isServerStreaming,
+		isToolContinuation,
 	} = useAgentChat({ agent });
 
 	// ...
@@ -701,15 +749,20 @@ function Chat() {
 
 ### Return values
 
-| Property                  | Type                               | Description                                          |
-| ------------------------- | ---------------------------------- | ---------------------------------------------------- |
-| `messages`                | `UIMessage[]`                      | Current conversation messages                        |
-| `sendMessage`             | `(message) => void`                | Send a message                                       |
-| `clearHistory`            | `() => void`                       | Clear conversation (client and server)               |
-| `addToolOutput`           | `({ toolCallId, output }) => void` | Provide output for a client-side tool                |
-| `addToolApprovalResponse` | `({ id, approved }) => void`       | Approve or reject a tool requiring approval          |
-| `setMessages`             | `(messages \| updater) => void`    | Set messages directly (syncs to server)              |
-| `status`                  | `string`                           | `"idle"`, `"submitted"`, `"streaming"`, or `"error"` |
+| Property                  | Type                               | Description                                                                       |
+| ------------------------- | ---------------------------------- | --------------------------------------------------------------------------------- |
+| `messages`                | `UIMessage[]`                      | Current conversation messages                                                     |
+| `sendMessage`             | `(message) => void`                | Send a message                                                                    |
+| `clearHistory`            | `() => void`                       | Clear conversation (client and server)                                            |
+| `addToolOutput`           | `({ toolCallId, output }) => void` | Provide output for a client-side tool                                             |
+| `addToolApprovalResponse` | `({ id, approved }) => void`       | Approve or reject a tool requiring approval                                       |
+| `setMessages`             | `(messages \| updater) => void`    | Set messages directly (syncs to server)                                           |
+| `status`                  | `string`                           | `"idle"`, `"submitted"`, `"streaming"`, or `"error"`                              |
+| `isStreaming`             | `boolean`                          | `true` while the agent is streaming or waiting on an active client tool           |
+| `isServerStreaming`       | `boolean`                          | `true` while a server-initiated stream or active client-tool phase is in progress |
+| `isToolContinuation`      | `boolean`                          | `true` while an automatic continuation after a tool result or approval is running |
+
+Use `isToolContinuation` when your UI should distinguish a fresh user submit from a continuation after a tool result. For example, show a typing indicator only for `status === "submitted" && !isToolContinuation`, while keeping loading controls disabled whenever `isStreaming` is true.
 
 ## Tools
 
@@ -1374,7 +1427,7 @@ export class ChatAgent extends AIChatAgent {
 
 :::note
 
-This section covers **in-process** subagents using the AI SDK's `ToolLoopAgent`. For **Durable Object sub-agents** with their own isolated storage and typed RPC, refer to [Sub-agents](/agents/api-reference/sub-agents/). For streaming full LLM turns through a child agent, refer to [Think: Sub-agent RPC](/agents/api-reference/think/#sub-agent-rpc-and-programmatic-turns).
+This section covers **in-process** subagents using the AI SDK's `ToolLoopAgent`. For **Durable Object sub-agents** with their own isolated storage and typed RPC, refer to [Sub-agents](/agents/api-reference/sub-agents/). To run Think or `AIChatAgent` sub-agents as retained, streaming tools, refer to [Agent tools](/agents/api-reference/agent-tools/).
 
 :::
 
@@ -1491,11 +1544,12 @@ The originating client receives the streaming response. All other clients receiv
 
 ### Exports
 
-| Import path                 | Exports                                             |
-| --------------------------- | --------------------------------------------------- |
-| `@cloudflare/ai-chat`       | `AIChatAgent`, `createToolsFromClientSchemas`, `ChatRecoveryContext`, `ChatRecoveryOptions` |
-| `@cloudflare/ai-chat/react` | `useAgentChat`                                      |
-| `@cloudflare/ai-chat/types` | `MessageType`, `OutgoingMessage`, `IncomingMessage` |
+| Import path                 | Exports                                                                                                    |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `@cloudflare/ai-chat`       | `AIChatAgent`, `createToolsFromClientSchemas`, `ChatRecoveryContext`, `ChatRecoveryOptions`                |
+| `@cloudflare/ai-chat/react` | `useAgentChat`                                                                                             |
+| `@cloudflare/ai-chat/types` | `MessageType`, `OutgoingMessage`, `IncomingMessage`                                                        |
+| `agents/chat`               | Shared advanced chat primitives such as `SaveMessagesResult`, `SaveMessagesOptions`, and `isReplayChunk()` |
 
 ### WebSocket protocol
 

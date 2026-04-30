@@ -41,7 +41,7 @@ import { routeAgentRequest } from "agents";
 export class MyAgent extends Think<Env> {
 	getModel() {
 		return createWorkersAI({ binding: this.env.AI })(
-			"@cf/moonshotai/kimi-k2.5",
+			"@cf/moonshotai/kimi-k2.6",
 		);
 	}
 }
@@ -109,7 +109,7 @@ function Chat() {
 
 ```toml
 compatibility_date = "$today"
-compatibility_flags = ["nodejs_compat", "experimental"]
+compatibility_flags = ["nodejs_compat"]
 
 [ai]
 binding = "AI"
@@ -167,10 +167,11 @@ Both Think and [`AIChatAgent`](/agents/api-reference/chat-agents/) extend `Agent
 | `getSystemPrompt()`     | `"You are a helpful assistant."` | System prompt (fallback when no context blocks)                                                       |
 | `getTools()`            | `{}`                             | AI SDK `ToolSet` for the agentic loop                                                                 |
 | `maxSteps`              | `10`                             | Max tool-call rounds per turn                                                                         |
+| `sendReasoning`         | `true`                           | Send reasoning chunks to chat clients                                                                 |
 | `configureSession()`    | identity                         | Add context blocks, compaction, search, skills — refer to [Sessions](/agents/api-reference/sessions/) |
 | `messageConcurrency`    | `"queue"`                        | How overlapping submits behave — refer to [Message concurrency](#message-concurrency)                 |
 | `waitForMcpConnections` | `false`                          | Wait for MCP servers before inference                                                                 |
-| `chatRecovery`          | `true`                           | Wrap turns in `runFiber` for durable execution                                                        |
+| `chatRecovery`          | `true`                           | Wrap turns in `runFiber` for durable execution, including sub-agent turns                             |
 
 ## Dynamic configuration
 
@@ -185,7 +186,7 @@ export class MyAgent extends Think<Env, MyConfig> {
 	getModel() {
 		const tier = this.getConfig()?.modelTier ?? "fast";
 		const models = {
-			fast: "@cf/moonshotai/kimi-k2.5",
+			fast: "@cf/moonshotai/kimi-k2.6",
 			capable: "@cf/meta/llama-4-scout-17b-16e-instruct",
 		};
 		return createWorkersAI({ binding: this.env.AI })(models[tier]);
@@ -731,6 +732,7 @@ Think owns the `streamText` call and provides hooks at each stage of the chat tu
 | --------------------------- | --------------------------------------------- | -------------------------- | ----- |
 | `configureSession(session)` | Once during `onStart`                         | `Session`                  | yes   |
 | `beforeTurn(ctx)`           | Before `streamText`                           | `TurnConfig` or void       | yes   |
+| `beforeStep(ctx)`           | Before each model step                        | `StepConfig` or void       | yes   |
 | `beforeToolCall(ctx)`       | When model calls a tool                       | `ToolCallDecision` or void | yes   |
 | `afterToolCall(ctx)`        | After tool execution                          | void                       | yes   |
 | `onStepFinish(ctx)`         | After each step completes                     | void                       | yes   |
@@ -748,12 +750,16 @@ configureSession()          ← once at startup, not per-turn
 beforeTurn()                ← inspect assembled context, override model/tools/prompt
       │
   ┌── streamText ───────────────────────────────────┐
+  │   beforeStep()                                  │
+  │       │                                         │
   │   onChunk()  onChunk()  onChunk()  ...          │
   │       │                                         │
   │   beforeToolCall()  →  tool executes            │
   │                        afterToolCall()           │
   │       │                                         │
   │   onStepFinish()                                │
+  │       │                                         │
+  │   beforeStep()                                  │
   │       │                                         │
   │   onChunk()  onChunk()  ...                     │
   │       │                                         │
@@ -789,16 +795,18 @@ beforeTurn(ctx: TurnContext): TurnConfig | void | Promise<TurnConfig | void>
 
 All fields are optional. Return only what you want to change.
 
-| Field             | Type                      | Description                          |
-| ----------------- | ------------------------- | ------------------------------------ |
-| `model`           | `LanguageModel`           | Override the model for this turn     |
-| `system`          | `string`                  | Override the system prompt           |
-| `messages`        | `ModelMessage[]`          | Override the assembled messages      |
-| `tools`           | `ToolSet`                 | Extra tools to merge (additive)      |
-| `activeTools`     | `string[]`                | Limit which tools the model can call |
-| `toolChoice`      | `ToolChoice`              | Force a specific tool call           |
-| `maxSteps`        | `number`                  | Override `maxSteps` for this turn    |
-| `providerOptions` | `Record<string, unknown>` | Provider-specific options            |
+| Field             | Type                      | Description                             |
+| ----------------- | ------------------------- | --------------------------------------- |
+| `model`           | `LanguageModel`           | Override the model for this turn        |
+| `system`          | `string`                  | Override the system prompt              |
+| `messages`        | `ModelMessage[]`          | Override the assembled messages         |
+| `tools`           | `ToolSet`                 | Extra tools to merge (additive)         |
+| `activeTools`     | `string[]`                | Limit which tools the model can call    |
+| `toolChoice`      | `ToolChoice`              | Force a specific tool call              |
+| `maxSteps`        | `number`                  | Override `maxSteps` for this turn       |
+| `sendReasoning`   | `boolean`                 | Send reasoning chunks for this turn     |
+| `output`          | `Output`                  | Request structured output for this turn |
+| `providerOptions` | `Record<string, unknown>` | Provider-specific options               |
 
 #### Examples
 
@@ -831,6 +839,56 @@ beforeTurn(ctx: TurnContext) {
 	}
 }
 ```
+
+Hide reasoning for internal continuation turns:
+
+```ts
+beforeTurn(ctx: TurnContext) {
+	if (ctx.continuation) {
+		return { sendReasoning: false };
+	}
+}
+```
+
+Force structured output for a turn:
+
+```ts
+import { Output } from "ai";
+import { z } from "zod";
+
+const ResultSchema = z.object({ severity: z.enum(["low", "high"]) });
+
+beforeTurn(ctx: TurnContext) {
+	if (ctx.body?.mode === "structured-answer") {
+		return {
+			output: Output.object({ schema: ResultSchema }),
+			activeTools: [],
+		};
+	}
+}
+```
+
+`output` is a turn-level setting only. The AI SDK's `prepareStep` does not accept an `output` override, so `beforeStep` cannot toggle structured output on a single step.
+
+### beforeStep
+
+Called before each AI SDK step in the agentic loop. Think forwards this hook to `streamText` as `prepareStep`, so it receives the AI SDK's full prepare-step context and can return per-step overrides. Use `beforeTurn` for turn-wide assembly and `beforeStep` when the decision depends on the step number or previous step results.
+
+```ts
+beforeStep(ctx: PrepareStepContext): StepConfig | void | Promise<StepConfig | void>
+```
+
+<TypeScriptExample>
+
+```ts
+beforeStep(ctx: PrepareStepContext): StepConfig | void {
+	if (ctx.stepNumber > 0) {
+		return { activeTools: [] };
+	}
+}
+```
+
+</TypeScriptExample>
 
 ### beforeToolCall
 
@@ -1145,10 +1203,13 @@ async saveMessages(
 	messages:
 		| UIMessage[]
 		| ((current: UIMessage[]) => UIMessage[] | Promise<UIMessage[]>),
+	options?: SaveMessagesOptions,
 ): Promise<SaveMessagesResult>
 ```
 
-Returns `{ requestId, status }` where `status` is `"completed"` or `"skipped"`.
+Returns `{ requestId, status }` where `status` is `"completed"`, `"skipped"`, or `"aborted"`.
+
+Pass `options.signal` to cancel a programmatic turn from the Durable Object that starts it. `AbortSignal` cannot cross Durable Object RPC boundaries, and the signal is not persisted across hibernation.
 
 #### Static messages
 
@@ -1234,10 +1295,11 @@ Resume the last assistant turn without injecting a new user message. Useful afte
 ```ts
 protected async continueLastTurn(
 	body?: Record<string, unknown>,
+	options?: SaveMessagesOptions,
 ): Promise<SaveMessagesResult>
 ```
 
-Returns `{ requestId, status: "skipped" }` if the last message is not an assistant message. The optional `body` parameter overrides the stored body for this continuation.
+Returns `{ requestId, status: "skipped" }` if the last message is not an assistant message. The optional `body` parameter overrides the stored body for this continuation. Pass `options.signal` to cancel the continuation while it is running.
 
 ### Chat recovery
 
@@ -1299,6 +1361,7 @@ export class MyAgent extends Think<Env> {
 | `messages`        | `UIMessage[]`              | Current conversation history              |
 | `lastBody`        | `Record<string, unknown>?` | Body from the interrupted turn            |
 | `lastClientTools` | `ClientToolSchema[]?`      | Client tools from the interrupted turn    |
+| `createdAt`       | `number`                   | Epoch milliseconds when the turn started  |
 
 #### ChatRecoveryOptions
 
@@ -1308,6 +1371,8 @@ export class MyAgent extends Think<Env> {
 | `continue` | `boolean?` | Whether to auto-continue with a new turn         |
 
 With `persist: true`, the partial message is saved. With `continue: true`, Think calls `continueLastTurn()` after the agent reaches a stable state.
+
+Use `ctx.createdAt` to skip stale recoveries. For example, if the interrupted turn is older than a few minutes, return `{ continue: false }` so the partial response is preserved without starting an old continuation.
 
 ### Stability detection
 
@@ -1365,6 +1430,14 @@ if (stable) {
 ## Acknowledgments
 
 Think's design is inspired by [Pi](https://pi.dev).
+
+## Example
+
+<LinkCard
+	title="Assistant example"
+	href="https://github.com/cloudflare/agents/tree/main/examples/assistant"
+	description="Explore a multi-session Think assistant with sub-agent routing, shared workspace, MCP, chat recovery, and GitHub OAuth."
+/>
 
 ## Related
 
