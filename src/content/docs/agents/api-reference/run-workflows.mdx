@@ -51,7 +51,7 @@ export class ProcessingWorkflow extends AgentWorkflow<MyAgent, TaskParams> {
 		});
 
 		// Broadcast to connected WebSocket clients
-		this.broadcastToClients({ type: "update", taskId: params.taskId });
+		await this.broadcastToClients({ type: "update", taskId: params.taskId });
 
 		await step.do("save-results", async () => {
 			// Call Agent methods via RPC
@@ -184,7 +184,7 @@ Broadcast a message to all WebSocket clients connected to the Agent.
 <TypeScriptExample>
 
 ```ts
-this.broadcastToClients({ type: "update", data: result });
+await this.broadcastToClients({ type: "update", data: result });
 ```
 
 </TypeScriptExample>
@@ -234,17 +234,17 @@ Methods available on the `Agent` class for Workflow management.
 
 ### runWorkflow(workflowName, params, options?)
 
-Start a workflow instance and track it in the Agent database.
+Start a workflow instance and track it in the originating Agent's database.
 
 **Parameters:**
 
-| Parameter              | Type   | Description                                           |
-| ---------------------- | ------ | ----------------------------------------------------- |
-| `workflowName`         | string | Workflow binding name from `env`                      |
-| `params`               | object | Parameters to pass to the workflow                    |
-| `options.id`           | string | Custom workflow ID (auto-generated if not provided)   |
-| `options.metadata`     | object | Metadata stored for querying (not passed to workflow) |
-| `options.agentBinding` | string | Agent binding name (auto-detected if not provided)    |
+| Parameter              | Type   | Description                                                                                                            |
+| ---------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------- |
+| `workflowName`         | string | Workflow binding name from `env`                                                                                       |
+| `params`               | object | Parameters to pass to the workflow                                                                                     |
+| `options.id`           | string | Custom workflow ID (auto-generated if not provided)                                                                    |
+| `options.metadata`     | object | Metadata stored for querying (not passed to workflow)                                                                  |
+| `options.agentBinding` | string | Agent binding name (auto-detected if not provided). When called from a sub-agent, this is the root Agent binding name. |
 
 **Returns:** `Promise<string>` - Workflow instance ID
 
@@ -261,6 +261,46 @@ const instanceId = await this.runWorkflow(
 ```
 
 </TypeScriptExample>
+
+#### Sub-agents
+
+Sub-agents can call `this.runWorkflow()` directly. The workflow is tracked in the originating sub-agent's SQLite database, and `this.agent` inside `AgentWorkflow` routes back to that same sub-agent for RPC calls, callbacks, state updates, and broadcasts.
+
+Parent agents do not automatically list or control workflows that a sub-agent starts. `SubAgentStub<T>` only exposes user-defined methods, not inherited `Agent` methods such as `approveWorkflow()` or `getWorkflow()`. To control a child-started workflow from the parent, define small wrapper methods on the child and call those wrappers through the sub-agent stub.
+
+<TypeScriptExample>
+
+```ts
+export class ParentAgent extends Agent {
+	async startChildWorkflow(childName: string, task: string) {
+		const child = await this.subAgent(ChildAgent, childName);
+		return child.startWorkflow(task);
+	}
+
+	async approveChildWorkflow(childName: string, workflowId: string) {
+		const child = await this.subAgent(ChildAgent, childName);
+		return child.approveChildWorkflow(workflowId);
+	}
+}
+
+export class ChildAgent extends Agent {
+	async startWorkflow(task: string) {
+		return this.runWorkflow("CHILD_WORKFLOW", { task });
+	}
+
+	async approveChildWorkflow(workflowId: string) {
+		return this.approveWorkflow(workflowId);
+	}
+
+	async getChildWorkflow(workflowId: string) {
+		return this.getWorkflow(workflowId);
+	}
+}
+```
+
+</TypeScriptExample>
+
+For sub-agent origins, `AgentWorkflow.agent` is an RPC-only stub. Use it to call Agent methods, but use `routeSubAgentRequest()` or the `/agents/{parent}/{name}/sub/{child}/{name}` URL shape for external HTTP or WebSocket routing instead of `this.agent.fetch()`.
 
 ### sendWorkflowEvent(workflowName, instanceId, event)
 
@@ -542,7 +582,7 @@ class MyAgent extends Agent {
 
 ## Workflow tracking
 
-Workflows started with `runWorkflow()` are automatically tracked in the Agent's internal database. You can query, filter, and manage workflows using the methods described above (`getWorkflow()`, `getWorkflows()`, `deleteWorkflow()`, etc.).
+Workflows started with `runWorkflow()` are automatically tracked in the originating Agent's internal database. If a sub-agent starts the workflow, the tracking record belongs to that sub-agent, not its parent. Query, filter, and manage those workflows from the originating Agent instance. From a parent, define child wrapper methods that call the workflow methods described above (`getWorkflow()`, `getWorkflows()`, `deleteWorkflow()`, etc.) inside the child.
 
 ### Status values
 
@@ -781,7 +821,7 @@ const data = await this.agent.getData(taskId);
 
 // Non-durable callbacks (may repeat on retry, use for frequent updates)
 await this.reportProgress({ step: "process", percent: 0.5 });
-this.broadcastToClients({ type: "update", data });
+await this.broadcastToClients({ type: "update", data });
 
 // Durable callbacks via step (idempotent, won't repeat on retry)
 await step.reportComplete(result);
@@ -794,6 +834,8 @@ await step.mergeAgentState({ progress: 0.5 });
 ```
 
 </TypeScriptExample>
+
+If a sub-agent started the workflow, `this.agent` routes RPC back to that originating facet. It does not support `.fetch()`; use `routeSubAgentRequest()` or the nested `/agents/.../sub/...` URL shape for external HTTP or WebSocket traffic.
 
 ### Agent to Workflow
 

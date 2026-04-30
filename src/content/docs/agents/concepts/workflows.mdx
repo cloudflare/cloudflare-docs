@@ -121,7 +121,7 @@ This durability model means workflows are well-suited for tasks where partial co
 
 ## Workflow tracking
 
-When an Agent starts a workflow using `runWorkflow()`, the workflow is automatically tracked in the Agent's internal database. This enables:
+When an Agent or sub-agent starts a workflow using `runWorkflow()`, the workflow is automatically tracked in that originating Agent's internal database. If a sub-agent starts the workflow, parent agents do not automatically list or control that workflow. To manage it from the parent, define child methods that call `getWorkflow()`, `approveWorkflow()`, `terminateWorkflow()`, or other workflow methods inside the child, then call those methods through the sub-agent stub.
 
 - Querying workflow status by ID, name, or metadata with cursor-based pagination
 - Monitoring progress through lifecycle callbacks (`onWorkflowProgress`, `onWorkflowComplete`, `onWorkflowError`)
@@ -181,6 +181,8 @@ const result = await step.do(
 ### State synchronization
 
 A Workflow updates Agent state at key milestones using `step.updateAgentState()` or `step.mergeAgentState()`. These state changes broadcast to all connected clients, keeping UIs synchronized without polling.
+
+If a sub-agent started the workflow, `AgentWorkflow.agent` routes RPC and state updates back to that originating facet. It is RPC-only for sub-agent origins; use sub-agent HTTP/WebSocket routing for external `fetch()` traffic.
 
 ## Related resources
 

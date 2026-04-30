@@ -33,13 +33,13 @@ Human-in-the-Loop (HITL) workflows integrate human judgment and oversight into a
 
 The Agents SDK provides five patterns for human-in-the-loop. Choose based on your architecture:
 
-| Use Case | Pattern | Best For |
-| --- | --- | --- |
+| Use Case               | Pattern           | Best For                                                                  |
+| ---------------------- | ----------------- | ------------------------------------------------------------------------- |
 | Long-running workflows | Workflow Approval | Multi-step processes, durable approval gates that can wait hours or weeks |
-| AIChatAgent tools | `needsApproval` | Chat-based tool calls with server-side approval before execution |
-| Client-side tools | `onToolCall` | Tools that need browser APIs or user interaction before execution |
-| MCP servers | Elicitation | MCP tools requesting structured user input during execution |
-| Simple confirmations | State + WebSocket | Lightweight approval flows without AI chat or workflows |
+| AIChatAgent tools      | `needsApproval`   | Chat-based tool calls with server-side approval before execution          |
+| Client-side tools      | `onToolCall`      | Tools that need browser APIs or user interaction before execution         |
+| MCP servers            | Elicitation       | MCP tools requesting structured user input during execution               |
+| Simple confirmations   | State + WebSocket | Lightweight approval flows without AI chat or workflows                   |
 
 ### Decision tree
 
@@ -64,6 +64,8 @@ For durable, multi-step processes with approval gates that can wait hours, days,
 - `waitForApproval(step, { timeout })` — Pause workflow until approved
 - `approveWorkflow(workflowId, { reason?, metadata? })` — Approve a waiting workflow
 - `rejectWorkflow(workflowId, { reason? })` — Reject a waiting workflow
+
+If a sub-agent starts the workflow, approval and rejection are scoped to that sub-agent. Parent agents should resolve the child with `subAgent()` and call child-defined wrapper methods that run the workflow control methods inside the child.
 
 **Best for:** Expense approvals, content publishing pipelines, data export requests
 

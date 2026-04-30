@@ -88,6 +88,10 @@ class Agent {
 
 Returns a `SubAgentStub<T>` — a typed RPC stub where every user-defined method on `T` is available as a Promise-returning remote call.
 
+Sub-agents can start [Workflows](/agents/api-reference/run-workflows/) with `this.runWorkflow()`. Workflow tracking is local to the sub-agent's SQLite database, and `AgentWorkflow.agent` routes RPC, callbacks, state updates, and broadcasts back to the originating sub-agent. Parent agents do not automatically list or control child-started workflows. Because `SubAgentStub<T>` only exposes user-defined child methods, add child wrapper methods for controls such as `getWorkflow()`, `approveWorkflow()`, or `terminateWorkflow()`, then call those wrappers through `await this.subAgent(Child, name)`.
+
+For sub-agent workflow origins, `AgentWorkflow.agent` is RPC-only. Use it to call Agent methods, but use `routeSubAgentRequest()` or the nested `/agents/{parent}/{name}/sub/{child}/{name}` URL shape for external HTTP or WebSocket routing instead of `this.agent.fetch()`. If you pass `runWorkflow(..., { agentBinding })` from a sub-agent, use the root Agent binding name, not a child binding name.
+
 ### SubAgentStub
 
 The stub exposes all public instance methods you define on the child class. Methods inherited from `Agent` (lifecycle hooks, `setState`, `broadcast`, `sql`, and so on) are excluded — only your custom methods appear on the stub.
