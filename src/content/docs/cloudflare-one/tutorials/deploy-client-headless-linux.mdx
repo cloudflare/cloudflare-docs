@@ -38,7 +38,7 @@ Device enrollment permissions determine the users and devices that can register 
 
 To allow devices to enroll using a service token:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Team & Resources** > **Devices**. Select the **Management** tab.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Team & Resources** > **Devices**. Select the **Management** tab.
 2. In **Device enrollment permissions**, select **Manage**.
 3. In the **Policies** tab, select **Create new policy**. A new tab will open with the policy creation page.
 4. For **Action**, select _Service Auth_.
@@ -124,4 +124,4 @@ To install the Cloudflare One Client using the example script:
    sudo ./install_warp.sh
    ```
 
-The Cloudflare One Client is now deployed with the configuration parameters stored in `/var/lib/cloudflare-warp/mdm.xml`. Assuming [`auto_connect`](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/#auto_connect) is configured, the Cloudflare One Client will automatically connect to your Zero Trust organization. Once connected, the device will appear in [Cloudflare One](https://one.dash.cloudflare.com) under **Team & Resources** > **Devices** with the email `non_identity@<team-name>.cloudflareaccess.com`.
+The Cloudflare One Client is now deployed with the configuration parameters stored in `/var/lib/cloudflare-warp/mdm.xml`. Assuming [`auto_connect`](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/#auto_connect) is configured, the Cloudflare One Client will automatically connect to your Zero Trust organization. Once connected, the device will appear in the [Cloudflare dashboard](https://dash.cloudflare.com/) under **Zero Trust** > **Team & Resources** > **Devices** with the email `non_identity@<team-name>.cloudflareaccess.com`.
