@@ -57,7 +57,7 @@ Create a custom IP subnet when the [default IPv4 range](#default-device-ips) con
 
 To define a custom IPv4 subnet for device IPs:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Team & Resources** > **Devices** > **Device profiles**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Team & Resources** > **Devices** > **Device profiles**.
 2. Under **Device IP subnets**, select **Add new IP subnet**.
 3. Enter any name for the subnet.
 4. In **CIDR**, enter a valid IPv4 CIDR block from the supported private ranges:
@@ -88,7 +88,7 @@ Assign [custom IP subnets](#create-an-ip-subnet) to ensure devices are provision
 
 To assign IP subnets to your devices:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Team & Resources** > **Devices** > **Device profiles**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Team & Resources** > **Devices** > **Device profiles**.
 2. Under **Device IP profiles**, select **Add new IP profile**.
 3. Enter a name for this group of devices (for example, `IT department`).
 4. Create rules to define the users or devices that will receive these IPs. Learn more about the available [Selectors](#selectors), [Operators](#comparison-operators), and [Values](#value).
@@ -202,7 +202,7 @@ The Cloudflare One Client checks the IP profiles from top to bottom as they appe
 
 To check the virtual IP addresses assigned to a specific device registration:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Team & Resources** > **Devices**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Team & Resources** > **Devices**.
 2. Select your device > **View details**.
    :::tip[Device filters]
    The Cloudflare One dashboard defaults to showing devices that were last seen within the past year. You can select **Show filters** to change the date range or filter by the last active user.
@@ -221,7 +221,7 @@ Monitor the consumption of your IPv4 subnets to ensure you have enough addresses
 
 Use the Cloudflare One dashboard to view a high-level overview of assigned and available IPs:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Team & Resources** > **Devices** > **Device profiles**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Team & Resources** > **Devices** > **Device profiles**.
 2. Locate the **Device IP subnets** table.
 3. The **IPs assigned** column displays the total number of IPs currently assigned to active device registrations versus the total capacity of the CIDR block.
 
@@ -347,7 +347,7 @@ To get a list of all device registrations in a subnet (including revoked registr
 
 Cloudflare does not support editing an existing IPv4 subnet definition. To assign a different IPv4 subnet to your devices:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Team & Resources** > **Devices** > **Device profiles**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Team & Resources** > **Devices** > **Device profiles**.
 2. Under **Device IP profiles**, find the device group associated with the old subnet and select **Edit**.
 3. Select **Create new subnet IP range** to define a new subnet.
 4. Select **Save**.

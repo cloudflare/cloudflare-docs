@@ -56,7 +56,7 @@ Every time a new Cloudflare One Client version is released, you must repeat this
    1. [Create a `plist` file](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/#plist-file) with your desired deployment parameters.
    2. Upload your `plist` file to Jamf and select **Save**.
 6. (Recommended) Advanced security features require deploying a [user-side certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) so that devices can establish trust with Cloudflare when their traffic is inspected. To deploy a user-side certificate using Jamf:
-   1. In [Cloudflare One](https://one.dash.cloudflare.com/), [generate and activate](/cloudflare-one/team-and-resources/devices/user-side-certificates/#generate-a-cloudflare-root-certificate) a Cloudflare root certificate.
+   1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), [generate and activate](/cloudflare-one/team-and-resources/devices/user-side-certificates/#generate-a-cloudflare-root-certificate) a Cloudflare root certificate.
    2. [Download the Cloudflare root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/#download-a-cloudflare-root-certificate) in `.pem` format.
    3. [Convert](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/#convert-the-certificate) the certificate to `.cer` format.
    4. In your Jamf configuration profile, scroll down the **Options** list and select **Certificate** > **Configure**.
@@ -99,7 +99,7 @@ Per-app VPN is supported on Cloudflare One Agent version `1.8` or greater for iO
 
 Before proceeding with per-app VPN configuration, you must make sure [Auto connect](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#auto-connect) is disabled in Zero Trust. To disable Auto connect:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Team & Resources** > **Devices** > **Device profiles** > **General profiles**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Team & Resources** > **Devices** > **Device profiles** > **General profiles**.
 2. Select your device profile and select **Edit**.
 3. Turn off **Auto Connect**.
 
