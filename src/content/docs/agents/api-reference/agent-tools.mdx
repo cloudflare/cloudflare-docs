@@ -170,8 +170,6 @@ useAgent({
 
 Gate external access with the parent registry so guessed run IDs cannot spawn fresh child facets:
 
-<TypeScriptExample>
-
 ```ts
 override async onBeforeSubAgent(_request, child) {
 	if (!this.hasAgentToolRun(child.className, child.name)) {
@@ -179,8 +177,6 @@ override async onBeforeSubAgent(_request, child) {
 	}
 }
 ```
-
-</TypeScriptExample>
 
 ## Clear retained runs
 

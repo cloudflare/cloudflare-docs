@@ -875,20 +875,12 @@ beforeTurn(ctx: TurnContext) {
 Called before each AI SDK step in the agentic loop. Think forwards this hook to `streamText` as `prepareStep`, so it receives the AI SDK's full prepare-step context and can return per-step overrides. Use `beforeTurn` for turn-wide assembly and `beforeStep` when the decision depends on the step number or previous step results.
 
 ```ts
-beforeStep(ctx: PrepareStepContext): StepConfig | void | Promise<StepConfig | void>
-```
-
-<TypeScriptExample>
-
-```ts
 beforeStep(ctx: PrepareStepContext): StepConfig | void {
 	if (ctx.stepNumber > 0) {
 		return { activeTools: [] };
 	}
 }
 ```
-
-</TypeScriptExample>
 
 ### beforeToolCall
 
