@@ -5,7 +5,7 @@ description: Persistent conversation storage with tree-structured messages, cont
 tags:
   - AI
 sidebar:
-  order: 6
+  order: 18
 products:
   - agents
 ---
@@ -102,18 +102,18 @@ const session = new Session(new AgentSessionProvider(this), {
 
 All builder methods return `this` for chaining. Order does not matter — providers are resolved lazily on first use.
 
-| Method | Description |
-| ------ | ----------- |
-| `Session.create(agent)` | Static factory. `agent` is any object with a `sql` tagged template method (your Agent or Durable Object). |
-| `.forSession(sessionId)` | Namespace this session by ID. Required for multi-session isolation when not using `SessionManager`. |
-| `.withContext(label, options?)` | Add a context block. Refer to [Context blocks](#context-blocks). |
-| `.withCachedPrompt(provider?)` | Enable system prompt persistence. The prompt is frozen on first use and survives hibernation and eviction. |
-| `.onCompaction(fn)` | Register a compaction function. Refer to [Compaction](#compaction). |
-| `.compactAfter(tokenThreshold)` | Auto-compact when estimated token count exceeds the threshold. Requires `.onCompaction()`. |
+| Method                          | Description                                                                                                |
+| ------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `Session.create(agent)`         | Static factory. `agent` is any object with a `sql` tagged template method (your Agent or Durable Object).  |
+| `.forSession(sessionId)`        | Namespace this session by ID. Required for multi-session isolation when not using `SessionManager`.        |
+| `.withContext(label, options?)` | Add a context block. Refer to [Context blocks](#context-blocks).                                           |
+| `.withCachedPrompt(provider?)`  | Enable system prompt persistence. The prompt is frozen on first use and survives hibernation and eviction. |
+| `.onCompaction(fn)`             | Register a compaction function. Refer to [Compaction](#compaction).                                        |
+| `.compactAfter(tokenThreshold)` | Auto-compact when estimated token count exceeds the threshold. Requires `.onCompaction()`.                 |
 
 ## Messages
 
-Messages use the `SessionMessage` type — a minimal shape with `id`, `role`, `parts`, and optional `createdAt`. The Vercel AI SDK's `UIMessage` is structurally compatible and can be passed directly. The session stores messages in a tree structure via `parent_id`, enabling branching conversations.
+Messages use the `SessionMessage` type — a minimal shape with `id`, `role`, `parts`, and optional `createdAt`. The AI SDK's `UIMessage` is structurally compatible and can be passed directly. The session stores messages in a tree structure via `parent_id`, enabling branching conversations.
 
 <TypeScriptExample>
 
@@ -201,12 +201,12 @@ Context blocks are persistent key-value sections injected into the system prompt
 
 There are four provider types, detected by duck-typing:
 
-| Provider | Interface | Behavior | AI tool |
-| -------- | --------- | -------- | ------- |
-| **ContextProvider** | `get()` | Read-only block in system prompt | — |
-| **WritableContextProvider** | `get()` + `set()` | Writable via AI | `set_context` |
-| **SkillProvider** | `get()` + `load()` + `set?()` | On-demand keyed documents. `get()` returns a metadata listing; `load(key)` fetches full content. | `load_context`, `unload_context`, `set_context` |
-| **SearchProvider** | `get()` + `search()` + `set?()` | Full-text searchable entries. `get()` returns a summary; `search(query)` runs FTS5. | `search_context`, `set_context` |
+| Provider                    | Interface                       | Behavior                                                                                         | AI tool                                         |
+| --------------------------- | ------------------------------- | ------------------------------------------------------------------------------------------------ | ----------------------------------------------- |
+| **ContextProvider**         | `get()`                         | Read-only block in system prompt                                                                 | —                                               |
+| **WritableContextProvider** | `get()` + `set()`               | Writable via AI                                                                                  | `set_context`                                   |
+| **SkillProvider**           | `get()` + `load()` + `set?()`   | On-demand keyed documents. `get()` returns a metadata listing; `load(key)` fetches full content. | `load_context`, `unload_context`, `set_context` |
+| **SearchProvider**          | `get()` + `search()` + `set?()` | Full-text searchable entries. `get()` returns a summary; `search(query)` runs FTS5.              | `search_context`, `set_context`                 |
 
 ### Built-in providers
 
@@ -452,13 +452,13 @@ Context blocks, prompt caching, and compaction settings are propagated to all se
 
 ### Builder methods
 
-| Method | Description |
-| ------ | ----------- |
-| `SessionManager.create(agent)` | Static factory. |
-| `.withContext(label, options?)` | Add context block template for all sessions. |
-| `.withCachedPrompt(provider?)` | Enable prompt persistence for all sessions. |
-| `.onCompaction(fn)` | Register compaction function for all sessions. |
-| `.compactAfter(tokenThreshold)` | Auto-compact threshold for all sessions. |
+| Method                          | Description                                                                                             |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `SessionManager.create(agent)`  | Static factory.                                                                                         |
+| `.withContext(label, options?)` | Add context block template for all sessions.                                                            |
+| `.withCachedPrompt(provider?)`  | Enable prompt persistence for all sessions.                                                             |
+| `.onCompaction(fn)`             | Register compaction function for all sessions.                                                          |
+| `.compactAfter(tokenThreshold)` | Auto-compact threshold for all sessions.                                                                |
 | `.withSearchableHistory(label)` | Add a cross-session searchable history block. The model can search past conversations from any session. |
 
 ### Session lifecycle
@@ -593,7 +593,8 @@ const myWritable: WritableContextProvider = {
 const mySkills: SkillProvider = {
 	get: async () => "- api-ref: API Reference\n- guide: User Guide",
 	load: async (key) => fetchDocument(key),
-	set: async (key, content, description) => saveDocument(key, content, description),
+	set: async (key, content, description) =>
+		saveDocument(key, content, description),
 };
 
 // Search provider (enables search_context tool)
@@ -612,18 +613,42 @@ You can also implement `SessionProvider` to replace the SQLite storage entirely:
 
 ```ts
 const myStorage: SessionProvider = {
-	getMessage(id) { /* ... */ },
-	getHistory(leafId?) { /* ... */ },
-	getLatestLeaf() { /* ... */ },
-	getBranches(messageId) { /* ... */ },
-	getPathLength(leafId?) { /* ... */ },
-	appendMessage(message, parentId?) { /* ... */ },
-	updateMessage(message) { /* ... */ },
-	deleteMessages(messageIds) { /* ... */ },
-	clearMessages() { /* ... */ },
-	addCompaction(summary, fromId, toId) { /* ... */ },
-	getCompactions() { /* ... */ },
-	searchMessages(query, limit) { /* ... */ },
+	getMessage(id) {
+		/* ... */
+	},
+	getHistory(leafId?) {
+		/* ... */
+	},
+	getLatestLeaf() {
+		/* ... */
+	},
+	getBranches(messageId) {
+		/* ... */
+	},
+	getPathLength(leafId?) {
+		/* ... */
+	},
+	appendMessage(message, parentId?) {
+		/* ... */
+	},
+	updateMessage(message) {
+		/* ... */
+	},
+	deleteMessages(messageIds) {
+		/* ... */
+	},
+	clearMessages() {
+		/* ... */
+	},
+	addCompaction(summary, fromId, toId) {
+		/* ... */
+	},
+	getCompactions() {
+		/* ... */
+	},
+	searchMessages(query, limit) {
+		/* ... */
+	},
 };
 ```
 
@@ -633,14 +658,14 @@ const myStorage: SessionProvider = {
 
 All storage is in Durable Object SQLite. Tables are created lazily on first use.
 
-| Table | Purpose |
-| ----- | ------- |
-| `assistant_messages` | Tree-structured messages with `id`, `session_id`, `parent_id`, `role`, `content` (JSON), `created_at` |
-| `assistant_compactions` | Compaction overlays with `summary`, `from_message_id`, `to_message_id` |
-| `assistant_fts` | FTS5 virtual table for message search (porter stemming, unicode tokenization) |
-| `assistant_sessions` | Session registry (SessionManager only) with `name`, `parent_session_id`, `model`, `source`, token/cost counters |
-| `cf_agents_context_blocks` | Persistent context block storage (`AgentContextProvider`) |
-| `cf_agents_search_entries` / `cf_agents_search_fts` | Searchable context entries and FTS5 index (`AgentSearchProvider`) |
+| Table                                               | Purpose                                                                                                         |
+| --------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `assistant_messages`                                | Tree-structured messages with `id`, `session_id`, `parent_id`, `role`, `content` (JSON), `created_at`           |
+| `assistant_compactions`                             | Compaction overlays with `summary`, `from_message_id`, `to_message_id`                                          |
+| `assistant_fts`                                     | FTS5 virtual table for message search (porter stemming, unicode tokenization)                                   |
+| `assistant_sessions`                                | Session registry (SessionManager only) with `name`, `parent_session_id`, `model`, `source`, token/cost counters |
+| `cf_agents_context_blocks`                          | Persistent context block storage (`AgentContextProvider`)                                                       |
+| `cf_agents_search_entries` / `cf_agents_search_fts` | Searchable context entries and FTS5 index (`AgentSearchProvider`)                                               |
 
 ## Acknowledgments
 

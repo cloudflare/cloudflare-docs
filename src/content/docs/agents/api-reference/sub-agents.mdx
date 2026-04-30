@@ -5,7 +5,7 @@ description: Spawn child agents with isolated storage and typed RPC using subAge
 tags:
   - AI
 sidebar:
-  order: 5
+  order: 15
 products:
   - agents
 ---
@@ -492,11 +492,11 @@ Sub-agents can schedule their own callbacks and run durable fibers:
 | `this.sql`                              | Works normally and points at the child's own SQLite database               |
 | `subAgent()`                            | Works, so sub-agents can spawn their own children                          |
 
-The top-level parent still owns the physical Durable Object alarm because facets do not have independent alarm slots. The Agents SDK stores the child owner path with each schedule row, wakes the parent, and routes the callback back into the child. `runFiber()` uses the same pattern: fiber rows and snapshots live in the child's own SQLite database, while the parent keeps a small root-side index so alarm housekeeping can route recovery checks back into idle children.
+The top-level parent still owns the physical Durable Object alarm because facets do not have independent alarm slots. The Agents SDK records which child owns each scheduled callback or recovery check, wakes the parent, and routes the work back into the child. The callback still runs with the sub-agent as `this`, so it uses the child's state, SQLite storage, and `getCurrentAgent()` context.
 
 The older synchronous `getSchedule()` and `getSchedules()` APIs throw inside sub-agents because scheduled rows are stored on the top-level parent. Use `getScheduleById()` and `listSchedules()` instead.
 
-Calling `this.destroy()` inside a sub-agent delegates cleanup to the parent. The parent cancels that sub-agent's parent-owned schedules, removes descendant fiber recovery leases, removes the registry row, and asks the runtime to wipe the child storage. Treat `this.destroy()` as fire-and-forget because the underlying facet deletion can abort the sub-agent isolate before the method returns cleanly.
+Calling `this.destroy()` inside a sub-agent delegates cleanup to the parent. The parent cancels that sub-agent's schedules, removes recovery metadata for the sub-agent and its descendants, removes the registry entry, and asks the runtime to wipe the child storage. Treat `this.destroy()` as fire-and-forget because deleting the sub-agent can abort its isolate before the method returns cleanly.
 
 ## Example
 

@@ -12,6 +12,14 @@ products:
 
 Build agents that persist for days, weeks, or months — surviving restarts, waking on demand, and managing work that spans far longer than any single request.
 
+The short version:
+
+- Agents are durable identities, not always-on processes.
+- State, SQL data, schedules, and fiber checkpoints survive hibernation and restarts.
+- In-memory variables, timers, open fetches, and local closures do not survive eviction.
+- Use `keepAlive()` for active work measured in minutes, `runFiber()` when work needs recovery, and Workflows for heavyweight multi-step jobs.
+- Use sub-agents when one parent coordinates many long-lived child contexts.
+
 ## Why Cloudflare for long-running agents
 
 Agents spend most of their time waiting. Waiting for user input (seconds to days), LLM responses (seconds to minutes), tool results (seconds to hours), human approvals (hours to days), or scheduled wake-ups (minutes to months). On a traditional VM or container, you pay for all that idle time. An agent that is 99% dormant and 1% active still costs you 100% of a server.

@@ -1423,7 +1423,7 @@ export class ChatAgent extends AIChatAgent {
 
 </TypeScriptExample>
 
-### Subagent delegation
+### In-process subagent delegation
 
 :::note
 
@@ -1485,7 +1485,7 @@ export class ChatAgent extends AIChatAgent {
 The research agent runs in its own context — its token budget is separate from the orchestrator's. Only the summary goes back to the parent model.
 
 :::note
-`ToolLoopAgent` is best suited for subagents, not as a replacement for `streamText` in `onChatMessage` itself. The main `onChatMessage` benefits from direct access to `this.env`, `this.messages`, and `options.body` — things that a pre-configured `ToolLoopAgent` instance cannot reference.
+`ToolLoopAgent` is best suited for in-process subagents, not as a replacement for `streamText` in `onChatMessage` itself. The main `onChatMessage` benefits from direct access to `this.env`, `this.messages`, and `options.body` — things that a pre-configured `ToolLoopAgent` instance cannot reference.
 :::
 
 #### Streaming progress with preliminary results

@@ -5,7 +5,7 @@ description: Opinionated chat agent framework with built-in tools, persistent me
 tags:
   - AI
 sidebar:
-  order: 7
+  order: 17
 products:
   - agents
 ---
@@ -1031,7 +1031,7 @@ Handle approvals on the client with `onToolCall`:
 <TypeScriptExample>
 
 ```ts
-const { messages, sendMessage, addToolResult } = useAgentChat({
+useAgentChat({
 	agent,
 	onToolCall: ({ toolCall }) => {
 		if (toolCall.toolName === "read") {
@@ -1052,13 +1052,13 @@ After a client tool result is received, Think automatically continues the conver
 
 The `messageConcurrency` property controls how overlapping user submits behave when a chat turn is already active.
 
-| Strategy                                        | Behavior                                                                              |
-| ----------------------------------------------- | ------------------------------------------------------------------------------------- |
-| `"queue"`                                       | Queue every submit and process them in order. Default.                                |
-| `"latest"`                                      | Keep only the latest overlapping submit.                                              |
-| `"merge"`                                       | All overlapping user messages remain in history; the model sees them all in one turn. |
-| `"drop"`                                        | Ignore overlapping submits entirely. Messages are not persisted.                      |
-| `{ strategy: "debounce", debounceMs?: number }` | Trailing-edge latest with a quiet window (default 750ms).                             |
+| Strategy                                        | Behavior                                                                                                                            |
+| ----------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `"queue"`                                       | Queue every submit and process them in order. Default.                                                                              |
+| `"latest"`                                      | Keep only the latest overlapping submission; superseded submissions still persist their user messages but do not start a model turn |
+| `"merge"`                                       | Queue overlapping submissions, then collapse their trailing user messages into one combined turn before the latest queued turn runs |
+| `"drop"`                                        | Ignore overlapping submits entirely. Messages are not persisted.                                                                    |
+| `{ strategy: "debounce", debounceMs?: number }` | Trailing-edge latest with a quiet window (default 750ms).                                                                           |
 
 <TypeScriptExample>
 
@@ -1422,7 +1422,7 @@ if (stable) {
 | Package                | Required | Notes                   |
 | ---------------------- | -------- | ----------------------- |
 | `agents`               | yes      | Cloudflare Agents SDK   |
-| `ai`                   | yes      | Vercel AI SDK v6        |
+| `ai`                   | yes      | AI SDK v6               |
 | `zod`                  | yes      | Schema validation (v4)  |
 | `@cloudflare/shell`    | yes      | Workspace filesystem    |
 | `@cloudflare/codemode` | optional | For `createExecuteTool` |

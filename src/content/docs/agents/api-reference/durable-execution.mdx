@@ -150,13 +150,13 @@ type FiberRecoveryContext = {
 
 ```txt
 runFiber("work", fn)
-  ├─ INSERT row into cf_agents_runs
+  ├─ Persist recovery metadata
   ├─ keepAlive() — heartbeat starts
   ├─ Execute fn(ctx)
-  │    ├─ ctx.stash(data) → UPDATE snapshot in SQLite
-  │    ├─ ctx.stash(data) → UPDATE snapshot in SQLite
+  │    ├─ ctx.stash(data) → persist snapshot
+  │    ├─ ctx.stash(data) → persist snapshot
   │    └─ return result
-  ├─ DELETE row from cf_agents_runs
+  ├─ Delete recovery metadata
   ├─ keepAlive dispose — heartbeat stops
   └─ Return result to caller
 ```
@@ -172,12 +172,12 @@ runFiber("work", fn)
   ├─ Persisted alarm fires → housekeeping check                   [fallback path]
 
   Recovery:
-  ├─ SELECT * FROM cf_agents_runs
-  ├─ For each orphaned row:
+  ├─ Load interrupted fibers from storage
+  ├─ For each interrupted fiber:
   │    ├─ Parse snapshot from JSON
   │    ├─ Call onFiberRecovered(ctx)
-  │    └─ DELETE the row
-  └─ If onFiberRecovered calls runFiber() again → new row, normal execution
+  │    └─ Delete recovery metadata
+  └─ If onFiberRecovered calls runFiber() again → new fiber, normal execution
 ```
 
 Both recovery paths call the same hook. The alarm path is critical for background agents that have no incoming client connections — the persisted alarm wakes the agent on its own.
@@ -186,7 +186,7 @@ Both recovery paths call the same hook. The alarm path is critical for backgroun
 
 Fibers also work inside sub-agents. The fiber row and snapshots are stored in the sub-agent's own SQLite database, and `onFiberRecovered()` runs with the sub-agent as `this`.
 
-Sub-agents do not have independent alarm slots, so the top-level parent owns the physical heartbeat. When a sub-agent starts a fiber, the parent stores a small root-side index entry for that facet and fiber ID. Root alarm housekeeping uses that index to route recovery checks back into the owning sub-agent, even if the child has no client connection or incoming RPC.
+Sub-agents do not have independent alarm slots, so the top-level parent owns the physical heartbeat. When a sub-agent starts a fiber, the parent tracks enough metadata to route recovery checks back into the owning sub-agent, even if the child has no client connection or incoming RPC.
 
 This keeps recovery local to the child while preserving the single physical alarm slot owned by the parent. A recovered continuation can use `schedule()` from inside the facet; the parent owns the physical alarm and routes the callback back to the child.
 
