@@ -2485,16 +2485,16 @@
 			}
 		},
 		"shared_dictionaries": {
-			"title": "Shared dictionaries (beta)",
+			"title": "Shared dictionaries",
 			"link": "/speed/optimization/content/shared-dictionaries/",
 			"properties": {
 				"availability": {
 					"title": "Availability",
-					"summary": "Available on all plans",
-					"free": "Yes",
-					"pro": "Yes",
-					"biz": "Yes",
-					"ent": "Yes"
+					"summary": "Available on all plans (beta)",
+					"free": "Yes (beta)",
+					"pro": "Yes (beta)",
+					"biz": "Yes (beta)",
+					"ent": "Yes (beta)"
 				}
 			}
 		},
