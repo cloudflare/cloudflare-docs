@@ -15,7 +15,7 @@ import { CURL } from "~/components";
 In passthrough mode, Cloudflare:
 
 - Forwards the `Use-As-Dictionary` and `Available-Dictionary` headers between client and origin without modification.
-- Treats `dcb` (delta Brotli) and `dcz` (delta Zstandard) as valid `Content-Encoding` values end to end, without recompressing them.
+- Treats `dcb` (Dictionary-Compressed Brotli) and `dcz` (Dictionary-Compressed Zstandard) as valid `Content-Encoding` values end to end, without recompressing them.
 - Extends the cache key to vary on `Available-Dictionary` and `Accept-Encoding` so each delta-compressed variant is cached correctly.
 
 Your origin manages the dictionary lifecycle: deciding which assets are dictionaries, attaching `Use-As-Dictionary` headers, and producing deltas in response to `Available-Dictionary` requests. Cloudflare handles the transport and the cache.
