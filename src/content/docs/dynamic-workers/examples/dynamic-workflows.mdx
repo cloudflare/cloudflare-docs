@@ -24,9 +24,9 @@ For example, you might be building:
   between tool calls, and wait for human approval.
 - A **multi-tenant job system** where each customer submits their own processing logic -- data transforms, webhook chains, scheduled tasks -- and you want every step to persist progress and retry on failure without building your own orchestrator.
 
-The dynamic-workflows library connects your Worker Loader to the Workflows engine so that each Dynamic Worker gets the full power of durable steps (step.do(), step.sleep(), step.waitForEvent()) without you having to build the plumbing yourself.
+The `@cloudflare/dynamic-workflows` library connects your Worker Loader to the Workflows engine so that each Dynamic Worker gets the full power of durable steps (`step.do()`, `step.sleep()`, `step.waitForEvent()`) without you having to build the plumbing yourself.
 
-In this guide, you will use the dynamic-workflows library to set up a Worker Loader, write a Dynamic Worker with durable steps, and trigger a Workflow instance.
+In this guide, you will use the `@cloudflare/dynamic-workflows` library to set up a Worker Loader, write a Dynamic Worker with durable steps, and trigger a Workflow instance.
 
 ## Understand the model
 
@@ -54,7 +54,7 @@ The library provides two functions that handle the wiring between the Worker Loa
 
 The library handles the wiring between the Worker Loader and the Workflows engine, so you do not have to manually tag requests, parse payloads, or write your own `WorkflowEntrypoint` subclass.
 
-<PackageManagers pkg="dynamic-workflows" type="add" />
+<PackageManagers pkg="@cloudflare/dynamic-workflows" type="add" />
 
 ## Configure your Worker Loader
 
@@ -102,7 +102,7 @@ import {
 	DynamicWorkflowBinding,
 	wrapWorkflowBinding,
 	type WorkflowRunner,
-} from "dynamic-workflows";
+} from "@cloudflare/dynamic-workflows";
 
 // Required: re-exporting puts the class on cloudflare:workers exports,
 // which is how wrapWorkflowBinding builds per-tenant RPC stubs.
@@ -207,7 +207,7 @@ curl "http://localhost:8787/api/status?instanceId=YOUR_INSTANCE_ID"
 
 ## Related resources
 
-- [`dynamic-workflows` on GitHub](https://github.com/cloudflare/dynamic-workflows)
+- [`@cloudflare/dynamic-workflows` on GitHub](https://github.com/cloudflare/dynamic-workflows)
 - [Workers API](/workflows/build/workers-api/)
 - [Trigger Workflows](/workflows/build/trigger-workflows/)
 - [Events and parameters](/workflows/build/events-and-parameters/)
