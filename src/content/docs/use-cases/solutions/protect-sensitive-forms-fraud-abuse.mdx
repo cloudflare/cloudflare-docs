@@ -54,7 +54,7 @@ Server-side validation is required. The client-side widget alone does not protec
 Call the Siteverify API before processing any form submission:
 
 ```js title="server.js"
-const SECRET_KEY = "your-secret-key";
+const SECRET_KEY = "<YOUR-SECRET-KEY>";
 
 async function validateTurnstile(token, remoteip) {
   try {
