@@ -107,10 +107,10 @@ inference = response.json()
 code = inference["result"]["response"]
 
 display(Markdown(f"""
-```python
-{prompt}
-{code.strip()}
-```
+    ```python
+    {prompt}
+    {code.strip()}
+    ```
 """))
 ````
 
@@ -265,9 +265,9 @@ response = requests.post(
 inference = response.json()
 response = inference["result"]["response"]
 display(Markdown(f"""
-```python
-{response.strip()}
-```
+    ```python
+    {response.strip()}
+    ```
 """))
 
 ````
@@ -338,9 +338,9 @@ response = requests.post(
 inference = response.json()
 response = inference["result"]["response"]
 display(Markdown(f"""
-```json
-{response.strip()}
-```
+    ```json
+    {response.strip()}
+    ```
 """))
 ````
 
