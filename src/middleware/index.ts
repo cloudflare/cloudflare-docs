@@ -24,7 +24,9 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
 		if (SCHEMA_FILE_RE.test(pathname)) {
 			const r2Key = `${AI_MODEL_SCHEMA_R2_PREFIX}${pathname}`;
-			return fetch(`${MIDDLECACHE_BASE}${r2Key}`);
+			return fetch(`${MIDDLECACHE_BASE}${r2Key}`, {
+				headers: { "accept-encoding": "identity" },
+			});
 		}
 	}
 
