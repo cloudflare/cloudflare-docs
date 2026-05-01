@@ -60,6 +60,7 @@
 /cloudflare-wan/zero-trust/warp/ /cloudflare-wan/zero-trust/cloudflare-one-client/ 301
 /cloudflare-one/networks/connectors/cloudflare-wan/zero-trust/warp/ /cloudflare-one/networks/connectors/cloudflare-wan/zero-trust/cloudflare-one-client/ 301
 /workers/runtime-apis/bindings/worker-loader/ /dynamic-workers/ 301
+/dynamic-workers/examples/dynamic-workflows/ /dynamic-workers/usage/dynamic-workflows/ 301
 /docs/ /directory/ 301
 /support/ai/ / 301
 /products/ /directory/ 301
