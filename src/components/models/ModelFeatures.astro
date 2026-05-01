@@ -1,0 +1,199 @@
+---
+import type { ResolvedModel } from "~/util/model-types";
+
+interface Props {
+	model: ResolvedModel;
+}
+
+const { model } = Astro.props;
+
+// Build a keyed map from the properties array
+const properties: Record<string, unknown> = {};
+for (const property of model.properties) {
+	properties[property.property_id] = property.value;
+}
+
+const hasProperties = Object.keys(properties).length > 0;
+
+// Number formatters — use fixed locale for deterministic SSG output
+const nf = new Intl.NumberFormat("en-US");
+const currencyFormatter = new Intl.NumberFormat("en-US", {
+	style: "currency",
+	currency: "USD",
+	maximumFractionDigits: 10,
+});
+
+// Deprecation date
+const deprecationDate = properties.planned_deprecation_date
+	? new Date(String(properties.planned_deprecation_date))
+	: null;
+const isDeprecated =
+	deprecationDate != null && Date.now() > deprecationDate.getTime();
+const deprecationLabel = isDeprecated ? "Deprecated" : "Planned Deprecation";
+const deprecationFormatted =
+	deprecationDate?.toLocaleDateString("en-US") ?? null;
+
+// Pricing for unit-priced models
+type PriceEntry = { price: number; unit: string };
+const priceEntries = Array.isArray(properties.price)
+	? (properties.price as PriceEntry[])
+	: [];
+const priceFormatted =
+	priceEntries.length > 0
+		? priceEntries
+				.map((p) => `${currencyFormatter.format(p.price)} ${p.unit}`)
+				.join(", ")
+		: null;
+
+// Dashboard deep link for catalog models
+const dashPricingUrl =
+	model.dataSource === "catalog"
+		? `https://dash.cloudflare.com/?to=/:account/ai/models/${model.modelId}`
+		: null;
+---
+
+{
+	hasProperties && (
+		<table>
+			<thead>
+				<tr>
+					<th>Model Info</th>
+					<th />
+				</tr>
+			</thead>
+			<tbody>
+				{deprecationFormatted && (
+					<tr>
+						<td>{deprecationLabel}</td>
+						<td>{deprecationFormatted}</td>
+					</tr>
+				)}
+				{properties.context_window && (
+					<tr>
+						<td>
+							Context Window{" "}
+							<a href="/workers-ai/glossary/" class="external-link">
+								↗
+							</a>
+						</td>
+						<td>{nf.format(Number(properties.context_window))} tokens</td>
+					</tr>
+				)}
+				{properties.terms && (
+					<tr>
+						<td>Terms and License</td>
+						<td>
+							<a
+								href={String(properties.terms)}
+								target="_blank"
+								class="external-link"
+							>
+								link ↗
+							</a>
+						</td>
+					</tr>
+				)}
+				{properties.info && (
+					<tr>
+						<td>More information</td>
+						<td>
+							<a
+								href={String(properties.info)}
+								target="_blank"
+								class="external-link"
+							>
+								link ↗
+							</a>
+						</td>
+					</tr>
+				)}
+				{properties.max_input_tokens && (
+					<tr>
+						<td>Maximum Input Tokens</td>
+						<td>{nf.format(Number(properties.max_input_tokens))}</td>
+					</tr>
+				)}
+				{properties.output_dimensions && (
+					<tr>
+						<td>Output Dimensions</td>
+						<td>{nf.format(Number(properties.output_dimensions))}</td>
+					</tr>
+				)}
+				{properties.function_calling && (
+					<tr>
+						<td>
+							Function calling{" "}
+							<a href="/workers-ai/function-calling" class="external-link">
+								↗
+							</a>
+						</td>
+						<td>Yes</td>
+					</tr>
+				)}
+				{properties.reasoning && (
+					<tr>
+						<td>Reasoning</td>
+						<td>Yes</td>
+					</tr>
+				)}
+				{properties.vision && (
+					<tr>
+						<td>Vision</td>
+						<td>Yes</td>
+					</tr>
+				)}
+				{properties.lora && (
+					<tr>
+						<td>LoRA</td>
+						<td>Yes</td>
+					</tr>
+				)}
+				{properties.beta && (
+					<tr>
+						<td>Beta</td>
+						<td>Yes</td>
+					</tr>
+				)}
+				{properties.async_queue && (
+					<tr>
+						<td>Batch</td>
+						<td>Yes</td>
+					</tr>
+				)}
+				{properties.partner && (
+					<tr>
+						<td>Partner</td>
+						<td>Yes</td>
+					</tr>
+				)}
+				{properties.realtime && (
+					<tr>
+						<td>Real-time</td>
+						<td>Yes</td>
+					</tr>
+				)}
+				{priceFormatted && (
+					<tr>
+						<td>Unit Pricing</td>
+						<td>{priceFormatted}</td>
+					</tr>
+				)}
+				{dashPricingUrl && (
+					<tr>
+						<td>Pricing</td>
+						<td>
+							<a
+								href={dashPricingUrl}
+								target="_blank"
+								rel="noreferrer"
+								class="external-link"
+							>
+								View pricing in the Cloudflare dashboard ↗
+							</a>
+						</td>
+					</tr>
+				)}
+			</tbody>
+		</table>
+	)
+}
