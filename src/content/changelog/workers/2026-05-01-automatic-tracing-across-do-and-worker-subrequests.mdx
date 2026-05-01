@@ -3,7 +3,7 @@ title: Automatic tracing across Durable Object and Worker subrequests
 description: Traces now propagate across service binding and Durable Object calls, producing a single unified trace instead of separate disconnected traces.
 products:
   - workers
-date: 2026-04-27
+date: 2026-05-01
 ---
 
 You can now get a single unified trace across Worker-to-Worker subrequests, with trace context propagating automatically. Previously, [automatic tracing](/workers/observability/traces/) produced disconnected traces when a Worker called another Worker through a [service binding](/workers/runtime-apis/bindings/service-bindings/) or [Durable Object](/durable-objects/).
