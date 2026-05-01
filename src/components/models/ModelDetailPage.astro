@@ -7,8 +7,7 @@ import { LinkButton, Tabs, TabItem, Code, Aside, Badge } from "~/components";
 import ModelInfo from "~/components/models/ModelInfo.tsx";
 import ModelFeatures from "~/components/models/ModelFeatures.tsx";
 import SchemaDisplay from "~/components/models/SchemaDisplay.astro";
-import SchemaVariantTabs from "~/components/models/SchemaVariantTabs.tsx";
-import { getTopLevelVariants } from "~/util/model-schema";
+import SchemaDisplayLazy from "~/components/models/SchemaDisplayLazy.tsx";
 import ExampleCard from "~/components/models/ExampleCard.astro";
 import CopyableCode from "~/components/models/CopyableCode.astro";
 
@@ -183,10 +182,36 @@ const hasSupportedLanguages = model.name === "@cf/deepgram/nova-3";
 const hasSchema =
 	model.schema.input && Object.keys(model.schema.input).length > 0;
 
-// Schema files for the "API Schemas (Raw)" section. Populated from
-// schema_manifest in detail.json — no schema content needed at build time.
+// Schema files populated from schema_manifest in detail.json.
+// Used for both "API Schemas (Raw)" download links and lazy Parameters rendering.
 const hasSchemaFiles =
 	model.schemaFiles != null && model.schemaFiles.length > 0;
+
+// Parameters section is shown when we have schema content (build-time) OR
+// schema file URLs (lazy client-side fetch).
+const hasParameters = hasSchema || hasSchemaFiles;
+
+// For lazy loading, derive input/output schema URLs from schemaFiles.
+// We show the primary input + output for the Parameters section.
+// For multi-mode models (sync/streaming/batch), use sync-input/output as the primary.
+// For flat models, use schema-input/output.
+const inputSchemaFile = model.schemaFiles?.find((f) =>
+	f.endsWith("sync-input.json") || f.endsWith("schema-input.json")
+) ?? model.schemaFiles?.[0];
+const outputSchemaFile = model.schemaFiles?.find((f) =>
+	f.endsWith("sync-output.json") || f.endsWith("schema-output.json")
+) ?? model.schemaFiles?.[1];
+
+// schemaFiles stores full R2 paths; the worker proxies them at the URL path segment
+// e.g. "v1/workers-ai-model-catalog/workers-ai/models/llama/sync-input.json"
+//   → URL: "/workers-ai/models/llama/sync-input.json"
+function r2PathToUrl(r2Path: string | undefined): string | undefined {
+	if (!r2Path) return undefined;
+	// Strip the "v1/workers-ai-model-catalog" prefix to get the proxied URL path
+	return r2Path.replace(/^v1\/workers-ai-model-catalog/, "");
+}
+const inputSchemaUrl = r2PathToUrl(inputSchemaFile);
+const outputSchemaUrl = r2PathToUrl(outputSchemaFile);
 
 // Derive a human-readable label from a schema filename.
 // e.g. "sync-input.json" → "Synchronous · Input"
@@ -236,7 +261,7 @@ const starlightPageProps = {
 		hasRemainingExamples
 			? { depth: 2, slug: "Examples", text: "Examples" }
 			: false,
-		hasSchema ? { depth: 2, slug: "Parameters", text: "Parameters" } : false,
+		hasParameters ? { depth: 2, slug: "Parameters", text: "Parameters" } : false,
 		hasSchemaFiles ? { depth: 2, slug: "API-Schemas", text: "API Schemas (Raw)" } : false,
 	].filter((v) => Boolean(v)) as MarkdownHeading[],
 	hideTitle: true,
@@ -419,33 +444,54 @@ const starlightPageProps = {
 	}
 
 	{
-		hasSchema && model.apiModes && model.apiModes.length > 1 ? (
-			<>
-				<h2 id="Parameters">Parameters</h2>
+		hasParameters && (
+			hasSchema && model.apiModes && model.apiModes.length > 1 ? (
+				<>
+					<h2 id="Parameters">Parameters</h2>
 
-				{/*
-				 * Render input schema once (shared across all modes), then
-				 * render per-mode output sections. This avoids duplicating the
-				 * processed SchemaRowData tree in the HTML for every mode.
-				 *
-				 * Sync and streaming always share the same input; batch may differ.
-				 * We detect shared input by comparing JSON serialisation.
-				 */}
-				{(() => {
-					// Detect which modes share the same input as the first mode
-					const firstInputJson = JSON.stringify(model.apiModes[0].input);
-					const allInputsIdentical = model.apiModes.every(
-						(mode) => JSON.stringify(mode.input) === firstInputJson,
-					);
+					{/*
+					 * Render input schema once (shared across all modes), then
+					 * render per-mode output sections. This avoids duplicating the
+					 * processed SchemaRowData tree in the HTML for every mode.
+					 *
+					 * Sync and streaming always share the same input; batch may differ.
+					 * We detect shared input by comparing JSON serialisation.
+					 */}
+					{(() => {
+						// Detect which modes share the same input as the first mode
+						const firstInputJson = JSON.stringify(model.apiModes[0].input);
+						const allInputsIdentical = model.apiModes.every(
+							(mode) => JSON.stringify(mode.input) === firstInputJson,
+						);
 
-					return allInputsIdentical ? (
-						<>
-							{/* Input rendered once */}
-							<h3 class="mt-4! mb-2! text-base font-semibold">Input</h3>
-							<SchemaDisplay schema={model.apiModes[0].input} title="Input" />
+						return allInputsIdentical ? (
+							<>
+								{/* Input rendered once */}
+								<h3 class="mt-4! mb-2! text-base font-semibold">Input</h3>
+								<SchemaDisplay schema={model.apiModes[0].input} title="Input" />
 
-							{/* Output per mode */}
-							<h3 class="mt-6! mb-2! text-base font-semibold">Output</h3>
+								{/* Output per mode */}
+								<h3 class="mt-6! mb-2! text-base font-semibold">Output</h3>
+								<div class="space-y-3">
+									{model.apiModes.map((mode) => (
+										<details class="group rounded-lg border border-gray-200 p-0 py-3 dark:border-gray-700">
+											<summary class="cursor-pointer px-8 font-medium text-gray-900 dark:text-gray-100">
+												<span>{mode.name}</span>
+												{mode.description && (
+													<span class="text-sm font-normal text-gray-500 dark:text-gray-400">
+														— {mode.description}
+													</span>
+												)}
+											</summary>
+											<div class="border-t border-gray-200 p-4 pb-1 dark:border-gray-700">
+												<SchemaDisplay schema={mode.output} title="Output" />
+											</div>
+										</details>
+									))}
+								</div>
+							</>
+						) : (
+							/* Inputs differ (e.g. batch has different input) — show per-mode tabs */
 							<div class="space-y-3">
 								{model.apiModes.map((mode) => (
 									<details class="group rounded-lg border border-gray-200 p-0 py-3 dark:border-gray-700">
@@ -458,43 +504,22 @@ const starlightPageProps = {
 											)}
 										</summary>
 										<div class="border-t border-gray-200 p-4 pb-1 dark:border-gray-700">
-											<SchemaDisplay schema={mode.output} title="Output" />
+											<Tabs syncKey={`schema-${mode.id}`}>
+												<TabItem label="Input">
+													<SchemaDisplay schema={mode.input} title="Input" />
+												</TabItem>
+												<TabItem label="Output">
+													<SchemaDisplay schema={mode.output} title="Output" />
+												</TabItem>
+											</Tabs>
 										</div>
 									</details>
 								))}
 							</div>
-						</>
-					) : (
-						/* Inputs differ (e.g. batch has different input) — show per-mode tabs */
-						<div class="space-y-3">
-							{model.apiModes.map((mode) => (
-								<details class="group rounded-lg border border-gray-200 p-0 py-3 dark:border-gray-700">
-									<summary class="cursor-pointer px-8 font-medium text-gray-900 dark:text-gray-100">
-										<span>{mode.name}</span>
-										{mode.description && (
-											<span class="text-sm font-normal text-gray-500 dark:text-gray-400">
-												— {mode.description}
-											</span>
-										)}
-									</summary>
-									<div class="border-t border-gray-200 p-4 pb-1 dark:border-gray-700">
-										<Tabs syncKey={`schema-${mode.id}`}>
-											<TabItem label="Input">
-												<SchemaDisplay schema={mode.input} title="Input" />
-											</TabItem>
-											<TabItem label="Output">
-												<SchemaDisplay schema={mode.output} title="Output" />
-											</TabItem>
-										</Tabs>
-									</div>
-								</details>
-							))}
-						</div>
-					);
-				})()}
-			</>
-		) : (
-			hasSchema && (
+						);
+					})()}
+				</>
+			) : hasSchema ? (
 				<>
 					<h2 id="Parameters">Parameters</h2>
 					{(() => {
@@ -605,6 +630,37 @@ const starlightPageProps = {
 								</p>
 							) : (
 								<SchemaDisplay schema={model.schema.output} title="Output" />
+							)}
+						</TabItem>
+					</Tabs>
+				</>
+			) : (
+				/* Lazy: fetch schema from R2 via worker proxy when user scrolls to section */
+				<>
+					<h2 id="Parameters">Parameters</h2>
+					<Tabs syncKey="schema-tab">
+						<TabItem label="Input">
+							{inputSchemaUrl ? (
+								<SchemaDisplayLazy
+									url={inputSchemaUrl}
+									title="Input"
+									schemaId={`${model.modelId}-input`}
+									client:visible
+								/>
+							) : (
+								<p class="text-sm text-gray-400">No input schema available.</p>
+							)}
+						</TabItem>
+						<TabItem label="Output">
+							{outputSchemaUrl ? (
+								<SchemaDisplayLazy
+									url={outputSchemaUrl}
+									title="Output"
+									schemaId={`${model.modelId}-output`}
+									client:visible
+								/>
+							) : (
+								<p class="text-sm text-gray-400">No output schema available.</p>
 							)}
 						</TabItem>
 					</Tabs>
