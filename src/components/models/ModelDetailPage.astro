@@ -505,7 +505,9 @@ const starlightPageProps = {
 		)
 	}
 
-	{/* Case 1: build-time schema with multiple API modes (production path) */}
+	{
+		/* Case 1: build-time schema with multiple API modes (legacy path, unused with middlecache) */
+	}
 	{
 		hasSchema && model.apiModes && model.apiModes.length > 1 && (
 			<>
@@ -569,7 +571,7 @@ const starlightPageProps = {
 		)
 	}
 
-	{/* Case 2: build-time schema, flat (no apiModes) */}
+	{/* Case 2: build-time schema, flat (legacy path, unused with middlecache) */}
 	{
 		hasSchema && !(model.apiModes && model.apiModes.length > 1) && (
 			<>

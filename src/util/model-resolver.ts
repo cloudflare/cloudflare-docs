@@ -61,10 +61,12 @@ function detailToResolved(detail: AiModelDetail): ResolvedModel {
 	// request time. Keep schema empty so hasSchema is false (Parameters hidden).
 	const schema = { input: {}, output: {} };
 
-	// schema_manifest.raw_files: filenames for "API Schemas (Raw)" download links
-	// The URL base for both parameters.json and raw files is /ai/models/{slug}/
-	// where slug = model_id with leading @ stripped (i.e. detail.slug)
-	const schemaFiles = detail.schema_manifest.raw_files;
+	// schema_manifest.raw_files: filenames for "API Schemas (Raw)" download links.
+	// Filter out .rows.json entries defensively — the worker proxy only serves
+	// raw .json schema files; .rows.json would result in a 404 download link.
+	const schemaFiles = detail.schema_manifest.raw_files.filter(
+		(f) => !f.endsWith(".rows.json"),
+	);
 
 	return {
 		name: detail.model_id,

@@ -183,15 +183,16 @@ A separate Semgrep workflow checks style guide compliance (dates, "coming soon" 
 
 The site defines 20 content collections in `src/content.config.ts` with schemas in `src/schemas/`. The major ones:
 
-| Collection          | Location                         | Description                              |
-| ------------------- | -------------------------------- | ---------------------------------------- |
-| `docs`              | `src/content/docs/`              | Main documentation pages (MDX)           |
-| `partials`          | `src/content/partials/`          | Reusable content snippets (MDX)          |
-| `changelog`         | `src/content/changelog/`         | Product changelogs (MDX)                 |
-| `glossary`          | `src/content/glossary/`          | Glossary terms (YAML)                    |
-| `products`          | `src/content/products/`          | Product metadata (YAML)                  |
-| `plans`             | `src/content/plans/`             | Plan/pricing data (YAML)                 |
-| `workers-ai-models` | `src/content/workers-ai-models/` | AI model definitions (JSON)              |
+| Collection          | Location                         | Description                             |
+| ------------------- | -------------------------------- | --------------------------------------- |
+| `docs`              | `src/content/docs/`              | Main documentation pages (MDX)          |
+| `partials`          | `src/content/partials/`          | Reusable content snippets (MDX)         |
+| `changelog`         | `src/content/changelog/`         | Product changelogs (MDX)                |
+| `glossary`          | `src/content/glossary/`          | Glossary terms (YAML)                   |
+| `products`          | `src/content/products/`          | Product metadata (YAML)                 |
+| `plans`             | `src/content/plans/`             | Plan/pricing data (YAML)                |
+| `ai-catalog`        | middlecache (`v1/workers-ai-model-catalog/ai-catalog.json`) | All AI models, card fields only (fetched at build time via `middlecacheLoader`) |
+| `workers-ai-catalog` | middlecache (`v1/workers-ai-model-catalog/workers-ai-catalog.json`) | Workers AI-only model subset, card fields only |
 | `directory`         | `src/content/directory/`         | Product/feature directory entries (YAML) |
 | `fields`            | `src/content/fields/`            | Ruleset engine field definitions (YAML)  |
 | `learning-paths`    | `src/content/learning-paths/`    | Learning path definitions (JSON)         |
