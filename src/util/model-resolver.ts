@@ -1,235 +1,137 @@
 import { getCollection } from "astro:content";
-import type { CatalogModelsSchema } from "~/schemas/catalog-models";
-import type { WorkersAIModelsSchema } from "~/schemas/workers-ai-models";
+import type { AiModelCard, AiModelDetail } from "~/schemas/ai-model-catalog";
 
 import type { ModelCardData, ResolvedModel } from "./model-types";
-import { detectApiModes } from "./model-schema";
 
 // Re-export client-safe helpers and types for convenience
 export { getModelAuthor } from "./model-helpers";
 export type { ResolvedModel, ModelCardData } from "./model-types";
 export type { ApiMode } from "./model-types";
 
+const MIDDLECACHE_BASE = "https://middlecache.ced.cloudflare.com/";
+const MODEL_DETAIL_BASE = `${MIDDLECACHE_BASE}v1/workers-ai-model-catalog/models/`;
+
 /**
- * Convert catalog model to resolved model format.
+ * Convert a middlecache AiModelCard to the ResolvedModel format expected by
+ * components. Card entries don't carry schema or examples — those are fetched
+ * separately via fetchModelDetail for detail pages.
  */
-function catalogToResolved(model: CatalogModelsSchema): ResolvedModel {
-	// Build legacy-compatible properties array from catalog fields
-	const properties: ResolvedModel["properties"] = [];
-
-	// Context window
-	if (model.context_length != null) {
-		properties.push({
-			property_id: "context_window",
-			value: String(model.context_length),
-		});
-	}
-
-	// Max output tokens
-	if (model.max_output_tokens != null) {
-		properties.push({
-			property_id: "max_output_tokens",
-			value: String(model.max_output_tokens),
-		});
-	}
-
-	// Terms
-	if (model.terms) {
-		properties.push({ property_id: "terms", value: model.terms });
-	}
-
-	// External info
-	if (model.external_info) {
-		properties.push({ property_id: "info", value: model.external_info });
-	}
-
-	// Async/batch support
-	if (model.supports_async) {
-		properties.push({ property_id: "async_queue", value: "true" });
-	}
-
-	// Zero Data Retention. Optional on the catalog row — older API responses
-	// omit the field entirely, in which case the badge stays hidden. The
-	// supplementary `zdr_comment` flows through `zdrComment` on the resolved
-	// model rather than the properties array because `Property.value` is
-	// string-only and the badge needs the raw comment for its tooltip.
-	if (model.zdr === true) {
-		properties.push({ property_id: "zdr", value: "true" });
-	}
-
-	// Extract additional properties from metadata
-	const metadata = model.metadata || {};
-	if (metadata.lora) {
-		properties.push({ property_id: "lora", value: "true" });
-	}
-	if (metadata.function_calling) {
-		properties.push({ property_id: "function_calling", value: "true" });
-	}
-	if (metadata.beta) {
-		properties.push({ property_id: "beta", value: "true" });
-	}
-	if (metadata.partner) {
-		properties.push({ property_id: "partner", value: "true" });
-	}
-	if (metadata.realtime) {
-		properties.push({ property_id: "realtime", value: "true" });
-	}
-	if (metadata.planned_deprecation_date) {
-		properties.push({
-			property_id: "planned_deprecation_date",
-			value: String(metadata.planned_deprecation_date),
-		});
-	}
-
-	const schema = {
-		input: model.schema?.input || {},
-		output: model.schema?.output || {},
-	};
-
+function cardToResolved(card: AiModelCard): ResolvedModel {
 	return {
-		name: model.model_id,
-		modelId: model.model_id,
-		slug: model.model_id,
-		displayName: model.name,
-		description: model.description,
-		task: {
-			id: "", // Catalog doesn't include task ID
-			name: model.task,
-			description: "", // Catalog doesn't include task description
-		},
-		schema,
-		apiModes: detectApiModes(schema),
-		tags: model.tags || [],
-		contextLength: model.context_length ?? undefined,
-		maxOutputTokens: model.max_output_tokens ?? undefined,
-		supportsAsync: model.supports_async,
-		codeSnippets: model.code_snippets,
-		examples: model.examples,
-		defaultExample: model.default_example ?? undefined,
-		metadata: model.metadata,
-		coverImageUrl: model.cover_image_url ?? undefined,
-		externalInfo: model.external_info ?? undefined,
-		terms: model.terms ?? undefined,
-		id: model.model_id,
-		source: 2, // 2 = catalog
-		created_at: model.created_at,
-		properties,
-		dataSource: "catalog",
-		hosting: "proxied",
-		zdrComment: model.zdr_comment ?? null,
-		banner: model.banner ?? null,
-		requestFormats: model.request_formats ?? null,
+		name: card.model_id,
+		modelId: card.model_id,
+		slug: card.slug,
+		displayName: card.display_name,
+		description: card.description,
+		task: card.task,
+		// Schema is not present in card data. Detail pages call fetchModelDetail.
+		schema: { input: {}, output: {} },
+		apiModes: undefined,
+		tags: card.tags,
+		contextLength: card.context_length ?? undefined,
+		maxOutputTokens: card.max_output_tokens ?? undefined,
+		supportsAsync: card.supports_async,
+		metadata: card.metadata,
+		coverImageUrl: card.cover_image_url ?? undefined,
+		externalInfo: card.external_info ?? undefined,
+		terms: card.terms ?? undefined,
+		id: card.model_id,
+		source: card.data_source === "catalog" ? 2 : 1,
+		created_at: card.created_at ?? undefined,
+		properties: card.properties,
+		dataSource: card.data_source,
+		hosting: card.hosting,
 	};
 }
 
 /**
- * Convert legacy model to resolved model format.
+ * Convert a middlecache AiModelDetail to ResolvedModel, including schema
+ * and examples for rendering detail pages.
  */
-function legacyToResolved(model: WorkersAIModelsSchema): ResolvedModel {
-	const slug = model.name;
-
-	// Extract values from properties array
-	const getProp = (id: string) =>
-		model.properties.find((p) => p.property_id === id)?.value;
-
-	const contextWindow = getProp("context_window");
-	const maxOutputTokens = getProp("max_output_tokens");
-
-	const schema = {
-		input: model.schema.input,
-		output: model.schema.output,
-	};
+function detailToResolved(detail: AiModelDetail): ResolvedModel {
+	// detail.json does not include schema — it is served from R2 via the worker
+	// proxy. We use empty schema here so hasSchema evaluates to false and the
+	// Parameters section is omitted. The schema files are still linked via
+	// schema_manifest for the "API Schemas (Raw)" download section.
+	const schema = { input: {}, output: {} };
 
 	return {
-		name: model.name,
-		modelId: model.name,
-		slug,
-		displayName: slug, // Legacy doesn't have separate display name
-		description: model.description,
-		task: {
-			id: model.task.id,
-			name: model.task.name,
-			description: model.task.description,
-		},
+		name: detail.model_id,
+		modelId: detail.model_id,
+		slug: detail.slug,
+		displayName: detail.display_name,
+		description: detail.description,
+		task: detail.task,
 		schema,
-		apiModes: detectApiModes(schema),
-		tags: model.tags || [],
-		contextLength:
-			typeof contextWindow === "string"
-				? parseInt(contextWindow, 10)
-				: undefined,
-		maxOutputTokens:
-			typeof maxOutputTokens === "string"
-				? parseInt(maxOutputTokens, 10)
-				: undefined,
-		supportsAsync: getProp("async_queue") === "true",
-		// Legacy doesn't have structured pricing, examples, or code snippets
-		id: model.id,
-		source: model.source, // Preserve original source number
-		created_at: model.created_at,
-		properties: model.properties,
-		dataSource: "legacy",
-		hosting: "hosted",
+		apiModes: undefined,
+		tags: detail.tags,
+		contextLength: detail.context_length ?? undefined,
+		maxOutputTokens: detail.max_output_tokens ?? undefined,
+		supportsAsync: detail.supports_async,
+		metadata: detail.metadata ?? {},
+		coverImageUrl: detail.cover_image_url ?? undefined,
+		externalInfo: detail.external_info ?? undefined,
+		terms: detail.terms ?? undefined,
+		codeSnippets: detail.code_snippets,
+		examples: detail.examples,
+		defaultExample: detail.default_example ?? undefined,
+		id: detail.model_id,
+		source: detail.data_source === "catalog" ? 2 : 1,
+		created_at: detail.created_at ?? undefined,
+		properties: detail.properties,
+		dataSource: detail.data_source,
+		hosting: detail.hosting,
 	};
 }
 
 /**
- * Get all models, preferring catalog data over legacy when available.
- * Catalog models completely replace their legacy counterparts.
+ * Get all models for the /ai/models/ index page.
+ * Reads card-only data from the middlecache ai-catalog collection.
  */
 export async function getResolvedModels(): Promise<ResolvedModel[]> {
-	const [catalogModels, legacyModels] = await Promise.all([
-		getCollection("catalog-models"),
-		getCollection("workers-ai-models"),
-	]);
-
-	// Build map of catalog models by slug
-	const catalogBySlug = new Map<string, ResolvedModel>();
-	for (const entry of catalogModels) {
-		const resolved = catalogToResolved(entry.data);
-		catalogBySlug.set(resolved.slug, resolved);
-	}
-
-	// Build final list: catalog models first, then legacy models not in catalog
-	const resolved: ResolvedModel[] = [...catalogBySlug.values()];
-	const catalogSlugs = new Set(catalogBySlug.keys());
-
-	for (const entry of legacyModels) {
-		const slug = entry.data.name;
-		if (!catalogSlugs.has(slug)) {
-			resolved.push(legacyToResolved(entry.data));
-		}
-	}
-
-	return resolved;
+	const entries = await getCollection("ai-catalog");
+	return entries.map((e) => cardToResolved(e.data));
 }
 
 /**
- * Get only legacy Workers AI models (hosted on Cloudflare infrastructure).
- * These are models from workers-ai-models collection that are NOT in the catalog.
+ * Get Workers AI-only models for the /workers-ai/models/ index page.
+ * Reads card-only data from the middlecache workers-ai-catalog collection.
  */
 export async function getLegacyModels(): Promise<ResolvedModel[]> {
-	const [catalogModels, legacyModels] = await Promise.all([
-		getCollection("catalog-models"),
-		getCollection("workers-ai-models"),
-	]);
+	const entries = await getCollection("workers-ai-catalog");
+	return entries.map((e) => cardToResolved(e.data));
+}
 
-	// Get catalog slugs to exclude
-	const catalogSlugs = new Set(
-		catalogModels.map((entry) => entry.data.model_id),
-	);
-
-	// Return only legacy models not in catalog
-	return legacyModels
-		.filter((entry) => !catalogSlugs.has(entry.data.name))
-		.map((entry) => legacyToResolved(entry.data));
+/**
+ * Fetch full model detail from middlecache for a single model detail page.
+ * Called at build time in getStaticPaths for [...name].astro pages.
+ *
+ * @param slug - The detail file slug: model_id with leading @ stripped.
+ *               e.g. "@cf/meta/llama-3.1-8b" → "cf/meta/llama-3.1-8b"
+ *               e.g. "openai/gpt-5.4-mini"   → "openai/gpt-5.4-mini"
+ */
+export async function fetchModelDetail(
+	slug: string,
+): Promise<ResolvedModel | null> {
+	const url = `${MODEL_DETAIL_BASE}${slug}/detail.json`;
+	try {
+		const res = await fetch(url);
+		if (!res.ok) {
+			console.warn(`fetchModelDetail: ${res.status} for ${url}`);
+			return null;
+		}
+		const detail = (await res.json()) as AiModelDetail;
+		return detailToResolved(detail);
+	} catch (err) {
+		console.warn(`fetchModelDetail: failed to fetch ${url}:`, err);
+		return null;
+	}
 }
 
 /**
  * Project a ResolvedModel to ModelCardData, stripping heavy fields
  * (schema, apiModes, codeSnippets, examples, metadata, etc.) that are
- * not needed by the catalog index pages. This avoids serializing
- * megabytes of JSON Schema data into the page HTML as island props.
+ * not needed by the catalog index pages.
  */
 export function toModelCardData(model: ResolvedModel): ModelCardData {
 	return {

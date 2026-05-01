@@ -1,17 +1,31 @@
 ---
 import type { GetStaticPaths } from "astro";
 import ModelDetailPage from "~/components/models/ModelDetailPage.astro";
-import { getResolvedModels } from "~/util/model-resolver";
+import { getResolvedModels, fetchModelDetail } from "~/util/model-resolver";
 
 export const getStaticPaths = (async () => {
+	// Get card data to know which slugs exist
 	const models = await getResolvedModels();
 
-	// Generate pages at full model ID path only (e.g., "@cf/moonshotai/kimi-k2.5")
-	// Short slugs are handled by /workers-ai/models/[...name].astro for legacy URLs
-	return models.map((model) => ({
-		params: { name: model.slug },
-		props: { model },
-	}));
+	// Fetch detail.json for each model concurrently.
+	// detail slug = model_id with leading @ stripped (matches middlecache R2 path).
+	const settled = await Promise.allSettled(
+		models.map(async (card) => {
+			const detailSlug = card.modelId.replace(/^@/, "");
+			const detail = await fetchModelDetail(detailSlug);
+			return { card, detail };
+		}),
+	);
+
+	return settled
+		.filter(
+			(r): r is PromiseFulfilledResult<{ card: (typeof models)[0]; detail: NonNullable<Awaited<ReturnType<typeof fetchModelDetail>>> }> =>
+				r.status === "fulfilled" && r.value.detail !== null,
+		)
+		.map(({ value: { card, detail } }) => ({
+			params: { name: card.slug },
+			props: { model: detail },
+		}));
 }) satisfies GetStaticPaths;
 
 const { model } = Astro.props;

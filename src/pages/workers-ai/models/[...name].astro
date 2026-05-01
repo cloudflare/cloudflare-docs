@@ -1,16 +1,34 @@
 ---
 import type { GetStaticPaths } from "astro";
 import ModelDetailPage from "~/components/models/ModelDetailPage.astro";
-import { getLegacyModels } from "~/util/model-resolver";
+import { getLegacyModels, fetchModelDetail } from "~/util/model-resolver";
 
 export const getStaticPaths = (async () => {
+	// Get card data to know which slugs exist (Workers AI-only subset)
 	const models = await getLegacyModels();
 
-	// Generate pages at short slug only (e.g., "kimi-k2.5")
-	return models.map((model) => ({
-		params: { name: model.name.split("/").at(-1) },
-		props: { model },
-	}));
+	// Fetch detail.json for each model concurrently.
+	// Workers AI model_ids look like "@cf/meta/llama-3.1-8b-instruct".
+	// detail slug = model_id with leading @ stripped.
+	// URL slug = last segment only (e.g. "llama-3.1-8b-instruct").
+	const settled = await Promise.allSettled(
+		models.map(async (card) => {
+			const detailSlug = card.modelId.replace(/^@/, "");
+			const urlSlug = card.modelId.split("/").at(-1)!;
+			const detail = await fetchModelDetail(detailSlug);
+			return { card, detail, urlSlug };
+		}),
+	);
+
+	return settled
+		.filter(
+			(r): r is PromiseFulfilledResult<{ card: (typeof models)[0]; detail: NonNullable<Awaited<ReturnType<typeof fetchModelDetail>>>; urlSlug: string }> =>
+				r.status === "fulfilled" && r.value.detail !== null,
+		)
+		.map(({ value: { detail, urlSlug } }) => ({
+			params: { name: urlSlug },
+			props: { model: detail },
+		}));
 }) satisfies GetStaticPaths;
 
 const { model } = Astro.props;
