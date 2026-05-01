@@ -16,16 +16,18 @@ To view admin activity logs, log in to the [Cloudflare dashboard](https://dash.c
 
 ## Explanation of the fields
 
-| Field                | Description                                                                                                                                             |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Action timestamp** | Date and time when the change occurred.                                                                                                                 |
-| **Action type**      | Type of action taken (for example, `create`, `update`, `delete`).                                                                                       |
-| **Action result**    | Whether the action was successful.                                                                                                                      |
-| **Actor email**      | Email address of the user who performed the action.                                                                                                     |
-| **Actor IP address** | IP address of the user who performed the action.                                                                                                        |
-| **Actor type**       | How the action was initiated — for example, by a user in the dashboard, by an API token, by a Cloudflare administrator, or by the system automatically. |
-| **Resource type**    | The type of resource that was changed, such as a Gateway policy or an Access application.                                                               |
-| **Resource product** | The Cloudflare product associated with the resource, such as Gateway or Access.                                                                         |
+| Field           | Description                                           | Example Value                                                                      |
+| ----------------| ------------------------------------------------------| -----------------------------------------------------------------------------------|
+| Email           | User who performed the action                         | josephli@cloudflare.com                                                            |
+| Product         | Cloudflare product being modified                     | Tunnel                                                                             |
+| Resource        | Specific resource type within the product             | Route                                                                              |
+| Event           | Action performed (Create, Update, Delete)             | Create                                                                             |
+| Date            | Timestamp of when the action occurred                 | April 30, 2026 • 12:19 AM                                                          |
+| User IP Address | IP address of the user who made the change            | 2a09:bac6:6447:523::83:30                                                          |
+| Interface       | How the change was initiated                          | API                                                                                |
+| Audit record    | Unique identifier for the audit log entry             | caf1a547-17cc-484a-b4ce-5d3b32771a8f                                               |
+| Old value       | Previous configuration state (empty for creates)      | {}                                                                                 |
+| New value       | New configuration state after the change              | JSON object with fields like comment, network, tun_type, tunnel_id, virtual_network_id |
 
 ## Export admin activity logs
 
