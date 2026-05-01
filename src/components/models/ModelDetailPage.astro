@@ -7,7 +7,8 @@ import { LinkButton, Tabs, TabItem, Code, Aside, Badge } from "~/components";
 import ModelInfo from "~/components/models/ModelInfo.tsx";
 import ModelFeatures from "~/components/models/ModelFeatures.tsx";
 import SchemaDisplay from "~/components/models/SchemaDisplay.astro";
-import SchemaDisplayLazy from "~/components/models/SchemaDisplayLazy.tsx";
+import SchemaDisplayFromRows from "~/components/models/SchemaDisplayFromRows.astro";
+import type { RowsPayload } from "~/components/models/SchemaDisplayFromRows.astro";
 import ExampleCard from "~/components/models/ExampleCard.astro";
 import CopyableCode from "~/components/models/CopyableCode.astro";
 
@@ -183,24 +184,96 @@ const hasSchema =
 	model.schema.input && Object.keys(model.schema.input).length > 0;
 
 // Schema files (raw_files) populated from schema_manifest — used for download links.
-// parameters.json — single file with pre-processed rows for all modes, fetched lazily.
 const hasSchemaFiles =
 	model.schemaFiles != null && model.schemaFiles.length > 0;
 
-// Parameters section is shown when we have build-time schema OR schemaFiles for lazy fetch.
-const hasParameters = hasSchema || hasSchemaFiles;
-
-// All schema files (parameters.json and raw .json files) live under
-// /ai/models/{r2Slug}/ where r2Slug = modelId with leading @ stripped.
-// This is the same path for both catalog and legacy models — the worker
-// proxies /ai/models/* → R2 v1/workers-ai-model-catalog/models/*.
+// All schema files live under /ai/models/{r2Slug}/ (@ stripped).
+// Worker proxies /ai/models/* → R2 v1/workers-ai-model-catalog/models/*.
 const r2Slug = model.modelId.replace(/^@/, "");
 const schemaBasePath = `/ai/models/${r2Slug}`;
 
-// URL to the single parameters.json file for lazy Parameters rendering.
-const parametersUrl = hasSchemaFiles
-	? `${schemaBasePath}/parameters.json`
-	: undefined;
+// Fetch parameters.json at build time from middlecache.
+// Contains pre-processed SchemaRowData for all modes — no client-side
+// schema processing needed.
+type ModeData = { input: RowsPayload; output: RowsPayload };
+type ParametersPayload =
+	| { flat: true; modes: null; input: RowsPayload; output: RowsPayload }
+	| ({ flat: false; modes: string[] } & Record<string, ModeData>);
+
+let parametersData: ParametersPayload | null = null;
+if (hasSchemaFiles) {
+	try {
+		const middlewareCacheBase = "https://middlecache.ced.cloudflare.com/";
+		const r2Key = `v1/workers-ai-model-catalog/models/${r2Slug}/parameters.json`;
+		const res = await fetch(`${middlewareCacheBase}${r2Key}`);
+		if (res.ok) {
+			parametersData = (await res.json()) as ParametersPayload;
+		} else {
+			console.warn(
+				`ModelDetailPage: parameters.json fetch failed (${res.status}) for ${r2Slug}`,
+			);
+		}
+	} catch (e) {
+		console.warn(
+			`ModelDetailPage: parameters.json fetch error for ${r2Slug}:`,
+			e,
+		);
+	}
+}
+
+// Parameters section shown when we have build-time schema OR fetched parameters data.
+const hasParameters = hasSchema || parametersData != null;
+
+// For multi-mode: detect if all modes share identical input (same as production logic).
+const parametersIsMultiMode =
+	parametersData != null &&
+	!parametersData.flat &&
+	parametersData.modes != null;
+const parametersIsFlat = parametersData != null && parametersData.flat;
+
+// Multi-mode: all inputs identical → render input once + per-mode output collapsibles.
+let multiModeAllInputsIdentical = false;
+let parametersMulti:
+	| ({ flat: false; modes: string[] } & Record<string, ModeData>)
+	| null = null;
+let parametersFlat: {
+	flat: true;
+	input: RowsPayload;
+	output: RowsPayload;
+} | null = null;
+
+if (parametersIsMultiMode && parametersData) {
+	parametersMulti = parametersData as {
+		flat: false;
+		modes: string[];
+	} & Record<string, ModeData>;
+	const firstInputJson = JSON.stringify(
+		parametersMulti[parametersMulti.modes[0]]?.input,
+	);
+	multiModeAllInputsIdentical = parametersMulti.modes.every(
+		(id) => JSON.stringify(parametersMulti![id]?.input) === firstInputJson,
+	);
+}
+if (parametersIsFlat && parametersData) {
+	parametersFlat = parametersData as {
+		flat: true;
+		input: RowsPayload;
+		output: RowsPayload;
+	};
+}
+
+// Mode display names/descriptions matching production.
+const PARAM_MODE_NAMES: Record<string, string> = {
+	sync: "Synchronous",
+	streaming: "Streaming",
+	batch: "Batch",
+};
+const PARAM_MODE_DESCRIPTIONS: Record<string, string> = {
+	sync: "Send a request and receive a complete response",
+	streaming:
+		"Send a request with `stream: true` and receive server-sent events",
+	batch: "Send multiple requests in a single API call",
+};
 
 // Derive a human-readable label from a schema filename.
 // e.g. "sync-input.json" → "Synchronous · Input"
@@ -428,55 +501,21 @@ const starlightPageProps = {
 		)
 	}
 
+	{/* Case 1: build-time schema with multiple API modes (production path) */}
 	{
-		hasParameters &&
-			(hasSchema && model.apiModes && model.apiModes.length > 1 ? (
-				<>
-					<h2 id="Parameters">Parameters</h2>
-
-					{/*
-					 * Render input schema once (shared across all modes), then
-					 * render per-mode output sections. This avoids duplicating the
-					 * processed SchemaRowData tree in the HTML for every mode.
-					 *
-					 * Sync and streaming always share the same input; batch may differ.
-					 * We detect shared input by comparing JSON serialisation.
-					 */}
-					{(() => {
-						// Detect which modes share the same input as the first mode
-						const firstInputJson = JSON.stringify(model.apiModes[0].input);
-						const allInputsIdentical = model.apiModes.every(
-							(mode) => JSON.stringify(mode.input) === firstInputJson,
-						);
-
-						return allInputsIdentical ? (
-							<>
-								{/* Input rendered once */}
-								<h3 class="mt-4! mb-2! text-base font-semibold">Input</h3>
-								<SchemaDisplay schema={model.apiModes[0].input} title="Input" />
-
-								{/* Output per mode */}
-								<h3 class="mt-6! mb-2! text-base font-semibold">Output</h3>
-								<div class="space-y-3">
-									{model.apiModes.map((mode) => (
-										<details class="group rounded-lg border border-gray-200 p-0 py-3 dark:border-gray-700">
-											<summary class="cursor-pointer px-8 font-medium text-gray-900 dark:text-gray-100">
-												<span>{mode.name}</span>
-												{mode.description && (
-													<span class="text-sm font-normal text-gray-500 dark:text-gray-400">
-														— {mode.description}
-													</span>
-												)}
-											</summary>
-											<div class="border-t border-gray-200 p-4 pb-1 dark:border-gray-700">
-												<SchemaDisplay schema={mode.output} title="Output" />
-											</div>
-										</details>
-									))}
-								</div>
-							</>
-						) : (
-							/* Inputs differ (e.g. batch has different input) — show per-mode tabs */
+		hasSchema && model.apiModes && model.apiModes.length > 1 && (
+			<>
+				<h2 id="Parameters">Parameters</h2>
+				{(() => {
+					const firstInputJson = JSON.stringify(model.apiModes[0].input);
+					const allInputsIdentical = model.apiModes.every(
+						(mode) => JSON.stringify(mode.input) === firstInputJson,
+					);
+					return allInputsIdentical ? (
+						<>
+							<h3 class="mt-4! mb-2! text-base font-semibold">Input</h3>
+							<SchemaDisplay schema={model.apiModes[0].input} title="Input" />
+							<h3 class="mt-6! mb-2! text-base font-semibold">Output</h3>
 							<div class="space-y-3">
 								{model.apiModes.map((mode) => (
 									<details class="group rounded-lg border border-gray-200 p-0 py-3 dark:border-gray-700">
@@ -489,151 +528,179 @@ const starlightPageProps = {
 											)}
 										</summary>
 										<div class="border-t border-gray-200 p-4 pb-1 dark:border-gray-700">
-											<Tabs syncKey={`schema-${mode.id}`}>
-												<TabItem label="Input">
-													<SchemaDisplay schema={mode.input} title="Input" />
-												</TabItem>
-												<TabItem label="Output">
-													<SchemaDisplay schema={mode.output} title="Output" />
-												</TabItem>
-											</Tabs>
+											<SchemaDisplay schema={mode.output} title="Output" />
 										</div>
 									</details>
 								))}
 							</div>
-						);
-					})()}
-				</>
-			) : hasSchema ? (
-				<>
-					<h2 id="Parameters">Parameters</h2>
-					{(() => {
-						// Compute the union of titled top-level oneOf branches across
-						// input and output. When at least one side has them, hoist a
-						// single variant selector above the Input/Output tabs so picking
-						// "Chat Completions" (etc.) filters both panels together. If a
-						// side has no matching branch (e.g. only the input is variant),
-						// SchemaDisplay falls back to rendering its full schema.
-						const inputVariants = getTopLevelVariants(model.schema.input) ?? [];
-						const outputVariants =
-							model.schema.output && model.schema.output.format !== "binary"
-								? (getTopLevelVariants(model.schema.output) ?? [])
-								: [];
-						const variantTitles: string[] = [];
-						for (const v of [...inputVariants, ...outputVariants]) {
-							if (!variantTitles.includes(v.title)) variantTitles.push(v.title);
-						}
-						const activeVariant = variantTitles[0];
-						return variantTitles.length > 0 ? (
-							<div data-variant-section data-active-variant={activeVariant}>
-								<SchemaVariantTabs titles={variantTitles} client:visible />
-								<Tabs syncKey="schema-tab">
-									<TabItem label="Input">
-										{variantTitles.map((title) => (
-											<div
-												data-variant-pane={title}
-												hidden={title !== activeVariant}
-											>
-												<SchemaDisplay
-													schema={model.schema.input}
-													title="Input"
-													variantTitle={title}
-												/>
-											</div>
-										))}
-									</TabItem>
-									<TabItem label="Output">
-										{model.schema.output.format === "binary" ? (
-											<p>
-												{(
-													model.schema.output.contentType as string
-												)?.startsWith("audio/") ? (
-													<>
-														The binding returns a <code>ReadableStream</code>{" "}
-														with the audio in{" "}
-														{(model.schema.output.contentType as string)
-															.replace("audio/", "")
-															.toUpperCase()}{" "}
-														format (check the model's output schema).
-													</>
-												) : (
-													<>
-														The binding returns a <code>ReadableStream</code>{" "}
-														with the output (check the model's output schema).
-													</>
-												)}
-											</p>
-										) : (
-											variantTitles.map((title) => (
-												<div
-													data-variant-pane={title}
-													hidden={title !== activeVariant}
-												>
-													<SchemaDisplay
-														schema={model.schema.output}
-														title="Output"
-														variantTitle={title}
-													/>
-												</div>
-											))
-										)}
-									</TabItem>
-								</Tabs>
-							</div>
-						) : (
-							<Tabs syncKey="schema-tab">
-								<TabItem label="Input">
-									<SchemaDisplay schema={model.schema.input} title="Input" />
-								</TabItem>
-								<TabItem label="Output">
-									{model.schema.output.format === "binary" ? (
-										<p>
-											{(model.schema.output.contentType as string)?.startsWith(
-												"audio/",
-											) ? (
-												<>
-													The binding returns a <code>ReadableStream</code> with
-													the audio in{" "}
-													{(model.schema.output.contentType as string)
-														.replace("audio/", "")
-														.toUpperCase()}{" "}
-													format (check the model's output schema).
-												</>
-											) : (
-												<>
-													The binding returns a <code>ReadableStream</code> with
-													the output (check the model's output schema).
-												</>
-											)}
-										</p>
-									) : (
-										<SchemaDisplay
-											schema={model.schema.output}
-											title="Output"
-										/>
-									)}
-								</p>
-							) : (
-								<SchemaDisplay schema={model.schema.output} title="Output" />
-							)}
-						</TabItem>
-					</Tabs>
-				</>
-			) : (
-				/* Lazy: fetch parameters.json from R2 when user scrolls to section */
-				<>
-					<h2 id="Parameters">Parameters</h2>
-					{parametersUrl ? (
-						<SchemaDisplayLazy
-							url={parametersUrl}
-							schemaId={model.modelId}
-							client:visible
-						/>
+						</>
 					) : (
-						<p class="text-sm text-gray-400">No parameters available.</p>
-					)}
-				</>
-			))
+						<div class="space-y-3">
+							{model.apiModes.map((mode) => (
+								<details class="group rounded-lg border border-gray-200 p-0 py-3 dark:border-gray-700">
+									<summary class="cursor-pointer px-8 font-medium text-gray-900 dark:text-gray-100">
+										<span>{mode.name}</span>
+										{mode.description && (
+											<span class="text-sm font-normal text-gray-500 dark:text-gray-400">
+												— {mode.description}
+											</span>
+										)}
+									</summary>
+									<div class="border-t border-gray-200 p-4 pb-1 dark:border-gray-700">
+										<Tabs syncKey={`schema-${mode.id}`}>
+											<TabItem label="Input">
+												<SchemaDisplay schema={mode.input} title="Input" />
+											</TabItem>
+											<TabItem label="Output">
+												<SchemaDisplay schema={mode.output} title="Output" />
+											</TabItem>
+										</Tabs>
+									</div>
+								</details>
+							))}
+						</div>
+					);
+				})()}
+			</>
+		)
+	}
+
+	{/* Case 2: build-time schema, flat (no apiModes) */}
+	{
+		hasSchema && !(model.apiModes && model.apiModes.length > 1) && (
+			<>
+				<h2 id="Parameters">Parameters</h2>
+				<Tabs syncKey="schema-tab">
+					<TabItem label="Input">
+						<SchemaDisplay schema={model.schema.input} title="Input" />
+					</TabItem>
+					<TabItem label="Output">
+						{model.schema.output.format === "binary" ? (
+							<p>
+								{(model.schema.output.contentType as string)?.startsWith(
+									"audio/",
+								) ? (
+									<>
+										The binding returns a <code>ReadableStream</code> with the
+										audio in{" "}
+										{(model.schema.output.contentType as string)
+											.replace("audio/", "")
+											.toUpperCase()}{" "}
+										format (check the model's output schema).
+									</>
+								) : (
+									<>
+										The binding returns a <code>ReadableStream</code> with the
+										output (check the model's output schema).
+									</>
+								)}
+							</p>
+						) : (
+							<SchemaDisplay schema={model.schema.output} title="Output" />
+						)}
+					</TabItem>
+				</Tabs>
+			</>
+		)
+	}
+
+	{/* Case 3: pre-processed rows, flat model */}
+	{
+		parametersFlat && (
+			<>
+				<h2 id="Parameters">Parameters</h2>
+				<Tabs syncKey="schema-tab">
+					<TabItem label="Input">
+						<SchemaDisplayFromRows
+							payload={parametersFlat.input}
+							title="Input"
+							schemaId={`${model.modelId}-input`}
+						/>
+					</TabItem>
+					<TabItem label="Output">
+						<SchemaDisplayFromRows
+							payload={parametersFlat.output}
+							title="Output"
+							schemaId={`${model.modelId}-output`}
+						/>
+					</TabItem>
+				</Tabs>
+			</>
+		)
+	}
+
+	{/* Case 4: pre-processed rows, multi-mode model */}
+	{
+		parametersMulti && (
+			<>
+				<h2 id="Parameters">Parameters</h2>
+				{multiModeAllInputsIdentical ? (
+					<>
+						<h3 class="mt-4! mb-2! text-base font-semibold">Input</h3>
+						<SchemaDisplayFromRows
+							payload={parametersMulti[parametersMulti.modes[0]].input}
+							title="Input"
+							schemaId={`${model.modelId}-input`}
+						/>
+						<h3 class="mt-6! mb-2! text-base font-semibold">Output</h3>
+						<div class="space-y-3">
+							{parametersMulti.modes.map((id) => (
+								<details class="group rounded-lg border border-gray-200 p-0 py-3 dark:border-gray-700">
+									<summary class="cursor-pointer px-8 font-medium text-gray-900 dark:text-gray-100">
+										<span>{PARAM_MODE_NAMES[id] ?? id}</span>
+										{PARAM_MODE_DESCRIPTIONS[id] && (
+											<span class="text-sm font-normal text-gray-500 dark:text-gray-400">
+												— {PARAM_MODE_DESCRIPTIONS[id]}
+											</span>
+										)}
+									</summary>
+									<div class="border-t border-gray-200 p-4 pb-1 dark:border-gray-700">
+										<SchemaDisplayFromRows
+											payload={parametersMulti![id].output}
+											title="Output"
+											schemaId={`${model.modelId}-${id}-output`}
+										/>
+									</div>
+								</details>
+							))}
+						</div>
+					</>
+				) : (
+					<div class="space-y-3">
+						{parametersMulti.modes.map((id) => (
+							<details class="group rounded-lg border border-gray-200 p-0 py-3 dark:border-gray-700">
+								<summary class="cursor-pointer px-8 font-medium text-gray-900 dark:text-gray-100">
+									<span>{PARAM_MODE_NAMES[id] ?? id}</span>
+									{PARAM_MODE_DESCRIPTIONS[id] && (
+										<span class="text-sm font-normal text-gray-500 dark:text-gray-400">
+											— {PARAM_MODE_DESCRIPTIONS[id]}
+										</span>
+									)}
+								</summary>
+								<div class="border-t border-gray-200 p-4 pb-1 dark:border-gray-700">
+									<Tabs syncKey={`schema-${id}`}>
+										<TabItem label="Input">
+											<SchemaDisplayFromRows
+												payload={parametersMulti![id].input}
+												title="Input"
+												schemaId={`${model.modelId}-${id}-input`}
+											/>
+										</TabItem>
+										<TabItem label="Output">
+											<SchemaDisplayFromRows
+												payload={parametersMulti![id].output}
+												title="Output"
+												schemaId={`${model.modelId}-${id}-output`}
+											/>
+										</TabItem>
+									</Tabs>
+								</div>
+							</details>
+						))}
+					</div>
+				)}
+			</>
+		)
 	}
 
 	{

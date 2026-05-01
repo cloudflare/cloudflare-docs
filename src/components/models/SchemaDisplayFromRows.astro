@@ -1,0 +1,53 @@
+---
+/**
+ * SchemaDisplayFromRows — renders pre-processed SchemaRowData at build time.
+ *
+ * Drop-in replacement for SchemaDisplay.astro when rows are already available
+ * (e.g. from parameters.json fetched from middlecache). Bypasses
+ * @stoplight/json-schema-tree entirely.
+ */
+import SchemaTreeView from "./SchemaTree.tsx";
+import SchemaVariantSelector from "./SchemaVariantSelector.tsx";
+import type { SchemaRowData } from "./types";
+
+type SchemaVariant = { title: string; rows: SchemaRowData[] };
+
+export interface RowsPayload {
+	rows: SchemaRowData[];
+	variants: SchemaVariant[] | null;
+	isFlat: boolean;
+}
+
+interface Props {
+	payload: RowsPayload;
+	title: "Input" | "Output";
+	schemaId: string;
+}
+
+const { payload, title, schemaId } = Astro.props;
+const hideRequired = title === "Output";
+---
+
+<div class="schema-display">
+	{
+		payload.variants && payload.variants.length > 0 ? (
+			<SchemaVariantSelector
+				variants={payload.variants}
+				schemaId={schemaId}
+				hideRequired={hideRequired}
+				client:visible
+			/>
+		) : payload.rows.length === 0 ? (
+			<p class="text-sm text-gray-500 dark:text-gray-400">
+				No parameters defined.
+			</p>
+		) : (
+			<SchemaTreeView
+				rows={payload.rows}
+				schemaId={schemaId}
+				hideRequired={hideRequired}
+				client:visible
+			/>
+		)
+	}
+</div>
