@@ -11,9 +11,9 @@ slug: 1.1.1.1/privacy/cloudflare-resolver-firefox
 
 ### What is the Cloudflare resolver for Firefox?
 
-When you type a web address like [www.mozilla.org](http://www.mozilla.org) into a browser, the browser sends a DNS query to a resolver. The resolver looks up the IP address associated with that domain and returns it so your browser can connect to the correct server. Without this step, your browser would not know which server to contact.
+Every time you type a web address, such as [www.mozilla.org](http://www.mozilla.org) or [www.firefox.com](http://www.firefox.com), into a web browser, the web browser sends a query to a DNS resolver. If DNS is like the card catalog of the Internet, then a DNS resolver is like a helpful librarian that knows how to use the information from that catalog to track down the exact location of a website. Whenever a resolver receives your query it looks up the IP address associated with the web address that you entered and relays that information to your web browser. “DNS resolution” as this process is referred to, is a crucial component of your Internet experience because without it your web browser would be unable to communicate with the servers that host your favorite websites, since communication requires knowing the IP addresses of those websites.
 
-Most users rely on a DNS resolver provided by their operating system or network provider. These default resolvers may be vulnerable to eavesdropping or on-path attacks, since DNS queries are typically sent in plaintext.
+For most Internet users, the DNS resolver that they use is either the one that comes with the operating system running on their machines or the one that is set by their network provider. In some cases, these resolvers leave a lot to be desired because of their susceptibility to unwanted spying and other security threats.
 
 To address this, Mozilla has partnered with Cloudflare to provide DNS resolution directly from within the Firefox browser using the Cloudflare resolver for Firefox. When this feature is active, Firefox sends DNS queries over a secure channel to the Cloudflare resolver for Firefox rather than to an unknown DNS resolver, significantly decreasing the odds of unwanted spying or man-in-the-middle attacks.
 
