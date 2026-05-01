@@ -8,6 +8,7 @@ import ModelInfo from "~/components/models/ModelInfo.tsx";
 import ModelFeatures from "~/components/models/ModelFeatures.tsx";
 import SchemaDisplay from "~/components/models/SchemaDisplay.astro";
 import SchemaDisplayFromRows from "~/components/models/SchemaDisplayFromRows.astro";
+import AnchorHeading from "~/components/AnchorHeading.astro";
 import type { RowsPayload } from "~/components/models/SchemaDisplayFromRows.astro";
 import ExampleCard from "~/components/models/ExampleCard.astro";
 import CopyableCode from "~/components/models/CopyableCode.astro";
@@ -440,7 +441,11 @@ const starlightPageProps = {
 	{
 		hasSupportedLanguages && (
 			<>
-				<h2 id="supported-languages">Supported languages</h2>
+				<AnchorHeading
+					depth={2}
+					title="Supported languages"
+					slug="supported-languages"
+				/>
 				<Render file="nova-3-supported-languages" product="workers-ai" />
 			</>
 		)
@@ -449,7 +454,7 @@ const starlightPageProps = {
 	{
 		hasPlayground && (
 			<>
-				<h2 id="Playground">Playground</h2>
+				<AnchorHeading depth={2} title="Playground" slug="Playground" />
 				<p>
 					Try out this model with Workers AI LLM Playground. It does not require
 					any setup or authentication and an instant way to preview and test a
@@ -467,7 +472,7 @@ const starlightPageProps = {
 	{
 		hasCatalogUsage && firstExample && (
 			<>
-				<h2 id="Usage">Usage</h2>
+				<AnchorHeading depth={2} title="Usage" slug="Usage" />
 				<ExampleCard example={firstExample} layout="stack" />
 			</>
 		)
@@ -476,7 +481,7 @@ const starlightPageProps = {
 	{
 		!hasCatalogUsage && CodeExamples && (
 			<>
-				<h2 id="Usage">Usage</h2>
+				<AnchorHeading depth={2} title="Usage" slug="Usage" />
 				<CodeExamples name={model.name} lora={false} />
 			</>
 		)
@@ -485,7 +490,7 @@ const starlightPageProps = {
 	{
 		hasRemainingExamples && (
 			<>
-				<h2 id="Examples">Examples</h2>
+				<AnchorHeading depth={2} title="Examples" slug="Examples" />
 				{remainingExamples.map((example) => (
 					<details>
 						<summary>
@@ -505,7 +510,7 @@ const starlightPageProps = {
 	{
 		hasSchema && model.apiModes && model.apiModes.length > 1 && (
 			<>
-				<h2 id="Parameters">Parameters</h2>
+				<AnchorHeading depth={2} title="Parameters" slug="Parameters" />
 				{(() => {
 					const firstInputJson = JSON.stringify(model.apiModes[0].input);
 					const allInputsIdentical = model.apiModes.every(
@@ -569,7 +574,7 @@ const starlightPageProps = {
 	{
 		hasSchema && !(model.apiModes && model.apiModes.length > 1) && (
 			<>
-				<h2 id="Parameters">Parameters</h2>
+				<AnchorHeading depth={2} title="Parameters" slug="Parameters" />
 				<Tabs syncKey="schema-tab">
 					<TabItem label="Input">
 						<SchemaDisplay schema={model.schema.input} title="Input" />
@@ -608,7 +613,7 @@ const starlightPageProps = {
 	{
 		parametersFlat && (
 			<>
-				<h2 id="Parameters">Parameters</h2>
+				<AnchorHeading depth={2} title="Parameters" slug="Parameters" />
 				<Tabs syncKey="schema-tab">
 					<TabItem label="Input">
 						<SchemaDisplayFromRows
@@ -633,7 +638,7 @@ const starlightPageProps = {
 	{
 		parametersMulti && (
 			<>
-				<h2 id="Parameters">Parameters</h2>
+				<AnchorHeading depth={2} title="Parameters" slug="Parameters" />
 				{multiModeAllInputsIdentical ? (
 					<>
 						<h3 class="mt-4! mb-2! text-base font-semibold">Input</h3>
@@ -706,7 +711,7 @@ const starlightPageProps = {
 	{
 		hasSchemaFiles && (
 			<>
-				<h2 id="API-Schemas">API Schemas (Raw)</h2>
+				<AnchorHeading depth={2} title="API Schemas (Raw)" slug="API-Schemas" />
 				<div class="not-content grid grid-cols-1 gap-2 sm:grid-cols-2">
 					{model.schemaFiles!.map((filename) => (
 						<div class="flex items-center justify-between rounded-lg border border-gray-200 px-4 py-1.5 dark:border-gray-700">
