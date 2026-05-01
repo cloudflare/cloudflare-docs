@@ -20,7 +20,10 @@ function cardToResolved(card: AiModelCard): ResolvedModel {
 	return {
 		name: card.model_id,
 		modelId: card.model_id,
-		slug: card.slug,
+		// Use model_id as slug (preserving @) to match the URL structure that
+		// ModelDetailPage uses for schemaBasePath and that getStaticPaths emits.
+		// The middlecache card.slug has @ stripped (R2 path key) — we don't use it here.
+		slug: card.model_id,
 		displayName: card.display_name,
 		description: card.description,
 		task: card.task,
@@ -58,7 +61,8 @@ function detailToResolved(detail: AiModelDetail): ResolvedModel {
 	return {
 		name: detail.model_id,
 		modelId: detail.model_id,
-		slug: detail.slug,
+		// Use model_id as slug (preserving @) — matches URL structure.
+		slug: detail.model_id,
 		displayName: detail.display_name,
 		description: detail.description,
 		task: detail.task,

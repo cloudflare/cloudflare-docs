@@ -8,7 +8,9 @@ export const getStaticPaths = (async () => {
 	const models = await getResolvedModels();
 
 	// Fetch detail.json for each model concurrently.
-	// detail slug = model_id with leading @ stripped (matches middlecache R2 path).
+	// The R2 path for detail.json uses the model_id with leading @ stripped
+	// (e.g. @cf/meta/llama → cf/meta/llama), but the URL param uses the full
+	// model_id (card.slug) to preserve existing URL structure.
 	const settled = await Promise.allSettled(
 		models.map(async (card) => {
 			const detailSlug = card.modelId.replace(/^@/, "");
