@@ -16,14 +16,16 @@ When you [create a gateway](/web3/how-to/manage-gateways/#create-a-gateway), Clo
 
 ## Read operations
 
-When your application sends a read request — for example, fetching a file from IPFS or querying an Ethereum account balance — the gateway checks whether the response is already cached at a nearby Cloudflare data center.
+When your application sends a read request (for example, fetching a file from IPFS or querying an Ethereum account balance), the gateway checks whether the response is already cached at a nearby Cloudflare data center.
 
 - If cached, the gateway returns the content immediately over HTTP, without contacting the underlying network.
 - If not cached, the gateway fetches the content from Cloudflare's own IPFS or Ethereum nodes, caches it for future requests, and returns it over HTTP.
 
 ## Write operations
 
-_Only available for gateways to EVM-based chains, such as [Ethereum](/web3/how-to/use-ethereum-gateway)._
+:::note
+Only available for gateways to EVM-based chains, such as [Ethereum](/web3/how-to/use-ethereum-gateway).
+:::
 
 Write operations submit new data to the network. For example, sending a transaction or deploying a smart contract. The gateway forwards your request to one of Cloudflare's Ethereum nodes, which places the transaction in its mempool (a queue of pending transactions waiting to be included in a block).
 
