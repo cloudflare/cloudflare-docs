@@ -103,19 +103,14 @@ export const collections = {
 	// ai-catalog: all models (catalog + Workers AI merged), card fields only.
 	// Powers /ai/models/ index. Fetched from middlecache at build time.
 	"ai-catalog": defineCollection({
-		loader: middlecacheLoader(
-			"v1/workers-ai-model-catalog/ai-catalog.json",
-			{
-				parser: (fileContent: string) => {
-					const data = JSON.parse(fileContent) as {
-						models: Array<{ model_id: string }>;
-					};
-					return Object.fromEntries(
-						data.models.map((m) => [m.model_id, m]),
-					);
-				},
+		loader: middlecacheLoader("v1/workers-ai-model-catalog/ai-catalog.json", {
+			parser: (fileContent: string) => {
+				const data = JSON.parse(fileContent) as {
+					models: Array<{ model_id: string }>;
+				};
+				return Object.fromEntries(data.models.map((m) => [m.model_id, m]));
 			},
-		),
+		}),
 		schema: aiModelCardSchema,
 	}),
 	// workers-ai-catalog: legacy-only subset, card fields only.
@@ -128,9 +123,7 @@ export const collections = {
 					const data = JSON.parse(fileContent) as {
 						models: Array<{ model_id: string }>;
 					};
-					return Object.fromEntries(
-						data.models.map((m) => [m.model_id, m]),
-					);
+					return Object.fromEntries(data.models.map((m) => [m.model_id, m]));
 				},
 			},
 		),

@@ -27,8 +27,18 @@ import type { SchemaRowData } from "./types";
 // ── Schema processing (mirrors SchemaDisplay.astro logic) ─────────────────────
 
 const SKIP_KEYS = new Set([
-	"type", "properties", "items", "required", "description", "default",
-	"enum", "oneOf", "anyOf", "allOf", "title", "additionalProperties",
+	"type",
+	"properties",
+	"items",
+	"required",
+	"description",
+	"default",
+	"enum",
+	"oneOf",
+	"anyOf",
+	"allOf",
+	"title",
+	"additionalProperties",
 ]);
 
 const shouldSkipKey = (key: string) =>
@@ -36,30 +46,50 @@ const shouldSkipKey = (key: string) =>
 
 const defaultResolver: SchemaTreeRefDereferenceFn =
 	(contextObject: object) =>
-	({ pointer }: { source: string | null; pointer: string | null }, _: unknown, currentObject?: object) => {
+	(
+		{ pointer }: { source: string | null; pointer: string | null },
+		_: unknown,
+		currentObject?: object,
+	) => {
 		const activeObject = contextObject ?? currentObject;
 		if (pointer === null) return null;
 		if (pointer === "#") return activeObject;
-		const resolved = resolveInlineRef(activeObject as Dictionary<string>, pointer);
+		const resolved = resolveInlineRef(
+			activeObject as Dictionary<string>,
+			pointer,
+		);
 		if (resolved) return resolved;
 		throw new ReferenceError(`Could not resolve '${pointer}'`);
 	};
 
 function isFlatSchema(schema: Record<string, unknown>): boolean {
 	if (schema.properties) return false;
-	const variants = (schema.oneOf || schema.anyOf) as Record<string, unknown>[] | undefined;
+	const variants = (schema.oneOf || schema.anyOf) as
+		| Record<string, unknown>[]
+		| undefined;
 	if (variants?.some((v) => v.properties)) return false;
 	return !!(schema.type || schema.contentType || schema.format);
 }
 
 function flatSchemaToRows(schema: Record<string, unknown>): SchemaRowData[] {
 	return Object.keys(schema).map((key, i, arr) => ({
-		id: key, name: key, type: String(schema[key]),
-		isArray: false, isObject: false, isOneOf: false,
-		isOneOfChild: false, isFirstOneOfChild: false, isLastOneOfChild: false,
-		required: false, defaultValue: undefined, description: undefined,
-		enumValues: undefined, metadata: undefined,
-		depth: 0, isLast: i === arr.length - 1, ancestorIsLast: [],
+		id: key,
+		name: key,
+		type: String(schema[key]),
+		isArray: false,
+		isObject: false,
+		isOneOf: false,
+		isOneOfChild: false,
+		isFirstOneOfChild: false,
+		isLastOneOfChild: false,
+		required: false,
+		defaultValue: undefined,
+		description: undefined,
+		enumValues: undefined,
+		metadata: undefined,
+		depth: 0,
+		isLast: i === arr.length - 1,
+		ancestorIsLast: [],
 		children: undefined,
 	}));
 }
@@ -78,7 +108,8 @@ function collectRows(
 		const rawName = reg.subpath?.[reg.subpath.length - 1];
 		if (rawName === undefined || rawName === "") return false;
 		const parentProperties = reg.parent?.fragment?.properties;
-		if (parentProperties && !(String(rawName) in (parentProperties as object))) return false;
+		if (parentProperties && !(String(rawName) in (parentProperties as object)))
+			return false;
 		return true;
 	});
 
@@ -90,7 +121,8 @@ function collectRows(
 
 		const parentRequired = reg.parent?.fragment?.required;
 		const required = Array.isArray(parentRequired)
-			? (parentRequired as string[]).includes(name) : false;
+			? (parentRequired as string[]).includes(name)
+			: false;
 
 		const isArray = reg.primaryType === "array";
 		const isObject = reg.primaryType === "object";
@@ -101,40 +133,64 @@ function collectRows(
 		let nullableType: string | undefined;
 		let nullableChildDescription: string | undefined;
 		if ((hasOneOf || hasAnyOf) && reg.children?.length === 2) {
-			const childTypes = reg.children.map((c) => String((c as RegularNode).primaryType ?? ""));
+			const childTypes = reg.children.map((c) =>
+				String((c as RegularNode).primaryType ?? ""),
+			);
 			const nullIndex = childTypes.findIndex((t) => t === "null");
 			if (nullIndex !== -1) {
 				const nonNullIndex = nullIndex === 0 ? 1 : 0;
 				const nonNullChild = reg.children[nonNullIndex] as RegularNode;
 				nullableType = childTypes[nonNullIndex];
-				nullableChildDescription = nonNullChild.annotations?.description as string | undefined;
+				nullableChildDescription = nonNullChild.annotations?.description as
+					| string
+					| undefined;
 				isNullable = true;
 			}
 		}
 
 		const isOneOf = (hasOneOf || hasAnyOf) && !isNullable;
-		const type = isNullable && nullableType
-			? `${nullableType} | null`
-			: isOneOf ? "one of" : (reg.primaryType ?? "");
+		const type =
+			isNullable && nullableType
+				? `${nullableType} | null`
+				: isOneOf
+					? "one of"
+					: (reg.primaryType ?? "");
 
-		const defaultValue = reg.annotations?.default !== undefined
-			? String(reg.annotations.default) : undefined;
-		const description = (reg.annotations?.description as string | undefined) ?? nullableChildDescription;
-		const enumValues = ((reg.validations?.enum as unknown[]) ??
-			((reg.fragment as Record<string, unknown>)?.enum as unknown[]))?.map(String);
+		const defaultValue =
+			reg.annotations?.default !== undefined
+				? String(reg.annotations.default)
+				: undefined;
+		const description =
+			(reg.annotations?.description as string | undefined) ??
+			nullableChildDescription;
+		const enumValues = (
+			(reg.validations?.enum as unknown[]) ??
+			((reg.fragment as Record<string, unknown>)?.enum as unknown[])
+		)?.map(String);
 
 		const metadata: Record<string, string | number | boolean> = {};
 		const fragment = reg.fragment as Record<string, unknown>;
 		if (fragment) {
 			for (const [key, value] of Object.entries(fragment)) {
-				if (!shouldSkipKey(key) && (typeof value === "string" || typeof value === "number" || typeof value === "boolean")) {
+				if (
+					!shouldSkipKey(key) &&
+					(typeof value === "string" ||
+						typeof value === "number" ||
+						typeof value === "boolean")
+				) {
 					metadata[key] = value;
 				}
 			}
 		}
 		if (reg.validations) {
 			for (const [key, value] of Object.entries(reg.validations)) {
-				if (!shouldSkipKey(key) && key !== "enum" && (typeof value === "string" || typeof value === "number" || typeof value === "boolean")) {
+				if (
+					!shouldSkipKey(key) &&
+					key !== "enum" &&
+					(typeof value === "string" ||
+						typeof value === "number" ||
+						typeof value === "boolean")
+				) {
 					metadata[key] = value;
 				}
 			}
@@ -151,38 +207,70 @@ function collectRows(
 		if (reg.children?.length && !isNullable) {
 			if (isArray && reg.children.length === 1) {
 				const itemsNode = reg.children[0] as RegularNode;
-				const itemsName = String(itemsNode.subpath?.[itemsNode.subpath.length - 1] ?? "");
+				const itemsName = String(
+					itemsNode.subpath?.[itemsNode.subpath.length - 1] ?? "",
+				);
 				if (itemsName === "items" && itemsNode.children?.length) {
-					children = collectRows(itemsNode.children, depth + 1, [...ancestorIsLast, isLast], id);
+					children = collectRows(
+						itemsNode.children,
+						depth + 1,
+						[...ancestorIsLast, isLast],
+						id,
+					);
 				} else {
-					children = collectRows(reg.children, depth + 1, [...ancestorIsLast, isLast], id);
+					children = collectRows(
+						reg.children,
+						depth + 1,
+						[...ancestorIsLast, isLast],
+						id,
+					);
 				}
 			} else {
-				children = collectRows(reg.children, depth + 1, [...ancestorIsLast, isLast], id);
+				children = collectRows(
+					reg.children,
+					depth + 1,
+					[...ancestorIsLast, isLast],
+					id,
+				);
 			}
 		}
 
 		let displayName = name;
 		const parentReg = reg.parent as RegularNode | undefined;
-		const isOneOfChild = parentReg?.combiners?.includes(SchemaCombinerName.OneOf);
-		const isAnyOfChild = parentReg?.combiners?.includes(SchemaCombinerName.AnyOf);
+		const isOneOfChild = parentReg?.combiners?.includes(
+			SchemaCombinerName.OneOf,
+		);
+		const isAnyOfChild = parentReg?.combiners?.includes(
+			SchemaCombinerName.AnyOf,
+		);
 		if (isOneOfChild || isAnyOfChild) {
 			const frag = reg.fragment as Record<string, unknown>;
-			const title = reg.title ?? ((reg.annotations as Record<string, unknown>)?.title as string | undefined) ?? (frag?.title as string | undefined);
+			const title =
+				reg.title ??
+				((reg.annotations as Record<string, unknown>)?.title as
+					| string
+					| undefined) ??
+				(frag?.title as string | undefined);
 			if (title) {
 				displayName = title;
 			} else {
-				const properties = frag?.properties as Record<string, Record<string, unknown>> | undefined;
+				const properties = frag?.properties as
+					| Record<string, Record<string, unknown>>
+					| undefined;
 				const roleEnum = properties?.role?.enum as string[] | undefined;
 				if (roleEnum && roleEnum.length === 1) {
 					displayName = `${roleEnum[0]} message`;
 				} else {
-					const nestedOneOf = frag?.oneOf as Record<string, unknown>[] | undefined;
+					const nestedOneOf = frag?.oneOf as
+						| Record<string, unknown>[]
+						| undefined;
 					if (nestedOneOf && nestedOneOf.length > 0 && nestedOneOf[0]?.title) {
 						displayName = `${nestedOneOf[0].title as string} format`;
 					} else if (properties) {
 						const props = Object.keys(properties);
-						displayName = props.includes("requests") ? "Batch request" : `Option ${Number(name) + 1}`;
+						displayName = props.includes("requests")
+							? "Batch request"
+							: `Option ${Number(name) + 1}`;
 					} else {
 						displayName = `Option ${Number(name) + 1}`;
 					}
@@ -191,13 +279,24 @@ function collectRows(
 		}
 
 		rows.push({
-			id, name: displayName, type, isArray, isObject, isOneOf,
+			id,
+			name: displayName,
+			type,
+			isArray,
+			isObject,
+			isOneOf,
 			isOneOfChild: !!(isOneOfChild || isAnyOfChild),
 			isFirstOneOfChild: !!(isOneOfChild || isAnyOfChild) && i === 0,
 			isLastOneOfChild: !!(isOneOfChild || isAnyOfChild) && isLast,
-			required, defaultValue, description, enumValues,
+			required,
+			defaultValue,
+			description,
+			enumValues,
 			metadata: Object.keys(metadata).length > 0 ? metadata : undefined,
-			depth, isLast, ancestorIsLast, children,
+			depth,
+			isLast,
+			ancestorIsLast,
+			children,
 		});
 	}
 	return rows;
@@ -206,18 +305,32 @@ function collectRows(
 type SchemaVariant = { title: string; rows: SchemaRowData[] };
 
 function processSchema(schema: Record<string, unknown>): SchemaRowData[] {
-	const tree = new SchemaTree(schema, { mergeAllOf: true, refResolver: defaultResolver, maxRefDepth: 3 });
+	const tree = new SchemaTree(schema, {
+		mergeAllOf: true,
+		refResolver: defaultResolver,
+		maxRefDepth: 3,
+	});
 	tree.populate();
-	const topNodes = (tree.root.children[0] as RegularNode)?.children ?? undefined;
+	const topNodes =
+		(tree.root.children[0] as RegularNode)?.children ?? undefined;
 	return collectRows(topNodes, 0, []);
 }
 
-function getTopLevelVariants(schema: Record<string, unknown>): SchemaVariant[] | null {
-	const variants = (schema.oneOf || schema.anyOf) as Record<string, unknown>[] | undefined;
+function getTopLevelVariants(
+	schema: Record<string, unknown>,
+): SchemaVariant[] | null {
+	const variants = (schema.oneOf || schema.anyOf) as
+		| Record<string, unknown>[]
+		| undefined;
 	if (!variants || variants.length < 2) return null;
-	const titled = variants.map((v, i) => ({ title: (v.title as string) || `Option ${i + 1}`, schema: v }));
+	const titled = variants.map((v, i) => ({
+		title: (v.title as string) || `Option ${i + 1}`,
+		schema: v,
+	}));
 	const hasRealTitle = variants.some((v) => v.title);
-	return hasRealTitle ? titled.map((v) => ({ title: v.title, rows: processSchema(v.schema) })) : null;
+	return hasRealTitle
+		? titled.map((v) => ({ title: v.title, rows: processSchema(v.schema) }))
+		: null;
 }
 
 function buildDisplay(schema: Record<string, unknown>): {
@@ -229,7 +342,9 @@ function buildDisplay(schema: Record<string, unknown>): {
 	const variants = isFlat ? null : getTopLevelVariants(schema);
 	const rows = isFlat
 		? flatSchemaToRows(schema)
-		: variants ? [] : processSchema(schema);
+		: variants
+			? []
+			: processSchema(schema);
 	return { rows, variants, isFlat };
 }
 
@@ -246,7 +361,11 @@ export default function SchemaDisplayLazy({ url, title, schemaId }: Props) {
 		| { status: "idle" }
 		| { status: "loading" }
 		| { status: "error"; message: string }
-		| { status: "ready"; rows: SchemaRowData[]; variants: SchemaVariant[] | null }
+		| {
+				status: "ready";
+				rows: SchemaRowData[];
+				variants: SchemaVariant[] | null;
+		  }
 	>({ status: "idle" });
 
 	const ref = useRef<HTMLDivElement>(null);
@@ -286,8 +405,19 @@ export default function SchemaDisplayLazy({ url, title, schemaId }: Props) {
 			{state.status === "idle" || state.status === "loading" ? (
 				<div className="flex items-center gap-2 py-4 text-sm text-gray-400 dark:text-gray-500">
 					<svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none">
-						<circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-						<path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+						<circle
+							className="opacity-25"
+							cx="12"
+							cy="12"
+							r="10"
+							stroke="currentColor"
+							strokeWidth="4"
+						/>
+						<path
+							className="opacity-75"
+							fill="currentColor"
+							d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+						/>
 					</svg>
 					Loading parameters…
 				</div>

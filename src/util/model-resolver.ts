@@ -58,8 +58,8 @@ function detailToResolved(detail: AiModelDetail): ResolvedModel {
 
 	// Extract filenames from full R2 paths in schema_manifest for the
 	// "API Schemas (Raw)" section (e.g. "v1/.../sync-input.json" → "sync-input.json")
-	const schemaFiles = detail.schema_manifest.files.map((r2Path) =>
-		r2Path.split("/").at(-1)!,
+	const schemaFiles = detail.schema_manifest.files.map(
+		(r2Path) => r2Path.split("/").at(-1)!,
 	);
 
 	return {
