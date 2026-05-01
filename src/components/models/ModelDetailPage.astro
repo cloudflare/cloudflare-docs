@@ -191,27 +191,28 @@ const hasSchemaFiles =
 // schema file URLs (lazy client-side fetch).
 const hasParameters = hasSchema || hasSchemaFiles;
 
-// For lazy loading, derive input/output schema URLs from schemaFiles.
-// We show the primary input + output for the Parameters section.
-// For multi-mode models (sync/streaming/batch), use sync-input/output as the primary.
-// For flat models, use schema-input/output.
-const inputSchemaFile = model.schemaFiles?.find((f) =>
-	f.endsWith("sync-input.json") || f.endsWith("schema-input.json")
-) ?? model.schemaFiles?.[0];
-const outputSchemaFile = model.schemaFiles?.find((f) =>
-	f.endsWith("sync-output.json") || f.endsWith("schema-output.json")
-) ?? model.schemaFiles?.[1];
+// For lazy loading, find the pre-processed .rows.json files from schemaFiles.
+// Use sync-input/output for multi-mode models, schema-input/output for flat.
+// schemaFiles contains both .json and .rows.json paths.
+const inputRowsFile = model.schemaFiles?.find(
+	(f) =>
+		f.endsWith("sync-input.rows.json") || f.endsWith("schema-input.rows.json"),
+);
+const outputRowsFile = model.schemaFiles?.find(
+	(f) =>
+		f.endsWith("sync-output.rows.json") ||
+		f.endsWith("schema-output.rows.json"),
+);
 
 // schemaFiles stores full R2 paths; the worker proxies them at the URL path segment
-// e.g. "v1/workers-ai-model-catalog/workers-ai/models/llama/sync-input.json"
-//   → URL: "/workers-ai/models/llama/sync-input.json"
+// e.g. "v1/workers-ai-model-catalog/workers-ai/models/llama/sync-input.rows.json"
+//   → URL: "/workers-ai/models/llama/sync-input.rows.json"
 function r2PathToUrl(r2Path: string | undefined): string | undefined {
 	if (!r2Path) return undefined;
-	// Strip the "v1/workers-ai-model-catalog" prefix to get the proxied URL path
 	return r2Path.replace(/^v1\/workers-ai-model-catalog/, "");
 }
-const inputSchemaUrl = r2PathToUrl(inputSchemaFile);
-const outputSchemaUrl = r2PathToUrl(outputSchemaFile);
+const inputRowsUrl = r2PathToUrl(inputRowsFile);
+const outputRowsUrl = r2PathToUrl(outputRowsFile);
 
 // Derive a human-readable label from a schema filename.
 // e.g. "sync-input.json" → "Synchronous · Input"
@@ -261,8 +262,12 @@ const starlightPageProps = {
 		hasRemainingExamples
 			? { depth: 2, slug: "Examples", text: "Examples" }
 			: false,
-		hasParameters ? { depth: 2, slug: "Parameters", text: "Parameters" } : false,
-		hasSchemaFiles ? { depth: 2, slug: "API-Schemas", text: "API Schemas (Raw)" } : false,
+		hasParameters
+			? { depth: 2, slug: "Parameters", text: "Parameters" }
+			: false,
+		hasSchemaFiles
+			? { depth: 2, slug: "API-Schemas", text: "API Schemas (Raw)" }
+			: false,
 	].filter((v) => Boolean(v)) as MarkdownHeading[],
 	hideTitle: true,
 } as StarlightPageProps;
@@ -444,8 +449,8 @@ const starlightPageProps = {
 	}
 
 	{
-		hasParameters && (
-			hasSchema && model.apiModes && model.apiModes.length > 1 ? (
+		hasParameters &&
+			(hasSchema && model.apiModes && model.apiModes.length > 1 ? (
 				<>
 					<h2 id="Parameters">Parameters</h2>
 
@@ -635,14 +640,14 @@ const starlightPageProps = {
 					</Tabs>
 				</>
 			) : (
-				/* Lazy: fetch schema from R2 via worker proxy when user scrolls to section */
+				/* Lazy: fetch pre-processed rows from R2 when user scrolls to section */
 				<>
 					<h2 id="Parameters">Parameters</h2>
 					<Tabs syncKey="schema-tab">
 						<TabItem label="Input">
-							{inputSchemaUrl ? (
+							{inputRowsUrl ? (
 								<SchemaDisplayLazy
-									url={inputSchemaUrl}
+									url={inputRowsUrl}
 									title="Input"
 									schemaId={`${model.modelId}-input`}
 									client:visible
@@ -652,9 +657,9 @@ const starlightPageProps = {
 							)}
 						</TabItem>
 						<TabItem label="Output">
-							{outputSchemaUrl ? (
+							{outputRowsUrl ? (
 								<SchemaDisplayLazy
-									url={outputSchemaUrl}
+									url={outputRowsUrl}
 									title="Output"
 									schemaId={`${model.modelId}-output`}
 									client:visible
@@ -665,8 +670,7 @@ const starlightPageProps = {
 						</TabItem>
 					</Tabs>
 				</>
-			)
-		)
+			))
 	}
 
 	{
@@ -676,10 +680,55 @@ const starlightPageProps = {
 				<div class="not-content grid grid-cols-1 gap-2 sm:grid-cols-2">
 					{model.schemaFiles!.map((filename) => (
 						<div class="flex items-center justify-between rounded-lg border border-gray-200 px-4 py-1.5 dark:border-gray-700">
-							<span class="text-sm font-medium text-gray-900 dark:text-gray-100">{schemaFileLabel(filename)}</span>
+							<span class="text-sm font-medium text-gray-900 dark:text-gray-100">
+								{schemaFileLabel(filename)}
+							</span>
 							<span class="flex items-center gap-1">
-								<a href={`${schemaBasePath}/${filename}`} target="_blank" rel="noopener noreferrer" title="Open" class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
-								<a href={`${schemaBasePath}/${filename}`} download={filename} title="Download" class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></a>
+								<a
+									href={`${schemaBasePath}/${filename}`}
+									target="_blank"
+									rel="noopener noreferrer"
+									title="Open"
+									class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="14"
+										height="14"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									>
+										<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+										<polyline points="15 3 21 3 21 9" />
+										<line x1="10" y1="14" x2="21" y2="3" />
+									</svg>
+								</a>
+								<a
+									href={`${schemaBasePath}/${filename}`}
+									download={filename}
+									title="Download"
+									class="flex h-7 w-7 items-center justify-center rounded text-gray-400 no-underline hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="14"
+										height="14"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									>
+										<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+										<polyline points="7 10 12 15 17 10" />
+										<line x1="12" y1="15" x2="12" y2="3" />
+									</svg>
+								</a>
 							</span>
 						</div>
 					))}

@@ -282,12 +282,6 @@ export default defineConfig({
 	vite: {
 		resolve: {
 			alias: {
-				// @stoplight/json-schema-merge-allof uses require() at module level
-				// and is CJS-only. Since no AI model schemas use allOf, stub it out
-				// for browser builds. The real package still runs in Node (SSG).
-				"@stoplight/json-schema-merge-allof": fileURLToPath(
-					new URL("./src/util/merge-allof-stub.ts", import.meta.url),
-				),
 				"./Page.astro": fileURLToPath(
 					new URL("./src/components/overrides/Page.astro", import.meta.url),
 				),

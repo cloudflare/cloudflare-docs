@@ -16,7 +16,7 @@ const AI_MODEL_SCHEMA_R2_PREFIX = "v1/workers-ai-model-catalog";
 // v1/workers-ai-model-catalog/ai/models/<slug>/<mode>-input.json
 // and likewise for /workers-ai/models/<short-slug>/<mode>-input.json.
 const SCHEMA_FILE_RE =
-	/^\/(ai|workers-ai)\/models\/.+\/((?:sync|streaming|batch|schema)-(?:input|output))\.json$/;
+	/^\/(ai|workers-ai)\/models\/.+\/((?:sync|streaming|batch|schema)-(?:input|output))\.(?:json|rows\.json)$/;
 
 // RFC 9727 requires the path to be exactly /.well-known/api-catalog with no
 // extension. The Cloudflare ASSETS binding cannot serve extensionless files

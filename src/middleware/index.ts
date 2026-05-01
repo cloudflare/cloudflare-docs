@@ -3,7 +3,7 @@ import { defineMiddleware } from "astro:middleware";
 const MIDDLECACHE_BASE = "https://middlecache.ced.cloudflare.com/";
 const AI_MODEL_SCHEMA_R2_PREFIX = "v1/workers-ai-model-catalog";
 const SCHEMA_FILE_RE =
-	/^\/(ai|workers-ai)\/models\/.+\/((?:sync|streaming|batch|schema)-(?:input|output))\.json$/;
+	/^\/(ai|workers-ai)\/models\/.+\/((?:sync|streaming|batch|schema)-(?:input|output))\.(?:json|rows\.json)$/;
 
 // `astro dev` only middleware so that `/api/...` links can be viewed,
 // and so that AI model schema JSON files are proxied from middlecache
