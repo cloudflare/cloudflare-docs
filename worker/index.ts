@@ -11,12 +11,14 @@ const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 const LLMS_FULL_R2_PREFIX = "v1/cloudflare-docs-llms-full";
 const AI_MODEL_SCHEMA_R2_PREFIX = "v1/workers-ai-model-catalog";
 
-// Schema JSON files for AI model detail pages. The R2 key mirrors the URL
-// path exactly: /ai/models/<slug>/<mode>-input.json maps to
-// v1/workers-ai-model-catalog/ai/models/<slug>/<mode>-input.json
-// and likewise for /workers-ai/models/<short-slug>/<mode>-input.json.
-const SCHEMA_FILE_RE =
-	/^\/(ai|workers-ai)\/models\/.+\/((?:sync|streaming|batch|schema)-(?:input|output))\.(?:json|rows\.json)$/;
+// Per-model schema files served from R2 for AI model detail pages.
+// All files live under models/{slug}/ in R2:
+//   /ai/models/<slug>/parameters.json       → R2: v1/.../models/<slug>/parameters.json
+//   /ai/models/<slug>/sync-input.json       → R2: v1/.../models/<slug>/sync-input.json
+//   etc.
+// The URL path /ai/models/<slug>/ maps directly to the R2 models/<slug>/ path.
+const AI_MODEL_FILE_RE =
+	/^\/ai\/models\/(.+)\/(parameters\.json|(?:sync|streaming|batch|schema)-(?:input|output)\.json)$/;
 
 // RFC 9727 requires the path to be exactly /.well-known/api-catalog with no
 // extension. The Cloudflare ASSETS binding cannot serve extensionless files
@@ -129,17 +131,18 @@ export default class extends WorkerEntrypoint<Env> {
 			});
 		}
 
-		if (SCHEMA_FILE_RE.test(pathname)) {
-			const r2Key = `${AI_MODEL_SCHEMA_R2_PREFIX}${pathname}`;
+		const aiModelFileMatch = AI_MODEL_FILE_RE.exec(pathname);
+		if (aiModelFileMatch) {
+			const [, slug, filename] = aiModelFileMatch;
+			const r2Key = `${AI_MODEL_SCHEMA_R2_PREFIX}/models/${slug}/${filename}`;
 			const object = await this.env.MIDDLECACHE.get(r2Key);
 			if (!object) {
-				return new Response("Schema file not found", { status: 404 });
+				return new Response("File not found", { status: 404 });
 			}
 			return new Response(object.body, {
 				headers: {
 					"Content-Type": "application/json; charset=utf-8",
-					// Allow the browser to cache schema files for up to 5 minutes.
-					// The middlecache pipeline runs daily, so stale content is bounded.
+					// Cache for 5 minutes — middlecache pipeline runs daily.
 					"Cache-Control": "public, max-age=300",
 				},
 			});

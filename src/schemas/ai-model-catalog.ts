@@ -113,9 +113,12 @@ export const aiModelDetailSchema = z.object({
 		.object({ label: z.string(), code: z.string() })
 		.array()
 		.optional(),
-	// schema_manifest lists the full R2 paths for the schema files
+	// schema_manifest:
+	//   parameters_json — full R2 path to parameters.json (pre-processed rows for all modes)
+	//   raw_files — filenames for "API Schemas (Raw)" download links
 	schema_manifest: z.object({
-		files: z.string().array(),
+		parameters_json: z.string(),
+		raw_files: z.string().array(),
 	}),
 });
 

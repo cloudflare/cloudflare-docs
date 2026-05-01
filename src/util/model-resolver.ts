@@ -61,11 +61,10 @@ function detailToResolved(detail: AiModelDetail): ResolvedModel {
 	// request time. Keep schema empty so hasSchema is false (Parameters hidden).
 	const schema = { input: {}, output: {} };
 
-	// Extract filenames from full R2 paths in schema_manifest for the
-	// "API Schemas (Raw)" section (e.g. "v1/.../sync-input.json" → "sync-input.json")
-	const schemaFiles = detail.schema_manifest.files.map(
-		(r2Path) => r2Path.split("/").at(-1)!,
-	);
+	// schema_manifest.raw_files: filenames for "API Schemas (Raw)" download links
+	// The URL base for both parameters.json and raw files is /ai/models/{slug}/
+	// where slug = model_id with leading @ stripped (i.e. detail.slug)
+	const schemaFiles = detail.schema_manifest.raw_files;
 
 	return {
 		name: detail.model_id,

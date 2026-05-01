@@ -128,9 +128,9 @@ export interface ResolvedModel {
 	// Currently inferred from data source; will eventually come from the Deus CMS.
 	hosting: "proxied" | "hosted";
 
-	// List of schema file names (e.g. ["sync-input.json", "sync-output.json"])
-	// populated from the middlecache detail.json schema_manifest. Used by
-	// ModelDetailPage to render the "API Schemas (Raw)" section without needing
-	// the full schema content at build time.
+	// Raw schema filenames (e.g. ["sync-input.json", "sync-output.json"]) from
+	// schema_manifest.raw_files. Used by ModelDetailPage to render the
+	// "API Schemas (Raw)" download links. The URL base for these files is
+	// /ai/models/{modelId stripped of leading @}/.
 	schemaFiles?: string[];
 }
