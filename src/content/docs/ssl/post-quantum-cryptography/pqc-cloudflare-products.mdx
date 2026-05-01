@@ -14,31 +14,42 @@ tags:
 
 Cloudflare is [targeting 2029](https://blog.cloudflare.com/post-quantum-roadmap/) to be fully post-quantum secure across its entire product suite.
 
-The sections below group Cloudflare products by the **Cloudflare-operated connection or service** that provides their secure communication channel. Many products share the same underlying connection or service — once that has been upgraded to post-quantum, every product on top of it inherits the same protection. Each section captures which classes of post-quantum algorithms are currently deployed: [key agreement](/ssl/post-quantum-cryptography/#hybrid-key-agreement) (which protects against [harvest-now, decrypt-later](https://en.wikipedia.org/wiki/Harvest_now,_decrypt_later) attacks) and [signatures](/ssl/post-quantum-cryptography/#post-quantum-signatures) (which protect against quantum-forged authentication).
+This page shows the status of the migration. Each section below groups Cloudflare products by the underlying secure communication channel. Once a channel supports PQC, every product built on top inherits PQC support.
+
+Each section captures the classes of post-quantum algorithms deployed in the secure communication channel: [key agreement](/ssl/post-quantum-cryptography/#hybrid-key-agreement) (sometimes called post-quantum encryption, which protects against [harvest-now, decrypt-later](https://en.wikipedia.org/wiki/Harvest_now,_decrypt_later) attacks) and [signatures](/ssl/post-quantum-cryptography/#post-quantum-signatures) (sometimes called post-quantum authentication, which protects live systems against unauthorized access by quantum adversaries [after Q-Day](https://blog.cloudflare.com/post-quantum-roadmap/)).
 
 A Cloudflare-side ✅ entry only delivers end-to-end post-quantum protection when **the party on the other side of the connection also supports the same post-quantum algorithms**. Refer to [PQC support](/ssl/post-quantum-cryptography/pqc-support/) for the list of browsers, libraries, and servers that support the algorithms Cloudflare has deployed.
+
+For an end-to-end walkthrough of how Cloudflare One on-ramps and off-ramps fit together, refer to [PQC and Cloudflare One](/ssl/post-quantum-cryptography/pqc-and-zero-trust/).
 
 ## Visitor to Cloudflare
 
 Inbound TLS 1.3 (including QUIC) from end-user clients to Cloudflare's edge.
 
-| Protection | Status |
-| --- | --- |
-| Key agreement | ✅ X25519MLKEM768 |
-| Signatures | 📝 Planned via [Merkle Tree Certificates](https://datatracker.ietf.org/doc/draft-ietf-plants-merkle-tree-certs/) |
+| Protection    | Status                                                                                                           |
+| ------------- | ---------------------------------------------------------------------------------------------------------------- |
+| Key agreement | ✅ X25519MLKEM768                                                                                                |
+| Signatures    | 📝 Planned via [Merkle Tree Certificates](https://datatracker.ietf.org/doc/draft-ietf-plants-merkle-tree-certs/) |
 
 Reference: [PQC for all websites and APIs](https://blog.cloudflare.com/post-quantum-for-all/).
 
-**Products covered:** any proxied hostname, including Workers custom domains and `*.workers.dev`, R2 public buckets, Stream, Images, the Cloudflare API and dashboard, any HTTPS application behind Cloudflare, and [Cloudflare Access (agentless / clientless)](/ssl/post-quantum-cryptography/pqc-and-zero-trust/#agentless-cloudflare-access).
+**Products covered:** any proxied hostname or HTTPS application behind Cloudflare, including:
+
+- The Cloudflare developer platform: [Workers](/workers/) custom domains, `*.workers.dev`, [Pages](/pages/), [R2](/r2/) public buckets, [Stream](/stream/), and [Images](/images/).
+- [API Shield](/api-shield/)-protected APIs.
+- The Cloudflare API and dashboard.
+- [Cloudflare Access](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) self-hosted applications (browser-to-edge leg).
+
+This section only covers the inbound TLS connection from the end-user client to Cloudflare's edge. When a Worker fetches data from a backend storage service ([D1](/d1/), [KV](/kv/), [Durable Objects](/durable-objects/), [R2](/r2/), [Workers AI](/workers-ai/), [Hyperdrive](/hyperdrive/), and similar), that connection is governed by the [Cloudflare internal network](#cloudflare-internal-network) section. When a Worker calls out to a third-party origin via `fetch()`, it is governed by the [Cloudflare to origin](#cloudflare-to-origin) section. The [Agentless via proxy endpoints](#agentless-via-proxy-endpoints) on-ramp to Cloudflare Gateway terminates inbound TLS in its own edge stack and is covered separately below.
 
 ## Cloudflare internal network
 
 Service-to-service TLS connections between Cloudflare data centers and internal services.
 
-| Protection | Status |
-| --- | --- |
+| Protection    | Status            |
+| ------------- | ----------------- |
 | Key agreement | 🚧 X25519MLKEM768 |
-| Signatures | Not yet |
+| Signatures    | Not yet           |
 
 Reference: [PQC generally available](https://blog.cloudflare.com/post-quantum-cryptography-ga/), [Roadmap](https://blog.cloudflare.com/post-quantum-roadmap/).
 
@@ -48,62 +59,101 @@ Most internal connections have been migrated to X25519MLKEM768. A long tail of s
 
 Outbound TLS 1.3 connections from Cloudflare's edge to customer origin servers.
 
-| Protection | Status |
-| --- | --- |
+| Protection    | Status            |
+| ------------- | ----------------- |
 | Key agreement | ✅ X25519MLKEM768 |
-| Signatures | Not yet |
+| Signatures    | Not yet           |
 
 Reference: [PQC to your origin](/ssl/post-quantum-cryptography/pqc-to-origin/).
 
-**Products covered:** any Cloudflare-proxied zone's origin pull, and the egress leg of [Cloudflare Gateway](/cloudflare-one/traffic-policies/http-policies/tls-decryption/#post-quantum-support) (SWG, HTTPS inspection) when Gateway fetches third-party origin content on behalf of the client.
+**Products covered:** any Cloudflare-proxied zone's origin pull, and the egress leg of [Cloudflare Gateway](#cloudflare-gateway) (SWG, HTTPS inspection) when Gateway fetches third-party origin content on behalf of the client. Gateway's post-quantum support on this leg is independent of which on-ramp the client uses to reach Cloudflare.
 
-## Cloudflare One Client
-
-MASQUE tunnel (TLS 1.3) from an end-user device to Cloudflare's global network, established by the Cloudflare One Client (formerly WARP).
-
-| Protection | Status |
-| --- | --- |
-| Key agreement | ✅ X25519MLKEM768 |
-| Signatures | Not yet |
-
-Reference: [PQC and Cloudflare One: Cloudflare One Client](/ssl/post-quantum-cryptography/pqc-and-zero-trust/#cloudflare-one-client).
-
-**Products covered:** WARP / [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/); [Cloudflare Gateway](/cloudflare-one/traffic-policies/http-policies/tls-decryption/#post-quantum-support) (SWG, HTTPS inspection) when traffic on-ramps via the Cloudflare One Client; and [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/).
+:::note
+If your origin server does not yet support PQC, you can onboard it to Cloudflare's network with a PQC connection by putting it behind [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/).
+:::
 
 ## Cloudflare Tunnel
 
 Outbound TLS 1.3 tunnel from `cloudflared` on a customer origin to Cloudflare's global network.
 
-| Protection | Status |
-| --- | --- |
+| Protection    | Status            |
+| ------------- | ----------------- |
 | Key agreement | ✅ X25519MLKEM768 |
-| Signatures | Not yet |
+| Signatures    | Not yet           |
 
 Reference: [PQ Cloudflare Tunnel](https://blog.cloudflare.com/post-quantum-tunnel/), [PQC and Cloudflare One](/ssl/post-quantum-cryptography/pqc-and-zero-trust/).
 
-**Products covered:** [Workers VPC](/workers-vpc/) private-network access and any [Cloudflare One](/cloudflare-one/) off-ramp that egresses via `cloudflared` (for example, HTTPS access to self-hosted applications via agentless [Cloudflare Access](/ssl/post-quantum-cryptography/pqc-and-zero-trust/#agentless-cloudflare-access)).
+**Products covered:** [Workers VPC](/workers-vpc/) private-network access and any [Cloudflare One](/cloudflare-one/) off-ramp that egresses via `cloudflared` (for example, [Cloudflare Access](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) self-hosted applications).
 
-## Cloudflare One Appliance
+## Cloudflare One
 
-TLS 1.3 control-plane connection used by the Cloudflare One Appliance to establish keys for its IPsec ESP dataplane tunnels.
+The sections below cover the connections and services that make up [Cloudflare One](/cloudflare-one/). For an end-to-end walkthrough of how on-ramps and off-ramps fit together, refer to [PQC and Cloudflare One](/ssl/post-quantum-cryptography/pqc-and-zero-trust/).
 
-| Protection | Status |
-| --- | --- |
+### Cloudflare One Client
+
+MASQUE tunnel (TLS 1.3) from an end-user device to Cloudflare's global network, established by the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) (formerly WARP).
+
+| Protection    | Status            |
+| ------------- | ----------------- |
 | Key agreement | ✅ X25519MLKEM768 |
-| Signatures | Not yet |
+| Signatures    | Not yet           |
 
-Reference: [PQC SASE](https://blog.cloudflare.com/post-quantum-sase/), [Cloudflare One Appliance](/cloudflare-wan/configuration/appliance/reference/), [PQC and Cloudflare One](/ssl/post-quantum-cryptography/pqc-and-zero-trust/#cloudflare-ipsec).
+Reference: [PQC and Cloudflare One: Cloudflare One Client](/ssl/post-quantum-cryptography/pqc-and-zero-trust/#cloudflare-one-client).
 
-## Cloudflare IPsec
+This connection also serves as a post-quantum on-ramp for traffic that traverses [Cloudflare Gateway](#cloudflare-gateway).
+
+### Cloudflare Mesh
+
+[Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) provides private IP connectivity between devices and servers using the Cloudflare One Client on each Mesh node and client device.
+
+Mesh inherits its post-quantum protection from the [Cloudflare One Client](#cloudflare-one-client) connection, which is used as both the on-ramp and the off-ramp for Mesh traffic.
+
+### Cloudflare Gateway
+
+[Cloudflare Gateway](/cloudflare-one/traffic-policies/http-policies/tls-decryption/#post-quantum-support) is a Secure Web Gateway that runs on Cloudflare's edge and filters HTTPS traffic egressing to the public Internet. Gateway has no client-side component; clients reach Gateway via one of several post-quantum on-ramps:
+
+- The [Cloudflare One Client](#cloudflare-one-client).
+- A [Cloudflare IPsec](#cloudflare-ipsec) tunnel.
+- The [Agentless via proxy endpoints](#agentless-via-proxy-endpoints) on-ramp.
+
+The egress leg from Gateway to third-party origin servers is covered by [Cloudflare to origin](#cloudflare-to-origin) and is independent of the on-ramp.
+
+Reference: [PQC and Cloudflare One: Secure Web Gateway](/ssl/post-quantum-cryptography/pqc-and-zero-trust/#secure-web-gateway).
+
+### Agentless via proxy endpoints
+
+Cloudflare Gateway [proxy endpoints](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) let browsers route their egress HTTPS traffic through Cloudflare Gateway for inspection and filtering, without an agent installed on the device. Browsers are configured via a Proxy Auto-Configuration (PAC) file or system proxy settings to forward traffic to a Cloudflare-hosted proxy endpoint, which terminates TLS at Cloudflare's edge.
+
+| Protection    | Status            |
+| ------------- | ----------------- |
+| Key agreement | ✅ X25519MLKEM768 |
+| Signatures    | Not yet           |
+
+Reference: [Proxy endpoints](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/), [PQC and Cloudflare One: Secure Web Gateway](/ssl/post-quantum-cryptography/pqc-and-zero-trust/#secure-web-gateway).
+
+### Cloudflare IPsec
 
 IKEv2 key exchange for IPsec tunnels between third-party branch connectors and Cloudflare's global network.
 
-| Protection | Status |
-| --- | --- |
+| Protection    | Status                                            |
+| ------------- | ------------------------------------------------- |
 | Key agreement | ✅ ML-KEM-768/1024 + DH Group 20 (P-384) in IKEv2 |
-| Signatures | Not yet |
+| Signatures    | Not yet                                           |
 
 Reference: [PQC SASE](https://blog.cloudflare.com/post-quantum-sase/), [GRE and IPsec tunnels](/cloudflare-wan/reference/gre-ipsec-tunnels/#tested-third-party-vendor-interoperability), [draft-ietf-ipsecme-ikev2-mlkem](https://datatracker.ietf.org/doc/draft-ietf-ipsecme-ikev2-mlkem/).
+
+The IPsec ESP dataplane can alternatively be keyed using the [Cloudflare One Appliance](#cloudflare-one-appliance) control plane instead of IKEv2.
+
+### Cloudflare One Appliance
+
+TLS 1.3 control-plane connection used by the [Cloudflare One Appliance](/cloudflare-wan/configuration/appliance/reference/) (formerly Magic WAN Connector) to establish keys for its IPsec ESP dataplane tunnels.
+
+| Protection    | Status            |
+| ------------- | ----------------- |
+| Key agreement | ✅ X25519MLKEM768 |
+| Signatures    | Not yet           |
+
+Reference: [PQC SASE](https://blog.cloudflare.com/post-quantum-sase/), [Cloudflare One Appliance](/cloudflare-wan/configuration/appliance/reference/), [PQC and Cloudflare One](/ssl/post-quantum-cryptography/pqc-and-zero-trust/#cloudflare-ipsec).
 
 ## Contributing
 
