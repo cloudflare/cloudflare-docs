@@ -146,7 +146,7 @@ const CARD_CAPABILITY_KEYS: (keyof AgentData["capabilities"])[] = [
 </div>
 
 <script>
-	import tippy from "tippy.js";
+	import { addTooltip } from "~/util/tippy";
 
 	// Scoped to each Catalog component on the page so multiple instances don't
 	// clash. Handles filter chip selection, URL sync, visibility toggling, and
@@ -161,14 +161,7 @@ const CARD_CAPABILITY_KEYS: (keyof AgentData["capabilities"])[] = [
 		.forEach((el) => {
 			const content = el.dataset.agentTooltip;
 			if (!content) return;
-			tippy(el, {
-				content,
-				placement: "top",
-				appendTo: () => document.body,
-				arrow: true,
-				maxWidth: 280,
-				delay: [150, 0],
-			});
+			addTooltip(el, content, { maxWidth: 280, delay: [150, 0] });
 		});
 
 	function initCatalog(root: HTMLElement) {

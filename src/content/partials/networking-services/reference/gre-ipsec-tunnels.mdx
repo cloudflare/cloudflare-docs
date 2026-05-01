@@ -86,8 +86,8 @@ a --> 1== Cloudflare anycast GRE <br> single endpoint ==>i --> j
 
 ## IPsec tunnels
 
-:::note[Post-quantum IPsec closed beta]
-Post-quantum key agreement for IPsec tunnels with third-party devices is currently in closed beta. Contact your account team to request access. Post-quantum IPsec is generally available when using the [Cloudflare One Appliance](/cloudflare-wan/configuration/appliance/).
+:::note[Post-quantum IPsec]
+Post-quantum key agreement for IPsec tunnels with third-party devices is generally available, with confirmed interoperability for [validated third-party platforms](#tested-third-party-vendor-interoperability). Post-quantum IPsec is also generally available when using the [Cloudflare One Appliance](/cloudflare-wan/configuration/appliance/).
 :::
 
 [IPsec](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/) is a group of protocols that work together to set up encrypted connections between devices. It helps keep data you send over public networks secure. Organizations often use IPsec to set up Virtual Private Networks (VPNs), and it works by encrypting IP packets and authenticating the source where the packets come from.
@@ -131,8 +131,8 @@ Documentation sometimes refers to IKE SA as Phase 1 as per IKEv1 language.
 - **Key Exchange Method** (formerly Diffie-Hellman group):
   Cloudflare supports the following key exchange methods for the IKE SA. Note that [RFC 9370](https://datatracker.ietf.org/doc/rfc9370/) renames "DH Group" to "Key Exchange Method" to accommodate non-DH algorithms.
 
-  - **Post-quantum hybrid (beta) (recommended)**: ML-KEM-768 in parallel with DH Group 20 (per RFC 9370 and [draft-ietf-ipsecme-ikev2-mlkem](https://datatracker.ietf.org/doc/draft-ietf-ipsecme-ikev2-mlkem/))
-  - Post-quantum hybrid: ML-KEM-1024 in parallel with DH Group 20 (per RFC 9370 and [draft-ietf-ipsecme-ikev2-mlkem](https://datatracker.ietf.org/doc/draft-ietf-ipsecme-ikev2-mlkem/))
+  - **Post-quantum hybrid (recommended)**: ML-KEM-768 as an additional Key Exchange to DH Group 20 (per RFC 9370 and [draft-ietf-ipsecme-ikev2-mlkem](https://datatracker.ietf.org/doc/draft-ietf-ipsecme-ikev2-mlkem/))
+  - Post-quantum hybrid: ML-KEM-1024 as an additional Key Exchange to DH Group 20 (per RFC 9370 and [draft-ietf-ipsecme-ikev2-mlkem](https://datatracker.ietf.org/doc/draft-ietf-ipsecme-ikev2-mlkem/))
   - Classical DH group 20 (384-bit random ECP group)
   - Classical DH group 14 (2048-bit MODP group)
   - Classical DH group 5 (1536-bit MODP group)
@@ -207,6 +207,18 @@ The Child SA. Documentation sometimes refers to this as Phase 2 as per IKEv1 lan
 - **`NULL` encryption for IPsec (not recommended):** Do not use this option unless necessary because it reduces security by leaving IPsec traffic unencrypted. You must explicitly opt in to use this option. Using this option also eliminates post-quantum protections.
 
 </Details>
+
+### Tested third-party vendor interoperability
+
+The following third-party vendors have been tested and validated to interoperate with Cloudflare IPsec for post-quantum key agreement:
+
+| Vendor   | Product / Version                                            | ML-KEM variant | DH group | Notes                                                         |
+| -------- | ------------------------------------------------------------ | -------------- | -------- | ------------------------------------------------------------- |
+| Cisco    | Cisco 8000 Series Secure Routers with IOS XR Release 26.1.1 | ML-KEM-1024    | Group 20 | Requires RFC 9370 and draft-ietf-ipsecme-ikev2-mlkem support. |
+| Fortinet | FortiOS 7.6.6+                                               | ML-KEM-768     | Group 20 | Requires RFC 9370 and draft-ietf-ipsecme-ikev2-mlkem support. |
+| Fortinet | FortiOS 7.6.6+                                               | ML-KEM-1024    | Group 20 | Requires RFC 9370 and draft-ietf-ipsecme-ikev2-mlkem support. |
+
+Cloudflare continues to test and validate additional third-party devices. If you have successfully configured post-quantum IPsec with a vendor not listed here, contact your account team.
 
 ### Supported IKE ID formats
 

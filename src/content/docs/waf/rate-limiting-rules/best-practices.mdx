@@ -149,6 +149,40 @@ For example, rule #3 computes the rate considering `POST` requests to `/login` t
 Login endpoints are also commonly protected against the [use of exposed credentials](/waf/managed-rules/check-for-exposed-credentials/) and [bot abuse](/bots/).
 :::
 
+### Protect OTP and verification endpoints
+
+One-time password (OTP) and verification endpoints (such as `/api/otp/validate` or `/account/verify`) are frequent targets for brute force attacks. These endpoints are particularly sensitive because attackers attempt large volumes of requests with different codes to guess a valid OTP.
+
+When configuring rate limiting for these endpoints, follow these guidelines:
+
+- **Match the exact URI path**: The rule expression must match the path that receives attack traffic. Verify the path in analytics before creating the rule. A rule targeting `/validate/otp` will not match requests to `/api/otp/validate`.
+- **Use response-based counting**: Count only requests that return error responses (such as `401` or `403`) to avoid rate limiting legitimate users who submit valid codes.
+- **Scope geographic restrictions appropriately**: If you restrict by country, verify that attack traffic originates from all the countries you observe in analytics, not just one.
+
+The following example rule protects an OTP validation endpoint by counting only failed attempts:
+
+| Setting                  | Value                                                                                                                |
+| ------------------------ | -------------------------------------------------------------------------------------------------------------------- |
+| Matching criteria        | URI Path equals `/api/otp/validate` and Request Method equals `POST`                                                 |
+| Expression               | `http.request.uri.path eq "/api/otp/validate" and http.request.method eq "POST"`                                     |
+| Counting characteristics | IP                                                                                                                   |
+| Increment counter when   | URI Path equals `/api/otp/validate` and Request Method equals `POST` and Response Status Code is in (401, 403)       |
+| Counting expression      | `http.request.uri.path eq "/api/otp/validate" and http.request.method eq "POST" and http.response.code in {401 403}` |
+| Rate (Requests / Period) | 5 requests / 1 minute                                                                                                |
+| Action                   | Block for 10 minutes                                                                                                 |
+
+_The above example rule requires a Business plan or higher._
+
+If your OTP endpoint returns `200` for both valid and invalid codes (with the result in the response body), use request-based counting with a lower threshold instead:
+
+| Setting                  | Value                                                                            |
+| ------------------------ | -------------------------------------------------------------------------------- |
+| Matching criteria        | URI Path equals `/api/otp/validate` and Request Method equals `POST`             |
+| Expression               | `http.request.uri.path eq "/api/otp/validate" and http.request.method eq "POST"` |
+| Counting characteristics | IP                                                                               |
+| Rate (Requests / Period) | 10 requests / 1 minute                                                           |
+| Action                   | Managed Challenge                                                                |
+
 ## Limiting the number of operations
 
 You can use rate limiting to limit the number of operations performed by a client. The exact rule providing this protection will depend on your application. The following examples address [content scraping](https://www.cloudflare.com/learning/bots/what-is-content-scraping/) via query string parameters or JSON body.

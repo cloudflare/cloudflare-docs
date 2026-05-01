@@ -226,6 +226,10 @@ For example, a `console.log()` outside of workflow steps may cause the logs to p
 
 However, logic involving non-serializable resources, like a database connection, should be executed outside of steps. Operations outside of a `step.do` might be repeated more than once, due to the nature of the Workflows' instance lifecycle.
 
+:::note
+If you use [Hyperdrive](/hyperdrive/) in a Workflow, create a new connection inside each `step.do()` and run your queries in that same step. Do not reuse a Hyperdrive-backed connection across steps.
+:::
+
 <TypeScriptExample filename="index.ts">
 
 ```ts
@@ -261,6 +265,7 @@ export class MyWorkflow extends WorkflowEntrypoint {
 		});
 
 		// ✅ Good: calls that have no side effects can be done outside of steps
+		// For Hyperdrive, create the connection inside each step instead of here.
 		const db = createDBConnection(this.env.DB_URL, this.env.DB_TOKEN);
 
 		// ✅ Good: run functions with side effects inside of a step
@@ -606,13 +611,13 @@ In JavaScript Workflows, `ReadableStream<Uint8Array>` is a supported serializabl
 - Keep individual chunks under 16 MB.
 - Do not return a locked stream or a stream that has already been read.
 - Rely only on streams returned from steps.
-:::note
-Only byte streams are supported - use `ReadableStream<Uint8Array>`.
+  :::note
+  Only byte streams are supported - use `ReadableStream<Uint8Array>`.
 
 BYOB streams and BYOB readers are not supported.
 :::
 
-Note that streamed outputs are still considered part of the Workflow instance storage limit. 
+Note that streamed outputs are still considered part of the Workflow instance storage limit.
 
 If these storage limits still do not work for you, consider storing your step outputs externally (for example, in [R2](/r2)) and saving a reference to it.
 

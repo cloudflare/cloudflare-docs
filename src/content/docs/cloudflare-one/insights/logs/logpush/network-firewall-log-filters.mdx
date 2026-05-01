@@ -12,7 +12,14 @@ tags:
 
 import { APIRequest } from "~/components";
 
-You can utilize different [Log filters](/logs/logpush/logpush-job/filters/) to only view specific data from Cloudflare Network Firewall.
+You can apply [Log filters](/logs/logpush/logpush-job/filters/) to your Logpush job to export only specific Cloudflare Network Firewall events. The examples below show common filter configurations using the Logpush API. Each filter uses a JSON structure with `where` clauses containing `key` (the log field to filter on), `operator` (the comparison, such as `eq` for equals or `!eq` for not equals), and `value` (the value to match).
+
+The filters in this guide use the following log fields:
+
+- `MitigationSystem` — Identifies which Cloudflare system sampled the packet. For Network Firewall events, this value is `magic-firewall`.
+- `RulesetID` — The unique identifier of the managed ruleset containing the rule that matched the packet, if any. An empty string indicates no managed ruleset matched.
+- `Outcome` — The action that Cloudflare systems took on the packet (`pass` or `drop`).
+- `Verdict` — The action that Cloudflare systems determined should be taken on the packet (`pass` or `drop`). For disabled rules, `Verdict` may differ from `Outcome` because the rule evaluated the packet but did not enforce its action.
 
 ## Filter by enabled or disabled rules
 
@@ -80,7 +87,7 @@ The example below [creates a Logpush job](/api/resources/logpush/subresources/jo
 
 Use the filter examples below to filter your Cloudflare Network Firewall traffic to display events for allowed or blocked traffic.
 
-The example below [creates a Logpush job](/api/resources/logpush/subresources/jobs/methods/create/) that only displays fields relevant to Cloudflare Network Firewall, and the filter only displays events where no explicit action was taken, for example, a packet "fell through" Cloudflare Network Firewall. This example does not have any rules applied.
+The example below [creates a Logpush job](/api/resources/logpush/subresources/jobs/methods/create/) that only displays fields relevant to Cloudflare Network Firewall, and the filter only displays events where no explicit action was taken — that is, a packet passed through the firewall without matching any rule. By default, Cloudflare Network Firewall permits unmatched traffic. This is identified by an empty `RulesetID`.
 
 <APIRequest
 	path="/accounts/{account_id}/logpush/jobs"
@@ -138,9 +145,9 @@ The example below [creates a Logpush job](/api/resources/logpush/subresources/jo
 	}}
 />
 
-## Filter by relevant fields to Cloudflare Network Firewall
+## Filter to only Network Firewall events
 
-Use the examples below to filter out fields that are not relevant to traffic flowing through Cloudflare Network Firewall. The example below [creates a Logpush job](/api/resources/logpush/subresources/jobs/methods/create/) that only includes Cloudflare Network Firewall events.
+If your Logpush job includes events from multiple Cloudflare mitigation systems, use the filter below to include only Cloudflare Network Firewall events. The example below [creates a Logpush job](/api/resources/logpush/subresources/jobs/methods/create/) that filters on `MitigationSystem` to include only Network Firewall traffic.
 
 <APIRequest
 	path="/accounts/{account_id}/logpush/jobs"

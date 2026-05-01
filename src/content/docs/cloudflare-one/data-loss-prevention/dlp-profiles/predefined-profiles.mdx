@@ -12,7 +12,7 @@ tags:
 
 import { Render } from "~/components";
 
-Cloudflare Zero Trust provides predefined DLP profiles for common types of sensitive data. Some profiles include built-in validation checks that increase detection accuracy. You can also configure [advanced settings](/cloudflare-one/data-loss-prevention/dlp-profiles/advanced-settings/) for predefined profiles.
+Cloudflare Zero Trust provides predefined DLP profiles for common types of sensitive data. Some profiles include built-in validation checks to increase detection accuracy. Others use profile-specific matching logic to reduce false positives. You can also configure [advanced settings](/cloudflare-one/data-loss-prevention/dlp-profiles/advanced-settings/) for predefined profiles.
 
 ## AI Prompt
 
@@ -87,6 +87,29 @@ The following diagnosis and medication names are checked for surrounding ASCII c
 - FDA active ingredients
 - FDA drug names
 - ICD-10 FY2023 short descriptions
+
+## Personally Identifiable Information (PII) Record
+
+The **Personally Identifiable Information (PII) Record** predefined profile is designed to detect records that contain multiple types of personal data. Unlike most predefined and custom DLP profiles, this profile matches only when at least three unique detection entries are found in close proximity.
+
+This behavior helps reduce false positives from isolated matches.
+
+The profile includes the following detection entries:
+
+- AU Passport Number
+- American Express Card Number
+- Diners Club Card Number
+- Driver's License Number
+- Email Address
+- Full Name
+- Mailing Address
+- Mastercard Card Number
+- US Individual Tax Identification Number (ITIN)
+- US Passport Number
+- US Phone Number
+- Union Pay Card Number
+- United States SSN Numeric Detection
+- Visa Card Number
 
 ## Social Security, Insurance, Tax, and Identifier Numbers
 

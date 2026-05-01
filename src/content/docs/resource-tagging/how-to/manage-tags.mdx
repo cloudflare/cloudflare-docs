@@ -17,7 +17,7 @@ curl -X PUT "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/tags" \
   -H "Authorization: Bearer $API_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-    "resource_type": "workers_script",
+    "resource_type": "worker",
     "resource_id": "'"$RESOURCE_ID"'",
     "tags": {
       "environment": "production",
@@ -50,7 +50,7 @@ Some resource types require additional fields. Refer to [supported resource type
 Retrieve tags for a specific resource:
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/tags?resource_type=workers_script&resource_id=$RESOURCE_ID" \
+curl -X GET "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/tags?resource_type=worker&resource_id=$RESOURCE_ID" \
   -H "Authorization: Bearer $API_TOKEN"
 ```
 
@@ -65,7 +65,7 @@ The API does not support partial updates — `PUT` always replaces all tags. To 
 1. `GET` the current tags.
 
 ```bash
-curl -X GET "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/tags?resource_type=workers_script&resource_id=$RESOURCE_ID" \
+curl -X GET "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/tags?resource_type=worker&resource_id=$RESOURCE_ID" \
   -H "Authorization: Bearer $API_TOKEN"
 
 # Response: {"result": {"tags": {"environment": "production", "team": "platform"}}}
@@ -88,7 +88,7 @@ curl -X PUT "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/tags" \
   -H "Authorization: Bearer $API_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-    "resource_type": "workers_script",
+    "resource_type": "worker",
     "resource_id": "'"$RESOURCE_ID"'",
     "tags": {
       "environment": "production",
@@ -115,7 +115,7 @@ curl -X DELETE "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/tags" 
   -H "Authorization: Bearer $API_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-    "resource_type": "workers_script",
+    "resource_type": "worker",
     "resource_id": "'"$RESOURCE_ID"'"
   }'
 ```

@@ -11,11 +11,13 @@ sidebar:
     label: Address maps
 ---
 
-import { GlossaryDefinition } from "~/components"
+import { GlossaryDefinition } from "~/components";
 
 <GlossaryDefinition term="address map" prepend="Address map is " />
 
-If you do not have BYOIP or static IPs and you want to use Address Maps, contact your account manager. You can [customize the IPs Cloudflare uses](/fundamentals/concepts/cloudflare-ip-addresses/#customize-cloudflare-ip-addresses) by bringing your own IP addresses to Cloudflare (BYOIP) or by leasing static Cloudflare IPs.
+By default, Cloudflare responds to DNS queries for proxied hostnames with Cloudflare-owned [anycast IP addresses](/fundamentals/concepts/cloudflare-ip-addresses/). Address maps allow you to override this behavior — when a zone or account is associated with an address map, Cloudflare responds with the IP addresses you specify instead.
+
+To use address maps, you must first have [BYOIP](/byoip/) prefixes or [static IPs](/byoip/concepts/static-ips/) configured on your account. You can [customize the IPs Cloudflare uses](/fundamentals/concepts/cloudflare-ip-addresses/#customize-cloudflare-ip-addresses) through either approach. If you are interested in address maps but do not yet have BYOIP or static IPs, contact your account manager.
 
 :::note
 Both IPv4 and IPv6 addresses are supported.
@@ -56,10 +58,12 @@ To specify different addresses for certain zones, [create a new address map](/by
 You can use address maps to set up [non-SNI support](/byoip/address-maps/setup/#spectrum-https-applications) for Spectrum HTTPS applications.
 
 However, to control what IP address Cloudflare will use when responding to requests for your Spectrum applications, you should first refer to their respective configuration and set the `edge_ips` field as `static`, e.g.:
+
 ```json
 "edge_ips": {
   "type": "static",
   "ips": ["1.2.3.4"]
 }
 ```
+
 For details, refer to the [Spectrum API](/api/resources/spectrum#%28resource%29%20spectrum%20%3E%20%28model%29%20edge_ips%20%3E%20%28schema%29%20%3E%20%28variant%29%201).

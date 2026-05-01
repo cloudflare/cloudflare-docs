@@ -96,7 +96,7 @@ More narrow permissions may be used, however this is the set of permissions that
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Identity providers**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Integrations** > **Identity providers**.
 
 2. Under **Your identity providers**, select **Add new identity provider**.
 
@@ -168,7 +168,7 @@ To receive an email claim in the `id_token` from Microsoft Entra, you must:
 
 4.  If you gave your email claim another name than `email`, you must update your configuration in Cloudflare One:
 
-        a. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Identity providers** > **Azure AD** > **Edit**.
+        a. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Integrations** > **Identity providers** > **Azure AD** > **Edit**.
 
         b. Under **Optional configurations** > **Email claim**, enter the name of the claim representing your organization's email addresses.
 
@@ -232,7 +232,7 @@ To check which users and groups were synchronized, select **Provisioning logs**.
 
 <Render file="access/verify-scim-provisioning" product="cloudflare-one" />
 
-To monitor the exchange of identity details between Cloudflare Access and Microsoft Entra ID, go to [Cloudflare One](https://one.dash.cloudflare.com) > **Insights** > **Logs** > **SCIM provisioning logs** and view the [SCIM activity logs](/cloudflare-one/insights/logs/dashboard-logs/scim-logs/).
+To monitor the exchange of identity details between Cloudflare Access and Microsoft Entra ID, go to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Zero Trust** > **Insights** > **Logs** > **SCIM provisioning logs** and view the [SCIM activity logs](/cloudflare-one/insights/logs/dashboard-logs/scim-logs/).
 
 ### Provisioning attributes
 

@@ -81,7 +81,7 @@ At this step, your `*.pages.dev` domain has been secured behind Access. To resec
 
 If you have a custom domain and protected your `*.pages.dev` domain behind Access, you must:
 
-10. Select **Add an application** > **Self hosted** in [Cloudflare Zero Trust](https://one.dash.cloudflare.com/).
+10. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**. Select **Add an application** > **Self hosted**.
 11. Input an **Application name** and select your custom domain from the _Domain_ dropdown menu.
 12. Select **Next** and configure your access rules to define who can reach the Access authentication page.
 13. Select **Add application**.
@@ -109,10 +109,21 @@ Use the `--force` flag to skip the confirmation prompt and to force deletion of 
 To delete _all_ your deployments for a particular project name, you could run the following shell script:
 
 ```sh
-npx wrangler pages deployment list --project-name <PROJECT_NAME> --json \
-  | jq -r '.[].Id' \
-  | xargs -I {} npx wrangler pages deployment delete {} --project-name <PROJECT_NAME> --force
+prod_id=""
+while :; do
+  ids=$(npx wrangler pages deployment list --project-name <PROJECT_NAME> --json | jq -r '.[].Id')
+  to_delete=$(echo "$ids" | grep -v -F -x "$prod_id" | grep .)
+  [ -z "$to_delete" ] && { echo "Done. Production: $prod_id"; break; }
+  echo "Deleting $(echo "$to_delete" | wc -l | tr -d ' ') deployments..."
+  while IFS= read -r id; do
+    if ! npx wrangler pages deployment delete "$id" --project-name <PROJECT_NAME> --force 2>&1 | tee /tmp/wrangler-del.log | grep -q "Successfully deleted"; then
+      grep -q "active production deployment" /tmp/wrangler-del.log && prod_id="$id"
+    fi
+  done <<< "$to_delete"
+done
 ```
+
+Note that this will not delete the active production deployment if one exists.
 
 ## Use Pages as Origin in Cloudflare Load Balancer
 

@@ -131,6 +131,8 @@ The dashboard will display your new VPC Service with a unique Service ID. Save t
 </TabItem>
 <TabItem label="Wrangler CLI">
 
+For an HTTP service:
+
 ```sh
 npx wrangler vpc service create my-private-api \
   --type http \
@@ -138,15 +140,28 @@ npx wrangler vpc service create my-private-api \
   --hostname <YOUR_HOSTNAME>
 ```
 
+For a TCP service (for example, a PostgreSQL database):
+
+```sh
+npx wrangler vpc service create my-database \
+  --type tcp \
+  --tcp-port 5432 \
+  --app-protocol postgresql \
+  --tunnel-id <YOUR_TUNNEL_ID> \
+  --ipv4 <YOUR_IPV4_ADDRESS>
+```
+
 Replace:
 
 - `<YOUR_TUNNEL_ID>` with your tunnel ID from step 2
 - `<YOUR_HOSTNAME>` with your internal service hostname (for example, `internal-api.company.local`)
+- `<YOUR_IPV4_ADDRESS>` with the private IP address of your service (for example, `10.0.1.50`)
 
 You can also:
 
-- Create services using IP addresses by replacing `--hostname <YOUR_HOSTNAME>` with `--ipv4 <YOUR_IPV4_ADDRESS>` (for example, `--ipv4 10.0.1.50`), `--ipv6 <YOUR_IPV6_ADDRESS>` (for example, `--ipv6 fe80::1`), or both for dual-stack configuration (`--ipv4 10.0.1.50 --ipv6 fe80::1`)
-- Specify custom ports by adding `--http-port <PORT>` and/or `--https-port <PORT>` (for example, `--http-port 8080 --https-port 8443`)
+- Create services using IP addresses by replacing `--hostname <YOUR_HOSTNAME>` with `--ipv4 <YOUR_IPV4_ADDRESS>`, `--ipv6 <YOUR_IPV6_ADDRESS>`, or both for dual-stack configuration
+- Specify custom ports for HTTP services by adding `--http-port <PORT>` and/or `--https-port <PORT>` (for example, `--http-port 8080 --https-port 8443`)
+- Set the TLS certificate verification mode with `--cert-verification-mode` (`verify_full`, `verify_ca`, or `disabled`)
 
 The command will return a service ID. Save this for the next step.
 
@@ -191,7 +206,9 @@ export default {
 		// This is a simple proxy scenario.
 		// In this case, you will need to replace the URL with the proper protocol (http vs. https), hostname and port of the service.
 		// For example, this could be "http://localhost:1111", "http://192.0.0.1:3000", "https://my-internal-api.example.com"
-		const targetUrl = new URL(`http://<ENTER_SERVICE_HOST>:<ENTER_SERVICE_PORT>${url.pathname}${url.search}`);
+		const targetUrl = new URL(
+			`http://<ENTER_SERVICE_HOST>:<ENTER_SERVICE_PORT>${url.pathname}${url.search}`,
+		);
 
 		// Create new request with the target URL but preserve all other properties
 		const proxyRequest = new Request(targetUrl, {
@@ -205,7 +222,6 @@ export default {
 		return response;
 	},
 } satisfies ExportedHandler<Env>;
-
 ```
 
 ## 6. Test locally

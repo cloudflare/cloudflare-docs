@@ -78,7 +78,7 @@ async function getExternalLinkPaths(dir: string): Promise<Set<string>> {
 				rel = rel.replace(/\.(mdx|md)$/, "");
 				rel = rel.replace(/\/index$/, "/");
 				if (!rel.endsWith("/")) rel += "/";
-				paths.add(rel);
+				paths.add(rel.toLowerCase());
 			}
 		}
 	}

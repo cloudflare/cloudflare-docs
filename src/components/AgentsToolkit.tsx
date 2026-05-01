@@ -4,8 +4,8 @@ import {
 	PiSparkleDuotone,
 	PiCheckCircleLight,
 } from "react-icons/pi";
-import { useState, useRef, useCallback } from "react";
-import { createPortal } from "react-dom";
+import { useState, useRef, useEffect } from "react";
+import tippy from "tippy.js";
 import ClaudeIcon from "./icons/ClaudeIcon";
 import ChatGPTIcon from "./icons/ChatGPTIcon";
 import DocsForAgentsIcon from "./icons/DocsForAgentsIcon";
@@ -28,50 +28,21 @@ interface IconOption {
 	onClick: () => void;
 }
 
-function useTooltip() {
-	const [visible, setVisible] = useState(false);
-	const [position, setPosition] = useState({ top: 0, left: 0 });
-	const triggerRef = useRef<HTMLElement | null>(null);
+function useTippy(content: string) {
+	const ref = useRef<HTMLButtonElement>(null);
 
-	const show = useCallback(() => {
-		if (triggerRef.current) {
-			const rect = triggerRef.current.getBoundingClientRect();
-			setPosition({
-				top: rect.top - 8,
-				left: rect.left + rect.width / 2,
-			});
-		}
-		setVisible(true);
-	}, []);
+	useEffect(() => {
+		if (!ref.current) return;
+		const instance = tippy(ref.current, {
+			content,
+			placement: "top",
+			arrow: false,
+			appendTo: () => document.body,
+		});
+		return () => instance.destroy();
+	}, [content]);
 
-	const hide = useCallback(() => {
-		setVisible(false);
-	}, []);
-
-	return { visible, position, triggerRef, show, hide };
-}
-
-function TooltipPortal({
-	text,
-	visible,
-	position,
-}: {
-	text: string;
-	visible: boolean;
-	position: { top: number; left: number };
-}) {
-	if (!visible) return null;
-
-	return createPortal(
-		<div
-			role="tooltip"
-			className="pointer-events-none fixed z-[99999] -translate-x-1/2 -translate-y-full rounded-md bg-[var(--sl-color-bg-nav)] px-3 py-2 text-center text-[12px] leading-snug text-[var(--sl-color-text)] shadow-lg ring-1 ring-[var(--sl-color-hairline)]"
-			style={{ top: position.top, left: position.left }}
-		>
-			{text}
-		</div>,
-		document.body,
-	);
+	return ref;
 }
 
 function ListItem({
@@ -87,19 +58,14 @@ function ListItem({
 	icon: React.ComponentType<{ className?: string }>;
 	label: string;
 }) {
-	const { visible, position, triggerRef, show, hide } = useTooltip();
+	const ref = useTippy(tooltip);
 
 	return (
 		<li className="m-0 p-0">
-			<TooltipPortal text={tooltip} visible={visible} position={position} />
 			<button
-				ref={triggerRef as React.RefObject<HTMLButtonElement>}
-				onMouseEnter={show}
-				onMouseLeave={hide}
-				onFocus={show}
-				onBlur={hide}
+				ref={ref}
 				onClick={onClick}
-				className="flex w-full cursor-pointer items-center gap-2.5 rounded-sm border-0 bg-transparent px-0 py-1 text-[13px] text-[var(--sl-color-gray-2)] shadow-none transition-colors duration-150 ease-out hover:text-[var(--sl-color-white)] focus-visible:ring-2 focus-visible:ring-[var(--sl-color-text-accent)] focus-visible:outline-none"
+				className="flex w-full cursor-pointer items-center gap-2.5 rounded-none border-0 bg-transparent px-0 py-1.5 text-[13px] leading-snug text-[var(--sidebar-text)] shadow-none transition-colors duration-150 ease-out hover:text-[var(--sidebar-text-strong)] focus-visible:ring-2 focus-visible:ring-[var(--sl-color-text-accent)] focus-visible:outline-none"
 			>
 				{justCopied ? (
 					<PiCheckCircleLight className="h-3.5 w-3.5 shrink-0 text-green-500" />
@@ -121,24 +87,17 @@ function IconButton({
 	onClick: () => void;
 	icon: React.ComponentType<{ className?: string }>;
 }) {
-	const { visible, position, triggerRef, show, hide } = useTooltip();
+	const ref = useTippy(tooltip);
 
 	return (
-		<div>
-			<TooltipPortal text={tooltip} visible={visible} position={position} />
-			<button
-				ref={triggerRef as React.RefObject<HTMLButtonElement>}
-				onMouseEnter={show}
-				onMouseLeave={hide}
-				onFocus={show}
-				onBlur={hide}
-				onClick={onClick}
-				className="inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-md border-0 bg-transparent text-[var(--sl-color-gray-2)] shadow-none transition-colors duration-150 ease-out hover:bg-[var(--color-cl1-gray-9)] hover:text-[var(--sl-color-white)] focus-visible:ring-2 focus-visible:ring-[var(--sl-color-text-accent)] focus-visible:outline-none dark:hover:bg-[var(--color-cl1-gray-2)]"
-			>
-				<Icon className="h-4 w-4" />
-				<span className="sr-only">{tooltip}</span>
-			</button>
-		</div>
+		<button
+			ref={ref}
+			onClick={onClick}
+			aria-label={tooltip}
+			className="inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-md border-0 bg-transparent text-[var(--sl-color-gray-2)] shadow-none transition-colors duration-150 ease-out hover:bg-[var(--color-cl1-gray-9)] hover:text-[var(--sl-color-white)] focus-visible:ring-2 focus-visible:ring-[var(--sl-color-text-accent)] focus-visible:outline-none dark:hover:bg-[var(--color-cl1-gray-2)]"
+		>
+			<Icon className="h-4 w-4" aria-hidden="true" />
+		</button>
 	);
 }
 

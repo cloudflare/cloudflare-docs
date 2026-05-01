@@ -13,7 +13,7 @@ tags:
   - REST API
   - Security
 sidebar:
-  label: Secure API endpoints (Free, Pro, Business)
+  label: Secure API endpoints
 ---
 
 import { Render, Steps, Tabs, TabItem, DashButton } from "~/components";
@@ -22,9 +22,7 @@ Once your API is in production and receiving traffic, you need to decide which e
 
 The core workflow uses [Cloudflare Application Security](/waf/) (also known as Web Application Firewall or WAF) features, [SSL/TLS](/ssl/) settings, and [bot detection](/bots/), all available on Free, Pro, and Business plans. Enterprise callouts cover [API Shield](/api-shield/) capabilities for teams that need schema validation, JSON Web Token (JWT) validation, and sequence analysis.
 
-:::note
-Most procedures in this guide are configured per domain or [zone](/fundamentals/concepts/accounts-and-zones/#zones). Select your domain in the Cloudflare dashboard before starting.
-:::
+<Render file="domain-scope-note" product="use-cases" />
 
 ## Know what you are exposing
 

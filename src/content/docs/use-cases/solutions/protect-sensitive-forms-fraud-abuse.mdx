@@ -1,0 +1,257 @@
+---
+pcx_content_type: solution-guide
+title: Protect your forms from spam and abuse (Free, Pro, and Business)
+description: Block spam submissions, fake account creation, and card testing on your web forms using a layered defense.
+products:
+  - turnstile
+  - waf
+  - bots
+  - client-side-security
+sidebar:
+  label: Protect your forms from spam and abuse
+---
+
+import { Render, Steps, DashButton } from "~/components";
+
+Contact, registration, and checkout forms are common targets for automated abuse. This guide covers form protection: verifying that visitors are human, limiting repeated submissions, and blocking known attack patterns. The core workflow uses features available on all plans. Pro and Business plan features are included as callouts.
+
+<Render file="domain-scope-note" product="use-cases" params={{ exception: "Turnstile is the exception: widgets are configured at the account level." }} />
+
+## Add Turnstile to your forms
+
+Turnstile verifies visitors are human without visible challenges. This guide uses Managed mode, which automatically chooses between a non-interactive or checkbox challenge based on visitor risk level. For other widget modes, refer to [Widget types](/turnstile/concepts/widget/).
+
+Adding Turnstile involves three steps: create a widget in the dashboard, add the client-side snippet to your form page, and validate the token on your server before processing the submission.
+
+### Create a Turnstile widget
+
+<Render file="create-widget-dashboard" product="turnstile" />
+
+Store the sitekey and secret key. You will use the sitekey in the client-side snippet and the secret key for server-side validation.
+
+### Add the client-side snippet
+
+Add the Turnstile script and widget `div` element to each form you want to protect. Replace `<YOUR-SITE-KEY>` with the sitekey from the previous step.
+
+```html
+<form id="contact-form" action="/submit" method="POST">
+  <input type="text" name="name" placeholder="Name" required />
+  <input type="email" name="email" placeholder="Email" required />
+  <textarea name="message" placeholder="Message" required></textarea>
+  <div class="cf-turnstile" data-sitekey="<YOUR-SITE-KEY>"></div>
+  <button type="submit">Submit</button>
+</form>
+
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+```
+
+The widget renders in the form and generates a token when the visitor passes verification. The token is included in the form submission as the `cf-turnstile-response` field.
+
+### Validate the token on your server
+
+Server-side validation is required. The client-side widget alone does not protect your forms because attackers can submit directly to your form endpoint. Tokens can only be validated once.
+
+Call the Siteverify API before processing any form submission:
+
+```js title="server.js"
+const SECRET_KEY = "<YOUR-SECRET-KEY>";
+
+async function validateTurnstile(token, remoteip) {
+  try {
+    const response = await fetch(
+      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          secret: SECRET_KEY,
+          response: token,
+          remoteip: remoteip,
+        }),
+      },
+    );
+
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error("Turnstile validation error:", error);
+    return { success: false, "error-codes": ["internal-error"] };
+  }
+}
+```
+
+Replace `"<YOUR-SECRET-KEY>"` with your Turnstile secret key. The endpoint returns a JSON object with a `success` field. Only process the form submission if `success` is `true`.
+
+For validation examples in PHP, Python, Java, and C#, refer to [Validate the token](/turnstile/get-started/server-side-validation/).
+
+## Rate limit form submission endpoints
+
+Some abuse scripts skip the browser entirely and POST directly to your form endpoints. Application Security [rate limiting rules](/waf/rate-limiting-rules/) catch these requests because client-side verification only runs in a browser.
+
+### Find your baseline request rate
+
+Before creating a rate limiting rule, check the normal submission rate for your form endpoints. Your rate limit threshold should be above this baseline to avoid blocking legitimate traffic.
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the **Analytics** page.
+
+   <DashButton url="/?to=/:account/:zone/security/analytics" />
+
+2. In the **Traffic** tab, select a time period with non-peak traffic, or with the lowest visitor activity.
+
+3. Use the **Add filter** button to narrow results to your form endpoint traffic.
+
+4. Note the typical request rate per IP address. Your rate limit should be above this baseline.
+
+</Steps>
+
+If you do not have enough traffic data to establish a baseline, start with a conservative threshold and adjust based on Security Events after deployment.
+
+:::note[Enterprise: Request rate analysis]
+The **Request rate analysis** tab in Security Analytics displays request rate distributions for your top unique clients. For details, refer to [Find appropriate rate limit](/waf/rate-limiting-rules/find-rate-limit/).
+:::
+
+### Create a rate limiting rule
+
+Create a rule that limits how many times a single IP address can submit to your form endpoint within a given period. Adjust the path, threshold, and period for your site.
+
+<Render file="create-rate-limiting-rule" product="waf" params={{ ruleName: "Rate limit contact form submissions", expression: '(http.request.uri.path eq "/contact" and http.request.method eq "POST")', expressionHelp: 'Replace "/contact" with your form endpoint path.', threshold: "5" }} />
+
+:::note
+Rate limiting rule parameters (counting characteristics, periods, number of rules) vary by plan. For the full availability matrix, refer to [Rate limiting rules](/waf/rate-limiting-rules/#availability).
+:::
+
+### Configure a custom response for blocked requests (Pro and above)
+
+Instead of showing the default Cloudflare error page when a rate limit is reached, you can configure a custom response. For details, refer to [Create a rate limiting rule in the dashboard](/waf/rate-limiting-rules/create-zone-dashboard/#configure-a-custom-response-for-blocked-requests).
+
+## Add Application Security rules for known abuse patterns
+
+Rate limiting alone does not catch targeted attack patterns like SQL injection or cross-site scripting (XSS) in form fields. Application Security [custom rules](/waf/custom-rules/) and [managed rulesets](/waf/managed-rules/) let you block these specific patterns targeting your form endpoints. Custom rules run before rate limiting rules and managed rulesets in the [execution order](/waf/feature-interoperability/).
+
+### Challenge non-bot requests to form endpoints
+
+Create a custom rule that challenges POST requests to your form endpoints from sources that are not verified bots.
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the **Security rules** page.
+
+   <DashButton url="/?to=/:account/:zone/security/security-rules" />
+
+2. Select **Create rule** > **Custom rules**.
+
+3. Enter a name for the rule (for example, "Challenge spam form submissions").
+
+4. Under **When incoming requests match**, select **Edit expression** and enter:
+
+   ```txt
+   (http.request.uri.path eq "/contact" and http.request.method eq "POST" and not cf.client.bot)
+   ```
+
+   Replace `/contact` with your form endpoint path. The `not cf.client.bot` clause exempts verified bots (such as search engine crawlers) from the rule.
+
+5. Under **Then take action**, select _Managed Challenge_.
+
+   Start with _Managed Challenge_ to observe which requests are flagged before switching to _Block_.
+
+6. Select **Deploy**.
+
+</Steps>
+
+After deploying, review [Security Events](/waf/analytics/security-events/) to check whether the rule is matching legitimate traffic. If legitimate users are being challenged, narrow the expression or switch to a less aggressive action.
+
+:::note[Pro plans and above: Managed rulesets]
+The [Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/) protects against common web attack patterns, including form-based injection attacks (SQL injection, XSS). Verify the ruleset is deployed on the **Security rules** page under **Managed rules**. For plan availability, refer to [Managed Rules](/waf/managed-rules/#availability).
+:::
+
+## Turn on bot protection
+
+Bot Fight Mode challenges requests that match known bot patterns across your entire domain. It is available on all plans and requires no configuration beyond turning it on.
+
+<Render file="enable-bfm" product="bots" />
+
+Bot Fight Mode protects your entire domain without endpoint restrictions. You cannot create exceptions using custom rules to bypass Bot Fight Mode.
+
+:::note[Pro, Business, and Enterprise]
+[Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/) provides more granular controls. You can configure how your domain responds to different categories of bot traffic (definitely automated, likely automated, verified bots) and create exceptions using custom rules with the Skip action. Enterprise customers with [Bot Management](/bots/get-started/bot-management/) can use `cf.bot_management.score` in custom rule expressions for path-specific bot protection.
+:::
+
+## Monitor your form endpoints
+
+After deploying Turnstile, rate limiting rules, and Application Security rules, monitor your form endpoints to verify your rules are working and to detect new attack patterns.
+
+### Review Security Events
+
+[Security Events](/waf/analytics/security-events/) shows requests that Cloudflare security products acted on or flagged, including blocks, challenges, and skips. Filter by your form endpoint paths to see what is being blocked and what is getting through. A high volume of blocked or challenged requests to your form paths confirms the rules are active.
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the **Analytics** page.
+
+   <DashButton url="/?to=/:account/:zone/security/analytics" />
+
+2. Select the **Events** tab.
+
+3. Use the **Add filter** button to narrow results to your form endpoint traffic.
+
+4. Review the sampled logs. For each event, check:
+
+   - **Action taken**: Whether the request was blocked, challenged, or allowed
+   - **Source**: The rule or feature that triggered the action
+   - **IP address**: Whether a single IP is generating many events
+   - **URI path**: Whether requests target your form endpoints specifically
+
+</Steps>
+
+If legitimate users are being challenged, narrow the rule expression or switch to a less aggressive action.
+
+### Set up security event alerts
+
+Configure a notification to receive alerts when there is an unusual spike in security events on your domain.
+
+For alert types, trigger thresholds, and setup instructions, refer to [Alerts for security events](/waf/reference/alerts/).
+
+### Turn on client-side resource monitoring
+
+If a third-party script is injected into your form page, it can exfiltrate submitted data, including payment information. Client-Side Security monitors third-party scripts on your pages for changes and potential supply chain attacks.
+
+To enable monitoring:
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the **Security Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/security/settings" />
+
+2. (Optional) Filter by **Client-side abuse**.
+
+3. Turn on **Continuous script monitoring**.
+
+</Steps>
+
+After enabling, review detected scripts on the **Web assets** page under the **Client-side resources** tab to identify any unexpected scripts on your form pages. For the full setup workflow, refer to [Get started with client-side security](/client-side-security/get-started/).
+
+## Related resources
+
+**Turnstile**
+
+- [Get started with Turnstile](/turnstile/get-started/) — create widgets, add the client snippet, and validate tokens
+- [Validate the token](/turnstile/get-started/server-side-validation/) — server-side validation examples in multiple languages
+- [Integrate Turnstile, WAF, and Bot Management](/turnstile/tutorials/integrating-turnstile-waf-and-bot-management/) — tutorial combining all three products for login protection
+
+**Application Security**
+
+- [Custom rules](/waf/custom-rules/) — create rules targeting specific request patterns
+- [Rate limiting rules](/waf/rate-limiting-rules/) — protect endpoints from high-volume abuse
+- [Security features interoperability](/waf/feature-interoperability/) — execution order and interaction between security features
+
+**Bots**
+
+- [Bot Fight Mode](/bots/get-started/bot-fight-mode/) — challenge requests matching bot patterns on Free plans
+- [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/) — granular bot controls for Pro and above
+
+**Client-Side Security**
+
+- [Get started with client-side security](/client-side-security/get-started/) — enable monitoring and review detected scripts

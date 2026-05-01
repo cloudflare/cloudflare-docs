@@ -1,7 +1,7 @@
 ---
 title: Schedule tasks
 description: Schedule delayed, date-based, cron, and interval tasks on Agents with persistent SQLite-backed execution.
-pcx_content_type: concept
+pcx_content_type: reference
 sidebar:
   order: 10
 products:
@@ -301,7 +301,7 @@ Retrieve a scheduled task by its ID:
 <TypeScriptExample>
 
 ```ts
-const schedule = this.getSchedule(scheduleId);
+const schedule = await this.getScheduleById(scheduleId);
 
 if (schedule) {
 	console.log(
@@ -324,13 +324,13 @@ Query scheduled tasks with optional filters:
 
 ```ts
 // Get all scheduled tasks
-const allSchedules = this.getSchedules();
+const allSchedules = await this.listSchedules();
 
 // Get only cron jobs
-const cronJobs = this.getSchedules({ type: "cron" });
+const cronJobs = await this.listSchedules({ type: "cron" });
 
 // Get tasks in the next hour
-const upcoming = this.getSchedules({
+const upcoming = await this.listSchedules({
 	timeRange: {
 		start: new Date(),
 		end: new Date(Date.now() + 60 * 60 * 1000),
@@ -338,10 +338,10 @@ const upcoming = this.getSchedules({
 });
 
 // Get a specific task by ID
-const specific = this.getSchedules({ id: "abc123" });
+const specific = await this.listSchedules({ id: "abc123" });
 
 // Combine filters
-const upcomingCronJobs = this.getSchedules({
+const upcomingCronJobs = await this.listSchedules({
 	type: "cron",
 	timeRange: {
 		start: new Date(),
@@ -478,7 +478,7 @@ class PollingAgent extends Agent {
 
 	async stopPolling() {
 		// Cancel all polling schedules
-		const schedules = this.getSchedules({ type: "delayed" });
+		const schedules = await this.listSchedules({ type: "delayed" });
 		for (const schedule of schedules) {
 			if (schedule.callback === "poll") {
 				await this.cancelSchedule(schedule.id);
@@ -763,13 +763,33 @@ Schedule a task to run repeatedly at a fixed interval.
 - If callback throws an error, the interval continues
 - Cancel with `cancelSchedule(id)` to stop the entire interval
 
+### `getScheduleById()`
+
+```ts
+async getScheduleById(id: string): Promise<Schedule<unknown> | undefined>
+```
+
+Get a scheduled task by ID. Returns `undefined` if not found. This method works in both top-level agents and sub-agents.
+
+### `listSchedules()`
+
+```ts
+async listSchedules(criteria?: {
+  id?: string;
+  type?: "scheduled" | "delayed" | "cron" | "interval";
+  timeRange?: { start?: Date; end?: Date };
+}): Promise<Schedule<unknown>[]>
+```
+
+Get scheduled tasks matching the criteria. This method works in both top-level agents and sub-agents.
+
 ### `getSchedule()`
 
 ```ts
 getSchedule<T>(id: string): Schedule<T> | undefined
 ```
 
-Get a scheduled task by ID. Returns `undefined` if not found. This method is synchronous.
+Deprecated. Get a scheduled task by ID synchronously. This method only works in top-level agents. Use `await this.getScheduleById(id)` instead.
 
 ### `getSchedules()`
 
@@ -781,7 +801,7 @@ getSchedules<T>(criteria?: {
 }): Schedule<T>[]
 ```
 
-Get scheduled tasks matching the criteria. This method is synchronous.
+Deprecated. Get scheduled tasks matching the criteria synchronously. This method only works in top-level agents. Use `await this.listSchedules(criteria)` instead.
 
 ### `cancelSchedule()`
 
@@ -797,7 +817,7 @@ Cancel a scheduled task. Returns `true` if cancelled, `false` if not found.
 async keepAlive(): Promise<() => void>
 ```
 
-Prevent the Durable Object from being evicted due to inactivity by creating a 30-second heartbeat schedule. Returns a disposer function that cancels the heartbeat when called. The disposer is idempotent — calling it multiple times is safe.
+Prevent the Durable Object from being evicted due to inactivity by holding a 30-second alarm-backed heartbeat reference. Returns a disposer function that releases the heartbeat when called. The disposer is idempotent — calling it multiple times is safe.
 
 Always call the disposer when the work is done — otherwise the heartbeat continues indefinitely.
 
@@ -841,11 +861,12 @@ const result = await this.keepAliveWhile(async () => {
 
 Durable Objects are evicted after a period of inactivity (typically 70-140 seconds with no incoming requests, WebSocket messages, or alarms). During long-running operations — streaming LLM responses, waiting on external APIs, running multi-step computations — the agent can be evicted mid-flight.
 
-`keepAlive()` prevents this by creating a 30-second heartbeat schedule. The internal heartbeat callback is a no-op — the alarm firing itself is what resets the inactivity timer. Because it uses the scheduling system:
+`keepAlive()` prevents this by holding an in-memory heartbeat reference and using the Durable Object alarm system directly. The alarm firing itself resets the inactivity timer.
 
-- The heartbeat does not conflict with your own schedules (the scheduling system multiplexes through a single alarm slot)
-- The heartbeat shows up in `getSchedules()` if you need to inspect it
-- Multiple concurrent `keepAlive()` calls each get their own schedule, so they do not interfere with each other
+- The heartbeat does not conflict with your own schedules because the alarm system multiplexes through a single alarm slot.
+- No schedule rows are created, and the heartbeat is invisible to `listSchedules()`.
+- Multiple concurrent `keepAlive()` calls use a reference count, so one disposer does not release another caller's heartbeat.
+- Inside sub-agents, `keepAlive()` delegates that heartbeat reference to the top-level parent because facets do not have independent alarm slots.
 
 ### Multiple concurrent callers
 
@@ -880,12 +901,6 @@ dispose2(); // Now the agent can go idle
 | Multi-step tool execution                   | Yes                                    |
 | Short request-response handlers             | No — not needed                        |
 | Background work via scheduling or workflows | No — alarms already keep the DO active |
-
-:::note
-
-`keepAlive()` is marked `@experimental` and may change between releases.
-
-:::
 
 ## Limits
 

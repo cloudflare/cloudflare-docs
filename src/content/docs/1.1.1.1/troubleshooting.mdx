@@ -15,9 +15,11 @@ slug: 1.1.1.1/troubleshooting
 
 import { Render } from "~/components";
 
-This guide will help you diagnose and resolve common issues with Cloudflare's DNS Resolver. Before proceeding with manual troubleshooting steps, you can [verify your connection](/1.1.1.1/check/) to automatically gather relevant information.
+This guide helps you diagnose and resolve common issues with Cloudflare's DNS Resolver. Before proceeding with manual troubleshooting steps, [verify your connection](/1.1.1.1/check/) to automatically gather relevant information.
 
 ## Name resolution issues
+
+If a domain name is not resolving correctly, test DNS resolution against 1.1.1.1 and compare the result to another resolver (such as `8.8.8.8`). The CHAOS TXT queries (`id.server`) identify which Cloudflare server handled your request, which is useful when reporting issues.
 
 ### Linux/macOS
 
@@ -51,11 +53,17 @@ nslookup -class=chaos -type=txt id.server 1.0.0.1
 nslookup -type=txt whoami.cloudflare.com ns3.cloudflare.com
 ```
 
-**Note:** The network information command reveals your IP address. Only include this in reports to Cloudflare if you are comfortable sharing this information.
+:::caution
+
+The network information command reveals your IP address. Only include this in reports to Cloudflare if you are comfortable sharing this information.
+
+:::
 
 For additional analysis, you can generate a [DNSViz](http://dnsviz.net/) report for the domain in question.
 
 ## Connectivity and routing issues
+
+If DNS queries time out or you cannot reach 1.1.1.1 at all, the problem may be a network routing issue between your device and Cloudflare. Run traceroutes to both resolver addresses to identify where packets are being dropped.
 
 Before reporting connectivity issues:
 
@@ -96,6 +104,8 @@ nslookup -vc -class=chaos -type=txt id.server 1.0.0.1
 
 ## DNS-over-TLS (DoT) troubleshooting
 
+DNS over TLS encrypts DNS queries using TLS on port `853`. If your DoT connection is not working, test TLS connectivity and then DNS resolution over TLS.
+
 ### Linux/macOS
 
 ```sh
@@ -114,6 +124,8 @@ Windows does not include a standalone DoT client. You can test TLS connectivity 
 
 ## DNS-over-HTTPS (DoH) troubleshooting
 
+DNS over HTTPS sends DNS queries as HTTPS requests. If your DoH connection is not working, test it by querying the Cloudflare DNS endpoint directly.
+
 ### Linux/macOS
 
 ```sh
@@ -130,7 +142,7 @@ curl -H 'accept: application/dns-json' 'https://cloudflare-dns.com/dns-query?nam
 
 ### First hop failures
 
-If your traceroute fails at the first hop, the issue is likely hardware-related. Your router may have a hardcoded route for 1.1.1.1. When reporting this issue, include:
+If your traceroute fails at the first hop (the first network device after your computer, usually your router), the issue is likely hardware-related. Your router may have a hardcoded route for `1.1.1.1` that conflicts with using it as a DNS resolver. When reporting this issue, include:
 
 - Router make and model
 - ISP name
