@@ -52,11 +52,15 @@ function cardToResolved(card: AiModelCard): ResolvedModel {
  * and examples for rendering detail pages.
  */
 function detailToResolved(detail: AiModelDetail): ResolvedModel {
-	// detail.json does not include schema — it is served from R2 via the worker
-	// proxy. We use empty schema here so hasSchema evaluates to false and the
-	// Parameters section is omitted. The schema files are still linked via
-	// schema_manifest for the "API Schemas (Raw)" download section.
+	// schema is not in detail.json — it lives in separate R2 files proxied at
+	// request time. Keep schema empty so hasSchema is false (Parameters hidden).
 	const schema = { input: {}, output: {} };
+
+	// Extract filenames from full R2 paths in schema_manifest for the
+	// "API Schemas (Raw)" section (e.g. "v1/.../sync-input.json" → "sync-input.json")
+	const schemaFiles = detail.schema_manifest.files.map((r2Path) =>
+		r2Path.split("/").at(-1)!,
+	);
 
 	return {
 		name: detail.model_id,
@@ -68,6 +72,7 @@ function detailToResolved(detail: AiModelDetail): ResolvedModel {
 		task: detail.task,
 		schema,
 		apiModes: undefined,
+		schemaFiles,
 		tags: detail.tags,
 		contextLength: detail.context_length ?? undefined,
 		maxOutputTokens: detail.max_output_tokens ?? undefined,
