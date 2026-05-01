@@ -18,8 +18,8 @@ const ALL_MODELS_DETAIL_PATH =
 
 /**
  * Convert a middlecache AiModelCard to the ResolvedModel format expected by
- * components. Card entries don't carry schema or examples — those are fetched
- * separately via fetchModelDetail for detail pages.
+ * components. Card entries carry card-level fields only — schema and examples
+ * are available via fetchAllModelDetails() for detail pages.
  */
 function cardToResolved(card: AiModelCard): ResolvedModel {
 	return {
@@ -32,7 +32,7 @@ function cardToResolved(card: AiModelCard): ResolvedModel {
 		displayName: card.display_name,
 		description: card.description,
 		task: card.task,
-		// Schema is not present in card data. Detail pages call fetchModelDetail.
+		// Schema is not present in card data — detail pages use fetchAllModelDetails().
 		schema: { input: {}, output: {} },
 		apiModes: undefined,
 		tags: card.tags,
