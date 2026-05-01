@@ -1,33 +1,27 @@
 ---
 import type { GetStaticPaths } from "astro";
 import ModelDetailPage from "~/components/models/ModelDetailPage.astro";
-import { getResolvedModels, fetchModelDetail } from "~/util/model-resolver";
+import { getResolvedModels, fetchAllModelDetails } from "~/util/model-resolver";
 
 export const getStaticPaths = (async () => {
-	// Get card data to know which slugs exist
-	const models = await getResolvedModels();
+	// One fetch for all detail data (fails loudly if middlecache is unavailable)
+	const [models, detailMap] = await Promise.all([
+		getResolvedModels(),
+		fetchAllModelDetails(),
+	]);
 
-	// Fetch detail.json for each model concurrently.
-	// The R2 path for detail.json uses the model_id with leading @ stripped
-	// (e.g. @cf/meta/llama → cf/meta/llama), but the URL param uses the full
-	// model_id (card.slug) to preserve existing URL structure.
-	const settled = await Promise.allSettled(
-		models.map(async (card) => {
-			const detailSlug = card.modelId.replace(/^@/, "");
-			const detail = await fetchModelDetail(detailSlug);
-			return { card, detail };
-		}),
-	);
-
-	return settled
-		.filter(
-			(r): r is PromiseFulfilledResult<{ card: (typeof models)[0]; detail: NonNullable<Awaited<ReturnType<typeof fetchModelDetail>>> }> =>
-				r.status === "fulfilled" && r.value.detail !== null,
-		)
-		.map(({ value: { card, detail } }) => ({
-			params: { name: card.slug },
-			props: { model: detail },
-		}));
+	return models.flatMap((card) => {
+		// Detail map is keyed by slug with @ stripped
+		const detailSlug = card.modelId.replace(/^@/, "");
+		const detail = detailMap.get(detailSlug);
+		if (!detail) {
+			console.warn(
+				`ai/models: no detail found for ${card.modelId} (slug: ${detailSlug})`,
+			);
+			return [];
+		}
+		return [{ params: { name: card.slug }, props: { model: detail } }];
+	});
 }) satisfies GetStaticPaths;
 
 const { model } = Astro.props;

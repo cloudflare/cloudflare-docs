@@ -120,3 +120,15 @@ export const aiModelDetailSchema = z.object({
 });
 
 export type AiModelDetail = z.infer<typeof aiModelDetailSchema>;
+
+/**
+ * Schema for all-models-detail.json — all models' detail data in one file,
+ * keyed by slug (@ stripped). Fetched once at build time.
+ */
+export const aiAllModelsDetailSchema = z.object({
+	generated_at: z.string(),
+	model_count: z.number(),
+	models: z.record(z.string(), aiModelDetailSchema),
+});
+
+export type AiAllModelsDetail = z.infer<typeof aiAllModelsDetailSchema>;

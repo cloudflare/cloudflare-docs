@@ -1,34 +1,29 @@
 ---
 import type { GetStaticPaths } from "astro";
 import ModelDetailPage from "~/components/models/ModelDetailPage.astro";
-import { getLegacyModels, fetchModelDetail } from "~/util/model-resolver";
+import { getLegacyModels, fetchAllModelDetails } from "~/util/model-resolver";
 
 export const getStaticPaths = (async () => {
-	// Get card data to know which slugs exist (Workers AI-only subset)
-	const models = await getLegacyModels();
+	// One fetch for all detail data (fails loudly if middlecache is unavailable)
+	const [models, detailMap] = await Promise.all([
+		getLegacyModels(),
+		fetchAllModelDetails(),
+	]);
 
-	// Fetch detail.json for each model concurrently.
-	// Workers AI model_ids look like "@cf/meta/llama-3.1-8b-instruct".
-	// detail slug = model_id with leading @ stripped.
-	// URL slug = last segment only (e.g. "llama-3.1-8b-instruct").
-	const settled = await Promise.allSettled(
-		models.map(async (card) => {
-			const detailSlug = card.modelId.replace(/^@/, "");
-			const urlSlug = card.modelId.split("/").at(-1)!;
-			const detail = await fetchModelDetail(detailSlug);
-			return { card, detail, urlSlug };
-		}),
-	);
-
-	return settled
-		.filter(
-			(r): r is PromiseFulfilledResult<{ card: (typeof models)[0]; detail: NonNullable<Awaited<ReturnType<typeof fetchModelDetail>>>; urlSlug: string }> =>
-				r.status === "fulfilled" && r.value.detail !== null,
-		)
-		.map(({ value: { detail, urlSlug } }) => ({
-			params: { name: urlSlug },
-			props: { model: detail },
-		}));
+	return models.flatMap((card) => {
+		// Detail map is keyed by slug with @ stripped
+		const detailSlug = card.modelId.replace(/^@/, "");
+		const detail = detailMap.get(detailSlug);
+		if (!detail) {
+			console.warn(
+				`workers-ai/models: no detail found for ${card.modelId} (slug: ${detailSlug})`,
+			);
+			return [];
+		}
+		// Workers AI detail pages use short slug (last segment) as URL param
+		const urlSlug = card.modelId.split("/").at(-1)!;
+		return [{ params: { name: urlSlug }, props: { model: detail } }];
+	});
 }) satisfies GetStaticPaths;
 
 const { model } = Astro.props;

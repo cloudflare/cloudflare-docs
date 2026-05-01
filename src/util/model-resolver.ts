@@ -1,5 +1,9 @@
 import { getCollection } from "astro:content";
 import type { AiModelCard, AiModelDetail } from "~/schemas/ai-model-catalog";
+import { downloadToDotTempIfNotPresent } from "./custom-loaders";
+import fs from "node:fs";
+import { fileURLToPath } from "node:url";
+import { join } from "node:path";
 
 import type { ModelCardData, ResolvedModel } from "./model-types";
 
@@ -9,7 +13,8 @@ export type { ResolvedModel, ModelCardData } from "./model-types";
 export type { ApiMode } from "./model-types";
 
 const MIDDLECACHE_BASE = "https://middlecache.ced.cloudflare.com/";
-const MODEL_DETAIL_BASE = `${MIDDLECACHE_BASE}v1/workers-ai-model-catalog/models/`;
+const ALL_MODELS_DETAIL_PATH =
+	"v1/workers-ai-model-catalog/all-models-detail.json";
 
 /**
  * Convert a middlecache AiModelCard to the ResolvedModel format expected by
@@ -112,29 +117,48 @@ export async function getLegacyModels(): Promise<ResolvedModel[]> {
 }
 
 /**
- * Fetch full model detail from middlecache for a single model detail page.
- * Called at build time in getStaticPaths for [...name].astro pages.
+ * Fetch all model detail data from middlecache in a single request.
+ * Returns a map of slug (@ stripped) → ResolvedModel.
  *
- * @param slug - The detail file slug: model_id with leading @ stripped.
- *               e.g. "@cf/meta/llama-3.1-8b" → "cf/meta/llama-3.1-8b"
- *               e.g. "openai/gpt-5.4-mini"   → "openai/gpt-5.4-mini"
+ * Uses downloadToDotTempIfNotPresent to cache the file locally for the
+ * build session — subsequent calls within the same build are free.
+ *
+ * Throws on failure so the build fails loudly rather than silently
+ * generating broken detail page links from the index.
  */
-export async function fetchModelDetail(
-	slug: string,
-): Promise<ResolvedModel | null> {
-	const url = `${MODEL_DETAIL_BASE}${slug}/detail.json`;
-	try {
-		const res = await fetch(url);
-		if (!res.ok) {
-			console.warn(`fetchModelDetail: ${res.status} for ${url}`);
-			return null;
-		}
-		const detail = (await res.json()) as AiModelDetail;
-		return detailToResolved(detail);
-	} catch (err) {
-		console.warn(`fetchModelDetail: failed to fetch ${url}:`, err);
-		return null;
+export async function fetchAllModelDetails(): Promise<
+	Map<string, ResolvedModel>
+> {
+	await downloadToDotTempIfNotPresent(
+		`${MIDDLECACHE_BASE}${ALL_MODELS_DETAIL_PATH}`,
+		`middlecache/${ALL_MODELS_DETAIL_PATH}`,
+	);
+
+	const dotTmpPath = fileURLToPath(new URL("../../.tmp", import.meta.url));
+	const localPath = join(dotTmpPath, "middlecache", ALL_MODELS_DETAIL_PATH);
+	const raw = JSON.parse(fs.readFileSync(localPath, "utf8")) as {
+		model_count: number;
+		models: Record<string, AiModelDetail>;
+	};
+
+	if (!raw.models || typeof raw.models !== "object") {
+		throw new Error(
+			`all-models-detail.json: expected .models to be an object, got ${typeof raw.models}`,
+		);
 	}
+
+	const map = new Map<string, ResolvedModel>();
+	for (const [slug, detail] of Object.entries(raw.models)) {
+		map.set(slug, detailToResolved(detail));
+	}
+
+	if (map.size === 0) {
+		throw new Error(
+			"all-models-detail.json: no models loaded — refusing to build with empty model set",
+		);
+	}
+
+	return map;
 }
 
 /**
