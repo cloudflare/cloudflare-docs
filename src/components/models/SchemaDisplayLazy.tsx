@@ -12,7 +12,7 @@
  *   - Multi, differing inputs: per-mode collapsibles with Input/Output tabs
  */
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import SchemaTreeView from "./SchemaTree.tsx";
 import SchemaVariantSelector from "./SchemaVariantSelector.tsx";
 import type { SchemaRowData } from "./types";
