@@ -3,7 +3,8 @@
 # STATIC REDIRECTS
 # ============================================================================
 
-# Blocked Content (moved from security-center to fundamentals/reference/report-abuse)
+
+# Blocked Content (Security center restructuring)
 /security-center/blocked-content/ /fundamentals/reference/report-abuse/blocked-content/ 301
 
 # Custom Dashboards (moved from log-explorer to analytics)
