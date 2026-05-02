@@ -1,0 +1,32 @@
+---
+title: Concepts
+pcx_content_type: overview
+sidebar:
+  order: 1
+description: Configure session timeouts across Cloudflare Access, Gateway, the Cloudflare One Client, and your identity provider.
+products:
+  - cloudflare-one
+  - access
+  - gateway
+  - cloudflare-one-client
+---
+
+Cloudflare Zero Trust uses multiple session timers to control when users must reauthenticate. Understanding how these sessions interact is critical to configuring your Zero Trust deployment to meet your organization's security requirements and user experience goals.
+
+This learning path explains the different session types, how they interact, and provides guidance for configuring them to achieve your desired reauthentication frequency — whether that's maximizing security through frequent verification or minimizing user friction with longer sessions.
+
+## Objectives
+
+By the end of this learning path, you will be able to:
+
+- Identify the different session timers in Cloudflare Zero Trust and understand what each controls.
+- Define your organization's reauthentication requirements based on security needs and user experience goals.
+- Understand how session timers interact and which takes precedence.
+- Configure session durations to match your security and compliance requirements.
+- Align your identity provider session timeout with Cloudflare session settings.
+
+## Prerequisites
+
+- A Cloudflare Zero Trust account.
+- An identity provider (IdP) configured (such as Okta, Azure AD, or Google Workspace).
+- Basic understanding of [Access policies](/cloudflare-one/access-controls/policies/) or [Gateway policies](/cloudflare-one/traffic-policies/).

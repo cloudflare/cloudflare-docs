@@ -1,0 +1,146 @@
+---
+title: How sessions interact
+pcx_content_type: learning-unit
+sidebar:
+  order: 4
+description: Understand decision flows, session precedence, silent versus interactive reauthentication, and policy evaluation.
+products:
+  - cloudflare-one
+  - access
+  - gateway
+  - cloudflare-one-client
+---
+
+import { Aside } from "~/components";
+
+Understanding when each session type applies helps you configure the right settings for your use case.
+
+## Decision flows
+
+### Access application authentication flow
+
+![Sequence diagram showing Access application authentication flow, including identity provider authentication, global session token issuance, and application token issuance.](~/assets/images/learning-paths/session-management-guide/access-application-auth-flow.png)
+
+### Gateway and Access traffic session authentication flow
+
+![Sequence diagram showing Gateway and Access traffic session authentication flow, including IdP session validation and Cloudflare One Client session enforcement.](~/assets/images/learning-paths/session-management-guide/gateway-access-traffic-flow.png)
+
+### Cloudflare One Client reauthentication flow
+
+![Sequence diagram showing the Cloudflare One Client reauthentication flow when the client session expires.](~/assets/images/learning-paths/session-management-guide/cloudflare-one-client-reauth-flow.png)
+
+## Session interaction and precedence
+
+Understanding how session timers interact is crucial to configuring them to match your needs.
+
+### The shortest timer determines reauthentication frequency
+
+For Access applications using traditional IdP authentication (not Device Authentication Identity), when multiple session timers are configured, the **shortest duration** among the IdP session, Global Access session, application session, or policy session determines when reauthentication occurs.
+
+<Aside type="note">
+	When Device Authentication Identity is enabled for an Access application, the
+	Access session layers (Global, Application, and Policy) are completely
+	overridden. Only the IdP session and Device Authentication Identity sessions
+	apply.
+</Aside>
+
+For Gateway policies, the **shorter duration** between the Gateway policy session and the IdP session determines when reauthentication occurs.
+
+### Example scenarios
+
+#### Scenario 1: Misaligned sessions causing unexpected interactive login
+
+**Configuration:**
+
+- IdP max session: 8 hours.
+- Global session: 24 hours.
+- Application session: 24 hours.
+
+**Result:** Users must fully reauthenticate with username, password, and MFA every **8 hours**. The IdP session expires first, preventing silent, browser-based reauthentication.
+
+**User experience:** User works for 8 hours, then suddenly sees a full IdP login prompt.
+
+#### Scenario 2: Silent reauthentication with aligned sessions
+
+**Configuration:**
+
+- IdP max session: 7 days.
+- Global session: 24 hours.
+- Application session: 24 hours.
+
+**Result:** Users reauthenticate every **24 hours** silently using existing IdP browser cookies. Full login only after 7 days.
+
+**User experience:** Brief Cloudflare One Client notification once per day, no credential entry. Full login once per week.
+
+#### Scenario 3: Device Authentication Identity bypasses traditional Access sessions
+
+**Configuration:**
+
+- IdP max session: 7 days.
+- Global session: 24 hours.
+- Device Authentication Identity: 7 days (enabled for specific apps).
+
+**Result:** For apps with Device Authentication Identity enabled, users authenticate once in the Cloudflare One Client and access the app for **7 days** without browser-based login. Global, Application, and Policy level Access sessions are ignored. Other apps follow the default 24-hour schedule.
+
+**User experience:** Inconsistent — some apps require Cloudflare One Client reauthentication weekly, others require daily browser-based IdP session refresh.
+
+## Silent versus interactive reauthentication
+
+Understanding the difference between silent and interactive reauthentication helps you configure sessions to match your user experience goals.
+
+### Silent reauthentication (default behavior)
+
+When a Cloudflare session expires, the system attempts to **automatically refresh the session** using existing IdP browser cookies in the background with minimal user interaction.
+
+**Requirements:**
+
+- User's IdP browser session must still be valid.
+- User has valid browser cookies stored.
+- "Force user interaction" not enabled (or not supported by IdP).
+
+**User experience:** Brief notification, no credential entry, completes in 1-2 seconds, no MFA prompt.
+
+### Interactive reauthentication (full login)
+
+When the IdP session has expired or silent reauthentication is prevented, users must **manually log in** to your identity provider.
+
+**When this occurs:**
+
+- IdP session has fully expired.
+- No valid browser cookies exist.
+- "Force user interaction" is enabled (Microsoft Entra ID only).
+- Browser cleared cookies or private browsing mode.
+
+**User experience:** Full IdP login screen, must enter username and password, must complete MFA, takes 10-30 seconds.
+
+<Aside type="note">
+	By default, Cloudflare uses existing IdP browser cookies to silently
+	reauthenticate users. To require explicit user interaction at the IdP login
+	page for enhanced security, refer to [Force user interaction with
+	IdP](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/#force-user-interaction-with-idp)
+	(Microsoft Entra ID only).
+</Aside>
+
+## Policy evaluation and sessions
+
+How policies are evaluated affects which session durations apply to users.
+
+### Access policy evaluation
+
+Access policies are evaluated by action type in this order: **Service Auth → Bypass → Block → Allow**.
+
+Within each type, policies are evaluated top to bottom. Once a user matches an Allow or Block policy, evaluation stops.
+
+**Impact on sessions:**
+
+- **Bypass policies:** Skip all authentication, including session checks.
+- **Service Auth policies:** Use bearer tokens or mTLS, session durations do not apply.
+- **Allow and Block policies:** Session durations apply as configured.
+
+For more information, refer to [Cloudflare Access policy order of execution](/cloudflare-one/access-controls/policies/#cloudflare-access-policy-order-of-execution).
+
+### Gateway policy evaluation
+
+Gateway policies are evaluated by precedence number (lower number means higher priority) with first-match principle. Gateway Allow policies do **not** bypass Access policies — if traffic is destined for a private IP protected by Access, Access policies still evaluate.
+
+For more information, refer to [Gateway policy order of enforcement](/cloudflare-one/traffic-policies/order-of-enforcement/) and [Order of precedence between Access and Gateway](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/#order-of-precedence).

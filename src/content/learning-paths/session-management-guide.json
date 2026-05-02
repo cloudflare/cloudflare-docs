@@ -1,0 +1,7 @@
+{
+	"title": "Understanding session management in Cloudflare Zero Trust",
+	"path": "/learning-paths/session-management-guide/concepts/",
+	"description": "Configure session timeouts across Cloudflare Access, Gateway, the Cloudflare One Client, and your identity provider to balance security and user experience.",
+	"pcx_content_type": "learning-path",
+	"products": ["cloudflare-one", "access", "gateway", "cloudflare-one-client"]
+}

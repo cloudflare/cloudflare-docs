@@ -1,0 +1,120 @@
+---
+title: Troubleshoot common session issues
+pcx_content_type: learning-unit
+sidebar:
+  order: 6
+description: Diagnose and resolve common session-related issues, plus key takeaways from the learning path.
+products:
+  - cloudflare-one
+  - access
+  - gateway
+  - cloudflare-one-client
+---
+
+## Issue 1: Users report frequent reauthentication prompts
+
+**Symptoms:** Multiple reauthentication notifications per day, requests seem random or inconsistent.
+
+**Common causes:**
+
+1. IdP session shorter than Cloudflare session (prevents silent reauthentication).
+2. Multiple conflicting session durations across policies.
+3. Browser clearing cookies or privacy extensions blocking cookies.
+
+**Solutions:**
+
+1. **Extend the IdP session beyond the Cloudflare session:**
+   - IdP: 7 days minimum.
+   - Cloudflare: 24 hours.
+   - Enables silent reauthentication for one week.
+2. **Align all Cloudflare durations:**
+   - Set all Gateway Allow policies to the same duration.
+   - Use consistent duration across similar applications.
+   - Only override for truly sensitive exceptions.
+3. **Check browser cookie settings:**
+   - Ensure `cloudflareaccess.com` is allowed.
+   - Turn off "Clear cookies on browser close".
+   - Review browser extensions that block tracking or cookies.
+
+## Issue 2: Silent reauthentication not working
+
+**Symptoms:** Users must enter username and password at every reauthentication, MFA required every time.
+
+**Common causes:**
+
+1. IdP session expired before Cloudflare session.
+2. Browser cookies cleared or blocked.
+3. IdP configured to require explicit user interaction (Microsoft Entra ID only).
+
+**Solutions:**
+
+1. **Verify the IdP session is longer than the Cloudflare session.** For detailed IdP configuration instructions, refer to:
+   - [Okta integration](/cloudflare-one/integrations/identity-providers/okta/).
+   - [Azure AD integration](/cloudflare-one/integrations/identity-providers/entra-id/).
+   - [Google Workspace integration](/cloudflare-one/integrations/identity-providers/google/).
+
+   Set the IdP session to at least 2x your Cloudflare global session (for example, 7 days for a 24-hour Cloudflare session).
+
+2. **Check browser cookie settings:**
+   - Allow third-party cookies for `cloudflareaccess.com`.
+   - Turn off "Clear cookies on browser close".
+   - Test in standard (non-private) mode.
+
+## Issue 3: Different reauthentication frequencies for different applications
+
+**Symptoms:** Some apps require daily reauthentication, others weekly, no clear pattern.
+
+**Common causes:**
+
+1. Per-application session durations configured differently.
+2. Mix of Device Authentication Identity and traditional authentication.
+3. Different Gateway policies with different session durations.
+
+**Solutions:**
+
+1. **Audit application-specific sessions:**
+   - Check each application's session duration.
+   - Review each policy's session duration.
+   - Document which apps have overrides.
+2. **Standardize session durations:**
+   - Use the global session as a baseline.
+   - Only override for truly sensitive applications.
+   - Group similar apps with the same duration.
+3. **Review Device Authentication Identity:**
+   - Check which apps have Device Authentication enabled.
+   - Apps with Device Authentication have a different reauthentication flow.
+   - Consider turning it off if it is causing confusion.
+
+## Issue 4: Session expires immediately after login
+
+**Symptoms:** User logs in successfully, immediately prompted to log in again.
+
+**Common causes:**
+
+1. Application or policy session set to "Immediate" timeout.
+
+**Solutions:**
+
+1. **Check session configuration:**
+   - Review the application session duration.
+   - Review each policy's session duration.
+   - Change from "Immediate" to an appropriate duration.
+
+## Summary
+
+Effective session management in Cloudflare Zero Trust requires understanding multiple session timers and how they interact to achieve your security and user experience goals.
+
+### Key takeaways
+
+1. **Define your goal first.** Different organizations need different reauthentication frequencies based on security requirements, compliance needs, and user experience priorities.
+2. **The IdP session is the foundation.** Set your IdP session equal to or longer than the Cloudflare sessions to enable silent reauthentication. This is the most critical configuration decision.
+3. **Device Authentication Identity replaces, not adds.** When enabled for an Access application, Device Authentication Identity completely replaces the Global, Application, and Policy session layers.
+4. **The Cloudflare One Client tunnel stays connected.** When sessions expire, the underlying WireGuard or MASQUE tunnel remains connected. Only traffic is blocked, not the tunnel itself.
+5. **The shortest timer wins.** The effective session duration is the minimum of all configured session timers that apply to that resource.
+
+## Additional resources
+
+- [Session management in Access](/cloudflare-one/access-controls/access-settings/session-management/).
+- [Client sessions in Zero Trust](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/).
+- [Gateway policy order of enforcement](/cloudflare-one/traffic-policies/order-of-enforcement/).
+- [Access policy evaluation order](/cloudflare-one/access-controls/policies/#cloudflare-access-policy-order-of-execution).

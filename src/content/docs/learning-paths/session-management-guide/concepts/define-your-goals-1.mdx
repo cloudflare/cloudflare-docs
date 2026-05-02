@@ -1,0 +1,68 @@
+---
+title: Define your reauthentication goals
+pcx_content_type: learning-unit
+sidebar:
+  order: 2
+description: Identify your organization's reauthentication requirements and the three core session concepts.
+products:
+  - cloudflare-one
+  - access
+  - gateway
+  - cloudflare-one-client
+---
+
+import { Aside } from "~/components";
+
+Before configuring session durations, consider your organization's security requirements and user experience priorities. Different organizations have different needs based on their risk tolerance, compliance requirements, and user workflows.
+
+## High-security scenarios (more frequent reauthentication)
+
+**When to use:**
+
+- Access to highly sensitive data (financial records, customer PII, production databases).
+- Compliance requirements (HIPAA, PCI-DSS, SOC 2) mandate regular verification.
+- Shared or public devices, contractor or temporary access.
+- Post-security incident heightened security posture.
+
+**Typical configuration:** Session durations of 1-8 hours with application-specific overrides for critical systems.
+
+**Trade-offs:** Reduces credential exposure window and ensures active user presence, but increases user interruption and potential productivity impact.
+
+## Balanced security scenarios (recommended for most)
+
+**When to use:**
+
+- Standard business applications with moderate sensitivity.
+- Mix of full-time employees and contractors.
+- Typical remote workforce with trusted corporate devices.
+
+**Typical configuration:** Session durations of 24 hours to 7 days with silent reauthentication enabled.
+
+**Trade-offs:** Daily or weekly verification maintains security with minimal user disruption, reasonable balance for most organizations.
+
+## Low-friction scenarios (less frequent reauthentication)
+
+**When to use:**
+
+- Low-sensitivity internal tools.
+- Highly trusted employee base with strong device posture.
+- Strong compensating controls (device certificates, continuous posture checks).
+
+**Typical configuration:** Session durations of 7-30 days, may enable Device Authentication Identity.
+
+**Trade-offs:** Minimal user interruption and maximum productivity, but requires trust in device security posture and may not meet strict compliance requirements.
+
+## Three core concepts: Cloudflare One Client tunnel, Cloudflare One Client session, and Access sessions
+
+It is important to understand three conceptually different things that are often confused:
+
+1. **Cloudflare One Client tunnel** — A persistent device registration with no expiry. The underlying WireGuard or MASQUE tunnel remains connected.
+2. **Cloudflare One Client session** — Controls how often a user must reauthenticate to use Cloudflare One Client for Gateway policies.
+3. **Access sessions** — Controls how long a user can access Access applications.
+
+<Aside type="note">
+	The Cloudflare One Client tunnel itself is **not interrupted** when sessions
+	expire. When a session expires, the tunnel remains connected but traffic is
+	blocked until the user reauthenticates. This is different from traditional
+	VPNs where the tunnel disconnects on session expiry.
+</Aside>

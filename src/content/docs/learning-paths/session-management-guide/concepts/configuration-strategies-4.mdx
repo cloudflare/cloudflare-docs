@@ -1,0 +1,112 @@
+---
+title: Configuration strategies
+pcx_content_type: learning-unit
+sidebar:
+  order: 5
+description: Apply session configuration strategies based on your reauthentication goals, plus a quick start guide.
+products:
+  - cloudflare-one
+  - access
+  - gateway
+  - cloudflare-one-client
+---
+
+Based on your reauthentication goals, here are recommended configuration strategies for different scenarios.
+
+## Strategy 1: Maximize security with frequent verification
+
+**Goal:** Minimize credential exposure window, ensure active user presence, meet strict compliance requirements.
+
+| Session type            | Duration  | Rationale                                  |
+| ----------------------- | --------- | ------------------------------------------ |
+| IdP max session         | 24 hours  | Force daily full authentication            |
+| Global session (Access) | 8 hours   | Multiple verifications per work day        |
+| Standard apps           | 8 hours   | Matches global session                     |
+| Sensitive apps          | 1 hour    | Frequent verification for high-risk data   |
+| Critical apps           | Immediate | Every access requires fresh authentication |
+| Gateway session         | 8 hours   | Consistent with Access baseline            |
+| Device Auth Identity    | Disabled  | Require IdP verification for all access    |
+
+**User experience:** Full IdP login daily, silent reauthentication every 8 hours, immediate reauthentication for critical systems. 3-4 reauthentication events per day.
+
+**Best for:** Healthcare (HIPAA), financial services (PCI-DSS), defense contractors, post-incident lockdown.
+
+## Strategy 2: Balanced security and usability (recommended for most)
+
+**Goal:** Daily identity verification with minimal user disruption.
+
+| Session type            | Duration | Rationale                                        |
+| ----------------------- | -------- | ------------------------------------------------ |
+| IdP max session         | 7 days   | Allows silent reauthentication for one work week |
+| Global session (Access) | 24 hours | Daily identity verification                      |
+| Standard apps           | 24 hours | Matches global session                           |
+| Sensitive apps          | 8 hours  | More frequent check for higher-risk apps         |
+| Critical apps           | 1 hour   | Short session for admin access                   |
+| Gateway session         | 24 hours | Consistent reauthentication baseline             |
+| Device Auth Identity    | Disabled | Simplifies troubleshooting                       |
+
+**User experience:** Full IdP login once per week, one silent reauthentication per day for standard apps, three per day for sensitive apps.
+
+**Best for:** Most organizations, standard business applications, remote workforce.
+
+## Strategy 3: Minimize friction with strong compensating controls
+
+**Goal:** Maximize user productivity and satisfaction, rely on strong device posture and continuous monitoring.
+
+| Session type            | Duration          | Rationale                                |
+| ----------------------- | ----------------- | ---------------------------------------- |
+| IdP max session         | 30 days           | Minimal IdP interaction                  |
+| Global session (Access) | 7 days            | Weekly verification                      |
+| Standard apps           | 7 days            | Matches global                           |
+| Sensitive apps          | 24 hours          | Exception for truly sensitive data       |
+| Critical apps           | 8 hours           | Exception for admin or production access |
+| Gateway session         | 7 days            | Consistent baseline                      |
+| Device Auth Identity    | 7 days (optional) | Further reduce IdP reauthentication      |
+
+**User experience:** Full IdP login once per month, one silent reauthentication per week, users rarely think about authentication.
+
+**Best for:** Trusted employee base, strong device management (MDM, certificates), continuous posture monitoring, development environments.
+
+## Strategy 4: Risk-based with per-application tuning
+
+**Goal:** Apply reauthentication frequency proportional to data sensitivity.
+
+| Application type                        | Session duration | Use case                                     |
+| --------------------------------------- | ---------------- | -------------------------------------------- |
+| Public documentation, wikis             | 30 days          | Minimal risk, maximum usability              |
+| Standard business apps (email, Slack)   | 7 days           | Daily use, moderate sensitivity              |
+| Business systems (CRM, HRIS)            | 24 hours         | Contains PII, daily verification             |
+| Financial systems, customer data        | 8 hours          | High sensitivity, frequent verification      |
+| Production infrastructure, admin panels | 1 hour           | Critical systems, very frequent verification |
+| Break-glass emergency access            | Immediate        | Every access requires fresh authentication   |
+
+**Best for:** Large organizations with varied application landscape, clear application classification and risk tiers.
+
+## Configuration quick start
+
+### Step 1: Define your requirements
+
+Choose your reauthentication goal:
+
+- High security: More frequent reauthentication.
+- Balanced: Standard verification (recommended).
+- Low friction: Less frequent reauthentication.
+- Risk-based: Per-application configuration.
+
+### Step 2: Configure the IdP session (critical first step)
+
+Set your IdP session **equal to or longer** than your planned Cloudflare sessions. This enables silent reauthentication.
+
+**Recommended configurations:**
+
+- For 24-hour Cloudflare sessions: Set the IdP to 7 days.
+- For 7-day Cloudflare sessions: Set the IdP to 30 days.
+
+### Step 3: Configure Cloudflare sessions
+
+1. **Set the global session.** Go to **Access controls** > **Access settings** and set the global session duration.
+   - Recommended: 24 hours for most deployments.
+   - Must be less than or equal to your IdP session.
+2. **Configure application sessions.** For most apps, use the global session default. Only override for sensitive applications requiring more frequent reauthentication.
+3. **Configure Gateway sessions.** Set all Gateway Allow policies to the same baseline duration (for example, `24h0m0s`) for consistency. For more information, refer to [Configure client sessions in Gateway](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/#configure-client-sessions-in-gateway).
+4. **Device Authentication Identity (optional).** Only turn it on if appropriate for your use case. For more information, refer to [Configure client sessions in Access](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/#configure-client-sessions-in-access-beta).

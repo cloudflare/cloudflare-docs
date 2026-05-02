@@ -1,0 +1,97 @@
+---
+title: Session timers in Cloudflare Zero Trust
+pcx_content_type: learning-unit
+sidebar:
+  order: 3
+description: Identify the six session timers that control reauthentication in Cloudflare Zero Trust.
+products:
+  - cloudflare-one
+  - access
+  - gateway
+  - cloudflare-one-client
+---
+
+import { Aside } from "~/components";
+
+When users access protected resources through Cloudflare Zero Trust, different session timers can affect when they need to reauthenticate. The timers that apply depend on whether you are using Access applications, Gateway policies, or both.
+
+## 1. Identity Provider (IdP) session timeout
+
+**What it controls:** How long a user's browser session with your IdP remains valid.
+
+**Where it is configured:** In your identity provider's admin console (Okta, Azure AD, Google Workspace, and similar).
+
+**Default values at the time of this writing:**
+
+- **Okta:** 2 hours (idle), 24 hours (maximum).
+- **Azure AD:** 90 days (with activity), configurable per application.
+- **Google Workspace:** 14 days (web sessions).
+
+**Impact:** When Cloudflare attempts to silently reauthenticate a user using existing browser cookies, the IdP session must still be valid. If the IdP session has expired, the user will see a full login prompt with username, password, and MFA.
+
+## 2. Global session duration (Access)
+
+**What it controls:** How often Cloudflare Access prompts users to reauthenticate with your IdP. Acts like a refresh token that can issue new application tokens.
+
+**Where it is configured:** **Access controls** > **Access settings** > [Set your global session duration](/cloudflare-one/access-controls/access-settings/session-management/#global-session-duration).
+
+**Default value:** 24 hours. **Range:** 15 minutes to 1 month.
+
+**When it applies:** For Access applications using traditional IdP authentication (not Device Authentication Identity).
+
+<Aside type="note">
+	Configure the global session duration to be greater than or equal to the
+	application session duration. The global token is required to issue new
+	application tokens. For more information, refer to [Session management in
+	Access](/cloudflare-one/access-controls/access-settings/session-management/).
+</Aside>
+
+## 3. Application session duration (Access)
+
+**What it controls:** How long users can access a specific Access application after authentication. Acts like an access token for the application.
+
+**Where it is configured:** Per-application in [application settings](/cloudflare-one/access-controls/access-settings/session-management/#application-session-duration).
+
+**Default value:** 24 hours. **Range:** Immediate timeout to 1 month.
+
+**When it applies:** For Access applications using traditional IdP authentication (not Device Authentication Identity). Sets the default for all policies in the application.
+
+## 4. Policy session duration (Access)
+
+**What it controls:** Per-policy override of the application session duration for specific user groups.
+
+**Where it is configured:** Per-policy in [policy configuration](/cloudflare-one/access-controls/access-settings/session-management/#policy-session-duration).
+
+**Default value:** Same as Application session duration. **Range:** Immediate timeout to 1 month.
+
+**When it applies:** Only for the specific policy where configured. Allows different session durations for different user groups within the same application (for example, 7 days for employees, 24 hours for contractors).
+
+## 5. (Optional) Device Authentication Identity session (Access)
+
+**What it controls:** How often users must reauthenticate when accessing Access applications via their Cloudflare One Client session instead of traditional IdP login.
+
+**Where it is configured:** [Device enrollment permissions](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/#configure-client-sessions-in-access-beta) > **Login methods** > **Device authentication identity**.
+
+**When it applies:** Only for Access applications that have Device Authentication Identity enabled.
+
+**Critical behavior:** When Device Authentication Identity is enabled for an Access application, it overrides and **completely replaces** the Global, Application, and Policy session layers. The only timeout that applies is the Device Authentication Identity session duration.
+
+## 6. Gateway policy session
+
+**What it controls:** How often users must reauthenticate when accessing resources through specific Gateway Network or HTTP policies.
+
+**Where it is configured:** Gateway [Network](/cloudflare-one/traffic-policies/network-policies/) or [HTTP](/cloudflare-one/traffic-policies/http-policies/) policies > **Configure policy settings** > **Enforce Cloudflare One Client session duration**.
+
+**Default value:** Unlimited (no timeout). **Range:** Custom format like `1h30m0s`.
+
+**When it applies:** Only for Gateway policies with Allow actions that have session enforcement enabled.
+
+**Impact:** When the timer expires, traffic through that specific policy is blocked until the user reauthenticates. The Cloudflare One Client tunnel remains connected, but access is denied.
+
+<Aside type="note">
+	Gateway policy sessions have **no effect** on Access applications, and Device
+	Authentication Identity sessions have **no effect** on Gateway traffic. These
+	are independent session types for different use cases. For more information,
+	refer to [Configure client sessions in
+	Gateway](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/#configure-client-sessions-in-gateway).
+</Aside>
