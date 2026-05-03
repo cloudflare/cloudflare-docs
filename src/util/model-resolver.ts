@@ -17,6 +17,15 @@ const ALL_MODELS_DETAIL_PATH =
 	"v1/workers-ai-model-catalog/all-models-detail.json";
 
 /**
+ * Returns the absolute path to the .tmp/ directory at the repo root.
+ * Centralised here so components don't have to compute relative paths
+ * from their own location (which varies).
+ */
+export function getDotTmpPath(): string {
+	return fileURLToPath(new URL("../../.tmp", import.meta.url));
+}
+
+/**
  * Convert a middlecache AiModelCard to the ResolvedModel format expected by
  * components. Card entries carry card-level fields only — schema and examples
  * are available via fetchAllModelDetails() for detail pages.

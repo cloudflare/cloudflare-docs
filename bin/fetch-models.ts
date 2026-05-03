@@ -47,7 +47,7 @@ const fail = (message: string): never => {
 
 if (fs.existsSync(MODELS_DOT_TMP_DIR) && !force) {
 	console.log(
-		`${MODELS_DOT_TMP_DIR} already exists, skipping fetch. (run with --force to re-fetch)`,
+		`${MODELS_DOT_TMP_DIR} already exists, skipping fetch. (run \`pnpm tsx bin/fetch-models.ts --force\` to re-fetch)`,
 	);
 	process.exit(0);
 }
@@ -71,8 +71,18 @@ const extractDir = join(
 	"workers-ai-model-catalog",
 );
 
-// Remove existing models/ directory so stale data doesn't accumulate
+// Remove existing models/ directory so stale data doesn't accumulate.
+// Also remove the other catalog files so they are re-fetched fresh on the
+// next build — their content changes whenever the pipeline re-graduates.
 fs.rmSync(MODELS_DOT_TMP_DIR, { recursive: true, force: true });
+for (const staleName of [
+	"ai-catalog.json",
+	"workers-ai-catalog.json",
+	"all-models-detail.json",
+	"models.tar.gz",
+]) {
+	fs.rmSync(join(extractDir, staleName), { force: true });
+}
 fs.mkdirSync(extractDir, { recursive: true });
 
 // Extract models.tar.gz into .tmp/middlecache/v1/workers-ai-model-catalog/

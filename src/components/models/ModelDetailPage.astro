@@ -40,11 +40,10 @@ import DeepgramFlux from "~/components/models/code/DeepgramFlux.astro";
 import Render from "~/components/Render.astro";
 import { authorData } from "~/components/models/data";
 import { hasProperty } from "~/util/model-properties";
-import { getModelAuthor } from "~/util/model-resolver";
+import { getModelAuthor, getDotTmpPath } from "~/util/model-resolver";
 import type { ResolvedModel } from "~/util/model-types";
 import fs from "node:fs";
 import { join } from "node:path";
-import { fileURLToPath } from "node:url";
 import { downloadToDotTempIfNotPresent } from "~/util/custom-loaders";
 
 interface Props {
@@ -217,8 +216,7 @@ if (hasSchemaFiles) {
 			`https://middlecache.ced.cloudflare.com/${r2Path}`,
 			`middlecache/${r2Path}`,
 		);
-		const dotTmpPath = fileURLToPath(new URL("../../.tmp", import.meta.url));
-		const localPath = join(dotTmpPath, "middlecache", r2Path);
+		const localPath = join(getDotTmpPath(), "middlecache", r2Path);
 		parametersData = JSON.parse(
 			fs.readFileSync(localPath, "utf8"),
 		) as ParametersPayload;
