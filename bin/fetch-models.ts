@@ -18,6 +18,8 @@ import { spawn } from "child_process";
 import fs from "fs";
 import { join } from "path";
 
+import kleur from "kleur";
+
 import { downloadToDotTempIfNotPresent } from "../src/util/custom-loaders";
 
 const MIDDLECACHE_BASE_URL = "https://middlecache.ced.cloudflare.com/";
@@ -45,12 +47,38 @@ const fail = (message: string): never => {
 	process.exit(1);
 };
 
+const tarballPath = join(".tmp", ...TARBALL_DOT_TMP_PATH.split("/"));
+const extractDir = join(
+	".tmp",
+	"middlecache",
+	"v1",
+	"workers-ai-model-catalog",
+);
+
 if (fs.existsSync(MODELS_DOT_TMP_DIR) && !force) {
 	console.log(
-		`${MODELS_DOT_TMP_DIR} already exists, skipping fetch. (run \`pnpm tsx bin/fetch-models.ts --force\` to re-fetch)`,
+		kleur.blue("[fetch-models]") +
+			" " +
+			kleur.dim(`${MODELS_DOT_TMP_DIR} already exists, skipping fetch.`) +
+			" " +
+			kleur.cyan("(run `pnpm tsx bin/fetch-models.ts --force` to re-fetch)"),
 	);
 	process.exit(0);
 }
+
+// Clear stale data before downloading so catalog files are always fresh
+// after a pipeline graduation. Must happen before downloadToDotTempIfNotPresent
+// so it re-fetches files it would otherwise skip as "already present".
+fs.rmSync(MODELS_DOT_TMP_DIR, { recursive: true, force: true });
+for (const staleName of [
+	"ai-catalog.json",
+	"workers-ai-catalog.json",
+	"all-models-detail.json",
+	"models.tar.gz",
+]) {
+	fs.rmSync(join(extractDir, staleName), { force: true });
+}
+fs.mkdirSync(extractDir, { recursive: true });
 
 console.log("Fetching AI model catalog from middlecache...");
 
@@ -62,28 +90,6 @@ try {
 } catch (err) {
 	fail(`fetch failed: ${err}`);
 }
-
-const tarballPath = join(".tmp", ...TARBALL_DOT_TMP_PATH.split("/"));
-const extractDir = join(
-	".tmp",
-	"middlecache",
-	"v1",
-	"workers-ai-model-catalog",
-);
-
-// Remove existing models/ directory so stale data doesn't accumulate.
-// Also remove the other catalog files so they are re-fetched fresh on the
-// next build — their content changes whenever the pipeline re-graduates.
-fs.rmSync(MODELS_DOT_TMP_DIR, { recursive: true, force: true });
-for (const staleName of [
-	"ai-catalog.json",
-	"workers-ai-catalog.json",
-	"all-models-detail.json",
-	"models.tar.gz",
-]) {
-	fs.rmSync(join(extractDir, staleName), { force: true });
-}
-fs.mkdirSync(extractDir, { recursive: true });
 
 // Extract models.tar.gz into .tmp/middlecache/v1/workers-ai-model-catalog/
 // The archive contains models/<slug>/... so we extract into the parent dir.

@@ -4,6 +4,8 @@ import { spawn } from "child_process";
 import fs from "fs";
 import { join } from "path";
 
+import kleur from "kleur";
+
 import { downloadToDotTempIfNotPresent } from "../src/util/custom-loaders";
 
 const MIDDLECACHE_BASE_URL = "https://middlecache.ced.cloudflare.com/";
@@ -35,7 +37,11 @@ const fail = (message: string): never => {
 
 if (fs.existsSync(SKILLS_DIR) && !force) {
 	console.log(
-		"/skills directory already exists, skipping fetch. (run `pnpm tsx bin/fetch-skills.ts --force` to re-fetch)",
+		kleur.blue("[fetch-skills]") +
+			" " +
+			kleur.dim(`${SKILLS_DIR} already exists, skipping fetch.`) +
+			" " +
+			kleur.cyan("(run `pnpm tsx bin/fetch-skills.ts --force` to re-fetch)"),
 	);
 	process.exit(0);
 }
