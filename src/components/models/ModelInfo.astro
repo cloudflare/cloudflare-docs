@@ -1,10 +1,10 @@
 ---
-import type { ResolvedModel } from "~/util/model-types";
+import type { ResolvedModel, ModelCardData } from "~/util/model-types";
 import { getModelAuthor } from "~/util/model-helpers";
 import { authorData } from "./data";
 
 interface Props {
-	model: ResolvedModel;
+	model: ResolvedModel | ModelCardData;
 }
 
 const { model } = Astro.props;
