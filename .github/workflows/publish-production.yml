@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - production
+  workflow_dispatch:
 
 jobs:
   publish:
