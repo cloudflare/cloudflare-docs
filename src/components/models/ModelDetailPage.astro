@@ -42,6 +42,10 @@ import { authorData } from "~/components/models/data";
 import { hasProperty } from "~/util/model-properties";
 import { getModelAuthor } from "~/util/model-resolver";
 import type { ResolvedModel } from "~/util/model-types";
+import fs from "node:fs";
+import { join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { downloadToDotTempIfNotPresent } from "~/util/custom-loaders";
 
 interface Props {
 	model: ResolvedModel;
@@ -204,20 +208,23 @@ type ParametersPayload =
 
 let parametersData: ParametersPayload | null = null;
 if (hasSchemaFiles) {
+	// Use downloadToDotTempIfNotPresent — same mechanism as middlecacheLoader and
+	// fetchAllModelDetails. If bin/fetch-models.ts already extracted the tarball,
+	// the file exists in .tmp/ and this is a no-op. Otherwise it fetches from HTTP.
+	const r2Path = `v1/workers-ai-model-catalog/models/${r2Slug}/parameters.json`;
 	try {
-		const middlewareCacheBase = "https://middlecache.ced.cloudflare.com/";
-		const r2Key = `v1/workers-ai-model-catalog/models/${r2Slug}/parameters.json`;
-		const res = await fetch(`${middlewareCacheBase}${r2Key}`);
-		if (res.ok) {
-			parametersData = (await res.json()) as ParametersPayload;
-		} else {
-			console.warn(
-				`ModelDetailPage: parameters.json fetch failed (${res.status}) for ${r2Slug}`,
-			);
-		}
+		await downloadToDotTempIfNotPresent(
+			`https://middlecache.ced.cloudflare.com/${r2Path}`,
+			`middlecache/${r2Path}`,
+		);
+		const dotTmpPath = fileURLToPath(new URL("../../.tmp", import.meta.url));
+		const localPath = join(dotTmpPath, "middlecache", r2Path);
+		parametersData = JSON.parse(
+			fs.readFileSync(localPath, "utf8"),
+		) as ParametersPayload;
 	} catch (e) {
 		console.warn(
-			`ModelDetailPage: parameters.json fetch error for ${r2Slug}:`,
+			`ModelDetailPage: parameters.json unavailable for ${r2Slug}:`,
 			e,
 		);
 	}
