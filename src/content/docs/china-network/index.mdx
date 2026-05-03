@@ -13,9 +13,11 @@ head:
 
 import { Stream } from "~/components";
 
-The [Cloudflare China Network](https://www.cloudflare.com/application-services/products/china-network/) is a package of selected Cloudflare's performance and security products running on data centers located in Mainland China and operated by Cloudflare's partner JD Cloud.
+Delivering content quickly and securely to users in Mainland China requires infrastructure within China itself. Traffic routed through servers outside the country faces significant latency and reliability issues due to China's network boundaries.
 
-The data centers cover most populated regions in China. Combining Cloudflare's technological leadership and JD Cloud's local operations expertise, the Cloudflare China Network is designed to meet the needs for secure, reliable, and fast-performing content delivery in China. You can use the same configurations that you use with Cloudflare everywhere else in the world and with the same dashboard experience.
+The [Cloudflare China Network](https://www.cloudflare.com/application-services/products/china-network/) solves this by running selected Cloudflare performance and security products on data centers located in Mainland China, operated by Cloudflare's partner JD Cloud. The data centers cover most populated regions in China.
+
+You can use the same configurations and dashboard experience that you use with Cloudflare everywhere else in the world.
 
 <Stream
 	id="b7933a5b3636ca29f834128ca92665b3"
@@ -34,10 +36,10 @@ The data centers cover most populated regions in China. Combining Cloudflare's t
 The Cloudflare China Network provides:
 
 - A single solution for both performance improvement and security services such as [WAF](/waf/), [DDoS](/ddos-protection/), and [bot management](/bots/).
-- An unified experience for managing network traffic and security posture. You can manage all configurations on the same dashboard.
+- A unified experience for managing network traffic and security posture. You can manage all configurations on the same dashboard.
 - The same customer support capabilities as Cloudflare's global network. You may also have access to premium service and local language support.
-- [In-China Authoritative DNS and in-China nameservers](/china-network/concepts/china-dns/) to improve the Time to First Byte (TTFB) performance.
-- [Global Acceleration](/china-network/concepts/global-acceleration/) is a suite of connectivity and performance offerings designed to simplify your global assets' deployment in China.
+- [In-China Authoritative DNS and in-China nameservers](/china-network/concepts/china-dns/) to reduce the time it takes for a user's browser to start receiving content (Time to First Byte).
+- [Global Acceleration](/china-network/concepts/global-acceleration/), a suite of connectivity and performance offerings that simplify deploying your global assets in China.
 
 ## Availability
 
@@ -46,6 +48,6 @@ The Cloudflare China Network is available as a separate subscription for custome
 ## Important notes
 
 - Not all Cloudflare products are available in the Cloudflare China Network. Refer to [Available products and features](/china-network/reference/available-products/) for details.
-- IPv6 support is mandatory for all Internet entities operating in Mainland China. The Cloudflare China Network feature automatically enables IPv6 for domains to fulfill this requirement.
+- IPv6 support is mandatory for all Internet-facing services operating in Mainland China. The Cloudflare China Network automatically enables IPv6 on your domains to fulfill this requirement.
 - All the content inside of Mainland China is monitored by local authorities and must comply with local regulations.
 - You must have a valid [ICP (Internet Content Provider) filing or license](/china-network/concepts/icp/) for each apex domain you wish to onboard to Cloudflare.

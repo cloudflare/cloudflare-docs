@@ -3,20 +3,24 @@ pcx_content_type: tutorial
 
 title: DNS over Discord
 slug: 1.1.1.1/additional-options/dns-over-discord
-description: 1.1.1.1 works from a Discord server. Invite the bot to your Discord server to start using DNS over Discord. Or, add it to your account to use it anywhere in Discord.
+description: Run DNS lookups and WHOIS queries directly in Discord using the 1.1.1.1 bot. Invite the bot to a server or add it to your account to query DNS records without leaving Discord.
 products:
   - 1.1.1.1
 ---
 
 import { Details } from "~/components";
 
-1.1.1.1 works from a Discord server, thanks to the 1.1.1.1 bot. [Invite the bot to your Discord server](https://cfl.re/3nM6VfQ) to start using DNS over Discord. Or, [add the bot to your Discord account](https://dns-over-discord.v4.wtf/invite/user) to use it anywhere in Discord.
+The 1.1.1.1 DNS over Discord bot allows you to run DNS lookups and WHOIS queries directly inside Discord, which is useful when you are debugging DNS issues collaboratively or need quick record checks without switching to a terminal.
+
+[Invite the bot to your Discord server](https://cfl.re/3nM6VfQ) to make it available in that server's channels, or [add the bot to your Discord account](https://dns-over-discord.v4.wtf/invite/user) to use it anywhere in Discord.
 
 ## Perform DNS lookups
 
-Once the bot is in your server, type `/dig` to start performing DNS lookups. This will provide a native interface within Discord that allows you to specify the domain to lookup, an optional DNS record type and an optional flag for a short result.
+Once the bot is in your server, type `/dig` to start performing DNS lookups. Discord will display a slash command form where you specify the domain to look up, an optional DNS record type, and an optional flag for a short result.
 
-If only a domain is given for the command, the bot will default to looking for `A` DNS records, and will return the full format result, not the short form.
+A DNS lookup queries the Domain Name System to retrieve records associated with a domain (for example, the IP addresses a domain points to, or the mail servers it uses).
+
+If only a domain is given for the command, the bot defaults to looking for `A` records (which map a domain to one or more IPv4 addresses) and returns the full format result, not the short form.
 
 Example:
 
@@ -62,9 +66,9 @@ To query other DNS record types, or multiple record types at once, use the `/mul
 
 ### Short form response
 
-DNS over Discord has an optional flag in the `/dig` command that allows the user to request a response in the short form.
+The `/dig` command has an optional flag to request a short form response.
 
-When you request a response in the short form, the name and TTL columns will be excluded. The command only returns the data column without formatting, similar to the equivalent `dig` command-line interface response.
+When you request a response in the short form, the name and TTL (time-to-live, how long the record is cached) columns are excluded. The command returns only the record data without formatting, similar to the equivalent `dig` command-line interface response.
 
 Example:
 
@@ -74,7 +78,7 @@ Example:
 
 ### Disable DNSSEC checking
 
-You can disable DNSSEC checking in the `dig` command by passing `cdflag` as true. This will return the DNS records even if the DNSSEC validation fails.
+DNSSEC (Domain Name System Security Extensions) validates that DNS responses have not been tampered with. You can disable this validation in the `/dig` command by passing `cdflag` as true, which is  useful when troubleshooting domains with misconfigured DNSSEC, where validation failures block otherwise valid records from appearing.
 
 Example:
 
@@ -90,7 +94,7 @@ The refresh button is available on all responses to the `/dig` command, includin
 
 ### Changing DNS provider
 
-By default, the DNS over Discord bot uses Cloudflare's 1.1.1.1 DNS service. You can run the DNS lookup with alternate DNS providers by selecting the dropdown below the result. This shows you a list of available providers. Selecting a new provider updates the results in the message. Any user can change the DNS provider.
+By default, the DNS over Discord bot uses Cloudflare's 1.1.1.1 DNS service. To compare results across providers (for example, to check whether a DNS propagation issue is provider-specific) select a different provider from the dropdown below the result. The results in the message update to reflect the selected provider. Any user can change the DNS provider.
 
 ## `multi-dig` command
 
@@ -104,7 +108,9 @@ Example:
 
 ### Supported record types
 
-When providing DNS record types for the `/multi-dig` command, Discord will not prompt you with options. You have to provide a space-separated list of valid DNS record types to lookup, as any invalid options will be silently dropped. `A` records will be used as the default if no valid types are given.
+Unlike `/dig`, the `/multi-dig` command does not show an autocomplete menu for record types. You provide a space-separated list of DNS record types to look up.
+
+If you include an invalid record type, the bot drops it without an error message. So if results seem incomplete, check for typos in your type list. If no valid types are provided, the bot defaults to `A` records.
 
 <Details header="DNS record types supported and considered valid by the bot">
 
@@ -192,7 +198,7 @@ This menu can be used by any user to change the DNS provider used for the lookup
 
 ## `whois` command
 
-The `/whois` command allows you to perform a RDAP/WHOIS lookup right in Discord for a given domain, IP or ASN.
+The `/whois` command performs a RDAP/WHOIS lookup in Discord for a given domain, IP address, or ASN (Autonomous System Number, a unique identifier assigned to a network). WHOIS returns registration and ownership information, such as who registered a domain and when it expires.
 
 Examples:
 

@@ -9,8 +9,6 @@ tags:
 sidebar:
   order: 1
   label: MCP server portals
-  badge:
-    text: Beta
 ---
 
 import { Render, Tabs, TabItem, APIRequest } from "~/components";
@@ -266,6 +264,32 @@ For MCP clients with server configuration files, we recommend using the `npx` co
 
 We do not recommend using the `serverURL` parameter since it may cause issues with portal session creation and management.
 
+### Portal homepage
+
+When users visit the portal domain (`https://<subdomain>.<domain>/`) in a browser, the portal displays a homepage with connection details and setup instructions.
+
+:::note
+Do not visit the MCP endpoint URL (`https://<subdomain>.<domain>/mcp`) directly in a browser. The `/mcp` path is intended for MCP clients only and will return an `invalid token` error if accessed in a browser.
+:::
+
+The homepage shows:
+
+- The portal name and your organization branding (if configured in Cloudflare Access)
+- The MCP endpoint URL with a copy button
+- Per-client connection instructions for Claude Desktop, Workers AI Playground, OpenCode, Windsurf, and other MCP clients with OS-specific file paths
+
+Authenticated users see their email address and a **Sign out** button in the session bar. Users who are not authenticated can still view the homepage and connection instructions.
+
+### Sign out of a portal
+
+To end a portal session, select **Sign out** from the [portal homepage](#portal-homepage) (`https://<subdomain>.<domain>/`). The sign-out flow:
+
+1. Revokes all portal-level OAuth grants for your user.
+2. Deletes all upstream MCP server OAuth states associated with your session.
+3. Redirects through Cloudflare Access logout.
+
+After sign-out, the portal displays a confirmation page with a summary of the revoked sessions. To reconnect, visit the portal homepage and authenticate again.
+
 ## Optimize context
 
 MCP server portals support context optimization options that reduce how many tokens tool definitions consume in the model's context window. These options are useful when a portal aggregates many MCP servers or servers that expose a large number of tools.
@@ -387,7 +411,7 @@ When an admin adds a new upstream MCP server to a portal, the portal automatical
 
 Portal logs allow you to monitor user activity through an MCP server portal. You can view logs on a per-portal or per-server basis.
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **AI controls**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **AI controls**.
 2. Find the portal or server that you want to view logs for, then select the three dots > **Edit**.
 3. Select **Logs**.
 

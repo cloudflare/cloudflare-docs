@@ -3,6 +3,7 @@ import Default from "@astrojs/starlight/components/Head.astro";
 import { Font } from "astro:assets";
 import { differenceInCalendarDays } from "date-fns";
 import "tippy.js/dist/tippy.css";
+import "~/styles/tippy.css";
 
 import { getEntry, getEntries } from "astro:content";
 import { getOgImage } from "~/util/og";
@@ -271,6 +272,7 @@ metaTags.map((attrs) => {
 	});
 });
 ---
+
 
 <Font cssVariable="--font-inter-tight" />
 <script src="src/scripts/footnotes.ts"></script>

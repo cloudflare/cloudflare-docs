@@ -70,11 +70,11 @@ Independent MFA prompts users for a second factor directly in Access. This allow
 
 You can configure MFA requirements at three levels:
 
-| Level            | Description                                                    |
-| ---------------- | -------------------------------------------------------------- |
-| [Organization](/cloudflare-one/access-controls/access-settings/independent-mfa/) | Enforce MFA by default for all applications in your account. |
-| [Application](#configure-independent-mfa-for-an-application)  | Require or turn off MFA for a specific application.            |
-| [Policy](#configure-independent-mfa-for-a-policy)       | Require or turn off MFA for users who match a specific policy. |
+| Level                                                                            | Description                                                    |
+| -------------------------------------------------------------------------------- | -------------------------------------------------------------- |
+| [Organization](/cloudflare-one/access-controls/access-settings/independent-mfa/) | Enforce MFA by default for all applications in your account.   |
+| [Application](#configure-independent-mfa-for-an-application)                     | Require or turn off MFA for a specific application.            |
+| [Policy](#configure-independent-mfa-for-a-policy)                                | Require or turn off MFA for users who match a specific policy. |
 
 Settings at lower levels (policy) override settings at higher levels (organization), giving you granular control over MFA enforcement.
 
@@ -82,15 +82,19 @@ Settings at lower levels (policy) override settings at higher levels (organizati
 
 Before you configure independent MFA on applications or policies, you must [turn on independent MFA](/cloudflare-one/access-controls/access-settings/independent-mfa/) at the organization level.
 
+:::tip
+At the organization level, you can also [restrict which authenticators can be enrolled using AAGUIDs](/cloudflare-one/access-controls/access-settings/independent-mfa/#restrict-authenticators-by-aaguid) and [skip independent MFA when the identity provider already performed MFA](/cloudflare-one/access-controls/access-settings/independent-mfa/#use-identity-provider-mfa.
+:::
+
 ### Configure independent MFA for an application
 
 Each application has three MFA options:
 
-| Option                                 | Behavior                                                                                                                                                                           |
-| -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Option                                 | Behavior                                                                                                                                                                                                                                               |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **Respect global enforcement setting** | Uses the [organization-level](/cloudflare-one/access-controls/access-settings/independent-mfa/) MFA configuration. If MFA is required globally, users must complete MFA. If MFA is not required globally, users are not prompted. This is the default. |
-| **Custom MFA settings**                | Overrides the organization setting with application-specific allowed authenticators and session duration.                                                                          |
-| **Disable MFA**                        | Users are not prompted for independent MFA when accessing this application, even if MFA is required globally.                                                                      |
+| **Custom MFA settings**                | Overrides the organization setting with application-specific allowed authenticators and session duration.                                                                                                                                              |
+| **Disable MFA**                        | Users are not prompted for independent MFA when accessing this application, even if MFA is required globally.                                                                                                                                          |
 
 To configure MFA for an application:
 

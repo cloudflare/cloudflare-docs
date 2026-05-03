@@ -178,7 +178,6 @@ import { env } from "cloudflare:workers";
 import { describe, it, expect, beforeEach } from "vitest";
 
 describe("Counter Durable Object", () => {
-	// Each test gets isolated storage automatically
 	it("should increment the counter", async () => {
 		const id = env.COUNTER.idFromName("test-counter");
 		const stub = env.COUNTER.get(id);
@@ -194,17 +193,11 @@ describe("Counter Durable Object", () => {
 		expect(count3).toBe(3);
 	});
 
-	it("should track separate counters independently", async () => {
+	it("should persist storage within a test file", async () => {
 		const id = env.COUNTER.idFromName("test-counter");
 		const stub = env.COUNTER.get(id);
 
-		await stub.increment("counter-a");
-		await stub.increment("counter-a");
-		await stub.increment("counter-b");
-
-		expect(await stub.getCount("counter-a")).toBe(2);
-		expect(await stub.getCount("counter-b")).toBe(1);
-		expect(await stub.getCount("counter-c")).toBe(0);
+		expect(await stub.getCount()).toBe(3);
 	});
 
 	it("should reset a counter", async () => {
@@ -339,40 +332,6 @@ describe("Direct Durable Object access", () => {
 		expect(ids.length).toBe(2);
 		expect(ids.some((id) => id.equals(id1))).toBe(true);
 		expect(ids.some((id) => id.equals(id2))).toBe(true);
-	});
-});
-```
-</TypeScriptExample>
-
-### Test isolation
-
-Each test automatically gets isolated storage. Durable Objects created in one test do not affect other tests:
-
-<TypeScriptExample filename="test/isolation.test.ts">
-```ts
-import { env } from "cloudflare:workers";
-import { listDurableObjectIds } from "cloudflare:test";
-import { describe, it, expect } from "vitest";
-
-describe("Test isolation", () => {
-	it("first test: creates a Durable Object", async () => {
-		const id = env.COUNTER.idFromName("isolated-counter");
-		const stub = env.COUNTER.get(id);
-
-		await stub.increment();
-		await stub.increment();
-		expect(await stub.getCount()).toBe(2);
-	});
-
-	it("second test: previous Durable Object does not exist", async () => {
-		// The Durable Object from the previous test is automatically cleaned up
-		const ids = await listDurableObjectIds(env.COUNTER);
-		expect(ids.length).toBe(0);
-
-		// Creating the same ID gives a fresh instance
-		const id = env.COUNTER.idFromName("isolated-counter");
-		const stub = env.COUNTER.get(id);
-		expect(await stub.getCount()).toBe(0);
 	});
 });
 ```

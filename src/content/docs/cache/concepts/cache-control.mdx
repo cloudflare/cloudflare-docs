@@ -320,3 +320,7 @@ In this section, we provide details regarding how other Cloudflare features inte
 ### Gzip and Other Compression
 
 Compression is disabled when the `no-transform` directive is present. If the original asset fetched from the origin is compressed, it is served compressed to the visitor. If the original asset is uncompressed, compression is not applied.
+
+### JavaScript Detections
+
+[JavaScript Detections](/cloudflare-challenges/challenge-types/javascript-detections/) injection is disabled when the `no-transform` directive is present. The `cf.bot_management.js_detection.passed` field will show as `missing` for affected requests.

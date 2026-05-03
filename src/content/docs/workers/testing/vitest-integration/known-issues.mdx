@@ -23,10 +23,6 @@ Vitest's [fake timers](https://vitest.dev/guide/mocking.html#timers) do not appl
 
 Dynamic `import()` statements do not work inside `export default { ... }` handlers when writing integration tests with `exports.default.fetch()`, or inside Durable Object event handlers. You must import and call your handlers directly, or use static `import` statements in the global scope.
 
-### Durable Object alarms
-
-Durable Object alarms are not reset between test runs and do not respect isolated storage. Ensure you delete or run all alarms with [`runDurableObjectAlarm()`](/workers/testing/vitest-integration/test-apis/#durable-objects) scheduled in each test before finishing the test.
-
 ### WebSockets
 
 Using WebSockets with Durable Objects is not supported with per-file storage isolation. To work around this, run your tests with shared storage using `--max-workers=1 --no-isolate`.

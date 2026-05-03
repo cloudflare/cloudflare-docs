@@ -1,0 +1,23 @@
+---
+title: Cloud Observatory connection metrics improvements
+description: Improved connection metric insights in the Cloud Observatory, with new provider-level, region-level, and percentile views
+products:
+  - radar
+date: 2026-04-30
+---
+
+The [Cloud Observatory](https://radar.cloudflare.com/cloud-observatory) on [**Radar**](/radar/) now provides improved connection metric insights, offering new ways to explore TCP round-trip time, TCP handshake duration, TLS handshake duration, and response header receive duration across cloud provider origin servers.
+
+The [Cloud Observatory overview](https://radar.cloudflare.com/cloud-observatory#connection-metrics) now shows connection metrics broken down by cloud provider, making it easy to compare connection performance across Amazon Web Services, Google Cloud, Microsoft Azure, and Oracle Cloud.
+
+![Screenshot of Cloud Observatory connection metrics broken down by cloud provider](~/assets/images/radar/cloud-observatory-connection-metrics-by-provider.png)
+
+Each [provider page](https://radar.cloudflare.com/cloud-observatory/amazon#connection-metrics) now shows connection metrics for the top five regions, with a selector to rank by lowest or highest values.
+
+![Screenshot of Cloud Observatory connection metrics broken down by region for a provider](~/assets/images/radar/cloud-observatory-connection-metrics-by-region.png)
+
+Each [region page](https://radar.cloudflare.com/cloud-observatory/amazon/us-east-1#connection-metrics) now displays connection metrics as percentile distributions (25th percentile, median, and 75th percentile), providing insight into the range and variability of connection times.
+
+![Screenshot of Cloud Observatory connection metrics with percentile distribution for a region](~/assets/images/radar/cloud-observatory-connection-metrics-percentiles.png)
+
+These views are also available through the [`Origins` API](/api/resources/radar/subresources/origins/), using the `timeseries_groups` endpoint with the `ORIGIN`, `REGION`, or `PERCENTILE` dimension.

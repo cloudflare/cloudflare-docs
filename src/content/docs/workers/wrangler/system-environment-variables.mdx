@@ -79,16 +79,16 @@ Wrangler supports the following environment variables:
 - `FORCE_COLOR` <Type text="string" /> <MetaInfo text="optional" />
   - By setting this to `0`, you can disable Wrangler's colorised output, which makes it easier to read with some terminal setups. For example, `FORCE_COLOR=0`.
 
-* `WRANGLER_HTTPS_KEY_PATH` <Type text="string" /> <MetaInfo text="optional" />
+- `WRANGLER_HTTPS_KEY_PATH` <Type text="string" /> <MetaInfo text="optional" />
   - Path to a custom HTTPS certificate key when running `wrangler dev`, to be used with `WRANGLER_HTTPS_CERT_PATH`.
 
-* `WRANGLER_HTTPS_CERT_PATH` <Type text="string" /> <MetaInfo text="optional" />
+- `WRANGLER_HTTPS_CERT_PATH` <Type text="string" /> <MetaInfo text="optional" />
   - Path to a custom HTTPS certificate when running `wrangler dev`, to be used with `WRANGLER_HTTPS_KEY_PATH`.
 
 - `DOCKER_HOST` <Type text="string" /> <MetaInfo text="optional" />
   - Used for local development of [Containers](/containers/local-dev). Wrangler will attempt to automatically find the correct socket to use to communicate with your container engine. If that does not work (usually surfacing as an `internal error` when attempting to connect to your Container), you can try setting the socket path using this environment variable.
 
-* `WRANGLER_R2_SQL_AUTH_TOKEN` <Type text="string" /> <MetaInfo text="optional" />
+- `WRANGLER_R2_SQL_AUTH_TOKEN` <Type text="string" /> <MetaInfo text="optional" />
   - API token used for executing queries with [R2 SQL](/r2-sql).
 
 - `WRANGLER_OUTPUT_FILE_PATH` <Type text="string" /> <MetaInfo text="optional" />
@@ -103,6 +103,11 @@ Wrangler supports the following environment variables:
 - `MINIFLARE_CACHE_DIR` <Type text="string" /> <MetaInfo text="optional" />
   - Custom directory for Miniflare's `cf.json` cache file, used during local development with `wrangler dev`. When set, this overrides the default cache location (`node_modules/.mf`). Useful for environments that do not use a traditional `node_modules` directory, such as Yarn PnP.
 
+- `CLOUDFLARE_CF_FETCH_ENABLED` <Type text="string" /> <MetaInfo text="optional" />
+  - Controls whether [Miniflare](/workers/testing/miniflare/) fetches the `cf.json` file containing [`Request.cf`](/workers/runtime-apis/request/#the-cf-property-requestinitcfproperties) properties from Cloudflare during local development. Set to `"false"` or `"0"` to disable fetching entirely and use fallback data. No `node_modules/.mf/cf.json` file will be created when disabled. Defaults to `"true"`. This is particularly useful for non-JavaScript projects (such as Rust or Go Workers) that do not want a `node_modules` directory created automatically. The explicit `cf` option in the [Miniflare API](/workers/testing/miniflare/get-started/#requestcf-object) takes precedence over this environment variable.
+
+- `CLOUDFLARE_CF_FETCH_PATH` <Type text="string" /> <MetaInfo text="optional" />
+  - Specifies a custom path for caching the `cf.json` file, overriding the default `node_modules/.mf/cf.json` location. This is useful for multi-project setups where you want a shared cache location, or for projects that want to store the cache outside of `node_modules`. The explicit `cf` option in the [Miniflare API](/workers/testing/miniflare/get-started/#requestcf-object) takes precedence over this environment variable, and `CLOUDFLARE_CF_FETCH_ENABLED=false` takes precedence over this variable.
 
 ### Example output file
 
@@ -135,6 +140,7 @@ CLOUDFLARE_API_BASE_URL=https://api.cloudflare.com/client/v4
 WRANGLER_LOG=debug
 WRANGLER_LOG_PATH=../Desktop/my-logs/my-log-file.log
 WRANGLER_R2_SQL_AUTH_TOKEN=<YOUR_R2_API_TOKEN_VALUE>
+CLOUDFLARE_CF_FETCH_ENABLED=false
 ```
 
 ## Deprecated global variables

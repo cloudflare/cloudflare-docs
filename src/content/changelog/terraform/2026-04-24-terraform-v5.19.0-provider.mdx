@@ -1,0 +1,107 @@
+---
+title: Terraform v5.19.0 now available
+description: Terraform v5.19.0 introduces 14 new resources and significantly improves v4 to v5 migration with automatic state upgraders and tf-migrate tool support
+products:
+  - terraform
+date: 2026-04-24
+---
+
+Terraform Provider v5.19.0 introduces 14 new resources spanning AI Gateway, Pipelines, R2 Data Catalog, User Groups, Vulnerability Scanner, Workers Observability, and Zero Trust capabilities. This release significantly improves the v4 to v5 migration experience with automatic state upgraders for 26 resources, working seamlessly with the new [tf-migrate CLI tool](https://github.com/cloudflare/tf-migrate) to automate resource renames, attribute updates, and `moved` block generation. Together, these enhancements reduce manual migration effort and minimize risk when upgrading from v4 to v5.
+
+**Note:** `cmd/migrate` is deprecated in favor of `tf-migrate` and will be removed in a future release ([#7062](https://github.com/cloudflare/terraform-provider-cloudflare/pull/7062))
+
+## New Resources
+
+- **cloudflare_ai_gateway**: Manage AI Gateway instances
+- **cloudflare_certificate_authorities_hostname_associations**: Manage mTLS certificate hostname associations
+- **cloudflare_custom_page_asset**: Manage custom page assets
+- **cloudflare_pipeline**: Manage Cloudflare Pipelines
+- **cloudflare_r2_data_catalog**: Manage R2 Data Catalog
+- **cloudflare_user_group**: Manage user groups
+- **cloudflare_user_group_members**: Manage user group memberships
+- **cloudflare_vulnerability_scanner_credential**: Manage vulnerability scanner credentials
+- **cloudflare_vulnerability_scanner_credential_set**: Manage vulnerability scanner credential sets
+- **cloudflare_vulnerability_scanner_target_environment**: Manage vulnerability scanner target environments
+- **cloudflare_workers_observability_destination**: Manage Workers Observability destinations
+- **cloudflare_zero_trust_device_ip_profile**: Manage Zero Trust device IP profiles
+- **cloudflare_zero_trust_device_subnet**: Manage Zero Trust device subnets
+- **cloudflare_zero_trust_dlp_settings**: Manage Zero Trust DLP settings
+
+## Features
+
+### V4 to V5 Migration State Upgraders
+
+State upgraders added for seamless migration from v4 to v5 for the following resources:
+- account
+- account_member
+- account_token
+- authenticated_origin_pulls
+- authenticated_origin_pulls_hostname_certificate
+- byo_ip_prefix
+- custom_hostname
+- custom_ssl
+- leaked_credential_check
+- leaked_credential_check_rule
+- logpush_ownership_challenge
+- mtls_certificate
+- observatory_scheduled_test
+- pages_domain
+- regional_tiered_cache
+- turnstile_widget
+- workers_custom_domain
+- zero_trust_device_custom_profile
+- zero_trust_device_default_profile
+- zero_trust_device_posture_integration
+- zero_trust_gateway_certificate
+- zero_trust_gateway_settings
+- zero_trust_organization
+- zero_trust_tunnel_cloudflared_virtual_network
+- zone_setting
+
+### Other Features
+
+- **ruleset**: Add `content_converter` and `redirects_for_ai_training` support to configuration rules
+- **zero_trust_gateway_logging**: Make importable
+
+## Bug Fixes
+
+### Migration & State Management
+
+- **account_member**: Add UseStateForUnknown to status field to prevent drift
+- **authenticated_origin_pulls_settings**: Fix no prior schema and no-op upgrade
+- **certificate_pack**: Initialize empty lists instead of null in state upgrader to prevent drift
+- **migrations**: Handle ambiguous schema_version state for v4/v5 coexistence
+- **zero_trust_access_policy**: Fix nil pointer panic in state upgrader; set PriorSchema nil for v4 state upgrade
+
+### Resource-Specific Fixes
+
+- **ai_search_instance**: Restore original defaults for cache and cache_threshold; conflict resolution
+- **apijson**: Return empty object from MarshalForPatch when no fields are serializable
+- **dlp_predefined_profile**: Eliminate perpetual entries and enabled_entries drift
+- **dns_record**: Avoid unnecessary drift for ipv4_only and ipv6_only attributes; remove private_routing default value
+- **drift**: Preserve prior state values for optional fields not returned by API
+- **healthcheck**: Use buildHealthcheckPlanChecks helper for correct plan checks per migration source; update assertions
+- **leaked_credential_check_rule**: Handle empty ID from v4 provider state migration
+- **list_item**: Remove context
+- **logpush_job**: Update model for migration
+- **ruleset**: Fix migration; add redirects_for_ai_training to SourceV4ActionParametersModel; fix duplicate model attribute
+- **worker**: Add UseStateForUnknown() plan modifiers and update tests for observability.traces
+- **workers_custom_domain**: Handle HTTP 200 no content header; update assertions
+- **workers_script**: Fix model drift
+- **zero_trust_access_identity_provider**: Fix boolean drifts
+- **zero_trust_device_managed_networks**: Upgrade resource state
+- **zero_trust_gateway_policy**: Make filters Computed+Optional to prevent drift
+- **zero_trust_gateway_settings**: Fix breaking changes; implement sweeper to reset account to clean defaults
+- **zone_setting**: Migration test improvements and fixes
+
+## Documentation
+
+- **healthcheck**: Update port description to clarify defaults
+- Add application-scoped access policy migration guidance
+- Update zone_settings_override migration guide for tf-migrate v2 workflow
+
+## For more information
+
+- [Terraform Provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs)
+- [Version 5 Migration Guide](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/guides/version-5-migration)
+- [Documentation on using Terraform with Cloudflare](/terraform/)

@@ -3,7 +3,7 @@ title: Voice agents
 description: Build real-time voice agents with speech-to-text, text-to-speech, and conversation persistence over WebSocket.
 pcx_content_type: reference
 sidebar:
-  order: 16
+  order: 22
 products:
   - agents
 ---
@@ -21,13 +21,13 @@ Build real-time voice agents with speech-to-text, text-to-speech, and conversati
 
 `@cloudflare/voice` provides two server-side mixins and matching client libraries:
 
-| Export | Import | Purpose |
-| --- | --- | --- |
-| `withVoice` | `@cloudflare/voice` | Full voice agent: STT, LLM, TTS, persistence |
-| `withVoiceInput` | `@cloudflare/voice` | STT-only: transcription without response |
-| `useVoiceAgent` | `@cloudflare/voice/react` | React hook for `withVoice` agents |
-| `useVoiceInput` | `@cloudflare/voice/react` | React hook for `withVoiceInput` agents |
-| `VoiceClient` | `@cloudflare/voice/client` | Framework-agnostic client |
+| Export           | Import                     | Purpose                                      |
+| ---------------- | -------------------------- | -------------------------------------------- |
+| `withVoice`      | `@cloudflare/voice`        | Full voice agent: STT, LLM, TTS, persistence |
+| `withVoiceInput` | `@cloudflare/voice`        | STT-only: transcription without response     |
+| `useVoiceAgent`  | `@cloudflare/voice/react`  | React hook for `withVoice` agents            |
+| `useVoiceInput`  | `@cloudflare/voice/react`  | React hook for `withVoiceInput` agents       |
+| `VoiceClient`    | `@cloudflare/voice/client` | Framework-agnostic client                    |
 
 Built on Cloudflare Durable Objects, you get:
 
@@ -176,10 +176,10 @@ The client receives `transcript_interim` messages with partial results as the us
 
 Set providers as class properties. Class field initializers run after `super()`, so `this.env` is available.
 
-| Property | Type | Required | Description |
-| --- | --- | --- | --- |
-| `transcriber` | `Transcriber` | Yes | Continuous per-call STT provider |
-| `tts` | `TTSProvider` | Yes | Text-to-speech |
+| Property      | Type          | Required | Description                      |
+| ------------- | ------------- | -------- | -------------------------------- |
+| `transcriber` | `Transcriber` | Yes      | Continuous per-call STT provider |
+| `tts`         | `TTSProvider` | Yes      | Text-to-speech                   |
 
 <TypeScriptExample>
 
@@ -224,12 +224,12 @@ Return a `string`, `AsyncIterable<string>`, or `ReadableStream` for streaming re
 
 ```ts
 export class MyAgent extends VoiceAgent<Env> {
-  transcriber = new WorkersAIFluxSTT(this.env.AI);
-  tts = new WorkersAITTS(this.env.AI);
+	transcriber = new WorkersAIFluxSTT(this.env.AI);
+	tts = new WorkersAITTS(this.env.AI);
 
-  async onTurn(transcript: string, context: VoiceTurnContext) {
-    return "You said: " + transcript;
-  }
+	async onTurn(transcript: string, context: VoiceTurnContext) {
+		return "You said: " + transcript;
+	}
 }
 ```
 
@@ -244,27 +244,27 @@ import { streamText } from "ai";
 import { createWorkersAI } from "workers-ai-provider";
 
 export class MyAgent extends VoiceAgent<Env> {
-  transcriber = new WorkersAIFluxSTT(this.env.AI);
-  tts = new WorkersAITTS(this.env.AI);
+	transcriber = new WorkersAIFluxSTT(this.env.AI);
+	tts = new WorkersAITTS(this.env.AI);
 
-  async onTurn(transcript: string, context: VoiceTurnContext) {
-    const workersai = createWorkersAI({ binding: this.env.AI });
+	async onTurn(transcript: string, context: VoiceTurnContext) {
+		const workersai = createWorkersAI({ binding: this.env.AI });
 
-    const result = streamText({
-      model: workersai("@cf/moonshotai/kimi-k2.5"),
-      system: "You are a helpful voice assistant. Keep responses concise.",
-      messages: [
-        ...context.messages.map(m => ({
-          role: m.role as "user" | "assistant",
-          content: m.content,
-        })),
-        { role: "user", content: transcript },
-      ],
-      abortSignal: context.signal,
-    });
+		const result = streamText({
+			model: workersai("@cf/moonshotai/kimi-k2.6"),
+			system: "You are a helpful voice assistant. Keep responses concise.",
+			messages: [
+				...context.messages.map((m) => ({
+					role: m.role as "user" | "assistant",
+					content: m.content,
+				})),
+				{ role: "user", content: transcript },
+			],
+			abortSignal: context.signal,
+		});
 
-    return result.textStream;
-  }
+		return result.textStream;
+	}
 }
 ```
 
@@ -272,30 +272,30 @@ export class MyAgent extends VoiceAgent<Env> {
 
 The `context` object provides:
 
-| Field | Type | Description |
-| --- | --- | --- |
-| `connection` | `Connection` | The WebSocket connection |
-| `messages` | `Array<{ role: string; content: string }>` | Conversation history from SQLite |
-| `signal` | `AbortSignal` | Aborted on interrupt or disconnect |
+| Field        | Type                                       | Description                        |
+| ------------ | ------------------------------------------ | ---------------------------------- |
+| `connection` | `Connection`                               | The WebSocket connection           |
+| `messages`   | `Array<{ role: string; content: string }>` | Conversation history from SQLite   |
+| `signal`     | `AbortSignal`                              | Aborted on interrupt or disconnect |
 
 ### Lifecycle hooks
 
-| Method | Description |
-| --- | --- |
-| `beforeCallStart(connection)` | Return `false` to reject the call |
-| `onCallStart(connection)` | Called after a call is accepted |
-| `onCallEnd(connection)` | Called when a call ends |
-| `onInterrupt(connection)` | Called when user interrupts during playback |
+| Method                        | Description                                 |
+| ----------------------------- | ------------------------------------------- |
+| `beforeCallStart(connection)` | Return `false` to reject the call           |
+| `onCallStart(connection)`     | Called after a call is accepted             |
+| `onCallEnd(connection)`       | Called when a call ends                     |
+| `onInterrupt(connection)`     | Called when user interrupts during playback |
 
 ### Pipeline hooks
 
 Intercept and transform data at each pipeline stage. Return `null` to skip the current utterance.
 
-| Method | Receives | Can skip? |
-| --- | --- | --- |
-| `afterTranscribe(transcript, connection)` | STT text | Yes |
-| `beforeSynthesize(text, connection)` | Text before TTS | Yes |
-| `afterSynthesize(audio, text, connection)` | Audio after TTS | Yes |
+| Method                                     | Receives        | Can skip? |
+| ------------------------------------------ | --------------- | --------- |
+| `afterTranscribe(transcript, connection)`  | STT text        | Yes       |
+| `beforeSynthesize(text, connection)`       | Text before TTS | Yes       |
+| `afterSynthesize(audio, text, connection)` | Audio after TTS | Yes       |
 
 <TypeScriptExample>
 
@@ -325,13 +325,13 @@ export class MyAgent extends VoiceAgent<Env> {
 
 ### Convenience methods
 
-| Method | Description |
-| --- | --- |
-| `speak(connection, text)` | Synthesize and send audio to one connection |
-| `speakAll(text)` | Synthesize and send audio to all connections |
-| `forceEndCall(connection)` | Programmatically end a call |
-| `saveMessage(role, text)` | Persist a message to conversation history |
-| `getConversationHistory()` | Retrieve conversation history from SQLite |
+| Method                     | Description                                  |
+| -------------------------- | -------------------------------------------- |
+| `speak(connection, text)`  | Synthesize and send audio to one connection  |
+| `speakAll(text)`           | Synthesize and send audio to all connections |
+| `forceEndCall(connection)` | Programmatically end a call                  |
+| `saveMessage(role, text)`  | Persist a message to conversation history    |
+| `getConversationHistory()` | Retrieve conversation history from SQLite    |
 
 ### Configuration options
 
@@ -349,11 +349,11 @@ const VoiceAgent = withVoice(Agent, {
 
 </TypeScriptExample>
 
-| Option | Type | Default | Description |
-| --- | --- | --- | --- |
-| `historyLimit` | `number` | `20` | Max messages loaded for context |
-| `audioFormat` | `string` | `"mp3"` | Audio format sent to client |
-| `maxMessageCount` | `number` | `1000` | Max messages stored in SQLite |
+| Option            | Type     | Default | Description                     |
+| ----------------- | -------- | ------- | ------------------------------- |
+| `historyLimit`    | `number` | `20`    | Max messages loaded for context |
+| `audioFormat`     | `string` | `"mp3"` | Audio format sent to client     |
+| `maxMessageCount` | `number` | `1000`  | Max messages stored in SQLite   |
 
 ## Server API: `withVoiceInput`
 
@@ -426,12 +426,12 @@ const {
 
 #### Tuning options
 
-| Option | Type | Default | Description |
-| --- | --- | --- | --- |
-| `silenceThreshold` | `number` | `0.04` | RMS below this is silence |
-| `silenceDurationMs` | `number` | `500` | Silence duration before `end_of_speech` (ms) |
-| `interruptThreshold` | `number` | `0.05` | RMS to detect speech during playback |
-| `interruptChunks` | `number` | `2` | Consecutive high-RMS chunks to trigger interrupt |
+| Option               | Type     | Default | Description                                      |
+| -------------------- | -------- | ------- | ------------------------------------------------ |
+| `silenceThreshold`   | `number` | `0.04`  | RMS below this is silence                        |
+| `silenceDurationMs`  | `number` | `500`   | Silence duration before `end_of_speech` (ms)     |
+| `interruptThreshold` | `number` | `0.05`  | RMS to detect speech during playback             |
+| `interruptChunks`    | `number` | `2`     | Consecutive high-RMS chunks to trigger interrupt |
 
 Changing tuning options triggers a client reconnect (the connection key includes them).
 
@@ -459,9 +459,7 @@ function Dictation() {
 	return (
 		<div>
 			<textarea
-				value={
-					transcript + (interimTranscript ? " " + interimTranscript : "")
-				}
+				value={transcript + (interimTranscript ? " " + interimTranscript : "")}
 				readOnly
 			/>
 			<button onClick={isListening ? stop : start}>
@@ -507,25 +505,25 @@ client.disconnect();
 
 ### Events
 
-| Event | Data type | Description |
-| --- | --- | --- |
-| `statuschange` | `VoiceStatus` | Pipeline state changed |
-| `transcriptchange` | `TranscriptMessage[]` | Transcript updated |
-| `interimtranscript` | `string \| null` | Interim transcript from streaming STT |
-| `metricschange` | `VoicePipelineMetrics` | Pipeline timing metrics |
-| `audiolevelchange` | `number` | Mic audio level (0–1) |
-| `connectionchange` | `boolean` | WebSocket connected/disconnected |
-| `mutechange` | `boolean` | Mute state changed |
-| `error` | `string \| null` | Error occurred |
-| `custommessage` | `unknown` | Non-voice message from server |
+| Event               | Data type              | Description                           |
+| ------------------- | ---------------------- | ------------------------------------- |
+| `statuschange`      | `VoiceStatus`          | Pipeline state changed                |
+| `transcriptchange`  | `TranscriptMessage[]`  | Transcript updated                    |
+| `interimtranscript` | `string \| null`       | Interim transcript from streaming STT |
+| `metricschange`     | `VoicePipelineMetrics` | Pipeline timing metrics               |
+| `audiolevelchange`  | `number`               | Mic audio level (0–1)                 |
+| `connectionchange`  | `boolean`              | WebSocket connected/disconnected      |
+| `mutechange`        | `boolean`              | Mute state changed                    |
+| `error`             | `string \| null`       | Error occurred                        |
+| `custommessage`     | `unknown`              | Non-voice message from server         |
 
 ### Advanced options
 
-| Option | Type | Description |
-| --- | --- | --- |
-| `transport` | `VoiceTransport` | Custom transport (default: WebSocket via PartySocket) |
-| `audioInput` | `VoiceAudioInput` | Custom mic capture (default: built-in AudioWorklet) |
-| `preferredFormat` | `VoiceAudioFormat` | Hint for server audio format (advisory only) |
+| Option            | Type               | Description                                           |
+| ----------------- | ------------------ | ----------------------------------------------------- |
+| `transport`       | `VoiceTransport`   | Custom transport (default: WebSocket via PartySocket) |
+| `audioInput`      | `VoiceAudioInput`  | Custom mic capture (default: built-in AudioWorklet)   |
+| `preferredFormat` | `VoiceAudioFormat` | Hint for server audio format (advisory only)          |
 
 ## Providers
 
@@ -533,11 +531,11 @@ client.disconnect();
 
 No API keys required — use your Workers AI binding:
 
-| Class | Type | Default model | Recommended for |
-| --- | --- | --- | --- |
-| `WorkersAIFluxSTT` | Continuous STT | `@cf/deepgram/flux` | `withVoice` |
+| Class               | Type           | Default model         | Recommended for  |
+| ------------------- | -------------- | --------------------- | ---------------- |
+| `WorkersAIFluxSTT`  | Continuous STT | `@cf/deepgram/flux`   | `withVoice`      |
 | `WorkersAINova3STT` | Continuous STT | `@cf/deepgram/nova-3` | `withVoiceInput` |
-| `WorkersAITTS` | TTS | `@cf/deepgram/aura-1` | Both |
+| `WorkersAITTS`      | TTS            | `@cf/deepgram/aura-1` | Both             |
 
 <TypeScriptExample>
 
@@ -575,11 +573,11 @@ export class CustomAgent extends VoiceAgent<Env> {
 
 ### Third-party providers
 
-| Package | Class | Description |
-| --- | --- | --- |
-| `@cloudflare/voice-deepgram` | `DeepgramSTT` | Continuous STT |
-| `@cloudflare/voice-elevenlabs` | `ElevenLabsTTS` | High-quality TTS |
-| `@cloudflare/voice-twilio` | `TwilioAdapter` | Telephony (phone calls) |
+| Package                        | Class           | Description             |
+| ------------------------------ | --------------- | ----------------------- |
+| `@cloudflare/voice-deepgram`   | `DeepgramSTT`   | Continuous STT          |
+| `@cloudflare/voice-elevenlabs` | `ElevenLabsTTS` | High-quality TTS        |
+| `@cloudflare/voice-twilio`     | `TwilioAdapter` | Telephony (phone calls) |
 
 **ElevenLabs TTS:**
 

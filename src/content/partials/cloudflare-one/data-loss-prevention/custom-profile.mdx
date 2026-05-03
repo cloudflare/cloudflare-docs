@@ -10,17 +10,15 @@ import { Details } from "~/components";
 
 3. Enter a name and optional description for the profile.
 
-4. Add custom or existing detection entries.
+4. Add new or existing detection entries to the profile.
 
    <Details header="Add a custom entry">
 
-   1. Select **Add custom entry** and give it a name.
+   1. Select **Add custom entry**.
 
-   2. In **Value**, enter a regular expression (or regex) that defines the text pattern you want to detect. For example, `test\d\d` will detect the word `test` followed by two digits.
+   2. Choose the type of detection entry you want to create and configure its values.
 
-      - Regular expressions are written in Rust. We recommend validating your regex with [Rustexp](https://rustexp.lpil.uk/).
-      - DLP detects UTF-8 characters, which can be up to 4 bytes each. Custom text pattern detections are limited to 1024 bytes in length.
-      - DLP does not support regular expressions with `+` or `*` operators because they are prone to exceeding the length limit. For example, the regex pattern `a+` can detect an infinite number of `a` characters. We recommend using `a{min,max}` instead, such as `a{1,1024}`.
+      For information on supported detection entry types, refer to [Configure detection entries](/cloudflare-one/data-loss-prevention/detection-entries/configure-detection-entries/).
 
    3. To save the detection entry, select **Done**.
 
@@ -28,7 +26,7 @@ import { Details } from "~/components";
 
    <Details header="Add existing entries">
 
-   Existing entries include [predefined](/cloudflare-one/data-loss-prevention/dlp-profiles/predefined-profiles/) and [user-defined](/cloudflare-one/data-loss-prevention/detection-entries/) detection entries.
+   Existing entries include [predefined](/cloudflare-one/data-loss-prevention/detection-entries/predefined-detection-entries/) and [user-defined](/cloudflare-one/data-loss-prevention/detection-entries/configure-detection-entries/) detection entries that you manage from the Detection entries section.
 
    1. Select **Add existing entries**.
    2. Choose which entries you want to add, then select **Confirm**.
@@ -36,6 +34,18 @@ import { Details } from "~/components";
 
    </Details>
 
-5. (Optional) Configure [**profile settings**](/cloudflare-one/data-loss-prevention/dlp-profiles/advanced-settings/) for the profile.
+5. (Optional) Add data classes to include reusable classification rules.
 
-6. Select **Save profile**.
+   1. Select **Add data classes**.
+   2. Choose the data classes you want to add, then select **Confirm**.
+
+6. (Optional) Use labels as match criteria for the profile.
+
+   - Select a sensitivity schema and minimum sensitivity level.
+   - Select a data tag group and one or more data tags.
+
+   For more information on labels, templates, and data classes, refer to [Data Classification](/cloudflare-one/data-loss-prevention/data-classification/).
+
+7. (Optional) Configure [**profile settings**](/cloudflare-one/data-loss-prevention/dlp-profiles/advanced-settings/) for the profile.
+
+8. Select **Save profile**.

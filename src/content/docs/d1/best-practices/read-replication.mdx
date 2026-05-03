@@ -432,9 +432,9 @@ There are some known limitations for D1 read replication.
 
 To account for <GlossaryTooltip term="replica lag">replica lag</GlossaryTooltip>, it is important to consider the consistency model for D1. A consistency model is a logical framework that governs how a database system serves user queries (how the data is updated and accessed) when there are multiple database instances. Different models can be useful in different use cases. Most database systems provide [read committed](https://jepsen.io/consistency/models/read-committed), [snapshot isolation](https://jepsen.io/consistency/models/snapshot-isolation), or [serializable](https://jepsen.io/consistency/models/serializable) consistency models, depending on their configuration.
 
-#### Without Sessions API
+#### Without a consistency model framework
 
-Consider what could happen in a distributed database system.
+Consider what could happen in a distributed database system without an explicit framework to enforce a consistency model.
 
 ![Distributed replicas could cause inconsistencies without Sessions API](/images/d1/consistency-without-sessions-api.png)
 

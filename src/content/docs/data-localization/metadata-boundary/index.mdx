@@ -8,13 +8,15 @@ sidebar:
   order: 5
 ---
 
-As part of the Data Localization Suite, the Customer Metadata Boundary (CMB) ensures that Customer Logs — any traffic metadata that can identify a customer’s end user (that is, contains the customer's [Account ID](/fundamentals/account/find-account-and-zone-ids/)) — will stay in the `EU` (European Union) or in the `US` (United States), depending on the region the customer selects. For example, if a customer selects the `EU` Customer Metadata Boundary, metadata will **only** be sent to our core data center located in the European Union.
+As part of the Data Localization Suite, the Customer Metadata Boundary (CMB) ensures that Customer Logs stay in the region you select.
 
-An exception is made if "Allow out-of-region access" is enabled. When enabled, Customer Logs will still be stored in the configured regions but will be accessible to authorized end users, regardless of physical location. Refer to [Out of region access](/data-localization/metadata-boundary/out-of-region-access/) for more details.
+Customer Logs are traffic metadata — information generated when visitors access your site, such as request URLs, timestamps, and firewall events — that could identify your end users. These logs are tagged with your [Account ID](/fundamentals/account/find-account-and-zone-ids/) and will be stored exclusively in the `EU` (European Union) or in the `US` (United States), depending on the region you configure. For example, if you select the `EU` Customer Metadata Boundary, metadata will **only** be sent to Cloudflare's core data center (the centralized processing facility, as distinct from the globally distributed edge data centers) located in the European Union.
+
+An exception is made if "Allow out-of-region access" is enabled. When enabled, Customer Logs will still be stored in the configured regions but will be accessible to authorized users on your account, regardless of physical location. Refer to [Out of region access](/data-localization/metadata-boundary/out-of-region-access/) for more details.
 
 ## Customer traffic metadata flow
 
-The following diagram is a high-level example of the flow of how metadata about a customer's traffic is generated on a Cloudflare data center. Logs are exclusively sent to the EU core data center for Cloudflare customers and their authorized users to access and view.
+The following diagram shows how metadata about your traffic is generated at a Cloudflare edge data center and forwarded exclusively to the core data center in the configured region (EU in this example). Authorized users access logs and analytics from that core data center.
 
 <br />
 
@@ -38,7 +40,7 @@ sequenceDiagram
 
 ## Log management
 
-Additionally, customers have the option to configure [Logpush](/logs/logpush/) to push their Customer Logs to various storage services, SIEMs, and log management providers.
+Additionally, you can configure [Logpush](/logs/logpush/) (Cloudflare's log export service) to push Customer Logs to your own storage services, SIEMs (Security Information and Event Management systems), and log management providers.
 
 ## Product specific-behavior
 

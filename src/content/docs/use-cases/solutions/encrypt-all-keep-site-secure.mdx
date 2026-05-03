@@ -6,7 +6,7 @@ products:
   - ssl
   - client-side-security
 sidebar:
-  label: Enforce HTTPS (Free, Pro, Business)
+  label: Enforce HTTPS
 ---
 
 import { DashButton, Render, Steps, TabItem, Tabs } from "~/components";
@@ -21,9 +21,7 @@ HTTPS on Cloudflare involves two separate connections: visitor to Cloudflare, an
 
 The core workflow is available on Free, Pro, and Business plans.
 
-:::note
-Most procedures in this guide are configured per domain. Select your domain in the Cloudflare dashboard before starting. Client-side security is the exception, as it is configured at the account level.
-:::
+<Render file="domain-scope-note" product="use-cases" params={{ exception: "Client-Side Security is the exception: it is configured at the account level." }} />
 
 ## Configure your SSL/TLS encryption mode
 

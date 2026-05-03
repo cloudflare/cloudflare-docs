@@ -17,6 +17,7 @@ Use `/accounts/{account_id}/tags` endpoints for these resource types.
 | `account` | None | The Cloudflare account itself |
 | `access_application` | None | Access application |
 | `access_group` | None | Access group |
+| `account_ruleset` | None | Account-level ruleset |
 | `ai_gateway` | None | AI Gateway |
 | `alerting_policy` | None | Notification policy |
 | `alerting_webhook` | None | Notification webhook destination |
@@ -27,12 +28,17 @@ Use `/accounts/{account_id}/tags` endpoints for these resource types.
 | `gateway_rule` | None | Gateway rule |
 | `image` | None | Cloudflare Image |
 | `kv_namespace` | None | Workers KV namespace |
+| `load_balancer_monitor` | None | Load Balancer monitor |
+| `load_balancer_pool` | None | Load Balancer pool |
+| `pages_project` | None | Pages project |
 | `queue` | None | Queue |
 | `r2_bucket` | None | R2 bucket |
+| `resource_share` | None | Resource share |
 | `stream_live_input` | None | Stream live input |
 | `stream_video` | None | Stream video |
-| `workers_script` | None | Workers script |
-| `workers_script_version` | `script_name` | Specific version of a Workers script |
+| `vectorize_index` | None | Vectorize index |
+| `worker` | None | Workers script |
+| `worker_version` | `worker_id` | Specific version of a Worker |
 
 ## Zone-level resources
 
@@ -45,20 +51,24 @@ Use `/zones/{zone_id}/tags` endpoints for these resource types.
 | `custom_certificate` | None | Custom SSL certificate |
 | `custom_hostname` | None | Custom hostname (SSL for SaaS) |
 | `dns_record` | None | DNS record |
+| `healthcheck` | None | Health check |
+| `load_balancer` | None | Load Balancer |
 | `managed_client_certificate` | None | Managed client certificate (mTLS) |
+| `worker_route` | None | Worker route |
 | `zone` | None | DNS zone |
+| `zone_ruleset` | None | Zone-level ruleset |
 
 ## Extra fields
 
-Most resource types only require `resource_type` and `resource_id`. Two types require an additional field in both request bodies and query parameters.
+Most resource types only require `resource_type` and `resource_id`. Two resource types require an additional field in both request bodies and query parameters.
 
-### `workers_script_version`
+### `worker_version`
 
-Include the `script_name` field:
+Include the `worker_id` field:
 
 ```bash
 # GET
-curl -X GET "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/tags?resource_type=workers_script_version&resource_id=$VERSION_ID&script_name=my-worker" \
+curl -X GET "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/tags?resource_type=worker_version&resource_id=$VERSION_ID&worker_id=$WORKER_ID" \
   -H "Authorization: Bearer $API_TOKEN"
 
 # PUT
@@ -66,9 +76,9 @@ curl -X PUT "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/tags" \
   -H "Authorization: Bearer $API_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-    "resource_type": "workers_script_version",
+    "resource_type": "worker_version",
     "resource_id": "'"$VERSION_ID"'",
-    "script_name": "my-worker",
+    "worker_id": "'"$WORKER_ID"'",
     "tags": {
       "version": "1.2.3",
       "environment": "staging"

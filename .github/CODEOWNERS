@@ -149,7 +149,7 @@ package.json @cloudflare/content-engineering
 /src/content/release-notes/workers.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @cloudflare/deploy-config @cloudflare/pcx-technical-writing @cloudflare/product-owners @irvinebroque @mikenomitch @mattietk
 /src/content/docs/zaraz/ @dcpena @kathayl @jonnyparris @simonabadoiu @cloudflare/pcx-technical-writing @cloudflare/product-owners
 /src/content/release-notes/zaraz.yaml @jonnyparris @simonabadoiu @cloudflare/pcx-technical-writing @cloudflare/product-owners
-/src/content/docs/workers/ci-cd/ @irvinebroque @aninibread @GregBrimble @cloudflare/pcx-technical-writing @cloudflare/product-owners @yomna-shousha
+/src/content/docs/workers/ci-cd/ @irvinebroque @aninibread @GregBrimble @ericclemmons @cloudflare/pcx-technical-writing @cloudflare/product-owners @yomna-shousha
 /src/content/compatibility-flags/ @irvinebroque @mikenomitch @GregBrimble @cloudflare/pcx-technical-writing @cloudflare/product-owners
 /src/content/docs/workers/wrangler/ @cloudflare/wrangler @irvinebroque @cloudflare/pcx-technical-writing @cloudflare/product-owners
 /src/content/docs/pages/framework-guides/ @cloudflare/wrangler @aninibread @GregBrimble @cloudflare/pcx-technical-writing @cloudflare/product-owners

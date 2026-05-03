@@ -16,6 +16,14 @@ Agents need memory to be useful over time. Without it, every conversation starts
 
 The [Session API](/agents/api-reference/sessions/) provides the memory layer for agents built on the Cloudflare Agents SDK. It manages two kinds of memory: **conversation history** (the messages and tool calls that make up a session) and **context memory** (persistent blocks injected into the system prompt that the agent can read, write, search, and load).
 
+Use this page when you need more than simple synced state or flat chat history. For small UI state, use [Store and sync state](/agents/api-reference/store-and-sync-state/). For basic chat persistence, `AIChatAgent` stores messages for you. For opinionated long-term memory, Think builds on Session and context blocks.
+
+:::caution[Experimental]
+
+The Session memory APIs currently use `agents/experimental/memory/session`. The concepts are stable, but import paths and details may change before graduation.
+
+:::
+
 ## Conversation history
 
 The most fundamental type of memory is the conversation itself: the messages between the user and the agent, the tool calls the agent made, and the results it received. The Session stores all of this in a tree-structured message history backed by a Session Provider, defaulting to SQLite.
@@ -27,9 +35,9 @@ import { Session } from "agents/experimental/memory/session";
 
 // Append messages as the conversation progresses
 await session.appendMessage({
-  id: `user-${crypto.randomUUID()}`,
-  role: "user",
-  parts: [{ type: "text", text: "What's the status of the deployment?" }]
+	id: `user-${crypto.randomUUID()}`,
+	role: "user",
+	parts: [{ type: "text", text: "What's the status of the deployment?" }],
 });
 
 // Read the full conversation history
@@ -71,15 +79,14 @@ A coding assistant might have a soul that defines its personality and constraint
 ```ts
 import { Session } from "agents/experimental/memory/session";
 
-const session = Session.create(this)
-  .withContext("soul", {
-    provider: {
-      get: async () =>
-        "You are a senior TypeScript engineer. You write concise, " +
-        "well-tested code. You prefer composition over inheritance. " +
-        "When you are unsure, you say so rather than guessing."
-    }
-  });
+const session = Session.create(this).withContext("soul", {
+	provider: {
+		get: async () =>
+			"You are a senior TypeScript engineer. You write concise, " +
+			"well-tested code. You prefer composition over inheritance. " +
+			"When you are unsure, you say so rather than guessing.",
+	},
+});
 ```
 
 </TypeScriptExample>
@@ -89,15 +96,14 @@ Or load it from R2 so you can update the agent's personality without redeploying
 <TypeScriptExample>
 
 ```ts
-const session = Session.create(this)
-  .withContext("soul", {
-    provider: {
-      get: async () => {
-        const obj = await env.CONFIG_BUCKET.get("soul.md");
-        return obj ? obj.text() : "You are a helpful assistant.";
-      }
-    }
-  });
+const session = Session.create(this).withContext("soul", {
+	provider: {
+		get: async () => {
+			const obj = await env.CONFIG_BUCKET.get("soul.md");
+			return obj ? obj.text() : "You are a helpful assistant.";
+		},
+	},
+});
 ```
 
 </TypeScriptExample>
@@ -112,14 +118,14 @@ Think of this as a scratchpad the agent maintains for itself, a place to jot dow
 
 ```ts
 const session = Session.create(this)
-  .withContext("memory", {
-    description: "Important facts learned during conversation",
-    maxTokens: 1100
-  })
-  .withContext("todos", {
-    description: "Task list, track what needs to be done and what is complete",
-    maxTokens: 2000
-  });
+	.withContext("memory", {
+		description: "Important facts learned during conversation",
+		maxTokens: 1100,
+	})
+	.withContext("todos", {
+		description: "Task list, track what needs to be done and what is complete",
+		maxTokens: 2000,
+	});
 ```
 
 </TypeScriptExample>
@@ -159,11 +165,11 @@ The built-in `AgentSearchProvider` uses Durable Object SQLite with FTS5 as defau
 ```ts
 import { AgentSearchProvider } from "agents/experimental/memory/session";
 
-const session = Session.create(this)
-  .withContext("knowledge", {
-    description: "Searchable knowledge base, search for relevant information before answering",
-    provider: new AgentSearchProvider(this)
-  });
+const session = Session.create(this).withContext("knowledge", {
+	description:
+		"Searchable knowledge base, search for relevant information before answering",
+	provider: new AgentSearchProvider(this),
+});
 ```
 
 </TypeScriptExample>
@@ -173,23 +179,23 @@ But you can implement your own provider backed by any search mechanism:
 <TypeScriptExample>
 
 ```ts
-const session = Session.create(this)
-  .withContext("knowledge", {
-    description: "Searchable knowledge base",
-    provider: {
-      get: async () => "Product documentation and FAQs",
-      search: async (query) => {
-        // Use Vectorize, an external API, whatever you need
-        const results = await env.VECTORIZE_INDEX.query(
-          await generateEmbedding(query), { topK: 5 }
-        );
-        return results.matches.map(m => m.metadata.text).join("\n\n");
-      },
-      set: async (key, content) => {
-        // Index new content
-      }
-    }
-  });
+const session = Session.create(this).withContext("knowledge", {
+	description: "Searchable knowledge base",
+	provider: {
+		get: async () => "Product documentation and FAQs",
+		search: async (query) => {
+			// Use Vectorize, an external API, whatever you need
+			const results = await env.VECTORIZE_INDEX.query(
+				await generateEmbedding(query),
+				{ topK: 5 },
+			);
+			return results.matches.map((m) => m.metadata.text).join("\n\n");
+		},
+		set: async (key, content) => {
+			// Index new content
+		},
+	},
+});
 ```
 
 </TypeScriptExample>
@@ -240,23 +246,24 @@ The built-in `R2SkillProvider` stores skills in a Cloudflare R2 bucket. Each ski
 import { Session, R2SkillProvider } from "agents/experimental/memory/session";
 
 const session = Session.create(this)
-  .withContext("soul", {
-    provider: {
-      get: async () => [
-        "You are a helpful assistant with access to skills.",
-        "When a user asks you to do something, check the SKILLS section",
-        "for a relevant skill and use load_context to load it.",
-      ].join("\n")
-    }
-  })
-  .withContext("memory", {
-    description: "Learned facts",
-    maxTokens: 1100
-  })
-  .withContext("skills", {
-    provider: new R2SkillProvider(env.SKILLS_BUCKET, { prefix: "skills/" })
-  })
-  .withCachedPrompt();
+	.withContext("soul", {
+		provider: {
+			get: async () =>
+				[
+					"You are a helpful assistant with access to skills.",
+					"When a user asks you to do something, check the SKILLS section",
+					"for a relevant skill and use load_context to load it.",
+				].join("\n"),
+		},
+	})
+	.withContext("memory", {
+		description: "Learned facts",
+		maxTokens: 1100,
+	})
+	.withContext("skills", {
+		provider: new R2SkillProvider(env.SKILLS_BUCKET, { prefix: "skills/" }),
+	})
+	.withCachedPrompt();
 ```
 
 </TypeScriptExample>
@@ -293,7 +300,7 @@ To add descriptions (shown in the metadata listing), set custom metadata on the 
 
 ```ts
 await env.SKILLS_BUCKET.put("skills/api-ref", content, {
-  customMetadata: { description: "API Reference documentation" }
+	customMetadata: { description: "API Reference documentation" },
 });
 ```
 
@@ -309,39 +316,39 @@ You can back skills with any storage by implementing the `SkillProvider` interfa
 import type { SkillProvider } from "agents/experimental/memory/session";
 
 class DatabaseSkillProvider implements SkillProvider {
-  private db: D1Database;
+	private db: D1Database;
 
-  constructor(db: D1Database) {
-    this.db = db;
-  }
+	constructor(db: D1Database) {
+		this.db = db;
+	}
 
-  async get(): Promise<string | null> {
-    const rows = await this.db
-      .prepare("SELECT key, description FROM skills ORDER BY key")
-      .all();
-    if (rows.results.length === 0) return null;
-    return rows.results
-      .map(r => `- ${r.key}${r.description ? `: ${r.description}` : ""}`)
-      .join("\n");
-  }
+	async get(): Promise<string | null> {
+		const rows = await this.db
+			.prepare("SELECT key, description FROM skills ORDER BY key")
+			.all();
+		if (rows.results.length === 0) return null;
+		return rows.results
+			.map((r) => `- ${r.key}${r.description ? `: ${r.description}` : ""}`)
+			.join("\n");
+	}
 
-  async load(key: string): Promise<string | null> {
-    const row = await this.db
-      .prepare("SELECT content FROM skills WHERE key = ?")
-      .bind(key)
-      .first();
-    return row ? (row.content as string) : null;
-  }
+	async load(key: string): Promise<string | null> {
+		const row = await this.db
+			.prepare("SELECT content FROM skills WHERE key = ?")
+			.bind(key)
+			.first();
+		return row ? (row.content as string) : null;
+	}
 
-  async set(key: string, content: string, description?: string): Promise<void> {
-    await this.db
-      .prepare(
-        "INSERT INTO skills (key, content, description) VALUES (?, ?, ?) " +
-        "ON CONFLICT(key) DO UPDATE SET content = ?, description = ?"
-      )
-      .bind(key, content, description ?? null, content, description ?? null)
-      .run();
-  }
+	async set(key: string, content: string, description?: string): Promise<void> {
+		await this.db
+			.prepare(
+				"INSERT INTO skills (key, content, description) VALUES (?, ?, ?) " +
+					"ON CONFLICT(key) DO UPDATE SET content = ?, description = ?",
+			)
+			.bind(key, content, description ?? null, content, description ?? null)
+			.run();
+	}
 }
 ```
 
@@ -351,13 +358,13 @@ The Session detects the `load()` method via duck-typing and generates the approp
 
 #### Skills vs other memory types
 
-| Aspect | Skills | Writable context | Searchable context |
-| ------ | ------ | ---------------- | ------------------ |
-| **In system prompt** | Metadata listing only | Full content | Summary count |
-| **Access pattern** | Load whole document by key | Always visible | Search by query |
-| **Best for** | Large documents, reference material | Short notes, preferences | Large collections of small entries |
-| **Context cost** | Low (until loaded) | Proportional to content | Low (until searched) |
-| **Agent writes?** | Optional (if `set` implemented) | Yes (via `set_context`) | Yes (via `set_context`) |
+| Aspect               | Skills                              | Writable context         | Searchable context                 |
+| -------------------- | ----------------------------------- | ------------------------ | ---------------------------------- |
+| **In system prompt** | Metadata listing only               | Full content             | Summary count                      |
+| **Access pattern**   | Load whole document by key          | Always visible           | Search by query                    |
+| **Best for**         | Large documents, reference material | Short notes, preferences | Large collections of small entries |
+| **Context cost**     | Low (until loaded)                  | Proportional to content  | Low (until searched)               |
+| **Agent writes?**    | Optional (if `set` implemented)     | Yes (via `set_context`)  | Yes (via `set_context`)            |
 
 The key distinction: skills are **lazy**. They cost nearly nothing in the system prompt until the agent decides it needs one. This makes them ideal for large reference material where only a subset is relevant to any given conversation.
 
@@ -372,10 +379,10 @@ const sessionTools = await session.tools();
 const allTools = { ...sessionTools, ...myApplicationTools };
 
 const result = streamText({
-  model: myModel,
-  system: await session.freezeSystemPrompt(),
-  messages: await convertToModelMessages(session.getHistory()),
-  tools: allTools
+	model: myModel,
+	system: await session.freezeSystemPrompt(),
+	messages: await convertToModelMessages(session.getHistory()),
+	tools: allTools,
 });
 ```
 
@@ -385,13 +392,13 @@ const result = streamText({
 
 The Session generates tools dynamically based on what provider types are present:
 
-| Tool | Generated when | What it does |
-| ---- | -------------- | ------------ |
-| **`set_context`** | Any writable, skill, or search block exists | Writes content to a named block. For writable blocks, replaces or appends. For skill/search blocks, writes a keyed entry. |
-| **`load_context`** | Any skill block exists | Loads full content of a document by key into the agent's context. |
-| **`unload_context`** | Any skill block exists | Frees context space by removing a previously loaded document. The document remains available for re-loading. |
-| **`search_context`** | Any search block exists | Full-text search within a searchable block. Returns the top results ranked by relevance. |
-| **`session_search`** | Using `SessionManager` | Searches across all sessions (cross-conversation search). |
+| Tool                 | Generated when                              | What it does                                                                                                              |
+| -------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| **`set_context`**    | Any writable, skill, or search block exists | Writes content to a named block. For writable blocks, replaces or appends. For skill/search blocks, writes a keyed entry. |
+| **`load_context`**   | Any skill block exists                      | Loads full content of a document by key into the agent's context.                                                         |
+| **`unload_context`** | Any skill block exists                      | Frees context space by removing a previously loaded document. The document remains available for re-loading.              |
+| **`search_context`** | Any search block exists                     | Full-text search within a searchable block. Returns the top results ranked by relevance.                                  |
+| **`session_search`** | Using `SessionManager`                      | Searches across all sessions (cross-conversation search).                                                                 |
 
 The tools include descriptions and parameter schemas that tell the LLM which blocks are available and what they are for. The agent decides when and how to use them based on the conversation.
 
@@ -446,11 +453,11 @@ This means the system prompt stays stable throughout a multi-step tool-use turn,
 
 ```ts
 const session = Session.create(this)
-  .withContext("soul", {
-    provider: { get: async () => "You are a helpful assistant." }
-  })
-  .withContext("memory", { description: "Learned facts", maxTokens: 1100 })
-  .withCachedPrompt(); // Persist the frozen prompt across hibernation
+	.withContext("soul", {
+		provider: { get: async () => "You are a helpful assistant." },
+	})
+	.withContext("memory", { description: "Learned facts", maxTokens: 1100 })
+	.withCachedPrompt(); // Persist the frozen prompt across hibernation
 
 // During a conversation turn:
 const system = await session.freezeSystemPrompt(); // Same value every call
@@ -495,15 +502,17 @@ The key points:
 import { createCompactFunction } from "agents/experimental/memory/utils/compaction-helpers";
 
 const session = Session.create(this)
-  .withContext("memory", { maxTokens: 1100 })
-  .onCompaction(createCompactFunction({
-    summarize: (prompt) =>
-      generateText({ model: myModel, prompt }).then(r => r.text),
-    protectHead: 3,
-    tailTokenBudget: 20000,
-    minTailMessages: 2
-  }))
-  .compactAfter(100_000); // Auto-compact when token estimate exceeds threshold
+	.withContext("memory", { maxTokens: 1100 })
+	.onCompaction(
+		createCompactFunction({
+			summarize: (prompt) =>
+				generateText({ model: myModel, prompt }).then((r) => r.text),
+			protectHead: 3,
+			tailTokenBudget: 20000,
+			minTailMessages: 2,
+		}),
+	)
+	.compactAfter(100_000); // Auto-compact when token estimate exceeds threshold
 ```
 
 </TypeScriptExample>
@@ -533,19 +542,19 @@ const truncated = truncateOlderMessages(history);
 ## Related
 
 <LinkCard
-  title="Session API reference"
-  href="/agents/api-reference/sessions/"
-  description="Full API reference for Session, covering messages, context blocks, compaction, search, tools, and custom providers."
+	title="Session API reference"
+	href="/agents/api-reference/sessions/"
+	description="Full API reference for Session, covering messages, context blocks, compaction, search, tools, and custom providers."
 />
 
 <LinkCard
-  title="Store and sync state"
-  href="/agents/api-reference/store-and-sync-state/"
-  description="setState() for simpler key-value persistence and real-time sync."
+	title="Store and sync state"
+	href="/agents/api-reference/store-and-sync-state/"
+	description="setState() for simpler key-value persistence and real-time sync."
 />
 
 <LinkCard
-  title="Think"
-  href="/agents/api-reference/think/"
-  description="Opinionated chat agent with built-in Session integration via configureSession()."
+	title="Think"
+	href="/agents/api-reference/think/"
+	description="Opinionated chat agent with built-in Session integration via configureSession()."
 />

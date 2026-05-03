@@ -8,43 +8,43 @@ sidebar:
 
 import { LinkButton, LinkCard } from "~/components";
 
-Cloudflare documentation provides features and tools to help you use your own AI agents to effectively consume the information. This enables you to query your agent for your specific needs, as well as use Cloudflare skills and MCP servers to effectively interact with Cloudflare products and services.
+AI agents — tools like Cursor, GitHub Copilot, and Claude Code — can answer questions about Cloudflare products, generate configuration, and call Cloudflare APIs on your behalf. Cloudflare documentation provides content in agent-friendly formats, agent skills, and MCP servers so your AI agent can look up documentation and interact with Cloudflare services directly.
 
-This page explains how you can use your agents on Cloudflare documentation.
+This page explains the available approaches and how to set them up.
 
 ## Quick start
 
-Choose the approach that matches how you use AI tools:
+These resources cover different aspects of using AI agents with Cloudflare documentation. Start with the one most relevant to you:
 
 <LinkCard
-  title="Understand key concepts"
-  description="Learn about agent skills and MCP (Model Context Protocol)."
-  href="#concepts"
+	title="Understand key concepts"
+	description="Learn about agent skills and MCP (Model Context Protocol)."
+	href="#concepts"
 />
 
 <LinkCard
-  title="Set up your agent"
-  href="/agent-setup/"
-  description="Effectively consume documentation and interact with Cloudflare products."
+	title="Set up your agent"
+	href="/agent-setup/"
+	description="Install skills and MCP servers for your specific AI tool."
 />
 
 <LinkCard
-  title="Extract documentation in agent-friendly format"
-  href="#markdown-documentation-for-llms"
-  description="Minimize token usage while improving the accuracy of your agent's responses."
+	title="Extract documentation in agent-friendly format"
+	href="#markdown-documentation-for-llms"
+	description="Minimize token usage while improving the accuracy of your agent's responses."
 />
 
 ## Concepts
 
 ### Agent skills
 
-[Agent skills](https://agentskills.io/home) are structured, task-specific instructions that AI tools load on demand — for example, a skill might teach your agent how to deploy a Cloudflare Worker or configure a WAF rule. Cloudflare publishes skills covering Workers, storage, AI, networking, security, and more in the [Cloudflare Skills repository](https://github.com/cloudflare/skills).
+[Agent skills](https://agentskills.io/home) are structured, task-specific instructions that AI tools load on demand — for example, a skill might teach your agent how to deploy a Cloudflare Worker or configure a WAF (Web Application Firewall) rule. Skills give your agent Cloudflare-specific instructions it would not otherwise have. Cloudflare publishes skills covering Workers, storage, AI, networking, security, and more in the [Cloudflare Skills repository](https://github.com/cloudflare/skills).
 
-Each agent has its own installation method for Skills. Refer to [Agent setup](#set-up-your-agent) for installation instructions.
+Each agent has its own installation method for skills. Refer to [Agent setup](#set-up-your-agent) for installation instructions.
 
 ### Model Context Protocol (MCP)
 
-The [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) is an open standard that connects AI tools to external tools, data, and services. When you connect an MCP server to your agent, the agent can search documentation, create DNS records, deploy Workers, and more.
+The [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) is an open standard that defines how AI tools connect to external tools, data, and services. An MCP server is an application that exposes specific capabilities. When you connect one to your agent, the agent can use those capabilities as part of its workflow (for example, searching documentation, creating DNS records, or deploying Workers).
 
 Cloudflare runs managed remote MCP servers that give your agent the ability to search documentation, call the Cloudflare API, and query logs and analytics while it works.
 
@@ -55,10 +55,9 @@ There are two approaches:
 
 Each agent's [Agent setup](#set-up-your-agent) guide includes MCP server installation as part of its Quick start. For the full list of available MCP servers, refer to [MCP servers for Cloudflare](/agents/model-context-protocol/mcp-servers-for-cloudflare/).
 
-
 ### Model flexibility
 
-AI agents use large language models (LLMs) to understand your requests and generate responses. How many models you can choose from depends on the agent:
+AI agents use large language models (LLMs) to understand your requests and generate responses. The model affects response quality, speed, and cost. How many models you can choose from depends on the agent:
 
 - **Locked**: Only the vendor's own models are supported.
 - **BYOK** (Bring Your Own Key): You supply your own API key for the model provider of your choice.
@@ -66,14 +65,14 @@ AI agents use large language models (LLMs) to understand your requests and gener
 
 ### Context approaches
 
-How the agent retains information about your project between conversations:
+How the agent retains information about your project between conversations affects how much your agent remembers between sessions:
 
 - **Project memory**: The agent remembers context across sessions using stored files or memory.
 - **Indexed codebase**: The agent builds a searchable index of your repository for fast lookups.
 
 ## Set up your agent
 
-Each supported agent has a dedicated setup guide covering installation, Skills, MCP server configuration, example prompts, tips, and troubleshooting.
+Each supported agent has a dedicated setup guide covering installation, skills, MCP server configuration, example prompts, tips, and troubleshooting.
 
 <LinkButton href="/agent-setup/">Get started</LinkButton>
 
@@ -104,16 +103,16 @@ curl "https://developers.cloudflare.com/workers/get-started/" \
   --header "Accept: text/markdown"
 ```
 
-The response includes an `x-markdown-tokens` header with an estimated token count for the document, useful for context window planning.
+The response includes an `x-markdown-tokens` header with an estimated token count for the document, useful for context window planning (a context window is the maximum number of tokens an AI model can consider at once).
 
 ### Site-wide endpoints
 
 These endpoints follow the [llms.txt standard](https://llmstxt.org/) and provide documentation content in Markdown format:
 
-| Endpoint                           | Description                                                                                                           |
-| ---------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| [`/llms.txt`](/llms.txt)           | Page index grouped by product category, with links to each product's own `llms.txt`                                   |
-| [`/llms-full.txt`](/llms-full.txt) | Full content of all documentation in a single file, for offline indexing, bulk vectorization, or large-context models |
+| Endpoint                           | Description                                                                                                                                                                                     |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`/llms.txt`](/llms.txt)           | Page index grouped by product category, with links to each product's own `llms.txt`                                                                                                             |
+| [`/llms-full.txt`](/llms-full.txt) | Full content of all documentation in a single file, for offline indexing, bulk vectorization (converting content into numerical representations for similarity search), or large-context models |
 
 ### Per-product endpoints
 
@@ -132,8 +131,8 @@ An [OpenAPI specification](https://www.openapis.org/) is a machine-readable desc
 
 The full Cloudflare API OpenAPI specification is available for AI coding tools, API clients, and code generators:
 
-| Endpoint                                                     | Description                                      |
-| ------------------------------------------------------------ | ------------------------------------------------ |
+| Endpoint                                                              | Description                                      |
+| --------------------------------------------------------------------- | ------------------------------------------------ |
 | [`cloudflare/api-schemas`](https://github.com/cloudflare/api-schemas) | Full Cloudflare API OpenAPI specification (JSON) |
 
 For the full API reference, refer to the [Cloudflare API documentation](/api/).

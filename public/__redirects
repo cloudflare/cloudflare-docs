@@ -3,6 +3,10 @@
 # STATIC REDIRECTS
 # ============================================================================
 
+
+# Blocked Content (Security center restructuring)
+/security-center/blocked-content/ /fundamentals/reference/report-abuse/blocked-content/ 301
+
 # Custom Dashboards (moved from log-explorer to analytics)
 /log-explorer/custom-dashboards/ /analytics/custom-dashboards/ 301
 
@@ -56,6 +60,7 @@
 /cloudflare-wan/zero-trust/warp/ /cloudflare-wan/zero-trust/cloudflare-one-client/ 301
 /cloudflare-one/networks/connectors/cloudflare-wan/zero-trust/warp/ /cloudflare-one/networks/connectors/cloudflare-wan/zero-trust/cloudflare-one-client/ 301
 /workers/runtime-apis/bindings/worker-loader/ /dynamic-workers/ 301
+/dynamic-workers/examples/dynamic-workflows/ /dynamic-workers/usage/dynamic-workflows/ 301
 /docs/ /directory/ 301
 /support/ai/ / 301
 /products/ /directory/ 301
@@ -2434,6 +2439,7 @@
 /cloudflare-one/analytics/logs/activity-log/ /cloudflare-one/insights/logs/dashboard-logs/gateway-logs/ 301
 /cloudflare-one/identity/devices/os-version/ /cloudflare-one/reusable-components/posture-checks/client-checks/os-version/ 301
 /cloudflare-one/insights/dex/fleet-status/ /cloudflare-one/insights/dex/monitoring/ 301
+/cloudflare-one/insights/dex/remote-captures/ /cloudflare-one/insights/dex/diagnostics/client-packet-capture/ 301
 /cloudflare-one/policies/zero-trust/cors/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/cors/ 301
 /cloudflare-one/identity/users/groups/ /cloudflare-one/policies/access/groups/ 301
 /cloudflare-one/analytics/private-network-discovery/ /cloudflare-one/insights/analytics/shadow-it-discovery/#private-network-origins 301

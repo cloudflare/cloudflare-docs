@@ -1326,8 +1326,11 @@ The following options are available:
   - Defaults to `[10, 100]`.
   - This can be overridden ad hoc by deploying with the `--containers-rollout=immediate` flag, which will roll out to 100% of instances in one step. Note that flag will not override `rollout_active_grace_period`, if configured.
 
-- `wrangler_ssh` <Type text="object" /> <MetaInfo text="optional" />
-  - Configuration for SSH through Wrangler. Refer to [Wrangler SSH](#wrangler-ssh).
+- `ssh` <Type text="object" /> <MetaInfo text="optional" />
+  - Configuration for SSH through Wrangler. Refer to [SSH](#ssh).
+
+- `wrangler_ssh` <Type text="object" /> <MetaInfo text="optional deprecated, use `ssh`" />
+  - Deprecated alias for `ssh`. Still supported for backward compatibility.
 
 - `authorized_keys` <Type text="object[]" /> <MetaInfo text="optional" />
   - Public keys that should be added to the Container's `authorized_keys` file.
@@ -1414,7 +1417,9 @@ The following options are available:
 
 </WranglerConfig>
 
-### Wrangler SSH
+<span id="wrangler-ssh"></span>
+
+### SSH
 
 Configuration for SSH access to a Container instance through Wrangler. For a guide on connecting to Containers via SSH, refer to [SSH](/containers/ssh/).
 

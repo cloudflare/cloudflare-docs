@@ -37,6 +37,10 @@ Before relying on enforce DNS-only as part of your incident response plan, you s
 - Review exposed record content: When enforce DNS-only is active, all origin IPs configured in proxied `A` and `AAAA` records, as well as the targets of proxied `CNAME` records, become publicly visible through DNS queries. If your origins rely on IP obscurity for security, plan accordingly.
 - Test in advance: Use the API in a staging or test account to confirm that you understand the behavior before you need it in an emergency.
 
+:::caution[Verify SSL certificates]
+If your origins serve HTTPS traffic, ensure they have publicly trusted SSL certificates installed for the relevant hostnames. Cloudflare [Origin CA certificates](/ssl/origin-configuration/origin-ca/) are only trusted by Cloudflare and will cause certificate errors for direct client connections.
+:::
+
 ## Enable enforce DNS-only
 
 Use the [Update DNS Settings](/api/resources/dns/subresources/settings/subresources/account/methods/edit/) endpoint to enable enforce DNS-only for your account:

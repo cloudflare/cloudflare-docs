@@ -76,7 +76,7 @@ Based on your report, DLP's machine learning will adjust its confidence in futur
 - All Cloudflare logs are encrypted at rest (encrypted while stored on disk). Encrypting the payload content adds a second layer of encryption for the matched values that triggered a DLP rule.
 - Cloudflare cannot decrypt encrypted payloads, since this operation requires your private key. Cloudflare staff will never ask for the private key.
 - By default, DLP uses Full Mask to redact alphanumeric characters in the matched pattern, replacing them with `*` while preserving the format. For example, `123-45-6789` becomes `***-**-****`. You can [configure the masking level](#configure-payload-log-masking) to show partial or full matches if your incident response workflow requires more context.
-  - You can define sensitive data with [Exact Data Match (EDM)](/cloudflare-one/data-loss-prevention/detection-entries/#exact-data-match). EDM match logs will redact your defined strings.
+  - You can define sensitive data with [Exact Data Match (EDM)](/cloudflare-one/data-loss-prevention/detection-entries/configure-detection-entries/#exact-data-match-datasets). EDM match logs will redact your defined strings.
 
 ## Log generative AI prompt content
 

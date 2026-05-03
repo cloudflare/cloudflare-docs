@@ -15,6 +15,14 @@ const { editUrl } = Astro.locals.starlightRoute;
 	<Default />
 
 	{
+		(showFeedback || showActions) && (
+			<nav class="mt-6 border-t border-[var(--sidebar-border)] pt-6 agents-toolkit-container" aria-label="Agents toolkit">
+				<AgentsToolkit client:only="react" />
+			</nav>
+		)
+	}
+
+	{
 		tags && tags.length > 0 && (
 			<div class="mt-8 border-t border-[var(--sidebar-border)] pt-6">
 				<h3 class="mb-3 text-[11px] font-semibold tracking-widest text-[var(--sl-color-gray-3)] uppercase">
@@ -38,12 +46,8 @@ const { editUrl } = Astro.locals.starlightRoute;
 	{
 		(showFeedback || showActions) && (
 			<div class="mt-6 flex flex-col gap-5 border-t border-[var(--sidebar-border)] pt-6">
-				<nav class="agents-toolkit-container" aria-label="Agents toolkit">
-					<AgentsToolkit client:only="react" />
-				</nav>
-
 				{showFeedback && (
-					<div class="feedback-container border-t border-[var(--sidebar-border)] pt-5">
+					<div class="feedback-container">
 						<FeedbackPrompt client:only="react" />
 					</div>
 				)}

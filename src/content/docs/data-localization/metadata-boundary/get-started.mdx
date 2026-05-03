@@ -10,7 +10,7 @@ sidebar:
 
 import { Details, APIRequest, DashButton } from "~/components";
 
-You can configure the Metadata Boundary to select the region where your logs and analytics are stored via API or dashboard.
+You can configure the Customer Metadata Boundary to select the region where your logs and analytics are stored. This setting controls where Cloudflare stores traffic metadata that could identify your end users. You can configure it via API or the dashboard.
 
 Currently, this can only be applied at the account-level. If you only want the Metadata Boundary to be applied on a portion of zones beneath the same account, you will have to [move the rest of zones to a new account](/fundamentals/manage-domains/move-domain/).
 
@@ -37,8 +37,8 @@ These are some examples of API requests.
 Here is an example request using cURL to get current regions (if any):
 
 <APIRequest
-  path="/accounts/{account_id}/logs/control/cmb/config"
-  method="GET"
+	path="/accounts/{account_id}/logs/control/cmb/config"
+	method="GET"
 />
 
 </Details>
@@ -48,12 +48,12 @@ Here is an example request using cURL to get current regions (if any):
 Here is an example request using cURL to set regions:
 
 <APIRequest
-  path="/accounts/{account_id}/logs/control/cmb/config"
-  method="POST"
-  json={{
-    regions: "eu",
-    allow_out_of_region_access: false
-  }}
+	path="/accounts/{account_id}/logs/control/cmb/config"
+	method="POST"
+	json={{
+		regions: "eu",
+		allow_out_of_region_access: false,
+	}}
 />
 
 This will overwrite any previous regions.
@@ -66,8 +66,8 @@ Change will be in effect after several minutes.
 Here is an example request using cURL to delete regions:
 
 <APIRequest
-  path="/accounts/{account_id}/logs/control/cmb/config"
-  method="DELETE"
+	path="/accounts/{account_id}/logs/control/cmb/config"
+	method="DELETE"
 />
 
 </Details>

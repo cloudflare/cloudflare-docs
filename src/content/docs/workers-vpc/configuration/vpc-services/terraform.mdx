@@ -22,7 +22,7 @@ The `cloudflare_connectivity_directory_service` resource creates a VPC Service i
 
 ### Hostname-based configuration
 
-When using a hostname, provide `host.hostname` with a `resolver_network` block. This parallels the hostname-based [JSON configuration example](/workers-vpc/configuration/vpc-services/#configuration-example).
+When using a hostname, provide `host.hostname` with a `resolver_network` block. This parallels the hostname-based [JSON configuration example](/workers-vpc/configuration/vpc-services/#configuration-examples).
 
 ```tf
 resource "cloudflare_connectivity_directory_service" "my_private_api" {
@@ -61,7 +61,7 @@ resource "cloudflare_connectivity_directory_service" "my_private_api" {
 
 ### IP-based configuration
 
-When using IP addresses, provide `host.ipv4` and/or `host.ipv6` with a `network` block. This parallels the IP-based [JSON configuration example](/workers-vpc/configuration/vpc-services/#configuration-example).
+When using IP addresses, provide `host.ipv4` and/or `host.ipv6` with a `network` block. This parallels the IP-based [JSON configuration example](/workers-vpc/configuration/vpc-services/#configuration-examples).
 
 ```tf
 resource "cloudflare_connectivity_directory_service" "my_private_api" {
@@ -81,9 +81,64 @@ resource "cloudflare_connectivity_directory_service" "my_private_api" {
 }
 ```
 
+### TCP service configuration
+
+For TCP services (for example, databases), set `type = "tcp"` and provide a `tcp_port`. You can optionally specify an `app_protocol` of `postgresql` or `mysql`.
+
+```tf
+resource "cloudflare_connectivity_directory_service" "my_database" {
+  account_id   = var.account_id
+  name         = "my-postgres-db"
+  type         = "tcp"
+  tcp_port     = 5432
+  app_protocol = "postgresql"
+
+  host = {
+    ipv4 = "10.0.0.5"
+    network = {
+      tunnel_id = var.tunnel_id
+    }
+  }
+}
+```
+
+### TLS certificate verification
+
+To configure the TLS certificate verification mode for the connection to the origin, add a `tls_settings` block:
+
+```tf
+resource "cloudflare_connectivity_directory_service" "my_database" {
+  account_id   = var.account_id
+  name         = "my-postgres-db"
+  type         = "tcp"
+  tcp_port     = 5432
+  app_protocol = "postgresql"
+
+  host = {
+    ipv4 = "10.0.0.5"
+    network = {
+      tunnel_id = var.tunnel_id
+    }
+  }
+
+  tls_settings = {
+    cert_verification_mode = "verify_ca"
+  }
+}
+```
+
+Valid values for `cert_verification_mode` are:
+- `verify_full` (default)
+- `verify_ca`
+- `disabled`
+
+Refer to [TLS certificate verification mode](/workers-vpc/configuration/vpc-services/#tls-certificate-verification-mode) for details.
+
 ### Port configuration
 
-Ports are optional and default to 80 (HTTP) and 443 (HTTPS). To enforce a single scheme, provide only one of `http_port` or `https_port`. Refer to [VPC Service configuration](/workers-vpc/configuration/vpc-services/#vpc-service-configuration) for how scheme enforcement and port behavior work.
+For HTTP services, ports are optional and default to 80 (HTTP) and 443 (HTTPS). To enforce a single scheme, provide only one of `http_port` or `https_port`. Refer to [VPC Service configuration](/workers-vpc/configuration/vpc-services/#vpc-service-configuration) for how scheme enforcement and port behavior work.
+
+For TCP services, `tcp_port` is required.
 
 ## Workers binding configuration
 
@@ -153,6 +208,11 @@ data "cloudflare_connectivity_directory_services" "all_http" {
   account_id = var.account_id
   type       = "http"
 }
+
+data "cloudflare_connectivity_directory_services" "all_tcp" {
+  account_id = var.account_id
+  type       = "tcp"
+}
 ```
 
 ## Resource schema reference
@@ -162,11 +222,15 @@ resource "cloudflare_connectivity_directory_service" "example" {
   # Required
   account_id = "your-account-id"        # Account identifier
   name       = "my-private-api"         # Human-readable name
-  type       = "http"                   # Service type (only "http" supported)
+  type       = "http"                   # Service type: "http" or "tcp"
 
-  # Optional
-  http_port  = 80                       # HTTP port (default: 80)
-  https_port = 443                      # HTTPS port (default: 443)
+  # HTTP-specific (optional, defaults to 80/443)
+  http_port  = 80                       # HTTP port
+  https_port = 443                      # HTTPS port
+
+  # TCP-specific (tcp_port is required when type = "tcp")
+  # tcp_port     = 5432                 # TCP port
+  # app_protocol = "postgresql"         # Optional: "postgresql" or "mysql"
 
   host = {
     # Use hostname OR ipv4/ipv6, not both
@@ -185,6 +249,11 @@ resource "cloudflare_connectivity_directory_service" "example" {
     #   tunnel_id = "tunnel-uuid"      # Required — Cloudflare Tunnel ID
     # }
   }
+
+  # Optional TLS settings
+  # tls_settings = {
+  #   cert_verification_mode = "verify_full"  # "verify_full", "verify_ca", or "disabled"
+  # }
 
   # Read-only (computed by the API)
   # id         — Terraform resource ID

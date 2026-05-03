@@ -6,14 +6,13 @@ products:
   - data-localization
 sidebar:
   order: 2
-
 ---
 
-Cloudflare runs one of the largest global anycast networks in the world, with all current data center locations accessible on the [network map](https://www.cloudflare.com/network/).
+Cloudflare runs one of the largest global anycast networks in the world — a network architecture where traffic is automatically routed to the nearest available data center. All current data center locations are accessible on the [network map](https://www.cloudflare.com/network/).
 
-Within the Cloudflare data centers, and between the Cloudflare network and a customer's origin, traffic is encrypted during transit. Customers have the flexibility to select which [encryption mode](/ssl/origin-configuration/ssl-modes/) and which [Cipher Suites](/ssl/edge-certificates/additional-options/cipher-suites/) they want to use.
+Within Cloudflare data centers, and between the Cloudflare network and your origin server, traffic is encrypted during transit. You can select which [encryption mode](/ssl/origin-configuration/ssl-modes/) (controlling how strictly Cloudflare validates your server's certificate) and which [cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/) (the specific encryption algorithms used for the connection) to use.
 
-Additionally, all request and response processing within a Cloudflare data center occurs in memory, with machine inspection used to prevent human access. Nothing is written to disk except for eligible content for caching or Cache Rules configured by the customer. Moreover, all cache disks are encrypted at rest.
+Additionally, all request and response processing within a Cloudflare data center occurs in memory — traffic content is handled by automated systems and is not written to disk, except for eligible content for caching or Cache Rules you have configured. Automated controls prevent Cloudflare personnel from accessing traffic content in the processing pipeline. All cache disks are encrypted at rest (meaning data is encrypted when stored on disk, in addition to being encrypted during transmission).
 
 ![HTTP requests flow](~/assets/images/data-localization/http-requests-flow.png)
 
@@ -21,10 +20,10 @@ At a high level, when an end user's device connects to any Cloudflare data cente
 
 1. Certain types of requests that can be used for cyber attacks are immediately dropped based on the addressing information (layer 3 / network layer).
 
-2. Next, the encrypted request is decrypted and inspected using the customer's chosen business logic, for example, the products Configuration Rules, WAF Custom Rules, Rate Limiting Rules, following the [traffic sequence](https://blog.cloudflare.com/traffic-sequence-which-product-runs-first/) and phases. This process enables the detection and prevention of a variety of different types of cyber attacks and malicious traffic, including layer 7 / application layer DDoS attacks, automated bot traffic, credential stuffing, and SQL injection, among others.
+2. Next, the encrypted request is decrypted (TLS termination) and inspected by the Cloudflare security and performance products you have configured — for example, Configuration Rules, WAF Custom Rules, and Rate Limiting Rules — applied in the order defined by the [traffic sequence](https://blog.cloudflare.com/traffic-sequence-which-product-runs-first/). This process enables the detection and prevention of a variety of cyber attacks, including application-layer (layer 7) DDoS attacks, automated bot traffic, credential stuffing (attackers using stolen username/password combinations), and SQL injection (attackers inserting malicious database commands into web requests), among others.
 
-3. The inspected request is then passed to the cache module. If the cache can fulfill the request with a cached copy of the content, it does so; if not, it forwards the request to the customer's origin server. Traffic between the Cloudflare data center and the origin server is encrypted, unless the customer decides to use a different encryption mode.
+3. The inspected request is then passed to the caching layer. If a cached copy of the requested content is available, it is served directly to the user. If not, the request is forwarded to your origin server. Traffic between the Cloudflare data center and your origin server is encrypted, unless you have configured a different encryption mode.
 
-4. When the response comes from the customer's origin server, any static and eligible content is cached onto encrypted disks. The response then goes back through the business logic to the user across the Internet.
+4. When the response arrives from your origin server, any static and eligible content is cached onto encrypted disks. The response then passes back through your configured security and performance products before being returned to the user.
 
-By default, Cloudflare performs TLS termination globally in every data center, where the Internet end user connects to a website or application behind Cloudflare. However, customers can configure Regional Services to specify in which regions the processing and TLS termination occurs.
+By default, Cloudflare performs TLS termination (decryption of HTTPS traffic) in every data center globally — wherever the end user connects to a website or application behind Cloudflare. Customers who need to restrict where decryption occurs can configure [Regional Services](/data-localization/regional-services/) to specify which regions handle TLS termination and traffic processing.

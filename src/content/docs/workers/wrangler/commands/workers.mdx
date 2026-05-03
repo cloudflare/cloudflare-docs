@@ -121,6 +121,9 @@ None of the options for this command are required. Many of these options can be 
   - Specify directory to use for local persistence.
 - `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Develop against remote resources and data stored on Cloudflare's network.
+- `--tunnel` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Open a publicly reachable Cloudflare Quick Tunnel for sharing a preview, testing webhooks, or accessing the app from another device.
+  - For more information, refer to [Share a local dev server](/workers/development-testing/local-dev-tunnels/).
 - `--test-scheduled` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Exposes a `/__scheduled` fetch route which will trigger a scheduled event (Cron Trigger) for testing during development. To simulate different cron patterns, a `cron` query parameter can be passed in: `/__scheduled?cron=*+*+*+*+*` or `/cdn-cgi/handler/scheduled?cron=*+*+*+*+*`.
 - `--log-level` <Type text="'debug'|'info'|'log'|'warn'|'error|'none'" /> <MetaInfo text="(default: log) optional" />

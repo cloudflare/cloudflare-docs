@@ -79,7 +79,7 @@ async function getExternalLinkPaths(dir: string): Promise<Set<string>> {
 				rel = rel.replace(/\.(mdx|md)$/, "");
 				rel = rel.replace(/\/index$/, "/");
 				if (!rel.endsWith("/")) rel += "/";
-				paths.add(rel);
+				paths.add(rel.toLowerCase());
 			}
 		}
 	}
@@ -170,6 +170,7 @@ export default defineConfig({
 				MarkdownContent: "./src/components/overrides/MarkdownContent.astro",
 				Sidebar: "./src/components/overrides/Sidebar.astro",
 				PageTitle: "./src/components/overrides/PageTitle.astro",
+				SkipLink: "./src/components/overrides/SkipLink.astro",
 				TableOfContents: "./src/components/overrides/TableOfContents.astro",
 			},
 			sidebar,

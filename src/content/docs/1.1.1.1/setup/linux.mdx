@@ -17,17 +17,17 @@ import { Render } from "~/components";
 
 Before you begin, take note of any DNS addresses you might have set up, and save them in a safe place in case you need to use them later.
 
-Consider the sections below to set up 1.1.1.1 using either the [command line interface (CLI)](#use-command-line-interface-cli) or a [graphical user interface (GUI)](#use-graphical-user-interface-gui) of your preference.
+You can configure 1.1.1.1 using the [command line](#use-command-line-interface-cli) or a [graphical interface](#use-graphical-user-interface-gui).
 
 ## Use command line interface (CLI)
 
-Choose whether you want to use 1.1.1.1 or 1.1.1.1 For Families, and replace `1.1.1.1` with the corresponding [IPv4 or IPv6 address](/1.1.1.1/ip-addresses/) accordingly.
+If you want to use 1.1.1.1 for Families instead of the standard resolver, replace `1.1.1.1` in the examples below with the corresponding [IPv4 or IPv6 address](/1.1.1.1/ip-addresses/).
 
 ### `resolv.conf`
 
-Usually, `/etc/resolv.conf` is where you can configure the resolver IPs that your system is using.
+On most Linux distributions, `/etc/resolv.conf` controls which DNS resolver the system uses.
 
-In that case, you can use the following one-line command to specify `1.1.1.1` as your DNS resolver and `1.0.0.1` as backup:
+To set `1.1.1.1` as your DNS resolver with `1.0.0.1` as a backup:
 
 ```sh
 echo -e "nameserver 1.1.1.1\nnameserver 1.0.0.1" | sudo tee /etc/resolv.conf
@@ -35,14 +35,14 @@ echo -e "nameserver 1.1.1.1\nnameserver 1.0.0.1" | sudo tee /etc/resolv.conf
 
 :::caution
 
-Note that other systems, such as dynamic host configuration protocol (DHCP), may automatically write to `/etc/resolv.conf` and change that configuration. In those cases, consider changing your network settings or DHCP to use `1.1.1.1`.
+Some services — such as DHCP clients or `NetworkManager` — automatically overwrite `/etc/resolv.conf` when your network connection changes. If your DNS settings revert after a reboot or reconnection, configure 1.1.1.1 in your network manager or DHCP client instead.
 :::
 
-Alternatively, you can use an editor (`nano` or `vim`, for example) to manually edit the file.
+You can also edit `/etc/resolv.conf` manually with a text editor like `nano` or `vim`.
 
 ### `systemd-resolved`
 
-If you use `systemd-resolved` utility and the resolver IPs configuration is in `/etc/systemd/resolved.conf`, consider the steps below:
+If your system uses `systemd-resolved` to manage DNS, edit the configuration file at `/etc/systemd/resolved.conf`:
 
 1. Run the following command, replacing `<EDITOR>` with your preferred editor.
 
@@ -57,7 +57,7 @@ sudo <EDITOR> /etc/systemd/resolved.conf
 DNS=1.1.1.1
 ```
 
-To use DNS over TLS, add `#one.one.one.one` and set `DNSOverTLS` to `yes`, as in the following example:
+To use DNS over TLS, append `#one.one.one.one` after the IP address (this tells `systemd-resolved` which hostname to use for TLS verification) and set `DNSOverTLS` to `yes`:
 
 ```txt
 [Resolve]
@@ -70,7 +70,7 @@ DNSOverTLS=yes
 ### GNOME
 
 1. Go to **Show Applications** > **Settings** > **Network**.
-2. Select the adapter you want to configure — like your Ethernet adapter or Wi-Fi card — and select the **Settings** button.
+2. Select the adapter you want to configure — such as your Ethernet adapter or Wi-Fi card — and select the **Settings** button.
 3. On the **IPv4** tab > **DNS** section, disable the **Automatic** toggle.
 4. <Render file="all-ipv4" product="1.1.1.1" />
 5. Go to **IPv6**.

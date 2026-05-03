@@ -11,7 +11,6 @@ tags:
 ---
 
 import {
-	Badge,
 	Details,
 	GlossaryDefinition,
 	TabItem,
@@ -20,8 +19,6 @@ import {
 } from "~/components";
 
 :::note
-[Authorization endpoints](#authorization-endpoint) and [PAC file hosting](#create-a-hosted-pac-file) are in open beta for all customers.
-
 [Source IP proxy endpoints](#source-ip-endpoint) are only available on Enterprise plans.
 :::
 
@@ -65,7 +62,7 @@ Cloudflare One offers two types of proxy endpoints, each with different authoriz
 
 Once you create a proxy endpoint, you cannot change its type. If you need a different authorization method, you must create a new proxy endpoint.
 
-#### Authorization endpoint <Badge text="Beta" variant="caution" />
+#### Authorization endpoint
 
 Authorization endpoints use [Cloudflare Access](/cloudflare-one/access-controls/policies/) to provide Zero Trust authorization. Users must authenticate through an identity provider and pass Access policies before they can use the proxy endpoint.
 
@@ -251,7 +248,7 @@ A PAC file is a text file written in JavaScript that specifies which traffic sho
 For detailed instructions and examples for creating a PAC file, refer to [PAC file best practices](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/best-practices/).
 :::
 
-### Create a hosted PAC file <Badge text="Beta" variant="caution" />
+### Create a hosted PAC file
 
 When you create a PAC file in Cloudflare One, Cloudflare will host it in a publicly accessible Worker. Hosted PAC files are automatically distributed through Cloudflare's global network.
 
@@ -499,11 +496,7 @@ Each user who authenticates through an authorization proxy endpoint occupies a [
 
 ### Authorization endpoint limitations
 
-When using [authorization endpoints](#authorization-endpoint), be aware of the following limitations.
-
-#### Domain bypassing and certificate pinning
-
-You must bypass domains you do not intend to inspect with your PAC file. Gateway will still apply [Do Not Inspect (DNI) policies](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) when using authorization endpoints, but this will not bypass certificate pinning errors.
+When using [authorization endpoints](#authorization-endpoint), be aware of the following limitations. For configuration guidance on apps with certificate pinning, refer to [PAC file best practices](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/best-practices/#apps-with-certificate-pinning).
 
 #### Plaintext HTTP traffic
 
@@ -511,7 +504,7 @@ Authorization endpoints do not support plaintext HTTP traffic unless the traffic
 
 #### Browser Isolation
 
-Gateway [HTTP Isolate policies](/cloudflare-one/traffic-policies/http-policies/#isolate) are not currently supported with authorization endpoints during the beta period.
+Gateway [HTTP Isolate policies](/cloudflare-one/traffic-policies/http-policies/#isolate) are not supported with authorization endpoints.
 
 #### Referer header traffic
 

@@ -10,9 +10,12 @@ sidebar:
   order: 1
 ---
 
-Cloudflare Gateway gives you multiple ways to safely handle your employees' personally identifiable information (PII). By default, PII is redacted from Gateway Activity logs for all permission roles except the Super Administrator and users with the [Cloudflare Zero Trust PII role](/cloudflare-one/roles-permissions/#cloudflare-zero-trust-pii) assigned to them. Only the Super Administrator can assign roles and determine who has permission to view PII. Redacting PII does not affect the way PII is captured in logs as the data is simply hidden and no information is lost.
+Cloudflare Gateway gives you multiple ways to safely handle your employees' personally identifiable information (PII) in activity logs:
 
-To add or remove the Cloudflare Zero Trust PII role for a user in your organization, refer to [Roles](/fundamentals/manage-members/roles/). Alternatively, you can choose to [exclude PII](#exclude-pii) from Gateway activity logs for all users.
+- **Redact PII** (default) — PII is stored in logs but hidden from view. Only the Super Administrator and users with the [Cloudflare Zero Trust PII role](/cloudflare-one/roles-permissions/#cloudflare-zero-trust-pii) can view redacted PII. The underlying data is preserved — redaction only controls who can see it.
+- **[Exclude PII](#exclude-pii)** — PII is not stored in logs at all. No user, including the Super Administrator, can retrieve it.
+
+Only the Super Administrator can assign roles and determine who has permission to view PII. To add or remove the Cloudflare Zero Trust PII role for a user in your organization, refer to [Roles](/fundamentals/manage-members/roles/).
 
 ## Types of PII
 
@@ -28,7 +31,13 @@ Cloudflare Gateway can log the following types of PII:
 
 ## Exclude PII
 
-Turning on the setting to exclude PII means Cloudflare Gateway will log activity without storing any employee PII. Changes to this setting will not change PII storage of any previous logs. This means if the setting is turned on and then turned off, there will be no PII data for logs captured while this setting was turned on. The PII data will be unavailable to all roles within your Zero Trust organization, including the Super Administrator.
+When you exclude PII, Gateway logs activity without storing any employee PII. This differs from the default redaction behavior — excluded PII is not stored and cannot be retrieved by any role, including the Super Administrator.
+
+:::caution
+Excluding PII is irreversible for the period it is active. If you turn on this setting and later turn it off, logs captured while the setting was on will permanently lack PII data.
+:::
+
+Changes to this setting do not affect PII already stored in previous logs.
 
 To turn on the setting to exclude PII:
 

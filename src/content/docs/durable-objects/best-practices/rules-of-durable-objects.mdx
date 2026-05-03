@@ -1499,7 +1499,7 @@ This pattern does not scale. As traffic increases, the single Durable Object bec
 
 ### Test with Vitest and plan for class migrations
 
-Use `@cloudflare/vitest-pool-workers` for testing Durable Objects. The integration provides isolated storage per test and utilities for direct instance access.
+Use `@cloudflare/vitest-pool-workers` for testing Durable Objects. The integration provides utilities for direct instance access.
 
 <TypeScriptExample filename="test/chat-room.test.ts">
 ```ts
@@ -1511,7 +1511,7 @@ import {
 import { describe, it, expect } from "vitest";
 
 describe("ChatRoom", () => {
-// Each test gets isolated storage automatically
+
 it("should send and retrieve messages", async () => {
 const id = env.CHAT_ROOM.idFromName("test-room");
 const stub = env.CHAT_ROOM.get(id);
@@ -1533,7 +1533,7 @@ const stub = env.CHAT_ROOM.get(id);
     		const count = state.storage.sql
     			.exec<{ count: number }>("SELECT COUNT(*) as count FROM messages")
     			.one();
-    		expect(count.count).toBe(0); // Fresh instance due to test isolation
+    		expect(count.count).toBe(2);
     	});
 
     	// Trigger alarms immediately without waiting

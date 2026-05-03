@@ -28,11 +28,17 @@ Workers VPC is currently in beta. Features and APIs may change before general av
 
 A VPC Service consists of:
 
-- **Type**: Currently only `http` is supported (support for `tcp` coming soon)
+- **Type**: `http` for HTTP/HTTPS services, or `tcp` for TCP services (for example, PostgreSQL, MySQL)
 - **Tunnel ID**: The Cloudflare Tunnel that provides network connectivity
 - **Hostname or IPv4/IPv6 addresses**: The hostname, or IPv4 and/or IPv6 addresses to use to route to your service from the tunnel in your private network
-- **Ports**: HTTP and/or HTTPS port configuration (optional, defaults to 80/443)
+- **Ports**: For `http` type, HTTP and/or HTTPS port configuration (optional, defaults to 80/443). For `tcp` type, a TCP port (required).
+- **Application protocol** (TCP only): Optionally, specify `postgresql` or `mysql` to indicate the application-layer protocol for the TCP service
+- **TLS certificate verification mode**: Optionally, configure how the connection to the origin verifies TLS certificates
 - **Resolver IPs**: Optionally, a specific resolver IP can be provided — when not provided, `cloudflared` will direct DNS traffic to the currently configured default system resolver.
+
+### HTTP services
+
+HTTP VPC Services allow Workers to make `fetch()` requests to private HTTP/HTTPS endpoints.
 
 Requests are encrypted in flight until they reach your network via a tunnel, regardless of the scheme used in the URL provided to `fetch`. If the `http` scheme is used, a plaintext connection is established to the service from the tunnel.
 
@@ -41,6 +47,14 @@ The `https` scheme can be used for an encrypted connection within your network, 
 VPC Services default to allowing both `http` and `https` schemes to be used. You can provide values for only one of `http_port` or `https_port` to enforce the use of a particular scheme.
 
 When Workers VPC is unable to establish a connection to your service, `fetch()` will throw an exception.
+
+### TCP services
+
+TCP VPC Services allow connections to TCP-based services such as PostgreSQL and MySQL databases. Use the `tcp` service type with a `--tcp-port` to expose a TCP service.
+
+You can optionally specify an `--app-protocol` of `postgresql` or `mysql` to indicate the application-layer protocol. This metadata is used by other Cloudflare products, such as [Hyperdrive](/hyperdrive/), to locate TCP services using a supported wire protocol.
+
+TCP VPC Services are used with [Hyperdrive](/hyperdrive/) to connect Workers to private databases. Refer to [Connect to a private database using Workers VPC](/hyperdrive/configuration/connect-to-private-database-vpc/) for a complete guide.
 
 :::note
 
@@ -61,9 +75,23 @@ When using the `https` scheme, the tunnel verifies the TLS certificate presented
 
 If your origin service presents a certificate that is not issued by a publicly trusted CA or by Cloudflare Origin CA, the TLS handshake will fail and `fetch()` will throw an exception.
 
-## Configuration example
+### TLS certificate verification mode
 
-The following is an example of a VPC Service for a service using custom HTTP and HTTPS ports, and both IPv4 and IPv6 addresses. These configurations represent the expected contract of the [REST API for creating a VPC Service](/api/resources/connectivity/subresources/directory/subresources/services/), a type of service within the broader connectivity directory.
+You can configure how the connection to your origin service verifies TLS certificates by setting the `--cert-verification-mode` option when creating or updating a VPC Service. This applies to both HTTP and TCP service types.
+
+| Mode          | Description                                                   |
+| ------------- | ------------------------------------------------------------- |
+| `verify_full` | Verify the full certificate chain and hostname (default)      |
+| `verify_ca`   | Verify the certificate chain only, skip hostname verification |
+| `disabled`    | Do not verify the server certificate                          |
+
+## Configuration examples
+
+These configurations represent the expected contract of the [REST API for creating a VPC Service](/api/resources/connectivity/subresources/directory/subresources/services/), a type of service within the broader connectivity directory.
+
+### HTTP service with IP addresses
+
+The following is an example of an HTTP VPC Service using custom HTTP and HTTPS ports, and both IPv4 and IPv6 addresses.
 
 ```jsonc
 {
@@ -85,7 +113,9 @@ The following is an example of a VPC Service for a service using custom HTTP and
 }
 ```
 
-The following is an example of a VPC Service for a service using custom HTTP and HTTPS ports as well, using a hostname. Note that since we are using a hostname, we must provide our service with a `resolver_network` that optionally has `resolver_ips`.
+### HTTP service with hostname
+
+The following is an example of an HTTP VPC Service using a hostname. When using a hostname, provide a `resolver_network` that optionally includes `resolver_ips`.
 
 ```jsonc
 {
@@ -103,6 +133,50 @@ The following is an example of a VPC Service for a service using custom HTTP and
 			"tunnel_id": "0191dce4-9ab4-7fce-b660-8e5dec5172da",
 			"resolver_ips": ["10.0.0.1"], // Optional
 		},
+	},
+}
+```
+
+### TCP service (for example, PostgreSQL)
+
+The following is an example of a TCP VPC Service for a PostgreSQL database.
+
+```jsonc
+{
+	"type": "tcp",
+	"name": "my-postgres-db",
+	"tcp_port": 5432,
+	"app_protocol": "postgresql", // Optional: "postgresql" or "mysql"
+
+	"host": {
+		"ipv4": "10.0.0.5",
+		"network": {
+			"tunnel_id": "0191dce4-9ab4-7fce-b660-8e5dec5172da",
+		},
+	},
+}
+```
+
+### Service with TLS certificate verification
+
+The following example creates a TCP service with `verify_ca` certificate verification mode.
+
+```jsonc
+{
+	"type": "tcp",
+	"name": "my-postgres-db",
+	"tcp_port": 5432,
+	"app_protocol": "postgresql",
+
+	"host": {
+		"ipv4": "10.0.0.5",
+		"network": {
+			"tunnel_id": "0191dce4-9ab4-7fce-b660-8e5dec5172da",
+		},
+	},
+
+	"tls_settings": {
+		"cert_verification_mode": "verify_ca",
 	},
 }
 ```

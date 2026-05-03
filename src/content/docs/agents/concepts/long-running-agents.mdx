@@ -12,6 +12,14 @@ products:
 
 Build agents that persist for days, weeks, or months — surviving restarts, waking on demand, and managing work that spans far longer than any single request.
 
+The short version:
+
+- Agents are durable identities, not always-on processes.
+- State, SQL data, schedules, and fiber checkpoints survive hibernation and restarts.
+- In-memory variables, timers, open fetches, and local closures do not survive eviction.
+- Use `keepAlive()` for active work measured in minutes, `runFiber()` when work needs recovery, and Workflows for heavyweight multi-step jobs.
+- Use sub-agents when one parent coordinates many long-lived child contexts.
+
 ## Why Cloudflare for long-running agents
 
 Agents spend most of their time waiting. Waiting for user input (seconds to days), LLM responses (seconds to minutes), tool results (seconds to hours), human approvals (hours to days), or scheduled wake-ups (minutes to months). On a traditional VM or container, you pay for all that idle time. An agent that is 99% dormant and 1% active still costs you 100% of a server.
@@ -80,29 +88,29 @@ Throughout this doc, we build up a project manager agent that:
 import { Agent } from "agents";
 
 type ProjectState = {
-  name: string;
-  status: "planning" | "active" | "review" | "complete";
-  tasks: Task[];
-  plan: Plan | null;
+	name: string;
+	status: "planning" | "active" | "review" | "complete";
+	tasks: Task[];
+	plan: Plan | null;
 };
 
 type Task = {
-  id: string;
-  title: string;
-  status: "pending" | "in_progress" | "blocked" | "complete";
-  assignee?: string;
-  dueDate?: string;
-  completedAt?: number;
-  externalJobId?: string;
+	id: string;
+	title: string;
+	status: "pending" | "in_progress" | "blocked" | "complete";
+	assignee?: string;
+	dueDate?: string;
+	completedAt?: number;
+	externalJobId?: string;
 };
 
 export class ProjectManager extends Agent<ProjectState> {
-  initialState: ProjectState = {
-    name: "",
-    status: "planning",
-    tasks: [],
-    plan: null
-  };
+	initialState: ProjectState = {
+		name: "",
+		status: "planning",
+		tasks: [],
+		plan: null,
+	};
 }
 ```
 
@@ -112,13 +120,13 @@ The `Plan` type is introduced in [Planning as a durability strategy](#planning-a
 
 A hibernated agent can be woken by any of these sources:
 
-| Wake source              | How it works                                                                                                                                                           | Example                                 |
-| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------- |
-| **HTTP request**         | Any request to the agent's URL triggers `onRequest()`                                                                                                                  | A webhook from GitHub                   |
-| **WebSocket connection** | A client connects, triggering `onConnect()`                                                                                                                            | A team member opens the dashboard       |
+| Wake source              | How it works                                                                                                                                                             | Example                                 |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------- |
+| **HTTP request**         | Any request to the agent's URL triggers `onRequest()`                                                                                                                    | A webhook from GitHub                   |
+| **WebSocket connection** | A client connects, triggering `onConnect()`                                                                                                                              | A team member opens the dashboard       |
 | **RPC call**             | Another Worker or agent calls a method via [service binding](/workers/runtime-apis/bindings/service-bindings/) or [`@callable`](/agents/api-reference/callable-methods/) | A coordinator agent delegates a task    |
-| **Scheduled alarm**      | A stored schedule fires, triggering your callback                                                                                                                      | Daily standup reminder at 9am           |
-| **Email**                | An inbound email triggers `onEmail()`                                                                                                                                  | A team member replies to a status email |
+| **Scheduled alarm**      | A stored schedule fires, triggering your callback                                                                                                                        | Daily standup reminder at 9am           |
+| **Email**                | An inbound email triggers `onEmail()`                                                                                                                                    | A team member replies to a status email |
 
 The pattern extends naturally to any event source that can reach a Worker — anything from telephony webhooks to chat platform bots. An external signal arrives, the platform wakes the agent, and the agent handles it.
 
@@ -126,42 +134,42 @@ The agent does not need to be "started" or "deployed" separately for each wake s
 
 ```ts
 export class ProjectManager extends Agent<ProjectState> {
-  async onStart() {
-    // Daily deadline check at 9am UTC — idempotent, safe across restarts
-    await this.schedule(
-      "0 9 * * *",
-      "checkDeadlines",
-      {},
-      {
-        idempotent: true
-      }
-    );
+	async onStart() {
+		// Daily deadline check at 9am UTC — idempotent, safe across restarts
+		await this.schedule(
+			"0 9 * * *",
+			"checkDeadlines",
+			{},
+			{
+				idempotent: true,
+			},
+		);
 
-    // Progress sync every 30 minutes
-    await this.scheduleEvery(1800, "syncProgress");
-  }
+		// Progress sync every 30 minutes
+		await this.scheduleEvery(1800, "syncProgress");
+	}
 
-  async onRequest(request: Request): Promise<Response> {
-    const url = new URL(request.url);
+	async onRequest(request: Request): Promise<Response> {
+		const url = new URL(request.url);
 
-    if (url.pathname.endsWith("/github-webhook")) {
-      const event = await request.json();
-      await this.handleGitHubEvent(event);
-      return new Response("OK");
-    }
+		if (url.pathname.endsWith("/github-webhook")) {
+			const event = await request.json();
+			await this.handleGitHubEvent(event);
+			return new Response("OK");
+		}
 
-    return Response.json({
-      project: this.state.name,
-      status: this.state.status
-    });
-  }
+		return Response.json({
+			project: this.state.name,
+			status: this.state.status,
+		});
+	}
 
-  async checkDeadlines() {
-    /* ... find overdue tasks, broadcast alerts ... */
-  }
-  async syncProgress() {
-    /* ... check on sub-agents, update task statuses ... */
-  }
+	async checkDeadlines() {
+		/* ... find overdue tasks, broadcast alerts ... */
+	}
+	async syncProgress() {
+		/* ... check on sub-agents, update task statuses ... */
+	}
 }
 ```
 
@@ -173,22 +181,22 @@ Sometimes an agent needs to do work that takes longer than the idle eviction win
 
 ```ts
 export class ProjectManager extends Agent<ProjectState> {
-  async generateProjectPlan(goal: string) {
-    const result = await this.keepAliveWhile(async () => {
-      const plan = await this.callLLM(`Create a project plan for: ${goal}`);
-      const tasks = await this.callLLM(
-        `Break this into tasks: ${JSON.stringify(plan)}`
-      );
-      return { plan, tasks };
-    });
+	async generateProjectPlan(goal: string) {
+		const result = await this.keepAliveWhile(async () => {
+			const plan = await this.callLLM(`Create a project plan for: ${goal}`);
+			const tasks = await this.callLLM(
+				`Break this into tasks: ${JSON.stringify(plan)}`,
+			);
+			return { plan, tasks };
+		});
 
-    this.setState({
-      ...this.state,
-      status: "active",
-      plan: result.plan,
-      tasks: result.tasks
-    });
-  }
+		this.setState({
+			...this.state,
+			status: "active",
+			plan: result.plan,
+			tasks: result.tasks,
+		});
+	}
 }
 ```
 
@@ -197,9 +205,9 @@ export class ProjectManager extends Agent<ProjectState> {
 ```ts
 const dispose = await this.keepAlive();
 try {
-  await longWork();
+	await longWork();
 } finally {
-  dispose();
+	dispose();
 }
 ```
 
@@ -207,12 +215,12 @@ try {
 
 `keepAlive` is for work measured in minutes, not hours. For truly long-running operations, use a different strategy:
 
-| Duration         | Strategy                                                                     |
-| ---------------- | ---------------------------------------------------------------------------- |
-| Seconds          | Normal request handling                                                      |
-| Minutes          | `keepAlive()` / `keepAliveWhile()`                                           |
-| Minutes to hours | [Workflows](/agents/concepts/workflows/)                                     |
-| Hours to days    | Async pattern: start job, hibernate, wake on completion                      |
+| Duration         | Strategy                                                |
+| ---------------- | ------------------------------------------------------- |
+| Seconds          | Normal request handling                                 |
+| Minutes          | `keepAlive()` / `keepAliveWhile()`                      |
+| Minutes to hours | [Workflows](/agents/concepts/workflows/)                |
+| Hours to days    | Async pattern: start job, hibernate, wake on completion |
 
 ## Surviving crashes: fibers and recovery
 
@@ -222,32 +230,32 @@ An agent can be evicted at any time — a deploy, a platform restart, or hitting
 
 ```ts
 export class ProjectManager extends Agent<ProjectState> {
-  async executeTask(task: Task) {
-    await this.runFiber(`task:${task.id}`, async (ctx) => {
-      const resources = await this.gatherResources(task);
-      ctx.stash({ phase: "prepared", resources, task });
+	async executeTask(task: Task) {
+		await this.runFiber(`task:${task.id}`, async (ctx) => {
+			const resources = await this.gatherResources(task);
+			ctx.stash({ phase: "prepared", resources, task });
 
-      const result = await this.runSubAgent(task, resources);
-      ctx.stash({ phase: "executed", result, task });
+			const result = await this.runSubAgent(task, resources);
+			ctx.stash({ phase: "executed", result, task });
 
-      await this.updateTaskStatus(task.id, "complete", result);
-    });
-  }
+			await this.updateTaskStatus(task.id, "complete", result);
+		});
+	}
 
-  async onFiberRecovered(ctx: FiberRecoveryContext) {
-    if (!ctx.name.startsWith("task:")) return;
-    const { phase, task } = ctx.snapshot as { phase: string; task: Task };
+	async onFiberRecovered(ctx: FiberRecoveryContext) {
+		if (!ctx.name.startsWith("task:")) return;
+		const { phase, task } = ctx.snapshot as { phase: string; task: Task };
 
-    if (phase === "prepared") {
-      await this.executeTask(task);
-    } else if (phase === "executed") {
-      await this.updateTaskStatus(
-        task.id,
-        "complete",
-        (ctx.snapshot as { result: unknown }).result
-      );
-    }
-  }
+		if (phase === "prepared") {
+			await this.executeTask(task);
+		} else if (phase === "executed") {
+			await this.updateTaskStatus(
+				task.id,
+				"complete",
+				(ctx.snapshot as { result: unknown }).result,
+			);
+		}
+	}
 }
 ```
 
@@ -271,35 +279,35 @@ The project manager starts a CI pipeline for a task. The pipeline takes 20 minut
 
 ```ts
 export class ProjectManager extends Agent<ProjectState> {
-  async startCIPipeline(task: Task) {
-    const response = await fetch("https://ci.example.com/api/pipelines", {
-      method: "POST",
-      body: JSON.stringify({
-        repo: "org/project",
-        branch: "main",
-        callback_url: `${this.url}/ci-callback?taskId=${task.id}`
-      })
-    });
+	async startCIPipeline(task: Task) {
+		const response = await fetch("https://ci.example.com/api/pipelines", {
+			method: "POST",
+			body: JSON.stringify({
+				repo: "org/project",
+				branch: "main",
+				callback_url: `${this.url}/ci-callback?taskId=${task.id}`,
+			}),
+		});
 
-    const { pipelineId } = await response.json();
-    this.updateTask(task.id, {
-      status: "in_progress",
-      externalJobId: pipelineId
-    });
-  }
+		const { pipelineId } = await response.json();
+		this.updateTask(task.id, {
+			status: "in_progress",
+			externalJobId: pipelineId,
+		});
+	}
 
-  async onRequest(request: Request): Promise<Response> {
-    const url = new URL(request.url);
-    if (url.pathname.endsWith("/ci-callback")) {
-      const taskId = url.searchParams.get("taskId");
-      const result = await request.json();
-      this.updateTask(taskId, {
-        status: result.status === "success" ? "complete" : "blocked"
-      });
-      return new Response("OK");
-    }
-    // ... other routes
-  }
+	async onRequest(request: Request): Promise<Response> {
+		const url = new URL(request.url);
+		if (url.pathname.endsWith("/ci-callback")) {
+			const taskId = url.searchParams.get("taskId");
+			const result = await request.json();
+			this.updateTask(taskId, {
+				status: result.status === "success" ? "complete" : "blocked",
+			});
+			return new Response("OK");
+		}
+		// ... other routes
+	}
 }
 ```
 
@@ -309,43 +317,43 @@ Not every external service supports callbacks. When the project manager submits 
 
 ```ts
 export class ProjectManager extends Agent<ProjectState> {
-  async startVideoGeneration(task: Task) {
-    const response = await fetch("https://video-api.example.com/generate", {
-      method: "POST",
-      body: JSON.stringify({ prompt: task.title })
-    });
-    const { jobId } = await response.json();
-    this.updateTask(task.id, { status: "in_progress", externalJobId: jobId });
-    await this.schedule(60, "pollExternalJob", {
-      taskId: task.id,
-      jobId,
-      attempt: 1
-    });
-  }
+	async startVideoGeneration(task: Task) {
+		const response = await fetch("https://video-api.example.com/generate", {
+			method: "POST",
+			body: JSON.stringify({ prompt: task.title }),
+		});
+		const { jobId } = await response.json();
+		this.updateTask(task.id, { status: "in_progress", externalJobId: jobId });
+		await this.schedule(60, "pollExternalJob", {
+			taskId: task.id,
+			jobId,
+			attempt: 1,
+		});
+	}
 
-  async pollExternalJob(payload: {
-    taskId: string;
-    jobId: string;
-    attempt: number;
-  }) {
-    const response = await fetch(
-      `https://video-api.example.com/status/${payload.jobId}`
-    );
-    const status = await response.json();
+	async pollExternalJob(payload: {
+		taskId: string;
+		jobId: string;
+		attempt: number;
+	}) {
+		const response = await fetch(
+			`https://video-api.example.com/status/${payload.jobId}`,
+		);
+		const status = await response.json();
 
-    if (status.state === "complete" || status.state === "failed") {
-      this.updateTask(payload.taskId, {
-        status: status.state === "complete" ? "complete" : "blocked"
-      });
-      return;
-    }
+		if (status.state === "complete" || status.state === "failed") {
+			this.updateTask(payload.taskId, {
+				status: status.state === "complete" ? "complete" : "blocked",
+			});
+			return;
+		}
 
-    const nextDelay = Math.min(60 * payload.attempt, 600);
-    await this.schedule(nextDelay, "pollExternalJob", {
-      ...payload,
-      attempt: payload.attempt + 1
-    });
-  }
+		const nextDelay = Math.min(60 * payload.attempt, 600);
+		await this.schedule(nextDelay, "pollExternalJob", {
+			...payload,
+			attempt: payload.attempt + 1,
+		});
+	}
 }
 ```
 
@@ -355,25 +363,25 @@ A production deployment involves multiple steps that must each retry independent
 
 ```ts
 export class ProjectManager extends Agent<ProjectState> {
-  async startDeployment(task: Task) {
-    const instanceId = await this.runWorkflow("DEPLOY_WORKFLOW", {
-      taskId: task.id,
-      environment: "production"
-    });
-    this.updateTask(task.id, {
-      status: "in_progress",
-      externalJobId: instanceId
-    });
-  }
+	async startDeployment(task: Task) {
+		const instanceId = await this.runWorkflow("DEPLOY_WORKFLOW", {
+			taskId: task.id,
+			environment: "production",
+		});
+		this.updateTask(task.id, {
+			status: "in_progress",
+			externalJobId: instanceId,
+		});
+	}
 
-  async onWorkflowComplete(
-    workflowName: string,
-    instanceId: string,
-    result?: unknown
-  ) {
-    const task = this.state.tasks.find((t) => t.externalJobId === instanceId);
-    if (task) this.updateTask(task.id, { status: "complete" });
-  }
+	async onWorkflowComplete(
+		workflowName: string,
+		instanceId: string,
+		result?: unknown,
+	) {
+		const task = this.state.tasks.find((t) => t.externalJobId === instanceId);
+		if (task) this.updateTask(task.id, { status: "complete" });
+	}
 }
 ```
 
@@ -391,10 +399,10 @@ Three approaches work today:
 
 ```ts
 ctx.stash({
-  task: "Waiting for CI results",
-  onSuccess: "Mark task complete, move to next step in plan",
-  onFailure: "Notify team, schedule retry in 1 hour",
-  relevantContext: { taskId, planStep: 3 }
+	task: "Waiting for CI results",
+	onSuccess: "Mark task complete, move to next step in plan",
+	onFailure: "Notify team, schedule retry in 1 hour",
+	relevantContext: { taskId, planStep: 3 },
 });
 ```
 
@@ -408,87 +416,87 @@ A structured plan is not just useful for showing progress to users — it is a d
 
 ```ts
 type Plan = {
-  goal: string;
-  steps: PlanStep[];
-  currentStep: number;
-  createdAt: string;
-  updatedAt: string;
+	goal: string;
+	steps: PlanStep[];
+	currentStep: number;
+	createdAt: string;
+	updatedAt: string;
 };
 
 type PlanStep = {
-  id: string;
-  description: string;
-  status: "pending" | "in_progress" | "complete" | "failed" | "skipped";
-  result?: unknown;
+	id: string;
+	description: string;
+	status: "pending" | "in_progress" | "complete" | "failed" | "skipped";
+	result?: unknown;
 };
 
 export class ProjectManager extends Agent<ProjectState> {
-  async createPlan(goal: string) {
-    const steps = await this.keepAliveWhile(async () => {
-      return this.callLLM(`
+	async createPlan(goal: string) {
+		const steps = await this.keepAliveWhile(async () => {
+			return this.callLLM(`
         Break down this project goal into concrete steps.
         Return a JSON array of { id, description } objects.
         Goal: ${goal}
       `);
-    });
+		});
 
-    this.setState({
-      ...this.state,
-      plan: {
-        goal,
-        steps: steps.map((s: { id: string; description: string }) => ({
-          ...s,
-          status: "pending" as const
-        })),
-        currentStep: 0,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
-      }
-    });
+		this.setState({
+			...this.state,
+			plan: {
+				goal,
+				steps: steps.map((s: { id: string; description: string }) => ({
+					...s,
+					status: "pending" as const,
+				})),
+				currentStep: 0,
+				createdAt: new Date().toISOString(),
+				updatedAt: new Date().toISOString(),
+			},
+		});
 
-    await this.schedule(0, "executeNextStep");
-  }
+		await this.schedule(0, "executeNextStep");
+	}
 
-  async executeNextStep() {
-    const { plan } = this.state;
-    if (!plan || plan.currentStep >= plan.steps.length) {
-      this.setState({ ...this.state, status: "complete" });
-      return;
-    }
+	async executeNextStep() {
+		const { plan } = this.state;
+		if (!plan || plan.currentStep >= plan.steps.length) {
+			this.setState({ ...this.state, status: "complete" });
+			return;
+		}
 
-    const step = plan.steps[plan.currentStep];
+		const step = plan.steps[plan.currentStep];
 
-    try {
-      const result = await this.keepAliveWhile(() => this.executeStep(step));
+		try {
+			const result = await this.keepAliveWhile(() => this.executeStep(step));
 
-      const updatedSteps = plan.steps.map((s) =>
-        s.id === step.id ? { ...s, status: "complete" as const, result } : s
-      );
-      this.setState({
-        ...this.state,
-        plan: {
-          ...plan,
-          steps: updatedSteps,
-          currentStep: plan.currentStep + 1,
-          updatedAt: new Date().toISOString()
-        }
-      });
+			const updatedSteps = plan.steps.map((s) =>
+				s.id === step.id ? { ...s, status: "complete" as const, result } : s,
+			);
+			this.setState({
+				...this.state,
+				plan: {
+					...plan,
+					steps: updatedSteps,
+					currentStep: plan.currentStep + 1,
+					updatedAt: new Date().toISOString(),
+				},
+			});
 
-      await this.schedule(0, "executeNextStep");
-    } catch (error) {
-      const updatedSteps = plan.steps.map((s) =>
-        s.id === step.id ? { ...s, status: "failed" as const } : s
-      );
-      this.setState({
-        ...this.state,
-        plan: {
-          ...plan,
-          steps: updatedSteps,
-          updatedAt: new Date().toISOString()
-        }
-      });
-    }
-  }
+			await this.schedule(0, "executeNextStep");
+		} catch (error) {
+			const updatedSteps = plan.steps.map((s) =>
+				s.id === step.id ? { ...s, status: "failed" as const } : s,
+			);
+			this.setState({
+				...this.state,
+				plan: {
+					...plan,
+					steps: updatedSteps,
+					updatedAt: new Date().toISOString(),
+				},
+			});
+		}
+	}
 }
 ```
 
@@ -506,23 +514,25 @@ A project manager does not do everything itself. It delegates specialized work t
 
 ```ts
 export class ProjectManager extends Agent<ProjectState> {
-  async delegateTask(task: Task) {
-    const researcher = await this.subAgent(
-      ResearchAgent,
-      `research-${task.id}`
-    );
+	async delegateTask(task: Task) {
+		const researcher = await this.subAgent(
+			ResearchAgent,
+			`research-${task.id}`,
+		);
 
-    const findings = await researcher.research(task.title);
+		const findings = await researcher.research(task.title);
 
-    this.updateTask(task.id, { status: "complete" });
-    return findings;
-  }
+		this.updateTask(task.id, { status: "complete" });
+		return findings;
+	}
 }
 ```
 
-Sub-agents are independent Durable Objects. They have their own state, their own schedules, and their own lifecycle. The parent does not need to stay alive while the sub-agent works — it can start the work, hibernate, and be woken by a callback or scheduled check.
+Sub-agents have their own state, schedules, durable fibers, and lifecycle. They are colocated under the parent, but each child stores its own SQLite data and runs callbacks with the child as `this`.
 
-For the full `subAgent()` API — typed RPC stubs, abort, delete, storage isolation, and limitations — refer to [Sub-agents](/agents/api-reference/sub-agents/). For AI-specific sub-agent streaming (running full LLM turns through a child agent), refer to [Think: Sub-agent RPC](/agents/api-reference/think/#sub-agent-rpc-and-programmatic-turns).
+Because facets do not have independent alarm slots, the top-level parent owns the physical Durable Object alarm. The Agents SDK records which sub-agent owns each schedule or fiber recovery lease, wakes the parent, and routes the callback back into the child. The parent does not need to stay active while the sub-agent works — it can start the work, hibernate, and be woken by the child-owned schedule or recovery check.
+
+For the full `subAgent()` API — typed RPC stubs, client routing, access control, storage isolation, and alarm-backed APIs — refer to [Sub-agents](/agents/api-reference/sub-agents/). For AI-specific sub-agent streaming (running full LLM turns through a child agent), refer to [Think: Sub-agent RPC](/agents/api-reference/think/#sub-agent-rpc-and-programmatic-turns).
 
 ## Recovering interrupted LLM streams
 
@@ -533,32 +543,35 @@ For chat-oriented agents built on `AIChatAgent`, this is an even sharper problem
 ```ts
 import { AIChatAgent } from "@cloudflare/ai-chat";
 import type {
-  ChatRecoveryContext,
-  ChatRecoveryOptions
+	ChatRecoveryContext,
+	ChatRecoveryOptions,
 } from "@cloudflare/ai-chat";
 
 class ProjectChat extends AIChatAgent<Env> {
-  override chatRecovery = true;
+	override chatRecovery = true;
 
-  override async onChatRecovery(
-    ctx: ChatRecoveryContext
-  ): Promise<ChatRecoveryOptions> {
-    // ctx.partialText    — text generated before eviction
-    // ctx.recoveryData   — whatever you stashed via this.stash()
-    // ctx.messages        — full conversation history
-    return {};
-  }
+	override async onChatRecovery(
+		ctx: ChatRecoveryContext,
+	): Promise<ChatRecoveryOptions> {
+		// ctx.partialText    — text generated before eviction
+		// ctx.recoveryData   — whatever you stashed via this.stash()
+		// ctx.messages        — full conversation history
+		// ctx.createdAt       — when the interrupted turn started
+		return {};
+	}
 }
 ```
 
 The right recovery strategy depends on the LLM provider:
 
-| Provider               | Strategy                            | How it works                                                                 | Token cost |
-| ---------------------- | ----------------------------------- | ---------------------------------------------------------------------------- | ---------- |
-| Workers AI             | Continue from partial               | `continueLastTurn()` — model continues via assistant prefill                 | Low        |
-| OpenAI (Responses API) | Retrieve completed response         | Stash `responseId` during streaming, retrieve on recovery                    | Zero       |
-| Anthropic              | Synthetic continuation              | Persist partial, send a synthetic user message asking the model to continue  | Medium     |
+| Provider               | Strategy                            | How it works                                                                  | Token cost |
+| ---------------------- | ----------------------------------- | ----------------------------------------------------------------------------- | ---------- |
+| Workers AI             | Continue from partial               | `continueLastTurn()` — model continues via assistant prefill                  | Low        |
+| OpenAI (Responses API) | Retrieve completed response         | Stash `responseId` during streaming, retrieve on recovery                     | Zero       |
+| Anthropic              | Synthetic continuation              | Persist partial, send a synthetic user message asking the model to continue   | Medium     |
 | Other                  | Try prefill, fall back to synthetic | `continueLastTurn()` if the provider supports it, synthetic message otherwise | Varies     |
+
+Use `ctx.createdAt` to suppress stale recoveries. For example, if a recovered chat turn is older than a few minutes, you may persist the partial answer but skip automatic continuation to avoid surprising the user with an old response.
 
 ## Managing state over time
 
@@ -570,31 +583,31 @@ Schedule periodic cleanup to prune old data and archive completed work:
 
 ```ts
 export class ProjectManager extends Agent<ProjectState> {
-  async onStart() {
-    await this.schedule("0 0 * * *", "housekeeping", {}, { idempotent: true });
-  }
+	async onStart() {
+		await this.schedule("0 0 * * *", "housekeeping", {}, { idempotent: true });
+	}
 
-  async housekeeping() {
-    const cutoff = Date.now() - 30 * 24 * 60 * 60 * 1000;
-    const toArchive = this.state.tasks.filter(
-      (t) => t.status === "complete" && (t.completedAt ?? 0) < cutoff
-    );
-    for (const task of toArchive) {
-      this
-        .sql`INSERT INTO archived_tasks (id, data) VALUES (${task.id}, ${JSON.stringify(task)})`;
-    }
-    this.setState({
-      ...this.state,
-      tasks: this.state.tasks.filter(
-        (t) => !toArchive.some((a) => a.id === t.id)
-      )
-    });
+	async housekeeping() {
+		const cutoff = Date.now() - 30 * 24 * 60 * 60 * 1000;
+		const toArchive = this.state.tasks.filter(
+			(t) => t.status === "complete" && (t.completedAt ?? 0) < cutoff,
+		);
+		for (const task of toArchive) {
+			this
+				.sql`INSERT INTO archived_tasks (id, data) VALUES (${task.id}, ${JSON.stringify(task)})`;
+		}
+		this.setState({
+			...this.state,
+			tasks: this.state.tasks.filter(
+				(t) => !toArchive.some((a) => a.id === t.id),
+			),
+		});
 
-    this.deleteWorkflows({
-      status: ["complete", "errored"],
-      createdBefore: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
-    });
-  }
+		this.deleteWorkflows({
+			status: ["complete", "errored"],
+			createdBefore: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+		});
+	}
 }
 ```
 
@@ -614,17 +627,17 @@ A long-running agent eventually completes its purpose. The project ships, the in
 
 ```ts
 export class ProjectManager extends Agent<ProjectState> {
-  async completeProject() {
-    const schedules = this.getSchedules();
-    for (const schedule of schedules) {
-      await this.cancelSchedule(schedule.id);
-    }
+	async completeProject() {
+		const schedules = await this.listSchedules();
+		for (const schedule of schedules) {
+			await this.cancelSchedule(schedule.id);
+		}
 
-    this.setState({ ...this.state, status: "complete" });
+		this.setState({ ...this.state, status: "complete" });
 
-    // All SQLite data, schedules, and state are permanently deleted
-    await this.destroy();
-  }
+		// All SQLite data, schedules, and state are permanently deleted
+		await this.destroy();
+	}
 }
 ```
 
@@ -651,17 +664,17 @@ The project manager agent uses both: schedules for its own rhythms (daily standu
 
 Long-running agents on Cloudflare are not long-running processes. They are durable entities that wake, work, and sleep — potentially over weeks or months. The key primitives:
 
-| Primitive                              | Purpose                                       |
-| -------------------------------------- | --------------------------------------------- |
-| **`setState()` / `this.sql`**          | Persist state across activations              |
-| **`schedule()` / `scheduleEvery()`**   | Wake the agent at future times                |
-| **`keepAlive()` / `keepAliveWhile()`** | Prevent eviction during active work           |
-| **`runFiber()` / `stash()`**           | Checkpoint and recover long tasks             |
-| **`chatRecovery`**            | Recover interrupted LLM streams               |
-| **`onRequest()` / `onEmail()` / RPC**  | Wake on external events                       |
-| **`runWorkflow()`**                    | Delegate heavyweight multi-step work          |
-| **`subAgent()`**                       | Delegate specialized work to child agents     |
-| **Structured plans in state**          | Enable recovery, visibility, and re-planning  |
+| Primitive                              | Purpose                                      |
+| -------------------------------------- | -------------------------------------------- |
+| **`setState()` / `this.sql`**          | Persist state across activations             |
+| **`schedule()` / `scheduleEvery()`**   | Wake the agent at future times               |
+| **`keepAlive()` / `keepAliveWhile()`** | Prevent eviction during active work          |
+| **`runFiber()` / `stash()`**           | Checkpoint and recover long tasks            |
+| **`chatRecovery`**                     | Recover interrupted LLM streams              |
+| **`onRequest()` / `onEmail()` / RPC**  | Wake on external events                      |
+| **`runWorkflow()`**                    | Delegate heavyweight multi-step work         |
+| **`subAgent()`**                       | Delegate specialized work to child agents    |
+| **Structured plans in state**          | Enable recovery, visibility, and re-planning |
 
 For the project manager agent, these compose into an agent that:
 

@@ -106,6 +106,10 @@ Issue a `POST` request for the [Create a User Agent Blocking rule](/api/resource
 
 </TabItem> </Tabs>
 
+## Challenge actions
+
+When a User Agent Blocking rule uses a challenge action such as _Managed Challenge_, the visitor must pass a challenge page. After passing the challenge, a `cf_clearance` cookie is set. The duration of this cookie is controlled by the [Challenge Passage](/cloudflare-challenges/challenge-types/challenge-pages/challenge-passage/) setting.
+
 ## Related resources
 
 - [Secure your application](/learning-paths/application-security/account-security/)
