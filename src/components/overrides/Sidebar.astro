@@ -11,7 +11,9 @@ const productTitle = isHomepage
 	: await lookupProductTitle(product, module);
 ---
 
-<div class="sidebar-header sticky top-0 z-[1] flex flex-col gap-2 bg-[var(--sl-color-black)] py-3.5 min-[50rem]:bg-[var(--sl-color-bg-sidebar)]">
+<div
+	class="sidebar-header sticky top-0 z-[1] flex flex-col gap-2 bg-[var(--sl-color-black)] py-3.5 min-[50rem]:bg-[var(--sl-color-bg-sidebar)]"
+>
 	{
 		!isHomepage && (
 			<div class="sidebar-product-title">
@@ -56,24 +58,22 @@ const productTitle = isHomepage
 
 	{
 		!isHomepage && (
-			<div class="border-b border-[var(--sidebar-border)] pb-3">
-				<a
-					href="/"
-					class="flex min-h-[2.125rem] w-full cursor-pointer items-center gap-2 rounded-lg px-3 text-sm font-medium text-[var(--sidebar-text-strong)] no-underline transition-colors hover:bg-[color:var(--sidebar-hover-bg)]/80"
+			<a
+				href="/"
+				class="flex min-h-[2.125rem] items-start gap-2 rounded-lg px-3 py-1.5 text-sm font-medium text-[var(--sidebar-text)] no-underline outline-2 outline-offset-[-2px] outline-transparent transition-colors duration-150 hover:bg-[color:var(--sidebar-hover-bg)]/80 hover:text-[var(--sidebar-hover-text)] focus-visible:outline-blue-500 dark:focus-visible:outline-blue-400"
+			>
+				<svg
+					width="16"
+					height="16"
+					fill="currentColor"
+					viewBox="0 0 256 256"
+					class="mt-0.5 shrink-0 opacity-50"
+					aria-hidden="true"
 				>
-					<svg
-						width="16"
-						height="16"
-						fill="currentColor"
-						viewBox="0 0 256 256"
-						class="shrink-0 opacity-50"
-						aria-hidden="true"
-					>
-						<path d="M232,200a8,8,0,0,1-16,0,88.1,88.1,0,0,0-88-88H51.31l34.35,34.34a8,8,0,0,1-11.32,11.32l-48-48a8,8,0,0,1,0-11.32l48-48A8,8,0,0,1,85.66,61.66L51.31,96H128A104.11,104.11,0,0,1,232,200Z" />
-					</svg>
-					<span class="truncate">Home</span>
-				</a>
-			</div>
+					<path d="M232,200a8,8,0,0,1-16,0,88.1,88.1,0,0,0-88-88H51.31l34.35,34.34a8,8,0,0,1-11.32,11.32l-48-48a8,8,0,0,1,0-11.32l48-48A8,8,0,0,1,85.66,61.66L51.31,96H128A104.11,104.11,0,0,1,232,200Z" />
+				</svg>
+				<span>Home</span>
+			</a>
 		)
 	}
 </div>

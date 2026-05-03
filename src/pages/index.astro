@@ -10,6 +10,7 @@ import SecureSection from "../components/landing/SecureSection.astro";
 import AccelerateSection from "../components/landing/AccelerateSection.astro";
 import AgentSetup from "../components/landing/AgentSetup.astro";
 import ChangelogSection from "../components/landing/ChangelogSection.astro";
+import CommunityGrid from "../components/landing/CommunityGrid.astro";
 import "../styles/landing.css";
 
 const heading = (icon: string) => ({
@@ -31,13 +32,9 @@ const sidebar = [
 		badge: heading("heading-get-started"),
 		items: [
 			{ label: "Overview", link: "/" },
-			{ label: "Fundamentals", link: "/fundamentals/" },
-			{ label: "API reference", link: "/api/" },
+			{ label: "API", link: "/api/" },
+			{ label: "Agent Setup", link: "/agent-setup/" },
 			{ label: "Directory", link: "/directory/" },
-			{
-				label: "Troubleshooting",
-				link: "/support/troubleshooting/http-status-codes/",
-			},
 			{
 				label: "Resources",
 				collapsed: true,
@@ -50,6 +47,17 @@ const sidebar = [
 					{ label: "Support", link: "/support/" },
 				],
 			},
+			{
+				label: "API & IaC",
+				collapsed: true,
+				items: [
+					{ label: "API reference", link: "/api/" },
+					{ label: "Terraform", link: "/terraform/" },
+					{ label: "Pulumi", link: "/pulumi/" },
+					{ label: "SDKs", link: "/fundamentals/api/reference/sdks/" },
+				],
+			},
+			{ label: "Support", link: "/support/" },
 		],
 	},
 	{
@@ -63,17 +71,18 @@ const sidebar = [
 				badge: groupIcon("workers"),
 				items: [
 					{ label: "Workers", link: "/workers/" },
-					{ label: "Pages", link: "/pages/" },
 					{ label: "Containers", link: "/containers/" },
-					{ label: "Workflows", link: "/workflows/" },
 					{ label: "Durable Objects", link: "/durable-objects/" },
 					{ label: "Queues", link: "/queues/" },
+					{ label: "Workflows", link: "/workflows/" },
+					{ label: "Browser Run", link: "/browser-run/" },
 					{ label: "Pipelines", link: "/pipelines/" },
+					{ label: "Workers VPC", link: "/workers-vpc/" },
 					{
 						label: "Cloudflare for Platforms",
 						link: "/cloudflare-for-platforms/",
 					},
-					{ label: "Workers VPC", link: "/workers-vpc/" },
+					{ label: "Email Service", link: "/email-service/" },
 				],
 			},
 			{
@@ -83,10 +92,8 @@ const sidebar = [
 				items: [
 					{ label: "Workers AI", link: "/workers-ai/" },
 					{ label: "AI Gateway", link: "/ai-gateway/" },
-					{ label: "AI Search", link: "/ai-search/" },
-					{ label: "AI Agents", link: "/agents/" },
 					{ label: "Vectorize", link: "/vectorize/" },
-					{ label: "Browser Rendering", link: "/browser-rendering/" },
+					{ label: "AI Search", link: "/ai-search/" },
 					{ label: "AI Crawl Control", link: "/ai-crawl-control/" },
 				],
 			},
@@ -95,8 +102,8 @@ const sidebar = [
 				collapsed: true,
 				badge: groupIcon("kv"),
 				items: [
-					{ label: "D1", link: "/d1/" },
 					{ label: "R2", link: "/r2/" },
+					{ label: "D1", link: "/d1/" },
 					{ label: "KV", link: "/kv/" },
 					{ label: "Hyperdrive", link: "/hyperdrive/" },
 				],
@@ -251,9 +258,12 @@ const props = {
 				<SecureSection />
 
 				<AccelerateSection />
+
 				<PlatformStats />
 
 				<ChangelogSection />
+
+				<CommunityGrid />
 			</main>
 		</div>
 	</div>

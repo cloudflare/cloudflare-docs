@@ -1,0 +1,287 @@
+---
+import { Icon } from "astro-icon/components";
+
+export interface Tab {
+	id: string;
+	label: string;
+	icon?: string;
+}
+
+export type TabBarVariant = "pill" | "underline";
+
+interface Props {
+	name: string;
+	tabs: Tab[];
+	activeId?: string;
+	variant?: TabBarVariant;
+	"aria-label"?: string;
+	class?: string;
+}
+
+const {
+	name,
+	tabs,
+	activeId = tabs[0]?.id,
+	variant = "pill",
+	"aria-label": ariaLabel,
+	class: className = "",
+} = Astro.props;
+
+interface VariantStyles {
+	tablist: string;
+	indicator: string;
+	tab: { base: string; active: string; inactive: string };
+}
+
+const variantStyles: Record<TabBarVariant, VariantStyles> = {
+	pill: {
+		tablist: [
+			"pointer-events-auto relative z-20 inline-flex items-center gap-1",
+			"border-border-100 bg-background shrink-0 overflow-x-auto rounded-full border p-1",
+			"scrollbar-hide max-w-full md:max-w-none md:overflow-x-visible",
+		].join(" "),
+		indicator: [
+			"bg-accent-100 pointer-events-none absolute top-1",
+			"h-[calc(100%-8px)] rounded-full",
+			"shadow-[0_1px_2px_rgba(0,0,0,0.06),0_4px_12px_rgba(0,0,0,0.08)]",
+			"opacity-0",
+		].join(" "),
+		tab: {
+			base: [
+				"relative z-10 flex h-10 cursor-pointer items-center gap-2",
+				"rounded-full px-3.5 py-2.5 font-medium -tracking-[0.01em]",
+				"whitespace-nowrap transition-colors duration-300 ease-out",
+				"focus-visible:outline-accent-100 focus-visible:outline-2 focus-visible:outline-offset-2",
+			].join(" "),
+			active: "text-light-foreground",
+			inactive:
+				"text-foreground-muted hover:bg-foreground/5 hover:text-foreground",
+		},
+	},
+	underline: {
+		tablist: [
+			"border-border-100 bg-background-muted relative flex border-b",
+			"scrollbar-hide overflow-x-auto md:overflow-x-visible",
+		].join(" "),
+		indicator: [
+			"bg-accent-100 pointer-events-none absolute bottom-[-1px] h-px",
+			"opacity-0",
+		].join(" "),
+		tab: {
+			base: [
+				"relative z-10 flex shrink-0 cursor-pointer items-center gap-2",
+				"px-5 py-3 text-sm font-medium -tracking-[0.01em] whitespace-nowrap",
+				"border-r border-border-100 last:border-r-0",
+				"transition-colors duration-200 ease-out",
+				"focus-visible:outline-accent-100 focus-visible:outline-2 focus-visible:-outline-offset-2",
+			].join(" "),
+			active: "text-foreground bg-background",
+			inactive:
+				"text-foreground-muted hover:bg-background hover:text-foreground",
+		},
+	},
+};
+
+const v = variantStyles[variant];
+---
+
+<div
+	data-tabbar={name}
+	data-tabbar-variant={variant}
+	role="tablist"
+	aria-label={ariaLabel ?? `${name} tabs`}
+	class:list={[v.tablist, className]}
+>
+	<div class:list={["tabbar-indicator", v.indicator]} aria-hidden="true"></div>
+
+	{
+		tabs.map((t) => {
+			const active = t.id === activeId;
+			return (
+				<button
+					type="button"
+					role="tab"
+					id={`${name}-tab-${t.id}`}
+					data-tab-id={t.id}
+					aria-selected={active ? "true" : "false"}
+					aria-controls={`${name}-panel-${t.id}`}
+					tabindex={active ? 0 : -1}
+					class:list={[v.tab.base, active ? v.tab.active : v.tab.inactive]}
+				>
+					{t.icon && (
+						<Icon name={t.icon} class="size-5 shrink-0" aria-hidden="true" />
+					)}
+					<span>{t.label}</span>
+				</button>
+			);
+		})
+	}
+</div>
+
+<script>
+	type TabBarRoot = HTMLElement;
+	type Variant = "pill" | "underline";
+
+	function initAllTabbars() {
+		document
+			.querySelectorAll<TabBarRoot>("[data-tabbar][role=tablist]")
+			.forEach(initTabbar);
+	}
+
+	function initTabbar(root: TabBarRoot) {
+		if (root.dataset.tabbarInit === "1") return;
+		root.dataset.tabbarInit = "1";
+
+		const name = root.dataset.tabbar!;
+		const variant = (root.dataset.tabbarVariant ?? "pill") as Variant;
+		const tabs = Array.from(
+			root.querySelectorAll<HTMLButtonElement>("[role=tab]"),
+		);
+		const indicator = root.querySelector<HTMLElement>(".tabbar-indicator");
+		const panels = Array.from(
+			document.querySelectorAll<HTMLElement>(
+				`[role=tabpanel][data-tabbar="${CSS.escape(name)}"]`,
+			),
+		);
+		if (!indicator || tabs.length === 0) return;
+
+		const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+		const activeClasses =
+			variant === "pill"
+				? ["text-light-foreground"]
+				: ["text-foreground", "bg-background"];
+		const inactiveClasses =
+			variant === "pill"
+				? [
+						"text-foreground-muted",
+						"hover:bg-foreground/5",
+						"hover:text-foreground",
+					]
+				: [
+						"text-foreground-muted",
+						"hover:bg-background",
+						"hover:text-foreground",
+					];
+
+		const FAST_MS = 180;
+		const SLOW_MS = 340;
+		const EASE = "cubic-bezier(0.16, 1, 0.3, 1)";
+		let lastIdx = -1;
+
+		function moveIndicatorTo(idx: number, animate: boolean) {
+			const tab = tabs[idx];
+			if (!tab || !indicator) return;
+
+			const newLeft = tab.offsetLeft;
+			const newRight = root.clientWidth - tab.offsetLeft - tab.offsetWidth;
+
+			if (!animate || reduceMotion.matches) {
+				const prev = indicator.style.transition;
+				indicator.style.transition = "none";
+				indicator.style.left = `${newLeft}px`;
+				indicator.style.right = `${newRight}px`;
+				indicator.style.opacity = "1";
+				void indicator.offsetWidth;
+				indicator.style.transition = prev;
+				lastIdx = idx;
+				return;
+			}
+
+			const movingRight = lastIdx === -1 || idx > lastIdx;
+			const transition = movingRight
+				? `right ${FAST_MS}ms ${EASE}, left ${SLOW_MS}ms ${EASE}, opacity 200ms ease-out`
+				: `left ${FAST_MS}ms ${EASE}, right ${SLOW_MS}ms ${EASE}, opacity 200ms ease-out`;
+
+			indicator.style.transition = transition;
+			indicator.style.left = `${newLeft}px`;
+			indicator.style.right = `${newRight}px`;
+			indicator.style.opacity = "1";
+
+			lastIdx = idx;
+		}
+
+		function setTabState(tab: HTMLButtonElement, active: boolean) {
+			tab.setAttribute("aria-selected", String(active));
+			tab.setAttribute("tabindex", active ? "0" : "-1");
+			activeClasses.forEach((c) => tab.classList.toggle(c, active));
+			inactiveClasses.forEach((c) => tab.classList.toggle(c, !active));
+		}
+
+		function activate(idx: number, opts: { focus?: boolean } = {}) {
+			const target = tabs[idx];
+			if (!target) return;
+			const targetId = target.dataset.tabId;
+
+			tabs.forEach((tab, i) => setTabState(tab, i === idx));
+
+			panels.forEach((p) => {
+				if (p.dataset.tabId === targetId) p.removeAttribute("hidden");
+				else p.setAttribute("hidden", "");
+			});
+
+			moveIndicatorTo(idx, true);
+			if (opts.focus) target.focus();
+
+			if (root.scrollWidth > root.clientWidth) {
+				target.scrollIntoView({
+					behavior: reduceMotion.matches ? "auto" : "smooth",
+					block: "nearest",
+					inline: "nearest",
+				});
+			}
+		}
+
+		tabs.forEach((tab, i) => {
+			tab.addEventListener("click", () => activate(i));
+			tab.addEventListener("keydown", (e: KeyboardEvent) => {
+				let next = -1;
+				switch (e.key) {
+					case "ArrowRight":
+					case "ArrowDown":
+						next = (i + 1) % tabs.length;
+						break;
+					case "ArrowLeft":
+					case "ArrowUp":
+						next = (i - 1 + tabs.length) % tabs.length;
+						break;
+					case "Home":
+						next = 0;
+						break;
+					case "End":
+						next = tabs.length - 1;
+						break;
+					default:
+						return;
+				}
+				e.preventDefault();
+				activate(next, { focus: true });
+			});
+		});
+
+		const initialIdx = Math.max(
+			0,
+			tabs.findIndex((t) => t.getAttribute("aria-selected") === "true"),
+		);
+		requestAnimationFrame(() => moveIndicatorTo(initialIdx, false));
+
+		let pendingFrame = 0;
+		window.addEventListener("resize", () => {
+			cancelAnimationFrame(pendingFrame);
+			pendingFrame = requestAnimationFrame(() => {
+				const idx = Math.max(
+					0,
+					tabs.findIndex((t) => t.getAttribute("aria-selected") === "true"),
+				);
+				moveIndicatorTo(idx, false);
+			});
+		});
+	}
+
+	if (document.readyState === "loading") {
+		document.addEventListener("DOMContentLoaded", initAllTabbars);
+	} else {
+		initAllTabbars();
+	}
+	document.addEventListener("astro:page-load", initAllTabbars);
+</script>

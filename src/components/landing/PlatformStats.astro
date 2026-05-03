@@ -1,4 +1,6 @@
 ---
+import CornerMarks from "./CornerMarks.astro";
+import Eyebrow from "./Eyebrow.astro";
 import { stagger } from "./constants";
 
 const stats = [
@@ -38,128 +40,25 @@ const stats = [
 	class={`pt-8 pb-8 lg:pt-10 lg:pb-12 ${stagger(0.42)}`}
 	aria-labelledby="stats-heading"
 >
-	<div class="mb-4">
-		<span class="text-accent font-mono text-[13px] tracking-widest uppercase"
-			>Platform at a Glance</span
-		>
-	</div>
+	<Eyebrow id="stats-heading" class="mb-4">Platform at a Glance</Eyebrow>
 
 	<div
-		class="grid grid-cols-2 lg:grid-cols-4 gap-px overflow-visible border border-[#e8e8e8] bg-[#e8e8e8] dark:border-[#2a2a2a] dark:bg-[#2a2a2a]"
 		id="stats-grid"
+		class="border-border-100 bg-border-100 relative grid grid-cols-2 gap-px overflow-visible border lg:grid-cols-4"
 	>
+		<CornerMarks />
 		{
 			stats.map((stat, i) => (
-				<div class="stat-card bg-l-card hover:bg-l-card-hover dark:bg-l-card-dark dark:hover:bg-l-card-hover-dark relative flex flex-col px-4 py-4 transition-colors duration-150 sm:px-5 sm:py-5">
-					{/* Corner plus marks — all four corners */}
-					<svg
-						width="10"
-						height="10"
-						viewBox="0 0 10 10"
-						class="pointer-events-none absolute -top-[5.5px] -left-[5.5px] z-10"
-						aria-hidden="true"
-					>
-						<line
-							x1="0"
-							y1="5"
-							x2="10"
-							y2="5"
-							stroke-width="1"
-							class="l-corner-stroke"
-						/>
-						<line
-							x1="5"
-							y1="0"
-							x2="5"
-							y2="10"
-							stroke-width="1"
-							class="l-corner-stroke"
-						/>
-					</svg>
-					<svg
-						width="10"
-						height="10"
-						viewBox="0 0 10 10"
-						class="pointer-events-none absolute -top-[5.5px] -right-[5.5px] z-10"
-						aria-hidden="true"
-					>
-						<line
-							x1="0"
-							y1="5"
-							x2="10"
-							y2="5"
-							stroke-width="1"
-							class="l-corner-stroke"
-						/>
-						<line
-							x1="5"
-							y1="0"
-							x2="5"
-							y2="10"
-							stroke-width="1"
-							class="l-corner-stroke"
-						/>
-					</svg>
-					<svg
-						width="10"
-						height="10"
-						viewBox="0 0 10 10"
-						class="pointer-events-none absolute -bottom-[5.5px] -left-[5.5px] z-10"
-						aria-hidden="true"
-					>
-						<line
-							x1="0"
-							y1="5"
-							x2="10"
-							y2="5"
-							stroke-width="1"
-							class="l-corner-stroke"
-						/>
-						<line
-							x1="5"
-							y1="0"
-							x2="5"
-							y2="10"
-							stroke-width="1"
-							class="l-corner-stroke"
-						/>
-					</svg>
-					<svg
-						width="10"
-						height="10"
-						viewBox="0 0 10 10"
-						class="pointer-events-none absolute -right-[5.5px] -bottom-[5.5px] z-10"
-						aria-hidden="true"
-					>
-						<line
-							x1="0"
-							y1="5"
-							x2="10"
-							y2="5"
-							stroke-width="1"
-							class="l-corner-stroke"
-						/>
-						<line
-							x1="5"
-							y1="0"
-							x2="5"
-							y2="10"
-							stroke-width="1"
-							class="l-corner-stroke"
-						/>
-					</svg>
-
-					{/* Index */}
+				<div class="stat-card bg-background relative flex flex-col px-4 py-4 transition-colors duration-150 sm:px-5 sm:py-5">
 					<div
-						class="mb-2.5 font-mono text-[11px] text-zinc-400 uppercase tabular-nums select-none dark:text-zinc-600"
+						class="text-foreground-subtle mb-2.5 font-mono text-[11px] uppercase tabular-nums select-none"
 						aria-hidden="true"
 					>
 						{String(i + 1).padStart(2, "0")}
 					</div>
 
-					{/* Stat value */}
 					<p class="mb-1">
-						<span class="stat-counter inline-flex items-baseline font-mono text-3xl leading-none font-medium -tracking-tight text-zinc-900 tabular-nums dark:text-white">
+						<span class="stat-counter text-foreground inline-flex items-baseline font-mono text-3xl leading-none font-medium -tracking-tight tabular-nums">
 							<span
 								class="stat-counter-value inline-block"
 								data-target={stat.value}
@@ -172,18 +71,16 @@ const stats = [
 						</span>
 					</p>
 
-					{/* Unit — min-h reserves 2-line height so the divider below lands at the same Y across all cards. text-balance prevents awkward orphan wraps like "REQUESTS/SE | C". */}
-					<p class="text-accent stat-unit mb-3 min-h-[2.4em] text-balance font-mono text-[12px] tracking-wide uppercase">
+					<p class="text-accent-100 stat-unit mb-3 min-h-[2.4em] font-mono text-[12px] tracking-wide text-balance uppercase">
 						{stat.unit}
 					</p>
 
-					{/* Label + detail. text-balance on the (1-3 word) label balances the wrap evenly; text-pretty on the longer detail prevents orphans without rebalancing. */}
-					<div class="border-t border-dashed border-[#e8e8e8] pt-3 dark:border-[#2a2a2a]">
+					<div class="border-border-100 border-t border-dashed pt-3">
 						<div class="space-y-0.5">
-							<p class="text-[15px] leading-snug font-medium text-balance text-zinc-900 dark:text-zinc-50">
+							<p class="text-foreground text-[15px] leading-snug font-medium text-balance">
 								{stat.label}
 							</p>
-							<p class="text-[13px] leading-snug text-pretty text-zinc-500 dark:text-zinc-400">
+							<p class="text-foreground-muted text-[13px] leading-snug text-pretty">
 								{stat.detail}
 							</p>
 						</div>

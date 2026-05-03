@@ -1,32 +1,25 @@
 ---
-/**
- * Two categories, three cards each. Cards have:
- * - Large product icon as the visual anchor
- * - Bold scenario text
- * - Product name as accent mono label
- * - CTA button links to product docs
- * - Plus marks on the outer grid corners
- * - gap-px grid technique from PlatformStats
- */
+import Eyebrow from "./Eyebrow.astro";
 import ProductCard from "./ProductCard.astro";
 import ProductCardGrid from "./ProductCardGrid.astro";
+import SectionHeading from "./SectionHeading.astro";
 
 const categories = [
 	{
-		label: "Network & Application",
+		label: "Public websites & apps",
 		threats: [
 			{
-				scenario: "Protect your applications",
+				scenario: "Block the latest attacks",
 				product: "WAF",
-				href: "/waf",
+				href: "/waf/",
 				icon: "ddos-protection",
 				detail: "Custom rules, rate limiting, zero-day protection",
 				cta: "Harden your app with WAF",
 			},
 			{
-				scenario: "Encrypt every connection",
+				scenario: "Protect users and data",
 				product: "SSL/TLS",
-				href: "/ssl",
+				href: "/ssl/",
 				icon: "ssl",
 				detail: "Automatic certificates, strict mode, mTLS",
 				cta: "Set up SSL/TLS",
@@ -34,7 +27,7 @@ const categories = [
 			{
 				scenario: "Replace CAPTCHAs",
 				product: "Turnstile",
-				href: "/turnstile",
+				href: "/turnstile/",
 				icon: "turnstile",
 				detail: "Invisible challenge, privacy-preserving verification",
 				cta: "Add Turnstile protection",
@@ -42,26 +35,27 @@ const categories = [
 		],
 	},
 	{
-		label: "Access & Identity",
+		label: "Corporate and home networks",
 		threats: [
 			{
-				scenario: "Expose internal services safely",
+				scenario: "Replace legacy VPNs",
 				product: "Tunnel",
-				href: "/cloudflare-one/networks/connectors/cloudflare-tunnel",
+				href: "/cloudflare-one/networks/connectors/cloudflare-tunnel/",
 				icon: "tunnel",
 				detail: "Outbound-only encrypted tunnels, no open ports",
 				cta: "Create a secure Tunnel",
 			},
 			{
-				scenario: "Secure access to internal tools",
+				scenario: "Manage access across your internal environment",
 				product: "Zero Trust",
 				href: "/cloudflare-one/",
 				icon: "access",
-				detail: "Identity-aware access, device posture checks",
+				detail:
+					"Identity-first, quantum-safe access with device posture checks",
 				cta: "Set up Zero Trust access",
 			},
 			{
-				scenario: "Filter outbound traffic network-wide",
+				scenario: "Protect employee Internet browsing",
 				product: "Gateway",
 				href: "/cloudflare-one/traffic-policies/",
 				icon: "gateway",
@@ -75,22 +69,15 @@ const categories = [
 
 <section
 	class="pt-10 pb-10 lg:pt-14 lg:pb-12"
-	aria-labelledby="s6-heading"
+	aria-labelledby="secure-heading"
 	id="secure"
 >
-	<div class="mb-3">
-		<span class="text-accent font-mono text-[13px] tracking-widest uppercase"
-			>Secure</span
-		>
-	</div>
-	<h2
-		id="s6-heading"
-		class="mb-2 text-2xl leading-[1.1] font-medium -tracking-[0.035em] text-balance text-zinc-900 md:text-3xl dark:text-zinc-50"
-	>
+	<Eyebrow>Secure</Eyebrow>
+	<SectionHeading id="secure-heading" class="mb-2">
 		Secure what you already have
-	</h2>
+	</SectionHeading>
 	<p
-		class="mb-8 max-w-[600px] text-sm leading-relaxed text-pretty text-zinc-500 md:text-lg dark:text-zinc-400"
+		class="text-foreground-muted mb-8 max-w-[600px] text-sm leading-relaxed text-pretty md:text-lg"
 	>
 		Add Cloudflare in front of what is already running, no rebuild required.
 	</p>

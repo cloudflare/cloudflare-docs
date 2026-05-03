@@ -1,5 +1,6 @@
 ---
 import Default from "@astrojs/starlight/components/Head.astro";
+import { Font } from "astro:assets";
 import { differenceInCalendarDays } from "date-fns";
 import "tippy.js/dist/tippy.css";
 
@@ -271,6 +272,7 @@ metaTags.map((attrs) => {
 });
 ---
 
+<Font cssVariable="--font-inter-tight" />
 <script src="src/scripts/footnotes.ts"></script>
 <script src="src/scripts/mermaid.ts"></script>
 <script src="src/scripts/analytics.ts"></script>

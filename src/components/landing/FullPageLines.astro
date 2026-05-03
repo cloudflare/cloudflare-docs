@@ -1,14 +1,4 @@
 ---
-/**
- * Full-page vertical container lines.
- *
- * Positioned absolutely within the same relative parent as StructuralGrid
- * so the lines share the same coordinate system as the plus marks and
- * corner brackets. Uses 100lvh height to extend beyond the content area;
- * parent containers have overflow:visible so the lines are not clipped.
- *
- * Uses the same container widths and responsive margin logic as StructuralGrid.
- */
 const CONTAINERS = [1400, 1280, 720, 400];
 
 const MIN_MARGINS = [0, 48, 120, 200];
@@ -27,13 +17,11 @@ const lineBase = "absolute top-0 left-1/2 -translate-x-1/2";
 	style="height: calc(100% + 25rem)"
 	aria-hidden="true"
 >
-	<!-- Center line -->
 	<div
 		class="absolute top-0 left-1/2 h-full w-0 border-l border-dotted border-black/[0.06] dark:border-white/[0.04]"
 	>
 	</div>
 
-	<!-- Container lines -->
 	{
 		CONTAINERS.map((w) => (
 			<div

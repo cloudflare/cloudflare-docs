@@ -95,7 +95,11 @@ const restoreIndices = sublist.map((entry) =>
 						>
 							<span class="group-label">
 								{entry.badge?.class?.includes("sidebar-group-icon") && (
-									<AstroIcon name={entry.badge.text} size="16px" class="group-icon shrink-0" />
+									<AstroIcon
+										name={entry.badge.text}
+										size="16px"
+										class="group-icon shrink-0"
+									/>
 								)}
 								<span class:list={[!nested && "large"]}>{entry.label}</span>
 								{entry.badge && (

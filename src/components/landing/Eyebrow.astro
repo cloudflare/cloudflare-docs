@@ -1,0 +1,28 @@
+---
+type Size = "sm" | "md";
+
+interface Props {
+	size?: Size;
+	id?: string;
+	class?: string;
+}
+
+const { size = "md", id, class: className = "" } = Astro.props;
+
+const sizeClasses: Record<Size, string> = {
+	sm: "text-[11px]",
+	md: "text-[13px]",
+};
+---
+
+<div class:list={["mb-3", className]}>
+	<span
+		id={id}
+		class:list={[
+			"text-accent-100 font-mono tracking-widest uppercase",
+			sizeClasses[size],
+		]}
+	>
+		<slot />
+	</span>
+</div>

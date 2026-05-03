@@ -1,24 +1,4 @@
 ---
-/**
- * CommandBlock — segmented `$ | code | copy` (or `code | copy`) command block
- * shared across landing-page sections.
- *
- * Used by:
- *   - BuildFromScratch (no prompt, rounded corners, max-width 680px)
- *   - AgentSetup       (with $ prompt, sharp corners, fills cell)
- *
- * The copy button is class `cmd-copy-btn`. The script at the bottom of this
- * file is hoisted once per page by Astro and binds copy behavior to every
- * instance via `data-copy-target` (the id of the matching `<code>` block).
- *
- * Props:
- *   id          unique DOM id used by the copy button to find the code text
- *   command     the literal command string shown and copied
- *   showPrompt  prepend a `$` prompt cell in the accent color (default false)
- *   rounded     round the outer corners (default false — sharp, matches the
- *               page's CAD aesthetic; BuildFromScratch passes true)
- *   class       extra classes appended to the outer wrapper
- */
 interface Props {
 	id: string;
 	command: string;
@@ -46,7 +26,7 @@ const {
 	{
 		showPrompt && (
 			<span
-				class="bg-l-card dark:bg-l-card-dark flex shrink-0 items-center border-r border-zinc-200 px-3 font-mono text-sm leading-none text-accent select-none dark:border-[#2a2a2a]"
+				class="bg-background text-accent flex shrink-0 items-center border-r border-zinc-200 px-3 font-mono text-sm leading-none select-none dark:border-[#2a2a2a]"
 				aria-hidden="true"
 			>
 				$
@@ -56,7 +36,7 @@ const {
 
 	<code
 		id={id}
-		class="bg-l-card dark:bg-l-card-dark min-w-0 flex-1 truncate px-3 py-4 font-mono text-sm leading-none text-zinc-700 select-all dark:text-zinc-300"
+		class="bg-background min-w-0 flex-1 truncate px-3 py-4 font-mono text-sm leading-none text-zinc-700 select-all dark:text-zinc-300"
 	>
 		{command}
 	</code>
@@ -65,7 +45,7 @@ const {
 		type="button"
 		data-copy-target={id}
 		aria-label="Copy to clipboard"
-		class="cmd-copy-btn focus-visible:outline-accent flex w-10 shrink-0 cursor-pointer items-center justify-center border-l border-zinc-200 text-zinc-500 transition-colors duration-150 hover:bg-zinc-200 hover:text-zinc-700 focus-visible:outline-2 focus-visible:-outline-offset-2 dark:border-[#2a2a2a] dark:text-zinc-400 dark:hover:bg-zinc-700 dark:hover:text-zinc-100"
+		class="cmd-copy-btn focus-visible:outline-accent flex w-10 shrink-0 cursor-pointer items-center justify-center border-l border-zinc-200 text-zinc-500 transition-colors duration-150 hover:bg-zinc-100 hover:text-zinc-700 focus-visible:outline-2 focus-visible:-outline-offset-2 dark:border-[#2a2a2a] dark:text-zinc-400 dark:hover:bg-zinc-700 dark:hover:text-zinc-100"
 	>
 		<svg
 			class="cmd-copy-default"

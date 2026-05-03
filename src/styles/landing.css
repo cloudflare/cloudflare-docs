@@ -2,10 +2,13 @@
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
-@font-face {
-	font-family: "Inter Tight";
-	font-display: swap;
-}
+/*
+ * Inter Tight is loaded via Astro's Fonts API (configured in astro.config.ts
+ * and injected as <Font> in src/components/overrides/Head.astro). The
+ * `--font-inter-tight` variable resolves to the loaded family plus an
+ * auto-generated metric-matched fallback, so we use it directly instead of
+ * declaring our own @font-face.
+ */
 
 @media (prefers-reduced-motion: no-preference) {
 	html {
@@ -14,13 +17,48 @@
 }
 
 @theme {
-	--color-accent: #f56500;
+	/*
+	 * Semantic colour tokens for the landing page.
+	 *
+	 * Naming convention is **role-based, not luminance-based**:
+	 *   - `background`        — canonical page / panel surface
+	 *   - `background-muted`  — recessed surface (tab strip, inset card)
+	 *   - `background-subtle` — deepest recess (hover/pressed surface)
+	 *   - `foreground`        — primary text
+	 *   - `foreground-muted`  — body / detail text
+	 *   - `foreground-subtle` — captions / eyebrows
+	 *
+	 * Brightness flips between light and dark themes — the role does
+	 * not. `foreground` is always the most prominent text colour
+	 * regardless of theme; in light mode that's near-black, in dark
+	 * mode it's near-white. Don't read the names as a luminance scale.
+	 *
+	 * Brand orange lives on `accent-100` (canonical) + `accent-200`
+	 * (lighter / hover). `accent-100` is used as both a fill (CTA
+	 * panels, primary buttons) and a foreground (eyebrows, links,
+	 * focus rings) — there is no separate "fill" alias.
+	 *
+	 * Theme switching is handled via the .landing-root scope further
+	 * below.
+	 */
+	--color-background: #ffffff;
+	--color-background-muted: #fafafa;
+	--color-background-subtle: #f4f4f5;
+	--color-foreground: #18181b;
+	--color-foreground-muted: #52525b;
+	--color-foreground-subtle: #71717a;
+	--color-accent-100: #ff4801;
+	--color-accent-200: #ff7038;
+	--color-light-foreground: #fffbf5;
+	--color-border-100: #e4e4e7;
 
-	/* Shared landing card surfaces — used across Stats, Build, Secure */
-	--color-l-card: #fff;
-	--color-l-card-dark: #1d1d1d;
-	--color-l-card-hover: #fafafa;
-	--color-l-card-hover-dark: #252525;
+	/*
+	 * Selection — borrowed from workers.cloudflare.com. Peach background +
+	 * deep-orange text in light mode, dark-brown background + lighter-orange
+	 * text in dark. Applied via the `::selection` rule on `.landing-root`.
+	 */
+	--color-selection-bg: #ffe9e0;
+	--color-selection-text: #ff500a;
 
 	@keyframes v27-enter {
 		from {
@@ -43,10 +81,37 @@
 			transform: translate(-50%, -50%) scale(2);
 		}
 	}
+
+	/*
+	 * Changelog "live" pulse — used by ChangelogSection.astro on the
+	 * featured card date dot. Registered as a Tailwind v4 animation
+	 * token so it can be applied via `animate-cl-pulse` (with
+	 * `motion-reduce:animate-none` for the reduced-motion fallback).
+	 */
+	--animate-cl-pulse: cl-pulse 3s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+
+	@keyframes cl-pulse {
+		0% {
+			transform: scale(0.4);
+			opacity: 0.6;
+		}
+		100% {
+			transform: scale(1.6);
+			opacity: 0;
+		}
+	}
 }
 
-@utility l-corner-stroke {
-	stroke: var(--l-corner-mark, rgba(24, 24, 27, 0.28));
+/*
+ * scrollbar-hide — for horizontally-scrollable strips (TabBar, etc.).
+ * Visually hides the scrollbar while preserving keyboard/touch scroll.
+ */
+@utility scrollbar-hide {
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+	&::-webkit-scrollbar {
+		display: none;
+	}
 }
 
 @utility v27-broadcast {
@@ -80,12 +145,6 @@
 		--tw-accent-900: var(--orange-accent-900);
 	}
 
-	:root[data-theme="dark"] {
-		--tw-accent-200: var(--orange-accent-200);
-		--tw-accent-600: var(--orange-accent-600);
-		--tw-accent-900: var(--orange-accent-900);
-	}
-
 	* {
 		-webkit-tap-highlight-color: transparent;
 	}
@@ -109,41 +168,53 @@
 /*
  * Landing page root — font and layout only.
  * StructuralGrid CSS variables live here because they need
- * complex values (radial-gradient, mask-image) with no Tailwind equivalent.
+ * complex values (radial-gradient backgrounds) with no Tailwind equivalent.
  */
 .landing-root {
+	/*
+	 * Token overrides — these MUST live on `.landing-root` (not in @theme)
+	 * because starlight-tailwind declares `--color-accent-100` etc. in an
+	 * UNLAYERED `:root` block, which outranks anything inside @layer theme.
+	 * `.landing-root` is more specific than `:root, :host` so wins.
+	 */
+	--color-background: #ffffff;
+	--color-background-muted: #fafafa;
+	--color-background-subtle: #f4f4f5;
+	--color-foreground: #18181b;
+	--color-foreground-muted: #52525b;
+	--color-foreground-subtle: #71717a;
+	--color-accent-100: #ff4801;
+	--color-accent-200: #ff7038;
+	--color-light-foreground: #fffbf5;
+	--color-border-100: #e4e4e7;
+	--color-selection-bg: #ffe9e0;
+	--color-selection-text: #ff500a;
+
 	--l-section-pad: max(2rem, 4vw);
 	--l-pad-top: var(--l-section-pad);
 	overflow-x: clip;
-	font-family:
-		"Inter Tight",
-		Inter,
-		-apple-system,
-		sans-serif;
+	/*
+	 * IMPORTANT: must be `var(--font-inter-tight)`, not the bare "Inter Tight"
+	 * family name. Astro's Fonts API registers the loaded font under a hashed
+	 * family name (e.g. "Inter Tight-5c4decf53c0bfa89") and only exposes it
+	 * through this CSS variable — using "Inter Tight" directly silently falls
+	 * back to the system font and collapses weights ≥ 600 to bold.
+	 */
+	font-family: var(--font-inter-tight);
 	line-height: normal;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	color: #18181b;
+	color: var(--color-foreground);
 
 	--l-dot-color: #efeff1;
 	--l-dot-size: 18px 18px;
-	--l-dot-mask: radial-gradient(
-		ellipse 50% 50% at 50% 50%,
-		#000 60%,
-		transparent 100%
-	);
 	--l-grid-mark: rgba(0, 0, 0, 0.08);
 	--l-grid-mark-accent: rgba(0, 0, 0, 0.12);
-	/* Corner plus marks on cards/grids — subdued, solid grey like the Workers site */
-	--l-corner-mark: #d4d4d8;
-	--l-h-line: rgba(0, 0, 0, 0.05);
-	--l-h-line-fine: rgba(0, 0, 0, 0.025);
 }
 
-@media (max-width: 1439px) {
-	.landing-root {
-		--l-section-pad: max(2rem, 4vw);
-	}
+.landing-root ::selection {
+	background-color: var(--color-selection-bg);
+	color: var(--color-selection-text);
 }
 
 @media (max-width: 800px) {
@@ -153,17 +224,23 @@
 }
 
 :root[data-theme="dark"] .landing-root {
-	color: #fafafa;
+	/* Dark-mode token overrides — keeps original neutral docs palette */
+	--color-background: #1d1d1d;
+	--color-background-muted: #252525;
+	--color-background-subtle: #2a2a2a;
+	--color-foreground: #fafafa;
+	--color-foreground-muted: #a1a1aa;
+	--color-foreground-subtle: #71717a;
+	--color-accent-100: #ff4801;
+	--color-accent-200: #ff7038;
+	--color-light-foreground: #fffbf5;
+	--color-border-100: #2a2a2a;
+	--color-selection-bg: #3d1f0f;
+	--color-selection-text: #ff7038;
+
+	color: var(--color-foreground);
 	--l-dot-color: rgba(255, 255, 255, 0.05);
 	--l-dot-size: 22px 22px;
-	--l-dot-mask: radial-gradient(
-		ellipse 45% 45% at 50% 50%,
-		#000 40%,
-		transparent 100%
-	);
 	--l-grid-mark: rgba(255, 255, 255, 0.1);
 	--l-grid-mark-accent: rgba(255, 255, 255, 0.16);
-	--l-corner-mark: #52525b;
-	--l-h-line: rgba(255, 255, 255, 0.06);
-	--l-h-line-fine: rgba(255, 255, 255, 0.03);
 }

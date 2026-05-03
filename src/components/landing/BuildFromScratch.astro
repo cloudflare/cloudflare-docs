@@ -1,6 +1,12 @@
 ---
 import { Icon } from "astro-icon/components";
 import CommandBlock from "./CommandBlock.astro";
+import CornerMarks from "./CornerMarks.astro";
+import Button from "./Button.astro";
+import Eyebrow from "./Eyebrow.astro";
+import RightArrow from "./RightArrow.astro";
+import SectionHeading from "./SectionHeading.astro";
+import TabBar from "./TabBar.astro";
 
 const primitives = [
 	{
@@ -20,9 +26,8 @@ const primitives = [
 		},
 		tags: [
 			{ label: "Workers", href: "/workers/" },
-			{ label: "Pages", href: "/pages/" },
 			{ label: "Containers", href: "/containers/" },
-			{ label: "Workflows", href: "/workflows/" },
+			{ label: "Durable Objects", href: "/durable-objects/" },
 			{ label: "Queues", href: "/queues/" },
 		],
 	},
@@ -41,7 +46,7 @@ const primitives = [
 		tags: [
 			{ label: "Workers AI", href: "/workers-ai/" },
 			{ label: "AI Gateway", href: "/ai-gateway/" },
-			{ label: "AI Agents", href: "/agents/" },
+			{ label: "Agents", href: "/agents/" },
 			{ label: "Vectorize", href: "/vectorize/" },
 			{ label: "Browser Rendering", href: "/browser-rendering/" },
 		],
@@ -59,6 +64,7 @@ const primitives = [
 		command: "npx wrangler d1 create my-database",
 		cta: { label: "Get started with D1", href: "/d1/get-started/" },
 		tags: [
+			{ label: "R2", href: "/r2/" },
 			{ label: "D1", href: "/d1/" },
 			{ label: "KV", href: "/kv/" },
 			{ label: "Hyperdrive", href: "/hyperdrive/" },
@@ -71,13 +77,16 @@ const primitives = [
 		iconColor: "#9616ff",
 		iconBg: "rgba(150, 22, 255, 0.1)",
 		iconBgDark: "rgba(150, 22, 255, 0.22)",
-		heading: "Store anything, serve everywhere",
+		heading: "Build media pipelines without infrastructure headaches",
 		description:
-			"Scalable, durable, affordable object storage without egress fees, image optimization, and live and on-demand video streaming — store, transform, and deliver from Cloudflare's network.",
-		command: "npx wrangler r2 bucket create my-bucket",
-		cta: { label: "Get started with R2", href: "/r2/get-started/" },
+			"Cloudflare Images helps teams build scalable, reliable media pipelines to store, optimize, and deliver images.",
+		command:
+			"curl --request POST https://api.cloudflare.com/client/v4/accounts/{account_id}/images/v1",
+		cta: {
+			label: "Get started with Images",
+			href: "/images/get-started/introduction/",
+		},
 		tags: [
-			{ label: "R2", href: "/r2/" },
 			{ label: "Images", href: "/images/" },
 			{ label: "Stream", href: "/stream/" },
 			{ label: "Realtime", href: "/realtime/" },
@@ -86,106 +95,32 @@ const primitives = [
 ];
 ---
 
-<section
-	class="pt-10 pb-6 lg:pt-14"
-	aria-labelledby="build-heading"
-	id="build"
->
-	<div class="mb-3">
-		<span class="text-accent font-mono text-[13px] tracking-widest uppercase"
-			>Build</span
-		>
-	</div>
-	<h2
-		id="build-heading"
-		class="mb-8 text-2xl leading-[1.1] font-medium -tracking-[0.035em] text-balance text-zinc-900 md:text-3xl dark:text-zinc-50"
-	>
+<section class="pt-10 pb-6 lg:pt-14" aria-labelledby="build-heading" id="build">
+	<Eyebrow>Build</Eyebrow>
+	<SectionHeading id="build-heading" class="mb-8">
 		Powerful primitives, seamlessly integrated
-	</h2>
+	</SectionHeading>
 
-	<div
-		class="relative overflow-visible border border-zinc-200 dark:border-[#2a2a2a]"
-		id="build-tabs-root"
-	>
-		<!-- Corner plus marks -->
-		{
-			[
-				"-top-[5.5px] -left-[5.5px]",
-				"-top-[5.5px] -right-[5.5px]",
-				"-bottom-[5.5px] -left-[5.5px]",
-				"-right-[5.5px] -bottom-[5.5px]",
-			].map((pos) => (
-				<svg
-					width="10"
-					height="10"
-					viewBox="0 0 10 10"
-					class={`pointer-events-none absolute ${pos} z-10`}
-					aria-hidden="true"
-				>
-					<line
-						x1="0"
-						y1="5"
-						x2="10"
-						y2="5"
-						stroke-width="1"
-						class="l-corner-stroke"
-					/>
-					<line
-						x1="5"
-						y1="0"
-						x2="5"
-						y2="10"
-						stroke-width="1"
-						class="l-corner-stroke"
-					/>
-				</svg>
-			))
-		}
+	<div class="border-border-100 relative overflow-visible border">
+		<CornerMarks />
 
-		<!-- Tab bar -->
-		<div
-			class="flex border-b border-zinc-200 bg-zinc-100/80 dark:border-[#2a2a2a] dark:bg-zinc-900/60"
-			role="tablist"
+		<TabBar
+			name="build"
+			variant="underline"
 			aria-label="Build primitives"
-		>
-			{
-				primitives.map((p, i) => (
-					<button
-						role="tab"
-						type="button"
-						aria-selected={i === 0 ? "true" : "false"}
-						aria-controls={`build-panel-${p.id}`}
-						id={`build-tab-${p.id}`}
-						class={[
-							"build-tab group relative flex shrink-0 items-center gap-2 px-5 py-3",
-							"text-sm font-medium -tracking-[0.005em]",
-							"cursor-pointer transition-colors duration-150 select-none",
-							"border-r border-zinc-200 last:border-r-0 dark:border-[#2a2a2a]",
-							"focus-visible:outline-accent focus-visible:outline-2 focus-visible:-outline-offset-2",
-							i === 0
-								? "build-tab-active dark:text-accent text-zinc-900"
-								: "build-tab-inactive",
-						].join(" ")}
-					>
-						{p.label}
-						<span
-							class={`bg-accent pointer-events-none absolute bottom-0 left-0 h-0.5 transition-[width] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] ${i === 0 ? "w-full" : "w-0"}`}
-							aria-hidden="true"
-						/>
-					</button>
-				))
-			}
-		</div>
+			tabs={primitives.map((p) => ({ id: p.id, label: p.label }))}
+		/>
 
-		<!-- Panels -->
 		{
 			primitives.map((p, i) => (
 				<div
 					role="tabpanel"
 					id={`build-panel-${p.id}`}
 					aria-labelledby={`build-tab-${p.id}`}
+					data-tabbar="build"
+					data-tab-id={p.id}
 					hidden={i !== 0}
-					class="bg-l-card dark:bg-l-card-dark p-5 sm:p-8"
+					class="bg-background p-5 sm:p-8"
 				>
 					<div class="w-full">
 						<div class="mb-4 flex items-center gap-3">
@@ -195,15 +130,14 @@ const primitives = [
 							>
 								<Icon name={p.icon} size="16px" />
 							</div>
-							<h3 class="text-base leading-snug font-medium text-zinc-900 md:text-lg dark:text-zinc-50">
+							<h3 class="text-foreground text-base leading-snug font-medium md:text-lg">
 								{p.heading}
 							</h3>
 						</div>
-						<p class="mb-6 text-sm leading-relaxed text-zinc-500 md:text-base dark:text-zinc-400">
+						<p class="text-foreground-muted mb-6 text-sm leading-relaxed md:text-base">
 							{p.description}
 						</p>
 
-						{/* Command block — shared CommandBlock component */}
 						<CommandBlock
 							id={`build-cmd-${p.id}`}
 							command={p.command}
@@ -211,45 +145,24 @@ const primitives = [
 							class="mb-6 max-w-[680px]"
 						/>
 
-						{/* CTA + tags row */}
 						<div class="flex w-full flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
-							<a
-								href={p.cta.href}
-								class="focus-visible:outline-accent inline-flex shrink-0 cursor-pointer items-center gap-2 rounded-md border border-zinc-300 bg-transparent px-4 py-2 text-sm font-medium text-zinc-900 no-underline transition-colors duration-150 hover:border-zinc-900 hover:bg-zinc-50 focus-visible:outline-2 focus-visible:outline-offset-2 dark:border-zinc-700 dark:text-zinc-50 dark:hover:border-zinc-300 dark:hover:bg-zinc-900"
-							>
-								{p.cta.label}
-								<svg
-									width="12"
-									height="12"
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="currentColor"
-									stroke-width="2"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									class="shrink-0"
-									aria-hidden="true"
-								>
-									<>
-										<line x1="5" y1="12" x2="19" y2="12" />
-										<polyline points="12 5 19 12 12 19" />
-									</>
-								</svg>
-							</a>
-							<p class="relative top-px min-w-0 flex-1 text-sm text-zinc-500 dark:text-zinc-400">
+							<Button href={p.cta.href} variant="secondary" size="md">
+								<span class="inline-flex items-center gap-2">
+									{p.cta.label}
+									<RightArrow size={12} />
+								</span>
+							</Button>
+							<p class="text-foreground-muted relative top-px min-w-0 flex-1 text-sm">
 								{p.tags.map((tag, idx) => (
 									<span class="inline-flex items-center">
 										<a
 											href={tag.href}
-											class="text-zinc-600 no-underline hover:underline hover:underline-offset-4 dark:text-zinc-300"
+											class="text-foreground no-underline hover:underline hover:underline-offset-4"
 										>
 											{tag.label}
 										</a>
 										{idx < p.tags.length - 1 && (
-											<span
-												class="mx-1.5 text-zinc-300 dark:text-zinc-600"
-												aria-hidden="true"
-											>
+											<span class="text-border-100 mx-1.5" aria-hidden="true">
 												·
 											</span>
 										)}
@@ -264,84 +177,13 @@ const primitives = [
 	</div>
 </section>
 
-<style is:global>
-	.build-tab-active {
-		background: var(--color-l-card);
-	}
-	.build-tab-inactive {
-		background: transparent;
-		color: #52525b;
-	}
-	:root[data-theme="dark"] .build-tab-inactive {
-		color: #a1a1aa;
-	}
-	.build-tab-inactive:hover {
-		background: var(--color-l-card);
-		color: #18181b;
-	}
-	:root[data-theme="dark"] .build-tab-active {
-		background: var(--color-l-card-dark);
-	}
-	:root[data-theme="dark"] .build-tab-inactive:hover {
-		background: var(--color-l-card-dark);
-		color: #fafafa;
-	}
-
+<style>
 	.build-panel-icon {
 		color: var(--build-icon-color);
 		border-color: var(--build-icon-color);
 		background: var(--build-icon-bg);
 	}
-	:root[data-theme="dark"] .build-panel-icon {
+	:global(:root[data-theme="dark"]) .build-panel-icon {
 		background: var(--build-icon-bg-dark);
 	}
 </style>
-
-<script>
-	const root = document.getElementById("build-tabs-root");
-	if (root) {
-		const tabs = Array.from(
-			root.querySelectorAll<HTMLButtonElement>("[role=tab]"),
-		);
-		const panels = Array.from(
-			root.querySelectorAll<HTMLElement>("[role=tabpanel]"),
-		);
-		function activate(idx: number) {
-			tabs.forEach((tab, i) => {
-				const active = i === idx;
-				tab.setAttribute("aria-selected", String(active));
-				tab.classList.toggle("build-tab-active", active);
-				tab.classList.toggle("text-zinc-900", active);
-				tab.classList.toggle("dark:text-accent", active);
-				tab.classList.toggle("build-tab-inactive", !active);
-				const bar = tab.querySelector("span:last-child") as HTMLElement | null;
-				if (bar) {
-					bar.classList.toggle("w-full", active);
-					bar.classList.toggle("w-0", !active);
-				}
-			});
-			panels.forEach((p, i) => {
-				if (i === idx) p.removeAttribute("hidden");
-				else p.setAttribute("hidden", "");
-			});
-		}
-		tabs.forEach((tab, i) => {
-			tab.addEventListener("click", () => activate(i));
-			tab.addEventListener("keydown", (e: KeyboardEvent) => {
-				if (e.key === "ArrowRight") {
-					e.preventDefault();
-					const n = (i + 1) % tabs.length;
-					activate(n);
-					tabs[n].focus();
-				}
-				if (e.key === "ArrowLeft") {
-					e.preventDefault();
-					const n = (i - 1 + tabs.length) % tabs.length;
-					activate(n);
-					tabs[n].focus();
-				}
-			});
-		});
-	}
-	// Copy behavior is now owned by CommandBlock.astro — see ./CommandBlock.astro
-</script>

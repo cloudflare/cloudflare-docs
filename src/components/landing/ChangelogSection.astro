@@ -1,22 +1,14 @@
 ---
-/**
- * ChangelogSection — Broadcast-grid changelog for the landing page.
- *
- * Asymmetric bento grid: the latest entry is a large featured card
- * spanning 2 rows with a broadcast-ring pulse; remaining entries fill
- * a 3-column gap-px grid with product-category colour accents.
- * Plus-mark corner flair on the outer container.
- *
- * Hover states mirror ProductCard.astro:
- *   - card bg shifts (bg-l-card → bg-l-card-hover)
- *   - CTA text goes accent + underline, arrow shifts right
- *   - titles do NOT change colour on hover
- */
 import { getChangelogs } from "~/util/changelog";
 import { getEntries } from "astro:content";
 import { format } from "date-fns";
+import CornerMarks from "./CornerMarks.astro";
+import Eyebrow from "./Eyebrow.astro";
+import HalftoneBackground from "./HalftoneBackground.astro";
+import RightArrow from "./RightArrow.astro";
+import SectionHeading from "./SectionHeading.astro";
+import ViewAllLink from "./ViewAllLink.astro";
 
-/* ── Product-category palette (mirrors ProductCard.astro) ───────── */
 const COMPUTE = new Set([
 	"workers",
 	"pages",
@@ -48,7 +40,6 @@ function catColor(id: string) {
 	return "#f56500";
 }
 
-/* ── Data ────────────────────────────────────────────────────────── */
 const all = await getChangelogs({
 	filter: (e) => !e.data.hidden,
 });
@@ -73,14 +64,6 @@ const entries = await Promise.all(
 
 const featured = entries[0];
 const grid = entries.slice(1);
-
-/* ── Plus-mark corner positions ──────────────────────────────────── */
-const CORNERS = [
-	"-top-[5.5px] -left-[5.5px]",
-	"-top-[5.5px] -right-[5.5px]",
-	"-bottom-[5.5px] -left-[5.5px]",
-	"-right-[5.5px] -bottom-[5.5px]",
-];
 ---
 
 {
@@ -88,305 +71,104 @@ const CORNERS = [
 		<section
 			id="changelog"
 			class="pt-10 pb-10 lg:pt-14 lg:pb-12"
-			aria-labelledby="cl-heading"
+			aria-labelledby="changelog-heading"
 		>
-			{/* ── Header ─────────────────────────────────────────── */}
 			<div class="mb-6 flex items-end justify-between sm:mb-8">
 				<div>
-					<div class="mb-3">
-						<span class="text-accent font-mono text-[13px] tracking-widest uppercase">
-							Changelog
-						</span>
-					</div>
-					<h2
-						id="cl-heading"
-						class="mb-2 text-2xl leading-[1.1] font-medium -tracking-[0.035em] text-balance text-zinc-900 md:text-3xl dark:text-zinc-50"
-					>
-						What we've shipped
-					</h2>
-					<p class="max-w-[600px] text-sm leading-relaxed text-pretty text-zinc-500 md:text-lg dark:text-zinc-400">
+					<Eyebrow>Changelog</Eyebrow>
+					<SectionHeading id="changelog-heading" class="mb-2">
+						What's new
+					</SectionHeading>
+					<p class="text-foreground-muted max-w-[600px] text-sm leading-relaxed text-pretty md:text-lg">
 						The latest features and improvements shipping across Cloudflare.
 					</p>
 				</div>
-				<a
-					href="/changelog/"
-					class="group text-accent decoration-accent/40 hidden shrink-0 items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline md:inline-flex"
-				>
+				<ViewAllLink href="/changelog/" class="hidden md:inline-flex">
 					View all
-					<svg
-						width="12"
-						height="12"
-						viewBox="0 0 12 12"
-						class="transition-transform duration-150 group-hover:translate-x-0.5"
-						aria-hidden="true"
-					>
-						<path
-							d="M4.5 2.5L8 6L4.5 9.5"
-							stroke="currentColor"
-							stroke-width="1.2"
-							fill="none"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						/>
-					</svg>
-				</a>
+				</ViewAllLink>
 			</div>
+			<div class="border-border-100 bg-border-100 relative grid grid-cols-1 gap-px overflow-visible border md:grid-cols-2 xl:grid-cols-[5fr_3fr_3fr]">
+				<CornerMarks />
 
-			{/* ── Grid ───────────────────────────────────────────── */}
-			<div class="cl-grid relative grid gap-px border border-zinc-200 bg-zinc-200 dark:border-[#2a2a2a] dark:bg-[#2a2a2a]">
-				{CORNERS.map((pos) => (
-					<svg
-						width="10"
-						height="10"
-						viewBox="0 0 10 10"
-						class={`pointer-events-none absolute ${pos} z-10`}
-						aria-hidden="true"
-					>
-						<line
-							x1="0"
-							y1="5"
-							x2="10"
-							y2="5"
-							stroke-width="1"
-							class="l-corner-stroke"
-						/>
-						<line
-							x1="5"
-							y1="0"
-							x2="5"
-							y2="10"
-							stroke-width="1"
-							class="l-corner-stroke"
-						/>
-					</svg>
-				))}
-
-				{/* ── Featured (latest) — same spacing rhythm as ProductCard ── */}
 				{featured && (
 					<a
 						href={featured.url}
-						class="cl-featured bg-l-card dark:bg-l-card-dark hover:bg-l-card-hover dark:hover:bg-l-card-hover-dark flex flex-col p-6 transition-colors duration-150"
+						class="group/card bg-background relative flex flex-col overflow-hidden p-6 no-underline md:col-span-full xl:col-auto xl:row-span-2"
 					>
-						{/* Header — date left, product label right (matching small cards) */}
-						<div class="mb-4 flex items-center justify-between">
+						<HalftoneBackground />
+
+						<div class="relative z-10 mb-4 flex items-center justify-between">
 							<div class="flex items-center gap-2.5">
-								<span class="cl-broadcast" aria-hidden="true">
-									<span class="cl-ring" />
-									<span class="cl-ring cl-ring--delay" />
-									<span class="cl-core" />
+								<span
+									class="relative inline-flex size-3 shrink-0 items-center justify-center"
+									aria-hidden="true"
+								>
+									<span class="border-accent-100 animate-cl-pulse absolute size-3 rounded-full border will-change-[transform,opacity] motion-reduce:animate-none motion-reduce:opacity-25" />
+									<span class="border-accent-100 animate-cl-pulse absolute size-3 rounded-full border will-change-[transform,opacity] [animation-delay:1.5s] motion-reduce:animate-none motion-reduce:opacity-25" />
+									<span class="bg-accent-100 absolute size-[5px] rounded-full" />
 								</span>
-								<time class="font-mono text-xs text-zinc-500 tabular-nums dark:text-zinc-400">
+								<time class="text-foreground-muted font-mono text-xs tabular-nums">
 									{featured.dateFormatted}
 								</time>
 							</div>
 							{featured.products[0] && (
-								<span class="text-accent font-mono text-xs tracking-wide uppercase">
+								<span class="text-accent-100 font-mono text-xs tracking-widest uppercase">
 									{featured.products[0].name}
 								</span>
 							)}
 						</div>
 
-						{/* Title — mirrors ProductCard scenario (mb-2) */}
-						<div class="mb-9 flex-1 pt-4">
-							<h3 class="mb-2 text-xl leading-snug font-medium text-zinc-900 md:text-2xl dark:text-zinc-50">
+						<div class="relative z-10 mb-9 flex-1 pt-4">
+							<h3 class="text-foreground mb-2 text-xl leading-snug font-medium md:text-2xl">
 								{featured.title}
 							</h3>
 
-							{/* Description — mirrors ProductCard detail (mb-6 flex-1) */}
-							<p class="max-w-[480px] text-sm leading-relaxed text-zinc-500 md:text-base dark:text-zinc-400">
+							<p class="text-foreground-muted max-w-[480px] text-sm leading-relaxed md:text-base">
 								{featured.description}
 							</p>
 						</div>
 
-						{/* CTA — mirrors ProductCard CTA */}
-						<span class="group/cta inline-flex w-fit items-center gap-2 text-sm font-medium text-zinc-600 dark:text-zinc-300">
+						<span class="text-foreground-muted relative z-10 inline-flex w-fit items-center gap-2 text-sm font-medium underline-offset-4 group-focus-within/card:underline group-hover/card:underline">
 							Read update
-							<svg
-								width="14"
-								height="14"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								class="transition-transform duration-150 group-hover/cta:translate-x-0.5"
-								aria-hidden="true"
-							>
-								<line x1="5" y1="12" x2="19" y2="12" />
-								<polyline points="12 5 19 12 12 19" />
-							</svg>
+							<RightArrow class="transition-transform duration-150 group-hover/card:translate-x-0.5" />
 						</span>
 					</a>
 				)}
 
-				{/* ── Smaller cards (mirrors ProductCard anatomy) ── */}
 				{grid.map((entry) => (
 					<a
 						href={entry.url}
-						class="cl-card bg-l-card dark:bg-l-card-dark hover:bg-l-card-hover dark:hover:bg-l-card-hover-dark flex flex-col p-6 transition-colors duration-150"
+						class="group/card bg-background flex flex-col p-6 no-underline"
 					>
-						{/* Header: date + product label — mirrors ProductCard icon + label row */}
 						<div class="mb-4 flex items-center justify-between">
-							<time class="font-mono text-xs text-zinc-500 tabular-nums dark:text-zinc-400">
+							<time class="text-foreground-muted font-mono text-xs tabular-nums">
 								{entry.dateShort}
 							</time>
-							<span class="text-accent font-mono text-xs tracking-wide uppercase">
+							<span class="text-accent-100 font-mono text-xs tracking-widest uppercase">
 								{entry.products[0]?.name}
 							</span>
 						</div>
+						<div class="mb-6 flex-1">
+							<p class="text-foreground mb-2 line-clamp-2 text-base leading-snug font-medium md:text-lg">
+								{entry.title}
+							</p>
 
-						{/* Title — matches ProductCard scenario */}
-						<p class="mb-2 line-clamp-2 text-base leading-snug font-medium text-zinc-900 md:text-lg dark:text-zinc-50">
-							{entry.title}
-						</p>
+							<p class="text-foreground-muted line-clamp-2 text-sm leading-relaxed md:text-base">
+								{entry.description}
+							</p>
+						</div>
 
-						{/* Description — matches ProductCard detail */}
-						<p class="mb-6 line-clamp-2 flex-1 text-sm leading-relaxed text-zinc-500 md:text-base dark:text-zinc-400">
-							{entry.description}
-						</p>
-
-						{/* CTA — matches ProductCard CTA */}
-						<span class="group/cta inline-flex w-fit items-center gap-2 text-sm font-medium text-zinc-600 dark:text-zinc-300">
+						<span class="text-foreground-muted inline-flex w-fit items-center gap-2 text-sm font-medium underline-offset-4 group-focus-within/card:underline group-hover/card:underline">
 							Read more
-							<svg
-								width="14"
-								height="14"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								class="transition-transform duration-150 group-hover/cta:translate-x-0.5"
-								aria-hidden="true"
-							>
-								<line x1="5" y1="12" x2="19" y2="12" />
-								<polyline points="12 5 19 12 12 19" />
-							</svg>
+							<RightArrow class="transition-transform duration-150 group-hover/card:translate-x-0.5" />
 						</span>
 					</a>
 				))}
 			</div>
 
-			{/* ── Mobile CTA ─────────────────────────────────────── */}
 			<div class="mt-6 md:hidden">
-				<a
-					href="/changelog/"
-					class="group text-accent decoration-accent/40 inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline"
-				>
-					View all updates
-					<svg
-						width="12"
-						height="12"
-						viewBox="0 0 12 12"
-						class="transition-transform duration-150 group-hover:translate-x-0.5"
-						aria-hidden="true"
-					>
-						<path
-							d="M4.5 2.5L8 6L4.5 9.5"
-							stroke="currentColor"
-							stroke-width="1.2"
-							fill="none"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						/>
-					</svg>
-				</a>
+				<ViewAllLink href="/changelog/">View all updates</ViewAllLink>
 			</div>
 		</section>
 	)
 }
-
-<style>
-	/* ── Grid layout (mobile-first) ────────────────────────────────── */
-	.cl-grid {
-		grid-template-columns: 1fr;
-	}
-	.cl-featured {
-		grid-row: auto;
-		text-decoration: none;
-	}
-	.cl-grid > a:not(.cl-featured) {
-		text-decoration: none;
-	}
-
-	/* Medium: featured full-width, smaller cards in 2 columns */
-	@media (min-width: 768px) {
-		.cl-grid {
-			grid-template-columns: 1fr 1fr;
-		}
-		.cl-featured {
-			grid-column: 1 / -1;
-		}
-	}
-
-	/* Large: 3-column bento with featured spanning 2 rows */
-	@media (min-width: 1200px) {
-		.cl-grid {
-			grid-template-columns: 5fr 3fr 3fr;
-		}
-		.cl-featured {
-			grid-column: auto;
-			grid-row: 1 / 3;
-		}
-	}
-
-	/* Hover: CTA gets underline on card hover — mirrors ProductCard.
-	 * Colour intentionally stays zinc so it matches the canonical inline-link
-	 * pattern (BuildFromScratch tags, Hero nav). Underline-only on hover. */
-	.cl-card:hover .group\/cta,
-	.cl-card:focus-within .group\/cta,
-	.cl-featured:hover .group\/cta,
-	.cl-featured:focus-within .group\/cta {
-		text-decoration: underline;
-		text-underline-offset: 4px;
-	}
-
-	/* ── Broadcast ring animation ──────────────────────────────────── */
-	.cl-broadcast {
-		position: relative;
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 12px;
-		height: 12px;
-		flex-shrink: 0;
-	}
-	.cl-core {
-		position: absolute;
-		width: 5px;
-		height: 5px;
-		border-radius: 50%;
-		background: var(--color-accent);
-	}
-	.cl-ring {
-		position: absolute;
-		width: 12px;
-		height: 12px;
-		border-radius: 50%;
-		border: 1px solid var(--color-accent);
-		animation: cl-pulse 3s cubic-bezier(0.16, 1, 0.3, 1) infinite;
-		will-change: transform, opacity;
-	}
-	.cl-ring--delay {
-		animation-delay: 1.5s;
-	}
-	@keyframes cl-pulse {
-		0% {
-			transform: scale(0.4);
-			opacity: 0.6;
-		}
-		100% {
-			transform: scale(1.6);
-			opacity: 0;
-		}
-	}
-	@media (prefers-reduced-motion: reduce) {
-		.cl-ring {
-			animation: none;
-			opacity: 0.25;
-			transform: scale(1);
-		}
-	}
-</style>

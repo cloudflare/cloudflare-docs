@@ -1,20 +1,4 @@
 ---
-/**
- * Structural grid overlay — dot grid + intersection markers.
- *
- * Works with FullPageLines.astro which draws the vertical lines.
- * This component adds:
- * 1. The dot grid background (full page)
- * 2. Plus marks at line intersections (where vertical lines meet the top)
- *
- * The plus marks are placed at the same widths as FullPageLines tiers:
- * - 1400px (outer scaffold)
- * - 1280px (content container)
- * - 1216px (content padding edge — where text starts)
- * - 720px  (inner scaffold)
- */
-
-/** Must match FullPageLines tier widths exactly */
 const LINE_TIERS = [
 	{ width: "min(1400px, 100%)", accent: false },
 	{ width: "min(1280px, calc(100% - 48px))", accent: true },
@@ -26,8 +10,6 @@ const marks =
 	"absolute -top-0 left-1/2 -translate-x-1/2 h-full pointer-events-none";
 ---
 
-<!-- Dot grid — extends beyond content to reach the footer divider.
-     The footer's opaque background-color covers any overshoot. -->
 <div
 	class="pointer-events-none absolute inset-x-0 top-0 z-0"
 	style="height: calc(100% + 25rem)"
@@ -40,12 +22,10 @@ const marks =
 	</div>
 </div>
 
-<!-- Plus marks at line intersections -->
 <div
 	class="pointer-events-none absolute inset-0 z-1 hidden [contain:layout_style_paint] lg:block"
 	aria-hidden="true"
 >
-	<!-- Plus marks at each line tier intersection -->
 	{
 		LINE_TIERS.map((tier) => {
 			const stroke = tier.accent

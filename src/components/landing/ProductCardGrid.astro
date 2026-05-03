@@ -1,19 +1,6 @@
 ---
-/**
- * ProductCardGrid — Reusable grid wrapper with plus-mark corner flair.
- *
- * Renders a 3-column (1-column on mobile) grid with 1px gap borders
- * and decorative plus marks on the four outer corners.
- *
- * Props:
- * - label: Optional category label shown above the grid
- *
- * Usage:
- *   <ProductCardGrid label="Network & Application">
- *     <ProductCard ... />
- *     <ProductCard ... />
- *   </ProductCardGrid>
- */
+import CornerMarks from "./CornerMarks.astro";
+
 interface Props {
 	label?: string;
 }
@@ -24,49 +11,15 @@ const { label } = Astro.props;
 <div>
 	{
 		label && (
-			<p class="mb-4 font-mono text-xs tracking-wide text-zinc-500 uppercase dark:text-zinc-400">
+			<p class="text-foreground-muted mb-4 font-mono text-xs tracking-widest uppercase">
 				{label}
 			</p>
 		)
 	}
 	<div
-		class="relative grid grid-cols-1 gap-px overflow-visible border border-zinc-200 bg-zinc-200 lg:grid-cols-3 dark:border-[#2a2a2a] dark:bg-[#2a2a2a]"
+		class="border-border-100 bg-border-100 relative grid grid-cols-1 gap-px overflow-visible border lg:grid-cols-3"
 	>
-		{/* Plus marks on the four corners */}
-		{
-			[
-				"-top-[5.5px] -left-[5.5px]",
-				"-top-[5.5px] -right-[5.5px]",
-				"-bottom-[5.5px] -left-[5.5px]",
-				"-right-[5.5px] -bottom-[5.5px]",
-			].map((pos) => (
-				<svg
-					width="10"
-					height="10"
-					viewBox="0 0 10 10"
-					class={`pointer-events-none absolute ${pos} z-10`}
-					aria-hidden="true"
-				>
-					<line
-						x1="0"
-						y1="5"
-						x2="10"
-						y2="5"
-						stroke-width="1"
-						class="l-corner-stroke"
-					/>
-					<line
-						x1="5"
-						y1="0"
-						x2="5"
-						y2="10"
-						stroke-width="1"
-						class="l-corner-stroke"
-					/>
-				</svg>
-			))
-		}
-
+		<CornerMarks />
 		<slot />
 	</div>
 </div>
