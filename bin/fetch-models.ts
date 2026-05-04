@@ -45,17 +45,23 @@ const MODELS_DOT_TMP_DIR =
 const soft = process.argv.includes("--soft");
 const force = process.argv.includes("--force");
 
+const tag = kleur.blue("[fetch-models]");
+
 const fail = (message: string): never => {
 	if (soft) {
 		const hasExisting = fs.existsSync(MODELS_DOT_TMP_DIR);
 		console.warn(
-			hasExisting
-				? `Warning: ${message} — continuing with existing models data`
-				: `Warning: ${message} — ${MODELS_DOT_TMP_DIR} does not exist, model parameters will not render`,
+			tag +
+				" " +
+				kleur.yellow(
+					hasExisting
+						? `Warning: ${message} — continuing with existing models data`
+						: `Warning: ${message} — ${MODELS_DOT_TMP_DIR} does not exist, model parameters will not render`,
+				),
 		);
 		process.exit(0);
 	}
-	console.error(`Error: ${message}`);
+	console.error(tag + " " + kleur.red(`Error: ${message}`));
 	process.exit(1);
 };
 
@@ -69,7 +75,7 @@ const extractDir = join(
 
 if (fs.existsSync(MODELS_DOT_TMP_DIR) && !force) {
 	console.log(
-		kleur.blue("[fetch-models]") +
+		tag +
 			" " +
 			kleur.dim(`${MODELS_DOT_TMP_DIR} already exists, skipping fetch.`) +
 			" " +
@@ -92,7 +98,7 @@ for (const staleName of [
 }
 fs.mkdirSync(extractDir, { recursive: true });
 
-console.log("Fetching AI model catalog from middlecache...");
+console.log(tag + " " + "Fetching AI model catalog from middlecache...");
 
 // Fetch top-level JSON files and the tarball in parallel
 try {
@@ -111,6 +117,8 @@ try {
 } catch (err) {
 	fail(`fetch failed: ${err}`);
 }
+
+console.log(tag + " " + "Extracting models.tar.gz...");
 
 // Extract models.tar.gz into .tmp/middlecache/v1/workers-ai-model-catalog/
 // The archive contains models/<slug>/... so we extract into the parent dir.
@@ -134,5 +142,9 @@ const modelCount = fs
 	}, 0);
 
 console.log(
-	`Extracted models.tar.gz to ${MODELS_DOT_TMP_DIR} (${modelCount} top-level entries)`,
+	tag +
+		" " +
+		kleur.green(
+			`Done — ${modelCount} top-level entries in ${MODELS_DOT_TMP_DIR}`,
+		),
 );

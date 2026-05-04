@@ -21,23 +21,29 @@ const SKILLS_DIR = "./skills";
 const soft = process.argv.includes("--soft");
 const force = process.argv.includes("--force");
 
+const tag = kleur.blue("[fetch-skills]");
+
 const fail = (message: string): never => {
 	if (soft) {
 		const hasExisting = fs.existsSync(SKILLS_DIR);
 		console.warn(
-			hasExisting
-				? `Warning: ${message} — continuing with existing Cloudflare Skills`
-				: `Warning: ${message} — skills/ does not exist, /.well-known/skills/ will not work`,
+			tag +
+				" " +
+				kleur.yellow(
+					hasExisting
+						? `Warning: ${message} — continuing with existing Cloudflare Skills`
+						: `Warning: ${message} — skills/ does not exist, /.well-known/skills/ will not work`,
+				),
 		);
 		process.exit(0);
 	}
-	console.error(`Error: ${message}`);
+	console.error(tag + " " + kleur.red(`Error: ${message}`));
 	process.exit(1);
 };
 
 if (fs.existsSync(SKILLS_DIR) && !force) {
 	console.log(
-		kleur.blue("[fetch-skills]") +
+		tag +
 			" " +
 			kleur.dim(`${SKILLS_DIR} already exists, skipping fetch.`) +
 			" " +
@@ -46,7 +52,7 @@ if (fs.existsSync(SKILLS_DIR) && !force) {
 	process.exit(0);
 }
 
-console.log("Fetching Cloudflare Skills from middlecache");
+console.log(tag + " " + "Fetching Cloudflare Skills from middlecache...");
 
 try {
 	await Promise.all([
@@ -91,5 +97,9 @@ const cloudflareSkills = fs
 	.filter((entry) => fs.statSync(`${SKILLS_DIR}/${entry}`).isDirectory());
 
 console.log(
-	`Fetched ${cloudflareSkills.length} Cloudflare Skills: ${cloudflareSkills.join(", ")}`,
+	tag +
+		" " +
+		kleur.green(
+			`Done — ${cloudflareSkills.length} skills: ${cloudflareSkills.join(", ")}`,
+		),
 );
