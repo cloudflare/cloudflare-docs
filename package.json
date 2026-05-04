@@ -59,6 +59,7 @@
 		"@marsidev/react-turnstile": "1.5.1",
 		"@nanostores/react": "1.1.0",
 		"@octokit/webhooks-types": "7.6.1",
+		"@phosphor-icons/core": "2.1.1",
 		"@stoplight/json": "3.21.7",
 		"@stoplight/json-schema-tree": "4.0.0",
 		"@stoplight/types": "14.1.1",
