@@ -25,7 +25,7 @@ Cached responses are the cheapest path through Cloudflare. Every cache hit avoid
 | Strategy | What it reduces |
 |---|---|
 | Increase cache hit ratio with longer TTLs and appropriate `Cache-Control` headers | Argo data transfer, Workers invocations, origin load |
-| Use [Cache Reserve](/cache/how-to/cache-reserve/) for long-tail content that is accessed infrequently | Origin fetches — keeps content cached even when it would normally be evicted |
+| Use [Cache Reserve](/cache/advanced-configuration/cache-reserve/) for long-tail content that is accessed infrequently | Origin fetches — keeps content cached even when it would normally be evicted |
 | Use [tiered caching](/cache/how-to/tiered-cache/) to reduce origin pulls | Origin bandwidth and Argo transfer between Cloudflare data centers |
 | Configure [cache rules](/cache/how-to/cache-rules/) to cache more static content by default | Overall cache hit ratio |
 
@@ -50,7 +50,7 @@ Cached responses are the cheapest path through Cloudflare. Every cache hit avoid
 | Strategy | What it reduces |
 |---|---|
 | Set appropriate cache headers on Stream embed pages | Repeated Stream delivery minutes |
-| Use [Image Resizing URL format](/images/transform-images/transform-via-url/) with width/height parameters to serve appropriately sized variants | Transformation count — sized variants are cached |
+| Use [Image Resizing URL format](/images/optimization/features/) with width/height parameters to serve appropriately sized variants | Transformation count — sized variants are cached |
 
 ### Load Balancing
 
