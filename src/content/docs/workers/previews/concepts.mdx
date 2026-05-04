@@ -16,19 +16,43 @@ A **Preview deployment** is an immutable snapshot of your Worker code and config
 
 One Preview can have many deployments over its lifetime. The latest deployment is what serves traffic on your Preview URL.
 
-## Preview settings
+## How Preview configuration works
 
-**Preview settings** are the shared defaults stored on Cloudflare that apply to every new Preview on a Worker. They include:
+Previews share a set of settings called **Preview defaults**. You configure them once — in the dashboard or via the API — and every new Preview starts from them. This includes bindings, environment variables, and secrets. Previews never inherit from production.
 
-- [Bindings](/workers/runtime-apis/bindings/) ([KV](/kv/), [D1](/d1/), [R2](/r2/), [Durable Objects](/durable-objects/), and so on)
-- [Environment variables](/workers/configuration/environment-variables/)
-- [Secrets](/workers/configuration/secrets/)
-- [Observability](/workers/observability/logs/workers-logs/), [Logpush](/workers/observability/logs/logpush/), and [Tail Worker](/workers/observability/logs/tail-workers/) settings
-- Runtime [limits](/workers/platform/limits/)
+If you only use the dashboard or Workers Builds, every Preview gets the same configuration. There is nothing per-Preview to configure, which is why the dashboard uses a toggle (production / previews) rather than a settings page per Preview.
 
-Preview settings are distinct from your Production settings. Previews never inherit from production.
+### Wrangler
 
-When you create a new Preview — via `wrangler preview`, CI, the dashboard, or a pull request — it starts with your Worker's Preview settings. Individual deployments can override those values for one deployment without changing the shared settings. See [Per-deployment overrides](/workers/previews/configuring-previews/#per-deployment-overrides).
+Wrangler introduces an additional layer. Your main branch has a Wrangler configuration file with a `previews` block that typically matches your defaults. When you run `wrangler preview`, Wrangler sends the values from that block along with the deployment.
+
+For example, if you are working on a feature that requires a new KV binding, you create a branch and add the binding to the `previews` block in your Wrangler config. When you run `wrangler preview`, your Preview receives the new binding — but the shared defaults on the platform are not modified. Other Previews are unaffected. You can continue iterating on the configuration without any changes leaking to other branches or the platform.
+
+When the branch is ready, you open a pull request. Your teammates review the configuration changes in the diff. After the PR merges and `wrangler deploy` runs from main, the updated `previews` block is now on main. From this point on, every new Preview — whether created from the dashboard, Builds, or any branch — picks up the new binding.
+
+### What this means
+
+Per-Preview settings do not exist on the platform. The shared defaults are the settings. Wrangler also shares defaults across all Previews — because every branch inherits the same `previews` block from main.
+
+The only time a Preview gets something different is when you change the `previews` block on a feature branch. What Wrangler sends from that branch rides along with the deployment. It is temporary, scoped to that one deployment, and goes away when the branch merges and everyone gets the updated config.
+
+### How the two sources combine
+
+When you run `wrangler preview`, the platform combines your Preview defaults (from the dashboard) with whatever your `previews` block sends (from your branch). Here is exactly what happens:
+
+**Your branch adds something new** — say you add `FEATURE_FLAG = "on"` to your `previews` block but it is not in the dashboard defaults. Your Preview gets it. Other Previews do not.
+
+**Your branch changes something** — say the defaults have `DB_NAME = "staging-db"` and your branch changes it to `DB_NAME = "my-test-db"`. Your Preview gets `"my-test-db"`. The defaults stay as `"staging-db"`. Other Previews still get the default.
+
+**Your branch removes something** — say the defaults have `CACHE_TTL = "60"` and your branch omits it from the `previews` block entirely. Your Preview **still gets it**. You cannot remove a default by omitting it from your branch. The only way to remove something from the defaults is in the dashboard.
+
+**Something exists only in the defaults** — say someone added `API_KEY` in the dashboard but it is not in your `previews` block. Your Preview gets it from the defaults.
+
+Neither source is modified. The defaults stay the same, your local config is unchanged.
+
+:::note
+**Dashboard and Builds users** do not have a second source. Their Previews get exactly the defaults and nothing else. The merge behavior above only applies when Wrangler is creating the Preview.
+:::
 
 ## Preview URLs
 
@@ -49,7 +73,7 @@ You can also serve Previews from your own **custom domain**. When Previews are e
 
 Previews can only be reached through these auto-generated URLs and custom domain wildcard URLs. User-managed triggers like [Worker routes](/workers/configuration/routing/routes/), [cron triggers](/workers/configuration/cron-triggers/), and [Queue](/queues/) consumers do not apply to Previews.
 
-For configuration details, see [Use a custom domain for Previews](/workers/previews/#use-a-custom-domain-for-previews).
+For configuration details, refer to [Custom domains](/workers/previews/guides/custom-domains/).
 
 Preview URLs can be secured with [Cloudflare Access](/cloudflare-one/access-controls/policies/) to restrict who can reach them.
 
@@ -73,7 +97,7 @@ Concretely, this means:
 
 This isolation applies only when the class is defined in the same Worker. If you set `script_name` on a Durable Object or Workflow binding, the binding points at another Worker's production instance and this isolation does not apply.
 
-For Durable Objects and Workflows defined in the same Worker, you can access them via [`ctx.exports`](/workers/runtime-apis/context/#exports) without configuring a binding at all.
+For Durable Objects and Workflows defined in the same Worker, you can access them via [`ctx.exports`](/workers/runtime-apis/context/#exports) without configuring a binding at all. Refer to [Durable Object isolation](/workers/previews/guides/durable-object-isolation/) for a full walkthrough.
 
 ### Shared across Previews
 
@@ -106,6 +130,23 @@ To keep Preview writes separate from production, create a dedicated resource for
 
 Preview isolation covers only resources that Cloudflare manages on your behalf. If your Durable Object writes to an external API, publishes to a Queue that your production Worker consumes, or mutates a shared D1 database, the Preview can still affect production through those channels. Audit for shared side effects and override them in `previews` where it matters.
 
+## Limits
+
+Previews have account-level limits:
+
+| | Free | Paid |
+| --- | --- | --- |
+| Previews per Worker | 10 | 100 |
+| Deployments per Preview | 100 | 100 |
+
+When you reach the Preview limit for a Worker and create a new Preview, the oldest Preview is automatically deleted to make room. When you reach the deployment limit within a Preview, the oldest deployment is automatically deleted.
+
+:::caution
+Automatic deletion of the oldest Preview may be surprising if you are not expecting it. Monitor your Preview count if you have many active branches.
+:::
+
 ## Next steps
 
-- [Configure your Preview settings](/workers/previews/configuring-previews/)
+- [Configuring Previews](/workers/previews/configuring-previews/) — full configuration reference
+- [Durable Object isolation](/workers/previews/guides/durable-object-isolation/) — how DO isolation works and how to use `ctx.exports`
+- [Custom domains](/workers/previews/guides/custom-domains/) — serve Previews on your own domain

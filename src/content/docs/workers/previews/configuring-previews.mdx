@@ -235,11 +235,15 @@ This reference example shows all supported binding types in `previews`.
 
 Previews do **not** inherit bindings from your top-level Wrangler configuration. Any binding you want available inside a Preview must be declared in the `previews` block. If you omit a binding here, your Preview will not have access to it at runtime.
 
+:::note
+If your production Worker has bindings and you run `wrangler preview` without those bindings in your `previews` block or in the platform-side Preview defaults, Wrangler will raise an error telling you the Preview is missing a binding that is present in your top-level configuration.
+:::
+
 For most binding types — such as [KV](/kv/), [D1](/d1/), [R2](/r2/), [Queues](/queues/), [Vectorize](/vectorize/), and [Hyperdrive](/hyperdrive/) — all of your Previews share the same underlying resource that you specify in `previews`. These are account-level resources referenced by ID or name, so pointing two Previews at the same `kv_namespaces.id` means they read and write the same data.
 
 If you need a Preview's writes to stay separate from production, create a dedicated resource for Previews, or use [auto-provisioning](#auto-provisioning) for KV, D1, and R2.
 
-The exceptions are [**Durable Objects**](/durable-objects/), [**Workflows**](/workflows/), and [**Containers**](/containers/). When your Worker defines the class itself (no `script_name` on the binding), each Preview automatically gets its own isolated namespace and instances, separate from production and from other Previews. State persists across deployments within the same Preview and is deleted when the Preview is deleted. If you set `script_name` to point at another Worker, the binding targets that Worker's production instance and this isolation does not apply — prefer [`ctx.exports`](/workers/runtime-apis/context/#exports) for Durable Objects and Workflows defined in the same Worker.
+The exceptions are [**Durable Objects**](/durable-objects/), [**Workflows**](/workflows/), and [**Containers**](/containers/). When your Worker defines the class itself (no `script_name` on the binding), each Preview automatically gets its own isolated namespace and instances, separate from production and from other Previews. State persists across deployments within the same Preview and is deleted when the Preview is deleted. If you set `script_name` to point at another Worker, the binding targets that Worker's production instance and this isolation does not apply — prefer [`ctx.exports`](/workers/runtime-apis/context/#exports) for Durable Objects and Workflows defined in the same Worker. Refer to [Durable Object isolation](/workers/previews/guides/durable-object-isolation/) for details.
 
 [Service bindings](/workers/runtime-apis/bindings/service-bindings/) behave differently from both: they always resolve to the bound Worker's production deployment, and cannot be pointed at another Worker's Preview.
 | `previews` field | How it behaves |
@@ -270,27 +274,19 @@ The exceptions are [**Durable Objects**](/durable-objects/), [**Workflows**](/wo
 | `media` | For creating a Media binding using the `binding` name you specify. |
 | `version_metadata` | For creating a version metadata binding using the `binding` name you specify. |
 
-## Per-deployment overrides
+## What your Preview deployment actually gets
 
-There are two ways your local `previews` block is applied:
-| Command | What happens |
-| ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `wrangler preview` | Values in your `previews` block are sent with this one deployment only. The shared Preview settings on the Cloudflare platform are not modified. |
-| `wrangler preview settings update` | Values in your `previews` block are pushed to the Cloudflare platform as the new shared Preview settings. Future Previews use them as defaults. |
+When you run `wrangler preview`, the platform combines your Preview defaults (configured in the dashboard) with whatever your `previews` block sends:
 
-When you run `wrangler preview`, Wrangler sends the values from your local `previews` block with that specific Preview deployment. Those values apply to that deployment only — they do not update your Worker's shared Preview settings, and they do not affect other Previews or other teammates' deployments.
+- Defaults have it, Wrangler did not send it → included.
+- Wrangler sent it, defaults do not have it → included.
+- Both have the same binding → Wrangler wins.
 
-This is useful for testing a local change in isolation. For example, if you are on a feature branch and want to point your Preview at a different D1 database, change `database_id` under `previews.d1_databases` and run `wrangler preview`. Your Preview deployment will use the new database. Other Previews keep using the database in the shared settings. Revert the change locally and your next `wrangler preview` run will use the original database again.
+Neither source is modified. The defaults stay the same, your local config is unchanged. Refer to [How Preview configuration works](/workers/previews/concepts/#how-preview-configuration-works) for the full explanation.
 
-To view the exact values a specific Preview deployment ran with, go to the dashboard under **Previews** > **[Preview name]** > **Deployments**.
-
-When you want your local `previews` block to become the new shared defaults — so that new Previews created via CI or by teammates use them — run:
-
-```sh
-wrangler preview settings update
-```
-
-Existing Previews are not affected; only Previews created after the update pick up the new defaults.
+:::note
+If you only use the dashboard or Workers Builds to create Previews, there is no second source. Your Previews get exactly the Preview defaults.
+:::
 
 ## Auto-provisioning
 
@@ -329,3 +325,19 @@ For example:
 
 - Top-level `previews.kv_namespaces` can point all new Previews at a shared staging KV namespace.
 - `env.dev.previews.kv_namespaces` can point development Previews at a different KV namespace.
+
+## Advanced: syncing to the platform
+
+The `wrangler preview settings update` command pushes your local `previews` block to the platform as the new Preview defaults. After running it, the dashboard will reflect whatever is in your Wrangler configuration, and new Previews created from the dashboard, Builds, or the API will use those values.
+
+This command is for teams that manage settings in both the dashboard and the CLI and want them in sync. If you only use Wrangler and commit your `previews` block to your main branch, you do not need this command — the shared layer is your Git repository.
+
+```sh
+wrangler preview settings update
+```
+
+A few things to know:
+
+- This command is **additive**. It can add and modify settings in the Preview defaults. It cannot remove them. If you need to remove a binding from the Preview defaults, use the dashboard.
+- **Existing Previews are not affected.** Only Previews created after the update pick up the new defaults.
+- It shows a diff of what will change before applying, and asks for confirmation.

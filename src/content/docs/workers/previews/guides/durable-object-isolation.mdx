@@ -1,0 +1,93 @@
+---
+pcx_content_type: how-to
+title: Durable Object isolation
+sidebar:
+  order: 1
+description: How Durable Objects are isolated per Preview.
+---
+
+import { WranglerConfig } from "~/components";
+
+When your Worker defines a Durable Object class, each Preview automatically gets its own isolated Durable Object namespace, instances, and storage — separate from production and from every other Preview.
+
+## How isolation works
+
+When you create a Preview (via `wrangler preview`, Builds, or the API), the platform provisions a separate Durable Object namespace for each class defined in your Worker. The namespace follows the pattern `{previewSlug}_{ClassName}`.
+
+This means:
+
+- `env.MY_DO.idFromName("some-id")` in a Preview returns a different instance than the same call in production or in another Preview.
+- Storage writes inside a Preview's Durable Object never touch production data or other Previews.
+- State persists across deployments within the same Preview — pushing new code does not wipe Durable Object storage.
+- When you delete a Preview, its Durable Object namespaces and all their data are deleted.
+
+The same isolation applies to [Workflows](/workflows/) and [Containers](/containers/) (which run on Durable Objects).
+
+## Configuration
+
+To get DO isolation in Previews, you need two things:
+
+1. A **migration** at the top level of your Wrangler config (this registers the class).
+2. A **DO binding** in your `previews` block or in your platform-side Preview defaults.
+
+<WranglerConfig>
+```jsonc
+{
+  // Top-level — registers the class for both production and Previews
+  "durable_objects": {
+    "bindings": [
+      { "name": "COUNTER", "class_name": "Counter" }
+    ]
+  },
+  "migrations": [
+    { "tag": "v1", "new_classes": ["Counter"] }
+  ],
+
+  // Previews — declares the binding so it is available in Previews
+  "previews": {
+    "durable_objects": {
+      "bindings": [
+        { "name": "COUNTER", "class_name": "Counter" }
+      ]
+    }
+  }
+}
+```
+</WranglerConfig>
+
+You can then access the Durable Object in your Worker using `env.COUNTER` or [`ctx.exports.Counter`](/workers/runtime-apis/context/#exports). Both resolve to the same isolated Preview namespace.
+
+```js
+export default {
+  async fetch(request, env, ctx) {
+    // Both of these hit the same isolated Preview namespace:
+    const viaEnv = env.COUNTER.idFromName("my-counter");
+    const viaCtx = ctx.exports.Counter.idFromName("my-counter");
+
+    const stub = env.COUNTER.get(viaEnv);
+    return stub.fetch(request);
+  },
+};
+```
+
+:::caution
+Without a DO binding declared in the `previews` block or in the dashboard Preview defaults, Durable Objects will not be accessible in the Preview — both `env` and `ctx.exports` will return a 1101 error.
+:::
+
+## When isolation does not apply
+
+Isolation only works for Durable Object classes **defined in the same Worker**. If your binding includes `script_name` — pointing at a Durable Object in a different Worker — the binding resolves to that other Worker's production Durable Object. There is no cross-Worker Preview isolation.
+
+## Troubleshooting
+
+### Error 1101 when accessing a Durable Object in a Preview
+
+This typically means the Durable Object namespace was not provisioned for the Preview. Check that:
+
+1. The class is defined and exported in the same Worker (no `script_name`).
+2. You have a [migration](/durable-objects/reference/durable-objects-migrations/) declared at the top level for the class.
+3. You have the DO binding declared in your `previews` block or in the dashboard Preview defaults.
+
+### Durable Object in Preview is sharing state with production
+
+If your Preview's Durable Object appears to be reading or writing production data, check whether the binding uses `script_name`. Bindings with `script_name` target another Worker's production Durable Object and are not isolated.
