@@ -330,8 +330,8 @@ importers:
         specifier: 0.12.0
         version: 0.12.0(@astrojs/starlight@0.38.4(astro@6.1.10(@types/node@24.6.0)(jiti@2.6.1)(lightningcss@1.29.2)(rollup@4.60.2)(tsx@4.20.5)(typescript@5.9.3)(yaml@2.8.3)))
       starlight-scroll-to-top:
-        specifier: 0.4.0
-        version: 0.4.0(@astrojs/starlight@0.38.4(astro@6.1.10(@types/node@24.6.0)(jiti@2.6.1)(lightningcss@1.29.2)(rollup@4.60.2)(tsx@4.20.5)(typescript@5.9.3)(yaml@2.8.3)))
+        specifier: 1.0.1
+        version: 1.0.1(@astrojs/starlight@0.38.4(astro@6.1.10(@types/node@24.6.0)(jiti@2.6.1)(lightningcss@1.29.2)(rollup@4.60.2)(tsx@4.20.5)(typescript@5.9.3)(yaml@2.8.3)))
       starlight-showcases:
         specifier: 0.3.2
         version: 0.3.2(@astrojs/starlight@0.38.4(astro@6.1.10(@types/node@24.6.0)(jiti@2.6.1)(lightningcss@1.29.2)(rollup@4.60.2)(tsx@4.20.5)(typescript@5.9.3)(yaml@2.8.3)))
@@ -6044,11 +6044,11 @@ packages:
     peerDependencies:
       '@astrojs/starlight': '>=0.22.0'
 
-  starlight-scroll-to-top@0.4.0:
-    resolution: {integrity: sha512-lxsW5Sv+oKCI8CYZQ6Ue957cExiHMozK73LmmbsvpBKWryW+AKU4OXmX/1bTQNx+mVLZcpm2qTwKa1KX5VdEaQ==}
-    engines: {node: ^18.17.1 || ^20.3.0 || >=21.0.0}
+  starlight-scroll-to-top@1.0.1:
+    resolution: {integrity: sha512-OkSVwEQBzHkYPgBYL/O9xSiFn75j6HvrmjvdL8+3Kk0oxgt4sNmkOwhB0bGjB/T7M7SAJ4AFk1Ojza1HVxOeHQ==}
+    engines: {node: '>=22.12.0'}
     peerDependencies:
-      '@astrojs/starlight': '>=0.35'
+      '@astrojs/starlight': '>=0.38.0'
 
   starlight-showcases@0.3.2:
     resolution: {integrity: sha512-PX+CDIaOkgmM+KxiD+OEF0NVppbbQia7iMZ1JeHnx0yyDkZCY6U6vtzoxpklhHU/JGHrmV6qj1qxzWS74SolqQ==}
@@ -13755,7 +13755,7 @@ snapshots:
     dependencies:
       '@astrojs/starlight': 0.38.4(astro@6.1.10(@types/node@24.6.0)(jiti@2.6.1)(lightningcss@1.29.2)(rollup@4.60.2)(tsx@4.20.5)(typescript@5.9.3)(yaml@2.8.3))
 
-  starlight-scroll-to-top@0.4.0(@astrojs/starlight@0.38.4(astro@6.1.10(@types/node@24.6.0)(jiti@2.6.1)(lightningcss@1.29.2)(rollup@4.60.2)(tsx@4.20.5)(typescript@5.9.3)(yaml@2.8.3))):
+  starlight-scroll-to-top@1.0.1(@astrojs/starlight@0.38.4(astro@6.1.10(@types/node@24.6.0)(jiti@2.6.1)(lightningcss@1.29.2)(rollup@4.60.2)(tsx@4.20.5)(typescript@5.9.3)(yaml@2.8.3))):
     dependencies:
       '@astrojs/starlight': 0.38.4(astro@6.1.10(@types/node@24.6.0)(jiti@2.6.1)(lightningcss@1.29.2)(rollup@4.60.2)(tsx@4.20.5)(typescript@5.9.3)(yaml@2.8.3))
 
