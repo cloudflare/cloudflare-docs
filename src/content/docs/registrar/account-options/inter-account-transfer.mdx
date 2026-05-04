@@ -51,3 +51,37 @@ The gaining account must log into their account and go to **Manage Domains** (un
 Select **View Actions** to display the domains with a pending move along and choose to accept or reject the request. Action must be taken within five days of the request.
 
 If no action is taken within the five days, the request will be automatically canceled.
+
+## Troubleshoot inter-account transfers
+
+### "This domain cannot be moved" error
+
+If the dashboard displays this error when you attempt to start a move, verify the following:
+
+- The domain was registered more than 10 days ago. Newly registered domains cannot be moved until the 10-day hold period expires.
+- The domain is not in `pendingDelete`, `redemptionPeriod`, or `pendingTransfer` status. Check the domain status on the **Manage Domain** page.
+- There is no pending Change of Registrant (COR) request. If a COR is in progress, complete or cancel it before initiating the move.
+- The registrant email address has been verified. If verification is incomplete, refer to [Email verification](/registrar/account-options/email-verification/).
+- DNSSEC is turned off. Disable it and wait for the DS record to clear (up to 24 hours) before retrying.
+- The domain is not administratively locked by Cloudflare (for example, due to a legal dispute or abuse investigation). Contact support if you believe this was applied in error.
+
+### Source account is inaccessible
+
+If the domain is registered under a Cloudflare account you no longer have access to (for example, a former employee's account or a lost email address):
+
+1. You cannot use the self-serve inter-account transfer flow, because both the source and target accounts must confirm the move.
+2. Contact Cloudflare support and provide proof of domain ownership, such as a government-issued ID matching the registrant name, business registration documents, or previous invoices.
+3. Cloudflare will verify your identity and may be able to facilitate the transfer on your behalf.
+
+### Domain registered through a third-party platform
+
+If your domain was registered through Cloudflare by a third-party platform (such as GoHighLevel, iCloud, or a web design agency), the registration may be tied to the platform's Cloudflare account rather than yours. In this case:
+
+1. Contact the platform and request that they initiate the inter-account transfer to your Cloudflare account.
+2. If the platform is unresponsive or no longer operational, contact Cloudflare support with documentation showing you are the rightful domain owner.
+
+### Nameserver mismatch after transfer
+
+After a successful inter-account move, the target account may assign different Cloudflare nameservers than the ones the domain was previously using. The registrar-level nameserver delegation must be updated to match the new account's assigned nameservers.
+
+In most cases, Cloudflare updates this automatically. If the domain remains in **Pending** status in the new account for more than 24 hours, contact Cloudflare support to request a nameserver resync at the registry level.

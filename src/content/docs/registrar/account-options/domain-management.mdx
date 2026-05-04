@@ -69,3 +69,13 @@ There may be instances where users may wish to delete a domain prior to expirati
 5. Once you click the Delete button, you will be presented with a confirmation window. If you proceed, an email will be sent to all users with the Super Admin role in the account. The email contains a deletion authorization token that must be entered into the window which appears to confirm and complete the deletion.
 
 Once all steps are completed, the domain will then be scheduled for deletion. To understand more about the timelines and potential reasons why a domain cannot be deleted, refer to the Registrar [FAQ](/registrar/faq/#domain-deletions).
+
+### Troubleshoot domain deletion
+
+If you are unable to delete a domain, check the following:
+
+- **`.uk` domains cannot be deleted through the dashboard.** This is a known limitation. Contact Cloudflare support to request manual deletion of a `.uk`, `.co.uk`, `.org.uk`, or `.me.uk` domain.
+- **Domain is in `redemptionPeriod` or `pendingDelete` status.** Domains in these states are already in the deletion lifecycle and cannot be manually deleted. They will be released by the registry at the end of the deletion period (approximately 75 days after expiration).
+- **Delete button returns a 404 or error.** If the **Delete** button produces an error, the domain may be in an inconsistent state at the registry level. Contact Cloudflare support and include the domain name and the error message you received. The registrar team can remove the domain from your account manually.
+- **Delete token email not received.** The deletion authorization token is only sent to **Super Admin** users on the account. If you are not a Super Admin, ask one of the account's Super Admins to provide the token. Also check your spam folder. The token expires after 30 minutes.
+- **Domain is administratively locked.** Domains locked due to legal disputes, court orders, or abuse investigations cannot be deleted until the lock is removed. Contact Cloudflare support for details on the lock reason.

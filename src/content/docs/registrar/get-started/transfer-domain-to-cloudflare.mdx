@@ -121,6 +121,29 @@ Request an authorization code for your domain. This is also called an auth code,
 
 Authorization codes are usually only valid for a limited period. Request the code when you are ready to enter it in the next step.
 
+:::note
+
+Authorization codes go by many names depending on the registrar: auth code, EPP code, authinfo code, transfer code, or authorization key. They all refer to the same thing.
+
+:::
+
+### Troubleshoot authorization code issues
+
+If your authorization code is rejected when you enter it in the Cloudflare dashboard:
+
+- **Trailing whitespace or line breaks**: Copy-paste can introduce hidden characters. Try typing the code manually in an incognito or private browser window.
+- **Code expired**: Most auth codes are valid for 5 to 14 days. If more than a few days have passed since you requested it, get a fresh code from your current registrar.
+- **Special characters**: Some registrars generate codes with special characters (such as `!`, `@`, `#`, `^`). Enter these exactly as provided. Do not URL-encode or escape them.
+- **`.ca` domains**: CIRA authorization codes are case-sensitive and may use a different format than standard gTLD codes. Enter the code exactly as your registrar provided it.
+- **"Transfer conditions not met" error**: This usually means one or more prerequisites have not been fulfilled. Verify each of the following before retrying:
+  1. Domain is unlocked (no `clientTransferProhibited` in WHOIS).
+  2. DNSSEC is disabled and the DS record has been removed from the parent zone.
+  3. Domain was not registered or transferred within the last 60 days.
+  4. WHOIS registrant contact was not changed within the last 60 days.
+  5. Domain is not in `serverHold`, `redemptionPeriod`, or `pendingDelete` status.
+
+For detailed troubleshooting, refer to [Troubleshoot failed domain transfers](/registrar/troubleshooting/).
+
 ### Enter your authorization code and confirm payment
 
 **In the Cloudflare dashboard:**
