@@ -3,7 +3,7 @@ import LanguageSelect from "@astrojs/starlight/components/LanguageSelect.astro";
 import DocSearch from "@astrojs/starlight-docsearch/DocSearch.astro";
 import SiteTitle from "@astrojs/starlight/components/SiteTitle.astro";
 import HeaderDropdowns from "../HeaderDropdowns.tsx";
-import ThemeSelectDropdown from "../ThemeSelectDropdown.tsx";
+import ThemeSelectDropdown from "../ThemeSelectDropdown.astro";
 import AgentDirective from "../AgentDirective.astro";
 ---
 
@@ -27,7 +27,7 @@ import AgentDirective from "../AgentDirective.astro";
 			>
 				Log in
 			</a>
-			<span class="w-[6rem]"><ThemeSelectDropdown client:idle /></span>
+			<ThemeSelectDropdown />
 			<LanguageSelect />
 		</div>
 	</div>
