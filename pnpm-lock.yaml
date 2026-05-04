@@ -213,8 +213,8 @@ importers:
         specifier: 1.5.0
         version: 1.5.0
       marked:
-        specifier: 16.4.1
-        version: 16.4.1
+        specifier: 18.0.3
+        version: 18.0.3
       mdast-util-from-markdown:
         specifier: 2.0.2
         version: 2.0.2
@@ -4906,6 +4906,11 @@ packages:
 
   marked@16.4.1:
     resolution: {integrity: sha512-ntROs7RaN3EvWfy3EZi14H4YxmT6A5YvywfhO+0pm+cH/dnSQRmdAmoFIc3B9aiwTehyk7pESH4ofyBY+V5hZg==}
+    engines: {node: '>= 20'}
+    hasBin: true
+
+  marked@18.0.3:
+    resolution: {integrity: sha512-7VT90JOkDeaRWpfjOReRGPEKn0ecdARBkDGL+tT1wZY0efPPqkUxLUSmzy/C7TIylQYJC9STISEsCHrqb/7VIA==}
     engines: {node: '>= 20'}
     hasBin: true
 
@@ -12056,6 +12061,8 @@ snapshots:
   markdown-table@3.0.4: {}
 
   marked@16.4.1: {}
+
+  marked@18.0.3: {}
 
   math-intrinsics@1.1.0: {}
 
