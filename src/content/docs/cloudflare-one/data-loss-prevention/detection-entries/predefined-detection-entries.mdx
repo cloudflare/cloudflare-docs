@@ -1,0 +1,78 @@
+---
+pcx_content_type: reference
+title: Predefined detection entries
+description: Reference information for predefined detection entries in Cloudflare One.
+products:
+  - cloudflare-one
+sidebar:
+  order: 2
+tags:
+  - Compliance
+---
+
+Predefined detection entries are Cloudflare-managed detections for specific types of sensitive content. You can review these entries from the **Predefined** view in **Detection entries**.
+
+You can add any predefined detection entry directly to a custom DLP profile. Use the following reference to review all predefined detection entries currently supported by Cloudflare DLP.
+
+| Detection entry | Description |
+| --- | --- |
+| Amazon AWS Access Key ID | Detects Amazon AWS access key IDs such as "AKIAIOSFODNN7EXAMPLE". |
+| Amazon AWS Secret Access Key | Detects potential Amazon AWS secret access keys such as "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY". |
+| American Express Card Number | Detects American Express credit card numbers such as "378282246310005". |
+| American Express Text | Detects mentions of the American Express brand name such as "American Express". |
+| AU Passport Number | Detects Australian passport numbers such as "L1234567". |
+| Australia Tax File Number | Detects Australian Tax File Numbers (TFN) such as "85 655 734". |
+| C | Detects C source code. |
+| C# | Detects C# source code. |
+| C++ | Detects C++ source code. |
+| Canada Social Insurance Number | Detects Canadian Social Insurance Numbers (SIN) such as "114 905 474". |
+| Cloudflare Account Owned API Token | Detects Cloudflare account-owned API tokens such as `cfat_<ACCOUNT_OWNED_API_TOKEN>`. |
+| Cloudflare User API Key | Detects Cloudflare user API keys such as `cfk_<USER_API_KEY>`. |
+| Cloudflare User API Token | Detects Cloudflare user API tokens such as `cfut_<USER_API_TOKEN>`. |
+| Diners Club Card Number | Detects Diners Club credit card numbers such as "30121690374838". |
+| US Driver's License Number | Detects US driver's license numbers such as "CA License: A1234567". |
+| Email Address | Detects email addresses such as "test@example.com". |
+| FDA Active Ingredients | Detects FDA-registered drug active ingredient names such as "ABEMACICLIB". |
+| FDA Drug Names | Detects FDA-registered drug names such as "ABACAVIR". |
+| France Social Security Number | Detects French social security (INSEE) numbers such as "145081849670637". |
+| Full Name | Detects personal full names. |
+| Generic CVV Card Number | Detects credit card CVV/CVC verification codes in context of the "cvv" keyword, such as "cvv: 033". |
+| Go | Detects Go source code. |
+| Google GCP API Key | Detects Google Cloud Platform API keys such as "AIzaSyA-FAKE-KEY-FOR-DOCS-ONLY-000000". |
+| Haskell | Detects Haskell source code. |
+| Hong Kong Identity Card Number | Detects Hong Kong identity card (HKID) numbers such as "F543210(A)". |
+| IBAN | Detects International Bank Account Numbers (IBAN) such as "GB94 BARC 1020 1530 0934 59". |
+| ICD-10 FY2023 Short Description | Detects ICD-10 FY2023 medical diagnosis terms such as "Typhoid fever, unspecified". |
+| ICD-11 Short Description | Detects ICD-11 medical diagnosis terms such as "ABDOMINAL ACTINOMYCOSIS". |
+| Indonesia Identity Card Number | Detects Indonesian identity card (KTP/NIK) numbers such as "3203012503770011". |
+| Java | Detects Java source code. |
+| JavaScript | Detects JavaScript source code. |
+| Lua | Detects Lua source code. |
+| US Mailing Address | Detects US mailing addresses such as "100 First St, Chicago, IL 60601". |
+| Malaysian National Identity Card Number | Detects Malaysian national identity card (MyKad) numbers such as "560224-10-8354". |
+| Mastercard Card Number | Detects Mastercard credit card numbers such as "5252 5971 4219 4116". |
+| Mastercard Text | Detects mentions of the Mastercard brand name such as "Mastercard". |
+| Microsoft Azure Client Secret | Detects Microsoft Azure client secrets such as `<AZURE_CLIENT_SECRET>`. |
+| Philippines Unified Multi-Purpose ID Identity Number | Detects Philippines Unified Multi-Purpose ID (UMID) numbers such as "2460-1501400-1". |
+| Python | Detects Python source code. |
+| R | Detects R source code. |
+| Rust | Detects Rust source code. |
+| Singapore National Registration Identity Card Number | Detects Singapore NRIC/FIN identity card numbers such as "S6792120H". |
+| SSH Private Key | Detects SSH private key material such as "-----BEGIN OPENSSH PRIVATE KEY-----". |
+| SWIFT | Detects SWIFT/BIC business identifier codes such as "PMFAUS66". |
+| Swift | Detects Swift source code. |
+| Taiwan National Identification Number | Detects Taiwan national identification numbers such as "W171845961". |
+| Thai Identity Card Number | Detects Thai national identity card numbers such as "4-8547-01245-28-9". |
+| Union Pay Card Number | Detects UnionPay credit card numbers such as "6250941006528599". |
+| Union Pay Text | Detects mentions of the UnionPay brand name such as "Union Pay". |
+| United Kingdom National Insurance Number | Detects UK National Insurance Numbers (NINO) such as "OC 66 31 85 C". |
+| United Kingdom NHS Number | Detects UK NHS patient identification numbers such as "485-585-0454". |
+| United States ABA Routing Number | Detects US ABA bank routing numbers such as "021000021". |
+| United States SSN Numeric Detection | Detects US Social Security Numbers such as "123-45-6789". |
+| United States SSN Text | Detects mentions of "SSN" or "social security" as a keyword, such as "social security". |
+| Unsanitized HAR File | Detects HAR (HTTP Archive) files that may contain unsanitized authentication tokens or session data, such as a HAR file containing `Authorization: Bearer <USER_API_TOKEN>`. |
+| US Individual Tax Identification Number (ITIN) | Detects US Individual Taxpayer Identification Numbers (ITIN) such as "934-78-5678". |
+| US Passport Number | Detects US passport numbers such as "A12345678". |
+| US Phone Number | Detects US phone numbers such as "555-555-5555". |
+| Visa Card Number | Detects Visa credit card numbers such as "4111 1111 1111 1111". |
+| Visa Text | Detects mentions of the Visa brand name such as "Visa". |

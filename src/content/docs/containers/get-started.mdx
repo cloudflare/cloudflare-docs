@@ -1,8 +1,11 @@
 ---
 pcx_content_type: get-started
 title: Getting started
+description: Deploy your first Container on Cloudflare by building an image, configuring a Worker, and routing requests to container instances.
 sidebar:
   order: 2
+products:
+  - containers
 ---
 
 import { Render, PackageManagers, WranglerConfig } from "~/components";
@@ -66,7 +69,7 @@ And see images deployed to the Cloudflare Registry with the following command:
 
 ### Make requests to Containers
 
-Now, open the URL for your Worker. It should look something like `https://hello-containers.YOUR_ACCOUNT_NAME.workers.dev`.
+Now, open the URL for your Worker. It should look something like `https://hello-containers.<YOUR_WORKERS_SUBDOMAIN>.workers.dev`.
 
 If you make requests to the paths `/container/1` or `/container/2`, your Worker routes requests to specific containers.
 Each different path after "/container/" routes to a unique container.
@@ -113,25 +116,23 @@ Your [Wrangler configuration file](/workers/wrangler/configuration/) defines the
 		{
 			"max_instances": 10,
 			"class_name": "MyContainer",
-			"image": "./Dockerfile"
-		}
+			"image": "./Dockerfile",
+		},
 	],
 	"durable_objects": {
 		"bindings": [
 			{
 				"name": "MY_CONTAINER",
-				"class_name": "MyContainer"
-			}
-		]
+				"class_name": "MyContainer",
+			},
+		],
 	},
 	"migrations": [
 		{
 			"tag": "v1",
-			"new_sqlite_classes": [
-				"MyContainer"
-			]
-		}
-	]
+			"new_sqlite_classes": ["MyContainer"],
+		},
+	],
 }
 ```
 
@@ -139,7 +140,7 @@ Your [Wrangler configuration file](/workers/wrangler/configuration/) defines the
 
 Important points about this config:
 
-- `image` points to a Dockerfile or to a directory containing a Dockerfile.
+- `image` points to a Dockerfile, to a directory containing a Dockerfile, or to a fully qualified image reference such as `registry.cloudflare.com/<YOUR_ACCOUNT_ID>/<IMAGE>:<TAG>`.
 - `class_name` must be a [Durable Object class name](/durable-objects/api/base/).
 - `max_instances` declares the maximum number of simultaneously running container instances
   that will run.
@@ -202,7 +203,7 @@ This defines basic configuration for the container:
 - `envVars` sets environment variables that will be passed to the container when it starts.
 - `onStart`, `onStop`, and `onError` are hooks that run when the container starts, stops, or errors, respectively.
 
-See the [Container class documentation](/containers/container-package) for more details and configuration options.
+See the [Container class documentation](/containers/container-class/) for more details and configuration options.
 
 #### Routing to Containers
 
@@ -243,29 +244,28 @@ This allows for multiple ways of using Containers:
   Container instances.
 
 :::note
-Currently, routing requests to one of many interchangeable Container instances is accomplished
-with the `getRandom` helper.
+Today, routing requests to one of many interchangeable Container instances uses the
+`getRandom` helper.
 
-This is temporary — we plan to add native support for latency-aware autoscaling and load balancing in the coming months.
+It randomly selects one of a fixed number of instances for each request.
 :::
 
 ## View Containers in your Dashboard
 
-The [Containers Dashboard](http://dash.cloudflare.com/?to=/:account/workers/containers) shows you helpful
+The [Containers Dashboard](https://dash.cloudflare.com/?to=/:account/workers/containers) shows you helpful
 information about your Containers, including:
 
 - Status and Health
 - Metrics
 - Logs
-- A link to associated Workers and Durable Objects
 
-After launching your Worker, navigate to the Containers Dashboard
-by clicking on "Containers" under "Workers & Pages" in your sidebar.
+After launching your Worker, go to the Containers Dashboard by selecting
+**Workers & Pages** > **Containers** in the dashboard sidebar.
 
 ## Next Steps
 
 To do more:
 
 - Modify the image by changing the Dockerfile and calling `wrangler deploy`
-- Review our [examples](/containers/examples) for more inspiration
-- Get [more information on the Containers Beta](/containers/beta-info)
+- Review our [examples](/containers/examples/) for more inspiration
+- Review the [Frequently Asked Questions](/containers/faq/) for current platform behavior and limitations

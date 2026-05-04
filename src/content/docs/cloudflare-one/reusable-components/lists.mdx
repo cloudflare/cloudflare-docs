@@ -1,5 +1,8 @@
 ---
 pcx_content_type: how-to
+description: Lists in Zero Trust.
+products:
+  - cloudflare-one
 title: Lists
 sidebar:
   order: 1
@@ -25,6 +28,7 @@ Lists can contain a single type of data each. Supported data types include:
 - User email addresses
 - IP addresses
 - Device ID numbers
+- AAGUIDs (used by [Access independent MFA](/cloudflare-one/access-controls/access-settings/independent-mfa/#restrict-authenticators-by-aaguid) to restrict the WebAuthn authenticators users can enroll)
 
 <Render file="gateway/lists" product="cloudflare-one" />
 

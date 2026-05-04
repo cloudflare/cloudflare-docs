@@ -1,0 +1,52 @@
+---
+pcx_content_type: navigation
+title: RtkSelfVideoToggleButton
+description: API reference for RtkSelfVideoToggleButton component (Flutter Library)
+products:
+  - realtime
+---
+
+A toggle button widget for controlling video state during a meeting. Allows users to turn their video on or off.
+
+:::note
+[`RtkProvider`](/realtime/realtimekit/ui-kit/api-reference/flutter/rtk-provider/) must be an ancestor of this widget in the widget tree.
+:::
+
+## Properties
+
+| Property                | Type                | Required | Default              | Description                            |
+| ----------------------- | ------------------- | -------- | -------------------- | -------------------------------------- |
+| `meeting`               | `RealtimekitClient` | ✅       | -                    | Meeting client instance                |
+| `individualDesignToken` | `RtkDesignTokens?`  | ❌       | Global design tokens | Design tokens for customization        |
+| `onVideoToggle`         | `VoidCallback?`     | ❌       | -                    | Callback invoked when video is toggled |
+| `iconSize`              | `double?`           | ❌       | -                    | Size of the icon                       |
+| `iconColor`             | `Color?`            | ❌       | -                    | Color of the icon                      |
+| `showLabel`             | `bool`              | ❌       | `false`              | Whether to show label text             |
+
+## Usage Examples
+
+### Basic Usage
+
+```dart
+import 'package:realtimekit_ui/realtimekit_ui.dart';
+
+RtkSelfVideoToggleButton(
+  meeting: yourMeetingInstance,
+)
+```
+
+### With Properties
+
+```dart
+import 'package:realtimekit_ui/realtimekit_ui.dart';
+
+RtkSelfVideoToggleButton(
+  meeting: yourMeetingInstance,
+  onVideoToggle: () {
+    // Handle video toggle
+  },
+  iconSize: 24.0,
+  iconColor: Colors.red,
+  showLabel: true,
+)
+```

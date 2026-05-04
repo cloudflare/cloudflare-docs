@@ -1,8 +1,11 @@
 ---
 title: Store and sync state
+description: Persist and sync Agent state across clients in real time using setState, SQL storage, and bidirectional updates.
 pcx_content_type: concept
 sidebar:
   order: 7
+products:
+  - agents
 ---
 
 import { TypeScriptExample, LinkCard } from "~/components";
@@ -365,7 +368,7 @@ function GameUI() {
   const agent = useAgent({
     agent: "game-agent",
     name: "room-123",
-    onStateChanged: (state, source) => {
+    onStateUpdate: (state, source) => {
       console.log("State updated:", state);
     }
   });
@@ -394,7 +397,7 @@ import { AgentClient } from "agents/client";
 const client = new AgentClient({
 	agent: "game-agent",
 	name: "room-123",
-	onStateChanged: (state) => {
+	onStateUpdate: (state) => {
 		document.getElementById("score").textContent = state.score;
 	},
 });

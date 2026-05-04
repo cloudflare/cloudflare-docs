@@ -1,0 +1,47 @@
+---
+pcx_content_type: reference
+title: RtkTextField
+description: API reference for RtkTextField component (React Native Library)
+products:
+  - realtime
+---
+
+A themed text input field component.
+
+## Properties
+
+| Property       | Type                  | Required | Default  | Description                   |
+| -------------- | --------------------- | -------- | -------- | ----------------------------- |
+| `disabled`     | `boolean`             | ❌       | `false`  | Whether the input is disabled |
+| `placeholder`  | `string`              | ❌       | `''`     | Placeholder text              |
+| `type`         | `string`              | ❌       | `'text'` | Input type                    |
+| `style`        | `StyleProp<any>`      | ❌       | -        | Custom styles                 |
+| `onChangeText` | `(s: string) => void` | ❌       | -        | Callback when text changes    |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkTextField } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkTextField placeholder="Enter your name" />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkTextField } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return (
+		<RtkTextField
+			placeholder="Enter display name"
+			onChangeText={(text) => setName(text)}
+			disabled={false}
+		/>
+	);
+}
+```

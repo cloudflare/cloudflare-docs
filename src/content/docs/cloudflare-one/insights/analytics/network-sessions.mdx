@@ -1,0 +1,67 @@
+---
+pcx_content_type: reference
+description: Reference information for Network session analytics in Zero Trust analytics.
+products:
+  - cloudflare-one
+title: Network session analytics
+sidebar:
+  order: 5
+---
+
+import { Render } from "~/components";
+
+The Network session analytics dashboard provides visibility into your Cloudflare One traffic patterns. This dashboard helps you understand how traffic flows through your network, including on-ramps (how traffic enters Cloudflare, such as the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/), [proxy endpoints (PAC files)](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/), [Browser Isolation](/cloudflare-one/remote-browser-isolation/), or Cloudflare Tunnel) and off-ramps (how traffic exits Cloudflare, such as the public Internet or a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/)).
+
+The dashboard is based on the [Zero Trust network sessions Logpush dataset](/logs/logpush/logpush-job/datasets/account/zero_trust_network_sessions/). For definitions on any field, refer to the dataset schema documentation.
+
+To review Network session analytics:
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Insights** > **Dashboards**.
+2. Select **Network session analytics**.
+
+<Render file="analytics/observability-tools-note" product="cloudflare-one" />
+
+## Use cases
+
+The Network session analytics dashboard helps you:
+
+- **Understand traffic patterns**: Visualize how traffic flows through your network infrastructure.
+- **Monitor bandwidth usage**: Track upload, download, and total bytes transferred across your network.
+- **Identify connection issues**: Analyze connection close reasons to troubleshoot network problems.
+- **Track user and device activity**: Monitor unique users and devices accessing your network.
+
+## Provided analytics
+
+### Summary metrics
+
+- **Session count**: Total number of network sessions. Each session represents an individual TCP, UDP, ICMP, or ICMPv6 flow that passes through Gateway.
+- **Bytes total**: Total bytes transferred (upload + download)
+- **Unique users**: Number of distinct users
+
+### Traffic by location
+
+- **World map**: Geographic visualization of network traffic by the Cloudflare data center where traffic entered the network (ingress) and where it exited (egress)
+- **Location list**: Top Cloudflare data center locations by ingress and egress session count with accompanying graph
+- **Change**: Shows the total change across ingress and egress for each location
+
+### Top analytics
+
+- **Top protocols**: Most used network protocols (TCP, UDP, ICMP, ICMPv6)
+- **Top connection close reasons**: Common reasons for session termination:
+  - Client closed
+  - Origin closed
+  - Client idle timeout
+  - Client error
+  - Unknown
+  - Client TLS error
+  - Origin unreachable
+  - Too many new sessions for user
+  - Origin TLS error
+  - Origin unroutable
+
+For the full list of reasons for session termination, refer to [ConnectionCloseReason](/logs/logpush/logpush-job/datasets/account/zero_trust_network_sessions/#connectionclosereason).
+
+## Related resources
+
+- [Zero Trust network sessions Logpush dataset](/logs/logpush/logpush-job/datasets/account/zero_trust_network_sessions/): View detailed logs for individual network sessions.
+- [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/): Configure policies that apply to network traffic.

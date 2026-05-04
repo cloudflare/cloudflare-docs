@@ -9,7 +9,7 @@ import { Type, MetaInfo } from "~/components";
 - <code>deleteAll(options <Type text="Object" /> <MetaInfo text="optional" />)</code>: <Type text="Promise" />
   - Deletes all stored data, effectively deallocating all storage used by the Durable Object. For Durable Objects with a key-value storage backend, `deleteAll()` removes all keys and associated values for an individual Durable Object. For Durable Objects with a [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class), `deleteAll()` removes the entire contents of a Durable Object's private SQLite database, including both SQL data and key-value data.
   - For Durable Objects with a key-value storage backend, an in-progress `deleteAll()` operation can fail, which may leave a subset of data undeleted. Durable Objects with a SQLite storage backend do not have a partial `deleteAll()` issue because `deleteAll()` operations are atomic (all or nothing).
-  - `deleteAll()` does not proactively delete [alarms](/durable-objects/api/alarms/). Use [`deleteAlarm()`](/durable-objects/api/alarms/#deletealarm) to delete an alarm.
+  - For Workers with a compatibility date of `2026-02-24` or later, `deleteAll()` also deletes any active [alarm](/durable-objects/api/alarms/). For earlier compatibility dates, `deleteAll()` does not delete alarms. Use [`deleteAlarm()`](/durable-objects/api/alarms/#deletealarm) separately, or enable the `delete_all_deletes_alarm` [compatibility flag](/workers/configuration/compatibility-flags/).
 
 ### `transactionSync`
 
@@ -20,7 +20,7 @@ import { Type, MetaInfo } from "~/components";
 
   - If `callback()` throws an exception, the transaction will be rolled back.
 
-  - The callback must complete synchronously, that is, it should not be declared `async` nor otherwise return a Promise. Only synchronous storage operations can be part of the transaction. This is intended for use with SQL queries using [`ctx.storage.sql.exec()`](/durable-objects/api/sqlite-storage-api/#exec), which complete sychronously.
+  - The callback must complete synchronously, that is, it should not be declared `async` nor otherwise return a Promise. Only synchronous storage operations can be part of the transaction. This is intended for use with SQL queries using [`ctx.storage.sql.exec()`](/durable-objects/api/sqlite-storage-api/#exec), which complete synchronously.
 
 ### `transaction`
 
@@ -32,7 +32,7 @@ import { Type, MetaInfo } from "~/components";
 - `txn`
   - Provides access to the `put()`, `get()`, `delete()`, and `list()` methods documented above to run in the current transaction context. In order to get transactional behavior within a transaction closure, you must call the methods on the `txn` Object instead of on the top-level `ctx.storage` Object.<br/><br/>Also supports a `rollback()` function that ensures any changes made during the transaction will be rolled back rather than committed. After `rollback()` is called, any subsequent operations on the `txn` Object will fail with an exception. `rollback()` takes no parameters and returns nothing to the caller.
 
-  - When using [the SQLite-backed storage engine](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend), the `txn` object is obsolete. Any storage operations performed directly on the `ctx.storage` object, including SQL queries using [`ctx.storage.sql.exec()`](/durable-objects/api/sqlite-storage-api/#exec), will be considered part of the transaction.
+  - When using [the SQLite-backed storage engine](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class), the `txn` object is obsolete. Any storage operations performed directly on the `ctx.storage` object, including SQL queries using [`ctx.storage.sql.exec()`](/durable-objects/api/sqlite-storage-api/#exec), will be considered part of the transaction.
 
 ### `sync`
 

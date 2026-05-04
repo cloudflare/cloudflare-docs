@@ -1,0 +1,35 @@
+---
+pcx_content_type: reference
+title: RtkImage
+description: API reference for RtkImage component (iOS Library)
+products:
+  - realtime
+---
+
+A struct that wraps a `UIImage` or a `URL` for image content.
+Used throughout the UI Kit for icons, avatars, and custom images.
+
+## Initializer parameters
+
+| Parameter | Type       | Required | Default | Description                         |
+| --------- | ---------- | -------- | ------- | ----------------------------------- |
+| `image`   | `UIImage?` | ❌       | `nil`   | A local UIImage to display          |
+| `url`     | `URL?`     | ❌       | `nil`   | A remote URL to load the image from |
+
+## Usage Examples
+
+### With a local image
+
+```swift
+import RealtimeKitUI
+
+let rtkImage = RtkImage(image: UIImage(systemName: "mic"))
+```
+
+### With a remote URL
+
+```swift
+import RealtimeKitUI
+
+let rtkImage = RtkImage(url: URL(string: "https://example.com/avatar.png"))
+```

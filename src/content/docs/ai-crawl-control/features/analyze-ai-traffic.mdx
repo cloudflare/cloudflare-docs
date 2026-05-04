@@ -5,6 +5,9 @@ tags:
   - AI
 sidebar:
   order: 2
+description: View metrics on AI crawler interactions with your site.
+products:
+  - ai-crawl-control
 ---
 
 import { Aside, Steps, Tabs, TabItem, DashButton } from "~/components";
@@ -83,6 +86,18 @@ The **Status code distribution** chart shows HTTP response codes for AI crawler 
 - **5xx** — Server errors
 
 Use this chart to identify patterns in how your site responds to AI crawlers, including the distribution of error codes and the volume of redirects.
+
+### Content Format
+
+The **Content Format** chart shows what content types AI systems request versus what your origin serves. This visibility helps you understand content negotiation patterns and optimize how your content is delivered to AI systems.
+
+The chart includes three views:
+
+| View          | Description                                                                 |
+| ------------- | --------------------------------------------------------------------------- |
+| **Comparison** | A grouped bar chart comparing requested content types versus served content types |
+| **Request Type** | Breakdown of requests by Accept header                                      |
+| **Response Type** | Breakdown of responses by Content-Type header                              |
 
 ### Top referrers
 

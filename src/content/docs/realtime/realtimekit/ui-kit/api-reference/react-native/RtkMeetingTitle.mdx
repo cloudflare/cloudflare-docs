@@ -1,0 +1,37 @@
+---
+pcx_content_type: reference
+title: RtkMeetingTitle
+description: API reference for RtkMeetingTitle component (React Native Library)
+products:
+  - realtime
+---
+
+Displays the meeting title from meeting metadata.
+
+## Properties
+
+| Property  | Type                | Required | Default | Description                      |
+| --------- | ------------------- | -------- | ------- | -------------------------------- |
+| `meeting` | `RealtimeKitClient` | ✅       | -       | The RealtimeKit meeting instance |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkMeetingTitle } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkMeetingTitle meeting={meeting} />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkMeetingTitle } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkMeetingTitle meeting={meeting} />;
+}
+```

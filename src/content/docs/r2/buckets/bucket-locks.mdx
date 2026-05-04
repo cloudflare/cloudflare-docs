@@ -1,6 +1,9 @@
 ---
 title: Bucket locks
+description: Prevent deletion and overwriting of R2 objects by enabling bucket lock retention policies.
 pcx_content_type: how-to
+products:
+  - r2
 ---
 
 import { DashButton } from "~/components";
@@ -28,14 +31,14 @@ Before getting started, you will need:
 
 1. Install [`npm`](https://docs.npmjs.com/getting-started).
 2. Install [Wrangler, the Developer Platform CLI](/workers/wrangler/install-and-update/).
-3. Log in to Wrangler with the [`wrangler login` command](/workers/wrangler/commands/#login).
-4. Add a bucket lock rule to your bucket by running the [`r2 bucket lock add` command](/workers/wrangler/commands/#r2-bucket-lock-add).
+3. Log in to Wrangler with the [`wrangler login` command](/workers/wrangler/commands/general/#login).
+4. Add a bucket lock rule to your bucket by running the [`r2 bucket lock add` command](/workers/wrangler/commands/r2/#r2-bucket-lock-add).
 
 ```sh
 npx wrangler r2 bucket lock add <BUCKET_NAME> [OPTIONS]
 ```
 
-Alternatively, you can set the entire bucket lock configuration for a bucket from a JSON file using the [`r2 bucket lock set` command](/workers/wrangler/commands/#r2-bucket-lock-set).
+Alternatively, you can set the entire bucket lock configuration for a bucket from a JSON file using the [`r2 bucket lock set` command](/workers/wrangler/commands/r2/#r2-bucket-lock-set).
 
 ```sh
 npx wrangler r2 bucket lock set <BUCKET_NAME> --file <FILE_PATH>
@@ -99,7 +102,7 @@ If your bucket is setup with [jurisdictional restrictions](/r2/reference/data-lo
 
 ### Wrangler
 
-To list bucket lock rules, run the [`r2 bucket lock list` command](/workers/wrangler/commands/#r2-bucket-lock-list):
+To list bucket lock rules, run the [`r2 bucket lock list` command](/workers/wrangler/commands/r2/#r2-bucket-lock-list):
 
 ```sh
 npx wrangler r2 bucket lock list <BUCKET_NAME>
@@ -122,7 +125,7 @@ For more information on required parameters and examples of how to get bucket lo
 
 ### Wrangler
 
-To remove a bucket lock rule, run the [`r2 bucket lock remove` command](/workers/wrangler/commands/#r2-bucket-lock-remove):
+To remove a bucket lock rule, run the [`r2 bucket lock remove` command](/workers/wrangler/commands/r2/#r2-bucket-lock-remove):
 
 ```sh
 npx wrangler r2 bucket lock remove <BUCKET_NAME> --id <RULE_ID>
@@ -147,3 +150,4 @@ If multiple rules apply to the same prefix or object key, the strictest (longest
 - Rules without prefix apply to all objects in the bucket.
 - Rules apply to both new and existing objects in the bucket.
 - Bucket lock rules take precedence over [lifecycle rules](/r2/buckets/object-lifecycles/). For example, if a lifecycle rule attempts to delete an object at 30 days but a bucket lock rule requires it be retained for 90 days, the object will not be deleted until the 90-day requirement is met.
+- A bucket cannot be emptied while any bucket lock rules are configured. Remove all lock rules before [emptying a bucket](/r2/buckets/delete-buckets/#empty-a-bucket). Bucket lock rules also apply when [deleting folders](/r2/objects/delete-objects/) from the dashboard.

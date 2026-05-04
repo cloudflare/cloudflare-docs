@@ -3,9 +3,15 @@ reviewed: 2020-12-29
 category: Connections
 difficulty: Advanced
 pcx_content_type: tutorial
+products:
+  - cloudflare-one
 title: MongoDB SSH
 description: >-
   You can build Zero Trust rules to secure connections to MongoDB deployments using Cloudflare Access and Cloudflared Tunnel.
+tags:
+  - MongoDB
+  - SSH
+  - Kubernetes
 ---
 
 import { Details } from "~/components";
@@ -31,7 +37,7 @@ In this tutorial, a client running `cloudflared` connects over SSH to a MongoDB 
 
 You can build a rule in Cloudflare Access to control who can connect to your MongoDB deployment. Cloudflare Access rules are built around a hostname; even though this deployment will be accessible over SSH, the resource will be represented in Cloudflare as a hostname. For example, if you have the website `app.com` in your Cloudflare account, you can build a rule to secure `mongodb.app.com`.
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **Applications**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
 
 2. Select **Add an application**.
 

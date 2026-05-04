@@ -1,8 +1,11 @@
 ---
 title: Run Workflows
+description: Integrate Cloudflare Workflows with Agents for durable, multi-step background processing and failure recovery.
 pcx_content_type: concept
 sidebar:
-  order: 12
+  order: 14
+products:
+  - agents
 ---
 
 import { TypeScriptExample, WranglerConfig, LinkCard } from "~/components";
@@ -825,12 +828,12 @@ await this.rejectWorkflow(instanceId, { reason: "Request denied" });
 
 ## Limitations
 
-| Constraint          | Limit               |
-| ------------------- | ------------------- |
-| Maximum steps       | 1,024 per workflow  |
-| State size          | 10 MB per workflow  |
-| Event wait time     | 1 year maximum      |
-| Step execution time | 30 minutes per step |
+| Constraint          | Limit                                                     |
+| ------------------- | --------------------------------------------------------- |
+| Maximum steps       | 10,000 per workflow (default) / configurable up to 25,000 |
+| State size          | 10 MB per workflow                                        |
+| Event wait time     | 1 year maximum                                            |
+| Step execution time | 30 minutes per step                                       |
 
 Workflows cannot open WebSocket connections directly. Use `broadcastToClients()` to communicate with connected clients through the Agent.
 

@@ -5,6 +5,8 @@ head:
   - tag: title
     content: JavaScript and web standards
 description: Standardized APIs for use by Workers running on Cloudflare's global network.
+products:
+  - workers
 ---
 
 ## JavaScript standards
@@ -49,6 +51,9 @@ The following methods are available per the [Worker Global Scope](https://develo
 
 - clearTimeout()
   - Cancels the delayed execution set using [`setTimeout()`](https://developer.mozilla.org/en-US/docs/Web/API/setTimeout).
+
+- [`scheduler.wait()`](/workers/runtime-apis/scheduler/)
+  - Returns a Promise that resolves after a given number of milliseconds. An `await`-able alternative to `setTimeout()`.
 
 :::note
 

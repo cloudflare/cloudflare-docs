@@ -1,0 +1,79 @@
+---
+pcx_content_type: reference
+title: MeetingViewController
+description: API reference for MeetingViewController component (iOS Library)
+products:
+  - realtime
+---
+
+The main meeting screen view controller.
+Displays the participant grid, plugins, screen share, header, and control bar.
+
+## Initializer parameters
+
+| Parameter    | Type                   | Required | Default | Description                                            |
+| ------------ | ---------------------- | -------- | ------- | ------------------------------------------------------ |
+| `meeting`    | `RealtimeKitClient`    | ✅       | -       | The RealtimeKit client instance for the active meeting |
+| `completion` | `@escaping () -> Void` | ✅       | -       | Closure called when the meeting ends                   |
+
+## Properties
+
+| Property     | Type                               | Required | Default | Description                                                          |
+| ------------ | ---------------------------------- | -------- | ------- | -------------------------------------------------------------------- |
+| `dataSource` | `MeetingViewControllerDataSource?` | ❌       | `nil`   | Data source for providing custom topbar, middle view, and bottom bar |
+
+## MeetingViewControllerDataSource protocol
+
+Implement this protocol to provide custom UI sections within the meeting screen.
+
+| Method                             | Return Type             | Description                                                     |
+| ---------------------------------- | ----------------------- | --------------------------------------------------------------- |
+| `getTopbar(viewController:)`       | `RtkMeetingHeaderView?` | Returns a custom header view for the meeting screen             |
+| `getMiddleView(viewController:)`   | `UIView?`               | Returns a custom middle view between the header and control bar |
+| `getBottomTabbar(viewController:)` | `RtkMeetingControlBar?` | Returns a custom control bar for the meeting screen             |
+
+## Usage Examples
+
+### Basic Usage
+
+```swift
+import RealtimeKitUI
+
+let meetingVC = MeetingViewController(
+    meeting: rtkClient,
+    completion: {
+        self.dismiss(animated: true)
+    }
+)
+meetingVC.modalPresentationStyle = .fullScreen
+self.present(meetingVC, animated: true)
+```
+
+### With custom data source
+
+```swift
+import RealtimeKitUI
+
+class CustomDataSource: MeetingViewControllerDataSource {
+    func getTopbar(viewController: MeetingViewController) -> RtkMeetingHeaderView? {
+        return RtkMeetingHeaderView(meeting: rtkClient)
+    }
+
+    func getMiddleView(viewController: MeetingViewController) -> UIView? {
+        return nil
+    }
+
+    func getBottomTabbar(viewController: MeetingViewController) -> RtkMeetingControlBar? {
+        return nil
+    }
+}
+
+let meetingVC = MeetingViewController(
+    meeting: rtkClient,
+    completion: {
+        self.dismiss(animated: true)
+    }
+)
+meetingVC.dataSource = CustomDataSource()
+self.present(meetingVC, animated: true)
+```

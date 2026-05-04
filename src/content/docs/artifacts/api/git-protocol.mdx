@@ -1,0 +1,79 @@
+---
+title: Git protocol
+description: Use Artifacts with standard git-over-HTTPS clients.
+pcx_content_type: reference
+sidebar:
+  order: 3
+products:
+  - artifacts
+---
+
+Artifacts exposes Git access for every Artifacts repository.
+
+Each repo has a standard Git smart HTTP remote at `https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/<namespace>/<repo>.git`.
+
+Replace the `<ACCOUNT_ID>` placeholder with your Cloudflare account ID. Use the exact hostname from the repo `remote` returned by the Workers binding or REST API.
+
+Use the returned repo `remote` with a regular Git client for `clone`, `fetch`, `pull`, and `push`.
+
+## Authentication
+
+Git routes accept repo access tokens in two forms:
+
+| Format                             | Details                                                                                                                               | Example                                                                                                      |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Bearer token in `http.extraHeader` | Recommended for local workflows. Use the full token string returned by the control plane and keep credentials out of the remote URL. | `git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" clone "$ARTIFACTS_REMOTE" artifacts-clone` |
+| HTTP Basic auth in the remote URL  | Use for short-lived, one-off commands when you need a self-contained remote. Put the token secret in the password slot.              | `https://x:<token-secret>@<ACCOUNT_ID>.artifacts.cloudflare.net/git/<namespace>/<repo>.git`               |
+
+### Token format
+
+Repo tokens are issued in the format `art_v1_<40 hex>?expires=<unix_seconds>`. The `?expires=` suffix is the token's expiry as a unix timestamp in seconds. To check when a token expires, parse the value after `?expires=`.
+
+### Git `extraHeader` parameter
+
+Git's [`http.extraHeader`](https://git-scm.com/docs/git-config#Documentation/git-config.txt-httpextraHeader) setting lets you attach an HTTP header to git requests.
+
+If you want to use the full token string returned by the API, pass it as a Bearer token:
+
+```sh
+git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" clone "$ARTIFACTS_REMOTE" artifacts-clone
+```
+
+### HTTPS remote with Basic auth
+
+For the URL form, use the token secret in the password slot. Artifacts ignores the Basic auth username.
+
+Use this form only when you need a self-contained remote URL for a short-lived command.
+
+```sh
+export ARTIFACTS_TOKEN_SECRET="${ARTIFACTS_TOKEN%%\?expires=*}"
+export ARTIFACTS_AUTH_REMOTE="https://x:${ARTIFACTS_TOKEN_SECRET}@${ARTIFACTS_REMOTE#https://}"
+```
+
+```sh
+git clone "$ARTIFACTS_AUTH_REMOTE" artifacts-clone
+```
+
+```sh
+git push "$ARTIFACTS_AUTH_REMOTE" HEAD:main
+```
+
+Use any non-empty username in the URL. Artifacts accepts that username but does not otherwise use or log it, so `x` is just a placeholder.
+
+## Protocol support
+
+Artifacts supports Git protocol v1 and v2 for clone and fetch. Git clients negotiate the protocol automatically.
+
+| Operation                         | Git service        | Protocol support | Notes                                                                                                                      |
+| --------------------------------- | ------------------ | ---------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| Clone and fetch                   | `git-upload-pack`  | v1 and v2        | Protocol v2 supports `ls-refs` and `fetch`. Protocol v1 supports normal fetch flows, including shallow and deepen fetches. |
+| Push                              | `git-receive-pack` | v1               | Push uses the standard v1 receive-pack flow.                                                                               |
+| Push over protocol v2             | `git-receive-pack` | Not supported    | Artifacts does not support v2 receive-pack.                                                                                |
+| Optional protocol v1 capabilities | `git-upload-pack`  | Partial          | Some optional v1 capabilities, such as `filter` and `include-tag`, are not supported.                                      |
+
+## Token scopes
+
+| Scope   | Commands                                         | Notes                                                   |
+| ------- | ------------------------------------------------ | ------------------------------------------------------- |
+| `read`  | `git clone`, `git fetch`, `git pull`             | Use for read-only access.                               |
+| `write` | `git clone`, `git fetch`, `git pull`, `git push` | `git push` mutates the repo and requires a write token. |

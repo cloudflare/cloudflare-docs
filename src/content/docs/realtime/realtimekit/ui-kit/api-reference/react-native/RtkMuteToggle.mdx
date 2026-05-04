@@ -1,0 +1,40 @@
+---
+pcx_content_type: reference
+title: RtkMuteToggle
+description: API reference for RtkMuteToggle component (React Native Library)
+products:
+  - realtime
+---
+
+Button to mute all participants' audio. Only visible for hosts with mute-all permissions.
+
+## Properties
+
+| Property   | Type                           | Required | Default           | Description                      |
+| ---------- | ------------------------------ | -------- | ----------------- | -------------------------------- |
+| `meeting`  | `RealtimeKitClient`            | ✅       | -                 | The RealtimeKit meeting instance |
+| `size`     | `'lg' \| 'md' \| 'sm' \| 'xl'` | ❌       | -                 | Icon size                        |
+| `iconPack` | `IconPack`                     | ❌       | `defaultIconPack` | Custom icon pack                 |
+| `t`        | `RtkI18n`                      | ❌       | -                 | i18n translation function        |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkMuteToggle } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkMuteToggle meeting={meeting} />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkMuteToggle } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkMuteToggle meeting={meeting} size="md" />;
+}
+```

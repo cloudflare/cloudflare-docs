@@ -269,19 +269,21 @@ This model is appropriate for a majority of scenarios, in which external users n
 
 ![Requests initiated from a client are securely tunneled to Cloudflare via a device agent, while requests from inside the private network follow the default route.](~/assets/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-10.svg)
 
-For bidirectional, or meshed connectivity, organizations should use the WARP Connector.
+For bidirectional, or meshed connectivity, organizations should use Cloudflare Mesh.
 
 ##### Mesh connectivity
 
-The [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) is a lightweight solution for site-to-site, bidirectional, and mesh networking connectivity that does not require changes to underlying network routing infrastructure. WARP Connector software is installed on a Linux server within an organization's network, which then becomes a gateway for other local networks that need to on-ramp traffic to Cloudflare.
+[Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) (formerly WARP Connector) is a lightweight solution for site-to-site, bidirectional, and mesh networking connectivity that does not require changes to underlying network routing infrastructure. Cloudflare Mesh is installed on a Linux server within an organization's network, which then becomes a gateway for other local networks that need to on-ramp traffic to Cloudflare.
 
 This provides a lightweight solution to support services such as Microsoft's System Center Configuration Manager (SCCM), Active Directory server updates, VOIP and SIP traffic, and developer workflows with complex CI/CD pipeline interaction. It can either be run supplementally to `cloudflared` and Cloudflare WAN (formerly Magic WAN), or can be a standalone remote access and site-to-site connector to the Cloudflare network.
 
-The WARP Connector can proxy both user-to-network and network-to-network connectivity, or can be used to establish an overlay network of Carrier Grade NAT ([CGNAT](https://en.wikipedia.org/wiki/Carrier-grade_NAT)) addressed endpoints to provide secure, direct connectivity to established resources using CGNAT IP ranges. This helps address overlapping network IP range challenges, point-solution access problems, or the process of shifting network design without impacting a greater underlying system.
+Cloudflare Mesh can proxy both user-to-network and network-to-network connectivity, or can be used to establish an overlay network of Carrier Grade NAT ([CGNAT](https://en.wikipedia.org/wiki/Carrier-grade_NAT)) addressed endpoints to provide secure, direct connectivity to established resources using CGNAT IP ranges. This helps address overlapping network IP range challenges, point-solution access problems, or the process of shifting network design without impacting a greater underlying system.
 
-![In an example scenario, a developer might push code to a git repository, which ends up in a Kubernetes cluster in a staging network. From staging, it is accessed by a QA tester. All of this traffic is routed and protected via WARP Connector.](~/assets/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-11.svg)
+![In an example scenario, a developer might push code to a git repository, which ends up in a Kubernetes cluster in a staging network. From staging, it is accessed by a QA tester. All of this traffic is routed and protected via a Cloudflare Mesh node.](~/assets/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-11.svg)
 
-Cloudflare Tunnel via `cloudflared` is the primary method for connecting users to applications and services on private networks because it is a simpler, more granular and agile solution for many application owners (vs. IP tunnel based connectivity technology, like [IPsec](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/) and [GRE](https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/)). Cloudflare Tunnel via WARP Connector is the preferred method for mesh or other software-defined networking — most of which require bidirectional connectivity — when organizations do not want to make changes to the underlying network routing or edge infrastructure.
+_Note: Labels in this image may reflect a previous product name._
+
+Cloudflare Tunnel via `cloudflared` is the primary method for connecting users to applications and services on private networks because it is a simpler, more granular and agile solution for many application owners (vs. IP tunnel based connectivity technology, like [IPsec](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/) and [GRE](https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/)). Cloudflare Mesh is the preferred method for mesh or other software-defined networking — most of which require bidirectional connectivity — when organizations do not want to make changes to the underlying network routing or edge infrastructure.
 
 #### Using network equipment
 
@@ -303,9 +305,9 @@ The simplest and easiest way to on-ramp existing network locations to the Cloudf
 
 The WAN Connector can be deployed as either a hardware or virtual appliance, making it versatile for a variety of user network environments — on-premises, virtual, or public cloud. Management, configuration, observability, and software updates for WAN Connectors is centrally managed from Cloudflare via either the dashboard or the Cloudflare API. As of 2023, the WAN Connector is currently best-suited for connecting small and medium-sized networks to Cloudflare (for example, small offices and retail stores).
 
-In situations where deploying the Cloudflare One Appliance is not feasible or desirable, organizations can securely connect their site networks to Cloudflare by configuring IPsec tunnels from their existing IPsec-capable network devices, including WAN or SD-WAN routers, firewalls, and cloud VPN gateways. Please refer to the Cloudflare [documentation](/cloudflare-wan/configuration/manually/third-party/) for up-to-date examples of validated IPsec devices.
+In situations where deploying the Cloudflare One Appliance is not feasible or desirable, organizations can securely connect their site networks to Cloudflare by configuring IPsec tunnels from their existing IPsec-capable network devices, including WAN or SD-WAN routers, firewalls, and cloud VPN gateways. Please refer to the Cloudflare [documentation](/cloudflare-wan/configuration/third-party/) for up-to-date examples of validated IPsec devices.
 
-There may also be situations where network-layer encryption is not necessary — for example, when a site's WAN-bound traffic is already encrypted at the application layer (via TLS), or when an IPsec network device offers very limited throughput performance as it encrypts and decrypts IPsec traffic. Under these circumstances, organizations can connect to the Cloudflare network using [GRE tunnels](/cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/).
+There may also be situations where network-layer encryption is not necessary — for example, when a site's WAN-bound traffic is already encrypted at the application layer (via TLS), or when an IPsec network device offers very limited throughput performance as it encrypts and decrypts IPsec traffic. Under these circumstances, organizations can connect to the Cloudflare network using [GRE tunnels](/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/).
 
 Organizations may also connect their network locations directly to the Cloudflare network via [Cloudflare Network Interconnect](https://www.cloudflare.com/network-services/products/network-interconnect/) (CNI). Cloudflare [supports a variety of options](/network-interconnect/) to connect your network to Cloudflare:
 
@@ -319,16 +321,16 @@ The following table summarizes the different methods of connecting networks to C
 | **Use case**                                                                                                                                           | **Recommended**                             | **Alternative solution**                                                                                      |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
 | Remote users connecting to applications on private networks in a Zero Trust model (e.g. most VPN replacement scenarios)                                | **Cloudflare Tunnel (with `cloudflared`)**  | **Cloudflare WAN** Alternative option if `cloudflared` not suitable for environment                           |
-| Site-to-site connectivity between branches, headquarters, and data centers                                                                             | **Cloudflare WAN**                          | **Cloudflare Tunnel (with WARP Connector)** Alternative option if routing changes cannot be made at perimeter |
+| Site-to-site connectivity between branches, headquarters, and data centers                                                                             | **Cloudflare WAN**                          | **Cloudflare Mesh** Alternative option if routing changes cannot be made at perimeter |
 | Egress traffic from physical sites or cloud environments to cloud security inspection (e.g. most common SWG and branch firewall replacement scenarios) | **Cloudflare WAN**                          | **N/A**                                                                                                       |
-| Service-initiated communication with remote users (e.g. AD or SCCM updates, DevOps workflows, VOIP)                                                    | **Cloudflare Tunnel (with WARP Connector)** | **Cloudflare WAN** Alternative option if inbound source IP fidelity not required                              |
-| Mesh networking and peer-to-peer connectivity                                                                                                          | **Cloudflare Tunnel (with WARP Connector)** | **N/A**                                                                                                       |
+| Service-initiated communication with remote users (e.g. AD or SCCM updates, DevOps workflows, VOIP)                                                    | **Cloudflare Mesh** | **Cloudflare WAN** Alternative option if inbound source IP fidelity not required                              |
+| Mesh networking and device-to-device connectivity                                                                                                      | **Cloudflare Mesh** | **N/A**                                                                                                       |
 
 Each of these methods of connecting and routing traffic can be deployed concurrently from any location. The following diagram highlights how different connectivity methods can be used in a single architecture.
 
 Note the following traffic flows:
 
-- All traffic connected via a WARP Connector or device agent can communicate with each other over the mesh network
+- All traffic connected via a Cloudflare Mesh node or device agent can communicate with each other over the mesh network
   - Developers working from home can communicate with the production and staging servers in the cloud
   - The employee in the retail location, as well as the developer at home, can receive VOIP calls on their laptop
 - A HPC Cluster in AWS represents a proprietary solution in which no third-party software agents can be installed; as a result, it uses an IPsec connection to Cloudflare WAN
@@ -336,12 +338,12 @@ Note the following traffic flows:
   - An employee's laptop running the device agent creates its own secure connection to Cloudflare that is routed over the IPsec tunnel
 - The application owner of the reporting system maintains a connection to Cloudflare using `cloudflared` and doesn't require any networking help to expose their application to employees
 
-![Connecting and routing traffic can be created using various methods such as Cloudflare Network Interconnect, IPSEC tunnels, WARP Connector and cloudflared.](~/assets/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-14.svg)
+![Connecting and routing traffic can be created using various methods such as Cloudflare Network Interconnect, IPSEC tunnels, Cloudflare Mesh and cloudflared.](~/assets/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-14.svg)
 
 _Note: Labels in this image may reflect a previous product name._
 
 <sub>
-	*Note: All of the endpoints connected via the WARP Connector or device agent
+	*Note: All of the endpoints connected via Cloudflare Mesh or device agent
 	are automatically assigned IP addresses from the 100.96.0.0/12 address range,
 	while endpoints connected to Cloudflare WAN retain their assigned RFC1918
 	private IP addresses. `cloudflared` can be deployed in any of the locations by
@@ -372,9 +374,9 @@ There are several approaches to ensure that traffic from a user device which isn
 
 #### Connecting with a device agent
 
-The preferred method of ensuring device traffic is forwarded to Cloudflare is to install the device agent (also referred to as [Cloudflare WARP](/cloudflare-one/team-and-resources/devices/warp)). The agent runs on Windows, macOS, Linux, iOS, and Android/ChromeOS, and creates a secure connection to Cloudflare where all non-local traffic is sent. Because of Cloudflare's use of anycast networking, the device agent always connects to the nearest Cloudflare server to ensure the best performance for the user. The device agent also collects local machine and network information, which is sent in the request to enrich the policy in Cloudflare.
+The preferred method of ensuring device traffic is forwarded to Cloudflare is to install the device agent (also referred to as [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/)). The agent runs on Windows, macOS, Linux, iOS, and Android/ChromeOS, and creates a secure connection to Cloudflare where all non-local traffic is sent. Because of Cloudflare's use of anycast networking, the device agent always connects to the nearest Cloudflare server to ensure the best performance for the user. The device agent also collects local machine and network information, which is sent in the request to enrich the policy in Cloudflare.
 
-To allow for flexibility in how different devices and users connect, there are multiple [deployment modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/):
+To allow for flexibility in how different devices and users connect, there are multiple [deployment modes](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/):
 
 - A full L4 traffic proxy
 - L7 DNS proxy
@@ -383,13 +385,13 @@ To allow for flexibility in how different devices and users connect, there are m
 
 For example, organizations might have an office that continues to use an existing [DNS filtering](https://www.cloudflare.com/learning/access-management/what-is-dns-filtering/) service, so they can configure the agent to just proxy network and HTTP traffic.
 
-The agent can also be configured with flexible routing controls that allow for scenarios in which traffic destined for office printers is not sent to the Cloudflare network but, instead, routed to the local network. These [split tunnel configurations](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) can be made specific to groups of users, types of device operating system, or networks and by default, traffic destined to all private [IPv4 and IPv6 ranges](https://datatracker.ietf.org/doc/html/rfc1918) is sent to the device's default gateway. If the application the user is attempting to reach is not in public DNS, you can configure the hostname and domain to be resolved with [local DNS services](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/private-dns/), so that the device agent does not attempt to resolve these using Cloudflare DNS.
+The agent can also be configured with flexible routing controls that allow for scenarios in which traffic destined for office printers is not sent to the Cloudflare network but, instead, routed to the local network. These [split tunnel configurations](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) can be made specific to groups of users, types of device operating system, or networks and by default, traffic destined to all private [IPv4 and IPv6 ranges](https://datatracker.ietf.org/doc/html/rfc1918) is sent to the device's default gateway. If the application the user is attempting to reach is not in public DNS, you can configure the hostname and domain to be resolved with [local DNS services](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/private-dns/), so that the device agent does not attempt to resolve these using Cloudflare DNS.
 
 ![Using the device agent allows Internet and company application bound traffic to be secured by Cloudflare's SWG and ZTNA services.](~/assets/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-16.svg)
 
 The agent is more than just a network proxy; it is able to examine the device's security posture, such as if the operating system is fully up-to-date or if the hard disk is encrypted. Cloudflare's integrations with [CrowdStrike](https://www.cloudflare.com/partners/technology-partners/crowdstrike/endpoint-partners/), [SentinelOne](https://www.cloudflare.com/partners/technology-partners/sentinelone/), and other third-party services also provide additional data about the security posture of the device. All of this information is associated with each request and, therefore, available for use in company policies — as explained in the "Unified Management" section.
 
-The agent can be [deployed](/cloudflare-one/team-and-resources/devices/warp/deployment/) to a device either manually or using existing endpoint management (UEM) technologies. Using the agent, users register and authenticate their device to Cloudflare with the integrated identity providers. Identity information — combined with information about the local device — is then used in your SWG and ZTNA policies (including inline CASB capabilities shared across these Cloudflare services).
+The agent can be [deployed](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/) to a device either manually or using existing endpoint management (UEM) technologies. Using the agent, users register and authenticate their device to Cloudflare with the integrated identity providers. Identity information — combined with information about the local device — is then used in your SWG and ZTNA policies (including inline CASB capabilities shared across these Cloudflare services).
 
 #### Browser proxy configuration
 
@@ -429,7 +431,7 @@ Isolating web applications and applying policies to risky websites helps organiz
 
 #### Agentless DNS Filtering
 
-Another option for securing traffic via the Cloudflare network is to configure the device to forward DNS traffic to Cloudflare to be inspected and filtered. First [DNS locations](/cloudflare-one/traffic-policies/initial-setup/dns/#connect-dns-locations) are created which allow policies to be applied based on different network locations. They can be determined either by the source IP address for the request or you can use "[DNS over TLS](https://www.cloudflare.com/learning/dns/dns-over-tls/)" or "[DNS over HTTPS](https://www.cloudflare.com/learning/dns/dns-over-tls/)".
+Another option for securing traffic via the Cloudflare network is to configure the device to forward DNS traffic to Cloudflare to be inspected and filtered. First [DNS locations](/cloudflare-one/traffic-policies/get-started/dns/#connect-dns-locations) are created which allow policies to be applied based on different network locations. They can be determined either by the source IP address for the request or you can use "[DNS over TLS](https://www.cloudflare.com/learning/dns/dns-over-tls/)" or "[DNS over HTTPS](https://www.cloudflare.com/learning/dns/dns-over-tls/)".
 
 When using source IP addresses, either the device will need to be told which DNS servers to use, or the local DNS server on the network the device is connected to needs to forward all DNS queries to Cloudflare. For DNS over TLS or HTTPS support, the devices need to be configured and support varies. Our recommendation is to use DNS over HTTPS which has wider operating system support.
 
@@ -497,16 +499,16 @@ Not only does the user identity need to be verified, but the security posture of
 
 The following built-in posture checks are available:
 
-- [Application check](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/application-check/): Checks that a specific application process is running
-- [File check](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/file-check/): Checks for the presence of a file
-- [Firewall](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/firewall/): Checks if a firewall is running
-- [Disk encryption](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/disk-encryption/): Checks if/how many disks are encrypted
-- [Domain joined](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/domain-joined/): Checks if the device is joined to a Microsoft Active Directory domain
-- [OS version](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/os-version/): Checks what version of the OS is running
-- [Unique Client ID](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/device-uuid/): When using an MDM too, organizations can assign a verifiable UUID to a mobile, desktop, or laptop device
-- [Device serial number](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/corp-device/): Checks to see if the device serial matches a list of company desktop/laptop computers
+- [Application check](/cloudflare-one/reusable-components/posture-checks/client-checks/application-check/): Checks that a specific application process is running
+- [File check](/cloudflare-one/reusable-components/posture-checks/client-checks/file-check/): Checks for the presence of a file
+- [Firewall](/cloudflare-one/reusable-components/posture-checks/client-checks/firewall/): Checks if a firewall is running
+- [Disk encryption](/cloudflare-one/reusable-components/posture-checks/client-checks/disk-encryption/): Checks if/how many disks are encrypted
+- [Domain joined](/cloudflare-one/reusable-components/posture-checks/client-checks/domain-joined/): Checks if the device is joined to a Microsoft Active Directory domain
+- [OS version](/cloudflare-one/reusable-components/posture-checks/client-checks/os-version/): Checks what version of the OS is running
+- [Unique Client ID](/cloudflare-one/reusable-components/posture-checks/client-checks/device-uuid/): When using an MDM too, organizations can assign a verifiable UUID to a mobile, desktop, or laptop device
+- [Device serial number](/cloudflare-one/reusable-components/posture-checks/client-checks/corp-device/): Checks to see if the device serial matches a list of company desktop/laptop computers
 
-Cloudflare One can also integrate with any deployed endpoint security solution, such as [Microsoft Endpoint Manager](/cloudflare-one/integrations/service-providers/microsoft/), [Tanium](/cloudflare-one/integrations/service-providers/taniums2s/), [Carbon Black](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/carbon-black/), [CrowdStrike](/cloudflare-one/integrations/service-providers/crowdstrike/), [SentinelOne](/cloudflare-one/integrations/service-providers/sentinelone/), and more. Any data from those products can be passed to Cloudflare for use in access decisions.
+Cloudflare One can also integrate with any deployed endpoint security solution, such as [Microsoft Endpoint Manager](/cloudflare-one/integrations/service-providers/microsoft/), [Tanium](/cloudflare-one/integrations/service-providers/taniums2s/), [Carbon Black](/cloudflare-one/reusable-components/posture-checks/client-checks/carbon-black/), [CrowdStrike](/cloudflare-one/integrations/service-providers/crowdstrike/), [SentinelOne](/cloudflare-one/integrations/service-providers/sentinelone/), and more. Any data from those products can be passed to Cloudflare for use in access decisions.
 
 All of the above device information, combined with data on the user identity and also the network the device is on, is available in Cloudflare to be used as part of the company policy. For example, organizations could choose to only allow administrators to SSH into servers when all of the following conditions are met: their device is free from threats, running the latest operating system, and joined to the company domain.
 
@@ -687,7 +689,7 @@ It's worth noting that many of the capabilities described in this document can b
 | Topic                     | Content                                                                                                                                                                           |
 | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Cloudflare Tunnels        | [Understanding Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) - [Open source repository for `cloudflared`](https://github.com/cloudflare/cloudflared) |
-| WAN as a Service          | [Cloudflare WAN documentation](/cloudflare-wan/)                                                                                                                                  |
+| WAN as a Service          | [Cloudflare WAN documentation](/cloudflare-wan/) - [WAN transformation](/cloudflare-one/networks/connectors/cloudflare-wan/wan-transformation/)                                   |
 | Secure Web Gateway        | [How to build Gateway policies](/cloudflare-one/traffic-policies/)                                                                                                                |
 | Zero Trust Network Access | [How to build Access policies](/cloudflare-one/access-controls/policies/)                                                                                                         |
 | Remote Browser Isolation  | [Understanding browser isolation](/cloudflare-one/remote-browser-isolation/)                                                                                                      |

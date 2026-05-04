@@ -1,5 +1,8 @@
 ---
 pcx_content_type: reference
+description: Use 1.1.1.1 on IPv6-only networks.
+products:
+  - 1.1.1.1
 title: Support for IPv6-only networks
 tags:
   - IPv6
@@ -14,11 +17,9 @@ While network infrastructure is shifting towards IPv6-only networks, providers s
 
 :::note
 
-
 You should only enable DNS64 if you are managing or using an IPv6-only network. While the resolver can synthesize IPv6 addresses, it cannot synthesize their record signatures for domains using DNSSEC, so a DNS client that is able to revalidate signatures would reject these extra records without signatures.
 
 A good tradeoff is to use a secure protocol such as DNS over TLS, or DNS over HTTPS between the client and the resolver to prevent tampering.
-
 
 :::
 

@@ -1,6 +1,9 @@
 ---
 title: Navigation
 pcx_content_type: concept
+description: Create navigation pages with directory listings.
+products:
+  - style-guide
 ---
 
 import { Render } from "~/components";
@@ -13,6 +16,10 @@ The purpose of a navigation page is to direct users deeper into the doc set and 
 
 ```yaml
 pcx_content_type: navigation
+products:
+  - product-a
+  - product-b
+  - product-c
 ```
 
 For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-properties/#pcx_content_type).
@@ -27,6 +34,11 @@ For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-
 ---
 weight: xx
 pcx_content_type: navigation
+description: Explore <Cloudflare product> guides for <key topic areas covered by child pages>.
+products:
+  - product-a
+  - product-b
+  - product-c
 ---
 
 import { DirectoryListing } from "~/components";

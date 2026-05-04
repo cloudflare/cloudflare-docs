@@ -9,7 +9,8 @@ import icon from "astro-icon";
 import sitemap from "@astrojs/sitemap";
 import react from "@astrojs/react";
 
-import { readdir } from "fs/promises";
+import { readdir, readFile } from "fs/promises";
+import { join } from "path";
 import { fileURLToPath } from "url";
 
 import remarkValidateImages from "./src/plugins/remark/validate-images";
@@ -24,6 +25,8 @@ import { createSitemapLastmodSerializer } from "./sitemap.serializer.ts";
 
 import skills from "astro-skills";
 
+import { isDisallowedByRobots } from "./src/util/robots.ts";
+
 async function autogenSections() {
 	const sections = (
 		await readdir("./src/content/docs/", {
@@ -31,6 +34,7 @@ async function autogenSections() {
 		})
 	)
 		.filter((x) => x.isDirectory())
+		.filter((x) => !["agent-setup"].includes(x.name))
 		.map((x) => x.name);
 	return sections.map((x) => {
 		return {
@@ -57,8 +61,33 @@ async function autogenStyles() {
 	return styles;
 }
 
+async function getExternalLinkPaths(dir: string): Promise<Set<string>> {
+	const paths = new Set<string>();
+	const entries = await readdir(dir, { withFileTypes: true });
+	for (const entry of entries) {
+		const full = join(dir, entry.name);
+		if (entry.isDirectory()) {
+			for (const p of await getExternalLinkPaths(full)) {
+				paths.add(p);
+			}
+		} else if (entry.name.endsWith(".mdx") || entry.name.endsWith(".md")) {
+			const content = await readFile(full, "utf-8");
+			const match = content.match(/^---\n([\s\S]*?)\n---/);
+			if (match?.[1].includes("external_link:")) {
+				let rel = full.slice("src/content/docs".length);
+				rel = rel.replace(/\.(mdx|md)$/, "");
+				rel = rel.replace(/\/index$/, "/");
+				if (!rel.endsWith("/")) rel += "/";
+				paths.add(rel.toLowerCase());
+			}
+		}
+	}
+	return paths;
+}
+
 const sidebar = await autogenSections();
 const customCss = await autogenStyles();
+const externalLinkPaths = await getExternalLinkPaths("src/content/docs");
 
 const RUN_LINK_CHECK =
 	process.env.RUN_LINK_CHECK?.toLowerCase() === "true" || false;
@@ -126,6 +155,7 @@ export default defineConfig({
 				MarkdownContent: "./src/components/overrides/MarkdownContent.astro",
 				Sidebar: "./src/components/overrides/Sidebar.astro",
 				PageTitle: "./src/components/overrides/PageTitle.astro",
+				SkipLink: "./src/components/overrides/SkipLink.astro",
 				TableOfContents: "./src/components/overrides/TableOfContents.astro",
 			},
 			sidebar,
@@ -135,8 +165,12 @@ export default defineConfig({
 				...(RUN_LINK_CHECK
 					? [
 							starlightLinksValidator({
+								failOnError: false,
 								errorOnInvalidHashes: false,
 								errorOnLocalLinks: false,
+								reporters: {
+									json: true,
+								},
 								exclude: [
 									"/api/",
 									"/api/**",
@@ -144,6 +178,8 @@ export default defineConfig({
 									"/http/resources/**",
 									"/llms.txt",
 									"/llms-full.txt",
+									"**/llms.txt",
+									"**/index.md",
 									"{props.*}",
 									"/",
 									"/glossary/",
@@ -155,10 +191,11 @@ export default defineConfig({
 									"/workers/examples/?tags=*",
 									"/workers/llms-full.txt",
 									"/workers-ai/models/**",
-									"**index.md",
 									"/markdown.zip",
 									"/style-guide/index.md",
-									"/style-guide/fixtures/markdown/index.md",
+									"/videos/**",
+									"/search/**",
+									"/agent-setup/",
 								],
 							}),
 						]
@@ -179,6 +216,7 @@ export default defineConfig({
 			lastUpdated: true,
 			markdown: {
 				headingLinks: false,
+				processedDirs: ["./src/content/partials/", "./src/content/changelog/"],
 			},
 			routeMiddleware: "./src/plugins/starlight/route-data.ts",
 			disable404Route: true,
@@ -192,6 +230,18 @@ export default defineConfig({
 				}
 
 				if (page.endsWith("/404/")) {
+					return false;
+				}
+
+				const pathname = new URL(page).pathname;
+
+				// Exclude external_link pages
+				if (externalLinkPaths.has(pathname)) {
+					return false;
+				}
+
+				// Exclude pages disallowed in robots.txt
+				if (isDisallowedByRobots(pathname)) {
 					return false;
 				}
 
@@ -210,6 +260,12 @@ export default defineConfig({
 				),
 				"../components/Page.astro": fileURLToPath(
 					new URL("./src/components/overrides/Page.astro", import.meta.url),
+				),
+				"./SidebarSublist.astro": fileURLToPath(
+					new URL(
+						"./src/components/overrides/SidebarSublist.astro",
+						import.meta.url,
+					),
 				),
 			},
 		},

@@ -1,0 +1,35 @@
+---
+title: Custom limits
+description: Limit resource usage of dynamic Workers.
+pcx_content_type: how-to
+sidebar:
+  order: 6
+products:
+  - dynamic-workers
+---
+
+Custom limits allow you to programmatically enforce limits on the dynamic Worker's resource usage. You can set limits for the maximum CPU time and number of subrequests per invocation. If a dynamic Worker hits either of these limits, it will immediately throw an exception.
+
+## Set custom limits
+
+Custom limits can be specified as part of the worker code:
+
+```js
+const worker = env.LOADER.get("my-worker", async () => {
+  return {
+    compatibilityDate: "$today",
+    mainModule: "index.js",
+    modules: { "index.js": code },
+    limits: { cpuMs: 10, subRequests: 5 },
+  };
+});
+```
+
+They can also be specified as part of the `getEntrypoint()` call:
+
+```js
+// get the worker's default entrypoint with custom limits
+// if limits were already specified as part of the worker code, the lower of the two limits is used
+const entrypoint = worker.getEntrypoint(null, { limits: { cpuMs: 10, subRequests: 5 } });
+await entrypoint.fetch(...);
+```

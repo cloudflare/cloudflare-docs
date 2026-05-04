@@ -5,6 +5,9 @@ tags:
   - Stripe
 sidebar:
   order: 4
+description: Connect your Stripe account for Pay Per Crawl payments.
+products:
+  - ai-crawl-control
 ---
 
 import { Steps, DashButton } from "~/components";
@@ -20,7 +23,6 @@ classDef highlight fill:#F6821F,color:white
 
 Connect your Cloudflare account to Stripe to process payments. Pay per crawl uses Stripe to process payments between AI crawler owners and site owners.
 
-{/* prettier-ignore */}
 <Steps>
 1. In the Cloudflare dashboard, go to **Manage Account** > **Settings**.
 
@@ -43,6 +45,6 @@ Cloudflare is not responsible for configuring spending limits. Ensure you have c
 
 ## Billing
 
-Charges are recorded upon successful delivery of content that is requested with valid [crawler price headers](/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-ai-owner/crawl-pages/#22-include-payment-headers).
+Charges are recorded upon successful delivery of content that is requested with valid [crawler price headers](/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-ai-owner/crawl-pages/#21-include-payment-headers).
 
 Invoices are created and managed via Stripe. Crawlers are responsible for setting and enforcing their own spending limits.

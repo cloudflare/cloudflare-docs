@@ -1,9 +1,12 @@
 ---
 pcx_content_type: configuration
 title: Scheduled Handler
+description: Run Workers on a recurring schedule using the scheduled() handler and Cron Triggers.
+products:
+  - workers
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, WranglerConfig } from "~/components";
 
 ## Background
 
@@ -13,7 +16,7 @@ When a Worker is invoked via a [Cron Trigger](/workers/configuration/cron-trigge
 
 You can test the behavior of your `scheduled()` handler in local development using Wrangler.
 
-Cron Triggers can be tested using `Wrangler` by passing in the `--test-scheduled` flag to [`wrangler dev`](/workers/wrangler/commands/#dev). This will expose a `/__scheduled` (or `/cdn-cgi/handler/scheduled` for Python Workers) route which can be used to test using a http request. To simulate different cron patterns, a `cron` query parameter can be passed in.
+Cron Triggers can be tested using `Wrangler` by passing in the `--test-scheduled` flag to [`wrangler dev`](/workers/wrangler/commands/general/#dev). This will expose a `/__scheduled` (or `/cdn-cgi/handler/scheduled` for Python Workers) route which can be used to test using a http request. To simulate different cron patterns, a `cron` query parameter can be passed in.
 
 ```sh
 npx wrangler dev --test-scheduled
@@ -82,6 +85,64 @@ class Default(WorkerEntrypoint):
 
 - `ctx` object
   - An object containing the context associated with your Worker using ES modules format. Currently, this object just contains the `waitUntil` function.
+
+### Handle multiple cron triggers
+
+When you configure multiple [Cron Triggers](/workers/configuration/cron-triggers/) for a single Worker, each trigger invokes the same `scheduled()` handler. Use `controller.cron` to distinguish which schedule fired and run different logic for each.
+
+<WranglerConfig>
+
+```jsonc
+{
+	"triggers": {
+		"crons": ["*/5 * * * *", "0 0 * * *"],
+	},
+}
+```
+
+</WranglerConfig>
+
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
+```js
+export default {
+	async scheduled(controller, env, ctx) {
+		switch (controller.cron) {
+			case "*/5 * * * *":
+				ctx.waitUntil(fetch("https://example.com/api/sync"));
+				break;
+			case "0 0 * * *":
+				ctx.waitUntil(env.MY_KV.put("last-cleanup", new Date().toISOString()));
+				break;
+		}
+	},
+};
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+export default {
+	async scheduled(
+		controller: ScheduledController,
+		env: Env,
+		ctx: ExecutionContext,
+	) {
+		switch (controller.cron) {
+			case "*/5 * * * *":
+				ctx.waitUntil(fetch("https://example.com/api/sync"));
+				break;
+			case "0 0 * * *":
+				ctx.waitUntil(env.MY_KV.put("last-cleanup", new Date().toISOString()));
+				break;
+		}
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TabItem> </Tabs>
+
+The value of `controller.cron` is the exact cron expression string from your configuration. It must match character-for-character, including spacing.
 
 ### Methods
 

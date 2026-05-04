@@ -1,0 +1,208 @@
+---
+title: REST API
+description: Create an Artifacts repo over HTTP.
+pcx_content_type: get-started
+sidebar:
+  order: 2
+head:
+  - tag: title
+    content: Get started - REST API
+products:
+  - artifacts
+---
+
+import { LinkCard, Tabs, TabItem } from "~/components";
+
+Create an Artifacts repo with the REST API, then use a regular Git client to push and pull content.
+
+By the end of this guide, you will create a repo inside a namespace, read back the repo remote URL, push a commit, and clone the same repo with a standard Git client.
+
+Start by reading [Namespaces](/artifacts/concepts/namespaces/), then choose the namespace name you will use. This guide uses `default` in the examples.
+
+## Prerequisites
+
+You need:
+
+- Access to Artifacts.
+- A namespace name, for example `default`.
+- A [Cloudflare API token](/fundamentals/api/get-started/create-token/) with **Artifacts** > **Read** and **Artifacts** > **Edit**.
+- A local `git` client.
+- `jq`, if you want to extract response fields automatically.
+
+For Workers-based access instead of direct HTTP calls, use the [Workers get started guide](/artifacts/get-started/workers/).
+
+## 1. Export your environment variables
+
+Set the variables used in the examples:
+
+```sh
+export ARTIFACTS_NAMESPACE="default"
+export ARTIFACTS_REPO="starter-repo"
+export ACCOUNT_ID="<YOUR_ACCOUNT_ID>"
+export CLOUDFLARE_API_TOKEN="<YOUR_API_TOKEN>"
+export ARTIFACTS_BASE_URL="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/artifacts/namespaces/$ARTIFACTS_NAMESPACE"
+```
+
+Use a unique repo name each time you run this guide.
+
+Artifacts uses Bearer authentication for control-plane requests:
+
+```txt
+Authorization: Bearer $CLOUDFLARE_API_TOKEN
+```
+
+## 2. Create a repo
+
+Choose one of the following ways to create a repo inside that namespace:
+
+<Tabs>
+	<TabItem label="Manual">
+
+```bash
+curl --request POST "$ARTIFACTS_BASE_URL/repos" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data "{\"name\":\"$ARTIFACTS_REPO\"}"
+```
+
+The response resembles the following:
+
+```json
+{
+	"result": {
+		"id": "repo_123",
+		"name": "starter-repo",
+		"description": null,
+		"default_branch": "main",
+		"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/starter-repo.git",
+		"token": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
+}
+```
+
+The REST control-plane base URL and the returned Git remote use different hosts. Use the exact `result.remote` value for Git operations. The example above uses `<ACCOUNT_ID>` as a placeholder for your Cloudflare account ID.
+
+The returned token encodes its expiry directly in the `?expires=` suffix.
+
+Copy the `remote` and `token` values from `result` into local shell variables:
+
+```sh
+export ARTIFACTS_REMOTE="<PASTE_RESULT_REMOTE_FROM_RESPONSE>"
+export ARTIFACTS_TOKEN="<PASTE_RESULT_TOKEN_FROM_RESPONSE>"
+```
+
+	</TabItem>
+	<TabItem label="jq">
+
+Capture the create response once and extract the fields with `jq`:
+
+```bash
+CREATE_RESPONSE=$(curl --silent --request POST "$ARTIFACTS_BASE_URL/repos" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data "{\"name\":\"$ARTIFACTS_REPO\"}")
+
+export ARTIFACTS_REMOTE=$(printf '%s' "$CREATE_RESPONSE" | jq -r '.result.remote')
+export ARTIFACTS_TOKEN=$(printf '%s' "$CREATE_RESPONSE" | jq -r '.result.token')
+```
+
+	</TabItem>
+
+</Tabs>
+
+## 3. Get the repo URL again
+
+Fetch the repo metadata when you need to recover the remote URL later:
+
+```bash
+curl "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+```json
+{
+	"result": {
+		"id": "repo_123",
+		"name": "starter-repo",
+		"description": null,
+		"default_branch": "main",
+		"created_at": "<ISO_TIMESTAMP>",
+		"updated_at": "<ISO_TIMESTAMP>",
+		"last_push_at": null,
+		"source": null,
+		"read_only": false,
+		"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/starter-repo.git"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
+}
+```
+
+This endpoint returns repo metadata only. If you need a new repo token, mint one with `POST /tokens`.
+
+## 4. Push your first commit with git
+
+Create a local repository and push it to the Artifacts remote:
+
+```sh
+mkdir artifacts-demo
+cd artifacts-demo
+git init -b main
+printf '# Artifacts demo\n' > README.md
+git add README.md
+git commit -m "Initial commit"
+git remote add origin "$ARTIFACTS_REMOTE"
+git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" push -u origin main
+```
+
+This uses the recommended header-based form and keeps the token out of the remote URL.
+
+If you need a self-contained remote URL for a short-lived command, build one from the token secret instead:
+
+```sh
+export ARTIFACTS_TOKEN_SECRET="${ARTIFACTS_TOKEN%%\?expires=*}"
+export ARTIFACTS_AUTH_REMOTE="https://x:${ARTIFACTS_TOKEN_SECRET}@${ARTIFACTS_REMOTE#https://}"
+git push "$ARTIFACTS_AUTH_REMOTE" HEAD:main
+```
+
+## 5. Pull the repo with a regular git client
+
+Clone the same repo into a second directory:
+
+```sh
+cd ..
+git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" clone "$ARTIFACTS_REMOTE" artifacts-clone
+git -C artifacts-clone log --oneline -1
+```
+
+You should see the commit you pushed in the previous step.
+
+You can also clone with a self-contained remote URL for a short-lived command:
+
+```sh
+git clone "$ARTIFACTS_AUTH_REMOTE" artifacts-clone
+```
+
+## Next steps
+
+<LinkCard
+	title="REST API reference"
+	href="/artifacts/api/rest-api/"
+	description="Review every repo and token endpoint with request and response examples."
+/>
+
+<LinkCard
+	title="Git client example"
+	href="/artifacts/examples/git-client/"
+	description="Use repo discovery and token minting with a standard Git client flow."
+/>
+
+<LinkCard
+	title="Best practices"
+	href="/artifacts/concepts/best-practices/"
+	description="Use repo isolation, least-privilege tokens, and namespace separation effectively."
+/>

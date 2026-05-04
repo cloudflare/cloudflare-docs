@@ -1,0 +1,40 @@
+---
+pcx_content_type: reference
+title: RtkIdleScreen
+description: API reference for RtkIdleScreen component (React Native Library)
+products:
+  - realtime
+---
+
+Loading/idle screen displayed while the meeting is initializing, showing a logo and spinner.
+
+## Properties
+
+| Property | Type       | Required | Default | Description                                 |
+| -------- | ---------- | -------- | ------- | ------------------------------------------- |
+| `config` | `UIConfig` | ✅       | -       | UI configuration object (used for logo URL) |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkIdleScreen } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkIdleScreen config={config} />;
+}
+```
+
+### With Properties
+
+```tsx
+import {
+	RtkIdleScreen,
+	defaultConfig,
+} from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkIdleScreen config={defaultConfig} />;
+}
+```

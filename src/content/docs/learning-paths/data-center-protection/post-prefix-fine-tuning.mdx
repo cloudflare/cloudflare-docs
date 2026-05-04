@@ -3,6 +3,10 @@ title: Post prefix advertisement monitoring and fine tuning
 pcx_content_type: reference
 sidebar:
   order: 10
+description: Learn about post prefix advertisement monitoring and fine tuning in this guide.
+products:
+  - magic-transit
+  - ddos-protection
 ---
 
 On this page, you can find suggestions to monitor your prefix advertisements and fine-tune them.
@@ -34,11 +38,11 @@ Refer to Cloudflare Network Firewall's [best practices](/cloudflare-network-fire
 ## Alerts for Magic Tunnel health checks and DDoS
 
 - Ensure all teams/members needing to receive these are getting the alerts.
-- Check the Magic Tunnel Health Check Alert configuration for Sensitivity and Alert interval and tunnels in-scope.
-- Refer to [Set up Magic Tunnel health alerts](/learning-paths/data-center-protection/enable-notifications/#set-up-magic-tunnel-health-alerts) and [DDoS alerts](/ddos-protection/reference/alerts/) for more details.
+- Check the Tunnel Health Check Alert configuration for Sensitivity and Alert interval and tunnels in-scope.
+- Refer to [Set up tunnel health alerts](/learning-paths/data-center-protection/enable-notifications/#set-up-tunnel-health-alerts) and [DDoS alerts](/ddos-protection/reference/alerts/) for more details.
 
 ## Optional
 
 - Enable [Logpush](/logs/logpush/) to your Security Information and Event Management (SIEM).
-- Enable Cloudflare Network Firewall's [Intrusion Detection System (IDS)](/cloudflare-network-firewall/about/ids/). Requires Logpush and is only available for accounts with [Advanced Cloudflare Network Firewall](/cloudflare-network-firewall/plans/#advanced-features).
+- Enable Cloudflare Network Firewall's [Intrusion Detection System (IDS)](/cloudflare-network-firewall/about/ids/). Requires Logpush and is only available for accounts with [Cloudflare Advanced Network Firewall](/cloudflare-network-firewall/plans/#advanced-features).
 - Use [Network Flow](/network-flow/) (formerly Magic Network Monitoring) for visibility into traffic on your non-Magic Transit prefixes, using NetFlow or sFlow from your CPEs.

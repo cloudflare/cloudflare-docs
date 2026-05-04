@@ -14,19 +14,19 @@ To customize the default settings:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Team & Resources** > **Devices** > **Device profiles** > **General profiles**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Team & Resources** > **Devices** > **Device profiles** > **General profiles**.
 
 2. Select the **Default** profile and select **Edit*.
 
-3. Many users running Cloudflare Zero Trust {props.one} have a default profile that resembles the following. Refer to [WARP client settings](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/) for a description of each setting.
+3. Many users running Cloudflare Zero Trust {props.one} have a default profile that resembles the following. Refer to [Cloudflare One Client settings](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/) for a description of each setting.
 
    | Setting                              | State                   | Notes                                                                                                                                                                                                                                                                                          |
    | ------------------------------------ | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
    | Captive portal detection             | Enabled                 |                                                                                                                                                                                                                                                                                                |
    | Mode switch                          | Disabled                | If enabled, users have the option to switch to a DNS-only security mode and lose access to your private network. {props.two}                                                                                                                                                                   |
-   | Lock WARP switch                     | Enabled                 | Should be enabled unless users have an explicit reason to disable WARP, such as a conflicting VPN client on the device or other extenuating circumstances. If disabled for concerns about user experience, **Auto Connect** should be enabled and set on a short interval, like 10-15 minutes. |
+   | Lock device client switch            | Enabled                 | Should be enabled unless users have an explicit reason to disable the device client, such as a conflicting VPN client on the device or other extenuating circumstances. If disabled for concerns about user experience, **Auto Connect** should be enabled and set on a short interval, like 10-15 minutes. |
    | Allow device to leave organization   | Disabled                |                                                                                                                                                                                                                                                                                                |
-   | Allow updates                        | Disabled                | Usually disabled on managed devices. If enabled, users who are local administrators on their device can update the WARP client on their own — this can introduce version consistency control issues if WARP versions are centrally managed by IT.                                              |
+   | Allow updates                        | Disabled                | Usually disabled on managed devices. If enabled, users who are local administrators on their device can update the Cloudflare One Client on their own — this can introduce version consistency control issues if client versions are centrally managed by IT.                                              |
    | Auto connect                         | Enabled                 | Timeout is usually set between 10min - 30min.                                                                                                                                                                                                                                                  |
    | Support URL                          | Enabled                 |                                                                                                                                                                                                                                                                                                |
    | Service mode                         | Traffic and DNS mode       | Proxies device traffic to Cloudflare according to your Split Tunnel rules.                                                                                                                                                                                                                     |
@@ -36,8 +36,8 @@ To customize the default settings:
 
 4. Save the profile.
 
-5. Configure [global settings](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#global-settings) for all device profiles:
-   1. (Recommended) Enable **Admin override code** if you turned on **Lock WARP switch**.
+5. Configure [global settings](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#global-settings) for all device profiles:
+   1. (Recommended) Enable **Admin override code** if you turned on **Lock device client switch**.
    2. Enable **Install CA to system certificate store** if you want users to see a [custom block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/).
 
 </TabItem>
@@ -105,7 +105,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/devices/settings \
 	}
 	```
 
-3. Configure [global settings](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#global-settings) using the [`cloudflare_zero_trust_device_settings`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_device_settings) resource:
+3. Configure [global settings](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#global-settings) using the [`cloudflare_zero_trust_device_settings`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_device_settings) resource:
 
 	```tf
 	resource "cloudflare_zero_trust_device_settings" "global_warp_settings" {
@@ -123,4 +123,4 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/devices/settings \
 
 You can configure a device settings profile to take effect when the device is connected to a trusted network such as an office. For example, you may wish to allow users in the office to access applications directly rather than route traffic through Cloudflare.
 
-For setup instructions, refer to [Add a managed network](/cloudflare-one/team-and-resources/devices/warp/configure-warp/managed-networks/).
+For setup instructions, refer to [Add a managed network](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/managed-networks/).

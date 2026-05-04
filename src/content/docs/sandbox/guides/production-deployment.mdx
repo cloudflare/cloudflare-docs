@@ -1,9 +1,11 @@
 ---
-title: Deploy to Production
+title: Deploy to production
 pcx_content_type: how-to
 sidebar:
   order: 10
 description: Set up custom domains for preview URLs in production.
+products:
+  - sandbox
 ---
 
 import { WranglerConfig } from "~/components";
@@ -87,7 +89,7 @@ const sandbox = getSandbox(env.Sandbox, 'test-sandbox');
 await sandbox.startProcess('python -m http.server 8080');
 const exposed = await sandbox.exposePort(8080, { hostname });
 
-console.log(exposed.exposedAt);
+console.log(exposed.url);
 // https://8080-test-sandbox.yourdomain.com
 ```
 

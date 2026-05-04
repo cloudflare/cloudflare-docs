@@ -1,8 +1,11 @@
 ---
 title: Schedule tasks
-pcx_content_type: concept
+description: Schedule delayed, date-based, cron, and interval tasks on Agents with persistent SQLite-backed execution.
+pcx_content_type: reference
 sidebar:
   order: 10
+products:
+  - agents
 ---
 
 import { TypeScriptExample, LinkCard } from "~/components";
@@ -186,6 +189,8 @@ await this.schedule("0 0 1 * *", "monthlyCleanup", {});
 - Health checks
 - Subscription renewals
 
+Cron schedules are idempotent by default — calling `schedule()` with the same cron expression, callback, and payload multiple times returns the existing schedule instead of creating a duplicate. This makes cron schedules safe to set up in `onStart()`.
+
 ### Interval
 
 Use `scheduleEvery()` to run a task at fixed intervals (in seconds). Unlike cron, intervals support sub-minute precision and arbitrary durations:
@@ -213,6 +218,25 @@ await this.scheduleEvery(90, "syncData", { destination: "warehouse" });
 | Arbitrary intervals | No (must fit cron pattern)            | Yes                    |
 | Fixed schedule      | Yes (for example, "every day at 8am") | No (relative to start) |
 | Overlap prevention  | No                                    | Yes (built-in)         |
+
+**Idempotency:**
+
+`scheduleEvery()` is idempotent on the combination of callback name, interval, and payload — calling it multiple times with the same arguments does not create duplicate schedules. This makes it safe to call in `onStart()`, which runs on every Durable Object wake:
+
+<TypeScriptExample>
+
+```ts
+class MyAgent extends Agent {
+	async onStart() {
+		// Safe to call on every wake — only one schedule is created
+		await this.scheduleEvery(30, "poll", { source: "api" });
+	}
+}
+```
+
+</TypeScriptExample>
+
+A different interval or payload creates a new, independent schedule.
 
 **Overlap prevention:**
 
@@ -277,7 +301,7 @@ Retrieve a scheduled task by its ID:
 <TypeScriptExample>
 
 ```ts
-const schedule = await this.getSchedule(scheduleId);
+const schedule = await this.getScheduleById(scheduleId);
 
 if (schedule) {
 	console.log(
@@ -300,13 +324,13 @@ Query scheduled tasks with optional filters:
 
 ```ts
 // Get all scheduled tasks
-const allSchedules = this.getSchedules();
+const allSchedules = await this.listSchedules();
 
 // Get only cron jobs
-const cronJobs = this.getSchedules({ type: "cron" });
+const cronJobs = await this.listSchedules({ type: "cron" });
 
 // Get tasks in the next hour
-const upcoming = this.getSchedules({
+const upcoming = await this.listSchedules({
 	timeRange: {
 		start: new Date(),
 		end: new Date(Date.now() + 60 * 60 * 1000),
@@ -314,10 +338,10 @@ const upcoming = this.getSchedules({
 });
 
 // Get a specific task by ID
-const specific = this.getSchedules({ id: "abc123" });
+const specific = await this.listSchedules({ id: "abc123" });
 
 // Combine filters
-const upcomingCronJobs = this.getSchedules({
+const upcomingCronJobs = await this.listSchedules({
 	type: "cron",
 	timeRange: {
 		start: new Date(),
@@ -454,7 +478,7 @@ class PollingAgent extends Agent {
 
 	async stopPolling() {
 		// Cancel all polling schedules
-		const schedules = this.getSchedules({ type: "delayed" });
+		const schedules = await this.listSchedules({ type: "delayed" });
 		for (const schedule of schedules) {
 			if (schedule.callback === "poll") {
 				await this.cancelSchedule(schedule.id);
@@ -668,7 +692,8 @@ Use Workflows when:
 async schedule<T>(
   when: Date | string | number,
   callback: keyof this,
-  payload?: T
+  payload?: T,
+  options?: { retry?: RetryOptions; idempotent?: boolean }
 ): Promise<Schedule<T>>
 ```
 
@@ -679,8 +704,29 @@ Schedule a task for future execution.
 - `when` - When to execute: `number` (seconds delay), `Date` (specific time), or `string` (cron expression)
 - `callback` - Name of the method to call
 - `payload` - Data to pass to the callback (must be JSON-serializable)
+- `options.retry` - Optional retry configuration. Refer to [Retries](/agents/api-reference/retries/) for details
+- `options.idempotent` - Deduplicate by callback + payload. Defaults to `true` for cron schedules, `false` for delayed and Date-based schedules
 
 **Returns:** A `Schedule` object with the task details
+
+**Idempotency:**
+
+Cron schedules are idempotent by default — calling `schedule("0 * * * *", "tick")` multiple times with the same callback, cron expression, and payload returns the existing schedule instead of creating a duplicate. Set `idempotent: false` to override this.
+
+For delayed and Date-based schedules, set `idempotent: true` to opt in to the same dedup behavior (matched on callback + payload). This is especially useful when calling `schedule()` in `onStart()` to avoid accumulating duplicate rows across Durable Object restarts:
+
+<TypeScriptExample>
+
+```ts
+class MyAgent extends Agent {
+	async onStart() {
+		// Without idempotent: true, this creates a new row on every DO restart
+		await this.schedule(3600, "hourlyCleanup", {}, { idempotent: true });
+	}
+}
+```
+
+</TypeScriptExample>
 
 :::caution
 
@@ -694,7 +740,8 @@ Tasks that set a callback for a method that does not exist will throw an excepti
 async scheduleEvery<T>(
   intervalSeconds: number,
   callback: keyof this,
-  payload?: T
+  payload?: T,
+  options?: { retry?: RetryOptions }
 ): Promise<Schedule<T>>
 ```
 
@@ -705,6 +752,7 @@ Schedule a task to run repeatedly at a fixed interval.
 - `intervalSeconds` - Number of seconds between executions (must be greater than 0)
 - `callback` - Name of the method to call
 - `payload` - Data to pass to the callback (must be JSON-serializable)
+- `options.retry` - Optional retry configuration. Refer to [Retries](/agents/api-reference/retries/) for details.
 
 **Returns:** A `Schedule` object with `type: "interval"`
 
@@ -715,13 +763,33 @@ Schedule a task to run repeatedly at a fixed interval.
 - If callback throws an error, the interval continues
 - Cancel with `cancelSchedule(id)` to stop the entire interval
 
+### `getScheduleById()`
+
+```ts
+async getScheduleById(id: string): Promise<Schedule<unknown> | undefined>
+```
+
+Get a scheduled task by ID. Returns `undefined` if not found. This method works in both top-level agents and sub-agents.
+
+### `listSchedules()`
+
+```ts
+async listSchedules(criteria?: {
+  id?: string;
+  type?: "scheduled" | "delayed" | "cron" | "interval";
+  timeRange?: { start?: Date; end?: Date };
+}): Promise<Schedule<unknown>[]>
+```
+
+Get scheduled tasks matching the criteria. This method works in both top-level agents and sub-agents.
+
 ### `getSchedule()`
 
 ```ts
 getSchedule<T>(id: string): Schedule<T> | undefined
 ```
 
-Get a scheduled task by ID. Returns `undefined` if not found. This method is synchronous.
+Deprecated. Get a scheduled task by ID synchronously. This method only works in top-level agents. Use `await this.getScheduleById(id)` instead.
 
 ### `getSchedules()`
 
@@ -733,7 +801,7 @@ getSchedules<T>(criteria?: {
 }): Schedule<T>[]
 ```
 
-Get scheduled tasks matching the criteria. This method is synchronous.
+Deprecated. Get scheduled tasks matching the criteria synchronously. This method only works in top-level agents. Use `await this.listSchedules(criteria)` instead.
 
 ### `cancelSchedule()`
 
@@ -742,6 +810,97 @@ async cancelSchedule(id: string): Promise<boolean>
 ```
 
 Cancel a scheduled task. Returns `true` if cancelled, `false` if not found.
+
+### `keepAlive()`
+
+```ts
+async keepAlive(): Promise<() => void>
+```
+
+Prevent the Durable Object from being evicted due to inactivity by holding a 30-second alarm-backed heartbeat reference. Returns a disposer function that releases the heartbeat when called. The disposer is idempotent — calling it multiple times is safe.
+
+Always call the disposer when the work is done — otherwise the heartbeat continues indefinitely.
+
+<TypeScriptExample>
+
+```ts
+const dispose = await this.keepAlive();
+try {
+	// Long-running work that must not be interrupted
+	const result = await longRunningComputation();
+	await sendResults(result);
+} finally {
+	dispose();
+}
+```
+
+</TypeScriptExample>
+
+### `keepAliveWhile()`
+
+```ts
+async keepAliveWhile<T>(fn: () => Promise<T>): Promise<T>
+```
+
+Run an async function while keeping the Durable Object alive. The heartbeat is automatically started before the function runs and stopped when it completes (whether it succeeds or throws). Returns the value returned by the function.
+
+This is the recommended way to use `keepAlive` — it guarantees cleanup.
+
+<TypeScriptExample>
+
+```ts
+const result = await this.keepAliveWhile(async () => {
+	const data = await longRunningComputation();
+	return data;
+});
+```
+
+</TypeScriptExample>
+
+## Keeping the agent alive
+
+Durable Objects are evicted after a period of inactivity (typically 70-140 seconds with no incoming requests, WebSocket messages, or alarms). During long-running operations — streaming LLM responses, waiting on external APIs, running multi-step computations — the agent can be evicted mid-flight.
+
+`keepAlive()` prevents this by holding an in-memory heartbeat reference and using the Durable Object alarm system directly. The alarm firing itself resets the inactivity timer.
+
+- The heartbeat does not conflict with your own schedules because the alarm system multiplexes through a single alarm slot.
+- No schedule rows are created, and the heartbeat is invisible to `listSchedules()`.
+- Multiple concurrent `keepAlive()` calls use a reference count, so one disposer does not release another caller's heartbeat.
+- Inside sub-agents, `keepAlive()` delegates that heartbeat reference to the top-level parent because facets do not have independent alarm slots.
+
+### Multiple concurrent callers
+
+Each `keepAlive()` call returns an independent disposer:
+
+<TypeScriptExample>
+
+```ts
+const dispose1 = await this.keepAlive();
+const dispose2 = await this.keepAlive();
+
+// Both heartbeats are active
+dispose1(); // Only cancels the first heartbeat
+// Agent is still alive via dispose2's heartbeat
+
+dispose2(); // Now the agent can go idle
+```
+
+</TypeScriptExample>
+
+### AIChatAgent
+
+`AIChatAgent` automatically calls `keepAlive()` during streaming responses. You do not need to add it yourself when using `AIChatAgent` — every LLM stream is protected from idle eviction by default.
+
+### When to use keepAlive
+
+| Scenario                                    | Use keepAlive?                         |
+| ------------------------------------------- | -------------------------------------- |
+| Streaming LLM responses via `AIChatAgent`   | No — already built in                  |
+| Long-running computation in a custom Agent  | Yes                                    |
+| Waiting on a slow external API call         | Yes                                    |
+| Multi-step tool execution                   | Yes                                    |
+| Short request-response handlers             | No — not needed                        |
+| Background work via scheduling or workflows | No — alarms already keep the DO active |
 
 ## Limits
 
@@ -754,6 +913,12 @@ Cancel a scheduled task. Returns `true` if cancelled, `false` if not found.
 - **Interval jobs:** After execution, rescheduled for `now + intervalSeconds`; skipped if still running
 
 ## Next steps
+
+<LinkCard
+	title="Push notifications"
+	href="/agents/guides/push-notifications/"
+	description="Send browser push notifications using scheduling and web-push."
+/>
 
 <LinkCard
 	title="Queue tasks"

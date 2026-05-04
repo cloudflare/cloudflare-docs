@@ -1,0 +1,64 @@
+---
+pcx_content_type: reference
+title: RtkMoreMenu
+description: API reference for RtkMoreMenu component (iOS Library)
+products:
+  - realtime
+---
+
+A bottom sheet menu that displays meeting action options such as chat, polls, and participant list.
+
+## Initializer parameters
+
+| Parameter  | Type                           | Required | Default | Description                                      |
+| ---------- | ------------------------------ | -------- | ------- | ------------------------------------------------ |
+| `title`    | `String?`                      | ❌       | `nil`   | Optional title displayed at the top of the menu  |
+| `features` | `[MenuType]`                   | ✅       | -       | Array of menu items to display                   |
+| `onSelect` | `@escaping (MenuType) -> Void` | ✅       | -       | Closure called when the user selects a menu item |
+
+## Methods
+
+| Method                    | Return Type | Description                                                   |
+| ------------------------- | ----------- | ------------------------------------------------------------- |
+| `show(on:)`               | `Void`      | Presents the menu as a bottom sheet on the specified `UIView` |
+| `reload(title:features:)` | `Void`      | Reloads the menu with a new title and set of features         |
+
+## Usage Examples
+
+### Basic Usage
+
+```swift
+import RealtimeKitUI
+
+let menu = RtkMoreMenu(
+    features: [.chat, .polls, .participants],
+    onSelect: { menuType in
+        print("Selected: \(menuType)")
+    }
+)
+menu.show(on: self.view)
+```
+
+### With title
+
+```swift
+import RealtimeKitUI
+
+let menu = RtkMoreMenu(
+    title: "More Options",
+    features: [.chat, .polls, .participants],
+    onSelect: { menuType in
+        switch menuType {
+        case .chat:
+            print("Open chat")
+        case .polls:
+            print("Open polls")
+        case .participants:
+            print("Open participants")
+        default:
+            break
+        }
+    }
+)
+menu.show(on: self.view)
+```

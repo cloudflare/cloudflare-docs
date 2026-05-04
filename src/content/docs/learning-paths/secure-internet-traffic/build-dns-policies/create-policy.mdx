@@ -3,13 +3,20 @@ title: Create your first DNS policy
 pcx_content_type: learning-unit
 sidebar:
   order: 1
+description: Build your first Gateway DNS policy.
+products:
+  - gateway
+  - cloudflare-one
+  - dlp
+  - casb
+  - browser-isolation
 ---
 
 import { Render, Tabs, TabItem, APIRequest } from "~/components";
 
 DNS policies determine how Gateway should handle a DNS request. When a user sends a DNS request, Gateway matches the request against your filters and either allows the query to resolve, blocks the query, or responds to the query with a different IP.
 
-You can filter DNS traffic based on query or response parameters (such as domain, source IP, or geolocation). You can also filter by user identity if you connect your devices to Gateway with the [WARP client or Cloudflare One Agent](/learning-paths/secure-internet-traffic/connect-devices-networks/install-agent/).
+You can filter DNS traffic based on query or response parameters (such as domain, source IP, or geolocation). You can also filter by user identity if you connect your devices to Gateway with the [Cloudflare One Client or Cloudflare One Agent](/learning-paths/secure-internet-traffic/connect-devices-networks/install-agent/).
 
 To create a new DNS policy:
 
@@ -17,7 +24,7 @@ To create a new DNS policy:
 
 <TabItem label="Dashboard">
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Firewall policies**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Traffic policies** > **Firewall policies**.
 2. In the **DNS** tab, select **Add a policy**.
 3. Name the policy.
 4. Under **Traffic**, build a logical expression that defines the traffic you want to allow or block.

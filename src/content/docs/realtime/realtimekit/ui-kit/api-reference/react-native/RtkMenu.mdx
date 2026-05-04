@@ -1,0 +1,47 @@
+---
+pcx_content_type: reference
+title: RtkMenu
+description: API reference for RtkMenu component (React Native Library)
+products:
+  - realtime
+---
+
+A menu container component with placement options.
+
+## Properties
+
+| Property    | Type                                                                                                                                                                 | Required | Default | Description                        |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ------- | ---------------------------------- |
+| `children`  | `ReactNode`                                                                                                                                                          | ✅       | -       | Menu content                       |
+| `size`      | `'lg' \| 'md' \| 'sm' \| 'xl'`                                                                                                                                       | ✅       | -       | Size variant                       |
+| `placement` | `'bottom' \| 'bottom-end' \| 'bottom-start' \| 'left' \| 'left-end' \| 'left-start' \| 'right' \| 'right-end' \| 'right-start' \| 'top' \| 'top-end' \| 'top-start'` | ✅       | -       | Menu placement relative to trigger |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkMenu } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return (
+		<RtkMenu size="md" placement="bottom">
+			<Text>Menu content</Text>
+		</RtkMenu>
+	);
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkMenu } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return (
+		<RtkMenu size="lg" placement="bottom-start">
+			<Text>Menu content</Text>
+		</RtkMenu>
+	);
+}
+```

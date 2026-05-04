@@ -1,0 +1,40 @@
+---
+pcx_content_type: reference
+title: RtkAvatar
+description: API reference for RtkAvatar component (React Native Library)
+products:
+  - realtime
+---
+
+Displays a participant's avatar image or initials-based fallback avatar.
+
+## Properties
+
+| Property      | Type                                  | Required | Default           | Description                             |
+| ------------- | ------------------------------------- | -------- | ----------------- | --------------------------------------- |
+| `participant` | `RTKParticipant \| RTKSelf`           | ✅       | -                 | The participant whose avatar to display |
+| `iconPack`    | `IconPack`                            | ❌       | `defaultIconPack` | Custom icon pack                        |
+| `size`        | `'lg' \| 'md' \| 'sm' \| 'xl'`        | ❌       | `'sm'`            | Size of the avatar                      |
+| `variant`     | `'circular' \| 'hexagon' \| 'square'` | ❌       | `'circular'`      | Shape variant of the avatar             |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkAvatar } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkAvatar participant={participant} />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkAvatar } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkAvatar participant={participant} size="lg" variant="circular" />;
+}
+```

@@ -1,5 +1,8 @@
 ---
 pcx_content_type: troubleshooting
+description: Troubleshoot WAF managed rules false positives and configuration issues.
+products:
+  - waf
 title: Troubleshoot managed rules
 sidebar:
   order: 4
@@ -67,3 +70,11 @@ To reduce false negatives, use the following checklist:
 
 - Is the malicious traffic reaching your origin IP addresses directly, therefore bypassing Cloudflare protection?<br/>
   Block all traffic except from [Cloudflare's IP addresses](/fundamentals/concepts/cloudflare-ip-addresses/) at your origin server.
+
+### Additional recommendations
+
+If WAF's managed rulesets do not detect a specific attack pattern after verifying the above, consider the following:
+
+- Use [WAF attack score](/waf/detections/attack-score/) to complement signature-based managed rules with machine-learning detection. Attack score classifies each request with a score indicating the likelihood it is malicious, even when no managed rule matches.
+
+- Create a [custom rule](/waf/custom-rules/) to block the specific attack pattern. Use fields such as URI path, query string, or HTTP request headers to match the malicious requests.

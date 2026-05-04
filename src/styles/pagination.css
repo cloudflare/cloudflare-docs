@@ -1,7 +1,7 @@
 .pagination-links {
 	display: flex !important;
 	justify-content: space-between;
-	margin-top: 3rem;
+	margin-top: var(--layout-space-12, 3rem);
 
 	& > a {
 		flex-basis: unset;

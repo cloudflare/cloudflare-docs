@@ -1,16 +1,23 @@
 ---
 pcx_content_type: reference
+description: Reference information for Common policies in Gateway.
+products:
+  - cloudflare-one
 title: Common policies
 sidebar:
   order: 1
 head:
   - tag: title
     content: Common HTTP policies
+tags:
+  - REST API
+  - WebSockets
+  - Google
 ---
 
 import { Render, Tabs, TabItem, APIRequest } from "~/components";
 
-The following policies are commonly used to secure HTTP traffic.
+The following policies are commonly used to secure HTTP traffic. HTTP policies are evaluated in order from top to bottom, and the first matching policy applies — except for [Do Not Inspect](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) policies, which are always evaluated first.
 
 For a baseline set of recommended policies, refer to [Secure your Internet traffic and SaaS apps](/learning-paths/secure-internet-traffic/build-http-policies/recommended-http-policies/).
 
@@ -33,6 +40,8 @@ Block all subdomains that use a host.
 </TabItem>
 
 <TabItem label="API">
+
+In the following API examples, `filters: ["http"]` indicates that this is an HTTP (Layer 7) policy.
 
 <APIRequest
 	path="/accounts/{account_id}/gateway/rules"
@@ -135,9 +144,9 @@ Block content categories which go against your organization's acceptable use pol
 
 ## Skip inspection for groups of applications
 
-Certain client applications, such as Zoom or Apple services, rely on certificate pinning. The [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) performed by Cloudflare Gateway will cause errors when users visit those applications. To avoid this behavior, you must add a Do Not Inspect HTTP policy.
+Certain client applications, such as Zoom or Apple services, rely on certificate pinning. These applications verify they are connecting directly to their own servers and will reject Gateway's TLS inspection certificate. To avoid connection errors, you must add a Do Not Inspect HTTP policy for these applications.
 
-Gateway [evaluates Do Not Inspect policies first](/cloudflare-one/traffic-policies/order-of-enforcement/#http-policies). We recommend moving your Do Not Inspect policies to the top of the list to reduce confusion.
+Gateway [evaluates Do Not Inspect policies first](/cloudflare-one/traffic-policies/order-of-enforcement/#http-policies), regardless of their position in the policy list. Cloudflare recommends moving your Do Not Inspect policies to the top of the list to reduce confusion.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -177,7 +186,7 @@ Require devices to have certain software installed or other configuration attrib
 
 ### Enforce a minimum OS version
 
-Perform an [OS version check](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/os-version/) to ensure users are running at least a minimum version.
+Perform an [OS version check](/cloudflare-one/reusable-components/posture-checks/client-checks/os-version/) to ensure users are running at least a minimum version.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -211,7 +220,7 @@ To get the UUIDs of your device posture checks, use the [List device posture rul
 
 ### Check for a specific file
 
-Perform a [file check](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/file-check/) to ensure users have a certain file on their device.
+Perform a [file check](/cloudflare-one/reusable-components/posture-checks/client-checks/file-check/) to ensure users have a certain file on their device.
 
 Since the file path will be different for each operating system, you can configure a file check for each system and use the **Or** logical operator to only require one of the checks to pass.
 
@@ -249,7 +258,7 @@ To get the UUIDs of your device posture checks, use the [List device posture rul
 
 ## Enforce session duration
 
-[Require users to re-authenticate](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-sessions/) after a certain amount of time has elapsed.
+[Require users to re-authenticate](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/) after a certain amount of time has elapsed.
 
 ## Isolate high risk sites in remote browser
 

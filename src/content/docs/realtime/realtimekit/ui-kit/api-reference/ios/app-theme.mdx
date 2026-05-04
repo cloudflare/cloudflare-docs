@@ -1,0 +1,47 @@
+---
+pcx_content_type: reference
+title: AppTheme
+description: API reference for AppTheme component (iOS Library)
+products:
+  - realtime
+---
+
+The application theme singleton that provides pre-configured appearance objects for UI components.
+Use `AppTheme.shared` to access default appearances or call `setUp(theme:)` to apply a custom theme.
+
+## Access
+
+```swift
+let theme = AppTheme.shared
+```
+
+## Methods
+
+| Method                           | Return Type | Description                                             |
+| -------------------------------- | ----------- | ------------------------------------------------------- |
+| `setUp(theme: AppThemeProtocol)` | `Void`      | Applies a custom theme conforming to `AppThemeProtocol` |
+
+## Usage Examples
+
+### Access default theme
+
+```swift
+import RealtimeKitUI
+
+let theme = AppTheme.shared
+let titleAppearance = theme.meetingTitleAppearance
+let clockAppearance = theme.clockViewAppearance
+```
+
+### Apply a custom theme
+
+```swift
+import RealtimeKitUI
+
+class CustomTheme: AppThemeProtocol {
+    // Implement required appearance properties
+}
+
+let customTheme = CustomTheme()
+AppTheme.shared.setUp(theme: customTheme)
+```

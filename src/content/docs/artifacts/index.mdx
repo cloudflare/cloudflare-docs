@@ -1,0 +1,82 @@
+---
+title: Artifacts
+description: Store, version, and share filesystem artifacts across Workers, APIs, and Git-compatible tools.
+pcx_content_type: overview
+sidebar:
+  order: 1
+  badge:
+    text: Beta
+head:
+  - tag: title
+    content: Artifacts
+products:
+  - artifacts
+---
+
+import { CardGrid, Description, LinkTitleCard } from "~/components";
+
+<Description>
+
+Versioned storage that speaks Git.
+
+</Description>
+
+:::note
+
+Artifacts is in beta. Refer to [How Artifacts works](/artifacts/concepts/how-artifacts-works/) for the architecture overview.
+
+:::
+
+Artifacts stores versioned file trees behind a Git-compatible interface. Create repositories programmatically, import existing repositories, and hand off a URL to any standard Git client.
+
+Review [Namespaces](/artifacts/concepts/namespaces/) before you start, then choose the namespace name you will use for these repos.
+
+Use Artifacts when you need to:
+
+- Store versioned file trees instead of raw blobs
+- Hand off work to Git-aware tools, agents, and automation
+- Isolate work in separate repos or branches for safer parallel execution
+- Fork from a shared baseline and diff or merge the results later
+
+The same repository can be addressed from [Workers](/artifacts/get-started/workers/), the REST API, and Git clients. You can create one repo per agent, user, branch, or task, keep each unit of work separate, and compare or merge the results later.
+
+
+<CardGrid>
+
+<LinkTitleCard
+	title="Get started"
+	href="/artifacts/get-started/"
+	icon="open-book"
+>
+	Create your first repo with Workers or the REST API.
+</LinkTitleCard>
+
+<LinkTitleCard title="Guides" href="/artifacts/guides/" icon="document">
+	Review authentication, imports, and ArtifactFS workflows.
+</LinkTitleCard>
+
+<LinkTitleCard title="Concepts" href="/artifacts/concepts/" icon="document">
+	Learn how Artifacts works and how to structure repository workflows.
+</LinkTitleCard>
+
+<LinkTitleCard title="API" href="/artifacts/api/" icon="document">
+	Review the Workers binding, REST API, and Git protocol.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Observability"
+	href="/artifacts/observability/"
+	icon="document"
+>
+	Explore metrics for understanding Artifact activity.
+</LinkTitleCard>
+
+<LinkTitleCard title="Examples" href="/artifacts/examples/" icon="document">
+	See example integrations with Git clients, isomorphic-git, and Sandbox SDK.
+</LinkTitleCard>
+
+<LinkTitleCard title="Platform" href="/artifacts/platform/" icon="document">
+	Review pricing, limits, and changelog entries for Artifacts.
+</LinkTitleCard>
+
+</CardGrid>

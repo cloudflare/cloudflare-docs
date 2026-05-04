@@ -1,0 +1,42 @@
+---
+pcx_content_type: reference
+title: RtkFileMessage
+description: API reference for RtkFileMessage component (React Native Library)
+products:
+  - realtime
+---
+
+Renders a file message in chat with file name, size, extension, and download button.
+
+## Properties
+
+| Property      | Type       | Required | Default           | Description                                         |
+| ------------- | ---------- | -------- | ----------------- | --------------------------------------------------- |
+| `message`     | `Message`  | ✅       | -                 | The chat message object                             |
+| `isContinued` | `boolean`  | ❌       | `false`           | Whether this message continues from the same sender |
+| `now`         | `Date`     | ❌       | `new Date()`      | Current time for relative timestamps                |
+| `iconPack`    | `IconPack` | ❌       | `defaultIconPack` | Custom icon pack                                    |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkFileMessage } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkFileMessage message={message} />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkFileMessage } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return (
+		<RtkFileMessage message={message} isContinued={true} now={new Date()} />
+	);
+}
+```

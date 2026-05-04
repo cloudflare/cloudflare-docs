@@ -1,0 +1,39 @@
+---
+pcx_content_type: reference
+title: RtkStageActionButtonControlBar
+description: API reference for RtkStageActionButtonControlBar component (iOS Library)
+products:
+  - realtime
+---
+
+A control bar button for webinar stage actions.
+Supports requesting to join, joining, leaving, and canceling stage requests based on the current stage status.
+
+## Initializer parameters
+
+| Parameter                  | Type                 | Required | Default | Description                                                |
+| -------------------------- | -------------------- | -------- | ------- | ---------------------------------------------------------- |
+| `rtkClient`                | `RealtimeKitClient`  | ✅       | -       | The RealtimeKit client instance                            |
+| `buttonState`              | `WebinarStageStatus` | ✅       | -       | The current stage status that determines the button action |
+| `presentingViewController` | `UIViewController`   | ✅       | -       | View controller used for presenting confirmation dialogs   |
+
+## Properties
+
+| Property     | Type                                        | Required | Default | Description                                              |
+| ------------ | ------------------------------------------- | -------- | ------- | -------------------------------------------------------- |
+| `dataSource` | `RtkStageActionButtonControlBarDataSource?` | ❌       | `nil`   | Data source for customizing stage action button behavior |
+
+## Usage Examples
+
+### Basic Usage
+
+```swift
+import RealtimeKitUI
+
+let stageButton = RtkStageActionButtonControlBar(
+    rtkClient: rtkClient,
+    buttonState: .requestToJoinStage,
+    presentingViewController: self
+)
+view.addSubview(stageButton)
+```

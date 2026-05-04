@@ -1,0 +1,46 @@
+---
+title: "WAF Release - 2026-04-30 - Emergency"
+description: Cloudflare WAF managed rulesets 2026-04-30 emergency release
+date: 2026-04-30
+---
+
+import { RuleID } from "~/components";
+
+This emergency release introduces a new rule to block a cPanel & WHM Authentication Bypass related to CVE-2026-41940.
+
+**Key Findings**
+
+- CVE-2026-41940: A critical authentication bypass vulnerability in cPanel & WHM allows unauthenticated remote attackers to bypass authentication mechanisms and gain unauthorized administrative access to the web hosting control panel. This vulnerability affects the session validation logic, enabling attackers to craft malicious requests that circumvent normal authentication checks.
+
+**Impact**
+
+Successful exploitation allows unauthenticated attackers to gain administrative control over affected cPanel & WHM installations. This leads to complete server compromise, potential theft or manipulation of hosted data, and significant service disruption across managed environments.
+
+We strongly recommend applying official vendor patches for cPanel & WHM immediately to address the underlying vulnerability.
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="fb29b1b660864285a5ebac86eb2b9e2f" />
+			</td>
+			<td>N/A</td>
+			<td>cPanel - Auth Bypass - CVE:CVE-2026-41940</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+	</tbody>
+</table>

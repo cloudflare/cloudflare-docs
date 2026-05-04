@@ -1,8 +1,14 @@
 ---
 pcx_content_type: how-to
+description: Service tokens in Access.
+products:
+  - cloudflare-one
 title: Service tokens
 sidebar:
   order: 6
+tags:
+- JSON web token (JWT)
+- Authentication
 ---
 
 import {
@@ -20,7 +26,7 @@ This section covers how to create, renew, and revoke a service token.
 
 <Render file="access/create-service-token" product="cloudflare-one" />
 
-You can now configure your Access applications and [device enrollment permissions](/cloudflare-one/team-and-resources/devices/warp/deployment/device-enrollment/#check-for-service-token) to accept this service token. Make sure to set the policy action to [**Service Auth**](/cloudflare-one/access-controls/policies/#service-auth); otherwise, Access will prompt for an identity provider login.
+You can now configure your Access applications and [device enrollment permissions](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/device-enrollment/#check-for-service-token) to accept this service token. Make sure to set the policy action to [**Service Auth**](/cloudflare-one/access-controls/policies/#service-auth); otherwise, Access will prompt for an identity provider login.
 
 ## Connect your service to Access
 
@@ -98,7 +104,7 @@ Service tokens expire according to the token duration you selected when you crea
 
 To renew the service token:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Service credentials** > **Service Tokens**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Service credentials** > **Service Tokens**.
 2. Locate the token you want to renew.
 3. To extend the token's lifetime by one year, select **Refresh**.
 4. To extend the token's lifetime by more than a year:
@@ -110,7 +116,7 @@ To renew the service token:
 
 If you need to revoke access before the token expires, simply delete the token.
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Service credentials** > **Service Tokens**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Service credentials** > **Service Tokens**.
 2. **Delete** the token you need to revoke.
 
 Services that rely on a deleted service token can no longer reach your application.

@@ -1,0 +1,37 @@
+---
+title: Ingest field selection for Log Explorer
+description: Select specific log fields to ingest into Log Explorer to optimize storage and focus on relevant data.
+date: 2026-03-11
+---
+
+Cloudflare Log Explorer now allows you to customize exactly which data fields are ingested and stored when enabling or managing log datasets.
+
+Previously, ingesting logs often meant taking an "all or nothing" approach to data fields. With **Ingest Field Selection**, you can now choose from a list of available and recommended fields for each dataset. This allows you to reduce noise, focus on the metrics that matter most to your security and performance analysis, and manage your data footprint more effectively.
+
+## Key capabilities
+
+- **Granular control:** Select only the specific fields you need when enabling a new dataset.
+- **Dynamic updates:** Update fields for existing, already enabled logstreams at any time.
+- **Historical consistency:** Even if you disable a field later, you can still query and receive results for that field for the period it was captured.
+- **Data integrity:** Core fields, such as `Timestamp`, are automatically retained to ensure your logs remain searchable and chronologically accurate.
+
+## Example configuration
+
+When configuring a dataset via the dashboard or API, you can define a specific set of fields. The `Timestamp` field remains mandatory to ensure data indexability.
+
+```json
+{
+  "dataset": "firewall_events",
+  "enabled": true,
+  "fields": [
+    "Timestamp",
+    "ClientRequestHost",
+    "ClientIP",
+    "Action",
+    "EdgeResponseStatus",
+    "OriginResponseStatus"
+  ]
+}
+```
+
+For more information, refer to the [Log Explorer documentation](/log-explorer/).

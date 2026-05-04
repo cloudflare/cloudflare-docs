@@ -3,9 +3,13 @@ reviewed: 2024-01-12
 category: Access
 difficulty: Intermediate
 pcx_content_type: tutorial
+products:
+  - cloudflare-one
 title: Use Microsoft Entra ID Conditional Access policies in Cloudflare Access
 description: >-
   With Conditional Access in Microsoft Entra ID, administrators can enforce policies on applications and users directly in EntraID.
+tags:
+  - Microsoft Entra ID
 ---
 
 With [Conditional Access](https://learn.microsoft.com/entra/identity/conditional-access/overview) in Microsoft Entra ID (formerly Azure Active Directory), administrators can enforce policies on applications and users directly in Entra ID. Conditional Access has a set of checks that are specialized to Windows and are often preferred by organizations with Windows power users.
@@ -58,7 +62,7 @@ Once the base IdP integration is tested and working, grant permission for Cloudf
 
 To import your Conditional Access policies into Cloudflare Access:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Access settings**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Access settings**.
 2. In **Manage your App Launcher**, select **Manage**.
 3. Choose **Login methods**.
 4. Find your Microsoft Entra ID integration and select **Edit**.
@@ -69,7 +73,7 @@ To import your Conditional Access policies into Cloudflare Access:
 
 To enforce your Conditional Access policies on a Cloudflare Access application:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Applications**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
 
 2. Select **Add an application**.
 

@@ -2,6 +2,8 @@
 pcx_content_type: how-to
 title: GitLab CI/CD
 description: Integrate Workers development into your existing GitLab Pipelines workflows.
+products:
+  - workers
 ---
 import { DashButton } from "~/components";
 
@@ -9,7 +11,7 @@ You can deploy Workers with [GitLab CI/CD](https://docs.gitlab.com/ee/ci/pipelin
 
 ## 1. Authentication
 
-When running Wrangler locally, authentication to the Cloudflare API happens via the [`wrangler login`](/workers/wrangler/commands/#login) command, which initiates an interactive authentication flow. Since CI/CD environments are non-interactive, Wrangler requires a [Cloudflare API token](/fundamentals/api/get-started/create-token/) and [account ID](/fundamentals/account/find-account-and-zone-ids/) to authenticate with the Cloudflare API.
+When running Wrangler locally, authentication to the Cloudflare API happens via the [`wrangler login`](/workers/wrangler/commands/general/#login) command, which initiates an interactive authentication flow. Since CI/CD environments are non-interactive, Wrangler requires a [Cloudflare API token](/fundamentals/api/get-started/create-token/) and [account ID](/fundamentals/account/find-account-and-zone-ids/) to authenticate with the Cloudflare API.
 
 ### Cloudflare account ID
 
@@ -23,9 +25,10 @@ To create an API token to authenticate Wrangler in your CI job:
 
    <DashButton url="/?to=/:account/api-tokens" />
 
-2. Select **Create Token** > find **Edit Cloudflare Workers** > select **Use Template**.
-3. Customize your token name.
-4. Scope your token.
+2. Select **Create Token**.
+3. Under **Permission policies**, open the **Custom** dropdown and select **Edit Cloudflare Workers**.
+4. Customize your token name.
+5. Scope your token.
 
 You will need to choose the account and zone resources that the generated API token will have access to. We recommend scoping these down as much as possible to limit the access of your token. For example, if you have access to three different Cloudflare accounts, you should restrict the generated API token to only the account on which you will be deploying a Worker.
 
@@ -49,4 +52,4 @@ Don't store the value of `CLOUDFLARE_API_TOKEN` in your repository, as it gives 
 
 ### GitLab Pipelines
 
-Refer to [GitLab's blog](https://about.gitlab.com/blog/2022/11/21/deploy-remix-with-gitlab-and-cloudflare/) for an example pipeline. Under the `script` key, replace `npm run deploy` with [`npx wrangler deploy`](/workers/wrangler/commands/#deploy).
+Refer to [GitLab's blog](https://about.gitlab.com/blog/2022/11/21/deploy-remix-with-gitlab-and-cloudflare/) for an example pipeline. Under the `script` key, replace `npm run deploy` with [`npx wrangler deploy`](/workers/wrangler/commands/general/#deploy).

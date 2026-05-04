@@ -1,8 +1,11 @@
 ---
 title: Upload objects
+description: Upload objects to R2 using single-part or multipart uploads via the dashboard, Workers API, or S3 API.
 pcx_content_type: how-to
 sidebar:
   order: 2
+products:
+  - r2
 ---
 
 import { Steps, Tabs, TabItem, Render, DashButton, LinkCard, TypeScriptExample } from "~/components"
@@ -38,6 +41,10 @@ To upload objects to your bucket from the Cloudflare dashboard:
 </Steps>
 
 You will receive a confirmation message after a successful upload.
+
+### Create a folder
+
+You can also create folders from the dashboard by selecting **Create folder**. This creates a zero-byte object with a key ending in `/` that acts as a placeholder. For more information on how folders work in R2, refer to [Prefixes and folders](/r2/objects/#prefixes-and-folders).
 
 ## Upload via Workers API
 
@@ -790,7 +797,7 @@ Wrangler supports uploading files up to 315 MB and only allows one object at a t
 
 :::
 
-Use [Wrangler](/workers/wrangler/install-and-update/) to upload objects. Run the [`r2 object put` command](/workers/wrangler/commands/#r2-object-put):
+Use [Wrangler](/workers/wrangler/install-and-update/) to upload objects. Run the [`r2 object put` command](/workers/wrangler/commands/r2/#r2-object-put):
 
 ```sh
 wrangler r2 object put test-bucket/image.png --file=image.png

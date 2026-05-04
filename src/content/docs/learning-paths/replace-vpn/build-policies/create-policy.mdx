@@ -3,6 +3,12 @@ title: Secure your first application
 pcx_content_type: overview
 sidebar:
   order: 3
+description: Create policies for your first application.
+products:
+  - cloudflare-one
+  - access
+  - tunnel
+  - gateway
 ---
 
 import { TabItem, Tabs } from "~/components";
@@ -15,7 +21,7 @@ To ensure holistic security precautions, we recommend securing each distinct pri
 
 ## Create a Gateway policy
 
-To create a new policy, open [Cloudflare One](https://one.dash.cloudflare.com/) and go to **Traffic policies** > **Firewall policies**.
+To create a new policy, open the [Cloudflare dashboard](https://dash.cloudflare.com/) and go to **Zero Trust** > **Traffic policies** > **Firewall policies**.
 
 ## Example DNS policy
 
@@ -257,5 +263,5 @@ To learn how multiple policies interact, refer to [Order of enforcement](/cloudf
 
 :::note
 
-It is not recommended to employ a default-deny model while testing. Instead, build your explicit application policies and [monitor your logs](/cloudflare-one/insights/logs/gateway-logs/) to determine if your policies are working as expected. If you do not see the policies triggering in your logs, you may need to tune your policies and review what kind of information (identity groups, device posture values, etc.) is being sent with your traffic.
+It is not recommended to employ a default-deny model while testing. Instead, build your explicit application policies and [monitor your logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/) to determine if your policies are working as expected. If you do not see the policies triggering in your logs, you may need to tune your policies and review what kind of information (identity groups, device posture values, etc.) is being sent with your traffic.
 :::

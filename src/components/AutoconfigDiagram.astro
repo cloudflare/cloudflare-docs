@@ -1,0 +1,535 @@
+---
+interface ConfigItem {
+	label: string;
+	file: string;
+	value: string;
+}
+
+interface Props {
+	framework: string;
+	configs: ConfigItem[];
+}
+
+const { framework, configs } = Astro.props;
+---
+
+<autoconfig-diagram data-framework={framework}>
+	<div class="diagram-wrapper">
+		<div class="diagram-container">
+			<!-- Framework node -->
+			<div class="flow-node framework-node" data-step="1">
+				<div class="node-card">
+					<div class="node-icon">
+						<slot name="icon">
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path d="M12 2L2 7l10 5 10-5-10-5z"/>
+								<path d="M2 17l10 5 10-5"/>
+								<path d="M2 12l10 5 10-5"/>
+							</svg>
+						</slot>
+					</div>
+					<div class="node-info">
+						<span class="node-name">{framework}</span>
+						<span class="node-label">Detected</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- Connector: Framework to Config -->
+			<div class="connector horizontal" data-step="2"></div>
+
+			<!-- Config items -->
+			<div class="config-section" data-step="3">
+				<div class="config-box">
+					<span class="config-title">Generated configuration</span>
+					<div class="config-items">
+						{configs.map((config, i) => (
+							<div class="config-item" data-config-index={i}>
+								<div class="config-file">{config.file}</div>
+								<div class="config-detail">
+									<span class="config-label">{config.label}:</span>
+									<span class="config-value">{config.value}</span>
+								</div>
+							</div>
+						))}
+					</div>
+				</div>
+			</div>
+
+			<!-- Connector: Config to Workers -->
+			<div class="connector horizontal" data-step="4"></div>
+
+			<!-- Workers node -->
+			<div class="flow-node workers-node" data-step="5">
+				<div class="node-card">
+					<div class="node-icon workers-icon">
+						<svg viewBox="0 0 24 24" fill="none">
+							<path d="M16.934 8.638l-5.669-3.14a2.91 2.91 0 00-2.82.027l-5.248 3.14A2.873 2.873 0 002 11.296V16.5c0 1.063.59 2.04 1.537 2.543l5.669 3.14a2.91 2.91 0 002.82-.027l5.248-3.14A2.873 2.873 0 0018.5 16.5v-5.204c0-1.063-.59-2.04-1.566-2.658z" fill="#F6821F"/>
+							<path d="M16.934 8.638a2.873 2.873 0 011.566 2.543v5.204c0 1.063-.59 2.04-1.537 2.543L11.714 22l-1.49-7.34 6.71-5.022z" fill="#FBAD41"/>
+						</svg>
+					</div>
+					<div class="node-info">
+						<span class="node-name">Workers</span>
+						<span class="node-label">Deployed</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Status indicator -->
+		<div class="status-indicator">
+			<div class="status-dot"></div>
+			<span class="status-text">Wrangler handles configuration automatically</span>
+		</div>
+	</div>
+</autoconfig-diagram>
+
+<style>
+	autoconfig-diagram {
+		display: block;
+		width: 100%;
+		margin: 1.5rem 0;
+	}
+
+	.diagram-wrapper {
+		position: relative;
+		padding: 1rem;
+		background: rgb(250 250 250);
+		border: 1px solid rgb(229 229 229);
+		border-radius: 0.75rem;
+	}
+
+	:root[data-theme="dark"] .diagram-wrapper {
+		background: rgb(23 23 23);
+		border-color: rgb(64 64 64);
+	}
+
+	.diagram-container {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0;
+		padding: 1rem 0;
+	}
+
+	.flow-node {
+		opacity: 0.4;
+		transition: opacity 0.3s ease;
+	}
+
+	.flow-node.active,
+	.flow-node.connected {
+		opacity: 1;
+	}
+
+	.node-card {
+		display: flex;
+		align-items: center;
+		gap: 0.625rem;
+		background: white;
+		border-radius: 0.5rem;
+		padding: 0.75rem 1rem;
+		border: 1px solid rgb(229 229 229);
+		min-width: 120px;
+		transition: border-color 0.3s ease, box-shadow 0.3s ease;
+	}
+
+	:root[data-theme="dark"] .node-card {
+		background: rgb(30 30 30);
+		border-color: rgb(64 64 64);
+	}
+
+	.flow-node.active .node-card {
+		border-color: rgb(249 115 22);
+		box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+	}
+
+	.flow-node.connected .node-card {
+		border-color: rgb(249 115 22);
+		box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+	}
+
+	.node-icon {
+		width: 2rem;
+		height: 2rem;
+		color: rgb(115 115 115);
+		transition: color 0.3s ease;
+	}
+
+	:root[data-theme="dark"] .node-icon {
+		color: rgb(163 163 163);
+	}
+
+	.flow-node.active .node-icon {
+		color: rgb(249 115 22);
+	}
+
+	.flow-node.connected .node-icon {
+		color: rgb(249 115 22);
+	}
+
+	.node-icon svg,
+	.node-icon :global(svg) {
+		width: 100%;
+		height: 100%;
+	}
+
+	/* Framework icon keeps its original color */
+	.framework-node .node-icon {
+		color: inherit;
+	}
+
+	.node-info {
+		display: flex;
+		flex-direction: column;
+		gap: 0.125rem;
+	}
+
+	.node-name {
+		font-size: 0.875rem;
+		font-weight: 600;
+		color: rgb(23 23 23);
+	}
+
+	:root[data-theme="dark"] .node-name {
+		color: rgb(245 245 245);
+	}
+
+	.node-label {
+		font-size: 0.6875rem;
+		color: rgb(115 115 115);
+		opacity: 0;
+		transition: opacity 0.3s ease;
+	}
+
+	:root[data-theme="dark"] .node-label {
+		color: rgb(163 163 163);
+	}
+
+	.flow-node.active .node-label,
+	.flow-node.connected .node-label {
+		opacity: 1;
+	}
+
+	/* Connectors */
+	.connector {
+		background: rgb(212 212 212);
+		transition: background-color 0.3s ease;
+		opacity: 0.4;
+	}
+
+	:root[data-theme="dark"] .connector {
+		background: rgb(64 64 64);
+	}
+
+	.connector.horizontal {
+		width: 40px;
+		height: 2px;
+	}
+
+	.connector.active {
+		background: rgb(249 115 22);
+		opacity: 1;
+	}
+
+	.connector.connected {
+		background: rgb(249 115 22);
+		opacity: 1;
+	}
+
+	/* Config section */
+	.config-section {
+		opacity: 0.4;
+		transition: opacity 0.3s ease;
+	}
+
+	.config-section.active,
+	.config-section.connected {
+		opacity: 1;
+	}
+
+	.config-box {
+		background: white;
+		border: 1px dashed rgb(212 212 212);
+		border-radius: 0.5rem;
+		padding: 0.75rem;
+		min-width: 220px;
+		transition: border-color 0.3s ease;
+	}
+
+	:root[data-theme="dark"] .config-box {
+		background: rgb(30 30 30);
+		border-color: rgb(64 64 64);
+	}
+
+	.config-section.active .config-box {
+		border-color: rgb(249 115 22);
+	}
+
+	.config-section.connected .config-box {
+		border-color: rgb(249 115 22);
+		border-style: solid;
+	}
+
+	.config-title {
+		display: block;
+		font-size: 0.6875rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: rgb(115 115 115);
+		margin-bottom: 0.5rem;
+	}
+
+	:root[data-theme="dark"] .config-title {
+		color: rgb(163 163 163);
+	}
+
+	.config-items {
+		display: flex;
+		flex-direction: column;
+		gap: 0.375rem;
+	}
+
+	.config-item {
+		background: rgb(250 250 250);
+		border: 1px solid rgb(229 229 229);
+		border-radius: 0.375rem;
+		padding: 0.375rem 0.5rem;
+		opacity: 0;
+		transform: translateY(-8px);
+		transition: all 0.3s ease;
+	}
+
+	:root[data-theme="dark"] .config-item {
+		background: rgb(23 23 23);
+		border-color: rgb(64 64 64);
+	}
+
+	.config-item.visible {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	.config-item.active {
+		border-color: rgb(249 115 22);
+		background: rgb(255 251 247);
+	}
+
+	:root[data-theme="dark"] .config-item.active {
+		background: rgb(40 30 25);
+		border-color: rgb(249 115 22);
+	}
+
+	.config-file {
+		font-size: 0.625rem;
+		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		color: rgb(115 115 115);
+		margin-bottom: 0.125rem;
+	}
+
+	:root[data-theme="dark"] .config-file {
+		color: rgb(163 163 163);
+	}
+
+	.config-detail {
+		font-size: 0.6875rem;
+		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+	}
+
+	.config-label {
+		color: rgb(115 115 115);
+	}
+
+	:root[data-theme="dark"] .config-label {
+		color: rgb(163 163 163);
+	}
+
+	.config-value {
+		color: rgb(23 23 23);
+		font-weight: 500;
+	}
+
+	:root[data-theme="dark"] .config-value {
+		color: rgb(245 245 245);
+	}
+
+	/* Status indicator */
+	.status-indicator {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		margin-top: 1rem;
+		padding-top: 1rem;
+		border-top: 1px solid rgb(229 229 229);
+	}
+
+	:root[data-theme="dark"] .status-indicator {
+		border-top-color: rgb(64 64 64);
+	}
+
+	.status-dot {
+		width: 0.5rem;
+		height: 0.5rem;
+		border-radius: 50%;
+		background: rgb(212 212 212);
+		transition: all 0.3s ease;
+	}
+
+	:root[data-theme="dark"] .status-dot {
+		background: rgb(64 64 64);
+	}
+
+	.status-indicator.running .status-dot {
+		background: rgb(249 115 22);
+		box-shadow: 0 0 8px rgba(249, 115, 22, 0.5);
+		animation: pulse 1s ease-in-out infinite;
+	}
+
+	.status-indicator.complete .status-dot {
+		background: rgb(249 115 22);
+		box-shadow: 0 0 8px rgba(249, 115, 22, 0.5);
+	}
+
+	@keyframes pulse {
+		0%, 100% { opacity: 1; }
+		50% { opacity: 0.5; }
+	}
+
+	.status-text {
+		font-size: 0.75rem;
+		color: rgb(115 115 115);
+		transition: color 0.3s ease;
+	}
+
+	:root[data-theme="dark"] .status-text {
+		color: rgb(163 163 163);
+	}
+
+	.status-indicator.complete .status-text {
+		color: rgb(249 115 22);
+	}
+</style>
+
+<script>
+	class AutoconfigDiagram extends HTMLElement {
+		private isRunning = false;
+		private framework = '';
+
+		connectedCallback() {
+			this.framework = this.dataset.framework || '';
+			// Auto-start after a short delay
+			setTimeout(() => this.run(), 500);
+		}
+
+		private async run() {
+			if (this.isRunning) return;
+			this.isRunning = true;
+
+			const statusIndicator = this.querySelector('.status-indicator');
+			const statusText = this.querySelector('.status-text');
+
+			// Reset state
+			this.resetState();
+
+			// Update status
+			statusIndicator?.classList.add('running');
+			if (statusText) statusText.textContent = `Detecting ${this.framework} project...`;
+
+			await this.delay(900);
+
+			// Step 1: Framework detected
+			const frameworkNode = this.querySelector('.framework-node');
+			frameworkNode?.classList.add('active');
+			if (statusText) statusText.textContent = `${this.framework} detected`;
+
+			await this.delay(1200);
+
+			// Step 2: First connector
+			const connectors = this.querySelectorAll('.connector');
+			connectors[0]?.classList.add('active');
+
+			await this.delay(600);
+
+			// Step 3: Config section
+			const configSection = this.querySelector('.config-section');
+			configSection?.classList.add('active');
+			if (statusText) statusText.textContent = 'Generating configuration...';
+
+			await this.delay(600);
+
+			// Show config items one by one
+			const configItems = this.querySelectorAll('.config-item');
+			for (let i = 0; i < configItems.length; i++) {
+				const item = configItems[i];
+				item.classList.add('visible', 'active');
+				
+				// Get the config value for status
+				const valueEl = item.querySelector('.config-value');
+				const labelEl = item.querySelector('.config-label');
+				if (valueEl && labelEl) {
+					const label = labelEl.textContent?.replace(':', '') || '';
+					const value = valueEl.textContent || '';
+					if (statusText) statusText.textContent = `Setting ${label} → ${value}`;
+				}
+
+				await this.delay(1400);
+				item.classList.remove('active');
+			}
+
+			await this.delay(500);
+
+			// Step 4: Second connector
+			connectors[1]?.classList.add('active');
+			if (statusText) statusText.textContent = 'Deploying to Workers...';
+
+			await this.delay(900);
+
+			// Step 5: Workers node
+			const workersNode = this.querySelector('.workers-node');
+			workersNode?.classList.add('active');
+
+			await this.delay(600);
+
+			// Complete - keep orange theme
+			frameworkNode?.classList.remove('active');
+			frameworkNode?.classList.add('connected');
+			configSection?.classList.remove('active');
+			configSection?.classList.add('connected');
+			connectors.forEach(c => {
+				c.classList.remove('active');
+				c.classList.add('connected');
+			});
+			configItems.forEach(item => item.classList.add('visible'));
+			workersNode?.classList.remove('active');
+			workersNode?.classList.add('connected');
+
+			statusIndicator?.classList.remove('running');
+			statusIndicator?.classList.add('complete');
+			if (statusText) statusText.textContent = 'Deployed to Cloudflare Workers!';
+
+			this.isRunning = false;
+
+			// Wait 3 seconds then restart
+			await this.delay(3000);
+			this.run();
+		}
+
+		private resetState() {
+			// Remove all state classes
+			this.querySelectorAll('.active, .connected, .visible').forEach(el => {
+				el.classList.remove('active', 'connected', 'visible');
+			});
+			
+			const statusIndicator = this.querySelector('.status-indicator');
+			statusIndicator?.classList.remove('running', 'complete');
+		}
+
+		private delay(ms: number): Promise<void> {
+			return new Promise(resolve => setTimeout(resolve, ms));
+		}
+	}
+
+	customElements.define('autoconfig-diagram', AutoconfigDiagram);
+</script>

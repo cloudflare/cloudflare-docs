@@ -1,5 +1,8 @@
 ---
 pcx_content_type: navigation
+description: Digital experience resources and guides for Zero Trust analytics.
+products:
+  - cloudflare-one
 title: Digital experience
 sidebar:
   order: 1
@@ -9,7 +12,7 @@ import { DirectoryListing, Render } from "~/components";
 
 <Render file="dex/intro" product="cloudflare-one" />
 
-DEX is compatible with Cloudflare's [Customer Metadata Boundary](/data-localization/metadata-boundary/) for the 'EU' (European Union) which ensures that customer log will not leave the 'EU' region.
+DEX is compatible with Cloudflare's [Customer Metadata Boundary](/data-localization/metadata-boundary/) (CMB) for the EU (European Union). When CMB is configured for the EU, customer logs are stored exclusively in the EU region.
 
 <Render file="analytics/observability-tools-note" product="cloudflare-one" />
 
@@ -18,8 +21,8 @@ DEX is compatible with Cloudflare's [Customer Metadata Boundary](/data-localizat
 If a user notifies that “the connection is not working” or “performance is slow,” DEX allows you to:
 
 - Use [device monitoring](/cloudflare-one/insights/dex/monitoring/) to check device health and endpoint connectivity.
-- Test network health and application responsiveness with [synthetic tests](/cloudflare-one/insights/dex/tests/).
-- Identify whether problems originate from the device (such as [issues with the WARP client](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/troubleshooting-guide/)), the network, or Cloudflare.
+- Test network health and application responsiveness with [synthetic tests](/cloudflare-one/insights/dex/tests/) — automated connectivity checks that run periodically from user devices.
+- Identify whether problems originate from the device (such as [issues with the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/troubleshooting-guide/)), the network, or Cloudflare.
 
 ## Troubleshooting other Cloudflare One features
 
@@ -33,12 +36,16 @@ Use DEX to troubleshoot other Cloudflare One features:
 
 To start using DEX for device, network, and application monitoring:
 
-1. [Create a Zero Trust organization](/cloudflare-one/setup/#create-a-zero-trust-organization).
-2. [Install the WARP client](/cloudflare-one/team-and-resources/devices/warp/) and sign in to register your device to the organization.
+1. [Create a Zero Trust organization](/cloudflare-one/setup/#2-create-a-zero-trust-organization).
+2. [Install the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) and sign in to register your device to the organization.
 3. Create [tests](/cloudflare-one/insights/dex/tests/) to verify device connectivity to applications and networks.
 4. [Monitor](/cloudflare-one/insights/dex/monitoring/) device and network health across your fleet using real-time and historical metrics.
-5. Run [remote captures](/cloudflare-one/insights/dex/remote-captures/) to collect diagnostic logs and packet captures from user devices.
+5. Use [diagnostics](/cloudflare-one/insights/dex/diagnostics/) to run speed tests and collect remote captures from user devices.
 6. Set up [notifications](/cloudflare-one/insights/dex/notifications/) to get alerts when degraded connectivity or application performance is detected.
+
+### Troubleshooting
+
+For help resolving common issues with Digital Experience Monitoring, refer to [Troubleshoot Digital Experience Monitoring](/cloudflare-one/insights/dex/troubleshooting/).
 
 ### Directory
 

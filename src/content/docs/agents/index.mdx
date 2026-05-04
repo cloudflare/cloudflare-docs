@@ -1,6 +1,6 @@
 ---
 title: Build Agents on Cloudflare
-
+description: Create stateful AI agents with persistent memory, real-time WebSocket connections, and scheduled tasks using the Cloudflare Agents SDK.
 pcx_content_type: overview
 tags:
   - AI
@@ -9,6 +9,8 @@ sidebar:
 head:
   - tag: title
     content: Agents
+products:
+  - agents
 ---
 
 import {
@@ -31,6 +33,8 @@ import {
 Most AI applications today are stateless — they process a request, return a response, and forget everything. Real agents need more. They need to remember conversations, act on schedules, call tools, coordinate with other agents, and stay connected to users in real-time. The Agents SDK gives you all of this as a TypeScript class.
 
 Each agent runs on a [Durable Object](/durable-objects/) — a stateful micro-server with its own SQL database, WebSocket connections, and scheduling. Deploy once and Cloudflare runs your agents across its global network, scaling to tens of millions of instances. No infrastructure to manage, no sessions to reconstruct, no state to externalize.
+
+The mental model is simple: define a TypeScript class, give each real-world thing a stable name, and route requests or WebSocket connections to that named instance. The instance wakes when something happens, reads its durable state, does work, and hibernates when idle.
 
 ### Get started
 
@@ -63,9 +67,10 @@ The starter includes streaming AI chat, server-side and client-side tools, human
 - **Think with any model** — Call [any AI model](/agents/api-reference/using-ai-models/) — Workers AI, OpenAI, Anthropic, Gemini — and stream responses over [WebSockets](/agents/api-reference/websockets/) or [Server-Sent Events](/agents/api-reference/http-sse/). Long-running reasoning models that take minutes to respond work out of the box.
 - **Use and serve tools** — Define server-side tools, client-side tools that run in the browser, and [human-in-the-loop](/agents/concepts/human-in-the-loop/) approval flows. Expose your agent's tools to other agents and LLMs via [MCP](/agents/api-reference/mcp-agent-api/).
 - **Act on their own** — [Schedule tasks](/agents/api-reference/schedule-tasks/) on a delay, at a specific time, or on a cron. Agents can wake themselves up, do work, and go back to sleep — without a user present.
-- **Browse the web** — Spin up [headless browsers](/agents/api-reference/browse-the-web/) to scrape, screenshot, and interact with web pages.
-- **Orchestrate work** — Run multi-step [workflows](/agents/api-reference/run-workflows/) with automatic retries, or coordinate across multiple agents.
-- **React to events** — Handle [inbound email](/agents/api-reference/email/), HTTP requests, WebSocket messages, and state changes — all from the same class.
+- **Browse the web** — Give your agents [browser tools](/agents/api-reference/browse-the-web/) powered by the Chrome DevTools Protocol to scrape, screenshot, debug, and interact with web pages.
+- **Talk to users** — Build real-time [voice agents](/agents/api-reference/voice/) with speech-to-text, text-to-speech, and conversation persistence — audio streams over WebSocket.
+- **Orchestrate work** — Run multi-step [workflows](/agents/api-reference/run-workflows/) with automatic retries, coordinate across [sub-agents](/agents/api-reference/sub-agents/), or run chat-capable [agent tools](/agents/api-reference/agent-tools/) with retained streaming timelines.
+- **React to events** — Handle [inbound email](/agents/api-reference/email/) (see the [email agent example](https://github.com/cloudflare/agents/tree/main/examples/email-agent)), HTTP requests, WebSocket messages, and state changes — all from the same class.
 
 ### How it works
 

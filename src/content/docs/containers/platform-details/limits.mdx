@@ -1,16 +1,18 @@
 ---
 pcx_content_type: reference
 title: Limits and Instance Types
+description: Available Container instance types and account-level limits for memory, vCPU, disk, and image storage.
 sidebar:
   order: 2
+products:
+  - containers
 ---
 
 import { Render } from "~/components";
 
 ## Instance Types
 
-The memory, vCPU, and disk space for Containers are set through predefined instance types.
-Six instance types are currently available:
+The memory, vCPU, and disk space for Containers are set through instance types. You can use one of six predefined instance types or configure a [custom instance type](#custom-instance-types).
 
 <Render product="containers" file="instance-types" />
 
@@ -26,29 +28,30 @@ In addition to the predefined instance types, you can configure custom instance 
 
 Custom instance types have the following constraints:
 
-| Resource             | Limit                               |
-| -------------------- | ----------------------------------- |
-| Minimum vCPU         | 1                                   |
-| Maximum vCPU         | 4                                   |
-| Maximum Memory       | 12 GiB                              |
-| Maximum Disk         | 20 GB                               |
-| Memory to vCPU ratio | Minimum 3 GiB memory per vCPU       |
-| Disk to Memory ratio | Maximum 2 GB disk per 1 GiB memory  |
+| Resource             | Limit                              |
+| -------------------- | ---------------------------------- |
+| Minimum vCPU         | 1                                  |
+| Maximum vCPU         | 4                                  |
+| Maximum Memory       | 12 GiB                             |
+| Maximum Disk         | 20 GB                              |
+| Memory to vCPU ratio | Minimum 3 GiB memory per vCPU      |
+| Disk to Memory ratio | Maximum 2 GB disk per 1 GiB memory |
 
 For workloads requiring less than 1 vCPU, use the predefined instance types such as `lite` or `basic`.
 
-Looking for larger instances? [Give us feedback here](/containers/beta-info/#feedback-wanted) and tell us what size instances you need, and what you want to use them for.
+If you need larger instance sizes or higher account-level limits, contact your account team, file a
+support ticket, or fill out [this form](https://forms.gle/CscdaEGuw5Hb6H2s7).
 
 ## Limits
 
-While in open beta, the following limits are currently in effect:
+The following limits currently apply:
 
-| Feature                                                | Workers Paid                                   |
-| ------------------------------------------------------ | ---------------------------------------------- |
-| GiB Memory for all concurrent live Container instances | 400GiB                                         |
-| vCPU for all concurrent live Container instances       | 100                                            |
-| TB Disk for all concurrent live Container instances    | 2TB                                            |
-| Image size                                             | Same as [instance disk space](#instance-types) |
-| Total image storage per account                        | 50 GB [^1]                                     |
+| Feature                                             | Workers Paid                                   |
+| --------------------------------------------------- | ---------------------------------------------- |
+| Memory for all concurrent live Container instances  | 6TiB                                           |
+| vCPU for all concurrent live Container instances    | 1,500                                          |
+| TB Disk for all concurrent live Container instances | 30TB                                           |
+| Image size                                          | Same as [instance disk space](#instance-types) |
+| Total image storage per account                     | 50 GB [^1]                                     |
 
-[^1]: Delete container images with `wrangler containers delete` to free up space. Note that if you delete a container image and then [roll back](/workers/configuration/versions-and-deployments/rollbacks/) your Worker to a previous version, this version may no longer work.
+[^1]: Delete container images with `wrangler containers delete` to free up space. If you delete a container image and then [roll back](/workers/configuration/versions-and-deployments/rollbacks/) your Worker to a previous version, this version may no longer work.

@@ -1,8 +1,11 @@
 ---
-title: API Reference
+title: API reference
+description: Sandbox SDK API for executing code, managing files, running processes, and exposing services.
 pcx_content_type: navigation
 sidebar:
   order: 4
+products:
+  - sandbox
 ---
 
 import { LinkTitleCard, CardGrid } from "~/components";
@@ -27,7 +30,7 @@ The Sandbox SDK provides a comprehensive API for executing code, managing files,
 </LinkTitleCard>
 
 <LinkTitleCard
-	title="File Watching"
+	title="File watching"
 	href="/sandbox/api/file-watching/"
 	icon="seti:eye"
 >
@@ -36,7 +39,7 @@ The Sandbox SDK provides a comprehensive API for executing code, managing files,
 </LinkTitleCard>
 
 <LinkTitleCard
-	title="Code Interpreter"
+	title="Code interpreter"
 	href="/sandbox/api/interpreter/"
 	icon="laptop"
 >
@@ -52,6 +55,11 @@ The Sandbox SDK provides a comprehensive API for executing code, managing files,
 <LinkTitleCard title="Storage" href="/sandbox/api/storage/" icon="database">
 	Mount S3-compatible buckets (R2, S3, GCS) as local filesystems for persistent
 	data storage across sandbox lifecycles.
+</LinkTitleCard>
+
+<LinkTitleCard title="Backups" href="/sandbox/api/backups/" icon="clock">
+	Create point-in-time snapshots of directories and restore them with
+	copy-on-write overlays. Store backups in R2.
 </LinkTitleCard>
 
 <LinkTitleCard title="Sessions" href="/sandbox/api/sessions/" icon="seti:plan">

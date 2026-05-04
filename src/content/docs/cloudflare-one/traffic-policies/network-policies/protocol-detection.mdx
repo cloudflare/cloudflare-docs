@@ -1,26 +1,31 @@
 ---
 title: Protocol detection
 pcx_content_type: how-to
+description: Protocol detection in Gateway.
+products:
+  - cloudflare-one
 sidebar:
   order: 2
+tags:
+  - SSH
 ---
 
-import { Badge, Render } from "~/components";
+import { Render } from "~/components";
 
 Gateway supports the detection, logging, and filtering of network protocols using packet attributes.
 
-Protocol detection only applies to devices connected to Cloudflare One via the WARP client in [Traffic and DNS mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#traffic-and-dns-mode-default) mode.
+Protocol detection only applies to devices connected to Cloudflare One via the Cloudflare One Client in [Traffic and DNS mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/#traffic-and-dns-mode-default) mode.
 
 ## Turn on protocol detection
 
 To turn on protocol detection:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Traffic settings** > **Proxy and inspection settings**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Traffic policies** > **Traffic settings** > **Proxy and inspection settings**.
 2. Turn on **Allow protocol detection**.
 
 You can now use _Detected Protocol_ as a selector in a [Network policy](/cloudflare-one/traffic-policies/network-policies/#detected-protocol).
 
-### Inspect on all ports <Badge text="Beta" variant="caution" size="small" />
+### Inspect on all ports
 
 <Render
 	file="gateway/inspect-on-all-ports"
@@ -35,7 +40,9 @@ You can now use _Detected Protocol_ as a selector in a [Network policy](/cloudfl
 
 **TLS interception on all ports**: When you turn on this setting, Gateway will attempt to intercept TLS traffic on every port, not just port `443`. This means all applications using TLS on non-standard ports will have their traffic intercepted by the Gateway proxy. If you only want to turn on SNI detection for Network policy filtering without full TLS interception, you will need to create [Do Not Inspect policies](/cloudflare-one/traffic-policies/http-policies/tls-decryption/#do-not-inspect) for the specific applications or domains that use TLS on non-standard ports.
 
-**Filtering non-HTTPS protocols inside TLS**: Once a Network policy allows a TLS connection at the network level (Layer 4), the Gateway proxy will intercept and decrypt the TLS traffic. However, Gateway cannot filter based on non-HTTP protocols inside the TLS connection. All non-HTTPS traffic inside TLS (such as SSH over TLS, database protocols, or custom protocols) will be allowed by default, and no further filtering will be applied to it. This limitation means that if your organization uses a Network policy to block all traffic by default, the Gateway proxy will allow all non-HTTPS TLS traffic through, and you will not be able to filter this traffic with HTTP policies.
+:::caution[Non-HTTP protocols inside TLS bypass network policy filtering]
+Once a Network policy allows a TLS connection at Layer 4, Gateway decrypts the TLS traffic. However, Gateway cannot filter non-HTTP protocols inside the TLS connection. All non-HTTPS traffic inside TLS (such as SSH over TLS, database protocols, or custom protocols) is allowed by default with no further filtering applied. If your organization uses a default-block Network policy, Gateway will still allow all non-HTTPS TLS traffic through.
+:::
 
 To use HTTP policies to filter all HTTPS traffic on all ports when using a default Block Network policy, [create a Network policy to explicitly allow HTTP and TLS traffic](/cloudflare-one/traffic-policies/network-policies/common-policies/#filter-https-traffic-when-inspecting-on-all-ports).
 
@@ -43,15 +50,22 @@ To use HTTP policies to filter all HTTPS traffic on all ports when using a defau
 
 Gateway supports detection and filtering of the following protocols:
 
-| Protocol | Notes                                                                                       |
-| -------- | ------------------------------------------------------------------------------------------- |
-| HTTP     | The policy builder includes separate values for HTTP/1.1 and HTTP/2.                        |
-| SSH      |                                                                                             |
-| TLS      | Gateway detects TLS versions 1.1 through 1.3 with the _TLS_ value.                          |
-| DCE/RPC  |                                                                                             |
-| MQTT     |                                                                                             |
-| TPKT     | TPKT commonly initiates RDP sessions, so you can use it to identify and filter RDP traffic. |
-| DNP3     |                                                                                             |
+| Protocol                                                          | Notes                                                                                        |
+| ----------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| HTTP                                                              | Hypertext Transfer Protocol (HTTP/1.1).                                                      |
+| HTTP2                                                             | Hypertext Transfer Protocol Version 2.                                                       |
+| SSH                                                               | Secure Shell Protocol — remote login and command execution.                                  |
+| TLS                                                               | Transport Layer Security. Gateway detects TLS versions 1.1 through 1.3 with the _TLS_ value. |
+| DCERPC                                                            | Distributed Computing Environment / Remote Procedure Call.                                   |
+| MQTT                                                              | Message Queuing Telemetry Transport — lightweight IoT messaging protocol.                    |
+| TPKT                                                              | TPKT commonly initiates RDP sessions, so you can use it to identify and filter RDP traffic.  |
+| IMAP         | Internet Message Access Protocol — email retrieval.                                          |
+| POP3         | Post Office Protocol v3 — email retrieval.                                                   |
+| SMTP         | Simple Mail Transfer Protocol — email sending.                                               |
+| MYSQL        | MySQL database wire protocol.                                                                |
+| RSYNC-DAEMON | rsync daemon protocol.                                                                       |
+| LDAP         | Lightweight Directory Access Protocol.                                                       |
+| NTP          | Network Time Protocol.                                                                       |
 
 ## Example network policy
 

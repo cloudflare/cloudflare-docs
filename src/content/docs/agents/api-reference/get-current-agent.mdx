@@ -1,8 +1,11 @@
 ---
 title: getCurrentAgent()
+description: Access the current Agent context from external utility functions using getCurrentAgent() in the Agents SDK.
 pcx_content_type: concept
 sidebar:
-  order: 17
+  order: 29
+products:
+  - agents
 ---
 
 import { TypeScriptExample, LinkCard } from "~/components";
@@ -18,7 +21,7 @@ All custom methods automatically have full agent context. The framework automati
 <TypeScriptExample>
 
 ```ts
-import { AIChatAgent } from "agents/ai-chat-agent";
+import { AIChatAgent } from "@cloudflare/ai-chat";
 import { getCurrentAgent } from "agents";
 
 export class MyAgent extends AIChatAgent {
@@ -49,7 +52,7 @@ No configuration is required. The framework automatically:
 <TypeScriptExample>
 
 ```ts
-import { AIChatAgent } from "agents/ai-chat-agent";
+import { AIChatAgent } from "@cloudflare/ai-chat";
 import { getCurrentAgent } from "agents";
 import { generateText } from "ai";
 import { openai } from "@ai-sdk/openai";
@@ -82,7 +85,7 @@ export class MyAgent extends AIChatAgent {
 
 ### Built-in vs custom methods
 
-- **Built-in methods** (`onRequest`, `onEmail`, `onStateUpdate`): Already have context.
+- **Built-in methods** (`onRequest`, `onEmail`, `onStateChanged`): Already have context.
 - **Custom methods** (your methods): Automatically wrapped during initialization.
 - **External functions**: Access context through `getCurrentAgent()`.
 
@@ -107,7 +110,7 @@ agent.customMethod();
 <TypeScriptExample>
 
 ```ts
-import { AIChatAgent } from "agents/ai-chat-agent";
+import { AIChatAgent } from "@cloudflare/ai-chat";
 import { generateText } from "ai";
 import { openai } from "@ai-sdk/openai";
 
@@ -134,7 +137,7 @@ export class MyAgent extends AIChatAgent {
 <TypeScriptExample>
 
 ```ts
-import { AIChatAgent } from "agents/ai-chat-agent";
+import { AIChatAgent } from "@cloudflare/ai-chat";
 import { getCurrentAgent } from "agents";
 
 async function saveToDatabase(data: any) {
@@ -211,7 +214,7 @@ function getCurrentAgent<T extends Agent>(): {
 <TypeScriptExample>
 
 ```ts
-import { AIChatAgent } from "agents/ai-chat-agent";
+import { AIChatAgent } from "@cloudflare/ai-chat";
 import { getCurrentAgent } from "agents";
 
 export class MyAgent extends AIChatAgent {

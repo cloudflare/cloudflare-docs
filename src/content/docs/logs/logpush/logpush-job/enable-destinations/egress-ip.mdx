@@ -6,6 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Dedicated Egress IP for Logpush
+description: Send Logpush logs via a dedicated egress IP.
+products:
+  - logpush
 ---
 
 import { APIRequest, Render } from "~/components";
@@ -107,11 +110,11 @@ In the proxy zone, go to **Security** > **WAF** > **Custom rules** and create a 
 
 ### Add ASN-based filtering
 
-For defense in depth, add a rule to only allow traffic from Cloudflare's ASN. Logpush traffic originates from Cloudflare's network (ASN 13335 or 132892).
+For defense in depth, add a rule to only allow traffic from Cloudflare's ASNs. Logpush traffic originates from Cloudflare's network (ASN 13335, 132892, or 202623).
 
 - **Expression:**
   ```txt
-  (http.host eq "logpush.yourdestinationendpoint.com" and not ip.geoip.asnum in {13335 132892})
+  (http.host eq "logpush.yourdestinationendpoint.com" and not ip.geoip.asnum in {13335 132892 202623})
   ```
 - **Action:** Block
 

@@ -2,6 +2,9 @@
 pcx_content_type: troubleshooting
 title: Error 526
 source: null
+description: Troubleshoot HTTP 526 error responses.
+products:
+  - support
 ---
 
 ## Error 526: invalid SSL certificate
@@ -30,6 +33,7 @@ Here are some options to fix or workaround this issue:
   - Certificate is not revoked.
   - Certificate is signed by a [Certificate Authority](https://en.wikipedia.org/wiki/Certificate_authority) (not self-signed).
   - The requested or target domain name and hostname are in the certificate's **Common Name** or **Subject Alternative Name**.
+  - The certificate chain is complete - the origin server must serve the leaf certificate along with any required intermediate CA certificates so that Cloudflare can build a trusted chain to a root CA.
   - Your origin web server accepts connections over port SSL port `443`.
   - [Temporarily pause Cloudflare](/fundamentals/manage-domains/pause-cloudflare/) and visit [https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com](https://www.sslshopper.com/ssl-checker.html#hostname=www.example.com) (replace `www.example.com` with your hostname and domain) to verify no issues exists with the origin SSL certificate:
 
@@ -37,7 +41,7 @@ Here are some options to fix or workaround this issue:
 
 ### Error 526 in the Zero Trust context
 
-When using [Cloudflare Gateway](/cloudflare-one/traffic-policies/), an HTTP Error `526` might be returned in the [following cases](/cloudflare-one/faq/troubleshooting/#i-see-error-526-when-browsing-to-a-website):
+When using [Cloudflare Gateway](/cloudflare-one/traffic-policies/), an HTTP Error `526` might be returned in the [following cases](/cloudflare-one/traffic-policies/troubleshooting/#error-526-invalid-ssl-certificate):
 
 - **An untrusted certificate is presented from the origin to Gateway.** Gateway will consider a certificate is untrusted if any of these conditions are true:
   - The server certificate issuer is unknown or is not trusted by the service.

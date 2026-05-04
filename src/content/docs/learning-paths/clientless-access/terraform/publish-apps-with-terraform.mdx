@@ -3,6 +3,11 @@ title: Publish applications with Terraform
 pcx_content_type: overview
 sidebar:
   order: 1
+description: Learn about publish applications with terraform in this guide.
+products:
+  - access
+  - tunnel
+  - cloudflare-one
 ---
 
 import { Details, Render } from "~/components";
@@ -27,7 +32,7 @@ Create a `.tf` file and copy-paste the following example. Fill in your API token
 
 <Details header="Find the Tunnel ID">
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Connectors** > **Cloudflare Tunnels**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Networks** > **Connectors** > **Cloudflare Tunnels**.
 2. Select the tunnel name.
 3. Copy the **Tunnel ID**.
 
@@ -75,7 +80,7 @@ Add the following resources to your Terraform configuration.
 
 ### Add published application to Cloudflare Tunnel
 
-Using the [`cloudflare_tunnel_config`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/tunnel_config) resource, create an ingress rule that maps your application to a public DNS record. This example makes `localhost:8080` available on `app.mycompany.com`, sets the [Connect Timeout](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/origin-parameters/#connecttimeout), and enables [Access JWT validation](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/origin-parameters/#access).
+Using the [`cloudflare_tunnel_config`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/tunnel_config) resource, create an ingress rule that maps your application to a public DNS record. This example makes `localhost:8080` available on `app.mycompany.com`, sets the [Connect Timeout](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/origin-parameters/#connecttimeout), and enables [Access JWT validation](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/origin-parameters/#access).
 
 ```txt
 resource "cloudflare_tunnel_config" "example_config" {
@@ -147,7 +152,7 @@ resource "cloudflare_access_policy" "example_policy" {
 
 <Render file="terraform/deploy-terraform" product="cloudflare-one" />
 
-Users can now access the private application by going to the public URL and authenticating with Cloudflare Access. You can view your new tunnel route, Access application, and Access policy in [Cloudflare One](https://one.dash.cloudflare.com). The new DNS record is shown in the [Cloudflare dashboard](https://dash.cloudflare.com).
+Users can now access the private application by going to the public URL and authenticating with Cloudflare Access. You can view your new tunnel route in the [Cloudflare dashboard](https://dash.cloudflare.com/) under **Zero Trust** > **Networks** > **Connectors**, and your Access application and policy under **Zero Trust** > **Access controls** > **Applications**. The new DNS record is shown in the [Cloudflare dashboard](https://dash.cloudflare.com/).
 
 :::note
 

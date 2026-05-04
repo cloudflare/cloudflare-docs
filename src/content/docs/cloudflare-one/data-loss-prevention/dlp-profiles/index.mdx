@@ -1,14 +1,21 @@
 ---
 pcx_content_type: how-to
+description: DLP profiles in Cloudflare One.
+products:
+  - cloudflare-one
 title: DLP profiles
 sidebar:
-  order: 3
+  order: 2
   label: Configure DLP profiles
+tags:
+  - Compliance
 ---
 
 import { Render } from "~/components";
 
-A DLP profile is a collection of regular expressions and [detection entries](/cloudflare-one/data-loss-prevention/detection-entries/) that define the data patterns you want to detect. Cloudflare DLP provides predefined profiles for common detections, or you can build custom DLP profiles specific to your data, organization, and risk tolerance.
+A DLP profile defines what sensitive data Cloudflare should detect in your traffic. Profiles can combine [detection entries](/cloudflare-one/data-loss-prevention/detection-entries/configure-detection-entries/) with [Data Classification](/cloudflare-one/data-loss-prevention/data-classification/) objects such as data classes, sensitivity levels, and data tags.
+
+Cloudflare DLP provides [predefined profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/predefined-profiles/) for common sensitive data types such as credit card numbers and national identifiers. You can also build custom DLP profiles specific to your data, organization, and risk tolerance by using direct detection entries, data classes, and labels.
 
 ## Configure a predefined profile
 
@@ -17,10 +24,10 @@ A DLP profile is a collection of regular expressions and [detection entries](/cl
 	product="cloudflare-one"
 />
 
-You can now use this profile in a [DLP policy](/cloudflare-one/data-loss-prevention/dlp-policies/#2-create-a-dlp-policy) or [CASB integration](/cloudflare-one/cloud-and-saas-findings/casb-dlp/).
+You can now use this profile in a [DLP policy](/cloudflare-one/data-loss-prevention/dlp-policies/#2-create-a-dlp-policy), [CASB integration](/cloudflare-one/cloud-and-saas-findings/casb-dlp/), or [AI Gateway DLP policy](/ai-gateway/features/dlp/set-up-dlp/).
 
 ## Build a custom profile
 
 <Render file="data-loss-prevention/custom-profile" product="cloudflare-one" />
 
-You can now use this profile in a [DLP policy](/cloudflare-one/data-loss-prevention/dlp-policies/#2-create-a-dlp-policy) or [CASB integration](/cloudflare-one/cloud-and-saas-findings/casb-dlp/).
+You can now use this profile in a [DLP policy](/cloudflare-one/data-loss-prevention/dlp-policies/#2-create-a-dlp-policy), [CASB integration](/cloudflare-one/cloud-and-saas-findings/casb-dlp/), or [AI Gateway DLP policy](/ai-gateway/features/dlp/set-up-dlp/).

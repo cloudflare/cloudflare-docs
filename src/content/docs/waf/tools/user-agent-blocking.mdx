@@ -1,5 +1,8 @@
 ---
 pcx_content_type: concept
+description: Block or challenge requests based on User-Agent header values.
+products:
+  - waf
 title: User Agent Blocking
 source: https://support.cloudflare.com/hc/en-us/articles/115001856951-Understanding-Cloudflare-User-Agent-Blocking
 sidebar:
@@ -102,6 +105,10 @@ Issue a `POST` request for the [Create a User Agent Blocking rule](/api/resource
 />
 
 </TabItem> </Tabs>
+
+## Challenge actions
+
+When a User Agent Blocking rule uses a challenge action such as _Managed Challenge_, the visitor must pass a challenge page. After passing the challenge, a `cf_clearance` cookie is set. The duration of this cookie is controlled by the [Challenge Passage](/cloudflare-challenges/challenge-types/challenge-pages/challenge-passage/) setting.
 
 ## Related resources
 

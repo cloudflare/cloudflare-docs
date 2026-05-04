@@ -1,0 +1,58 @@
+---
+{}
+---
+
+1. From the AWS console, go to **Compute** > **EC2** > **Instances**
+
+2. Select **Launch instance**.
+
+3. Name your VM instance. In this example we will name it `http-test-server`.
+
+4. For \*_Amazon Machine Image (AMI)_ choose your desired operating system and specifications. For this example, we will use _Ubuntu Server 24.04 LTS (HVM), SSD Volume Type_.
+
+5. For **Instance type:**, you can select _t2.micro_ which is available on the free tier.
+
+6. In **Key pair (login)**, create a new key pair to use for SSH. You will need to download the `.pem` file onto your local machine.
+
+7. In **Network settings**, select **Create security group**.
+
+8. Turn on the following Security Group rules:
+   - **Allow SSH traffic from _My IP_** to prevent the instance from being publicly accessible.
+   - **Allow HTTPS traffic from the internet**
+   - **Allow HTTP traffic from the internet**
+
+9. Select **Launch instance**.
+
+10. Once the instance is up and running, go to the **Instances** summary page and copy its **Public IPv4 DNS** hostname (for example, `ec2-44-202-59-16.compute-1.amazonaws.com`).
+
+11. To log in to the instance over SSH, open a terminal and run the following commands:
+
+```sh
+cd Downloads
+```
+
+```
+chmod 400 "YourKeyPair.pem"
+```
+
+```sh
+ssh -i "YourKeyPair.pem" ubuntu@ec2-44-202-59-16.compute-1.amazonaws.com
+```
+
+12. Run `sudo su` to gain full admin rights to the instance.
+
+13. For testing purposes, you can deploy a basic Apache web server on port `80`:
+
+```bash
+apt update
+
+apt -y install apache2
+
+cat <<EOF > /var/www/html/index.html
+<html><body><h1>Hello Cloudflare!</h1>
+<p>This page was created for a Cloudflare demo.</p>
+</body></html>
+EOF
+```
+
+14. To verify that the Apache server is running, open a browser and go to `http://ec2-44-202-59-16.compute-1.amazonaws.com` (make sure to connect over `http`, not `https`). You should see the **Hello Cloudflare!** test page.

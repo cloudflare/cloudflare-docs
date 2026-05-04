@@ -1,0 +1,107 @@
+---
+// Click-to-copy example prompt chips. Each prompt is a button; clicking
+// anywhere on the chip copies the text (without surrounding quotes) to the
+// clipboard and swaps the copy icon for a checkmark for 1.5s.
+//
+// All prompts are rendered in the HTML but only 5 randomly-selected ones are
+// shown on each page load (client-side shuffle).
+//
+// Mirrors the inline-script copy pattern used in PackageManagers.astro.
+interface Props {
+	prompts: string[];
+	count?: number;
+}
+
+const { prompts, count = 5 } = Astro.props;
+---
+
+<div class="agent-setup-prompts" data-cfdocs-prompts-count={count}>
+	{
+		prompts.map((prompt) => (
+			<button
+				type="button"
+				class="agent-setup-prompt"
+				data-cfdocs-copy-prompt
+				data-prompt={prompt}
+				aria-label={`Copy prompt: ${prompt}`}
+			>
+				<span class="agent-setup-prompt-text">&ldquo;{prompt}&rdquo;</span>
+				<span class="agent-setup-prompt-icon" aria-hidden="true">
+					<svg
+						class="agent-setup-prompt-icon-copy"
+						xmlns="http://www.w3.org/2000/svg"
+						width="16"
+						height="16"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="1.75"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						viewBox="0 0 24 24"
+					>
+						<rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+						<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+					</svg>
+					<svg
+						class="agent-setup-prompt-icon-check"
+						xmlns="http://www.w3.org/2000/svg"
+						width="16"
+						height="16"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2.5"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						viewBox="0 0 24 24"
+					>
+						<polyline points="20 7 10 17 5 12" />
+					</svg>
+				</span>
+			</button>
+		))
+	}
+</div>
+
+<script>
+	// For each prompts container, shuffle all buttons and hide all but `count`.
+	document
+		.querySelectorAll<HTMLElement>("[data-cfdocs-prompts-count]")
+		.forEach((container) => {
+			const count = parseInt(container.dataset.cfdocsPromptsCount ?? "5", 10);
+			const btns = Array.from(
+				container.querySelectorAll<HTMLButtonElement>(
+					"[data-cfdocs-copy-prompt]",
+				),
+			);
+
+			// Fisher-Yates shuffle
+			for (let i = btns.length - 1; i > 0; i--) {
+				const j = Math.floor(Math.random() * (i + 1));
+				[btns[i], btns[j]] = [btns[j], btns[i]];
+			}
+
+			// Reorder DOM and hide extras
+			btns.forEach((btn, i) => {
+				container.appendChild(btn);
+				if (i >= count) btn.style.display = "none";
+			});
+		});
+
+	// Copy-to-clipboard
+	document
+		.querySelectorAll<HTMLButtonElement>("[data-cfdocs-copy-prompt]")
+		.forEach((btn) => {
+			btn.addEventListener("click", async () => {
+				const text = btn.dataset.prompt ?? "";
+				try {
+					await navigator.clipboard.writeText(text);
+					btn.dataset.copied = "true";
+					setTimeout(() => {
+						delete btn.dataset.copied;
+					}, 1500);
+				} catch {
+					/* clipboard unavailable */
+				}
+			});
+		});
+</script>

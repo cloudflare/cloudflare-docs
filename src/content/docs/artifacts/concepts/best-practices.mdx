@@ -1,0 +1,169 @@
+---
+title: Best practices for Artifacts
+description: Use repo, token, metadata, and namespace patterns.
+pcx_content_type: concept
+sidebar:
+  order: 4
+products:
+  - artifacts
+---
+
+import { TypeScriptExample } from "~/components";
+
+Artifacts works best when you isolate work, scope access narrowly, keep metadata separate, and partition storage deliberately.
+
+Use these patterns to structure repos for agents, automation, and shared systems.
+
+## Organize repos for isolation
+
+### Create a repo per agent, session, or application
+
+Create one repo for each unit of autonomous work. If you have `10,000` agents, create `10,000` repos.
+
+This keeps each agent's changes, failures, and cleanup lifecycle separate. It also avoids turning one shared repo into a hot spot for conflicts, large diffs, and accidental overwrites.
+
+Use this pattern when you need to:
+
+- isolate one agent's work from another agent's work
+- hand off a repo to a single session or user application
+- review, merge, archive, or delete work independently
+
+Use branches only when collaborators share the same lifecycle and need to work on the same repository. Do not use one shared repo as a queue for many autonomous agents.
+
+### Use unique names
+
+Repo names are unique within a namespace. If multiple agents need isolated copies of the same baseline repo in one namespace, do not reuse a short shared name such as `docs-site`.
+
+Include stable identifiers in the repo name, such as the agent name, session ID, user ID, or workflow ID. A name like `${agentName}-${sessionId}-${repoName}` is safer than `${repoName}` because it avoids collisions and makes cleanup easier.
+
+This example creates a unique repo name before creating the repo.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+interface Env {
+	ARTIFACTS: Artifacts;
+}
+
+async function createRepoCopy(
+	env: Env,
+	agentName: string,
+	sessionId: string,
+	repoName: string,
+) {
+	const uniqueRepoName = `${agentName}-${sessionId}-${repoName}`;
+
+	return env.ARTIFACTS.create(uniqueRepoName);
+}
+```
+
+</TypeScriptExample>
+
+### Fork from a stable baseline
+
+Start new repos from a trusted baseline when agents need the same starter files, prompts, or application structure. Forking from a reviewed repo is safer than copying files into every new repo by hand.
+
+This keeps your starting point consistent and makes downstream diffs easier to review. It also lets you merge back only the results you want.
+
+This example forks a reviewed baseline repo into a session-specific repo.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+interface Env {
+	ARTIFACTS: Artifacts;
+}
+
+async function forkFromBaseline(env: Env, sessionId: string) {
+	const baseline = await env.ARTIFACTS.get("starter-repo");
+	const forked = await baseline.fork(`starter-repo-${sessionId}`, {
+		description: `Fork for session ${sessionId}`,
+		defaultBranchOnly: true,
+		readOnly: false,
+	});
+
+	return {
+		name: forked.name,
+		remote: forked.remote,
+	};
+}
+```
+
+</TypeScriptExample>
+
+## Scope access narrowly
+
+### Mint least-privilege repo tokens
+
+Artifacts tokens are repo-scoped. Prefer `read` tokens for cloning, indexing, review, and retrieval.
+
+Use `write` tokens only for the agent or system that must push changes. Give tokens short lifetimes, and re-issue a fresh token for each agent session.
+
+This example uses the [Workers binding](/artifacts/api/workers-binding/) to mint a short-lived read token for a repo.
+
+Assume the caller is already authenticated and authorized before this route returns a token.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+interface Env {
+	ARTIFACTS: Artifacts;
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const url = new URL(request.url);
+		const repoName = url.searchParams.get("repo") ?? "starter-repo";
+
+		const repo = await env.ARTIFACTS.get(repoName);
+		const token = await repo.createToken("read", 900);
+
+		return Response.json({
+			repo: repoName,
+			scope: token.scope,
+			expiresAt: token.expiresAt,
+			token: token.plaintext,
+		});
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+Use the same pattern for `write` tokens only after your Worker authorizes a session that must push changes.
+
+Do not issue one long-lived write token to every agent. Mint the narrowest token you can, for the shortest time you can.
+
+## Store harness metadata separately
+
+### Use git notes for prompts and model output
+
+Use [git notes](https://git-scm.com/docs/git-notes) to attach prompts, model output, run IDs, or other harness metadata to a commit without changing the commit object or working tree.
+
+This lets you use Artifacts as both the versioned filesystem for agent work and the source of truth for your agent harness. Your files stay focused on the work product, while the commit notes hold the surrounding execution context.
+
+This example stores the user prompt and the assistant summary on the current commit, then reads the note back.
+
+```bash
+git notes add -m 'user: Add a best-practices section for unique repo names.' HEAD
+git notes append -m 'assistant: Added naming guidance and a code example.' HEAD
+git notes show HEAD
+```
+
+If you sync repos between systems, remember that notes live on separate refs. Push and fetch `refs/notes/*` with the rest of your repo data when you want that metadata to travel with the repository.
+
+## Partition namespaces deliberately
+
+### Separate environments, teams, and high-rate workloads
+
+Use namespaces to separate operating boundaries. Repo separation isolates units of work, while namespace separation isolates ownership, environments, and traffic patterns.
+
+Do not keep every repo in one default namespace once usage grows. Split namespaces when you need clearer ownership or more room to scale within the [request rate limits](/artifacts/platform/limits/) for each namespace.
+
+| Use case | Example namespaces | Why |
+| --- | --- | --- |
+| Environments | `staging`, `prod` | Keep test traffic and production traffic separate. |
+| Team boundaries | `sales`, `finance`, `devtools` | Keep ownership, access, and cleanup policies distinct. |
+| Traffic isolation | `agents-batch`, `agents-realtime` | Prevent one workload from consuming the limits of another workload. |
+
+When one namespace becomes hot, shard new repos into additional namespaces instead of continuing to grow a single shared namespace.

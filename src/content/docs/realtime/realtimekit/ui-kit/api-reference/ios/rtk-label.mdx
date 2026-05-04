@@ -1,0 +1,41 @@
+---
+pcx_content_type: reference
+title: RtkLabel
+description: API reference for RtkLabel component (iOS Library)
+products:
+  - realtime
+---
+
+A themed label that uses design token colors and fonts from the RTK Design System.
+
+## Initializer parameters
+
+| Parameter    | Type                | Required | Default | Description                                      |
+| ------------ | ------------------- | -------- | ------- | ------------------------------------------------ |
+| `appearance` | `RtkTextAppearance` | ❌       | -       | Text appearance configuration for font and color |
+
+## Usage Examples
+
+### Basic Usage
+
+```swift
+import RealtimeKitUI
+
+let label = RtkLabel()
+label.text = "Meeting Room"
+view.addSubview(label)
+```
+
+### With custom appearance
+
+```swift
+import RealtimeKitUI
+
+let appearance = RtkTextAppearance(
+    font: UIFont.systemFont(ofSize: 16, weight: .semibold),
+    textColor: .white
+)
+let label = RtkLabel(appearance: appearance)
+label.text = "Meeting Room"
+view.addSubview(label)
+```

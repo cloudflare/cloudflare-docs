@@ -2,6 +2,7 @@
 import Default from "@astrojs/starlight/components/Head.astro";
 import { differenceInCalendarDays } from "date-fns";
 import "tippy.js/dist/tippy.css";
+import "~/styles/tippy.css";
 
 import { getEntry, getEntries } from "astro:content";
 import { getOgImage } from "~/util/og";
@@ -30,17 +31,33 @@ const shouldChatbotDeprioritize =
 	frontmatter.sidebar.hidden ||
 	frontmatter.chatbot_deprioritize;
 
+// URL path prefixes that are not backed by a `directory` collection entry.
+// For these sections, skip the `getEntry("directory", ...)` lookup to avoid
+// spurious "Entry directory → <section> was not found" warnings.
+//   - `changelog` resolves its product below from frontmatter.products[0].
+const SECTIONS_WITHOUT_DIRECTORY_ENTRY = ["changelog"];
+
 // if not a top-level page, add metadata values from src/content/directory/ entries
 if (currentSection) {
-	// if entry for directory, grab and proceed
-	let product = await getEntry("directory", currentSection);
+	let product = !SECTIONS_WITHOUT_DIRECTORY_ENTRY.includes(currentSection)
+		? await getEntry("directory", currentSection)
+		: undefined;
 	// if entry for changelog, grab the first product value (which corresponds to the folder the entry is in) and use as the primary "product"
 	if (currentSection === "changelog") {
-		const products = frontmatter.products;
-		if (products && products.length > 0) {
-			const primaryProduct = products[0];
-			product = await getEntry("directory", primaryProduct.id);
+		const originalEntry = Astro.locals.starlightRoute.originalEntry as
+			| CollectionEntry<"changelog">
+			| undefined;
+		if (originalEntry && originalEntry.data.products.length > 0) {
+			const primaryProductRef = originalEntry.data.products[0];
+			product = await getEntry("directory", primaryProductRef.id);
+			// product = await getEntry(originalEntry.data.products[0]);
 		}
+		["pcx_content_type", "algolia_content_type"].map((name) => {
+			metaTags.push({
+				name,
+				content: formatContentType("changelog-entry"),
+			});
+		});
 	}
 
 	if (product) {
@@ -122,6 +139,12 @@ if (
 
 	if (existingOpenGraphTag !== -1) {
 		head[existingOpenGraphTag].attrs!.content = frontmatter.description;
+	} else {
+		// og:description not added by Starlight; add it explicitly
+		metaTags.push({
+			property: "og:description",
+			content: frontmatter.description as string,
+		});
 	}
 
 	metaTags.push({
@@ -188,7 +211,10 @@ if (frontmatter.external_link) {
 	});
 }
 
-if (frontmatter.pcx_content_type === "changelog") {
+if (
+	frontmatter.pcx_content_type === "changelog" ||
+	currentSection === "changelog"
+) {
 	const href = new URL(entry.id.concat("/index.xml"), Astro.url.origin);
 
 	head.push({
@@ -223,6 +249,21 @@ head.push({
 	},
 });
 
+if (frontmatter.canonical) {
+	const canonicalHref = new URL(frontmatter.canonical, Astro.site).toString();
+	const canonicalIdx = head.findIndex(
+		({ tag, attrs }) => tag === "link" && attrs?.rel === "canonical",
+	);
+	if (canonicalIdx !== -1) {
+		head[canonicalIdx].attrs!.href = canonicalHref;
+	} else {
+		head.push({
+			tag: "link",
+			attrs: { rel: "canonical", href: canonicalHref },
+		});
+	}
+}
+
 metaTags.map((attrs) => {
 	head.push({
 		tag: "meta",
@@ -231,7 +272,10 @@ metaTags.map((attrs) => {
 });
 ---
 
+
 <script src="src/scripts/footnotes.ts"></script>
 <script src="src/scripts/mermaid.ts"></script>
 <script src="src/scripts/analytics.ts"></script>
+<script src="src/scripts/explain-code.ts"></script>
+<script src="src/scripts/webmcp.ts"></script>
 <Default><slot /></Default>

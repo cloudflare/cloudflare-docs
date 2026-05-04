@@ -1,20 +1,21 @@
 ---
 pcx_content_type: reference
+
 title: 1.1.1.1 Public DNS Resolver
 head: []
-description: Learn more about Cloudflare's commitment to privacy with the
-  1.1.1.1 Public DNS Resolver.
+description: Learn more about Cloudflare's commitment to privacy with the 1.1.1.1 Public DNS Resolver.
+products:
+  - 1.1.1.1
 slug: 1.1.1.1/privacy/public-dns-resolver
-
 ---
 
-*Last updated March 27, 2024*
+_Last updated March 27, 2024_
 
 ## Cloudflare’s commitment to privacy: 1.1.1.1 Public DNS Resolver
 
 The 1.1.1.1 public DNS resolver is governed by our [Privacy Policy](https://www.cloudflare.com/privacypolicy/). This document provides additional details on our collection, use, and disclosure of the information collected from the 1.1.1.1 public DNS resolver.
 
-***
+---
 
 Nearly everything on the Internet starts with a DNS request. DNS is the Internet’s directory. Select a link, open an app, send an email, and the first thing your phone or computer does is ask its directory: where can I find this?
 
@@ -48,73 +49,73 @@ Aside from APNIC, Cloudflare will not share the Public Resolver Logs with any th
 
 The Public Resolver Logs we store consist entirely of the following fields:
 
-* answerData type
-* answerData
-* coloID (unique Cloudflare data center ID)
-* date
-* dateTime
-* dstIPVersion
-* dstIPv6
-* dstIPv4
-* dstPort
-* ede
-* ednsVersion
-* ednsPayload
-* ednsNsid
-* feature.uid
-* feature.value
-* metalId (unique Cloudflare data center ID)
-* ns ip
-* ns name
-* protocol
-* queryName
-* queryType
-* queryClass
-* queryRd
-* queryDo
-* querySize
-* queryEdns
-* queryCd
-* responseType
-* responseCode
-* responseSize
-* responseCount
-* responseTimeMs
-* responseCached
-* responseMinTTL
-* reused
-* srcAsNum
-* srcCountry
-* srcIPVersion
-* validationState
+- answerData type
+- answerData
+- coloID (unique Cloudflare data center ID)
+- date
+- dateTime
+- dstIPVersion
+- dstIPv6
+- dstIPv4
+- dstPort
+- ede
+- ednsVersion
+- ednsPayload
+- ednsNsid
+- feature.uid
+- feature.value
+- metalId (unique Cloudflare data center ID)
+- ns ip
+- ns name
+- protocol
+- queryName
+- queryType
+- queryClass
+- queryRd
+- queryDo
+- querySize
+- queryEdns
+- queryCd
+- responseType
+- responseCode
+- responseSize
+- responseCount
+- responseTimeMs
+- responseCached
+- responseMinTTL
+- reused
+- srcAsNum
+- srcCountry
+- srcIPVersion
+- validationState
 
 Additionally, recursive resolvers perform outgoing queries to various authoritative nameservers in the DNS hierarchy that are logged in subrequest fields. These logs are used for the operation and debugging of our public DNS resolver service.
 
 The following subrequest data is included in the Public Resolver Logs:
 
-* subrequest.ipv6 (authoritative nameserver)
-* subrequest.ipv4 (authoritative nameserver)
-* subrequest.protocol
-* subrequest.durationMs
-* subrequest.queryName
-* subrequest.queryType
-* subrequest.responseCode
-* subrequest.responseCount
-* subrequest.recordType
-* subrequest.recordData
-* subrequest.error
+- subrequest.ipv6 (authoritative nameserver)
+- subrequest.ipv4 (authoritative nameserver)
+- subrequest.protocol
+- subrequest.durationMs
+- subrequest.queryName
+- subrequest.queryType
+- subrequest.responseCode
+- subrequest.responseCount
+- subrequest.recordType
+- subrequest.recordData
+- subrequest.error
 
 Except for the limited sampled data from the Public Resolver Logs (which do not include truncated IP addresses) used to generate the aggregated data described below, all of the Public Resolver Logs are deleted within 25 hours of Cloudflare’s receipt of such information.
 
 Cloudflare may make the following aggregations:
 
-* Total number of queries with different protocol settings (for example, tcp/udp/dnssec) by Cloudflare data centers.
-* Response code/time quantiles with different protocol settings by Cloudflare data centers.
-* Total Number of Requests Processed by Cloudflare data centers.
-* Aggregate List of All Domain Names Requested and aggregate number of requests and timestamp of first time requested by region.
-* Number of unique clients, queries over IPv4, queries over IPv6, queries with the RD bit set, queries asking for DNSSEC, number of bogus, valid, and invalid DNSSEC answers, queries by type, number of answers with each response code, response time quantiles (e.g. 50 percentile), response TTL, and number of cached answers per minute, per day, per protocol (HTTPS/UDP/TCP/TLS), per region, per Cloudflare data center, and per Autonomous System Number.
-* Number of queries, number of queries with EDNS, number of bytes and time in answers quantiles (e.g. 50 percentile) by day, month, Cloudflare data center, and by IPv4 vs IPv6.
-* Number of queries, response codes and response code quantiles (e.g. 50 percentile) by day, region, name and type.
+- Total number of queries with different protocol settings (for example, tcp/udp/dnssec) by Cloudflare data centers.
+- Response code/time quantiles with different protocol settings by Cloudflare data centers.
+- Total Number of Requests Processed by Cloudflare data centers.
+- Aggregate List of All Domain Names Requested and aggregate number of requests and timestamp of first time requested by region.
+- Number of unique clients, queries over IPv4, queries over IPv6, queries with the RD bit set, queries asking for DNSSEC, number of bogus, valid, and invalid DNSSEC answers, queries by type, number of answers with each response code, response time quantiles (e.g. 50 percentile), response TTL, and number of cached answers per minute, per day, per protocol (HTTPS/UDP/TCP/TLS), per region, per Cloudflare data center, and per Autonomous System Number.
+- Number of queries, number of queries with EDNS, number of bytes and time in answers quantiles (e.g. 50 percentile) by day, month, Cloudflare data center, and by IPv4 vs IPv6.
+- Number of queries, response codes and response code quantiles (e.g. 50 percentile) by day, region, name and type.
 
 Cloudflare may store the data described above indefinitely in order to power Cloudflare Radar and assist Cloudflare in improving Cloudflare services, such as, enhancing the overall performance of the Cloudflare Resolver and identifying security threats.
 

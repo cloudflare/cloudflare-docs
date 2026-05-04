@@ -1,0 +1,23 @@
+---
+title: Audit Logs v2 — Organization-level support
+description: Audit Logs v2 now supports organization-level audit logs.
+products:
+  - audit-logs
+date: 2026-04-23
+---
+
+Audit Logs v2 now supports organization-level audit logs. Org Admins can retrieve audit events for actions performed at the organization level via the Audit Logs v2 API.
+
+To retrieve organization-level audit logs, use the following endpoint:
+
+```bash
+GET https://api.cloudflare.com/client/v4/organizations/{organization_id}/logs/audit
+```
+
+This release covers user-initiated actions performed through organization-level APIs. Audit logs for system-initiated actions, a dashboard UI, and Logpush support for organizations will be added in future releases.
+
+:::note
+Organization-level audit logs are separate from account-level audit logs. Actions performed within a specific account continue to be available via the account-level Audit Logs UI, Audit Logs v2 API, and Logpush.
+:::
+
+For more information, refer to the [Audit Logs documentation](/fundamentals/account/account-security/audit-logs/).

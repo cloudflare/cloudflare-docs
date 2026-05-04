@@ -1,0 +1,52 @@
+---
+pcx_content_type: reference
+title: RtkMoreButtonControlBar
+description: API reference for RtkMoreButtonControlBar component (iOS Library)
+products:
+  - realtime
+---
+
+A control bar button that opens a bottom sheet menu with meeting actions such as chat, polls, and participant list.
+
+## Initializer parameters
+
+| Parameter                         | Type                | Required | Default | Description                                                |
+| --------------------------------- | ------------------- | -------- | ------- | ---------------------------------------------------------- |
+| `meeting`                         | `RealtimeKitClient` | ✅       | -       | The RealtimeKit client instance                            |
+| `presentingViewController`        | `UIViewController`  | ✅       | -       | View controller used to present the bottom sheet           |
+| `settingViewControllerCompletion` | `(() -> Void)?`     | ❌       | `nil`   | Closure called when the settings view controller dismisses |
+
+## Methods
+
+| Method              | Return Type | Description                                      |
+| ------------------- | ----------- | ------------------------------------------------ |
+| `hideBottomSheet()` | `Void`      | Programmatically dismisses the bottom sheet menu |
+
+## Usage Examples
+
+### Basic Usage
+
+```swift
+import RealtimeKitUI
+
+let moreButton = RtkMoreButtonControlBar(
+    meeting: rtkClient,
+    presentingViewController: self
+)
+view.addSubview(moreButton)
+```
+
+### With settings completion
+
+```swift
+import RealtimeKitUI
+
+let moreButton = RtkMoreButtonControlBar(
+    meeting: rtkClient,
+    presentingViewController: self,
+    settingViewControllerCompletion: {
+        print("Settings dismissed")
+    }
+)
+view.addSubview(moreButton)
+```

@@ -1,10 +1,13 @@
 ---
 pcx_content_type: concept
 title: Build a Remote MCP server
+description: Deploy a remote MCP server on Cloudflare with optional authentication using Streamable HTTP transport.
 tags:
   - MCP
 sidebar:
   order: 7
+products:
+  - agents
 ---
 
 import { Details, Render, PackageManagers, LinkCard } from "~/components";
@@ -38,9 +41,9 @@ The button below will guide you through everything you need to do to deploy an [
 
 [![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-authless)
 
-Once deployed, this server will be live at your `workers.dev` subdomain (for example, `remote-mcp-server-authless.your-account.workers.dev/mcp`). You can connect to it immediately using the [AI Playground](https://playground.ai.cloudflare.com/) (a remote MCP client), [MCP inspector](https://github.com/modelcontextprotocol/inspector) or [other MCP clients](/agents/guides/remote-mcp-server/#connect-your-remote-mcp-server-to-claude-and-other-mcp-clients-via-a-local-proxy).
+Once deployed, this server will be live at your `workers.dev` subdomain (for example, `remote-mcp-server-authless.your-account.workers.dev/mcp`). You can connect to it immediately using the [AI Playground](https://playground.ai.cloudflare.com/) (a remote MCP client), [MCP inspector](https://github.com/modelcontextprotocol/inspector) or [other MCP clients](/agents/guides/remote-mcp-server/#connect-from-an-mcp-client-via-a-local-proxy).
 
-A new git repository will be set up on your GitHub or GitLab account for your MCP server, configured to automatically deploy to Cloudflare each time you push a change or merge a pull request to the main branch of the repository. You can clone this repository, [develop locally](/agents/guides/remote-mcp-server/#local-development), and start customizing the MCP server with your own [tools](/agents/model-context-protocol/tools/).
+A new git repository will be set up on your GitHub or GitLab account for your MCP server, configured to automatically deploy to Cloudflare each time you push a change or merge a pull request to the main branch of the repository. You can clone this repository, [develop locally](/agents/guides/remote-mcp-server/#via-the-cli), and start customizing the MCP server with your own [tools](/agents/model-context-protocol/tools/).
 
 ### Via the CLI
 
@@ -157,7 +160,7 @@ The public MCP server example you deployed earlier allows any client to connect 
 
 You can configure your MCP server to require user authentication through Cloudflare Access. Cloudflare Access acts as an identity aggregator and verifies user emails, signals from your existing [identity providers](/cloudflare-one/integrations/identity-providers/) (such as GitHub or Google), and other attributes such as IP address or device certificates. When users connect to the MCP server, they will be prompted to log in to the configured identity provider and are only granted access if they pass your [Access policies](/cloudflare-one/access-controls/policies/#selectors).
 
-For a step-by-step deployment guide, refer to [Secure MCP servers with Access for SaaS](/cloudflare-one/access-controls/ai-controls/saas-mcp/).
+For a step-by-step deployment guide, refer to [Secure MCP servers with Access for SaaS](/cloudflare-one/access-controls/ai-controls/secure-mcp-servers/).
 
 ### Third-party OAuth
 
@@ -268,9 +271,11 @@ npx wrangler secret put GITHUB_CLIENT_ID
 npx wrangler secret put GITHUB_CLIENT_SECRET
 ```
 
-    ```
-    npx wrangler secret put COOKIE_ENCRYPTION_KEY # add any random string here e.g. openssl rand -hex 32
-    ```
+```sh
+npx wrangler secret put COOKIE_ENCRYPTION_KEY
+```
+
+Use any random string for `COOKIE_ENCRYPTION_KEY`, for example the output of `openssl rand -hex 32`.
 
     :::caution
     When you create the first secret, Wrangler will ask if you want to create a new Worker. Submit "Y" to create a new Worker and save the secret.

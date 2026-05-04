@@ -1,13 +1,19 @@
 ---
 pcx_content_type: how-to
 title: Get Global API key (legacy)
+description: Retrieve or change your Cloudflare Global API key, a legacy authentication method with full account access.
 sidebar:
   order: 4
+products:
+  - fundamentals
+  - api
 ---
 
 import { DashButton, Render } from "~/components";
 
 Global API key is the previous authorization scheme for interacting with the Cloudflare API. When possible, use [API tokens](/fundamentals/api/get-started/create-token/) instead of Global API key.
+
+New and rolled Global API Keys use the `cfk_` prefixed [scannable format](/fundamentals/api/get-started/token-formats/), which allows credential scanning tools to detect leaked keys.
 
 :::note
 
@@ -35,7 +41,7 @@ To retrieve your Global API key:
 
 1. In the Cloudflare dashboard and select **User Profile** > **API Tokens**.
 
-    <DashButton url="/?to=/:account/api-tokens" />
+   <DashButton url="/?to=/:account/api-tokens" />
 
 2. In the **API Keys** section, click `View` button of **Global API Key**.
 

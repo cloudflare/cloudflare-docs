@@ -4,6 +4,8 @@ pcx_content_type: get-started
 sidebar:
   order: 3
 description: Use R2 from the command line with Wrangler, rclone, or AWS CLI.
+products:
+  - r2
 ---
 
 import { PackageManagers, LinkCard, Render, Tabs, TabItem, Steps } from "~/components";
@@ -117,9 +119,6 @@ wrangler r2 object put my-bucket/myfile.txt --file ./myfile.txt
 
 # Download myfile.txt and save it as downloaded.txt
 wrangler r2 object get my-bucket/myfile.txt --file ./downloaded.txt
-
-# List all objects in my-bucket
-wrangler r2 object list my-bucket
 ```
 
 Refer to the [Wrangler R2 commands](/r2/reference/wrangler-commands/) for all available operations.

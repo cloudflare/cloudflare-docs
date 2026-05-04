@@ -1,5 +1,8 @@
 ---
 pcx_content_type: concept
+description: Block, challenge, or allow requests matching custom expressions.
+products:
+  - waf
 title: Custom rules
 sidebar:
   order: 5
@@ -9,19 +12,25 @@ import { Render, FeatureTable } from "~/components";
 
 <Render file="custom-rules-intro" product="waf" />
 
-Custom rules are evaluated in order, and some actions like _Block_ will stop the evaluation of other rules. For more details on actions and their behavior, refer to [Actions](/ruleset-engine/rules-language/actions/).
+Custom rules are evaluated in order, and some actions like _Block_ will stop the evaluation of other rules. This means that if an earlier rule blocks a request, later rules will not run for that request. For more details on actions and their behavior, refer to [Actions](/ruleset-engine/rules-language/actions/).
 
-To define sets of custom rules that apply to more than one zone, use [custom rulesets](/waf/account/custom-rulesets/). At the zone level, all customers can create and deploy custom rulesets. Custom rulesets at the account level require an Enterprise plan with a paid add-on.
+## Custom rulesets
+
+To define sets of custom rules that apply to more than one zone, use [custom rulesets](/waf/account/custom-rulesets/). At the zone level, all customers can create and deploy custom rulesets. Custom rulesets at the account level require an Enterprise plan.
 
 :::note
 Currently, the Cloudflare dashboard does not support working with custom rulesets at the zone level. You will need to [use the Cloudflare API](/waf/custom-rules/create-api/) to configure or deploy these rulesets.
 :::
 
+## Interaction with other app security features
+
+<Render file="app-security-interoperability" product="waf" />
+
 ## Availability
 
 <FeatureTable id="security.waf_c_custom_rules" />
 
-The maximum number of custom rules applies to an entire [phase](/ruleset-engine/about/phases/). Each scope (zone or account) has a separate maximum number of rules, counted in the following way:
+The maximum number of custom rules applies to all rules in the `http_request_firewall_custom` [phase](/ruleset-engine/about/phases/), which is where custom rules run. Each scope (zone or account) has a separate maximum number of rules, counted in the following way:
 
 - Zone: All custom rules plus all the rules across custom rulesets defined at the zone level.
 - Account: All the rules across custom rulesets defined at the account level.

@@ -3,9 +3,13 @@ reviewed: 2020-12-07
 category: Zero Trust
 difficulty: Intermediate
 pcx_content_type: tutorial
+products:
+  - cloudflare-one
 title: Require U2F with Okta
 description: >-
   This tutorial covers how to Integrate Cloudflare Access with Okta. It also covers the steps to set up Cloudflare Access and integrate Okta with Zero Trust.
+tags:
+  - Okta
 ---
 
 Many identity providers, like Okta, support multiple multifactor authentication (MFA) options simultaneously. For example, Okta will allow you to login with your password and a temporary code generated in an app or a U2F hard key like a Yubikey.
@@ -43,7 +47,7 @@ An Okta administrator in your organization must first [enable U2F support](https
 
 You can begin building U2F policies by testing your Okta integration.
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to the **Access controls** > **Access settings**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Access settings**.
 2. In **Manage your App Launcher**, select **Manage**.
 3. Choose **Login methods**.
 4. Choose the row for Okta and select **Test**.

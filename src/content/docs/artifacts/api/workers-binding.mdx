@@ -1,0 +1,355 @@
+---
+title: Workers binding
+description: Call Artifacts from a Worker binding.
+pcx_content_type: reference
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Workers binding · Artifacts
+products:
+  - artifacts
+---
+
+import {
+	LinkCard,
+	MetaInfo,
+	Type,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+Use the Artifacts Workers binding to create, import, inspect, fork, and delete repos directly from your Worker. The Artifacts binding returns repo handles that allow repo-scoped operations such as token management and forking.
+
+Review [Namespaces](/artifacts/concepts/namespaces/) first, then choose the namespace name you will bind here.
+
+## Configure the binding
+
+Add the Artifacts binding to your Wrangler config file:
+
+<WranglerConfig>
+
+```toml title="wrangler.toml"
+[[artifacts]]
+binding = "ARTIFACTS"
+namespace = "default" # replace with your Artifacts namespace
+# remote = true # optional: use the remote Artifacts service in local dev
+```
+
+</WranglerConfig>
+
+After you run `npx wrangler types`, your Worker environment looks like this:
+
+```ts
+export interface Env {
+	ARTIFACTS: Artifacts;
+}
+```
+
+Wrangler generates the `Artifacts` type for consumers and binds it directly in your environment.
+
+In named Wrangler environments, `artifacts` is non-inheritable. Repeat the binding in each environment where you need it.
+
+At runtime, deployed Workers use the configured binding directly. For local Wrangler commands such as `wrangler dev`, `wrangler deploy`, or `wrangler types`, authenticate Wrangler first. For local OAuth authentication, refer to [`wrangler login`](/workers/wrangler/commands/general/#login). For CI or headless environments, refer to [Running Wrangler in CI/CD](/workers/ci-cd/).
+
+## Namespace methods
+
+Use namespace methods on `env.ARTIFACTS` to create, list, inspect, import, or delete repos.
+
+### `create(name, opts?)`
+
+- `name` <Type text="RepoName" /> <MetaInfo text="required" />
+- `opts.readOnly` <Type text="boolean" /> <MetaInfo text="optional" />
+- `opts.description` <Type text="string" /> <MetaInfo text="optional" />
+- `opts.setDefaultBranch` <Type text="string" /> <MetaInfo text="optional" />
+- Returns <Type text="Promise<ArtifactsCreateRepoResult>" />
+
+<TypeScriptExample>
+
+```ts
+async function createRepo(artifacts: Artifacts) {
+	const created = await artifacts.create("starter-repo", {
+		description: "Repository for automation experiments",
+		readOnly: false,
+		setDefaultBranch: "main",
+	});
+
+	return {
+		defaultBranch: created.defaultBranch,
+		name: created.name,
+		remote: created.remote,
+		initialToken: created.token,
+	};
+}
+```
+
+</TypeScriptExample>
+
+The returned token encodes its expiry directly in the `?expires=` suffix.
+
+### `get(name)`
+
+- `name` <Type text="RepoName" /> <MetaInfo text="required" />
+- Returns <Type text="Promise<ArtifactsRepo>" />
+- Throws if the repo does not exist or is not ready yet.
+
+<TypeScriptExample>
+
+```ts
+async function getRepoHandle(artifacts: Artifacts) {
+	const repo = await artifacts.get("starter-repo");
+	return repo;
+}
+```
+
+</TypeScriptExample>
+
+### `list(opts?)`
+
+- `opts.limit` <Type text="number" /> <MetaInfo text="optional" />
+- `opts.cursor` <Type text="Cursor" /> <MetaInfo text="optional" />
+- Returns <Type text="Promise<ArtifactsRepoListResult>" />
+
+<TypeScriptExample>
+
+```ts
+async function listRepos(artifacts: Artifacts) {
+	const page = await artifacts.list({ limit: 10 });
+
+	return {
+		repos: page.repos.map((repo) => ({
+			name: repo.name,
+			status: repo.status,
+		})),
+		nextCursor: page.cursor ?? null,
+	};
+}
+```
+
+</TypeScriptExample>
+
+Each listed repo includes a `status` value of `ready`, `importing`, or `forking`.
+
+### `import(params)`
+
+Import a repository from an external git remote.
+
+- `params.source.url` <Type text="string" /> <MetaInfo text="required" /> — HTTPS URL of the source repository.
+- `params.source.branch` <Type text="string" /> <MetaInfo text="optional" /> — Branch to import (defaults to the remote's default branch).
+- `params.source.depth` <Type text="number" /> <MetaInfo text="optional" /> — Shallow clone depth.
+- `params.target.name` <Type text="RepoName" /> <MetaInfo text="required" /> — Name for the imported repo.
+- `params.target.opts.description` <Type text="string" /> <MetaInfo text="optional" />
+- `params.target.opts.readOnly` <Type text="boolean" /> <MetaInfo text="optional" />
+- Returns <Type text="Promise<ArtifactsCreateRepoResult>" />
+
+<TypeScriptExample>
+
+```ts
+async function importFromGitHub(artifacts: Artifacts) {
+	const imported = await artifacts.import({
+		source: {
+			url: "https://github.com/cloudflare/workers-sdk",
+			branch: "main",
+		},
+		target: {
+			name: "workers-sdk",
+		},
+	});
+
+	return {
+		name: imported.name,
+		remote: imported.remote,
+		token: imported.token,
+	};
+}
+```
+
+</TypeScriptExample>
+
+Imported repos return the same create-style token format. The token encodes its expiry directly in the `?expires=` suffix.
+
+### `delete(name)`
+
+- `name` <Type text="RepoName" /> <MetaInfo text="required" />
+- Returns <Type text="Promise<boolean>" />
+
+<TypeScriptExample>
+
+```ts
+async function deleteRepo(artifacts: Artifacts) {
+	return artifacts.delete("starter-repo");
+}
+```
+
+</TypeScriptExample>
+
+## Repo handle methods
+
+Call `await artifacts.get(name)` to get a repo handle. The handle extends `ArtifactsRepoInfo`, so repo metadata (`id`, `name`, `remote`, `defaultBranch`, etc.) is available directly as properties.
+
+<TypeScriptExample>
+
+```ts
+async function getRemoteUrl(artifacts: Artifacts) {
+	const repo = await artifacts.get("starter-repo");
+	return repo.remote;
+}
+```
+
+</TypeScriptExample>
+
+### `createToken(scope?, ttl?)`
+
+- `scope` <Type text='"read" | "write"' /> <MetaInfo text='optional (default: "write")' />
+- `ttl` <Type text="number" /> <MetaInfo text="optional (seconds)" />
+- Returns <Type text="Promise<ArtifactsCreateTokenResult>" />
+
+<TypeScriptExample>
+
+```ts
+async function mintReadToken(artifacts: Artifacts) {
+	const repo = await artifacts.get("starter-repo");
+	return repo.createToken("read", 3600);
+}
+```
+
+</TypeScriptExample>
+
+Unlike `create()` and `import()`, `repo.createToken()` returns a structured result with `plaintext` and `expiresAt`. The `plaintext` value is the Git token string.
+
+### `listTokens()`
+
+- Returns <Type text="Promise<ArtifactsTokenListResult>" />
+
+<TypeScriptExample>
+
+```ts
+async function listRepoTokens(artifacts: Artifacts) {
+	const repo = await artifacts.get("starter-repo");
+	const result = await repo.listTokens();
+	return {
+		total: result.total,
+		tokens: result.tokens,
+	};
+}
+```
+
+</TypeScriptExample>
+
+### `revokeToken(tokenOrId)`
+
+- `tokenOrId` <Type text="string" /> <MetaInfo text="required" />
+- Returns <Type text="Promise<boolean>" />
+
+<TypeScriptExample>
+
+```ts
+async function revokeToken(artifacts: Artifacts, tokenOrId: string) {
+	const repo = await artifacts.get("starter-repo");
+	return repo.revokeToken(tokenOrId);
+}
+```
+
+</TypeScriptExample>
+
+### `fork(name, opts?)`
+
+- `name` <Type text="RepoName" /> <MetaInfo text="required" />
+- `opts.description` <Type text="string" /> <MetaInfo text="optional" />
+- `opts.readOnly` <Type text="boolean" /> <MetaInfo text="optional" />
+- `opts.defaultBranchOnly` <Type text="boolean" /> <MetaInfo text="optional" />
+- Returns <Type text="Promise<ArtifactsCreateRepoResult>" />
+
+<TypeScriptExample>
+
+```ts
+async function forkRepo(artifacts: Artifacts) {
+	const repo = await artifacts.get("starter-repo");
+	const forked = await repo.fork("starter-repo-copy", {
+		description: "Fork for testing",
+		defaultBranchOnly: true,
+		readOnly: false,
+	});
+
+	return forked.remote;
+}
+```
+
+</TypeScriptExample>
+
+## Worker example
+
+This example combines the binding methods in one Worker route.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+interface Env {
+	ARTIFACTS: Artifacts;
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const url = new URL(request.url);
+
+		if (request.method === "POST" && url.pathname === "/repos") {
+			const created = await env.ARTIFACTS.create("starter-repo");
+			return Response.json({
+				name: created.name,
+				remote: created.remote,
+			});
+		}
+
+		if (request.method === "GET" && url.pathname === "/repos/starter-repo") {
+			const repo = await env.ARTIFACTS.get("starter-repo");
+			return Response.json({
+				id: repo.id,
+				name: repo.name,
+				remote: repo.remote,
+				defaultBranch: repo.defaultBranch,
+			});
+		}
+
+		if (request.method === "POST" && url.pathname === "/tokens") {
+			const repo = await env.ARTIFACTS.get("starter-repo");
+			const token = await repo.createToken("read", 3600);
+			return Response.json(token);
+		}
+
+		return Response.json(
+			{ message: "Use POST /repos, GET /repos/starter-repo, or POST /tokens." },
+			{ status: 404 },
+		);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+:::caution[Protect token routes]
+This example omits authentication so it can focus on the binding surface. In production, authorize the caller before creating repos or returning tokens.
+:::
+
+## Generated types
+
+Run `npx wrangler types` in your own project and treat the generated `worker-configuration.d.ts` file as the source of truth for the Artifacts binding types in that environment.
+
+## Next steps
+
+<LinkCard
+	title="REST API"
+	href="/artifacts/api/rest-api/"
+	description="Compare the binding methods with the underlying HTTP routes."
+/>
+
+<LinkCard
+	title="Get started with Workers"
+	href="/artifacts/get-started/workers/"
+	description="Use the binding in a full Worker project from local development through deploy."
+/>
+
+<LinkCard
+	title="Git protocol"
+	href="/artifacts/api/git-protocol/"
+	description="Use repo remotes and tokens with standard git-over-HTTPS clients."
+/>

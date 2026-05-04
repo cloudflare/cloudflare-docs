@@ -1,6 +1,10 @@
 ---
 pcx_content_type: how-to
+products:
+  - cloudflare-one
 title: PingOne (SAML)
+tags:
+  - SAML
 description: Learn how to integrate PingOne as a SAML identity provider with Cloudflare One.
 ---
 
@@ -42,13 +46,14 @@ The PingOne cloud platform from PingIdentity provides SSO identity management. C
    | `givenName`           | Given Name     |
    | `surName`             | Family Name    |
 
+
    These [SAML attributes](/cloudflare-one/integrations/identity-providers/generic-saml/#saml-attributes) tell Cloudflare Access who the user is.
 
 9. Set the application to **Active**.
 
 ### 2. Add PingOne to Cloudflare One
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Integrations** > **Identity providers**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Integrations** > **Identity providers**.
 
 2. Under **Your identity providers**, select **Add new identity provider**.
 

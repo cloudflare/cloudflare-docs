@@ -1,19 +1,26 @@
 ---
-summary: Extract the JWT token from a header, decode it, and implement
-  validation checks to verify it.
+summary: Extract a JWT from the Authorization header, verify its HMAC-SHA256
+  signature using the WebCrypto API, and validate its claims.
 tags:
   - Authentication
   - Request modification
 products: [snippets]
 pcx_content_type: example
 title: Validate JSON web tokens (JWT)
-description: Extract the JWT token from a header, decode it, and implement
-  validation checks to verify it.
+description: Extract a JWT from the Authorization header, verify its HMAC-SHA256
+  signature using the WebCrypto API, and validate its claims.
 ---
+
+:::caution[Caution when using in production]
+The example code contains a placeholder HMAC secret of `"mysecretsymmetrickey"`. To best protect your resources, change the secret to a strong, unique value in the Snippets editor before saving your code.
+:::
 
 ```js
 export default {
 	async fetch(request) {
+		const HMAC_SECRET = "mysecretsymmetrickey"; // Change this to your secret key
+		const CLOCK_TOLERANCE = 30; // Tolerance for clock skew in seconds
+
 		// Extract JWT token from "Authorization: Bearer" header
 		function getJWTToken(request) {
 			const authorizationHeader = request.headers.get("Authorization");
@@ -23,29 +30,91 @@ export default {
 			return null;
 		}
 
-		// Validate that JWT token has correct format: header.payload.signature (for example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNjI0OTkyMDAwLCJleHAiOjE2MjI1MDAwMDB9.TldRGokRHJvG69SefbxIqAlQ6nnco6aLa3y7jsYXHMI")
-		function validateJWT(token) {
-			const [header, payload, signature] = token.split(".");
+		// Convert a base64url string to a Uint8Array
+		function base64urlToUint8Array(base64url) {
+			const base64 = base64url
+				.replace(/-/g, "+")
+				.replace(/_/g, "/")
+				.padEnd(base64url.length + ((4 - (base64url.length % 4)) % 4), "=");
+			const binary = atob(base64);
+			return Uint8Array.from(binary, (c) => c.charCodeAt(0));
+		}
 
-			if (!header || !payload || !signature) {
+		// Decode a base64url-encoded JWT segment to a JSON object
+		function decodeSegment(s) {
+			const bytes = base64urlToUint8Array(s);
+			return JSON.parse(new TextDecoder().decode(bytes));
+		}
+
+		// Validate JWT token structure, cryptographic signature, and claims.
+		async function validateJWT(token) {
+			const parts = token.split(".");
+			if (parts.length !== 3) {
 				throw new Error("Invalid JWT format");
 			}
 
-			// Decode the JWT payload and header to JSON
-			const decodedHeader = JSON.parse(atob(header));
-			const decodedPayload = JSON.parse(atob(payload));
+			const [headerB64, payloadB64, signatureB64] = parts;
+			const decodedHeader = decodeSegment(headerB64);
+			const decodedPayload = decodeSegment(payloadB64);
 
-			// Here you would implement the logic to verify the JWT signature.
-			// This example assumes a simple validation that just checks the payload.
-			// Replace the following lines with your actual validation logic.
+			// Verify the algorithm.
+			// This prevents algorithm-confusion attacks where an attacker changes the "alg" header to bypass signature verification.
+			// Never branch on the token's alg header to decide how to verify.
+			// Always enforce the algorithm you expect.
+			if (decodedHeader.alg !== "HS256") {
+				throw new Error("Unsupported algorithm");
+			}
 
-			// Ensure that JWT token hasn't expired (to test, try sending a request with an expired token "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNjI0OTkyMDAwLCJleHAiOjE2MjI1MDAwMDB9.TldRGokRHJvG69SefbxIqAlQ6nnco6aLa3y7jsYXHMI")
-			if (decodedPayload.exp < Math.floor(Date.now() / 1000)) {
+			// Verify the cryptographic signature.
+			// Import the shared secret as an HMAC-SHA256 key, then verify that the signature matches "header.payload".
+			// If this fails, the token was tampered with or signed with a different key.
+			const signature = base64urlToUint8Array(signatureB64);
+			const data = new TextEncoder().encode(`${headerB64}.${payloadB64}`);
+			const key = await crypto.subtle.importKey(
+				"raw",
+				new TextEncoder().encode(HMAC_SECRET),
+				{ name: "HMAC", hash: "SHA-256" },
+				false,
+				["verify"],
+			);
+			const valid = await crypto.subtle.verify(
+				{ name: "HMAC" },
+				key,
+				signature,
+				data,
+			);
+
+			if (!valid) {
+				throw new Error("Invalid signature");
+			}
+
+			// Validate standard claims.
+			// The claims a JWT must contain depends on your use case.
+			const now = Math.floor(Date.now() / 1000);
+
+			// exp (expiration): Reject tokens that have expired.
+			// A small clock tolerance accounts for clock skew between servers.
+			if (typeof decodedPayload.exp !== "number") {
+				throw new Error("Missing exp claim");
+			}
+			if (decodedPayload.exp < now - CLOCK_TOLERANCE) {
 				throw new Error("JWT has expired");
 			}
 
-			// Optionally, you could add more validation checks here (issuer, audience, etc.).
-			// Also, implement actual signature validation with a custom function.
+			// iat (issued at): Ensure the token declares when it was created.
+			if (typeof decodedPayload.iat !== "number") {
+				throw new Error("Missing iat claim");
+			}
+
+			// Additional claims per RFC 7519 (https://www.rfc-editor.org/rfc/rfc7519.html):
+			// - nbf (not before): Reject tokens used before their valid start time.
+			//     if (decodedPayload.nbf > now + CLOCK_TOLERANCE) throw new Error("JWT is not yet valid");
+			// - iss (issuer): Ensure the token was issued by a trusted authority.
+			//     if (decodedPayload.iss !== "https://auth.example.com") throw new Error("Invalid issuer");
+			// - aud (audience): Ensure the token is intended for your service.
+			//     if (decodedPayload.aud !== "my-api") throw new Error("Invalid audience");
+			// - sub (subject): Identify the principal the token refers to.
+			// - jti (JWT ID): Unique token identifier, useful for preventing replay attacks.
 
 			return true;
 		}
@@ -58,20 +127,13 @@ export default {
 			return new Response("Missing JWT token", { status: 401 });
 		}
 
-		// Execute the function to validate the token
 		try {
-			const validToken = await validateJWT(jwtToken);
-			if (validToken) {
-				// If the token is valid, serve actual response
-				// An example of a valid token that will expire in 2033 is "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNjI0OTkyMDAwLCJleHAiOjIwMDExMjAwMDB9._qgQ_TMrGfYgOoA8HtTZwEGoj8zAPWxsz8CT1jEAGzo"
-				return fetch(request);
-			} else {
-				return new Response("Invalid JWT token", { status: 401 });
-			}
-		} catch (error) {
-			return new Response("Error validating token: " + error.message, {
-				status: 500,
-			});
+			// If the token is valid, the validateJWT function will not error and serve the actual response
+			// An example of a valid token that will expire in 2033 is "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNjI0OTkyMDAwLCJleHAiOjIwMDExMjAwMDB9._qgQ_TMrGfYgOoA8HtTZwEGoj8zAPWxsz8CT1jEAGzo"
+			await validateJWT(jwtToken);
+			return fetch(request);
+		} catch {
+			return new Response("Invalid JWT token", { status: 401 });
 		}
 	},
 };

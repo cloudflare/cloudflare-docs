@@ -1,0 +1,49 @@
+---
+pcx_content_type: reference
+title: RtkPollsToggle
+description: API reference for RtkPollsToggle component (React Native Library)
+products:
+  - realtime
+---
+
+Toggle button to open the polls sidebar panel. Hides if poll permissions are not available.
+
+## Properties
+
+| Property   | Type                           | Required | Default           | Description                      |
+| ---------- | ------------------------------ | -------- | ----------------- | -------------------------------- |
+| `meeting`  | `RealtimeKitClient`            | ✅       | -                 | The RealtimeKit meeting instance |
+| `states`   | `States`                       | ✅       | -                 | UI state object                  |
+| `size`     | `'lg' \| 'md' \| 'sm' \| 'xl'` | ❌       | -                 | Icon size                        |
+| `variant`  | `'button' \| 'horizontal'`     | ❌       | -                 | Layout variant                   |
+| `iconPack` | `IconPack`                     | ❌       | `defaultIconPack` | Custom icon pack                 |
+| `t`        | `RtkI18n`                      | ❌       | -                 | i18n translation function        |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkPollsToggle } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkPollsToggle meeting={meeting} states={states} />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkPollsToggle } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return (
+		<RtkPollsToggle
+			meeting={meeting}
+			states={states}
+			size="md"
+			variant="button"
+		/>
+	);
+}
+```

@@ -7,6 +7,8 @@ tags:
   - JavaScript
 description: >-
   This tutorial builds a full-stack Pages application using the React framework.
+products:
+  - pages
 ---
 
 import { YouTube, PackageManagers, DashButton } from "~/components";
@@ -219,7 +221,7 @@ After you have configured your Pages application and Pages Function, deploy your
 
 ### Deploy with Wrangler
 
-In your `blog-frontend` directory, run [`wrangler pages deploy`](/workers/wrangler/commands/#deploy-1) to deploy your project to the Cloudflare dashboard.
+In your `blog-frontend` directory, run [`wrangler pages deploy`](/workers/wrangler/commands/general/#deploy) to deploy your project to the Cloudflare dashboard.
 
 ```sh
 wrangler pages deploy blog-frontend

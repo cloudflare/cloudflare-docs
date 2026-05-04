@@ -1,0 +1,39 @@
+---
+pcx_content_type: navigation
+title: RtkLeaveMeetingDialog
+description: API reference for RtkLeaveMeetingDialog component (Flutter Library)
+products:
+  - realtime
+---
+
+A dialog widget for confirming the action of leaving a RealtimeKit meeting. Provides a prompt with cancel and leave options, and displays an additional end-meeting option for hosts.
+
+## Properties
+
+| Property      | Type                | Required | Default              | Description                     |
+| ------------- | ------------------- | -------- | -------------------- | ------------------------------- |
+| `meeting`     | `RealtimekitClient` | ✅       | -                    | Meeting client instance         |
+| `designToken` | `RtkDesignTokens?`  | ❌       | Global design tokens | Design tokens for customization |
+
+## Usage Examples
+
+### Basic Usage
+
+```dart
+import 'package:realtimekit_ui/realtimekit_ui.dart';
+
+RtkLeaveMeetingDialog(
+  meeting: yourMeetingInstance,
+)
+```
+
+### With Properties
+
+```dart
+import 'package:realtimekit_ui/realtimekit_ui.dart';
+
+RtkLeaveMeetingDialog(
+  meeting: yourMeetingInstance,
+  designToken: yourDesignToken,
+)
+```

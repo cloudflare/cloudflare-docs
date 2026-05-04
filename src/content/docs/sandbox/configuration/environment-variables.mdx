@@ -1,8 +1,11 @@
 ---
 title: Environment variables
+description: Pass configuration, secrets, and runtime settings to Sandbox SDK containers using environment variables.
 pcx_content_type: configuration
 sidebar:
   order: 3
+products:
+  - sandbox
 ---
 
 import { WranglerConfig } from "~/components";
@@ -27,12 +30,37 @@ Controls the transport protocol for SDK-to-container communication. WebSocket tr
 {
 	"vars": {
 		"SANDBOX_TRANSPORT": "websocket"
-	},
+	}
 }
 ```
 </WranglerConfig>
 
 See [Transport modes](/sandbox/configuration/transport/) for a complete guide including when to use each transport, performance considerations, and migration instructions.
+
+### COMMAND_TIMEOUT_MS
+
+| | |
+|---|---|
+| **Type** | `number` (milliseconds) |
+| **Default** | None (no timeout) |
+
+Sets a global default timeout for every `exec()` call. When set, any command that exceeds this duration raises an error on the caller side and closes the connection.
+
+Per-command `timeout` on `exec()` and session-level `commandTimeoutMs` on [`createSession()`](/sandbox/api/sessions/#createsession) both override this value. For more details on timeout precedence, refer to [Execute commands - Timeouts](/sandbox/guides/execute-commands/#timeouts).
+
+<WranglerConfig>
+```jsonc
+{
+	"vars": {
+		"COMMAND_TIMEOUT_MS": "30000"
+	}
+}
+```
+</WranglerConfig>
+
+:::note
+A timeout does not kill the underlying process. It only terminates the connection to the caller. The process continues running until the session is deleted or the sandbox is destroyed.
+:::
 
 ## Three ways to set environment variables
 
@@ -127,7 +155,7 @@ await sandbox.setEnvVars({
 	// Set new values
 	API_KEY: 'new-key',
 	DATABASE_URL: env.DATABASE_URL,
-	
+
 	// Unset variables (removes them from the environment)
 	OLD_API_KEY: undefined,
 	TEMP_TOKEN: null
@@ -183,9 +211,10 @@ Then pass them to your sandbox:
 
 ```typescript
 import { getSandbox } from "@cloudflare/sandbox";
+export { Sandbox } from "@cloudflare/sandbox";
 
 interface Env {
-	Sandbox: DurableObjectNamespace;
+	Sandbox: DurableObjectNamespace<Sandbox>;
 	OPENAI_API_KEY: string;
 	DATABASE_URL: string;
 }
@@ -270,17 +299,14 @@ wrangler secret put AWS_SECRET_ACCESS_KEY
 # Paste your R2 Secret Access Key
 ```
 
-:::caution[Production only]
-Bucket mounting requires production deployment. It does not work with `wrangler dev` due to FUSE support limitations. See [Mount buckets guide](/sandbox/guides/mount-buckets/) for details.
-:::
-
 **Mount buckets with automatic credential detection:**
 
 ```typescript
 import { getSandbox } from "@cloudflare/sandbox";
+export { Sandbox } from "@cloudflare/sandbox";
 
 interface Env {
-	Sandbox: DurableObjectNamespace;
+	Sandbox: DurableObjectNamespace<Sandbox>;
 	AWS_ACCESS_KEY_ID: string;
 	AWS_SECRET_ACCESS_KEY: string;
 }
@@ -352,3 +378,4 @@ await sandbox.exec("node app.js", {
 - [Secrets](/workers/configuration/secrets/) - Managing sensitive data
 - [Sessions API](/sandbox/api/sessions/) - Session-level environment variables
 - [Security model](/sandbox/concepts/security/) - Understanding data isolation
+- [Proxy requests to external APIs](/sandbox/guides/proxy-requests/) - Keep credentials out of the sandbox entirely using a Worker proxy

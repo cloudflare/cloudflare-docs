@@ -1,0 +1,35 @@
+---
+title: Email Sending now in public beta
+description: Send transactional emails at scale directly from Cloudflare Workers or the REST API. Email Sending joins Email Routing under the new Cloudflare Email Service.
+date: 2026-04-16
+---
+
+import { TypeScriptExample } from "~/components";
+
+**[Email Sending](/email-service/api/send-emails/)** is now in public beta. Send transactional emails directly from Workers (`env.EMAIL.send()`) or the REST API, with support for HTML, plain text, attachments, inline images, and custom headers. Email Sending joins [Email Routing](https://blog.cloudflare.com/introducing-email-routing/) under the new **Cloudflare Email Service** — a single service for sending and receiving email on the Cloudflare developer platform.
+
+Send an email from a Worker in a few lines of code:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request, env): Promise<Response> {
+		const response = await env.EMAIL.send({
+			from: "notifications@yourdomain.com",
+			to: "user@example.com",
+			subject: "Order confirmed",
+			html: "<h1>Your order has been confirmed</h1>",
+			text: "Your order has been confirmed.",
+		});
+
+		return Response.json({ messageId: response.messageId });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+Email Service also integrates with the [Agents SDK](/agents/), giving your agents a native `onEmail` hook to receive, process, and reply to emails. Combined with the new [Email MCP server](https://github.com/cloudflare/mcp-server-cloudflare) and Wrangler CLI email commands, any agent can send email regardless of where it runs.
+
+Start sending and receiving emails from Workers and agents today. Email Sending is available on the Workers paid plan. Refer to the [Email Service documentation](/email-service/) to get started.
