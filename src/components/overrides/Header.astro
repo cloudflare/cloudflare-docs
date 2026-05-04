@@ -2,9 +2,8 @@
 import LanguageSelect from "@astrojs/starlight/components/LanguageSelect.astro";
 import DocSearch from "@astrojs/starlight-docsearch/DocSearch.astro";
 import SiteTitle from "@astrojs/starlight/components/SiteTitle.astro";
-import ThemeSelect from "@astrojs/starlight/components/ThemeSelect.astro";
-
 import HeaderDropdowns from "../HeaderDropdowns.tsx";
+import ThemeSelectDropdown from "../ThemeSelectDropdown.tsx";
 import AgentDirective from "../AgentDirective.astro";
 ---
 
@@ -28,7 +27,7 @@ import AgentDirective from "../AgentDirective.astro";
 			>
 				Log in
 			</a>
-			<ThemeSelect />
+			<span class="w-[6rem]"><ThemeSelectDropdown client:idle /></span>
 			<LanguageSelect />
 		</div>
 	</div>
@@ -76,7 +75,10 @@ import AgentDirective from "../AgentDirective.astro";
 		line-height: 1;
 		white-space: nowrap;
 		text-decoration: none;
-		transition: color 150ms, background-color 150ms, border-color 150ms;
+		transition:
+			color 150ms,
+			background-color 150ms,
+			border-color 150ms;
 	}
 
 	.header-login {
@@ -109,29 +111,6 @@ import AgentDirective from "../AgentDirective.astro";
 		height: 1.25rem;
 	}
 
-	:global(starlight-theme-select > label > select) {
-		line-height: 1.25rem;
-		margin: 1px;
-		color: var(--color-header-text-subtle);
-	}
-
-	:global(
-		starlight-theme-select > label > select:focus,
-		starlight-theme-select > label > select:focus-visible
-	) {
-		margin: 1px;
-		outline-offset: -4px;
-	}
-
-	:global(starlight-theme-select > label > .label-icon) {
-		left: 8%;
-		color: var(--color-header-text-subtle);
-	}
-
-	:global(starlight-theme-select > label > .caret) {
-		left: 75%;
-	}
-
 	#right-group {
 		display: none;
 		align-items: center;
@@ -151,7 +130,10 @@ import AgentDirective from "../AgentDirective.astro";
 			height: 2.25rem;
 			border-color: var(--color-header-line);
 			color: var(--color-header-text-subtle);
-			transition: color 150ms, background-color 150ms, border-color 150ms;
+			transition:
+				color 150ms,
+				background-color 150ms,
+				border-color 150ms;
 		}
 
 		#docsearch :global(.DocSearch-Button:hover) {

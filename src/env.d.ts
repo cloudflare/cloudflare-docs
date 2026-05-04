@@ -39,3 +39,15 @@ interface ModelContext {
 interface Navigator {
 	readonly modelContext?: ModelContext;
 }
+
+// Allow the starlight-theme-select custom element to be used in React JSX.
+declare namespace React {
+	namespace JSX {
+		interface IntrinsicElements {
+			"starlight-theme-select": React.DetailedHTMLProps<
+				React.HTMLAttributes<HTMLElement>,
+				HTMLElement
+			>;
+		}
+	}
+}
