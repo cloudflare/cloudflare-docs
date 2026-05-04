@@ -8,6 +8,7 @@ import "astro-breadcrumbs/breadcrumbs.css";
 import Description from "~/components/Description.astro";
 import LastReviewed from "~/components/LastReviewed.astro";
 import ComponentUsage from "~/components/ComponentUsage.astro";
+import PageActions from "~/components/PageActions.astro";
 
 import { getEntry } from "astro:content";
 
@@ -23,6 +24,10 @@ const slug = Astro.locals.starlightRoute.id;
 // https://starlight.astro.build/guides/overriding-components/#only-override-on-specific-pages
 const hideTitle = Astro.locals.starlightRoute.hideTitle;
 const hideBreadcrumbs = Astro.locals.starlightRoute.hideBreadcrumbs;
+
+const isSplash = frontmatter.template === "splash";
+const showPageActions =
+	!hideTitle && !isSplash && !Astro.url.pathname.startsWith("/support/");
 
 const breadcrumbProps: Record<string, any> = {
 	crumbs: [
@@ -113,9 +118,21 @@ if (!hideBreadcrumbs) {
 	)
 }
 
+{
+	showPageActions && (
+		<div class="page-actions-wrapper">
+			<PageActions />
+		</div>
+	)
+}
+
 <style>
 	:root {
 		--color-link-breadcrumbs: var(--sl-color-text-accent);
+	}
+
+	.page-actions-wrapper {
+		margin-top: 1rem;
 	}
 
 	:global(.c-breadcrumbs) {

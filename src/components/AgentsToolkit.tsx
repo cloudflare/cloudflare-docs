@@ -3,12 +3,12 @@ import {
 	PiArrowSquareOutLight,
 	PiSparkleDuotone,
 	PiCheckCircleLight,
+	PiScrollLight,
 } from "react-icons/pi";
 import { useState, useRef, useEffect } from "react";
 import tippy from "tippy.js";
 import ClaudeIcon from "./icons/ClaudeIcon";
 import ChatGPTIcon from "./icons/ChatGPTIcon";
-import DocsForAgentsIcon from "./icons/DocsForAgentsIcon";
 import { track } from "~/util/zaraz";
 
 type CopyFeedback = { key: string; state: "success" } | null;
@@ -68,9 +68,9 @@ function ListItem({
 				className="flex w-full cursor-pointer items-center gap-2.5 rounded-none border-0 bg-transparent px-0 py-1.5 text-[13px] leading-snug text-[var(--sidebar-text)] shadow-none transition-colors duration-150 ease-out hover:text-[var(--sidebar-text-strong)] focus-visible:ring-2 focus-visible:ring-[var(--sl-color-text-accent)] focus-visible:outline-none"
 			>
 				{justCopied ? (
-					<PiCheckCircleLight className="h-3.5 w-3.5 shrink-0 text-green-500" />
+					<PiCheckCircleLight className="h-4 w-4 shrink-0 text-green-500" />
 				) : (
-					<Icon className="h-3.5 w-3.5 shrink-0" />
+					<Icon className="h-4 w-4 shrink-0" />
 				)}
 				<span>{justCopied ? "Copied!" : label}</span>
 			</button>
@@ -164,7 +164,7 @@ export default function AgentsToolkit() {
 			key: "docs-for-agents",
 			label: "Docs for agents",
 			tooltip: "Connect AI agents and LLMs to Cloudflare docs",
-			icon: DocsForAgentsIcon,
+			icon: PiScrollLight,
 			onClick: handleViewDocsForAgents,
 		},
 		{

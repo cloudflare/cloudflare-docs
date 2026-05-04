@@ -2,7 +2,6 @@
 import Default from "@astrojs/starlight/components/TableOfContents.astro";
 import { Icon } from "@astrojs/starlight/components";
 import FeedbackPrompt from "../FeedbackPrompt.tsx";
-import AgentsToolkit from "../AgentsToolkit.tsx";
 
 const tags = Astro.locals.starlightRoute.entry.data.tags;
 const showFeedback = Astro.locals.starlightRoute.entry.data.feedback;
@@ -13,14 +12,6 @@ const { editUrl } = Astro.locals.starlightRoute;
 <div class="tb-container bg-[var(--sl-color-bg-elevated)] pr-4">
 	{/* We use Starlight's native TOC component instead of re-implementing it */}
 	<Default />
-
-	{
-		(showFeedback || showActions) && (
-			<nav class="mt-6 border-t border-[var(--sidebar-border)] pt-6 agents-toolkit-container" aria-label="Agents toolkit">
-				<AgentsToolkit client:only="react" />
-			</nav>
-		)
-	}
 
 	{
 		tags && tags.length > 0 && (
