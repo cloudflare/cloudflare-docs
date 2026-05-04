@@ -7,20 +7,15 @@ export interface FilterItem {
 
 /**
  * Searchable multi-select dropdown for catalog filter controls.
- *
- * Fires a "model-catalog-filter" CustomEvent on the document when the
- * selection changes, so the Astro catalog script can respond without
- * React owning catalog state.
+ * Controlled — parent owns selection state and event dispatching.
  */
 export function FilterDropdown({
 	label,
-	filterKey,
 	items,
 	selected,
 	onChange,
 }: {
 	label: string;
-	filterKey: string;
 	items: FilterItem[];
 	selected: string[];
 	onChange: (selected: string[]) => void;
@@ -32,11 +27,6 @@ export function FilterDropdown({
 	function handleChange(value: unknown) {
 		const next = (value as FilterItem[]).map((item) => item.value);
 		onChange(next);
-		document.dispatchEvent(
-			new CustomEvent("model-catalog-filter", {
-				detail: { key: filterKey, value: next },
-			}),
-		);
 	}
 
 	return (

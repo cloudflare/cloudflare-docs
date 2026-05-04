@@ -22,11 +22,7 @@ export function SortSelect({
 }) {
 	function handleChange(value: SortOrder | null) {
 		if (!value) return;
-		const next = value;
-		onChange(next);
-		document.dispatchEvent(
-			new CustomEvent("model-catalog-sort", { detail: { value: next } }),
-		);
+		onChange(value);
 	}
 
 	return (

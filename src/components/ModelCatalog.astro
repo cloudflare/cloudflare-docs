@@ -382,14 +382,13 @@ const cards = sortedModels.map((model) => {
 		state.capabilities.forEach((c) => params.append("capabilities", c));
 		if (state.sort !== "newest") params.set("sort", state.sort);
 
-		if (params.size === 0) {
-			history.pushState(null, "", window.location.pathname);
-		} else {
-			history.pushState(
-				null,
-				"",
-				`${window.location.pathname}?${params.toString()}`,
-			);
+		const newUrl =
+			params.size === 0
+				? window.location.pathname
+				: `${window.location.pathname}?${params.toString()}`;
+
+		if (newUrl !== window.location.pathname + window.location.search) {
+			history.pushState(null, "", newUrl);
 		}
 	}
 

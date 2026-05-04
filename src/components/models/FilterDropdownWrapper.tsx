@@ -50,7 +50,6 @@ export function FilterDropdownWrapper({
 	return (
 		<FilterDropdown
 			label={label}
-			filterKey={filterKey}
 			items={items}
 			selected={selected}
 			onChange={handleChange}
