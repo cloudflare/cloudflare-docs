@@ -2,7 +2,7 @@ import { getCollection } from "astro:content";
 import type { AiModelCard, AiModelDetail } from "~/schemas/ai-model-catalog";
 import { downloadToDotTempIfNotPresent } from "./custom-loaders";
 import fs from "node:fs";
-import { fileURLToPath } from "node:url";
+
 import { join } from "node:path";
 
 import type { ModelCardData, ResolvedModel } from "./model-types";
@@ -18,11 +18,12 @@ const ALL_MODELS_DETAIL_PATH =
 
 /**
  * Returns the absolute path to the .tmp/ directory at the repo root.
- * Centralised here so components don't have to compute relative paths
- * from their own location (which varies).
+ * Uses process.cwd() rather than import.meta.url — the latter resolves
+ * relative to the compiled output location (dist/) during astro build,
+ * which is wrong. process.cwd() is always the repo root.
  */
 export function getDotTmpPath(): string {
-	return fileURLToPath(new URL("../../.tmp", import.meta.url));
+	return join(process.cwd(), ".tmp");
 }
 
 /**
@@ -144,8 +145,11 @@ export async function fetchAllModelDetails(): Promise<
 		`middlecache/${ALL_MODELS_DETAIL_PATH}`,
 	);
 
-	const dotTmpPath = fileURLToPath(new URL("../../.tmp", import.meta.url));
-	const localPath = join(dotTmpPath, "middlecache", ALL_MODELS_DETAIL_PATH);
+	const localPath = join(
+		getDotTmpPath(),
+		"middlecache",
+		ALL_MODELS_DETAIL_PATH,
+	);
 	const raw = JSON.parse(fs.readFileSync(localPath, "utf8")) as {
 		model_count: number;
 		models: Record<string, AiModelDetail>;

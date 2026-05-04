@@ -3,7 +3,6 @@
 import type { LoaderContext, Loader } from "astro/loaders";
 import { file } from "astro/loaders";
 
-import { fileURLToPath } from "node:url";
 import { Readable } from "node:stream";
 import type { ReadableStream as WebReadableStream } from "node:stream/web";
 import { writeFile } from "node:fs/promises";
@@ -38,7 +37,10 @@ export async function downloadToDotTempIfNotPresent(
 	const destinationParts = relativeDestination.split("/");
 	const universalRelativeDestination = join(...destinationParts);
 
-	const dotTmpPath = fileURLToPath(new URL("../../.tmp", import.meta.url));
+	// Use process.cwd() rather than import.meta.url — the latter resolves
+	// relative to the compiled output location during astro build (dist/),
+	// not the repo root where .tmp/ actually lives.
+	const dotTmpPath = join(process.cwd(), ".tmp");
 
 	const destination = join(dotTmpPath, universalRelativeDestination);
 
