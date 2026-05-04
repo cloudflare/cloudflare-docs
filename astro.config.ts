@@ -253,16 +253,6 @@ export default defineConfig({
 		skills(),
 	],
 	vite: {
-		server: {
-			proxy: {
-				// Proxy *.md requests to prod so they work during local dev.
-				// Matches any path ending in .md (e.g. /workers/index.md)
-				"^/.*\\.md$": {
-					target: "https://developers.cloudflare.com",
-					changeOrigin: true,
-				},
-			},
-		},
 		resolve: {
 			alias: {
 				"./Page.astro": fileURLToPath(
