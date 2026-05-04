@@ -44,7 +44,6 @@ import { getModelAuthor, getDotTmpPath } from "~/util/model-resolver";
 import type { ResolvedModel } from "~/util/model-types";
 import fs from "node:fs";
 import { join } from "node:path";
-import { downloadToDotTempIfNotPresent } from "~/util/custom-loaders";
 
 interface Props {
 	model: ResolvedModel;
@@ -207,16 +206,12 @@ type ParametersPayload =
 
 let parametersData: ParametersPayload | null = null;
 if (hasSchemaFiles) {
-	// Use downloadToDotTempIfNotPresent — same mechanism as middlecacheLoader and
-	// fetchAllModelDetails. If bin/fetch-models.ts already extracted the tarball,
-	// the file exists in .tmp/ and this is a no-op. Otherwise it fetches from HTTP.
+	// parameters.json is extracted from models.tar.gz by bin/fetch-models.ts
+	// (runs as prebuild/predev). Read it directly — no HTTP fallback since
+	// individual model files are not served as standalone middlecache endpoints.
 	const r2Path = `v1/workers-ai-model-catalog/models/${r2Slug}/parameters.json`;
+	const localPath = join(getDotTmpPath(), "middlecache", r2Path);
 	try {
-		await downloadToDotTempIfNotPresent(
-			`https://middlecache.ced.cloudflare.com/${r2Path}`,
-			`middlecache/${r2Path}`,
-		);
-		const localPath = join(getDotTmpPath(), "middlecache", r2Path);
 		parametersData = JSON.parse(
 			fs.readFileSync(localPath, "utf8"),
 		) as ParametersPayload;
