@@ -1,12 +1,15 @@
 #!/usr/bin/env tsx
 
 /**
- * Downloads and extracts the workers_ai_model_catalog models.tar.gz from
- * middlecache into .tmp/middlecache/v1/workers-ai-model-catalog/models/.
+ * Downloads all workers_ai_model_catalog files from middlecache into .tmp/:
+ *   - ai-catalog.json
+ *   - workers-ai-catalog.json
+ *   - all-models-detail.json
+ *   - models.tar.gz  (extracted to models/<slug>/parameters.json + schema files)
  *
- * This runs as a prebuild/predev hook so cloudflare-docs can read
- * parameters.json and schema files from the local filesystem at build time
- * instead of making per-model HTTP requests.
+ * This runs as a prebuild/predev hook so the entire catalog payload is on the
+ * local filesystem before the Astro build starts. Nothing is fetched lazily at
+ * build time — all reads are plain fs.readFileSync calls.
  *
  * Flags:
  *   --soft   Warn and continue on failure (used by predev so a network
@@ -23,7 +26,16 @@ import kleur from "kleur";
 import { downloadToDotTempIfNotPresent } from "../src/util/custom-loaders";
 
 const MIDDLECACHE_BASE_URL = "https://middlecache.ced.cloudflare.com/";
-const TARBALL_MIDDLECACHE_PATH = "v1/workers-ai-model-catalog/models.tar.gz";
+const CATALOG_BASE_PATH = "v1/workers-ai-model-catalog";
+
+// Top-level JSON files fetched directly (not in the tarball)
+const TOP_LEVEL_FILES = [
+	"ai-catalog.json",
+	"workers-ai-catalog.json",
+	"all-models-detail.json",
+];
+
+const TARBALL_MIDDLECACHE_PATH = `${CATALOG_BASE_PATH}/models.tar.gz`;
 const TARBALL_DOT_TMP_PATH = `middlecache/${TARBALL_MIDDLECACHE_PATH}`;
 
 // The extracted models/ directory inside .tmp/middlecache/v1/workers-ai-model-catalog/
@@ -82,11 +94,20 @@ fs.mkdirSync(extractDir, { recursive: true });
 
 console.log("Fetching AI model catalog from middlecache...");
 
+// Fetch top-level JSON files and the tarball in parallel
 try {
-	await downloadToDotTempIfNotPresent(
-		`${MIDDLECACHE_BASE_URL}${TARBALL_MIDDLECACHE_PATH}`,
-		TARBALL_DOT_TMP_PATH,
-	);
+	await Promise.all([
+		...TOP_LEVEL_FILES.map((name) =>
+			downloadToDotTempIfNotPresent(
+				`${MIDDLECACHE_BASE_URL}${CATALOG_BASE_PATH}/${name}`,
+				`middlecache/${CATALOG_BASE_PATH}/${name}`,
+			),
+		),
+		downloadToDotTempIfNotPresent(
+			`${MIDDLECACHE_BASE_URL}${TARBALL_MIDDLECACHE_PATH}`,
+			TARBALL_DOT_TMP_PATH,
+		),
+	]);
 } catch (err) {
 	fail(`fetch failed: ${err}`);
 }
