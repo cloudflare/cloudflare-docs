@@ -17,7 +17,7 @@ Cloudflare's cache now runs on a new proxy built on [Pingora](https://github.com
 
 ## New features
 
-- **Asynchronous `stale-while-revalidate`**: Every request returns stale content immediately while revalidation happens in the background, instead of the first request after expiry blocking on the origin. Refer to the [asynchronous `stale-while-revalidate` changelog](/changelog/2026-02-26-async-stale-while-revalidate/) for details.
+- **Asynchronous `stale-while-revalidate`**: Every request returns stale content immediately while revalidation happens in the background, instead of the first request after expiry blocking on the origin. Refer to the [asynchronous `stale-while-revalidate` changelog](/changelog/post/2026-02-26-async-stale-while-revalidate/) for details.
 - **Unbuffered bypass by default**: Responses that bypass cache are streamed directly to the client without buffering, reducing time-to-first-byte for uncacheable content.
 
 ## Behavioral changes
