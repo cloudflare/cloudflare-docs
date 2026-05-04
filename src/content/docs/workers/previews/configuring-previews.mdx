@@ -108,7 +108,7 @@ This reference example shows all supported binding types in `previews`.
 	// this Worker (no `script_name`), each Preview gets its own isolated
 	// Durable Object namespace and instances — independent from production.
 	// For Durable Objects defined in the same Worker, you can also access them
-	// via `ctx.exports.Counter` without configuring a binding at all.
+	// via `ctx.exports.Counter`, but the binding must still be declared here.
 	//
 	// Containers are accessed through a Durable Object binding whose `class_name`
 	// matches the container's `class_name`. Each Preview gets its own isolated
@@ -122,7 +122,7 @@ This reference example shows all supported binding types in `previews`.
 		// Workflow binding. Same isolation rules as Durable Objects: when the
 		// class lives in this Worker, each Preview gets isolated Workflow
 		// instances. For Workflows defined in the same Worker, you can also
-		// access them via `ctx.exports` without configuring a binding at all.
+		// access them via `ctx.exports`, but the binding must still be declared here.
 		"workflows": [
 			{
 				"binding": "MY_WORKFLOW",
@@ -253,8 +253,8 @@ The exceptions are [**Durable Objects**](/durable-objects/), [**Workflows**](/wo
 | `d1_databases` | For connecting your D1 database binding to a Preview D1 database `database_id`. You need to manually create the D1 database for Previews to use, or leave the `database_name` field empty and Wrangler will auto-provision you a new D1 database and write the `database_name` back to your configuration file. |
 | `r2_buckets` | For connecting your R2 bucket binding to a Preview R2 bucket `bucket_name`. You need to manually create the R2 bucket for Previews to use, or leave the `bucket_name` field empty and Wrangler will auto-provision you a new R2 bucket and write the `bucket_name` back to your configuration file. |
 | `services` | For connecting a Service binding to a Worker `service` and optional `entrypoint`. Service bindings from a Preview always target the production instance of the bound Worker — they cannot be pointed at another Preview. |
-| `durable_objects.bindings` | For connecting a Durable Object binding to the `class_name` (and optional `script_name`) you specify. When the class is defined in the same Worker, each Preview gets its own isolated Durable Object namespace and instances, separate from production. If `script_name` points at another Worker, the binding targets that Worker's production Durable Object. For Durable Objects defined in the same Worker, you can access them via `ctx.exports` without configuring a binding. |
-| `workflows` | For connecting a Workflow binding to the `class_name`, Workflow `name`, and optional `script_name` you specify. When the class is defined in the same Worker, each Preview gets its own isolated Workflow instances, separate from production. If `script_name` points at another Worker, the binding targets that Worker's production Workflow. For Workflows defined in the same Worker, you can access them via `ctx.exports` without configuring a binding. |
+| `durable_objects.bindings` | For connecting a Durable Object binding to the `class_name` (and optional `script_name`) you specify. When the class is defined in the same Worker, each Preview gets its own isolated Durable Object namespace and instances, separate from production. If `script_name` points at another Worker, the binding targets that Worker's production Durable Object. You can also access same-Worker Durable Objects via `ctx.exports`, but the binding must still be declared here. Refer to [Durable Object isolation](/workers/previews/guides/durable-object-isolation/) for details. |
+| `workflows` | For connecting a Workflow binding to the `class_name`, Workflow `name`, and optional `script_name` you specify. When the class is defined in the same Worker, each Preview gets its own isolated Workflow instances, separate from production. If `script_name` points at another Worker, the binding targets that Worker's production Workflow. |
 | `send_email` | For creating a Send Email binding. The runtime binding name comes from `name`, not `binding`. `destination_address`, `allowed_destination_addresses`, and `allowed_sender_addresses` are preserved when set. |
 | `queues.producers` | For connecting a Queue producer binding to the `queue` name you specify. `delivery_delay` is preserved when set. Queue consumer settings (`queues.consumers`) are not Preview bindings — Previews cannot consume from Queues. |
 | `vectorize` | For connecting a Vectorize binding to the `index_name` you specify. You need to manually create the Vectorize index for Previews to use. |

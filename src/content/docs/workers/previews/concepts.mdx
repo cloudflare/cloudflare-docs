@@ -97,7 +97,7 @@ Concretely, this means:
 
 This isolation applies only when the class is defined in the same Worker. If you set `script_name` on a Durable Object or Workflow binding, the binding points at another Worker's production instance and this isolation does not apply.
 
-For Durable Objects and Workflows defined in the same Worker, you can access them via [`ctx.exports`](/workers/runtime-apis/context/#exports) without configuring a binding at all. Refer to [Durable Object isolation](/workers/previews/guides/durable-object-isolation/) for a full walkthrough.
+For Durable Objects and Workflows defined in the same Worker, you can also access them via [`ctx.exports`](/workers/runtime-apis/context/#exports), but the binding must still be declared in the `previews` block or dashboard defaults. Refer to [Durable Object isolation](/workers/previews/guides/durable-object-isolation/) for a full walkthrough.
 
 ### Shared across Previews
 
