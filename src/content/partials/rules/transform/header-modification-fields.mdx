@@ -19,9 +19,6 @@ import { Markdown } from "~/components";
 - `cf.ray_id`
 - `cf.timings.client_quic_rtt_msec`
 - `cf.timings.client_tcp_rtt_msec`
-- `cf.timings.edge_msec`
-- `cf.timings.origin_ttfb_msec`
-- `cf.timings.worker_msec`
 - `cf.tls_version`
 - `cf.tls_cipher`
 - `cf.tls_client_hello_length`
@@ -106,6 +103,9 @@ import { Markdown } from "~/components";
       <li><code>raw.http.response.headers.*</code></li>
       <li><code>cf.response.1xxx_code</code></li>
       <li><code>cf.response.error_type</code></li>
+      <li><code>cf.timings.edge_msec</code></li>
+      <li><code>cf.timings.origin_ttfb_msec</code></li>
+      <li><code>cf.timings.worker_msec</code></li>
     </ul>
   </>
 )}
