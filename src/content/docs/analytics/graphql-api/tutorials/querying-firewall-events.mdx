@@ -188,4 +188,46 @@ https://api.cloudflare.com/client/v4/graphql \
 #=> }
 ```
 
+## Retention and query window
+
+`firewallEventsAdaptive` has different retention limits from the datasets that back [Security Analytics](/waf/analytics/security-analytics/). Queries that exceed the retention window return an error similar to the following:
+
+```txt
+cannot request data older than 2678400s
+```
+
+The value `2678400` seconds equals 31 days — the maximum query window for the dataset. Retention limits per plan:
+
+| Plan       | Historical time (how far back you can query) | Max query window (span of a single query) |
+| ---------- | -------------------------------------------- | ----------------------------------------- |
+| Free       | 24 hours                                     | 24 hours                                  |
+| Pro        | 24 hours                                     | 24 hours                                  |
+| Business   | 3 days                                       | 3 days                                    |
+| Enterprise | 30 days                                      | 31 days                                   |
+
+To discover the exact limits for your zone programmatically, query the `settings` node:
+
+```graphql
+{
+	viewer {
+		zones(filter: { zoneTag: "<CLOUDFLARE_ZONE_TAG>" }) {
+			settings {
+				firewallEventsAdaptive {
+					maxDuration
+					maxPageSize
+					notOlderThan
+				}
+				httpRequestsAdaptive {
+					maxDuration
+					maxPageSize
+					notOlderThan
+				}
+			}
+		}
+	}
+}
+```
+
+For more on the `settings` node, refer to [Settings node](/analytics/graphql-api/features/discovery/settings/).
+
 [^1]: Refer to [Configure an Analytics API token](/analytics/graphql-api/getting-started/authentication/api-token-auth/) for more information on configuration and permissions.
