@@ -53,6 +53,23 @@ The CNAME target — optional, but highly encouraged — provides a friendly and
 
 <Render file="get-started-per-hostname" product="cloudflare-for-platforms" />
 
+### Check when a custom hostname is ready
+
+A custom hostname uses separate validation flows for hostname activation and certificate issuance.
+
+| API field           | What it means                                                        | Ready value |
+| ------------------- | -------------------------------------------------------------------- | ----------- |
+| `result.status`     | Cloudflare has validated the hostname and can proxy traffic for it.  | `active`    |
+| `result.ssl.status` | Cloudflare has issued and deployed the certificate for the hostname. | `active`    |
+
+Treat a custom hostname as ready for production traffic when:
+
+- `result.status` is `active`.
+- `result.ssl.status` is `active`.
+- The hostname's DNS record points to your SaaS target.
+
+A successful TLS handshake can happen before `result.ssl.status` changes to `active` if Cloudflare can present another matching certificate. Use the [Custom hostname details endpoint](/api/resources/custom_hostnames/methods/get/) as the source of truth for onboarding state. For more information, refer to [Certificate and hostname priority](/ssl/reference/certificate-and-hostname-priority/).
+
 ### 3. Have customer create CNAME record
 
 To finish the custom hostname setup, your customer needs to set up a CNAME record at their authoritative DNS that points to your [CNAME target](#2-optional-create-cname-target) [^1].
