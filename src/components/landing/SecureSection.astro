@@ -9,27 +9,29 @@ const categories = [
 		label: "Public websites & apps",
 		threats: [
 			{
-				scenario: "Block the latest attacks",
+				scenario: "Protect your applications without sacrificing performance",
 				product: "WAF",
 				href: "/waf/",
 				icon: "ddos-protection",
-				detail: "Custom rules, rate limiting, zero-day protection",
+				detail:
+					"Identify and block malicious payloads before they can compromise your application",
 				cta: "Harden your app with WAF",
 			},
 			{
-				scenario: "Protect users and data",
+				scenario: "Encrypt your site in minutes",
 				product: "SSL/TLS",
 				href: "/ssl/",
 				icon: "ssl",
-				detail: "Automatic certificates, strict mode, mTLS",
+				detail: "Streamline TLS Certificate Management",
 				cta: "Set up SSL/TLS",
 			},
 			{
-				scenario: "Replace CAPTCHAs",
+				scenario: "Verify visitors without CAPTCHA",
 				product: "Turnstile",
 				href: "/turnstile/",
 				icon: "turnstile",
-				detail: "Invisible challenge, privacy-preserving verification",
+				detail:
+					"Confirm web visitors are real and block unwanted bots without slowing down web experiences for real users",
 				cta: "Add Turnstile protection",
 			},
 		],
@@ -38,7 +40,7 @@ const categories = [
 		label: "Corporate and home networks",
 		threats: [
 			{
-				scenario: "Replace legacy VPNs",
+				scenario: "Securely connect origins with post-quantum encrypted tunnels",
 				product: "Tunnel",
 				href: "/cloudflare-one/networks/connectors/cloudflare-tunnel/",
 				icon: "tunnel",
@@ -51,15 +53,16 @@ const categories = [
 				href: "/cloudflare-one/",
 				icon: "access",
 				detail:
-					"Identity-first, quantum-safe access with device posture checks",
+					"Identity-first, quantum-safe access to private applications and infrastructure",
 				cta: "Set up Zero Trust access",
 			},
 			{
-				scenario: "Protect employee Internet browsing",
+				scenario: "Secure Internet browsing without disruptions",
 				product: "Gateway",
 				href: "/cloudflare-one/traffic-policies/",
 				icon: "gateway",
-				detail: "DNS filtering, HTTP policies, network controls",
+				detail:
+					"Cloud-native Secure Web Gateway (SWG) that inspects browser traffic without disruption",
 				cta: "Create Gateway policies",
 			},
 		],
@@ -74,12 +77,12 @@ const categories = [
 >
 	<Eyebrow>Secure</Eyebrow>
 	<SectionHeading id="secure-heading" class="mb-2">
-		Secure what you already have
+		Block exploits, bots, and DDoS attacks in seconds.
 	</SectionHeading>
 	<p
 		class="text-foreground-muted mb-8 max-w-[600px] text-sm leading-relaxed text-pretty md:text-lg"
 	>
-		Add Cloudflare in front of what is already running, no rebuild required.
+		Everything you need to secure applications, APIs, and infrastructure.
 	</p>
 
 	<div class="space-y-8">
