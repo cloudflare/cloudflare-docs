@@ -107,7 +107,7 @@ package.json @cloudflare/content-engineering
 
 # Developer Platform
 
-/src/content/docs/artifacts/ @elithrar @dmmulroy @mattzcarey @whoiskatrin @cloudflare/pcx-technical-writing @cloudflare/product-owners
+/src/content/docs/artifacts/ @elithrar @dmmulroy @mattzcarey @dinasaur404 @whoiskatrin @cloudflare/pcx-technical-writing @cloudflare/product-owners
 /src/content/docs/containers/ @mikenomitch @th0m @cloudflare/pcx-technical-writing @cloudflare/product-owners @cloudflare/cloudchamber
 /src/content/partials/containers/ @mikenomitch @th0m @cloudflare/pcx-technical-writing @cloudflare/product-owners @cloudflare/cloudchamber
 /src/content/docs/d1/ @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @harshil1712 @cloudflare/pcx-technical-writing @cloudflare/product-owners
