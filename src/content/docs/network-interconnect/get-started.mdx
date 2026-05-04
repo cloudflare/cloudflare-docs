@@ -74,7 +74,7 @@ Consider the following service levels when planning your deployment:
   - CNI is currently offered at no charge and without a formal [Service Level Agreement (SLA)](https://www.cloudflare.com/service-specific-terms-network-services/#cf-network-interconnect-terms).
   - Cloudflare will work to restore CNI service in the event of a Cloudflare issue. In some Cloudflare data centers the recovery time could be several days. Therefore, we always recommend backup connectivity to a different device or via an Internet tunnel.
 - **Observability**: There is no visibility of the interconnect config/status within the Cloudflare dashboard.
-- **Availability**: While network-resilient locations are designed to maintain connectivity during maintenance, single-homed locations can experience full service disruption.
+- **Availability**: Locations that support device-level diversity can maintain connectivity during maintenance when your connections terminate on separate devices. Single-device deployments will experience full service disruption during maintenance.
 - **Backup Connectivity**: You are required to maintain alternative Internet connectivity as a backup for all CNI implementations.
 - **Capacity planning**: You are responsible for capacity planning across your available links to Cloudflare, based on the topology and size of those links.
 
