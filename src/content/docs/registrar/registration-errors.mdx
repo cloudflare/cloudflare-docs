@@ -1,0 +1,112 @@
+---
+pcx_content_type: troubleshooting
+title: Troubleshoot domain registration errors
+sidebar:
+  order: 9
+products:
+  - registrar
+description: Fix common errors when registering a new domain through Cloudflare Registrar.
+---
+
+import { DashButton } from "~/components";
+
+If you encounter an error while registering a new domain through Cloudflare Registrar, use this guide to identify the cause and resolve the issue.
+
+## Registration temporarily blocked
+
+**Error message**: `This domain registration is temporarily blocked. Please wait a few minutes and try again.`
+
+This is the most common registration error. It can be caused by:
+
+- **Fraud prevention checks**: Cloudflare's automated systems flagged the transaction for review. This can happen with new accounts, new payment methods, or unusual purchase patterns.
+- **Recent payment failure**: If a previous payment attempt failed (card declined, PayPal error), the system may temporarily block further attempts on the same domain.
+- **Rate limiting**: Too many registration attempts in a short period.
+
+### How to resolve
+
+1. Wait 15 to 30 minutes, then try again.
+2. If the error persists, try a different payment method (switch between credit card and PayPal, or use a different card).
+3. Verify that your billing address matches the address on file with your payment provider.
+4. Clear your browser cache or try in an incognito/private window.
+5. If the error continues after multiple attempts over several hours, contact Cloudflare support.
+
+## Payment declined
+
+**Error message**: `We're sorry, there was a payment error. Your card was declined.`
+
+Your payment method was rejected during checkout. Common causes:
+
+- **Incorrect billing details**: The name, address, or ZIP code does not match what your bank has on file.
+- **Card issuer block**: Some banks block international transactions or online purchases by default. Contact your bank to authorize the Cloudflare charge.
+- **Insufficient funds or credit limit**: Verify your account balance.
+- **Expired card**: Check that the expiration date and CVV are correct.
+- **Previously declined card**: If you accidentally rejected a payment confirmation on your phone or banking app, the card may remain in a declined state for that merchant. Contact your bank to clear the block, or use a different card.
+
+### Address validation failures
+
+If the checkout form rejects your address with a message like `cannot find your address`, try the following:
+
+1. Use the exact format your bank has on file (including apartment numbers, suite numbers, and abbreviations).
+2. Omit special characters from the street name.
+3. Try a shorter version of your address (for example, `123 Main St` instead of `123 Main Street, Suite 200`).
+4. If you are outside the United States, verify that you selected the correct country.
+
+## Registration failed but payment was captured
+
+**Error message** (via email): `Registration of [domain] unsuccessful`
+
+In some cases, your payment is processed but the registration fails at the registry level. This can happen due to:
+
+- Temporary communication errors between Cloudflare and the domain registry (such as Verisign for `.com`).
+- Registry maintenance or technical difficulties.
+- The domain was registered by another party between the time you started checkout and the time the registration was submitted.
+
+### What happens to your payment
+
+- If the charge shows as **pending** on your bank statement, it will typically be voided automatically within 5 to 7 business days.
+- If the charge was fully captured, Cloudflare will issue a refund. Contact support if the refund does not appear within 7 business days.
+
+### What to do
+
+1. Wait 24 to 48 hours and try registering the domain again. Most registry failures are temporary.
+2. Check whether the domain appears in your **Domain Registration** page. If it shows with a `registrationFailed` status, the zone may need to be cleaned up before you can retry.
+3. If the domain still shows as unavailable in your account but is available at other registrars, contact support to clear the failed registration state.
+
+## Domain shows unavailable but is not registered
+
+If you search for a domain and Cloudflare says it is unavailable, but a WHOIS lookup shows the domain is not registered:
+
+- **Registry propagation delay**: The registry may take a few hours to update availability after a previous registration attempt or expiration. Wait and try again.
+- **Previous failed registration**: A failed registration attempt in your account may still be holding the domain in a reserved state. Contact support to release it.
+- **Premium domain**: Some domains are classified as premium by the registry and may not be available at standard pricing. Cloudflare does not currently support premium domain registration for all TLDs.
+
+## Registration failed with invalid nameservers
+
+After purchasing a domain, the dashboard shows **Invalid nameservers** and the domain is stuck in **Pending** status.
+
+This typically means the registration completed at the registry, but the nameserver delegation was not properly set. Since the domain is registered through Cloudflare, the nameservers should be configured automatically.
+
+### How to resolve
+
+1. Wait up to 24 hours. Nameserver propagation can take time, especially for newer TLDs.
+2. If the domain remains in **Pending** status after 24 hours, contact support. The Cloudflare Registrar team can re-sync the nameserver delegation at the registry level.
+
+## Domain shows as registered but not in your account
+
+If you paid for a domain and received a charge confirmation, but the domain does not appear in your **Domain Registration** page:
+
+1. Verify you are logged into the correct Cloudflare account. Check the account email in the top-right corner of the dashboard.
+2. Check your email for a registration confirmation or failure notification from Cloudflare.
+3. Go to **Billing** &gt; **Invoices** to verify the payment was processed.
+
+    <DashButton url="/?to=/:account/billing" />
+
+4. If payment was processed but the domain is missing, contact support with your invoice number.
+
+## Unsupported TLD
+
+**Error message**: `[domain] cannot be registered as Cloudflare does not yet support the "[extension]" extension.`
+
+Cloudflare Registrar supports over 400 TLDs, but not all extensions are available. If you need a TLD that Cloudflare does not support, you will need to register it through another registrar. You can still use Cloudflare for DNS, CDN, and security services by [adding the domain](/fundamentals/manage-domains/add-site/) and updating nameservers at your registrar.
+
+For a list of supported TLDs, refer to [Top Level Domains supported](/registrar/top-level-domains/).

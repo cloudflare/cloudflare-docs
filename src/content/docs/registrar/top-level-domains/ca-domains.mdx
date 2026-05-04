@@ -1,0 +1,113 @@
+---
+pcx_content_type: how-to
+title: .ca domains
+sidebar:
+  order: 4
+head:
+  - tag: title
+    content: Learn how to manage a .ca domain with Cloudflare.
+products:
+  - registrar
+description: Manage .ca domains with Cloudflare Registrar, including CIRA verification requirements.
+---
+
+import { DashButton } from "~/components";
+
+## Who can register a .ca domain
+
+`.ca` domains are administered by the Canadian Internet Registration Authority (CIRA). To register a `.ca` domain, you must meet the [Canadian Presence Requirements (CPR)](https://www.cira.ca/en/policy/rules-policies/canadian-presence-requirements-registrants/). Eligible registrants include:
+
+- Canadian citizens or permanent residents (anywhere in the world).
+- Canadian corporations, partnerships, trusts, or associations.
+- Trademark holders with a valid Canadian trademark registration.
+- Official representatives of the Canadian government or its agencies.
+
+During registration, you must select a **legal entity type** (`ca-legal-type`) that describes your eligibility. Common values include:
+
+| Legal type | Description |
+| --- | --- |
+| `CCT` | Canadian citizen |
+| `RES` | Permanent resident |
+| `CCO` | Canadian corporation |
+| `ABO` | Aboriginal peoples |
+| `GOV` | Government entity |
+| `TDM` | Trademark owner (Canada) |
+
+Cloudflare submits this information to CIRA during registration. If the information is incorrect or does not meet CPR, the registration may be rejected or the domain may be suspended.
+
+## CIRA registrant verification
+
+After registering a `.ca` domain, CIRA requires registrant email verification. This is separate from — and in addition to — the standard ICANN verification process.
+
+### How it works
+
+1. CIRA sends a verification email to the registrant email address on file. This email comes from `noreply@emailverification.info`, not from Cloudflare or CIRA directly.
+2. You must select the verification link within the email to confirm your identity.
+3. If you do not complete verification, CIRA places the domain in **serverHold** status.
+
+### What happens if verification is not completed
+
+If the registrant email is not verified:
+
+- The domain's nameservers are changed to `ns1.emailverification.info` and `ns2.emailverification.info`.
+- Your website and email stop working.
+- The domain remains registered to you but is not functional until verification is complete.
+
+This is the same process described in [Email verification](/registrar/account-options/email-verification/), but `.ca` domains are particularly affected because CIRA enforces verification strictly.
+
+### How to resolve a suspended .ca domain
+
+1. Check your inbox and spam folder for an email from `noreply@emailverification.info`.
+2. Select the verification link. If the link has expired, contact Cloudflare support to request a new verification email.
+3. After verification, CIRA restores the nameservers automatically. This can take up to 24 hours.
+
+If your registrant email has a typo or uses the same domain that was suspended, update the registrant contact email first through **Domain Registration** &gt; **Manage Domains** &gt; **Contacts**, then complete verification with the corrected address.
+
+## Transferring .ca domains
+
+### Transfer a .ca domain to Cloudflare
+
+Cloudflare supports inbound transfers of `.ca` domains. The process follows the standard transfer flow with some `.ca`-specific considerations:
+
+1. Ensure your domain is **unlocked** at your current registrar.
+2. Obtain the **authorization code** from your current registrar. CIRA authorization codes are case-sensitive and may contain special characters.
+3. Your domain must be [added to your Cloudflare account](/fundamentals/manage-domains/add-site/) and showing **Active** status before you can initiate the transfer.
+4. Go to the **Transfer domains** page and enter your authorization code.
+
+    <DashButton url="/?to=/:account/registrar/transfer" />
+
+:::note
+
+`.ca` transfers do not add an additional year to the registration. The expiration date remains the same after transfer.
+
+If the authorization code is rejected, request a fresh code from your current registrar. CIRA codes expire after a set period and must be entered exactly as provided, including any special characters.
+
+:::
+
+### Transfer a .ca domain away from Cloudflare
+
+1. In the Cloudflare dashboard, go to **Domain Registration** &gt; **Manage Domains**.
+2. Find the `.ca` domain and select **Manage**.
+3. Select **Configuration** &gt; **Unlock**.
+4. Copy the authorization code and provide it to your new registrar.
+5. Your new registrar will initiate the transfer through CIRA.
+
+## .ca renewal
+
+`.ca` domains renew at the registry list price. Auto-renewal follows the same process as other TLDs — refer to [Renew domains](/registrar/account-options/renew-domains/) for details.
+
+## Troubleshooting
+
+### Authorization code rejected during transfer
+
+- CIRA authorization codes are case-sensitive. Enter the code exactly as provided.
+- Codes expire. If your code was generated more than a few days ago, request a new one.
+- Some registrars format `.ca` auth codes differently. Try entering the code manually rather than copy-pasting to avoid hidden characters.
+
+### Domain stuck in serverHold after verification
+
+If you completed CIRA verification but the domain still shows `serverHold` or the nameservers have not been restored after 24 hours, contact Cloudflare support. The registrar team can check the verification status with the backend registry and push the nameserver update.
+
+### WHOIS shows incorrect registrar
+
+After a transfer, WHOIS may still show the previous registrar (often displayed as `CentralNic Canada Inc` or the previous registrar name). This is normal during the propagation period. WHOIS data typically updates within 24 to 48 hours after a completed transfer.

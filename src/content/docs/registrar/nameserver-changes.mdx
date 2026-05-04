@@ -1,0 +1,74 @@
+---
+pcx_content_type: troubleshooting
+title: Troubleshoot unexpected nameserver changes
+sidebar:
+  order: 10
+products:
+  - registrar
+description: Understand why your nameservers changed to emailverification.info and how to fix it.
+---
+
+If your domain's nameservers were unexpectedly changed to `ns1.emailverification.info` and `ns2.emailverification.info`, your domain has been suspended due to incomplete registrant email verification. This is not a security breach or unauthorized change.
+
+## Why this happens
+
+ICANN requires that every domain registrant verify their email address. Cloudflare's backend registrar (Key-Systems/CentralNic) enforces this requirement by replacing your nameservers with verification parking servers when verification is not completed within the required timeframe (typically 15 days).
+
+When this happens:
+
+- Your domain's authoritative nameservers change to `ns1.emailverification.info` and `ns2.emailverification.info`.
+- Your website and any services depending on DNS (including email) stop working.
+- Your Cloudflare dashboard may still show the correct nameservers, but public DNS resolvers use the registry-level delegation, which now points elsewhere.
+
+## How to confirm the issue
+
+Run the following command to check your domain's current nameservers at the registry level:
+
+```bash
+dig NS example.com +short
+```
+
+If the output shows:
+
+```txt
+ns1.emailverification.info.
+ns2.emailverification.info.
+```
+
+Your domain has been suspended due to incomplete email verification. Your Cloudflare zone configuration is intact — only the registry-level delegation was changed.
+
+## How to fix it
+
+1. **Find the verification email**. Check your inbox and spam folder for an email from `noreply@emailverification.info`. This is the legitimate verification sender, not phishing.
+
+2. **Select the verification link**. No login is required. After verification, the nameservers are restored automatically.
+
+3. **If the email is missing or expired**, contact Cloudflare support to request a new verification email. Include the domain name and your account email.
+
+4. **If your registrant email has a typo**, update the registrant contact email first through **Domain Registration** &gt; **Manage Domains** &gt; **Contacts**, then complete verification with the corrected address.
+
+5. **Wait for restoration**. After successful verification, the nameservers are restored to your assigned Cloudflare nameservers. This typically takes 1 to 24 hours depending on DNS TTL values and registry processing.
+
+## Affected TLDs
+
+All TLDs managed through Key-Systems/CentralNic can be affected, but the following TLDs are most commonly impacted because their registries enforce verification particularly strictly:
+
+| TLD | Verification sender | Notes |
+| --- | --- | --- |
+| `.ca` | `noreply@emailverification.info` | CIRA requires additional registrant verification beyond ICANN |
+| `.mx` | `noreply@emailverification.info` | NIC Mexico enforces verification through Key-Systems |
+| `.nz` | `noreply@emailverification.info` | Verification handled by third-party service |
+| `.com`, `.net`, `.org` | `noreply@emailverification.info` | Standard ICANN verification |
+
+## Prevention
+
+- **Use a reliable email address** for your registrant contact — one that you check regularly and that is on a different domain than the one you are registering.
+- **Add `noreply@emailverification.info` to your safe sender list** to prevent verification emails from being filtered as spam.
+- **Complete verification promptly** when you receive the email. Do not wait until the deadline.
+- **Avoid using your registered domain's email** as the registrant contact email. If the domain is suspended, you will not be able to receive the verification email needed to unsuspend it.
+
+## Related resources
+
+- [Email verification](/registrar/account-options/email-verification/) — Full guide to the ICANN verification process.
+- [.ca domains](/registrar/top-level-domains/ca-domains/) — CIRA-specific verification requirements.
+- [Domain contact updates](/registrar/account-options/domain-contact-updates/) — How to update your registrant email address.

@@ -1,0 +1,77 @@
+---
+pcx_content_type: reference
+title: Refunds and cancellations
+sidebar:
+  order: 9
+products:
+  - registrar
+description: Understand the refund and cancellation policy for Cloudflare Registrar domain registrations.
+---
+
+import { DashButton } from "~/components";
+
+## Domain registration refund policy
+
+Domain registrations through Cloudflare Registrar are generally **non-refundable**. When you register or renew a domain, Cloudflare pays the registry fee on your behalf, and that payment cannot be reversed.
+
+However, some domains may be eligible for cancellation and refund during the **Add Grace Period (AGP)**.
+
+## Add Grace Period (AGP)
+
+ICANN provides a short window after initial registration during which a domain can be deleted and the registration fee refunded. This is called the Add Grace Period.
+
+- **Duration**: 5 days from the date of registration for most gTLDs (`.com`, `.net`, `.org`, and similar).
+- **Eligibility**: Only applies to **new registrations**, not renewals or transfers.
+- **How it works**: If you contact Cloudflare support within the AGP window, Cloudflare can delete the registration at the registry and refund your payment.
+- **Not all TLDs support AGP**: Some country-code TLDs (such as `.uk`, `.ca`, `.ai`) do not offer an Add Grace Period or have different rules. Check with support if you are unsure.
+
+:::note
+
+AGP refunds are processed at Cloudflare's discretion and are subject to registry policies. If the domain has been used (DNS records configured, traffic served, or email routed), the refund request may be denied.
+
+:::
+
+### How to request an AGP refund
+
+1. Open a support case within 5 days of the registration date.
+2. Include the domain name, your account email, and the reason for cancellation.
+3. Confirm that you want the domain deleted. This action is irreversible — the domain will become available for anyone to register.
+
+## Renewals are non-refundable
+
+Once a domain renewal is processed, it cannot be reversed or refunded. This applies to both manual renewals and automatic renewals.
+
+To avoid unwanted renewal charges:
+
+1. In the Cloudflare dashboard, go to the **Manage domains** page.
+
+    <DashButton url="/?to=/:account/registrar/domains" />
+
+2. Find the domain and turn off the **Auto-renew** toggle.
+
+:::caution
+
+Disable auto-renew at least 30 days before the expiration date. Cloudflare begins auto-renewal attempts approximately 30 days prior to expiration.
+
+:::
+
+## Transfers are non-refundable
+
+Domain transfers include a one-year registration extension. Once the transfer is complete and the year has been added, the transfer fee cannot be refunded.
+
+## Common scenarios
+
+| Scenario | Refund eligible? | Action |
+| --- | --- | --- |
+| Registered wrong domain (typo) within 5 days | Possibly, via AGP | Contact support immediately |
+| Registered wrong domain after 5 days | No | Register the correct domain separately |
+| Auto-renewal you did not want | No | Disable auto-renew for future cycles |
+| Transfer completed but you changed your mind | No | Transfer out to another registrar if needed |
+| Registration failed but payment was captured | Yes | Payment is automatically voided or refunded within 5-7 business days. Contact support if not resolved. |
+| Duplicate charge for same domain | Yes | Contact support with both invoice numbers |
+
+## Tips to avoid unwanted charges
+
+- **Double-check the domain name** before confirming your purchase. Typos in domain names cannot be corrected after registration.
+- **Review auto-renew settings** periodically, especially for domains you no longer need.
+- **Set calendar reminders** for domains approaching their renewal date if you want to make a decision before auto-renew triggers.

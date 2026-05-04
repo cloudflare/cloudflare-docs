@@ -1,0 +1,122 @@
+---
+pcx_content_type: how-to
+title: Email verification
+sidebar:
+  order: 10
+products:
+  - registrar
+description: Understand ICANN registrant email verification requirements and how to resolve domain suspensions.
+---
+
+import { DashButton } from "~/components";
+
+## Overview
+
+ICANN requires that the registrant email address associated with every domain registration is verified. If you do not complete verification within the required timeframe, your domain may be suspended and your website and email will stop working.
+
+This page explains how the verification process works, what happens if you miss it, and how to restore a suspended domain.
+
+## How verification works
+
+When you register a new domain, transfer a domain to Cloudflare, or update your registrant contact email, a verification email is sent to the registrant email address on file.
+
+- **Who sends it**: For most TLDs, the email comes from `noreply@emailverification.info`. This is a legitimate third-party verification service used by Cloudflare's backend registrar (Key-Systems/CentralNic). It is not phishing.
+- **Deadline**: You must verify within **15 days** of receiving the email.
+- **What to do**: Open the email and select the verification link. No login is required.
+
+:::caution
+
+The verification email comes from `noreply@emailverification.info`, not from Cloudflare. Check your spam or junk folder if you do not see it in your inbox.
+
+:::
+
+## What happens if you do not verify
+
+If the registrant email is not verified within 15 days:
+
+1. The domain is placed in a **serverHold** status at the registry.
+2. The domain's nameservers are replaced with `ns1.emailverification.info` and `ns2.emailverification.info`.
+3. Your website stops resolving. Visitors see an error page or no response.
+4. Email delivery to addresses on the domain stops working.
+
+This is an automated process required by ICANN. Cloudflare does not control when the hold is applied.
+
+## How to check if your domain is affected
+
+If your website or email suddenly stops working and you did not make any changes, check whether your nameservers were changed:
+
+```bash
+dig NS example.com +short
+```
+
+If the output shows `ns1.emailverification.info` and `ns2.emailverification.info` instead of your assigned Cloudflare nameservers, your domain has been suspended due to incomplete email verification.
+
+You can also check by running a WHOIS lookup and looking for `serverHold` in the domain status.
+
+## How to resolve a suspended domain
+
+### Step 1 — Verify your registrant email
+
+1. Check your inbox (and spam folder) for an email from `noreply@emailverification.info`.
+2. Select the verification link in the email.
+3. If the link has expired or you cannot find the email, proceed to Step 2.
+
+### Step 2 — Resend the verification email
+
+1. In the Cloudflare dashboard, go to **Domain Registration** &gt; **Manage Domains**.
+
+    <DashButton url="/?to=/:account/registrar/domains" />
+
+2. Find the affected domain and select **Manage**.
+3. Go to the **Contacts** tab.
+4. Verify that the registrant email address is correct.
+5. If a **Resend verification** option is available, select it.
+
+If you do not see a resend option in the dashboard, contact Cloudflare support and request that the verification email be resent.
+
+### Step 3 — Wait for nameserver restoration
+
+After successful verification, the nameservers are automatically restored to your assigned Cloudflare nameservers. This typically takes **1 to 24 hours** but may take longer depending on DNS TTL values and registry processing times.
+
+## Common issues
+
+### Typo in registrant email
+
+If you entered an incorrect email address during registration, you will never receive the verification email. To fix this:
+
+1. Update the registrant contact email through **Domain Registration** &gt; **Manage Domains** &gt; **Contacts**.
+2. A new verification email will be sent to the corrected address.
+3. Complete verification using the new email.
+
+:::note
+
+Updating the registrant email triggers a Change of Registrant (COR) process for some TLDs. You may need to approve the change from both the old and new email addresses. If the old email is inaccessible, contact support.
+
+:::
+
+### Verification email going to spam
+
+Emails from `@emailverification.info` are frequently filtered as spam. Add `noreply@emailverification.info` to your email allowlist or safe sender list. Check your spam, junk, and promotions folders.
+
+### Domain using same email domain as the registered domain
+
+If your registrant email uses the same domain that was suspended (for example, `admin@example.com` for the domain `example.com`), you will not receive the verification email because the domain's email is no longer working.
+
+To resolve this, update the registrant contact email to an address on a different domain (such as a Gmail or other external email), then complete verification.
+
+### Verification link returns an error
+
+If the verification link returns an error such as `Invalid attribute value` or `Invalid trigger code`, the verification token has expired. Contact Cloudflare support to request a new verification email.
+
+## TLD-specific verification requirements
+
+Some TLDs have additional verification requirements beyond standard ICANN email verification:
+
+| TLD | Additional requirements |
+| --- | --- |
+| `.ca` | CIRA (Canadian Internet Registration Authority) requires registrant verification. Failure to verify results in `serverHold` and nameserver replacement. |
+| `.mx` | NIC Mexico may require separate verification through a third-party service. |
+| `.nz` | The `.nz` registry sends verification through `@emailverification.info`. |
+| `.us` | Registrants must meet usTLD Nexus requirements. WHOIS privacy is not available. |
+
+For `.ca` domains specifically, refer to [.ca domains](/registrar/top-level-domains/ca-domains/) for detailed CIRA verification steps.
