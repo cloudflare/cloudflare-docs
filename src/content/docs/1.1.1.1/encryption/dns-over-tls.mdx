@@ -21,7 +21,7 @@ A stub resolver is the DNS client software on your device that sends queries to 
 
 1. Before the connection, the DNS stub resolver stores a fingerprint of 1.1.1.1's TLS certificate. This fingerprint is a base64-encoded SHA-256 hash of the certificate's public key information, known as the Subject Public Key Info (SPKI) pin. The stub resolver uses this pin to verify it is connecting to the authentic 1.1.1.1 server.
 2. The DNS stub resolver establishes a TCP connection with `1.1.1.1:853`.
-3. The DNS stub resolver initiates a TLS handshake — a negotiation where both sides agree on encryption parameters and the client verifies the server's identity.
+3. The DNS stub resolver initiates a TLS handshake — a process where both sides agree on encryption parameters and the client verifies the server's identity.
 4. In the TLS handshake, 1.1.1.1 presents its TLS certificate.
 5. Once the TLS connection is established, the DNS stub resolver can send DNS over an encrypted connection, preventing eavesdropping and tampering.
 6. All DNS queries sent over the TLS connection must comply with specifications of [sending DNS over TCP](https://tools.ietf.org/html/rfc1035#section-4.2.2).
