@@ -2807,3 +2807,6 @@
 /changelog/2024-* /changelog/post/2024-:splat 301
 /changelog/2025-* /changelog/post/2025-:splat 301
 /changelog/2026-* /changelog/post/2026-:splat 301
+
+# Security Insights (moved from Security Center to Security)
+/security-center/security-insights/* /security/security-insights/:splat 301

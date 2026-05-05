@@ -3,7 +3,7 @@ pcx_content_type: concept
 title: How it works
 description: How Security Insights scans your account and produces security findings.
 products:
-  - security-center
+  - security
 sidebar:
   order: 1
 ---
@@ -14,7 +14,7 @@ Once you [enable Security Insights](/security-center/get-started/), Cloudflare r
 
 Each scan compares your current configuration against a set of ideal product configurations that indicate a strong security posture. When your configuration does not match an ideal configuration for one or more checks, the scan produces a **Security Insight** — a finding that represents a potential risk.
 
-The [list of insights](/security-center/security-insights/) may include potential security threats, vulnerabilities, compliance risks, insecure configurations, or any other identified risks.
+The [list of insights](/security/security-insights/) may include potential security threats, vulnerabilities, compliance risks, insecure configurations, or any other identified risks.
 
 :::note
 Security Insights also checks [non-proxied (DNS-only) hostnames](/dns/proxy-status/#dns-only-records). Because these records are not routed through Cloudflare, they do not benefit from Cloudflare's application security features.
@@ -26,7 +26,7 @@ Each insight has the following properties:
 
 <Render file="scan-properties" product="security-center" />
 
-For a full list of insight types and their descriptions, refer to [Security Insights](/security-center/security-insights/).
+For a full list of insight types and their descriptions, refer to [Security Insights](/security/security-insights/).
 
 ## Scan frequency
 
