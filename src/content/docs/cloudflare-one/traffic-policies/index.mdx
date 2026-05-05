@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-description: How Traffic policies works in Gateway.
+description: Filter DNS, network, and HTTP traffic with Cloudflare Gateway traffic policies.
 products:
   - cloudflare-one
 title: Traffic policies
@@ -18,7 +18,7 @@ A Secure Web Gateway (SWG) is a security service that sits between an organizati
 - **URL and domain filtering** – Controls which websites users can access.
 - **Anti-malware scanning** – Inspects files in transit for malicious code.
 - **Application control** – Manages which applications users can reach and what actions they can perform.
-- **Data Loss Prevention (DLP)** – Detects and blocks sensitive data before it leaves the network.
+- **Data Loss Prevention (DLP)** – Detects and blocks sensitive data before it leaves the network.fprotecting
 - **Traffic inspection** – Decrypts and examines encrypted (HTTPS) traffic for hidden threats.
 
 ## The need for an SWG
@@ -47,7 +47,7 @@ If you are familiar with traditional network security, Gateway's policy layers m
 - **Network policies** correspond to a Layer 4 stateful firewall, sometimes called Firewall-as-a-Service (FWaaS), filtering by IP address, port, and protocol.
 - **HTTP policies** correspond to a Layer 7 application firewall (forward proxy with TLS decryption and deep packet inspection).
 
-Unlike hardware firewalls that sit at a single network perimeter, Gateway enforces these policies across Cloudflare's global network, protecting 
+Unlike hardware firewalls that sit at a single network perimeter, Gateway enforces these policies across Cloudflare's global network, protecting traffic regardless of where users connect.
 
 Gateway supports several policy types because network traffic can be inspected at different layers — from raw packets up to full HTTP requests. Each policy type gives you control at a specific layer:
 
