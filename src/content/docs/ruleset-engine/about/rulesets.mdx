@@ -8,23 +8,23 @@ sidebar:
   order: 3
 ---
 
-A ruleset is an ordered set of [rules](/ruleset-engine/about/rules/) that you can apply to traffic on the Cloudflare global network. Rulesets belong to a phase and can only execute in the same phase. To deploy a ruleset to a phase, add a rule that executes the ruleset to the [phase entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset).
+A ruleset is an ordered set of [rules](/ruleset-engine/about/rules/) that you can apply to traffic on the Cloudflare global network. Each ruleset belongs to a [phase](/ruleset-engine/about/phases/) and can only execute in that phase. To deploy a ruleset, you add a rule with the `execute` action to the phase's [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset).
 
-Rulesets are versioned. Each ruleset modification creates a new version of the ruleset. You can have several versions of a ruleset in use at the same time. When you deploy a ruleset — that is, when you create a rule that executes the ruleset — the most recent version of the ruleset is selected by default.
+Rulesets are versioned. Each modification to a ruleset creates a new version. When you deploy a ruleset — that is, when you create a rule that executes the ruleset — the most recent version is selected by default.
 
 There are several types of rulesets:
 
-- Phases have their entry point rulesets.
-- Cloudflare provides managed rulesets you can deploy.
-- You can create and manage your own custom rulesets.
+- **Entry point rulesets**: Each phase has an entry point ruleset that serves as the starting point for rule execution.
+- **Managed rulesets**: Preconfigured rulesets provided by Cloudflare that you can deploy.
+- **Custom rulesets**: Rulesets you create and manage yourself.
 
 Specific Cloudflare products may provide other types of rulesets.
 
 ## Entry point ruleset
 
-An entry point ruleset contains a list of ordered [rules](/ruleset-engine/about/rules/) that run in a [phase](/ruleset-engine/about/phases/) at the account or zone level. This ruleset is an entry point for all rules executed in a phase. Some of these rules may run other rulesets.
+An entry point ruleset is the top-level ruleset for a given [phase](/ruleset-engine/about/phases/). It contains an ordered list of [rules](/ruleset-engine/about/rules/) that run at the account or zone level. Every rule that executes in a phase starts from the entry point ruleset. Some of those rules may in turn run other rulesets (managed or custom) using the `execute` action.
 
-Each phase has at most one entry point ruleset at the account level and at the zone level.
+Each phase has at most one entry point ruleset at the account level and one at the zone level.
 
 :::note
 
@@ -39,9 +39,9 @@ The `kind` field of a phase entry point ruleset has one of the following values:
 
 Managed rulesets are preconfigured rulesets provided by Cloudflare that you can deploy to a phase. Only Cloudflare can modify these rulesets.
 
-The rules in a managed ruleset have a default action and status. However, you can define **overrides** that change these defaults.
+Each rule in a managed ruleset has a default action and status. You cannot edit these rules directly, but you can define [overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/) that change the default action or status of specific rules (or all rules) within the managed ruleset.
 
-There are several Cloudflare products that provide you with managed rulesets. Check each product’s documentation for details on the available managed rulesets.
+Several Cloudflare products provide managed rulesets. Check each product's documentation for details on the available managed rulesets.
 
 For more information on deploying managed rulesets and defining overrides, refer to [Work with managed rulesets](/ruleset-engine/managed-rulesets/).
 
