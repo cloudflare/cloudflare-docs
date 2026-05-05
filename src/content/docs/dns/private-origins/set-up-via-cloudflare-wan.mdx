@@ -1,14 +1,14 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: tutorial
 title: Set up a private origin via Cloudflare WAN
 description: Proxy public hostnames to private origins through a Cloudflare WAN IPsec tunnel.
 products:
   - dns
 sidebar:
   order: 2
-  badge: Beta
 tags:
   - Private networks
+difficulty: Intermediate
 ---
 
 This guide walks you through proxying public hostnames to origins on a private network. The private network is reachable through a [Cloudflare WAN](/cloudflare-wan/) (formerly Magic WAN) IPsec tunnel. The CDN, WAF, Cache, and other proxied features apply to this traffic the same way they apply to traffic destined for public origins.
@@ -39,7 +39,7 @@ Go to [Configure Cloudflare source IPs](/cloudflare-wan/configuration/how-to/con
 
 Create an `A` or `AAAA` record that points to the private IP address of your origin, with proxy status enabled and **Use private network routing** turned on. This tells Cloudflare to send traffic for the hostname through your Cloudflare WAN tunnel instead of over the public Internet.
 
-For the dashboard and API steps, refer to [Private network routing](/dns/manage-dns-records/how-to/private-origins/private-network-routing/).
+For the dashboard and API steps, refer to [Private network routing](/dns/private-origins/private-network-routing/).
 
 ## 3. Verify end-to-end connectivity
 
@@ -71,15 +71,15 @@ Replace `100.64.0.0/12` with the Source IP range configured for your account, an
 
 ## Common pitfalls
 
-| Symptom | Cause and fix |
-| --- | --- |
-| Connection timeouts from clients | Cloudflare Source IP is set to a public range. Set it to a private `/12`. |
-| Request times out, no response on the origin | The network where your origin lives has no return route for the Cloudflare Source IP range. Add a route that sends that range back through the tunnel. |
+| Symptom                                             | Cause and fix                                                                                                                                                                            |
+| --------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Connection timeouts from clients                    | Cloudflare Source IP is set to a public range. Set it to a private `/12`.                                                                                                                |
+| Request times out, no response on the origin        | The network where your origin lives has no return route for the Cloudflare Source IP range. Add a route that sends that range back through the tunnel.                                   |
 | Tunnel shows IKE established but health checks fail | ICMP is blocked on the path or the health check is misconfigured. Allow ICMP between the tunnel endpoints and confirm the health check direction is `bidirectional` and type is `reply`. |
-| Traffic tries to route over the public Internet | The **Use private network routing** toggle is not turned on for the DNS record. Edit the record and turn the toggle on. |
+| Traffic tries to route over the public Internet     | The **Use private network routing** toggle is not turned on for the DNS record. Edit the record and turn the toggle on.                                                                  |
 
 ## Next steps
 
 - [Configure tunnel health alerts](/cloudflare-wan/configuration/common-settings/configure-tunnel-health-alerts/) to get notified when a tunnel goes down.
-- Review the [Private network routing](/dns/manage-dns-records/how-to/private-origins/private-network-routing/) reference for dashboard and API details.
+- Review the [Private network routing](/dns/private-origins/private-network-routing/) reference for dashboard and API details.
 - If you run into tunnel issues, refer to [Tunnel health troubleshooting](/cloudflare-wan/troubleshooting/tunnel-health/) and [IPsec troubleshooting](/cloudflare-wan/troubleshooting/ipsec-troubleshoot/).
