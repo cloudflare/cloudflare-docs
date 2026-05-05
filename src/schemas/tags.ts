@@ -163,7 +163,7 @@ const use_cases: Array<Tag> = [
 	{ label: "Private networks" },
 	{ label: "Redirects", variants: ["redirect"] },
 	{ label: "Request modification", variants: ["request"] },
-	{ label: "Response modification", variants: ["response"] },		
+	{ label: "Response modification", variants: ["response"] },
 	{ label: "Scraping" },
 	{ label: "Security" },
 	{ label: "SIEM" },
