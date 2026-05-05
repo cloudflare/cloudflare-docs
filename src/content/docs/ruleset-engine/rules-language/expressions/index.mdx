@@ -13,11 +13,16 @@ head:
 
 import { Render } from "~/components";
 
-The Rules language supports two kinds of expressions: simple and compound.
+An expression is a formula written in the [Rules language](/ruleset-engine/rules-language/) that the Ruleset Engine evaluates against each request or response. Rules use expressions in two ways:
+
+- **Filter expressions** define the conditions under which a rule applies. They evaluate to a boolean value (`true` or `false`). When a filter expression matches, Cloudflare triggers the rule's configured [action](/ruleset-engine/rules-language/actions/).
+- **Value expressions** compute a dynamic result — typically a string — that becomes part of the rule's action. For example, [URL rewrite rules](/rules/transform/url-rewrite/) support rewrite expressions to calculate the target URI path or query string, [request header transform rules](/rules/transform/request-header-modification/) support expressions to set header values, and [dynamic URL redirects](/rules/url-forwarding/single-redirects/settings/#dynamic-url-redirect) use expressions to build the target URL.
+
+An expression can be simple or compound.
 
 ## Simple expressions
 
-**Simple expressions** compare a value from an HTTP request to a value defined in the expression. For example, this simple expression matches Microsoft Exchange Autodiscover requests:
+Simple expressions compare a single property of an HTTP request (or response) to a value you define. For example, this simple expression matches Microsoft Exchange Autodiscover requests:
 
 ```txt
 http.request.uri.path matches "/autodiscover\.(xml|src)$"
@@ -31,15 +36,15 @@ Simple expressions have the following syntax:
 
 Where:
 
-- [Fields](/ruleset-engine/rules-language/fields/) specify properties associated with an HTTP request.
+- [Fields](/ruleset-engine/rules-language/fields/) specify which property of the request or response to examine (for example, `http.request.uri.path` or `ip.src`).
 
-- [Comparison operators](/ruleset-engine/rules-language/operators/#comparison-operators) define how values must relate to actual request data for an expression to return `true`.
+- [Comparison operators](/ruleset-engine/rules-language/operators/#comparison-operators) define the relationship that must hold between the field value and your specified value for the expression to return `true` (for example, `eq`, `matches`, or `in`).
 
-- [Values](/ruleset-engine/rules-language/values/) represent the data associated with fields. When evaluating a rule, Cloudflare compares these values with the actual data obtained from the request.
+- [Values](/ruleset-engine/rules-language/values/) are the data you compare against the field. When evaluating a rule, Cloudflare compares these values with the actual data obtained from the request.
 
 ## Compound expressions
 
-**Compound expressions** use [logical operators](/ruleset-engine/rules-language/operators/#logical-operators) such as `and` to combine two or more expressions into a single expression.
+Compound expressions use [logical operators](/ruleset-engine/rules-language/operators/#logical-operators) such as `and` to combine two or more expressions into a single expression.
 
 For example, this expression uses the `and` operator to target requests to `www.example.com` that are not on ports 80 or 443:
 
@@ -53,7 +58,7 @@ Compound expressions have the following general syntax:
 <expression> <logical_operator> <expression>
 ```
 
-Compound expressions allow you to generate sophisticated, highly targeted rules.
+Compound expressions combine multiple conditions using logical operators to create more precise targeting.
 
 ## Maximum rule expression length
 
