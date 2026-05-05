@@ -4,21 +4,21 @@ pcx_content_type: how-to
 description: Configure R2 Object Storage with Regional Services and Customer Metadata Boundary.
 products:
   - data-localization
-  - r2 
+  - r2
 sidebar:
   order: 6
 ---
 
 import { Details, DashButton } from "~/components";
 
-In the following sections, we will give you some details about how to configure R2 with Regional Services and Customer Metadata Boundary.
+The following sections describe how to configure R2 Object Storage with Regional Services and Customer Metadata Boundary to control where object requests are processed and where logs are stored.
 
 ## Regional Services
 
-To configure Regional Services for hostnames [proxied](/dns/proxy-status/) through Cloudflare and ensure that processing of requesting objects from a [R2 Bucket](/r2/buckets/) occurs only in-region, follow these steps:
+To configure Regional Services for hostnames [proxied](/dns/proxy-status/) (meaning traffic routes through Cloudflare) through Cloudflare and ensure that processing of requests to an [R2 Bucket](/r2/buckets/) occurs only in-region, follow these steps:
 
 1. In the Cloudflare dashboard, go to the **R2** page.
- 
+
    <DashButton url="/?to=/:account/r2/overview" />
 
 2. Follow the steps to [create a Bucket](/r2/buckets/create-buckets/).

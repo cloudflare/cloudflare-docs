@@ -42,6 +42,10 @@ To upload objects to your bucket from the Cloudflare dashboard:
 
 You will receive a confirmation message after a successful upload.
 
+### Create a folder
+
+You can also create folders from the dashboard by selecting **Create folder**. This creates a zero-byte object with a key ending in `/` that acts as a placeholder. For more information on how folders work in R2, refer to [Prefixes and folders](/r2/objects/#prefixes-and-folders).
+
 ## Upload via Workers API
 
 Use R2 [bindings](/workers/runtime-apis/bindings/) in Workers to upload objects server-side. Refer to [Use R2 from Workers](/r2/api/workers/workers-api-usage/) for instructions on setting up an R2 binding.

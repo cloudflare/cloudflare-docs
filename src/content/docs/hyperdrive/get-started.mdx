@@ -36,7 +36,7 @@ Before you begin, ensure you have completed the following:
 
 1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) if you have not already.
 2. Install [`Node.js`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm). Use a Node version manager like [nvm](https://github.com/nvm-sh/nvm) or [Volta](https://volta.sh/) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.17.0` or later.
-3. Have a publicly accessible PostgreSQL or MySQL (or compatible) database. _If your database is in a private network (like a VPC)_, refer to [Connect to a private database](/hyperdrive/configuration/connect-to-private-database/) for instructions on using Cloudflare Tunnel with Hyperdrive.
+3. Have a publicly accessible PostgreSQL or MySQL (or compatible) database. _If your database is in a private network_, refer to [Connect to a private database using Workers VPC](/hyperdrive/configuration/connect-to-private-database-vpc/).
 
 ## 1. Log in
 
@@ -283,17 +283,16 @@ Populate your `index.ts` file with the following code:
 
 ```typescript
 // mysql2 v3.13.0 or later is required
-import { createConnection  } from 'mysql2/promise';
+import { createConnection } from "mysql2/promise";
 
 export interface Env {
-  // If you set another name in the Wrangler config file as the value for 'binding',
-  // replace "HYPERDRIVE" with the variable name you defined.
-  HYPERDRIVE: Hyperdrive;
+	// If you set another name in the Wrangler config file as the value for 'binding',
+	// replace "HYPERDRIVE" with the variable name you defined.
+	HYPERDRIVE: Hyperdrive;
 }
 
 export default {
- async fetch(request, env, ctx): Promise<Response> {
-
+	async fetch(request, env, ctx): Promise<Response> {
 		// Create a new connection on each request. Hyperdrive maintains the underlying
 		// database connection pool, so creating a new connection is fast.
 		const connection = await createConnection({
@@ -306,34 +305,29 @@ export default {
 			// The following line is needed for mysql2 compatibility with Workers
 			// mysql2 uses eval() to optimize result parsing for rows with > 100 columns
 			// Configure mysql2 to use static parsing instead of eval() parsing with disableEval
-			disableEval: true
+			disableEval: true,
 		});
 
-		try{
+		try {
 			// Sample query
-			const [results, fields] = await connection.query(
-				'SHOW tables;'
-			);
+			const [results, fields] = await connection.query("SHOW tables;");
 
 			// Return result rows as JSON
 			return new Response(JSON.stringify({ results, fields }), {
 				headers: {
-					'Content-Type': 'application/json',
-					'Access-Control-Allow-Origin': '*',
+					"Content-Type": "application/json",
+					"Access-Control-Allow-Origin": "*",
 				},
 			});
-		}
-		catch(e){
+		} catch (e) {
 			console.error(e);
 			return Response.json(
 				{ error: e instanceof Error ? e.message : e },
 				{ status: 500 },
 			);
 		}
-
- },
+	},
 } satisfies ExportedHandler<Env>;
-
 ```
 
 Upon receiving a request, the code above does the following:

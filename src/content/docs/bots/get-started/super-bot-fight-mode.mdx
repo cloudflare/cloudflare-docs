@@ -13,7 +13,7 @@ head:
 
 import { Render, Tabs, TabItem, Steps, DashButton } from "~/components";
 
-Super Bot Fight Mode is included in your Pro, Business, or Enterprise subscription. When enabled, the product:
+Super Bot Fight Mode is included in your Pro, Business, or Enterprise subscription. Compared to [Bot Fight Mode](/bots/get-started/bot-fight-mode/), Super Bot Fight Mode adds configurable actions per bot category, bot analytics, and the ability to create exceptions using [WAF custom rules](/waf/custom-rules/). When enabled, the product:
 
 - Identifies traffic matching patterns of known bots
 - Can challenge or block bots
@@ -48,7 +48,7 @@ To start using Super Bot Fight Mode:
 
 :::caution[Warning]
 
-If your organization also uses [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/), keep **Definitely Automated** set to **Allow**. Otherwise, tunnels might fail with a `websocket: bad handshake` error.
+If your organization also uses [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/), keep **Definitely Automated** set to **Allow**. Otherwise, Super Bot Fight Mode may block tunnel connections, causing failures with a `websocket: bad handshake` error.
 :::
 
 <Render file="flexible-sbfm" product="bots" />
@@ -116,6 +116,6 @@ You can see bot-related actions by going to **Security** > **Events**. Any reque
 
 ## Ruleset Engine
 
-Super Bot Fight Mode runs during the `http_request_sbfm` phase of the [Ruleset Engine](/ruleset-engine/about/phases/).
+Super Bot Fight Mode rules run after WAF custom rules in the request evaluation pipeline. Specifically, Super Bot Fight Mode runs during the `http_request_sbfm` phase of the [Ruleset Engine](/ruleset-engine/about/phases/).
 
 <Render file="bfm-change-notice" product="bots" />

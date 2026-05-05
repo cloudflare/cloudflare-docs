@@ -3,6 +3,26 @@ link: "/realtime/realtimekit/release-notes/react-native-ui-kit/"
 productName: RealtimeKit React Native UI Kit
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-05-05"
+    title: RealtimeKit React Native UI Kit 1.0.0
+    description: |-
+      **Breaking changes**
+
+      - Removed support for `@cloudflare/realtimekit-react-native` version less than v1.0.0
+      - The Join Stage Confirmation dialog (i.e `RtkJoinStage`) now opens with Mic/Camera disabled by default.
+
+      **Features**
+
+      - Added unread counts for chat and polls in `RtkPollsToggle`, `RtkChatToggle`, and `RtkMoreToggle`
+
+      **Fixes**
+      - Fixed an issue where when a meeting host leaves the stage, all plugins and host controls disappear.
+  - publish_date: "2026-03-30"
+    title: RealtimeKit React Native UI Kit 0.2.1
+    description: |-
+      **Fixes**
+
+      - Fixed an issue where self video is not visible on Setup Screen on initial load (i.e happens with @cloudflare/realtimekit-react-native version v0.3.2)
   - publish_date: "2025-11-20"
     title: RealtimeKit React Native UI Kit 0.2.0
     description: |-

@@ -9,10 +9,9 @@ description: Review the limitations of Universal certificates, such as hostname 
 head:
   - tag: title
     content: Limitations for Universal SSL
-
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip, Render } from "~/components";
 
 Universal SSL certificates present some limitations.
 
@@ -28,8 +27,8 @@ When you rely only on Universal SSL in a full setup zone, coverage is limited to
 
 To enable SSL for deeper subdomains, you can:
 
-* Purchase [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) — then turn on [Total TLS](/ssl/edge-certificates/additional-options/total-tls/) for automatic certificate coverage of all proxied subdomains, or manually create advanced certificates for specific hostnames.
-* Upload a [custom SSL certificate](/ssl/edge-certificates/custom-certificates/) that includes the required subdomains as Subject Alternative Names (SANs).
+- Purchase [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) — then turn on [Total TLS](/ssl/edge-certificates/additional-options/total-tls/) for automatic certificate coverage of all proxied subdomains, or manually create advanced certificates for specific hostnames.
+- Upload a [custom SSL certificate](/ssl/edge-certificates/custom-certificates/) that includes the required subdomains as Subject Alternative Names (SANs).
 
 ### CNAME setup
 
@@ -42,7 +41,6 @@ For Universal SSL certificates, Cloudflare chooses the <GlossaryTooltip term="Ce
 Cloudflare can change the [certificate authority](/ssl/reference/certificate-authorities/) without prior notification, and will not send any notification as the change happens.
 
 If you want to choose the issuing certificate authority, [order an advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/).
-
 
 ## Validity period
 
@@ -76,5 +74,9 @@ Some domains are not eligible for Universal SSL if they contain words that confl
 
 To resolve this issue, you can:
 
-* Purchase an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/).
-* Upload your own [custom certificate](/ssl/edge-certificates/custom-certificates/uploading/).
+- Purchase an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/).
+- Upload your own [custom certificate](/ssl/edge-certificates/custom-certificates/uploading/).
+
+## Certificate pinning
+
+<Render file="hpkp-not-supported" product="ssl" />

@@ -4,18 +4,18 @@ pcx_content_type: how-to
 description: Configure Cache with Regional Services and Customer Metadata Boundary.
 products:
   - data-localization
-  - cache  
+  - cache
 sidebar:
   order: 3
 ---
 
 import { TabItem, Tabs, DashButton } from "~/components";
 
-In the following sections, we will give you some details about how to configure Cache with Regional Services and Customer Metadata Boundary.
+The following sections describe how to configure Cache with Regional Services and Customer Metadata Boundary to control where cached content is stored and served from.
 
 ## Regional Services
 
-To configure Regional Services for hostnames [proxied](/dns/proxy-status/) through Cloudflare and ensure that [eligible assets](/cache/concepts/default-cache-behavior/) are cached only in-region, follow these steps for the dashboard or API configuration:
+To configure Regional Services for hostnames [proxied](/dns/proxy-status/) (meaning traffic routes through Cloudflare) through Cloudflare and ensure that [eligible assets](/cache/concepts/default-cache-behavior/) are cached only in-region, follow these steps for the dashboard or API configuration:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 

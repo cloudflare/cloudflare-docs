@@ -144,6 +144,8 @@ const uid = Math.random().toString(36).slice(2, 8);
 </style>
 
 <script>
+	import tippy, { type Instance } from "tippy.js";
+
 	const SYNC_KEY = "lc-pm-active-tab";
 
 	function activate(card: Element, index: number) {
@@ -176,13 +178,23 @@ const uid = Math.random().toString(36).slice(2, 8);
 		card
 			.querySelectorAll<HTMLButtonElement>("[data-lc-pm-copy]")
 			.forEach((btn) => {
+				const tooltip: Instance = tippy(btn, {
+					content: "Copy to clipboard",
+					placement: "top",
+					arrow: false,
+					appendTo: () => document.body,
+				});
+
 				btn.addEventListener("click", async () => {
 					try {
 						await navigator.clipboard.writeText(btn.dataset.command ?? "");
 						const prev = btn.innerHTML;
-						btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34Z"/></svg>`;
+						btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg>`;
+						tooltip.setContent("Copied!");
+						tooltip.show();
 						setTimeout(() => {
 							btn.innerHTML = prev;
+							tooltip.setContent("Copy to clipboard");
 						}, 1500);
 					} catch {
 						/* clipboard unavailable */

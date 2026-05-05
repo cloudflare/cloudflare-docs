@@ -7,7 +7,7 @@ import SubtractIPCalculator from "~/components/SubtractIPCalculator.tsx";
 
 [Private network routes](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/) allow users to connect to your {props.networkName} using the Cloudflare One Client. To add a private network route for your Cloudflare Tunnel:
 
-1.  In [Cloudflare One](https://one.dash.cloudflare.com), go to **Networks** > **Routes**.
+1.  In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Networks** > **Routes**.
 2.  In the **CIDR** tab, enter the **Private IP address** of your {props.resourceName} (for example, <code>{props.exampleIp}</code>). You can expand the IP range later if necessary.
 3.  In your [Split Tunnel configuration](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/#add-a-route), make sure the private IP is routing through the Cloudflare One Client. For example, if you are using Split Tunnels in **Exclude** mode, delete <code>{props.splitTunnelCidr}</code>. We recommend re-adding the IPs that are not explicitly used by your {props.resourceName}.
 

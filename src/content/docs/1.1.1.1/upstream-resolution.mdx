@@ -9,34 +9,43 @@ sidebar:
 slug: 1.1.1.1/upstream-resolution
 ---
 
-When 1.1.1.1 cannot answer a query from cache, it contacts authoritative nameservers on your behalf. This page describes how 1.1.1.1 selects which nameserver to query, what happens when a nameserver is unreachable, and how the final response is determined.
+When 1.1.1.1 does not have an answer in its cache, it contacts authoritative nameservers on your behalf. Authoritative nameservers are the DNS servers that hold the actual records for a domain. This page describes how 1.1.1.1 selects which nameserver to query, what happens when a nameserver is unreachable, and how the final response is determined.
 
 ## Query name minimization
 
-1.1.1.1 minimizes privacy leakage by only sending the minimal query name to authoritative DNS servers. For example, if a client looks up `foo.bar.example.com`, the only part of the query 1.1.1.1 discloses to `.com` is that it needs to know who is responsible for `example.com`. The zone internals stay hidden.
+When resolving a multi-level domain name like `foo.bar.example.com`, 1.1.1.1 does not reveal the full name to every server in the chain. Instead, it sends only the minimum information each server needs. For example, when asking the `.com` TLD server, 1.1.1.1 only discloses that it needs to find `example.com` — the subdomain parts (`foo.bar`) are not included. This limits the amount of information exposed to intermediary servers and reduces privacy leakage.
 
 ## Root zone
 
-1.1.1.1 upstreams to [locally hosted root zone files](https://blog.cloudflare.com/f-root/) instead of querying remote root servers for every lookup. This reduces latency, lowers privacy leakage, and decreases load on the DNS root server system.
+1.1.1.1 uses [locally hosted copies of the root zone file](https://blog.cloudflare.com/f-root/) instead of querying remote root servers for every lookup. The root zone file contains the addresses of all top-level domain (TLD) servers. By hosting it locally, 1.1.1.1 avoids a network round trip to root servers, which reduces latency, improves privacy, and decreases load on the global DNS root server system.
 
 ## Nameserver selection
 
-When more than one authoritative nameserver is available for a zone (for example, multiple `NS` records at the root, TLD, or delegation level), 1.1.1.1 chooses between them based on measured performance. The resolver tracks per-upstream metrics — including round-trip time (RTT) and response quality — and queries the nameserver that has historically been fastest and most reliable from the data center serving the request.
+Most domains have multiple authoritative nameservers for redundancy. When 1.1.1.1 needs to query one, it chooses based on measured performance. The resolver tracks metrics for each nameserver — including round-trip time (how long a query takes to travel to the server and back) and response quality — then picks the nameserver that has historically been fastest and most reliable from the data center handling your request.
 
-If that nameserver does not answer in time or returns a transient error, 1.1.1.1 retries against another authoritative nameserver for the same zone. Refer to [Retry behavior](#retry-behavior) for details.
+If the selected nameserver does not respond in time or returns an error, 1.1.1.1 retries against a different nameserver for the same zone. Refer to [Retry behavior](#retry-behavior) for details.
 
-A small share of queries is also sent to other candidates so that latency measurements stay current and a previously slow server can be re-evaluated. For more background on the platform that powers this behavior, refer to the [BigPineapple architecture blog post](https://blog.cloudflare.com/big-pineapple-intro/).
+A small percentage of queries are also sent to alternative nameservers so that performance measurements stay current. This allows a previously slow server to be re-evaluated if its performance improves. For more background on the system that powers this selection, refer to the [BigPineapple architecture blog post](https://blog.cloudflare.com/big-pineapple-intro/).
 
 ## Retry behavior
 
-If a chosen upstream nameserver does not respond in time or returns a transient error, 1.1.1.1 retries the query against another authoritative nameserver for the same zone. The temporarily unresponsive server is downranked so that subsequent queries prefer healthier alternatives. It is periodically re-probed to detect recovery.
+If a nameserver does not respond in time or returns a temporary error, 1.1.1.1 retries the query against a different authoritative nameserver for the same zone. The unresponsive server is deprioritized so that subsequent queries prefer healthier alternatives. 1.1.1.1 periodically re-checks deprioritized servers to detect recovery.
 
-Concurrent identical upstream queries are deduplicated so that a single in-flight request serves multiple waiting clients. The exact retry parameters and ranking logic are tuned over time and may change.
+When multiple clients request the same domain at the same time, 1.1.1.1 deduplicates the upstream queries so that a single in-flight request serves all waiting clients. The exact retry timing and ranking logic are tuned over time and may change.
 
 ## Response selection
 
-For a given query, 1.1.1.1 returns only one final answer to the client. When authoritative nameservers disagree, which response is selected depends on whether the upstream responses are authoritative answers or transient failures:
+For a given query, 1.1.1.1 returns only one answer to the client. When authoritative nameservers disagree, which response 1.1.1.1 selects depends on the type of responses received.
 
-- **`NOERROR` (with answer or `NODATA`) versus `NXDOMAIN`:** Both are valid authoritative answers. 1.1.1.1 returns the first valid response it receives and does not query the remaining authoritative nameservers to compare answers. Authoritative nameservers for the same zone are expected to be consistent — if one returns `NXDOMAIN` and another returns `NOERROR` for the same name, that indicates a misconfiguration on the authoritative side, and which answer reaches the client depends on which nameserver was queried.
-- **Timeout versus a valid response:** A timeout is not an answer. 1.1.1.1 retries against another authoritative nameserver and returns the first valid response (`NOERROR`, `NXDOMAIN`, or other) it receives.
-- **`SERVFAIL`, `REFUSED`, or other transient failure versus a valid response:** Transient failures are treated as upstream errors rather than authoritative answers. 1.1.1.1 retries against another authoritative nameserver and returns the first valid response it receives. Only if no authoritative nameserver returns a valid response does 1.1.1.1 return a failure to the client — typically `SERVFAIL`, or `REFUSED` if that is what the authoritative nameservers consistently returned.
+The following DNS response codes are relevant:
+
+- **`NOERROR`** — The query succeeded. The response contains the requested records, or indicates that the name exists but has no records of the requested type (sometimes called `NODATA`).
+- **`NXDOMAIN`** — The domain name does not exist.
+- **`SERVFAIL`** — The nameserver encountered an internal error and could not answer.
+- **`REFUSED`** — The nameserver refused to answer the query.
+
+How 1.1.1.1 handles disagreements between nameservers:
+
+- **`NOERROR` versus `NXDOMAIN`:** Both are valid authoritative answers. 1.1.1.1 returns whichever response it receives first and does not query remaining nameservers to compare. Authoritative nameservers for the same zone are expected to be consistent. If one returns `NXDOMAIN` and another returns `NOERROR` for the same name, that indicates a misconfiguration on the authoritative side.
+- **Timeout versus a valid response:** A timeout is not an answer. 1.1.1.1 retries against another nameserver and returns the first valid response it receives.
+- **`SERVFAIL` or `REFUSED` versus a valid response:** Temporary failures are treated as upstream errors, not authoritative answers. 1.1.1.1 retries against another nameserver and returns the first valid response. Only if all nameservers return errors does 1.1.1.1 return a failure to the client — typically `SERVFAIL`, or `REFUSED` if that is what the nameservers consistently returned.

@@ -37,15 +37,15 @@ const reader = readable.getReader({ mode: 'byob' });
 
   * Returns a promise with the next available chunk of data read into a passed-in buffer.
 
-* <code>readAtLeast(minBytes, bufferArrayBufferView)</code> : Promise\<ReadableStreamBYOBReadResult>
+* <code>readAtLeast(minElements, bufferArrayBufferView)</code> : Promise\<ReadableStreamBYOBReadResult>
 
-  * Returns a promise with the next available chunk of data read into a passed-in buffer. The promise will not resolve until at least `minBytes` bytes have been read. However, fewer than `minBytes` bytes may be returned if the end of the stream is reached or the underlying stream is closed. Specifically:
+  * Returns a promise with the next available chunk of data read into a passed-in buffer. The promise will not resolve until at least `minElements` elements have been read.  The element size is determined by `bufferArrayBufferView`, for example 4 bytes per element for a `Uint32Array`. However, fewer than `minElements` elements may be returned if the end of the stream is reached or the underlying stream is closed. Specifically:
 
-    * If `minBytes` or more bytes are available, the promise resolves with `{ value: <buffer view sized to bytes read>, done: false }`.
-    * If the stream ends after some bytes have been read but fewer than `minBytes`, the promise resolves with the partial data: `{ value: <buffer view sized to bytes actually read>, done: false }`. The next call to `read` or `readAtLeast` will then return `{ value: undefined, done: true }`.
+    * If `minElements` or more elements are available, the promise resolves with `{ value: <buffer view sized to bytes read>, done: false }`.
+    * If the stream ends after some data has been read but fewer than `minElements` elements, the promise resolves with the partial data: `{ value: <buffer view sized to bytes actually read>, done: false }`. The next call to `read` or `readAtLeast` will then return `{ value: undefined, done: true }`.
     * If the stream ends with zero bytes available (that is, the stream is already at EOF), the promise resolves with `{ value: <zero-length view>, done: true }`.
     * If the stream errors, the promise rejects.
-    * `minBytes` must be at least 1, and must not exceed the byte length of `bufferArrayBufferView`, or the promise rejects with a `TypeError`.
+    * `minElements` must be at least 1, and `minElements * elementSize` must not exceed the byte length of `bufferArrayBufferView`, or the promise rejects with a `TypeError`. For a `Uint8Array`, element size is 1, so `minElements` is effectively a byte count.
 
 
 
@@ -60,7 +60,7 @@ const reader = readable.getReader({ mode: 'byob' });
 
 In practice, the Workers team has found that `read` typically fills only 1% of the provided buffer.
 
-`readAtLeast` is a non-standard extension to the Streams API which allows users to specify that at least `minBytes` bytes must be read into the buffer before resolving the read. If the stream ends before `minBytes` bytes are available, the partial data that was read is still returned rather than throwing an error — refer to the [`readAtLeast` method documentation above](#methods) for the full details.
+`readAtLeast` is a non-standard extension to the Streams API which allows users to specify that at least `minElements` elements must be read into the buffer before resolving the read. For a `Uint8Array` (the most common case), each element is one byte, so `minElements` is effectively a byte count. If the stream ends before `minElements` elements are available, the partial data that was read is still returned rather than throwing an error — refer to the [`readAtLeast` method documentation above](#methods) for the full details.
 
 
 :::

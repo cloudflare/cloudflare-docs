@@ -8,7 +8,9 @@ sidebar:
   order: 5
 ---
 
-With the default configuration for Customer Metadata Boundary, users outside the configured region will not have access to view analytics on the dashboard or the default API endpoint. When **Allow out-of-region access** is enabled, Customer Logs will still be stored exclusively within the configured region but will be made available to users outside the region as well.
+With the default configuration for Customer Metadata Boundary, users who are physically located outside the configured storage region will not have access to view analytics on the dashboard or retrieve data through the standard API endpoint. When **Allow out-of-region access** is enabled, Customer Logs will still be stored exclusively within the configured region but will be made available to authorized users on your account regardless of their physical location.
+
+This is useful when your operations, security, or engineering teams are distributed across multiple regions and need visibility into traffic analytics without relocating the underlying data.
 
 For example, when **Allow out-of-region access** is **disabled** on an account configured for Customer Metadata Boundary in the US, users in Europe will not be able to see any analytics or Customer Logs on the dashboard.
 

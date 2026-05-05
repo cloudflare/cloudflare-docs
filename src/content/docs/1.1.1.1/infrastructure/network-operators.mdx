@@ -9,11 +9,11 @@ sidebar:
 slug: 1.1.1.1/infrastructure/network-operators
 ---
 
-Network operators, including Internet Service Providers (ISPs), device manufacturers, public Wi-Fi networks, municipal broadband providers, and security scanning services can use [1.1.1.1](/1.1.1.1/setup/) in place of operating their own recursive DNS infrastructure.
+Network operators, including Internet Service Providers (ISPs), device manufacturers, public Wi-Fi networks, municipal broadband providers, and security scanning services can use [1.1.1.1](/1.1.1.1/setup/) in place of operating their own recursive DNS infrastructure — DNS servers that resolve queries on behalf of clients by querying authoritative nameservers across the internet.
 
 Cloudflare also partners with ISPs and network equipment providers to make [1.1.1.1 for Families](/1.1.1.1/setup/#1111-for-families) available within their offerings. Refer to our [blog post](https://blog.cloudflare.com/safer-resolver/) for details.
 
-Using 1.1.1.1 can improve performance for end-users due to Cloudflare's extensive [global network](https://www.cloudflare.com/network/), as well as provide higher overall cache hit rates due to our regional caches.
+Using 1.1.1.1 can improve performance for end-users due to Cloudflare's extensive [global network](https://www.cloudflare.com/network/), as well as provide higher overall cache hit rates (the percentage of DNS queries answered from cache rather than requiring a new upstream lookup) due to our regional caches.
 
 The 1.1.1.1 resolver was designed with a privacy-first approach. Refer to our [data and privacy policies](/1.1.1.1/privacy/public-dns-resolver/) for what is logged and retained by 1.1.1.1.
 
@@ -22,10 +22,10 @@ The 1.1.1.1 resolver was designed with a privacy-first approach. Refer to our [d
 There are multiple ways to use 1.1.1.1 as an operator:
 
 - Including a [DNS over HTTPS](/1.1.1.1/encryption/dns-over-https/) or [DNS over TLS](/1.1.1.1/encryption/dns-over-tls/) proxy on end-user routers or devices (best for privacy).
-- Pushing 1.1.1.1 to devices via DHCP/PPP within an operator network (recommended; most practical).
-- Having a DNS proxy on a edge router make requests to 1.1.1.1 on behalf of all connected devices.
+- Pushing 1.1.1.1 to devices via DHCP/PPP (the protocols operators use to automatically assign network settings, including DNS servers, to devices) within an operator network (recommended; most practical).
+- Having a DNS proxy on an edge router make requests to 1.1.1.1 on behalf of all connected devices.
 
-Where possible, we recommend using encrypted transports (DNS over HTTPS or TLS) for queries, as this provides the highest degree of privacy for users over last-mile networks.
+Where possible, we recommend using encrypted transports (DNS over HTTPS or TLS) for queries, as this provides the highest degree of privacy for users over last-mile networks (the final segment of connectivity between the operator and the end user).
 
 ## Available Endpoints
 
@@ -37,7 +37,7 @@ If you require additional controls over our public 1.1.1.1 resolver, [contact us
 
 :::
 
-The publicly available endpoints for 1.1.1.1 are detailed in the following table:
+The publicly available endpoints for 1.1.1.1 are detailed in the following table. Each resolver variant serves a different filtering level: the unfiltered resolver performs standard DNS resolution with no content blocking, the Malware variant blocks queries to domains associated with malware and phishing, and the Adult Content + Malware variant blocks adult content in addition to malware and phishing.
 
 | Resolver                                 | IPv4 address               | IPv6 <br /> address                                  | DNS over <br /> HTTPS endpoint                  | DNS over <br /> TLS endpoint  |
 | ---------------------------------------- | -------------------------- | ---------------------------------------------------- | ----------------------------------------------- | ----------------------------- |
@@ -54,7 +54,7 @@ Operators using 1.1.1.1 for typical Internet-facing applications and/or users sh
 Best practices include:
 
 - Avoiding tunneling or proxying all queries from a single IP address at high rates. Distributing queries across multiple public IPs will improve this without impacting cache hit rates (caches are regional).
-- A high rate of "uncacheable" responses (such as `SERVFAIL`) against the same domain may be rate limited to protect upstream, authoritative nameservers. Many authoritative nameservers enforce their own rate limits, and we strive to avoid overloading third party infrastructure where possible.
+- A high rate of "uncacheable" responses (such as `SERVFAIL`, a DNS response code indicating the server failed to complete the query) against the same domain may be rate limited to protect upstream, authoritative nameservers (the DNS servers that hold the official records for a domain). Many authoritative nameservers enforce their own rate limits, and we strive to avoid overloading third party infrastructure where possible.
 
 ## Help
 

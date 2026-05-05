@@ -22,9 +22,124 @@ import {
 
 Wrangler offers APIs to programmatically interact with your Cloudflare Workers.
 
+- [`experimental_generateTypes`](#experimental_generatetypes) - Generate TypeScript type definitions from your Worker configuration.
 - [`unstable_startWorker`](#unstable_startworker) - Start a server for running integration tests against your Worker.
 - [`unstable_dev`](#unstable_dev) - Start a server for running either end-to-end (e2e) or integration tests against your Worker.
 - [`getPlatformProxy`](#getplatformproxy) - Get proxies and values for emulating the Cloudflare Workers platform in a Node.js process.
+
+## `experimental_generateTypes`
+
+Generate TypeScript type definitions from your Worker configuration. This API uses the same core logic as the `wrangler types` CLI command, so outputs stay aligned between the CLI and programmatic API.
+
+Unlike the CLI command, `experimental_generateTypes` does not write to disk automatically. Instead, it returns the generated type content as structured strings for you to handle as needed.
+
+:::note
+
+The `experimental_generateTypes()` function has an `experimental_` prefix because the API is experimental and may change in the future.
+
+:::
+
+### Syntax
+
+```ts
+import { experimental_generateTypes } from "wrangler";
+
+const result = await experimental_generateTypes(options);
+```
+
+### Parameters
+
+- `options` <Type text="object" /> <MetaInfo text="optional" />
+
+  - Optional options object mirroring the `wrangler types` CLI flags:
+
+    - `config` `string | string[]`
+
+      Path to the Wrangler configuration file to use. Can be an array for multi-config type resolution.
+
+    - `env` `string`
+
+      Name of the Wrangler environment to generate types for.
+
+    - `envFile` `string[]`
+
+      Paths to `.env` files to load when inferring local variables and secrets.
+
+    - `envInterface` `string`
+
+      Name of the generated environment interface. Defaults to `Env`.
+
+    - `includeEnv` `boolean`
+
+      Whether to include environment and bindings types in the output. Defaults to `true`.
+
+    - `includeRuntime` `boolean`
+
+      Whether to include runtime types in the output. Defaults to `true`.
+
+    - `path` `string`
+
+      Path to the declaration file for generated types. Defaults to `worker-configuration.d.ts`.
+
+    - `strictVars` `boolean`
+
+      Whether to generate strict literal and union types for variables. Defaults to `true`.
+
+### Return Type
+
+`experimental_generateTypes()` returns a `Promise` resolving to an object containing the following fields:
+
+- `content` `string`
+
+  - Combined formatted output containing all generated sections, including headers and both env and runtime types.
+
+- `env` `string | null`
+
+  - Generated environment and bindings types, or `null` when env types are excluded.
+
+- `path` `string`
+
+  - Target declaration file path associated with this generation run.
+
+- `runtime` `string | null`
+
+  - Generated runtime types, or `null` when runtime types are excluded.
+
+### Usage
+
+You can use `experimental_generateTypes` to generate types programmatically and write them to disk yourself, or pass them to other tools:
+
+```ts
+import { experimental_generateTypes } from "wrangler";
+import * as fs from "node:fs";
+
+const result = await experimental_generateTypes({
+	config: "wrangler.json",
+	includeRuntime: true,
+	includeEnv: true,
+});
+
+// Write the combined content to the path specified in options
+fs.writeFileSync(result.path, result.content, "utf-8");
+```
+
+To generate only env types without runtime types:
+
+```ts
+const result = await experimental_generateTypes({
+	includeRuntime: false,
+});
+```
+
+To generate types for a specific environment with a custom interface name:
+
+```ts
+const result = await experimental_generateTypes({
+	env: "staging",
+	envInterface: "StagingEnv",
+	path: "./types/staging.d.ts",
+});
+```
 
 ## `unstable_startWorker`
 
@@ -80,11 +195,9 @@ const worker = await unstable_dev(script, options);
 ### Parameters
 
 - `script` <Type text="string" />
-
   - A string containing a path to your Worker script, relative to your Worker project's root directory.
 
 - `options` <Type text="object" /> <MetaInfo text="optional" />
-
   - Optional options object containing `wrangler dev` configuration settings.
   - Include an `experimental` object inside `options` to access experimental features such as `disableExperimentalWarning`.
     - Set `disableExperimentalWarning` to `true` to disable Wrangler's warning about using `unstable_` prefixed APIs.
@@ -94,12 +207,10 @@ const worker = await unstable_dev(script, options);
 `unstable_dev()` returns an object containing the following methods:
 
 - `fetch()` `Promise<Response>`
-
   - Send a request to your Worker. Returns a Promise that resolves with a [`Response`](/workers/runtime-apis/response) object.
   - Refer to [`Fetch`](/workers/runtime-apis/fetch/).
 
 - `stop()` `Promise<void>`
-
   - Shuts down the dev server.
 
 ### Usage
@@ -281,9 +392,7 @@ const platform = await getPlatformProxy(options);
 ### Parameters
 
 - `options` <Type text="object" /> <MetaInfo text="optional" />
-
   - Optional options object containing preferences for the bindings:
-
     - `environment` string
 
       The environment to use.
@@ -311,25 +420,20 @@ const platform = await getPlatformProxy(options);
 `getPlatformProxy()` returns a `Promise` resolving to an object containing the following fields.
 
 - `env` `Record<string, unknown>`
-
   - Object containing proxies to bindings that can be used in the same way as production bindings. This matches the shape of the `env` object passed as the second argument to modules-format workers. These proxy to binding implementations run inside `workerd`.
   - TypeScript Tip: `getPlatformProxy<Env>()` is a generic function. You can pass the shape of the bindings record as a type argument to get proper types without `unknown` values.
 
 - `cf` IncomingRequestCfProperties read-only
-
   - Mock of the `Request`'s `cf` property, containing data similar to what you would see in production.
 
 - `ctx` object
-
   - Mock object containing implementations of the [`waitUntil`](/workers/runtime-apis/context/#waituntil) and [`passThroughOnException`](/workers/runtime-apis/context/#passthroughonexception) functions that do nothing.
 
 - `caches` object
-
   - Emulation of the [Workers `caches` runtime API](/workers/runtime-apis/cache/).
   - For the time being, all cache operations do nothing. A more accurate emulation will be made available soon.
 
 - `dispose()` () => `Promise<void>`
-
   - Terminates the underlying `workerd` process.
   - Call this after the platform proxy is no longer required by the program. If you are running a long running process (such as a dev server) that can indefinitely make use of the proxy, you do not need to call this function.
 
@@ -397,61 +501,71 @@ The bindings supported by `getPlatformProxy` are:
   <Render file="ai-local-usage-charges" product="workers" />
 
 - [Durable Object bindings](/durable-objects/api/)
-
   - To use a Durable Object binding with `getPlatformProxy`, always specify a [`script_name`](/workers/wrangler/configuration/#durable-objects).
 
     For example, you might have the following binding in a Wrangler configuration file read by `getPlatformProxy`.
 
     <WranglerConfig>
-
-    ```jsonc
-    {
-      "durable_objects": {
-        "bindings": [
-          {
-            "name": "MyDurableObject",
-            "class_name": "MyDurableObject",
-            "script_name": "external-do-worker"
-          }
-        ]
-      }
-    }
-    ```
-
-    </WranglerConfig>
+            
+                ```jsonc
+                {
+                  "durable_objects": {
+                    "bindings": [
+                      {
+                        "name": "MyDurableObject",
+                        "class_name": "MyDurableObject",
+                        "script_name": "external-do-worker"
+                      }
+                    ]
+                  }
+                }
+                ```
+            
+                </WranglerConfig>
 
     You will need to declare your Durable Object `"MyDurableObject"` in another Worker, called `external-do-worker` in this example.
 
-        ```ts title="./external-do-worker/src/index.ts"
-        export class MyDurableObject extends DurableObject {
-        	// Your DO code goes here
-        }
+    ```ts title="./external-do-worker/src/index.ts"
+    export class MyDurableObject extends DurableObject {
+    	// Your DO code goes here
+    }
 
-        export default {
-        	fetch() {
-        			// Doesn't have to do anything, but a DO cannot be the default export
-        			return new Response("Hello, world!");
-        	},
-        };
-        ```
-        That Worker also needs a Wrangler configuration file that looks like this:
+    export default {
+    	fetch() {
+    		// Doesn't have to do anything, but a DO cannot be the default export
+    		return new Response("Hello, world!");
+    	},
+    };
+    ```
 
-        <WranglerConfig>
-        ```json
-        {
-        	"name": "external-do-worker",
-        	"main": "src/index.ts",
-        	"compatibility_date": "XXXX-XX-XX"
-        }
-        ```
-        </WranglerConfig>
+    That Worker also needs a Wrangler configuration file that looks like this:
 
-        If you are not using RPC with your Durable Object, you can run a separate Wrangler dev session alongside your framework development server.
+    <WranglerConfig>
+                    ```json
+                    {
+                    	"name": "external-do-worker",
+                    	"main": "src/index.ts",
+                    	"compatibility_date": "XXXX-XX-XX"
+                    }
+                    ```
+                    </WranglerConfig>
 
-        Otherwise, you can build your application and run both Workers in the same Wrangler dev session.
+    If you are not using RPC with your Durable Object, you can run a separate Wrangler dev session alongside your framework development server.
 
-        If you are using Pages run:
-        <PackageManagers type="exec" pkg="wrangler" args="pages dev -c path/to/pages/wrangler.jsonc -c path/to/external-do-worker/wrangler.jsonc" />
+    Otherwise, you can build your application and run both Workers in the same Wrangler dev session.
 
-        If you are using Workers with Assets run:
-        <PackageManagers type="exec" pkg="wrangler" args="dev -c path/to/workers-assets/wrangler.jsonc -c path/to/external-do-worker/wrangler.jsonc" />
+    If you are using Pages run:
+
+    <PackageManagers
+    	type="exec"
+    	pkg="wrangler"
+    	args="pages dev -c path/to/pages/wrangler.jsonc -c path/to/external-do-worker/wrangler.jsonc"
+    />
+
+    If you are using Workers with Assets run:
+
+    <PackageManagers
+    	type="exec"
+    	pkg="wrangler"
+    	args="dev -c path/to/workers-assets/wrangler.jsonc -c path/to/external-do-worker/wrangler.jsonc"
+    />

@@ -323,6 +323,7 @@ A separate Semgrep workflow checks style guide compliance (dates, "coming soon" 
 10. **Invalid changelog product folders** — the product directory must exist in `src/content/products/`.
 11. **Invalid tags** — tags are validated against the allowlist in `src/schemas/tags.ts`.
 12. **Redirect issues** — source URLs in `public/__redirects` must end in `/` (or `*`, `.xml`, `.json`, `.html`). No fragments in source URLs. No infinite loops.
+13. **Hand-crafted directory entry IDs** — never manually write `id` values in `src/content/directory/` files. Always run `node tools/directory-entry-ids --fix` to generate them.
 
 ## Content collections
 
@@ -337,8 +338,32 @@ The site defines 20 content collections in `src/content.config.ts` with schemas 
 | `products`          | `src/content/products/`          | Product metadata (YAML)                 |
 | `plans`             | `src/content/plans/`             | Plan/pricing data (YAML)                |
 | `workers-ai-models` | `src/content/workers-ai-models/` | AI model definitions (JSON)             |
+| `directory`         | `src/content/directory/`         | Product/feature directory entries (YAML) |
 | `fields`            | `src/content/fields/`            | Ruleset engine field definitions (YAML) |
 | `learning-paths`    | `src/content/learning-paths/`    | Learning path definitions (JSON)        |
+
+### Directory entry IDs
+
+Every file in `src/content/directory/` **must** have a unique `id` field on the very first line. This is enforced by Semgrep rules in CI (`.semgrep/directory-entry-validation.yaml`).
+
+**Rules:**
+
+- The `id` must be exactly **6 characters** long.
+- Characters are drawn from a reduced-confusion set: `abcdefghijkmnopqrstuvwxyzACDEFGHJKLMNPQRTUVWXY34679`. This deliberately omits visually ambiguous characters (`l`/`1`/`I`, `O`/`0`, `B`/`8`, `S`/`5`, `Z`/`2`).
+- IDs are **randomly generated** — they must not contain human names or be hand-crafted.
+- The `id` is a **stable identifier** that stays with the YAML file even when the `name` or filename changes. Never modify an existing `id` unless fixing a validation error.
+- Files must use the `.yaml` extension, not `.yml`.
+
+**Generating IDs:**
+
+Use the `tools/directory-entry-ids` script to generate and validate IDs:
+
+```bash
+node tools/directory-entry-ids        # Check all files, report errors
+node tools/directory-entry-ids --fix  # Auto-fix missing, malformed, or duplicate IDs
+```
+
+**Do not** manually write `id` values. Always use the script to generate them.
 
 ## Testing
 

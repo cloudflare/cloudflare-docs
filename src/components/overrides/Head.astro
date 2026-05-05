@@ -2,6 +2,7 @@
 import Default from "@astrojs/starlight/components/Head.astro";
 import { differenceInCalendarDays } from "date-fns";
 import "tippy.js/dist/tippy.css";
+import "~/styles/tippy.css";
 
 import { getEntry, getEntries } from "astro:content";
 import { getOgImage } from "~/util/og";
@@ -270,6 +271,7 @@ metaTags.map((attrs) => {
 	});
 });
 ---
+
 
 <script src="src/scripts/footnotes.ts"></script>
 <script src="src/scripts/mermaid.ts"></script>

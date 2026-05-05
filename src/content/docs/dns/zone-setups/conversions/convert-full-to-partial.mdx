@@ -11,15 +11,15 @@ sidebar:
 
 import { Tabs, TabItem, Render, Details } from "~/components";
 
-If you initially configured a [primary setup (full)](/dns/zone-setups/full-setup/), you can later convert your zone to use a CNAME setup (also known as partial setup).
+If you initially configured a [primary setup (full)](/dns/zone-setups/full-setup/), you can later convert your zone to use a CNAME setup (also known as partial setup). This guide assumes your zone is already in an [active status](/dns/zone-setups/reference/domain-status/#active).
 
 A CNAME setup allows you to use [Cloudflare's reverse proxy](/fundamentals/concepts/how-cloudflare-works/) on individual subdomains while using a different authoritative DNS provider.
 
+---
+
 ## Before you begin
 
-Make sure you consider the following:
-
-- This guide assumes your zone is already in an [active status](/dns/zone-setups/reference/domain-status/#active).
+### Consider CNAME setup limitations
 
 - A CNAME setup requires a CNAME record for each proxied hostname but, following [RFC 1912](https://datatracker.ietf.org/doc/html/rfc1912#section-2.4), CNAME records are not allowed on the zone apex (`example.com`). With a CNAME setup, you can only proxy the zone apex if your authoritative DNS provider supports [CNAME flattening](https://blog.cloudflare.com/introducing-cname-flattening-rfc-compliant-cnames-at-a-domains-root/) (or an equivalent like ALIAS/ANAME records), or if you create A/AAAA records pointing the apex directly to Cloudflare [anycast IP addresses](/fundamentals/concepts/cloudflare-ip-addresses/). Otherwise, you can only proxy subdomains.
 
@@ -28,7 +28,18 @@ Make sure you consider the following:
   :::
 
 - Once your zone is using CNAME setup, on the dashboard, you will only be able to create A, AAAA, and CNAME records, which are the DNS record types that can be [proxied](/dns/proxy-status/).
-- You should plan for SSL/TLS certificates. If you are only using [Universal SSL](/ssl/edge-certificates/universal-ssl/) prior to converting your zone, a certificate will be provisioned for your subdomains only after each of the respective DNS records are proxied. If your domain is sensitive to downtime, instead of using Universal SSL, consider using an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) with [delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/#setup).
+
+### Plan for SSL/TLS certificates
+
+:::caution[Universal SSL deletion]
+If you are using [Universal SSL](/ssl/edge-certificates/universal-ssl/), converting to a CNAME setup will delete your existing Universal SSL certificates.
+:::
+
+New Universal SSL certificates will be [provisioned](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/#partial-dns-setup) for your proxied subdomains only after each CNAME record pointing to `{your-hostname}.cdn.cloudflare.net` is in place, and domain ownership is verified with the TXT record, as [explained below](#2-convert-the-zone).
+
+To avoid downtime, replace your Universal SSL certificates with an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/), which will persist during the transition. After the conversion, you can optionally configure [delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/#setup).
+
+---
 
 ## 1. Prepare new DNS provider
 

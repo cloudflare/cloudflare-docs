@@ -10,7 +10,15 @@ products:
 
 import { DirectoryListing, Render } from "~/components"
 
-Objects are individual files or data that you store in an R2 bucket.
+Objects are individual files or data that you store in an R2 bucket. Each object is identified by its key, a string like `images/photo.png`.
+
+## Prefixes and folders
+
+R2 uses a flat storage structure. There are no real directories or folders. The `/` character in an object key is used as a delimiter to group objects by prefix.
+
+The R2 dashboard groups objects that share a common prefix into folders when the **View prefixes as directories** checkbox is selected. For example, objects with keys `logs/jan.csv` and `logs/feb.csv` appear under a `logs/` folder. These folders are a visual grouping and do not exist as separate resources in your bucket.
+
+## Manage objects
 
 <DirectoryListing />
 

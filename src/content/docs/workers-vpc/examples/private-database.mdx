@@ -1,0 +1,91 @@
+---
+title: Connect to a private database
+pcx_content_type: example
+---
+
+import { Render } from "~/components";
+
+This example demonstrates how to query a private PostgreSQL database from a Worker using [Workers VPC](/workers-vpc/) and [Hyperdrive](/hyperdrive/). The Worker connects to a database that is not exposed to the public Internet, with Hyperdrive providing connection pooling and query acceleration.
+
+## Prerequisites
+
+- A PostgreSQL database running in your private network (for example, on port 5432)
+- A [Cloudflare Tunnel](/workers-vpc/configuration/tunnel/) connected to the private network where your database runs
+- A Cloudflare account with Workers VPC access
+
+## 1. Set up a Cloudflare Tunnel
+
+If you do not already have a tunnel running in the same network as your database, create one.
+
+<Render file="create-tunnel-steps" product="workers-vpc" />
+
+The tunnel must be able to reach your database host and port from within the private network. For full tunnel documentation, refer to [Cloudflare Tunnel for Workers VPC](/workers-vpc/configuration/tunnel/).
+
+## 2. Create a TCP VPC Service
+
+Create a VPC Service of type `tcp` that points to your database:
+
+```sh
+npx wrangler vpc service create my-postgres-db \
+  --type tcp \
+  --tcp-port 5432 \
+  --app-protocol postgresql \
+  --tunnel-id <YOUR_TUNNEL_ID> \
+  --ipv4 <YOUR_DATABASE_IP>
+```
+
+Replace `<YOUR_TUNNEL_ID>` with the tunnel ID from step 1 and `<YOUR_DATABASE_IP>` with the private IP address of your database (for example, `10.0.0.5`).
+
+The command returns a service ID. Save this value for the next step.
+
+:::note
+If your database uses a self-signed certificate, add `--cert-verification-mode verify_ca` to the command above. Refer to [TLS certificate verification mode](/workers-vpc/configuration/vpc-services/#tls-certificate-verification-mode) for all options.
+:::
+
+## 3. Create a Hyperdrive configuration
+
+Use the `--service-id` flag to point Hyperdrive at the VPC Service you created:
+
+```sh
+npx wrangler hyperdrive create my-vpc-database \
+  --service-id <YOUR_VPC_SERVICE_ID> \
+  --database <DATABASE_NAME> \
+  --user <DATABASE_USER> \
+  --password <DATABASE_PASSWORD> \
+  --scheme postgresql
+```
+
+Replace `<YOUR_VPC_SERVICE_ID>` with the service ID from step 2, and provide your database name, user, and password.
+
+The command outputs a Hyperdrive configuration ID. Copy this for the next step.
+
+## 4. Bind Hyperdrive to a Worker
+
+<Render file="create-hyperdrive-binding" product="hyperdrive" />
+
+## 5. Query the database
+
+<Render file="use-node-postgres-to-make-query" product="hyperdrive" />
+
+## 6. Deploy and test
+
+Deploy your Worker:
+
+```sh
+npx wrangler deploy
+```
+
+Send a request to verify the connection:
+
+```sh
+curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev
+```
+
+A successful response returns a JSON array of rows from your database.
+
+## Next steps
+
+- Learn more about [how Hyperdrive works](/hyperdrive/concepts/how-hyperdrive-works/)
+- Configure [query caching](/hyperdrive/concepts/query-caching/) for Hyperdrive
+- Review [VPC Service configuration options](/workers-vpc/configuration/vpc-services/) including TLS certificate verification
+- Explore [other examples](/workers-vpc/examples/)

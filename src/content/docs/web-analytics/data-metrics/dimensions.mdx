@@ -22,5 +22,20 @@ Below you can find a list of the different dimensions you can use to filter Web 
 - **Operating system**: The operating system visitors use to access a page.
 - **Site**: The website's domain name. Used for high-level segmentation of data. For example, you can use it for a particular zone or gray-clouded website.
 - **Exclude Bots**: Exclude bot traffic from the dataset. With this dimension set to `Yes`, the resulting dataset will be a closer representation of real user traffic.
+- **Navigation type**: Which method was used to load the HTML document. Refer to [Navigation types](#navigation-types) for a breakdown.
 
 ![Web Analytics dimensions page](~/assets/images/web-analytics/dash-web_analytics-dimensions.png)
+
+## Navigation types
+
+| Type                    | Cache hit? | Explanation |
+| ----------------------- | ---------- | ----------- |
+| Navigate                | ❌         | The visitor clicked a link or submitted a form but the document was either not found or stale in the browsers HTTP cache, so a network request was made to load the document. |
+| Navigate Cache          | ✅         | The visitor clicked a link or submitted a form and the document was found and fresh within the browsers HTTP cache, so no network request was necessary for the document. |
+| Navigate Prefetch Cache | ✅         | The visitor clicked a link or submitted a form and the document has been prefetched into the browsers HTTP cache, so no network request was necessary for the document. |
+| Prerender               | ✅         | The visitor clicked a link or submitted a form but the browser had already prerendered the page, so no network request was necessary for the document. |
+| Reload                  | ❌         | The visitor reloaded the page but the document was either not found or stale in the browsers HTTP cache, so a network request was made to load the document. |
+| Reload Cache            | ✅         | The visitor reloaded the page and the document was found and fresh within the browsers HTTP cache, so no network request was necessary for the document. |
+| Back-forward            | ❌         | The visitor used the back/forward buttons/gestures in their browser but the previously-loaded document either not found or stale in the browsers HTTP cache OR a feature was used which prevents using the cache (refer to the explanation in [Back/forward cache](https://web.dev/articles/bfcache)), so a network request was made to load the document. |
+| Back-forward Cache      | ✅         | The visitor used the back/forward buttons/gestures in their browser and the document was found and fresh within the browsers HTTP cache, so no network request was necessary for the document. |
+| Restore                 | ✅         | The browser was able to restore this page, for example when a tab has been paused due to inactivity. |

@@ -15,6 +15,12 @@ export const modelExampleSchema = z.object({
 	description: z.string().optional(),
 	input: z.record(z.string(), z.unknown()),
 	output: z.record(z.string(), z.unknown()).optional(),
+	// Full provider response as returned by the upstream API. Shape varies by
+	// provider — streaming responses are arrays of chunks, non-streaming are
+	// objects. Rendered as JSON in the UI regardless of shape.
+	raw_response: z
+		.union([z.record(z.string(), z.unknown()), z.array(z.unknown())])
+		.optional(),
 	code_snippets: codeSnippetSchema.array().optional(),
 });
 

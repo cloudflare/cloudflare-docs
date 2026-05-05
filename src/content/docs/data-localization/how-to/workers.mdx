@@ -7,16 +7,15 @@ products:
   - workers
 sidebar:
   order: 8
-
 ---
 
 import { DashButton } from "~/components";
 
-In the following sections, we will give you some details about how to configure Workers with Regional Services and Customer Metadata Boundary.
+To ensure that your Cloudflare Workers code runs only within a specific geographic region, configure Regional Services on the Workers custom domain. This restricts where TLS termination (traffic decryption) and code execution occur.
 
 ## Regional Services
 
-To configure Regional Services for hostnames [proxied](/dns/proxy-status/) through Cloudflare and ensure that processing of a Workers project occurs only in-region, follow these steps:
+To configure Regional Services for hostnames [proxied](/dns/proxy-status/) (meaning traffic routes through Cloudflare rather than directly to your origin server) through Cloudflare and ensure that processing of a Workers project occurs only in-region, follow these steps:
 
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
@@ -30,7 +29,7 @@ To configure Regional Services for hostnames [proxied](/dns/proxy-status/) throu
 
 Regional Services only applies to the custom domain configured for a Workers project. Therefore, it will run only in-region Cloudflare locations.
 
-Regional Services does not apply to [subrequests](/workers/platform/limits/#subrequests).
+Regional Services does not apply to [subrequests](/workers/platform/limits/#subrequests) (secondary HTTP requests that Workers make to other services).
 
 Regional Services does not apply to other Worker triggers, like [Queues](/queues/) or [Cron Triggers](/workers/configuration/cron-triggers/).
 
@@ -44,9 +43,7 @@ With Customer Metadata Boundary set to `EU`, **Workers & Pages** > **Workers** >
 
 :::note
 
-
 It is recommended to not store any Personally Identifiable Information (PII) in the Workers code. If sensitive information needs to be used, it is recommended to use [Secrets](/workers/configuration/secrets/).
-
 
 :::
 

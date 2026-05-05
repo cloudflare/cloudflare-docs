@@ -175,21 +175,14 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" cl
 </div>
 
 <script>
-	import tippy from "tippy.js";
+	import { addTooltip } from "~/util/tippy";
 
 	document
 		.querySelectorAll<HTMLElement>("[data-agent-tooltip]")
 		.forEach((el) => {
 			const content = el.dataset.agentTooltip;
 			if (!content) return;
-			tippy(el, {
-				content,
-				placement: "top",
-				appendTo: () => document.body,
-				arrow: true,
-				maxWidth: 280,
-				delay: [150, 0],
-			});
+			addTooltip(el, content, { maxWidth: 280, delay: [150, 0] });
 		});
 
 	document
