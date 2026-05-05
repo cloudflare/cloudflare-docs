@@ -7,7 +7,7 @@ products:
   - agent-setup
 ---
 
-import { Steps } from "~/components";
+import { Steps, Tabs, TabItem } from "~/components";
 import AgentHeader from "~/components/agent-setup/AgentHeader.astro";
 import PlatformAccess from "~/components/agent-setup/PlatformAccessSection.astro";
 import ExamplePromptsList from "~/components/agent-setup/ExamplePromptsList.astro";
@@ -24,37 +24,54 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
 ## Quick start
 
-<Steps>
-	1. **Install Codex**
+<Tabs>
+	<TabItem label="Terminal">
+		<Steps>
+			1. **Install Codex**
 
-		Install the Codex CLI. macOS and Linux are fully supported; use WSL2 on Windows. For Homebrew or other install methods, see the [Codex CLI setup guide](https://developers.openai.com/codex/cli/).
+				Install the Codex CLI. macOS and Linux are fully supported; use WSL2 on Windows. For Homebrew or other install methods, see the [Codex CLI setup guide](https://developers.openai.com/codex/cli/).
 
-		```bash
-		npm install -g @openai/codex
-		```
+				```bash
+				npm install -g @openai/codex
+				```
 
-	2. **Launch Codex in your project**
+			2. **Launch Codex in your project**
 
-		Start Codex from the root of your project, where `wrangler.jsonc` lives (if it already exists).
+				Start Codex from the root of your project, where `wrangler.jsonc` lives (if it already exists).
 
-		```bash
-		codex
-		```
+				```bash
+				codex
+				```
 
-	3. **Install the Cloudflare plugin**
+			3. **Install the Cloudflare plugin**
 
-		Inside Codex, run `/plugins`, then search for and install **Cloudflare**. This installs Cloudflare Skills and registers the Cloudflare MCP servers.
+				Inside Codex, run `/plugins`, then search for and install **Cloudflare**. This installs Cloudflare Skills and registers the Cloudflare MCP servers.
 
-		```txt
-		/plugins
-		```
+				```txt
+				/plugins
+				```
 
-	4. **Try a prompt**
+			4. **Try a prompt**
 
-		For example:
+				For example:
 
-		<RandomPrompt />
-</Steps>
+				<RandomPrompt />
+		</Steps>
+	</TabItem>
+	<TabItem label="Standalone">
+		<Steps>
+			1. **Download Codex**
+
+				Follow the download instructions for your operating system at [developers.openai.com/codex/app](https://developers.openai.com/codex/app).
+
+			2. **Install the Cloudflare plugin**
+
+				In the Codex app, go to **Plugins** and install **Cloudflare**.
+
+				![Install the Cloudflare plugin in the Codex standalone app.](~/assets/images/agent-setup/codex-standalone.png)
+		</Steps>
+	</TabItem>
+</Tabs>
 
 ## Cloudflare platform access
 
