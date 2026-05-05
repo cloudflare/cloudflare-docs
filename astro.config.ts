@@ -1,4 +1,4 @@
-import { defineConfig, fontProviders } from "astro/config";
+import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 import starlightDocSearch from "@astrojs/starlight-docsearch";
 import starlightImageZoom from "starlight-image-zoom";
@@ -120,20 +120,6 @@ export default defineConfig({
 	experimental: {
 		contentIntellisense: true,
 	},
-	fonts: [
-		{
-			provider: fontProviders.google(),
-			name: "Inter Tight",
-			cssVariable: "--font-inter-tight",
-			// Variable axis — covers every weight referenced in landing.css
-			// (400/500/600/700/800/900). Astro requests the variable file from
-			// Google Fonts when given a range string.
-			weights: ["100 900"],
-			styles: ["normal"],
-			subsets: ["latin"],
-			fallbacks: ["sans-serif"],
-		},
-	],
 	server: {
 		port: 1111,
 	},

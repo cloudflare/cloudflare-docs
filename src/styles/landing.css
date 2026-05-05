@@ -2,14 +2,6 @@
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
-/*
- * Inter Tight is loaded via Astro's Fonts API (configured in astro.config.ts
- * and injected as <Font> in src/components/overrides/Head.astro). The
- * `--font-inter-tight` variable resolves to the loaded family plus an
- * auto-generated metric-matched fallback, so we use it directly instead of
- * declaring our own @font-face.
- */
-
 @media (prefers-reduced-motion: no-preference) {
 	html {
 		scroll-behavior: smooth;
@@ -193,14 +185,6 @@
 	--l-section-pad: max(2rem, 4vw);
 	--l-pad-top: var(--l-section-pad);
 	overflow-x: clip;
-	/*
-	 * IMPORTANT: must be `var(--font-inter-tight)`, not the bare "Inter Tight"
-	 * family name. Astro's Fonts API registers the loaded font under a hashed
-	 * family name (e.g. "Inter Tight-5c4decf53c0bfa89") and only exposes it
-	 * through this CSS variable — using "Inter Tight" directly silently falls
-	 * back to the system font and collapses weights ≥ 600 to bold.
-	 */
-	font-family: var(--font-inter-tight);
 	line-height: normal;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;

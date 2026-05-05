@@ -13,12 +13,14 @@ const ALL_GUIDES_HREF = "/agent-setup/";
 	class="pt-10 pb-6 lg:pt-14"
 	aria-labelledby="agents-heading"
 >
-	<div class="border-border-100 relative overflow-visible border">
+	<div
+		class="border-accent-100/20 bg-accent-100/20 relative overflow-visible border"
+	>
 		<CornerMarks />
 
-		<div class="bg-border-100 grid grid-cols-12 gap-px">
+		<div class="bg-accent-100/20 grid grid-cols-12 gap-px">
 			<div
-				class="bg-background col-span-12 flex min-w-0 flex-col gap-3 p-8 lg:col-span-8"
+				class="bg-background/90 col-span-12 flex min-w-0 flex-col gap-3 p-8 lg:col-span-8"
 			>
 				<SectionHeading id="agents-heading">
 					Build with your favorite AI agent
@@ -33,7 +35,7 @@ const ALL_GUIDES_HREF = "/agent-setup/";
 			</div>
 			<a
 				href={ALL_GUIDES_HREF}
-				class="bg-background focus-visible:outline-accent-100 relative col-span-12 flex min-w-0 flex-row items-center justify-between overflow-hidden px-8 py-6 no-underline transition-colors duration-150 focus-visible:bg-[#FCEDE0] focus-visible:outline-2 focus-visible:-outline-offset-2 lg:col-span-4 lg:flex-col lg:items-stretch lg:p-8 dark:focus-visible:bg-[#2A2118]"
+				class="bg-background/90 focus-visible:outline-accent-100 relative col-span-12 flex min-w-0 flex-row items-center justify-between overflow-hidden px-8 py-6 no-underline transition-colors duration-150 focus-visible:bg-[#FCEDE0] focus-visible:outline-2 focus-visible:-outline-offset-2 lg:col-span-4 lg:flex-col lg:items-stretch lg:p-8 dark:focus-visible:bg-[#2A2118]"
 			>
 				<HalftoneBackground />
 				<div class="relative z-[1] flex flex-col gap-2.5">
