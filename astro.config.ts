@@ -1,6 +1,5 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
-import starlightDocSearch from "@astrojs/starlight-docsearch";
 import starlightImageZoom from "starlight-image-zoom";
 import liveCode from "astro-live-code";
 import starlightLinksValidator from "starlight-links-validator";
@@ -200,9 +199,6 @@ export default defineConfig({
 							}),
 						]
 					: []),
-				starlightDocSearch({
-					clientOptionsModule: "./src/plugins/docsearch/index.ts",
-				}),
 				starlightImageZoom(),
 				starlightScrollToTop({
 					tooltipText: "Back to top",

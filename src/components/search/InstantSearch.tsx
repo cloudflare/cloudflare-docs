@@ -1,44 +1,64 @@
-import { liteClient as algoliasearch } from "algoliasearch/lite";
-import { ALGOLIA_APP_ID, ALGOLIA_API_KEY, ALGOLIA_INDEX } from "~/util/algolia";
+import type { SearchResult } from "@cloudflare/ai-search-snippet";
 import { useEffect, useState } from "react";
-import {
-	InstantSearch,
-	Highlight,
-	Configure,
-	useSearchBox,
-	type UseSearchBoxProps,
-	useInfiniteHits,
-	type UseInfiniteHitsProps,
-	useRefinementList,
-} from "react-instantsearch";
-import {
-	useFloating,
-	useInteractions,
-	useClick,
-	useDismiss,
-	shift,
-	offset,
-	autoUpdate,
-	FloatingPortal,
-} from "@floating-ui/react";
-import { PiCaretDownBold } from "react-icons/pi";
-import { subDays } from "date-fns";
+import { AI_SEARCH_ENDPOINT } from "~/util/ai-search";
 import { setSearchParams } from "~/util/url";
-import he from "he";
 
-function SearchBox(props: UseSearchBoxProps) {
-	const { query, refine } = useSearchBox(props);
+function getInitialParams() {
+	const params = new URLSearchParams(window.location.search);
+	return {
+		query: params.get("q") ?? params.get("query") ?? "",
+		tags: params.get("tags") ?? "",
+		contentType: params.get("contentType") ?? "",
+	};
+}
+
+function buildSearchQuery(query: string, tags: string, contentType: string) {
+	const filters = [tags, contentType].filter(Boolean).join(" ");
+
+	return [query, filters].filter(Boolean).join(" ").trim();
+}
+
+function getResultDescription(result: SearchResult) {
+	return result.description || "";
+}
+
+function SearchResultCard({ result }: { result: SearchResult }) {
+	return (
+		<a
+			href={result.url || "#"}
+			className="border-cl1-gray-8 hover:bg-cl1-gray-9 dark:border-cl1-gray-2 dark:bg-cl1-gray-0 dark:hover:bg-cl1-gray-1 flex flex-col rounded-sm border p-6 text-black! no-underline"
+		>
+			<strong>{result.title || "Untitled"}</strong>
+			{getResultDescription(result) && (
+				<p className="line-clamp-2">{getResultDescription(result)}</p>
+			)}
+			{result.url && (
+				<span className="text-cl1-gray-4! dark:text-cl1-gray-7! mt-2 overflow-hidden text-sm text-ellipsis whitespace-nowrap">
+					{result.url}
+				</span>
+			)}
+		</a>
+	);
+}
+
+export default function InstantSearchComponent() {
+	const [query, setQuery] = useState("");
+	const [tags, setTags] = useState("");
+	const [contentType, setContentType] = useState("");
+	const [results, setResults] = useState<SearchResult[]>([]);
+	const [isLoading, setIsLoading] = useState(false);
+	const [error, setError] = useState("");
 
 	useEffect(() => {
-		const params = new URLSearchParams(window.location.search);
-		const query = params.get("q") ?? params.get("query");
-
-		if (query) {
-			refine(query);
-		}
+		const initial = getInitialParams();
+		setQuery(initial.query);
+		setTags(initial.tags);
+		setContentType(initial.contentType);
 	}, []);
 
 	useEffect(() => {
+		const controller = new AbortController();
+		const searchQuery = buildSearchQuery(query, tags, contentType);
 		const params = new URLSearchParams(window.location.search);
 
 		if (query) {
@@ -48,204 +68,92 @@ function SearchBox(props: UseSearchBoxProps) {
 		}
 
 		setSearchParams(params);
-	}, [query]);
 
-	return (
-		<div className="border-cl1-gray-8 dark:border-cl1-gray-2 flex items-center rounded-sm border p-2">
-			<input
-				type="text"
-				value={query}
-				onChange={(event) => refine(event.target.value)}
-				className="w-full border-none bg-transparent p-0 text-sm outline-hidden"
-				placeholder="Search..."
-			/>
-		</div>
-	);
-}
+		if (!searchQuery) {
+			setResults([]);
+			setError("");
+			return;
+		}
 
-function InfiniteHits(props: UseInfiniteHitsProps) {
-	const { items, isLastPage, showMore } = useInfiniteHits(props);
+		setIsLoading(true);
+		setError("");
+
+		void import("@cloudflare/ai-search-snippet")
+			.then(({ AISearchClient }) => {
+				const client = new AISearchClient(AI_SEARCH_ENDPOINT);
+
+				return client.search(searchQuery, {
+					maxResults: 25,
+					signal: controller.signal,
+				});
+			})
+			.then((nextResults) => {
+				setResults(nextResults);
+			})
+			.catch((searchError: unknown) => {
+				if ((searchError as Error).name === "AbortError") {
+					return;
+				}
+
+				setError((searchError as Error).message || "Search failed.");
+			})
+			.finally(() => {
+				if (!controller.signal.aborted) {
+					setIsLoading(false);
+				}
+			});
+
+		return () => {
+			controller.abort();
+		};
+	}, [query, tags, contentType]);
 
 	return (
 		<div className="space-y-4">
-			{items.map((item) => {
-				const hierarchy = Object.entries(item.hierarchy)
-					.filter(([, value]) => value !== null)
-					.sort((a, b) => a[0].localeCompare(b[0]))
-					.map(([, value]) => value);
+			<div className="border-cl1-gray-8 dark:border-cl1-gray-2 flex items-center rounded-sm border p-2">
+				<input
+					type="search"
+					value={query}
+					onChange={(event) => setQuery(event.target.value)}
+					className="w-full border-none bg-transparent p-0 text-sm outline-hidden"
+					placeholder="Search..."
+				/>
+			</div>
 
-				const title = hierarchy ? hierarchy.join(" > ") : "Documentation";
-				const today = new Date();
-				const futureDate = subDays(today, item.lastModified);
-				const options: Intl.DateTimeFormatOptions = {
-					year: "numeric",
-					month: "long",
-					day: "numeric",
-				};
-
-				return (
-					<a
-						key={item.objectID}
-						href={item.url}
-						className="border-cl1-gray-8 hover:bg-cl1-gray-9 dark:border-cl1-gray-2 dark:bg-cl1-gray-0 dark:hover:bg-cl1-gray-1 flex flex-col rounded-sm border p-6 text-black! no-underline"
-					>
-						<strong>{he.decode(title)}</strong>
-						<p className="line-clamp-2">
-							<Highlight attribute="content" hit={item} />
-						</p>
-						{item.lastModified && (
-							<span className="text-cl1-gray-4! dark:text-cl1-gray-7! mt-2 text-sm">
-								{futureDate.toLocaleDateString("en-US", options)}
+			{(tags || contentType) && (
+				<div className="not-content border-cl1-gray-8 dark:border-cl1-gray-2 rounded-sm border p-4 text-sm">
+					<p className="m-0 font-medium">Applied search context</p>
+					<p className="m-0 mt-2 text-[var(--sl-color-gray-3)]">
+						AI Search does not expose the previous Algolia facets on this page,
+						so these values are added to the search query.
+					</p>
+					<div className="mt-3 flex flex-wrap gap-2">
+						{tags && (
+							<span className="rounded-sm border px-2 py-1">Tags: {tags}</span>
+						)}
+						{contentType && (
+							<span className="rounded-sm border px-2 py-1">
+								Page type: {contentType}
 							</span>
 						)}
-					</a>
-				);
-			})}
-			{items.length !== 0 && !isLastPage && (
-				<div className="flex items-center justify-center">
-					<button
-						onClick={showMore}
-						className="bg-cl1-brand-orange text-cl1-black h-12 cursor-pointer rounded-sm px-6 font-medium"
-					>
-						Load more
-					</button>
-				</div>
-			)}
-		</div>
-	);
-}
-
-function FilterDropdown({
-	attribute,
-	label,
-	limit = 1000,
-}: {
-	attribute: string;
-	label: string;
-	limit?: number;
-}) {
-	const [isOpen, setIsOpen] = useState(false);
-	const { items, refine } = useRefinementList({
-		attribute,
-		limit,
-		sortBy: ["count:desc"],
-	});
-
-	useEffect(() => {
-		const params = new URLSearchParams(window.location.search);
-		const values = params.get(attribute)?.split(",");
-
-		if (values && values.length !== 0) {
-			for (const value of values) {
-				refine(value);
-			}
-		}
-	}, []);
-
-	useEffect(() => {
-		const refined = items
-			.filter((item) => item.isRefined)
-			.map((item) => item.value);
-
-		const params = new URLSearchParams(window.location.search);
-
-		if (refined.length === 0) {
-			params.delete(attribute);
-		} else {
-			params.set(attribute, refined.join(","));
-		}
-
-		setSearchParams(params);
-	}, [items]);
-
-	const { refs, floatingStyles, context } = useFloating({
-		open: isOpen,
-		onOpenChange: setIsOpen,
-		middleware: [shift(), offset(5)],
-		whileElementsMounted: autoUpdate,
-	});
-
-	const click = useClick(context);
-	const dismiss = useDismiss(context);
-
-	const { getReferenceProps, getFloatingProps } = useInteractions([
-		click,
-		dismiss,
-	]);
-
-	const selectedItems = items.filter((item) => item.isRefined);
-
-	return (
-		<>
-			<button
-				ref={refs.setReference}
-				{...getReferenceProps()}
-				className="border-cl1-gray-8 dark:border-cl1-gray-2 flex cursor-pointer items-center justify-center gap-2 rounded-sm border bg-transparent p-2"
-			>
-				<span>
-					{label}
-					{selectedItems.length > 0 && ` (${selectedItems.length})`}
-				</span>
-				<PiCaretDownBold />
-			</button>
-			{isOpen && (
-				<FloatingPortal>
-					<div
-						ref={refs.setFloating}
-						style={floatingStyles}
-						{...getFloatingProps()}
-						className="border-cl1-gray-8 bg-cl1-white dark:border-cl1-gray-1 dark:bg-cl1-gray-0 rounded-sm border p-4 shadow-md"
-					>
-						<div className="max-h-60 space-y-2 overflow-y-auto">
-							{items
-								.sort((a, b) => {
-									if (a.isRefined && !b.isRefined) return -1;
-									if (!a.isRefined && b.isRefined) return 1;
-									return b.count - a.count;
-								})
-								.map((item) => (
-									<label
-										key={item.value}
-										className="flex items-center gap-2 text-sm"
-									>
-										<input
-											type="checkbox"
-											className="bg-transparent"
-											checked={item.isRefined}
-											onChange={() => refine(item.value)}
-										/>
-										<span>
-											{item.label} ({item.count})
-										</span>
-									</label>
-								))}
-						</div>
 					</div>
-				</FloatingPortal>
-			)}
-		</>
-	);
-}
-
-export default function InstantSearchComponent() {
-	return (
-		<InstantSearch
-			searchClient={algoliasearch(ALGOLIA_APP_ID, ALGOLIA_API_KEY)}
-			indexName={ALGOLIA_INDEX}
-			future={{
-				preserveSharedStateOnUnmount: true,
-			}}
-		>
-			<Configure filters="type:content" facetingAfterDistinct={true} />
-			<div className="space-y-4">
-				<SearchBox />
-				<div className="not-content flex gap-2">
-					<FilterDropdown attribute="product" label="Products" />
-					<FilterDropdown attribute="tags" label="Tags" />
-					<FilterDropdown attribute="contentType" label="Page type" />
 				</div>
-				<InfiniteHits />
+			)}
+
+			{isLoading && <p>Searching...</p>}
+			{error && <p className="text-red-600">{error}</p>}
+			{!isLoading &&
+				!error &&
+				buildSearchQuery(query, tags, contentType) &&
+				results.length === 0 && <p>No results found.</p>}
+			<div className="space-y-4">
+				{results.map((result, index) => (
+					<SearchResultCard
+						key={result.id || result.url || index}
+						result={result}
+					/>
+				))}
 			</div>
-		</InstantSearch>
+		</div>
 	);
 }

@@ -3,8 +3,11 @@
  * Spec: https://webmachinelearning.github.io/webmcp/
  */
 
-import { ALGOLIA_APP_ID, ALGOLIA_API_KEY, ALGOLIA_INDEX } from "~/util/algolia";
+import { AISearchClient } from "@cloudflare/ai-search-snippet";
+import { AI_SEARCH_ENDPOINT } from "~/util/ai-search";
+
 const LLMS_TXT_URL = "https://developers.cloudflare.com/llms.txt";
+const searchClient = new AISearchClient(AI_SEARCH_ENDPOINT);
 
 // Cache for list-directories results — fetched once per session.
 let directoriesCache: DirectoryEntry[] | null = null;
@@ -16,28 +19,6 @@ interface DirectoryEntry {
 	group: string;
 }
 
-interface AlgoliaHit {
-	objectID: string;
-	url?: string;
-	hierarchy?: {
-		lvl0?: string;
-		lvl1?: string;
-		lvl2?: string;
-	};
-	content?: string;
-	_snippetResult?: {
-		content?: { value?: string };
-		hierarchy?: {
-			lvl1?: { value?: string };
-			lvl2?: { value?: string };
-		};
-	};
-}
-
-interface AlgoliaResponse {
-	hits: AlgoliaHit[];
-}
-
 // ---------------------------------------------------------------------------
 // Tool: search
 // ---------------------------------------------------------------------------
@@ -45,45 +26,14 @@ async function executeSearch(input: object): Promise<unknown> {
 	const { query, limit = 5 } = input as { query: string; limit?: number };
 
 	const clampedLimit = Math.min(Math.max(1, limit), 20);
+	const results = await searchClient.search(query, {
+		maxResults: clampedLimit,
+	});
 
-	const response = await fetch(
-		`https://${ALGOLIA_APP_ID}-dsn.algolia.net/1/indexes/${ALGOLIA_INDEX}/query`,
-		{
-			method: "POST",
-			headers: {
-				"X-Algolia-Application-Id": ALGOLIA_APP_ID,
-				"X-Algolia-API-Key": ALGOLIA_API_KEY,
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				query,
-				filters: "type:content",
-				hitsPerPage: clampedLimit,
-				attributesToRetrieve: ["url", "hierarchy", "content"],
-				attributesToSnippet: ["content:20", "hierarchy.lvl1:10"],
-			}),
-		},
-	);
-
-	if (!response.ok) {
-		throw new Error(`Search failed: ${response.status} ${response.statusText}`);
-	}
-
-	const data = (await response.json()) as AlgoliaResponse;
-
-	return data.hits.map((hit) => ({
-		title:
-			hit.hierarchy?.lvl2 ??
-			hit.hierarchy?.lvl1 ??
-			hit.hierarchy?.lvl0 ??
-			"Untitled",
-		url: hit.url ?? "",
-		snippet:
-			hit._snippetResult?.content?.value ??
-			hit._snippetResult?.hierarchy?.lvl1?.value ??
-			hit._snippetResult?.hierarchy?.lvl2?.value ??
-			hit.content?.slice(0, 200) ??
-			"",
+	return results.map((result) => ({
+		title: result.title || "Untitled",
+		url: result.url ?? "",
+		snippet: result.description ?? "",
 	}));
 }
 
