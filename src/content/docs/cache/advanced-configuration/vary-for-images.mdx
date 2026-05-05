@@ -9,11 +9,11 @@ products:
 
 import { Details, FeatureTable, APIRequest } from "~/components"
 
-`Vary` is an HTTP response header that allows origins to serve variants of the same content that can be used depending on the browser sending the request.
+The `Vary` HTTP response header tells Cloudflare that an origin can serve different versions of the same resource depending on the request headers. For images, this allows your origin to serve modern formats like WebP or AVIF to browsers that support them, while continuing to serve JPEG or PNG to others.
 
-Cloudflare sits in between the browser and the origin. When Cloudflare receives the origin’s response, the specific image variant is cached so that subsequent requests from browsers with the same image preferences can be served from cache. This also means that serving multiple image variants for the same asset will create distinct cache entries.
+When Cloudflare receives a response with image variants, it caches each variant separately. Subsequent requests from browsers with the same image format preferences are served directly from cache without contacting your origin.
 
-`Vary` for Images reduces the content-negotiation process by parsing a request’s `Accept` header, which is sent to the origin to deliver the correct content to the browser.
+Vary for Images works by parsing the `Accept` header in each request to determine which image format the browser supports, then serving the matching cached variant.
 
 Vary for images is available for Pro, Business, and Enterprise customers.
 
@@ -43,7 +43,7 @@ You can use vary for images on the file extensions below if the origin server se
 
 ## Enable vary for images
 
-Vary for Images is enabled through Cloudflare’s API by creating a variants rule. In the examples below, learn how to serve JPEG, WebP, and AVIF variants for `.jpeg` and `.jpg` extensions.
+Vary for Images is enabled through Cloudflare's API by creating a variants rule. In the examples below, learn how to serve JPEG, WebP, and AVIF variants for `.jpeg` and `.jpg` extensions.
 
 ### Create a variants rule
 
