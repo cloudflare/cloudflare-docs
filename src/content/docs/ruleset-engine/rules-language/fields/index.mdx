@@ -13,18 +13,20 @@ head:
 
 import { DirectoryListing } from "~/components";
 
-The Cloudflare Rules language supports different types of fields such as:
+Fields represent the properties of an HTTP request or response that you can reference in [rule expressions](/ruleset-engine/rules-language/expressions/). For example, `http.request.uri.path` contains the URI path of the request, and `ip.src` contains the client IP address.
 
-- Request fields that represent the basic properties of incoming requests, including specific fields for accessing request headers, URI components, and the request body.
-- Dynamic fields that represent computed or derived values, typically related to threat intelligence about an HTTP request.
-- Response fields that represent the basic properties of the received response.
-- Raw fields that preserve the original request values for later evaluations.
+The Cloudflare Rules language supports different types of fields:
+
+- **Request fields** represent the basic properties of incoming requests, including specific fields for accessing request headers, URI components, and the request body.
+- **Dynamic fields** represent computed or derived values, typically related to threat intelligence about an HTTP request.
+- **Response fields** represent the basic properties of the received response.
+- **Raw fields** preserve the original request values for later evaluations. These fields are immutable during the entire request evaluation workflow, so they are not affected by the actions of previously matched rules in any phase.
 
 Refer to the [Fields reference](/ruleset-engine/rules-language/fields/reference/) for the list of available fields.
 
 ## Differences from Wireshark display fields
 
-Most fields supported by the Cloudflare Rules language use the same naming conventions as [Wireshark display fields](https://www.wireshark.org/docs/wsug_html_chunked/ChWorkBuildDisplayFilterSection.html). However, there are some subtle differences between Cloudflare and Wireshark:
+Most fields supported by the Cloudflare Rules language use the same naming conventions as [Wireshark fields](https://www.wireshark.org/docs/wsug_html_chunked/ChWorkBuildDisplayFilterSection.html). If you are familiar with Wireshark, you will recognize many field names, but there are some differences:
 
 - Wireshark supports [CIDR (Classless Inter-Domain Routing) notation](https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing) for expressing IP address ranges in equality comparisons (`ip.src == 1.2.3.0/24`, for example). Cloudflare does not.
 
