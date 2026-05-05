@@ -105,10 +105,10 @@ Use resolver policies to resolve private hostnames on your internal network, rou
 
 Gateway policies can go beyond network attributes (domains, IPs, ports) and incorporate user identity and device health into every decision.
 
-When users connect through the [Cloudflare One Client](/cloudflare-one/connections/connect-devices/warp/), Gateway can evaluate:
+When users connect through the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/), Gateway can evaluate:
 
-- **User identity** – Email address, group membership, and authentication method from your [identity provider](/cloudflare-one/identity/idp-integration/) (for example, Okta, Microsoft Entra ID, or Google Workspace).
-- **Device posture** – Signals such as operating system version, disk encryption status, firewall state, and whether the device serial number matches a managed device list. For the full list of available checks, refer to [Device posture](/cloudflare-one/identity/devices/).
+- **User identity** – Email address, group membership, and authentication method from your [identity provider](/cloudflare-one/integrations/identity-providers/) (for example, Okta, Microsoft Entra ID, or Google Workspace).
+- **Device posture** – Signals such as operating system version, disk encryption status, firewall state, and whether the device serial number matches a managed device list. For the full list of available checks, refer to [Device posture](/cloudflare-one/reusable-components/posture-checks/).
 
 These signals can be combined with traffic selectors to create context-aware policies. For example, you can create an HTTP policy that allows access to a sensitive SaaS application only when the user belongs to a specific group **and** the device has disk encryption turned on.
 
@@ -159,10 +159,10 @@ The connection method (on-ramp) you use determines which policy types Gateway ca
 
 | Connection method | DNS policies | Network policies | HTTP policies | Best for |
 | --- | --- | --- | --- | --- |
-| [Cloudflare One Client](/cloudflare-one/connections/connect-devices/warp/) (WARP) | Yes | Yes | Yes | Roaming users on managed devices (laptops, phones) |
-| [DNS resolver](/cloudflare-one/connections/connect-devices/agentless/dns/) configuration | Yes | No | No | Unmanaged devices, entire networks, or initial rollout |
-| [Proxy endpoint](/cloudflare-one/connections/connect-devices/agentless/pac-files/) (PAC file) | No | No | Yes (browser only) | Browser-level HTTP filtering without a device agent |
-| [Network tunnel](/cloudflare-one/connections/connect-networks/) (IPsec/GRE via Magic WAN) | Yes | Yes | Yes | Branch offices, data centers, and site-level connectivity |
+| [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) (WARP) | Yes | Yes | Yes | Roaming users on managed devices (laptops, phones) |
+| [DNS resolver](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) configuration | Yes | No | No | Unmanaged devices, entire networks, or initial rollout |
+| [Proxy endpoint](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) (PAC file) | No | No | Yes (browser only) | Browser-level HTTP filtering without a device agent |
+| [Network tunnel](/cloudflare-one/networks/) (IPsec/GRE via Magic WAN) | Yes | Yes | Yes | Branch offices, data centers, and site-level connectivity |
 
 - The **Cloudflare One Client** provides the broadest coverage and is the recommended method for per-device deployments.
 - **DNS resolver** configuration is the easiest to deploy (change a DNS setting on your router or device) and provides immediate protection, but it only enforces DNS policies.

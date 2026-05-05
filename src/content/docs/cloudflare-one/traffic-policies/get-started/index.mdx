@@ -42,7 +42,7 @@ For setup instructions, refer to [Set up DNS filtering](/cloudflare-one/traffic-
 
 After DNS filtering is in place, add network-level controls for non-HTTP traffic.
 
-- Deploy the [Cloudflare One Client](/cloudflare-one/connections/connect-devices/warp/) and enable the [Gateway proxy](/cloudflare-one/traffic-policies/proxy/) for TCP.
+- Deploy the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) and enable the [Gateway proxy](/cloudflare-one/traffic-policies/proxy/) for TCP.
 - Block traffic to high-risk IP ranges or restrict which ports and protocols users can access.
 - Use [protocol detection](/cloudflare-one/traffic-policies/network-policies/protocol-detection/) to identify applications by traffic pattern rather than port number.
 - Enable network session logging for audit trails.
@@ -56,7 +56,7 @@ HTTP inspection provides the deepest visibility and the most granular controls, 
 - Install the [Cloudflare root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on user devices.
 - Enable [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) to inspect HTTPS traffic.
 - Create [Do Not Inspect](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) policies for applications that use certificate pinning.
-- Block risky file types, enable [anti-virus scanning](/cloudflare-one/traffic-policies/http-policies/antivirus-scanning/), and configure [DLP profiles](/cloudflare-one/policies/data-loss-prevention/) to detect sensitive data.
+- Block risky file types, enable [anti-virus scanning](/cloudflare-one/traffic-policies/http-policies/antivirus-scanning/), and configure [DLP profiles](/cloudflare-one/data-loss-prevention/) to detect sensitive data.
 - Use [Browser Isolation](/cloudflare-one/remote-browser-isolation/) to render high-risk sites in a remote browser.
 
 For setup instructions, refer to [Set up HTTP filtering](/cloudflare-one/traffic-policies/get-started/http/).
@@ -65,10 +65,10 @@ For setup instructions, refer to [Set up HTTP filtering](/cloudflare-one/traffic
 
 With all policy layers active, extend Gateway to cover your full network and integrate with other Cloudflare One services.
 
-- Connect branch offices and data centers with [network tunnels](/cloudflare-one/connections/connect-networks/) (IPsec/GRE via Magic WAN).
+- Connect branch offices and data centers with [network tunnels](/cloudflare-one/networks/) (IPsec/GRE via Magic WAN).
 - Configure [dedicated egress IPs](/cloudflare-one/traffic-policies/egress-policies/) so third-party services can identify your organization's traffic.
 - Set up [resolver policies](/cloudflare-one/traffic-policies/resolver-policies/) to route internal DNS queries to your private DNS servers.
-- Monitor SaaS application usage with [CASB](/cloudflare-one/applications/casb/).
+- Monitor SaaS application usage with [CASB](/cloudflare-one/cloud-and-saas-findings/).
 
 :::note
 You do not need to complete every phase. Choose the phases that match your organization's security requirements and deployment timeline.
