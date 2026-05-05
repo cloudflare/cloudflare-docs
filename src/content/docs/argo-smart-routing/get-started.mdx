@@ -48,6 +48,6 @@ If Cloudflare mitigates attacks on your site - whether through DDoS protection, 
 
 ## Enable Tiered Cache
 
-[Cache](/cache/) works by storing a copy of website content at Cloudflare's data centers. [Tiered Cache](/cache/how-to/tiered-cache/) organizes these data centers into a hierarchy so that fewer data centers need to request content from your origin server. Instead, edge data centers can pull cached content from an upper-tier data center.
+[Cache](/cache/) works by storing a copy of website content at Cloudflare's data centers. [Tiered Cache](/cache/how-to/tiered-cache/) organizes these data centers into a hierarchy based on location. This behavior allows Cloudflare to deliver content from data centers closest to your visitor.
 
 When used together, Argo Smart Routing optimizes the network path between Cloudflare data centers and your origin, while Tiered Cache reduces the number of requests that reach your origin. For more information, refer to [Tiered Cache](/cache/how-to/tiered-cache/).
