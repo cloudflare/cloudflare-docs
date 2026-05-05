@@ -22,10 +22,10 @@ All included usage is on a monthly basis.
 | **Catalog operations**                |                               |                                       |
 | Included                              | 1 million operations / month  | 1 million operations / month          |
 | Additional                            | N/A                           | $9.00 / million operations            |
-| **Compaction data processed** [^1]    |                               |                                       |
+| **Data processed (Compaction)** [^1]    |                               |                                       |
 | Included                              | 10 GB / month                 | 10 GB / month                         |
 | Additional (data processed)           | N/A                           | $0.005 / GB processed                 |
-| **Compaction objects processed** [^1] |                               |                                       |
+| **Objects processed (Compaction)** [^1] |                               |                                       |
 | Included                              | 1 million objects / month     | 1 million objects / month             |
 | Additional                            | N/A                           | $2.00 / million objects               |
 
@@ -45,6 +45,10 @@ Compaction charges only apply when compaction is turned on for a table. If you h
 :::note
 Current compaction pricing is based on binpacking, the simplest form of compaction. More compute-intensive compaction algorithms (such as sort or z-order) may be priced differently in the future.
 :::
+
+### Snapshot Expiration
+
+When you turn on [automatic snapshot expiration](/r2/data-catalog/table-maintenance/#why-do-i-need-snapshot-expiration), R2 Data Catalog automatically deletes old snapshots and their associated data files after a specified retention period. Snapshot expiration is free of charge and does not incur any additional costs outside of the standard R2 storage and data catalog operations charges.
 
 ## Billing examples
 
@@ -79,4 +83,4 @@ For large-scale use cases, storage costs are typically the largest component of 
 
 To learn more about how usage is billed, refer to [Cloudflare Billing Policy](/billing/understand/billing-policy/).
 
-[^1]: Only applies when compaction is turned on for a table.
+[^1]: Only applies when compaction is enabled for a table.

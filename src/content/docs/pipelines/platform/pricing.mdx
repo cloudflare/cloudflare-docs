@@ -25,8 +25,7 @@ All included usage is on a monthly basis.
 |                                 | Workers Free | Workers Paid |
 | ------------------------------- | ------------ | ------------ |
 | **Streams (ingress)**           |              |              |
-| Included                        | 1 GB / month | 50 GB / month |
-| Additional                      | N/A          | Free         |
+| Included                        | 1 GB / month | Unlimited |
 | **SQL transforms** [^1]        |              |              |
 | Included                        | 1 GB / month | 50 GB / month |
 | Additional                      | N/A          | $0.04 / GB   |
@@ -41,7 +40,7 @@ Streams provide durable, distributed log storage that buffers incoming messages.
 
 ### SQL transforms
 
-SQL transforms let you filter, reshape, and compute over data before it reaches a sink. You are only charged when you go beyond a passthrough query (`SELECT * FROM stream`). Any query that filters, renames, casts, or computes columns counts as a transform.
+SQL transforms let you filter, reshape, and compute over data before it reaches a sink. Any query that filters, renames, casts, or computes columns counts as a transform.
 
 Pricing covers stateless transforms only (for example, filter, reshape, unnest, cast, and compute). Future stateful operations such as aggregations, joins, and windows may be priced separately.
 
@@ -80,6 +79,6 @@ A pipeline ingests 500 GB of event data per month. A SQL transform filters and r
 
 To learn more about how usage is billed, refer to [Cloudflare Billing Policy](/billing/understand/billing-policy/).
 
-[^1]: Optional. Includes stateless SQL transforms only (for example, filter, reshape, unnest, cast, compute). A passthrough `SELECT * FROM stream` is not charged.
+[^1]: Optional. Includes stateless SQL transforms only (for example, filter, reshape, unnest, cast, compute).
 
 [^2]: Sink egress is measured on uncompressed data.
