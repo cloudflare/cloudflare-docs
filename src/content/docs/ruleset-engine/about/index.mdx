@@ -9,18 +9,17 @@ sidebar:
 head:
   - tag: title
     content: About Ruleset Engine
-
 ---
 
-The Cloudflare Ruleset Engine allows you to create and deploy rules and rulesets. The engine syntax, inspired by the Wireshark Display Filter language, is defined by the [Rules language](/ruleset-engine/rules-language/). Cloudflare uses the Ruleset Engine in different products, allowing you to configure several products using the same basic syntax.
+The Cloudflare Ruleset Engine allows you to create and deploy rules and rulesets. The engine syntax, based on the [Wireshark display filter language](https://www.wireshark.org/docs/wsug_html_chunked/ChWorkBuildDisplayFilterSection.html), is defined by the [Rules language](/ruleset-engine/rules-language/). Cloudflare uses the Ruleset Engine in different products, allowing you to configure several products using the same basic syntax.
 
-There are several elements involved in the configuration and use of the Ruleset Engine. These elements are:
+The Ruleset Engine is built around three core elements that work together:
 
-* [**Phase**](/ruleset-engine/about/phases/): Defines a stage in the life of a request where you can execute rulesets.
-* [**Ruleset**](/ruleset-engine/about/rulesets/): Defines a versioned set of rules. You deploy rulesets to a phase, where they execute.
-* [**Rule**](/ruleset-engine/about/rules/): Defines a filter and an action to perform on incoming requests that match the filter expression. A rule with an `execute` action executes a ruleset.
+- [**Phase**](/ruleset-engine/about/phases/): A specific stage in the lifecycle of a request (or response) where rules can run. For example, one phase handles rate limiting rules while another handles URL rewrites. Phases control when your rules execute.
+- [**Ruleset**](/ruleset-engine/about/rulesets/): An ordered, versioned collection of rules. You deploy rulesets to a phase so they can run at that stage. Each modification to a ruleset creates a new version.
+- [**Rule**](/ruleset-engine/about/rules/): The basic unit of logic. Each rule has a filter expression (defining which requests it matches) and an action (defining what happens when it matches). Some rules use the `execute` action to run an entire ruleset, chaining sets of rules together.
 
-***
+---
 
 ## Get started
 
