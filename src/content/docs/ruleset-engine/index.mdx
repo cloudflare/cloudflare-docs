@@ -13,14 +13,16 @@ head:
 
 import { LinkButton } from "~/components";
 
-The Cloudflare Ruleset Engine allows you to create and deploy rules and rulesets in different Cloudflare products using the same basic syntax.
+The Cloudflare Ruleset Engine is the shared foundation that several Cloudflare products use to evaluate and execute rules. When you write a rule in the WAF, create a redirect, or add a transform rule, the Ruleset Engine is what processes that rule against incoming traffic.
+
+Because multiple products share the same engine, you write rules once using a common syntax and manage them through a single API, instead of learning a different configuration model for every product.
 
 ## Main features
 
-- **Powerful syntax**: Rule expressions use a powerful Rules language similar to the wirefilter syntax that allows you to create complex rules.
-- **High-performance rule evaluation**: Allows you to have many rules in different Cloudflare products with almost no impact on performance.
-- **Engine powering different Cloudflare products**: Cloudflare keeps building products on top of the Ruleset Engine, which means that you can use the same API methods for configuring different products, with the same customization possibilities. Additionally, the Ruleset Engine supports the different phases of the request life cycle at Cloudflare.
+- **Consistent rule syntax**: Rule expressions use the [Rules language](/ruleset-engine/rules-language/), a syntax based on the [Wireshark display filter language](https://www.wireshark.org/docs/wsug_html_chunked/ChWorkBuildDisplayFilterSection.html). If you know how to write a rule for one Cloudflare product, you can apply the same syntax to others.
+- **High-performance rule evaluation**: The engine is optimized to evaluate large numbers of rules across multiple products with minimal impact on request latency.
+- **Shared across Cloudflare products**: Products such as the [WAF](/waf/), [Transform Rules](/rules/transform/), [Redirect Rules](/rules/url-forwarding/single-redirects/), and [Configuration Rules](/rules/configuration-rules/) all run on the Ruleset Engine. You configure them using the same API methods and can apply rules at different [phases](/ruleset-engine/about/phases/) of the request lifecycle.
 
 ## Availability
 
-The Ruleset Engine supports different Cloudflare products. Refer to [Phases list](/ruleset-engine/reference/phases-list/) and to each product's documentation for details.
+The Ruleset Engine supports different Cloudflare products. Refer to the [phases list](/ruleset-engine/reference/phases-list/) and to each product's documentation for details on availability and supported features.
