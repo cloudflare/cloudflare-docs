@@ -154,7 +154,6 @@ ${shellSelectors} {
 	id="accelerate"
 	data-mode="after"
 >
-	<Eyebrow>Accelerate</Eyebrow>
 	<div
 		class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between sm:gap-6"
 	>
@@ -212,20 +211,6 @@ ${shellSelectors} {
 				></span>
 				Without Cloudflare
 			</button>
-		</div>
-		<div
-			class="wf-total-label text-foreground-muted flex items-baseline gap-2 font-mono text-xs tabular-nums transition-opacity duration-300"
-		>
-			<span class="tracking-widest uppercase">Total</span>
-			<span class="text-foreground font-medium tabular-nums">
-				<span class="group-data-[mode=before]/wf:hidden" data-mode-only="after"
-					>~300 ms</span
-				>
-				<span
-					class="hidden group-data-[mode=before]/wf:inline"
-					data-mode-only="before">~2,300 ms</span
-				>
-			</span>
 		</div>
 	</div>
 
@@ -358,25 +343,12 @@ ${shellSelectors} {
 						</div>
 					</div>
 				</div>
-
-				<div
-					id="wf-savings-group"
-					aria-hidden="false"
-					class="text-foreground-muted hidden items-baseline gap-2 font-mono text-xs tabular-nums transition-opacity duration-300 group-data-[mode=before]/wf:pointer-events-none group-data-[mode=before]/wf:opacity-0 motion-reduce:transition-none sm:flex"
-				>
-					<span class="tracking-widest uppercase">Savings</span>
-					<span class="text-foreground font-medium tabular-nums">
-						87% faster
-					</span>
-				</div>
 			</div>
 		</div>
 	</div>
 
 	<div class="mb-6 flex items-end justify-between gap-4 pt-12">
-		<h3
-			class="not-content text-foreground text-lg font-medium -tracking-tight"
-		>
+		<h3 class="not-content text-foreground text-lg font-medium -tracking-tight">
 			Explore by product
 		</h3>
 		<ViewAllLink href="/directory/">View all</ViewAllLink>

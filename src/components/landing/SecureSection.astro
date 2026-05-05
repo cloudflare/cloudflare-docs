@@ -1,5 +1,4 @@
 ---
-import Eyebrow from "./Eyebrow.astro";
 import ProductCard from "./ProductCard.astro";
 import ProductCardGrid from "./ProductCardGrid.astro";
 import SectionHeading from "./SectionHeading.astro";
@@ -40,7 +39,8 @@ const categories = [
 		label: "Corporate and home networks",
 		threats: [
 			{
-				scenario: "Securely connect origins with post-quantum encrypted tunnels",
+				scenario:
+					"Securely connect origins with post-quantum encrypted tunnels",
 				product: "Tunnel",
 				href: "/cloudflare-one/networks/connectors/cloudflare-tunnel/",
 				icon: "tunnel",
@@ -75,7 +75,6 @@ const categories = [
 	aria-labelledby="secure-heading"
 	id="secure"
 >
-	<Eyebrow>Secure</Eyebrow>
 	<SectionHeading id="secure-heading" class="mb-2">
 		Block exploits, bots, and DDoS attacks in seconds.
 	</SectionHeading>

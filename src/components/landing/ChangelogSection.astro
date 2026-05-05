@@ -3,7 +3,6 @@ import { getChangelogs } from "~/util/changelog";
 import { getEntries } from "astro:content";
 import { format } from "date-fns";
 import CornerMarks from "./CornerMarks.astro";
-import Eyebrow from "./Eyebrow.astro";
 import HalftoneBackground from "./HalftoneBackground.astro";
 import RightArrow from "./RightArrow.astro";
 import SectionHeading from "./SectionHeading.astro";
@@ -75,7 +74,6 @@ const grid = entries.slice(1);
 		>
 			<div class="mb-6 flex items-end justify-between sm:mb-8">
 				<div>
-					<Eyebrow>Changelog</Eyebrow>
 					<SectionHeading id="changelog-heading" class="mb-2">
 						What's new
 					</SectionHeading>

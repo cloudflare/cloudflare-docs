@@ -1,27 +1,11 @@
 ---
 import { Icon } from "@astrojs/starlight/components";
-import CommandBlock from "./CommandBlock.astro";
 import CornerMarks from "./CornerMarks.astro";
 import HalftoneBackground from "./HalftoneBackground.astro";
-import RightArrow from "./RightArrow.astro";
 import SectionHeading from "./SectionHeading.astro";
-
-const PROMPT = "Fetch https://developers.cloudflare.com/agent-setup/prompt.md";
+import CopyPromptButton from "./CopyPromptButton.astro";
 
 const ALL_GUIDES_HREF = "/agent-setup/";
-
-const AGENTS = [
-	{ id: "claude", label: "Claude Code", href: "/agent-setup/claude-code/" },
-	{ id: "codex", label: "Codex", href: "/agent-setup/codex/" },
-	{ id: "cursor", label: "Cursor", href: "/agent-setup/cursor/" },
-	{ id: "opencode", label: "OpenCode", href: "/agent-setup/opencode/" },
-	{
-		id: "copilot",
-		label: "GitHub Copilot",
-		href: "/agent-setup/github-copilot/",
-	},
-	{ id: "windsurf", label: "Windsurf", href: "/agent-setup/windsurf/" },
-];
 ---
 
 <section
@@ -45,29 +29,18 @@ const AGENTS = [
 				>
 					Paste into any AI coding agent to install Cloudflare agent tooling:
 				</p>
-				<CommandBlock
-					id="agents-setup-prompt"
-					command={PROMPT}
-					rounded
-					class="mt-auto min-w-0"
-				/>
+				<CopyPromptButton class="mr-auto" />
 			</div>
 			<a
 				href={ALL_GUIDES_HREF}
 				class="bg-background focus-visible:outline-accent-100 relative col-span-12 flex min-w-0 flex-row items-center justify-between overflow-hidden px-8 py-6 no-underline transition-colors duration-150 focus-visible:bg-[#FCEDE0] focus-visible:outline-2 focus-visible:-outline-offset-2 lg:col-span-4 lg:flex-col lg:items-stretch lg:p-8 dark:focus-visible:bg-[#2A2118]"
 			>
 				<HalftoneBackground />
-
 				<div class="relative z-[1] flex flex-col gap-2.5">
-					<span
-						class="text-accent-100 hidden font-mono text-[11px] tracking-widest uppercase lg:block"
-					>
-						All agents
-					</span>
 					<span
 						class="text-foreground max-w-[14ch] text-lg leading-tight font-medium md:text-xl"
 					>
-						Browse all setup guides
+						Browse all agent setup guides
 					</span>
 				</div>
 
@@ -79,45 +52,6 @@ const AGENTS = [
 					<Icon name="right-arrow" size="1rem" />
 				</span>
 			</a>
-			{
-				AGENTS.map((agent) => (
-					<a
-						href={agent.href}
-						class="agent-setup-tile bg-background focus-visible:bg-background-subtle focus-visible:outline-accent-100 group relative col-span-6 flex min-h-[9.5rem] min-w-0 flex-col items-start justify-between gap-5 px-5 py-6 no-underline transition-colors duration-150 focus-visible:outline-2 focus-visible:-outline-offset-2 sm:col-span-4 lg:col-span-2"
-						aria-label={`${agent.label} setup guide`}
-					>
-						<span
-							class="inline-flex h-8 w-8 items-center justify-center"
-							aria-hidden="true"
-						>
-							<img
-								src={`/icons/agents/${agent.id}/light.svg`}
-								alt=""
-								class="block h-full w-full object-contain dark:hidden"
-								loading="lazy"
-								decoding="async"
-							/>
-							<img
-								src={`/icons/agents/${agent.id}/dark.svg`}
-								alt=""
-								class="hidden h-full w-full object-contain dark:block"
-								loading="lazy"
-								decoding="async"
-							/>
-						</span>
-						<div class="flex flex-col gap-1">
-							<span class="text-foreground text-[15px] leading-snug font-medium -tracking-[0.012em]">
-								{agent.label}
-							</span>
-						</div>
-						<RightArrow
-							variant="chevron"
-							strokeWidth={1.7}
-							class="text-foreground-subtle group-hover:text-foreground group-focus-visible:text-foreground absolute top-5 right-5 transition duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-[2px] group-focus-visible:translate-x-[2px] motion-reduce:transition-none"
-						/>
-					</a>
-				))
-			}
 		</div>
 	</div>
 </section>

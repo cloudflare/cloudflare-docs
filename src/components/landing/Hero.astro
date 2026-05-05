@@ -2,23 +2,7 @@
 import { Icon } from "@astrojs/starlight/components";
 import { stagger } from "./constants";
 import Button from "./Button.astro";
-
-interface Anchor {
-	href: string;
-	label: string;
-	hideMobile?: boolean;
-}
-
-const anchors: Anchor[] = [
-	{ href: "#build", label: "Build" },
-	{ href: "#agent-setup", label: "Agent Setup" },
-	{ href: "#secure", label: "Secure" },
-	{ href: "#accelerate", label: "Accelerate" },
-	{ href: "#changelog", label: "Changelog", hideMobile: true },
-];
-
-const anchorClass =
-	"focus-visible:outline-accent-100 text-foreground-muted hover:text-foreground cursor-pointer text-base no-underline hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2";
+import CopyPromptButton from "./CopyPromptButton.astro";
 ---
 
 <section id="hero" class="pb-12 md:pt-6 lg:pb-16">
@@ -35,9 +19,7 @@ const anchorClass =
 		and securing infrastructure
 	</p>
 
-	<div
-		class={`flex flex-wrap items-center gap-x-5 gap-y-3 text-sm lg:flex-nowrap ${stagger(0.16)}`}
-	>
+	<div class={`flex flex-wrap items-center gap-x-3 gap-y-3 ${stagger(0.16)}`}>
 		<Button href="/fundamentals/" variant="primary" size="md">
 			<span class="inline-flex items-center gap-2 text-base font-medium">
 				Get started
@@ -45,18 +27,6 @@ const anchorClass =
 			</span>
 		</Button>
 
-		<span class="bg-border-100 hidden h-4 w-px sm:block" aria-hidden="true"
-		></span>
-
-		{
-			anchors.map((a) => (
-				<a
-					href={a.href}
-					class:list={[anchorClass, a.hideMobile && "hidden sm:inline"]}
-				>
-					{a.label}
-				</a>
-			))
-		}
+		<CopyPromptButton />
 	</div>
 </section>

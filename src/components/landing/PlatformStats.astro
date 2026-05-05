@@ -1,6 +1,5 @@
 ---
 import CornerMarks from "./CornerMarks.astro";
-import Eyebrow from "./Eyebrow.astro";
 import { stagger } from "./constants";
 
 const stats = [
@@ -40,7 +39,11 @@ const stats = [
 	class={`pt-8 pb-8 lg:pt-10 lg:pb-12 ${stagger(0.42)}`}
 	aria-labelledby="stats-heading"
 >
-	<Eyebrow id="stats-heading" class="mb-4">Platform at a Glance</Eyebrow>
+	<div class="mb-3">
+		<span class="text-accent-100 font-mono text-xs tracking-widest uppercase">
+			Platform at a Glance
+		</span>
+	</div>
 
 	<div
 		id="stats-grid"
