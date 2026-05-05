@@ -179,7 +179,7 @@ ${shellSelectors} {
 		>
 			<span
 				aria-hidden="true"
-				class="group-data-[mode=after]/wf:bg-accent-100 group-data-[mode=before]/wf:border-border-100 pointer-events-none absolute top-1 left-1 h-[calc(100%-8px)] w-[calc(50%-4px)] rounded-full border border-transparent transition-[transform_300ms_cubic-bezier(0.16,1,0.3,1),background-color_500ms_ease-in-out,border-color_500ms_ease-in-out,box-shadow_500ms_ease-in-out] group-data-[mode=after]/wf:translate-x-0 group-data-[mode=after]/wf:shadow-[0_1px_2px_rgba(0,0,0,0.06),0_4px_12px_rgba(0,0,0,0.08)] group-data-[mode=before]/wf:translate-x-full group-data-[mode=before]/wf:bg-transparent group-data-[mode=before]/wf:shadow-none motion-reduce:transition-none"
+				class="bg-accent-100 pointer-events-none absolute top-1 left-1 h-[calc(100%-8px)] w-[calc(50%-4px)] rounded-full shadow-[0_1px_2px_rgba(0,0,0,0.06),0_4px_12px_rgba(0,0,0,0.08)] transition-transform duration-200 ease-in-out group-data-[mode=after]/wf:translate-x-0 group-data-[mode=before]/wf:translate-x-full motion-reduce:transition-none"
 			></span>
 
 			<button
@@ -188,11 +188,11 @@ ${shellSelectors} {
 				role="radio"
 				aria-checked="true"
 				tabindex="0"
-				class="group/btn focus-visible:outline-accent-100 text-foreground-muted aria-checked:text-light-foreground relative z-10 flex h-10 cursor-pointer items-center justify-center gap-2 rounded-full px-3.5 py-2.5 font-medium -tracking-[0.01em] whitespace-nowrap transition-colors duration-300 ease-out focus-visible:outline-2 focus-visible:outline-offset-2"
+				class="group/btn focus-visible:outline-accent-100 text-foreground-muted aria-checked:text-light-foreground relative z-10 flex h-8 cursor-pointer items-center justify-center gap-1.5 rounded-full px-2.5 py-1.5 text-xs font-medium -tracking-[0.01em] whitespace-nowrap transition-colors duration-200 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 sm:h-10 sm:gap-2 sm:px-3.5 sm:py-2.5 sm:text-sm"
 			>
 				<span
 					aria-hidden="true"
-					class="bg-accent-100 group-aria-checked/btn:bg-light-foreground/90 size-2 shrink-0 rounded-full transition-colors duration-300"
+					class="bg-foreground-subtle group-aria-checked/btn:bg-light-foreground/90 size-1.5 shrink-0 rounded-full transition-colors duration-200 ease-in-out sm:size-2"
 				></span>
 				With Cloudflare
 			</button>
@@ -202,11 +202,11 @@ ${shellSelectors} {
 				role="radio"
 				aria-checked="false"
 				tabindex="-1"
-				class="group/btn focus-visible:outline-accent-100 hover:bg-foreground/5 text-foreground-muted aria-checked:text-foreground relative z-10 flex h-10 cursor-pointer items-center justify-center gap-2 rounded-full px-3.5 py-2.5 font-medium -tracking-[0.01em] whitespace-nowrap transition-colors duration-300 ease-out focus-visible:outline-2 focus-visible:outline-offset-2"
+				class="group/btn focus-visible:outline-accent-100 hover:bg-foreground/5 text-foreground-muted aria-checked:text-light-foreground relative z-10 flex h-8 cursor-pointer items-center justify-center gap-1.5 rounded-full px-2.5 py-1.5 text-xs font-medium -tracking-[0.01em] whitespace-nowrap transition-colors duration-200 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 sm:h-10 sm:gap-2 sm:px-3.5 sm:py-2.5 sm:text-sm"
 			>
 				<span
 					aria-hidden="true"
-					class="bg-foreground-subtle group-aria-checked/btn:bg-foreground size-2 shrink-0 rounded-full transition-colors duration-300"
+					class="bg-foreground-subtle group-aria-checked/btn:bg-light-foreground/90 size-1.5 shrink-0 rounded-full transition-colors duration-200 ease-in-out sm:size-2"
 				></span>
 				Without Cloudflare
 			</button>
@@ -350,7 +350,7 @@ ${shellSelectors} {
 		<h3 class="not-content text-foreground text-lg font-medium -tracking-tight">
 			Explore by product
 		</h3>
-		<ViewAllLink href="/directory/">View all</ViewAllLink>
+		<ViewAllLink href="/directory/">Explore Directory</ViewAllLink>
 	</div>
 
 	<ProductCardGrid>

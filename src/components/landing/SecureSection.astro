@@ -37,6 +37,7 @@ const categories = [
 	},
 	{
 		label: "Corporate and home networks",
+		category: "zero-trust" as const,
 		threats: [
 			{
 				scenario:
@@ -96,6 +97,7 @@ const categories = [
 							detail={t.detail}
 							href={t.href}
 							cta={t.cta}
+							category={"category" in cat ? cat.category : undefined}
 						/>
 					))}
 				</ProductCardGrid>

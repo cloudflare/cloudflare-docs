@@ -1,7 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 
-type Category = "compute" | "ai" | "storage" | "media";
+type Category = "compute" | "ai" | "storage" | "media" | "zero-trust";
 
 interface Props {
 	icon: string;
@@ -28,6 +28,7 @@ const CATEGORY_COLOR: Record<Category, string> = {
 	ai: "#19e306",
 	storage: "#ee0ddb",
 	media: "#9616ff",
+	"zero-trust": "#009788",
 };
 
 // Per-card accent: category color when set, otherwise the brand accent.
@@ -53,14 +54,14 @@ const cardColor = category
 				class="pc-icon transition-colors duration-200"
 			/>
 		</span>
-		<span class="text-accent-100 font-mono text-xs tracking-widest uppercase">
+		<span
+			class="text-accent-100 text-right font-mono text-xs tracking-widest uppercase"
+		>
 			{product}
 		</span>
 	</div>
 
-	<p
-		class="text-foreground mb-2 text-base leading-snug font-medium md:text-lg"
-	>
+	<p class="text-foreground mb-2 text-base leading-snug font-medium md:text-lg">
 		{scenario}
 	</p>
 	<p
