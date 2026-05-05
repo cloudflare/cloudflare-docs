@@ -8,25 +8,23 @@ sidebar:
   order: 2
 ---
 
-A phase defines a stage in the life of a request where you can execute [rulesets](/ruleset-engine/about/rulesets/). Phases are defined by Cloudflare and cannot be modified.
+A phase defines a stage in the life of a request where you can execute [rulesets](/ruleset-engine/about/rulesets/). Phases determine when your rules run relative to other Cloudflare products. For example, rate limiting rules run in a different phase than URL rewrite rules. Phases are defined by Cloudflare and cannot be modified.
 
 Phases exist at two levels:
 
-- At the [account](/fundamentals/concepts/accounts-and-zones/#accounts) level
-- At the [zone](/fundamentals/concepts/accounts-and-zones/#zones) level
+- At the [account](/fundamentals/concepts/accounts-and-zones/#accounts) level, where rules can apply across multiple zones in the account.
+- At the [zone](/fundamentals/concepts/accounts-and-zones/#zones) level, where rules apply to a single zone.
 
-For the same phase, rules defined at the account level are evaluated before the rules defined at the zone level.
-
-Each phase has at most one [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) at the account and zone level.
+For the same phase, rules defined at the account level are evaluated before the rules defined at the zone level. Each phase has at most one [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) at the account level and one at the zone level.
 
 :::note
 Currently, phases at the account level are only available in Enterprise plans.
 :::
 
-The following diagram outlines the request handling process where requests go through the available phases:
+The following diagram shows how a request flows through the available phases. The request passes through several request phases before reaching the origin server (or being blocked), and the response passes through several response phases before reaching the client:
 
 ![Diagram showing the request handling process. The user request goes through several request phases until it eventually reaches the origin server (the request can also be blocked). The origin returns a response, which goes through several response phases until it reaches the user.](~/assets/images/ruleset-engine/rulesets-phases.png)
 
-Cloudflare products are specific to one or more phases, and they add support for different features. Check the documentation for each Cloudflare product for details on the applicable phases.
+Each Cloudflare product operates in one or more specific phases. Check the documentation for each product for details on which phases apply.
 
 Refer to [Phases list](/ruleset-engine/reference/phases-list/) for a list of phases and their corresponding Cloudflare products.
