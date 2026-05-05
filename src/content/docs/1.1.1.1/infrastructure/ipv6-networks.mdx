@@ -11,7 +11,7 @@ sidebar:
 slug: 1.1.1.1/infrastructure/ipv6-networks
 ---
 
-While network infrastructure is shifting towards IPv6-only networks, providers still need to support IPv4 addresses. Dual-stack networks — networks in which all nodes have both IPv4 and IPv6 connectivity capabilities — can understand both IPv4 and IPv6 packets. However, not all networks are dual-stack, and IPv6-only networks need a translation mechanism to reach IPv4 resources.
+While network infrastructure is shifting towards IPv6-only networks, providers still need to support IPv4 addresses. Dual-stack networks (networks in which all nodes have both IPv4 and IPv6 connectivity capabilities) can understand both IPv4 and IPv6 packets. However, not all networks are dual-stack, and IPv6-only networks need a translation mechanism to reach IPv4 resources.
 
 1.1.1.1 supports DNS64, a mechanism that synthesizes AAAA records (DNS records that map domain names to IPv6 addresses) from A records (DNS records that map domain names to IPv4 addresses) when no AAAA records exist. This allows IPv6-only clients to receive a usable IPv6 address for destinations that only have an IPv4 address, so the client can still connect through the network's NAT64 gateway.
 
