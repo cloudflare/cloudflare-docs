@@ -12,14 +12,16 @@ head:
 slug: 1.1.1.1/encryption
 ---
 
-Traditionally, DNS queries and replies are performed over plaintext. They are sent over the Internet without any kind of encryption or protection, even when you are accessing a secured website. This has a great impact on security and privacy, as these queries might be subject to surveillance, spoofing and tracking by malicious actors, advertisers, ISPs, and others.
+When you visit a website, your device first sends a DNS query to translate the domain name (for example, `example.com`) into an IP address. Traditionally, these queries are sent in plaintext — unencrypted and readable by anyone on the network path.
 
-To prevent untrustworthy entities from interpreting and manipulating your queries, 1.1.1.1 supports different standards to encrypt plaintext DNS traffic and improve DNS privacy:
+Unencrypted DNS queries can be monitored, modified, or used for tracking by ISPs, network operators, or malicious actors.
 
-- [DNS over TLS (DoT)](/1.1.1.1/encryption/dns-over-tls/)
-- [DNS over HTTPS (DoH)](/1.1.1.1/encryption/dns-over-https/)
-- [Oblivious DNS over HTTPS (ODoH)](/1.1.1.1/encryption/oblivious-dns-over-https/)
+To protect your DNS traffic, 1.1.1.1 supports three encryption standards:
+
+- [DNS over TLS (DoT)](/1.1.1.1/encryption/dns-over-tls/) — Encrypts DNS queries over a dedicated TLS connection on port `853`.
+- [DNS over HTTPS (DoH)](/1.1.1.1/encryption/dns-over-https/) — Encrypts DNS queries inside regular HTTPS traffic on port `443`.
+- [Oblivious DNS over HTTPS (ODoH)](/1.1.1.1/encryption/oblivious-dns-over-https/) — Adds a privacy layer to DoH so that no single entity can see both your identity and your query.
 
 You can also [configure your browser](/1.1.1.1/encryption/dns-over-https/encrypted-dns-browsers/) to secure your DNS queries.
 
-If you need to secure connections in your smartphone, refer to 1.1.1.1 [iOS](/1.1.1.1/setup/ios/) or [Android](/1.1.1.1/setup/android/) apps.
+To secure connections on your smartphone, refer to the 1.1.1.1 [iOS](/1.1.1.1/setup/ios/) or [Android](/1.1.1.1/setup/android/) apps.
