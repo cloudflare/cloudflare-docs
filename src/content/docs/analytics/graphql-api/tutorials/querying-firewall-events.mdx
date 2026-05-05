@@ -190,20 +190,13 @@ https://api.cloudflare.com/client/v4/graphql \
 
 ## Retention and query window
 
-`firewallEventsAdaptive` has different retention limits from the datasets that back [Security Analytics](/waf/analytics/security-analytics/). Queries that exceed the retention window return an error similar to the following:
+The `firewallEventsAdaptive` dataset, which powers [Security Events](/waf/analytics/security-events/), has different data retention limits from the datasets used in [Security Analytics](/waf/analytics/security-analytics/#limits). Queries that exceed the data retention window return an error similar to the following:
 
 ```txt
 cannot request data older than 2678400s
 ```
 
-The value 2,678,400 seconds (31 days) is the the maximum query window for the dataset. The retention limits per plan are the following:
-
-| Plan       | Historical time (how far back you can query) | Max query window (span of a single query) |
-| ---------- | -------------------------------------------- | ----------------------------------------- |
-| Free       | 24 hours                                     | 24 hours                                  |
-| Pro        | 24 hours                                     | 24 hours                                  |
-| Business   | 3 days                                       | 3 days                                    |
-| Enterprise | 30 days                                      | 31 days                                   |
+For more information on the limits per plan for the `firewallEventsAdaptive` dataset, refer to [Security Events](/waf/analytics/security-events/#availability).
 
 To discover the exact limits for your zone programmatically, query the `settings` node:
 
