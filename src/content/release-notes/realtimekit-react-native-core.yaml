@@ -3,6 +3,24 @@ link: "/realtime/realtimekit/release-notes/react-native-core/"
 productName: RealtimeKit React Native Core
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-05-05"
+    title: RealtimeKit React Native Core 1.0.0
+    description: |-
+      **Breaking changes**
+
+      - Removed Hive SFU support. Only the Cloudflare SFU is supported going forward.
+      - The default base URI is now `realtime.cloudflare.com`. Calling `initMeeting()` with baseURI parameter set to a `dyte.io` base domain now throws an Error.
+      - `RealtimeKitClientOptions` is renamed to `RTKClientOptions`.
+
+      **Fixes**
+      - Fixed an issue where sometimes after rejoining a meeting & upon stopping iOS screenshare, the app freezes.
+  - publish_date: "2026-03-30"
+    title: RealtimeKit React Native Core 0.3.2
+    description: |-
+      **Fixes**
+
+      - Fixed the issue when leaving & rejoining a meeting causes the local media to stop working
+      - Fixed iOS screenshare stops broadcasting on Web when calling `meeting.self.disableScreenShare()` but not clicking on 'Stop' on iOS Picker View.
   - publish_date: "2025-11-20"
     title: RealtimeKit React Native Core 0.3.1
     description: |-
