@@ -11,9 +11,6 @@ sidebar:
     badge:
       text: Beta
     label: Private origins
-head:
-  - tag: title
-    content: Private origins
 tags:
   - Private networks
 ---
@@ -26,13 +23,12 @@ import {
 } from "~/components";
 
 <Description>
-	Proxy HTTP/HTTPS traffic from public hostnames to origins in your private
-	network.
+Proxy HTTP/HTTPS traffic from public hostnames to origins in your private network.
 </Description>
 
 <Plan type="enterprise" />
 
-Private network routing allows you to proxy HTTP/HTTPS traffic from public hostnames to origins in your private network. When you enable this setting on a DNS record, Cloudflare routes traffic through your configured tunnel instead of over the public Internet. The CDN, WAF, Cache, and other proxied features apply to this traffic the same way they apply to traffic destined for public origins.
+Use [private network routing](/dns/private-origins/private-network-routing/) and secure connections such as [Cloudflare WAN IPSec tunnels](/dns/private-origins/set-up-via-cloudflare-wan/) to connect Cloudflare's application services to your private network. The CDN, WAF, Cache, and other proxied features apply to this traffic the same way they apply to traffic destined for public origins.
 
 :::note[Closed beta]
 This feature is in closed beta. Contact your account team to request access.

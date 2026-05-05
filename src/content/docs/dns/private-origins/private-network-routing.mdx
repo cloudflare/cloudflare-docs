@@ -12,8 +12,6 @@ tags:
 
 import { Tabs, TabItem, DashButton, Plan, APIRequest } from "~/components";
 
-<Plan type="enterprise" />
-
 Private network routing allows you to proxy HTTP/HTTPS traffic from public hostnames to origins in your private network. When you enable this setting on a DNS record, Cloudflare routes traffic through your configured tunnel instead of over the public Internet.
 
 For an end-to-end setup walkthrough using Cloudflare WAN (formerly Magic WAN) IPsec, refer to [Set up a private origin via Cloudflare WAN](/dns/private-origins/set-up-via-cloudflare-wan/).
@@ -22,7 +20,7 @@ For an end-to-end setup walkthrough using Cloudflare WAN (formerly Magic WAN) IP
 This feature is in closed beta. Contact your account team to request access.
 :::
 
-## Before you begin
+## Aspects to consider
 
 Before you enable private network routing, consider the following:
 
@@ -30,7 +28,7 @@ Before you enable private network routing, consider the following:
 - Private network routing is available for `A` (IPv4) and `AAAA` (IPv6) records only. Records must be [proxied](/dns/proxy-status/).
 - If you have multiple `A` or `AAAA` records on the same name, and at least one of them has private network routing enabled, all records on that name will use private network routing. This is consistent with the [proxy status behavior](/dns/proxy-status/#mix-proxied-and-unproxied) in these cases.
 
-### IP ranges
+## IP ranges
 
 The following private address ranges are automatically detected:
 
