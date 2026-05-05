@@ -12,9 +12,20 @@ sidebar:
   order: 7
 ---
 
-[DNSSEC is a protocol](https://www.cloudflare.com/learning/dns/dns-records/dnskey-ds-records/) that adds a layer of security to the domain name system (DNS). DNSSEC does this by providing authentication through public signing keys using two DNS records: DNSKEY and DS. They can be used to verify DNSSEC signatures in [RRSIG records](https://www.cloudflare.com/dns/dnssec/how-dnssec-works/).
+Standard DNS has no built-in way to verify that a response actually came from the authoritative server for a domain. An attacker could return a forged answer, and a resolver would have no way to detect it.
 
-1.1.1.1 supports the following signature algorithms:
+[DNSSEC](https://www.cloudflare.com/learning/dns/dns-records/dnskey-ds-records/) solves this by adding cryptographic signatures to DNS records. Domain owners sign their DNS records with a private key, and resolvers like 1.1.1.1 verify those signatures using the corresponding public key. This proves the response is authentic and has not been modified in transit.
+
+DNSSEC uses two DNS record types to distribute the public keys needed for verification:
+
+- **DNSKEY** records contain the public signing keys for a domain.
+- **DS** (Delegation Signer) records link a child zone's keys to its parent zone, creating a chain of trust.
+
+Resolvers use these keys to verify the signatures stored in [RRSIG records](https://www.cloudflare.com/dns/dnssec/how-dnssec-works/).
+
+## Supported signature algorithms
+
+1.1.1.1 supports the following DNSSEC signature algorithms:
 
 - RSA/SHA-1
 - RSA/SHA-256

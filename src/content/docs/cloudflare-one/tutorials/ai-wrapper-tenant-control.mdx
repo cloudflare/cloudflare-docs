@@ -408,7 +408,7 @@ The Worker is now behind an addressable public hostname. Make sure to turn off b
 
 To secure the AI agent wrapper to ensure that only trusted users can access it:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **Applications**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
 2. Select **Add an application**.
 3. Choose **Self-hosted**.
 4. Enter a name for your AI agent wrapper application.
@@ -423,7 +423,7 @@ Now your AI wrapper can only be accessed by your users that successfully match y
 
 You can now block access to all unauthorized public AI agents with a Gateway [HTTP policy](/cloudflare-one/traffic-policies/http-policies/).
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Firewall policies** > **HTTP**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Traffic policies** > **Firewall policies** > **HTTP**.
 2. Select **Add a policy**.
 3. Add the following policy:
 
@@ -445,7 +445,7 @@ Now that you have full control over access to your AI agent wrapper, you can enf
 
 You can use [Data Loss Prevention (DLP)](/cloudflare-one/data-loss-prevention/) to prevent your users from sending sensitive data to the AI agent.
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **Profiles**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Data loss prevention** > **Profiles**.
 2. Ensure that the [DLP profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/) you want to enforce are properly configured.
 3. Add an HTTP policy to enforce the DLP profile for the hostname for your wrapper. For example:
 

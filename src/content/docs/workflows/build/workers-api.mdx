@@ -459,7 +459,38 @@ interface WorkflowInstanceCreateOptions {
 	 * The event payload the Workflow instance is triggered with
 	 */
 	params?: unknown;
+	/**
+	 * The retention policy for the Workflow instance.
+	 * Defaults to the maximum retention period available for the owner's account.
+	 */
+	retention?: {
+		/**
+		 * How long to retain instance state after the Workflow completes successfully.
+		 */
+		successRetention?: WorkflowRetentionDuration;
+		/**
+		 * How long to retain instance state after the Workflow ends in an errored or terminated state.
+		 */
+		errorRetention?: WorkflowRetentionDuration;
+	};
 }
+
+type WorkflowRetentionDuration = WorkflowSleepDuration;
+```
+
+If `retention` is not set, instance state is retained for the maximum retention period available on your account (3 days on the Workers Free plan, 30 days on the Workers Paid plan). Refer to the [retention limit](/workflows/reference/limits/) for more information.
+
+The following example creates an instance that retains state for 1 day after success and 7 days after an error:
+
+```ts
+let instance = await env.MY_WORKFLOW.create({
+	id: myIdDefinedFromOtherSystem,
+	params: { hello: "world" },
+	retention: {
+		successRetention: "1 day",
+		errorRetention: "7 days",
+	},
+});
 ```
 
 ## WorkflowInstance

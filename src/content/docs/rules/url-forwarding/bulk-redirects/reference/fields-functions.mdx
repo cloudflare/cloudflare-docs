@@ -15,6 +15,10 @@ import { Render } from "~/components";
 
 The available fields when defining a Bulk Redirect Rule filter expression are the following:
 
-<Render file="transform/transform-phase-fields" product="rules" />
+<Render
+	file="transform/transform-phase-fields"
+	params={{ bulkRedirects: true }}
+	product="rules"
+/>
 
 For information on the available functions, refer to [Functions](/ruleset-engine/rules-language/functions/).

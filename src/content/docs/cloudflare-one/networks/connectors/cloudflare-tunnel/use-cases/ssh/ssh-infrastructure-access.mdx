@@ -142,7 +142,7 @@ To turn off SSH command logging, delete your uploaded public key:
 <Tabs>
 <TabItem label="Dashboard">
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Traffic policies** > **Traffic settings** > **SSH log encryption public key**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Traffic policies** > **Traffic settings** > **SSH log encryption public key**.
 2. Select **Remove**.
 3. Select **Remove key** to confirm.
 
@@ -170,7 +170,7 @@ SSH command logs are not visible from the dashboard itself and must be exported 
 
 To manually retrieve logs:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Insights** > **Logs**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Insights** > **Logs**.
 2. Select **SSH command logs**.
 3. Filter the logs using the name of your [SSH application](#5-add-an-infrastructure-application).
 4. Select the SSH session for which you want to export command logs.
@@ -244,7 +244,7 @@ You will need Cloudflare dashboard access and log view [permissions](/cloudflare
 
 :::
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Insights** > **Logs**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Insights** > **Logs**.
 
 2. Select **Access authentication logs**.
 
@@ -272,7 +272,7 @@ If the end user cannot connect to the target, the tunnel you set up in [step 1: 
 
 To check the status of your tunnel:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Routes**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Networks** > **Routes**.
 2. Search your IP to find the tunnel associated with the IP.
 
    This IP will be visible in the `warp-cli target list` output in [the previous step](#1-review-access-policies). If you are an admin, you can also go to **Networks** > **Targets** and find the IP next to your Hostname.

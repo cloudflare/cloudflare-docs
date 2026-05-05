@@ -62,7 +62,7 @@ Under the hood, `env` is actually a JavaScript object. When you call `.FOO`, you
 
 Occasionally, to interoperate with JavaScript APIs, you may need to convert a Python object to JavaScript. Pyodide provides a `to_js` function to facilitate this conversion.
 
-````python
+```python
 from js import Object
 from pyodide.ffi import to_js as _to_js
 
@@ -71,8 +71,7 @@ from workers import WorkerEntrypoint, Response
 # to_js converts between Python dictionaries and JavaScript Objects
 def to_js(obj):
    return _to_js(obj, dict_converter=Object.fromEntries)
-	```
-````
+```
 
 For more details, see out the [documentation on `pyodide.ffi.to_js`](https://pyodide.org/en/stable/usage/api/python-api/ffi.html#pyodide.ffi.to_js).
 

@@ -14,14 +14,14 @@ Anyone with write access to a Container can SSH into it with Wrangler as long as
 
 ## Configure SSH
 
-SSH can be configured in your [Container's configuration](/workers/wrangler/configuration/#containers) with the `wrangler_ssh` and `authorized_keys` properties. Only the `ssh-ed25519` key type is supported.
+SSH can be configured in your [Container's configuration](/workers/wrangler/configuration/#containers) with the `ssh` and `authorized_keys` properties. Only the `ssh-ed25519` key type is supported.
 
-The `wrangler_ssh.enabled` property only controls whether you can SSH into a Container through Wrangler.
-If `wrangler_ssh.enabled` is false but keys are still present in `authorized_keys`, the SSH service will still be started on the Container.
+The `ssh.enabled` property only controls whether you can SSH into a Container through Wrangler.
+If `ssh.enabled` is false but keys are still present in `authorized_keys`, the SSH service will still be started on the Container.
 
 ## Connect with Wrangler
 
-To SSH into a Container with Wrangler, you must first enable Wrangler SSH.
+To SSH into a Container with Wrangler, you must first enable SSH in your Container configuration.
 The following example shows a basic configuration:
 
 <WranglerConfig>
@@ -31,7 +31,7 @@ The following example shows a basic configuration:
 	"containers": [
 		{
 			// other options here...
-			"wrangler_ssh": {
+			"ssh": {
 				"enabled": true
 			},
 			"authorized_keys": [
@@ -47,7 +47,7 @@ The following example shows a basic configuration:
 
 </WranglerConfig>
 
-For more information on configuring SSH, refer to [Wrangler SSH configuration](/workers/wrangler/configuration/#wrangler-ssh).
+For more information on configuring SSH, refer to [SSH configuration](/workers/wrangler/configuration/#ssh).
 
 Find the instance ID for your Container by running [`wrangler containers instances`](/workers/wrangler/commands/containers/#containers-instances) or in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/containers).
 The instance you want to SSH into must be running.

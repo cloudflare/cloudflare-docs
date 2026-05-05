@@ -8,7 +8,7 @@ products:
   - turnstile
   - waf
 sidebar:
-  label: Stop account takeover (Free, Pro, Business)
+  label: Stop account takeover
 ---
 
 import {
@@ -20,9 +20,7 @@ import {
 
 When your site has login pages, you need to decide how to verify that visitors are human, how aggressively to limit failed attempts, and which request patterns to block. This guide covers five stages: enforce HTTPS, turn on bot protection, add [Turnstile](/turnstile/) to your login form, create Application Security [rate limiting rules](/waf/rate-limiting-rules/) and [custom rules](/waf/custom-rules/) for suspicious patterns, and monitor for ongoing attacks using [SSL/TLS](/ssl/) transport security and [Cloudflare bot solutions](/bots/). The core workflow covers features available on Free, Pro, and Business plans. Enterprise features such as leaked credentials custom detection locations and Bot Management custom rules are included as callouts.
 
-:::note
-Most procedures in this guide are configured per domain. Select your domain in the Cloudflare dashboard before starting. Turnstile is the exception. It is configured at the account level.
-:::
+<Render file="domain-scope-note" product="use-cases" params={{ exception: "Turnstile is the exception: widgets are configured at the account level." }} />
 
 ## Enforce HTTPS to protect credentials in transit
 
@@ -121,7 +119,7 @@ The widget renders inside the `div` and produces a token when the visitor passes
 
 Before processing the form submission, send the token to the Turnstile siteverify endpoint to confirm the visitor passed the challenge.
 ```js title="server.js"
-const SECRET_KEY = "your-secret-key";
+const SECRET_KEY = "<YOUR-SECRET-KEY>";
 
 async function validateTurnstile(token, remoteip) {
 	try {
@@ -149,7 +147,7 @@ async function validateTurnstile(token, remoteip) {
 }
 ```
 
-Replace `"your-secret-key"` with your Turnstile secret key. The endpoint returns a JSON object with a `success` field. Only process the form submission if `success` is `true`.
+Replace `"<YOUR-SECRET-KEY>"` with your Turnstile secret key. The endpoint returns a JSON object with a `success` field. Only process the form submission if `success` is `true`.
 
 For additional fraud detection, Turnstile supports [Ephemeral IDs](/turnstile/tutorials/fraud-detection-with-ephemeral-ids/) that provide a unique, temporary identifier for each visitor session without storing personal data.
 
@@ -174,45 +172,17 @@ The following example creates a rate limiting rule that issues a Managed Challen
 Managed Challenge and other [challenge types](/cloudflare-challenges/challenge-types/challenge-pages/) require an HTML response to render. They do not work for non-HTML responses such as AJAX/XHR requests, which are common on login endpoints that use single-page applications (SPAs) or API-based authentication. If your login flow uses AJAX, consider using [Turnstile Pre-Clearance](/turnstile/additional-configuration/pre-clearance-support/) instead.
 :::
 
-<Steps>
+<Render file="create-rate-limiting-rule" product="waf" params={{ ruleName: "Rate limit login endpoint", expression: 'http.host eq "example.com" and http.request.uri.path eq "/login" and http.request.method eq "POST"', expressionHelp: 'Replace `example.com` with your domain and `/login` with your login endpoint path.', threshold: "5" }} />
 
-1. In the Cloudflare dashboard, go to the **Security rules** page.
+:::note
+(Optional) To count only failed login attempts instead of all matching requests, Business plan and above users can add a separate counting expression under **Increment counter when**:
 
-   <DashButton url="/?to=/:account/:zone/security/security-rules" />
+```txt
+http.request.uri.path eq "/login" and http.request.method eq "POST" and http.response.code in {401 403}
+```
 
-2. Select **Create rule** and choose **Rate limiting rules**.
-
-3. Enter a name for the rule (for example, "Rate limit login endpoint").
-
-4. Under **When incoming requests match**, enter the following expression:
-
-   ```txt
-   http.host eq "example.com" and http.request.uri.path eq "/login" and http.request.method eq "POST"
-   ```
-
-   Replace `example.com` with your domain and `/login` with your login endpoint path.
-
-5. Under **With the same characteristics**, verify that _IP_ is selected. On Free plans, this is preset to _IP_.
-
-6. Under **When rate exceeds**, enter _5_ for **Requests** and select a value for **Period**. On Free plans, select _10 seconds_. Pro and above plans offer additional periods. For available values by plan, refer to [Rate limiting parameters](/waf/rate-limiting-rules/parameters/).
-
-7. Under **Then take action**, select an action from the **Choose action** dropdown. On Free plans, select _Block_. On Pro and above, _Managed Challenge_ is recommended as it allows legitimate users who trigger the limit to pass by completing a challenge.
-
-8. Under **For duration**, select a duration for the action. On Free plans, select _10 seconds_. Pro and above plans offer longer durations. This is how long the action applies after the rate limit is triggered.
-
-9. Select **Deploy**.
-
-   :::note
-   (Optional) To count only failed login attempts instead of all matching requests, Business plan and above users can add a separate counting expression under **Increment counter when**:
-
-   ```txt
-   http.request.uri.path eq "/login" and http.request.method eq "POST" and http.response.code in {401 403}
-   ```
-
-   This counts requests based on the response status code. Successful logins (200) do not increment the counter.
-   :::
-
-</Steps>
+This counts requests based on the response status code. Successful logins (200) do not increment the counter.
+:::
 
 :::note[Advanced Rate Limiting (Enterprise)]
 Enterprise customers with Advanced Rate Limiting can rate limit by characteristics beyond IP address, which is useful when attackers distribute attempts across many IP addresses. For available characteristics and plan availability, refer to [Rate limiting parameters](/waf/rate-limiting-rules/parameters/).

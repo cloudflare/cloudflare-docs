@@ -9,19 +9,17 @@ sidebar:
 
 ---
 
-When you set up a gateway with a DNSLink record, that gateway is restricted to a particular piece of content (either a specific Content Identifier (CID) or an Interplanetary Name Service (IPNS) hostname).
+When you set up a gateway with a DNSLink record, that gateway is restricted to a particular piece of content — either a specific Content Identifier (CID) or an Interplanetary Name Service (IPNS) hostname. This is called a restricted gateway.
 
-A gateway with a DNSLink - otherwise known as a *restricted gateway* - differs from a [universal gateway](/web3/ipfs-gateway/concepts/universal-gateway/), which allows users to access any content hosted on the IPFS network.
+A restricted gateway differs from a [universal gateway](/web3/ipfs-gateway/concepts/universal-gateway/), which allows users to access any content hosted on the IPFS network.
 
-## What is it?
+## What is DNSLink?
 
-When you import anything to the [IPFS](/web3/ipfs-gateway/concepts/ipfs/), that item gets a unique content identifier ([CID](https://docs.ipfs.io/concepts/glossary/#cid)) similar to `bafybeiaysi4s6lnjev27ln5icwm6tueaw2vdykrtjkwiphwekaywqhcjze`.
+Every file on [IPFS](/web3/ipfs-gateway/concepts/ipfs/) is identified by a [CID](https://docs.ipfs.io/concepts/glossary/#cid) — a long string like `bafybeiaysi4s6lnjev27ln5icwm6tueaw2vdykrtjkwiphwekaywqhcjze`. These CIDs are not practical for end users to type or remember, the same way IP addresses (`192.0.2.1`) are not practical compared to domain names (`example.com`).
 
-Such a long CID can cause issues when you want others to be able to access a website hosted on IPFS (`https://cf-ipfs.com/ipfs/bafybeiaysi4s6lnjev27ln5icwm6tueaw2vdykrtjkwiphwekaywqhcjze`). It is a similar problem to websites in general, where end users would have difficulty remembering an IP address (`192.0.2.1`) instead of a domain name (`google.com`).
+DNSLink solves this by mapping a human-readable domain name to an IPFS CID through a DNS TXT record. You put your website files into an IPFS directory and create a DNSLink record pointing your domain to that directory's CID. Users then access your site through a readable URL like `https://cf-ipfs.com/ipns/en.wikipedia-on-ipfs.org/`, and the gateway resolves it to the correct CID.
 
-The problem is solved the same way, via a DNS record. To make a website hosted on IPFS more accessible, you can put your entire website inside of a directory and create a **DNSLink** record for that CID. End users can then make requests to a Universal Gateway URL like `https://cf-ipfs.com/ipns/en.wikipedia-on-ipfs.org/` and have their requests translated to the correct CID in the background.
-
-DNSLink records also help with content maintenance. When a new version of your website is ready to be published, you can update your DNSLink DNS record to point to the new CID and the gateway will start serving the new version automatically.
+DNSLink also simplifies content updates. When you publish a new version of your site, update the DNSLink record to point to the new CID and the gateway serves the new version automatically — no need to share a new URL.
 
 :::note
 

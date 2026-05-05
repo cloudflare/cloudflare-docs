@@ -49,8 +49,8 @@ Storage billing for Workflows will go live on September 15th, 2025.
 Storage is billed using gigabyte-month (GB-month) as the billing metric, identical to [Durable Objects SQL storage](/durable-objects/platform/pricing/#sqlite-storage-backend). A GB-month is calculated by averaging the peak storage per day over a billing period (30 days).
 
 * Storage is calculated across all instances, and includes running, errored, sleeping and completed instances.
-* By default, instance state is retained for [3 days on the Free plan](/workflows/reference/limits/) and [7 days on the Paid plan](/workflows/reference/limits/).
-* When creating a Workflow instance, you can set a shorter state retention period if you do not need to retain state for errored or completed Workflows.
+* By default, instance state is retained for [3 days on the Free plan](/workflows/reference/limits/) and [30 days on the Paid plan](/workflows/reference/limits/).
+* When creating a Workflow instance, you can set a shorter state retention period if you do not need to retain state for errored or completed Workflows. Refer to the [`retention` option in `WorkflowInstanceCreateOptions`](/workflows/build/workers-api/#workflowinstancecreateoptions) for more information.
 * Deleting instances via the [Workers API](/workflows/build/workers-api/), [Wrangler CLI](/workers/wrangler/commands/workflows/#workflows), REST API, or dashboard will free up storage. Note that it may take a few minutes for storage limits to update.
 
 An instance that attempts to store state when your have reached the storage limit on the Free plan will cause an error to be thrown.
