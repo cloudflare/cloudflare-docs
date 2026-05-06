@@ -10,8 +10,8 @@ You can now see how your origin server responds to Cloudflare using **Origin Ana
 
 Origin Analytics helps you:
 
-- **Monitor origin response times** at the 50th, 95th, and 99th percentiles, with a reference line showing your zone's configured timeout.
-- **Compare origin and edge status codes.** See both `originResponseStatus` (what your origin returned) and `edgeResponseStatus` (what Cloudflare served the end user), making it possible to diagnose cases where your origin returns a `200` but Cloudflare serves a `520`.
-- **Find slow or failing endpoints.** A sortable table ranks request paths by P95 response time, error rate, request volume, or TCP failure rate.
+- **Spot slowdowns before they cause timeouts.** Track origin response times at P50, P95, and P99 against your zone's configured timeout threshold.
+- **Understand what your origin actually returned.** When your users see a `520`, Origin Analytics shows whether your origin returned a `200` with malformed headers, a `503`, or no response at all.
+- **Narrow down which endpoint is the problem.** Sort request paths by response time, error rate, or TCP failure rate to isolate the source.
 
 To get started, go to **Speed** > **Origin Analytics** in the [Cloudflare dashboard](https://dash.cloudflare.com/). For more information, refer to [Origin Analytics](/speed/origin-analytics/).
