@@ -33,11 +33,11 @@ Page below describes roles for Workers and D1. The same pattern would be followe
 :::
 
 ```mermaid
-flowchart LR
-    A["Metadata Read-Only"] --> B["Bind"]
+flowchart TD
+    A["Metadata Read-Only<br/>(least privileged)"] --> B["Bind"]
     B --> C["Content Read-Only"]
     C --> D["Editor"]
-    D --> E["Admin"]
+    D --> E["Admin<br/>(most privileged)"]
 ```
 
 ## Developer Platform roles
