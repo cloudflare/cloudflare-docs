@@ -28,7 +28,7 @@ The procedures in this guide are configured at the Cloudflare account level. Log
 
 ## Set up Cloudflare Tunnel
 
-To expose your internal application to authenticated users without opening any inbound firewall ports, install [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/). The `cloudflared` daemon runs on a machine in your private network and maintains an outbound connection to Cloudflare; all incoming traffic to your application then arrives through that tunnel. {/* Source: /cloudflare-one/networks/connectors/cloudflare-tunnel/ — outbound-only model */}
+To expose your internal application to authenticated users without opening any inbound firewall ports, install [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/). The `cloudflared` daemon runs on a machine in your private network and maintains an outbound connection to Cloudflare; all incoming traffic to your application then arrives through that tunnel.
 
 In this stage you install `cloudflared`, create a tunnel, and map a public hostname to your local service.
 
@@ -38,7 +38,7 @@ In this stage you install `cloudflared`, create a tunnel, and map a public hostn
 - An [active domain on your Cloudflare account](/fundamentals/manage-domains/add-site/). The application is published as a subdomain on this domain.
 - A Linux, Windows, or macOS machine on the private network that can reach the application. This is where `cloudflared` runs.
 - A running web application on your private network, reachable from the `cloudflared` host (for example, `http://10.10.1.25` or `http://localhost:3000`).
-- The host machine can make outbound connections to Cloudflare on port `7844`. {/* Source: /cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-with-firewall/ — port 7844 TCP/UDP */} If your firewall restricts outbound connections, refer to [Tunnel with firewall](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-with-firewall/) for the IPs and hostnames to allowlist.
+- The host machine can make outbound connections to Cloudflare on port `7844`. If your firewall restricts outbound connections, refer to [Tunnel with firewall](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-with-firewall/) for the IPs and hostnames to allowlist.
 
 ### Create a tunnel and define your application
 
