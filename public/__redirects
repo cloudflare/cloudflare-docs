@@ -491,7 +491,9 @@
 /network-interconnect/express-cni/create-interconnects/ /network-interconnect/ 301
 /network-interconnect/express-cni/ /network-interconnect/ 301
 /network-interconnect/pni-and-peering/ /network-interconnect/ 301
-/network-interconnect/static/cni-locations-04-08-2025.pdf /network-interconnect/static/cni-locations-30-10-2025.pdf 301
+/network-interconnect/static/cni-locations-04-08-2025.pdf /network-interconnect/static/cni-locations-05-may-2026.pdf 301
+/network-interconnect/static/cni-locations-30-10-2025.pdf /network-interconnect/static/cni-locations-05-may-2026.pdf 301
+/network-interconnect/static/cni-locations-31-mar-2026.pdf /network-interconnect/static/cni-locations-05-may-2026.pdf 301
 
 # Constellation
 /constellation/ /workers-ai/ 301
