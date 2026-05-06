@@ -10,9 +10,11 @@ tags:
 
 import { Render } from "~/components"
 
-Customers can set cache time-to-live (TTL) based on the response status from the origin web server. Cache TTL refers to the duration of a resource in the Cloudflare network before being marked as `STALE` or discarded from cache. Status codes are returned by a resource's origin.
+When your origin server responds to a request, it includes an HTTP status code (such as `200` for success or `404` for not found). You can control how long Cloudflare caches a response based on that status code. This is useful when you want different caching durations for successful responses versus errors — for example, caching successful responses for a full day but not caching server errors at all.
 
-Setting cache TTL based on response status overrides the [default cache behavior (standard caching)](/cache/concepts/default-cache-behavior/) for static files and overrides cache instructions sent by the origin web server. To cache non-static assets, set a [Cache Level of Cache Everything using a Cache Rule](/cache/how-to/cache-rules/create-api/#example-requests). Setting `no-store` **Cache-Control** or a low TTL (using `max-age`/`s-maxage`) increases requests to origin web servers and decreases performance.
+Cache time-to-live (TTL) is the duration a resource stays in the Cloudflare network before being marked as stale or removed from cache.
+
+Setting cache TTL based on response status overrides the [default cache behavior (standard caching)](/cache/concepts/default-cache-behavior/) for static files and overrides cache instructions sent by the origin web server. To cache non-static assets, set a [Cache Level of Cache Everything using a Cache Rule](/cache/how-to/cache-rules/create-api/#example-requests). Setting `no-store` `Cache-Control` or a low TTL (using `max-age`/`s-maxage`) increases requests to origin web servers and decreases performance.
 
 ## Caching limits
 

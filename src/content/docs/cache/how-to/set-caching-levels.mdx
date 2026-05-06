@@ -1,7 +1,7 @@
 ---
 title: Caching levels
 pcx_content_type: concept
-description: Set caching levels to control query string behavior.
+description: Control how query strings affect cached content.
 products:
   - cache
 head:
@@ -10,10 +10,10 @@ head:
 
 ---
 
-Caching levels determine how much of your website’s static content Cloudflare should cache. Cloudflare’s CDN caches static content according to the levels below.
+A query string is the part of a URL after the `?` character (for example, `?color=blue&size=large`). Caching levels determine whether Cloudflare treats URLs with different query strings as the same cached resource or as separate resources.
 
-* **No Query String**: Delivers resources from cache when there is no query string. Example URL: `example.com/pic.jpg`
-* **Ignore Query String**: Delivers the same resource to everyone independent of the query string. Example URL: `example.com/pic.jpg?ignore=this-query-string`
+* **No Query String**: Only delivers resources from cache when the URL has no query string. Example URL: `example.com/pic.jpg`
+* **Ignore Query String**: Delivers the same cached resource regardless of the query string. Example URL: `example.com/pic.jpg?ignore=this-query-string`
 * **Standard (Default)**: Delivers a different resource each time the query string changes. Example URL: `example.com/pic.jpg?with=query`
 
 You can adjust the caching level from the dashboard under **Caching** > **Configuration** > **Caching level**.
@@ -26,9 +26,9 @@ Ignore Query String only disregards the query string for static file extensions.
 
 :::
 
-## API Caching level values
+## API caching level values
 
-If you are using the API to change the cache level, the values will differ from those shown in the dashboard. Refer to the table below to see how the API values map to the values shown in the dashboard.
+If you are using the API to change the cache level, the values differ from those shown in the dashboard. Refer to the table below to see how the API values map to the values shown in the dashboard.
 
 | Dashboard           | API        |
 | ------------------- | ---------- |

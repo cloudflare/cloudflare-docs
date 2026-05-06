@@ -16,21 +16,23 @@ head:
 
 import { FeatureTable, DashButton } from "~/components"
 
-A Cache Key is an identifier that Cloudflare uses for a file in our cache, and the Cache Key Template defines the identifier for a given HTTP request.
+A cache key is the identifier Cloudflare uses to store and look up a file in its cache. When a request arrives, Cloudflare builds a cache key from parts of the request and checks whether a matching entry already exists. The Cache Key Template defines which parts of an HTTP request are used to build that identifier.
 
 A default cache key includes:
 
 1. Full URL:
-   * scheme - could be HTTP or HTTPS.
-   * host - for example, `www.cloudflare.com`
-   * URI with query string - for example, `/logo.jpg?utm_source=newsletter`
-2. Origin header sent by client (for CORS support).
+   * Scheme — `HTTP` or `HTTPS`.
+   * Host — for example, `www.cloudflare.com`.
+   * URI with query string — for example, `/logo.jpg?utm_source=newsletter`.
+2. `Origin` header sent by the client (included by default to support [CORS](https://developer.mozilla.org/en-US/docs/Glossary/CORS), which requires different cache entries for requests from different origins).
 3. `x-http-method-override`, `x-http-method`, and `x-method-override` headers.
 4. `x-forwarded-host`, `x-host`, `x-forwarded-scheme` (unless http or https), `x-original-url`, `x-rewrite-url`, and `forwarded` headers.
 
 ## Create custom cache keys
 
-Custom cache keys let you precisely set the cacheability setting for any resource. They provide the benefit of more control, though they may reduce your cache hit rate and result in cache sharding:
+Custom cache keys allow you to control exactly which parts of a request determine the cached version that Cloudflare serves. This gives you more control over caching behavior, but may reduce your cache hit rate if the key is too specific — a situation called cache sharding, where the same content is stored multiple times under different keys.
+
+To create a custom cache key:
 
 1. In the Cloudflare dashboard, go to the **Cache Rules** page.
 
