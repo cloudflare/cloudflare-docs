@@ -1,0 +1,247 @@
+---
+pcx_content_type: solution-guide
+title: Protect client-side resources from supply chain attacks (Free, Pro, and Business)
+description: Gain visibility into third-party scripts on your pages and enforce an allowlist that blocks unauthorized resources.
+products:
+  - client-side-security
+sidebar:
+  label: Protect client-side resources
+---
+
+import { Render, Tabs, TabItem, Steps, DashButton } from "~/components";
+
+If an attacker compromises a third-party script on your pages, they can steal visitor data directly from the browser without generating unusual traffic to your origin. Your response depends on three decisions: what is running on your pages, how to act when something looks suspicious, and whether to enforce an allowlist that blocks everything you did not approve. This guide starts with gaining visibility into the scripts your pages load, then walks through monitoring and reviewing your inventory, and finally covers enforcing an allowlist with content security rules. Script monitoring is available on all Cloudflare plans. Content security rules require Client-Side Security Advanced.
+
+:::note
+The procedures in this guide are configured per domain. Select your domain in the Cloudflare dashboard before starting.
+:::
+
+## Know what runs in your visitors' browsers
+
+{/* Source: /client-side-security/ — product overview framing the supply chain threat */}
+{/* Source: /client-side-security/how-it-works/ — CSP monitoring mechanism */}
+
+Server-side security tools such as WAF custom rules, bot detection, and rate limiting inspect traffic between the visitor's browser and your origin. They do not see what happens inside the browser after the page loads. A compromised third-party script can exfiltrate form data, including login credentials and payment information, by sending it to an external endpoint without generating any unusual traffic to your origin.
+
+[Client-side security](/client-side-security/) (formerly Page Shield) addresses this gap. It adds a `content-security-policy-report-only` HTTP header to a sample of your HTML responses. Browsers that receive this header report back to Cloudflare which scripts are running and which external connections those scripts make. Cloudflare builds an inventory of every script and connection detected on your pages.
+
+This monitoring layer gives you visibility into three categories of risk:
+
+- **Unknown scripts** loading from domains you do not recognize
+- **Changed scripts** where an existing script's code has been modified
+- **Malicious scripts** flagged by threat intelligence and machine learning
+
+The rest of this guide walks through turning on monitoring, reviewing your inventory, and (if you have Client-Side Security Advanced) enforcing an allowlist.
+
+## Turn on script monitoring
+
+{/* Source: /client-side-security/get-started/ — activation procedure */}
+
+To see which scripts, connections, and cookies are active on your pages, turn on client-side resource monitoring. It adds a CSP report-only header to a sample of your site's HTML responses without blocking any resources or changing how your pages load.
+
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the Security **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/security/settings" />
+
+2. (Optional) Filter by **Client-side abuse**.
+
+3. Turn on **Continuous script monitoring**.
+
+</Steps>
+
+</TabItem> <TabItem label="Old dashboard">
+
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+
+2. Go to **Security** > **Client-side security**.
+
+3. Go to the **Settings** tab.
+
+4. Next to **Continuous monitoring and alerting**, select **Enable**.
+
+</Steps>
+
+</TabItem> </Tabs>
+
+If you do not have access to client-side security settings, verify that your user has one of the required [roles and permissions](/client-side-security/reference/roles-and-permissions/).
+
+### Review your script inventory
+
+{/* Source: /client-side-security/detection/monitor-connections-scripts/ — dashboard review procedure */}
+
+After you turn on monitoring, Cloudflare begins collecting data from CSP violation reports. It may take some time before the dashboard shows a complete list of scripts.
+
+<Steps>
+
+1. Go to the client-side resources page:
+
+   <Tabs syncKey="dashNewNav">
+   <TabItem label="New dashboard" icon="rocket">
+
+   1. In the Cloudflare dashboard, go to the **Web assets** page.
+
+      <DashButton url="/?to=/:account/:zone/security/web-assets" />
+
+   2. Select the **Client-side resources** tab.
+
+   </TabItem>
+   <TabItem label="Old dashboard">
+
+   1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+
+   2. Go to **Security** > **Client-side security**.
+
+   </TabItem>
+   </Tabs>
+
+2. Review the list of scripts, connections, and cookies for your domain. To narrow results, select **Add filter** and use one or more of the available options.
+
+3. For each script, confirm that you recognize the source domain and the purpose of the script. Flag any script loading from a domain you did not explicitly add to your site.
+
+</Steps>
+
+When reviewing, focus on scripts that:
+
+- Load from domains you do not recognize
+- Were recently added (check the **First seen** date)
+- Make connections to external endpoints you did not expect
+
+Depending on your Cloudflare plan, you may also be able to review connections made by scripts and check them for malicious activity. For the full list of available filters and details, refer to [Monitor resources and cookies](/client-side-security/detection/monitor-connections-scripts/).
+
+### Review scripts flagged as malicious
+
+{/* Source: /client-side-security/detection/review-malicious-scripts/ — malicious script review procedure */}
+
+Cloudflare flags scripts using threat intelligence feeds and machine learning analysis. If any scripts are marked malicious, investigate them before taking action.
+
+<Steps>
+
+1. Go to the client-side resources page:
+
+   <Tabs syncKey="dashNewNav">
+   <TabItem label="New dashboard" icon="rocket">
+
+   1. In the Cloudflare dashboard, go to the **Web assets** page.
+
+      <DashButton url="/?to=/:account/:zone/security/web-assets" />
+
+   2. Select the **Client-side resources** tab.
+
+   </TabItem>
+   <TabItem label="Old dashboard">
+
+   1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+
+   2. Go to **Security** > **Client-side security**.
+
+   </TabItem>
+   </Tabs>
+
+2. Select the **Scripts** tab.
+
+3. Select **Details** for each script considered malicious. The script details contain:
+   - **Malicious code analysis**: Scores between 1-99 classifying how malicious the current script version is, where 1 means definitely malicious and 99 means definitely not malicious.
+   - **Threat intelligence**: Whether the script URL or domain is known to be malicious according to threat intelligence feeds. If threat intelligence feeds do not have information about the script, the dashboard shows **Not present**.
+
+4. Based on the displayed information, and with the help of the **First seen** and **Last seen** fields, review and update the pages where the malicious script was detected. Remove the script from your site if it is confirmed malicious.
+
+</Steps>
+
+For a detailed investigation workflow when you receive an alert, refer to [Handle a client-side resource alert](/client-side-security/best-practices/handle-an-alert/).
+
+### Configure alerts
+
+{/* Source: /client-side-security/get-started/ — alerts configuration */}
+
+Set up alert notifications so you are informed when Cloudflare detects new, changed, or malicious scripts on your pages. The [available alert types](/client-side-security/alerts/alert-types/) depend on your Cloudflare plan and subscriptions.
+
+<Render file="alerts-configure" product="client-side-security" />
+
+## Enforce an allowlist with content security rules
+
+{/* Source: /client-side-security/rules/ — content security rules concept */}
+{/* Source: /client-side-security/get-started/ — Log then Allow workflow */}
+
+:::note[Requires Client-Side Security Advanced]
+Content security rules are only available to customers with Client-Side Security Advanced. If you do not have this subscription, the previous sections (script monitoring, alerts, and malicious script review) are the primary protections available to you.
+:::
+
+Once you know which resources your pages load, you can block anything unexpected by defining an allowlist. Content security rules specify which resources your application is allowed to load through Content Security Policy (CSP) directives that Cloudflare adds to your HTTP responses. Two rule actions are available:
+
+- **Log**: Reports resources outside your allowlist as [rule violations](/client-side-security/rules/violations/) without blocking them. Use this action to validate a new rule.
+- **Allow**: Blocks any resource not explicitly listed in your allowlist and logs it as a rule violation.
+
+The workflow for enforcing an allowlist follows a positive security model: deploy a rule in Log mode to identify what your pages load, review violations to confirm your allowlist is complete, then switch to Allow mode to block unapproved resources.
+
+### Create a content security rule with the Log action
+
+Start by creating a rule that logs violations without blocking any resources. This lets you verify your allowlist before enforcement. When building the rule, define the scope of pages it applies to and select which CSP directives to include in the allowlist.
+
+<Render file="rule-create" params={{ ruleAction: "Log" }} product="client-side-security" />
+
+Cloudflare provides source suggestions for **Default**, **Scripts**, and **Connections** directives based on your monitored resources. Select **Refresh suggestions** to populate the allowlist with scripts and connections Cloudflare has already detected on your pages.
+
+### Review rule violations
+
+{/* Source: /client-side-security/get-started/ — violation review procedure */}
+
+After your Log rule has been active, review the list of rule violations to confirm no legitimate resources are missing from your allowlist.
+
+<Render file="rule-review-violations" product="client-side-security" />
+
+The displayed information includes a sparkline next to the rule name showing violations in the past seven days. For rules with violations, an expandable details section shows the top resources in violation events.
+
+Update the rule to add any legitimate resources that appear as violations. Repeat this review until no legitimate resources are flagged.
+
+### Complete the pre-enforcement checklist
+
+{/* Source: /client-side-security/best-practices/deploy-rules-in-production/ — pre-enforcement checklist */}
+
+Before switching a content security rule from Log to Allow, complete the following checklist:
+
+- The rule was tested in Log mode for a minimum of seven days.
+- Reviewed all rule violations and confirmed there are no unexpected blocks.
+- Added all legitimate third-party resources to the rule allowlist.
+- Tested the application on all major browsers (Chrome, Firefox, Safari, Edge).
+- Configured [alerts](/client-side-security/alerts/) for rule violations.
+- There is a documented rollback procedure that is ready to execute.
+
+:::caution
+Switching a rule from Log to Allow without completing this checklist may block resources required by your application. This will directly affect your end users.
+:::
+
+### Change the rule action to Allow
+
+Once you have verified that your content security rule covers all legitimate resources, change the rule action from _Log_ to _Allow_. When you use the [Allow action](/client-side-security/rules/#rule-actions), Cloudflare starts blocking any resources not explicitly allowed by the rule.
+
+If a rule change causes unexpected violations or blocks legitimate resources, refer to the [rollback procedure](/client-side-security/best-practices/deploy-rules-in-production/#rollback-a-rule-change): switch the rule action back to Log immediately, review the violations, update the allowlist, and repeat validation before switching back to Allow.
+
+:::note[Connection monitoring (Enterprise)]
+Customers with Client-Side Security Advanced can also monitor which external endpoints scripts send data to, providing visibility into potential data exfiltration. Review the **Connections** tab on the client-side resources page to identify unexpected outbound connections. For more information, refer to [Monitor resources and cookies](/client-side-security/detection/monitor-connections-scripts/).
+:::
+
+### Troubleshoot allowlist issues
+
+{/* Source: /client-side-security/troubleshooting/ — common allowlist problems */}
+
+Two common issues arise when enforcing content security rules:
+
+**Rule violations for an allowlisted domain.** CSP violation reports do not account for redirects. If a third-party service (such as Google Ads) redirects to a different domain, you may receive violations for the original domain even though it is in your allowlist. Add the redirect destination domain to your rule. You may need to add several domains to account for redirect chains. For more information, refer to [Troubleshooting](/client-side-security/troubleshooting/).
+
+**Rule not triggering (CSP header not added).** If [Transform Rules](/rules/transform/) rewrite the request path before the content security rule is evaluated, the rule may not match. Content security rules evaluate against the rewritten path, not the original URI. To fix this, update the rule expression to match the rewritten path, or use the [`raw.http.request.uri.path`](/ruleset-engine/rules-language/fields/reference/?field-category=Raw+fields) field to match the original path. Refer to the Troubleshooting page for details.
+
+## Related resources
+
+**Client-side security**
+
+- [Get started with client-side security](/client-side-security/get-started/) — Step-by-step activation, monitoring, alerts, and rule creation
+- [How client-side security works](/client-side-security/how-it-works/) — CSP header mechanism for monitoring and enforcement
+- [Content security rules](/client-side-security/rules/) — Rule actions, CSP directives, and allowlist enforcement
+- [Deploy content security rules in production](/client-side-security/best-practices/deploy-rules-in-production/) — Pre-enforcement checklist and rollback procedures
+- [Client-side security and PCI DSS compliance](/client-side-security/reference/pci-dss/) — PCI DSS v4 requirements 6.4.3 and 11.6.1
