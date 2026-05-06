@@ -26,8 +26,6 @@ By the end of this guide, you will have:
 The procedures in this guide are configured at the Cloudflare account level. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account before starting. If you do not yet have a Zero Trust organization, complete the prerequisites in [Cloudflare One get started](/cloudflare-one/setup/).
 :::
 
-
-
 ## Set up Cloudflare Tunnel
 
 To expose your internal application to authenticated users without opening any inbound firewall ports, install [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/). The `cloudflared` daemon runs on a machine in your private network and maintains an outbound connection to Cloudflare; all incoming traffic to your application then arrives through that tunnel. {/* Source: /cloudflare-one/networks/connectors/cloudflare-tunnel/ — outbound-only model */}
