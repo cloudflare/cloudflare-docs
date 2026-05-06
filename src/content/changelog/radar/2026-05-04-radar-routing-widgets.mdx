@@ -20,4 +20,11 @@ The [RPKI sub-page](https://radar.cloudflare.com/routing/rpki) adds an **RPKI RO
 
 ![Screenshot of the RPKI ROA deployment timeseries widget](~/assets/images/radar/rpki-roa-deployment-timeseries.png)
 
+## API endpoints
+
+The data behind these widgets is also available through two new endpoints on the [`BGP`](/api/resources/radar/subresources/bgp/) API:
+
+- [`/bgp/ips/top/ases`](/api/resources/radar/subresources/bgp/subresources/ips/subresources/top/methods/ases/) - Returns the top autonomous systems by announced IP space (IPv4 `/24`s or IPv6 `/48`s), globally or filtered by country, snapped to the nearest 8-hour RIB boundary.
+- [`/bgp/rpki/roas/timeseries`](/api/resources/radar/subresources/bgp/subresources/rpki/subresources/roas/methods/timeseries/) - Returns RPKI ROA validation coverage over time, by share of prefixes or share of IP address space, split by IP version, with optional ASN or location filters.
+
 Visit the [Radar routing section](https://radar.cloudflare.com/routing) to explore both widgets.
