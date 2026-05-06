@@ -8,11 +8,11 @@ title: Using ETag Headers with Cloudflare
 
 ---
 
-ETag headers identify whether the version of a resource cached in the browser is the same as the resource at the origin web server. A visitor's browser stores ETags. When a visitor revisits a site, the browser compares each ETag to the one it stored. Matching values cause a `304 Not-Modified HTTP` response that indicates the cached resource version is current. Cloudflare supports both strong and weak ETags configured at your origin web server.
+ETag (Entity Tag) headers identify whether the version of a resource cached in the browser is the same as the resource at the origin web server. A visitor's browser stores ETags. When a visitor revisits a site, the browser compares each ETag to the one it stored. Matching values cause a `304 Not-Modified HTTP` response that indicates the cached resource version is current, so the browser can use its local copy instead of downloading the resource again. Cloudflare supports both strong and weak ETags configured at your origin web server.
 
 ## Weak ETags
 
-Weak ETag headers indicate a cached resource is semantically equivalent to the version on the web server but not necessarily byte-for-byte identical.
+Weak ETag headers indicate a cached resource is semantically equivalent to the version on the web server but not necessarily byte-for-byte identical. For example, the content may be the same but compressed differently or have minor formatting differences.
 
 :::note
 
@@ -30,7 +30,7 @@ Strong ETag headers ensure the resource in browser cache and on the web server a
 
 When you enable **Respect Strong ETags** in a cache rule, Cloudflare will use strong ETag header validation to ensure that resources in the Cloudflare cache and on the origin server are byte-for-byte identical.
 
-However, in some situations Cloudflare will convert strong ETags to weak ETags. For example, given the following conditions:
+However, in some situations Cloudflare will convert strong ETags to weak ETags. This happens when Cloudflare must decompress and recompress a response to match what the visitor's browser accepts — because the bytes change during recompression, the ETag can no longer guarantee a byte-for-byte match. For example, given the following conditions:
 
 * **Respect Strong ETags** is enabled
 * [Brotli compression](/speed/optimization/content/compression/) is enabled
@@ -53,7 +53,7 @@ The Cloudflare network will take the following actions, depending on the visitor
 
 </table-wrap>
 
-Enabling **Respect Strong ETags** in Cloudflare automatically disables Rocket Loader, Email Obfuscation, and Automatic HTTPS Rewrites.
+Enabling **Respect Strong ETags** in Cloudflare automatically disables [Rocket Loader](/speed/optimization/content/rocket-loader/), [Email Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/), and [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/).
 
 ### Behavior with Respect Strong ETags disabled
 
@@ -92,6 +92,6 @@ Refer to [Content compression](/speed/optimization/content/compression/) for mor
 
 * You must set the value in a strong ETag header using double quotes (for example, `etag: "foobar"`). If you use an incorrect format, Cloudflare will remove the ETag header instead of converting it to a weak ETag. 
 
-* If a resource is cacheable and there is a cache miss, Cloudflare does not send ETag headers to the origin server. This is because Cloudflare requires the full response body to fill its cache.
+* If a resource is cacheable and there is a [cache miss](/cache/concepts/cache-responses/#miss), Cloudflare does not send ETag headers to the origin server. This is because Cloudflare requires the full response body to fill its cache.
 
 * If your origin (or R2) applies compression based on `accept-encoding`, the first compression type will be cached. Consider whether strong ETags fit your use case, or use cache key rules to handle different compression types.
