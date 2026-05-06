@@ -12,9 +12,9 @@ import { DashButton } from "~/components";
 
 ## Web Cache Deception attacks
 
-A Web Cache Deception attack tricks a user into visiting a URL that looks like a static asset but actually serves dynamic, personalized content.
+A Web Cache Deception attack tricks a user into visiting a URL that appears to point to a static asset but actually returns dynamic, personalized content from the origin.
 
-This works when an origin treats requests to non-existent paths as equivalent to a parent path. For example, if your origin serves the same dynamic response for both `/newsfeed` and `/newsfeed/foo.jpg`, an attacker could send a user a link to `http://www.example.com/newsfeed/foo.jpg`. Because the path ends in `.jpg`, Cloudflare caches the response by default. The attacker then visits the same URL and receives the cached copy of the user's personalized content.
+This attack works when an origin treats requests to non-existent paths as equivalent to a parent path — for example, when `http://www.example.com/newsfeed` is a dynamic page that returns different content for each authenticated user, and the origin also serves that same response for `/newsfeed/foo.jpg`. Because the path ends in `.jpg`, Cloudflare caches the response by default. The attacker then visits the same URL and receives the cached copy of the user's personalized content.
 
 ## Cache Deception Armor protects against attacks
 
