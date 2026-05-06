@@ -31,11 +31,11 @@ This usually happens when all of the following are true:
 - The origin sends a `Set-Cookie` header.
 - An [Edge TTL](/cache/how-to/cache-rules/settings/#edge-ttl) or status-code TTL overrides origin cache directives.
 
-In this configuration, Cloudflare can cache the response and remove the `Set-Cookie` header before the response is stored at the edge. As a result, the browser receives the login page but never gets the session cookie required for the next request.
+When an Edge TTL override forces caching, Cloudflare removes the `Set-Cookie` header from the stored response. Subsequent visitors receive the cached login page without the session cookie their browser needs for the next request. For the full set of rules governing this behavior, refer to [Interaction of Set-Cookie response header with Cache](/cache/concepts/cache-behavior/#interaction-of-set-cookie-response-header-with-cache).
 
 ### How to confirm
 
-Check the response for the login page or other dynamic route.
+Check the response headers for the login page or other dynamic route.
 
 If you see both of the following, the page is probably cached when it should not be:
 
@@ -46,7 +46,7 @@ You may also see framework-specific failures after form submission, for example:
 
 - A redirect back to the login page
 - A `403` or `500` after sign-in
-- CSRF validation errors
+- CSRF (cross-site request forgery) validation errors
 - Missing server-side session state
 
 This issue is common with frameworks that rely on a session or CSRF cookie on the first page load, including JavaServer Faces, ASP.NET, PHP session handlers, Django, Rails, and Laravel.
@@ -61,8 +61,6 @@ Instead:
 2. Add a more specific Cache Rule that bypasses or disables caching for routes such as `/login`, `/account`, `/cart`, `/checkout`, and application API paths.
 3. If the origin must control caching, remove any Edge TTL override that forces the page to be cached.
 4. Verify the fixed response now returns `CF-Cache-Status: DYNAMIC`, `MISS`, or `BYPASS`, and preserves `Set-Cookie`.
-
-For more information on cookie behavior, refer to [Interaction of Set-Cookie response header with Cache](/cache/concepts/cache-behavior/#interaction-of-set-cookie-response-header-with-cache).
 
 ## Challenge loops on login or form flows
 

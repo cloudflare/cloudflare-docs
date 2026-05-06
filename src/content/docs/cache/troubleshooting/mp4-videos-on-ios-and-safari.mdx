@@ -3,22 +3,26 @@ title: Issues with MP4 videos on iOS and Safari
 pcx_content_type: troubleshooting
 products:
   - cache
-description: Learn how to resolve issues with MP4 videos not playing on iOS and Safari.
+description: Resolve MP4 videos not playing on iOS and Safari.
 sidebar:
   order: 2
 ---
 
 import { DashButton } from "~/components";
 
-When traffic is proxied through Cloudflare, Safari on macOS and iOS devices may fail to load MP4 video files.
+When traffic is proxied through Cloudflare, Safari on macOS and iOS devices may fail to load MP4 video files. Videos may not play at all or may display as black screens.
 
-This issue occurs because Safari handles HTTP range requests differently than other browsers, particularly in how it processes ETags during video streaming.
+### Why this happens
 
-Safari and iOS devices rely on HTTP range requests to support video features such as seeking to specific timestamps and resuming interrupted downloads.
+Safari relies on HTTP range requests to stream video. Range requests allow the browser to fetch specific portions of a file — for example, when a user seeks to a particular timestamp or resumes an interrupted download.
 
-When Cloudflare's caching layer processes these range requests with weak ETags, Safari may reject the cached response entirely, resulting in videos that fail to load or display as black screens.
+To verify that each portion belongs to the same file, Safari checks the [ETag header](/cache/reference/etag-headers/) in the response. Safari requires a strong ETag (an exact byte-for-byte identifier) for range requests. By default, Cloudflare may convert strong ETags to weak ETags during caching. When Safari receives a weak ETag in a range response, it can reject the response entirely.
 
-To resolve this issue, configure two cache rules in the following order.
+### Resolution
+
+To resolve this issue, configure two [cache rules](/cache/how-to/cache-rules/) in the following order. The first rule ensures Cloudflare preserves strong ETags for MP4 files. The second rule bypasses cache so that range requests go directly to your origin server, which avoids serving cached responses with potentially mismatched ETags.
+
+The first rule must appear above the second rule in the Cache Rules list. Cloudflare evaluates cache rules in order, and the strong ETag setting from the first rule applies even though the second rule ultimately bypasses the cache.
 
 ## 1. Create the strong ETags rule
 
@@ -49,8 +53,4 @@ Create another cache rule that applies to all MP4 files and bypasses cache entir
 5. Select **Bypass cache** in the **Cache eligibility** section.
 6. Select **Last** as **Place at**.
 
-## Why this order matters
 
-The first rule preserves strong ETags for MP4 files, which satisfies Safari's requirements for range request handling. The second rule bypasses cache so that Cloudflare forwards range requests to the origin server instead of serving cached responses with potentially mismatched ETags.
-
-The first rule must appear above the second rule in the Cache Rules list.
