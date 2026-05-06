@@ -23,7 +23,7 @@ By the end of this guide, you will have:
 - Authentication audit logs and notifications for service-token expiration and tunnel-health changes.
 
 :::note
-The procedures in this guide are configured at the Cloudflare account level. Sign in to the Cloudflare dashboard and select your account before starting. If you do not yet have a Zero Trust organization, complete the prerequisites in [Cloudflare One get started](/cloudflare-one/setup/).
+The procedures in this guide are configured at the Cloudflare account level. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account before starting. If you do not yet have a Zero Trust organization, complete the prerequisites in [Cloudflare One get started](/cloudflare-one/setup/).
 :::
 
 
@@ -44,13 +44,11 @@ In this stage you install `cloudflared`, create a tunnel, and map a public hostn
 
 ### Create a tunnel and define your application
 
-The fastest path uses the **Get Started** flow in the Cloudflare One dashboard. It creates a tunnel, installs `cloudflared` on your host, and creates an Access application in one workflow.
+The fastest path uses the **Get Started** flow in the Cloudflare dashboard. It creates a tunnel, installs `cloudflared` on your host, and creates an Access application in one workflow.
 
-1. Sign in to [Cloudflare One](https://one.dash.cloudflare.com).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and go to **Zero Trust** > **Get Started**.
 
-   <DashButton url="/?to=/:account/access/overview" />
-
-2. Go to **Get Started** and select **Get started** under **Set up secure access to private apps from any browser**.
+2. For **Set up secure access to private apps from any browser**, select **Get started**.
 
 3. For **Connect a private web application**, select **Continue**.
 
@@ -118,11 +116,9 @@ Replace the default policy with two: one for employees authenticating through yo
 
 To open the policies for your customer portal application:
 
-{/* VERIFY: dashboard navigation composed for this guide. Confirm steps in dashboard. */}
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and go to **Zero Trust** > **Access controls** > **Applications**.
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Policies**.
-
-2. Select your customer portal application, then go to the **Policies** tab.
+2. Find your customer portal application, select **Configure**, then go to the **Policies** tab.
 
 3. Replace the default policy with two new ones:
 
@@ -162,15 +158,11 @@ After you create the token, copy both the Client ID and Client Secret. Cloudflar
 
 To let the service token reach a specific Access application:
 
-{/* VERIFY: dashboard navigation composed for this guide; rule structure verified against /cloudflare-one/access-controls/policies/common-policies/. */}
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and go to **Zero Trust** > **Access controls** > **Applications**.
 
-1. Sign in to [Cloudflare One](https://one.dash.cloudflare.com).
+2. Find the application the automated system should reach (for example, your internal API), select **Configure**, then go to the **Policies** tab.
 
-   <DashButton url="/?to=/:account/access/apps" />
-
-2. Select the application the automated system should reach (for example, your internal API).
-
-3. Go to the **Policies** tab and select **Add a policy**.
+3. Select **Add a policy**.
 
 4. Configure the policy:
 
@@ -205,9 +197,7 @@ To investigate suspicious sign-ins, audit user activity, or confirm a policy is 
 
 ### View Access authentication logs
 
-1. Sign in to [Cloudflare One](https://one.dash.cloudflare.com).
-
-   <DashButton url="/?to=/:account/logs/access" />
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and go to **Zero Trust** > **Insights** > **Logs**.
 
 2. Select **Access authentication logs**.
 
@@ -227,11 +217,11 @@ Cloudflare Notifications can send an alert when a relevant event occurs. Useful 
 
 {/* NEW PROCEDURE GAP: Jira outline references "alerts for failed login attempts" but the available notifications list (src/content/notifications/index.yaml) does not include a failed-login alert for Cloudflare Access. Possible alternatives: configure Logpush to push Access authentication logs to a SIEM and alert on denied events. The writer should confirm with the Cloudflare One team whether a per-product failed-login alert is on the roadmap. */}
 
-1. Sign in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and go to the **Notifications** page.
 
    <DashButton url="/?to=/:account/notifications" />
 
-2. Go to the **Notifications** page and select **Add**.
+2. Select **Add**.
 
 3. Select the notification type:
 
