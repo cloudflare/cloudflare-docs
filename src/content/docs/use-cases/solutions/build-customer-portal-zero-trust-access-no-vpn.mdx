@@ -64,7 +64,7 @@ The fastest path uses the **Get Started** flow in the Cloudflare dashboard. It c
 
 9. Select **Continue**.
 
-   {/* Source: /cloudflare-one/setup/secure-private-apps/private-web-app/ — steps 5-9 verbatim from source */}
+   {/* Source: /cloudflare-one/setup/secure-private-apps/private-web-app/ — steps 5-9 structurally match source; example application name adapted to customer-portal */}
 
 <Render
 	file="access/secure-private-apps-shared-steps"
@@ -146,7 +146,7 @@ If your identity provider exposes group membership (for example, Google Workspac
 
 Some clients of your portal are not people: a CI/CD pipeline that deploys to your internal admin tool, a monitoring agent that runs health checks, or a partner integration that posts data to an internal API. {/* Source: /cloudflare-one/access-controls/service-credentials/service-tokens/ — service tokens authenticate automated systems */} [Service tokens](/cloudflare-one/access-controls/service-credentials/service-tokens/) give automated systems an identity that Access can recognize.
 
-A service token consists of a **Client ID** and **Client Secret** that the automated system sends as HTTP headers. Access verifies the headers against your policy and lets the request through if they match. Service tokens are not scoped to a specific application by default. Every Access application that includes a service token in an `Allow` rule with the **Service Auth** action accepts requests from that token. {/* Source: /cloudflare-one/access-controls/service-credentials/service-tokens/ — Service Auth action */}
+A service token consists of a **Client ID** and **Client Secret** that the automated system sends as HTTP headers. Access verifies the headers against your policy and lets the request through if they match. Each Access application that references the service token in a **Service Auth** policy accepts requests from that token. {/* Source: /cloudflare-one/access-controls/service-credentials/service-tokens/ — Service Auth action */}
 
 ### Create a service token
 
@@ -201,7 +201,7 @@ To investigate suspicious sign-ins, audit user activity, or confirm a policy is 
 
 2. Select **Access authentication logs**.
 
-3. Filter the log viewer by application, user email, identity provider, country, or policy decision. {/* Source: /cloudflare-one/insights/logs/dashboard-logs/access-authentication-logs/ — filter by timestamp and event details */}
+3. Filter the log viewer by event details such as application, user email, and policy decision. {/* Source: /cloudflare-one/insights/logs/dashboard-logs/access-authentication-logs/ — filter by timestamp and event details */}
 
 4. Select an individual timestamp to inspect the full event, including the Ray ID and the policy that matched.
 
