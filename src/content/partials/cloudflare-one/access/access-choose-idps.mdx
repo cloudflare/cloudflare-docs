@@ -15,6 +15,8 @@ Select the [identity providers](/cloudflare-one/integrations/identity-providers/
 
 { props.appType === "rdp" ?
 (<> <li> <b>Authenticate with Cloudflare One Client</b> is not supported for browser-based RDP and should remain turned off. </li> </>) :
+props.appType === "private" ?
+(<> <li> (Recommended) Turn on <b>Authenticate with Cloudflare One Client</b> to allow users to authenticate to the application using their <a href="/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/">Cloudflare One Client session identity</a>. Turn this on if your application is not in the browser and cannot handle a <code>302</code> redirect. </li> </>) :
 (<> <li> (Optional) Turn on  <b>Authenticate with Cloudflare One Client</b> to allow users to authenticate to the application using their <a href="/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/"> Cloudflare One Client session identity</a>. </li> </>)
 }
 

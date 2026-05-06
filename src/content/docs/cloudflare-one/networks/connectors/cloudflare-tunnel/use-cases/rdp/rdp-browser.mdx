@@ -124,9 +124,7 @@ The DNS record does not need to point to an active destination IP address or hos
 
 12. <Render file="access/access-choose-idps" product="cloudflare-one" params={{ appType: "rdp" }}/>
 
-13. In **Session Duration**, choose how often the user's [application token](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/) should expire.
-
-		Cloudflare checks every HTTP request to your application for a valid application token. If the user's application token (and global token) has expired, they will be prompted to reauthenticate with the IdP. For more information, refer to [Session management](/cloudflare-one/access-controls/access-settings/session-management/).
+13. <Render file="access/session-duration" product="cloudflare-one" />
 
 14. (Optional) Go to the **Additional settings** tab to customize the application experience:
 
