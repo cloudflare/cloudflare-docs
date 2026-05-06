@@ -1,42 +1,41 @@
 ---
 pcx_content_type: concept
-description: Attributes and metadata for DNS records.
+description: Add comments and tags to DNS records for organization and filtering.
 products:
   - dns
-title: Record attributes
+title: Comments and tags
 sidebar:
   order: 4
 head:
   - tag: title
     content: DNS record comments and tags
+---
+
+import { FeatureTable } from "~/components";
+
+DNS record comments and tags help you organize, label, and filter DNS records in your zone. Comments are free-text notes attached to individual records. Tags are structured `name:value` pairs that group records into categories.
+
+Comments and tags are private metadata. They do not affect DNS resolution or propagation and are only visible to [members](/fundamentals/manage-members/manage/) of your Cloudflare account.
+
+## Use cases
+
+Comments and tags are useful for zones with many records or multiple teams. Common examples include:
+
+- **Identify record ownership**: Add a comment like `Managed by the email team - contact ops@example.com before editing` so other team members know who to ask before changing a record.
+- **Track external services**: Note which third-party service a record belongs to, such as `Domain verification for Google Workspace` or `CDN origin for Fastly`.
+- **Reference internal tickets**: Include a ticket number like `Added per JIRA-4521` to trace why a record was created.
+- **Tag by environment or application**: Use tags like `env:production`, `app:marketing-site`, or `team:platform` to group and filter records.
+- **Flag temporary records**: Mark records that should be cleaned up later with a comment like `Temporary - remove after migration completes` or a tag like `status:temporary`.
 
 ---
 
-import { FeatureTable } from "~/components"
-
-Use DNS record comments and tags to categorize and clarify the purpose of DNS records within Cloudflare.
-
-Comments provide a unique descriptions for specific records, whereas tags group similar records into categories.
-
-These attributes are particularly useful when:
-
-* Multiple teams are managing DNS records within the same zone.
-* Your zone contains a large number of DNS records.
-* You want to filter your DNS records based on matching attributes (for example, when they are managed by the same team or used for the same application).
-
-:::note
-
-
-The information in record attributes will not impact DNS record resolution or propagation timing and is only meant for your private reference. This information is only visible to [members](/fundamentals/manage-members/manage/) of your Cloudflare account and is not visible publicly.
-
-
-:::
-
-***
-
 ## Availability
 
-Comments and tags are only supported for [primary zones (full setup)](/dns/zone-setups/full-setup/) and [partial zones (CNAME setup)](/dns/zone-setups/partial-setup/).
+Comments and tags are supported on [full setup](/dns/zone-setups/full-setup/) and [partial (CNAME) setup](/dns/zone-setups/partial-setup/) zones.
+
+Comments are available on all plans. Free plans allow up to 100 characters per comment. Paid plans allow up to 500 characters.
+
+Tags are available on paid plans only.
 
 ### Record comments
 
@@ -46,24 +45,33 @@ Comments and tags are only supported for [primary zones (full setup)](/dns/zone-
 
 <FeatureTable id="dns.record_tags" />
 
-***
+---
 
-## Add or edit record attributes
+## Add or edit comments and tags
 
-Create or edit record attributes just like any other aspect of DNS records, whether through the [dashboard](/dns/manage-dns-records/how-to/create-dns-records/) or [API](/api/resources/dns/subresources/records/methods/create/).
+You can add or edit comments and tags in the same ways you manage other DNS record fields:
 
-You can also add or edit attributes by [exporting and re-importing](/dns/manage-dns-records/how-to/import-and-export/#dns-record-attributes) your records, or using the [Batch record changes API](/dns/manage-dns-records/how-to/batch-record-changes/#use-the-api).
+- **Dashboard**: When you [create or edit a record](/dns/manage-dns-records/how-to/create-dns-records/), fill in the **Comment** and **Tag** fields.
+- **API**: Include the `comment` and `tags` fields in a [create](/api/resources/dns/subresources/records/methods/create/) or [update](/api/resources/dns/subresources/records/methods/update/) request.
+- **Zone file**: [Export and re-import](/dns/manage-dns-records/how-to/import-and-export/#dns-record-attributes) your records with comments and tags in the zone file.
+- **Batch API**: Use the [Batch record changes API](/dns/manage-dns-records/how-to/batch-record-changes/#use-the-api) to update comments and tags across multiple records at once.
 
-When exporting and importing, special tags starting by `cf-` allow you to control specific Cloudflare configurations. On export, these tags are automatically added to reflect the current configuration for each record on your zone. Refer to [reserved cf- tags](/dns/manage-dns-records/how-to/import-and-export/#reserved-cf--tags) for details.
+When exporting and importing, special tags starting with `cf-` control specific Cloudflare configurations. Refer to [reserved cf- tags](/dns/manage-dns-records/how-to/import-and-export/#reserved-cf--tags) for details.
 
-***
+---
+
+## Filter records by comment or tag
+
+In the dashboard, use the search bar on the **DNS Records** page to filter records by comment or tag text. The API also supports filtering with the `comment.contains`, `comment.exact`, `tag`, and `tag-match` query parameters. Refer to the [List DNS Records API](/api/resources/dns/subresources/records/methods/list/) for details.
+
+---
 
 ## Reference
 
 ### Comments
 
-Comments are treated as [graphic Unicode characters](https://en.wikipedia.org/wiki/Graphic_character), meaning that they are case-sensitive and do not have any character limitations. However, comments do not support newline (`\n`) or carriage return (`\r`) characters.
+Comments support [graphic Unicode characters](https://en.wikipedia.org/wiki/Graphic_character) and are case-sensitive. Newline (`\n`) and carriage return (`\r`) characters are not supported.
 
 ### Tags
 
-Tags are treated as an array of `name:value` pairs, meaning that tag names are not case-sensitive and can only contain letters, numbers, `-`, and `_`. For tag values, the same character restrictions apply as for comments.
+Tags are `name:value` pairs. Tag names are not case-sensitive and can only contain letters, numbers, `-`, and `_`. Tag values follow the same character rules as comments.
