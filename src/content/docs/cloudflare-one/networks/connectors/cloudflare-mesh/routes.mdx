@@ -19,6 +19,8 @@ By default, a Mesh node is reachable only by its own [Mesh IP](/cloudflare-one/n
 
 When you add a route, the Mesh node acts as a gateway: traffic destined for the advertised CIDR is forwarded to the node, which delivers it to the appropriate host on the local network.
 
+Both IPv4 and IPv6 CIDR routes are supported.
+
 ## When to use routes
 
 - **Without routes** — Devices on your Mesh can only reach the node itself by its Mesh IP. Services running directly on the node are reachable this way.
