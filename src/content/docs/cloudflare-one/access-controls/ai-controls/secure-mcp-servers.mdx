@@ -105,7 +105,7 @@ The Worker will be deployed to your `*.workers.dev` subdomain at `mcp-access-sel
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
 2. Select **Create new application**.
 3. Select **Self-hosted and private**.
-4. In **Application domain**, enter your Worker URL (for example, `mcp-access-self-hosted.<YOUR_SUBDOMAIN>.workers.dev`).
+4. Select **Add public hostname** and enter your Worker URL (for example, `mcp-access-self-hosted.<YOUR_SUBDOMAIN>.workers.dev`).
 5. Configure [Access policies](/cloudflare-one/access-controls/policies/) to define the users who can access the MCP server (for example, allow emails ending in `@yourcompany.com`).
 6. <Render
    	file="access/access-choose-idps"
