@@ -7,6 +7,9 @@
 # Blocked Content (Security center restructuring)
 /security-center/blocked-content/ /fundamentals/reference/report-abuse/blocked-content/ 301
 
+# Security reports (moved from security-center to analytics)
+/security-center/app-security-reports/ /analytics/account-and-zone-analytics/app-security-reports/ 301
+
 # Custom Dashboards (moved from log-explorer to analytics)
 /log-explorer/custom-dashboards/ /analytics/custom-dashboards/ 301
 

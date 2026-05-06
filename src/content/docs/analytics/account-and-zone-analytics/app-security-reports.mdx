@@ -7,13 +7,12 @@ products:
 tags:
   - Analytics
 sidebar:
-  order: 6
+  order: 3
   badge:
     text: Beta
 head:
   - tag: title
     content: Application Security reports
-
 ---
 
 import { DashButton, Details } from "~/components";
@@ -22,13 +21,13 @@ Application Security reports provide cyber attack insights and trends for all of
 
 The reports are automatically generated on a monthly basis.
 
-You can access reports by going to the **Security reports** page or via the [API](#api). You can access reports from previous months by selecting the month from the dropdown. 
+You can access reports by going to the **Security reports** page or via the [API](#api). You can access reports from previous months by selecting the month from the dropdown.
 
 <DashButton url="/?to=/:account/security-center/reports" />
 
-To download the report, select **Print report**. 
+To download the report, select **Print report**.
 
-Reports from before April 2025 can be accessed through **Security reports** > **Legacy reports**. Due to limitations in the legacy reports, some customers may not have reports for every month prior to April 2025. 
+Reports from before April 2025 can be accessed through **Security reports** > **Legacy reports**. Due to limitations in the legacy reports, some customers may not have reports for every month prior to April 2025.
 
 The current reports are curated by Cloudflare and will be expanded to include more insights. The option to create custom reports, filter by various fields, and schedule reports will be added in upcoming improvements.
 
@@ -38,13 +37,13 @@ The current reports are curated by Cloudflare and will be expanded to include mo
 
 Currently, only Application Security reports are available. They cover the entire suite of products such as [HTTP DDoS Protection](/ddos-protection/managed-rulesets/http/), [WAF](/waf/), and [Bot Management](/bots/).
 
-Reports for Application Performance, [Cloudflare One](/cloudflare-one/), and Network Services, such as [Magic Transit](/magic-transit/), will be made available in future improvements. 
+Reports for Application Performance, [Cloudflare One](/cloudflare-one/), and Network Services, such as [Magic Transit](/magic-transit/), will be made available in future improvements.
 
 ---
 
 ## Report layout
 
-Each report includes the following sections: 
+Each report includes the following sections:
 
 - Executive summary
 - Distribution of allowed and mitigated requests
@@ -65,7 +64,7 @@ To ensure fairness and accuracy, Cloudflare normalizes your data before comparis
 
 The result helps you interpret your mitigated traffic data in context. For example, you may see a statement such as "_You are in the top 25% most attacked companies in the Cosmetics industry._" This insight enables you to better understand your threat exposure, communicate results to stakeholders, and understand value of the protection Cloudflare provides.
 
-If your account is not assigned an industry or if the shown industry is incorrect, use the link within the report to select the correct industry. 
+If your account is not assigned an industry or if the shown industry is incorrect, use the link within the report to select the correct industry.
 
 It may take a while for your new selection to take effect, and it may only be applied to future reports.
 
@@ -77,7 +76,7 @@ If you have multiple Cloudflare accounts, select the industry that is most relev
 
 You must have at least one Enterprise zone. Application Security reports are automatically enabled on your Enterprise zone. No action is required.
 
-If you do not have any Enterprise zones, a report will not be generated. If you have an account that is not older than one month, a report will not be generated yet. 
+If you do not have any Enterprise zones, a report will not be generated. If you have an account that is not older than one month, a report will not be generated yet.
 
 ### Required roles
 
@@ -88,7 +87,7 @@ A Cloudflare user must have one of the following [roles](/fundamentals/manage-me
 
 ---
 
-## API 
+## API
 
 ```sh title="List all report policies for a specific account"
 GET /accounts/{account_id}/reporting/policies
@@ -107,20 +106,13 @@ GET /accounts/{account_id}/reporting/reports/{report_id}
 ```
 
 <Details header="Data returned by the API">
-  - Account ID
-  - Account Name
-  - Account Industry
-  - Time range
-  - Total zones
-  - Total zones analyzed
-  - Industry percentile (nullable float)
-  - Total requests (count, percentage)
-  - Total mitigated requests (count, percentage)
-  - Total served requests (count, percentage)
-  - Top 5 hostnames by mitigated requests (hostname, count)
-  - Top 5 source countries by served requests (country, count)
-  - Top 5 source countries by mitigated requests (country, count)
-  - Top 5 rules by mitigated requests (rule name, rule type, count)
+	- Account ID - Account Name - Account Industry - Time range - Total zones -
+	Total zones analyzed - Industry percentile (nullable float) - Total requests
+	(count, percentage) - Total mitigated requests (count, percentage) - Total
+	served requests (count, percentage) - Top 5 hostnames by mitigated requests
+	(hostname, count) - Top 5 source countries by served requests (country, count)
+	- Top 5 source countries by mitigated requests (country, count) - Top 5 rules
+	by mitigated requests (rule name, rule type, count)
 </Details>
 
 :::note
