@@ -27,17 +27,17 @@ As a best practice, developers building with the Developer Platform should have 
 Users can have multiple roles, both account-wide and per-resource.
 
 :::note
-Roles are ordered from least to most privileged: Metadata Read-Only < Bind < Content Read-Only < Editor < Admin. More privileged roles include all access granted by less privileged roles.
+Metadata Read-Only, Content Read-Only, Editor, and Admin roles are ordered from least to most privileged. More privileged roles include all access granted by less privileged roles.
 
 Page below describes roles for Workers and D1. The same pattern would be followed for all products within Developer Platform.
 :::
 
 ```mermaid
 flowchart TD
-    A["Metadata Read-Only<br/>(least privileged)"] --> B["Bind"]
-    B --> C["Content Read-Only"]
-    C --> D["Editor"]
-    D --> E["Admin<br/>(most privileged)"]
+    classDef default text-align:center;
+    A["Metadata Read-Only<br/>(least privileged)"] --> B["Content Read-Only"]
+    B --> C["Editor"]
+    C --> D["Admin<br/>(most privileged)"]
 ```
 
 ## Developer Platform roles
@@ -47,7 +47,7 @@ Developer Platform roles grant access to all products in the Developer Platform,
 | Role                                                                                                   | Description                                                                                                                                                                                          |
 | ------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Developer Platform Metadata Read-Only                                                                    | Can see all resources. <br/> Can read metadata such as settings and observability (metrics, logs, traces). <br/> Cannot read product content or manage resources.                                                                 |
-| [Developer Platform Read-Only](/fundamentals/manage-members/roles/#account-scoped-roles) (existing role) | Can read metadata and product content (KV namespace values, Worker code). <br/> Cannot manage resources or update settings.                                                                          |
+| [Developer Platform Content Read-Only](/fundamentals/manage-members/roles/#account-scoped-roles) (existing role) | Can read metadata and product content (KV namespace values, Worker code). <br/> Cannot manage resources or update settings.                                                                          |
 | Developer Platform Editor                                                                                | Can read and write product content. <br/> Can update settings and create new versions and deployments. <br/> Cannot create, delete, or rename resources. <br/> Cannot manage resource access.        |
 | [Developer Platform Admin](/fundamentals/manage-members/roles/#account-scoped-roles) (existing role)     | Can read metadata and product content. <br/> Can update settings. <br/> Can create, rename, and delete resources. <br/> Can grant resource access to other users.                                    |
 | Developer Platform Create                                                                                | Can create new resources across Developer Platform products (Workers, D1, KV). <br/> User who creates a resource becomes Admin for that resource. <br/> Does not grant access to existing resources. |
