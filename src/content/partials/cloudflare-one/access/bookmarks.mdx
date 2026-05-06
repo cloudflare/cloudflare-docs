@@ -9,7 +9,7 @@ Links to applications not protected by Access can be added as bookmarks. You can
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
 
-2. Select **Add an application** > **Bookmark**.
+2. Select **Create new application** > **Bookmarks**.
 
 3. Name your application.
 
@@ -19,18 +19,16 @@ Links to applications not protected by Access can be added as bookmarks. You can
    - To use an existing policy, select **Select existing policies** and choose the policies you want to apply. Refer to [supported policies](#supported-policies) for policy limitations.
    - To create a new policy, select **Create new policy** and [build your policy rules](/cloudflare-one/access-controls/policies/).
 
-6. Select **Next**.
+6. (Optional) Go to the **Additional settings** tab to customize the application experience:
 
-7. Turn on **App Launcher visibility** if you want the application to be visible in the App Launcher. The toggle does not impact the ability for users to reach the application.
+	- **App Launcher visibility**: Turn on if you want the application to be visible in the App Launcher. The toggle does not impact the ability for users to reach the application.
+	- **Custom logo**: To add a custom logo for your application, select **Custom** and enter the image URL.
 
-8. (Optional) To add a custom logo for your application, select **Custom** and enter the image URL.
+		:::note
+		If you are having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, `http://www.example.com/upload/logo.png` will not work. However, `https://www.example.com/upload/logo.png` will.
+		:::
 
-   :::note
-
-   If you are having issues specifying a custom logo, check that the image is served from an HTTPS endpoint. For example, `http://www.example.com/upload/logo.png` will not work. However, `https://www.example.com/upload/logo.png` will.
-   :::
-
-9. Select **Save**.
+7. Select **Create**.
 
 The application will show up on the Applications page labeled as `BOOKMARK`. You can always edit or delete your bookmarks, as you would any other application.
 

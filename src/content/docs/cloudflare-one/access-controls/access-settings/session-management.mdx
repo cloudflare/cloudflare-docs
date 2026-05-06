@@ -97,7 +97,7 @@ Users who match a policy configured with a _Same as application session timeout_
 
 ### Cloudflare One Client session duration
 
-When [Device authentication identity](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/#configure-client-sessions-in-access) is enabled for an Access application, the Cloudflare One Client session duration takes precedence over all other session durations (application, policy, and global). As long as the Cloudflare One Client session is valid and the user is running the Cloudflare One Client, the user will not be prompted to re-authenticate with the IdP — even if the global session has expired.
+When [Authenticate with Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/#configure-client-sessions-in-access) is enabled for an Access application, the Cloudflare One Client session duration takes precedence over all other session durations (application, policy, and global). As long as the Cloudflare One Client session is valid and the user is running the Cloudflare One Client, the user will not be prompted to re-authenticate with the IdP — even if the global session has expired.
 
 ### MFA session duration
 If you use [independent multi-factor authentication (MFA)](/cloudflare-one/access-controls/access-settings/independent-mfa/), the MFA session duration determines how long a user can log in to Cloudflare Access without being prompted for MFA. The MFA session is independent of the global, policy, and application session durations. When logging in to an Access app with [MFA enabled](/cloudflare-one/access-controls/policies/mfa-requirements/#configure-independent-mfa-for-an-application), users must complete an MFA challenge if their last MFA authentication falls outside the configured session duration. After authenticating with their identity provider, users are prompted for MFA. The [`CF_Device` cookie](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/#cf_device) ensures both authentication steps occur on the same device. MFA session durations do not affect how long a user has access to the application (that is controlled by the [application token](#session-durations)).
@@ -114,8 +114,8 @@ flowchart TB
 
     %% In with user traffic
     start["User goes to Access application"]
-    start--"Device authentication identity enabled" -->warpsession[Device client session expired?]
-    start-- "Device authentication identity disabled" --> policysession[Policy session expired?]
+    start--"Authenticate with Cloudflare One Client enabled" -->warpsession[Device client session expired?]
+    start-- "Authenticate with Cloudflare One Client disabled" --> policysession[Policy session expired?]
 
 		warpsession--"Yes"-->idp[Prompt to log in to IdP]
 		warpsession--"No"-->accessgranted[Access granted]

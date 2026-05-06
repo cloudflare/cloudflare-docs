@@ -14,17 +14,15 @@ import {
 <TabItem label="Dashboard">
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
-2. Select **Add an application**.
+2. Select **Create new application**.
 3. Select **Infrastructure**.
-4. Enter any name for the application.
-5. In **Target criteria**, select the <GlossaryTooltip term="target hostname">target hostname(s)</GlossaryTooltip> that you want to secure. This application definition will apply to all targets that share the selected hostname, including any targets added in the future. Similarly, if you later decide to change the hostname for a target, the renamed target will no longer be covered by this application.
-6. Enter the **Protocol** and **Port** that will be used to connect to the server.
-7. (Optional) If a protocol runs on more than one port, select **Add new target criteria** and reconfigure the same target hostname and protocol with a different port number.
+4. In **Target criteria**, select the <GlossaryTooltip term="target hostname">target hostname(s)</GlossaryTooltip> that you want to secure. This application definition will apply to all targets that share the selected hostname, including any targets added in the future. Similarly, if you later decide to change the hostname for a target, the renamed target will no longer be covered by this application.
+5. Enter the **Protocol** and **Port** that will be used to connect to the server.
+6. (Optional) If a protocol runs on more than one port, select **Add new target criteria** and reconfigure the same target hostname and protocol with a different port number.
    :::note
    Access for Infrastructure only supports assigning one protocol per port. You can reuse a port/protocol pairing across infrastructure applications, but the port cannot be reassigned to another protocol.
    :::
-8. Select **Next**.
-9. To secure your targets, configure a policy that defines who can connect and how they can connect:
+7. To secure your targets, configure a policy that defines who can connect and how they can connect:
    1. Enter any name for your policy.
    2. Create a rule that matches the users who are allowed to reach the targets. For more information, refer to [Access policies](/cloudflare-one/access-controls/policies/) and review the list of [infrastructure policy selectors](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/#infrastructure-policy-selectors).
    3. In **Connection context**, configure the following settings:
@@ -35,7 +33,7 @@ import {
       Cloudflare will not create new users on the target. UNIX users must already be present on the server.
       :::
 
-10. Select **Add application**.
+8. Select **Create**.
 
 </TabItem>
 <TabItem label="API">
