@@ -1,19 +1,11 @@
 ---
 name: docs-review
-description: Reviews documentation PRs and provides GitHub PR suggestions. Load when asked to review, suggest changes, or provide feedback on docs content. Covers MDX, frontmatter, style guide, components, and content accuracy.
+description: "Reviews Cloudflare documentation PRs and posts GitHub PR suggestions. Validates MDX syntax, frontmatter, component usage, style guide compliance, and content accuracy. Use when asked to review, suggest changes, or provide feedback on docs content in this repository."
 ---
 
 Review documentation changes for correctness, style, and structure. Use AGENTS.md and the style guide at `src/content/docs/style-guide/` as primary references.
 
 ## When to Suggest vs. When to Edit
-
-### Decision logic
-
-1. **Explicit instruction wins.** If the user says "suggest", "only make suggestions", or "do not make changes" — post suggestions via `gh` CLI, never push commits. If they say "fix", "address this", or "update" — edit files directly and commit.
-2. **Different actor = suggest.** If the person invoking the review is not the PR author (and no explicit fix instruction was given), post suggestions so the author retains control.
-3. **Same actor or ambiguous = fix by default.** When the invoker is the PR author (or it is unclear), default to **editing files directly**. MDX syntax errors, broken code, invalid frontmatter, wrong component usage, and other obvious errors should always be fixed, not suggested.
-
-### Quick reference
 
 | Instruction                                        | Action                                                                |
 | -------------------------------------------------- | --------------------------------------------------------------------- |

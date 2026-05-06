@@ -1,6 +1,6 @@
 ---
 name: changelog
-description: Creates, updates, and reviews product changelog entries for the Cloudflare documentation site. Load when generating changelog MDX files, editing existing entries, reviewing changelog style, or validating frontmatter.
+description: "Creates, updates, and reviews product changelog entries for the Cloudflare documentation site. Use when generating changelog MDX files, editing existing entries, reviewing changelog style, or validating frontmatter."
 ---
 
 Use this skill when creating, editing, or reviewing changelog entries under `src/content/changelog/`.
@@ -43,13 +43,9 @@ date: <YYYY-MM-DD>
 
 ## Writing style
 
-- Imperative mood, active voice
 - Opening sentence: what the feature/change is and what problem it solves
 - Expand on usage, use cases, and the "why" in subsequent paragraphs
-- Assume a technical developer/cloud audience
-- Keep sentences concise (8-12 words where possible)
-- Do not use contractions
-- Do not use LLM-like phrases ("It's important to note", "leverage", "seamless", etc.)
+- Imperative mood, active voice, no contractions
 - Replace `e.g.` with "for example" and `i.e.` with "that is"
 
 ## Code examples
@@ -93,6 +89,14 @@ When reviewing, validate against every section above: frontmatter fields, file p
 - **Error**: Missing required frontmatter fields, wrong product folder, broken links
 - **Warning**: Style violations, missing code examples for API changes, vague descriptions
 - **Nit**: Minor phrasing improvements
+
+## Validation
+
+Before finalizing, verify:
+- Frontmatter has all 4 required fields (`title`, `description`, `products`, `date`)
+- File path matches `{YYYY-MM-DD}-{slug}.mdx` pattern in the correct product folder
+- At least one documentation link is present
+- Code example included if the change involves an API, SDK, or config
 
 ## Output
 

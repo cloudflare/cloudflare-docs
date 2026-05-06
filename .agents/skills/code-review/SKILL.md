@@ -1,6 +1,6 @@
 ---
 name: code-review
-description: Reviews Workers and Cloudflare Developer Platform code for type correctness, API usage, and configuration validity. Load when reviewing TypeScript/JavaScript using Workers APIs, wrangler.jsonc/toml config, or Cloudflare bindings (KV, R2, D1, Durable Objects, Queues, Vectorize, AI, Hyperdrive).
+description: "Reviews Workers and Cloudflare Developer Platform code for type correctness, API usage, and configuration validity. Use when reviewing TypeScript/JavaScript using Workers APIs, wrangler.jsonc/toml config, or Cloudflare bindings (KV, R2, D1, Durable Objects, Queues, Vectorize, AI, Hyperdrive)."
 ---
 
 Your knowledge of Cloudflare Workers APIs, types, and wrangler configuration may be outdated. **Prefer retrieval over pre-training** for any Workers code review task.
@@ -81,20 +81,20 @@ Focus deeper analysis on HIGH risk. For critical paths, check blast radius: how 
 
 ## Anti-patterns to Flag
 
-| Anti-pattern                                                                  | Why it matters                                                             |
+| Anti-pattern                                                                  | Detail                                                                     |
 | ----------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| `any` on `Env` or handler params                                              | Defeats type safety for every binding access downstream                    |
-| `as unknown as T` double-cast                                                 | Hides real type incompatibilities — fix the underlying design              |
-| `@ts-ignore` / `@ts-expect-error` without explanation                         | Masks errors silently; require a comment justifying each suppression       |
-| Buffering unbounded data (`await res.text()`, `await res.json()` on streams)  | Memory exhaustion on large payloads; use streaming                         |
+| `any` on `Env` or handler params                                              | Defeats type safety for all binding access downstream                      |
+| `as unknown as T` double-cast                                                 | Fix the underlying type design instead                                     |
+| `@ts-ignore` / `@ts-expect-error` without explanation                         | Require a justifying comment                                               |
+| Buffering unbounded data (`await res.text()`, `await res.json()` on streams)  | Use streaming for large/unknown payloads                                   |
 | Hardcoded secrets or API keys                                                 | Use `env` bindings and `wrangler secret`                                   |
-| `blockConcurrencyWhile` on every request                                      | Only for initialization; blocks all concurrent requests                    |
-| Single global Durable Object                                                  | Creates a bottleneck; shard by coordination atom                           |
-| In-memory-only state in DOs                                                   | Lost on eviction; persist to SQLite storage                                |
+| `blockConcurrencyWhile` on every request                                      | Only for initialization — blocks all concurrent requests                   |
+| Single global Durable Object                                                  | Shard by coordination atom to avoid bottleneck                             |
+| In-memory-only state in DOs                                                   | Lost on eviction — persist to SQLite storage                               |
 | Missing DO migrations in config                                               | New DO classes require migration entries or deployment fails               |
-| Floating promises (`step.do()`, `fetch()` without `await`)                    | Silent bugs — drops results, breaks Workflow durability, ignores errors    |
-| Non-serializable values across boundaries (`Response`, `Error` in step/queue) | Compiles but fails at runtime; extract plain data before crossing boundary |
-| `implements` instead of `extends` on platform base classes                    | Legacy pattern — loses `this.ctx`, `this.env` access from base class       |
+| Floating promises (`step.do()`, `fetch()` without `await`)                    | Breaks Workflow durability, drops results                                  |
+| Non-serializable values across boundaries (`Response`, `Error` in step/queue) | Extract plain data before crossing boundary                                |
+| `implements` instead of `extends` on platform base classes                    | Loses `this.ctx`, `this.env` access from base class                        |
 
 ## What NOT to Flag
 
