@@ -1,14 +1,13 @@
 id: mTGfbs
-name: Security Center
+name: Threat intelligence
 
 entry:
-  title: Security Center
-  url: /security-center/
+  title: Threat intelligence
+  url: /threat-intelligence/
   group: Application security
   additional_groups: [Analytics]
 
 meta:
-  title: Cloudflare Security Center docs
-  description:
-    Enhance your security posture with a range of security products and one-click solutions
+  title: Cloudflare Threat intelligence docs
+  description: Enhance your security posture with a range of security products and one-click solutions
   author: "@cloudflare"

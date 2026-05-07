@@ -1104,7 +1104,7 @@
 /learning-paths/get-started/security/ssl-tls/ /ssl/origin-configuration/ssl-modes/ 301
 /learning-paths/get-started/security/bot-fight-mode/ /bots/get-started/bot-fight-mode/ 301
 /learning-paths/get-started/security/secure-origin/ /fundamentals/security/protect-your-origin-server/ 301
-/learning-paths/get-started/security/security-center/ /security-center/ 301
+/learning-paths/get-started/security/security-center/ /threat-intelligence/ 301
 /learning-paths/get-started/security/add-on-products/ /products/?product-group=Application+security 301
 /learning-paths/get-started/security/security-settings/ /fundamentals/security/ 301
 /learning-paths/get-started/performance/ /fundamentals/performance/ 301
@@ -1130,7 +1130,7 @@
 /learning-paths/get-started-free/security/dnssec/ /dns/dnssec/#enable-dnssec 301
 /learning-paths/get-started-free/security/security-settings/ /fundamentals/security/ 301
 /learning-paths/get-started-free/security/bot-fight-mode/ /bots/get-started/bot-fight-mode/ 301
-/learning-paths/get-started-free/security/security-center/ /security-center/ 301
+/learning-paths/get-started-free/security/security-center/ /threat-intelligence/ 301
 /learning-paths/get-started-free/security/add-on-products/ /products/?product-group=Application+security 301
 /learning-paths/get-started-free/other-features/ /fundamentals/ 301
 /learning-paths/get-started-free/other-features/rules/ /rules/ 301
@@ -1486,8 +1486,8 @@
 /ruleset-engine/rules-language/fields/http-request-response/ /ruleset-engine/rules-language/fields/reference/ 301
 /ruleset-engine/rules-language/fields/magic-firewall/ /cloudflare-network-firewall/reference/network-firewall-fields/ 301
 # security center
-/security-center/indicator-feeds/getting-started/ /security-center/indicator-feeds/ 301
-/security-center/indicator-feeds/get-started/ /security-center/indicator-feeds/ 301
+/security-center/indicator-feeds/getting-started/ /threat-intelligence/indicator-feeds/ 301
+/security-center/indicator-feeds/get-started/ /threat-intelligence/indicator-feeds/ 301
 
 # spectrum
 /spectrum/changelog/ /spectrum/ 301
@@ -2815,3 +2815,10 @@
 
 # Security Insights (moved from Security Center to Security)
 /security-center/security-insights/* /security/security-insights/:splat 301
+
+# Security Center renamed to Threat intelligence
+/security-center/ /threat-intelligence/ 301
+/security-center/* /threat-intelligence/:splat 301
+
+# Learning path Security Center module renamed
+/learning-paths/application-security/security-center/* /learning-paths/application-security/threat-intelligence/:splat 301

@@ -20,7 +20,7 @@ products:
     client-side-security,
     ssl,
     spectrum,
-    security-center,
+    threat-intelligence,
     waf,
   ]
 sidebar:
@@ -141,7 +141,7 @@ The reason the Cloudflare network exists is to provide services to customers to 
         6. [Bot Management](#bot-management)
         7. [Client-side security](#client-side-security)
         8. [SSL/TLS](#ssltls)
-        9. [Security Center](#security-center)
+        9. [Threat intelligence](#threat-intelligence)
         10. [Cloudflare for SaaS](#cloudflare-for-saas)
     3.  [Cloudflare network security products](#cloudflare-network-security-products)
         1. [Magic Transit](#magic-transit)
@@ -438,9 +438,9 @@ Edge certificates are presented to clients visiting the customer’s website or 
 
 Customers can also enable [mutual Transport Layer Security (mTLS)](/ssl/client-certificates/enable-mtls/) for hostnames and API endpoints to bolster security for authentication, enforcing that only devices with valid certificates can gain access. Additional security features like [Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/) can be configured to help ensure requests to the origin server come from the Cloudflare network. [Keyless SSL](/ssl/keyless-ssl/) allows security-conscious clients to upload their own custom certificates and benefit from Cloudflare, but without exposing their TLS private keys. With [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/), customers can also issue and validate certificates for their own customers.
 
-##### Security Center
+##### Threat intelligence
 
-[Cloudflare Security Center](/security-center/) offers attack surface management (ASM) that inventories IT assets, enumerates potential security issues, controls phishing and spoofing risks, and enables security teams to investigate and mitigate threats in a few clicks. The Security Center is a great starting point for security analysts to get a global view of all potential issues across all applications/domains.
+[Cloudflare Threat intelligence](/threat-intelligence/) (formerly Security Center) offers attack surface management (ASM) that inventories IT assets, enumerates potential security issues, controls phishing and spoofing risks, and enables security teams to investigate and mitigate threats in a few clicks. Threat intelligence is a great starting point for security analysts to get a global view of all potential issues across all applications/domains.
 
 Key capabilities offered:
 
@@ -527,7 +527,7 @@ Existing private infrastructure can be complex. Cloudflare provides a variety of
 | [Cloudflare WAN](/cloudflare-wan/)                                                                            | IPsec or GRE tunnel from networking devices to Cloudflare, routing entire network traffic.                                                                   | Connecting existing network routers to Cloudflare. Allowing all traffic into and out of the network to go through Cloudflare.                                                       |
 | [Cloudflare One Appliance](/cloudflare-wan/configuration/appliance/)                                          | Appliance-based IPsec or GRE tunnel from networking devices to Cloudflare, routing entire network traffic.                                                   | Uses the same technology as Cloudflare WAN; however, instead of using existing networking devices, a dedicated appliance or virtual machine is used — the Cloudflare One Appliance. |
 | [cloudflared](/cloudflare-one/networks/connectors/cloudflare-tunnel/)                                         | Software agent deployed on servers or alongside services like Kubernetes for creating a tunnel for incoming connections to private applications or networks. | IT admins or application owners can easily install this tunnel software to expose their application to the Cloudflare network.                                                      |
-| [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/)           | Software agent deployed on servers for creating a tunnel for incoming and outgoing connections to private applications or networks.                          | Similar to cloudflared, but supports East to West traffic and is often used in place of Cloudflare WAN when there is no ability to create an IPsec tunnel from existing devices.    |
+| [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/)                                       | Software agent deployed on servers for creating a tunnel for incoming and outgoing connections to private applications or networks.                          | Similar to cloudflared, but supports East to West traffic and is often used in place of Cloudflare WAN when there is no ability to create an IPsec tunnel from existing devices.    |
 | [WARP Desktop Agent](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/)                       | Software agent deployed on user devices, creating a tunnel for traffic to and from private applications and networks.                                        | Connecting end user devices like phones and laptops to be part of the Cloudflare network.                                                                                           |
 | [Cloudflare Network Interconnect](https://www.cloudflare.com/network-services/products/network-interconnect/) | Direct connection between your physical networks and Cloudflare.                                                                                             | When your applications live in the same data centers we operate in, we can connect those networks directly to Cloudflare.                                                           |
 

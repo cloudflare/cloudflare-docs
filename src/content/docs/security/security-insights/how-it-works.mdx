@@ -10,7 +10,7 @@ sidebar:
 
 import { Render } from "~/components";
 
-Once you [enable Security Insights](/security-center/get-started/), Cloudflare runs regular security scans on your account. These scans check your Cloudflare account settings, DNS record configurations, and product configurations — such as SSL/TLS, WAF, and Access — across all domains in your account.
+Once you [enable Security Insights](/threat-intelligence/get-started/), Cloudflare runs regular security scans on your account. These scans check your Cloudflare account settings, DNS record configurations, and product configurations — such as SSL/TLS, WAF, and Access — across all domains in your account.
 
 Each scan compares your current configuration against a set of ideal product configurations that indicate a strong security posture. When your configuration does not match an ideal configuration for one or more checks, the scan produces a **Security Insight** — a finding that represents a potential risk.
 
@@ -24,12 +24,12 @@ Security Insights also checks [non-proxied (DNS-only) hostnames](/dns/proxy-stat
 
 Each insight has the following properties:
 
-<Render file="scan-properties" product="security-center" />
+<Render file="scan-properties" product="threat-intelligence" />
 
 For a full list of insight types and their descriptions, refer to [Security Insights](/security/security-insights/).
 
 ## Scan frequency
 
-<Render file="scan-frequency" product="security-center" />
+<Render file="scan-frequency" product="threat-intelligence" />
 
-Eligible accounts (Business, Enterprise, or Teams plans) can also manually start a scan. Refer to [Get started](/security-center/get-started/) for instructions.
+Eligible accounts (Business, Enterprise, or Teams plans) can also manually start a scan. Refer to [Get started](/threat-intelligence/get-started/) for instructions.

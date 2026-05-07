@@ -9,16 +9,16 @@ products:
   - ddos-protection
   - ssl
   - dns
-  - security-center
+  - threat-intelligence
 ---
 
 import { Render } from "~/components";
 
-<Render file="security-insights-definition" product="security-center" />
+<Render file="security-insights-definition" product="threat-intelligence" />
 
 ## Dashboard analytics
 
-Security Insights focuses on your Cloudflare environment by running [security scans](/security/security-insights/how-it-works/#scan-frequency) at regular intervals. Instead of navigating through each of your domains to review their security issues, the Security Center aggregates all of them into a single dashboard.
+Security Insights focuses on your Cloudflare environment by running [security scans](/security/security-insights/how-it-works/#scan-frequency) at regular intervals. Instead of navigating through each of your domains to review their security issues, Threat intelligence aggregates all of them into a single dashboard.
 
 ![Security Insights Overview](~/assets/images/fundamentals/security-insights-overview.png)
 
@@ -28,4 +28,4 @@ The list of insights may include potential security threats, vulnerabilities, co
 
 Each insight that is discovered by the Security Insights scan will have the following properties assigned to them:
 
-<Render file="scan-properties" product="security-center" />
+<Render file="scan-properties" product="threat-intelligence" />
