@@ -29,7 +29,7 @@ This documentation is focused on the SSL/TLS product. For a broader overview, re
 
 When a hostname has [mTLS enabled](/ssl/client-certificates/enable-mtls/), Cloudflare requires connecting clients to present a valid certificate. Client certificates are installed on the devices or services that should be granted access.
 
-Cloudflare validates client certificates against CAs set at the account level. Because validation is account-level, the same certificates work across multiple zones and domains under your account (for example, `host.example.com`, `name.example.net`, `secure.anotherdomain.test`) as long as mTLS is enabled for each hostname.
+Cloudflare validates client certificates against CAs set at the account level. Because validation is account-level, the same certificates work across multiple domains under your account, as long as mTLS is enabled for each hostname (for example, `host.example.com`, `name.example.net`, `secure.anotherdomain.test`).
 
 The account-level CAs can be:
 
