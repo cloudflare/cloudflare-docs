@@ -36,11 +36,11 @@ Simple expressions have the following syntax:
 
 Where:
 
-- [Fields](/ruleset-engine/rules-language/fields/) specify which property of the request or response to examine (for example, `http.request.uri.path` or `ip.src`).
+- [Field](/ruleset-engine/rules-language/fields/) specifies which property of the request or response to examine (for example, `http.request.uri.path` or `ip.src`).
 
-- [Comparison operators](/ruleset-engine/rules-language/operators/#comparison-operators) define the relationship that must hold between the field value and your specified value for the expression to return `true` (for example, `eq`, `matches`, or `in`).
+- [Comparison operator](/ruleset-engine/rules-language/operators/#comparison-operators) defines the relationship that must hold between the field value and your specified value for the expression to return `true` (for example, `eq`, `matches`, or `in`).
 
-- [Values](/ruleset-engine/rules-language/values/) are the data you compare against the field. When evaluating a rule, Cloudflare compares these values with the actual data obtained from the request.
+- [Value](/ruleset-engine/rules-language/values/) is the data you compare against the field. When evaluating a rule, Cloudflare compares this value with the actual data obtained from the request.
 
 ## Compound expressions
 
