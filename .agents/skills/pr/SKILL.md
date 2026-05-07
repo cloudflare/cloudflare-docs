@@ -35,7 +35,10 @@ Run `--stat` first to understand the scope without blowing up context:
 ```bash
 git log --oneline production..HEAD
 git diff production...HEAD --stat
+git status
 ```
+
+**If `git status` shows untracked or modified files**, stop and ask the user whether those files should be committed as part of this PR before proceeding. Do not silently ignore them — they may be integral to the work being submitted.
 
 If the stat output shows more than ~20 files changed, do **not** run the full diff. Instead, read specific files that are unclear from the stat output. For smaller changesets (under ~20 files), the full diff is fine:
 
