@@ -17,7 +17,7 @@ import { TabItem, Tabs } from "~/components"
 
 If you are migrating from Page Rules, there is a behavior change between Page Rules and Cache Rules.
 
-When you create a new Cache Rule and select **Eligible for cache**, the Cache Everything feature is enabled by default. With Page Rules, you had to specifically enable the Cache Everything option.
+When you create a new Cache Rule and select **Eligible for cache**, the Cache Everything feature is enabled by default. This means Cloudflare caches all content matching the rule, including content types it does not cache by default (such as HTML). With Page Rules, you had to specifically enable the Cache Everything option.
 
 To maintain the same behavior you had with Page Rules (that is, not enabling Cache Everything), you need to create these two specific rules in this order before creating any additional rules.
 
@@ -62,12 +62,10 @@ If you prefer, you can select **Edit expression** and paste the following expres
 
 </TabItem> </Tabs>
 
-:::note[Note]
-
+:::note
 
 Remember to create the rules in the specified order: first, the `bypass everything` rule, and then the `cache all default cacheable file extensions` rule.
 
 ![Rules order](~/assets/images/cache/rule-order.png)
-
 
 :::
