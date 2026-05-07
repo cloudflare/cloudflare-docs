@@ -62,8 +62,6 @@ The fastest path uses the **Get Started** flow in the Cloudflare dashboard. It c
 
 9. Select **Continue**.
 
-   {/* Source: /cloudflare-one/setup/secure-private-apps/private-web-app/ — steps 5-9 structurally match source; example application name adapted to customer-portal */}
-
 <Render
 	file="access/secure-private-apps-shared-steps"
 	product="cloudflare-one"
@@ -86,13 +84,13 @@ To add a second published application to an existing tunnel, refer to [Published
 
 ## Add identity-based access control
 
-To control which employees and clients can reach the portal, put [Cloudflare Access](/cloudflare-one/access-controls/) in front of it. Access checks every request against a policy before it reaches your origin, and the policy can require an identity provider login, a one-time PIN, a service token, or other context such as country or device posture. {/* Source: /cloudflare-one/access-controls/policies/ — Allow, Block, Bypass, Service Auth actions */}
+To control which employees and clients can reach the portal, put [Cloudflare Access](/cloudflare-one/access-controls/) in front of it. Access checks every request against a policy before it reaches your origin, and the policy can require an identity provider login, a one-time PIN, a service token, or other context such as country or device posture.
 
 The basic policy created in the **Get Started** flow allows the email addresses you typed in. For a customer portal that serves both employees and external clients, replace it with identity-provider login for employees and keep one-time PIN for clients.
 
 ### Connect an identity provider
 
-Cloudflare Access integrates with most corporate identity providers (IdPs). {/* Source: /cloudflare-one/integrations/identity-providers/ — supports social, open source, and corporate IdPs */} The setup depends on which provider you use:
+Cloudflare Access integrates with most corporate identity providers (IdPs). The setup depends on which provider you use:
 
 - [Google Workspace](/cloudflare-one/integrations/identity-providers/google-workspace/) for organizations on Google Workspace.
 - [Okta](/cloudflare-one/integrations/identity-providers/okta/) for Okta-based SSO.
@@ -120,7 +118,7 @@ To open the policies for your customer portal application:
 
 3. Replace the default policy with two new ones:
 
-   **Allow employees by email domain** — uses the `Allow` action with an `Include` rule for **Emails ending in** `@example.com`. {/* Source: /cloudflare-one/access-controls/policies/common-policies/ — example-allow-email-domain partial */}
+   **Allow employees by email domain** — uses the `Allow` action with an `Include` rule for **Emails ending in** `@example.com`.
 
    <Render file="access/example-allow-email-domain" product="cloudflare-one" />
 
@@ -130,7 +128,7 @@ For more policy examples, refer to [Common policies](/cloudflare-one/access-cont
 
 ### Use rule groups for per-tenant access
 
-Most customer portals serve more than one client. The simplest way to scope access per tenant is to publish one application per client (for example, `client-acme.example.com`, `client-globex.example.com`) and apply a different policy to each. For organizations with many clients, use [rule groups](/cloudflare-one/access-controls/policies/groups/) to define each client's allowed users once and reference the group from each application's policy. {/* Source: /cloudflare-one/access-controls/policies/groups/ — rule groups can mix individual users, IdP groups, and service tokens */}
+Most customer portals serve more than one client. The simplest way to scope access per tenant is to publish one application per client (for example, `client-acme.example.com`, `client-globex.example.com`) and apply a different policy to each. For organizations with many clients, use [rule groups](/cloudflare-one/access-controls/policies/groups/) to define each client's allowed users once and reference the group from each application's policy.
 
 A typical pattern:
 
@@ -142,9 +140,9 @@ If your identity provider exposes group membership (for example, Google Workspac
 
 ## Add machine access with service tokens
 
-Some clients of your portal are not people: a CI/CD pipeline that deploys to your internal admin tool, a monitoring agent that runs health checks, or a partner integration that posts data to an internal API. {/* Source: /cloudflare-one/access-controls/service-credentials/service-tokens/ — service tokens authenticate automated systems */} [Service tokens](/cloudflare-one/access-controls/service-credentials/service-tokens/) give automated systems an identity that Access can recognize.
+Some clients of your portal are not people: a CI/CD pipeline that deploys to your internal admin tool, a monitoring agent that runs health checks, or a partner integration that posts data to an internal API. [Service tokens](/cloudflare-one/access-controls/service-credentials/service-tokens/) give automated systems an identity that Access can recognize.
 
-A service token consists of a **Client ID** and **Client Secret** that the automated system sends as HTTP headers. Access verifies the headers against your policy and lets the request through if they match. Each Access application that references the service token in a **Service Auth** policy accepts requests from that token. {/* Source: /cloudflare-one/access-controls/service-credentials/service-tokens/ — Service Auth action */}
+A service token consists of a **Client ID** and **Client Secret** that the automated system sends as HTTP headers. Access verifies the headers against your policy and lets the request through if they match. Each Access application that references the service token in a **Service Auth** policy accepts requests from that token.
 
 ### Create a service token
 
@@ -171,7 +169,7 @@ To let the service token reach a specific Access application:
 
 5. Select **Save**.
 
-The Service Auth action is required so Access does not redirect the automated system to an identity provider login. {/* Source: /cloudflare-one/access-controls/service-credentials/service-tokens/ — Service Auth required for non-IdP authentication */}
+The Service Auth action is required so Access does not redirect the automated system to an identity provider login.
 
 ### Authenticate from your script
 
@@ -191,7 +189,7 @@ Service tokens expire on the duration you selected when creating them. To extend
 
 ## Audit and monitor access
 
-To investigate suspicious sign-ins, audit user activity, or confirm a policy is behaving as expected, review the [Access authentication logs](/cloudflare-one/insights/logs/dashboard-logs/access-authentication-logs/). Every authentication attempt (successful or denied) is recorded. {/* Source: /cloudflare-one/insights/logs/dashboard-logs/access-authentication-logs/ — logs every login attempt */}
+To investigate suspicious sign-ins, audit user activity, or confirm a policy is behaving as expected, review the [Access authentication logs](/cloudflare-one/insights/logs/dashboard-logs/access-authentication-logs/). Every authentication attempt (successful or denied) is recorded.
 
 ### View Access authentication logs
 
@@ -199,11 +197,11 @@ To investigate suspicious sign-ins, audit user activity, or confirm a policy is 
 
 2. Select **Access authentication logs**.
 
-3. Filter the log viewer by event details such as application, user email, and policy decision. {/* Source: /cloudflare-one/insights/logs/dashboard-logs/access-authentication-logs/ — filter by timestamp and event details */}
+3. Filter the log viewer by event details such as application, user email, and policy decision.
 
 4. Select an individual timestamp to inspect the full event, including the Ray ID and the policy that matched.
 
-Each log entry contains the user email, IP address, the application requested, the identity provider used, whether the attempt was allowed, and a Ray ID for tracing. {/* Source: /cloudflare-one/insights/logs/dashboard-logs/access-authentication-logs/ — basic log fields */}
+Each log entry contains the user email, IP address, the application requested, the identity provider used, whether the attempt was allowed, and a Ray ID for tracing.
 
 :::note[Per-request logs require Enterprise]
 Authentication logs record every login. To audit individual HTTP requests made during an authenticated session, refer to the Per-request logs section in the Access authentication logs reference.
@@ -213,8 +211,6 @@ Authentication logs record every login. To audit individual HTTP requests made d
 
 Cloudflare Notifications can send an alert when a relevant event occurs. Useful alerts for a customer portal include service token expiration warnings and tunnel health changes.
 
-{/* NEW PROCEDURE GAP: Jira outline references "alerts for failed login attempts" but the available notifications list (src/content/notifications/index.yaml) does not include a failed-login alert for Cloudflare Access. Possible alternatives: configure Logpush to push Access authentication logs to a SIEM and alert on denied events. The writer should confirm with the Cloudflare One team whether a per-product failed-login alert is on the roadmap. */}
-
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and go to the **Notifications** page.
 
    <DashButton url="/?to=/:account/notifications" />
@@ -223,8 +219,8 @@ Cloudflare Notifications can send an alert when a relevant event occurs. Useful 
 
 3. Select the notification type:
 
-   - **Expiring Access Service Token Alert** — alerts you a week before a service token expires. {/* Source: /cloudflare-one/access-controls/service-credentials/service-tokens/ — confirmed against /cloudflare-docs/src/content/notifications/index.yaml */}
-   - **Tunnel Health Alert** — alerts you when a tunnel changes deployment or health status. {/* Source: /cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/notifications/ — confirmed against /cloudflare-docs/src/content/notifications/index.yaml */}
+   - **Expiring Access Service Token Alert** — alerts you a week before a service token expires.
+   - **Tunnel Health Alert** — alerts you when a tunnel changes deployment or health status.
 
 4. Enter a name for the alert and an optional description.
 
@@ -242,13 +238,13 @@ Use the following options to tighten the deployment for production traffic.
 
 The session duration on each Access application controls how long a user stays signed in before they must reauthenticate. The default is set when you create the application; tighten it for sensitive applications.
 
-To change session duration, edit the application in **Zero Trust** > **Access controls** > **Applications**, then update **Session Duration**. {/* Source: /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/ — session duration sets application token lifetime */} Choose a shorter duration (for example, 30 minutes) for admin panels and a longer duration (for example, 8 hours) for everyday productivity tools.
+To change session duration, edit the application in **Zero Trust** > **Access controls** > **Applications**, then update **Session Duration**. Choose a shorter duration (for example, 30 minutes) for admin panels and a longer duration (for example, 8 hours) for everyday productivity tools.
 
 ### Run more than one tunnel replica
 
-A single `cloudflared` instance is a single point of failure. To make the tunnel highly available, run `cloudflared` on more than one host. Cloudflare load-balances requests across all replicas of the same tunnel. {/* Source: /cloudflare-one/networks/connectors/cloudflare-tunnel/ — multiple connectors per tunnel; reference architecture covers HA */}
+A single `cloudflared` instance is a single point of failure. To make the tunnel highly available, run `cloudflared` on more than one host. Cloudflare load-balances requests across all replicas of the same tunnel.
 
-To add replicas, install `cloudflared` on another host and start it with the same tunnel token. The token is available from **Zero Trust** > **Networks** > **Connectors** > **Cloudflare Tunnels** > select the tunnel > **Edit**. {/* Source: /cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/remote-tunnel-permissions/ — get the tunnel token */}
+To add replicas, install `cloudflared` on another host and start it with the same tunnel token. The token is available from **Zero Trust** > **Networks** > **Connectors** > **Cloudflare Tunnels** > select the tunnel > **Edit**.
 
 :::note[Treat the tunnel token as a secret]
 Anyone with the tunnel token can run the tunnel. Store it in a secrets manager and rotate it if it is exposed. Refer to [Rotate a token without service disruption](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/remote-tunnel-permissions/#rotate-a-token-without-service-disruption) for the rotation procedure.
@@ -264,7 +260,7 @@ The Cloudflare One Client and device posture features are not available on the Z
 
 ### Add MFA to high-value applications
 
-You can require multi-factor authentication (MFA) on individual applications independently of your identity provider's MFA. {/* Source: /cloudflare-one/access-controls/policies/mfa-requirements/ — MFA requirements page */} Refer to [Enforce MFA](/cloudflare-one/access-controls/policies/mfa-requirements/) for the available factors and how to configure them.
+You can require multi-factor authentication (MFA) on individual applications independently of your identity provider's MFA. Refer to [Enforce MFA](/cloudflare-one/access-controls/policies/mfa-requirements/) for the available factors and how to configure them.
 
 ## Related resources
 
