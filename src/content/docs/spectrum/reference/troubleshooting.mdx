@@ -27,3 +27,128 @@ When a Spectrum application uses a [virtual network origin](/spectrum/reference/
 ### Cloudflare WAN as the connector
 
 For tunnel health, BGP, and routing diagnostics on WAN-connected origins, refer to [Troubleshoot Cloudflare WAN](/cloudflare-wan/troubleshooting/).
+
+## Health checks fail when IP Access Rules are enabled
+
+### Symptoms
+
+- Cloudflare Load Balancer health checks report all endpoints as unhealthy with the error `Connection reset by peer`.
+- Removing IP Access Rules from the Spectrum application causes health checks to succeed.
+- The Spectrum application itself works correctly for client traffic that is allowed by the IP Access Rules.
+
+### Cause
+
+When you enable [IP Access Rules](/spectrum/reference/configuration-options/#ip-access-rules) on a Spectrum application, all incoming connections are evaluated against your rules — including connections from Cloudflare's own health check probes. If your IP Access Rules use an allowlist model (allow specific IPs, block everything else), Cloudflare's health check source IPs will be blocked, causing health checks to fail.
+
+### Solution
+
+Add Cloudflare's IP ranges to your IP Access Rules allowlist. You can find the current list of Cloudflare IP addresses at [cloudflare.com/ips](https://www.cloudflare.com/ips/).
+
+Alternatively, if you only need to restrict client access (not health check access), consider configuring health checks to use a TCP check type that validates the connection can be established, and manage your access control at the origin level instead.
+
+:::note
+
+[Custom rules](/waf/custom-rules/) (WAF rules) do not apply to Spectrum applications configured with the TCP/UDP application type. For Spectrum, IP Access Rules are the only supported mechanism for IP-based filtering. Refer to [Spectrum Limitations](/spectrum/reference/limitations/#ip-access-control).
+
+:::
+
+## Cannot create Spectrum application — DNS record already exists
+
+### Symptoms
+
+- When creating a Spectrum application in the dashboard, you receive the error: **"An A, AAAA or CNAME record already exists with that host."**
+- You are trying to use the same hostname for both an HTTP-proxied service (through Cloudflare's CDN/WAF) and a Spectrum TCP or UDP application on a different port.
+
+### Cause
+
+Cloudflare does not support having both a proxied DNS record (used for HTTP/HTTPS traffic through the CDN and WAF) and a Spectrum application on the same hostname. This is a platform limitation, not a dashboard-only restriction.
+
+When a Spectrum application is created, it provisions its own DNS record for the hostname. This conflicts with any existing proxied A, AAAA, or CNAME record for that same hostname.
+
+### Solution
+
+Use a **split-hostname architecture** where HTTP/HTTPS traffic and TCP/UDP traffic use different hostnames:
+
+| Traffic type | Hostname | Cloudflare service |
+|---|---|---|
+| HTTPS (web UI, APIs) | `app.example.com` | Proxied DNS record with CDN/WAF |
+| TCP (custom protocol, ICA/HDX, etc.) | `app-tcp.example.com` | Spectrum application |
+
+Configure your application or client to use the appropriate hostname for each traffic type.
+
+:::note[Common use case: Citrix Gateway / VDI]
+
+A common scenario where this limitation is encountered is Citrix Gateway deployments, where the web UI and authentication flow use HTTPS (requiring WAF protection) while ICA/HDX session traffic uses TCP on a different port. In this case, configure the Citrix StoreFront to generate ICA files pointing to the Spectrum hostname (for example, `citrix-ica.example.com:4443`) while keeping the web UI on the WAF-protected hostname (`citrix.example.com:443`).
+
+:::
+
+For more details on this limitation, refer to [Spectrum Limitations — Using the same hostname for HTTP proxy and Spectrum](/spectrum/reference/limitations/#using-the-same-hostname-for-http-proxy-and-spectrum).
+
+## Origin receives HTTP instead of HTTPS (protocol mismatch)
+
+### Symptoms
+
+- Your Spectrum application edge port uses HTTP (for example, port 8012), and your origin expects HTTPS on port 443.
+- The origin rejects the connection or returns errors because it receives plaintext HTTP instead of encrypted HTTPS.
+- The configuration appears to work as: `http:8012 → Cloudflare Spectrum → http:443 (origin)` instead of the expected `http:8012 → Cloudflare Spectrum → https:443 (origin)`.
+
+### Cause
+
+Spectrum operates at Layer 4 (TCP/UDP). When Edge TLS Termination is set to **off** (Passthrough), Spectrum forwards the raw TCP payload to the origin without modification. It does not perform protocol upgrade — connecting to an origin on port 443 does not automatically mean the connection will use HTTPS.
+
+### Solution
+
+To send encrypted traffic from Cloudflare to your origin, you must enable **Edge TLS Termination** on the Spectrum application and set it to **Full** or **Full (Strict)**:
+
+- **Full**: Cloudflare connects to origin using TLS but does not validate the origin certificate.
+- **Full (Strict)**: Cloudflare connects to origin using TLS and validates the origin certificate against a trusted CA or Cloudflare Origin CA.
+
+You can configure Edge TLS Termination in the Spectrum application settings in the dashboard, or via the API by setting the `tls` field to `full` or `strict`.
+
+Refer to [Edge TLS Termination](/spectrum/reference/configuration-options/#edge-tls-termination) for more details.
+
+## Error 525: SSL handshake failed
+
+### Symptoms
+
+- Clients connecting through Spectrum receive HTTP 525 errors.
+- The error occurs after enabling a Spectrum application or changing TLS settings.
+
+### Cause
+
+Error 525 indicates that the TLS handshake between Cloudflare and your origin server failed. In a Spectrum context, common causes include:
+
+1. **Edge TLS Termination is set to Full or Full (Strict)**, but the origin does not have a valid TLS certificate or does not accept TLS connections on the configured port.
+2. **The Spectrum application origin points to another Cloudflare-proxied hostname** (for example, `origin.example.com.cdn.cloudflare.net`). This creates a double-proxy chain that is not supported for TCP application types and can cause TLS handshake failures.
+3. **TLS version or cipher mismatch** between Cloudflare's edge and the origin server.
+
+### Solution
+
+- Verify that your origin server has a valid TLS certificate and is configured to accept TLS connections on the origin port.
+- If using **Full (Strict)**, ensure the origin certificate is issued by a publicly trusted CA or a [Cloudflare Origin CA certificate](/ssl/origin-configuration/origin-ca/).
+- Do not route a TCP-type Spectrum application through another Cloudflare-proxied hostname. Use a direct origin IP address or a DNS name that resolves directly to your origin server (not through Cloudflare's proxy).
+- If the origin only supports specific TLS versions, note that Spectrum supports TLS 1.1, 1.2, and 1.3 when Edge TLS Termination is enabled.
+
+## Understanding common Spectrum event log status codes
+
+Spectrum uses its own set of connection status codes that are distinct from HTTP status codes used by Cloudflare's CDN layer. Some codes share numbers (for example, 444, 499) but have different meanings.
+
+For the full status code table, refer to [Event logs](/spectrum/reference/logs/).
+
+### Common patterns
+
+| Pattern | Likely cause | Recommended action |
+|---|---|---|
+| High volume of **444** (Origin sent RST) | Origin server is actively resetting connections. May indicate origin overload, misconfigured firewall, or application crash. | Check origin server health, firewall rules, and application logs. |
+| High volume of **445** (Origin timeout) | Established connections to origin are timing out. May indicate origin is slow to respond or network path issues. | Check origin server performance and network connectivity between Cloudflare and origin. |
+| High volume of **497** (Client timeout) | Client connections are timing out. May indicate network issues between clients and Cloudflare edge, or clients with very long idle connections. | Review client network conditions and consider adjusting idle timeout expectations. |
+| High volume of **498** (Client broken pipe) | Client connections are dropping mid-session. May indicate unstable client networks (for example, mobile users). | Often expected for mobile or unreliable networks. Monitor for trends. |
+| High volume of **499** (Client sent RST) | Clients are actively closing connections. May indicate client-side timeouts or application-level disconnects. | Review client application timeout settings. |
+| **521** (Origin refused connection) | Origin is not accepting connections on the configured port. | Verify origin server is running and listening on the correct port. Check origin firewall. |
+| **522** (Origin connection timeout) | Cannot establish a TCP connection to origin. | Verify origin IP address, port, and that origin is reachable from Cloudflare. |
+
+:::note
+
+Network Analytics data for Spectrum does not reflect the outcomes of IP Access Rules. To verify whether traffic was allowed or blocked based on IP Access Rules, consult the Spectrum event logs.
+
+:::
