@@ -11,11 +11,11 @@ import { FeatureTable } from "~/components"
 
 ## Edge Cache TTL
 
-Edge Cache TTL (Time to Live) specifies the maximum time to cache a resource in the Cloudflare global network. Edge Cache TTL is not visible in response headers and the minimum Edge Cache TTL depends on plan type.
+Edge Cache TTL (Time to Live) specifies the maximum time to cache a resource in the Cloudflare global network. A longer Edge Cache TTL means more requests are served from cache, reducing load on your origin server. Edge Cache TTL is not visible in response headers and the minimum Edge Cache TTL depends on plan type.
 
 <FeatureTable id="cache.edge_cache_ttl" />
 
-For more information on how to set up Edge Cache TTL, refer to [Cache rules](/cache/how-to/cache-rules/settings/#edge-ttl).
+For more information on how to configure Edge Cache TTL, refer to [Cache rules](/cache/how-to/cache-rules/settings/#edge-ttl).
 
 ## Browser Cache TTL
 
@@ -26,13 +26,13 @@ The Browser Cache TTL sets the expiration for resources cached in a visitor’s 
 
 Unless specifically set in a cache rule, Cloudflare does not override or insert `Cache-Control` headers if you set **Browser Cache TTL** to **Respect Existing Headers**.
 
-:::note[Note]
+:::note
 
-
-* Setting high Browser Cache TTL values means that the assets will be cached for a long time by users’ browsers.
+* Setting high Browser Cache TTL values means that the assets will be cached for a long time by users' browsers.
 * If you modify cached assets, the new assets may not be displayed to repeat visitors before the Browser Cache TTL expires.
-* Purging Cloudflare’s cache does not affect assets stored by a visitor’s browser. 
-  :::
+* Purging Cloudflare's cache does not affect assets stored by a visitor's browser.
+
+:::
 
 <FeatureTable id="cache.browser_cache_ttl" />
 
