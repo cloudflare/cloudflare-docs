@@ -16,34 +16,25 @@ If an attacker compromises a third-party script on your pages, they can steal vi
 The procedures in this guide are configured per domain. Select your domain in the Cloudflare dashboard before starting.
 :::
 
-## Know what runs in your visitors' browsers
+## Turn on script monitoring
 
 {/* Source: /client-side-security/ — product overview framing the supply chain threat */}
 {/* Source: /client-side-security/how-it-works/ — CSP monitoring mechanism */}
+{/* Source: /client-side-security/get-started/ — activation procedure */}
 
-Server-side security tools such as WAF custom rules, bot detection, and rate limiting inspect traffic between the visitor's browser and your origin. They do not see what happens inside the browser after the page loads. A compromised third-party script can exfiltrate form data, including login credentials and payment information, by sending it to an external endpoint without generating any unusual traffic to your origin.
-
-[Client-side security](/client-side-security/) (formerly Page Shield) addresses this gap. It adds a `content-security-policy-report-only` HTTP header to a sample of your HTML responses. Browsers that receive this header report back to Cloudflare which scripts are running and which external connections those scripts make. Cloudflare builds an inventory of every script and connection detected on your pages.
-
-This monitoring layer gives you visibility into three categories of risk:
+Server-side security tools such as WAF custom rules, bot detection, and rate limiting inspect traffic between the visitor's browser and your origin. They do not see what happens inside the browser after the page loads. [Client-side security](/client-side-security/) (formerly Page Shield) fills this gap by adding a `content-security-policy-report-only` HTTP header to a sample of your HTML responses. Browsers use this header to report which scripts are running and which external connections those scripts make, and Cloudflare builds an inventory of detected resources. Monitoring surfaces three categories of risk:
 
 - **Unknown scripts** loading from domains you do not recognize
 - **Changed scripts** where an existing script's code has been modified
 - **Malicious scripts** flagged by threat intelligence and machine learning
 
-The rest of this guide walks through turning on monitoring, reviewing your inventory, and (if you have Client-Side Security Advanced) enforcing an allowlist.
-
-## Turn on script monitoring
-
-{/* Source: /client-side-security/get-started/ — activation procedure */}
-
-To see which scripts, connections, and cookies are active on your pages, turn on client-side resource monitoring. It adds a CSP report-only header to a sample of your site's HTML responses without blocking any resources or changing how your pages load.
+To turn on client-side resource monitoring, which does not block any resources or change how your pages load:
 
 <Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
 <Steps>
 
-1. In the Cloudflare dashboard, go to the Security **Settings** page.
+1. In the Cloudflare dashboard, go to the **Security Settings** page.
 
    <DashButton url="/?to=/:account/:zone/security/settings" />
 
@@ -147,9 +138,9 @@ Cloudflare flags scripts using threat intelligence feeds and machine learning an
 
 3. Select **Details** for each script considered malicious. The script details contain:
    - **Malicious code analysis**: Scores between 1-99 classifying how malicious the current script version is, where 1 means definitely malicious and 99 means definitely not malicious.
-   - **Threat intelligence**: Whether the script URL or domain is known to be malicious according to threat intelligence feeds. If threat intelligence feeds do not have information about the script, the dashboard shows **Not present**.
+   - **Threat intelligence**: Whether the script URL and/or domain is known to be malicious according to threat intelligence feeds. If the script is considered malicious, the dashboard shows a list of associated threat categories. If threat intelligence feeds do not have information about the script, the dashboard shows **Not present**.
 
-4. Based on the displayed information, and with the help of the **First seen** and **Last seen** fields, review and update the pages where the malicious script was detected. Remove the script from your site if it is confirmed malicious.
+4. Based on the displayed information, and with the help of the **First seen** and **Last seen** fields, review and update the pages where the malicious script was detected.
 
 </Steps>
 
@@ -177,7 +168,7 @@ Once you know which resources your pages load, you can block anything unexpected
 - **Log**: Reports resources outside your allowlist as [rule violations](/client-side-security/rules/violations/) without blocking them. Use this action to validate a new rule.
 - **Allow**: Blocks any resource not explicitly listed in your allowlist and logs it as a rule violation.
 
-The workflow for enforcing an allowlist follows a positive security model: deploy a rule in Log mode to identify what your pages load, review violations to confirm your allowlist is complete, then switch to Allow mode to block unapproved resources.
+The workflow for enforcing an allowlist follows a positive security model (define what is allowed, reject everything else): deploy a rule in Log mode to identify what your pages load, review violations to confirm your allowlist is complete, then switch to Allow mode to block unapproved resources.
 
 ### Create a content security rule with the Log action
 
@@ -185,7 +176,7 @@ Start by creating a rule that logs violations without blocking any resources. Th
 
 <Render file="rule-create" params={{ ruleAction: "Log" }} product="client-side-security" />
 
-Cloudflare provides source suggestions for **Default**, **Scripts**, and **Connections** directives based on your monitored resources. Select **Refresh suggestions** to populate the allowlist with scripts and connections Cloudflare has already detected on your pages.
+Cloudflare provides suggestions for **Default**, **Scripts**, and **Connections** directives based on your monitored resources. Select **Refresh suggestions** to populate the allowlist with scripts and connections Cloudflare has already detected on your pages.
 
 ### Review rule violations
 
@@ -194,8 +185,6 @@ Cloudflare provides source suggestions for **Default**, **Scripts**, and **Conne
 After your Log rule has been active, review the list of rule violations to confirm no legitimate resources are missing from your allowlist.
 
 <Render file="rule-review-violations" product="client-side-security" />
-
-The displayed information includes a sparkline next to the rule name showing violations in the past seven days. For rules with violations, an expandable details section shows the top resources in violation events.
 
 Update the rule to add any legitimate resources that appear as violations. Repeat this review until no legitimate resources are flagged.
 
@@ -222,7 +211,7 @@ Once you have verified that your content security rule covers all legitimate res
 
 If a rule change causes unexpected violations or blocks legitimate resources, refer to the [rollback procedure](/client-side-security/best-practices/deploy-rules-in-production/#rollback-a-rule-change): switch the rule action back to Log immediately, review the violations, update the allowlist, and repeat validation before switching back to Allow.
 
-:::note[Connection monitoring (Enterprise)]
+:::note[Connection monitoring (Client-Side Security Advanced)]
 Customers with Client-Side Security Advanced can also monitor which external endpoints scripts send data to, providing visibility into potential data exfiltration. Review the **Connections** tab on the client-side resources page to identify unexpected outbound connections. For more information, refer to [Monitor resources and cookies](/client-side-security/detection/monitor-connections-scripts/).
 :::
 
