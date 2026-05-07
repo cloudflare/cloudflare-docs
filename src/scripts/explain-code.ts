@@ -48,7 +48,7 @@ function init() {
 		const instance = tippy(button, {
 			content: "Explain Code",
 			placement: "top",
-			arrow: false,
+			arrow: true,
 			appendTo: () => document.body,
 		});
 		tippyInstances.push(instance);
@@ -61,7 +61,7 @@ function init() {
 		const instance = tippy(button, {
 			content: "Copy to clipboard",
 			placement: "top",
-			arrow: false,
+			arrow: true,
 			appendTo: () => document.body,
 		});
 		tippyInstances.push(instance);

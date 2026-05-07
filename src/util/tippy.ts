@@ -22,7 +22,7 @@ export function addTooltip(
 		allowHTML: true,
 		interactive: true,
 		placement: "top",
-		arrow: false,
+		arrow: true,
 		// This is imperfect as it stops you from tabbing into
 		// links inside the tooltip, but stops tooltips being
 		// cutoff by the sidebar
