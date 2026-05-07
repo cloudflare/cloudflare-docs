@@ -16,7 +16,13 @@ const collection = await getCollection("granular-control-applications");
 		<Details header={entry.data.display_id as string}>
 			<ul>
 				{entry.data.applications.map((application: Application) => (
-					<li>{application.display_name}</li>
+					<li>
+						<a
+							href={`/cloudflare-one/traffic-policies/http-policies/compatible-applications#${application.name}`}
+						>
+							{application.display_name}
+						</a>
+					</li>
 				))}
 			</ul>
 		</Details>

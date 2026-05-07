@@ -1,0 +1,129 @@
+---
+import { getCollection } from "astro:content";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+type Item = {
+	operation_name: string;
+	operation_id: number;
+	application_control: string | null;
+	application_control_id: number | null;
+	contains_payload: boolean;
+	operation_group: string;
+	operation_group_id: number;
+};
+
+type Control = {
+	label: string;
+	items: Item[];
+};
+
+type Application = {
+	name: string;
+	display_name: string;
+	controls: Control[];
+};
+
+const collection = await getCollection("granular-control-applications");
+
+const sorted = [...collection].sort((a, b) =>
+	a.data.display_id.localeCompare(b.data.display_id),
+);
+---
+
+{
+	sorted.map((entry) => (
+		<>
+			<h2 id={entry.id}>{entry.data.display_id}</h2>
+			{(entry.data.applications as Application[]).map((app) => (
+				<>
+					<h3 id={app.name}>{app.display_name}</h3>
+					{app.controls.length > 1 ? (
+						<Tabs>
+							{app.controls.map((control) => (
+								<TabItem label={control.label}>
+									<table>
+										<thead>
+											<tr>
+												<th>Operation Name</th>
+												<th>Operation ID</th>
+												<th>Application Control</th>
+												<th>Application Control ID</th>
+												<th>Contains Payload</th>
+												<th>Operation Group</th>
+												<th>Operation Group ID</th>
+											</tr>
+										</thead>
+										<tbody>
+											{control.items.map((item) => (
+												<tr>
+													<td>
+														<strong>{item.operation_name}</strong>
+													</td>
+													<td>
+														<code>{item.operation_id}</code>
+													</td>
+													<td>{item.application_control ?? "—"}</td>
+													<td>
+														{item.application_control_id !== null ? (
+															<code>{item.application_control_id}</code>
+														) : (
+															"—"
+														)}
+													</td>
+													<td>{item.contains_payload ? "✓" : "—"}</td>
+													<td>{item.operation_group}</td>
+													<td>
+														<code>{item.operation_group_id}</code>
+													</td>
+												</tr>
+											))}
+										</tbody>
+									</table>
+								</TabItem>
+							))}
+						</Tabs>
+					) : (
+						<table>
+							<thead>
+								<tr>
+									<th>Operation Name</th>
+									<th>Operation ID</th>
+									<th>Application Control</th>
+									<th>Application Control ID</th>
+									<th>Contains Payload</th>
+									<th>Operation Group</th>
+									<th>Operation Group ID</th>
+								</tr>
+							</thead>
+							<tbody>
+								{app.controls[0].items.map((item) => (
+									<tr>
+										<td>
+											<strong>{item.operation_name}</strong>
+										</td>
+										<td>
+											<code>{item.operation_id}</code>
+										</td>
+										<td>{item.application_control ?? "—"}</td>
+										<td>
+											{item.application_control_id !== null ? (
+												<code>{item.application_control_id}</code>
+											) : (
+												"—"
+											)}
+										</td>
+										<td>{item.contains_payload ? "✓" : "—"}</td>
+										<td>{item.operation_group}</td>
+										<td>
+											<code>{item.operation_group_id}</code>
+										</td>
+									</tr>
+								))}
+							</tbody>
+						</table>
+					)}
+				</>
+			))}
+		</>
+	))
+}
