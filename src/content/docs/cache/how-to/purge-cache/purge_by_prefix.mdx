@@ -11,7 +11,7 @@ sidebar:
 
 import { DashButton } from "~/components"
 
-You can instantly purge their cache by URL prefix or path separators in their URL. For an example URL like `https://www.example.com/foo/bar/baz/qux.jpg`, valid purge requests include:
+You can purge cached resources by URL prefix or path separator. For an example URL like `https://www.example.com/foo/bar/baz/qux.jpg`, valid purge requests include:
 
 * `www.example.com`
 * `www.example.com/foo`
@@ -51,7 +51,7 @@ If you have a [Transform Rule](/rules/transform/) in place that is modifying par
 
 Purging by prefix deletes the resource, causing `CF-Cache-Status` header to show [`MISS`](/cache/concepts/cache-responses/#miss) for the subsequent request.
 
-If [tiered cache](/cache/how-to/tiered-cache/) is used, purging by prefix may return `EXPIRED`, as the lower tier tries to revalidate with the upper tier to reduce load on the latter.
+If [Tiered Cache](/cache/how-to/tiered-cache/) is used, purging by prefix may return `EXPIRED`, as the lower tier tries to revalidate with the upper tier to reduce load on the latter.
 Depending on whether the upper tier has the resource or not, and whether the end user is reaching the lower tier or the upper tier, `EXPIRED` or `MISS` are returned.
 
 ## Limitations
@@ -61,7 +61,7 @@ There are several limitations regarding purge by prefix:
 * Path separators are limited to 31 for a prefix `(example.com/a/b/c/d/e/f/g/h/i/j/k/l/m…)`.
 * Purge requests are limited to 30 prefixes per request.
 * [Purge rate-limits apply](/api/resources/cache/methods/purge/).
-* URI query strings & fragments cannot purge by prefix:
+* URI query strings and fragments cannot purge by prefix:
   * `www.example.com/foo?a=b` (query string)
   * `www.example.com/foo#bar` (fragment)
 
@@ -79,7 +79,7 @@ Example: If you purge `foo.com/bar`, any asset that starts with `foo.com/bar` wi
 
 Using purge by prefix normalization, when a purge by prefix request comes into Cloudflare for a normalized URL path, the purge service respects the [URL normalization](/rules/normalization/) and purges the normalized URL.
 
-### How does URL Normalization work
+### URL normalization behavior
 
 Take the following website as an example: `https://cloudflare.com/انشاء-موقع-الكتروني/img_1.jpg`. The table below shows you how Cloudflare’s cache views these paths with [normalization on/off](/rules/normalization/).
 

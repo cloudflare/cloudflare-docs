@@ -20,8 +20,7 @@ Purging by hostname means that all assets at URLs with a host that matches one o
 2. Under **Purge Cache**, select **Custom Purge**. The **Custom Purge** window appears.
 3. Under **Purge by**, select **Hostname**.
 4. Follow the syntax instructions:
-   * One hostname per line.
-   * Separated by commas.
+   * One hostname per line, or separated by commas.
    * You can purge up to 30 hostnames at a time.
 5. Enter the appropriate value(s) in the text field using the format shown in the example.
 6. Select **Purge**.
@@ -32,5 +31,5 @@ For information on rate limits, refer to the [Availability and limits](/cache/ho
 
 Purging by hostname deletes the resource, resulting in the `CF-Cache-Status` header being set to [`MISS`](/cache/concepts/cache-responses/#miss) for subsequent requests.
 
-If [tiered cache](/cache/how-to/tiered-cache/) is used, purging by hostname may return `EXPIRED`, as the lower tier tries to revalidate with the upper tier to reduce load on the latter.
+If [Tiered Cache](/cache/how-to/tiered-cache/) is used, purging by hostname may return `EXPIRED`, as the lower tier tries to revalidate with the upper tier to reduce load on the latter.
 Depending on whether the upper tier has the resource or not, and whether the end user is reaching the lower tier or the upper tier, `EXPIRED` or `MISS` are returned.

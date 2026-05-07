@@ -1,7 +1,7 @@
 ---
 title: Purge cache
 pcx_content_type: concept
-description: Remove cached content from Cloudflare edge servers.
+description: Remove cached content from Cloudflare data centers.
 products:
   - cache
 ---
@@ -42,7 +42,7 @@ Note that the thresholds for URLs are calculated using a moving average.
 
 ### Token bucket rate limiting
 
-Cloudflare uses token bucket rate limiting to limit the number of purge requests flowing through the system at any given time, ensuring a steady and manageable flow.
+Cloudflare uses token bucket rate limiting — a method that controls request flow using a fixed pool of "tokens" — to limit the number of purge requests flowing through the system at any given time.
 
 Each account tier has a defined request rate (for example, Free: 5 requests per minute, Business: 10 requests per second), and requests are only allowed if there are available tokens in the bucket. Tokens refill at a consistent rate, but each bucket has a maximum capacity (for example, Free: 25 tokens, Enterprise: 500 tokens), allowing short bursts of requests if tokens have accumulated.
 

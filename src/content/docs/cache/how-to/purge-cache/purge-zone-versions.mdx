@@ -11,9 +11,9 @@ sidebar:
 
 To purge zone versions via the Cloudflare API, follow these steps:
 
-## Step 1: Retrieve the environment ID
+## 1. Retrieve the environment ID
 
-First, retrieve your zone's environment ID by sending a request to the following API endpoint:
+Retrieve your zone's environment ID by sending a `GET` request to the following API endpoint:
 
 ```bash
 https://api.cloudflare.com/client/v4/zones/<zone_id>/environments
@@ -64,9 +64,9 @@ This API call will return a JSON response similar to the example below:
 }
 ```
 
-In this particular example, we have three environments: Production, Staging, and Development. You can find the environment ID in the `ref` field.
+This example includes three environments: Production, Staging, and Development. You can find the environment ID in the `ref` field.
 
-## Step 2: Purge cache per environment
+## 2. Purge cache per environment
 
 To purge the Production environment, use the general cache purge endpoint:
 

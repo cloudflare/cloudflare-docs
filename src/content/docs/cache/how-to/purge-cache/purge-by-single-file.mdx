@@ -26,7 +26,7 @@ A single-file purge performed through your Cloudflare dashboard does not clear o
   - `X-Rewrite-URL`
   - `Forwarded`
 
-You can purge objects with these characteristics using an API call to ([purge files by URL](/api/resources/cache/methods/purge/)). In the data/header section of the API call, you must include all headers and cache keys contained in the cached resource, along with their matching values.
+You can purge objects with these characteristics using an API call to [purge files by URL](/api/resources/cache/methods/purge/). In the data/header section of the API call, you must include all headers and cache keys contained in the cached resource, along with their matching values.
 
 :::caution
 Always use UTF-8 encoded URLs for single-file cache purges. Wildcards are not supported on single file purge, and you must use purge by hostname, prefix, or implement cache tags as an alternative solution.
@@ -39,7 +39,7 @@ Always use UTF-8 encoded URLs for single-file cache purges. Wildcards are not su
 2. Under **Purge Cache**, select **Custom Purge**. The **Custom Purge** window appears.
 3. Under **Purge by**, select **URL**.
 4. Enter the appropriate value(s) in the text field using the format shown in the example. Be aware that the host part of the URL is not case-sensitive, meaning it will always be converted to lowercase according to RFC standards. However, the path portion is case-sensitive. For example, `https://EXAMPLE.com/helloHI` would be treated as `https://example.com/helloHI`.
-5. Perform any additional instructions to complete the form.
+5. (Optional) Add any additional URLs to purge.
 6. Review your entries.
 7. Select **Purge**.
 
