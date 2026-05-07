@@ -10,6 +10,7 @@ updates:
       day: "tuesday"
     assignees:
       - "kodster28"
+      - "mvvmm"
     reviewers:
       - "cloudflare/content-engineering"
     groups:
