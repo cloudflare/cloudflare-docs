@@ -20,7 +20,9 @@
 	filter: drop-shadow(0 1px 0 var(--sl-color-hairline-shade));
 }
 
-[data-theme="dark"] .tippy-box[data-placement^="bottom"] > .tippy-arrow::before {
+[data-theme="dark"]
+	.tippy-box[data-placement^="bottom"]
+	> .tippy-arrow::before {
 	filter: drop-shadow(0 -1px 0 var(--sl-color-hairline-shade));
 }
 
