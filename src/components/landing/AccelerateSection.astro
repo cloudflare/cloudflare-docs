@@ -3,37 +3,7 @@ import ProductCard from "./ProductCard.astro";
 import ProductCardGrid from "./ProductCardGrid.astro";
 import SectionHeading from "./SectionHeading.astro";
 import ViewAllLink from "./ViewAllLink.astro";
-import Waterfall from "./Waterfall.astro";
 import { phases, phaseColor } from "./accelerate-data";
-
-// Cross-highlight rules: hovering a waterfall row tints the matching product
-// card icon shell, and vice-versa. Both halves expose a `[data-phase]`
-// attribute and an inline `--phase-color` so a single `:has()` selector
-// rooted at `.wf-section` can wire them together.
-const rowSelectors = phases
-	.map(
-		(p) =>
-			`.wf-section:has([data-phase="${p.id}"]:hover) [data-phase="${p.id}"].wf-row`,
-	)
-	.join(",\n");
-
-const shellSelectors = phases
-	.map(
-		(p) =>
-			`.wf-section:has([data-phase="${p.id}"]:hover) [data-phase="${p.id}"] .pc-icon-shell`,
-	)
-	.join(",\n");
-
-const crossHighlightCss = `
-${rowSelectors} {
-	background-color: color-mix(in srgb, var(--color-accent-100) 5%, transparent);
-}
-${shellSelectors} {
-	border-color: var(--phase-color);
-	border-style: dashed;
-	background-color: color-mix(in srgb, var(--phase-color) 10%, transparent);
-	color: var(--phase-color);
-}`;
 ---
 
 <section
@@ -84,5 +54,3 @@ ${shellSelectors} {
 		}
 	</ProductCardGrid>
 </section>
-
-<style is:global set:html={crossHighlightCss}></style>
