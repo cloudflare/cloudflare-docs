@@ -29,9 +29,9 @@ Some SaaS applications provide the Redirect URL after you [configure the SSO pro
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
 
-2. Select **Add an application**.
+2. Select **Create new application**.
 
-3. Select **SaaS**.
+3. Select **SaaS application**.
 
 4. Select your **Application** from the drop-down menu. If your application is not listed, enter a custom name in the **Application** field and select the textbox that appears below.
 
@@ -61,13 +61,12 @@ Some SaaS applications provide the Redirect URL after you [configure the SSO pro
 
 12. <Render file="access/access-choose-idps" product="cloudflare-one" params={{ appType: "saas" }}/>
 
-13. Select **Next**.
+13. (Optional) Go to **Additional settings** to customize the application experience:
 
-14. Configure [App Launcher settings](/cloudflare-one/access-controls/access-settings/app-launcher/) for the application. If **Show application in App Launcher** is enabled, then you must enter an **App Launcher URL**. The App Launcher URL is provided by the SaaS application. It may match the base URL portion of **Redirect URL** (`https://<INSTANCE-NAME>.example-app.com`) but could be a different value.
+	- **App Launcher customization**: Configure how this application appears to users in the [App Launcher](/cloudflare-one/access-controls/access-settings/app-launcher/). If **Show application in App Launcher** is enabled, then you must enter an **App Launcher URL**. The App Launcher URL is provided by the SaaS application. It may match the base URL portion of **Redirect URL** (`https://<INSTANCE-NAME>.example-app.com`) but could be a different value.
+	- <Render file="access/access-block-page" product="cloudflare-one" />
 
-15. <Render file="access/access-block-page" product="cloudflare-one" />
-
-16. Select **Save application**.
+14. Select **Create**.
 
 ## 3. Configure SSO in your SaaS application
 

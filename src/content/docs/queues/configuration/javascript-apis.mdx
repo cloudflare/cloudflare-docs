@@ -298,6 +298,30 @@ class Default(WorkerEntrypoint):
 
 The `env` and `ctx` fields are as [documented in the Workers documentation](/workers/reference/migrate-to-module-workers/).
 
+### TypeScript message types
+
+You can type queue messages with `Queue<T>` on the producer and `ExportedHandler<Env, T>` on the consumer.
+
+```ts
+type MyMessage = {
+  id: string;
+};
+
+interface Env {
+  MY_QUEUE: Queue<MyMessage>;
+}
+
+export default {
+  async queue(batch) {
+    for (const message of batch.messages) {
+      console.log(message.body.id);
+    }
+  },
+} satisfies ExportedHandler<Env, MyMessage>;
+```
+
+For primitive messages, use `Queue<number>` or `satisfies ExportedHandler<Env, number>`. If you do not specify a type, `message.body` is `unknown`.
+
 Or alternatively, a queue consumer can be written using the (deprecated) service worker syntax:
 
 ```js

@@ -103,18 +103,17 @@ The Worker will be deployed to your `*.workers.dev` subdomain at `mcp-access-sel
 <TabItem label="Dashboard">
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
-2. Select **Add an application**.
-3. Select **Self-hosted**.
-4. Enter a name for your application (for example, `MCP server`).
-5. In **Application domain**, enter your Worker URL (for example, `mcp-access-self-hosted.<YOUR_SUBDOMAIN>.workers.dev`).
-6. Configure [Access policies](/cloudflare-one/access-controls/policies/) to define the users who can access the MCP server (for example, allow emails ending in `@yourcompany.com`).
-7. <Render
+2. Select **Create new application**.
+3. Select **Self-hosted and private**.
+4. Select **Add public hostname** and enter your Worker URL (for example, `mcp-access-self-hosted.<YOUR_SUBDOMAIN>.workers.dev`).
+5. Configure [Access policies](/cloudflare-one/access-controls/policies/) to define the users who can access the MCP server (for example, allow emails ending in `@yourcompany.com`).
+6. <Render
    	file="access/access-choose-idps"
    	product="cloudflare-one"
    	params={{ appType: "self-hosted" }}
    />
-8. Save the application.
-9. On the application details page, copy the **AUD tag** value from **Basic information**. You will need this value to configure your MCP server.
+7. Select **Create**.
+8. On the application details page, go to **Additional settings** > **AUD tag** and copy the value. You will need this value to configure your MCP server.
 
 </TabItem>
 <TabItem label="API">
@@ -306,8 +305,8 @@ The Worker will be deployed to your `*.workers.dev` subdomain at `mcp-server-cf-
 <TabItem label="Dashboard">
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
-2. Select **Add an application**.
-3. Select **SaaS**.
+2. Select **Create new application**.
+3. Select **SaaS application**.
 4. In **Application**, enter a custom name (for example, `MCP server`) and select the textbox that appears below.
 5. Select **OIDC** as the authentication protocol.
 6. Select **Add application**.
@@ -327,7 +326,7 @@ The Worker will be deployed to your `*.workers.dev` subdomain at `mcp-server-cf-
     	product="cloudflare-one"
     	params={{ appType: "saas" }}
     />
-12. Save the application.
+12. Select **Create**.
 
 </TabItem>
 <TabItem label="API">

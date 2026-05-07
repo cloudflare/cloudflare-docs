@@ -1,0 +1,11 @@
+id: 6K9jmD
+name: Public to private
+
+entry:
+  title: Private origins
+  group: Application performance
+  additional_groups: [Cloudflare One]
+  url: /dns/private-origins/
+
+meta:
+  description: Proxy public hostnames to origins on your private network

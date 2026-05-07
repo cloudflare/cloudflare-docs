@@ -1616,11 +1616,18 @@
 					"ent": "Yes"
 				},
 				"historical_data": {
-					"title": "Historical time",
+					"title": "Historical time (data retention)",
 					"free": "Up to the last 24 hours",
 					"pro": "Up to the last 24 hours",
 					"biz": "Up to the last 3 days",
 					"ent": "Up to the last 30 days"
+				},
+				"i_max_query_window": {
+					"title": "Max query window",
+					"free": "24 hours",
+					"pro": "24 hours",
+					"biz": "3 days",
+					"ent": "31 days"
 				},
 				"export_records": {
 					"title": "Export report",
@@ -1651,18 +1658,18 @@
 					"ent": "Yes"
 				},
 				"retention": {
-					"title": "Retention",
-					"free": "7",
-					"pro": "7",
-					"biz": "31",
-					"ent": "90"
+					"title": "Historical time (data retention)",
+					"free": "Up to the last 7 days",
+					"pro": "Up to the last 7 days",
+					"biz": "Up to the last 31 days",
+					"ent": "Up to the last 90 days"
 				},
 				"query_window": {
-					"title": "Query window",
-					"free": "1",
-					"pro": "7",
-					"biz": "31",
-					"ent": "31"
+					"title": "Max query window",
+					"free": "24 hours",
+					"pro": "7 days",
+					"biz": "31 days",
+					"ent": "31 days"
 				}
 			}
 		},

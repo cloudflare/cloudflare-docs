@@ -37,21 +37,22 @@ At least one **IP address resolution** record is required for each domain on Clo
 These records include the following fields:
 
 <Render file="records-name-field" product="dns" />
+
 - **IPv4/IPv6 address**: Your origin server address (cannot be a [Cloudflare IP](https://www.cloudflare.com/ips))
 
-   :::note
+:::note
 
-   Cloudflare uses the [canonical notation](https://www.rfc-editor.org/rfc/rfc5952.html#section-4.2) to store DNS records. This means that an AAAA record with content `fe80::0:0:1` is stored and returned as `fe80::1`, for example.
+Cloudflare uses the [canonical notation](https://www.rfc-editor.org/rfc/rfc5952.html#section-4.2) to store DNS records. This means that an AAAA record with content `fe80::0:0:1` is stored and returned as `fe80::1`, for example.
 
-   Alternative notations of IPv4 addresses (`1.1` for `1.0.0.1`, for example) are not supported for A records.
+Alternative notations of IPv4 addresses (`1.1` for `1.0.0.1`, for example) are not supported for A records.
 
-   :::
+:::
 
 - **TTL**: Time to live, which controls how long DNS resolvers should cache a response before revalidating it.
   - If the **Proxy Status** is **Proxied**, this value defaults to **Auto**, which is 300 seconds.
   - If the **Proxy Status** is **DNS Only**, you can customize the value.
 - **Proxy status**: For more details, refer to [Proxied DNS records](/dns/proxy-status/).
-- **Private network routing**: Some Enterprise customers also have access to [private network routing](/dns/manage-dns-records/how-to/private-origins/private-network-routing/). For `A` and `AAAA` records, this feature allows you to proxy HTTP/HTTPS traffic from public hostnames to origins in your private network.
+- **Private network routing**: Some Enterprise customers also have access to [private network routing](/dns/private-origins/private-network-routing/). For `A` and `AAAA` records, this feature allows you to proxy HTTP/HTTPS traffic from public hostnames to origins in your private network.
 
 #### Example API call
 
@@ -110,12 +111,13 @@ When creating A or AAAA records [using the API](/dns/manage-dns-records/how-to/c
 
 These records include the following fields:
 
-<Render file="records-name-field" product="dns" />
-- **Target**: The hostname where traffic should be directed (`example.com`).
-- **TTL**: Time to live, which controls how long DNS resolvers should cache a response before revalidating it.
-   - If the **Proxy Status** is **Proxied**, this value defaults to **Auto**, which is 300 seconds.
-   - If the **Proxy Status** is **DNS Only**, you can customize the value.
-- **Proxy status**: For more details, refer to [Proxied DNS records](/dns/proxy-status/).
+<Render file="records-name-field" product="dns" />- **Target**: The hostname
+where traffic should be directed (`example.com`). - **TTL**: Time to live, which
+controls how long DNS resolvers should cache a response before revalidating it.
+- If the **Proxy Status** is **Proxied**, this value defaults to **Auto**, which
+is 300 seconds. - If the **Proxy Status** is **DNS Only**, you can customize the
+value. - **Proxy status**: For more details, refer to [Proxied DNS
+records](/dns/proxy-status/).
 
 #### Proxied CNAME records
 

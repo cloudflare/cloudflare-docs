@@ -11,13 +11,11 @@ tags:
 - Private networks
 ---
 
-:::note
-Not recommended for new deployments. We recommend using a [self-hosted application](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/) to secure a private IP address.
+:::caution
+The Private Network application type can no longer be created from the dashboard. If you do not already have a legacy private network application, use a [self-hosted application](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/) to secure a private IP address instead.
 :::
 
-You can configure a **Private Network** application to manage access to specific applications on your private network.
-
-To create a private network application:
+Existing **Private Network** applications continue to function and can still be managed. These applications were originally configured with the following steps:
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications** > **Add an application**.
 
