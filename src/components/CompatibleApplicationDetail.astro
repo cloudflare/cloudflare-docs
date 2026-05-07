@@ -1,0 +1,212 @@
+---
+import { getCollection } from "astro:content";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+interface Props {
+	appName: string;
+}
+
+type Item = {
+	operation_name: string;
+	operation_id: number;
+	application_control: string | null;
+	application_control_id: number | null;
+	contains_payload: boolean;
+	operation_group: string;
+	operation_group_id: number;
+};
+
+type Control = {
+	label: string;
+	items: Item[];
+};
+
+type Application = {
+	name: string;
+	display_name: string;
+	controls: Control[];
+};
+
+const { appName } = Astro.props;
+
+const collection = await getCollection("granular-control-applications");
+
+console.log({ collection });
+
+let app: Application | undefined;
+for (const entry of collection) {
+	app = (entry.data.applications as Application[]).find(
+		(a) => a.name === appName,
+	);
+	console.log({ controls: app?.controls[0].items });
+	if (app) break;
+}
+---
+
+{
+	app && (
+		<div class="compatible-apps">
+			{app.controls.length > 1 ? (
+				<Tabs>
+					{app.controls.map((control) => (
+						<TabItem label={control.label}>
+							<div class="ops-list">
+								{control.items.map((item) => (
+									<details class="op-row">
+										<summary class="op-name">{item.operation_name}</summary>
+										<div class="op-fields">
+											<div class="op-field">
+												<span class="op-label">Operation ID</span>
+												<span>
+													<code>{item.operation_id}</code>
+												</span>
+											</div>
+											<div class="op-field">
+												<span class="op-label">Application Control</span>
+												<span>{item.application_control ?? "—"}</span>
+											</div>
+											<div class="op-field">
+												<span class="op-label">Application Control ID</span>
+												<span>
+													{item.application_control_id !== null ? (
+														<code>{item.application_control_id}</code>
+													) : (
+														"—"
+													)}
+												</span>
+											</div>
+											<div class="op-field">
+												<span class="op-label">Contains Payload</span>
+												<span>{item.contains_payload ? "✓" : "—"}</span>
+											</div>
+											<div class="op-field">
+												<span class="op-label">Operation Group</span>
+												<span>{item.operation_group}</span>
+											</div>
+											<div class="op-field">
+												<span class="op-label">Operation Group ID</span>
+												<span>
+													<code>{item.operation_group_id}</code>
+												</span>
+											</div>
+										</div>
+									</details>
+								))}
+							</div>
+						</TabItem>
+					))}
+				</Tabs>
+			) : (
+				<div class="ops-list">
+					{app.controls[0].items.map((item) => (
+						<details class="op-row">
+							<summary class="op-name">{item.operation_name}</summary>
+							<div class="op-fields">
+								<div class="op-field">
+									<span class="op-label">Operation ID</span>
+									<span>
+										<code>{item.operation_id}</code>
+									</span>
+								</div>
+								<div class="op-field">
+									<span class="op-label">Application Control</span>
+									<span>{item.application_control ?? "—"}</span>
+								</div>
+								<div class="op-field">
+									<span class="op-label">Application Control ID</span>
+									<span>
+										{item.application_control_id !== null ? (
+											<code>{item.application_control_id}</code>
+										) : (
+											"—"
+										)}
+									</span>
+								</div>
+								<div class="op-field">
+									<span class="op-label">Contains Payload</span>
+									<span>{item.contains_payload ? "✓" : "—"}</span>
+								</div>
+								<div class="op-field">
+									<span class="op-label">Operation Group</span>
+									<span>{item.operation_group}</span>
+								</div>
+								<div class="op-field">
+									<span class="op-label">Operation Group ID</span>
+									<span>
+										<code>{item.operation_group_id}</code>
+									</span>
+								</div>
+							</div>
+						</details>
+					))}
+				</div>
+			)}
+		</div>
+	)
+}
+
+<style is:global>
+	.compatible-apps .ops-list {
+		border: 1px solid var(--color-table-fill);
+		border-radius: 0.5rem;
+		overflow: hidden;
+	}
+
+	.compatible-apps .op-row {
+		border-bottom: 1px solid var(--color-table-fill);
+	}
+
+	.compatible-apps .op-row:last-child {
+		border-bottom: none;
+	}
+
+	.compatible-apps .op-name {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.625rem 1rem;
+		font-size: 0.875rem;
+		font-weight: 600;
+		cursor: pointer;
+		list-style: none;
+		color: var(--sl-color-text);
+	}
+
+	.compatible-apps .op-name::-webkit-details-marker {
+		display: none;
+	}
+
+	.compatible-apps .op-name::before {
+		content: "›";
+		display: inline-block;
+		font-size: 1.1rem;
+		line-height: 1;
+		color: var(--sl-color-gray-3);
+		transition: transform 0.15s ease;
+		transform: rotate(0deg);
+		flex-shrink: 0;
+	}
+
+	.compatible-apps .op-row[open] > .op-name::before {
+		transform: rotate(90deg);
+	}
+
+	.compatible-apps .op-fields {
+		padding: 0.25rem 0 0.75rem 0;
+	}
+
+	.compatible-apps .op-field {
+		display: flex;
+		align-items: baseline;
+		gap: 0.75rem;
+		padding: 0.2rem 1rem 0.2rem 2.25rem;
+		font-size: 0.875rem;
+	}
+
+	.compatible-apps .op-label {
+		flex: 0 0 12rem;
+		font-size: 0.8125rem;
+		color: var(--sl-color-gray-3);
+		font-weight: 400;
+	}
+</style>

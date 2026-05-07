@@ -18,7 +18,7 @@ const collection = await getCollection("granular-control-applications");
 				{entry.data.applications.map((application: Application) => (
 					<li>
 						<a
-							href={`/cloudflare-one/traffic-policies/http-policies/compatible-applications#${application.name}`}
+							href={`/cloudflare-one/traffic-policies/http-policies/granular-controls/${application.name}/`}
 						>
 							{application.display_name}
 						</a>

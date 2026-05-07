@@ -11,6 +11,7 @@ export { default as AutoconfigDiagram } from "./AutoconfigDiagram.astro";
 export { default as AvailableNotifications } from "./AvailableNotifications.astro";
 export { default as Checkbox } from "./Checkbox.astro";
 export { default as CompatibilityFlag } from "./CompatibilityFlag.astro";
+export { default as CompatibleApplicationDetail } from "./CompatibleApplicationDetail.astro";
 export { default as CompatibleApplicationsDetail } from "./CompatibleApplicationsDetail.astro";
 export { default as CompatibilityFlags } from "./CompatibilityFlags.astro";
 export { default as ComponentUsage } from "./ComponentUsage.astro";
