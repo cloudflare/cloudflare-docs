@@ -1,26 +1,35 @@
-/*
- * Tooltip surface styled to match the kumo Tooltip component.
- * Theme-aware via Starlight color tokens (light + dark modes).
- *
- * Kumo reference: kumo/packages/kumo/src/components/tooltip/tooltip.tsx
- *   - bg-kumo-base       -> --sl-color-bg
- *   - text-kumo-default  -> --sl-color-text
- *   - outline-kumo-fill  -> --sl-color-hairline
- *   - rounded-md         -> 6px
- *   - px-2.5 py-1.5      -> 6px 10px
- *   - text-sm            -> 0.875rem
- */
-
 .tippy-box {
 	background-color: var(--sl-color-bg) !important;
 	color: var(--sl-color-text) !important;
 	border: 1px solid var(--sl-color-hairline) !important;
 	border-radius: 6px !important;
-	font-size: 0.875rem !important;
+	font-size: 0.8125rem !important;
 	line-height: 1.4 !important;
 	box-shadow:
 		0 4px 6px -1px rgb(0 0 0 / 0.1),
 		0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
+}
+
+/* Dark mode — bump the border one step (`hairline-shade`) so the tooltip
+ * edge reads more clearly against the dark page surface. */
+[data-theme="dark"] .tippy-box {
+	border-color: var(--sl-color-hairline-shade) !important;
+}
+
+[data-theme="dark"] .tippy-box[data-placement^="top"] > .tippy-arrow::before {
+	filter: drop-shadow(0 1px 0 var(--sl-color-hairline-shade));
+}
+
+[data-theme="dark"] .tippy-box[data-placement^="bottom"] > .tippy-arrow::before {
+	filter: drop-shadow(0 -1px 0 var(--sl-color-hairline-shade));
+}
+
+[data-theme="dark"] .tippy-box[data-placement^="left"] > .tippy-arrow::before {
+	filter: drop-shadow(1px 0 0 var(--sl-color-hairline-shade));
+}
+
+[data-theme="dark"] .tippy-box[data-placement^="right"] > .tippy-arrow::before {
+	filter: drop-shadow(-1px 0 0 var(--sl-color-hairline-shade));
 }
 
 .tippy-box .tippy-content {
