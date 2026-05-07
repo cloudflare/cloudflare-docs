@@ -17,9 +17,9 @@ import { DirectoryListing, Render } from "~/components";
 <Render file="cipher-suites-definition" product="ssl" />
 <br />
 
-The settings on this page apply to cipher suites used in connections between visitors and the Cloudflare network. Cipher suites used between Cloudflare and your origin server are configured separately — refer to [Origin server > Cipher suites](/ssl/origin-configuration/cipher-suites/).
+This section covers cipher suites used in connections between visitors and the Cloudflare network. Cipher suites used between Cloudflare and your origin server are configured separately — refer to [Origin server > Cipher suites](/ssl/origin-configuration/cipher-suites/).
 
-Compliance standards such as PCI DSS may require specific cipher suites or prohibit older ones, and security testing tools like Qualys SSL Labs may flag Cloudflare's default configuration.
+[Compliance standards](/ssl/edge-certificates/additional-options/cipher-suites/compliance-status/) such as PCI DSS may require specific cipher suites or prohibit older ones, and security testing tools like Qualys SSL Labs may flag Cloudflare's [default configuration](/ssl/edge-certificates/additional-options/cipher-suites/recommendations/#legacy-default).
 
 :::note
 
@@ -30,7 +30,7 @@ Cloudflare maintains a [public repository of our SSL/TLS configurations](https:/
 
 ## Cipher suites and edge certificates
 
-Cloudflare's default cipher suites ([Legacy](/ssl/edge-certificates/additional-options/cipher-suites/recommendations/)) prioritize broad compatibility, which means they include older algorithms that security testing tools may flag.
+Cloudflare's default cipher suites ([Legacy](/ssl/edge-certificates/additional-options/cipher-suites/recommendations/)) balance security and compatibility, which means they include older algorithms that security testing tools may flag.
 
 If the default configuration does not meet your requirements, you can [purchase the Advanced Certificate Manager add-on](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/acm/) to [specify more secure cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/).
 
