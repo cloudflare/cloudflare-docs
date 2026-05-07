@@ -50,7 +50,7 @@ These are the settings that you can configure when creating a Cache Response Rul
 | `http.response.headers.names` | Array | Response header names |
 | `http.response.headers.values` | Array | Response header values |
 
-If you select the [Edit expression](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor) option, you can enter any of the above response fields.
+If you select the **Edit expression** option, you can enter any of the above response fields.
 
 ## Functions
 
@@ -106,7 +106,7 @@ Configures settings related to caching on the origin response. The following par
 
 :::note
 
-If `strip_etags` or `strip_last_modified` is `true` after all matching rules are applied, [Smart Edge Revalidation](https://blog.cloudflare.com/introducing-smart-edge-revalidation/) is disabled for the origin response.
+If `strip_etags` or `strip_last_modified` is `true` after all matching rules are applied, [Smart Edge Revalidation](/cache/concepts/revalidation/#smart-revalidation-towards-users) is turned off for the origin response.
 
 :::
 
@@ -130,7 +130,7 @@ Refer to [Create a rule via API](/cache/how-to/cache-response-rules/create-api/)
 
 ### Action: set_cache_tags
 
-Modifies the cache tags associated with the response. Cache tags can be used for targeted [cache purging](/cache/how-to/purge-cache/purge-by-tags/).
+Modifies the cache tags associated with the response. Cache tags are labels you attach to cached responses so you can later [purge specific groups of cached content](/cache/how-to/purge-cache/purge-by-tags/) without clearing your entire cache.
 
 | Parameter | Type | Description |
 | --- | --- | --- |
@@ -164,7 +164,7 @@ Refer to [Create a rule via API](/cache/how-to/cache-response-rules/create-api/)
 
 ### Action: set_cache_control
 
-Modifies Cache-Control header directives in the origin response.
+Modifies `Cache-Control` header directives in the origin response. This allows you to override how long Cloudflare and downstream clients cache content, without changing your origin server configuration.
 
 #### Supported directives
 
@@ -201,7 +201,7 @@ Applies to `max-age`, `s-maxage`, `stale-if-error`, and `stale-while-revalidate`
 | Parameter | Type | Description |
 | --- | --- | --- |
 | `operation` | String | **Required.** `set` or `remove`. |
-| `cloudflare_only` | Boolean | When enabled, this setting only affects how Cloudflare caches your content. Your visitors still receive the original directive. |
+| `cloudflare_only` | Boolean | When turned on, this setting only affects how Cloudflare caches your content. Your visitors still receive the original directive from the origin. |
 | `value` | Integer | Duration in seconds. **Required when operation is `set`.** |
 
 ##### Directives with optional qualifiers
@@ -211,7 +211,7 @@ Applies to `private` and `no-cache`.
 | Parameter | Type | Description |
 | --- | --- | --- |
 | `operation` | String | **Required.** `set` or `remove`. |
-| `cloudflare_only` | Boolean | When enabled, this setting only affects how Cloudflare caches your content. Your visitors still receive the original directive. |
+| `cloudflare_only` | Boolean | When turned on, this setting only affects how Cloudflare caches your content. Your visitors still receive the original directive from the origin. |
 | `qualifiers` | Array | Optional list of header names to qualify the directive. |
 
 ##### Boolean directives
@@ -221,7 +221,7 @@ Applies to `no-store`, `no-transform`, `must-revalidate`, `proxy-revalidate`, `m
 | Parameter | Type | Description |
 | --- | --- | --- |
 | `operation` | String | **Required.** `set` or `remove`. |
-| `cloudflare_only` | Boolean | When enabled, this setting only affects how Cloudflare caches your content. Your visitors still receive the original directive. |
+| `cloudflare_only` | Boolean | When turned on, this setting only affects how Cloudflare caches your content. Your visitors still receive the original directive from the origin. |
 
 <Details header="API information">
 

@@ -10,7 +10,7 @@ sidebar:
 
 import { FeatureTable, InlineBadge, Render } from "~/components";
 
-Cache Response Rules allow you to configure cache settings based on request and response attributes. These rules execute prior to caching in the `http_response_cache_settings` phase, which runs after Cloudflare receives the origin response.
+Cache Response Rules allow you to adjust cache settings based on request and response attributes. These rules run in the `http_response_cache_settings` [phase](/ruleset-engine/reference/phases-list/), which executes after Cloudflare receives the response from your origin server but before the response is cached.
 
 With Cache Response Rules you can:
 
@@ -45,22 +45,22 @@ Cache Response Rules operate on the origin response, while [Cache Rules](/cache/
 Key differences:
 
 - **Cache eligibility**: Cache Rules remain the only mechanism to decide whether content is eligible for caching. However, Cache Response Rules can make a cacheable asset non-cacheable by setting the `no-store` directive using the `set_cache_control` action.
-- **Origin Cache Control (OCC)**: If any rule in the `http_response_cache_settings` phase matches, Cloudflare defaults to Origin Cache Control behavior (`origin_cache_control = true`).
+- **Origin Cache Control**: If any rule in the `http_response_cache_settings` phase matches, Cloudflare defaults to Origin Cache Control behavior (`origin_cache_control = true`).
 - **CDN-Cache-Control precedence**: `Cache-Control` directives set by Cache Response Rules take precedence over origin-set `Cloudflare-CDN-Cache-Control` and `CDN-Cache-Control` headers. For more information, refer to [CDN-Cache-Control header precedence](/cache/concepts/cdn-cache-control/#header-precedence).
 - **Stacking**: Cache Response Rules stack the same way as Cache Rules. When multiple rules specify the same setting, the last matching rule wins.
 
-### Example: OCC precedence over Edge TTL
+### Example: Origin Cache Control precedence over Edge TTL
 
 Consider the following scenario:
 
 1. A Cache Rule sets **Edge TTL** to `override_origin` with a value of `7200` seconds (2 hours).
-2. A Cache Response Rule uses `set_cache_control` to set `s-maxage` to `3600` seconds (1 hour) with `cloudflare_only` enabled.
+2. A Cache Response Rule uses `set_cache_control` to set `s-maxage` to `3600` seconds (1 hour) with `cloudflare_only` turned on.
 3. The origin responds with `Cache-Control: s-maxage=600`.
 
-In this case, the Cache Response Rule takes precedence. Cloudflare caches the asset for `3600` seconds (1 hour) based on the `s-maxage` directive set by the Cache Response Rule, while visitors still receive the original `s-maxage=600` from the origin because `cloudflare_only` is enabled.
+In this case, the Cache Response Rule takes precedence. Cloudflare caches the asset for `3600` seconds (1 hour) based on the `s-maxage` directive set by the Cache Response Rule, while visitors still receive the original `s-maxage=600` from the origin because `cloudflare_only` is turned on.
 
 ## Notes
 
-- If you strip last modified then Smart Edge Revalidation will be turned off.
-- Cache Response Rules ignore [`1xx` HTTP response status codes](/support/troubleshooting/http-status-codes/1xx-informational/) as they are treated as informational responses.
-- Cache Response Rules can be versioned. Refer to the [Version Management](/version-management/) documentation for more information.
+- If you strip `ETag` or `Last-Modified` headers, [Smart Edge Revalidation](/cache/concepts/revalidation/#smart-revalidation-towards-users) is turned off for the affected responses.
+- Cache Response Rules ignore [`1xx` HTTP response status codes](/support/troubleshooting/http-status-codes/1xx-informational/) because they are treated as informational responses.
+- Cache Response Rules can be versioned. For more information, refer to [Version Management](/version-management/).
