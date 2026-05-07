@@ -82,7 +82,7 @@ Refer to the [events and parameters](/workflows/build/events-and-parameters/) do
 - <code>step.do(name: string, config?: WorkflowStepConfig, callback: (ctx: WorkflowStepContext):
 	RpcSerializable): Promise&lt;T&gt;</code>
   - `name` - the name of the step, up to 256 characters.
-  - `config` (optional) - an optional `WorkflowStepConfig` for configuring [step specific retry behaviour](/workflows/build/sleeping-and-retrying/).
+  - `config` (optional) - an optional `WorkflowStepConfig` for configuring [step-specific retry behaviour](/workflows/build/sleeping-and-retrying/) and step output redaction.
   - `callback` - an asynchronous function that receives a [`WorkflowStepContext`](/workflows/build/step-context/) and optionally returns serializable state for the Workflow to persist. In JavaScript Workflows, this includes a fresh, unlocked `ReadableStream<Uint8Array>` for large binary output.
 
 :::note[Returning state]
@@ -186,10 +186,14 @@ export type WorkflowStepConfig = {
 		backoff?: WorkflowBackoff;
 	};
 	timeout?: string | number;
+	sensitive?: "output";
 };
 ```
 
-- A `WorkflowStepConfig` is an optional argument to the `do` method of a `WorkflowStep` and defines properties that allow you to configure the retry behaviour of that step.
+- A `WorkflowStepConfig` is an optional argument to the `do` method of a `WorkflowStep` and defines properties that allow you to configure the retry behaviour, timeout, and step output redaction for that step.
+- Use `sensitive: "output"` to redact step output from the Workers API, REST API, and Workflows dashboard.
+
+Redaction only affects step output returned by these APIs and the dashboard. Your Workflow can still use the step output in later code.
 
 Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how Workflows are retried.
 

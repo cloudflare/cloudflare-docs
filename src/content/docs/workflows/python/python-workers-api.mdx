@@ -27,7 +27,7 @@ class MyWorkflow(WorkflowEntrypoint):
 - <code>step.do(name=None, *, concurrent=False, config=None)</code> — a decorator that allows you to define a step in a workflow.
   - `name` — an optional name for the step. If omitted, the function name (`func.__name__`) is used.
   - `concurrent` — an optional boolean that indicates whether dependencies for this step can run concurrently.
-  - `config` — an optional [`WorkflowStepConfig`](/workflows/build/workers-api/#workflowstepconfig) for configuring [step specific retry behaviour](/workflows/build/sleeping-and-retrying/). This is passed as a Python dictionary and then type translated into a `WorkflowStepConfig` object.
+  - `config` — an optional [`WorkflowStepConfig`](/workflows/build/workers-api/#workflowstepconfig) for configuring [step-specific retry behaviour](/workflows/build/sleeping-and-retrying/) and step output redaction. This is passed as a Python dictionary and then type translated into a `WorkflowStepConfig` object.
 
   All parameters except `name` are keyword-only.
 
@@ -138,7 +138,7 @@ raise NonRetryableError(message)
 
 ## Configure a workflow instance
 
-You can bind a step to a specific retry policy by passing a `WorkflowStepConfig` object to the `config` parameter of the `step.do` decorator.
+You can bind a step to a specific retry policy or step output redaction policy by passing a `WorkflowStepConfig` object to the `config` parameter of the `step.do` decorator.
 With Python Workflows, you need to make sure that your `dict` respects the [`WorkflowStepConfig`](/workflows/build/workers-api/#workflowstepconfig) type.
 
 ```python
@@ -146,11 +146,19 @@ from workers import WorkflowEntrypoint
 
 class DemoWorkflowClass(WorkflowEntrypoint):
     async def run(self, event, step):
-        @step.do('step-name', config={"retries": {"limit": 1, "delay": "10 seconds"}})
+        @step.do(
+            "step-name",
+            config={
+                "retries": {"limit": 1, "delay": "10 seconds"},
+                "sensitive": "output",
+            },
+        )
         async def first_step():
             # do some work
             pass
 ```
+
+Use `"output"` to redact the step output itself from the Workers API, REST API, and Workflows dashboard.
 
 ### Access step context (`ctx`)
 
@@ -160,7 +168,7 @@ If you define a `ctx` parameter, the [step context](/workflows/build/step-contex
 | --------- | ------ | ------------------------------------------------------------------------------------------------------ |
 | `step`    | `dict` | Contains `name` (the step name) and `count` (how many times `step.do` has been called with this name). |
 | `attempt` | `int`  | The current attempt number (1-indexed).                                                                |
-| `config`  | `dict` | The resolved retry and timeout configuration for this step.                                            |
+| `config`  | `dict` | The resolved retry, timeout, and step output redaction configuration for this step.                    |
 
 ```python
 from workers import WorkflowEntrypoint

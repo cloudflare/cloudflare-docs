@@ -54,7 +54,7 @@ You can also provide a UNIX timestamp (milliseconds since the UNIX epoch) direct
 
 ## Retry steps
 
-Each call to `step.do` in a Workflow accepts an optional `StepConfig`, which allows you define the retry behaviour for that step.
+Each call to `step.do` in a Workflow accepts an optional `WorkflowStepConfig`, which allows you to define the retry behaviour, timeout, and output redaction for that step.
 
 If you do not provide your own retry configuration, Workflows applies the following defaults:
 
@@ -69,12 +69,13 @@ const defaultConfig: WorkflowStepConfig = {
 };
 ```
 
-When providing your own `StepConfig`, you can configure:
+When providing your own `WorkflowStepConfig`, you can configure:
 
 - The total number of attempts to make for a step (limited to 10,000 retries per step)
 - The delay between attempts (accepts both `number` (ms) or a human-readable format)
 - What backoff algorithm to apply between each attempt: any of `constant`, `linear`, or `exponential`
 - When to timeout (in duration) before considering the step as failed (including during a retry attempt, as the timeout is set per attempt)
+- Whether to redact step output
 
 For example, to limit a step to 10 retries and have it apply an exponential delay (starting at 10 seconds) between each attempt, you would pass the following configuration as an optional object to `step.do`:
 
@@ -88,12 +89,15 @@ let someState = await step.do(
 			backoff: "exponential", // Any of "constant" | "linear" | "exponential";
 		},
 		timeout: "30 minutes",
+		sensitive: "output",
 	},
 	async () => {
 		/* Step code goes here */
 	},
 );
 ```
+
+In this example, `sensitive: "output"` redacts the step output itself from APIs and the dashboard.
 
 ## Force a Workflow instance to fail
 

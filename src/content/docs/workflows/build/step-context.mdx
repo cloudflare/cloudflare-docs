@@ -30,7 +30,7 @@ type WorkflowStepContext = {
 | `step.name`  | `string`                                                                 | The name you passed to `step.do`.                                                                                                               |
 | `step.count` | `number`                                                                 | How many times `step.do` has been called with this name so far in the current Workflow run. Starts at `1` for the first call with a given name. |
 | `attempt`    | `number`                                                                 | The current attempt number (1-indexed). `1` on the first try, `2` on the first retry, and so on.                                                |
-| `config`     | [`WorkflowStepConfig`](/workflows/build/workers-api/#workflowstepconfig) | The resolved retry and timeout configuration for this step, including any defaults applied by the runtime.                                      |
+| `config`     | [`WorkflowStepConfig`](/workflows/build/workers-api/#workflowstepconfig) | The resolved retry, timeout, and output redaction for this step, including any defaults applied by the runtime.              |
 
 ## Access the context
 
@@ -57,10 +57,12 @@ await step.do(
 			backoff: "exponential",
 		},
 		timeout: "30 minutes",
+		sensitive: "output",
 	},
 	async (ctx) => {
 		console.log(ctx.config.retries.limit); // 10
 		console.log(ctx.config.timeout); // "30 minutes"
+		console.log(ctx.config.sensitive); // "output"
 	},
 );
 ```
