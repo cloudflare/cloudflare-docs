@@ -8,7 +8,11 @@ sidebar:
   order: 3
 ---
 
-A ruleset is an ordered set of [rules](/ruleset-engine/about/rules/) that you can apply to traffic on the Cloudflare global network. Each ruleset belongs to a [phase](/ruleset-engine/about/phases/) and can only execute in that phase. To deploy a ruleset, you add a rule with the `execute` action to the phase's [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset).
+A ruleset is an ordered set of [rules](/ruleset-engine/about/rules/) that you can apply to traffic on the Cloudflare global network. Each ruleset belongs to a [phase](/ruleset-engine/about/phases/) and can only execute in that phase. 
+
+For phase [entry point rulesets](/ruleset-engine/about/rulesets/#entry-point-ruleset), all rules are evaluated automatically when the request evaluation workflow reaches the stage corresponding to that phase. The account-level entry point ruleset is evaluated first, and then the zone-level entry point ruleset. 
+
+A rule in the entry point ruleset can execute (or deploy) another ruleset, such as a custom ruleset or a managed ruleset. To deploy a ruleset, add a rule with the `execute` action to the entry point ruleset and provide the ID of the ruleset to execute in the action parameters.
 
 Rulesets are versioned. Each modification to a ruleset creates a new version. When you deploy a ruleset — that is, when you create a rule that executes the ruleset — the most recent version is selected by default.
 

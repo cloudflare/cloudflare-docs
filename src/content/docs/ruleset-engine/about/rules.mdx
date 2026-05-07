@@ -48,7 +48,7 @@ When you use `true` as the rule filter expression, this means "apply the rule to
 
 ### Field values during rule evaluation
 
-While evaluating rules for a given request or response, the values of all [fields](/ruleset-engine/rules-language/fields/) are immutable within each phase. This means that if an earlier rule in the same phase modifies a value (for example, rewrites a URL), later rules in that phase still see the original value. However, field values may change between phases.
+While evaluating rules for a given request or response, the values of all [fields](/ruleset-engine/rules-language/fields/) are immutable within each phase. This means that if an earlier rule in the same phase modifies a value (for example, rewrites a URL), later rules in that phase still see the original value. Since [a phase is composed of account and zone-level rules](/ruleset-engine/about/phases/), field values are also immutable between account and zone rules in a given phase. However, field values may change between phases.
 
 For example:
 
