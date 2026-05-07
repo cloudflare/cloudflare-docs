@@ -1,14 +1,14 @@
 ---
 pcx_content_type: configuration
 title: Request handling
-description: Configure AI Gateway request timeouts, retries, and fallback strategies for reliable AI provider interactions.
+description: Configure AI Gateway request timeouts and retries for reliable AI provider interactions.
 sidebar:
   order: 4
 products:
   - ai-gateway
 ---
 
-import { Render, Aside } from "~/components";
+import { Render } from "~/components";
 
 :::note
 
@@ -20,7 +20,7 @@ Your AI gateway supports different strategies for handling requests to providers
 
 ## Request timeouts
 
-A request timeout allows you to return an error if a provider takes too long to respond.
+A request timeout allows you to return an error or trigger a retry if a provider takes too long to respond.
 
 These timeouts help:
 
