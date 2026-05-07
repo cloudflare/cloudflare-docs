@@ -12,6 +12,7 @@ interface Props {
 	target?: string;
 	rel?: string;
 	"aria-label"?: string;
+	"data-tooltip"?: string;
 }
 
 const {
@@ -24,6 +25,7 @@ const {
 	target,
 	rel,
 	"aria-label": ariaLabel,
+	"data-tooltip": dataTooltip,
 } = Astro.props;
 
 const base = [
@@ -85,6 +87,7 @@ const Tag = href ? "a" : "button";
 	target={target}
 	rel={rel}
 	aria-label={ariaLabel}
+	data-tooltip={dataTooltip}
 	type={href ? undefined : type}
 >
 	<slot />

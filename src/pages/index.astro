@@ -39,7 +39,10 @@ const sidebar = [
 				label: "Resources",
 				collapsed: true,
 				items: [
-					{ label: "Learning paths", link: "/learning-paths/" },
+					{
+						label: "Learning paths",
+						link: "/resources/?filter-pcx_content_type=learning-path ",
+					},
 					{ label: "Use cases", link: "/use-cases/" },
 					{ label: "Terraform", link: "/terraform/" },
 					{ label: "Pulumi", link: "/pulumi/" },
@@ -141,11 +144,11 @@ const sidebar = [
 				],
 			},
 			{
-				label: "Zero Trust",
+				label: "Cloudflare One",
 				collapsed: true,
 				badge: groupIcon("cloudflare-one"),
 				items: [
-					{ label: "Cloudflare One", link: "/cloudflare-one/" },
+					{ label: "Overview", link: "/cloudflare-one/" },
 					{
 						label: "Access",
 						link: "/cloudflare-one/access-controls/policies/",
@@ -226,8 +229,7 @@ const sidebar = [
 const props = {
 	frontmatter: {
 		title: "Cloudflare Developer Docs",
-		description:
-			"Compute, storage, AI, and security on Cloudflare's global network. Ship applications instead of managing and securing infrastructure.",
+		description: "Connect, protect, and build everywhere.",
 		template: "doc",
 		tableOfContents: false,
 	},

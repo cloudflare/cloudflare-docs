@@ -1,0 +1,329 @@
+---
+/**
+ * Waterfall — interactive request timeline with a "With / Without Cloudflare"
+ * toggle. Renders the toggle, per-phase rows, and the total-latency summary.
+ *
+ * Designed to live inside an ancestor with classes `wf-section group/wf` and a
+ * `data-mode="after"` attribute (see AccelerateSection.astro). The toggle
+ * script reaches up via `closest(".wf-section")` to mutate that mode, which
+ * drives Tailwind `group-data-[mode=*]/wf:` selectors in the rows below.
+ */
+import { Icon } from "astro-icon/components";
+import RightArrow from "./RightArrow.astro";
+import CornerMarks from "./CornerMarks.astro";
+import { phaseColor, type WaterfallPhase } from "./accelerate-data";
+
+interface Props {
+	phases: readonly WaterfallPhase[];
+}
+
+const { phases } = Astro.props;
+---
+
+<div
+	class="mb-5 flex flex-wrap items-center justify-between gap-3 sm:gap-4"
+	role="radiogroup"
+	aria-label="Comparison mode"
+>
+	<div
+		class="wf-toggle-track border-border-100 bg-background pointer-events-auto relative z-20 inline-grid shrink-0 grid-cols-2 items-center rounded-full border p-1"
+	>
+		<span
+			aria-hidden="true"
+			class="bg-accent-100 pointer-events-none absolute top-1 left-1 h-[calc(100%-8px)] w-[calc(50%-4px)] rounded-full shadow-[0_1px_2px_rgba(0,0,0,0.06),0_4px_12px_rgba(0,0,0,0.08)] transition-transform duration-200 ease-in-out group-data-[mode=after]/wf:translate-x-0 group-data-[mode=before]/wf:translate-x-full motion-reduce:transition-none"
+		></span>
+
+		<button
+			type="button"
+			id="wf-toggle-after"
+			role="radio"
+			aria-checked="true"
+			tabindex="0"
+			class="group/btn focus-visible:outline-accent-100 text-foreground-muted aria-checked:text-light-foreground relative z-10 flex h-8 cursor-pointer items-center justify-center gap-1.5 rounded-full px-2.5 py-1.5 text-xs font-medium -tracking-[0.01em] whitespace-nowrap transition-colors duration-200 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 sm:h-10 sm:gap-2 sm:px-3.5 sm:py-2.5 sm:text-sm"
+		>
+			<span
+				aria-hidden="true"
+				class="bg-foreground-subtle group-aria-checked/btn:bg-light-foreground/90 size-1.5 shrink-0 rounded-full transition-colors duration-200 ease-in-out sm:size-2"
+			></span>
+			With Cloudflare
+		</button>
+		<button
+			type="button"
+			id="wf-toggle-before"
+			role="radio"
+			aria-checked="false"
+			tabindex="-1"
+			class="group/btn focus-visible:outline-accent-100 hover:bg-foreground/5 text-foreground-muted aria-checked:text-light-foreground relative z-10 flex h-8 cursor-pointer items-center justify-center gap-1.5 rounded-full px-2.5 py-1.5 text-xs font-medium -tracking-[0.01em] whitespace-nowrap transition-colors duration-200 ease-in-out focus-visible:outline-2 focus-visible:outline-offset-2 sm:h-10 sm:gap-2 sm:px-3.5 sm:py-2.5 sm:text-sm"
+		>
+			<span
+				aria-hidden="true"
+				class="bg-foreground-subtle group-aria-checked/btn:bg-light-foreground/90 size-1.5 shrink-0 rounded-full transition-colors duration-200 ease-in-out sm:size-2"
+			></span>
+			Without Cloudflare
+		</button>
+	</div>
+</div>
+
+<div class="border-border-100 relative overflow-visible border">
+	<CornerMarks />
+
+	<div
+		class="bg-background border-border-100 hidden h-7 items-end gap-4 border-b px-5 sm:grid sm:grid-cols-[minmax(220px,1.1fr)_minmax(0,3fr)_auto]"
+		aria-hidden="true"
+	>
+		<div></div>
+		<div class="relative h-full">
+			{
+				[0, 400, 800, 1200, 1600].map((ms) => (
+					<div
+						class="absolute bottom-0 flex flex-col items-center"
+						style={`left: ${(ms / 1600) * 100}%`}
+					>
+						<span
+							class="wf-ruler-label text-foreground-subtle mb-1 font-mono text-[9px] tracking-wider tabular-nums"
+							data-ms={ms}
+						>
+							{ms === 0 ? "0" : `${ms}ms`}
+						</span>
+						<span class="bg-border-100 h-1.5 w-px" />
+					</div>
+				))
+			}
+		</div>
+		<div class="w-3.5"></div>
+	</div>
+
+	{
+		phases.map((p, i) => (
+			<a
+				href={p.href}
+				aria-label={`${p.phase} — eliminate with ${p.product}`}
+				class:list={[
+					"wf-row group relative grid grid-cols-[1fr] items-center gap-2 px-3 py-3 no-underline transition-colors duration-150",
+					"sm:grid-cols-[minmax(220px,1.1fr)_minmax(0,3fr)_auto] sm:gap-4 sm:px-5",
+					"bg-background hover:bg-accent-100/5",
+					"focus-visible:outline-accent-100 focus-visible:outline-2 focus-visible:-outline-offset-2",
+					i > 0 && "border-border-100 border-t",
+				]}
+				data-phase={p.id}
+				style={`--phase-color: ${phaseColor(p)};`}
+			>
+				<span
+					class="bg-accent-100 pointer-events-none absolute bottom-0 left-0 h-px w-0 transition-[width] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:w-full"
+					aria-hidden="true"
+				/>
+
+				<div class="flex min-w-0 items-center gap-2 sm:gap-3">
+					<span class="border-border-100 bg-background-muted text-foreground-subtle group-hover:border-accent-100/30 group-hover:bg-accent-100/5 group-hover:text-accent-100 flex size-8 shrink-0 items-center justify-center rounded border transition-colors duration-150">
+						<Icon name={p.icon} size="16px" />
+					</span>
+					<div class="min-w-0">
+						<p class="text-foreground text-sm leading-tight font-medium">
+							{p.phase}
+						</p>
+						<p class="text-accent-100 m-0 max-h-6 overflow-hidden font-mono text-[11px] tracking-widest uppercase opacity-100 transition-[max-height,opacity] duration-300 ease-out group-data-[mode=before]/wf:max-h-0 group-data-[mode=before]/wf:opacity-0 motion-reduce:transition-none">
+							{p.product}
+						</p>
+					</div>
+				</div>
+
+				<div
+					class="relative h-5 sm:h-auto sm:self-stretch"
+					aria-hidden="true"
+				>
+					<div class="bg-background-muted absolute inset-0 rounded" />
+
+					{[25, 50, 75].map((pct) => (
+						<div
+							class="border-border-100/50 absolute inset-y-0 border-l border-dashed"
+							style={`left: ${pct}%`}
+						/>
+					))}
+
+					<div
+						class={`wf-bar absolute inset-y-0 rounded transition-[left,width,box-shadow] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] data-[shrunk=true]:animate-[wf-shrink-pulse_0.6s_ease-out] motion-reduce:!transition-none motion-reduce:data-[shrunk=true]:animate-none ${p.color}`}
+						style={`--off-before: ${p.before.offset}%; --w-before: ${p.before.width}%; --off-after: ${p.after.offset}%; --w-after: ${p.after.width}%;`}
+						data-shrunk="false"
+					>
+						<span
+							class:list={[
+								"absolute top-1/2 right-2 hidden -translate-y-1/2 font-mono text-[10px] font-medium whitespace-nowrap text-white/90 tabular-nums drop-shadow-sm group-data-[mode=after]/wf:sm:inline",
+								p.after.width < 6 && "opacity-0",
+							]}
+						>
+							{Math.round(p.after.width * 16)}ms
+						</span>
+						<span
+							class:list={[
+								"absolute top-1/2 right-2 hidden -translate-y-1/2 font-mono text-[10px] font-medium whitespace-nowrap text-white/90 tabular-nums drop-shadow-sm group-data-[mode=before]/wf:sm:inline",
+								p.before.width < 6 && "opacity-0",
+							]}
+						>
+							{Math.round(p.before.width * 16)}ms
+						</span>
+					</div>
+				</div>
+
+				<div class="text-foreground-subtle group-hover:text-accent-100 hidden items-center transition-colors duration-150 sm:flex">
+					<RightArrow
+						strokeWidth={1.5}
+						class="transition-transform duration-150 group-hover:translate-x-0.5"
+					/>
+				</div>
+			</a>
+		))
+	}
+
+	<div
+		class="wf-summary bg-background border-border-100 border-t px-5 py-3"
+		aria-live="polite"
+	>
+		<div class="flex items-center justify-between gap-4">
+			<div
+				class="text-foreground-muted flex items-center gap-3 font-mono text-xs tabular-nums"
+			>
+				<span class="tracking-widest uppercase">Total latency</span>
+				<div
+					class="bg-background-muted relative h-1.5 w-28 overflow-hidden rounded-full sm:w-48"
+					role="presentation"
+				>
+					<div
+						class="bg-accent-100 absolute inset-y-0 left-0 w-[12%] rounded-full transition-[width] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-data-[mode=before]/wf:w-[96%]"
+					>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style is:global>
+	@keyframes wf-shrink-pulse {
+		0% {
+			box-shadow: 0 0 0 0
+				color-mix(in srgb, var(--color-accent-100) 30%, transparent);
+		}
+		70% {
+			box-shadow: 0 0 0 4px
+				color-mix(in srgb, var(--color-accent-100) 0%, transparent);
+		}
+		100% {
+			box-shadow: 0 0 0 0
+				color-mix(in srgb, var(--color-accent-100) 0%, transparent);
+		}
+	}
+
+	.wf-bar {
+		left: var(--off-after);
+		width: var(--w-after);
+	}
+	.wf-section[data-mode="before"] .wf-bar {
+		left: var(--off-before);
+		width: var(--w-before);
+	}
+</style>
+
+<script>
+	function initWaterfall() {
+		const btnAfter = document.querySelector<HTMLButtonElement>(
+			"#wf-toggle-after",
+		);
+		const btnBefore = document.querySelector<HTMLButtonElement>(
+			"#wf-toggle-before",
+		);
+		if (!btnAfter || !btnBefore) return;
+
+		// Reach up to the .wf-section ancestor (in AccelerateSection.astro).
+		// That element owns `data-mode` so its `group/wf` data-attribute
+		// selectors apply to all descendants including the rows below.
+		const root = btnAfter.closest<HTMLElement>(".wf-section");
+		if (!root) return;
+
+		if (root.dataset.wfInit === "true") return;
+		root.dataset.wfInit = "true";
+
+		const prefersReducedMotion = window.matchMedia(
+			"(prefers-reduced-motion: reduce)",
+		).matches;
+
+		const bars = root.querySelectorAll<HTMLElement>(".wf-bar");
+
+		let isAfter = true;
+
+		const setMode = (after: boolean) => {
+			isAfter = after;
+
+			root.dataset.mode = after ? "after" : "before";
+
+			btnBefore.setAttribute("aria-checked", String(!after));
+			btnAfter.setAttribute("aria-checked", String(after));
+			btnBefore.setAttribute("tabindex", after ? "-1" : "0");
+			btnAfter.setAttribute("tabindex", after ? "0" : "-1");
+
+			bars.forEach((bar) => {
+				bar.dataset.shrunk = "false";
+				void bar.offsetWidth;
+				if (after && !prefersReducedMotion) {
+					bar.dataset.shrunk = "true";
+				}
+			});
+		};
+
+		const onBeforeClick = () => setMode(false);
+		const onAfterClick = () => setMode(true);
+		btnBefore.addEventListener("click", onBeforeClick);
+		btnAfter.addEventListener("click", onAfterClick);
+
+		const onToggleKeyDown = (event: KeyboardEvent) => {
+			const radios = [btnAfter, btnBefore];
+			const currentIndex = isAfter ? 0 : 1;
+			let nextIndex = currentIndex;
+
+			switch (event.key) {
+				case "ArrowRight":
+				case "ArrowDown":
+					nextIndex = (currentIndex + 1) % radios.length;
+					break;
+				case "ArrowLeft":
+				case "ArrowUp":
+					nextIndex = (currentIndex - 1 + radios.length) % radios.length;
+					break;
+				case "Home":
+					nextIndex = 0;
+					break;
+				case "End":
+					nextIndex = radios.length - 1;
+					break;
+				default:
+					return;
+			}
+
+			event.preventDefault();
+			setMode(nextIndex === 0);
+			radios[nextIndex].focus();
+		};
+
+		btnBefore.addEventListener("keydown", onToggleKeyDown);
+		btnAfter.addEventListener("keydown", onToggleKeyDown);
+
+		setMode(true);
+
+		document.addEventListener(
+			"astro:before-swap",
+			() => {
+				btnBefore.removeEventListener("click", onBeforeClick);
+				btnAfter.removeEventListener("click", onAfterClick);
+				btnBefore.removeEventListener("keydown", onToggleKeyDown);
+				btnAfter.removeEventListener("keydown", onToggleKeyDown);
+			},
+			{ once: true },
+		);
+	}
+
+	if (document.readyState === "loading") {
+		document.addEventListener("DOMContentLoaded", initWaterfall);
+	} else {
+		initWaterfall();
+	}
+	document.addEventListener("astro:page-load", initWaterfall);
+</script>

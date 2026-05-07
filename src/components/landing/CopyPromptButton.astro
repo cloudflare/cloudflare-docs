@@ -13,11 +13,18 @@ interface Props {
 	 * Optional class hooks merged onto the underlying secondary Button.
 	 */
 	class?: string;
+	/**
+	 * Optional hover/focus tooltip shown above the button. When omitted, no
+	 * tooltip is rendered (e.g., the duplicate button in the AgentSetup
+	 * section, where the surrounding copy already provides context).
+	 */
+	tooltip?: string;
 }
 
 const {
 	agentIds = ["claude", "cursor", "codex", "opencode"] as const,
 	class: className = "",
+	tooltip,
 } = Astro.props;
 
 const featuredAgents = AGENTS.filter((a) =>
@@ -26,10 +33,11 @@ const featuredAgents = AGENTS.filter((a) =>
 ---
 
 <Button
-	class:list={["copy-prompt-btn group/copy cursor-pointer", className]}
+	class:list={["copy-prompt-btn group/copy cursor-copy", className]}
 	variant="secondary"
 	size="md"
 	type="button"
+	data-tooltip={tooltip}
 >
 	<span class="inline-flex items-center gap-2.5 text-base font-medium">
 		<span
@@ -65,6 +73,7 @@ const featuredAgents = AGENTS.filter((a) =>
 </Button>
 
 <script>
+	import tippy from "tippy.js";
 	import { AGENT_SETUP_PROMPT } from "./constants";
 
 	// Mirrors the CommandBlock pattern: class-based selector binds every
@@ -78,6 +87,18 @@ const featuredAgents = AGENTS.filter((a) =>
 			.forEach((btn) => {
 				if (btn.dataset.bound === "true") return;
 				btn.dataset.bound = "true";
+
+				// Wire up the (optional) tooltip — same pattern as PageActions.
+				const tooltip = btn.dataset.tooltip;
+				if (tooltip) {
+					tippy(btn, {
+						content: tooltip,
+						placement: "top",
+						arrow: false,
+						delay: [200, 0],
+						appendTo: () => document.body,
+					});
+				}
 
 				btn.addEventListener("click", async () => {
 					try {
