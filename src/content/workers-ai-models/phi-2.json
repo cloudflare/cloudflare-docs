@@ -22,6 +22,10 @@
         {
             "property_id": "info",
             "value": "https://huggingface.co/microsoft/phi-2"
+        },
+        {
+            "property_id": "planned_deprecation_date",
+            "value": "2026-05-30"
         }
     ],
     "schema": {
