@@ -32,7 +32,7 @@ When making requests to Amazon Bedrock, replace `https://bedrock-runtime.us-east
 For example, to invoke the Anthropic Claude model in `us-east-1`:
 
 ```txt
-https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/aws-bedrock/bedrock-runtime/us-east-1/model/anthropic.claude-3-haiku-20240307-v1:0/invoke
+https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/aws-bedrock/bedrock-runtime/us-east-1/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/invoke
 ```
 
 ## Authenticating with Amazon Bedrock
@@ -94,7 +94,7 @@ If you prefer to sign requests yourself, you can use the [`aws4fetch`](https://g
 With your AWS credentials [stored as a provider key](/ai-gateway/configuration/bring-your-own-keys/), requests are simple — no AWS signing required:
 
 ```bash
-curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/aws-bedrock/bedrock-runtime/us-east-1/model/anthropic.claude-3-haiku-20240307-v1:0/invoke" \
+curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/aws-bedrock/bedrock-runtime/us-east-1/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/invoke" \
   -H "cf-aig-authorization: Bearer {CF_AIG_TOKEN}" \
   -H "Content-Type: application/json" \
   -d '{
@@ -145,7 +145,7 @@ export default {
 		});
 
 		// Sign against the original AWS URL
-		const awsUrl = `https://bedrock-runtime.${region}.amazonaws.com/model/anthropic.claude-3-haiku-20240307-v1:0/invoke`;
+		const awsUrl = `https://bedrock-runtime.${region}.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/invoke`;
 
 		const presignedRequest = await awsClient.sign(awsUrl, {
 			method: "POST",
@@ -154,7 +154,7 @@ export default {
 		});
 
 		// Send through AI Gateway
-		const gatewayUrl = `https://gateway.ai.cloudflare.com/v1/${cfAccountId}/${gatewayName}/aws-bedrock/bedrock-runtime/${region}/model/anthropic.claude-3-haiku-20240307-v1:0/invoke`;
+		const gatewayUrl = `https://gateway.ai.cloudflare.com/v1/${cfAccountId}/${gatewayName}/aws-bedrock/bedrock-runtime/${region}/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/invoke`;
 
 		const response = await fetch(gatewayUrl, {
 			method: "POST",
@@ -194,7 +194,7 @@ curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat
   -H "cf-aig-authorization: Bearer {CF_AIG_TOKEN}" \
   -H "Content-Type: application/json" \
   -d '{
-    "model": "aws-bedrock/anthropic.claude-3-haiku-20240307-v1:0",
+    "model": "aws-bedrock/us.anthropic.claude-haiku-4-5-20251001-v1:0",
     "messages": [
       {
         "role": "user",
@@ -216,7 +216,7 @@ const client = new OpenAI({
 });
 
 const response = await client.chat.completions.create({
-	model: "aws-bedrock/anthropic.claude-3-haiku-20240307-v1:0",
+	model: "aws-bedrock/us.anthropic.claude-haiku-4-5-20251001-v1:0",
 	messages: [
 		{
 			role: "user",
