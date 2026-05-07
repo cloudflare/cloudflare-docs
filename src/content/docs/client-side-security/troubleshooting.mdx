@@ -57,7 +57,7 @@ To try to solve this issue, add the domain of the redirected destination to your
 
 ## I get scoped alerts for hostnames I do not manage on a SaaS root zone
 
-If you operate an [SSL for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) root zone with custom hostnames, and you configured a [scoped alert](/client-side-security/alerts/#scoped-alerts) with a content security rule that uses the `'self'` keyword, you will receive alerts for resources detected across all custom hostnames served under your root zone — not only on your own application surfaces.
+If you operate an [SSL for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) root zone with custom hostnames, and you configured a [scoped alert](/client-side-security/alerts/#scoped-alerts) with a content security rule that uses the `'self'` keyword, you will receive alerts for resources detected across all custom hostnames served under your root zone, not only on your own application surfaces.
 
 This is expected behavior:
 
@@ -66,7 +66,7 @@ This is expected behavior:
 
 At SaaS scale, this can produce a high volume of alerts across hostnames you do not manage, and makes it difficult to isolate the scope of your own compliance audits (for example, the specific pages where you collect cardholder data).
 
-There is currently no way to scope a content security rule to "root zone only, excluding custom hostnames." If you only need to monitor your own application surfaces, consider one of the following:
+There is currently no way to scope a content security rule to the root zone only, excluding custom hostnames. If you only need to monitor your own application surfaces, consider one of the following:
 
 - Use a content security rule expression that matches only the specific page paths you control (for example, the request paths where you collect cardholder data).
 - Replace `'self'` with an explicit list of hostnames you control. Note that this is rarely feasible at SaaS scale because CSP headers have practical size limits.
