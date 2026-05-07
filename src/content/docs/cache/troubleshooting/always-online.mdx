@@ -37,18 +37,18 @@ Always Online only activates when your origin is completely unreachable (Cloudfl
 
 ## Frequently asked questions
 
-### Check if a page has been crawled
+### How can I check if a page has been crawled?
 
 Search for the page URL on the [Internet Archive](https://web.archive.org/) or query the [Internet Archive Availability API](https://archive.org/help/wayback_api.php).
 
-### Missing pages
+### Why are some pages not crawled?
 
 Cloudflare only requests the Internet Archive to crawl the most popular pages on your site, based on `GET` requests that returned a `200` status code in the previous five hours. Some pages may not be archived. To archive a specific page, submit it through the [Internet Archive save page](https://web.archive.org/save).
 
-### IP addresses to allowlist
+### What IP addresses should I allowlist?
 
 Add the Internet Archive IP ranges to your allowlist: `207.241.224.0/20` and `208.70.24.0/21`. These IP addresses belong to the Internet Archive, not Cloudflare.
 
-### Expected user agent
+### What user agent should the origin expect?
 
 The Internet Archive currently uses: `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/605.1.15 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/605.1.15`.
