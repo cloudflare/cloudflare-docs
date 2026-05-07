@@ -9,7 +9,7 @@ tags:
 description: >-
   Reference for the AI binding with AI Gateway. Call Workers AI and
   third-party models with env.AI.run(), access log IDs, and use gateway methods
-  for feedback, logging, URLs, and universal requests.
+  for feedback, logging, and URLs.
 products:
   - ai-gateway
 ---
@@ -198,21 +198,4 @@ const anthropic = createAnthropic({
 });
 ```
 
-### `run()`
 
-Executes a [universal request](/ai-gateway/usage/universal/) to any supported provider. Accepts a single request object or an array.
-
-```typescript
-const resp = await gateway.run({
-	provider: "workers-ai",
-	endpoint: "@cf/meta/llama-3.1-8b-instruct",
-	headers: {
-		authorization: "Bearer my-api-token",
-	},
-	query: {
-		prompt: "tell me a joke",
-	},
-});
-```
-
-**Returns:** `Promise<Response>`
