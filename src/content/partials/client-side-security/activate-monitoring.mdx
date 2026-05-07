@@ -1,0 +1,31 @@
+---
+{}
+---
+
+import { Tabs, TabItem, Steps, DashButton } from "~/components";
+
+<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the Security **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/security/settings" />
+
+2. (Optional) Filter by **Client-side abuse**.
+3. Turn on **Continuous script monitoring**.
+
+</Steps>
+
+</TabItem> <TabItem label="Old dashboard">
+
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+2. Go to **Security** > **Client-side security**.
+3. Go to the **Settings** tab.
+4. Next to **Continuous monitoring and alerting**, select **Enable**.
+
+</Steps>
+
+</TabItem> </Tabs>

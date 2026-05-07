@@ -11,6 +11,8 @@ tags:
   - CSP
 ---
 
+import { Render } from "~/components";
+
 :::note
 Only available to customers with Client-Side Security Advanced.
 :::
@@ -37,16 +39,7 @@ Instead, follow these practices:
 
 Complete the following checklist before switching a content security rule from _Log_ to _Allow_:
 
-- The rule was tested in _Log_ mode for a minimum of seven days.
-- Reviewed all [rule violations](/client-side-security/rules/violations/) and confirmed there are no unexpected blocks.
-- Added all legitimate third-party resources to the rule allowlist.
-- Tested the application on all major browsers (Chrome, Firefox, Safari, Edge).
-- Configured [alerts](/client-side-security/alerts/) for rule violations.
-- There is a documented rollback procedure that is ready to execute.
-
-:::caution
-Switching a rule from _Log_ to _Allow_ without completing this checklist may block resources required by your application. This will directly affect your end users.
-:::
+<Render file="pre-enforcement-checklist" product="client-side-security" />
 
 ## Rollback a rule change
 
