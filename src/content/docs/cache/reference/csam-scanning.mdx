@@ -9,6 +9,8 @@ tags:
   - Security
 ---
 
+import { DashButton } from "~/components";
+
 The Child Sexual Abuse Material (CSAM) Scanning Tool allows website owners to proactively identify and take action on CSAM present on their website. When you turn on this tool, Cloudflare compares content served for your website through the Cloudflare cache to known lists of CSAM. These lists are provided by leading child safety advocacy groups such as the National Center for Missing and Exploited Children (NCMEC).
 
 By turning on the Service, you agree to the [Service-Specific Terms](https://www.cloudflare.com/service-specific-terms-application-services/#csam-scanning-tool-terms) for the CSAM Scanning Tool. You agree to use this tool solely for the purposes of preventing the spread of CSAM.
@@ -21,9 +23,11 @@ Because knowingly distributing or viewing CSAM is illegal, the owner of the webs
 
 To turn on the tool:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
-2. Go to **Caching** > **Configuration**.
-3. For **CSAM Scanning Tool**, select **Configure**.
+1. Log the Cloudflare dashboard, select your account and domain, and go to **Caching** > **Configuration**.
+
+   <DashButton url="/?to=/:account/:zone/caching/configuration" />
+
+2. Go to **CSAM Scanning Tool**, then select **Configure**.
 
 You must provide an email address, which Cloudflare uses to notify you if a positive match is detected.
 
