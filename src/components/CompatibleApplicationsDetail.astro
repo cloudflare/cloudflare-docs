@@ -28,102 +28,165 @@ const collection = await getCollection("granular-control-applications");
 const sorted = [...collection].sort((a, b) =>
 	a.data.display_id.localeCompare(b.data.display_id),
 );
+
+const COLUMNS = [
+	"Operation Name",
+	"Operation ID",
+	"Application Control",
+	"Application Control ID",
+	"Contains Payload",
+	"Operation Group",
+	"Operation Group ID",
+] as const;
 ---
 
-{
-	sorted.map((entry) => (
-		<>
-			<h2 id={entry.id}>{entry.data.display_id}</h2>
-			{(entry.data.applications as Application[]).map((app) => (
-				<>
-					<h3 id={app.name}>{app.display_name}</h3>
-					{app.controls.length > 1 ? (
-						<Tabs>
-							{app.controls.map((control) => (
-								<TabItem label={control.label}>
-									<table>
-										<thead>
-											<tr>
-												<th>Operation Name</th>
-												<th>Operation ID</th>
-												<th>Application Control</th>
-												<th>Application Control ID</th>
-												<th>Contains Payload</th>
-												<th>Operation Group</th>
-												<th>Operation Group ID</th>
-											</tr>
-										</thead>
-										<tbody>
-											{control.items.map((item) => (
+<div class="compatible-apps">
+	{
+		sorted.map((entry) => (
+			<>
+				<h2 id={entry.id}>{entry.data.display_id}</h2>
+				{(entry.data.applications as Application[]).map((app) => (
+					<>
+						<h3 id={app.name}>{app.display_name}</h3>
+						{app.controls.length > 1 ? (
+							<Tabs>
+								{app.controls.map((control) => (
+									<TabItem label={control.label}>
+										<table>
+											<thead>
 												<tr>
-													<td>
-														<strong>{item.operation_name}</strong>
-													</td>
-													<td>
-														<code>{item.operation_id}</code>
-													</td>
-													<td>{item.application_control ?? "—"}</td>
-													<td>
-														{item.application_control_id !== null ? (
-															<code>{item.application_control_id}</code>
-														) : (
-															"—"
-														)}
-													</td>
-													<td>{item.contains_payload ? "✓" : "—"}</td>
-													<td>{item.operation_group}</td>
-													<td>
-														<code>{item.operation_group_id}</code>
-													</td>
+													{COLUMNS.map((col) => (
+														<th>{col}</th>
+													))}
 												</tr>
-											))}
-										</tbody>
-									</table>
-								</TabItem>
-							))}
-						</Tabs>
-					) : (
-						<table>
-							<thead>
-								<tr>
-									<th>Operation Name</th>
-									<th>Operation ID</th>
-									<th>Application Control</th>
-									<th>Application Control ID</th>
-									<th>Contains Payload</th>
-									<th>Operation Group</th>
-									<th>Operation Group ID</th>
-								</tr>
-							</thead>
-							<tbody>
-								{app.controls[0].items.map((item) => (
-									<tr>
-										<td>
-											<strong>{item.operation_name}</strong>
-										</td>
-										<td>
-											<code>{item.operation_id}</code>
-										</td>
-										<td>{item.application_control ?? "—"}</td>
-										<td>
-											{item.application_control_id !== null ? (
-												<code>{item.application_control_id}</code>
-											) : (
-												"—"
-											)}
-										</td>
-										<td>{item.contains_payload ? "✓" : "—"}</td>
-										<td>{item.operation_group}</td>
-										<td>
-											<code>{item.operation_group_id}</code>
-										</td>
-									</tr>
+											</thead>
+											<tbody>
+												{control.items.map((item) => (
+													<tr>
+														<td data-label="Operation Name">
+															<strong>{item.operation_name}</strong>
+														</td>
+														<td data-label="Operation ID">
+															<code>{item.operation_id}</code>
+														</td>
+														<td data-label="Application Control">
+															{item.application_control ?? "—"}
+														</td>
+														<td data-label="Application Control ID">
+															{item.application_control_id !== null ? (
+																<code>{item.application_control_id}</code>
+															) : (
+																"—"
+															)}
+														</td>
+														<td data-label="Contains Payload">
+															{item.contains_payload ? "✓" : "—"}
+														</td>
+														<td data-label="Operation Group">
+															{item.operation_group}
+														</td>
+														<td data-label="Operation Group ID">
+															<code>{item.operation_group_id}</code>
+														</td>
+													</tr>
+												))}
+											</tbody>
+										</table>
+									</TabItem>
 								))}
-							</tbody>
-						</table>
-					)}
-				</>
-			))}
-		</>
-	))
-}
+							</Tabs>
+						) : (
+							<table>
+								<thead>
+									<tr>
+										{COLUMNS.map((col) => (
+											<th>{col}</th>
+										))}
+									</tr>
+								</thead>
+								<tbody>
+									{app.controls[0].items.map((item) => (
+										<tr>
+											<td data-label="Operation Name">
+												<strong>{item.operation_name}</strong>
+											</td>
+											<td data-label="Operation ID">
+												<code>{item.operation_id}</code>
+											</td>
+											<td data-label="Application Control">
+												{item.application_control ?? "—"}
+											</td>
+											<td data-label="Application Control ID">
+												{item.application_control_id !== null ? (
+													<code>{item.application_control_id}</code>
+												) : (
+													"—"
+												)}
+											</td>
+											<td data-label="Contains Payload">
+												{item.contains_payload ? "✓" : "—"}
+											</td>
+											<td data-label="Operation Group">
+												{item.operation_group}
+											</td>
+											<td data-label="Operation Group ID">
+												<code>{item.operation_group_id}</code>
+											</td>
+										</tr>
+									))}
+								</tbody>
+							</table>
+						)}
+					</>
+				))}
+			</>
+		))
+	}
+</div>
+
+<style is:global>
+	@media (max-width: 640px) {
+		.sl-markdown-content .compatible-apps tbody:has(tr:nth-child(5)) tr:nth-child(even) td {
+			background-color: transparent;
+		}
+
+		.compatible-apps table {
+			display: block;
+			overflow-x: unset;
+		}
+
+		.compatible-apps thead {
+			display: none;
+		}
+
+		.compatible-apps tbody,
+		.compatible-apps tr {
+			display: block;
+		}
+
+		.compatible-apps tr {
+			border-bottom: 1px solid var(--color-table-fill);
+			padding-block: 0.75rem;
+		}
+
+		.compatible-apps tr:last-child {
+			border-bottom: none;
+		}
+
+		.compatible-apps td {
+			display: flex;
+			align-items: baseline;
+			gap: 0.75rem;
+			border-bottom: none;
+			padding: 0.2rem 1rem;
+		}
+
+		.compatible-apps td::before {
+			content: attr(data-label);
+			flex: 0 0 10rem;
+			font-size: 0.8125rem;
+			color: var(--sl-color-gray-3);
+			font-weight: 400;
+		}
+	}
+</style>
