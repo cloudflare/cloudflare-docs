@@ -1,0 +1,231 @@
+---
+title: Workers API
+pcx_content_type: reference
+description: Configure the Agent Memory binding and use memory profiles from Worker code.
+products:
+  - agent-memory
+sidebar:
+  order: 1
+---
+
+import {
+	LinkCard,
+	MetaInfo,
+	Type,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+Use the Workers API to access Agent Memory from your [Worker](/workers/). The binding connects your Worker to a [namespace](/agent-memory/concepts/namespaces-profiles/) containing profiles, which are isolated memory stores for your agent.
+
+## Configure the binding
+
+Add an `agent_memory` entry to your Wrangler configuration. The `binding` field is the variable name you use in Worker code, and the `namespace` field is the Agent Memory namespace to bind to.
+
+<WranglerConfig>
+
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"agent_memory": [
+		{
+			"binding": "MEMORY",
+			"namespace": "<NAMESPACE_NAME>"
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+To bind multiple namespaces, add multiple entries to the `agent_memory` array.
+
+## Generated types
+
+Run `npx wrangler types` to generate the binding type in `worker-configuration.d.ts`:
+
+```ts title="worker-configuration.d.ts"
+interface Env {
+	MEMORY: AgentMemoryNamespace;
+}
+```
+
+## Namespace methods
+
+Use namespace methods on the binding to access and list memory profiles.
+
+### `get(name)`
+
+Gets a memory profile by name. If the profile does not exist, Agent Memory creates it.
+
+- `name` <Type text="string" /> <MetaInfo text="required" />: Name of the profile to access. Maximum 32 characters.
+- Returns <Type text="Promise<AgentMemoryProfile>" />
+
+The first `get()` call for a new profile may take longer while Agent Memory creates the profile.
+
+### `list(options?)`
+
+Lists profiles in the namespace. A profile appears in `list()` after Agent Memory creates it, including when you call `get()` for a new profile.
+
+- `options.limit` <Type text="number" /> <MetaInfo text="optional" />: Maximum number of profiles to return.
+- `options.cursor` <Type text="string" /> <MetaInfo text="optional" />: Cursor for the next page of results.
+- `options.prefix` <Type text="string" /> <MetaInfo text="optional" />: Filter profiles by name prefix.
+- Returns <Type text="Promise<ListProfilesResult>" />
+
+```ts
+type ListProfilesResult = {
+	profiles: ProfileInfo[];
+	cursor?: string;
+};
+
+type ProfileInfo = {
+	name: string;
+	createdAt: Date;
+	updatedAt: Date;
+};
+```
+
+## Profile methods
+
+Call profile methods after you get a profile from the binding.
+
+```ts
+type Memory = {
+	id: string;
+	summary: string;
+	sessionId: string | null;
+};
+```
+
+### `ingest(messages, options?)`
+
+Processes a conversation and extracts structured memories from it. Agent Memory identifies facts, events, instructions, and tasks automatically, so you do not need to specify what to remember.
+
+- `messages` <Type text="Iterable<Message>" /> <MetaInfo text="required" />: Conversation messages to process.
+- `options.sessionId` <Type text="string | null" /> <MetaInfo text="optional" />: Identifier for the conversation session. Maximum 64 characters. If omitted, Agent Memory derives one from the message content.
+- Returns <Type text="Promise<void>" />
+
+```ts
+type Message = {
+	role: "system" | "user" | "assistant";
+	content: string; // Max 32 KB
+	timestamp?: Date | string;
+};
+```
+
+`ingest()` is idempotent. Re-ingesting the same conversation does not create duplicate memories.
+
+### `remember(memory)`
+
+Stores a single memory explicitly. Use `remember()` when your application or agent already knows what should be stored, instead of passing a conversation to `ingest()` for extraction.
+
+- `memory.content` <Type text="string" /> <MetaInfo text="required" />: Memory content to store.
+- `memory.sessionId` <Type text="string | null" /> <MetaInfo text="optional" />: Identifier for the related conversation session.
+- Returns <Type text="Promise<Memory>" />
+
+### `forget(query, options?)`
+
+Finds and removes memories that match a natural language query. Use `forget()` when you need semantic deletion rather than exact deletion by memory ID.
+
+- `query` <Type text="string" /> <MetaInfo text="required" />: Natural language description of what to forget.
+- Returns <Type text="Promise<ForgetResult>" />
+
+```ts
+type ForgetResult = {
+	memories: Memory[];
+};
+```
+
+### `recall(query, options?)`
+
+Searches stored memories in the profile and returns a synthesized answer grounded in the stored content.
+
+- `query` <Type text="string" /> <MetaInfo text="required" />: Natural language question or search query. Maximum 1 KB (1,024 bytes UTF-8).
+- `options.thinkingLevel` <Type text='"low" | "medium" | "high"' /> <MetaInfo text='optional (default: "low")' />: Controls retrieval breadth. Higher levels search more candidates but take longer.
+- `options.responseLength` <Type text='"short" | "medium" | "long"' /> <MetaInfo text='optional (default: "medium")' />: Controls the verbosity of the synthesized answer.
+- `options.referenceDate` <Type text="Date | string" /> <MetaInfo text="optional" />: Temporal anchor for date-relative queries.
+- Returns <Type text="Promise<RecallResult>" />
+
+```ts
+type RecallResult = {
+	answer: string;
+	count: number;
+	candidates: Array<{
+		id: string;
+		summary: string;
+		sessionId: string | null;
+		score: number;
+	}>;
+};
+```
+
+If no memories match the query, `recall()` returns an empty answer.
+
+### `list(options?)`
+
+Lists memories stored in the profile.
+
+- `options.limit` <Type text="number" /> <MetaInfo text="optional" />: Maximum number of memories to return.
+- `options.cursor` <Type text="string" /> <MetaInfo text="optional" />: Cursor for the next page of results.
+- `options.sessionId` <Type text="string" /> <MetaInfo text="optional" />: Filter memories by session ID.
+- `options.type` <Type text='"fact" | "event" | "instruction" | "task"' /> <MetaInfo text="optional" />: Filter memories by type.
+- Returns <Type text="Promise<ListMemoriesResult>" />
+
+```ts
+type ListMemoriesResult = {
+	memories: Memory[];
+	cursor?: string;
+};
+```
+
+### `get(id)`
+
+Retrieves a memory by ID.
+
+- `id` <Type text="string" /> <MetaInfo text="required" />: Memory ID.
+- Returns <Type text="Promise<Memory | null>" />
+
+### `delete(id)`
+
+Deletes one or more memories by ID.
+
+- `id` <Type text="string | string[]" /> <MetaInfo text="required" />: Memory ID or list of memory IDs.
+- Returns <Type text="Promise<void>" />
+
+### `getSummary(options?)`
+
+Generates a structured Markdown summary of everything stored in a memory profile. Use it to inspect what Agent Memory remembers about a profile.
+
+- `options.sessionId` <Type text="string | null" /> <MetaInfo text="optional" />: Session ID to scope the "Last Session" section of the summary. If omitted, Agent Memory uses the most recent session.
+- Returns <Type text="Promise<GetSummaryResponse>" />
+
+```ts
+type GetSummaryResponse = {
+	summary: string;
+};
+```
+
+## Limits
+
+| Parameter                    | Limit                      |
+| ---------------------------- | -------------------------- |
+| Messages per `ingest()` call | 500                        |
+| Message content size         | 32 KB (32,768 bytes UTF-8) |
+| Session ID length            | 64 characters              |
+| `recall()` query size        | 1 KB (1,024 bytes UTF-8)   |
+
+Refer to [Limits](/agent-memory/platform/limits/) for the complete list of constraints.
+
+## Next steps
+
+<LinkCard
+	title="HTTP API"
+	href="/agent-memory/api/http-api/"
+	description="Use Agent Memory from services that call the Cloudflare API directly."
+/>
+
+<LinkCard
+	title="Get started"
+	href="/agent-memory/get-started/"
+	description="Add durable memory recall and ingestion to an agent."
+/>
