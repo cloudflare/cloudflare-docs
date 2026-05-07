@@ -122,7 +122,9 @@ Write a short explanation covering:
 
 - What type of documentation is being changed (new page, update, fix, restructure, changelog entry)
 - Why the change is needed or what prompted it
-- Links to any relevant public context: GitHub issues, Jira tickets, related PRs, or public docs pages.
+- Links to any relevant public context: GitHub issues, related PRs, or public docs pages.
+
+This is a public repository. Do not include URLs or titles of internal resources (tickets, wiki pages, internal docs) in PR titles, descriptions, or comments. Reference internal tickets by ID only (for example, `PCX-20808`).
 
 Keep it factual. Do not repeat what the checklist items say. For small, focused PRs 1-2 sentences is enough. For larger PRs touching many files or multiple areas, a longer description is appropriate — use tables, lists, or code blocks over paragraphs of prose where it makes the summary easier to scan.
 
