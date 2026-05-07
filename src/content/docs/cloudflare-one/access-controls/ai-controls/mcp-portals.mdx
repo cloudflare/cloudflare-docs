@@ -120,13 +120,13 @@ Cloudflare Access automatically creates an Access application for each MCP serve
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
 2. Find the portal that you want to configure, then select the three dots > **Edit**.
 3. To configure identity providers for the portal:
-   1. Go to the **Login methods** tab.
+   1. Go to **Authentication**.
    2. Select the [identity providers](/cloudflare-one/integrations/identity-providers/) that you want to enable for your application.
-   3. (Recommended) If you plan to only allow access via a single identity provider, turn on **Instant Auth**. End users will not be shown the [Cloudflare Access login page](/cloudflare-one/reusable-components/custom-pages/access-login-page/). Instead, Cloudflare will redirect users directly to your SSO login event.
+   3. (Recommended) If you plan to only allow access via a single identity provider, turn on **Apply instant authentication**. End users will not be shown the [Cloudflare Access login page](/cloudflare-one/reusable-components/custom-pages/access-login-page/). Instead, Cloudflare will redirect users directly to your SSO login event.
 4. To customize the block page:
-   1. Go to the **Experience settings** tab.
+   1. Go to **Additional settings**.
    2. <Render file="access/access-block-page" product="cloudflare-one" />
-5. Select **Save application**.
+5. Select **Save**.
 
 ## Code mode
 

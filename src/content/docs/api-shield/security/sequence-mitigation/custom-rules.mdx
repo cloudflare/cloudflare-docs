@@ -15,8 +15,6 @@ import { GlossaryTooltip, Render } from "~/components"
 API Shield sequence custom rules use the configured API Shield <GlossaryTooltip term="session identifier">session identifier</GlossaryTooltip> to track the order of requests a user has made and the time between requests, and makes them available via [Cloudflare Rules](/rules). This allows you to write rules that match valid or invalid sequences.
 
 These rules are similar to [cookie sequence rules](/bots/additional-configurations/sequence-rules/) but have a different set of prerequisites:
-
-- They also need the `fraud_acct_ent` entitlement on a Cloudflare account.
 - They require [session identifiers](/api-shield/get-started/#session-identifiers) to be set in API Shield.
 - Because they require session identifiers, they can only be used on traffic that can be clearly attributed to individual users through session identifiers (authenticated traffic).
 - Because Cloudflare stores the user state in memory and not in a cookie, a session's sequence lifetime is limited to 10 minutes.

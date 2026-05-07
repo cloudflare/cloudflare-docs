@@ -1,0 +1,53 @@
+---
+pcx_content_type: overview
+title: Private origins (beta)
+description: Connect Cloudflare's application services to your private network by proxying public hostnames to private origins.
+products:
+  - dns
+sidebar:
+  order: 13
+  label: Overview
+  group:
+    badge:
+      text: Beta
+    label: Private origins
+tags:
+  - Private networks
+---
+
+import {
+	Description,
+	Plan,
+	RelatedProduct,
+	DirectoryListing,
+} from "~/components";
+
+<Description>
+Proxy HTTP/HTTPS traffic from public hostnames to origins in your private network.
+</Description>
+
+<Plan type="enterprise" />
+
+Use [private network routing](/dns/private-origins/private-network-routing/) and secure connections such as [Cloudflare WAN IPSec tunnels](/dns/private-origins/set-up-via-cloudflare-wan/) to connect Cloudflare's application services to your private network. The CDN, WAF, Cache, and other proxied features apply to this traffic the same way they apply to traffic destined for public origins.
+
+:::note[Closed beta]
+This feature is in closed beta. Contact your account team to request access.
+:::
+
+---
+
+## Resources
+
+<DirectoryListing />
+
+---
+
+## Related products
+
+<RelatedProduct
+	header="Cloudflare WAN"
+	href="/cloudflare-wan/"
+	product="cloudflare-wan"
+>
+	Connect your private network to Cloudflare with IPsec tunnels.
+</RelatedProduct>

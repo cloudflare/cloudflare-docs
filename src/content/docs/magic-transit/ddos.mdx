@@ -1,7 +1,7 @@
 ---
 title: DDoS protection
 pcx_content_type: concept
-description: DDoS protection for Magic Transit prefixes.
+description: DDoS mitigation layers available to Magic Transit customers.
 products:
   - magic-transit
 sidebar:
@@ -9,26 +9,56 @@ sidebar:
 head:
   - tag: title
     content: Cloudflare DDoS protection
-
 ---
 
-Cloudflare [DDoS protection](/ddos-protection/) automatically detects and mitigates Distributed Denial of Service (DDoS) attacks using its [Autonomous Edge](/ddos-protection/about/components/#autonomous-edge). With Magic Transit, you have access to additional [Advanced DDoS mitigation systems](/ddos-protection/advanced-ddos-systems/overview/), such as:
+import { Render } from "~/components";
 
-- [Advanced TCP Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/)
-- [Advanced DNS Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-dns-protection/)
-- [Programmable Flow Protection](/ddos-protection/advanced-ddos-systems/overview/programmable-flow-protection/)
+Cloudflare [DDoS protection](/ddos-protection/) automatically detects and mitigates DDoS attacks using the [Autonomous Edge](/ddos-protection/about/components/#autonomous-edge). Magic Transit customers get multiple layers of protection, from always-on managed rulesets to advanced systems that you can configure for your specific traffic patterns.
 
-For more information, refer to [Cloudflare DDoS Protection](/ddos-protection/).
+## Mitigation layers
 
----
+### DDoS managed rulesets
+
+The [network-layer DDoS managed ruleset](/ddos-protection/managed-rulesets/network/) provides pre-configured rules that detect and mitigate L3/L4 DDoS attacks. The ruleset is always enabled and cannot be turned off. Magic Transit and Spectrum Enterprise customers can [customize the ruleset behavior](/ddos-protection/managed-rulesets/network/network-overrides/configure-dashboard/) by adjusting the action and sensitivity level for individual rules or groups of rules.
+
+### Advanced TCP Protection
+
+[Advanced TCP Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/) detects and mitigates SYN flood attacks and out-of-state TCP attacks. It uses `flowtrackd` to learn your normal TCP traffic patterns and identify anomalous flows. You can create rules scoped globally, by region, or by data center, and set each rule to monitoring or mitigation mode.
+
+### Advanced DNS Protection
+
+[Advanced DNS Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-dns-protection/) detects and mitigates DNS-over-UDP DDoS attacks. Like Advanced TCP Protection, it uses `flowtrackd` to build a traffic profile and identify volumetric DNS anomalies. You can create rules with configurable burst, rate, and profile sensitivity levels.
+
+### Programmable Flow Protection
+
+[Programmable Flow Protection](/ddos-protection/advanced-ddos-systems/overview/programmable-flow-protection/) lets you write custom eBPF programs to inspect UDP payloads at the packet level. It is designed for custom or standardized L7 UDP-based protocols such as gaming, VoIP, financial services, and streaming. Programmable Flow Protection is available as an add-on for Magic Transit customers.
+
+### Network Firewall
+
+[Cloudflare Network Firewall](/cloudflare-network-firewall/) lets you create custom packet-level firewall rules to filter traffic by protocol, port, IP address, packet length, and other attributes. Network Firewall is included with Magic Transit.
+
+## Automatic activation
+
+<Render
+	file="advanced-ddos/mt-advanced-ddos-systems-onboarding"
+	product="ddos-protection"
+/>
+
+After the initial monitoring period, review your traffic in [Network Analytics](/magic-transit/analytics/network-analytics/) to observe what would have been mitigated, then switch your rules from monitoring to mitigation mode. For more information, refer to [Advanced DDoS Systems general settings](/ddos-protection/advanced-ddos-systems/overview/).
 
 ## Execution order
 
-Magic Transit executes mitigation systems in the following order:
+When traffic enters the Cloudflare network, it passes through mitigation systems in the following order:
 
 1. [DDoS managed rulesets](/ddos-protection/managed-rulesets/)
 2. [Advanced TCP Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/)
 3. [Advanced DNS Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-dns-protection/)
 4. [Cloudflare Network Firewall](/cloudflare-network-firewall/)
 
-[Programmable Flow Protection](/ddos-protection/advanced-ddos-systems/overview/programmable-flow-protection/) runs within the Advanced DDoS Protection layer for UDP-based protocols.
+[Programmable Flow Protection](/ddos-protection/advanced-ddos-systems/overview/programmable-flow-protection/) operates within the Advanced DDoS Protection layer for UDP-based protocols.
+
+## Related resources
+
+- [Verify your DDoS protection](/magic-transit/how-to/verify-ddos-protection/): Confirm that your DDoS mitigation layers are active and correctly configured.
+- [DDoS Protection overview](/ddos-protection/): Learn about Cloudflare DDoS Protection across all products.
+- [Best practices for DDoS protection](/ddos-protection/best-practices/proactive-defense/): Review proactive defense recommendations, including steps specific to Magic Transit.

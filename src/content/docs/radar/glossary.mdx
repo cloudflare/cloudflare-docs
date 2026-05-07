@@ -262,6 +262,10 @@ On Cloudflare Radar’s [Security & Attacks page](https://radar.cloudflare.com/s
 
 Learn more about the TCP resets and timeouts dataset in our [blog post](https://blog.cloudflare.com/tcp-resets-timeouts).
 
+## TLD nameserver performance
+
+TLD nameserver performance measures the response time (latency) of authoritative nameservers for top-level domains, as observed from Cloudflare's [1.1.1.1](/1.1.1.1/) resolver infrastructure. When the resolver forwards a DNS query upstream to a TLD's nameserver, the round-trip time is captured from the issuing Cloudflare data center. For anycasted authoritative nameservers, upstream queries are generally handled by a topologically close data center, resulting in lower median latencies compared to nameservers not deployed using anycast. This data reveals which nameservers are fastest, how latency varies across Cloudflare's global network, and how TLD infrastructure performance trends over time.
+
 ## Threat categories
 
 Attackers use multiple types of techniques when carrying out email-based attacks, including links or attachments leading to malware; identity deception, where the message appears to be coming from a trusted contact; and brand impersonation, where the message appears to be coming from a trusted brand. Categories are assigned to the various types of threats found during the analysis of a malicious email message, and a single message can have multiple categories. These categories are aggregated into “Link”, “Attachment”, “Impersonation”, and “Other” groupings. “Link” groups individual threat types where the attacker is trying to get the user to click on something, “Attachment” groups individual threat types where the attacker has attached a file to the email message, and “Impersonation” groups individual threat types where the attacker is impersonating a trusted brand or contact. The “Other” grouping includes other threat types not covered by the previous three. The percentages represent the share of malicious email messages where the given threat categories have been found. Data for this metric comes from Cloudflare’s cloud email security service.

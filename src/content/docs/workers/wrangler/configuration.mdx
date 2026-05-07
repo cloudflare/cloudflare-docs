@@ -1586,15 +1586,7 @@ You can configure various aspects of local development, such as the local protoc
 
 [Secrets](/workers/configuration/secrets/) are a type of binding that allow you to [attach encrypted text values](/workers/wrangler/commands/general/#secret) to your Worker.
 
-### Local development
-
-<Render file="secrets-in-dev" product="workers" />
-
 ### `secrets` configuration property
-
-:::note
-This property is experimental and subject to change.
-:::
 
 The `secrets` configuration property lets you declare the secret names your Worker requires in your Wrangler configuration file. Required secrets are validated during local development and deploy, and used as the source of truth for type generation.
 
@@ -1619,6 +1611,10 @@ Per-environment secrets are supported. Each named environment produces its own i
 **Deploy**
 
 When `secrets` is defined, `wrangler deploy` and `wrangler versions upload` validate that all secrets in `secrets.required` are configured on the Worker before the operation succeeds. If any required secrets are missing, the command fails with an error listing which secrets need to be set.
+
+### Local development
+
+<Render file="secrets-in-dev" product="workers" />
 
 ## Module Aliasing
 

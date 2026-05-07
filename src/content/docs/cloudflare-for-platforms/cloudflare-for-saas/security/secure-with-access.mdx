@@ -4,6 +4,8 @@ pcx_content_type: how-to
 description: Control access to custom hostnames using Cloudflare Access identity and device policies.
 products:
   - cloudflare-for-saas
+tags:
+  - Authentication
 sidebar:
   order: 4
 head:
@@ -22,9 +24,9 @@ Cloudflare Access provides visibility and control over who has access to your [c
 ## Setup
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), select your SaaS provider account and go to **Zero Trust** > **Access controls** > **Applications**.
-2. Select **Add an application** and, for type of application, select **Self-hosted**.
-3. Enter a name for your Access application and, in **Session Duration**, choose how often the user's [application token](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/) should expire.
+2. Select **Create new application**.
+3. Select **Self-hosted and private**.
 4. Select **Add public hostname**.
-5. For **Input method**, select _Custom_.
+5. Select **Switch to custom input**.
 6. In **Hostname**, enter your custom hostname (for example, `mycustomhostname.com`).
 7. Follow the remaining [self-hosted application creation steps](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) to publish the application.

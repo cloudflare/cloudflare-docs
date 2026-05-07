@@ -54,6 +54,17 @@ The following egress policy configures all traffic destined for a third-party ne
 	product="cloudflare-one"
 />
 
+### Secure access to SaaS applications
+
+Many SaaS providers (for example, Microsoft 365, Salesforce, or Workday) allow you to restrict access to connections from specific IP addresses. You can use dedicated egress IPs with Gateway to enforce this restriction:
+
+1. **Obtain dedicated egress IPs** from your account team and note the assigned IPv4 and IPv6 addresses.
+2. **Create an egress policy** that routes traffic destined for the SaaS provider through your dedicated egress IP. Use the Destination IP selector with the published IP ranges of the provider. Alternatively, use the Application selector (Beta) to match the provider by name.
+3. **Add the egress IPs to the SaaS provider's allowlist** so the provider only accepts connections from your organization's IPs.
+4. **Pair with HTTP policies** to add deeper controls. For example, block file uploads to personal accounts, enforce DLP profiles to prevent sensitive data from leaving the organization, or require [device posture checks](/cloudflare-one/reusable-components/posture-checks/) before allowing access.
+
+This pattern ensures that access to the SaaS application is limited to traffic that passes through Gateway, where your security policies are enforced, and that the SaaS provider can verify traffic originates from your organization.
+
 ### Catch-all policy
 
 Without a catch-all policy, any traffic that does not match an explicit egress policy will attempt to use the closest dedicated egress IP location. To avoid unexpected IP assignments and maintain the best performance, create a catch-all policy that routes remaining traffic through the default Zero Trust IP range:

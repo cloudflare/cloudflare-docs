@@ -48,7 +48,7 @@ Catches automated traffic through pattern matching against a database of known m
 
 <Render file="bots-heuristics" product="bots" />
 
-The Heuristics engine immediately gives automated requests a score of 1.
+The Heuristics engine gives automated requests a score of 1 for high-confidence, deterministic detections. Occasionally, heuristics will set a score of 29 in cases where Cloudflare has identified automated traffic and is still assessing traffic overlap.
 
 ### Machine learning
 

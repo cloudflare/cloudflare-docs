@@ -7,6 +7,9 @@
 # Blocked Content (Security center restructuring)
 /security-center/blocked-content/ /fundamentals/reference/report-abuse/blocked-content/ 301
 
+# Security reports (moved from security-center to analytics)
+/security-center/app-security-reports/ /analytics/account-and-zone-analytics/app-security-reports/ 301
+
 # Custom Dashboards (moved from log-explorer to analytics)
 /log-explorer/custom-dashboards/ /analytics/custom-dashboards/ 301
 
@@ -491,7 +494,9 @@
 /network-interconnect/express-cni/create-interconnects/ /network-interconnect/ 301
 /network-interconnect/express-cni/ /network-interconnect/ 301
 /network-interconnect/pni-and-peering/ /network-interconnect/ 301
-/network-interconnect/static/cni-locations-04-08-2025.pdf /network-interconnect/static/cni-locations-30-10-2025.pdf 301
+/network-interconnect/static/cni-locations-04-08-2025.pdf /network-interconnect/static/cni-locations-05-may-2026.pdf 301
+/network-interconnect/static/cni-locations-30-10-2025.pdf /network-interconnect/static/cni-locations-05-may-2026.pdf 301
+/network-interconnect/static/cni-locations-31-mar-2026.pdf /network-interconnect/static/cni-locations-05-may-2026.pdf 301
 
 # Constellation
 /constellation/ /workers-ai/ 301
@@ -605,7 +610,10 @@
 /dns/foundation-dns/graphql-analytics/ /dns/additional-options/analytics/ 301
 /dns/manage-dns-records/how-to/dns-load-balancing/ /dns/manage-dns-records/how-to/round-robin-dns/ 301
 /dns/manage-dns-records/how-to/create-root-domain/ /dns/manage-dns-records/how-to/create-zone-apex/ 301
-/dns/manage-dns-records/how-to/private-network-routing/ /dns/manage-dns-records/how-to/private-origins/private-network-routing/ 301
+/dns/manage-dns-records/how-to/private-network-routing/ /dns/private-origins/private-network-routing/ 301
+/dns/manage-dns-records/how-to/private-origins/ /dns/private-origins/ 301
+/dns/manage-dns-records/how-to/private-origins/private-network-routing/ /dns/private-origins/private-network-routing/ 301
+/dns/manage-dns-records/how-to/private-origins/private-origin-via-cloudflare-wan/ /dns/private-origins/set-up-via-cloudflare-wan/ 301
 /dns/manage-dns-records/reference/proxied-dns-records/ /dns/proxy-status/ 301
 /dns/manage-dns-records/troubleshooting/acme-challenge-txt-record/ /dns/manage-dns-records/troubleshooting/unexpected-dns-records/#acme_challenge-txt-records 301
 /dns/reference/troubleshooting/ /dns/reference/recommended-third-party-tools/ 301
@@ -2807,3 +2815,6 @@
 /changelog/2024-* /changelog/post/2024-:splat 301
 /changelog/2025-* /changelog/post/2025-:splat 301
 /changelog/2026-* /changelog/post/2026-:splat 301
+
+# Security Insights (moved from Security Center to Security)
+/security-center/security-insights/* /security/security-insights/:splat 301

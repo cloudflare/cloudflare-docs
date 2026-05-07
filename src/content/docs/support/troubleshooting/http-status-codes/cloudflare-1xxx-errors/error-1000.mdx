@@ -21,8 +21,10 @@ Cloudflare halted the request for one of the following reasons:
 - The request includes two `X-Forwarded-For` headers.
 - The request includes a `CF-Connecting-IP` header.
 - A Server Name Indication (SNI) issue or mismatch at the origin.
+- Your DNS record points to a SaaS provider that uses [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) with [BYOIP](/byoip/) (Bring Your Own IP). Because the provider's IP addresses are advertised through Cloudflare's network, requests resolve to Cloudflare infrastructure. If the provider has not configured a [custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/) for your domain, this error is returned.
 
 ### Resolution
 
 - If an A record within your Cloudflare DNS app points to a [Cloudflare IP address](https://www.cloudflare.com/ips/), update the IP address to your origin web server IP address. Reach out to your hosting provider if you need help obtaining the origin IP address.
 - There is a reverse-proxy at your origin that sends the request back through the Cloudflare proxy. Instead of using a reverse-proxy, contact your hosting provider or site administrator to configure an HTTP redirect at your origin.
+- If your domain points to a SaaS provider that uses Cloudflare, contact the SaaS provider to verify that a custom hostname is properly configured for your domain. The error originates from the provider's Cloudflare account, not yours.

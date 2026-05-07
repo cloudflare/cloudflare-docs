@@ -4,6 +4,8 @@ title: Account Abuse Protection (Early Access)
 description: Detect and block automated abuse on login and registration endpoints.
 products:
   - bots
+tags:
+  - Account takeover
 sidebar:
   order: 6
   label: Account Abuse Protection
@@ -72,6 +74,10 @@ Refer to [Fraud detection with ephemeral IDs](/turnstile/tutorials/fraud-detecti
 Cloudflare Bot Management includes dedicated detection IDs for account takeover attacks. 
 
 Refer to [Account takeover detections](/bots/additional-configurations/detection-ids/account-takeover-detections/) for more information.
+
+:::note
+Account takeover (ATO) detections are not available for accounts using the [Data Localization Suite](/data-localization/) with [Regional Services](/data-localization/regional-services/) in the EU region. ATO detections rely on zone logs to identify suspicious activity, and Cloudflare does not ingest logs for these accounts to comply with General Data Protection (GDPR).
+:::
 
 ---
 

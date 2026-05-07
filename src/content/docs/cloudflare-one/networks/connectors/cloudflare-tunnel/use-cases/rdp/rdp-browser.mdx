@@ -87,15 +87,19 @@ The DNS record does not need to point to an active destination IP address or hos
 
 ## 4. Create an Access application
 
-<Render file="access/self-hosted-app/create-app" product="cloudflare-one" />
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
 
-6.  Select **Add public hostname**.
+2. Select **Create new application**.
+
+3. Select **Self-hosted and private**.
+
+4. Select **Add public hostname**.
 
         :::note
         Browser-based RDP is only compatible with public hostnames. If you add a private hostname or IP, RDP functionality will not be available in this application.
         :::
 
-7.  <Render
+5.  <Render
     	file="access/self-hosted-app/choose-domain"
     	product="cloudflare-one"
     />
@@ -104,40 +108,37 @@ The DNS record does not need to point to an active destination IP address or hos
         You can only enable browser-based RDP on domains and subdomains, not for specific paths. The selected domain and subdomain must also have a corresponding DNS record (refer to [Step 3](#3-create-a-dns-record)).
         :::
 
-8.  Expand **Browser rendering settings**. In the **Browser rendering** dropdown, select _RDP_.
+6.  Turn on **Allow access through browser-based RDP, SSH, or VNC sessions**, then select _RDP_ from the dropdown menu.
 
-9.  In **Target criteria**, select the [target hostname(s)](#2-add-a-target) that define your RDP servers. The application definition will apply to all targets that share the selected target hostname, including any targets added in the future.
+7.  In **Target criteria**, select the [target hostname(s)](#2-add-a-target) that define your RDP servers. The application definition will apply to all targets that share the selected target hostname, including any targets added in the future.
 
-10. In **Port**, enter the [RDP listening port](https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/clients/change-listening-port) of your server. It will likely be port `3389`.
+8. In **Port**, enter the [RDP listening port](https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/clients/change-listening-port) of your server. It will likely be port `3389`.
 
-11. (Optional) If you run RDP on more than one port, select **Add new target criteria** and reconfigure the same target hostname(s) with the different port number.
+9. (Optional) If you run RDP on more than one port, select **Add new target criteria** and reconfigure the same target hostname(s) with the different port number.
 
-12. <Render file="access/add-access-policies" product="cloudflare-one" />
+10. <Render file="access/add-access-policies" product="cloudflare-one" />
 
 	<Render file="access/self-hosted-app/browser-rendering-policies" product="cloudflare-one" />
 
-13. (Optional) In your Access policy, configure [clipboard controls](#clipboard-controls) to restrict copy and paste actions between the user's local machine and the browser-based RDP session.
+11. (Optional) In your Access policy, configure [clipboard controls](#clipboard-controls) to restrict copy and paste actions between the user's local machine and the browser-based RDP session.
 
-14. <Render file="access/access-choose-idps" product="cloudflare-one" params={{ appType: "rdp" }}/>
+12. <Render file="access/access-choose-idps" product="cloudflare-one" params={{ appType: "rdp" }}/>
 
-15. Select **Next**.
+13. <Render file="access/session-duration" product="cloudflare-one" />
 
-16. (Recommended) Turn on **Show application in App Launcher** and configure [App Launcher settings](/cloudflare-one/access-controls/access-settings/app-launcher/) for the application. The App Launcher allows users to view the Windows servers that they can access using browser-based RDP. Without the App Launcher, users will need to know each target's direct URL.
+14. (Optional) Go to the **Additional settings** tab to customize the application experience:
+
+	- **App Launcher customization**: The [App Launcher](/cloudflare-one/access-controls/access-settings/app-launcher/) allows users to view the Windows servers that they can access using browser-based RDP. Cloudflare recommends keeping **Show application in App Launcher** turned on. Without the App Launcher, users will need to know each target's direct URL.
 
         :::note
         Ensure that users match an Allow rule in your [App Launcher policies](/cloudflare-one/access-controls/access-settings/app-launcher/#enable-the-app-launcher).
         :::
 
-17. <Render file="access/access-block-page" product="cloudflare-one" />
+	- <Render file="access/access-block-page" product="cloudflare-one" />
 
-18. Select **Next**.
+	<Render file="access/self-hosted-app/advanced-settings" product="cloudflare-one" />
 
-19. <Render
-    	file="access/self-hosted-app/advanced-settings"
-    	product="cloudflare-one"
-    />
-
-20. Select **Save**.
+15. Select **Create**.
 
 ## 5. (Recommended) Modify order of precedence in Gateway
 

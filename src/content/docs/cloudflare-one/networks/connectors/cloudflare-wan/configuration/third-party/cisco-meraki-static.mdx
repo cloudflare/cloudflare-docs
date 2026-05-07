@@ -1,0 +1,24 @@
+---
+pcx_content_type: integration-guide
+description: Integrate Cisco Meraki MX with Zero Trust networking using static routing.
+products:
+  - cloudflare-one
+title: Cisco Meraki MX (static routing)
+tags:
+  - IPsec
+---
+
+import { Render } from "~/components";
+
+<Render file="cloudflare-wan/third-party/cisco-meraki-static"
+	product="networking-services"
+	params={{
+		antiReplayProtectionUrl: "/cloudflare-one/networks/connectors/cloudflare-wan/reference/anti-replay-protection/",
+		mssClampingUrl: "/cloudflare-one/networks/connectors/cloudflare-wan/reference/mtu-mss/#mss-clamping",
+		unifiedRoutingUrl: "/cloudflare-one/networks/connectors/cloudflare-wan/reference/traffic-steering/#unified-routing-mode-beta",
+		automaticReturnRoutingUrl: "/cloudflare-one/networks/connectors/cloudflare-wan/reference/traffic-steering/#automatic-return-routing-beta",
+		trafficSteeringUrl: "/cloudflare-one/networks/connectors/cloudflare-wan/reference/traffic-steering/",
+		supportedConfigParametersUrl: "/cloudflare-one/networks/connectors/cloudflare-wan/reference/gre-ipsec-tunnels/#supported-configuration-parameters",
+		paloAltoGuideUrl: "/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/palo-alto/",
+		configureTunnelEndpointsUrl: "/cloudflare-one/networks/connectors/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/#add-tunnels"
+	}} />

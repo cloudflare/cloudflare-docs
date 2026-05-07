@@ -3,21 +3,27 @@ pcx_content_type: concept
 description: Encrypt DNS queries using TLS with 1.1.1.1.
 products:
   - 1.1.1.1
+tags:
+  - TLS
 title: DNS over TLS
 slug: 1.1.1.1/encryption/dns-over-tls
 sidebar:
   order: 4
 ---
 
-By default, DNS is sent over a plaintext connection. DNS over TLS (DoT) is one way to send DNS queries over an encrypted connection. Cloudflare supports DNS over TLS on standard port 853 and is compliant with [RFC 7858](https://tools.ietf.org/html/rfc7858). With DoT, the encryption happens at the transport layer, where it adds TLS encryption on top of a TCP connection.
+By default, DNS is sent over a plaintext connection. DNS over TLS (DoT) is one way to send DNS queries over an encrypted connection. Cloudflare supports DNS over TLS on standard port `853` and is compliant with [RFC 7858](https://tools.ietf.org/html/rfc7858).
+
+DoT wraps standard DNS traffic inside a TLS-encrypted TCP connection. This prevents anyone between your device and the resolver from reading or modifying your DNS queries.
 
 ## How it works
 
-Cloudflare supports DNS over TLS (DoT) on `1.1.1.1`, `1.0.0.1`, and the corresponding IPv6 addresses (`2606:4700:4700::1111` and `2606:4700:4700::1001`) on port `853`. If your DoT client does not support IP addresses, Cloudflare's DoT endpoint can also be reached by hostname on `one.one.one.one`. A stub resolver (the DNS client on a device that talks to the DNS resolver) connects to the resolver over a TLS connection:
+Cloudflare supports DNS over TLS (DoT) on `1.1.1.1`, `1.0.0.1`, and the corresponding IPv6 addresses (`2606:4700:4700::1111` and `2606:4700:4700::1001`) on port `853`. If your DoT client does not support IP addresses, Cloudflare's DoT endpoint can also be reached by hostname on `one.one.one.one`.
 
-1. Before the connection, the DNS stub resolver has stored a base64 encoded SHA256 hash of the TLS certificate from 1.1.1.1 (called SPKI).
-2. DNS stub resolver establishes a TCP connection with `1.1.1.1:853`.
-3. DNS stub resolver initiates a TLS handshake.
+A stub resolver is the DNS client software on your device that sends queries to a DNS resolver. With DoT, the stub resolver connects to the resolver over a TLS connection:
+
+1. Before the connection, the DNS stub resolver stores a fingerprint of 1.1.1.1's TLS certificate. This fingerprint is a base64-encoded SHA-256 hash of the certificate's public key information, known as the Subject Public Key Info (SPKI) pin. The stub resolver uses this pin to verify it is connecting to the authentic 1.1.1.1 server.
+2. The DNS stub resolver establishes a TCP connection with `1.1.1.1:853`.
+3. The DNS stub resolver initiates a TLS handshake — a process where both sides agree on encryption parameters and the client verifies the server's identity.
 4. In the TLS handshake, 1.1.1.1 presents its TLS certificate.
 5. Once the TLS connection is established, the DNS stub resolver can send DNS over an encrypted connection, preventing eavesdropping and tampering.
 6. All DNS queries sent over the TLS connection must comply with specifications of [sending DNS over TCP](https://tools.ietf.org/html/rfc1035#section-4.2.2).

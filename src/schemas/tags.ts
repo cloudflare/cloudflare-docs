@@ -126,6 +126,7 @@ const protocols: Array<Tag> = [
 
 const use_cases: Array<Tag> = [
 	{ label: "A11y", variants: ["accessibility"] },
+	{ label: "Account takeover" },
 	{ label: "AI" },
 	{ label: "AI Agents", variants: ["agentic"] },
 	{ label: "Analytics" },
@@ -139,6 +140,7 @@ const use_cases: Array<Tag> = [
 	{ label: "Compliance" },
 	{ label: "Cookies" },
 	{ label: "CORS" },
+	{ label: "CSP" },
 	{ label: "Debugging", variants: ["debug", "troubleshooting"] },
 	{ label: "DNS" },
 	{ label: "Forms" },
@@ -162,7 +164,7 @@ const use_cases: Array<Tag> = [
 	{ label: "Redirects", variants: ["redirect"] },
 	{ label: "Request modification", variants: ["request"] },
 	{ label: "Response modification", variants: ["response"] },
-	{ label: "REST API" },
+	{ label: "Scraping" },
 	{ label: "Security" },
 	{ label: "SIEM" },
 	{ label: "SPA" },
