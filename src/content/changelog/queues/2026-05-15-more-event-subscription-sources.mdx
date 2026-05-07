@@ -1,0 +1,175 @@
+---
+title: Event subscriptions now support AI Search, Artifacts, Email Service, and Stream
+description: Queues event subscriptions now support more Cloudflare products and event types.
+products:
+  - queues
+  - ai-search
+  - artifacts
+  - email-service
+  - stream
+date: 2026-05-15
+---
+
+export const grayCellStyle = {
+	backgroundColor: "var(--sl-color-gray-6)",
+	borderBottom: "1px solid var(--sl-color-gray-5)",
+};
+
+export const whiteCellStyle = {
+	backgroundColor: "var(--sl-color-bg)",
+	borderBottom: "1px solid var(--sl-color-gray-5)",
+};
+
+export const codeOnGrayStyle = {
+	backgroundColor: "var(--sl-color-bg)",
+};
+
+[Event subscriptions](/queues/event-subscriptions/) have added support for AI Search, Artifacts, Email Sending, and Stream.
+
+You can now send events from these sources to your [Cloudflare Queues](/queues/) and process via a [Workers](/queues/configuration/configure-queues/#consumer-worker-configuration) or [HTTP pull](/queues/configuration/pull-consumers/) consumer.
+
+<table>
+	<thead>
+		<tr>
+			<th>Source</th>
+			<th>Event</th>
+			<th>Triggered when</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td rowSpan="5" style={grayCellStyle}>AI Search</td>
+			<td style={grayCellStyle}><code style={codeOnGrayStyle}>namespace.created</code></td>
+			<td style={grayCellStyle}>An AI Search namespace is created.</td>
+		</tr>
+		<tr>
+			<td style={grayCellStyle}><code style={codeOnGrayStyle}>namespace.deleted</code></td>
+			<td style={grayCellStyle}>An AI Search namespace is deleted.</td>
+		</tr>
+		<tr>
+			<td style={grayCellStyle}><code style={codeOnGrayStyle}>instance.created</code></td>
+			<td style={grayCellStyle}>An AI Search instance is created in a namespace.</td>
+		</tr>
+		<tr>
+			<td style={grayCellStyle}><code style={codeOnGrayStyle}>instance.deleted</code></td>
+			<td style={grayCellStyle}>An AI Search instance is deleted from a namespace.</td>
+		</tr>
+		<tr>
+			<td style={grayCellStyle}><code style={codeOnGrayStyle}>status.updated</code></td>
+			<td style={grayCellStyle}>An AI Search instance status changes.</td>
+		</tr>
+		<tr>
+			<td rowSpan="7" style={whiteCellStyle}>Artifacts</td>
+			<td style={whiteCellStyle}><code>repo.created</code></td>
+			<td style={whiteCellStyle}>An Artifacts repository is created.</td>
+		</tr>
+		<tr>
+			<td style={whiteCellStyle}><code>repo.deleted</code></td>
+			<td style={whiteCellStyle}>An Artifacts repository is deleted.</td>
+		</tr>
+		<tr>
+			<td style={whiteCellStyle}><code>repo.forked</code></td>
+			<td style={whiteCellStyle}>An Artifacts repository is forked.</td>
+		</tr>
+		<tr>
+			<td style={whiteCellStyle}><code>repo.imported</code></td>
+			<td style={whiteCellStyle}>An Artifacts repository is imported from an external Git remote.</td>
+		</tr>
+		<tr>
+			<td style={whiteCellStyle}><code>pushed</code></td>
+			<td style={whiteCellStyle}>A ref is pushed to an Artifacts repository.</td>
+		</tr>
+		<tr>
+			<td style={whiteCellStyle}><code>cloned</code></td>
+			<td style={whiteCellStyle}>An Artifacts repository is cloned.</td>
+		</tr>
+		<tr>
+			<td style={whiteCellStyle}><code>fetched</code></td>
+			<td style={whiteCellStyle}>Incremental updates are fetched from an Artifacts repository.</td>
+		</tr>
+		<tr>
+			<td rowSpan="8" style={grayCellStyle}>Email Service</td>
+			<td style={grayCellStyle}><code style={codeOnGrayStyle}>email.message.delivered</code></td>
+			<td style={grayCellStyle}>An email is accepted by the recipient mail server.</td>
+		</tr>
+		<tr>
+			<td style={grayCellStyle}><code style={codeOnGrayStyle}>email.message.deferred</code></td>
+			<td style={grayCellStyle}>An email delivery attempt is temporarily deferred.</td>
+		</tr>
+		<tr>
+			<td style={grayCellStyle}><code style={codeOnGrayStyle}>email.message.bounced</code></td>
+			<td style={grayCellStyle}>An email reaches a terminal bounce state.</td>
+		</tr>
+		<tr>
+			<td style={grayCellStyle}><code style={codeOnGrayStyle}>email.message.spam_rejected</code></td>
+			<td style={grayCellStyle}>Email Service rejects or drops an email as spam.</td>
+		</tr>
+		<tr>
+			<td style={grayCellStyle}><code style={codeOnGrayStyle}>email.message.failed</code></td>
+			<td style={grayCellStyle}>An email fails because of an internal or non-SMTP delivery error.</td>
+		</tr>
+		<tr>
+			<td style={grayCellStyle}><code style={codeOnGrayStyle}>email.message.rejected</code></td>
+			<td style={grayCellStyle}>Policy rejects an email before normal delivery.</td>
+		</tr>
+		<tr>
+			<td style={grayCellStyle}><code style={codeOnGrayStyle}>email.message.dropped</code></td>
+			<td style={grayCellStyle}>Routing or Worker logic intentionally drops an email.</td>
+		</tr>
+		<tr>
+			<td style={grayCellStyle}><code style={codeOnGrayStyle}>email.message.unauthenticated_forward</code></td>
+			<td style={grayCellStyle}>An inbound email forward is blocked because the message is unauthenticated.</td>
+		</tr>
+		<tr>
+			<td rowSpan="11" style={whiteCellStyle}>Stream</td>
+			<td style={whiteCellStyle}><code>live_input.connected</code></td>
+			<td style={whiteCellStyle}>A Stream live input connects.</td>
+		</tr>
+		<tr>
+			<td style={whiteCellStyle}><code>live_input.disconnected</code></td>
+			<td style={whiteCellStyle}>A Stream live input disconnects.</td>
+		</tr>
+		<tr>
+			<td style={whiteCellStyle}><code>live_input.errored</code></td>
+			<td style={whiteCellStyle}>A Stream live input encounters an error.</td>
+		</tr>
+		<tr>
+			<td style={whiteCellStyle}><code>video_state.ready</code></td>
+			<td style={whiteCellStyle}>A Stream video is ready to stream.</td>
+		</tr>
+		<tr>
+			<td style={whiteCellStyle}><code>video_state.updated</code></td>
+			<td style={whiteCellStyle}>A Stream video is updated.</td>
+		</tr>
+		<tr>
+			<td style={whiteCellStyle}><code>caption.created</code></td>
+			<td style={whiteCellStyle}>A Stream video caption is uploaded or starts generating.</td>
+		</tr>
+		<tr>
+			<td style={whiteCellStyle}><code>caption.updated</code></td>
+			<td style={whiteCellStyle}>A Stream video caption status changes.</td>
+		</tr>
+		<tr>
+			<td style={whiteCellStyle}><code>caption.deleted</code></td>
+			<td style={whiteCellStyle}>A Stream video caption is deleted.</td>
+		</tr>
+		<tr>
+			<td style={whiteCellStyle}><code>download.created</code></td>
+			<td style={whiteCellStyle}>A Stream video download is created.</td>
+		</tr>
+		<tr>
+			<td style={whiteCellStyle}><code>download.updated</code></td>
+			<td style={whiteCellStyle}>A Stream video download status changes.</td>
+		</tr>
+		<tr>
+			<td style={whiteCellStyle}><code>download.deleted</code></td>
+			<td style={whiteCellStyle}>A Stream video download is deleted.</td>
+		</tr>
+	</tbody>
+</table>
+
+## Common schema fields
+
+All events include common metadata fields, including `metadata.accountId`, `metadata.eventSubscriptionId`, `metadata.eventSchemaVersion`, and `metadata.eventTimestamp`.
+
+For more information, refer to [Queues event subscriptions](/queues/event-subscriptions/).
