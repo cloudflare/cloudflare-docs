@@ -28,7 +28,7 @@ Let's briefly consider which primitives are exposed by Durable Objects so we und
 constructor(ctx: DurableObjectState, env: Env) {}
 ```
 
-The Workers runtime always calls the constructor to handle things internally. This means two things:
+The [Workers runtime](https://blog.cloudflare.com/workerd-open-source-workers-runtime/) always calls the constructor to handle things internally. This means two things:
 
 1. While the constructor is called every time the Durable Object is initialized, the signature is fixed. Developers cannot add or update parameters from the constructor.
 2. Instead of instantiating the class manually, developers must use the binding APIs and do it through the [DurableObjectNamespace](/durable-objects/api/namespace/).
