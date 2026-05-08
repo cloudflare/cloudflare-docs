@@ -1,3 +1,15 @@
+export class MyDurableObject {
+  constructor(ctx, env) {
+    this.ctx = ctx;
+    this.storage = ctx.storage; // access to SQLite/KV/alarms
+  }
+
+  async fetch(request) {
+    // Handle requests — has access to in-memory state + durable storage
+    const value = this.ctx.storage.sql.exec("SELECT * FROM data");
+    return new Response(JSON.stringify(value.rows));
+  }
+}
 ---
 title: Cloudflare Version Management
 
