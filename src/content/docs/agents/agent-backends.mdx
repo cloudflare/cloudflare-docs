@@ -1,0 +1,187 @@
+---
+title: Agent backends
+pcx_content_type: concept
+description: Compare compute and storage primitives for running agent workloads on Cloudflare.
+sidebar:
+  order: 9
+tags:
+  - AI
+products:
+  - agents
+---
+
+import { LinkCard } from "~/components";
+
+Agents need more than an LLM call. They generate code, run tools, read and write files, and make network requests — often with code or data you do not fully trust. Cloudflare provides several primitives for running these workloads, each with different isolation models, startup characteristics, and levels of control.
+
+This page explains when to use each one and how they fit together.
+
+## Compute backends
+
+### Sandbox SDK
+
+[Sandbox SDK](/sandbox/) runs untrusted code in isolated containers with a full Linux environment. Each sandbox is a Durable Object backed by [Containers](/containers/), with its own filesystem, process tree, and network stack.
+
+Use Sandbox when you need:
+
+- A full Linux environment (Python, Node.js, system packages)
+- Persistent filesystems that survive across interactions
+- Long-running background processes or servers
+- Preview URLs that expose HTTP services from inside the sandbox
+- File watching, terminal access, or WebSocket connections into the container
+
+Sandbox is the right choice for AI code interpreters, interactive development environments, data analysis platforms, and any workload that needs more than a JavaScript runtime.
+
+<LinkCard
+	title="Sandbox SDK"
+	href="/sandbox/"
+	description="Build secure, isolated code execution environments powered by Workers and Containers."
+/>
+
+### Think + Agents SDK + Dynamic Workers
+
+The [Agents SDK](/agents/) provides the `Agent` base class — a Durable Object with built-in state, WebSocket connections, scheduling, and tool execution. [`Think`](/agents/api-reference/think/) is an opinionated framework on top of it that handles the full chat lifecycle: agentic loop, message persistence, streaming, tool execution, and sub-agent RPC.
+
+When an agent needs to execute generated code, Think uses [Codemode](/agents/api-reference/codemode/) to spin up a [Dynamic Worker](/dynamic-workers/) — a lightweight, sandboxed Worker created at runtime. The agent writes JavaScript, Codemode loads it into an isolated Worker, runs it, and returns the result. The dynamic Worker gets only the bindings you explicitly pass to it.
+
+Use this stack when you need:
+
+- A stateful agent with persistent memory and conversation history
+- Streaming AI chat with automatic message persistence
+- Tool execution, MCP support, and sub-agent orchestration
+- Fast code execution in JavaScript (millisecond cold starts, not seconds)
+- Fine-grained control over what the generated code can access
+
+This is the default path for most agent applications on Cloudflare. Start with Think for the chat layer and add Dynamic Workers when the agent needs to run generated code.
+
+<LinkCard
+	title="Think"
+	href="/agents/api-reference/think/"
+	description="Opinionated chat agent framework with built-in tools, persistent memory, and streaming."
+/>
+
+### When to use which
+
+| Requirement | Sandbox SDK | Think + Dynamic Workers |
+| --- | --- | --- |
+| Run Python, shell commands, or system packages | Yes | No (JavaScript only) |
+| Millisecond cold starts | No (container startup) | Yes |
+| Persistent filesystem across interactions | Yes | Via workspace (SQLite-backed) |
+| Background processes and servers | Yes | No |
+| Preview URLs for web apps | Yes | No |
+| Fine-grained binding control per execution | Via outbound handlers | Via `WorkerCode` object |
+| Built-in AI chat lifecycle | No (bring your own) | Yes (Think handles it) |
+| Cost | Container pricing | Workers pricing |
+
+You can combine both. A Think agent can use Dynamic Workers for fast JavaScript execution and delegate heavier workloads — running Python, installing packages, compiling code — to a Sandbox.
+
+## Multi-tenant platforms
+
+If you are building a platform that runs code on behalf of your customers (not just your own agents), you have two options for the underlying compute primitive.
+
+### Workers for Platforms
+
+[Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) is designed for multi-tenant SaaS platforms. It provides dispatch namespaces, per-customer Worker deployment via API, hostname routing, custom limits, and observability across all tenants.
+
+Use Workers for Platforms when:
+
+- Customers upload their own code through your platform
+- You need per-customer deployment, versioning, and rollback
+- You route requests by hostname or subdomain (for example, `customer-a.myplatform.com`)
+- You need tags, metadata, and observability across thousands of deployed Workers
+- You want the Cloudflare API to manage the full lifecycle of customer code
+
+Workers for Platforms manages deployments declaratively. You upload a customer's Worker code through the API, and Cloudflare handles versioning, routing, and execution.
+
+<LinkCard
+	title="Workers for Platforms"
+	href="/cloudflare-for-platforms/workers-for-platforms/"
+	description="Run untrusted code from your customers or AI in secure, isolated sandboxes."
+/>
+
+### Dynamic Workers
+
+[Dynamic Workers](/dynamic-workers/) is the lowest-level primitive for creating Workers at runtime. Your loader Worker composes the dynamic Worker in code — specifying the module source, bindings, outbound policy, and limits — and invokes it immediately.
+
+Use Dynamic Workers when:
+
+- You generate or compose Worker code at runtime (AI-generated code, REPL, code mode)
+- You need per-execution control over bindings and network access
+- You do not need persistent deployment, versioning, or hostname routing
+- You want the simplest possible API for spinning up isolated code execution
+
+Dynamic Workers are ephemeral by default. You provide the code, Cloudflare runs it, and you get the result. There is no deployment step, no namespace to manage, and no API call to upload code first.
+
+### When to use which
+
+| Requirement | Workers for Platforms | Dynamic Workers |
+| --- | --- | --- |
+| Customers upload code through your platform | Yes | No (you compose at runtime) |
+| Per-customer deployment and versioning | Yes | No |
+| Hostname or subdomain routing | Yes | No |
+| Tags, metadata, and cross-tenant observability | Yes | No |
+| Runtime code composition | No (deploy via API) | Yes |
+| Per-execution binding and outbound control | Limited (per-namespace) | Full (per-invocation) |
+| Durable Object Facets (isolated DO storage) | No | Yes |
+
+If you are building a platform where customers deploy long-lived applications, use Workers for Platforms. If your agent or system generates code on the fly and needs to run it immediately, use Dynamic Workers.
+
+## Versioned storage with Artifacts
+
+[Artifacts](/artifacts/) is versioned storage that speaks Git. It stores file trees behind a Git-compatible interface and is built on Durable Objects, so it scales to tens of millions of repositories.
+
+Use Artifacts when agents, sandboxes, or automation need to:
+
+- Store versioned file trees instead of raw blobs
+- Hand off work to Git-aware tools and agents via a standard Git remote URL
+- Isolate work in separate repos or branches for parallel execution
+- Fork from a shared baseline and diff or merge the results later
+- Persist sandbox state without keeping block storage around
+
+Artifacts provides three API surfaces: a [Workers binding](/artifacts/api/workers-binding/) for creating and managing repos, a [REST API](/artifacts/api/rest-api/) for non-Worker clients, and the [Git protocol](/artifacts/api/git-protocol/) for any standard Git client.
+
+A common pattern is one repo per agent session. Your Worker creates the repo, mints a short-lived token, and passes the authenticated Git remote URL into the sandbox or agent as an environment variable. Code inside the sandbox uses standard `git clone`, `git fetch`, `git pull`, and `git push` — no new APIs to learn.
+
+For large repositories, [ArtifactFS](/artifacts/guides/artifact-fs/) mounts a Git repo as a local filesystem without waiting for a full clone. It fetches the tree structure first, mounts through FUSE, and hydrates file contents on demand. This reduces sandbox startup time from minutes to seconds for multi-gigabyte repos.
+
+<LinkCard
+	title="Artifacts"
+	href="/artifacts/"
+	description="Versioned storage that speaks Git, built for agents and automation at scale."
+/>
+
+## Secure agent workloads
+
+Agent workloads run untrusted or semi-trusted code. The sections below cover the mechanisms available for controlling what that code can do.
+
+### Control outbound network access
+
+Every compute backend on Cloudflare provides a way to intercept, restrict, or block outbound network requests from untrusted code.
+
+**Sandbox SDK** uses [`outbound` handlers](/sandbox/guides/outbound-traffic/) — programmable egress proxies that run in the Workers runtime, outside the sandbox. You can block all internet access with `enableInternet = false`, allow or deny specific hosts, and define handlers that inject credentials into outbound requests without exposing secrets to the sandbox. Handlers can be changed at runtime on a per-instance basis.
+
+**Dynamic Workers** use [`globalOutbound`](/dynamic-workers/usage/egress-control/) in the `WorkerCode` object. Set it to `null` to block all outbound `fetch()` and `connect()` calls, or point it at a `WorkerEntrypoint` class that acts as a gateway. The gateway can restrict destinations, inject credentials, and log requests — the same pattern as Sandbox outbound handlers, but at the Worker level.
+
+**Workers for Platforms** use [outbound Workers](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) — a dedicated Worker that sits between user Workers and the public internet. Every `fetch()` request from a user Worker passes through the outbound Worker, where you can log, allow, block, or modify requests. Context from the dispatch Worker (for example, customer name or plan type) is available in the outbound Worker via environment variables.
+
+All three follow the same principle: the untrusted code never holds secrets or makes unmediated network requests. A trusted layer outside the sandbox intercepts every outbound call and decides what to do with it.
+
+### Authenticate users with Access
+
+[Cloudflare Access](/cloudflare-one/access-controls/) puts an authentication layer in front of any Worker, including agents and MCP servers. Users authenticate through your identity provider before reaching the Worker.
+
+Use Access when you need to:
+
+- Restrict who can connect to your agent or MCP server
+- Enforce identity-based policies (for example, only users in a specific group)
+- Add authentication without changing your Worker code
+
+Access works by creating a [self-hosted application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) that protects your Worker by name or hostname. When a request arrives, Access validates the user's identity against your configured policies and injects a signed JWT that your Worker can verify.
+
+For MCP servers specifically, refer to [Secure MCP servers with Access](/cloudflare-one/access-controls/ai-controls/secure-mcp-servers/) for a step-by-step guide.
+
+<LinkCard
+	title="Secure MCP servers"
+	href="/cloudflare-one/access-controls/ai-controls/secure-mcp-servers/"
+	description="Put Cloudflare Access in front of MCP servers for identity-based authentication."
+/>
