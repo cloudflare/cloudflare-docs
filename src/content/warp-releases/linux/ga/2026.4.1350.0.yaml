@@ -10,6 +10,7 @@ releaseNotes: |-
 
   **Known issues**
   - Registration may hang at "Checking your organization configuration" due to IPC errors. A system reboot should resolve the error, allowing registration to proceed.
+  - Split tunnel list configuration is not available in the new UI. Management of split tunnel entries is currently only possible via `warp-cli tunnel ip` and `warp-cli tunnel host`. UI support will be added in a future release.
 version: 2026.4.1350.0
 releaseDate: 2026-05-11T15:17:54.055Z
 packageURL: https://downloads.cloudflareclient.com/v1/download/fedora35-intel/version/2026.4.1350.0
