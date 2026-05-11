@@ -323,10 +323,197 @@ Props: `repo` (`cloudflare/<name>`), `file` (path within repo), `commit` (40-cha
 
 ## DirectoryListing
 
-Auto-generates a listing of child pages. Standard in `navigation` and `overview` pages.
+Auto-generates a listing of child pages. Used in `navigation` and `overview` pages.
 
 ```mdx
 import { DirectoryListing } from "~/components";
 
 <DirectoryListing />
 ```
+
+---
+
+## Badge
+
+Starlight built-in. Displays a coloured status badge. Use in page headings to indicate beta, new, deprecated, etc. Prefer this over `InlineBadge` for heading-level status labels.
+
+```mdx
+import { Badge } from "~/components";
+
+<Badge text="Beta" variant="caution" />
+<Badge text="New" variant="tip" />
+<Badge text="Deprecated" variant="danger" />
+```
+
+Variants: `note` (blue), `tip` (purple), `caution` (orange), `danger` (red), `success` (green).
+
+Can also be added to the sidebar via frontmatter without importing:
+
+```yaml
+sidebar:
+  badge:
+    text: Beta
+    variant: caution
+```
+
+---
+
+## Card / LinkTitleCard / ListCard
+
+Starlight built-ins for styled card containers. Used on overview and navigation pages.
+
+```mdx
+import { Card, LinkTitleCard, ListCard } from "~/components";
+
+<!-- Informational card with icon -->
+<Card title="Check this out" icon="puzzle">
+  Interesting content you want to highlight.
+</Card>
+
+<!-- Card that links to another page -->
+<LinkTitleCard title="Get started" icon="rocket" href="/workers/get-started/">
+  Deploy your first Worker in minutes.
+</LinkTitleCard>
+
+<!-- Card with a list of links -->
+<ListCard title="Resources" icon="open-book">
+- [Docs](/workers/)
+- [API reference](/api/)
+</ListCard>
+```
+
+---
+
+## YouTube
+
+Embeds a YouTube video by ID.
+
+```mdx
+import { YouTube } from "~/components";
+
+<YouTube id="XHvmX3FhTwU" />
+```
+
+---
+
+## Stream
+
+Embeds a Cloudflare Stream video. Use `id` + `title` for a specific video, or `file` to reference an entry in `src/content/stream/`.
+
+```mdx
+import { Stream } from "~/components";
+
+<!-- By video ID: -->
+<Stream
+  id="86f22d1f760b77cdc349f89b25b63c3e"
+  title="Video title"
+  thumbnail="https://example.com/thumbnail.jpg"
+/>
+
+<!-- By stream collection file: -->
+<Stream file="warp-1-basics" />
+```
+
+Props: `id` (required unless using `file`), `title` (required unless using `file`), `thumbnail` (timestamp or URL), `chapters` (record of label → timestamp), `expandChapters` (boolean), `showMoreVideos` (boolean, default `true`), `file` (collection entry name — mutually exclusive with `id`/`title`/`thumbnail`/`chapters`).
+
+---
+
+## APIRequest
+
+Generates a formatted `curl` command from the Cloudflare OpenAPI schema. Use for Cloudflare API endpoints. Path variables not supplied via `parameters` default to shell variable format (e.g. `$ZONE_ID`).
+
+```mdx
+import { APIRequest } from "~/components";
+
+<!-- GET with query parameters: -->
+<APIRequest
+  path="/zones/{zone_id}/page_shield/scripts"
+  method="GET"
+  parameters={{ direction: "asc" }}
+/>
+
+<!-- PUT with JSON body: -->
+<APIRequest
+  path="/zones/{zone_id}/api_gateway/settings/schema_validation"
+  method="PUT"
+  json={{ validation_default_mitigation_action: "block" }}
+/>
+
+<!-- POST with form data: -->
+<APIRequest
+  path="/accounts/{account_id}/images/v2/direct_upload"
+  method="POST"
+  form={{ requireSignedURLs: true }}
+/>
+```
+
+Props: `path` (required), `method` (required), `parameters` (URL path + query substitutions), `json` (JSON body), `form` (FormData body), `roles` (API token roles filter — `true` shows all, `false` hides, string filters by substring), `code` (Expressive Code options).
+
+---
+
+## CURL
+
+Generates a `curl` command for arbitrary (non-Cloudflare-API) URLs. Use when `APIRequest` is not appropriate.
+
+```mdx
+import { CURL } from "~/components";
+
+<CURL
+  url="https://api.example.com/endpoint"
+  method="POST"
+  json={{ key: "value" }}
+  query={{ foo: "bar" }}
+/>
+```
+
+Props: `url` (required), `method` (default `GET`), `headers`, `json`, `form`, `query`, `code` (Expressive Code options).
+
+---
+
+## WranglerCommand
+
+Renders the full CLI reference for a Wrangler command, auto-generated from the installed Wrangler version. Used in Wrangler reference documentation.
+
+```mdx
+import { WranglerCommand } from "~/components";
+
+<WranglerCommand command="deploy" />
+<WranglerCommand command="d1 execute" />
+
+<!-- With custom description: -->
+<WranglerCommand command="deploy" description={"Deploy a [Worker](/workers/)"} />
+```
+
+Use `ExtraFlagDetails` as a child to add or replace help text for specific flags:
+
+```mdx
+import { WranglerCommand, ExtraFlagDetails } from "~/components";
+
+<WranglerCommand command="deploy">
+  <ExtraFlagDetails key="dry-run">
+    Additional detail appended to the flag's help text.
+  </ExtraFlagDetails>
+  <ExtraFlagDetails key="compatibility-date" mode="replace">
+    Custom text that replaces the flag's help text entirely.
+  </ExtraFlagDetails>
+</WranglerCommand>
+```
+
+Props: `command` (required), `headingLevel` (default `2`), `description` (overrides Wrangler default).
+
+---
+
+## Markdown
+
+Renders a Markdown string inside a JSX context. Primarily useful for formatting variables passed into partials via `Render`.
+
+```mdx
+import { Markdown } from "~/components";
+
+<Markdown text="**bold** and [a link](/path/)" />
+
+<!-- In a partial, for a formatted variable: -->
+<Markdown text={props.instructions} />
+```
+
+Limitations: no MDX features, no Astro image optimization, no syntax highlighting in code blocks, no heading IDs or table of contents entries. Use sparingly — prefer standard Markdown prose when not inside a JSX context.

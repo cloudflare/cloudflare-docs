@@ -301,10 +301,18 @@ All components are imported from `~/components`. Imports must appear after the f
 | `GlossaryTooltip` | Hover tooltip from `src/content/glossary/` |
 | `GlossaryDefinition` | Inline glossary definition |
 | `Glossary` | Full product glossary table |
-| `InlineBadge` | Status badge — **avoid**, prefer prose or heading badge instead |
+| `InlineBadge` | Status badge — **avoid**, prefer `Badge` in headings or sidebar frontmatter instead |
+| `Badge` | Coloured status badge (`Beta`, `New`, `Deprecated`) for headings and sidebar |
+| `Card` / `LinkTitleCard` / `ListCard` | Styled card containers for overview and navigation pages |
 | `DashButton` | Button linking to a validated dashboard deeplink |
 | `GitHubCode` | Fetch and display a file from a Cloudflare GitHub repo (use full commit hash) |
 | `DirectoryListing` | Auto-generated child page listing for nav/overview pages |
+| `YouTube` | Embed a YouTube video by ID |
+| `Stream` | Embed a Cloudflare Stream video by ID or collection file |
+| `APIRequest` | Generate a `curl` command from the Cloudflare OpenAPI schema |
+| `CURL` | Generate a `curl` command for arbitrary URLs |
+| `WranglerCommand` | Auto-generated Wrangler CLI reference for a specific command |
+| `Markdown` | Render a Markdown string inside JSX — primarily for formatted partial variables |
 
 For full props, examples, and edge cases, see `.agents/references/components.md`.
 
