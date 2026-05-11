@@ -60,9 +60,7 @@ async function isCodeowner(octokit: Octokit, actor: string): Promise<boolean> {
 	// Collect all unique owner tokens from the file.
 	const ownerPattern = /@([a-zA-Z0-9_.-]+(?:\/[a-zA-Z0-9_.-]+)?)/g;
 	const owners = Array.from(
-		new Set(
-			Array.from(content.matchAll(ownerPattern)).map((m) => m[1]),
-		),
+		new Set(Array.from(content.matchAll(ownerPattern)).map((m) => m[1])),
 	);
 
 	for (const ownerEntry of owners) {
