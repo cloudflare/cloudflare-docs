@@ -60,10 +60,20 @@ curl -s https://example.com -H 'Cloudflare-Workers-Version-Overrides: my-worker-
 
 You can set the `Cloudflare-Workers-Version-Overrides` header when making a subrequest from one Worker to another using a [service binding](/workers/runtime-apis/bindings/service-bindings/). This lets you test a specific version of a downstream Worker from an upstream Worker.
 
-The header from the original inbound request is **not** automatically forwarded to service-binding subrequests. The calling Worker must explicitly set it:
+If you forward the original request object, the override header carries through automatically:
 
 ```js
-// Caller Worker — explicitly set the override on the service-binding subrequest.
+// The override header from the inbound request is forwarded to the downstream Worker.
+export default {
+  async fetch(request, env) {
+    return env.MY_SERVICE.fetch(request);
+  },
+};
+```
+
+If you are constructing a new request, you must set the header explicitly:
+
+```js
 // Replace the version ID with the target version from `wrangler versions list`.
 export default {
   async fetch(request, env) {
@@ -74,22 +84,6 @@ export default {
       },
     });
     return response;
-  },
-};
-```
-
-If you want to forward a version override from the inbound request to a service binding, you must read the header and set it on the subrequest yourself:
-
-```js
-export default {
-  async fetch(request, env) {
-    const headers = {};
-    const override = request.headers.get("Cloudflare-Workers-Version-Overrides");
-    if (override) {
-      headers["Cloudflare-Workers-Version-Overrides"] = override;
-    }
-
-    return env.MY_SERVICE.fetch("https://example.com/", { headers });
   },
 };
 ```
