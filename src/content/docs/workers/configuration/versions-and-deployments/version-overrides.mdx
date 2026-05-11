@@ -29,7 +29,7 @@ There are a number of reasons why a request's version override may not be applie
 
 In the case that a request's version override is not applied, the request will be routed according to the percentages set in the gradual deployment configuration.
 
-To make sure that the request's version override was applied correctly, you can observe the version of your Worker that was invoked using [Logpush](/workers/observability/logs/logpush/) or the [version metadata binding](/workers/runtime-apis/bindings/version-metadata/). You could even automate this check by using the version metadata binding to return the version in the Worker's response.
+You can observe the version of your Worker that was invoked using [Observability](https://developers.cloudflare.com/workers/observability/), including in features such as [Logpush](/workers/observability/logs/logpush/). Alternatively, if you want to inform clients about the version they ran (e.g. for faster and more transparent debugging), you could use the [version metadata binding](/workers/runtime-apis/bindings/version-metadata/) and return the version ID in the Worker's response.
 
 :::
 
