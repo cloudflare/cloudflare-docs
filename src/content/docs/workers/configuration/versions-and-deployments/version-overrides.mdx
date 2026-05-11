@@ -24,7 +24,7 @@ A version override will only be applied if the specified version is in the curre
 
 There are a number of reasons why a request's version override may not be applied. For example:
 
-- The deployment containing the specified version may not have propagated yet.
+- The deployment may not contain the specified version. It can take up to a couple of seconds to be available globally after a recent change.
 - The header value may not be a valid [Dictionary](https://www.rfc-editor.org/rfc/rfc8941#name-dictionaries).
 
 In the case that a request's version override is not applied, the request will be routed according to the percentages set in the gradual deployment configuration.
