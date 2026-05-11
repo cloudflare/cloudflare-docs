@@ -103,7 +103,6 @@ Focus deeper analysis on HIGH risk. For critical paths, check blast radius: how 
 - Theoretical performance concerns without evidence
 - Missing features not in scope of the example
 - Pre-existing issues in unchanged code
-- Wrangler config formatting (handled by the `docs-review` skill — `WranglerConfig` component usage is a docs concern, not a code correctness concern)
 
 ## Output Format
 
