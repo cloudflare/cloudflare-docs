@@ -1,11 +1,17 @@
 #!/usr/bin/env tsx
 
 /**
- * Checks that every style guide component page with a `styleGuide.component`
- * frontmatter field is mentioned in `.agents/references/components.md`.
+ * Bidirectional sync check between style guide component pages and the agent
+ * reference file `.agents/references/components.md`.
  *
- * Run automatically as part of the prebuild step. Exits non-zero if any
- * component is undocumented in the agent reference.
+ * The `styleGuide.component` frontmatter field is the authoritative signal that
+ * a component is documented and author-facing. This script enforces that:
+ *
+ * 1. Every style guide page with `styleGuide.component` is mentioned in components.md.
+ * 2. Every component name mentioned in components.md import lines exists as a
+ *    `styleGuide.component` value in some style guide page.
+ *
+ * Run automatically as a CI pre-build step. Exits non-zero on any violation.
  */
 
 import fs from "fs";
@@ -29,48 +35,94 @@ function extractComponentName(content: string): string | undefined {
 	return componentMatch?.[1];
 }
 
+// Extract primary component names from H2 section headings in the reference.
+// Only the first PascalCase word of each heading is used as the component name,
+// since headings like "## Tabs / TabItem" document Tabs as primary.
+// Strips fenced code blocks first to avoid matching headings inside examples.
+function extractSectionComponents(content: string): string[] {
+	// Remove fenced code blocks (``` ... ```) before scanning for headings
+	const stripped = content.replace(/```[\s\S]*?```/g, "");
+	const names: string[] = [];
+	const headingRe = /^## ([A-Z][A-Za-z]+)/gm;
+	let match: RegExpExecArray | null;
+	while ((match = headingRe.exec(stripped)) !== null) {
+		names.push(match[1]);
+	}
+	return names;
+}
+
+// --- Build the known set from style guide pages ---
+
 const styleGuideFiles = fs
 	.readdirSync(STYLE_GUIDE_COMPONENTS_DIR)
 	.filter((f) => f.endsWith(".mdx") && f !== "index.mdx");
 
-const referenceContent = fs.readFileSync(AGENT_REFERENCE, "utf-8");
-
-const missing: string[] = [];
+const knownComponents = new Map<string, string>(); // componentName -> filename
 
 for (const file of styleGuideFiles) {
 	const filePath = path.join(STYLE_GUIDE_COMPONENTS_DIR, file);
 	const content = fs.readFileSync(filePath, "utf-8");
 	const componentName = extractComponentName(content);
-
-	if (!componentName) continue; // No styleGuide.component field — skip
-
-	// Check that the component name appears somewhere in the reference file.
-	if (!referenceContent.includes(componentName)) {
-		missing.push(`${componentName} (${file})`);
+	if (componentName) {
+		knownComponents.set(componentName, file);
 	}
 }
 
-if (missing.length > 0) {
+const referenceContent = fs.readFileSync(AGENT_REFERENCE, "utf-8");
+
+let failed = false;
+
+// --- Check 1: style guide page → components.md ---
+
+const missingFromReference: string[] = [];
+
+for (const [componentName, file] of knownComponents) {
+	if (!referenceContent.includes(componentName)) {
+		missingFromReference.push(`${componentName} (${file})`);
+	}
+}
+
+if (missingFromReference.length > 0) {
 	console.error(
-		`\nError: The following components have style guide pages but are missing from .agents/references/components.md:\n`,
+		"\nError: The following components have style guide pages but are missing from .agents/references/components.md:\n",
 	);
-	for (const m of missing) {
+	for (const m of missingFromReference) {
 		console.error(`  - ${m}`);
 	}
 	console.error(
-		`\nAdd entries for these components to .agents/references/components.md.\n`,
+		"\nAdd entries for these components to .agents/references/components.md.\n",
 	);
+	failed = true;
+}
+
+// --- Check 2: components.md → style guide pages ---
+
+const sectionsInReference = extractSectionComponents(referenceContent);
+const unknownInReference: string[] = [];
+
+for (const name of sectionsInReference) {
+	if (!knownComponents.has(name)) {
+		unknownInReference.push(name);
+	}
+}
+
+if (unknownInReference.length > 0) {
+	console.error(
+		"\nError: The following components are imported in .agents/references/components.md but have no style guide page with a matching `styleGuide.component` field:\n",
+	);
+	for (const name of unknownInReference) {
+		console.error(`  - ${name}`);
+	}
+	console.error(
+		"\nEither add a style guide page with a matching `styleGuide.component` field, or rename the ## heading in components.md to match an existing style guide component name.\n",
+	);
+	failed = true;
+}
+
+if (failed) {
 	process.exit(1);
 }
 
 console.log(
-	`✓ All ${
-		styleGuideFiles.filter((f) => {
-			const content = fs.readFileSync(
-				path.join(STYLE_GUIDE_COMPONENTS_DIR, f),
-				"utf-8",
-			);
-			return extractComponentName(content) !== undefined;
-		}).length
-	} documented components are referenced in .agents/references/components.md`,
+	`✓ All ${knownComponents.size} documented components are in sync between style guide pages and .agents/references/components.md`,
 );
