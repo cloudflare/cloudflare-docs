@@ -15,6 +15,8 @@ import { Render, PackageManagers, TypeScriptExample } from "~/components";
 
 Mount object storage buckets as local filesystem paths to persist data across sandbox lifecycles. This tutorial uses Cloudflare R2, but the same approach works with any S3-compatible provider.
 
+This tutorial shows how to persist an external data directory mounted at `/data`. It is a good fit for persisted storage such as datasets, uploads, and artifacts. If you are trying to preserve the working project in `/workspace`, review [Backup and restore](/sandbox/guides/backup-restore/) as well.
+
 **Time to complete:** 20 minutes
 
 ## What you'll build
@@ -176,6 +178,10 @@ Try this flow:
 ```
 </TypeScriptExample>
 
+:::note[Mounting `/workspace`]
+Some applications may choose to mount a bucket at `/workspace`, but it is important to understand the tradeoff: in production, the mount overlays that path and can hide files that were seeded there by your image or template. If you want the visible workspace contents to persist over time, backup and restore is usually the clearer approach.
+:::
+
 :::note[Replace YOUR_ACCOUNT_ID]
 Replace `YOUR_ACCOUNT_ID` in the endpoint URL with your Cloudflare account ID. Find it in the [dashboard](https://dash.cloudflare.com/) under **R2** > **Overview**.
 :::
@@ -239,6 +245,7 @@ In this tutorial, you built a data pipeline that demonstrates filesystem persist
 - **Mounting buckets**: Use `mountBucket()` to make R2 accessible as a local directory
 - **Standard file operations**: Access mounted buckets using familiar filesystem commands (`cat`, Python `open()`, etc.)
 - **Automatic persistence**: Data written to mounted directories survives sandbox destruction
+- **Choose the right persistence model**: Use bucket mounts for external storage directories such as `/data`, and consider backup and restore when you need a persistent workspace under `/workspace`
 - **Credential management**: Configure R2 access using environment variables or explicit credentials
 
 ## Next steps

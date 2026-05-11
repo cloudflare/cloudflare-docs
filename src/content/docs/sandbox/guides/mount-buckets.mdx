@@ -12,6 +12,12 @@ import { TypeScriptExample, WranglerConfig } from "~/components";
 
 Mount S3-compatible object storage buckets as local filesystem paths. Access object storage using standard file operations.
 
+:::caution[Mounting `/workspace`]
+Mounting a bucket at `/workspace` or a subpath under `/workspace` can be confusing for normal app or project setups. In production, a bucket mount replaces the visible contents at that path. It does not merge bucket contents with files already present in your image or template.
+
+If you use `/workspace` as a mount point, plan for the mounted bucket to overlay that directory. For many applications, it is simpler to mount buckets at paths such as `/data`, `/storage`, or `/mnt/uploads`, and use [Backup and restore](/sandbox/guides/backup-restore/) when you want the working project in `/workspace` to persist across sandbox lifecycles.
+:::
+
 :::note[S3-compatible providers]
 The SDK works with any S3-compatible object storage provider. Examples include Cloudflare R2, Amazon S3, Google Cloud Storage, Backblaze B2, MinIO, and [many others](https://github.com/s3fs-fuse/s3fs-fuse/wiki/Non-Amazon-S3). The SDK automatically detects and optimizes for R2, S3, and GCS.
 :::
@@ -24,6 +30,23 @@ Mount S3-compatible buckets when you need:
 - **Large datasets** - Process data without downloading
 - **Shared storage** - Multiple sandboxes access the same data
 - **Cost-effective persistence** - Cheaper than keeping sandboxes alive
+
+## Choose the right persistence pattern
+
+Use `mountBucket()` when you want persisted external storage for:
+
+- datasets
+- user uploads
+- generated artifacts
+- shared storage across sandboxes
+
+Consider backup and restore when you want to persist:
+
+- the project root
+- source files under `/workspace`
+- a working directory that should come back as a whole later
+
+If your image seeds project files, mounting a bucket over `/workspace` can hide those seeded files in production. To avoid surprises, keep template files outside `/workspace`, for example under `/opt/template`, and copy them into `/workspace` when you initialize the project. If your goal is to preserve that initialized workspace over time, backup and restore is usually the better fit.
 
 ## Mount an R2 bucket
 
@@ -229,7 +252,7 @@ During local development, files are synchronized between R2 and the container us
 - **Bidirectional sync** - Changes made in the container are synced to R2, and changes made in R2 are synced to the container. Both directions follow the same periodic sync model.
 
 :::note
-These considerations apply to local development with `wrangler dev` only. In production, bucket mounts use a direct filesystem mount with no synchronization delay.
+These considerations apply to local development with `wrangler dev` only. In production, bucket mounts use a direct filesystem mount with no synchronization delay. Local sync-style behavior may not fully reflect how a production mount overlays the target path.
 :::
 
 ## Unmount buckets
@@ -392,7 +415,7 @@ await sandbox.exec('cp', { args: ['/workspace/results.json', '/data/results/outp
 - **Secure credentials** - Always use Worker secrets, never hardcode
 - **Read-only when possible** - Protect data with read-only mounts
 - **Use prefixes for isolation** - Mount subdirectories when working with specific datasets
-- **Mount paths** - Use `/data`, `/storage`, or `/mnt/*` (avoid `/workspace`, `/tmp`)
+- **Mount paths** - Prefer `/data`, `/storage`, or `/mnt/*`; if you mount under `/workspace`, account for the mount overlaying that path in production
 - **Handle errors** - Wrap mount operations in `try...catch` blocks
 - **Optimize access** - Copy frequently accessed files locally
 
