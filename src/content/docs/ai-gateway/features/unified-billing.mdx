@@ -7,6 +7,8 @@ sidebar:
     badge: Beta
 head: []
 description: Use the Cloudflare billing to pay for and authenticate your inference requests.
+products:
+  - ai-gateway
 ---
 
 import { DashButton, TabItem, Tabs } from "~/components";
@@ -49,9 +51,33 @@ When your balance falls below the set threshold, AI Gateway will automatically a
 
 ## Use Unified Billing
 
-Call any supported provider without passing an API Key. The request will automatically use Cloudflare's key and deduct credits from your account.
+Unified Billing works in two ways: through the AI binding or through the HTTP API. Both deduct credits from your account automatically without requiring provider API keys.
 
-For example, you can use the Unified API:
+:::note
+Workers AI models (models prefixed with `@cf/`) routed through AI Gateway are not charged via Unified Billing. These models are billed through [Workers AI pricing](/workers-ai/platform/pricing/) instead. Unified Billing only applies to third-party provider models (such as OpenAI, Anthropic, and Google AI Studio).
+:::
+
+### AI binding
+
+Call any model listed in the [model catalog](/ai/models/) using `env.AI.run()`. This includes both Workers AI models and third-party models from providers like OpenAI, Anthropic, and Google.
+
+```typescript
+const resp = await env.AI.run(
+	"openai/gpt-4.1-mini",
+	{
+		messages: [{ role: "user", content: "What is Cloudflare?" }],
+	},
+	{
+		gateway: { id: "my-gateway" },
+	},
+);
+```
+
+Refer to the [binding reference](/ai-gateway/integrations/worker-binding-methods/) for the full API surface.
+
+### HTTP API
+
+Call a supported provider through the AI Gateway REST API without passing a provider API key. Use the `cf-aig-authorization` header to authenticate with your Cloudflare API token.
 
 ```bash
 curl -X POST https://gateway.ai.cloudflare.com/v1/$CLOUDFLARE_ACCOUNT_ID/default/compat/chat/completions \
@@ -69,6 +95,15 @@ curl -X POST https://gateway.ai.cloudflare.com/v1/$CLOUDFLARE_ACCOUNT_ID/default
 ```
 
 The `default` gateway is created automatically on your first request. Replace `default` with a specific gateway ID if you have already created one.
+
+The HTTP API supports the following providers through [provider-native endpoints](/ai-gateway/usage/providers/) and the [Unified API (chat completions)](/ai-gateway/usage/chat-completion/):
+
+- [OpenAI](/ai-gateway/usage/providers/openai/)
+- [Anthropic](/ai-gateway/usage/providers/anthropic/)
+- [Google AI Studio](/ai-gateway/usage/providers/google-ai-studio/)
+- [Google Vertex AI](/ai-gateway/usage/providers/vertex/)
+- [xAI](/ai-gateway/usage/providers/grok/)
+- [Groq](/ai-gateway/usage/providers/groq/)
 
 ### Spend limits
 
@@ -129,13 +164,3 @@ curl -X POST https://gateway.ai.cloudflare.com/v1/$CLOUDFLARE_ACCOUNT_ID/{gatewa
     ]
   }'
 ```
-
-### Supported providers
-
-Unified Billing supports the following AI providers:
-
-- [OpenAI](/ai-gateway/usage/providers/openai/)
-- [Anthropic](/ai-gateway/usage/providers/anthropic/)
-- [Google AI Studio](/ai-gateway/usage/providers/google-ai-studio/)
-- [xAI](/ai-gateway/usage/providers/grok/)
-- [Groq](/ai-gateway/usage/providers/groq/)

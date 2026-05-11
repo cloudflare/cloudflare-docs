@@ -1,8 +1,13 @@
 ---
 pcx_content_type: troubleshooting
 title: Super Bot Fight Mode for WordPress
+description: Fix WordPress loopback errors caused by Super Bot Fight Mode blocking diagnostics.
+products:
+  - bots
 sidebar:
   order: 2
+tags:
+  - WordPress
 ---
 
 import { Tabs, TabItem, Steps, Render, DashButton } from "~/components";
@@ -17,14 +22,12 @@ Loopback requests may also be blocked by [I’m Under Attack mode](/fundamentals
 
 ## Enable Optimize for WordPress
 
-{/* prettier-ignore-start */}
-
 <Tabs syncKey="dashNewNav">
   <TabItem label="New dashboard" icon="rocket">
     <Steps>
       1. In the Cloudflare dashboard, go to the **Security Settings** page.
 
-          <DashButton url="/?to=/:account/:zone/security/settings" />
+				<DashButton url="/?to=/:account/:zone/security/settings" />
       2. Filter by **Bot traffic**.
       3. Go to **Super Bot Fight Mode**.
       4. Under **Configurations**, select the edit icon for **Optimize for WordPress** and turn it on.
@@ -39,8 +42,6 @@ Loopback requests may also be blocked by [I’m Under Attack mode](/fundamentals
     </Steps>
   </TabItem>
 </Tabs>
-
-{/* prettier-ignore-end */}
 
 ## Availability
 

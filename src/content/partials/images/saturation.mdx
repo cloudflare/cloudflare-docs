@@ -1,9 +1,46 @@
 ---
 {}
 ---
-import { Tabs, TabItem } from "~/components"
+import { Tabs, TabItem} from "~/components"
+import originalImg from "~/assets/images/images/examples/original.jpg";
+import saturationLowImg from "~/assets/images/images/examples/saturation-0.jpg";
+import saturationHighImg from "~/assets/images/images/examples/saturation-2.jpg";
 
-Increases saturation by a factor. A value of `1.0` equals no change, a value of `0.5` equals half saturation, and a value of `2.0` equals twice as saturated. A value of `0` will convert the image to grayscale.
+### `saturation`
+
+Adjusts the color saturation of an image using a multiplier.
+
+- `0` — Completely desaturates the image (grayscale).
+- `< 1.0` — Reduces color intensity. For example, `0.5` is half as saturated.
+- `1` (default) — No change to the original saturation.
+- `> 1.0` — Increases color intensity. For example, `2` is twice as saturated.
+
+<table style="width:100%; table-layout:fixed; text-align:center; border:none">
+  <tr style="border:none; background:none">
+    <td style="width:33%; border:none; vertical-align:bottom">
+      <img src={originalImg.src} alt="Original image" style="width:100%; height:auto" />
+    </td>
+    <td style="width:33%; border:none; vertical-align:bottom">
+      <img src={saturationLowImg.src} alt="saturation=0 output" style="width:100%; height:auto" />
+    </td>
+    <td style="width:33%; border:none; vertical-align:bottom">
+      <img src={saturationHighImg.src} alt="saturation=2 output" style="width:100%; height:auto" />
+    </td>
+  </tr>
+  <tr style="border:none; background:none">
+    <td style="border:none;">
+      <strong>Original</strong>
+    </td>
+    <td style="border:none;">
+      
+      <code>saturation=0</code>
+    </td>
+    <td style="border:none;">
+      
+      <code>saturation=2</code>
+    </td>
+  </tr>
+</table>
 
 <Tabs>
   <TabItem label="URL format">

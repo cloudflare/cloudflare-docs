@@ -1,11 +1,16 @@
 ---
 pcx_content_type: concept
+description: How Data loss prevention works in Cloudflare One.
+products:
+  - cloudflare-one
 title: Data loss prevention
 sidebar:
   order: 12
 learning_center:
   title: What is DLP (data loss prevention)?
   link: https://www.cloudflare.com/learning/access-management/what-is-dlp/
+tags:
+  - Compliance
 ---
 
 import { GlossaryDefinition, Render } from "~/components";
@@ -21,6 +26,12 @@ Users on Zero Trust Free and Pay-as-you-go plans can use the [Financial Informat
 DLP scans HTTP traffic, SaaS application files, and AI prompts for sensitive data such as credit card numbers, credentials, and personally identifiable information.
 
 Cloudflare does not write scanned content to disk. DLP encrypts and temporarily stores content in memory only. To retain matched content for review, configure [payload logging](/cloudflare-one/data-loss-prevention/dlp-policies/logging-options/#log-the-payload-of-matched-rules) for encrypted payload copies or a [Logpush destination](/cloudflare-one/data-loss-prevention/dlp-policies/logging-options/#send-dlp-forensic-copies-to-logpush-destination) to export full matching HTTP requests.
+
+## Data classification
+
+Data Classification extends Cloudflare DLP with reusable labels and data classes for organizing sensitive content. Use it to define sensitivity schemas, sensitivity levels, data tag groups, data tags, and reusable classification rules that can then be applied in custom DLP profiles.
+
+To get started, refer to [Data Classification](/cloudflare-one/data-loss-prevention/data-classification/).
 
 ## Data in transit
 
@@ -59,6 +70,6 @@ DLP supports reporting and scanning the following file types:
 
 DLP will scan the text contained in text, Microsoft Office, and PDF files.
 
-### Size
-
-DLP can scan files less than or equal to 100 MB in size. ZIP files can be recursively compressed a maximum of 10 times, and each content file within the ZIP file must be less than or equal to 200 MB in uncompressed size.
+:::note
+ZIP files can be recursively compressed a maximum of 10 times.
+:::

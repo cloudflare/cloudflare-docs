@@ -1,8 +1,11 @@
 ---
 pcx_content_type: concept
 title: Exporting OpenTelemetry Data
+description: Export traces and logs from Cloudflare Workers to any OpenTelemetry-compatible destination.
 sidebar:
   order: 5
+products:
+  - workers
 ---
 
 import { Badge, DirectoryListing, WranglerConfig } from "~/components";
@@ -109,7 +112,7 @@ After creating a destination, you can monitor its health and delivery status in 
 | Status                  | Description                                                             | Troubleshooting                                                                                               |
 | ----------------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
 | **Last: n minutes ago** | Data was recently delivered successfully.                               |                                                                                                               |
-| **Never run**           | No data has been delivered to this destination.                         | •Check if your Worker is receving traffic <br /> • Review sampling rates (low rates generate less data)<br /> |
+| **Never run**           | No data has been delivered to this destination.                         | •Check if your Worker is receiving traffic <br /> • Review sampling rates (low rates generate less data)<br /> |
 | **Error**               | An error occurred while attempting to deliver data to this destination. | • Verify OTLP endpoint URL is correct<br />• Check authentication headers are valid<br />                     |
 
 ## Limits and pricing

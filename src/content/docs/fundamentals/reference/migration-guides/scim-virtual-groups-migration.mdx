@@ -5,7 +5,9 @@ sidebar:
   order: 1
   label: SCIM migration
 head: []
-description: Migrate from SCIM v1 Virtual Groups to Cloudflare’s GA SCIM User Groups
+description: Migrate from SCIM v1 Virtual Groups to Cloudflare's GA SCIM User Groups
+products:
+  - fundamentals
 ---
 
 Cloudflare's first iteration of SCIM integration introduced a concept called *Virtual Groups*, typically identified by the pattern `CF-<accountID>-<Role Name>` in your IdP. Virtual Groups were an early implementation of group-based access control: they acted as placeholders created automatically by SCIM to map IdP groups to account memberships.  

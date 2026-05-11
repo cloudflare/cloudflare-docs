@@ -1,8 +1,11 @@
 ---
 title: Cross-domain authentication
+description: Authenticate WebSocket connections to Cloudflare Agents across domains using signed tokens.
 pcx_content_type: how-to
 sidebar:
   order: 13
+products:
+  - agents
 ---
 
 import { TypeScriptExample, LinkCard } from "~/components";
@@ -291,6 +294,12 @@ export class SecureAgent extends Agent {
 	title="WebSockets"
 	href="/agents/api-reference/websockets/"
 	description="Real-time bidirectional communication."
+/>
+
+<LinkCard
+	title="GitHub OAuth agent example"
+	href="https://github.com/cloudflare/agents/tree/main/examples/auth-agent"
+	description="Protect an app built with Agents using GitHub OAuth, HTTP-only cookies, and server-owned Durable Object routing."
 />
 
 <LinkCard

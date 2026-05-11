@@ -6,7 +6,7 @@ products:
 date: 2026-03-23
 ---
 
-[AI Search](/ai-search/) now offers new [REST API](/ai-search/usage/rest-api/) endpoints for search and chat that use an OpenAI compatible format. This means you can use the familiar `messages` array structure that works with existing OpenAI SDKs and tools. The messages array also lets you pass previous messages within a session, so the model can maintain context across multiple turns.
+[AI Search](/ai-search/) now offers new [REST API](/ai-search/api/search/rest-api/) endpoints for search and chat that use an OpenAI compatible format. This means you can use the familiar `messages` array structure that works with existing OpenAI SDKs and tools. The messages array also lets you pass previous messages within a session, so the model can maintain context across multiple turns.
 
 | Endpoint         | Path                                                                      |
 | ---------------- | ------------------------------------------------------------------------- |
@@ -33,10 +33,10 @@ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai-search/instan
   }'
 ```
 
-For more details, refer to the [AI Search REST API guide](/ai-search/usage/rest-api/).
+For more details, refer to the [AI Search REST API guide](/ai-search/api/search/rest-api/).
 
 ## Migration from existing AutoRAG API (recommended)
 
 If you are using the previous AutoRAG API endpoints (`/autorag/rags/`), we recommend migrating to the new endpoints. The previous AutoRAG API endpoints will continue to be fully supported.
 
-Refer to the [migration guide](/ai-search/how-to/migrate-from-autorag-api/) for step-by-step instructions.
+Refer to the [migration guide](/ai-search/api/migration/rest-api/) for step-by-step instructions.

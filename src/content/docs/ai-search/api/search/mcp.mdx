@@ -1,0 +1,55 @@
+---
+pcx_content_type: how-to
+title: MCP
+description: Expose AI Search content to AI agents through the Model Context Protocol (MCP) endpoint.
+sidebar:
+  order: 3
+products:
+  - ai-search
+---
+
+import { DashButton } from "~/components";
+
+The Model Context Protocol (MCP) endpoint allows AI agents to discover and interact with your AI Search content. This endpoint follows the [MCP specification](https://modelcontextprotocol.io/) and provides tools for querying your indexed content.
+
+## Prerequisites
+
+Enable public endpoints for your AI Search instance:
+
+1. Go to **AI Search** in the Cloudflare dashboard.
+   <DashButton url="/?to=/:account/ai/ai-search" />
+2. Select your AI Search instance.
+3. Go to **Settings** > **Public Endpoint**.
+4. Turn on **Enable Public Endpoint**.
+5. Copy the public endpoint URL.
+
+## Available tools
+
+The AI Search MCP endpoint exposes a `search` tool that queries your indexed content.
+
+| Tool     | Description                           |
+| -------- | ------------------------------------- |
+| `search` | Finds exactly what you're looking for |
+
+You can customize this in your AI Search instance settings. For more details, refer to [Public endpoint configuration](/ai-search/configuration/retrieval/public-endpoint/).
+
+## Test the MCP endpoint
+
+Send a request to the `/mcp` endpoint with the `Accept: application/json, text/event-stream` header:
+
+```bash
+curl https://<INSTANCE_ID>.search.ai.cloudflare.com/mcp \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json, text/event-stream" \
+  -d '{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "method": "tools/call",
+    "params": {
+      "name": "search",
+      "arguments": {
+        "query": "How do I configure AI Search?"
+      }
+    }
+  }'
+```

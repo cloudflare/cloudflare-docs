@@ -6,6 +6,8 @@ head:
     content: Direct Upload
 description: Upload your prebuilt assets to Pages and deploy them via the
   Wrangler CLI or the Cloudflare dashboard.
+products:
+  - pages
 
 ---
 
@@ -101,6 +103,12 @@ If you would like to use Wrangler to obtain a list of all available projects for
 
 ```sh
 npx wrangler pages project list
+```
+
+To get the output as JSON for programmatic use or scripting, use the `--json` flag:
+
+```sh
+npx wrangler pages project list --json
 ```
 
 If you would like to use Wrangler to obtain a list of all unique preview URLs for a particular project, use [`pages deployment list`](/workers/wrangler/commands/pages/#pages-deployment-list):

@@ -1,5 +1,8 @@
 ---
 pcx_content_type: concept
+description: How File sandboxing works in Gateway.
+products:
+  - cloudflare-one
 title: File sandboxing
 sidebar:
   order: 6
@@ -49,7 +52,7 @@ flowchart TD
 
 To begin quarantining downloaded files, turn on file sandboxing:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Traffic policies** > **Traffic settings**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Traffic policies** > **Traffic settings**.
 2. In **Policy settings**, turn on **Open previously unseen files in a sandbox environment**.
 3. (Optional) To block requests containing [non-scannable files](#non-scannable-files), select **Block requests for files that cannot be scanned**.
 
@@ -59,7 +62,7 @@ You can now create [Quarantine HTTP policies](/cloudflare-one/traffic-policies/h
 
 To test if file sandboxing is working, you can create a Quarantine policy that matches the [Cloudflare Sandbox Test](https://sandbox.cloudflaredemos.com/):
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Firewall policies** > **HTTP**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Traffic policies** > **Firewall policies** > **HTTP**.
 2. Select **Add a policy**.
 3. Add the following expression:
 

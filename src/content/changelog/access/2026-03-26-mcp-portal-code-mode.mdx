@@ -1,0 +1,21 @@
+---
+title: Code mode for MCP server portals
+description: MCP server portals support code mode, which reduces context window usage by collapsing tools into a single code execution tool.
+date: 2026-03-26
+products:
+  - access
+---
+
+[MCP server portals](/cloudflare-one/access-controls/ai-controls/mcp-portals/) support [code mode](/agents/api-reference/codemode/), a technique that reduces context window usage by replacing individual tool definitions with a single code execution tool. Code mode is turned on by default on all portals.
+
+To turn it off, edit the portal in **Access controls** > **AI controls** and turn off **Code mode** under **Basic information**.
+
+When code mode is active, the portal exposes a single `code` tool instead of listing every tool from every upstream MCP server. The connected AI agent writes JavaScript that calls typed `codemode.*` methods for each upstream tool. The generated code runs in an isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/) environment, keeping authentication credentials and environment variables out of the model context.
+
+To use code mode, append `?codemode=search_and_execute` to your portal URL when connecting from an MCP client:
+
+```txt
+https://<subdomain>.<domain>/mcp?codemode=search_and_execute
+```
+
+For more information, refer to [code mode](/cloudflare-one/access-controls/ai-controls/mcp-portals/#code-mode).

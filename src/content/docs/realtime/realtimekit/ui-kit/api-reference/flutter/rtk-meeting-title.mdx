@@ -1,0 +1,39 @@
+---
+pcx_content_type: navigation
+title: RtkMeetingTitle
+description: API reference for RtkMeetingTitle component (Flutter Library)
+products:
+  - realtime
+---
+
+A widget that displays the title of a RealtimeKit meeting. Integrates with the RealtimeKit design system for consistent styling.
+
+## Properties
+
+| Property                | Type                | Required | Default              | Description                     |
+| ----------------------- | ------------------- | -------- | -------------------- | ------------------------------- |
+| `meeting`               | `RealtimekitClient` | ✅       | -                    | Meeting client instance         |
+| `individualDesignToken` | `RtkDesignTokens?`  | ❌       | Global design tokens | Design tokens for customization |
+
+## Usage Examples
+
+### Basic Usage
+
+```dart
+import 'package:realtimekit_ui/realtimekit_ui.dart';
+
+RtkMeetingTitle(
+  meeting: yourMeetingInstance,
+)
+```
+
+### With Properties
+
+```dart
+import 'package:realtimekit_ui/realtimekit_ui.dart';
+
+RtkMeetingTitle(
+  meeting: yourMeetingInstance,
+  individualDesignToken: yourDesignToken,
+)
+```

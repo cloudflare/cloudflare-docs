@@ -8,6 +8,8 @@ head:
   - tag: title
     content: Actions reference
 description: Learn about actions supported by the Rules language, including Block, Skip, and Log.
+products:
+  - ruleset-engine
 ---
 
 The action of a rule tells Cloudflare how to handle matches for the rule [expression](/ruleset-engine/rules-language/expressions/).
@@ -20,7 +22,6 @@ Some actions like _Block_, called terminating actions, will stop the evaluation 
 
 The available actions depend on the [phase](/ruleset-engine/about/phases/) where you are configuring the rule. Refer to each product’s documentation for details on the phase(s) supported by that product.
 
-{/* prettier-ignore */}
 <table style="width: 100%">
   <thead>
     <tr>

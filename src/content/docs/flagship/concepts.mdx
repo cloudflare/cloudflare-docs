@@ -1,0 +1,85 @@
+---
+pcx_content_type: concept
+title: Concepts
+description: Understand Flagship core concepts including apps, flags, variations, targeting rules, evaluation context, and flag propagation.
+sidebar:
+  order: 3
+products:
+  - flagship
+---
+
+Flagship organizes feature flags into apps. You define flags with variations and targeting rules, then evaluate them within Cloudflare's global network.
+
+## Overview
+
+Flagship feature flags go through three stages from creation to evaluation:
+
+1. **Configure** — Create flags and targeting rules in the [Cloudflare dashboard](https://dash.cloudflare.com/) or through the API.
+2. **Propagate** — Flagship automatically distributes your flag configuration across Cloudflare's global network within seconds.
+3. **Evaluate** — Your Worker (or SDK) evaluates flags locally using the propagated configuration. There is no round-trip to a central server.
+
+Flag changes take effect globally within seconds of saving. You do not need to redeploy your Worker or restart your application. If the dashboard is temporarily unavailable, flag evaluation continues to work using the last propagated configuration.
+
+## Apps
+
+An app is the top-level organizational unit in Flagship. It groups related flags together.
+
+An app typically maps to a single project, service, or product surface. Each Cloudflare account can have multiple apps. For example, you might create one app for your marketing site and another for your API backend.
+
+## Flags
+
+A flag is a named feature toggle. Each flag has a key, a set of [variations](#variations), [targeting rules](#targeting-rules), and an enabled/disabled state.
+
+Flag keys must be unique within an app. Keys can contain letters, numbers, hyphens, and underscores.
+
+When a flag is disabled, it always returns the default variation regardless of any targeting rules.
+
+## Variations
+
+Variations are the possible values a flag can return. Each flag must have at least one variation, and one variation is designated as the default.
+
+Flagship supports four variation types:
+
+| Type        | Example                                                               |
+| ----------- | --------------------------------------------------------------------- |
+| Boolean     | `on: true`, `off: false`                                              |
+| String      | `v1: "old-checkout"`, `v2: "new-checkout"`                            |
+| Number      | `low: 100`, `high: 1000`                                              |
+| JSON object | `premium: { "tier": "premium", "features": ["analytics", "export"] }` |
+
+Use boolean flags for simple on/off toggles. Use string, number, or JSON object flags when you need to deliver configuration values or structured data.
+
+## Targeting rules
+
+Targeting rules control which variation a flag returns for a given request. Rules are evaluated in sequential order, and the first matching rule wins. If no rule matches, the default variation is returned.
+
+Each rule contains:
+
+- **Conditions** that compare an attribute from the [evaluation context](#evaluation-context) against a value using an operator.
+- An optional **percentage rollout** that splits traffic across variations.
+- A **variation** to serve when the rule matches.
+
+Conditions within a rule can be grouped with `AND`/`OR` operators.
+
+Refer to [Targeting rules](/flagship/targeting/) and [Operators](/flagship/targeting/operators/) for the full list of operators and configuration options.
+
+## Evaluation context
+
+The evaluation context is a set of key-value attributes that describe the current user or request (for example, `userId`, `country`, `plan`).
+
+You pass the context as the third argument to evaluation methods on the binding:
+
+```ts
+const value = await env.FLAGS.getBooleanValue("new-checkout", false, {
+	userId: "user-42",
+	country: "US",
+});
+```
+
+When using the [OpenFeature SDK](/flagship/sdk/), you pass context through the OpenFeature evaluation context object.
+
+Flagship uses context attributes to match targeting rules and to determine percentage rollout bucketing. A consistent context (for example, the same `userId`) produces the same rollout result on every evaluation.
+
+## Flag propagation
+
+During the brief propagation window after a flag change, some regions may still serve the previous flag value. After propagation completes, all subsequent evaluations return the updated value.

@@ -1,0 +1,41 @@
+---
+pcx_content_type: reference
+title: RtkPlugins
+description: API reference for RtkPlugins component (React Native Library)
+products:
+  - realtime
+---
+
+Plugin management panel showing active plugins and the plugin store with activate/deactivate controls.
+
+## Properties
+
+| Property   | Type                           | Required | Default           | Description                      |
+| ---------- | ------------------------------ | -------- | ----------------- | -------------------------------- |
+| `meeting`  | `RealtimeKitClient`            | ✅       | -                 | The RealtimeKit meeting instance |
+| `config`   | `UIConfig`                     | ❌       | `defaultConfig`   | UI configuration object          |
+| `iconPack` | `IconPack`                     | ❌       | `defaultIconPack` | Custom icon pack                 |
+| `size`     | `'lg' \| 'md' \| 'sm' \| 'xl'` | ❌       | `'sm'`            | Size variant                     |
+| `t`        | `RtkI18n`                      | ❌       | -                 | i18n translation function        |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkPlugins } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkPlugins meeting={meeting} />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkPlugins } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkPlugins meeting={meeting} size="md" config={customConfig} />;
+}
+```

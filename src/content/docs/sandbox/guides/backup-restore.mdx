@@ -4,15 +4,13 @@ pcx_content_type: how-to
 sidebar:
   order: 11
 description: Create point-in-time backups and restore sandbox directories.
+products:
+  - sandbox
 ---
 
 import { TypeScriptExample, WranglerConfig } from "~/components";
 
 Create point-in-time snapshots of sandbox directories and restore them using copy-on-write overlays. Backups are stored in an R2 bucket and use squashfs compression.
-
-:::caution[Production only]
-Backup and restore does not work with `wrangler dev` because it requires FUSE support that wrangler does not currently provide. Deploy your Worker with `wrangler deploy` to use this feature. All other Sandbox SDK features work in local development.
-:::
 
 ## Prerequisites
 
@@ -76,6 +74,10 @@ Backup and restore does not work with `wrangler dev` because it requires FUSE su
 
    You can create R2 API tokens in the [Cloudflare dashboard](https://dash.cloudflare.com/) under **R2** > **Overview** > **Manage R2 API Tokens**. The token needs **Object Read & Write** permissions for your backup bucket.
 
+:::note
+The `vars` and API secrets in steps 2 and 3 are only required for production. For local development with `wrangler dev`, only the `BACKUP_BUCKET` R2 binding is required. Refer to [Local development](#local-development) for details.
+:::
+
 ## Create a backup
 
 Use `createBackup()` to snapshot a directory and upload it to R2:
@@ -118,7 +120,7 @@ console.log(`Restored: ${result.success}`);
 </TypeScriptExample>
 
 :::caution[Ephemeral mount]
-The FUSE mount is lost when the sandbox sleeps or the container restarts. Re-restore from the backup handle to recover.
+In production, the FUSE mount is lost when the sandbox sleeps or the container restarts. Re-restore from the backup handle to recover. This does not apply to local development.
 :::
 
 ## Exclude gitignored files
@@ -257,6 +259,74 @@ To automatically remove expired backup objects from R2, set up an [R2 object lif
 
 For example, if your longest TTL is 7 days, configure a lifecycle rule to delete objects older than 7 days from the `backups/` prefix. This ensures R2 storage does not grow unbounded while giving you a buffer to restore any non-expired backup.
 
+## Local development
+
+You can use backup and restore during local development with `wrangler dev` by passing the `localBucket: true` option to `createBackup()`. This uses the `BACKUP_BUCKET` R2 binding from your Worker environment directly, so no presigned URL credentials are required.
+
+### Configure R2 binding
+
+Add a `BACKUP_BUCKET` R2 binding to your Wrangler configuration:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"r2_buckets": [
+		{
+			"binding": "BACKUP_BUCKET",
+			"bucket_name": "my-backup-bucket"
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+### Back up and restore with `localBucket`
+
+Pass `localBucket: true` to `createBackup()` to back up and restore using the R2 binding directly:
+
+<TypeScriptExample>
+
+```ts
+const sandbox = getSandbox(env.Sandbox, "my-sandbox");
+
+// Create a local backup
+const backup = await sandbox.createBackup({
+	dir: "/workspace",
+	localBucket: true,
+});
+
+// Restore the backup
+const result = await sandbox.restoreBackup(backup);
+console.log(`Restored: ${result.success}`);
+```
+
+</TypeScriptExample>
+
+:::note
+You can use an environment variable to toggle `localBucket` between local development and production. Set an environment variable such as `LOCAL_DEV` in your Wrangler configuration using `vars` for local development, then reference it in your code:
+
+```ts
+const backup = await sandbox.createBackup({
+	dir: "/workspace",
+	localBucket: Boolean(env.LOCAL_DEV),
+});
+```
+
+When `localBucket` is `true`, presigned URL credentials are not required and the SDK uses the R2 binding directly. For more information on setting environment variables, refer to [Environment variables in Wrangler configuration](/workers/configuration/environment-variables/).
+:::
+
+### Local development considerations
+
+- **No presigned URLs** - The SDK reads and writes backup archives directly through the R2 binding, so no S3-compatible credentials are needed.
+- **No FUSE required** - Local restore extracts the archive using `unsquashfs` instead of mounting with FUSE overlayfs. The backup is not applied as a copy-on-write overlay; the directory is replaced on restore.
+- **Same archive format** - Local backups use the same squashfs archive format as production backups.
+
+:::note
+These considerations apply to local development with `wrangler dev` only. In production, backup and restore use presigned URLs and FUSE overlayfs.
+:::
+
 ## Clean up backup objects in R2
 
 Backup archives are stored in your R2 bucket under the `backups/` prefix with the structure `backups/{backupId}/data.sqsh` and `backups/{backupId}/meta.json`. You can use the `BACKUP_BUCKET` R2 binding to manage these objects directly.
@@ -334,7 +404,7 @@ await env.BACKUP_BUCKET.delete(`backups/${backupId}/meta.json`);
 
 ## Copy-on-write behavior
 
-Restore uses FUSE overlayfs to mount the backup as a read-only lower layer. New writes go to a writable upper layer and do not affect the original backup:
+In production, restore uses FUSE overlayfs to mount the backup as a read-only lower layer. New writes go to a writable upper layer and do not affect the original backup:
 
 <TypeScriptExample>
 
@@ -449,7 +519,7 @@ This means `mksquashfs` could not read one or more files inside the directory yo
 - **Configure R2 lifecycle rules** - Set up [object lifecycle rules](/r2/buckets/object-lifecycles/) to automatically delete expired backups from R2, since TTL is only enforced at restore time
 - **Clean up old backups** - Delete previous backup objects from R2 when you no longer need them, or use the delete-then-write pattern for rolling backups
 - **Handle errors** - Wrap backup and restore calls in `try...catch` blocks
-- **Re-restore after restart** - The FUSE mount is ephemeral, so re-restore from the backup handle after container restarts
+- **Re-restore after restart** - In production, the FUSE mount is ephemeral, so re-restore from the backup handle after container restarts
 
 ## Related resources
 

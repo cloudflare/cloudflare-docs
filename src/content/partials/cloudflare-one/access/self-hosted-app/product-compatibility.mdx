@@ -8,5 +8,8 @@ However, the following products are not supported:
 
 * [Automatic Platform Optimization](/automatic-platform-optimization)
 * [Zaraz](/zaraz)
+* [Google tag gateway for advertisers](/google-tag-gateway)
 
 You can disable Zaraz for a specific application - instead of across your entire zone - using a [Configuration Rule](/rules/configuration-rules/) scoped to the application domain.
+
+Google tag gateway is configured at the zone level and cannot be scoped to specific hostnames. To use Access binding cookie on a hostname, disable Google tag gateway for the entire zone.

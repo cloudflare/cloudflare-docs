@@ -4,6 +4,8 @@ pcx_content_type: how-to
 sidebar:
   order: 1
 description: Gate HTTP endpoints with MPP payments using the mpp-proxy template on Cloudflare Workers.
+products:
+  - agents
 ---
 
 The [mpp-proxy](https://github.com/cloudflare/mpp-proxy) template is a Cloudflare Worker that sits in front of any HTTP backend. When a request hits a protected route, the proxy returns a `402` response with an MPP payment challenge. After the client pays, the proxy verifies the payment, forwards the request to your origin, and issues a 1-hour session cookie.

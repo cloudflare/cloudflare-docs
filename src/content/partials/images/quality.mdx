@@ -2,40 +2,30 @@
 {}
 ---
 
-import { Tabs, TabItem } from "~/components";
+import { Tabs, TabItem} from "~/components";
 
-Specifies quality for images in JPEG, WebP, and AVIF formats. The quality is in a 1-100 scale, but useful values are between `50` (low quality, small file size) and `90` (high quality, large file size). `85` is the default. When using the PNG format, an explicit quality setting allows use of PNG8 (palette) variant of the format. Use the `format=auto` option to allow use of WebP and AVIF formats.
+<a id="quality"></a>
 
-We also allow setting one of the perceptual quality levels `high|medium-high|medium-low|low`
+### `quality` | `q`
 
-**Alias:** `q`
+Specifies the output quality of an image for JPEG, WebP, and AVIF formats, expressed as a fixed value or perceptual quality level. The default is `85`.
+
+- **Fixed quality** — Accepts a positive integer from `1` (low quality, small file size) to `100` (high quality, large file size).
+- **Perceptual quality** — Accepts `high`, `medium-high`, `medium-low`, and `low`.
+
+When the output format is PNG, an explicit `quality` setting allows the use of PNG8 (palette) variant of the format.
 
 <Tabs>
   <TabItem label="URL format">
     ```txt
     quality=50
-
-    OR
-
     quality=low
+    q=50
     ```
   </TabItem>
-  <TabItem label="URL format alias">
-  ```txt
-  q=50
-
-OR
-
-q=medium-high
-
-```
-</TabItem>
 <TabItem label="Workers">
 ```js
 cf: {image: {quality: 50}}
-
-OR
-
 cf: {image: {quality: "high"}}
 ```
 

@@ -1,4 +1,5 @@
 import { liteClient as algoliasearch } from "algoliasearch/lite";
+import { ALGOLIA_APP_ID, ALGOLIA_API_KEY, ALGOLIA_INDEX } from "~/util/algolia";
 import { useEffect, useState } from "react";
 import {
 	InstantSearch,
@@ -229,11 +230,8 @@ function FilterDropdown({
 export default function InstantSearchComponent() {
 	return (
 		<InstantSearch
-			searchClient={algoliasearch(
-				"D32WIYFTUF",
-				"5cec275adc19dd3bc17617f7d9cf312a",
-			)}
-			indexName="prod_devdocs"
+			searchClient={algoliasearch(ALGOLIA_APP_ID, ALGOLIA_API_KEY)}
+			indexName={ALGOLIA_INDEX}
 			future={{
 				preserveSharedStateOnUnmount: true,
 			}}

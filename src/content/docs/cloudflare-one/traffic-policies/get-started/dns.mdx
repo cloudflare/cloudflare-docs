@@ -3,6 +3,9 @@ title: DNS filtering
 tags:
   - DNS
 pcx_content_type: how-to
+description: DNS filtering in Gateway.
+products:
+  - cloudflare-one
 sidebar:
   order: 1
 head:
@@ -70,7 +73,7 @@ A DNS policy has two parts: a **traffic condition** that defines which queries t
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Firewall policies**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Traffic policies** > **Firewall policies**.
 2. In the **DNS** tab, select **Add a policy**.
 3. Name the policy.
 4. Under **Traffic**, use the condition builder to define which DNS queries this policy applies to. Select a selector (such as **Security Categories**), an operator (such as **in**), and one or more values.

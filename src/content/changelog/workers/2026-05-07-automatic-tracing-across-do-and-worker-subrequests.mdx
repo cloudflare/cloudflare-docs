@@ -1,0 +1,21 @@
+---
+title: Automatic tracing across Durable Object and Worker subrequests
+description: Traces now propagate across service binding and Durable Object calls, producing a single unified trace instead of separate disconnected traces.
+products:
+  - workers
+date: 2026-05-07
+---
+
+You can now get a single unified trace across Worker-to-Worker subrequests, with trace context propagating automatically. Previously, [automatic tracing](/workers/observability/traces/) produced disconnected traces when a Worker called another Worker through a [service binding](/workers/runtime-apis/bindings/service-bindings/) or [Durable Object](/durable-objects/).
+
+![Unified trace showing nested spans across a Durable Object subrequest and a service binding call](~/assets/images/changelog/workers/observability/2026-04-28-worker-to-worker-context-prop.png)
+
+This means you can:
+
+- Follow a request through your entire Worker architecture in one trace view
+- See service binding and Durable Object calls as nested child spans instead of separate traces
+- Debug cross-Worker request flows in the Cloudflare dashboard or in an external observability platform via [OpenTelemetry](/workers/observability/exporting-opentelemetry-data/)
+
+[Tracing must be enabled](/workers/observability/traces/#how-to-enable-tracing) in your Wrangler configuration for traces to be recorded. Checkout [Workers tracing](/workers/observability/traces/) to get started.
+
+Up next, we are working on external trace context propagation using [W3C Trace Context standards](https://www.w3.org/TR/trace-context/), which will allow traces from your Workers to link with traces from services outside of Cloudflare.

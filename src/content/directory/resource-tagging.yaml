@@ -1,0 +1,13 @@
+id: RsTagN
+name: Resource Tagging
+
+entry:
+  title: Resource Tagging
+  url: /resource-tagging/
+  wrap: true
+  group: Core platform
+
+meta:
+  title: Cloudflare Resource Tagging docs
+  description: Attach key-value metadata to Cloudflare resources for organization, access control, and billing attribution
+  author: "@cloudflare"

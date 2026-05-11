@@ -1,0 +1,65 @@
+---
+title: Vector search
+description: Configure vector search in AI Search to find semantically similar content using embeddings.
+pcx_content_type: concept
+sidebar:
+  order: 2
+products:
+  - ai-search
+---
+
+Vector search converts your query into a vector embedding and finds chunks with similar meaning. It is enabled by default on all AI Search instances. For an overview of search modes, refer to [Search modes](/ai-search/concepts/search-modes/).
+
+## Built-in vector index
+
+Instances created after **April 16, 2026** include a built-in vector index powered by [Vectorize](/vectorize/). The vector index stores embeddings generated from your content and is created and maintained automatically. You do not need to create or manage a Vectorize index yourself.
+
+Instances created before this date use a Vectorize index provisioned on your account. These instances are billed separately for Vectorize usage. All instances will be migrated to managed infrastructure. Migration details are coming soon.
+
+## Embedding model
+
+The [embedding model](/ai-search/configuration/models/) determines the vector dimensions for the vector index. The embedding model is set when creating an instance and cannot be changed after creation.
+
+## Disable vector search
+
+Vector search is the default index method for all instances. To switch to [keyword search](/ai-search/configuration/indexing/keyword-search/) only, set `index_method.vector` to `false`. At least one of `vector` or `keyword` must be `true`.
+
+```ts
+const instance = await env.AI_SEARCH.create({
+	id: "my-instance",
+	index_method: {
+		vector: false,
+		keyword: true,
+	},
+});
+```
+
+## Per-request overrides
+
+You can force vector-only search on a per-request basis using `ai_search_options.retrieval.retrieval_type`, even if keyword search is also enabled on the instance.
+
+```ts
+const instance = env.AI_SEARCH.get("my-instance");
+
+const results = await instance.search({
+	messages: [{ role: "user", content: "What is Cloudflare?" }],
+	ai_search_options: {
+		retrieval: {
+			retrieval_type: "vector",
+		},
+	},
+});
+```
+
+## Scoring details
+
+When using vector search, each chunk includes a `scoring_details` object:
+
+| Field          | Type   | Description                       |
+| -------------- | ------ | --------------------------------- |
+| `vector_score` | number | Vector similarity score (0 to 1). |
+| `vector_rank`  | number | Rank position in the result set.  |
+
+## Limits
+
+For vector index limits, refer to [Limits and pricing](/ai-search/platform/limits-pricing/).

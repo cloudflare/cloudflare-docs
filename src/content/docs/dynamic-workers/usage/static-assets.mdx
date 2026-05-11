@@ -1,0 +1,219 @@
+---
+title: Static assets
+description: Serve static files alongside Dynamic Worker code.
+pcx_content_type: how-to
+sidebar:
+  order: 2
+products:
+  - dynamic-workers
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+Dynamic Workers can serve static assets like HTML pages, JavaScript bundles, images, and other files alongside your Worker code. This is useful when you need a Dynamic Worker to serve a full-stack application.
+
+Static assets for Dynamic Workers work differently from [static assets in regular Workers](/workers/static-assets/). Instead of uploading assets at deploy time, you provide them at runtime through the Worker Loader `get()` callback, sourcing them from R2, KV, or another storage backend.
+
+## How it works
+
+There are three parts to setting up static assets for Dynamic Workers:
+
+1. **Store the assets** — Upload static files to a KV namespace, keyed by project ID and pathname.
+2. **Define an asset binding in the loader Worker** — Create a class that handles requests for static files by reading them from KV and returning them with the correct headers.
+3. **Pass the binding to the Dynamic Worker** — The Dynamic Worker uses it to serve static files by calling `env.ASSETS.fetch(request)`.
+
+## Store the static assets
+
+Static assets are stored in a KV namespace, separated by project ID so each project's files are isolated from each other:
+
+```
+project/{projectId}/assets/index.html      →  file content
+project/{projectId}/assets/app.js          →  file content
+project/{projectId}/manifest               →  asset manifest
+```
+
+When a user deploys their project through your platform's upload API, store each file in KV under its pathname:
+
+```ts
+await env.KV_ASSETS.put(`project/${projectId}/assets${pathname}`, fileContent);
+```
+
+You also need to store a manifest, a mapping that tells the asset handler which files exist and what their content types are. Use `buildAssetManifest()` from `@cloudflare/worker-bundler` to generate it from your assets:
+
+<TypeScriptExample>
+
+```ts
+import { buildAssetManifest } from "@cloudflare/worker-bundler";
+
+const assets = {
+	"/index.html": htmlContent,
+	"/app.js": jsContent,
+	"/style.css": cssContent,
+};
+
+const manifest = await buildAssetManifest(assets);
+
+await env.KV_ASSETS.put(
+	`project/${projectId}/manifest`,
+	JSON.stringify(manifest),
+);
+```
+
+</TypeScriptExample>
+
+:::note
+
+The examples on this page use KV for asset storage, but you can also use [R2](/r2/), which is recommended for larger files like images or videos. A common pattern is to store assets in R2 and use KV as a cache layer for frequently accessed files.
+
+:::
+
+## Add bindings to the loader Worker
+
+Grant the loader Worker access to the KV namespace where you stored the assets:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"worker_loaders": [{ "binding": "LOADER" }],
+	"kv_namespaces": [
+		{
+			"binding": "KV_ASSETS",
+			"id": "<your-kv-namespace-id>",
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+## Define the asset binding
+
+Create a class in the loader Worker that extends `WorkerEntrypoint` and define a `fetch()` method. `WorkerEntrypoint` makes this method callable from the Dynamic Worker using RPC. When the Dynamic Worker calls `env.ASSETS.fetch(request)`, it runs this method in the loader Worker, where the KV binding and your asset-serving logic live.
+
+The class takes a `projectId` prop so it knows which project's assets to look up. When `fetch()` is called, it:
+
+1. Loads the project's asset manifest from KV.
+2. Resolves the request pathname to a file.
+3. Fetches the file content from KV.
+4. Returns a `Response` with the correct `Content-Type` header.
+
+### Use `@cloudflare/worker-bundler` to handle static asset serving
+
+Instead of writing your own logic to match request paths to files, detect content types, and set cache headers, use the `@cloudflare/worker-bundler` package to handle static asset serving. In your `fetch()` method, pass `handleAssetRequest()` two things:
+
+- A **manifest**, the path-to-content-type mapping you stored in KV during upload, built with `buildAssetManifest()`. This tells `handleAssetRequest()` which files exist and what their content types are.
+- A **storage object**, tells `handleAssetRequest()` how to read files from your KV namespace. It has one method, `get(pathname)`, which reads and returns the content for a given file path.
+
+`handleAssetRequest()` serves the file if it finds a match in the manifest, with the correct headers for content type and caching.
+
+<TypeScriptExample>
+
+```ts
+import { WorkerEntrypoint } from "cloudflare:workers";
+import { handleAssetRequest } from "@cloudflare/worker-bundler";
+
+export class AssetBinding extends WorkerEntrypoint {
+	async fetch(request: Request) {
+		const { projectId } = this.ctx.props;
+
+		// Load the project's asset manifest from KV
+		const manifest = await this.env.KV_ASSETS.get(
+			`project/${projectId}/manifest`,
+			{ type: "json", cacheTtl: 300 },
+		);
+
+		if (!manifest) {
+			return new Response("No assets found", { status: 404 });
+		}
+
+		// Storage object — handleAssetRequest calls get() to
+		// read file content when it needs to serve an asset
+		const storage = {
+			async get(pathname: string) {
+				return this.env.KV_ASSETS.get(
+					`project/${projectId}/assets${pathname}`,
+					{ type: "arrayBuffer", cacheTtl: 86_400 },
+				);
+			},
+		};
+
+		const response = await handleAssetRequest(request, manifest, storage);
+		return response ?? new Response("Not Found", { status: 404 });
+	}
+}
+```
+
+</TypeScriptExample>
+
+:::note
+
+The `cacheTtl` option caches KV results so repeated requests do not hit KV storage every time. The manifest uses a shorter cache (5 minutes) so new deploys are picked up quickly. Asset content uses a longer cache (24 hours) since files at the same path do not change between deploys.
+
+:::
+
+Once `AssetBinding` is exported, it becomes available on `ctx.exports` in the loader Worker's `fetch()` handler. `ctx` is the handler's third parameter, after `request` and `env`. This is how you pass it to the Dynamic Worker in the next step.
+
+## Pass the asset binding to the Dynamic Worker
+
+When you call `get()` to create the Dynamic Worker, include the `AssetBinding` in the `env` object so the Dynamic Worker can use it to serve static files. To reference the `AssetBinding` class you defined in the previous step, use `ctx.exports.AssetBinding()` and pass the `projectId` as a prop so it knows which project's assets to serve. This works the same way as custom bindings — `props` is how you pass information to the class, and the class reads it at `this.ctx.props` when it runs.
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+		const projectId = getProjectIdFromRequest(request);
+
+		const worker = env.LOADER.get(projectId, async () => {
+			const serverCode = await loadServerCode(projectId);
+
+			return {
+				mainModule: "index.js",
+				modules: {
+					"index.js": { js: serverCode },
+				},
+				compatibilityDate: "$today",
+				env: {
+					ASSETS: ctx.exports.AssetBinding({
+						props: { projectId },
+					}),
+				},
+			};
+		});
+
+		return await worker.getEntrypoint().fetch(request);
+	},
+};
+```
+
+</TypeScriptExample>
+
+The Dynamic Worker sees `ASSETS` as a binding and can call `env.ASSETS.fetch(request)` because that is the method you defined on `AssetBinding`. When the Dynamic Worker calls that method, it runs in the loader Worker, where your `AssetBinding` class reads the manifest and file content from KV.
+
+## Use the asset binding in the Dynamic Worker
+
+From the Dynamic Worker's perspective, `env.ASSETS` works like any other binding. The user writes their server code and calls `env.ASSETS.fetch()` to serve static files:
+
+<TypeScriptExample>
+
+```ts
+// Inside the Dynamic Worker
+export default {
+	async fetch(request: Request, env: Env) {
+		const url = new URL(request.url);
+
+		// Handle API routes directly
+		if (url.pathname.startsWith("/api/")) {
+			return Response.json({ hello: "world" });
+		}
+
+		// Everything else — serve static assets
+		return env.ASSETS.fetch(request);
+	},
+};
+```
+
+</TypeScriptExample>
+
+When the Dynamic Worker calls `env.ASSETS.fetch(request)`, the call goes through RPC to the loader Worker's `AssetBinding`, which looks up the file in the manifest and reads it from KV. The Dynamic Worker does not need to handle any of this — it calls `env.ASSETS.fetch(request)` and gets back the file with the correct headers, ready to return to the client.

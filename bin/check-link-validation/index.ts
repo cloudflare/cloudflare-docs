@@ -2,9 +2,17 @@ import { existsSync, readFileSync } from "node:fs";
 
 import * as core from "@actions/core";
 
+interface LinkValidationError {
+	docsPath: string;
+	link: string;
+	position: { line: number; column: number } | null;
+	message: string;
+}
+
 interface LinkValidationReport {
 	errorCount: number;
 	errorFileCount: number;
+	errors: LinkValidationError[];
 }
 
 async function run(): Promise<void> {
@@ -22,6 +30,14 @@ async function run(): Promise<void> {
 	} catch {
 		core.setFailed(`Could not read report at ${reportPath}`);
 		process.exit();
+	}
+
+	for (const error of report.errors) {
+		core.error(`${decodeURIComponent(error.link)}: ${error.message}`, {
+			file: error.docsPath,
+			startLine: error.position?.line,
+			startColumn: error.position?.column,
+		});
 	}
 
 	core.setFailed(

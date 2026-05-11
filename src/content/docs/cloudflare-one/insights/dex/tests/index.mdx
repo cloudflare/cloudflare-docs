@@ -1,5 +1,8 @@
 ---
 pcx_content_type: navigation
+description: Synthetic tests resources and guides for Zero Trust analytics.
+products:
+  - cloudflare-one
 title: Synthetic tests
 sidebar:
   order: 3
@@ -11,12 +14,10 @@ import { DirectoryListing, Render } from "~/components";
 
 DEX tests will only run when the Cloudflare One Client is turned on, whereas [fleet status](/cloudflare-one/insights/dex/monitoring/#fleet-status) metrics are always available.
 
-To specify the target group of a test, use [DEX rules](/cloudflare-one/insights/dex/rules/).
+To control which users or groups run a test, use [DEX rules](/cloudflare-one/insights/dex/rules/).
 
 <DirectoryListing />
 
 ## Export DEX application test logs
-
-The Cloudflare Logs documentation lists the full set of data fields available in [DEX application tests](/logs/logpush/logpush-job/datasets/account/dex_application_tests/).
 
 <Render file="dex/logpush-export" product="cloudflare-one" params={{ applicationTests: true }} />

@@ -1,11 +1,18 @@
 ---
 pcx_content_type: concept
 title: NLWeb
+description: Deploy NLWeb with AI Search to enable conversational natural language queries on your website.
 sidebar:
   order: 6
+products:
+  - ai-search
 ---
 
+import { YouTube, DashButton } from "~/components";
+
 Enable conversational search on your website with NLWeb and Cloudflare AI Search. This template crawls your site, indexes the content, and deploys NLWeb-standard endpoints to serve both people and AI agents.
+
+<YouTube id="Az6NKLjSZMM" />
 
 :::note
 This is a public preview ideal for experimentation. If you're interested in running this in production workflows, please contact us at nlweb@cloudflare.com.
@@ -23,12 +30,15 @@ This is a public preview ideal for experimentation. If you're interested in runn
 You can deploy NLWeb on your website directly through the AI Search dashboard:
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. Go to **Compute & AI** > **AI Search**.
-3. Select **Create**.
+2. Go to **AI** > **AI Search**.
+
+   <DashButton url="/?to=/:account/ai/ai-search" />
+
+3. Select **Create AI Search**.
 4. Select **Website** as a data source.
-4. Follow the instructions to create an AI Search instance.
-5. Go to the **Settings** for the instance 
-6. Find **NLWeb Worker** and select "Enable AI Search for your website".
+5. Follow the instructions to create an AI Search instance.
+6. Go to the **Settings** for the instance
+7. Find **NLWeb Worker** and select "Enable AI Search for your website".
 
 Once complete, AI Search will deploy an NLWeb Worker for you that enables you to use the NLWeb API Endpoints.
 
@@ -37,7 +47,7 @@ Once complete, AI Search will deploy an NLWeb Worker for you that enables you to
 Choosing the NLWeb Website option extends a normal AI Search by tailoring it for content‑heavy websites and giving you everything that is required to adopt NLWeb as the standard for conversational search on your site. Specifically, the template provides:
 
 - **Website as a data source:** Uses [Website](/ai-search/configuration/data-source/website/) as data source option to crawl and ingest pages with the Rendered Sites option.
-- **Defaults for content-heavy websites:**  Applies tuned embedding and retrieval configurations ideal for publishing and content‑rich websites.
+- **Defaults for content-heavy websites:** Applies tuned embedding and retrieval configurations ideal for publishing and content‑rich websites.
 - **NLWeb Worker deployment:** Automatically spins up a Cloudflare Worker from the [NLWeb Worker template](https://github.com/cloudflare/templates).
 
 ## What the Worker includes
@@ -45,24 +55,15 @@ Choosing the NLWeb Website option extends a normal AI Search by tailoring it for
 Your deployed Worker provides two endpoints:
 
 - `/ask` — NLWeb’s standard conversational endpoint
-    - Powers the conversational UI at the root (`/`)
-    - Powers the embeddable preview widget (`/snippet.html`)
+  - Powers the conversational UI at the root (`/`)
+  - Powers the embeddable preview widget (`/snippet.html`)
 - `/mcp` — NLWeb’s MCP server endpoint for trusted AI agents
 
 These endpoints give both people and agents structured access to your content.
 
 ## Using It on Your Website
 
-To integrate NLWeb search directly into your site you can:
-
-1. Find your deployed Worker in the [Cloudflare dashboard](https://dash.cloudflare.com/):
-  - Go to **Compute & AI** >  **AI Search**.
-  - Select **Connect**, then go to the **NLWeb** tab.
-  - Select **Go to Worker**.
-2. Add a [custom domain](/workers/configuration/routing/custom-domains/) to your Worker (for example, ask.example.com)
-3. Use the `/ask` endpoint on your custom domain to power the search (for example, ask.example.com/ask)
-
-You can also use the embeddable snippet to add a search UI directly into your website. For example:
+You can use the embeddable snippet to add a search UI directly into your website. For example:
 
 ```html
 <!-- Add css on head -->
@@ -87,10 +88,9 @@ You can also use the embeddable snippet to add a search UI directly into your we
 
 This lets you serve conversational AI search directly from your own domain, with control over how people and agents access your content.
 
-
 ## Modifying or updating the Worker
 
-You may want to customize your Worker, for example, to adjust the UI for the embeddable snippet. In those cases, we recommend calling the `/ask` endpoint for queries and building your own UI on top of it, however, you may also choose to modify the Worker's code for the embeddable UI.
+You may want to customize your Worker, for example, to adjust the UI for the embeddable snippet. In those cases, we recommend calling the `/ask` endpoint for queries, and building your own UI on top of it. However, you may also choose to modify the Worker's code for the embeddable UI.
 
 If the NLWeb standard is updated, you can update your Worker to stay compatible and receive the latest updates.
 
@@ -98,13 +98,11 @@ The simplest way to apply changes or updates is to redeploy the Worker template:
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/nlweb-template)
 
-To do so:
-
-1. Select the **Deploy to Cloudflare** button from above to deploy the Worker template to your Cloudflare account.
+1. Use the **Deploy to Cloudflare** button from above to deploy the Worker template to your Cloudflare account.
 2. Enter the name of your AI Search in the `RAG_ID` environment variable field.
 3. Click **Deploy**.
 4. Select the **GitHub/GitLab** icon on the Workers Dashboard.
-4. Clone the repository that is created for your Worker.
-5. Make your modifications, then commit and push changes to the repository to update your Worker.
+5. Clone the repository that is created for your Worker.
+6. Make your modifications, then commit and push changes to the repository to update your Worker.
 
 Now you can use this Worker as the new NLWeb endpoint for your website.

@@ -1,0 +1,19 @@
+---
+title: Logpush subrequest merging for HTTP requests
+description: Logpush now supports subrequest merging for the http_requests dataset, delivering one log line per visitor request.
+date: 2026-04-21
+---
+
+When a Cloudflare Worker intercepts a visitor request, it can dispatch additional outbound fetch calls called subrequests. By default, each subrequest generates its own log entry in Logpush, resulting in multiple log lines per visitor request. With subrequest merging enabled, subrequest data is embedded as a nested array field on the parent log record instead.
+
+### What's new
+- New subrequest_merging field on Logpush jobs — Set "merge_subrequests": true when creating or updating an http_requests Logpush job to enable the feature.
+- New Subrequests log field — When subrequest merging is enabled, a Subrequests field (`array\<object\>`) is added to each parent request log record. Each element in the array contains the standard http_requests fields for that subrequest.
+
+### Limitations
+- Applies to the http_requests (zone-scoped) dataset only.
+- A maximum of 50 subrequests are merged per parent request. Subrequests beyond this limit are passed through unmodified as individual log entries.
+- Subrequests must complete within 5 minutes of the visitor request. Subrequests that exceed this window are passed through unmodified.
+- Subrequests that do not qualify appear as separate log entries — no data is lost.
+- Subrequest merging is being gradually rolled out and is not yet available on all zones. Contact your account team for concerns or to ensure it is enabled for your zone.
+- For more information, refer to [Subrequests](/logs/logpush/logpush-job/subrequests/).

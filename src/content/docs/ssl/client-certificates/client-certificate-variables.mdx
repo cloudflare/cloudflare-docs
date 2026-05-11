@@ -1,8 +1,13 @@
 ---
 pcx_content_type: reference
+description: Variables available in WAF rules when using client certificates.
+products:
+  - ssl
 title: Client certificate variables
 sidebar:
   order: 10
+tags:
+  - mTLS
 ---
 
 When a request includes a client certificate for [mTLS authentication](/ssl/client-certificates/enable-mtls/), Cloudflare exposes certificate details as variables in the Ruleset Engine and as properties on the Workers `request.cf` object.

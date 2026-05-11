@@ -1,9 +1,38 @@
 ---
 {}
 ---
-import { Tabs, TabItem } from "~/components"
+import { Tabs, TabItem} from "~/components"
+import dpr1Img from "~/assets/images/images/examples/dpr-1.jpg";
+import dpr2Img from "~/assets/images/images/examples/dpr-2.jpg";
 
-Device Pixel Ratio. Default is `1`. Multiplier for `width`/`height` that makes it easier to specify higher-DPI sizes in `<img srcset>`.
+### `dpr`
+
+Scales the output resolution by a multiplier to match a user's specific screen density (for example, Retina or 4K). The default is `1`, which delivers the image at the exact width and height requested. The maximum supported value is `2`.
+
+Modern devices have more physical pixels than CSS pixels. If you serve a 300 px image in a 300 px container on a high-DPR smartphone, then it will look blurry. Using `dpr=2` tells Cloudflare to send a 600 px image for the same 300 px container, which results in a clearer, crisper image.
+
+The `dpr` parameter can be used with `srcset` to [serve responsive images](/images/optimization/make-responsive-images/).
+
+<table style="width:100%; table-layout:fixed; text-align:center; border:none">
+  <tr style="border:none; background:none">
+    <td style="width:50%; border:none; vertical-align:bottom">
+      <img src={dpr1Img.src} alt="dpr=1 output" style="width:100%; height:auto" />
+    </td>
+    <td style="width:50%; border:none; vertical-align:bottom">
+      <img src={dpr2Img.src} alt="dpr=2 output" style="width:100%; height:auto" />
+    </td>
+  </tr>
+  <tr style="border:none; background:none">
+    <td style="border:none;">
+      
+      <code>width=300,height=200,dpr=1</code>
+    </td>
+    <td style="border:none;">
+      
+      <code>width=300,height=200,dpr=2</code>
+    </td>
+  </tr>
+</table>
 
 <Tabs>
   <TabItem label="URL format">

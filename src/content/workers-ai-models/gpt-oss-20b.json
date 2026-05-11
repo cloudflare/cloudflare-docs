@@ -2,7 +2,7 @@
     "id": "188a4e1e-253e-46d0-9616-0bf8c149763f",
     "source": 1,
     "name": "@cf/openai/gpt-oss-20b",
-    "description": "OpenAI’s open-weight models designed for powerful reasoning, agentic tasks, and versatile developer use cases – gpt-oss-20b is for lower latency, and local or specialized use-cases.",
+    "description": "OpenAI's open-weight models designed for powerful reasoning, agentic tasks, and versatile developer use cases – gpt-oss-20b is for lower latency, and local or specialized use-cases.",
     "task": {
         "id": "c329a1f9-323d-4e91-b2aa-582dd4188d34",
         "name": "Text Generation",
@@ -522,10 +522,396 @@
             "oneOf": [
                 {
                     "type": "object",
-                    "contentType": "application/json"
+                    "title": "Prompt_Output",
+                    "description": "Output when using the Prompt input format",
+                    "properties": {
+                        "response": {
+                            "type": "string",
+                            "description": "The generated text response from the model"
+                        },
+                        "usage": {
+                            "type": "object",
+                            "description": "Usage statistics for the inference request",
+                            "properties": {
+                                "prompt_tokens": {
+                                    "type": "number",
+                                    "description": "Total number of tokens in input",
+                                    "default": 0
+                                },
+                                "completion_tokens": {
+                                    "type": "number",
+                                    "description": "Total number of tokens in output",
+                                    "default": 0
+                                },
+                                "total_tokens": {
+                                    "type": "number",
+                                    "description": "Total number of input and output tokens",
+                                    "default": 0
+                                }
+                            }
+                        },
+                        "tool_calls": {
+                            "type": "array",
+                            "description": "An array of tool calls requests made during the response generation",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "arguments": {
+                                        "type": "object",
+                                        "description": "The arguments to be passed to the tool call request"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "description": "The name of the tool to be called"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": [
+                        "response"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "title": "Messages_Output",
+                    "description": "Output when using the Messages input format (Chat Completions API)",
+                    "properties": {
+                        "id": {
+                            "type": "string",
+                            "description": "A unique identifier for the chat completion"
+                        },
+                        "object": {
+                            "type": "string",
+                            "description": "The object type, which is always 'chat.completion'"
+                        },
+                        "created": {
+                            "type": "integer",
+                            "description": "The Unix timestamp (in seconds) of when the chat completion was created"
+                        },
+                        "model": {
+                            "type": "string",
+                            "description": "The model used for the chat completion"
+                        },
+                        "choices": {
+                            "type": "array",
+                            "description": "A list of chat completion choices",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "index": {
+                                        "type": "integer",
+                                        "description": "The index of the choice in the list of choices"
+                                    },
+                                    "message": {
+                                        "type": "object",
+                                        "description": "A chat completion message generated by the model",
+                                        "properties": {
+                                            "role": {
+                                                "type": "string",
+                                                "description": "The role of the message author (e.g., 'assistant')"
+                                            },
+                                            "content": {
+                                                "type": "string",
+                                                "description": "The contents of the assistant message"
+                                            },
+                                            "tool_calls": {
+                                                "type": "array",
+                                                "description": "The tool calls generated by the model",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string",
+                                                            "description": "The ID of the tool call"
+                                                        },
+                                                        "type": {
+                                                            "type": "string",
+                                                            "description": "The type of the tool (e.g., 'function')"
+                                                        },
+                                                        "function": {
+                                                            "type": "object",
+                                                            "description": "The function that the model called",
+                                                            "properties": {
+                                                                "name": {
+                                                                    "type": "string",
+                                                                    "description": "The name of the function to call"
+                                                                },
+                                                                "arguments": {
+                                                                    "type": "string",
+                                                                    "description": "The arguments to call the function with, as a JSON string"
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "finish_reason": {
+                                        "type": "string",
+                                        "description": "The reason the model stopped generating tokens (e.g., 'stop', 'length', 'tool_calls')"
+                                    }
+                                }
+                            }
+                        },
+                        "usage": {
+                            "type": "object",
+                            "description": "Usage statistics for the inference request",
+                            "properties": {
+                                "prompt_tokens": {
+                                    "type": "number",
+                                    "description": "Total number of tokens in the prompt",
+                                    "default": 0
+                                },
+                                "completion_tokens": {
+                                    "type": "number",
+                                    "description": "Total number of tokens in the generated completion",
+                                    "default": 0
+                                },
+                                "total_tokens": {
+                                    "type": "number",
+                                    "description": "Total number of tokens used in the request (prompt + completion)",
+                                    "default": 0
+                                }
+                            }
+                        }
+                    },
+                    "required": [
+                        "id",
+                        "object",
+                        "created",
+                        "model",
+                        "choices"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "title": "Responses_Output",
+                    "description": "Output when using the Responses input format (Responses API)",
+                    "properties": {
+                        "id": {
+                            "type": "string",
+                            "description": "Unique identifier for this Response"
+                        },
+                        "object": {
+                            "type": "string",
+                            "description": "The object type, which is always 'response'"
+                        },
+                        "created_at": {
+                            "type": "integer",
+                            "description": "Unix timestamp (in seconds) of when this Response was created"
+                        },
+                        "model": {
+                            "type": "string",
+                            "description": "The model used to generate this Response"
+                        },
+                        "output": {
+                            "type": "array",
+                            "description": "An array of output items generated by the model",
+                            "items": {
+                                "type": "object",
+                                "oneOf": [
+                                    {
+                                        "title": "Message",
+                                        "properties": {
+                                            "type": {
+                                                "type": "string",
+                                                "description": "The type of output item (e.g., 'message')"
+                                            },
+                                            "id": {
+                                                "type": "string",
+                                                "description": "The unique ID of the output item"
+                                            },
+                                            "role": {
+                                                "type": "string",
+                                                "description": "The role of the output message (e.g., 'assistant')"
+                                            },
+                                            "content": {
+                                                "type": "array",
+                                                "description": "The content of the message",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "type": {
+                                                            "type": "string",
+                                                            "description": "The content type (e.g., 'output_text')"
+                                                        },
+                                                        "text": {
+                                                            "type": "string",
+                                                            "description": "The text content generated by the model"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "title": "FunctionCall",
+                                        "properties": {
+                                            "type": {
+                                                "type": "string",
+                                                "description": "The type of output item (e.g., 'function_call')"
+                                            },
+                                            "id": {
+                                                "type": "string",
+                                                "description": "The unique ID of the function call"
+                                            },
+                                            "call_id": {
+                                                "type": "string",
+                                                "description": "The call ID for this function call"
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "description": "The name of the function being called"
+                                            },
+                                            "arguments": {
+                                                "type": "string",
+                                                "description": "The arguments passed to the function, as a JSON string"
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "usage": {
+                            "type": "object",
+                            "description": "Usage statistics for the inference request",
+                            "properties": {
+                                "input_tokens": {
+                                    "type": "number",
+                                    "description": "Total number of input tokens used",
+                                    "default": 0
+                                },
+                                "output_tokens": {
+                                    "type": "number",
+                                    "description": "Total number of output tokens generated",
+                                    "default": 0
+                                },
+                                "total_tokens": {
+                                    "type": "number",
+                                    "description": "Total number of tokens used (input + output)",
+                                    "default": 0
+                                }
+                            }
+                        },
+                        "error": {
+                            "type": "object",
+                            "description": "Error information if the request failed",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "description": "A human-readable error message"
+                                },
+                                "type": {
+                                    "type": "string",
+                                    "description": "The type of error"
+                                },
+                                "code": {
+                                    "type": "string",
+                                    "description": "Error code"
+                                }
+                            }
+                        }
+                    },
+                    "required": [
+                        "id",
+                        "object",
+                        "created_at",
+                        "model"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "title": "Responses_Async_Output",
+                    "description": "Output when using the Responses_Async input format (Async Batch API)",
+                    "properties": {
+                        "results": {
+                            "type": "array",
+                            "description": "An array of response results",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string",
+                                        "description": "Unique identifier for this Response"
+                                    },
+                                    "object": {
+                                        "type": "string",
+                                        "description": "The object type, which is always 'response'"
+                                    },
+                                    "created_at": {
+                                        "type": "integer",
+                                        "description": "Unix timestamp (in seconds) of when this Response was created"
+                                    },
+                                    "model": {
+                                        "type": "string",
+                                        "description": "The model used to generate this Response"
+                                    },
+                                    "output": {
+                                        "type": "array",
+                                        "description": "An array of output items generated by the model",
+                                        "items": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "usage": {
+                                        "type": "object",
+                                        "description": "Usage statistics for this inference request",
+                                        "properties": {
+                                            "input_tokens": {
+                                                "type": "number",
+                                                "description": "Total number of input tokens used",
+                                                "default": 0
+                                            },
+                                            "output_tokens": {
+                                                "type": "number",
+                                                "description": "Total number of output tokens generated",
+                                                "default": 0
+                                            },
+                                            "total_tokens": {
+                                                "type": "number",
+                                                "description": "Total number of tokens used (input + output)",
+                                                "default": 0
+                                            }
+                                        }
+                                    },
+                                    "error": {
+                                        "type": "object",
+                                        "description": "Error information if this specific request failed",
+                                        "properties": {
+                                            "message": {
+                                                "type": "string",
+                                                "description": "A human-readable error message"
+                                            },
+                                            "type": {
+                                                "type": "string",
+                                                "description": "The type of error"
+                                            },
+                                            "code": {
+                                                "type": "string",
+                                                "description": "Error code"
+                                            }
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "id",
+                                    "object",
+                                    "created_at",
+                                    "model"
+                                ]
+                            }
+                        }
+                    },
+                    "required": [
+                        "results"
+                    ]
                 },
                 {
                     "type": "string",
+                    "title": "Stream_Output",
+                    "description": "Server-Sent Events stream when streaming is enabled",
                     "contentType": "text/event-stream",
                     "format": "binary"
                 }

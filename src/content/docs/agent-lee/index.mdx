@@ -1,5 +1,6 @@
 ---
 title: Agent Lee
+description: Ask questions, run diagnostics, and take actions across your Cloudflare account using an AI-powered dashboard assistant.
 pcx_content_type: overview
 tags:
   - AI
@@ -8,6 +9,8 @@ sidebar:
 head:
   - tag: title
     content: Overview
+products:
+  - agent-lee
 ---
 
 import { Description } from "~/components";
@@ -67,7 +70,7 @@ Example requests:
 
 ---
 
-## Data usage and access
+## Data access and privacy
 
 ### What Agent Lee can access
 
@@ -87,11 +90,11 @@ Agent Lee fetches this data on demand when your question requires it.
 
 ### Conversation storage
 
-Conversations are stored per user using [Durable Objects](/durable-objects/), isolated to your account. Agent Lee does not currently reference previous conversation context when responding. 
+Conversations are stored per user using [Durable Objects](/durable-objects/), isolated to your account. Conversation data is retained for one year in accordance with Cloudflare's data retention policy. Agent Lee does not currently reference previous conversation context when responding.
 
 ### Data usage
 
-Agent Lee does not use your conversations, prompts, or account data to train AI models, and does not share your data with other Cloudflare customers. Refer to the [Cloudflare Privacy Policy](https://www.cloudflare.com/privacypolicy/) for more details.
+Agent Lee does not currently use your conversations, prompts, or account data to train AI models, nor do we share your data with other Cloudflare customers. Should these practices change in the future, we will provide advance notice to keep you informed. For Cloudflare's authoritative data handling commitments, refer to the [Cloudflare Privacy Policy](https://www.cloudflare.com/privacypolicy/).
 
 ---
 

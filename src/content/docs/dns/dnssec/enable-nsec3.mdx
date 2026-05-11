@@ -1,5 +1,7 @@
 ---
 pcx_content_type: how-to
+products:
+  - dns
 title: NSEC3 support
 description: Learn how to enable NSEC3 support with Cloudflare to meet compliance requirements.
 sidebar:
@@ -8,7 +10,7 @@ sidebar:
 
 import { APIRequest } from "~/components";
 
-As explained in [our blog](https://blog.cloudflare.com/black-lies/), Cloudflare's implementation of negative answers with NSEC is protected against zone walking[^1]. This implementation, also referred to as Compact Denial of Existance ([RFC 9824](https://www.rfc-editor.org/rfc/rfc9824.html)), removes the need for NSEC3 and is significantly more efficient.
+As explained in [our blog](https://blog.cloudflare.com/black-lies/), Cloudflare's implementation of negative answers with NSEC is protected against zone walking[^1]. This implementation, also referred to as Compact Denial of Existence ([RFC 9824](https://www.rfc-editor.org/rfc/rfc9824.html)), removes the need for NSEC3 and is significantly more efficient.
 
 However, if you must use NSEC3 for compliance reasons, you can enable it as explained below.
 

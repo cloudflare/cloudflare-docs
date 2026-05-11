@@ -1,0 +1,40 @@
+---
+pcx_content_type: reference
+title: RtkLeaveButton
+description: API reference for RtkLeaveButton component (React Native Library)
+products:
+  - realtime
+---
+
+Button to trigger the leave meeting confirmation dialog.
+
+## Properties
+
+| Property   | Type                           | Required | Default           | Description               |
+| ---------- | ------------------------------ | -------- | ----------------- | ------------------------- |
+| `variant`  | `'button' \| 'horizontal'`     | ❌       | -                 | Layout variant            |
+| `size`     | `'lg' \| 'md' \| 'sm' \| 'xl'` | ❌       | -                 | Button size               |
+| `iconPack` | `IconPack`                     | ❌       | `defaultIconPack` | Custom icon pack          |
+| `t`        | `RtkI18n`                      | ❌       | -                 | i18n translation function |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkLeaveButton } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkLeaveButton />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkLeaveButton } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkLeaveButton variant="button" size="md" />;
+}
+```

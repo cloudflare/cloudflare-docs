@@ -1,8 +1,11 @@
 ---
 pcx_content_type: how-to
 title: Workers Binding
+description: Send and retrieve batch inference requests using a Workers AI binding.
 sidebar:
   order: 2
+products:
+  - workers-ai
 ---
 
 import {
@@ -17,7 +20,7 @@ You can use Workers Bindings to interact with the Batch API.
 
 ## Send a Batch request
 
-Send your initial batch inference request by composing a JSON payload containing an array of individual inference requests and the `queueRequest: true` property (which is what controlls queueing behavior).
+Send your initial batch inference request by composing a JSON payload containing an array of individual inference requests and the `queueRequest: true` property (which is what controls queueing behavior).
 
 :::note[Note]
 

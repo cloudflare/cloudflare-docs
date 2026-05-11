@@ -1,0 +1,41 @@
+---
+pcx_content_type: reference
+title: RtkLiveStreamToggle
+description: API reference for RtkLiveStreamToggle component (React Native Library)
+products:
+  - realtime
+---
+
+Toggle button to start or stop a livestream. Only visible for hosts with livestream permissions.
+
+## Properties
+
+| Property   | Type                           | Required | Default           | Description                      |
+| ---------- | ------------------------------ | -------- | ----------------- | -------------------------------- |
+| `meeting`  | `RealtimeKitClient`            | ✅       | -                 | The RealtimeKit meeting instance |
+| `size`     | `'lg' \| 'md' \| 'sm' \| 'xl'` | ❌       | -                 | Icon size                        |
+| `variant`  | `'button' \| 'horizontal'`     | ❌       | -                 | Layout variant                   |
+| `iconPack` | `IconPack`                     | ❌       | `defaultIconPack` | Custom icon pack                 |
+| `t`        | `RtkI18n`                      | ❌       | -                 | i18n translation function        |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkLiveStreamToggle } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkLiveStreamToggle meeting={meeting} />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkLiveStreamToggle } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkLiveStreamToggle meeting={meeting} size="md" variant="button" />;
+}
+```

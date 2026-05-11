@@ -1,6 +1,9 @@
 ---
 title: Create an IP access rule
 pcx_content_type: how-to
+description: Create IP Access rules to allow, block, or challenge by IP.
+products:
+  - waf
 sidebar:
   order: 2
   label: Create a rule
@@ -8,14 +11,18 @@ sidebar:
 
 import { TabItem, Tabs, Steps, DashButton } from "~/components";
 
-:::caution[Recommendation: Use custom rules instead]
+:::tip[Recommendation: Use custom rules instead]
 Cloudflare recommends that you create [custom rules](/waf/custom-rules/) instead of IP Access rules to perform IP-based or geography-based blocking (geoblocking).
+:::
+
+:::caution
+For [Spectrum](/spectrum/) applications configured with the non-HTTP/HTTPS application type, IP Access rules are the only supported mechanism for filtering traffic by IP address, IP range, country, or ASN. To use them, enable IP Access rules in your [Spectrum app configuration](/spectrum/reference/configuration-options/#ip-access-rules).
 :::
 
 <Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
 
 :::note
-IP Access Rules are only available in the new security dashboard if you have configured at least one IP access rule. Cloudflare recommends that you use [custom rules](/waf/custom-rules/) instead of IP Access Rules.
+IP Access Rules are only available in the new security dashboard if you have configured at least one IP access rule.
 :::
 
 <Steps>

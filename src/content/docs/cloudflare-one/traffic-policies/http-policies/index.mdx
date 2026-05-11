@@ -1,5 +1,8 @@
 ---
 pcx_content_type: configuration
+description: Configure HTTP policies in Gateway.
+products:
+  - cloudflare-one
 title: HTTP policies
 sidebar:
   order: 4
@@ -61,7 +64,7 @@ The **Untrusted certificate action** determines how to handle insecure requests.
 | Option       | Action                                                                                                                                                                                                                                               |
 | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Error        | Display Gateway error page. Matches the default behavior when no action is configured.                                                                                                                                                               |
-| Block        | Display [block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/) as set in Cloudflare One.                                                                                                                                 |
+| Block        | Display [block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/) as set in the Cloudflare dashboard.                                                                                                                                 |
 | Pass through | Bypass insecure connection warnings and seamlessly connect to the upstream. For more information on what statuses are bypassed, refer to [Troubleshooting Gateway](/cloudflare-one/traffic-policies/troubleshooting/#error-526-invalid-ssl-certificate). |
 
 ### Block

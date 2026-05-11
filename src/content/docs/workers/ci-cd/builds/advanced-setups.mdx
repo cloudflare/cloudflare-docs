@@ -4,6 +4,8 @@ title: Advanced setups
 description: Learn how to use Workers Builds with more advanced setups
 sidebar:
   order: 9
+products:
+  - workers
 ---
 
 import { FileTree } from "~/components";
@@ -47,22 +49,21 @@ Set the root directory of each Worker to where its Wrangler configuration file i
 
 When a new commit is made to `ecommerce-monorepo`, a build and deploy will be triggered for each of the Workers if the change is within its included watch paths using the configured commands for that Worker.
 
-{/* prettier-ignore */}
 <FileTree>
-- ecommerce-monorepo/
-  - workers/
-    - product-service/
-      - src/
-      - wrangler.jsonc
-    - order-service/
-      - src/
-      - wrangler.jsonc
-    - notification-service/
-      - src/
-      - wrangler.jsonc
-  - packages/
-    - schema/
-  - README.md
+	- ecommerce-monorepo/
+		- workers/
+			- product-service/
+				- src/
+				- wrangler.jsonc
+			- order-service/
+				- src/
+				- wrangler.jsonc
+			- notification-service/
+				- src/
+				- wrangler.jsonc
+		- packages/
+			- schema/
+		- README.md
 </FileTree>
 
 ## Wrangler Environments

@@ -1,0 +1,651 @@
+{
+	"model_id": "openai/gpt-5.4-pro",
+	"provider_id": "openai",
+	"name": "GPT-5.4 Pro",
+	"description": "GPT-5.4 Pro uses OpenAI's Responses API with built-in tools, improved reasoning, and stateful context management.",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Coding",
+		"Reasoning",
+		"Multimodal",
+		"Responses API"
+	],
+	"context_length": 1000000,
+	"max_output_tokens": 16384,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Question",
+			"description": "Basic Responses API request with string input",
+			"input": {
+				"input": "What are the three laws of thermodynamics?"
+			},
+			"output": {},
+			"raw_response": {
+				"id": "resp_00272dd8da5b37c90169ebb1aaeb288194a6e5ddeb7bb03dc8",
+				"object": "response",
+				"created_at": 1777054122,
+				"model": "gpt-5.4-pro-2026-03-05",
+				"output": [
+					{
+						"id": "rs_00272dd8da5b37c90169ebb1faf90c81948fd9a67a37b4c209",
+						"type": "reasoning",
+						"summary": []
+					},
+					{
+						"id": "msg_00272dd8da5b37c90169ebb1fafad0819488ef71fbebf8527a",
+						"type": "message",
+						"status": "completed",
+						"content": [
+							{
+								"type": "output_text",
+								"annotations": [],
+								"logprobs": [],
+								"text": "The **three laws of thermodynamics** usually mean:\n\n1. **First Law \u2014 Conservation of Energy**  \n   Energy cannot be created or destroyed, only transferred or transformed.  \n   - In thermodynamics: the change in a system\u2019s internal energy equals heat added to the system minus work done by the system.\n\n2. **Second Law \u2014 Entropy Increases**  \n   In any natural process, the total entropy of an isolated system tends to increase.  \n   - This means energy spontaneously spreads out, and no heat engine can be 100% efficient.\n   - Heat naturally flows from hot objects to cold ones, not the reverse without input of work.\n\n3. **Third Law \u2014 Entropy at Absolute Zero**  \n   As temperature approaches **absolute zero** (0 K), the entropy of a perfect crystal approaches zero.  \n   - A consequence is that absolute zero cannot be reached in a finite number of steps.\n\nSmall note: thermodynamics also has a **Zeroth Law**, which is often listed before these:\n- If system A is in thermal equilibrium with B, and B is in thermal equilibrium with C, then A is in thermal equilibrium with C.  \n- This is the basis for the concept of **temperature**.\n\nIf you want, I can also give a **one-line intuitive version** of each law."
+							}
+						],
+						"phase": "final_answer",
+						"role": "assistant"
+					}
+				],
+				"status": "completed",
+				"usage": {
+					"input_tokens": 15,
+					"output_tokens": 342,
+					"total_tokens": 357,
+					"input_tokens_details": {
+						"cached_tokens": 0
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 67
+					}
+				},
+				"background": false,
+				"billing": {
+					"payer": "developer"
+				},
+				"completed_at": 1777054203,
+				"error": null,
+				"frequency_penalty": 0,
+				"incomplete_details": null,
+				"instructions": null,
+				"max_output_tokens": null,
+				"max_tool_calls": null,
+				"moderation": null,
+				"parallel_tool_calls": true,
+				"presence_penalty": 0,
+				"previous_response_id": null,
+				"prompt_cache_key": null,
+				"prompt_cache_retention": "in_memory",
+				"reasoning": {
+					"effort": "medium",
+					"summary": null
+				},
+				"safety_identifier": null,
+				"service_tier": "default",
+				"store": false,
+				"temperature": 1,
+				"text": {
+					"format": {
+						"type": "text"
+					},
+					"verbosity": "medium"
+				},
+				"tool_choice": "auto",
+				"tools": [],
+				"top_logprobs": 0,
+				"top_p": 0.98,
+				"truncation": "disabled",
+				"user": null,
+				"metadata": {},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5.4-pro',\n  {\n    input: 'What are the three laws of thermodynamics?',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "With Instructions",
+			"description": "Using instructions to set context",
+			"input": {
+				"input": "How do I read a JSON file in Python?",
+				"instructions": "You are a helpful coding assistant specializing in Python."
+			},
+			"output": {},
+			"raw_response": {
+				"id": "resp_00e5a81e42bf0bda0169ebb1ab449c8190a0d57802b4aebebd",
+				"object": "response",
+				"created_at": 1777054123,
+				"model": "gpt-5.4-pro-2026-03-05",
+				"output": [
+					{
+						"id": "rs_00e5a81e42bf0bda0169ebb1c0e57881909eaf01efa0557a43",
+						"type": "reasoning",
+						"summary": []
+					},
+					{
+						"id": "msg_00e5a81e42bf0bda0169ebb1c0e7608190b3928d22f252a21a",
+						"type": "message",
+						"status": "completed",
+						"content": [
+							{
+								"type": "output_text",
+								"annotations": [],
+								"logprobs": [],
+								"text": "Use Python\u2019s built-in `json` module.\n\n### Read a JSON file into a Python object\n```python\nimport json\n\nwith open(\"data.json\", \"r\", encoding=\"utf-8\") as f:\n    data = json.load(f)\n\nprint(data)\n```\n\n### What you get back\n`json.load()` converts JSON into normal Python types:\n\n- JSON object \u2192 `dict`\n- JSON array \u2192 `list`\n- JSON string \u2192 `str`\n- JSON number \u2192 `int` / `float`\n- JSON true/false \u2192 `True` / `False`\n- JSON null \u2192 `None`\n\n### Example\nIf `data.json` contains:\n```json\n{\n  \"name\": \"Alice\",\n  \"age\": 30,\n  \"skills\": [\"Python\", \"SQL\"]\n}\n```\n\nThen:\n```python\nimport json\n\nwith open(\"data.json\", \"r\", encoding=\"utf-8\") as f:\n    data = json.load(f)\n\nprint(data[\"name\"])    # Alice\nprint(data[\"skills\"])  # ['Python', 'SQL']\n```\n\n### Handle errors safely\n```python\nimport json\n\ntry:\n    with open(\"data.json\", \"r\", encoding=\"utf-8\") as f:\n        data = json.load(f)\nexcept FileNotFoundError:\n    print(\"File not found.\")\nexcept json.JSONDecodeError:\n    print(\"Invalid JSON.\")\n```\n\n### If you already have JSON as a string\nUse `json.loads()` instead:\n```python\nimport json\n\ntext = '{\"name\": \"Alice\", \"age\": 30}'\ndata = json.loads(text)\nprint(data)\n```\n\nIf you want, I can also show how to **write JSON back to a file**."
+							}
+						],
+						"phase": "final_answer",
+						"role": "assistant"
+					}
+				],
+				"status": "completed",
+				"usage": {
+					"input_tokens": 30,
+					"output_tokens": 397,
+					"total_tokens": 427,
+					"input_tokens_details": {
+						"cached_tokens": 0
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 35
+					}
+				},
+				"background": false,
+				"billing": {
+					"payer": "developer"
+				},
+				"completed_at": 1777054145,
+				"error": null,
+				"frequency_penalty": 0,
+				"incomplete_details": null,
+				"instructions": "You are a helpful coding assistant specializing in Python.",
+				"max_output_tokens": null,
+				"max_tool_calls": null,
+				"moderation": null,
+				"parallel_tool_calls": true,
+				"presence_penalty": 0,
+				"previous_response_id": null,
+				"prompt_cache_key": null,
+				"prompt_cache_retention": "in_memory",
+				"reasoning": {
+					"effort": "medium",
+					"summary": null
+				},
+				"safety_identifier": null,
+				"service_tier": "default",
+				"store": false,
+				"temperature": 1,
+				"text": {
+					"format": {
+						"type": "text"
+					},
+					"verbosity": "medium"
+				},
+				"tool_choice": "auto",
+				"tools": [],
+				"top_logprobs": 0,
+				"top_p": 0.98,
+				"truncation": "disabled",
+				"user": null,
+				"metadata": {},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5.4-pro',\n  {\n    input: 'How do I read a JSON file in Python?',\n    instructions: 'You are a helpful coding assistant specializing in Python.',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Multi-turn Conversation",
+			"description": "Continuing a conversation with message array",
+			"input": {
+				"input": [
+					{
+						"role": "user",
+						"content": "I need help planning a road trip from San Francisco to Los Angeles."
+					},
+					{
+						"role": "assistant",
+						"content": "I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?"
+					},
+					{
+						"role": "user",
+						"content": "Yes, what are some good places to stop?"
+					}
+				],
+				"max_output_tokens": 150
+			},
+			"output": {},
+			"raw_response": {
+				"id": "resp_0397b95354e16b7b0169ebb1c23c208195ba8c75dd3c321a8b",
+				"object": "response",
+				"created_at": 1777054146,
+				"model": "gpt-5.4-pro-2026-03-05",
+				"output": [
+					{
+						"id": "rs_0397b95354e16b7b0169ebb1cc0bb08195b0ef5e3a34b7d7aa",
+						"type": "reasoning",
+						"summary": []
+					}
+				],
+				"status": "incomplete",
+				"usage": {
+					"input_tokens": 76,
+					"output_tokens": 150,
+					"total_tokens": 226,
+					"input_tokens_details": {
+						"cached_tokens": 0
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 150
+					}
+				},
+				"background": false,
+				"billing": {
+					"payer": "developer"
+				},
+				"completed_at": null,
+				"error": null,
+				"frequency_penalty": 0,
+				"incomplete_details": {
+					"reason": "max_output_tokens"
+				},
+				"instructions": null,
+				"max_output_tokens": 150,
+				"max_tool_calls": null,
+				"moderation": null,
+				"parallel_tool_calls": true,
+				"presence_penalty": 0,
+				"previous_response_id": null,
+				"prompt_cache_key": null,
+				"prompt_cache_retention": "in_memory",
+				"reasoning": {
+					"effort": "medium",
+					"summary": null
+				},
+				"safety_identifier": null,
+				"service_tier": "default",
+				"store": false,
+				"temperature": 1,
+				"text": {
+					"format": {
+						"type": "text"
+					},
+					"verbosity": "medium"
+				},
+				"tool_choice": "auto",
+				"tools": [],
+				"top_logprobs": 0,
+				"top_p": 0.98,
+				"truncation": "disabled",
+				"user": null,
+				"metadata": {},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5.4-pro',\n  {\n    input: [\n      {\n        role: 'user',\n        content:\n          'I need help planning a road trip from San Francisco to Los Angeles.',\n      },\n      {\n        role: 'assistant',\n        content:\n          \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n      },\n      {\n        role: 'user',\n        content: 'Yes, what are some good places to stop?',\n      },\n    ],\n    max_output_tokens: 150,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Temperature Control",
+			"description": "Using temperature for creative responses",
+			"input": {
+				"input": "Write a haiku about artificial intelligence",
+				"temperature": 1
+			},
+			"output": {},
+			"raw_response": {
+				"id": "resp_01b04056ffd5d9ac0169ebb1cc85348196a164e1d9e99ac1f5",
+				"object": "response",
+				"created_at": 1777054156,
+				"model": "gpt-5.4-pro-2026-03-05",
+				"output": [
+					{
+						"id": "rs_01b04056ffd5d9ac0169ebb1ee42688196859b0cd089b7924c",
+						"type": "reasoning",
+						"summary": []
+					},
+					{
+						"id": "msg_01b04056ffd5d9ac0169ebb1ee44248196aa66c63d28c6a59b",
+						"type": "message",
+						"status": "completed",
+						"content": [
+							{
+								"type": "output_text",
+								"annotations": [],
+								"logprobs": [],
+								"text": "Silent circuits dream  \nLearning patterns in the dark  \nDawn wakes metal minds"
+							}
+						],
+						"phase": "final_answer",
+						"role": "assistant"
+					}
+				],
+				"status": "completed",
+				"usage": {
+					"input_tokens": 13,
+					"output_tokens": 122,
+					"total_tokens": 135,
+					"input_tokens_details": {
+						"cached_tokens": 0
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 101
+					}
+				},
+				"background": false,
+				"billing": {
+					"payer": "developer"
+				},
+				"completed_at": 1777054190,
+				"error": null,
+				"frequency_penalty": 0,
+				"incomplete_details": null,
+				"instructions": null,
+				"max_output_tokens": null,
+				"max_tool_calls": null,
+				"moderation": null,
+				"parallel_tool_calls": true,
+				"presence_penalty": 0,
+				"previous_response_id": null,
+				"prompt_cache_key": null,
+				"prompt_cache_retention": "in_memory",
+				"reasoning": {
+					"effort": "medium",
+					"summary": null
+				},
+				"safety_identifier": null,
+				"service_tier": "default",
+				"store": false,
+				"temperature": 1,
+				"text": {
+					"format": {
+						"type": "text"
+					},
+					"verbosity": "medium"
+				},
+				"tool_choice": "auto",
+				"tools": [],
+				"top_logprobs": 0,
+				"top_p": 0.98,
+				"truncation": "disabled",
+				"user": null,
+				"metadata": {},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5.4-pro',\n  {\n    input: 'Write a haiku about artificial intelligence',\n    temperature: 1,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "With Reasoning",
+			"description": "Using reasoning effort for complex problems",
+			"input": {
+				"input": "Solve this problem step by step: A train leaves Chicago at 60mph heading east. Another train leaves New York at 80mph heading west. They are 900 miles apart. When do they meet?",
+				"reasoning": {
+					"effort": "medium"
+				}
+			},
+			"output": {},
+			"raw_response": {
+				"id": "resp_01e1e7671514bf440169ebb1ef8af88190b68b1e60a0cb59ed",
+				"object": "response",
+				"created_at": 1777054191,
+				"model": "gpt-5.4-pro-2026-03-05",
+				"output": [
+					{
+						"id": "rs_01e1e7671514bf440169ebb236f1e88190931dc758c55a4050",
+						"type": "reasoning",
+						"summary": []
+					},
+					{
+						"id": "msg_01e1e7671514bf440169ebb236f3a88190b6a99b6fc6389fde",
+						"type": "message",
+						"status": "completed",
+						"content": [
+							{
+								"type": "output_text",
+								"annotations": [],
+								"logprobs": [],
+								"text": "Step 1: Find their combined speed since they are moving toward each other.\n\n- Train from Chicago: **60 mph**\n- Train from New York: **80 mph**\n\nCombined speed:\n\n**60 + 80 = 140 mph**\n\nStep 2: Use the distance formula:\n\n\\[\n\\text{time}=\\frac{\\text{distance}}{\\text{speed}}\n\\]\n\n\\[\n\\text{time}=\\frac{900}{140}\n\\]\n\n\\[\n\\text{time}=6.428571\\text{ hours}\n\\]\n\nStep 3: Convert the decimal part to minutes.\n\n\\[\n0.428571 \\times 60 \\approx 25.7 \\text{ minutes}\n\\]\n\nSo they meet after about:\n\n**6 hours 26 minutes**\n\nFinal answer: **The trains meet about 6 hours 26 minutes after they leave.**"
+							}
+						],
+						"phase": "final_answer",
+						"role": "assistant"
+					}
+				],
+				"status": "completed",
+				"usage": {
+					"input_tokens": 48,
+					"output_tokens": 272,
+					"total_tokens": 320,
+					"input_tokens_details": {
+						"cached_tokens": 0
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 88
+					}
+				},
+				"background": false,
+				"billing": {
+					"payer": "developer"
+				},
+				"completed_at": 1777054263,
+				"error": null,
+				"frequency_penalty": 0,
+				"incomplete_details": null,
+				"instructions": null,
+				"max_output_tokens": null,
+				"max_tool_calls": null,
+				"moderation": null,
+				"parallel_tool_calls": true,
+				"presence_penalty": 0,
+				"previous_response_id": null,
+				"prompt_cache_key": null,
+				"prompt_cache_retention": "in_memory",
+				"reasoning": {
+					"effort": "medium",
+					"summary": null
+				},
+				"safety_identifier": null,
+				"service_tier": "default",
+				"store": false,
+				"temperature": 1,
+				"text": {
+					"format": {
+						"type": "text"
+					},
+					"verbosity": "medium"
+				},
+				"tool_choice": "auto",
+				"tools": [],
+				"top_logprobs": 0,
+				"top_p": 0.98,
+				"truncation": "disabled",
+				"user": null,
+				"metadata": {},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5.4-pro',\n  {\n    input:\n      'Solve this problem step by step: A train leaves Chicago at 60mph heading east. Another train leaves New York at 80mph heading west. They are 900 miles apart. When do they meet?',\n    reasoning: {\n      effort: 'medium',\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://openai.com/",
+	"terms": "https://openai.com/policies/",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/openai/gpt-5.4.png",
+	"metadata": {
+		"Architecture": "Transformer",
+		"API": "Responses"
+	},
+	"created_at": "2026-04-24 18:12:33",
+	"default_example": null,
+	"code_snippets": [],
+	"zdr": false,
+	"zdr_comment": null,
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"input": {
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "array",
+							"items": {}
+						}
+					]
+				},
+				"instructions": {
+					"type": "string"
+				},
+				"temperature": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 2
+				},
+				"max_output_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"top_p": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"stream": {
+					"type": "boolean"
+				},
+				"tools": {
+					"type": "array",
+					"items": {}
+				},
+				"tool_choice": {},
+				"text": {
+					"type": "object",
+					"properties": {
+						"format": {}
+					},
+					"additionalProperties": {}
+				},
+				"reasoning": {
+					"type": "object",
+					"properties": {
+						"effort": {
+							"type": "string",
+							"enum": [
+								"none",
+								"low",
+								"medium",
+								"high"
+							]
+						}
+					},
+					"additionalProperties": {}
+				}
+			},
+			"required": [
+				"input"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"object": {
+					"type": "string",
+					"const": "response"
+				},
+				"created_at": {
+					"type": "number"
+				},
+				"model": {
+					"type": "string"
+				},
+				"output": {
+					"type": "array",
+					"items": {}
+				},
+				"output_text": {
+					"type": "string"
+				},
+				"status": {
+					"type": "string",
+					"enum": [
+						"in_progress",
+						"completed",
+						"failed",
+						"incomplete"
+					]
+				},
+				"usage": {
+					"type": "object",
+					"properties": {
+						"input_tokens": {
+							"type": "number"
+						},
+						"output_tokens": {
+							"type": "number"
+						},
+						"total_tokens": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"input_tokens",
+						"output_tokens",
+						"total_tokens"
+					],
+					"additionalProperties": {}
+				}
+			},
+			"required": [
+				"id",
+				"object",
+				"created_at",
+				"model",
+				"output"
+			],
+			"additionalProperties": {}
+		}
+	}
+}

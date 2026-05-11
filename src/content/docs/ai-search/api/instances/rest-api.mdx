@@ -1,0 +1,74 @@
+---
+pcx_content_type: reference
+title: REST API
+description: Manage AI Search instances and sync jobs over HTTP using the Instances REST API.
+sidebar:
+  order: 2
+products:
+  - ai-search
+---
+
+import { Render } from "~/components";
+
+Use the AI Search REST API to manage instances and sync jobs over HTTP.
+
+## Authentication
+
+<Render file="rest-api-auth" product="ai-search" />
+
+## API paths
+
+AI Search APIs are available at two base paths:
+
+| Path                                                                 | Description                                                                 |
+| -------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| `/accounts/{account_id}/ai-search/instances/{id}`                        | Operates on a specific instance                                             |
+| `/accounts/{account_id}/ai-search/namespaces/{namespace}/instances/{id}` | Operates on instances within a [namespace](/ai-search/concepts/namespaces/) |
+
+The available operations are the same for both paths. For the namespace-scoped API, refer to the [Namespace API reference](/api/resources/ai_search/subresources/namespaces/).
+
+## Instances
+
+Create, list, get, update, and delete AI Search instances. For the full specification, refer to the [Instances API reference](/api/resources/ai_search/subresources/instances/).
+
+| Operation                                                                 | Method   | Description                   |
+| ------------------------------------------------------------------------- | -------- | ----------------------------- |
+| [Create](/api/resources/ai_search/subresources/instances/methods/create/) | `POST`   | Create a new instance         |
+| [List](/api/resources/ai_search/subresources/instances/methods/list/)     | `GET`    | List all instances            |
+| [Get](/api/resources/ai_search/subresources/instances/methods/read/)      | `GET`    | Get an instance by ID         |
+| [Update](/api/resources/ai_search/subresources/instances/methods/update/) | `PUT`    | Update instance configuration |
+| [Delete](/api/resources/ai_search/subresources/instances/methods/delete/) | `DELETE` | Delete an instance            |
+| [Stats](/api/resources/ai_search/subresources/instances/methods/stats/)   | `GET`    | Get indexing statistics       |
+
+### Example: Create an instance
+
+Create an instance in the default namespace:
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "id": "my-instance"
+  }'
+```
+
+## Jobs
+
+Trigger and monitor [sync jobs](/ai-search/configuration/indexing/syncing/) that scan your data source and index new or updated content. For the full specification, refer to the [Jobs API reference](/api/resources/ai_search/subresources/instances/subresources/jobs/).
+
+| Operation                                                                                   | Method | Description                   |
+| ------------------------------------------------------------------------------------------- | ------ | ----------------------------- |
+| [Create](/api/resources/ai_search/subresources/instances/subresources/jobs/methods/create/) | `POST` | Trigger a new sync job        |
+| [List](/api/resources/ai_search/subresources/instances/subresources/jobs/methods/list/)     | `GET`  | List all jobs for an instance |
+| [Get](/api/resources/ai_search/subresources/instances/subresources/jobs/methods/read/)      | `GET`  | Get job details               |
+| [Logs](/api/resources/ai_search/subresources/instances/subresources/jobs/methods/logs/)     | `GET`  | View job logs                 |
+
+### Example: Trigger a sync job
+
+Start a new sync job for an instance:
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/<INSTANCE_NAME>/jobs" \
+  -H "Authorization: Bearer <API_TOKEN>"
+```

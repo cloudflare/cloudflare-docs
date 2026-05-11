@@ -285,6 +285,12 @@ Type: `int`
 
 Source port of the request.
 
+## TenantID
+
+Type: `string`
+
+The tenant ID of the request, if exists.
+
 ## URL
 
 Type: `string`

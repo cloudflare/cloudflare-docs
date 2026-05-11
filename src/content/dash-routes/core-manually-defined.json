@@ -3,5 +3,20 @@
 		"deeplink": "/?to=/:account/tunnels",
 		"name": "Tunnels",
 		"parent": ["Networking"]
+	},
+	{
+		"name": "Browser Run",
+		"deeplink": "/?to=/:account/workers/browser-run",
+		"parent": ["Compute & AI"]
+	},
+	{
+		"deeplink": "/?to=/:account/workers/browser-run/logs",
+		"name": "Browser Run Logs",
+		"parent": ["Compute & AI"]
+	},
+	{
+		"deeplink": "/?to=/:account/mesh",
+		"name": "Mesh",
+		"parent": ["Networking"]
 	}
 ]

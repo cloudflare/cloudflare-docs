@@ -6,8 +6,17 @@ updates:
     commit-message:
       prefix: "[Docs Site] "
     schedule:
-      interval: "daily"
+      interval: "weekly"
+      day: "tuesday"
     assignees:
       - "kodster28"
+      - "mvvmm"
     reviewers:
-      - "kodster28"
+      - "cloudflare/content-engineering"
+    groups:
+      non-major:
+        update-types:
+          - "minor"
+          - "patch"
+        patterns:
+          - "*"

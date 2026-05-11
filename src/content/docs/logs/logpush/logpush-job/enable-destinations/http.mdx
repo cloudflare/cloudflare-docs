@@ -3,6 +3,9 @@ pcx_content_type: how-to
 title: Enable HTTP destination
 sidebar:
   order: 50
+description: Push Cloudflare logs to a custom HTTP endpoint.
+products:
+  - logpush
 ---
 
 import { Render, APIRequest } from "~/components";
@@ -31,7 +34,7 @@ Cloudflare expects that the endpoint is available over HTTPS, using a trusted ce
    - In **Send the following fields**, you can choose to either push all logs to your storage destination or selectively choose which logs you want to push.
 
 8. In **Advanced Options**, you can:
-   - Choose the format of timestamp fields in your logs (`RFC3339`(default),`Unix`, or `UnixNano`).
+   - Choose the format of timestamp fields in your logs (`RFC3339` (default), `Unix`, or `UnixNano`).
    - Select a [sampling rate](/logs/logpush/logpush-job/api-configuration/#sampling-rate) for your logs or push a randomly-sampled percentage of logs.
    - Enable redaction for `CVE-2021-44228`. This option will replace every occurrence of `${` with `x{`.
 

@@ -1,10 +1,13 @@
 ---
 pcx_content_type: concept
 title: Tools
+description: Define, register, and manage MCP tools that expose server-side functions for AI agents to call.
 tags:
   - MCP
 sidebar:
   order: 2
+products:
+  - agents
 ---
 
 import { TypeScriptExample, LinkCard } from "~/components";
@@ -12,6 +15,18 @@ import { TypeScriptExample, LinkCard } from "~/components";
 MCP tools are functions that an [MCP server](/agents/model-context-protocol/) exposes for clients to call. When an LLM decides it needs to take an action — look up data, run a calculation, call an API — it invokes a tool. The MCP server executes the tool and returns the result.
 
 Tools are defined using the `@modelcontextprotocol/sdk` package. The Agents SDK handles transport and lifecycle; the tool definitions are the same regardless of whether you use [`createMcpHandler`](/agents/api-reference/mcp-handler-api/) or [`McpAgent`](/agents/api-reference/mcp-agent-api/).
+
+:::note[Experimental WebMCP adapter]
+
+The Agents SDK also includes the experimental `agents/experimental/webmcp` adapter for bridging `McpAgent` tools to Chrome's native `navigator.modelContext` API. This API is under active development and may change between releases.
+
+:::
+
+<LinkCard
+	title="WebMCP example"
+	href="https://github.com/cloudflare/agents/tree/main/examples/webmcp"
+	description="Bridge MCP tools from a Cloudflare McpAgent into Chrome's experimental WebMCP API."
+/>
 
 ## Defining tools
 

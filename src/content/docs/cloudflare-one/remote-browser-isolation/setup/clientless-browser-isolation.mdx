@@ -1,5 +1,8 @@
 ---
 pcx_content_type: concept
+description: How Clientless Web Isolation works in Browser Isolation.
+products:
+  - cloudflare-one
 title: Clientless Web Isolation
 sidebar:
   order: 5
@@ -9,7 +12,11 @@ tags:
 
 import { GlossaryTooltip, Render } from "~/components";
 
-Clientless Web Isolation allows users to securely browse high risk or sensitive websites in a remote browser without having to install the Cloudflare One Client on their device.
+Clientless Web Isolation allows users to securely browse high risk or sensitive websites in a remote browser without having to install the Cloudflare One Client on their device. Use Clientless Web Isolation when you need to provide isolated browsing to unmanaged devices (for example, contractor laptops or personal phones) where you cannot install software.
+
+:::note
+Clientless Web Isolation requires the [Cloudflare Browser Isolation](/cloudflare-one/remote-browser-isolation/) add-on.
+:::
 
 ## Set up Clientless Web Isolation
 
@@ -33,19 +40,19 @@ Your application will now be served in an isolated browser for users matching yo
 
 To open links using Browser Isolation:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Browser isolation**.
-2. Select **Launch isolated browser**. Turn **Clientless web isolation** on.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Browser isolation** > **Browser isolation settings**.
+2. Turn on **Allow users to open a remote browser without the device client**.
 3. In **Launch browser**, enter the URL link, and then select **Launch**. Your URL will open in a secure isolated browser.
 
 ## Filter DNS queries
 
-Gateway filters and resolves DNS queries for isolated sessions via [DNS policies](/cloudflare-one/traffic-policies/dns-policies/). Enterprise users can resolve domains available only through private resolvers by creating [resolver policies](/cloudflare-one/traffic-policies/resolver-policies/).
+When users browse through Clientless Web Isolation, their DNS queries (the lookups that translate domain names to IP addresses) are handled by Gateway. You can use [DNS policies](/cloudflare-one/traffic-policies/dns-policies/) to control which domains the remote browser can resolve. Enterprise users can resolve domains available only through private DNS servers by creating [resolver policies](/cloudflare-one/traffic-policies/resolver-policies/).
 
 Gateway DNS and resolver policies will always apply to Clientless Web Isolation traffic, regardless of device configuration.
 
 ## Use the remote browser
 
-Clientless Web Isolation is implemented through a prefixed URL, where `<your-team-name>` is your organization's <GlossaryTooltip term="team name">team name</GlossaryTooltip>.
+Clientless Web Isolation is implemented through a prefixed URL — the target website's address is appended to a Cloudflare-hosted base URL. `<your-team-name>` is your organization's <GlossaryTooltip term="team name">team name</GlossaryTooltip>.
 
 ```txt
 https://<your-team-name>.cloudflareaccess.com/browser/<URL>
@@ -69,7 +76,7 @@ For example, if you use a third-party Secure Web Gateway to block `example.com`,
 
 ### Bypass TLS decryption
 
-If [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) is turned on, Gateway will decrypt all sites accessed through the Clientless Web Isolation URL. To connect to sites that are incompatible with TLS decryption, you will need to add a Do Not Inspect HTTP policy for the application or domain.
+[TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) allows Gateway to inspect the contents of HTTPS traffic by decrypting it, applying policies, and re-encrypting it. If TLS decryption is turned on, Gateway will decrypt all sites accessed through the Clientless Web Isolation URL. Some sites are incompatible with this process (for example, sites that use certificate pinning). To connect to those sites, add a Do Not Inspect HTTP policy for the application or domain.
 
 | Selector | Operator | Value        | Action         |
 | -------- | -------- | ------------ | -------------- |
@@ -77,7 +84,7 @@ If [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryptio
 
 :::note
 
-Clientless Web Isolation can function without TLS decryption enabled. However, TLS decryption is required to apply [HTTP policies](/cloudflare-one/traffic-policies/http-policies/) to Clientless Web Isolation traffic.
+Clientless Web Isolation can function without TLS decryption turned on. However, TLS decryption is required to apply [HTTP policies](/cloudflare-one/traffic-policies/http-policies/) to Clientless Web Isolation traffic, because Gateway must decrypt the traffic before it can inspect and filter the content.
 
 :::
 
@@ -133,6 +140,7 @@ To turn on or off the address bar, users can right-click on any isolated page an
 - **Authentication events**: User login events are available in [Access authentication logs](/cloudflare-one/insights/logs/dashboard-logs/access-authentication-logs/).
 - **HTTP requests**: Traffic from the remote browser to the Internet is logged in [Gateway activity logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/).
 - **DNS queries**: DNS queries from the remote browser are shown in [Gateway activity logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/).
+- **Network sessions**: Egress traffic from the remote browser generates [Zero Trust Network Session Logs](/logs/logpush/logpush-job/datasets/account/zero_trust_network_sessions/), available via [Logpush](/cloudflare-one/insights/logs/logpush/) and [Log Explorer](/log-explorer/).
 - **User actions**: Track copy/paste, download/upload, and print actions initiated by users in the remote browser (only available in [Logpush](/cloudflare-one/insights/logs/logpush/)).
 
 ## Redirect traffic to the remote browser

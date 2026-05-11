@@ -1,0 +1,47 @@
+---
+pcx_content_type: reference
+title: RtkLeaveMeeting
+description: API reference for RtkLeaveMeeting component (React Native Library)
+products:
+  - realtime
+---
+
+Leave meeting confirmation dialog with options to leave or end the meeting for all (if host).
+
+## Properties
+
+| Property   | Type                | Required | Default           | Description                      |
+| ---------- | ------------------- | -------- | ----------------- | -------------------------------- |
+| `meeting`  | `RealtimeKitClient` | ✅       | -                 | The RealtimeKit meeting instance |
+| `onClose`  | `any`               | ✅       | -                 | Callback to close the dialog     |
+| `iconPack` | `IconPack`          | ❌       | `defaultIconPack` | Custom icon pack                 |
+| `states`   | `States`            | ❌       | -                 | UI state object                  |
+| `t`        | `RtkI18n`           | ❌       | -                 | i18n translation function        |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkLeaveMeeting } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkLeaveMeeting meeting={meeting} onClose={() => setOpen(false)} />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkLeaveMeeting } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return (
+		<RtkLeaveMeeting
+			meeting={meeting}
+			onClose={() => setOpen(false)}
+			states={states}
+		/>
+	);
+}
+```

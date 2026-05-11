@@ -1,0 +1,48 @@
+---
+pcx_content_type: reference
+title: RtkRecordingView
+description: API reference for RtkRecordingView component (iOS Library)
+products:
+  - realtime
+---
+
+A blinking recording indicator displayed when the meeting is being recorded.
+Shows a red dot with configurable text and image.
+
+## Initializer parameters
+
+| Parameter    | Type                         | Required | Default | Description                                            |
+| ------------ | ---------------------------- | -------- | ------- | ------------------------------------------------------ |
+| `meeting`    | `RealtimeKitClient`          | ✅       | -       | The RealtimeKit client instance for the active meeting |
+| `title`      | `String`                     | ❌       | `"Rec"` | Text label displayed next to the recording indicator   |
+| `image`      | `RtkImage?`                  | ❌       | `nil`   | Custom image for the recording indicator               |
+| `appearance` | `RtkRecordingViewAppearance` | ❌       | -       | Appearance configuration for the recording indicator   |
+
+## Methods
+
+| Method                  | Return Type | Description                                                       |
+| ----------------------- | ----------- | ----------------------------------------------------------------- |
+| `blinking(start: Bool)` | `Void`      | Starts or stops the blinking animation on the recording indicator |
+
+## Usage Examples
+
+### Basic Usage
+
+```swift
+import RealtimeKitUI
+
+let recordingView = RtkRecordingView(meeting: rtkClient)
+view.addSubview(recordingView)
+```
+
+### With custom title
+
+```swift
+import RealtimeKitUI
+
+let recordingView = RtkRecordingView(
+    meeting: rtkClient,
+    title: "Recording"
+)
+view.addSubview(recordingView)
+```

@@ -1,6 +1,8 @@
 ---
 title: Rate limiting (previous version) upgrade
 pcx_content_type: reference
+products:
+  - waf
 sidebar:
   order: 3
   label: Rate limiting upgrade
@@ -27,6 +29,8 @@ You must now use the [Rulesets API](/ruleset-engine/rulesets-api/) and the [`clo
 - **Billing model:** The previous version of Rate Limiting was billed based on usage and it was available as an add-on on all plans, while the new version is included in Cloudflare plans. For Enterprise plans, Rate Limiting is priced based on total contracted HTTP traffic. The new rate limiting rules offer all the capabilities available on the previous version of rate limiting along with several additional features.
 
 - **Advanced scope expressions:** The previous version of Rate Limiting allowed you to scope the rules based on a single path and method of the request. In the new version, you can write rules similar to [WAF custom rules](/waf/custom-rules/), combining multiple parameters of the HTTP request.
+
+- **Counter scope:** The new version of rate limiting uses counters scoped per data center, with `cf.colo.id` always included as a characteristic. This means thresholds can behave differently for traffic distributed across multiple Cloudflare locations. Data centers in the same geographic location share counters. For more information, refer to [How Cloudflare determines the request rate](/waf/rate-limiting-rules/request-rate/).
 
 - **Separate counting and mitigation expressions:** In the new version of Rate Limiting, counting and mitigation expressions are separate (for Business and Enterprise customers). The counting expression defines which requests are used to compute the rate. The mitigation expression defines which requests are mitigated once the threshold has been reached. Using these separate expressions, you can track the rate of requests on a specific path such as `/login` and, when an IP exceeds the threshold, block every request from the same IP addressed at your domain.
 

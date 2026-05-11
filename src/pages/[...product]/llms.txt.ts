@@ -58,7 +58,8 @@ export const getStaticPaths = (async () => {
 					(e.id.startsWith(prefix + "/") || e.id === prefix) &&
 					!isDirectoryOnlyPage(e.body ?? "") &&
 					!isDisallowedByRobots(`/${e.id}/`) &&
-					!isExternalRedirect(`/${e.id}/`),
+					!isExternalRedirect(`/${e.id}/`) &&
+					(!e.data.external_link || e.data.external_link.startsWith("/")),
 			);
 
 			if (pages.length === 0) return null;
@@ -76,8 +77,10 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 type Page = InferGetStaticPropsType<typeof getStaticPaths>["pages"][number];
 
 function formatPage(base: string, e: Page) {
-	const resolved = resolveRedirect(`/${e.id}/`);
-	const line = `- [${e.data.title}](${base}${resolved}index.md)`;
+	const path = e.data.external_link?.startsWith("/")
+		? resolveRedirect(e.data.external_link)
+		: resolveRedirect(`/${e.id}/`);
+	const line = `- [${e.data.title}](${base}${path}index.md)`;
 	return e.data.description ? line.concat(`: ${e.data.description}`) : line;
 }
 

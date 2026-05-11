@@ -14,7 +14,7 @@ Outbound Workers for [Sandboxes](/sandbox/) and [Containers](/containers/) now s
 Because outbound handlers run in the Workers runtime, outside the sandbox, they can hold secrets the sandbox never sees. A sandboxed workload can make a plain request, and credentials are transparently attached before a request is forwarded upstream.
 
 For instance, you could run an agent in a sandbox and ensure that any requests it makes to Github are authenticated.
-But it will never be able to accesss the credentials:
+But it will never be able to access the credentials:
 
 ```ts
 export class MySandbox extends Sandbox {}

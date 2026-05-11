@@ -2,6 +2,8 @@
 pcx_content_type: configuration
 title: Manage catalogs
 description: Understand how to manage Iceberg REST catalogs associated with R2 buckets
+products:
+  - r2
 sidebar:
   order: 3
 ---
@@ -161,7 +163,7 @@ npx wrangler r2 bucket catalog compaction disable <BUCKET_NAME> <NAMESPACE> <TAB
 
 ## Enable snapshot expiration
 
-Snapshot expiration automatically removes old table snapshots to reduce metadata bloat and storage costs. For more information about snapshot expiration and why it is valuable, refer to [Table maintenance](/r2/data-catalog/table-maintenance/).
+Snapshot expiration automatically removes old table snapshots and any unreferenced data files to reduce metadata overhead and storage costs.
 
 :::note
 Snapshot expiration commands are available as of Wrangler version 4.56.0.

@@ -1,5 +1,8 @@
 ---
 pcx_content_type: navigation
+description: Insights resources and guides for Zero Trust analytics.
+products:
+  - cloudflare-one
 title: Insights
 sidebar:
   order: 5
@@ -11,16 +14,16 @@ Cloudflare One offers observability tools to monitor and troubleshoot your envir
 
 - [Analytics Overview](/cloudflare-one/insights/analytics-overview/) to monitor overall Cloudflare One usage.
 - [Analytics Dashboards](/cloudflare-one/insights/analytics/) to review organizational traffic trends and policy insights.
-- [Logs](/cloudflare-one/insights/logs/) for event-level investigation.  
+- [Logs](/cloudflare-one/insights/logs/) for event-level investigation.
 - [Digital Experience Monitoring (DEX)](/cloudflare-one/insights/dex/) for device, network, and application performance.
 
 ## Troubleshooting workflow example
 
 A user reports they cannot reach an internal application behind [Cloudflare Access](/cloudflare-one/). To address the issue:
 
-1. The admin checks the [Access Event Analytics dashboard](/cloudflare-one/insights/analytics-overview/) to review if other users are experiencing similar issues.
-2. The admin then reviews [Logs](/cloudflare-one/insights/logs/) to examine the user's authentication attempts and blocked requests.
-3. Finally, the admin uses [DEX](/cloudflare-one/insights/dex/) to evaluate the user's device health and network performance.
+1. Check the [Analytics overview dashboard](/cloudflare-one/insights/analytics-overview/) to review if other users are experiencing similar issues.
+2. Review [Logs](/cloudflare-one/insights/logs/) to examine the user's authentication attempts and blocked requests.
+3. Use [DEX](/cloudflare-one/insights/dex/) to evaluate the user's device health and network performance.
 
 ## How to use these tools together
 
@@ -28,32 +31,32 @@ A user reports they cannot reach an internal application behind [Cloudflare Acce
 
 After onboarding your devices and users, use these tools to confirm everything is set up correctly and to monitor your organization's activity.
 
-  1. Start with [Logs](/cloudflare-one/insights/logs/) to validate initial configuration and confirm that authentication is successful.
-  2. Use [Analytics Overview](/cloudflare-one/insights/analytics-overview/) to confirm expected patterns and policy activity.
+1. Start with [Logs](/cloudflare-one/insights/logs/) to validate initial configuration and confirm that authentication is successful.
+2. Use [Analytics Overview](/cloudflare-one/insights/analytics-overview/) to confirm expected patterns and policy activity.
 
 If your device is experiencing connectivity issues, Cloudflare recommends starting with [troubleshooting WARP](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/troubleshooting-guide/) as WARP misconfiguration is the most common cause of connectivity issues.
 
 ### Daily monitoring
 
-  1. Use [Analytics Dashboards](/cloudflare-one/insights/analytics/) to understand trends and for visualizations of your log data.
+1. Use [Analytics Dashboards](/cloudflare-one/insights/analytics/) to understand trends and for visualizations of your log data.
 
-      Administrators typically start with Analytics Dashboards because they offer:
+    Administrators typically start with Analytics Dashboards because they offer:
 
-      - A high-level view of activity across your products, like Access, or security use cases, such as AI and shadow IT.  
-      - Visibility into trends, provided through time-series graphs, to track the evolution of key metrics (such as [DNS queries](/cloudflare-one/insights/analytics/gateway/#dns-query-analytics), [network sessions](/cloudflare-one/insights/analytics/gateway/#network-session-analytics), [HTTP requests](/cloudflare-one/insights/analytics/gateway/#http-request-analytics), and [CASB posture/content findings](/cloudflare-one/insights/analytics/data-analytics/)) over time.
+    - A high-level view of activity across your products, like Access, or security use cases, such as AI and shadow IT.
+    - Visibility into trends, provided through time-series graphs, to track the evolution of key metrics (such as [DNS queries](/cloudflare-one/insights/analytics/gateway/#dns-query-analytics), [network sessions](/cloudflare-one/insights/analytics/gateway/#network-session-analytics), [HTTP requests](/cloudflare-one/insights/analytics/gateway/#http-request-analytics), and [CASB posture/content findings](/cloudflare-one/insights/analytics/data-analytics/)) over time.
 
-  2. Use [Logs](/cloudflare-one/insights/logs/) as needed for event-level verification.
+2. Use [Logs](/cloudflare-one/insights/logs/) as needed for event-level verification.
 
-      Use Logs when you need to:
+    Use Logs when you need to:
 
-      - Investigate a specific event; for example, a user's [failed authentication attempt](/cloudflare-one/insights/logs/dashboard-logs/access-authentication-logs/) when trying to log into an application.
-      - Validate identity or device details; for example, confirming which user made the request, how they authenticated, and whether their device met required [posture conditions](/cloudflare-one/insights/logs/dashboard-logs/posture-logs/).
-      - Confirm policy matches; for example, verifying which [specific rule](/cloudflare-one/access-controls/policies/#rule-types) allowed, blocked, or challenged a user's request and why it was applied.
+    - Investigate a specific event; for example, a user's [failed authentication attempt](/cloudflare-one/insights/logs/dashboard-logs/access-authentication-logs/) when trying to log in to an application.
+    - Validate identity or device details; for example, confirming which user made the request, how they authenticated, and whether their device met required [posture conditions](/cloudflare-one/insights/logs/dashboard-logs/posture-logs/).
+    - Confirm policy matches; for example, verifying which [specific rule](/cloudflare-one/access-controls/policies/#rule-types) allowed, blocked, or challenged a user's request and why it was applied.
 
 ### User-reported issues
 
 Users may report problems like slow or failing connections to internal apps.
 
-  1. Start with [Analytics Dashboards](/cloudflare-one/insights/analytics/) to review whether the issue impacts others.  
-  2. Check [Logs](/cloudflare-one/insights/logs/) for failed authentication attempts, blocked requests, or unexpected policy matches.
-  3. Use [DEX](/cloudflare-one/insights/dex/) to diagnose device- or network-level causes with [synthetic tests](/cloudflare-one/insights/dex/tests/) and [device monitoring](/cloudflare-one/insights/dex/monitoring/).
+1. Start with [Analytics Dashboards](/cloudflare-one/insights/analytics/) to review whether the issue impacts others.
+2. Check [Logs](/cloudflare-one/insights/logs/) for failed authentication attempts, blocked requests, or unexpected policy matches.
+3. Use [DEX](/cloudflare-one/insights/dex/) to diagnose device- or network-level causes with [synthetic tests](/cloudflare-one/insights/dex/tests/) and [device monitoring](/cloudflare-one/insights/dex/monitoring/).

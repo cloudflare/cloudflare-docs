@@ -1,6 +1,9 @@
 ---
 title: Functions
 pcx_content_type: reference
+description: Functions available for transforming values in rule expressions.
+products:
+  - ruleset-engine
 sidebar:
   order: 7
 head:
@@ -221,6 +224,40 @@ has_value(http.request.headers.names, "X-My-Header")
 # Check if there is a request header with the exact name provided as the first query argument:
 has_value(http.request.headers.names, http.request.uri.args.names[0])
 ```
+
+### `is_jwt_present`
+
+<code>is_jwt_present(token_configuration_id: <Type text="String" />)</code>: <Type text="Boolean" />
+
+Returns true if the request has a token as configured in the token configuration with the ID `token_configuration_id`.
+
+`token_configuration_id` must be the ID of an existing [token configuration](/api-shield/security/jwt-validation/api/#token-configurations).
+
+Example:
+
+```txt
+is_jwt_present("51231d16-01f1-48e3-93f8-91c99e81288e")
+```
+
+:::note
+This function is only available in [API JWT validation rules](/api-shield/security/jwt-validation/).
+:::
+
+### `is_jwt_valid`
+
+<code>is_jwt_valid(token_configuration_id: <Type text="String" />)</code>: <Type text="Boolean" />
+
+Returns true if the request has a valid token according to the token configuration with the ID `token_configuration_id`.
+
+`token_configuration_id` must be the ID of an existing [token configuration](/api-shield/security/jwt-validation/api/#token-configurations). The function returns false if the token is missing from the request.
+
+```txt
+is_jwt_valid("51231d16-01f1-48e3-93f8-91c99e81288e")
+```
+
+:::note
+This function is only available in [API JWT validation rules](/api-shield/security/jwt-validation/).
+:::
 
 ### `len`
 

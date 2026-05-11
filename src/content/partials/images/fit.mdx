@@ -2,22 +2,31 @@
 {}
 ---
 
-import { Tabs, TabItem } from "~/components";
+import { Tabs, TabItem} from "~/components";
+import lg from "~/assets/images/images/examples/fit/1296x1296.png";
+import peteContain from "~/assets/images/images/examples/fit/pete-contain.png";
+import peteCover from "~/assets/images/images/examples/fit/pete-cover.png";
+import petePad from "~/assets/images/images/examples/fit/pete-pad.png";
+import originalAbstract from "~/assets/images/images/examples/fit/abstract.jpg";
+import squeezeAbstract from "~/assets/images/images/examples/fit/abstract-squeeze.jpg";
+import originalPete from "~/assets/images/images/examples/fit/pete-landscape.jpg";
+import squeezePete from "~/assets/images/images/examples/fit/pete-squeeze.jpg";
 
-Affects interpretation of `width` and `height`. All resizing modes preserve aspect ratio. Used as a string in Workers integration. Available modes are:
+### `fit`
 
-- `scale-down`\
-  Similar to `contain`, but the image is never enlarged. If the image is larger than given `width` or `height`, it will be resized. Otherwise its original size will be kept.
-- `contain`\
-  Image will be resized (shrunk or enlarged) to be as large as possible within the given `width` or `height` while preserving the aspect ratio. If you only provide a single dimension (for example, only `width`), the image will be shrunk or enlarged to exactly match that dimension.
-- `cover`\
-  Resizes (shrinks or enlarges) to fill the entire area of `width` and `height`. If the image has an aspect ratio different from the ratio of `width` and `height`, it will be cropped to fit.
-- `crop`\
-  Image will be shrunk and cropped to fit within the area specified by `width` and `height`. The image will not be enlarged. For images smaller than the given dimensions, it is the same as `scale-down`. For images larger than the given dimensions, it is the same as `cover`. See also [`trim`](#trim)
-- `pad`\
-  Resizes to the maximum size that fits within the given `width` and `height`, and then fills the remaining area with a `background` color (white by default). This mode is not recommended, since you can achieve the same effect more efficiently with the `contain` mode and the CSS `object-fit: contain` property.
-- `squeeze`
-  Resizes the image to the exact width and height specified. This mode does not preserve the original aspect ratio and will cause the image to appear stretched or squashed.
+Specifies how the image is fit to the target area.
+
+Fit is performed after setting the [`width`](/images/optimization/features/#width) and [`height`](/images/optimization/features/#height) dimensions of the image.
+
+| Option | Result | Match original aspect ratio | Upscales |
+| --- | --- | --- | --- |
+| `contain` (default) | Show entire image without cropping | Yes | Yes |
+| `cover` | Fill the entire requested area, cropping if needed | No | Yes |
+| `crop` | Same as `cover`, but never upscales | No | No |
+| `pad` | Fit within the target area, adding space for remaining area | Yes | Yes |
+| `scale-down` | Same as `contain`, but never upscales | Yes | No |
+| `squeeze` | Scale to exact dimensions, distorting if needed | No | Yes |
+
 <Tabs>
   <TabItem label="URL format">
     ```txt
@@ -30,3 +39,199 @@ Affects interpretation of `width` and `height`. All resizing modes preserve aspe
   ```
   </TabItem>
 </Tabs>
+
+#### `contain`
+Resizes the image to be as large as possible within the target `width` and `height` dimensions while preserving its original aspect ratio. This is the default `fit` behavior.
+
+In the example below, the 1080x720 image is resized to fit within the target 500x500 area. Since `contain` preserves original aspect ratio (3:2), the final dimensions of the output image are 500x333.
+
+<table style="width:100%; text-align:center; border:none">
+  <tr style="border:none; background:none">
+    <td style="border:none; width:51.9%; vertical-align:bottom">
+      <img src={originalPete.src} alt="original image" style="width:100%; height:auto" />
+    </td>
+    <td style="border:none; width:24%; vertical-align:bottom">
+      <img src={lg.src} alt="target area" style="width:100%; height:auto" />
+    </td>
+    <td style="border:none; width:24%; vertical-align:bottom">
+      <img src={peteContain.src} alt="fit=contain output" style="width:100%; height:auto" />
+    </td>
+  </tr>
+  <tr style="border:none; background:none">
+    <td style="border:none;">
+      <strong>Original</strong><br />
+      1080 x 720 (3:2)
+    </td>
+    <td style="border:none;">
+      <strong>Requested</strong><br />
+      500 x 500 (1:1)
+    </td>
+    <td style="border:none;">
+      <strong>Output</strong><br />
+      500 x 333 (3:2)
+    </td>
+  </tr>
+</table>
+
+When the original image is smaller than the target area, it upscales instead, which may reduce image quality. To avoid upscaling, use `scale-down`.
+
+#### `cover`
+Fills the entire target area, shrinking or enlarging the image if needed. The output area always matches the requested `width` and `height` dimensions exactly.
+
+When the original and target aspect ratios differ, the image is resized to cover the full target area and any overflow is cropped. Use the [`gravity`](/images/optimization/features/#gravity) parameter to control which part of the image is preserved during cropping.
+
+In the example below, the 1080×720 image is first resized to 750×500 (matching the requested height) to fit the target area, then cropped from the left and right edges to its final 500x500 dimensions.
+
+<table style="width:100%; text-align:center; border:none">
+  <tr style="border:none; background:none">
+    <td style="border:none; width:51.9%; vertical-align:bottom">
+      <img src={originalPete.src} alt="original image" style="width:100%; height:auto" />
+    </td>
+    <td style="border:none; width:24%; vertical-align:bottom">
+      <img src={lg.src} alt="target area" style="width:100%; height:auto" />
+    </td>
+    <td style="border:none; width:24%; vertical-align:bottom">
+      <img src={peteCover.src} alt="fit=cover output" style="width:100%; height:auto" />
+    </td>
+  </tr>
+  <tr style="border:none; background:none">
+    <td style="border:none;">
+      <strong>Original</strong><br />
+      1080 x 720 (3:2)
+    </td>
+    <td style="border:none;">
+      <strong>Requested</strong><br />
+      500 x 500 (1:1)
+    </td>
+    <td style="border:none;">
+      <strong>Output</strong><br />
+      500 x 500 (1:1)
+    </td>
+  </tr>
+</table>
+
+When the original image is smaller than the target area, it upscales instead. To avoid upscaling, use `crop`.
+
+#### `crop`
+Resizes the image to fill the target area without upscaling.
+
+When the original image is smaller than the target area, it is returned at its original dimensions and does not upscale.
+
+In the example below, the original image (1080x720) is smaller than the target area (1296x1296), so it preserves its original size and aspect ratio.
+
+<table style="width:100%; text-align:center; border:none">
+  <tr style="border:none; background:none">
+    <td style="border:none; width:31.25%; vertical-align:bottom">
+      <img src={originalPete.src} alt="original image" style="width:100%; height:auto" />
+    </td>
+    <td style="border:none; width:37.5%; vertical-align:bottom">
+      <img src={lg.src} alt="target area" style="width:100%; height:auto" />
+    </td>
+    <td style="border:none; width:31.25%; vertical-align:bottom">
+      <img src={originalPete.src} alt="fit=crop output" style="width:100%; height:auto" />
+    </td>
+  </tr>
+  <tr style="border:none; background:none">
+    <td style="border:none;">
+      <strong>Original</strong><br />
+      1080 x 720 (3:2)
+    </td>
+    <td style="border:none;">
+      <strong>Requested</strong><br />
+      1296 x 1296 (1:1)
+    </td>
+    <td style="border:none;">
+      <strong>Output</strong><br />
+      1080 x 720 (3:2)
+    </td>
+  </tr>
+</table>
+
+When the original image is larger than the target area, it behaves like `cover` (fills the target area and crops the rest) instead.
+
+#### `pad`
+Resizes the image to be as large as possible within the dimensions. If applicable, the output area will be expanded to match the `width` and `height` dimensions exactly.
+
+Works with the `background` parameter to fill any blank or transparent pixels. However, for web apps, you can often achieve the same visual result using the `contain` option with the CSS `object-fit: contain` property, which avoids encoding padding pixels into the image itself.
+
+In the example below, the original image (1080x720) is smaller than the target area (1080x1080), so it creates space for the remaining pixels.
+
+<table style="width:100%; text-align:center; border:none">
+  <tr style="border:none; background:none">
+    <td style="border:none; width:33%; vertical-align:bottom">
+      <img src={originalPete.src} alt="original image" style="width:100%; height:auto" />
+    </td>
+    <td style="border:none; width:33%; vertical-align:bottom">
+      <img src={lg.src} alt="target area" style="width:100%; height:auto" />
+    </td>
+    <td style="border:none; width:33%; vertical-align:bottom">
+      <img src={petePad.src} alt="fit=pad output" style="width:100%; height:auto" />
+    </td>
+  </tr>
+  <tr style="border:none; background:none">
+    <td style="border:none;">
+      <strong>Original</strong><br />
+      1080 x 720 (3:2)
+    </td>
+    <td style="border:none;">
+      <strong>Requested</strong><br />
+      1080 x 1080 (1:1)
+    </td>
+    <td style="border:none;">
+      <strong>Output</strong><br />
+      1080 x 1080 (1:1)
+    </td>
+  </tr>
+</table>
+
+#### `scale-down`
+Resizes the image to fit within the specified dimensions while preserving its original aspect ratio, but never upscales the image.
+
+When the original image is smaller than the target area, it behaves like `crop` (keeps original size and aspect ratio). When larger, it behaves like `contain` (downscaled to fill the target area).
+
+#### `squeeze`
+Resizes the image to exactly match the requested width and height, without cropping the edges or constraining the portions.
+
+When the original and target aspect ratios differ, the image will be distorted to fit the target area. 
+
+<table style="width:100%; text-align:center; border:none">
+  <tr style="border:none; background:none">
+    <td style="border:none; width:31.25%; vertical-align:bottom">
+      <img src={originalPete.src} alt="original image" style="width:100%; height:auto" />
+    </td>
+    <td style="border:none; width:31.25%; vertical-align:bottom">
+      <img src={squeezePete.src} alt="fit=squeeze output" style="width:100%; height:auto" />
+    </td>
+  </tr>
+  <tr style="border:none; background:none">
+    <td style="border:none;">
+      <strong>Original</strong><br />
+      1080 x 720
+    </td>
+    <td style="border:none;">
+      <strong>Output</strong><br />
+      1080 x 540
+    </td>
+  </tr>
+</table>
+
+<table style="width:100%; text-align:center; border:none">
+  <tr style="border:none; background:none">
+    <td style="border:none; width:31.25%; vertical-align:bottom">
+      <img src={originalAbstract.src} alt="original image" style="width:100%; height:auto" />
+    </td>
+    <td style="border:none; width:31.25%; vertical-align:bottom">
+      <img src={squeezeAbstract.src} alt="fit=squeeze output" style="width:100%; height:auto" />
+    </td>
+  </tr>
+  <tr style="border:none; background:none">
+    <td style="border:none;">
+      <strong>Original</strong><br />
+      1080 x 1080
+    </td>
+    <td style="border:none;">
+      <strong>Output</strong><br />
+      1080 x 540
+    </td>
+  </tr>
+</table>

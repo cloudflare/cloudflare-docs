@@ -42,7 +42,7 @@ Key capabilities:
 - **Persist and reuse across sandbox sessions** — Easily store backup handles in KV, D1, or Durable Object storage for use in subsequent sessions
 - **Usable across multiple instances** — Fork a backup across many sandboxes for parallel work
 - **Named backups** — Provide optional human-readable labels for easier management
-- **TTLs** — Set time-to-live durations so backups are automatically removed from storage once they are no longer neeeded
+- **TTLs** — Set time-to-live durations so backups are automatically removed from storage once they are no longer needed
 
 :::note
 Backup and restore currently uses a FUSE overlay. Soon, native snapshotting at a lower level will be added to Containers and Sandboxes, improving speed and ergonomics. The current backup functionality provides a significant speed improvement over manually recreating a file system, but it will be further optimized in the future. The new snapshotting system will use a similar API, so changing to this system will be simple once it is available.

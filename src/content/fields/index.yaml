@@ -616,6 +616,29 @@ entries:
     description: |-
       Provides the same information as [`cf.bot_management.verified_bot`](/ruleset-engine/rules-language/fields/reference/cf.bot_management.verified_bot/).
 
+  - name: cf.bot_management.corporate_proxy
+    data_type: Boolean
+    categories: [Request, Bots]
+    keywords: [request, bots, proxy, client, visitor]
+    plan_info_label: Enterprise add-on
+    summary: Indicates whether the incoming request comes from an identified Enterprise-only cloud-based corporate proxy or secure web gateway.
+    description: |-
+      Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
+    example_block: |-
+      not cf.bot_management.verified_bot
+      and not cf.bot_management.static_resource
+      and not cf.bot_management.corporate_proxy
+      and cf.bot_management.score lt 30
+
+  - name: cf.bot_management.signed_agent
+    data_type: Boolean
+    categories: [Request, Bots]
+    keywords: [request, bots, client, visitor, agent, web bot auth]
+    plan_info_label: Enterprise add-on
+    summary: Indicates whether or not the request originated from a known [signed agent](/bots/concepts/bot/signed-agents/).
+    description: |-
+      Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
+
   - name: cf.edge.server_ip
     data_type: IP address
     categories: [Request]
@@ -855,7 +878,19 @@ entries:
   - name: cf.tls_client_auth.cert_rfc9440_too_large
     data_type: Boolean
     categories: [Request, mTLS]
-    keywords: [request, ssl, mtls, client, visitor, rfc9440, cert, chain, too large, error]
+    keywords:
+      [
+        request,
+        ssl,
+        mtls,
+        client,
+        visitor,
+        rfc9440,
+        cert,
+        chain,
+        too large,
+        error,
+      ]
     summary: Returns `true` when the RFC 9440 encoded mTLS client certificate exceeds the 10 KiB size limit.
     description: |-
       When `true`, [`cf.tls_client_auth.cert_rfc9440`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_rfc9440/) contains an empty string instead of the encoded certificate.
@@ -881,7 +916,19 @@ entries:
   - name: cf.tls_client_auth.cert_chain_rfc9440_too_large
     data_type: Boolean
     categories: [Request, mTLS]
-    keywords: [request, ssl, mtls, client, visitor, rfc9440, cert, chain, too large, error]
+    keywords:
+      [
+        request,
+        ssl,
+        mtls,
+        client,
+        visitor,
+        rfc9440,
+        cert,
+        chain,
+        too large,
+        error,
+      ]
     summary: Returns `true` when the RFC 9440 encoded client certificate chain exceeds the 16 KiB size limit.
     description: |-
       When `true`, [`cf.tls_client_auth.cert_chain_rfc9440`](/ruleset-engine/rules-language/fields/reference/cf.tls_client_auth.cert_chain_rfc9440/) contains an empty string instead of the encoded certificate chain.
@@ -1511,20 +1558,6 @@ entries:
     summary: Identifies whether a request comes from a worker or not.
     description: |-
       When a request comes from a worker, this field will hold the name of the zone for that worker. Otherwise, `cf.worker.upstream_zone` is empty.
-
-  - name: cf.bot_management.corporate_proxy
-    data_type: Boolean
-    categories: [Request, Bots]
-    keywords: [request, bots, proxy, client, visitor]
-    plan_info_label: Enterprise add-on
-    summary: Indicates whether the incoming request comes from an identified Enterprise-only cloud-based corporate proxy or secure web gateway.
-    description: |-
-      Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
-    example_block: |-
-      not cf.bot_management.verified_bot
-      and not cf.bot_management.static_resource
-      and not cf.bot_management.corporate_proxy
-      and cf.bot_management.score lt 30
 
   - name: http.request.jwt.claims.aud
     data_type: Map<Array<String>>

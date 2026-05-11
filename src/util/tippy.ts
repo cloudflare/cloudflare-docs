@@ -8,22 +8,19 @@ export function addTooltip(
 	content: string,
 	opts?: Options,
 ) {
-	const id = "#" + CSS.escape(element.id);
-
 	if (opts?.hideAfter) {
+		const hideAfter = opts.hideAfter;
 		opts.onShow = (instance) => {
 			setTimeout(() => {
 				instance.hide();
-			}, opts.hideAfter);
+			}, hideAfter);
 		};
 	}
 
-	tippy(id, {
+	tippy(element, {
 		content,
 		allowHTML: true,
 		interactive: true,
-		placement: "auto",
-		arrow: false,
 		// This is imperfect as it stops you from tabbing into
 		// links inside the tooltip, but stops tooltips being
 		// cutoff by the sidebar

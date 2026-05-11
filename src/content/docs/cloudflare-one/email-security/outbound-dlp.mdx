@@ -3,6 +3,9 @@ title: Outbound Data Loss Prevention (DLP)
 tags:
   - Microsoft
 pcx_content_type: how-to
+description: Outbound Data Loss Prevention (DLP) in Email Security.
+products:
+  - cloudflare-one
 sidebar:
   order: 18
 ---
@@ -24,7 +27,7 @@ An outbound policy allows you to control outbound email flow.
 
 To create an outbound DLP policy:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Email security** > **Outbound DLP**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security** > **Outbound DLP**.
 2. Select **Add a policy**.
 3. Name your policy.
 4. Build an expression to match specific email traffic. For example, you can create a policy that blocks outbound emails containing identifying numbers:
@@ -49,11 +52,11 @@ After creating your policy, you can modify or reorder your policies in **Email s
 
 ## 2. DLP Assist add-in
 
-The Data Loss Prevention (DLP) Assist add-in allows Microsoft 365 users to deploy a DLP solution for free using Cloudflare's Email security. DLP Assist add-in protects your data egress from Outlook web and dekstop client.
+The Data Loss Prevention (DLP) Assist add-in allows Microsoft 365 users to deploy a DLP solution for free using Cloudflare's Email security. DLP Assist add-in protects your data egress from Outlook web and desktop client.
 
 To set up DLP Assist add-in:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Email security** > **Outbound DLP**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Email security** > **Outbound DLP**.
 2. Select **View Microsoft add-in instructions** > Select **Download add-in**. This downloads a `.xml` file necessary to install the add-in on the client side.
 3. Set up the add-in in Microsoft 365:
    - Log in to the [Microsoft admin panel](https://security.microsoft.com/homepage) and go to **Microsoft 365 Admin Center** > **Settings** > **Integrated Apps**.

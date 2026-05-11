@@ -1,6 +1,9 @@
 import type { WorkersAIModelsSchema } from "~/schemas";
+import type { ResolvedModel } from "~/util/model-types";
 
-const ModelFeatures = ({ model }: { model: WorkersAIModelsSchema }) => {
+type ModelType = WorkersAIModelsSchema | ResolvedModel;
+
+const ModelFeatures = ({ model }: { model: ModelType }) => {
 	const nf = new Intl.NumberFormat("en-US");
 	const currencyFormatter = new Intl.NumberFormat("en-US", {
 		style: "currency",
@@ -11,6 +14,15 @@ const ModelFeatures = ({ model }: { model: WorkersAIModelsSchema }) => {
 	model.properties.forEach((property: any) => {
 		properties[property.property_id] = property.value;
 	});
+
+	// For catalog models, build a dashboard deep link for pricing.
+	// model_id format is "provider/name" (e.g. "pixverse/v6"), mapped to
+	// https://dash.cloudflare.com/?to=/:account/ai/models/provider/name
+	const isCatalog =
+		"dataSource" in model && (model as ResolvedModel).dataSource === "catalog";
+	const dashPricingUrl = isCatalog
+		? `https://dash.cloudflare.com/?to=/:account/ai/models/${(model as ResolvedModel).modelId}`
+		: null;
 
 	return (
 		<>
@@ -149,6 +161,17 @@ const ModelFeatures = ({ model }: { model: WorkersAIModelsSchema }) => {
 													`${currencyFormatter.format(price.price)} ${price.unit}`,
 											)
 											.join(", ")}
+									</td>
+								</tr>
+							)}
+							{dashPricingUrl && (
+								<tr>
+									<td>Pricing</td>
+									<td>
+										<a href={dashPricingUrl} target="_blank" rel="noreferrer">
+											View pricing in the Cloudflare dashboard
+											<span className="external-link"> ↗</span>
+										</a>
 									</td>
 								</tr>
 							)}

@@ -2,6 +2,8 @@
 title: SQL reference
 pcx_content_type: navigation
 description: Comprehensive reference for SQL syntax, functions, and data types supported in R2 SQL.
+products:
+  - r2-sql
 tags:
   - SQL
 sidebar:
@@ -326,6 +328,14 @@ EXPLAIN SELECT department, COUNT(*) AS dept_count
 FROM my_namespace.sales_data
 WHERE total_amount IS NOT NULL
 GROUP BY department;
+```
+
+### EXPLAIN FORMAT JSON
+
+Returns the execution plan as structured JSON for programmatic analysis.
+
+```sql
+EXPLAIN FORMAT JSON SELECT * FROM my_namespace.sales_data LIMIT 10;
 ```
 
 ---

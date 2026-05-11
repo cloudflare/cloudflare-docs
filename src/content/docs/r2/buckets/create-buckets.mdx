@@ -1,8 +1,11 @@
 ---
 pcx_content_type: how-to
 title: Create new buckets
+description: Create R2 buckets using the Cloudflare dashboard or Wrangler CLI.
 sidebar:
   order: 1
+products:
+  - r2
 ---
 
 You can create a bucket from the Cloudflare dashboard or using Wrangler.
@@ -39,11 +42,7 @@ List buckets in the current account with the [`r2 bucket list`](/workers/wrangle
 wrangler r2 bucket list
 ```
 
-Delete a bucket with the [`r2 bucket delete`](/workers/wrangler/commands/r2/#r2-bucket-delete) command. Note that the bucket must be empty and all objects must be deleted.
-
-```sh
-wrangler r2 bucket delete BUCKET_TO_DELETE
-```
+To delete a bucket, you must first empty it and then delete it. For detailed instructions, refer to [Delete buckets](/r2/buckets/delete-buckets/).
 
 ## Notes
 

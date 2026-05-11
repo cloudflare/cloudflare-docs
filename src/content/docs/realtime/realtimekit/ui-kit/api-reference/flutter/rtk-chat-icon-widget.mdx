@@ -1,0 +1,27 @@
+---
+pcx_content_type: navigation
+title: RtkChatIconWidget
+description: API reference for RtkChatIconWidget component (Flutter Library)
+products:
+  - realtime
+---
+
+A widget that displays a chat icon, navigates to the chat page when pressed, and marks all messages as read.
+
+:::note
+[`RtkProvider`](/realtime/realtimekit/ui-kit/api-reference/flutter/rtk-provider/) must be an ancestor of this widget in the widget tree.
+:::
+
+## Properties
+
+This component does not accept any properties. It uses the `RealtimekitClient` from the nearest [`RtkProvider`](/realtime/realtimekit/ui-kit/api-reference/flutter/rtk-provider/) ancestor.
+
+## Usage Examples
+
+### Basic Usage
+
+```dart
+import 'package:realtimekit_ui/realtimekit_ui.dart';
+
+RtkChatIconWidget()
+```

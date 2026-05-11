@@ -1,0 +1,40 @@
+---
+pcx_content_type: reference
+title: RtkIcon
+description: API reference for RtkIcon component (React Native Library)
+products:
+  - realtime
+---
+
+Renders an SVG icon from an icon string, applying the current theme text color.
+
+## Properties
+
+| Property | Type     | Required | Default | Description               |
+| -------- | -------- | -------- | ------- | ------------------------- |
+| `icon`   | `string` | ✅       | -       | SVG icon string to render |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkIcon } from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkIcon icon={svgIconString} />;
+}
+```
+
+### With Properties
+
+```tsx
+import {
+	RtkIcon,
+	defaultIconPack,
+} from "@cloudflare/realtimekit-react-native-ui";
+
+function MyComponent() {
+	return <RtkIcon icon={defaultIconPack.mic_on} />;
+}
+```

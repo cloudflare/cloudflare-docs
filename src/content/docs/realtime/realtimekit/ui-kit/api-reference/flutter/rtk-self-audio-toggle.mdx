@@ -1,0 +1,52 @@
+---
+pcx_content_type: navigation
+title: RtkSelfAudioToggleButton
+description: API reference for RtkSelfAudioToggleButton component (Flutter Library)
+products:
+  - realtime
+---
+
+A toggle button widget for controlling microphone audio state during a meeting. Allows users to mute or unmute their microphone.
+
+:::note
+[`RtkProvider`](/realtime/realtimekit/ui-kit/api-reference/flutter/rtk-provider/) must be an ancestor of this widget in the widget tree.
+:::
+
+## Properties
+
+| Property                | Type                | Required | Default              | Description                            |
+| ----------------------- | ------------------- | -------- | -------------------- | -------------------------------------- |
+| `meeting`               | `RealtimekitClient` | ✅       | -                    | Meeting client instance                |
+| `individualDesignToken` | `RtkDesignTokens?`  | ❌       | Global design tokens | Design tokens for customization        |
+| `onAudioToggle`         | `VoidCallback?`     | ❌       | -                    | Callback invoked when audio is toggled |
+| `iconSize`              | `double?`           | ❌       | -                    | Size of the icon                       |
+| `iconColor`             | `Color?`            | ❌       | -                    | Color of the icon                      |
+| `showLabel`             | `bool`              | ❌       | `false`              | Whether to show label text             |
+
+## Usage Examples
+
+### Basic Usage
+
+```dart
+import 'package:realtimekit_ui/realtimekit_ui.dart';
+
+RtkSelfAudioToggleButton(
+  meeting: yourMeetingInstance,
+)
+```
+
+### With Properties
+
+```dart
+import 'package:realtimekit_ui/realtimekit_ui.dart';
+
+RtkSelfAudioToggleButton(
+  meeting: yourMeetingInstance,
+  onAudioToggle: () {
+    // Handle audio toggle
+  },
+  iconSize: 24.0,
+  iconColor: Colors.blue,
+  showLabel: true,
+)
+```

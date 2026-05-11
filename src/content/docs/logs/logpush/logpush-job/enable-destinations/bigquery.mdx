@@ -6,11 +6,14 @@ sidebar:
 head:
   - tag: title
     content: Enable Logpush to Google BigQuery
+description: Push Cloudflare logs to Google BigQuery.
+products:
+  - logpush
 ---
 
 import { Render, APIRequest } from "~/components";
 
-Cloudflare Logpush supports pushing logs directly to Google BigQuery (using Legacy Streaming API) via the Cloudflare API.
+Cloudflare Logpush supports pushing logs directly to Google BigQuery (using Legacy Streaming API) via the Cloudflare dashboard or via API.
 
 ## Create and get access to a BigQuery table
 
@@ -38,6 +41,34 @@ TABLE_ID=<TABLE_ID>
 
 bq mk --table "${PROJECT_ID}:${DATASET_ID}.${TABLE_ID}" schema.json
 ```
+
+## Manage via the Cloudflare dashboard
+
+<Render file="enable-logpush-job" product="logs" />
+
+4. In **Select a destination**, choose **Google BigQuery**.
+
+5. Enter the following destination details:
+   - **Project ID** - your Google Cloud project ID
+   - **Dataset ID** - the BigQuery dataset containing your table
+   - **Table ID** - the BigQuery table to push logs to
+   - **Service Account Credentials** - paste your Google service account key JSON. This credential is stored encrypted and will not be displayed again.
+
+When you are done entering the destination details, select **Continue**.
+
+6. Select the dataset to push to the storage service.
+
+7. In the next step, you need to configure your logpush job:
+   - Enter the **Job name**.
+   - Under **If logs match**, you can select the events to include and/or remove from your logs. Refer to [Filters](/logs/logpush/logpush-job/filters/) for more information. Not all datasets have this option available.
+   - In **Send the following fields**, you can choose to either push all logs to your storage destination or selectively choose which logs you want to push.
+
+8. In **Advanced Options**, you can:
+    - Choose the format of timestamp fields in your logs (`RFC3339` (default), `Unix`, or `UnixNano`).
+    - Select a [sampling rate](/logs/logpush/logpush-job/api-configuration/#sampling-rate) for your logs or push a randomly-sampled percentage of logs.
+    - Enable redaction for `CVE-2021-44228`. This option will replace every occurrence of `${` with `x{`.
+
+9. Select **Submit** once you are done configuring your logpush job.
 
 ## Manage via API
 

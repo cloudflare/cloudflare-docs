@@ -1,11 +1,13 @@
 ---
 pcx_content_type: navigation
 title: Tools based on OpenAPI Spec
+description: Generate Workers AI function calling tools from an OpenAPI specification using the ai-utils package.
 tags:
   - AI
 sidebar:
   order: 5
-
+products:
+  - workers-ai
 ---
 
 Oftentimes APIs are defined and documented via [OpenAPI specification](https://swagger.io/specification/). The Cloudflare `ai-utils` package's `createToolsFromOpenAPISpec` function creates tools from the OpenAPI spec, which the LLM can then leverage to fulfill the prompt.
