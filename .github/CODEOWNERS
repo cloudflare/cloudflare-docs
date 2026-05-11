@@ -121,7 +121,6 @@ package.json @cloudflare/content-engineering
 /src/content/docs/hyperdrive/ @elithrar @thomasgauvin @sejoker @oxyjun @cloudflare/product-owners
 /src/content/release-notes/hyperdrive.yaml @elithrar @thomasgauvin @sejoker @oxyjun @cloudflare/product-owners
 /src/content/partials/hyperdrive/ @elithrar @thomasgauvin @sejoker @oxyjun @cloudflare/product-owners
-/src/content/release-notes/durable-objects.yaml @elithrar @vy-ton @joshthoward @oxyjun @cloudflare/product-owners
 /src/content/docs/images/ @dcpena @cloudflare/product-owners @renandincer @third774
 /src/content/docs/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @irvinebroque @cloudflare/product-owners
 /src/content/partials/pages/ @elithrar @rita3ko @irvinebroque @vy-ton @cloudflare/product-owners
@@ -207,7 +206,7 @@ package.json @cloudflare/content-engineering
 /src/content/docs/cache/ @cloudflare/product-owners
 /src/content/docs/health-checks/ @cloudflare/product-owners
 /src/content/docs/load-balancing/ @cloudflare/product-owners
-src/content/docs/smart-shield/ @cloudflare/product-owners
+/src/content/docs/smart-shield/ @cloudflare/product-owners
 /src/content/docs/speed/ @cloudflare/product-owners
 /src/content/docs/web3/ @cloudflare/product-owners
 
