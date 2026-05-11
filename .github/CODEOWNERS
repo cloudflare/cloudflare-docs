@@ -62,8 +62,8 @@ package.json @cloudflare/content-engineering
 
 /src/content/changelog/ @cloudflare/pm-changelogs @cloudflare/pcx-technical-writing @cloudflare/product-owners
 /src/content/changelog/waf/ @cloudflare/firewall @vs-mg @fb1337 @cloudflare/pm-changelogs @cloudflare/pcx-technical-writing @cloudflare/product-owners
-/src/assets/images/changelog/ @alexmoraru7 @cloudflare/pm-changelogs @cloudflare/pcx-technical-writing @cloudflare/product-owners
-/src/assets/images/ @alexmoraru7 @cloudflare/pm-changelogs @cloudflare/pcx-technical-writing @cloudflare/product-owners
+/src/assets/images/changelog/ @cloudflare/pm-changelogs @cloudflare/pcx-technical-writing @cloudflare/product-owners
+/src/assets/images/ @cloudflare/pm-changelogs @cloudflare/pcx-technical-writing @cloudflare/product-owners
 
 # Cloudflare One
 
