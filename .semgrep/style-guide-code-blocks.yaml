@@ -1,0 +1,29 @@
+rules:
+  - id: style-guide-dollar-prefix-in-bash
+    languages: [generic]
+    message: "Found a '$ ' prefix on a terminal command. The copy button copies the entire block verbatim — including the '$' — so omit the prompt prefix. (add [skip style guide checks] to commit message to skip)"
+    severity: MEDIUM
+    paths:
+      include:
+        - "*.mdx"
+      exclude:
+        - "/src/content/changelog/**"
+        - "/src/content/release-notes/**"
+        - "/src/content/docs/style-guide/**"
+        - "/.semgrep/**"
+        - "/.github/**"
+    patterns:
+      - pattern-either:
+          - pattern-inside: |
+              ```bash
+              ... ... ...
+              ```
+          - pattern-inside: |
+              ```sh
+              ... ... ...
+              ```
+          - pattern-inside: |
+              ```shell
+              ... ... ...
+              ```
+      - pattern-regex: "(?m)^\\$\\s+\\S"

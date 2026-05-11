@@ -1,0 +1,65 @@
+rules:
+  - id: style-guide-contractions
+    languages: [generic]
+    message: "Found a contraction. The style guide requires the full form (e.g., 'do not' instead of \"don't\"). (add [skip style guide checks] to commit message to skip)"
+    severity: MEDIUM
+    paths:
+      include:
+        - "*.mdx"
+      exclude:
+        - "/src/content/changelog/**"
+        - "/src/content/release-notes/**"
+        - "/src/content/partials/**/changelog/**"
+        - "/src/content/docs/style-guide/**"
+        - "/.semgrep/**"
+        - "/.github/**"
+    patterns:
+      - pattern-regex: "\\b(don|can|won|isn|doesn|wouldn|couldn|shouldn|hasn|haven|wasn|weren|aren|didn|hadn|mustn|needn|shan|mightn|oughtn)['\u2019]t\\b|\\b(let|that|here|there|what|who|it|she|he)['\u2019]s\\b|\\b(we|you|they|I)['\u2019](re|ll|ve|d)\\b"
+
+  - id: style-guide-click-vs-select
+    languages: [generic]
+    message: "Found 'click' used for a UI interaction. The style guide requires 'select' (e.g., 'Select Save' not 'Click Save'). (add [skip style guide checks] to commit message to skip)"
+    severity: MEDIUM
+    paths:
+      include:
+        - "*.mdx"
+      exclude:
+        - "/src/content/changelog/**"
+        - "/src/content/release-notes/**"
+        - "/src/content/docs/style-guide/**"
+        - "/.semgrep/**"
+        - "/.github/**"
+    patterns:
+      - pattern-regex: "\\b[Cc]lick\\s+(the|on|here|a|an|your)\\b"
+
+  - id: style-guide-navigate-vs-goto
+    languages: [generic]
+    message: "Found 'navigate to'. The style guide requires 'go to' for directing users to a location. (add [skip style guide checks] to commit message to skip)"
+    severity: MEDIUM
+    paths:
+      include:
+        - "*.mdx"
+      exclude:
+        - "/src/content/changelog/**"
+        - "/src/content/release-notes/**"
+        - "/src/content/docs/style-guide/**"
+        - "/.semgrep/**"
+        - "/.github/**"
+    patterns:
+      - pattern-regex: "\\b[Nn]avigate\\s+to\\b"
+
+  - id: style-guide-enable-vs-turnon
+    languages: [generic]
+    message: "Found imperative 'Enable' or 'Disable'. The style guide requires 'turn on' / 'turn off' for UI actions. Descriptive uses (e.g., 'is enabled by default') are fine. (add [skip style guide checks] to commit message to skip)"
+    severity: MEDIUM
+    paths:
+      include:
+        - "*.mdx"
+      exclude:
+        - "/src/content/changelog/**"
+        - "/src/content/release-notes/**"
+        - "/src/content/docs/style-guide/**"
+        - "/.semgrep/**"
+        - "/.github/**"
+    patterns:
+      - pattern-regex: "\\b(Enable|Disable)\\s+(the|a|an|your|this|these|those)\\b"

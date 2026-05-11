@@ -60,9 +60,17 @@ jobs:
           if [ -s tools/relevant_changed_files.txt ]; then
             list_of_files=$(cat tools/relevant_changed_files.txt | tr '\n' ' ')
 
+            # Explicitly list active rule files. New rules in .semgrep/ that are
+            # not yet ready for CI (e.g., style-guide-prose.yaml, style-guide-links.yaml,
+            # style-guide-code-blocks.yaml) are intentionally omitted here — they can be
+            # run locally during the violation cleanup phase. Once pre-existing violations
+            # are resolved, the omitted configs should be added back to this list.
             # when ready to show errors add back --error below
             semgrep scan \
-              --config .semgrep --metrics=off \
+              --config .semgrep/directory-entry-validation.yaml \
+              --config .semgrep/style-guide-dates-in-docs.yaml \
+              --config .semgrep/style-guide-footnotes-in-tabs.yaml \
+              --metrics=off \
               --include "*.mdx" --include "*.mdx" \
               --json \
               $list_of_files \

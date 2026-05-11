@@ -1,0 +1,48 @@
+rules:
+  - id: style-guide-bad-link-text
+    languages: [generic]
+    message: "Found generic link text. The style guide requires descriptive link text (e.g., 'For more information, refer to [Page Title](/path/).' instead of '[here](/path/)'). (add [skip style guide checks] to commit message to skip)"
+    severity: MEDIUM
+    paths:
+      include:
+        - "*.mdx"
+      exclude:
+        - "/src/content/changelog/**"
+        - "/src/content/release-notes/**"
+        - "/src/content/docs/style-guide/**"
+        - "/.semgrep/**"
+        - "/.github/**"
+    patterns:
+      - pattern-regex: "\\[([Hh]ere|[Tt]his page|[Tt]his link|[Tt]his article|[Tt]his document|[Rr]ead more|[Ll]earn more|[Cc]lick here|[Ss]ee here)\\]\\("
+
+  - id: style-guide-full-internal-url
+    languages: [generic]
+    message: "Found a full URL pointing at developers.cloudflare.com. The style guide requires relative paths for internal links (e.g., '/workers/' instead of 'https://developers.cloudflare.com/workers/'). (add [skip style guide checks] to commit message to skip)"
+    severity: MEDIUM
+    paths:
+      include:
+        - "*.mdx"
+      exclude:
+        - "/src/content/changelog/**"
+        - "/src/content/release-notes/**"
+        - "/src/content/docs/style-guide/**"
+        - "/.semgrep/**"
+        - "/.github/**"
+    patterns:
+      - pattern-regex: "https?://developers\\.cloudflare\\.com/"
+
+  - id: style-guide-relative-file-links
+    languages: [generic]
+    message: "Found a relative file link ('./' or '../'). The docs framework does not support relative file links — use an absolute path from the site root (e.g., '/workers/get-started/'). (add [skip style guide checks] to commit message to skip)"
+    severity: MEDIUM
+    paths:
+      include:
+        - "*.mdx"
+      exclude:
+        - "/src/content/changelog/**"
+        - "/src/content/release-notes/**"
+        - "/src/content/docs/style-guide/**"
+        - "/.semgrep/**"
+        - "/.github/**"
+    patterns:
+      - pattern-regex: "\\]\\(\\.{1,2}/"
