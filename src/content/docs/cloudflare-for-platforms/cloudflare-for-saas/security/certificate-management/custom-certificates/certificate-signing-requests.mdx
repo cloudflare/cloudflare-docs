@@ -114,9 +114,9 @@ You should replace newlines in the certificate with literal `\n` characters, as 
 Cloudflare only accepts publicly trusted certificates. If you attempt to upload a self-signed certificate, it will be rejected.
 
 ```bash
-$ MYCERT="$(cat app_example_com.pem|perl -pe 's/\r?\n/\\n/'|sed -e 's/..$//')"
+MYCERT="$(cat app_example_com.pem|perl -pe 's/\r?\n/\\n/'|sed -e 's/..$//')"
 
-$ request_body=$(< <(cat <<EOF
+request_body=$(< <(cat <<EOF
 {
   "hostname": "app.example.com",
   "ssl": {

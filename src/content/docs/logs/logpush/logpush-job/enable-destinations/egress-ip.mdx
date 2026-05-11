@@ -135,10 +135,10 @@ https://logpush.yourdestinationendpoint.com?header_CF-Access-Client-Id=YOUR_CLIE
 Test that your WAF rules are blocking unauthorized requests:
 
 ```bash
-$ curl https://logpush.yourdestinationendpoint.com
+curl https://logpush.yourdestinationendpoint.com
 # Expected: error code: 1020
 
-$ curl -H "X-Logpush-Secret: wrong-token" https://logpush.yourdestinationendpoint.com
+curl -H "X-Logpush-Secret: wrong-token" https://logpush.yourdestinationendpoint.com
 # Expected: error code: 1020
 ```
 

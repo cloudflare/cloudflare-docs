@@ -61,7 +61,7 @@ kinesis://<STREAM_NAME>?region=<AWS_REGION>&sts-assume-role-arn=arn:aws:iam::<YO
 ### STS Assume Role example
 
 ```bash
-$ curl https://api.cloudflare.com/client/v4/zones/$ZONE_TAG/logpush/jobs \
+curl https://api.cloudflare.com/client/v4/zones/$ZONE_TAG/logpush/jobs \
 -H 'Authorization: Bearer <API_TOKEN>' \
 -H 'Content-Type: application/json' -d '{
   "name": "kinesis",
@@ -82,7 +82,7 @@ kinesis://<STREAM_NAME>?region=<AWS_REGION>&access-key-id=<AWS_ACCESS_KEY_ID>&se
 ### IAM Access Key example 
 
 ```bash
-$ curl https://api.cloudflare.com/client/v4/zones/$ZONE_TAG/logpush/jobs \
+curl https://api.cloudflare.com/client/v4/zones/$ZONE_TAG/logpush/jobs \
 -H 'Authorization: Bearer <API_TOKEN>' \
 -H 'Content-Type: application/json' -d '{
   "name": "kinesis",
