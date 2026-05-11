@@ -202,10 +202,10 @@ To connect your Iceberg engine to R2 Data Catalog, you must provide a Cloudflare
 
 ### Create API token in the dashboard
 
-Create an [R2 API token](/r2/api/tokens/#permissions) with **Admin Read & Write** or **Admin Read only** permissions. These permissions include both:
+Create an [R2 API token](/r2/api/tokens/#permissions) with **Admin Read & Write** permissions. These permissions include both:
 
-- Access to R2 Data Catalog (read-only or read/write, depending on chosen permission)
-- Access to R2 storage (read-only or read/write, depending on chosen permission)
+- Access to R2 Data Catalog (read/write)
+- Access to R2 storage (read/write)
 
 Providing the resulting token value to your Iceberg engine gives it the ability to manage catalog metadata and handle data operations (reads or writes to R2).
 
