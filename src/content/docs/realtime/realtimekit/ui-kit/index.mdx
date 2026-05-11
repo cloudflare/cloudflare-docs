@@ -9,7 +9,7 @@ products:
   - realtime
 ---
 
-import { Tabs, TabItem, Render } from "~/components";
+import { Tabs, TabItem, Render, Details } from "~/components";
 import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnippet.astro";
 
 The default RealtimeKit Meeting UI component gives you a complete meeting experience out of the box, with all the essential features built in. Drop it into your app and you are ready to go.
@@ -276,10 +276,75 @@ Call `RealtimeKitUIBuilder.dispose()` when you no longer need the meeting UI.
 
 <RTKCodeSnippet id="mobile-react-native">
 
+<Details open={true} header="Additional steps for background audio/video support (Android only)">
+
+To enable background audio and video support on Android, add the following permissions and service declaration to your `AndroidManifest.xml`.
+
+Add these permissions to your `AndroidManifest.xml` file:
+
+```xml
+<uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+```
+
+Add the following `KeepAlive` service declaration to your `AndroidManifest.xml` file:
+
+```xml
+<service
+  android:enabled="true"
+  android:foregroundServiceType="mediaPlayback|camera|microphone"
+  android:name="com.cloudflare.realtimekit.ui.KeepAliveService">
+</service>
+```
+
+:::note
+`RtkMeeting` has built-in support for background audio and video on Android. If you are using `RtkMeeting`, the manifest changes above are all you need.
+:::
+
+**Optional:** If you are building a custom UI instead of using `RtkMeeting`, you need to manage the foreground service manually. Start the service before joining the meeting and stop it when the meeting ends:
+
+```typescript
+import { Platform, PermissionsAndroid, NativeModules } from "react-native";
+
+const RealtimeKitUIModule = NativeModules.CoreUiKit;
+
+// Start the foreground service for background support
+async function startKeepAliveService() {
+	if (Platform.OS !== "android") return;
+
+	// Request notification permission on Android 13+ (API level 33)
+	if ((Platform.Version as number) >= 33) {
+		const result = await PermissionsAndroid.request(
+			PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+		);
+		if (result !== PermissionsAndroid.RESULTS.GRANTED) {
+			console.warn("Permission required for background meeting notification");
+		}
+	}
+
+	const isRunning = await RealtimeKitUIModule.isForegroundServiceRunning();
+	if (!isRunning) {
+		await RealtimeKitUIModule.startService();
+	}
+}
+
+// Stop the foreground service when the meeting ends
+async function stopKeepAliveService() {
+	if (Platform.OS !== "android") return;
+	await RealtimeKitUIModule.stopService();
+}
+```
+
+:::note
+The `POST_NOTIFICATIONS` runtime permission is only required on Android 13 (API level 33) and above. On earlier Android versions, notification permission is granted at install time through the manifest declaration.
+:::
+
+</Details>
 ## Initialize the SDK
 
 Use the `useRealtimeKitClient` hook from the core React Native package to create a meeting instance:
-
 Use the [Add participant API](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/) to fetch the `authToken`.
 
 ```typescript
