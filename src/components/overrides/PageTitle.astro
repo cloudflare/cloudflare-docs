@@ -111,18 +111,18 @@ if (!hideBreadcrumbs) {
 {summary && <Description set:html={marked.parse(summary)} />}
 
 {
-	component && (
-			<div class="sl-markdown-content md-ignore">
-				<ComponentUsage component={component} />
-			</div>
-	)
-}
-
-{
 	showPageActions && (
 		<div class="page-actions-wrapper">
 			<PageActions />
 		</div>
+	)
+}
+
+{
+	component && (
+			<div class="sl-markdown-content md-ignore">
+				<ComponentUsage component={component} />
+			</div>
 	)
 }
 
