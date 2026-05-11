@@ -1,0 +1,32 @@
+releaseNotes: |-
+  This release introduces the new Cloudflare One Client UI for Linux! You can expect a cleaner and more intuitive design as well as easier access to common actions and information. Here are some of the many things we have found our users appreciate:
+
+  - Right click context menu to access the most common client actions quickly
+  - Built-in captive portal login experience
+
+  **Changes and improvements**
+  - Added a new CLI command: warp-cli mdm refresh. This command executes an immediate refresh of the Mobile Device Management (MDM) configuration file.
+  - Official support for RHEL 9 has been added for Cloudflare Mesh nodes. To install the RHEL 9 package, the Extra Packages for Enterprise Linux (EPEL) repository must be active, as it contains dependencies required for the tray icon and captive portal webview.
+
+  **Known issues**
+  - Registration may hang at "Checking your organization configuration" due to IPC errors. A system reboot should resolve the error, allowing registration to proceed.
+version: 2026.4.1350.0
+releaseDate: 2026-05-11T15:17:54.055Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/fedora35-intel/version/2026.4.1350.0
+packageSize: 79891600
+platformName: Linux
+linuxPlatforms:
+  fedora35-intel: 79891600
+  fedora35-arm: 78619626
+  bookworm-intel: 77317238
+  jammy-intel: 77317298
+  centos8-intel: 79809136
+  trixie-intel: 77090296
+  fedora34-intel: 80242129
+  jammy-arm: 76068450
+  centos8-arm: 78894283
+  trixie-arm: 76331580
+  noble-arm: 76500742
+  noble-intel: 77096692
+  fedora34-arm: 79046082
+  bookworm-arm: 76092636

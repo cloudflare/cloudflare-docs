@@ -1,0 +1,16 @@
+releaseNotes: |-
+  This release introduces the new Cloudflare One Client UI for macOS! You can expect a cleaner and more intuitive design as well as easier access to common actions and information. Here are some of the many things we have found our users appreciate:
+
+  - Right click context menu to access the most common client actions quickly
+  - Built-in captive portal login experience
+
+  **Additional Changes and improvements**
+  - Added a new CLI command: warp-cli mdm refresh. This command executes an immediate refresh of the Mobile Device Management (MDM) configuration file.
+
+  **Known issues**
+  - Registration may hang at "Checking your organization configuration" due to IPC errors. A system reboot should resolve the error, allowing registration to proceed.
+version: 2026.4.1350.0
+releaseDate: 2026-05-11T17:35:57.027Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2026.4.1350.0
+packageSize: 133396434
+platformName: macOS
