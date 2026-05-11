@@ -18,6 +18,8 @@ concurrency:
 jobs:
   check-codeowner:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     outputs:
       is-codeowner: ${{ steps.check.outputs.is-codeowner }}
     steps:
