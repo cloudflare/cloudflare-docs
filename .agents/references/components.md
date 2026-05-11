@@ -2,8 +2,6 @@
 
 Full usage details for MDX components available in this repository. All components are imported from `~/components`. Imports must appear after the frontmatter block.
 
-For the quick-reference table of components, see `.agents/references/style-guide.md`.
-
 ---
 
 ## Render (partials)
