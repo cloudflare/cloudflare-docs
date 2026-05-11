@@ -9,7 +9,9 @@ sidebar:
 
 ---
 
-The gokeyless key server exposes a [Prometheus](https://prometheus.io/) metrics endpoint that you can use to monitor signing performance, error rates, connection health, and certificate expiry.
+The gokeyless key server exposes a [Prometheus](https://prometheus.io/) metrics endpoint that you can use to monitor signing performance, error rates, connection health, and certificate expiry. This endpoint can also be scraped by the OpenTelemetry Collector Prometheus receiver, making the metrics available to any OpenTelemetry-compatible backend.
+
+
 
 ## Metrics endpoint
 
