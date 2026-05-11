@@ -12,11 +12,7 @@ import { TypeScriptExample, WranglerConfig } from "~/components";
 
 Create point-in-time snapshots of sandbox directories and restore them using copy-on-write overlays. Backups are stored in an R2 bucket and use squashfs compression.
 
-Backup and restore is useful when you need workspace state to come back later, such as a project directory under `/workspace`. This is often the clearest approach when you want to preserve the working project across sandbox lifecycles.
-
-If you want `/workspace` to behave like a persistent working directory, backup and restore is often a better fit. If you want a separate persisted storage directory attached to the sandbox, use bucket mounts.
-
-If your image contains starter files, be aware that mounting a bucket over `/workspace` can overlay those files in production. One practical pattern is to keep starter files outside `/workspace` or copy them into `/workspace` during initialization, then create backups of `/workspace` if you want that project state to persist over time.
+Use backup and restore when you want workspace state, such as `/workspace`, to come back later. This is often a better fit for persistent project directories, while bucket mounts are better suited to separate persisted storage paths. If you mount a bucket over `/workspace`, be aware that it can overlay files seeded by your image in production.
 
 ## Prerequisites
 

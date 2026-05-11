@@ -13,9 +13,7 @@ import { TypeScriptExample, WranglerConfig } from "~/components";
 Mount S3-compatible object storage buckets as local filesystem paths. Access object storage using standard file operations.
 
 :::caution[Mounting `/workspace`]
-Mounting a bucket at `/workspace` or a subpath under `/workspace` can be confusing for normal app or project setups. In production, a bucket mount replaces the visible contents at that path. It does not merge bucket contents with files already present in your image or template.
-
-If you use `/workspace` as a mount point, plan for the mounted bucket to overlay that directory. For many applications, it is simpler to mount buckets at paths such as `/data`, `/storage`, or `/mnt/uploads`, and use [Backup and restore](/sandbox/guides/backup-restore/) when you want the working project in `/workspace` to persist across sandbox lifecycles.
+Mounting a bucket at `/workspace` or a subpath under it can be confusing in app or project setups. In production, the mount overlays that path instead of merging with files already in the image or template. If you want `/workspace` itself to persist over time, [Backup and restore](/sandbox/guides/backup-restore/) is often a better fit.
 :::
 
 :::note[S3-compatible providers]
@@ -30,23 +28,6 @@ Mount S3-compatible buckets when you need:
 - **Large datasets** - Process data without downloading
 - **Shared storage** - Multiple sandboxes access the same data
 - **Cost-effective persistence** - Cheaper than keeping sandboxes alive
-
-## Choose the right persistence pattern
-
-Use `mountBucket()` when you want persisted external storage for:
-
-- datasets
-- user uploads
-- generated artifacts
-- shared storage across sandboxes
-
-Consider backup and restore when you want to persist:
-
-- the project root
-- source files under `/workspace`
-- a working directory that should come back as a whole later
-
-If your image seeds project files, mounting a bucket over `/workspace` can hide those seeded files in production. To avoid surprises, keep template files outside `/workspace`, for example under `/opt/template`, and copy them into `/workspace` when you initialize the project. If your goal is to preserve that initialized workspace over time, backup and restore is usually the better fit.
 
 ## Mount an R2 bucket
 

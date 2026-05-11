@@ -15,7 +15,7 @@ import { Render, PackageManagers, TypeScriptExample } from "~/components";
 
 Mount object storage buckets as local filesystem paths to persist data across sandbox lifecycles. This tutorial uses Cloudflare R2, but the same approach works with any S3-compatible provider.
 
-This tutorial shows how to persist an external data directory mounted at `/data`. It is a good fit for persisted storage such as datasets, uploads, and artifacts. If you are trying to preserve the working project in `/workspace`, review [Backup and restore](/sandbox/guides/backup-restore/) as well.
+This tutorial shows how to persist an external data directory mounted at `/data`. If you want the working project in `/workspace` to persist, refer to [Backup and restore](/sandbox/guides/backup-restore/).
 
 **Time to complete:** 20 minutes
 
@@ -177,10 +177,6 @@ Try this flow:
 };
 ```
 </TypeScriptExample>
-
-:::note[Mounting `/workspace`]
-Some applications may choose to mount a bucket at `/workspace`, but it is important to understand the tradeoff: in production, the mount overlays that path and can hide files that were seeded there by your image or template. If you want the visible workspace contents to persist over time, backup and restore is usually the clearer approach.
-:::
 
 :::note[Replace YOUR_ACCOUNT_ID]
 Replace `YOUR_ACCOUNT_ID` in the endpoint URL with your Cloudflare account ID. Find it in the [dashboard](https://dash.cloudflare.com/) under **R2** > **Overview**.
