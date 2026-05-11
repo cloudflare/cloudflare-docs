@@ -72,22 +72,30 @@ package.json @cloudflare/content-engineering
 /src/content/docs/cloudflare-one/applications/ @alexmoraru7 @kennyj42 @ranbel @cloudflare/product-owners
 /src/content/docs/cloudflare-one/identity/ @kennyj42 @ranbel @cloudflare/product-owners
 /src/content/docs/cloudflare-one/access-controls/ @kennyj42 @ranbel @cloudflare/product-owners
-/src/content/docs/cloudflare-one/team-and-resources/devices/ @ranbel @cloudflare/product-owners
+/src/content/docs/cloudflare-one/team-and-resources/devices/ @ranbel @cf-rhett @cloudflare/product-owners
 /src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/ @nikitacano @ranbel @cloudflare/product-owners
+/src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/ @nikitacano @ranbel @cf-rhett @cloudflare/product-owners
 /src/content/docs/cloudflare-one/networks/connectors/cloudflare-mesh/ @nikitacano @ranbel @cloudflare/product-owners
 /src/content/docs/tunnel/ @nikitacano @ranbel @cloudflare/product-owners
 /src/content/partials/cloudflare-one/tunnel/ @nikitacano @ranbel @cloudflare/product-owners
+/src/content/partials/cloudflare-one/warp/ @ranbel @cf-rhett @cloudflare/product-owners
 /src/content/docs/cloudflare-one/cloud-and-saas-findings/ @Maddy-Cloudflare @codyanthony850 @cloudflare/product-owners
 /src/content/docs/cloudflare-one/traffic-policies/ @alexmoraru7 @Maddy-Cloudflare @codyanthony850 @cloudflare/product-owners
 /src/content/docs/cloudflare-one/remote-browser-isolation/ @codyanthony850 @cloudflare/product-owners
 /src/content/docs/cloudflare-one/data-loss-prevention/ @Maddy-Cloudflare @codyanthony850 @cloudflare/product-owners
 /src/content/docs/cloudflare-one/insights/dex/ @codyanthony850 @cloudflare/product-owners
 /src/content/docs/email-security/ @Maddy-Cloudflare @cloudflare/product-owners
+/src/assets/images/cloudflare-one/ @ranbel @Maddy-Cloudflare @codyanthony850 @cf-rhett @cloudflare/product-owners
 
 # Consumer products
 
-/src/content/docs/1.1.1.1/ @RebeccaTamachiro @cloudflare/product-owners
-/src/content/docs/warp-client/ @ranbel @cloudflare/product-owners
+/src/content/docs/1.1.1.1/ @RebeccaTamachiro @cf-rhett @cloudflare/product-owners
+/src/content/partials/1.1.1.1/ @RebeccaTamachiro @cf-rhett @cloudflare/product-owners
+/src/assets/images/1.1.1.1/ @RebeccaTamachiro @cf-rhett @cloudflare/product-owners
+/src/content/docs/warp-client/ @ranbel @cf-rhett @cloudflare/product-owners
+/src/content/partials/warp-client/ @ranbel @cf-rhett @cloudflare/product-owners
+/src/content/warp-releases/ @ranbel @cf-rhett @cloudflare/product-owners
+/src/content/changelog/cloudflare-one-client/ @ranbel @cf-rhett @cloudflare/pm-changelogs @cloudflare/product-owners
 
 # Core platform
 
