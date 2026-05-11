@@ -1,0 +1,13 @@
+{
+	"private": true,
+	"version": "0.0.0",
+	"name": "check-codeowner",
+	"scripts": {
+		"build": "esbuild index.ts --bundle --format=cjs --platform=node --minify --outfile=index.js"
+	},
+	"devDependencies": {
+		"@actions/core": "3.0.0",
+		"@actions/github": "9.0.0",
+		"esbuild": "0.14.39"
+	}
+}

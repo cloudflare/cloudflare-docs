@@ -1,0 +1,15 @@
+name: "Check CODEOWNERS"
+description: "Check whether the event actor is listed in CODEOWNERS, including team membership."
+
+inputs:
+  GH_ORG_TOKEN:
+    description: "Token with read:org scope for resolving team membership"
+    required: true
+
+outputs:
+  is-codeowner:
+    description: "true if the actor is a CODEOWNER, false otherwise"
+
+runs:
+  using: "node24"
+  main: "index.js"
