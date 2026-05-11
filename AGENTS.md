@@ -140,10 +140,14 @@ pnpm exec tsm bin/validate-redirects.ts  # Only if public/__redirects was modifi
 
 ### Fixing formatting
 
+After editing any `.ts`, `.tsx`, `.js`, `.mjs`, or `.css` file, run:
+
 ```bash
 pnpm run format             # Auto-fix code + data files
 pnpm run format:content     # Auto-fix MDX/MD/Astro files
 ```
+
+Always format edited files before committing — CI runs `pnpm run format:core:check` and will fail if formatting is off.
 
 ### Syncing types after content collection changes
 

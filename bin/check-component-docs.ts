@@ -18,11 +18,7 @@ const STYLE_GUIDE_COMPONENTS_DIR = path.join(
 	"style-guide",
 	"components",
 );
-const AGENT_REFERENCE = path.join(
-	".agents",
-	"references",
-	"components.md",
-);
+const AGENT_REFERENCE = path.join(".agents", "references", "components.md");
 
 // Extract the value of `styleGuide.component` from a frontmatter block.
 // Returns undefined if the field is not present.
@@ -68,11 +64,13 @@ if (missing.length > 0) {
 }
 
 console.log(
-	`✓ All ${styleGuideFiles.filter((f) => {
-		const content = fs.readFileSync(
-			path.join(STYLE_GUIDE_COMPONENTS_DIR, f),
-			"utf-8",
-		);
-		return extractComponentName(content) !== undefined;
-	}).length} documented components are referenced in .agents/references/components.md`,
+	`✓ All ${
+		styleGuideFiles.filter((f) => {
+			const content = fs.readFileSync(
+				path.join(STYLE_GUIDE_COMPONENTS_DIR, f),
+				"utf-8",
+			);
+			return extractComponentName(content) !== undefined;
+		}).length
+	} documented components are referenced in .agents/references/components.md`,
 );
