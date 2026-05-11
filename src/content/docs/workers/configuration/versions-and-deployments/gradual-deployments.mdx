@@ -159,6 +159,18 @@ curl -s https://example.com -H 'Cloudflare-Workers-Version-Overrides: my-worker-
 
 The dictionary can contain multiple key-value pairs. Each key indicates the name of the Worker the override should be applied to. The value indicates the version ID that should be used and must be a [String](https://www.rfc-editor.org/rfc/rfc8941#name-strings).
 
+You can set the `Cloudflare-Workers-Version-Overrides` header both when making an external request from the Internet to your Worker, as well as when making a subrequest from one Worker to another Worker using a [service binding](/workers/runtime-apis/bindings/service-bindings/). The header is not automatically propagated through service bindings — the calling Worker must explicitly set it on the subrequest:
+
+```js
+// Caller Worker — explicitly forward an override on the service-binding subrequest
+await env.MY_SERVICE.fetch("https://example.com/", {
+	headers: {
+		"Cloudflare-Workers-Version-Overrides":
+			'my-worker-name="dc8dcd28-271b-4367-9840-6c244f84cb40"',
+	},
+});
+```
+
 A version override will only be applied if the specified version is in the current deployment. The versions in the current deployment can be found using the [`wrangler deployments list`](/workers/wrangler/commands/general/#deployments-list) command or on the **Workers & Pages** page of the Cloudflare dashboard > Select your Workers > Deployments > Active Deployment.
 
 :::note[Verifying that the version override was applied]
