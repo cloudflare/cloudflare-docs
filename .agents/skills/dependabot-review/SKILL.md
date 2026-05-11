@@ -1,5 +1,5 @@
 ---
-name: verify-dependabot-pr
+name: dependabot-review
 description: Analyzes a Dependabot PR to determine what actually changed in each bumped package and whether those changes affect this repo. Reports changed APIs/methods, which doc pages use them, and the realistic probability of any visible impact on the docs site.
 ---
 

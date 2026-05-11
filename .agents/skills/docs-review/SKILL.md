@@ -3,7 +3,9 @@ name: docs-review
 description: Reviews documentation PRs and provides GitHub PR suggestions. Load when asked to review, suggest changes, or provide feedback on docs content. Covers MDX, frontmatter, style guide, components, and content accuracy.
 ---
 
-Review documentation changes for correctness, style, and structure. Use AGENTS.md and the style guide at `src/content/docs/style-guide/` as primary references.
+Review documentation changes for correctness, style, and structure.
+
+**Primary style reference:** `.agents/references/style-guide.md` — read this before reviewing. It contains the canonical rules for MDX syntax, frontmatter, writing style, formatting, links, code blocks, and admonitions. The full style guide lives at `src/content/docs/style-guide/` if you need to go deeper on any topic.
 
 ## When to Suggest vs. When to Edit
 
@@ -146,21 +148,21 @@ Read full files for context — code that looks wrong in a diff may be correct i
 
 ### 2. Check Against Rules
 
-See `references/content-rules.md` for the full checklist. Quick reference:
+See `.agents/references/style-guide.md` for the full rules. Quick reference:
 
 | Rule                     | Detail                                                                                               |
 | ------------------------ | ---------------------------------------------------------------------------------------------------- |
 | Unescaped MDX characters | `{`, `}`, `<`, `>` in prose must be escaped or in backticks                                          |
 | Component imports        | Every component used must be imported from `~/components`                                            |
-| Code block languages     | Must be lowercase and in the supported set (see AGENTS.md)                                           |
-| Internal links           | Absolute paths, no file extensions, no `https://developers.cloudflare.com`                           |
-| Heading hierarchy        | Sequential: H2 then H3 then H4 — never skip                                                          |
-| Frontmatter              | `title` required; `pcx_content_type` must be a valid value                                           |
-| Style guide              | Active voice, no contractions, "select" not "click", bold for UI elements                            |
-| Workers code             | Must use `TypeScriptExample` component, not bare `js`/`ts` fences                                    |
-| Config blocks            | Must use `WranglerConfig` component with TOML input                                                  |
+| Workers code             | Must use `TypeScriptExample`, not bare `js`/`ts` fences                                              |
+| Config blocks            | Must use `WranglerConfig` with TOML input; use `$today` for `compatibility_date`                     |
+| Package install commands | Must use `PackageManagers`, not bare `sh` fences                                                     |
+| Code block languages     | Lowercase, from the supported set — see `.agents/references/style-guide.md`                          |
+| Internal links           | Root-relative paths, trailing slash, no file extensions, no full `developers.cloudflare.com` URLs    |
+| Frontmatter              | `title` and `description` required; `pcx_content_type` must be a valid value                         |
+| Writing style            | See `.agents/references/style-guide.md` — covers voice, contractions, terminology, headings, etc.    |
 | Code correctness         | For type checking, API usage, and binding patterns, load the `code-review` skill                     |
-| Accuracy                 | Claims must be substantiated — link to sources of truth, do not explain inline what other docs cover |
+| Accuracy                 | Claims must be substantiated — link to sources of truth, do not re-explain what other pages cover    |
 
 ### 3. Assess What to Flag
 
