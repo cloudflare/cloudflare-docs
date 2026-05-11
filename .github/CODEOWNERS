@@ -237,6 +237,7 @@ src/content/docs/smart-shield/ @RebeccaTamachiro @cloudflare/pcx-technical-writi
 /src/content/docs/secrets-store/ @RebeccaTamachiro @cloudflare/pcx-technical-writing @cloudflare/product-owners
 /src/content/docs/security-center/ @cloudflare/pcx-technical-writing @cloudflare/product-owners
 /src/content/docs/ssl/ @RebeccaTamachiro @cloudflare/pcx-technical-writing @cloudflare/product-owners
+/src/content/docs/ssl/post-quantum-cryptography @lukevalenta @cjpatton @bwesterb @cloudflare/pcx-technical-writing @cloudflare/product-owners
 /src/content/docs/waf/ @pedrosousa @cloudflare/firewall @cloudflare/pcx-technical-writing @cloudflare/product-owners
 /src/content/docs/waf/change-log/ @pedrosousa @cloudflare/firewall @vs-mg @cloudflare/pcx-technical-writing @cloudflare/product-owners
 /src/content/docs/cloudflare-challenges/ @patriciasantaana @cloudflare/pcx-technical-writing @cloudflare/product-owners
