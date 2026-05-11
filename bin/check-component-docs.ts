@@ -24,35 +24,6 @@ const AGENT_REFERENCE = path.join(
 	"components.md",
 );
 
-// Components that have style guide pages but are intentionally excluded from
-// the agent reference because they are system-level, data-driven, or too
-// specialised for general content authoring.
-const EXCLUDED_COMPONENTS = new Set([
-	"AnchorHeading",        // Internal — heading utility, not authored directly
-	"AvailableNotifications", // Data-driven, system component
-	"Description",          // Internal style guide component
-	"ExternalResources",    // Specialised, rarely hand-authored
-	"Feature",              // Product feature cards, data-driven
-	"FeatureTable",         // Data-driven
-	"FileTree",             // Specialised, low frequency
-	"LinkButton",           // Starlight built-in, rarely used in docs prose
-	"LinkCard",             // Starlight built-in (LinkCard ≠ LinkTitleCard)
-	"ListTutorials",        // Auto-generated listing, not hand-authored
-	"PagesBuildPreset",     // Pages-specific, data-driven
-	"ProductAvailabilityText", // System component
-	"ProductChangelog",     // System component
-	"ProductFeatures",      // Data-driven
-	"PublicStats",          // Internal stats component
-	"RelatedProduct",       // Specialised cross-product links
-	"ResourcesBySelector",  // Data-driven
-	"RuleID",               // Security rules specific
-	"SubtractIPCalculator", // Single-use calculator
-	"Width",                // Layout utility
-	"WranglerCLI",          // Auto-generated CLI reference, not hand-authored
-	"WranglerNamespace",    // Wrangler-specific utility
-	"YouTubeVideos",        // Playlist component, distinct from YouTube
-]);
-
 // Extract the value of `styleGuide.component` from a frontmatter block.
 // Returns undefined if the field is not present.
 function extractComponentName(content: string): string | undefined {
@@ -76,7 +47,6 @@ for (const file of styleGuideFiles) {
 	const componentName = extractComponentName(content);
 
 	if (!componentName) continue; // No styleGuide.component field — skip
-	if (EXCLUDED_COMPONENTS.has(componentName)) continue; // Deliberately excluded
 
 	// Check that the component name appears somewhere in the reference file.
 	if (!referenceContent.includes(componentName)) {

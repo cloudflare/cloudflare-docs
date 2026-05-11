@@ -517,3 +517,358 @@ import { Markdown } from "~/components";
 ```
 
 Limitations: no MDX features, no Astro image optimization, no syntax highlighting in code blocks, no heading IDs or table of contents entries. Use sparingly — prefer standard Markdown prose when not inside a JSX context.
+
+---
+
+## AnchorHeading
+
+Creates a heading with a custom anchor ID — useful when writing headings inside components or non-Markdown files. In regular MDX, headings get anchors automatically via rehype plugins, so this is rarely needed. To override a heading ID in MDX, use an inline comment instead:
+
+```mdx
+## My heading {/*custom-anchor*/}
+```
+
+When you do need the component:
+
+```mdx
+import { AnchorHeading } from "~/components";
+
+<AnchorHeading title="How to use AnchorHeading" slug="use-anchorheading" depth={2} />
+```
+
+Props: `title` (required, heading text), `slug` (required, custom anchor ID), `depth` (heading level, e.g. `2` for H2).
+
+---
+
+## LinkButton
+
+Renders a styled link button. Useful for primary CTAs on overview and get-started pages.
+
+```mdx
+import { LinkButton } from "~/components";
+
+<LinkButton href="/workers/get-started/">Get started</LinkButton>
+<LinkButton href="/workers/get-started/" variant="secondary" icon="external">More information</LinkButton>
+<LinkButton href="/workers/get-started/" variant="minimal">Other stuff</LinkButton>
+```
+
+Variants: `primary` (default), `secondary`, `minimal`.
+
+---
+
+## LinkCard / CardGrid
+
+Starlight built-in. Renders a card with a title, description, and link. Use `CardGrid` to display multiple cards in a grid layout.
+
+```mdx
+import { LinkCard, CardGrid } from "~/components";
+
+<LinkCard
+  title="Get started"
+  description="Deploy your first Worker in minutes."
+  href="/workers/get-started/"
+/>
+
+<CardGrid>
+  <LinkCard title="Workers" description="..." href="/workers/" />
+  <LinkCard title="Pages" description="..." href="/pages/" />
+</CardGrid>
+```
+
+---
+
+## FileTree
+
+Starlight built-in. Displays a file and directory tree. Use bold to highlight the current file.
+
+```mdx
+import { FileTree } from "~/components";
+
+<FileTree>
+- src/
+  - index.ts
+  - **worker.ts**
+- wrangler.toml
+</FileTree>
+```
+
+---
+
+## Description
+
+Renders a short description block directly below the page title. Prefer the `summary` frontmatter field for most use cases — use this component only when you need the description to appear conditionally or within a component.
+
+```mdx
+import { Description } from "~/components";
+
+<Description>
+  A short description rendered below the page title.
+</Description>
+```
+
+---
+
+## Feature
+
+Renders a feature card with a name and link. Used on product overview pages to list available features.
+
+```mdx
+import { Feature } from "~/components";
+
+<Feature header="Durable Objects" href="/durable-objects/">
+  Coordinate state and logic across Workers with strongly consistent storage.
+</Feature>
+```
+
+Props: `header` (required, feature name), `href` (required, link to feature docs). Body text is the feature description.
+
+---
+
+## RelatedProduct
+
+Renders a related product card with an icon, name, and link. Used on overview pages to surface related Cloudflare products.
+
+```mdx
+import { RelatedProduct } from "~/components";
+
+<RelatedProduct header="R2" href="/r2/" product="r2">
+  Store large amounts of unstructured data without egress fees.
+</RelatedProduct>
+```
+
+Props: `header` (required, product name), `href` (required), `product` (required, slugified product name for icon lookup). Body text is the product description.
+
+---
+
+## FeatureTable
+
+Renders a feature availability table by plan, sourced from `src/content/plans/index.json`. Use `id` in dot notation: `<product>.<feature>`.
+
+```mdx
+import { FeatureTable } from "~/components";
+
+<FeatureTable id="analytics.logpush" />
+<FeatureTable id="analytics.logpush" skipAvailability="true" />
+```
+
+Props: `id` (required, dot-notation path into `src/content/plans/`), `skipAvailability` (boolean string `"true"`/`"false"`, default `"false"`).
+
+---
+
+## ProductFeatures
+
+Renders a full feature list for a product grouping, sourced from `src/content/plans/index.json`.
+
+```mdx
+import { ProductFeatures } from "~/components";
+
+<ProductFeatures id="dns" />
+```
+
+Props: `id` (required, product key in `src/content/plans/`).
+
+---
+
+## ProductChangelog
+
+Embeds changelog entries for a product inline on a docs page.
+
+```mdx
+import { ProductChangelog } from "~/components";
+
+<ProductChangelog product="workers" />
+<ProductChangelog area="platform" />
+```
+
+Props: `product` and `area` are mutually exclusive. `hideEntry` (string, hides a specific entry by name). `scheduled` (boolean, default `false` — set `true` for WAF scheduled changelogs).
+
+---
+
+## ProductAvailabilityText
+
+Renders a product's lifecycle status (Beta, Alpha, etc.) inline. Renders nothing for GA products, so safe to leave in place as a product matures.
+
+```mdx
+import { ProductAvailabilityText } from "~/components";
+
+Cloud Connector <ProductAvailabilityText product="cloud-connector" /> lets you route traffic to public cloud providers.
+```
+
+Props: `product` (required, slug matching a file in `src/content/directory/`), `parentheses` (string `"true"`/`"false"`, default `"true"` — wraps output in parentheses).
+
+---
+
+## PublicStats
+
+Renders a live public statistic inline in prose. Available IDs are defined in `src/components/PublicStats.astro`.
+
+```mdx
+import { PublicStats } from "~/components";
+
+Cloudflare has data centers in <PublicStats id="data_center_cities" />.
+Our network handles <PublicStats id="total_bandwidth" />.
+```
+
+To add or update stats, edit `src/components/PublicStats.astro`.
+
+---
+
+## ExternalResources
+
+Pulls demo apps or videos from the central `src/content/apps/index.yaml` and `src/content/videos/index.yaml` collections, filtered by tags and products.
+
+```mdx
+import { ExternalResources } from "~/components";
+
+<ExternalResources type="apps" tags={["AI"]} products={["Workers"]} />
+<ExternalResources type="videos" tags={["AI"]} />
+```
+
+Props: `type` (required, `"apps"` or `"videos"`), `tags` (string array, filter by tag), `products` (string array, filter by product), `cloudflareOnly` (boolean, default `true`).
+
+---
+
+## ResourcesBySelector
+
+Displays a filterable list of docs pages pulled by `pcx_content_type`, `tags`, and/or `products` frontmatter. Used on example and tutorial index pages.
+
+```mdx
+import { ResourcesBySelector } from "~/components";
+
+<ResourcesBySelector
+  directory="workers/examples/"
+  types={["example"]}
+  filterables={["tags"]}
+/>
+```
+
+Props: `directory` (required, relative to `src/content/docs/`), `types` (array of `pcx_content_type` values), `filterables` (frontmatter properties to show as filter dropdowns), `tags` (pre-filter by tag), `products` (pre-filter by product), `showDescriptions` (boolean, default `true`), `showLastUpdated` (boolean, default `false`).
+
+---
+
+## ListTutorials
+
+Auto-generates a table of tutorial pages for the current product. Used on tutorial index pages.
+
+```mdx
+import { ListTutorials } from "~/components";
+
+<ListTutorials />
+```
+
+---
+
+## PagesBuildPreset
+
+Displays build preset details for a Pages framework.
+
+```mdx
+import { PagesBuildPreset } from "~/components";
+
+<PagesBuildPreset framework="next-js" />
+<PagesBuildPreset framework="gatsby" />
+```
+
+Props: `framework` (required, framework slug).
+
+---
+
+## WranglerCLI
+
+Renders a Wrangler command wrapped in `PackageManagers`, with optional argument display. Use when documenting a specific invocation of a Wrangler command (as opposed to `WranglerCommand` which renders the full command reference).
+
+```mdx
+import { WranglerCLI } from "~/components";
+
+<WranglerCLI command="deploy" positionals={["src/index.mjs"]} flags={{ name: "my-worker" }} />
+```
+
+Props: `command` (required), `positionals` (string array of positional args), `flags` (record of flag name → value), `showArgs` (boolean, default `false` — shows available arguments in a `Details` block).
+
+---
+
+## WranglerNamespace
+
+Renders the full command listing for a Wrangler namespace (e.g. `d1`, `hyperdrive`). Used in Wrangler reference docs.
+
+```mdx
+import { WranglerNamespace } from "~/components";
+
+<WranglerNamespace namespace="d1" />
+```
+
+Props: `namespace` (required), `headingLevel` (default `2`).
+
+---
+
+## RuleID
+
+Renders a copyable rule ID. Used in WAF and security rules documentation.
+
+```mdx
+import { RuleID } from "~/components";
+
+<RuleID id="abcdefghijklmnopqrstuvwxyz" />
+```
+
+---
+
+## SubtractIPCalculator
+
+Interactive calculator for subtracting IP ranges from a base CIDR block. Used in Magic Transit and networking docs.
+
+```mdx
+import SubtractIPCalculator from "~/components/SubtractIPCalculator.tsx";
+
+<SubtractIPCalculator client:load />
+
+<!-- With defaults: -->
+<SubtractIPCalculator client:load defaults={{ base: "10.0.0.0/8", subtract: ["10.0.0.0/24"] }} />
+```
+
+Note: imports directly from the `.tsx` file path, not from `~/components`.
+
+---
+
+## Width
+
+Constrains content width. Useful for images or text that should not span the full container.
+
+```mdx
+import { Width } from "~/components";
+
+<Width size="large">75% of container width</Width>
+<Width size="medium">50% of container width</Width>
+<Width size="small" center>25%, centered</Width>
+```
+
+Props: `size` (required, `"large"` | `"medium"` | `"small"`), `center` (boolean).
+
+---
+
+## YouTubeVideos
+
+Renders a grid of YouTube videos associated with one or more products, sourced from `src/content/videos/index.yaml`.
+
+```mdx
+import { YouTubeVideos } from "~/components";
+
+<YouTubeVideos products={["Workers"]} />
+```
+
+Props: `products` (string array — if omitted, uses the current page's product).
+
+---
+
+## AvailableNotifications
+
+Lists available notification types for a product, sourced from `src/content/notifications/index.yaml`.
+
+```mdx
+import { AvailableNotifications } from "~/components";
+
+<AvailableNotifications product="dns" />
+<AvailableNotifications product="dns" notificationFilter="Secondary DNS all Primaries Failing" />
+```
+
+Props: `product` (required, product name or slug), `notificationFilter` (optional, filter to a specific notification type by name).
