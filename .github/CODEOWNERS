@@ -44,7 +44,7 @@ package.json @cloudflare/content-engineering
 # Analytics & Logs
 
 /src/content/docs/analytics/ @soheiokamoto @angelampcosta @rianvdm @dcpena @cloudflare/product-owners
-/src/content/docs/data-localization/ @njones-cf @mathew-cf @aberglund-cf @cferike @cagrawal @Arkanayan @connect-avinash31 @umeshgtank @angelampcosta @dcpena @cloudflare/product-owners
+/src/content/docs/data-localization/ @njones-cf @mathew-cf @aberglund-cf @cferike @cagrawal @Arkanayan @connect-avinash31 @umeshgtank @angelampcosta @dcpena @cloudflare/appsec-reviewers @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/logs/ @soheiokamoto @angelampcosta @rianvdm @dcpena @cloudflare/product-owners
 
 # API & Zones
@@ -61,31 +61,31 @@ package.json @cloudflare/content-engineering
 # Changelogs
 
 /src/content/changelog/ @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/content/changelog/waf/ @cloudflare/firewall @vs-mg @fb1337 @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/changelog/waf/ @cloudflare/firewall @vs-mg @fb1337 @cloudflare/pm-changelogs @cloudflare/appsec-reviewers @cloudflare/product-owners
 /src/assets/images/changelog/ @cloudflare/pm-changelogs @cloudflare/product-owners
 /src/assets/images/ @cloudflare/pm-changelogs @cloudflare/product-owners
 
 # Cloudflare One
 
-/src/content/docs/cloudflare-one/ @ranbel @Maddy-Cloudflare @codyanthony850 @cloudflare/product-owners
-/src/content/partials/cloudflare-one/ @ranbel @Maddy-Cloudflare @codyanthony850 @cloudflare/product-owners
-/src/content/docs/cloudflare-one/applications/ @alexmoraru7 @kennyj42 @ranbel @cloudflare/product-owners
-/src/content/docs/cloudflare-one/identity/ @kennyj42 @ranbel @cloudflare/product-owners
-/src/content/docs/cloudflare-one/access-controls/ @kennyj42 @ranbel @cloudflare/product-owners
-/src/content/docs/cloudflare-one/team-and-resources/devices/ @ranbel @cf-rhett @cloudflare/product-owners
-/src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/ @nikitacano @ranbel @cloudflare/product-owners
-/src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/ @nikitacano @ranbel @cf-rhett @cloudflare/product-owners
-/src/content/docs/cloudflare-one/networks/connectors/cloudflare-mesh/ @nikitacano @ranbel @cloudflare/product-owners
-/src/content/docs/tunnel/ @nikitacano @ranbel @cloudflare/product-owners
-/src/content/partials/cloudflare-one/tunnel/ @nikitacano @ranbel @cloudflare/product-owners
-/src/content/partials/cloudflare-one/warp/ @ranbel @cf-rhett @cloudflare/product-owners
-/src/content/docs/cloudflare-one/cloud-and-saas-findings/ @Maddy-Cloudflare @codyanthony850 @cloudflare/product-owners
-/src/content/docs/cloudflare-one/traffic-policies/ @alexmoraru7 @Maddy-Cloudflare @codyanthony850 @cloudflare/product-owners
-/src/content/docs/cloudflare-one/remote-browser-isolation/ @codyanthony850 @cloudflare/product-owners
-/src/content/docs/cloudflare-one/data-loss-prevention/ @Maddy-Cloudflare @codyanthony850 @cloudflare/product-owners
-/src/content/docs/cloudflare-one/insights/dex/ @codyanthony850 @cloudflare/product-owners
-/src/content/docs/email-security/ @Maddy-Cloudflare @cloudflare/product-owners
-/src/assets/images/cloudflare-one/ @ranbel @Maddy-Cloudflare @codyanthony850 @cf-rhett @cloudflare/product-owners
+/src/content/docs/cloudflare-one/ @ranbel @Maddy-Cloudflare @codyanthony850 @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/partials/cloudflare-one/ @ranbel @Maddy-Cloudflare @codyanthony850 @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/applications/ @alexmoraru7 @kennyj42 @ranbel @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/identity/ @kennyj42 @ranbel @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/access-controls/ @kennyj42 @ranbel @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/team-and-resources/devices/ @ranbel @cf-rhett @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/ @nikitacano @ranbel @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/ @nikitacano @ranbel @cf-rhett @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/networks/connectors/cloudflare-mesh/ @nikitacano @ranbel @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/tunnel/ @nikitacano @ranbel @cloudflare/appsec-reviewers @cloudflare/product-owners
+/src/content/partials/cloudflare-one/tunnel/ @nikitacano @ranbel @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/partials/cloudflare-one/warp/ @ranbel @cf-rhett @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/cloud-and-saas-findings/ @Maddy-Cloudflare @codyanthony850 @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/traffic-policies/ @alexmoraru7 @Maddy-Cloudflare @codyanthony850 @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/remote-browser-isolation/ @codyanthony850 @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/data-loss-prevention/ @Maddy-Cloudflare @codyanthony850 @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/insights/dex/ @codyanthony850 @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/email-security/ @Maddy-Cloudflare @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/assets/images/cloudflare-one/ @ranbel @Maddy-Cloudflare @codyanthony850 @cf-rhett @cloudflare/cf1-reviewers @cloudflare/product-owners
 
 # Consumer products
 
@@ -95,22 +95,25 @@ package.json @cloudflare/content-engineering
 /src/content/docs/warp-client/ @ranbel @cf-rhett @cloudflare/product-owners
 /src/content/partials/warp-client/ @ranbel @cf-rhett @cloudflare/product-owners
 /src/content/warp-releases/ @ranbel @cf-rhett @cloudflare/product-owners
-/src/content/changelog/cloudflare-one-client/ @ranbel @cf-rhett @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/changelog/cloudflare-one-client/ @ranbel @cf-rhett @cloudflare/pm-changelogs @cloudflare/cf1-reviewers @cloudflare/product-owners
 
 # Core platform
 
 /src/content/docs/byoip/ @RebeccaTamachiro @cloudflare/product-owners
-/src/content/docs/china-network/ @pedrosousa @cloudflare/product-owners
+/src/content/docs/china-network/ @pedrosousa @cloudflare/appsec-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-for-platforms/cloudflare-for-saas/ @RebeccaTamachiro @cloudflare/product-owners
 /src/content/docs/dns/ @RebeccaTamachiro @cloudflare/product-owners
+/src/content/docs/dns/dns-firewall/ @RebeccaTamachiro @cloudflare/appsec-reviewers @cloudflare/product-owners
+/src/content/docs/dns/internal-dns/ @RebeccaTamachiro @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/dns/private-origins/ @RebeccaTamachiro @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/fundamentals/ @dcpena @cloudflare/product-owners
 /src/content/docs/learning-paths/ @cloudflare/product-owners
 /src/content/docs/network-error-logging/ @dcpena @cloudflare/product-owners
 /src/content/docs/network-interconnect/ @marciocloudflare @cloudflare/product-owners
 /src/content/docs/notifications/ @dcpena @cloudflare/product-owners
 /src/content/docs/registrar/ @dcpena @cloudflare/product-owners
-/src/content/docs/rules/ @pedrosousa @cloudflare/product-owners
-/src/content/docs/ruleset-engine/ @pedrosousa @cloudflare/product-owners
+/src/content/docs/rules/ @pedrosousa @cloudflare/appsec-reviewers @cloudflare/product-owners
+/src/content/docs/ruleset-engine/ @pedrosousa @cloudflare/appsec-reviewers @cloudflare/product-owners
 /src/content/docs/log-explorer/ @angelampcosta @dcpena @cloudflare/product-owners
 
 # Developer Platform
@@ -163,6 +166,7 @@ package.json @cloudflare/content-engineering
 /src/content/docs/analytics/analytics-engine/ @irvinebroque @elithrar @nevikashah @WalshyDev @cloudflare/product-owners
 /src/content/docs/cloudflare-for-platforms/ @irvinebroque @dinasaur404 @cloudflare/product-owners
 /src/content/docs/cloudflare-for-platforms/workers-for-platforms/ @irvinebroque @dinasaur404 @cloudflare/deploy-config @cloudflare/product-owners
+/src/content/docs/cloudflare-for-platforms/cloudflare-for-saas/ @irvinebroque @dinasaur404 @cloudflare/appsec-reviewers @cloudflare/product-owners
 /src/content/docs/workers/observability/ @irvinebroque @mikenomitch @nevikashah @cloudflare/product-owners
 /src/content/docs/workers/static-assets @irvinebroque @GregBrimble @WalshyDev @cloudflare/deploy-config @cloudflare/product-owners
 /src/content/docs/workflows/ @elithrar @celso @mia303 @jonesphillip @cloudflare/product-owners
@@ -178,10 +182,10 @@ package.json @cloudflare/content-engineering
 
 # DDoS Protection
 
-/src/content/docs/ddos-protection/ @patriciasantaana @cloudflare/product-owners
-/src/content/docs/ddos-protection/change-log/ @patriciasantaana @cloudflare/product-owners
-/src/content/release-notes/ddos-http.yaml @patriciasantaana @cloudflare/product-owners
-/src/content/release-notes/ddos-network.yaml @patriciasantaana @cloudflare/product-owners
+/src/content/docs/ddos-protection/ @patriciasantaana @cloudflare/appsec-reviewers @cloudflare/product-owners
+/src/content/docs/ddos-protection/change-log/ @patriciasantaana @cloudflare/appsec-reviewers @cloudflare/product-owners
+/src/content/release-notes/ddos-http.yaml @patriciasantaana @cloudflare/appsec-reviewers @cloudflare/product-owners
+/src/content/release-notes/ddos-network.yaml @patriciasantaana @cloudflare/appsec-reviewers @cloudflare/product-owners
 
 # Docs team areas
 
@@ -193,10 +197,10 @@ package.json @cloudflare/content-engineering
 # Magic products
 
 /src/content/docs/magic-transit/ @cloudflare/product-owners
-/src/content/docs/cloudflare-network-firewall/ @cloudflare/product-owners
+/src/content/docs/cloudflare-network-firewall/ @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/network-flow/ @cloudflare/product-owners
-/src/content/docs/cloudflare-wan/ @cloudflare/product-owners
-/src/content/docs/multi-cloud-networking/ @cloudflare/product-owners
+/src/content/docs/cloudflare-wan/ @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/multi-cloud-networking/ @cloudflare/cf1-reviewers @cloudflare/product-owners
 
 # Migration guides
 
@@ -213,14 +217,15 @@ package.json @cloudflare/content-engineering
 /src/content/docs/automatic-platform-optimization/ @cloudflare/product-owners
 /src/content/docs/cache/ @cloudflare/product-owners
 /src/content/docs/health-checks/ @cloudflare/product-owners
-/src/content/docs/load-balancing/ @cloudflare/product-owners
-/src/content/docs/smart-shield/ @cloudflare/product-owners
+/src/content/docs/load-balancing/ @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/smart-shield/ @cloudflare/appsec-reviewers @cloudflare/product-owners
+/src/content/docs/spectrum/ @cloudflare/appsec-reviewers @cloudflare/product-owners
 /src/content/docs/speed/ @cloudflare/product-owners
-/src/content/docs/web3/ @cloudflare/product-owners
+/src/content/docs/web3/ @cloudflare/appsec-reviewers @cloudflare/product-owners
 
 # Privacy
 
-/src/content/docs/key-transparency/ @cloudflare/product-owners
+/src/content/docs/key-transparency/ @cloudflare/appsec-reviewers @cloudflare/product-owners
 /src/content/docs/privacy-gateway/ @cloudflare/product-owners
 
 # Radar
@@ -235,18 +240,19 @@ package.json @cloudflare/content-engineering
 
 # Security products
 
-/src/content/docs/api-shield/ @patriciasantaana @cloudflare/product-owners
-/src/content/docs/bots/ @patriciasantaana @cloudflare/product-owners
-/src/content/docs/dmarc-management/ @Maddy-Cloudflare @cloudflare/product-owners
-/src/content/docs/firewall/ @pedrosousa @cloudflare/firewall @cloudflare/product-owners
-/src/content/docs/client-side-security/ @pedrosousa @cloudflare/product-owners
-/src/content/docs/secrets-store/ @RebeccaTamachiro @cloudflare/product-owners
-/src/content/docs/security-center/ @alexmoraru7 @cloudflare/product-owners
-/src/content/docs/ssl/ @RebeccaTamachiro @cloudflare/product-owners
-/src/content/docs/ssl/post-quantum-cryptography @lukevalenta @cjpatton @bwesterb @cloudflare/product-owners
-/src/content/docs/waf/ @pedrosousa @cloudflare/firewall @cloudflare/product-owners
-/src/content/docs/waf/change-log/ @pedrosousa @cloudflare/firewall @vs-mg @cloudflare/product-owners
-/src/content/docs/cloudflare-challenges/ @patriciasantaana @cloudflare/product-owners
+/src/content/docs/api-shield/ @patriciasantaana @cloudflare/appsec-reviewers @cloudflare/product-owners
+/src/content/docs/bots/ @patriciasantaana @cloudflare/appsec-reviewers @cloudflare/product-owners
+/src/content/docs/dmarc-management/ @Maddy-Cloudflare @cloudflare/appsec-reviewers @cloudflare/product-owners
+/src/content/docs/firewall/ @pedrosousa @cloudflare/firewall @cloudflare/appsec-reviewers @cloudflare/product-owners
+/src/content/docs/client-side-security/ @pedrosousa @cloudflare/appsec-reviewers @cloudflare/product-owners
+/src/content/docs/secrets-store/ @RebeccaTamachiro @cloudflare/appsec-reviewers @cloudflare/product-owners
+/src/content/docs/security/ @cloudflare/appsec-reviewers @cloudflare/product-owners
+/src/content/docs/security-center/ @alexmoraru7 @cloudflare/appsec-reviewers @cloudflare/product-owners
+/src/content/docs/ssl/ @RebeccaTamachiro @cloudflare/appsec-reviewers @cloudflare/product-owners
+/src/content/docs/ssl/post-quantum-cryptography @lukevalenta @cjpatton @bwesterb @cloudflare/appsec-reviewers @cloudflare/product-owners
+/src/content/docs/waf/ @pedrosousa @cloudflare/firewall @cloudflare/appsec-reviewers @cloudflare/product-owners
+/src/content/docs/waf/change-log/ @pedrosousa @cloudflare/firewall @vs-mg @cloudflare/appsec-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-challenges/ @patriciasantaana @cloudflare/appsec-reviewers @cloudflare/product-owners
 
 # Support
 
@@ -256,7 +262,7 @@ package.json @cloudflare/content-engineering
 
 # Turnstile
 
-/src/content/docs/turnstile/ @migueldemoura @punkeel @patriciasantaana @cloudflare/product-owners
+/src/content/docs/turnstile/ @migueldemoura @punkeel @patriciasantaana @cloudflare/appsec-reviewers @cloudflare/product-owners
 
 # Waiting Room
 
