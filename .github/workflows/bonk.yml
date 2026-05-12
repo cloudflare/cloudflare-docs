@@ -89,7 +89,7 @@ jobs:
           mentions: "/bonk"
           permissions: CODEOWNERS
 
-  bonk-auto-triage:
+  bonk-auto-review:
     needs: check-codeowner
     if: |
       needs.check-codeowner.outputs.is-codeowner == 'true' &&
@@ -132,7 +132,7 @@ jobs:
         run: pnpm install --frozen-lockfile
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
 
-      - name: Run Lil Bonk (auto-triage)
+      - name: Run Lil Bonk (auto-review)
         uses: ask-bonk/ask-bonk/github@main
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_AI_GATEWAY_ACCOUNT_ID }}
@@ -144,7 +144,7 @@ jobs:
           permissions: CODEOWNERS
           token_permissions: NO_PUSH
           prompt: |
-            Triage this pull request. Review the title, description, and diff.
+            Review this pull request. Review the title, description, and diff.
             Apply appropriate labels, summarize what the PR changes, and flag
             any issues that need attention from a maintainer (e.g. missing
             description, broken links, incorrect frontmatter, style guide
