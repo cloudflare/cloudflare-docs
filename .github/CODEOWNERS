@@ -250,8 +250,8 @@ package.json @cloudflare/content-engineering
 
 # Support
 
-/src/content/docs/support/ @cloudflare/product-owners @cloudflare/customer-support
-/src/assets/images/support/ @cloudflare/product-owners @cloudflare/customer-support
+/src/content/docs/support/ @asomaiah @pierre-nicolas @simon @hbhatt @pweaver @cloudflare/product-owners @cloudflare/customer-support
+/src/assets/images/support/ @asomaiah @pierre-nicolas @simon @hbhatt @pweaver @cloudflare/product-owners @cloudflare/customer-support
 /src/content/docs/billing/ @cloudflare/customer-support @cloudflare/product-owners
 
 # Turnstile
