@@ -101,7 +101,7 @@ package.json @cloudflare/content-engineering
 
 /src/content/docs/byoip/ @RebeccaTamachiro @cloudflare/product-owners
 /src/content/docs/china-network/ @pedrosousa @cloudflare/product-owners
-/src/content/docs/cloudflare-for-platforms/cloudflare-for-saas/ @RebeccaTamachiro @cloudflare/product-owners
+/src/content/docs/cloudflare-for-platforms/cloudflare-for-saas/ @baubuchon-cf @RebeccaTamachiro @cloudflare/product-owners
 /src/content/docs/dns/ @RebeccaTamachiro @cloudflare/product-owners
 /src/content/docs/fundamentals/ @dcpena @cloudflare/product-owners
 /src/content/docs/learning-paths/ @cloudflare/product-owners
@@ -240,9 +240,9 @@ package.json @cloudflare/content-engineering
 /src/content/docs/dmarc-management/ @Maddy-Cloudflare @cloudflare/product-owners
 /src/content/docs/firewall/ @pedrosousa @cloudflare/firewall @cloudflare/product-owners
 /src/content/docs/client-side-security/ @pedrosousa @cloudflare/product-owners
-/src/content/docs/secrets-store/ @RebeccaTamachiro @cloudflare/product-owners
+/src/content/docs/secrets-store/ @baubuchon-cf @RebeccaTamachiro @cloudflare/product-owners
 /src/content/docs/security-center/ @alexmoraru7 @cloudflare/product-owners
-/src/content/docs/ssl/ @RebeccaTamachiro @cloudflare/product-owners
+/src/content/docs/ssl/ @baubuchon-cf @RebeccaTamachiro @cloudflare/product-owners
 /src/content/docs/ssl/post-quantum-cryptography @lukevalenta @cjpatton @bwesterb @cloudflare/product-owners
 /src/content/docs/waf/ @pedrosousa @cloudflare/firewall @cloudflare/product-owners
 /src/content/docs/waf/change-log/ @pedrosousa @cloudflare/firewall @vs-mg @cloudflare/product-owners
