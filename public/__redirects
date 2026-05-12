@@ -2189,7 +2189,26 @@
 /workers-ai/models/translation/ /ai/models/#translation 301
 /workers-ai/models/text-classification/ /ai/models/#text-classification 301
 /workers-ai/models/image-classification/ /ai/models/#image-classification 301
-/workers-ai/models/openchat_3.5-awq/ /workers-ai/models/ 301
+/workers-ai/models/openchat_3.5-awq/ /workers-ai/platform/model-deprecations/ 301
+/workers-ai/models/deepseek-coder-6.7b-base-awq/ /workers-ai/platform/model-deprecations/ 301
+/workers-ai/models/deepseek-coder-6.7b-instruct-awq/ /workers-ai/platform/model-deprecations/ 301
+/workers-ai/models/deepseek-math-7b-instruct/ /workers-ai/platform/model-deprecations/ 301
+/workers-ai/models/discolm-german-7b-v1-awq/ /workers-ai/platform/model-deprecations/ 301
+/workers-ai/models/falcon-7b-instruct/ /workers-ai/platform/model-deprecations/ 301
+/workers-ai/models/llama-2-13b-chat-awq/ /workers-ai/platform/model-deprecations/ 301
+/workers-ai/models/llamaguard-7b-awq/ /workers-ai/platform/model-deprecations/ 301
+/workers-ai/models/mistral-7b-instruct-v0.1-awq/ /workers-ai/platform/model-deprecations/ 301
+/workers-ai/models/neural-chat-7b-v3-1-awq/ /workers-ai/platform/model-deprecations/ 301
+/workers-ai/models/openchat-3.5-0106/ /workers-ai/platform/model-deprecations/ 301
+/workers-ai/models/openhermes-2.5-mistral-7b-awq/ /workers-ai/platform/model-deprecations/ 301
+/workers-ai/models/qwen1.5-0.5b-chat/ /workers-ai/platform/model-deprecations/ 301
+/workers-ai/models/qwen1.5-1.8b-chat/ /workers-ai/platform/model-deprecations/ 301
+/workers-ai/models/qwen1.5-14b-chat-awq/ /workers-ai/platform/model-deprecations/ 301
+/workers-ai/models/qwen1.5-7b-chat-awq/ /workers-ai/platform/model-deprecations/ 301
+/workers-ai/models/starling-lm-7b-beta/ /workers-ai/platform/model-deprecations/ 301
+/workers-ai/models/tinyllama-1.1b-chat-v1.0/ /workers-ai/platform/model-deprecations/ 301
+/workers-ai/models/una-cybertron-7b-v2-bf16/ /workers-ai/platform/model-deprecations/ 301
+/workers-ai/models/zephyr-7b-beta-awq/ /workers-ai/platform/model-deprecations/ 301
 
 /workers-ai/platform/bindings/ /workers-ai/configuration/bindings/ 301
 /workers-ai/get-started/local-dev-setup/ /workers-ai/get-started/workers-wrangler/ 301
