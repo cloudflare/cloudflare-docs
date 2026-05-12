@@ -144,8 +144,8 @@ importers:
         specifier: 0.1.0
         version: 0.1.0(astro@6.2.2(@types/node@24.6.0)(jiti@2.6.1)(lightningcss@1.32.0)(rollup@4.60.2)(tsx@4.21.0)(yaml@2.8.4))(typescript@5.9.3)
       cidr-tools:
-        specifier: 11.3.5
-        version: 11.3.5
+        specifier: 12.0.0
+        version: 12.0.0
       codeowners-utils:
         specifier: 1.0.2
         version: 1.0.2
@@ -2794,9 +2794,9 @@ packages:
     resolution: {integrity: sha512-77PSwercCZU2Fc4sX94eF8k8Pxte6JAwL4/ICZLFjJLqegs7kCuAsqqj/70NQF6TvDpgFjkubQB2FW2ZZddvQg==}
     engines: {node: '>=8'}
 
-  cidr-tools@11.3.5:
-    resolution: {integrity: sha512-cu6KcxIZRKlvcTrMWbUZU6LQ/mKSUNhjktDpgSZASoUF7pAJPk038BtwOIgCpbtjfOLpAWCh/y8+sE6YCEIXxw==}
-    engines: {node: '>=18'}
+  cidr-tools@12.0.0:
+    resolution: {integrity: sha512-FVXqGmV1HiQihRnDR3VeDQx9GDQnbWC0TuJbdAEb6puPMlqAC7uvzx3A4hRgOAZnnEF+4fUGdHBucroTLctDuQ==}
+    engines: {node: '>=22'}
 
   cjs-module-lexer@1.4.3:
     resolution: {integrity: sha512-9z8TZaGM1pfswYeXrUpzPrkx8UnWYdhJclsiYMm6x/w5+nN+8Tf/LnAgfLGQCm59qAOxU8WwHEq2vNwF6i4j+Q==}
@@ -4166,9 +4166,9 @@ packages:
     resolution: {integrity: sha512-XXADHxXmvT9+CRxhXg56LJovE+bmWnEWB78LB83VZTprKTmaC5QfruXocxzTZ2Kl0DNwKuBdlIhjL8LeY8Sf8Q==}
     engines: {node: '>= 12'}
 
-  ip-bigint@8.3.6:
-    resolution: {integrity: sha512-IRan4ty1RP2aI0MDQtfEs6gGtjDLb/4808xm21BK+ytLquz8FLiWQlepONVcQycjku3HPPEPPUcg9Om8hdOzJQ==}
-    engines: {node: '>=18'}
+  ip-bigint@9.0.0:
+    resolution: {integrity: sha512-rnynsdrAKd8IWMSea89qsx/eHCF+9lVZPHrJYzss78HLI0DbtFZKDwsSUdozOvWmIyvWPqSgThvKC6JBzJg9qw==}
+    engines: {node: '>=22'}
 
   ipaddr.js@1.9.1:
     resolution: {integrity: sha512-0KI/607xoxSToH7GjN1FfSbLoU0+btTicjsQSWQlh/hZykN8KpmMf7uYwPW3R+akZ6R/w18ZlXSHBYXiYUPO3g==}
@@ -9472,9 +9472,9 @@ snapshots:
 
   ci-info@4.4.0: {}
 
-  cidr-tools@11.3.5:
+  cidr-tools@12.0.0:
     dependencies:
-      ip-bigint: 8.3.6
+      ip-bigint: 9.0.0
 
   cjs-module-lexer@1.4.3: {}
 
@@ -11217,7 +11217,7 @@ snapshots:
 
   ip-address@10.1.0: {}
 
-  ip-bigint@8.3.6: {}
+  ip-bigint@9.0.0: {}
 
   ipaddr.js@1.9.1: {}
 
