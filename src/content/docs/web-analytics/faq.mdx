@@ -141,6 +141,14 @@ Cloudflare's Real User Monitoring (RUM) operates exclusively on the initial clie
 
 ## Functionality
 
+### Is the data sampled?
+
+What you see in the dashboard for the past 7 days is unsampled, when filtering beyond this point you will see data aggregated down to 10%.
+
+* The beacon script will fire on every pageview.
+* The data pipeline does not apply sampling.
+* As we compact data older than 7 days, we aggregate it down so it's 10% of the original volume
+
 ### Can I see server-side analytics by URL?
 
 Web Analytics only displays client-side analytics. All Cloudflare customers who proxy their traffic also get analytics based on traffic at their edge.
