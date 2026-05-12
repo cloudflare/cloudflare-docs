@@ -1,0 +1,48 @@
+---
+pcx_content_type: reference
+title: Wrangler commands
+description: Query the Workers AI model catalog from the command line using Wrangler.
+sidebar:
+  order: 3
+products:
+  - workers-ai
+---
+
+Use `wrangler ai models` to query the Workers AI model catalog from your terminal. The command lists matching models in a table by default.
+
+Before you run this command, authenticate Wrangler with an account that has the `Workers AI Read` permission.
+
+```sh
+npx wrangler ai models
+```
+
+To return the response as JSON, add `--json`:
+
+```sh
+npx wrangler ai models --json
+```
+
+## Query the model catalog
+
+Use filters to narrow model results by keyword, task, author, source, or release status:
+
+```sh
+npx wrangler ai models --search llama --task "Text Generation" --hide-experimental
+```
+
+```sh
+npx wrangler ai models --author cloudflare --source 1 --json
+```
+
+The `wrangler ai models` command supports the following options:
+
+| Option                | Description                  |
+| --------------------- | ---------------------------- |
+| `--search <query>`    | Search models by keyword.    |
+| `--task <task>`       | Filter by task name.         |
+| `--author <author>`   | Filter by author.            |
+| `--source <id>`       | Filter by source ID.         |
+| `--hide-experimental` | Hide experimental models.    |
+| `--json`              | Return the response as JSON. |
+
+For the underlying API, refer to [Model Search](/api/resources/ai/subresources/models/methods/list/).
