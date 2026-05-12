@@ -58,14 +58,18 @@ async function isCodeowner(octokit: Octokit, actor: string): Promise<boolean> {
 	const content = Buffer.from(data.content, "base64").toString("utf-8");
 
 	// Collect all unique owner tokens from the file, ignoring comments and blank lines.
-	const ownerPattern = /@([a-zA-Z0-9_.-]+(?:/[a-zA-Z0-9_.-]+)?)/g;
+	const ownerPattern = new RegExp(
+		"@([a-zA-Z0-9_.-]+(?:/[a-zA-Z0-9_.-]+)?)",
+		"g",
+	);
 	const owners = Array.from(
 		new Set(
 			content
-				.split("
-")
+				.split("\n")
 				.filter((line) => line.trim() && !line.trim().startsWith("#"))
-				.flatMap((line) => Array.from(line.matchAll(ownerPattern)).map((m) => m[1])),
+				.flatMap((line) =>
+					Array.from(line.matchAll(ownerPattern)).map((m) => m[1]),
+				),
 		),
 	);
 
