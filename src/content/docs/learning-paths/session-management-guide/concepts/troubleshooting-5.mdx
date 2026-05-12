@@ -48,10 +48,7 @@ products:
 
 **Solutions:**
 
-1. **Verify the IdP session is longer than the Cloudflare session.** For detailed IdP configuration instructions, refer to:
-   - [Okta integration](/cloudflare-one/integrations/identity-providers/okta/).
-   - [Azure AD integration](/cloudflare-one/integrations/identity-providers/entra-id/).
-   - [Google Workspace integration](/cloudflare-one/integrations/identity-providers/google/).
+1. **Verify the IdP session is longer than the Cloudflare session.**
 
    Set the IdP session to at least 2x your Cloudflare global session (for example, 7 days for a 24-hour Cloudflare session).
 
@@ -83,7 +80,6 @@ products:
 3. **Review Device Authentication Identity:**
    - Check which apps have Device Authentication enabled.
    - Apps with Device Authentication have a different reauthentication flow.
-   - Consider turning it off if it is causing confusion.
 
 ## Issue 4: Session expires immediately after login
 

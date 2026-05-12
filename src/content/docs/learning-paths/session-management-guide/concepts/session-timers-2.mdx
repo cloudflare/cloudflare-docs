@@ -19,12 +19,12 @@ When users access protected resources through Cloudflare Zero Trust, different s
 
 **What it controls:** How long a user's browser session with your IdP remains valid.
 
-**Where it is configured:** In your identity provider's admin console (Okta, Azure AD, Google Workspace, and similar).
+**Where it is configured:** In your identity provider's admin console (Okta, Microsoft Entra ID, Google Workspace, and similar).
 
-**Default values at the time of this writing:**
+**Default values:**
 
 - **Okta:** 2 hours (idle), 24 hours (maximum).
-- **Azure AD:** 90 days (with activity), configurable per application.
+- **Microsoft Entra ID:** 90 days (with activity), configurable per application.
 - **Google Workspace:** 14 days (web sessions).
 
 **Impact:** When Cloudflare attempts to silently reauthenticate a user using existing browser cookies, the IdP session must still be valid. If the IdP session has expired, the user will see a full login prompt with username, password, and MFA.
@@ -95,3 +95,32 @@ When users access protected resources through Cloudflare Zero Trust, different s
 	refer to [Configure client sessions in
 	Gateway](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/#configure-client-sessions-in-gateway).
 </Aside>
+
+## Configuration quick start
+
+### Step 1: Define your requirements
+
+Choose your reauthentication goal:
+
+- High security: More frequent reauthentication.
+- Balanced: Standard verification (recommended).
+- Low friction: Less frequent reauthentication.
+- Risk-based: Per-application configuration.
+
+### Step 2: Configure the Identity Provider session
+
+Set your IdP session **equal to or longer** than your planned Cloudflare sessions. This enables silent reauthentication.
+
+**Recommended configurations:**
+
+- For 24-hour Cloudflare sessions: Set the IdP to 7 days.
+- For 7-day Cloudflare sessions: Set the IdP to 30 days.
+
+### Step 3: Configure Cloudflare sessions
+
+1. **Set the global Access session.** Go to **Access controls** > **Access settings** and set the global session duration.
+   - Recommended: 24 hours for most deployments.
+   - Recommended to be less than or equal to your IdP session.
+2. **Configure application and policy sessions.** For most apps, use the defaults. Only override for sensitive applications requiring more frequent reauthentication. Policy level sessions take precedence over Application level sessions.
+3. **Configure Gateway sessions.** Set all Gateway Allow policies to the same baseline duration (for example, `24h0m0s`) for consistency. For more information, refer to [Configure client sessions in Gateway](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/#configure-client-sessions-in-gateway).
+4. **Device Authentication Identity (optional).** Only turn it on if appropriate for your use case. For more information, refer to [Configure client sessions in Access](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/#configure-client-sessions-in-access-beta).

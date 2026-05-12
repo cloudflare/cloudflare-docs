@@ -25,7 +25,7 @@ Based on your reauthentication goals, here are recommended configuration strateg
 | Sensitive apps          | 1 hour    | Frequent verification for high-risk data   |
 | Critical apps           | Immediate | Every access requires fresh authentication |
 | Gateway session         | 8 hours   | Consistent with Access baseline            |
-| Device Auth Identity    | Disabled  | Require IdP verification for all access    |
+| Device Auth Identity    | Off       | Require IdP verification for all access    |
 
 **User experience:** Full IdP login daily, silent reauthentication every 8 hours, immediate reauthentication for critical systems. 3-4 reauthentication events per day.
 
@@ -43,7 +43,7 @@ Based on your reauthentication goals, here are recommended configuration strateg
 | Sensitive apps          | 8 hours  | More frequent check for higher-risk apps         |
 | Critical apps           | 1 hour   | Short session for admin access                   |
 | Gateway session         | 24 hours | Consistent reauthentication baseline             |
-| Device Auth Identity    | Disabled | Simplifies troubleshooting                       |
+| Device Auth Identity    | Off      | Simplifies troubleshooting                       |
 
 **User experience:** Full IdP login once per week, one silent reauthentication per day for standard apps, three per day for sensitive apps.
 
@@ -80,33 +80,7 @@ Based on your reauthentication goals, here are recommended configuration strateg
 | Production infrastructure, admin panels | 1 hour           | Critical systems, very frequent verification |
 | Break-glass emergency access            | Immediate        | Every access requires fresh authentication   |
 
+**User experience:** Reauthentication frequency varies by application sensitivity. Users experience longer sessions for low-risk apps and frequent verification for high-risk systems.
+
 **Best for:** Large organizations with varied application landscape, clear application classification and risk tiers.
 
-## Configuration quick start
-
-### Step 1: Define your requirements
-
-Choose your reauthentication goal:
-
-- High security: More frequent reauthentication.
-- Balanced: Standard verification (recommended).
-- Low friction: Less frequent reauthentication.
-- Risk-based: Per-application configuration.
-
-### Step 2: Configure the IdP session (critical first step)
-
-Set your IdP session **equal to or longer** than your planned Cloudflare sessions. This enables silent reauthentication.
-
-**Recommended configurations:**
-
-- For 24-hour Cloudflare sessions: Set the IdP to 7 days.
-- For 7-day Cloudflare sessions: Set the IdP to 30 days.
-
-### Step 3: Configure Cloudflare sessions
-
-1. **Set the global session.** Go to **Access controls** > **Access settings** and set the global session duration.
-   - Recommended: 24 hours for most deployments.
-   - Must be less than or equal to your IdP session.
-2. **Configure application sessions.** For most apps, use the global session default. Only override for sensitive applications requiring more frequent reauthentication.
-3. **Configure Gateway sessions.** Set all Gateway Allow policies to the same baseline duration (for example, `24h0m0s`) for consistency. For more information, refer to [Configure client sessions in Gateway](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/#configure-client-sessions-in-gateway).
-4. **Device Authentication Identity (optional).** Only turn it on if appropriate for your use case. For more information, refer to [Configure client sessions in Access](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/#configure-client-sessions-in-access-beta).
