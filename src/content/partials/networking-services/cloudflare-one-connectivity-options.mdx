@@ -164,15 +164,7 @@ For detailed configuration, refer to the <a href={props.greIpsecURL}>GRE and IPs
 
 IPsec tunnels provide encrypted, stateful network connectivity between your infrastructure and Cloudflare. IPsec tunnels are used with Cloudflare WAN and Magic Transit for secure site-to-site connectivity, using IKEv2 for tunnel negotiation and AES-GCM or AES-CBC for encryption.
 
-Use IPsec tunnels when you need to encrypt traffic over the public Internet, meet compliance requirements for encrypted connections, or replace expensive MPLS links.
-
-:::note[Important to know]
-Requires a static public IP and supports IKEv2 only (not IKEv1). If behind NAT, initiate IKE on port `4500`.
-
-When traffic from Cloudflare WAN egresses to the public Internet through Gateway, source IP addresses are translated to Cloudflare dedicated egress IP addresses.
-:::
-
-For cloud environments (AWS, Azure, GCP), use [Multi-Cloud Networking](#multi-cloud-networking) to automate IPsec tunnel creation instead of configuring tunnels manually.
+Use IPsec tunnels when you need to encrypt traffic over the public Internet or meet compliance requirements for encrypted connections. IPsec tunnels are supported on generic router and firewall appliances, and on cloud environment gateways (AWS, Azure, GCP).
 
 For detailed configuration, refer to the <a href={props.greIpsecURL}>GRE and IPsec tunnels documentation</a>.
 
