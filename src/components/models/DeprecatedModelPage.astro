@@ -1,0 +1,176 @@
+---
+import { Aside } from "~/components";
+import { DEPRECATED_MODELS } from "~/util/deprecated-models";
+
+// Group models by deprecation date
+const deprecated = DEPRECATED_MODELS.filter((m) => m.status === "deprecated");
+const planned = DEPRECATED_MODELS.filter(
+	(m) => m.status === "planned-deprecation",
+);
+
+const byDateDeprecated = deprecated.reduce(
+	(acc, m) => {
+		acc[m.deprecationDate] = acc[m.deprecationDate] || [];
+		acc[m.deprecationDate].push(m);
+		return acc;
+	},
+	{} as Record<string, typeof deprecated>,
+);
+
+const byDatePlanned = planned.reduce(
+	(acc, m) => {
+		acc[m.deprecationDate] = acc[m.deprecationDate] || [];
+		acc[m.deprecationDate].push(m);
+		return acc;
+	},
+	{} as Record<string, typeof planned>,
+);
+
+function fmtDate(dateStr: string): string {
+	return new Date(`${dateStr}T12:00:00Z`).toLocaleDateString("en-US", {
+		year: "numeric",
+		month: "long",
+		day: "numeric",
+		timeZone: "UTC",
+	});
+}
+---
+
+<Aside type="caution">
+	<p>
+		You followed a link to a model that is no longer available. Refer to the
+		lists below for deprecated models and their status and recommended
+		replacements.
+	</p>
+</Aside>
+
+<p>
+	We refresh the Workers AI model catalog to make room for newer
+	releases and to focus on the best-performing models. When a model is
+	deprecated, it will no longer be available for inference and existing
+	requests will return an error. Please update your applications before the
+	listed dates to avoid disruption.
+</p>
+
+<h2 id="replacements">Recommended replacements</h2>
+
+<p>
+	We recommend migrating to one of the following models, depending on your use
+	case. For the full list of available models, refer to the{" "}
+	<a href="/workers-ai/models/">Workers AI model catalog</a>.
+</p>
+
+<div class="not-content mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
+	{
+		[
+			{
+				name: "@cf/moonshotai/kimi-k2.6",
+				displayName: "Kimi K2.6",
+				url: "/workers-ai/models/kimi-k2.6/",
+				description:
+					"Flagship multimodal model with advanced reasoning, tool calling, and vision capabilities.",
+			},
+			{
+				name: "@cf/zai-org/glm-4.7-flash",
+				displayName: "GLM 4.7 Flash",
+				url: "/workers-ai/models/glm-4.7-flash/",
+				description:
+					"Fast multilingual model with multi-turn tool calling and coding capabilities.",
+			},
+			{
+				name: "@cf/openai/gpt-oss-120b",
+				displayName: "GPT-OSS 120B",
+				url: "/workers-ai/models/gpt-oss-120b/",
+				description:
+					"Open-source reasoning model with strong performance on complex tasks.",
+			},
+			{
+				name: "@cf/meta/llama-4-scout-17b-16e-instruct",
+				displayName: "Llama 4 Scout 17B 16E Instruct",
+				url: "/workers-ai/models/llama-4-scout-17b-16e-instruct/",
+				description:
+					"Efficient mixture-of-experts model with strong multilingual support.",
+			},
+		].map((replacement) => (
+			<a
+				href={replacement.url}
+				class="flex flex-col rounded-lg border border-gray-200 p-4 no-underline transition-colors hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800/50"
+			>
+				<span class="text-base font-semibold text-gray-900 dark:text-gray-100">
+					{replacement.displayName}
+				</span>
+				<span class="mt-1 text-xs font-mono text-gray-500">
+					{replacement.name}
+				</span>
+				<span class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+					{replacement.description}
+				</span>
+			</a>
+		))
+	}
+</div>
+
+{
+	Object.keys(byDatePlanned).length > 0 && (
+		<>
+			<h2 id="planned">Planned deprecations</h2>
+			<p>
+				The following models are scheduled for deprecation. Please update your
+				applications before the listed dates to avoid disruption.
+			</p>
+			{Object.entries(byDatePlanned)
+				.sort(([a], [b]) => a.localeCompare(b))
+				.map(([date, models]) => (
+					<div class="mt-4">
+						<h3>
+							<a href="/changelog/post/2026-05-08-planned-model-deprecations/">
+								{fmtDate(date)}
+							</a>
+						</h3>
+						<ul>
+							{models.map((m) => (
+								<li>
+									<code class="text-sm">{m.name}</code>
+									{m.slug === "kimi-k2.5" && (
+										<>
+											{" "}→{" "}
+											<code class="text-sm">
+												@cf/moonshotai/kimi-k2.6
+											</code>{" "}
+											(alias)
+										</>
+										)}
+									</li>
+								))}
+							</ul>
+						</div>
+					))}
+		</>
+	)
+}
+
+{
+	Object.keys(byDateDeprecated).length > 0 && (
+		<>
+			<h2 id="deprecated">Deprecated models</h2>
+			<p>
+				The following models are no longer available. If you still have
+				references to them, migrate to the suggested replacements.
+			</p>
+			{Object.entries(byDateDeprecated)
+				.sort(([a], [b]) => b.localeCompare(a))
+				.map(([date, models]) => (
+					<div class="mt-4">
+						<h3>{fmtDate(date)}</h3>
+						<ul>
+							{models.map((m) => (
+								<li>
+									<code class="text-sm">{m.name}</code>
+								</li>
+								))}
+							</ul>
+						</div>
+					))}
+		</>
+	)
+}
