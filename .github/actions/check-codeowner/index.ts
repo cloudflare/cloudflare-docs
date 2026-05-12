@@ -11,7 +11,6 @@ function getActor(): string {
 
 	switch (eventName) {
 		case "pull_request":
-		case "pull_request_target":
 			return payload.pull_request?.user?.login ?? "";
 		case "issue_comment":
 		case "pull_request_review_comment":
