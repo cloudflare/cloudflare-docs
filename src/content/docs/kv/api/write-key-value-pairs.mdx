@@ -1,8 +1,11 @@
 ---
 pcx_content_type: concept
 title: Write key-value pairs
+description: Store data in a Workers KV namespace using the put() method, with options for expiration and metadata.
 sidebar:
   order: 5
+products:
+  - kv
 ---
 
 To create a new key-value pair, or to update the value for a particular key, call the `put()` method of the [KV binding](/kv/concepts/kv-bindings/) on any [KV namespace](/kv/concepts/kv-namespaces/) you have bound to your Worker code:

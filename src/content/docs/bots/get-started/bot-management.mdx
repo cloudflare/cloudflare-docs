@@ -17,9 +17,9 @@ Bot Management for Enterprise is a paid add-on that provides sophisticated bot p
 
 This Enterprise product provides the most flexibility to customers by:
 
-- Generating a [bot score](/bots/concepts/bot-score/) of 1-99 for every request. Scores below 30 are commonly associated with bot traffic.
-- Allowing customers to take action on this score with [WAF custom rules](/waf/custom-rules/) or [`Workers`](/workers/runtime-apis/request/#incomingrequestcfproperties).
-- Allowing customers to view this score in Bot Analytics or Logs.
+- Generating a [bot score](/bots/concepts/bot-score/) of 1-99 for every request. Scores below 30 are commonly associated with bot traffic. This lets you write targeted rules instead of applying blanket actions to all detected bots.
+- Allowing customers to take action on this score with [WAF custom rules](/waf/custom-rules/) or [`Workers`](/workers/runtime-apis/request/#incomingrequestcfproperties). For example, you can challenge low-scoring requests on your login page while allowing them on your public blog.
+- Allowing customers to view this score in Bot Analytics or Logs, so you can analyze bot traffic patterns and tune your rules over time.
 
 ---
 
@@ -78,13 +78,15 @@ You can view blocked AI bot traffic via [Security Analytics](/waf/analytics/secu
 
 ### Deploy custom rule templates
 
-The **Security Settings** toggles you configured above already provide baseline protection against definitely automated and likely automated traffic.
+The **Definitely Automated** and **Likely Automated** toggles you configured in the previous step already provide baseline protection against automated traffic.
 
 If you need additional control, such as path-specific protection, custom score thresholds, or combining bot score with other fields, Cloudflare provides [rule templates](https://dash.cloudflare.com/?to=/:account/:zone/security/security-rules?template=bot_traffic) to get started.
 
 :::note
 Custom rules created from these templates execute before the managed rules configured in **Security Settings**. For more details on this execution order, refer to [Security features interoperability](/waf/feature-interoperability/).
 :::
+
+These templates use wirefilter expression syntax. In these expressions, `eq` means equals, `le` means less than or equal to, `ge` means greater than or equal to, and `not` excludes matching traffic.
 
 - [Definite Bots template](https://dash.cloudflare.com/?to=/:account/:zone:/security/security-rules/custom-rules/create?template=Definitely%20Bots): Targets malicious bot traffic while ignoring verified bots and routes delivering static content.
 

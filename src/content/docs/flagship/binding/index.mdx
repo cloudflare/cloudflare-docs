@@ -1,8 +1,11 @@
 ---
 pcx_content_type: overview
 title: Binding API
+description: Evaluate Flagship feature flags directly in Cloudflare Workers using the native binding with type-safe methods and automatic fallback.
 sidebar:
   order: 5
+products:
+  - flagship
 ---
 
 import {
@@ -17,10 +20,12 @@ Workers access Flagship through a binding that you add to your Wrangler configur
 
 ```jsonc
 {
-	"flagship": {
-		"binding": "FLAGS",
-		"app_id": "<APP_ID>",
-	},
+	"flagship": [
+		{
+			"binding": "FLAGS",
+			"app_id": "<APP_ID>",
+		},
+	],
 }
 ```
 

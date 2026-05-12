@@ -5,7 +5,7 @@ pcx_content_type: reference
 tags:
   - MCP
 sidebar:
-  order: 12
+  order: 26
 products:
   - agents
 ---
@@ -309,6 +309,7 @@ const state = this.getMcpServers();
 for (const tool of state.tools) {
 	console.log(`Tool: ${tool.name}`);
 	console.log(`  From server: ${tool.serverId}`);
+	console.log(`  Title: ${tool.title ?? tool.name}`);
 	console.log(`  Description: ${tool.description}`);
 }
 ```
@@ -352,7 +353,7 @@ for (const [id, server] of Object.entries(state.servers)) {
 
 ### Integration with AI SDK
 
-To use MCP tools with the Vercel AI SDK, use `this.mcp.getAITools()` which converts MCP tools to AI SDK format:
+To use MCP tools with the AI SDK, use `this.mcp.getAITools()` which converts MCP tools to AI SDK format:
 
 <TypeScriptExample>
 

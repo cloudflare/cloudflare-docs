@@ -1,8 +1,12 @@
 ---
 title: Send emails from Workers
+description: Use the send_email binding to send outbound emails from Cloudflare Workers through Email Routing.
 pcx_content_type: how-to
 sidebar:
   order: 4
+products:
+  - email-routing
+  - workers
 ---
 
 import { Render, WranglerConfig } from "~/components";
@@ -56,7 +60,7 @@ import { createMimeMessage } from "mimetext";
 export default {
 	async fetch(request, env) {
 		const msg = createMimeMessage();
-		msg.setSender({ name: "GPT-4", addr: "<SENDER>@example.com" });
+		msg.setSender({ name: "Sender", addr: "<SENDER>@example.com" });
 		msg.setRecipient("<RECIPIENT>@example.com");
 		msg.setSubject("An email generated in a worker");
 		msg.addMessage({

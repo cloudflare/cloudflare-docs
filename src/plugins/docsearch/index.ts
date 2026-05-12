@@ -1,12 +1,18 @@
 import { track } from "~/util/zaraz";
 import type { DocSearchClientOptions } from "@astrojs/starlight-docsearch";
+import {
+	ALGOLIA_APP_ID,
+	ALGOLIA_API_KEY,
+	ALGOLIA_INDEX,
+	ALGOLIA_INDEX_STYLE_GUIDE,
+} from "~/util/algolia";
 
 const isStyleGuide = window.location.pathname.startsWith("/style-guide/");
 
 export default {
-	appId: "D32WIYFTUF",
-	apiKey: "5cec275adc19dd3bc17617f7d9cf312a",
-	indexName: isStyleGuide ? "prod_devdocs_styleguide" : "prod_devdocs",
+	appId: ALGOLIA_APP_ID,
+	apiKey: ALGOLIA_API_KEY,
+	indexName: isStyleGuide ? ALGOLIA_INDEX_STYLE_GUIDE : ALGOLIA_INDEX,
 	insights: true,
 	// Replace URL with the current origin so search
 	// can be used in local development and previews.

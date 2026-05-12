@@ -9,21 +9,20 @@ sidebar:
 head:
   - tag: title
     content: Free Universal SSL/TLS certificates
-
 ---
 
-import { FeatureTable, GlossaryDefinition, Render } from "~/components"
+import { FeatureTable, GlossaryDefinition, Render } from "~/components";
 
 <GlossaryDefinition term="Universal SSL certificate" />
 
-Universal certificates are [Domain Validated (DV)](/ssl/concepts/#validation-level). For setup details, refer to [Enable Universal SSL](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/).
+On a [full setup](/dns/zone-setups/full-setup/), Universal SSL certificates cover your root domain (for example, `example.com`) and first-level subdomains (for example, `www.example.com`). On a [partial (CNAME) setup](/dns/zone-setups/partial-setup/), each proxied subdomain receives its own certificate regardless of depth. Cloudflare handles issuance, renewal, and deployment automatically.
+
+For full setup zones that need coverage beyond first-level subdomains, use [Total TLS](/ssl/edge-certificates/additional-options/total-tls/) or [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/).
+
+Universal certificates are [Domain Validated (DV)](/ssl/concepts/#validation-level), which means the certificate authority verifies domain ownership but does not validate organization identity. For setup details, refer to [Enable Universal SSL](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/).
 
 :::note
-
-
-If your website or application requires an SSL certificate prior to migrating traffic to Cloudflare, or if you need to [customize cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/), refer to [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) or [Custom](/ssl/edge-certificates/custom-certificates/) certificates.
-
-
+Universal SSL certificates are issued after your domain is active on Cloudflare. If you need an SSL certificate before migrating traffic, or if you need to [customize cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/), use [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) or [Custom](/ssl/edge-certificates/custom-certificates/) certificates.
 :::
 
 ## Availability
@@ -32,5 +31,6 @@ If your website or application requires an SSL certificate prior to migrating tr
 
 ## Related resources
 
+- [Limitations](/ssl/edge-certificates/universal-ssl/limitations/)
 - [Backup certificates](/ssl/edge-certificates/backup-certificates/)
 - [Validity period and renewal](/ssl/reference/certificate-validity-periods/#universal-ssl)

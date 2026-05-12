@@ -7,12 +7,14 @@ products:
   - bots
   - turnstile
 sidebar:
-  label: Block bots (Free, Pro, Business)
+  label: Block bots
 ---
 
 import { Tabs, TabItem, Steps, Render, DashButton } from "~/components";
 
-The right defense against malicious bot traffic depends on the traffic patterns on your site and your plan. This guide covers a layered approach using [Cloudflare Bots](/bots/), [Cloudflare Application Security](/waf/) (also known as Web Application Firewall or WAF), and [Turnstile](/turnstile/), from baseline protection to targeted custom rules. The core workflow uses features on Free, Pro, and Business plans, with callouts for Enterprise options. Most settings in this guide are configured per domain. [Select a domain](https://dash.cloudflare.com/) in the Cloudflare dashboard before following the steps below.
+The right defense against malicious bot traffic depends on the traffic patterns on your site and your plan. This guide covers a layered approach using [Cloudflare Bots](/bots/), [Cloudflare Application Security](/waf/) (also known as Web Application Firewall or WAF), and [Turnstile](/turnstile/), from baseline protection to targeted custom rules. The core workflow uses features on Free, Pro, and Business plans, with callouts for Enterprise options.
+
+<Render file="domain-scope-note" product="use-cases" params={{ exception: "Turnstile is the exception: widgets are configured at the account level." }} />
 
 ## Review your bot traffic
 
@@ -52,12 +54,7 @@ Review the following:
 
 ### Understand bot categories
 
-Cloudflare classifies bot traffic into categories based on bot scores and verification status:
-
-- **Verified bots**: Crawlers and services that Cloudflare has confirmed as legitimate, such as Googlebot, Bingbot, and uptime monitors. Cloudflare maintains a [verified bot list](/bots/concepts/bot/verified-bots/policy/) with strict requirements.
-- **Automated** (score 1): Cloudflare is quite certain the request is automated.
-- **Likely automated** (scores 2-29): Probably a bot. This category and Automated are your primary targets, including scrapers, credential stuffing tools, and spam submitters.
-- **Likely human** (scores 30-99): These requests appear to come from real users. Do not challenge or block this traffic.
+<Render file="bot-score-categories" product="bots" />
 
 ## Block automated traffic with Bot Fight Mode
 
@@ -81,7 +78,11 @@ For more details, refer to [Bot Fight Mode considerations](/bots/get-started/bot
 
 ### Enable Super Bot Fight Mode (Pro, Business, and Enterprise)
 
-Super Bot Fight Mode adds verified bot allowlisting, per-category actions, static resource protection, and JavaScript detections. If Bot Fight Mode is currently active on your domain, disable it before enabling Super Bot Fight Mode.
+Super Bot Fight Mode adds verified bot allowlisting, per-category actions, static resource protection, and JavaScript detections.
+
+<Render file="sbfm-upgrade" product="bots" />
+
+<Render file="enable-sbfm" product="bots" />
 
 :::note[Plan availability]
 Super Bot Fight Mode is available on Pro, Business, and Enterprise plans. Free plan users can use Bot Fight Mode for baseline protection. Enterprise customers who need machine learning-based bot scoring and custom allow/block rules can add [Bot Management](/bots/plans/bm-subscription/).
@@ -90,8 +91,6 @@ Super Bot Fight Mode is available on Pro, Business, and Enterprise plans. Free p
 :::caution
 If your organization uses [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/), keep **Definitely Automated** set to **Allow** in Super Bot Fight Mode. Otherwise, tunnels might fail with a `websocket: bad handshake` error.
 :::
-
-For full details and setup instructions, refer to [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/).
 
 ## Protect forms from automated abuse
 

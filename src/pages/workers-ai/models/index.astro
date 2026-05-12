@@ -1,10 +1,10 @@
 ---
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import ModelCatalog from "~/components/ModelCatalog.tsx";
-import { getLegacyModels } from "~/util/model-resolver";
+import { getLegacyModels, toModelCardData } from "~/util/model-resolver";
 import { Aside } from "~/components";
 
-const models = await getLegacyModels();
+const models = (await getLegacyModels()).map(toModelCardData);
 ---
 
 <StarlightPage

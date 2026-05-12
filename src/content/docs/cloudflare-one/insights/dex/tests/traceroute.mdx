@@ -31,7 +31,7 @@ import { Details, Render } from "~/components";
 
 </Details>
 
-A traceroute test measures the network path of an IP packet from an end-user device to a server. You can use the test results to troubleshoot network issues. For example, increased latency may indicate a problem with connectivity along the network path.
+A traceroute test measures the network path of an IP packet from an end-user device to a server. The packet passes through a series of intermediate routers — each called a "hop" — and the test records the response time and packet loss at each one. You can use the results to troubleshoot network issues by identifying which hop along the path is causing increased latency or dropped packets.
 
 ## Create a test
 
@@ -43,7 +43,7 @@ To set up a traceroute test for an application:
 4. Fill in the following fields:
    - **Name**: Enter any name for the test.
    - **Target**: Enter the IP address of the server you want to test (for example, `192.0.2.0`). You can test either a public-facing endpoint or a private endpoint you have connected to Cloudflare.
-   - **Source device profiles**: (Optional) Select the [device profiles](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/) that you want to run the test on. If no profiles are selected, the test will run on all supported devices connected to your Zero Trust organization.
+   - **Source device profiles**: (Optional) Select the [device profiles](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/) that you want to run the test on. A device profile defines Cloudflare One Client settings for a specific set of devices in your organization. If no profiles are selected, the test will run on all supported devices connected to your Zero Trust organization.
    - **Test type**: Select _Traceroute_.
    - **Test frequency**: Specify how often the test will run. Input a minute value between 5 and 60.
 5. Select **Add test**.
@@ -56,12 +56,12 @@ A traceroute test measures the following data:
 
 | Data            | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Network path    | IP address, average response time, and packet loss for each hop between the device and the target.                                                                                                                                                                                                                                                                                                                                                          |
-| Round trip time | Time between sending out a packet and receiving a response from the target.                                                                                                                                                                                                                                                                                                                                                                                 |
+| Network path    | IP address, average response time, and packet loss for each hop (router) between the device and the target. This is the core traceroute data — it maps the route your traffic takes.                                                                                                                                                                                                                                                                       |
+| Round trip time | Time, in milliseconds, between sending out a packet and receiving a response from the target. This is the end-to-end latency measurement.                                                                                                                                                                                                                                                                                                                  |
 | Number of hops  | Number of routers encountered between the device and the target.                                                                                                                                                                                                                                                                                                                                                                                            |
 | Packet loss     | Percentage of IP packets that failed to receive a response.                                                                                                                                                                                                                                                                                                                                                                                                 |
-| Availability    | Percentage of tests where at least one packet reached the destination.                                                                                                                                                                                                                                                                                                                                                                                      |
-| Last seen ISP   | The Internet Service Provider that is managing the connection from the device to Cloudflare. (Only available on macOS and Windows.) <br/> <br/> DEX looks up the IP address of the ISP in a geolocation database and returns the corresponding [ASO and ASN](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/). If the ASO and ASN are `Unknown`, it means this information is unavailable in the geolocation data provider. |
+| Availability    | Percentage of tests where at least one packet reached the destination. A value below 100% means the destination was completely unreachable during some test runs.                                                                                                                                                                                                                                                                                           |
+| Last seen ISP   | The Internet Service Provider that is managing the connection from the device to Cloudflare. (Only available on macOS and Windows.) <br/> <br/> DEX looks up the IP address of the ISP in a geolocation database and returns the corresponding [ASO (Autonomous System Organization) and ASN (Autonomous System Number)](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/). If the ASO and ASN are `Unknown`, it means this information is unavailable in the geolocation data provider. |
 
 ## Export DEX application test logs
 
@@ -73,4 +73,4 @@ A traceroute test measures the following data:
 
 ## Related resources
 
-- [DEX rules](/cloudflare-one/insights/dex/rules/) - Specify the target group of a test.
+- [DEX rules](/cloudflare-one/insights/dex/rules/) - Define which users or groups a test applies to, using selectors such as user email, user group, operating system, or managed network.

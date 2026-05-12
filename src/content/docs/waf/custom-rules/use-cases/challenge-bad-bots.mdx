@@ -19,13 +19,13 @@ Access to [Bot Management](/bots/plans/bm-subscription/) requires a Cloudflare E
 Before creating custom rules for bot protection, review the settings on your [Security Settings](/security/) page under **Bot traffic**. Built-in features auto-update with new bot signatures, do not count toward your custom rule limits, and are simpler to manage.
 
 | Use case                                            | Bot setting                    |
-| --------------------------------------------------- | ------------------------------ | --------------------------------------- |
+| --------------------------------------------------- | ------------------------------ |
 | Block AI crawlers (GPTBot, ClaudeBot, etc.)         | **Block AI bots**              |
 | Block definitely automated traffic (bot score of 1) | **Definitely automated**       |
 | Challenge likely automated traffic (bot score 2-29) | **Likely automated**           |
 | Allow verified bots (Googlebot, Bingbot, etc.)      | **Verified bots**              |
-| Extend bot protection to static resources           | **Static resource protection** | **Security Settings** > **Bot traffic** |
-| Allow WordPress loopback requests                   | **Optimize for WordPress**     | **Security Settings** > **Bot traffic** |
+| Extend bot protection to static resources           | **Static resource protection** |
+| Allow WordPress loopback requests                   | **Optimize for WordPress**     |
 
 Custom rules are still valuable when you need path-specific protection (different handling for `/api/` vs. `/login/`), custom score thresholds (for example, score below 20 instead of 30), conditional logic combining bot score with other fields, or custom actions not available in the built-in settings.
 

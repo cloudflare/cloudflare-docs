@@ -79,7 +79,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-sear
 
 ## 3. Add content
 
-If you did not create an instance that is connected to a data source, upload files using the [Items API](/api/resources/ai_search/subresources/items/methods/upload/). You can skip this step if you connected a website or R2 bucket.
+If you did not create an instance that is connected to a data source, upload files using the [Items API](/api/resources/ai_search/subresources/namespaces/subresources/instances/subresources/items/methods/upload/). You can skip this step if you connected a website or R2 bucket.
 
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/my-instance/items" \

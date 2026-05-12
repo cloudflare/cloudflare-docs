@@ -9,9 +9,9 @@ products:
 
 import { FeatureTable, DashButton } from "~/components"
 
-Early Hints takes advantage of “server think time” to asynchronously send instructions to the browser to begin loading resources while the origin server is compiling the full response. By sending these hints to a browser before the full response is prepared, the browser can figure out how to load the webpage faster for the end user.
+When a browser requests a page, the origin server takes time to prepare the full response. Early Hints uses this wait time to send the browser a preliminary `103` response containing `Link` headers that tell the browser which assets it will need. The browser can start loading those assets before the full response arrives, which speeds up page loads.
 
-Formally, Early Hints is a [web standard](https://httpwg.org/specs/rfc8297.html) that defines a new HTTP status code (103 Early Hints) that defines new interactions between a client and server. 103s are served to clients while a 200 OK (or error) response is prepared, which is the “server think time.” You can enable Cloudflare's edge to cache and send 103 Early Hints responses with Link headers from your HTML pages. The response contains hints about which assets will likely be needed to fully render the webpage. This "hinting" speeds up page loads and generally reduces user-perceived latency.
+Early Hints is defined in [RFC 8297](https://httpwg.org/specs/rfc8297.html) as a new HTTP status code (`103 Early Hints`). Cloudflare caches and serves these `103` responses with `Link` headers from your HTML pages, reducing user-perceived latency.
 
 :::note[Note]
 

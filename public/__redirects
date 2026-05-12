@@ -3,6 +3,16 @@
 # STATIC REDIRECTS
 # ============================================================================
 
+
+# Blocked Content (Security center restructuring)
+/security-center/blocked-content/ /fundamentals/reference/report-abuse/blocked-content/ 301
+
+# Security reports (moved from security-center to analytics)
+/security-center/app-security-reports/ /analytics/account-and-zone-analytics/app-security-reports/ 301
+
+# Custom Dashboards (moved from log-explorer to analytics)
+/log-explorer/custom-dashboards/ /analytics/custom-dashboards/ 301
+
 # Solutions (moved from use-cases/application-security/bots/)
 /use-cases/application-security/bots/stop-malicious-bots/ /use-cases/solutions/stop-malicious-bots/ 301
 
@@ -27,6 +37,9 @@
 /billing/resolve-you-cannot-modify-this-subscription/ /billing/troubleshoot/resolve-you-cannot-modify-this-subscription/ 301
 /billing/resolve-cannot-remove-payment-method/ /billing/troubleshoot/resolve-cannot-remove-payment-method/ 301
 
+# artifacts
+/artifacts/guides/namespaces/ /artifacts/concepts/namespaces/ 301
+
 # homepage
 /cloudflare-one/identity/ /cloudflare-one/integrations/identity-providers/ 301
 /cloudflare-one/applications/ /cloudflare-one/access-controls/applications/http-apps/ 301
@@ -50,6 +63,7 @@
 /cloudflare-wan/zero-trust/warp/ /cloudflare-wan/zero-trust/cloudflare-one-client/ 301
 /cloudflare-one/networks/connectors/cloudflare-wan/zero-trust/warp/ /cloudflare-one/networks/connectors/cloudflare-wan/zero-trust/cloudflare-one-client/ 301
 /workers/runtime-apis/bindings/worker-loader/ /dynamic-workers/ 301
+/dynamic-workers/examples/dynamic-workflows/ /dynamic-workers/usage/dynamic-workflows/ 301
 /docs/ /directory/ 301
 /support/ai/ / 301
 /products/ /directory/ 301
@@ -359,6 +373,7 @@
 /browser-rendering/workers-bindings/screenshots/ /browser-run/how-to/deploy-worker/ 301
 /browser-rendering/workers-bindings/ /browser-run/get-started/#browser-sessions 301
 /browser-rendering/how-to/browser-rendering-with-do/ /browser-run/how-to/browser-run-with-do/ 301
+/browser-run/how-to/ai/ /browser-run/quick-actions/json-endpoint/ 301
 
 # byoip
 /byoip/about/dynamic-advertisement/ /byoip/concepts/dynamic-advertisement/ 301
@@ -441,6 +456,7 @@
 /realtime/realtimekit/getting-started/ /realtime/realtimekit/quickstart/ 302
 /realtime/introduction/ /realtime/realtimekit/introduction/ 302
 /realtime/concepts/ /realtime/realtimekit/concepts/ 302
+/realtime/static/calls-api-2024-05-21.yaml /realtime/static/realtime-api-2024-05-21.yaml 301
 
 # Cloudflare Challenges
 /cloudflare-challenges/frequently-asked-questions/ /cloudflare-challenges/ 301
@@ -478,7 +494,9 @@
 /network-interconnect/express-cni/create-interconnects/ /network-interconnect/ 301
 /network-interconnect/express-cni/ /network-interconnect/ 301
 /network-interconnect/pni-and-peering/ /network-interconnect/ 301
-/network-interconnect/static/cni-locations-04-08-2025.pdf /network-interconnect/static/cni-locations-30-10-2025.pdf 301
+/network-interconnect/static/cni-locations-04-08-2025.pdf /network-interconnect/static/cni-locations-05-may-2026.pdf 301
+/network-interconnect/static/cni-locations-30-10-2025.pdf /network-interconnect/static/cni-locations-05-may-2026.pdf 301
+/network-interconnect/static/cni-locations-31-mar-2026.pdf /network-interconnect/static/cni-locations-05-may-2026.pdf 301
 
 # Constellation
 /constellation/ /workers-ai/ 301
@@ -592,6 +610,10 @@
 /dns/foundation-dns/graphql-analytics/ /dns/additional-options/analytics/ 301
 /dns/manage-dns-records/how-to/dns-load-balancing/ /dns/manage-dns-records/how-to/round-robin-dns/ 301
 /dns/manage-dns-records/how-to/create-root-domain/ /dns/manage-dns-records/how-to/create-zone-apex/ 301
+/dns/manage-dns-records/how-to/private-network-routing/ /dns/private-origins/private-network-routing/ 301
+/dns/manage-dns-records/how-to/private-origins/ /dns/private-origins/ 301
+/dns/manage-dns-records/how-to/private-origins/private-network-routing/ /dns/private-origins/private-network-routing/ 301
+/dns/manage-dns-records/how-to/private-origins/private-origin-via-cloudflare-wan/ /dns/private-origins/set-up-via-cloudflare-wan/ 301
 /dns/manage-dns-records/reference/proxied-dns-records/ /dns/proxy-status/ 301
 /dns/manage-dns-records/troubleshooting/acme-challenge-txt-record/ /dns/manage-dns-records/troubleshooting/unexpected-dns-records/#acme_challenge-txt-records 301
 /dns/reference/troubleshooting/ /dns/reference/recommended-third-party-tools/ 301
@@ -1237,16 +1259,16 @@
 
 # magic-wan → cloudflare-wan
 /magic-wan/tutorials/ipsec/ /cloudflare-wan/reference/gre-ipsec-tunnels/#ipsec-tunnels 301
-/magic-wan/how-to/configure-tunnels/ /cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/ 301
+/magic-wan/how-to/configure-tunnels/ /cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/ 301
 /magic-wan/about/ /cloudflare-wan/get-started/ 301
 /magic-wan/about/traffic-steering/ /cloudflare-wan/reference/traffic-steering/ 301
 /magic-wan/how-to/ipsec/ /cloudflare-wan/reference/gre-ipsec-tunnels/#ipsec-tunnels 301
-/magic-wan/partners/aruba-edgeconnect/ /cloudflare-wan/configuration/manually/third-party/aruba-edgeconnect/ 301
-/magic-wan/tutorials/viptela/ /cloudflare-wan/configuration/manually/third-party/viptela/ 301
-/magic-wan/tutorials/pfsense/ /cloudflare-wan/configuration/manually/third-party/pfsense/ 301
-/magic-wan/tutorials/sophos-firewall/ /cloudflare-wan/configuration/manually/third-party/sophos-firewall/ 301
+/magic-wan/partners/aruba-edgeconnect/ /cloudflare-wan/configuration/third-party/aruba-edgeconnect/ 301
+/magic-wan/tutorials/viptela/ /cloudflare-wan/configuration/third-party/viptela/ 301
+/magic-wan/tutorials/pfsense/ /cloudflare-wan/configuration/third-party/pfsense/ 301
+/magic-wan/tutorials/sophos-firewall/ /cloudflare-wan/configuration/third-party/sophos-firewall/ 301
 /magic-wan/how-to/run-tunnel-health-checks/ /cloudflare-wan/configuration/common-settings/update-tunnel-health-checks-frequency/ 301
-/magic-wan/get-started/configure-tunnels/ /cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/ 301
+/magic-wan/get-started/configure-tunnels/ /cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/ 301
 /magic-wan/configuration/connector/configure-connector/ /cloudflare-wan/configuration/appliance/configure-hardware-appliance/ 301
 /magic-wan/configuration/connector/device-information/ /cloudflare-wan/configuration/appliance/reference/ 301
 /magic-wan/configuration/manually/how-to/configure-magic-tunnel-alerts/ /cloudflare-wan/configuration/common-settings/configure-tunnel-health-alerts/ 301
@@ -1254,9 +1276,9 @@
 /magic-wan/configuration/manually/how-to/view-analytics/ /cloudflare-wan/analytics/ 301
 /magic-wan/configuration/common-settings/view-analytics/ /cloudflare-wan/analytics/ 301
 /magic-wan/prerequisites/ /cloudflare-wan/get-started/ 301
-/magic-wan/configuration/manually/how-to/configure-static-routes/ /cloudflare-wan/configuration/manually/how-to/configure-routes/ 301
-/magic-wan/configuration/manually/how-to/bgp-peering/ /cloudflare-wan/configuration/manually/how-to/configure-routes/ 301
-/magic-wan/configuration/manually/how-to/configure-tunnels/ /cloudflare-wan/configuration/manually/how-to/configure-tunnel-endpoints/ 301
+/magic-wan/configuration/manually/how-to/configure-static-routes/ /cloudflare-wan/configuration/how-to/configure-routes/ 301
+/magic-wan/configuration/manually/how-to/bgp-peering/ /cloudflare-wan/configuration/how-to/configure-routes/ 301
+/magic-wan/configuration/manually/how-to/configure-tunnels/ /cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/ 301
 /magic-wan/configuration/common-settings/tunnel-health-checks/ /cloudflare-wan/configuration/common-settings/update-tunnel-health-checks-frequency/ 301
 /magic-wan/configuration/common-settings/configure-magic-tunnel-alerts/ /cloudflare-wan/configuration/common-settings/configure-tunnel-health-alerts/ 301
 /magic-wan/reference/tunnels/ /cloudflare-wan/reference/gre-ipsec-tunnels/ 301
@@ -1607,6 +1629,7 @@
 /style-guide/components/last-reviewed/ /style-guide/frontmatter/custom-properties/#reviewed 301
 /style-guide/components/mermaid/ /style-guide/documentation-content-strategy/component-attributes/diagrams/#mermaid-diagrams 301
 /style-guide/components/workers-templates/ /style-guide/components/index/ 301
+/style-guide/ai-tooling/ /docs-for-agents/ 301
 
 # support
 /support/about-cloudflare/getting-started/troubleshooting-faq-for-new-cloudflare-customers/ /fundamentals/reference/troubleshooting/ 301
@@ -2424,6 +2447,7 @@
 /cloudflare-one/analytics/logs/activity-log/ /cloudflare-one/insights/logs/dashboard-logs/gateway-logs/ 301
 /cloudflare-one/identity/devices/os-version/ /cloudflare-one/reusable-components/posture-checks/client-checks/os-version/ 301
 /cloudflare-one/insights/dex/fleet-status/ /cloudflare-one/insights/dex/monitoring/ 301
+/cloudflare-one/insights/dex/remote-captures/ /cloudflare-one/insights/dex/diagnostics/client-packet-capture/ 301
 /cloudflare-one/policies/zero-trust/cors/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/cors/ 301
 /cloudflare-one/identity/users/groups/ /cloudflare-one/policies/access/groups/ 301
 /cloudflare-one/analytics/private-network-discovery/ /cloudflare-one/insights/analytics/shadow-it-discovery/#private-network-origins 301
@@ -2553,6 +2577,9 @@
 # ============================================================================
 # DYNAMIC REDIRECTS
 # ============================================================================
+
+# Agent Skills legacy discovery path
+/.well-known/skills/* /.well-known/agent-skills/:splat 301
 
 /cloudflare-one/faq/troubleshooting/* /cloudflare-one/troubleshooting/ 301
 # Pub/Sub (removed product)
@@ -2698,8 +2725,8 @@
 /network-interconnect/partners/* /network-interconnect/classic-cni/set-up/partners/:splat 301
 
 # Magic WAN → Cloudflare WAN
-/magic-wan/how-to/* /cloudflare-wan/configuration/manually/how-to/:splat 301
-/magic-wan/third-party/* /cloudflare-wan/configuration/manually/third-party/:splat 301
+/magic-wan/how-to/* /cloudflare-wan/configuration/how-to/:splat 301
+/magic-wan/third-party/* /cloudflare-wan/configuration/third-party/:splat 301
 /magic-wan/connector/* /cloudflare-wan/configuration/appliance/:splat 301
 /magic-wan/configuration/connector/dhcp/* /cloudflare-wan/configuration/appliance/network-options/dhcp/:splat 301
 
@@ -2748,6 +2775,8 @@
 /cloudflare-wan/configuration/connector/configure-hardware-connector/* /cloudflare-wan/configuration/appliance/configure-hardware-appliance/:splat 301
 /cloudflare-wan/configuration/appliance/configure-hardware-connector/* /cloudflare-wan/configuration/appliance/configure-hardware-appliance/:splat 301
 /cloudflare-wan/configuration/connector/* /cloudflare-wan/configuration/appliance/:splat 301
+/cloudflare-wan/configuration/manually/third-party/* /cloudflare-wan/configuration/third-party/:splat 301
+/cloudflare-wan/configuration/manually/how-to/* /cloudflare-wan/configuration/how-to/:splat 301
 /magic-wan/* /cloudflare-wan/:splat 301
 
 # WAN Tunnels → Cloudflare WAN (within Cloudflare One)
@@ -2755,6 +2784,8 @@
 /cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/* /cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/:splat 301
 /cloudflare-one/networks/connectors/wan-tunnels/configuration/appliance/configure-hardware-connector/* /cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/configure-hardware-appliance/:splat 301
 /cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/configure-hardware-connector/* /cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/configure-hardware-appliance/:splat 301
+/cloudflare-one/networks/connectors/cloudflare-wan/configuration/manually/third-party/* /cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/:splat 301
+/cloudflare-one/networks/connectors/cloudflare-wan/configuration/manually/how-to/* /cloudflare-one/networks/connectors/cloudflare-wan/configuration/how-to/:splat 301
 /cloudflare-one/networks/connectors/wan-tunnels/* /cloudflare-one/networks/connectors/cloudflare-wan/:splat 301
 
 # Multi-Cloud Networking (formerly Magic Cloud Networking)
@@ -2784,3 +2815,6 @@
 /changelog/2024-* /changelog/post/2024-:splat 301
 /changelog/2025-* /changelog/post/2025-:splat 301
 /changelog/2026-* /changelog/post/2026-:splat 301
+
+# Security Insights (moved from Security Center to Security)
+/security-center/security-insights/* /security/security-insights/:splat 301

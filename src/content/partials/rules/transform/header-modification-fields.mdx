@@ -6,18 +6,19 @@ params:
 import { Markdown } from "~/components";
 
 - `cf.bot_management.*`
-- `cf.bot_detection.js_check_score`
 - `cf.client.bot`
-- `cf.threat_score`
 - `cf.verified_bot_category`
 - `cf.edge.server_ip`
 - `cf.edge.server_port`
 - `cf.edge.client_port`
+- `cf.edge.client_tcp`
+- `cf.edge.l4.delivery_rate`
 - `cf.hostname.metadata`
 - `cf.zone.name`
-- `cf.metal.id`
 - `cf.random_seed`
 - `cf.ray_id`
+- `cf.timings.client_quic_rtt_msec`
+- `cf.timings.client_tcp_rtt_msec`
 - `cf.tls_version`
 - `cf.tls_cipher`
 - `cf.tls_client_hello_length`
@@ -26,13 +27,23 @@ import { Markdown } from "~/components";
 - `cf.tls_client_extensions_sha1_le`
 - `cf.tls_client_ciphers_sha1`
 - `cf.tls_client_auth.*`
+- `cf.worker.upstream_zone`
+- `cf.fraud.email_risk`
 - `http.cookie`
 - `http.host`
 - `http.referer`
+- `http.request.accepted_languages`
+- `http.request.cookies`
 - `http.request.headers`
 - `http.request.headers.*`
-- `http.request.accepted_languages`
 - `http.request.method`
+- `http.request.body.form`
+- `http.request.body.form.*`
+- `http.request.body.multipart`
+- `http.request.body.multipart.*`
+- `http.request.body.raw`
+- `http.request.body.size`
+- `http.request.body.truncated`
 - `http.request.timestamp.sec`
 - `http.request.timestamp.msec`
 - `http.request.full_uri`
@@ -63,10 +74,12 @@ import { Markdown } from "~/components";
 - `ssl`
 
 { props.location === "request" && (
+
   <>
     <ul>
       <li><code>http.request.jwt.claims</code></li>
       <li><code>http.request.jwt.claims.*</code></li>
+      <li><code>cf.fraud_detection.disposable_email</code></li>
       <li><code>cf.sequence.current_op</code></li>
       <li><code>cf.sequence.msec_since_op</code></li>
       <li><code>cf.sequence.previous_ops</code></li>
@@ -74,20 +87,25 @@ import { Markdown } from "~/components";
       <li><code>cf.waf.credential_check.*</code></li>
       <li><code>cf.waf.score</code></li>
       <li><code>cf.waf.score.*</code></li>
-      <li><code>cf.worker.upstream_zone</code></li>
     </ul>
   </>
 )}
 
 { props.location === "response" && (
+
   <>
     <ul>
       <li><code>http.response.code</code></li>
+      <li><code>http.response.content_type.media_type</code></li>
       <li><code>http.response.headers</code></li>
       <li><code>http.response.headers.*</code></li>
-      <li><code>http.response.content_type.media_type</code></li>
+      <li><code>raw.http.response.headers</code></li>
+      <li><code>raw.http.response.headers.*</code></li>
       <li><code>cf.response.1xxx_code</code></li>
       <li><code>cf.response.error_type</code></li>
+      <li><code>cf.timings.edge_msec</code></li>
+      <li><code>cf.timings.origin_ttfb_msec</code></li>
+      <li><code>cf.timings.worker_msec</code></li>
     </ul>
   </>
 )}

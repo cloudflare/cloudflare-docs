@@ -31,10 +31,10 @@ Review the caching configuration for your origin web server and ensure you are c
 
 ## Do not trust data in HTTP headers
 
-Client-side vulnerabilities are often exploited through HTTP headers, including cross-site scripting (XSS). In general, you should not trust the data in HTTP headers and as such:
+Attackers can exploit HTTP headers to inject malicious content into cached responses. For example, if your application reflects an untrusted header value in the response body, an attacker could use this to perform cross-site scripting (XSS) through the cache. To reduce this risk:
 
 * Do not rely on values in HTTP headers if they are not part of your [cache key](/cache/how-to/cache-keys/).
-* Never return HTTP headers to users in cached content.
+* Do not include untrusted header values in your response body.
 
 ## Do not trust GET request bodies
 

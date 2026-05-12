@@ -1,7 +1,7 @@
 ---
 title: Buckets
 pcx_content_type: how-to
-description: Buckets in Zero Trust analytics.
+description: Configure cloud storage buckets for full packet captures.
 products:
   - cloudflare-one
 sidebar:
@@ -12,7 +12,7 @@ tags:
 
 import { GlossaryTooltip, TabItem, Tabs, DashButton } from "~/components";
 
-Before you can begin a full <GlossaryTooltip term="data packet">packet</GlossaryTooltip> capture, you must first configure a bucket that Cloudflare can use to upload your files. Setting up a bucket is not required for sample packet captures.
+Before you can begin a full <GlossaryTooltip term="data packet">packet</GlossaryTooltip> capture, you must configure a cloud storage bucket where Cloudflare can write the captured traffic data. Setting up a bucket is not required for sample packet captures, which complete immediately and can be downloaded directly from the API.
 
 You can configure an Amazon S3 or Google Cloud Platform bucket to use as a target. You can also [use R2](#r2) as a target using the API.
 
@@ -32,7 +32,7 @@ The **Prove ownership** step of the **Bucket configuration** displays.
 
 </TabItem> <TabItem label="API">
 
-Before you can begin using a bucket, you must first enable destinations.
+Before you can begin using a bucket, you must first enable destinations. Follow the destination setup steps for your provider, then return here to validate ownership.
 
 Refer to the [Amazon S3](/logs/logpush/logpush-job/enable-destinations/aws-s3/#create-and-get-access-to-an-s3-bucket) or [Google Cloud Storage](/logs/logpush/logpush-job/enable-destinations/google-cloud-storage/#create-and-get-access-to-a-gcs-bucket) documentation and follow the steps for those specific services.
 
@@ -42,12 +42,12 @@ Next, validate the bucket and confirm ownership.
 
 ## Validate a bucket
 
-After the initial bucket set up, you need to confirm you own the bucket via an ownership challenge. After you validate your bucket, you can begin using it to collect full packet captures.
+After the initial bucket setup, you need to confirm you have access to the bucket via an ownership challenge. This verification prevents Cloudflare from writing capture data to a bucket you do not control. After you validate your bucket, you can begin using it to collect full packet captures.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. From the **Prove ownership** step of the **Bucket configuration**, locate the **Ownership token** field.
-2. In the **Ownership token** field, enter the ownership token for your service provider.
+2. Find the ownership challenge file that Cloudflare placed in your bucket, copy its contents, and enter them in the **Ownership token** field.
 3. When you are done, select **Create**. The **Packet captures** page displays.
 
 The **Buckets** tab displays a list of the buckets associated with your account. Refer to the **Status** column to see the status of your bucket configuration.
@@ -121,7 +121,7 @@ The bucket status displays one of the following options:
 
 - **Success:** The bucket is fully verified and ready to use.
 - **Pending:** The challenge response was initiated but is pending verification. Bucket verification can take five to ten minutes to finish processing.
-- **Failed:** The bucket could not be validated. If this occurs, verify your ownership information.
+- **Failed:** The bucket could not be validated. If this occurs, verify that Cloudflare has write access to your bucket and that you submitted the correct contents of the ownership challenge file.
 
 ## List configured buckets
 
@@ -129,11 +129,8 @@ View a list of all buckets configured on your account.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In the Cloudflare dashboard, go to the **Network health** page.
-
-   <DashButton url="/?to=/:account/networking-insights/health" />
-
-2. Go to the **Diagnostics** tab, and select **Buckets**.
+1. In the [Cloudflare One](https://one.dash.cloudflare.com) dashboard, go to ***Insights** > *Network visibility** > **Diagnostics**.
+2. Select the **Buckets** tab.
 
 The list of buckets associated with your account displays.
 
@@ -169,11 +166,15 @@ To learn how to collect packet captures, refer to [Collect packet captures](/clo
 
 ## R2
 
-To start collecting packet captures with R2, you first need to configure it properly. For all the required details, refer to the [Cloudflare R2](/r2/) documentation.
+You can also use [Cloudflare R2](/r2/) as a storage destination for packet captures. R2 bucket configuration is available through the API only.
+
+:::note
+When you validate an R2 bucket, exclude the `access-key-id` and `secret-access-key` parameters from the `destination_conf` URL. Only include them in the initial registration request.
+:::
 
 ### Create bucket and API token
 
-1. In the Cloudflare One dashboard, go to the **R2** page.
+1. In the Cloudflare dashboard, go to the **R2** page.
 
 	<DashButton url="/?to=/:account/r2/overview" />
 

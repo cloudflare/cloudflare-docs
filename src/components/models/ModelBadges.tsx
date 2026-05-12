@@ -1,5 +1,5 @@
 import type { WorkersAIModelsSchema } from "~/schemas";
-import type { ResolvedModel } from "~/util/model-types";
+import type { ModelCardData, ResolvedModel } from "~/util/model-types";
 import { CAPABILITY_PROPERTIES } from "~/util/model-properties";
 
 const CATEGORY_BADGE: Record<string, string> = {
@@ -7,7 +7,7 @@ const CATEGORY_BADGE: Record<string, string> = {
 	platform: "caution", // orange
 };
 
-type ModelType = WorkersAIModelsSchema | ResolvedModel;
+type ModelType = WorkersAIModelsSchema | ResolvedModel | ModelCardData;
 
 const ModelBadges = ({ model }: { model: ModelType }) => {
 	const badges = model.properties.flatMap(({ property_id, value }) => {

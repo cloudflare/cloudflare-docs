@@ -1,0 +1,33 @@
+---
+const { entry } = Astro.locals.starlightRoute;
+const base =
+	Astro.site?.toString().replace(/\/$/, "") ??
+	"https://developers.cloudflare.com";
+
+const productPrefix = entry.id !== "index" ? entry.id.split("/")[0] : null;
+const llmsTxt = productPrefix
+	? `${base}/${productPrefix}/llms.txt`
+	: `${base}/llms.txt`;
+---
+
+<blockquote class="llms-txt-directive" aria-hidden="true">
+Documentation Index<br/>
+Fetch the complete documentation index at: {llmsTxt}<br/>
+Use this file to discover all available pages before exploring further.
+</blockquote>
+
+<style>
+	/* Visually hidden from human readers but present in DOM for AI agents.
+	   Uses clip-rect (not display:none) so the element survives HTML-to-markdown conversion. */
+	.llms-txt-directive {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+</style>

@@ -222,6 +222,13 @@ The action behavior can be one of the following:
 
 Use **IP with NAT support** to handle situations such as requests under NAT sharing the same IP address. Cloudflare uses a variety of privacy-preserving techniques to identify unique visitors, which may include use of session cookies. Refer to [Cloudflare Cookies](/fundamentals/reference/policies-compliances/cloudflare-cookies/) for details.
 
+#### Considerations when using IP with NAT support
+
+**IP with NAT support** relies on a cookie-based visitor identification mechanism ([`_cfuvid` cookie](/fundamentals/reference/policies-compliances/cloudflare-cookies/#_cfuvid-for-rate-limiting-rules)). Keep the following in mind:
+
+- Visitors who clear cookies, use private browsing, or do not accept cookies will not be individually identified. Requests from these visitors share a single counter bucket, which can cause false positives in high-traffic NAT environments.
+- For security-critical rate limiting (such as protecting login or payment endpoints), combine **IP with NAT support** with other characteristics like **Path** or **Header value of** to reduce the impact of identification gaps.
+
 ### Incompatible characteristics
 
 You cannot use both **IP with NAT support** and **IP** as characteristics of the same rate limiting rule.

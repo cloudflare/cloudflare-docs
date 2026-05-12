@@ -2,26 +2,34 @@
 pcx_content_type: troubleshooting
 title: Error 1015
 source: null
+description: Troubleshoot Cloudflare 1015 error code.
+products:
+  - support
 ---
 
 ## Error 1015: You are being rate limited
 
-This error indicates that you are being rate limited by the website.
+The website you are trying to visit has received too many requests and has temporarily blocked you from accessing it.
 
 ### Common cause
 
-The site owner implemented [rate limiting](/waf/rate-limiting-rules/) that affects your visitor traffic.
-
-:::note
-_Unable to purge_ is another `1015` error code relating to [Cloudflare cache purge](/cache/how-to/purge-cache). Retry the cache purge and contact [Cloudflare support](/support/contacting-cloudflare-support/) if errors persist.
-:::
+The website owner has configured rate limiting rules that restrict how many requests a visitor can make to their site in a given time period. When you exceed this limit, Cloudflare returns a `1015` error.
 
 ### Resolution
 
-- If you are a site visitor, contact the site owner to request exclusion of your IP from rate limiting.
-- If you are the site owner, review the current rate limiting thresholds and adjust your configuration.
-- If a rate limiting rule is blocking requests in a short time period (for example, one second) try increasing the time period to 10 seconds.
+**If you are a site visitor:**
+
+- Wait for a period of time, then try accessing the website again later. Do not repeatedly try to access the website within a short period of time, as this may extend the block.
+- If you are still blocked or need help, contact the website owner or the website's support team directly for help. Cloudflare does not control which visitors are rate limited, the website owner sets these rules.
+
+**If you are the site owner:**
+
+- Review your current [rate limiting thresholds](/waf/rate-limiting-rules/) and adjust your configuration.
+- If a rate limiting rule is blocking requests in a short time period (for example, one second), try increasing the time period to 10 seconds.
 
 :::note
 If you expect a new Cloudflare Worker to exceed rate limits, refer to the [Workers documentation](/workers/platform/limits/) for guidance.
+:::
+:::note
+_Unable to purge_ is another `1015` error code relating to [Cloudflare cache purge](/cache/how-to/purge-cache). Retry the cache purge and contact [Cloudflare support](/support/contacting-cloudflare-support/) if errors persist.
 :::

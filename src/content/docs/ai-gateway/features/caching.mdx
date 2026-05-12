@@ -57,6 +57,18 @@ This caching behavior will be uniformly applied to all requests that support cac
 
 To check whether a response comes from cache or not, **cf-aig-cache-status** will be designated as `HIT` or `MISS`.
 
+## How the cache key works
+
+By default, AI Gateway constructs the cache key by concatenating the following and hashing the result with SHA-256:
+
+- **Provider** (for example, `openai`, `anthropic`)
+- **Endpoint** (the API path)
+- **Model** (for example, `gpt-4o`)
+- **Provider authentication header** (for example, the `Authorization` bearer token)
+- **Full request body**
+
+This means caching is based on **exact match** of the entire request. Any difference in the body — including messages, tools, or model parameters — will result in a separate cache entry. To override this behavior, use the [custom cache key header](#custom-cache-key-cf-aig-cache-key).
+
 ## Per-request caching
 
 While your gateway's default cache settings provide a good baseline, you might need more granular control. These situations could include data freshness, content with varying lifespans, or dynamic or personalized responses.

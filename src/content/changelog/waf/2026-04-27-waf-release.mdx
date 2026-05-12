@@ -1,0 +1,415 @@
+---
+title: "WAF Release - 2026-04-27"
+description: Cloudflare WAF managed rulesets 2026-04-27 release
+date: 2026-04-27
+---
+
+import { RuleID } from "~/components";
+
+This week's release focuses on new improvements to enhance coverage.
+
+**Key Findings**
+
+- Existing rule enhancements have been deployed to improve detection resilience against broad classes of web attacks and strengthen behavioral coverage.
+
+
+**Continuous Rule Improvements**
+
+We are continuously refining our managed rules to provide more resilient protection and deeper insights into attack patterns. To ensure an optimal security posture, we recommend consistently monitoring the Security Events dashboard and adjusting rule actions as these enhancements are deployed.
+
+
+<table style="width: 100%">
+  <thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+  </thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="d866f980582748568385b94480cec1dd" />
+			</td>
+			<td>N/A</td>
+			<td>PostgreSQL - SQLi - COPY - Beta</td>
+			<td>Log</td>
+            <td>Block</td>
+			<td>
+				This is a new detection.  This rule is merged into the original rule
+				"PostgreSQL - SQLi - COPY - Body (ID:{" "}
+				<RuleID id="705a6b5569d5472596910e3ce7265a4e" />). The rule previously known as "PostgreSQL - SQLi - COPY" is now renamed to "PostgreSQL - SQLi - COPY - Body".
+			</td>
+		</tr>
+		<tr>
+        	<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="71d133c374d94559aa9fdf042903de89" />
+			</td>
+			<td>N/A</td>
+			<td>PostgreSQL - SQLi - COPY - Headers</td>
+			<td>Log</td>
+            <td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>		
+		<tr>
+        	<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="9f1b1b7fd28a401b9d5c172d1036cfa6" />
+			</td>
+			<td>N/A</td>
+			<td>PostgreSQL - SQLi - COPY - URI</td>
+			<td>Log</td>
+            <td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>  
+		<tr>
+        	<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="8e40416659334b8ba789365755ff389e" />
+			</td>
+   			<td>N/A</td>
+			<td>SQLi - AND/OR MAKE_SET/ELT - Beta</td>
+			<td>Log</td>
+            <td>Block</td>
+			<td>
+				This is a new detection. This rule is merged into the original rule
+				"SQLi - AND/OR MAKE_SET/ELT - Body" (ID:{" "}
+				<RuleID id="0f41a593c8fe42c38a26f709252d3934" />). The rule previously known as "SQLi - AND/OR MAKE_SET/ELT" is now renamed to "SQLi - AND/OR MAKE_SET/ELT - Body".
+			</td>
+		</tr>
+		<tr>
+        	<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="1e0d4372ee1e41b9804b2d5c346487f9" />
+			</td>
+   			<td>N/A</td>
+			<td>SQLi - AND/OR MAKE_SET/ELT - Headers</td>
+			<td>Log</td>
+            <td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>		
+		<tr>
+        	<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="d2c961a164a64cf6b871c9511ac6ceca" />
+			</td>
+			<td>N/A</td>
+			<td>SQLi - AND/OR MAKE_SET/ELT - URI</td>
+			<td>Log</td>
+            <td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+        	<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="4dacc0e6f32d4c5da3c2293edd471337" />
+			</td>
+			<td>N/A</td>
+			<td>SQLi - Common Patterns - Beta</td>
+			<td>Log</td>
+            <td>Block</td>
+			<td>
+				This is a new detection. This rule is merged into the original rule
+				"SQLi - Common Patterns - Body" (ID:{" "}
+				<RuleID id="98f746d07a6d48ab9dae669acb5d0b9b" />). The rule previously known as "SQLi - Common Patterns" is now renamed to "SQLi - Common Patterns - Body".
+			</td>
+		</tr>
+		<tr>
+        	<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="53a374379f2e41e9934791c1975c07b7" />
+			</td>
+			<td>N/A</td>
+			<td>SQLi - Common Patterns - Headers</td>
+			<td>Log</td>
+            <td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>		
+		<tr>
+        	<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="9efedebfc371443f9fe7308605b1b06b" />
+			</td>
+			<td>N/A</td>
+			<td>SQLi - Common Patterns - URI</td>
+			<td>Log</td>
+            <td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+        	<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="d53a791496d64700870334f4dd0ba3c7" />
+			</td>
+			<td>N/A</td>
+			<td>SQLi - Equation - Beta</td>
+			<td>Log</td>
+            <td>Block</td>
+			<td>
+				This is a new detection. This rule is merged into the original rule
+				"SQLi - Equation - Body" (ID:{" "}
+				<RuleID id="e7691e1e4f4d4769909f3df6c2eb3e7f" />). The rule previously known as "SQLi - Equation" is now renamed to "SQLi - Equation - Body".
+			</td>
+		</tr>
+		<tr>
+        	<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="46efbd3496e64c3f902ad33d3d1c2384" />
+			</td>
+			<td>N/A</td>
+			<td>SQLi - Equation - Headers</td>
+			<td>Log</td>
+            <td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>		
+		<tr>
+        	<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="46b937649a424b7ead90f6d0e1149ea6" />
+			</td>
+			<td>N/A</td>
+			<td>SQLi - Equation - URI</td>
+			<td>Log</td>
+            <td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+        	<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="04d9182545f54ba8a4fa29fe205adbb0" />
+			</td>
+			<td>N/A</td>
+			<td>SQLi - AND/OR Digit Operator Digit - Beta</td>
+			<td>Log</td>
+            <td>Block</td>
+			<td>
+				This is a new detection. This rule is merged into the original rule
+				"SQLi - AND/OR Digit Operator Digit - Body" (ID:{" "}
+				<RuleID id="762dd334ed0b4273816e3ff13893c564" />). The rule previously known as "SQLi - AND/OR Digit Operator Digit" is now renamed to "SQLi - AND/OR Digit Operator Digit - Body".
+			</td>
+		</tr>
+		<tr>
+        	<td>Cloudflare Managed Ruleset</td>
+            <td>
+                <RuleID id="a24e7c15503948bc8766481aad2abbaa" />
+            </td>
+            <td>N/A</td>
+            <td>SQLi - AND/OR Digit Operator Digit - Headers</td>
+            <td>Log</td>
+            <td>Block</td>
+            <td>This is a new detection.</td>
+        </tr>
+		<tr>
+        	<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="0c55eb362df64f92a85aa46753acbc0d" />
+			</td>
+			<td>N/A</td>
+			<td>SQLi - AND/OR Digit Operator Digit - URI</td>
+			<td>Log</td>
+            <td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+        	<td>Cloudflare Managed Ruleset</td>
+            <td>
+                <RuleID id="18c9879b7e184c559d23c1652b45a97d" />
+            </td>
+			<td>N/A</td>
+			<td>SQLi - Benchmark Function - Beta</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>
+				This is a new detection. This rule is merged into the original rule
+				"SQLi - Benchmark Function - Body" (ID:{" "}
+				<RuleID id="ac4e9ebfb43a4f3998f6072d2ebc44ad" />). The rule previously known as "SQLi - Benchmark Function" is now renamed to "SQLi - Benchmark Function - Body".
+			</td>
+		</tr>
+		<tr>
+        	<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="2adbc36c52324efcb4681b829889aadc" />
+			</td>
+			<td>N/A</td>
+			<td>SQLi - Benchmark Function - Headers</td>
+			<td>Log</td>
+            <td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>		
+		<tr>
+        	<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="69564af3bc54406080deed72491b28e9" />
+			</td>
+			<td>N/A</td>
+			<td>SQLi - Benchmark Function - URI</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+        	<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="94b1646f0b0b46ec9b96f7742aa649de" />
+			</td>
+			<td>N/A</td>
+			<td>SQLi - Comparison - Beta</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>
+				This is a new detection. This rule is merged into the original rule
+				"SQLi - Comparison - Body" (ID:{" "}
+				<RuleID id="8166da327a614849bfa29317e7907480" />). The rule previously known as "SQLi - Comparison" is now renamed to "SQLi - Comparison - Body".
+			</td>
+		</tr>
+		<tr>
+        	<td>Cloudflare Managed Ruleset</td>
+            <td>
+                <RuleID id="455ce87681bd4200bf53456c39e3e013" />
+            </td>
+            <td>N/A</td>
+            <td>SQLi - Comparison - Headers</td>
+            <td>Log</td>
+            <td>Block</td>
+            <td>This is a new detection.</td>
+		</tr>	
+		<tr>
+        	<td>Cloudflare Managed Ruleset</td>
+            <td>
+                <RuleID id="8152816062ed47f69be0f907f4bdb492" />
+            </td>
+            <td>N/A</td>
+            <td>SQLi - Comparison - URI</td>
+            <td>Log</td>
+            <td>Block</td>
+            <td>This is a new detection.</td>
+		</tr>
+		<tr>
+        	<td>Cloudflare Managed Ruleset</td>
+            <td>
+                <RuleID id="d5afd403a0544248b829fe5da1ff3b34" />
+            </td>
+            <td>N/A</td>
+            <td>SQLi - String Concatenation - Body - Beta</td>
+            <td>Log</td>
+            <td>Block</td>
+            <td>This is a new detection. This rule is merged into the original rule "SQLi - String Concatenation - Headers" (ID:{" "}
+				<RuleID id="3b0c61407d0b4f7d87e516472116d2fe" />).The rule previously known as "SQLi - String Concatenation - Headers" is now renamed to "SQLi - String Concatenation - Body". </td>
+		</tr>	
+        <tr>
+			<td>Cloudflare Managed Ruleset</td>
+            <td>
+                <RuleID id="cb0ec290ee454138abe18b750d0e6c3b" />
+            </td>
+            <td>N/A</td>
+			<td>SQLi - String Concatenation - Headers</td>
+			<td>Log</td>
+            <td>Block</td>
+			<td>This is a new detection.(Former Id was{" "}
+				<RuleID id="380099df2bb2469c91ebbb7b846d1940" />)</td>
+		</tr>		
+		<tr>
+        	<td>Cloudflare Managed Ruleset</td>
+            <td>
+                <RuleID id="c46d9097c9ef419aa4d9f10626cc211f" />
+            </td>
+            <td>N/A</td>
+            <td>SQLi - String Concatenation - URI</td>
+            <td>Log</td>
+            <td>Block</td>
+            <td>This is a new detection. (Former Id was{" "}
+				<RuleID id="bd19397228404b85aa3797238fae8c84" />)</td>
+		</tr>	
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+            <td>
+                <RuleID id="6542d36980cf4018b4d5e2bfeacc78ab" />
+            </td>
+            <td>N/A</td>
+			<td>SQLi - SELECT Expression - Beta</td>
+			<td>Log</td>
+            <td>Block</td>
+			<td>
+				This is a new detection. This rule is merged into the original rule
+				"SQLi - SELECT Expression - Body" (ID:{" "}
+				<RuleID id="00da180570d34b5bae2121acd0023a36" />). The rule previously known as "SQLi - SELECT Expression" is now renamed to "SQLi - SELECT Expression - Body".
+			</td>
+		</tr>	
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+            <td>
+                <RuleID id="4073f7b575ff45dfb7621b43630bb223" />
+            </td>
+			<td>N/A</td>
+			<td>SQLi - SELECT Expression - Headers</td>
+			<td>Log</td>
+            <td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>	
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+            <td>
+                <RuleID id="2721e3184d50466ea637e9afdcd6efb5" />
+            </td>
+			<td>N/A</td>
+			<td>SQLi - SELECT Expression - URI</td>
+			<td>Log</td>
+            <td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>	
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+            <td>
+                <RuleID id="7ecca84c08aa4aad9b5a7bda18c47cea" />
+            </td>
+			<td>N/A</td>
+			<td>SQLi - ORD and ASCII - Beta</td>
+			<td>Log</td>
+            <td>Block</td>
+			<td>
+				This is a new detection. This rule is merged into the original rule
+				"SQLi - ORD and ASCII- Body" (ID:{" "}
+				<RuleID id="2fc38b34a9d744d2a3cbcc41d0d207f9" />). The rule previously known as "SQLi - ORD and ASCII" is now renamed to "SQLi - ORD and ASCII- Body".
+			</td>
+		</tr>	
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+            <td>
+                <RuleID id="f6d10e10c9514eb49dcc2122bdb1618f" />
+            </td>
+			<td>N/A</td>
+			<td>SQLi - ORD and ASCII - URI</td>
+			<td>Log</td>
+            <td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>	
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+            <td>
+                <RuleID id="60704f5c5513425c94cf77031d0906b6" />
+            </td>
+			<td>N/A</td>
+			<td>SQLi - ORD and ASCII - Headers</td>
+			<td>Log</td>
+            <td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>	
+		<tr>
+        	<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="700613b191d3479ea2782b4e9fe4eff5" />
+			</td>
+			<td>N/A</td>
+			<td>SQLi - Destructive Operations</td>
+			<td>Log</td>
+            <td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>					
+	</tbody>
+</table>

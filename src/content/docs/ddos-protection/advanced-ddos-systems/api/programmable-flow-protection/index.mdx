@@ -1,0 +1,64 @@
+---
+pcx_content_type: how-to
+title: Programmable Flow Protection
+description: Configure Programmable Flow Protection programs and rules using the Cloudflare API.
+products:
+  - ddos-protection
+sidebar:
+  order: 3
+  label: Configure via the API
+  badge:
+    text: Beta
+head:
+  - tag: title
+    content: Configure Programmable Flow Protection via API
+
+---
+
+Use the [Cloudflare API](/api/) to configure Programmable Flow Protection.
+
+For examples of API calls, refer to [Common API calls](/ddos-protection/advanced-ddos-systems/api/programmable-flow-protection/examples/).
+
+## Endpoints
+
+To obtain the complete endpoint, append the Programmable Flow Protection API endpoints listed below to the Cloudflare API base URL:
+
+```txt
+https://api.cloudflare.com/client/v4
+```
+
+The `{account_id}` argument is the [account ID](/fundamentals/account/find-account-and-zone-ids/) (a hexadecimal string). You can find this value in the Cloudflare dashboard.
+
+The tables in the following sections summarize the available operations.
+
+### Program operations
+
+| Operation | Method and endpoint / Description |
+| --- | --- |
+| List programs | <p>`GET accounts/{account_id}/magic/programmable_flow_protection/configs/programs`</p>Fetches all Programmable Flow Protection programs in the account. |
+| Upload a program | <p>`POST accounts/{account_id}/magic/programmable_flow_protection/configs/programs`</p>Uploads a new program to the account. |
+| Get a program | <p>`GET accounts/{account_id}/magic/programmable_flow_protection/configs/programs/{program_id}`</p>Fetches the details of an existing program. |
+| Update a program | <p>`PATCH accounts/{account_id}/magic/programmable_flow_protection/configs/programs/{program_id}`</p>Updates an existing program. |
+| Delete a program | <p>`DELETE accounts/{account_id}/magic/programmable_flow_protection/configs/programs/{program_id}`</p>Deletes an existing program from the account. |
+| Delete all programs | <p>`DELETE accounts/{account_id}/magic/programmable_flow_protection/configs/programs`</p>Deletes all existing programs from the account. |
+
+### Rule operations
+
+| Operation | Method and endpoint / Description |
+| --- | --- |
+| List rules | <p>`GET accounts/{account_id}/magic/programmable_flow_protection/configs/rules`</p>Fetches all Programmable Flow Protection rules in the account. |
+| Create a rule | <p>`POST accounts/{account_id}/magic/programmable_flow_protection/configs/rules`</p>Creates a new rule in the account. |
+| Get a rule | <p>`GET accounts/{account_id}/magic/programmable_flow_protection/configs/rules/{rule_id}`</p>Fetches the details of an existing rule. |
+| Update a rule | <p>`PATCH accounts/{account_id}/magic/programmable_flow_protection/configs/rules/{rule_id}`</p>Updates an existing rule in the account. |
+| Delete a rule | <p>`DELETE accounts/{account_id}/magic/programmable_flow_protection/configs/rules/{rule_id}`</p>Deletes an existing rule from the account. |
+| Delete all rules | <p>`DELETE accounts/{account_id}/magic/programmable_flow_protection/configs/rules`</p>Deletes all existing rules from the account. |
+
+### Debug operations
+
+| Operation | Method and endpoint / Description |
+| --- | --- |
+| Debug with PCAP | <p>`POST accounts/{account_id}/magic/programmable_flow_protection/configs/programs/{program_id}/pcap`</p>Runs a program against a PCAP file and returns an annotated PCAP with program verdicts. |
+
+## Pagination
+
+The API operations that return a list of items use pagination. For more information on the available pagination query parameters, refer to [Pagination](/fundamentals/api/how-to/make-api-calls/#pagination).

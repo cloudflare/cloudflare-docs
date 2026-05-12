@@ -1,0 +1,651 @@
+{
+	"model_id": "openai/gpt-5.5-pro",
+	"provider_id": "openai",
+	"name": "GPT-5.5 Pro",
+	"description": "GPT-5.5 Pro uses OpenAI's Responses API with built-in tools, improved reasoning, and stateful context management.",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Coding",
+		"Reasoning",
+		"Multimodal",
+		"Responses API"
+	],
+	"context_length": 1000000,
+	"max_output_tokens": 16384,
+	"schema_version": "1.0.0",
+	"examples": [
+		{
+			"name": "Simple Question",
+			"description": "Basic Responses API request with string input",
+			"input": {
+				"input": "What are the three laws of thermodynamics?"
+			},
+			"output": {},
+			"raw_response": {
+				"id": "resp_063e06a488467aad0169ebb1fc91d4819081d5cf054ee32daa",
+				"object": "response",
+				"created_at": 1777054206,
+				"model": "gpt-5.5-pro-2026-04-23",
+				"output": [
+					{
+						"id": "rs_063e06a488467aad0169ebb262c1408190aa715f10dd4763dc",
+						"type": "reasoning",
+						"summary": []
+					},
+					{
+						"id": "msg_063e06a488467aad0169ebb262c45c819093301855572fac7f",
+						"type": "message",
+						"status": "completed",
+						"content": [
+							{
+								"type": "output_text",
+								"annotations": [],
+								"logprobs": [],
+								"text": "The **three laws of thermodynamics** are:\n\n1. **First Law \u2014 Conservation of Energy**  \n   Energy cannot be created or destroyed, only transferred or transformed.  \n   In thermodynamics: the change in a system\u2019s internal energy equals heat added to the system minus work done by the system.  \n   \\[\n   \\Delta U = Q - W\n   \\]\n\n2. **Second Law \u2014 Entropy Increases**  \n   In any natural process, the total entropy of an isolated system tends to increase.  \n   Equivalently, heat flows spontaneously from hotter objects to colder ones, and no heat engine can be 100% efficient.\n\n3. **Third Law \u2014 Absolute Zero Limit**  \n   As temperature approaches absolute zero, the entropy of a perfect crystal approaches zero.  \n   It also implies that absolute zero cannot be reached by any finite physical process.\n\nThere is also a **Zeroth Law**, often stated separately: if two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other. This is what makes temperature well-defined."
+							}
+						],
+						"phase": "final_answer",
+						"role": "assistant"
+					}
+				],
+				"status": "completed",
+				"usage": {
+					"input_tokens": 15,
+					"output_tokens": 293,
+					"total_tokens": 308,
+					"input_tokens_details": {
+						"cached_tokens": 0
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 66
+					}
+				},
+				"background": false,
+				"billing": {
+					"payer": "developer"
+				},
+				"completed_at": 1777054314,
+				"error": null,
+				"frequency_penalty": 0,
+				"incomplete_details": null,
+				"instructions": null,
+				"max_output_tokens": null,
+				"max_tool_calls": null,
+				"moderation": null,
+				"parallel_tool_calls": true,
+				"presence_penalty": 0,
+				"previous_response_id": null,
+				"prompt_cache_key": null,
+				"prompt_cache_retention": "24h",
+				"reasoning": {
+					"effort": "high",
+					"summary": null
+				},
+				"safety_identifier": null,
+				"service_tier": "default",
+				"store": false,
+				"temperature": 1,
+				"text": {
+					"format": {
+						"type": "text"
+					},
+					"verbosity": "medium"
+				},
+				"tool_choice": "auto",
+				"tools": [],
+				"top_logprobs": 0,
+				"top_p": 0.98,
+				"truncation": "disabled",
+				"user": null,
+				"metadata": {},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5.5-pro',\n  {\n    input: 'What are the three laws of thermodynamics?',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "With Instructions",
+			"description": "Using instructions to set context",
+			"input": {
+				"input": "How do I read a JSON file in Python?",
+				"instructions": "You are a helpful coding assistant specializing in Python."
+			},
+			"output": {},
+			"raw_response": {
+				"id": "resp_0a5627201ea32bd60169ebb23813c081978bb6448d3757ad16",
+				"object": "response",
+				"created_at": 1777054264,
+				"model": "gpt-5.5-pro-2026-04-23",
+				"output": [
+					{
+						"id": "rs_0a5627201ea32bd60169ebb24e286081979a18901a559d3252",
+						"type": "reasoning",
+						"summary": []
+					},
+					{
+						"id": "msg_0a5627201ea32bd60169ebb24e2a148197917120444493cfa0",
+						"type": "message",
+						"status": "completed",
+						"content": [
+							{
+								"type": "output_text",
+								"annotations": [],
+								"logprobs": [],
+								"text": "Use Python\u2019s built-in `json` module:\n\n```python\nimport json\n\nwith open(\"data.json\", \"r\", encoding=\"utf-8\") as file:\n    data = json.load(file)\n\nprint(data)\n```\n\nIf `data.json` contains:\n\n```json\n{\n  \"name\": \"Alice\",\n  \"age\": 30\n}\n```\n\nThen `data` will be a Python dictionary:\n\n```python\nprint(data[\"name\"])  # Alice\nprint(data[\"age\"])   # 30\n```\n\nYou can also handle common errors:\n\n```python\nimport json\n\ntry:\n    with open(\"data.json\", \"r\", encoding=\"utf-8\") as file:\n        data = json.load(file)\n\n    print(data)\n\nexcept FileNotFoundError:\n    print(\"The JSON file was not found.\")\n\nexcept json.JSONDecodeError:\n    print(\"The file is not valid JSON.\")\n```\n\nUse `json.load(file)` for reading from a file, and `json.loads(string)` for parsing a JSON string."
+							}
+						],
+						"phase": "final_answer",
+						"role": "assistant"
+					}
+				],
+				"status": "completed",
+				"usage": {
+					"input_tokens": 30,
+					"output_tokens": 387,
+					"total_tokens": 417,
+					"input_tokens_details": {
+						"cached_tokens": 0
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 170
+					}
+				},
+				"background": false,
+				"billing": {
+					"payer": "developer"
+				},
+				"completed_at": 1777054286,
+				"error": null,
+				"frequency_penalty": 0,
+				"incomplete_details": null,
+				"instructions": "You are a helpful coding assistant specializing in Python.",
+				"max_output_tokens": null,
+				"max_tool_calls": null,
+				"moderation": null,
+				"parallel_tool_calls": true,
+				"presence_penalty": 0,
+				"previous_response_id": null,
+				"prompt_cache_key": null,
+				"prompt_cache_retention": "24h",
+				"reasoning": {
+					"effort": "high",
+					"summary": null
+				},
+				"safety_identifier": null,
+				"service_tier": "default",
+				"store": false,
+				"temperature": 1,
+				"text": {
+					"format": {
+						"type": "text"
+					},
+					"verbosity": "medium"
+				},
+				"tool_choice": "auto",
+				"tools": [],
+				"top_logprobs": 0,
+				"top_p": 0.98,
+				"truncation": "disabled",
+				"user": null,
+				"metadata": {},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5.5-pro',\n  {\n    input: 'How do I read a JSON file in Python?',\n    instructions: 'You are a helpful coding assistant specializing in Python.',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Multi-turn Conversation",
+			"description": "Continuing a conversation with message array",
+			"input": {
+				"input": [
+					{
+						"role": "user",
+						"content": "I need help planning a road trip from San Francisco to Los Angeles."
+					},
+					{
+						"role": "assistant",
+						"content": "I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?"
+					},
+					{
+						"role": "user",
+						"content": "Yes, what are some good places to stop?"
+					}
+				],
+				"max_output_tokens": 150
+			},
+			"output": {},
+			"raw_response": {
+				"id": "resp_094e31e65118cd0f0169ebb24ee6b0819796327f59a6439f35",
+				"object": "response",
+				"created_at": 1777054287,
+				"model": "gpt-5.5-pro-2026-04-23",
+				"output": [
+					{
+						"id": "rs_094e31e65118cd0f0169ebb257e74c81979ddc97189d31ce3f",
+						"type": "reasoning",
+						"summary": []
+					}
+				],
+				"status": "incomplete",
+				"usage": {
+					"input_tokens": 76,
+					"output_tokens": 150,
+					"total_tokens": 226,
+					"input_tokens_details": {
+						"cached_tokens": 0
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 150
+					}
+				},
+				"background": false,
+				"billing": {
+					"payer": "developer"
+				},
+				"completed_at": null,
+				"error": null,
+				"frequency_penalty": 0,
+				"incomplete_details": {
+					"reason": "max_output_tokens"
+				},
+				"instructions": null,
+				"max_output_tokens": 150,
+				"max_tool_calls": null,
+				"moderation": null,
+				"parallel_tool_calls": true,
+				"presence_penalty": 0,
+				"previous_response_id": null,
+				"prompt_cache_key": null,
+				"prompt_cache_retention": "24h",
+				"reasoning": {
+					"effort": "high",
+					"summary": null
+				},
+				"safety_identifier": null,
+				"service_tier": "default",
+				"store": false,
+				"temperature": 1,
+				"text": {
+					"format": {
+						"type": "text"
+					},
+					"verbosity": "medium"
+				},
+				"tool_choice": "auto",
+				"tools": [],
+				"top_logprobs": 0,
+				"top_p": 0.98,
+				"truncation": "disabled",
+				"user": null,
+				"metadata": {},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5.5-pro',\n  {\n    input: [\n      {\n        role: 'user',\n        content:\n          'I need help planning a road trip from San Francisco to Los Angeles.',\n      },\n      {\n        role: 'assistant',\n        content:\n          \"I'd be happy to help! The drive is about 380 miles and takes roughly 5-6 hours. Would you like suggestions for scenic routes or interesting stops along the way?\",\n      },\n      {\n        role: 'user',\n        content: 'Yes, what are some good places to stop?',\n      },\n    ],\n    max_output_tokens: 150,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "Temperature Control",
+			"description": "Using temperature for creative responses",
+			"input": {
+				"input": "Write a haiku about artificial intelligence",
+				"temperature": 1
+			},
+			"output": {},
+			"raw_response": {
+				"id": "resp_0861b6980fc9f4ab0169ebb2585a388196b5ae496c923d5c46",
+				"object": "response",
+				"created_at": 1777054296,
+				"model": "gpt-5.5-pro-2026-04-23",
+				"output": [
+					{
+						"id": "rs_0861b6980fc9f4ab0169ebb260b08c81968600b365effb3d15",
+						"type": "reasoning",
+						"summary": []
+					},
+					{
+						"id": "msg_0861b6980fc9f4ab0169ebb260b29c81968b2573cb5b00befc",
+						"type": "message",
+						"status": "completed",
+						"content": [
+							{
+								"type": "output_text",
+								"annotations": [],
+								"logprobs": [],
+								"text": "Silent circuits dream  \nLearning patterns in starlight  \nDawn hums through the code"
+							}
+						],
+						"phase": "final_answer",
+						"role": "assistant"
+					}
+				],
+				"status": "completed",
+				"usage": {
+					"input_tokens": 13,
+					"output_tokens": 121,
+					"total_tokens": 134,
+					"input_tokens_details": {
+						"cached_tokens": 0
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 97
+					}
+				},
+				"background": false,
+				"billing": {
+					"payer": "developer"
+				},
+				"completed_at": 1777054304,
+				"error": null,
+				"frequency_penalty": 0,
+				"incomplete_details": null,
+				"instructions": null,
+				"max_output_tokens": null,
+				"max_tool_calls": null,
+				"moderation": null,
+				"parallel_tool_calls": true,
+				"presence_penalty": 0,
+				"previous_response_id": null,
+				"prompt_cache_key": null,
+				"prompt_cache_retention": "24h",
+				"reasoning": {
+					"effort": "high",
+					"summary": null
+				},
+				"safety_identifier": null,
+				"service_tier": "default",
+				"store": false,
+				"temperature": 1,
+				"text": {
+					"format": {
+						"type": "text"
+					},
+					"verbosity": "medium"
+				},
+				"tool_choice": "auto",
+				"tools": [],
+				"top_logprobs": 0,
+				"top_p": 0.98,
+				"truncation": "disabled",
+				"user": null,
+				"metadata": {},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5.5-pro',\n  {\n    input: 'Write a haiku about artificial intelligence',\n    temperature: 1,\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		},
+		{
+			"name": "With Reasoning",
+			"description": "Using reasoning effort for complex problems",
+			"input": {
+				"input": "Solve this problem step by step: A train leaves Chicago at 60mph heading east. Another train leaves New York at 80mph heading west. They are 900 miles apart. When do they meet?",
+				"reasoning": {
+					"effort": "medium"
+				}
+			},
+			"output": {},
+			"raw_response": {
+				"id": "resp_03fc3b8888c0aecf0169ebb2616f408195b4462e87d425924a",
+				"object": "response",
+				"created_at": 1777054305,
+				"model": "gpt-5.5-pro-2026-04-23",
+				"output": [
+					{
+						"id": "rs_03fc3b8888c0aecf0169ebb2684a4c8195b4fd258c0d92977d",
+						"type": "reasoning",
+						"summary": []
+					},
+					{
+						"id": "msg_03fc3b8888c0aecf0169ebb2684bc0819589f472918a0073f2",
+						"type": "message",
+						"status": "completed",
+						"content": [
+							{
+								"type": "output_text",
+								"annotations": [],
+								"logprobs": [],
+								"text": "Assuming both trains leave at the same time:\n\n1. Train from Chicago speed: **60 mph**\n2. Train from New York speed: **80 mph**\n3. Since they are moving toward each other, add their speeds:\n\n\\[\n60 + 80 = 140 \\text{ mph}\n\\]\n\n4. They are **900 miles** apart, so time is:\n\n\\[\n\\text{time} = \\frac{900}{140}\n\\]\n\n\\[\n\\text{time} = 6.428571\\ldots \\text{ hours}\n\\]\n\n5. Convert the decimal part:\n\n\\[\n0.428571 \\times 60 \\approx 25.7 \\text{ minutes}\n\\]\n\nSo they meet after about:\n\n\\[\n\\boxed{6 \\text{ hours } 26 \\text{ minutes}}\n\\]\n\nMore exactly, they meet after **6 hours, 25 minutes, and 43 seconds**."
+							}
+						],
+						"phase": "final_answer",
+						"role": "assistant"
+					}
+				],
+				"status": "completed",
+				"usage": {
+					"input_tokens": 48,
+					"output_tokens": 381,
+					"total_tokens": 429,
+					"input_tokens_details": {
+						"cached_tokens": 0
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 182
+					}
+				},
+				"background": false,
+				"billing": {
+					"payer": "developer"
+				},
+				"completed_at": 1777054312,
+				"error": null,
+				"frequency_penalty": 0,
+				"incomplete_details": null,
+				"instructions": null,
+				"max_output_tokens": null,
+				"max_tool_calls": null,
+				"moderation": null,
+				"parallel_tool_calls": true,
+				"presence_penalty": 0,
+				"previous_response_id": null,
+				"prompt_cache_key": null,
+				"prompt_cache_retention": "24h",
+				"reasoning": {
+					"effort": "medium",
+					"summary": null
+				},
+				"safety_identifier": null,
+				"service_tier": "default",
+				"store": false,
+				"temperature": 1,
+				"text": {
+					"format": {
+						"type": "text"
+					},
+					"verbosity": "medium"
+				},
+				"tool_choice": "auto",
+				"tools": [],
+				"top_logprobs": 0,
+				"top_p": 0.98,
+				"truncation": "disabled",
+				"user": null,
+				"metadata": {},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-5.5-pro',\n  {\n    input:\n      'Solve this problem step by step: A train leaves Chicago at 60mph heading east. Another train leaves New York at 80mph heading west. They are 900 miles apart. When do they meet?',\n    reasoning: {\n      effort: 'medium',\n    },\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				}
+			]
+		}
+	],
+	"supports_async": false,
+	"external_info": "https://openai.com/",
+	"terms": "https://openai.com/policies/",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/openai/gpt-5.5-pro.png",
+	"metadata": {
+		"Architecture": "Transformer",
+		"API": "Responses"
+	},
+	"created_at": "2026-04-24 18:03:34",
+	"default_example": null,
+	"code_snippets": [],
+	"zdr": false,
+	"zdr_comment": null,
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"input": {
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "array",
+							"items": {}
+						}
+					]
+				},
+				"instructions": {
+					"type": "string"
+				},
+				"temperature": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 2
+				},
+				"max_output_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"top_p": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"stream": {
+					"type": "boolean"
+				},
+				"tools": {
+					"type": "array",
+					"items": {}
+				},
+				"tool_choice": {},
+				"text": {
+					"type": "object",
+					"properties": {
+						"format": {}
+					},
+					"additionalProperties": {}
+				},
+				"reasoning": {
+					"type": "object",
+					"properties": {
+						"effort": {
+							"type": "string",
+							"enum": [
+								"none",
+								"low",
+								"medium",
+								"high"
+							]
+						}
+					},
+					"additionalProperties": {}
+				}
+			},
+			"required": [
+				"input"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"object": {
+					"type": "string",
+					"const": "response"
+				},
+				"created_at": {
+					"type": "number"
+				},
+				"model": {
+					"type": "string"
+				},
+				"output": {
+					"type": "array",
+					"items": {}
+				},
+				"output_text": {
+					"type": "string"
+				},
+				"status": {
+					"type": "string",
+					"enum": [
+						"in_progress",
+						"completed",
+						"failed",
+						"incomplete"
+					]
+				},
+				"usage": {
+					"type": "object",
+					"properties": {
+						"input_tokens": {
+							"type": "number"
+						},
+						"output_tokens": {
+							"type": "number"
+						},
+						"total_tokens": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"input_tokens",
+						"output_tokens",
+						"total_tokens"
+					],
+					"additionalProperties": {}
+				}
+			},
+			"required": [
+				"id",
+				"object",
+				"created_at",
+				"model",
+				"output"
+			],
+			"additionalProperties": {}
+		}
+	}
+}

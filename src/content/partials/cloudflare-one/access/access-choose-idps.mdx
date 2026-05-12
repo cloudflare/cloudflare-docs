@@ -7,15 +7,17 @@ Configure how users will authenticate:
 
 <ol>
 <li>
-Select the [**Identity providers**](/cloudflare-one/integrations/identity-providers/) you want to enable for your application.
+Select the [identity providers](/cloudflare-one/integrations/identity-providers/) you want to enable for your application.
 </li>
 <li>
-(Recommended) If you plan to only allow access via a single IdP, turn on **Instant Auth**. End users will not be shown the [Cloudflare Access login page](/cloudflare-one/reusable-components/custom-pages/access-login-page/). Instead, Cloudflare will redirect users directly to your SSO login event.
+(Recommended) If you plan to only allow access via a single IdP, turn on **Apply instant authentication**. End users will not be shown the [Cloudflare Access login page](/cloudflare-one/reusable-components/custom-pages/access-login-page/). Instead, Cloudflare will redirect users directly to your SSO login event.
 </li>
 
 { props.appType === "rdp" ?
-(<> <li> <b>Device authentication identity</b> is not supported for browser-based RDP and should remain turned off. </li> </>) :
-(<> <li> (Optional) Under <b>Device authentication identity</b>, allow users to authenticate to the application using their <a href="/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/"> Cloudflare One Client session identity</a>. </li> </>)
+(<> <li> <b>Authenticate with Cloudflare One Client</b> is not supported for browser-based RDP and should remain turned off. </li> </>) :
+props.appType === "private" ?
+(<> <li> (Recommended) Turn on <b>Authenticate with Cloudflare One Client</b> to allow users to authenticate to the application using their <a href="/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/">Cloudflare One Client session identity</a>. Turn this on if your application is not in the browser and cannot handle a <code>302</code> redirect. </li> </>) :
+(<> <li> (Optional) Turn on  <b>Authenticate with Cloudflare One Client</b> to allow users to authenticate to the application using their <a href="/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/"> Cloudflare One Client session identity</a>. </li> </>)
 }
 
 </ol>

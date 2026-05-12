@@ -168,6 +168,8 @@ Countries contributing traffic to this AS, and their relative contribution as pe
 
 HTTP origins trends provide visibility into the status of traffic between [Cloudflare's global network](https://www.cloudflare.com/network/) and cloud-based [origin infrastructure](https://www.cloudflare.com/learning/cdn/glossary/origin-server/). This data comes from requests sent by Cloudflare to origin servers. The metrics track key indicators such as HTTP status codes, response times, and traffic volume over time, allowing us to identify degradations, outages, or anomalies in origin server performance and availability.
 
+Measurements are aggregated across requests from all Cloudflare data centers made to cloud-based origin infrastructure. Performance data is median-based (p50) for all views, including overall and provider-level breakdowns. Region-specific views additionally show quartile distributions (25th, 50th, and 75th percentiles).
+
 ## Internet outages
 
 Internet connectivity can experience outages or disruptions due to a number of factors. These factors include power outages, damage to fiber optic cables, severe weather, natural disasters, or government directed shutdowns. Outages may be sub-national or national in geographic scope, or may impact one or more [ASNs](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-an-autonomous-system/). Some outages may be brief, lasting just a few minutes, while others can stretch on for months — the duration can be related, in part, to the underlying cause. Internet outages listed in the Cloudflare Radar Outage Center are notable drops in traffic that have generally been corroborated with third party-information, which may include a social media or status page post from a telecommunications provider, a news report, or industry/community mailing lists.
@@ -259,6 +261,10 @@ On Cloudflare Radar’s [Security & Attacks page](https://radar.cloudflare.com/s
 - **None**: All other connections.
 
 Learn more about the TCP resets and timeouts dataset in our [blog post](https://blog.cloudflare.com/tcp-resets-timeouts).
+
+## TLD nameserver performance
+
+TLD nameserver performance measures the response time (latency) of authoritative nameservers for top-level domains, as observed from Cloudflare's [1.1.1.1](/1.1.1.1/) resolver infrastructure. When the resolver forwards a DNS query upstream to a TLD's nameserver, the round-trip time is captured from the issuing Cloudflare data center. For anycasted authoritative nameservers, upstream queries are generally handled by a topologically close data center, resulting in lower median latencies compared to nameservers not deployed using anycast. This data reveals which nameservers are fastest, how latency varies across Cloudflare's global network, and how TLD infrastructure performance trends over time.
 
 ## Threat categories
 

@@ -3,7 +3,7 @@ title: Observability
 description: Subscribe to structured Agent events for RPC calls, state changes, schedules, workflows, and MCP connections via diagnostics channels.
 pcx_content_type: concept
 sidebar:
-  order: 18
+  order: 30
 products:
   - agents
 ---
@@ -32,16 +32,16 @@ Every event has these fields:
 
 Events are routed to eight named channels based on their type:
 
-| Channel            | Event types                                                                                                                                                                  | Description                         |
-| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------- |
-| `agents:state`     | `state:update`                                                                                                                                                               | State sync events                   |
-| `agents:rpc`       | `rpc`, `rpc:error`                                                                                                                                                           | RPC method calls and failures       |
-| `agents:message`   | `message:request`, `message:response`, `message:clear`, `message:cancel`, `message:error`, `tool:result`, `tool:approval`                                                    | Chat message and tool lifecycle     |
-| `agents:schedule`  | `schedule:create`, `schedule:execute`, `schedule:cancel`, `schedule:retry`, `schedule:error`, `queue:create`, `queue:retry`, `queue:error`                                   | Scheduled and queued task lifecycle |
-| `agents:lifecycle` | `connect`, `disconnect`, `destroy`                                                                                                                                           | Agent connection and teardown       |
-| `agents:workflow`  | `workflow:start`, `workflow:event`, `workflow:approved`, `workflow:rejected`, `workflow:terminated`, `workflow:paused`, `workflow:resumed`, `workflow:restarted`             | Workflow state transitions          |
-| `agents:mcp`       | `mcp:client:preconnect`, `mcp:client:connect`, `mcp:client:authorize`, `mcp:client:discover`                                                                                 | MCP client operations               |
-| `agents:email`     | `email:receive`, `email:reply`                                                                                                                                               | Email processing                    |
+| Channel            | Event types                                                                                                                                                      | Description                         |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------- |
+| `agents:state`     | `state:update`                                                                                                                                                   | State sync events                   |
+| `agents:rpc`       | `rpc`, `rpc:error`                                                                                                                                               | RPC method calls and failures       |
+| `agents:message`   | `message:request`, `message:response`, `message:clear`, `message:cancel`, `message:error`, `tool:result`, `tool:approval`                                        | Chat message and tool lifecycle     |
+| `agents:schedule`  | `schedule:create`, `schedule:execute`, `schedule:cancel`, `schedule:retry`, `schedule:error`, `queue:create`, `queue:retry`, `queue:error`                       | Scheduled and queued task lifecycle |
+| `agents:lifecycle` | `connect`, `disconnect`, `destroy`                                                                                                                               | Agent connection and teardown       |
+| `agents:workflow`  | `workflow:start`, `workflow:event`, `workflow:approved`, `workflow:rejected`, `workflow:terminated`, `workflow:paused`, `workflow:resumed`, `workflow:restarted` | Workflow state transitions          |
+| `agents:mcp`       | `mcp:client:preconnect`, `mcp:client:connect`, `mcp:client:authorize`, `mcp:client:discover`                                                                     | MCP client operations               |
+| `agents:email`     | `email:receive`, `email:reply`                                                                                                                                   | Email processing                    |
 
 ## Subscribing to events
 

@@ -3,6 +3,9 @@ link: "/workers/platform/changelog/"
 productName: Workers
 productLink: "/workers/"
 entries:
+  - publish_date: "2026-04-27"
+    description: |-
+      - Updated v8 to version 14.8.
   - publish_date: "2026-04-17"
     description: |-
       - Updated v8 to version 14.7.

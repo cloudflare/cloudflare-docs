@@ -18,14 +18,14 @@ import { TypeScriptExample, LinkCard } from "~/components";
 
 Agents and Workflows have complementary strengths:
 
-| Capability              | Agents                     | Workflows                      |
-| ----------------------- | -------------------------- | ------------------------------ |
-| Execution model         | Can run indefinitely       | Run to completion              |
-| Real-time communication | WebSockets, HTTP streaming | Not supported                  |
-| State persistence       | Built-in SQL database      | Step-level persistence         |
-| Failure handling        | Application-defined        | Automatic retries and recovery |
-| External events         | Direct handling            | Pause and wait for events      |
-| User interaction        | Direct (chat, UI)          | Through Agent callbacks        |
+| Capability              | Agents                                   | Workflows                      |
+| ----------------------- | ---------------------------------------- | ------------------------------ |
+| Execution model         | Long-lived identity that wakes on events | Run to completion              |
+| Real-time communication | WebSockets, HTTP streaming               | Not supported                  |
+| State persistence       | Built-in SQL database                    | Step-level persistence         |
+| Failure handling        | Application-defined                      | Automatic retries and recovery |
+| External events         | Direct handling                          | Pause and wait for events      |
+| User interaction        | Direct (chat, UI)                        | Through Agent callbacks        |
 
 Agents can loop, branch, and interact directly with users. Workflows execute steps sequentially with guaranteed delivery and can pause for days waiting for approvals or external data.
 

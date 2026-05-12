@@ -1,0 +1,72 @@
+---
+pcx_content_type: navigation
+title: Share a local dev server
+sidebar:
+  order: 6
+head: []
+description: Expose a local Wrangler or Vite dev server over a public tunnel URL.
+---
+
+import { PackageManagers, TypeScriptExample } from "~/components";
+
+You can expose your local dev server over a [Cloudflare Quick Tunnel](/tunnel/setup/#quick-tunnels-development) when you need to share a preview, test a webhook, or access your app from another device. This provides a random `*.trycloudflare.com` hostname for the current dev session.
+
+This page covers tunnel support in [Wrangler](/workers/wrangler/commands/general/#dev) and the [Cloudflare Vite plugin](/workers/vite-plugin/).
+
+## Start a tunnel
+
+**Wrangler**
+
+Run `wrangler dev --tunnel`:
+
+<PackageManagers type="exec" pkg="wrangler" args="dev --tunnel" />
+
+Wrangler will print the public tunnel URL for the current dev session.
+
+**Cloudflare Vite plugin**
+
+Enable `tunnel` conditionally in the plugin config:
+
+<TypeScriptExample filename="vite.config.ts">
+```ts
+import { defineConfig } from "vite";
+import { cloudflare } from "@cloudflare/vite-plugin";
+
+export default defineConfig({
+	plugins: [
+		cloudflare({
+			tunnel: process.env.ENABLE_DEV_TUNNEL === "true",
+		}),
+	],
+});
+```
+</TypeScriptExample>
+
+Then enable the tunnel only for the sessions where you want a public URL:
+
+```sh
+ENABLE_DEV_TUNNEL=true vite dev # or "vite preview"
+```
+
+Once the tunnel opens:
+
+- The public tunnel URL is printed in the terminal for the current dev session.
+- The session expires after 1 hour by default.
+- A reminder is logged every 10 minutes while the tunnel is open.
+- You can extend the tunnel by 1 hour at a time, either by pressing `t` for Wrangler or `t + Enter` for Vite.
+- The tunnel can be extended up to 3 hours of remaining time.
+
+## Security considerations
+
+Anyone with the tunnel URL can reach your dev server, so review what your app exposes before enabling a tunnel.
+
+- Pay special attention to ungated preview or admin endpoints.
+- Review any [remote bindings](/workers/development-testing/#remote-bindings) connected to real resources.
+- Review any code that proxies requests to private or internal services.
+- If you are using the Cloudflare Vite plugin with `vite dev`, HMR and module serving may expose source files, file paths, or project structure over the tunnel. If you only need to share a built preview, prefer `vite preview` for public sharing.
+- Local dev-related routes, such as `/cdn-cgi/*`, remain restricted and are not exposed over the tunnel.
+- If you need a stable hostname or stricter access control, use a named tunnel protected by Cloudflare Access.
+
+## Related docs
+
+- [Cloudflare Tunnel](/tunnel/)

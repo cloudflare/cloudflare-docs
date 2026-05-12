@@ -35,7 +35,9 @@ You can create sequence mitigation rules for a sequence even if the sequence is 
 
 ## Process
 
-You can [create a sequence rule](/api-shield/security/sequence-mitigation/manage-sequence-rules/) to enforce behavior on your API over time in two different ways. Sequence rules can either protect an endpoint from users performing a known specific sequence of API calls (otherwise known as a negative security model) or from users making API requests outside of your expectations (otherwise known as a positive security model).
+You can [create a sequence rule](/api-shield/security/sequence-mitigation/manage-sequence-rules/) to enforce behavior on your API over time using one of two approaches.
+
+A positive security model blocks users who make API requests outside of your expected patterns. A negative security model blocks users who perform a known malicious sequence of API calls.
 
 Sequence rules built via the Cloudflare dashboard using API Shield rules utilize a lookback window to match endpoints in the sequence. The rule will match as long as both endpoints are found within [10 requests](/api-shield/security/sequence-mitigation/#request-limitations) (to endpoints within Endpoint Management) of each other and made within [10 minutes](/api-shield/security/sequence-mitigation/#time-limitations) of each other.
 
@@ -50,7 +52,7 @@ In the bank funds transfer example, enforcing that a user requests `GET /api/v1/
 
 A negative security model may be useful if you see abusive behavior that is outside the norm of your application and you need to stop the requests while researching the correct positive security model to implement.
 
-For example, if there was an authorization bug that allowed users to iterate through other users' profiles that contain account numbers via `GET /api/v1/users/{var1}/profile` and then a user tries to make fraudulent funds transfers, you could create up a rule to block or log the sequence `GET /api/v1/users/{var1}/profile` to `POST /api/v1/transferFunds`.
+For example, if there was an authorization bug that allowed users to iterate through other users' profiles that contain account numbers via `GET /api/v1/users/{var1}/profile` and then a user tries to make fraudulent funds transfers, you could create a rule to block or log the sequence `GET /api/v1/users/{var1}/profile` to `POST /api/v1/transferFunds`.
 
 
 ## Limitations
@@ -79,7 +81,9 @@ Sequence mitigation de-duplicated the two requests to `GET /api/v1/accounts/{acc
 
 ### Time limitations
 
-Sequence mitigation rules have a lookback period of 10 minutes, which means that any two requests using the same session identifier will extend the sequence if they happen no further than 10 minutes apart. A request for a session identifier that happens 10 minutes after the last one will start recording a new sequence. For example, if you create a rule that one endpoint must be requested before another endpoint, and more than 10 minutes elapses between a user requesting each endpoint, the rule will not match.
+Sequence mitigation rules have a lookback period of 10 minutes. Any two requests using the same session identifier extend the sequence if they happen no further than 10 minutes apart. A request that happens more than 10 minutes after the previous one starts a new sequence.
+
+For example, if you create a rule requiring one endpoint to be requested before another, and more than 10 minutes elapses between the two requests, the rule will not match.
 
 ## Availability
 

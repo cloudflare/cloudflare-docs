@@ -15,6 +15,12 @@ export const modelExampleSchema = z.object({
 	description: z.string().optional(),
 	input: z.record(z.string(), z.unknown()),
 	output: z.record(z.string(), z.unknown()).optional(),
+	// Full provider response as returned by the upstream API. Shape varies by
+	// provider — streaming responses are arrays of chunks, non-streaming are
+	// objects. Rendered as JSON in the UI regardless of shape.
+	raw_response: z
+		.union([z.record(z.string(), z.unknown()), z.array(z.unknown())])
+		.optional(),
 	code_snippets: codeSnippetSchema.array().optional(),
 });
 
@@ -39,9 +45,6 @@ export const catalogModelsSchema = z.object({
 	context_length: z.number().nullable(),
 	max_output_tokens: z.number().nullable(),
 	supports_async: z.boolean(),
-
-	// Pricing (flexible structure: {input, output} or {per_image} etc)
-	pricing: z.record(z.string(), z.number()),
 
 	// Examples
 	examples: modelExampleSchema.array(),

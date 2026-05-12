@@ -150,7 +150,6 @@ Decodes a Base64-encoded String specified in `source`.
 
 For example, with the following HTTP request header: `client_id: MTIzYWJj`, `(any(decode_base64(http.request.headers["client_id"][*])[*] eq "123abc"))` would return `true`.
 
-
 :::note
 You can only use the `decode_base64()` function in [Transform Rules](/rules/transform/), [custom rules](/waf/custom-rules/), and [rate limiting rules](/waf/rate-limiting-rules/).
 :::
@@ -225,6 +224,40 @@ has_value(http.request.headers.names, "X-My-Header")
 # Check if there is a request header with the exact name provided as the first query argument:
 has_value(http.request.headers.names, http.request.uri.args.names[0])
 ```
+
+### `is_jwt_present`
+
+<code>is_jwt_present(token_configuration_id: <Type text="String" />)</code>: <Type text="Boolean" />
+
+Returns true if the request has a token as configured in the token configuration with the ID `token_configuration_id`.
+
+`token_configuration_id` must be the ID of an existing [token configuration](/api-shield/security/jwt-validation/api/#token-configurations).
+
+Example:
+
+```txt
+is_jwt_present("51231d16-01f1-48e3-93f8-91c99e81288e")
+```
+
+:::note
+This function is only available in [API JWT validation rules](/api-shield/security/jwt-validation/).
+:::
+
+### `is_jwt_valid`
+
+<code>is_jwt_valid(token_configuration_id: <Type text="String" />)</code>: <Type text="Boolean" />
+
+Returns true if the request has a valid token according to the token configuration with the ID `token_configuration_id`.
+
+`token_configuration_id` must be the ID of an existing [token configuration](/api-shield/security/jwt-validation/api/#token-configurations). The function returns false if the token is missing from the request.
+
+```txt
+is_jwt_valid("51231d16-01f1-48e3-93f8-91c99e81288e")
+```
+
+:::note
+This function is only available in [API JWT validation rules](/api-shield/security/jwt-validation/).
+:::
 
 ### `len`
 

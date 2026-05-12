@@ -1,9 +1,12 @@
 ---
 pcx_content_type: how-to
 title: Add Custom Header
+description: Add a custom header to your RealtimeKit meeting UI with individual components.
 slug: realtime/realtimekit/ui-kit/custom-header
 sidebar:
   order: 5
+products:
+  - realtime
 ---
 
 import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelector.astro";
@@ -21,7 +24,7 @@ In this guide, we will learn how to add a custom header for your RealtimeKit mee
 
 <RTKCodeSnippet id="web-react">
 
-RealtimeKit UI Kit provides the [`RtkHeader`](/realtime/realtimekit/ui-kit/component-library/#rtk-header) component for a default header.
+RealtimeKit UI provides the [`RtkHeader`](/realtime/realtimekit/ui-kit/component-library/#rtk-header) component for a default header.
 
 If you need additional controls, replace `RtkHeader` with individual UI Kit components and custom elements.
 
@@ -92,13 +95,13 @@ const handleReportBugClick = () => {
 };
 ```
 
-A complete example to build your own UI with custom header can be found [here](https://github.com/cloudflare/realtimekit-web-examples/tree/main/react-examples/examples/create-your-own-ui) with the custom header component [here](https://github.com/cloudflare/realtimekit-web-examples/blob/main/react-examples/examples/create-your-own-ui/src/components/meeting-header.tsx).
+For a complete example, refer to the [custom UI example](https://github.com/cloudflare/realtimekit-web-examples/tree/main/react-examples/examples/create-your-own-ui) and the [custom header component](https://github.com/cloudflare/realtimekit-web-examples/blob/main/react-examples/examples/create-your-own-ui/src/components/meeting-header.tsx).
 
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-web-components">
 
-RealtimeKit UI Kit provides the [`rtk-header`](/realtime/realtimekit/ui-kit/component-library/#rtk-header) component for a default header.
+RealtimeKit UI provides the [`rtk-header`](/realtime/realtimekit/ui-kit/component-library/#rtk-header) component for a default header.
 
 If you need additional controls, replace `rtk-header` with individual UI Kit components and custom elements. In the `renderJoinedScreen` function from [Build Your Own UI](/realtime/realtimekit/ui-kit/build-your-own-ui/), replace:
 
@@ -140,13 +143,13 @@ document.querySelector("#report-bug-button").addEventListener("click", () => {
 });
 ```
 
-A complete example to build your own UI with custom header can be found [here](https://github.com/cloudflare/realtimekit-web-examples/tree/main/html-examples/examples/create-your-own-ui) with the custom header component [here](https://github.com/cloudflare/realtimekit-web-examples/blob/main/html-examples/examples/create-your-own-ui/components/meeting-header.js).
+For a complete example, refer to the [custom UI example](https://github.com/cloudflare/realtimekit-web-examples/tree/main/html-examples/examples/create-your-own-ui) and the [custom header component](https://github.com/cloudflare/realtimekit-web-examples/blob/main/html-examples/examples/create-your-own-ui/components/meeting-header.js).
 
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-angular">
 
-RealtimeKit UI Kit provides the [`rtk-header`](/realtime/realtimekit/ui-kit/component-library/#rtk-header) component for a default header.
+RealtimeKit UI provides the [`rtk-header`](/realtime/realtimekit/ui-kit/component-library/#rtk-header) component for a default header.
 
 If you need additional controls, replace `rtk-header` with individual UI Kit components and custom elements. Create a custom header component that uses the RealtimeKit angular components directly.
 
@@ -282,9 +285,8 @@ export class MeetingComponent implements OnInit, OnDestroy {
 	private authToken = "<participant_auth_token>";
 
 	async ngOnInit() {
-		const RealtimeKitClient = await import(
-			"https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit@latest/dist/index.es.js"
-		);
+		const RealtimeKitClient =
+			await import("https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit@latest/dist/index.es.js");
 
 		this.meeting = await RealtimeKitClient.default.init({
 			authToken: this.authToken,
@@ -324,5 +326,730 @@ export class AppModule {}
 ```
 
 This approach gives you full control over the header layout while maintaining Angular's component architecture and event handling patterns.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+RealtimeKit UI provides the `RtkMeetingHeaderView` component for a default header.
+
+If you need additional controls, replace `RtkMeetingHeaderView` with individual UI Kit components and custom elements.
+
+Import the required components:
+
+```swift
+import RealtimeKitUI
+```
+
+#### Create custom header view
+
+Create a custom header view that uses the RealtimeKit iOS components directly:
+
+```swift title="CustomHeaderView.swift"
+import UIKit
+import RealtimeKit
+import RealtimeKitUI
+
+class CustomHeaderView: UIView {
+    private let meeting: RealtimeKitClient
+
+    private lazy var titleLabel: RtkMeetingTitleLabel = {
+        return RtkMeetingTitleLabel(meeting: meeting)
+    }()
+
+    private lazy var participantCountView: RtkParticipantCountView = {
+        return RtkParticipantCountView(meeting: meeting)
+    }()
+
+    private lazy var clockView: RtkClockView = {
+        return RtkClockView(meeting: meeting)
+    }()
+
+    private lazy var recordingView: RtkRecordingView = {
+        return RtkRecordingView(meeting: meeting)
+    }()
+
+    private let reportBugButton = UIButton(type: .system)
+
+    init(meeting: RealtimeKitClient) {
+        self.meeting = meeting
+        super.init(frame: .zero)
+        setupUI()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func setupUI() {
+        backgroundColor = .black
+
+        // Configure report bug button
+        reportBugButton.setTitle("Report Bug", for: .normal)
+        reportBugButton.setTitleColor(.white, for: .normal)
+        reportBugButton.layer.borderColor = UIColor.white.cgColor
+        reportBugButton.layer.borderWidth = 1
+        reportBugButton.layer.cornerRadius = 4
+        reportBugButton.contentEdgeInsets = UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8)
+        reportBugButton.addTarget(self, action: #selector(handleReportBugTap), for: .touchUpInside)
+
+        // Create stack views for layout
+        let leftStack = UIStackView(arrangedSubviews: [recordingView])
+        leftStack.axis = .horizontal
+        leftStack.spacing = 8
+        leftStack.alignment = .center
+
+        let centerStack = UIStackView(arrangedSubviews: [titleLabel])
+        centerStack.axis = .horizontal
+        centerStack.alignment = .center
+
+        let rightStack = UIStackView(arrangedSubviews: [
+            participantCountView,
+            clockView,
+            reportBugButton
+        ])
+        rightStack.axis = .horizontal
+        rightStack.spacing = 8
+        rightStack.alignment = .center
+
+        let mainStack = UIStackView(arrangedSubviews: [leftStack, centerStack, rightStack])
+        mainStack.axis = .horizontal
+        mainStack.distribution = .equalSpacing
+        mainStack.alignment = .center
+        mainStack.translatesAutoresizingMaskIntoConstraints = false
+
+        addSubview(mainStack)
+
+        NSLayoutConstraint.activate([
+            mainStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
+            mainStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
+            mainStack.topAnchor.constraint(equalTo: topAnchor),
+            mainStack.bottomAnchor.constraint(equalTo: bottomAnchor),
+            heightAnchor.constraint(equalToConstant: 48)
+        ])
+    }
+
+    @objc private func handleReportBugTap() {
+        print("Report Bug Tapped")
+        // Add your custom logic here
+    }
+}
+```
+
+#### Use in your meeting view controller
+
+In your `MeetingViewController`, replace the default header with your custom header:
+
+```swift title="MeetingViewController.swift"
+import UIKit
+import RealtimeKit
+import RealtimeKitUI
+
+class MeetingViewController: UIViewController {
+    private var meeting: RealtimeKitClient?
+    private var customHeader: CustomHeaderView?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupMeeting()
+    }
+
+    private func setupMeeting() {
+        Task {
+            do {
+                let client = try await RealtimeKitClient.init(authToken: "<PARTICIPANT_AUTH_TOKEN>")
+                self.meeting = client
+                await MainActor.run {
+                    setupCustomHeader(meeting: client)
+                }
+            } catch {
+                print("Failed to initialize meeting: \(error)")
+            }
+        }
+    }
+
+    private func setupCustomHeader(meeting: RealtimeKitClient) {
+        let header = CustomHeaderView(meeting: meeting)
+        self.customHeader = header
+
+        view.addSubview(header)
+        header.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            header.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            header.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            header.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+    }
+}
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+
+RealtimeKit UI provides the `RtkMeetingHeaderView` component for a default header.
+
+If you need additional controls, replace `RtkMeetingHeaderView` with individual UI Kit components and custom elements.
+
+Import the required components:
+
+```kotlin
+import com.cloudflare.realtimekit.ui.view.headers.RtkMeetingHeaderView
+import com.cloudflare.realtimekit.ui.view.RtkMeetingTitleView
+import com.cloudflare.realtimekit.ui.view.RtkParticipantCountView
+import com.cloudflare.realtimekit.ui.view.RtkClockView
+import com.cloudflare.realtimekit.ui.view.RtkRecordingIndicator
+import com.cloudflare.realtimekit.ui.view.RtkLivestreamIndicator
+import com.cloudflare.realtimekit.ui.view.RtkGridPaginatorView
+```
+
+#### Create custom header layout
+
+Create an XML layout file for your custom header:
+
+```xml title="layout/custom_header.xml"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingHorizontal="12dp"
+    android:background="@android:color/black">
+
+    <!-- Left section -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="start|center_vertical">
+
+        <com.cloudflare.realtimekit.ui.view.RtkRecordingIndicator
+            android:id="@+id/recordingIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.cloudflare.realtimekit.ui.view.RtkLivestreamIndicator
+            android:id="@+id/livestreamIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp" />
+    </LinearLayout>
+
+    <!-- Center section -->
+    <com.cloudflare.realtimekit.ui.view.RtkMeetingTitleView
+        android:id="@+id/meetingTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white" />
+
+    <!-- Right section -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="end|center_vertical">
+
+        <com.cloudflare.realtimekit.ui.view.RtkGridPaginatorView
+            android:id="@+id/gridPaginator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.cloudflare.realtimekit.ui.view.RtkParticipantCountView
+            android:id="@+id/participantCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp" />
+
+        <com.cloudflare.realtimekit.ui.view.RtkClockView
+            android:id="@+id/clock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp" />
+
+        <Button
+            android:id="@+id/reportBugButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Report Bug"
+            android:textColor="@android:color/white"
+            android:background="@android:color/transparent"
+            style="?android:attr/borderlessButtonStyle" />
+    </LinearLayout>
+</LinearLayout>
+```
+
+#### Create custom header view class
+
+```kotlin title="CustomHeaderView.kt"
+package com.example.meeting
+
+import android.content.Context
+import android.util.AttributeSet
+import android.util.Log
+import android.view.LayoutInflater
+import android.widget.Button
+import android.widget.LinearLayout
+import com.cloudflare.realtimekit.ui.view.RtkClockView
+import com.cloudflare.realtimekit.ui.view.RtkMeetingTitleView
+import com.cloudflare.realtimekit.ui.view.RtkParticipantCountView
+import com.cloudflare.realtimekit.ui.view.RtkRecordingIndicator
+
+class CustomHeaderView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : LinearLayout(context, attrs, defStyleAttr) {
+
+    init {
+        LayoutInflater.from(context).inflate(R.layout.custom_header, this, true)
+        setupReportBugButton()
+    }
+
+    private fun setupReportBugButton() {
+        findViewById<Button>(R.id.reportBugButton).setOnClickListener {
+            Log.d("CustomHeader", "Report Bug Clicked")
+            // Add your custom logic here
+        }
+    }
+}
+```
+
+#### Use in your meeting activity
+
+In your `MeetingActivity`, replace the default header with your custom header:
+
+```kotlin title="MeetingActivity.kt"
+package com.example.meeting
+
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.cloudflare.realtimekit.RealtimeKitClient
+
+class MeetingActivity : AppCompatActivity() {
+    private lateinit var meeting: RealtimeKitClient
+    private lateinit var customHeader: CustomHeaderView
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_meeting)
+
+        customHeader = findViewById(R.id.customHeader)
+        initializeMeeting()
+    }
+
+    private fun initializeMeeting() {
+        RealtimeKitClient.init(
+            authToken = "<PARTICIPANT_AUTH_TOKEN>",
+            onSuccess = { client ->
+                meeting = client
+                // Configure meeting UI
+            },
+            onError = { error ->
+                Log.e("Meeting", "Failed to initialize: $error")
+            }
+        )
+    }
+}
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-flutter">
+
+RealtimeKit UI provides the `RtkAppBar` widget for a default header.
+
+If you need additional controls, replace `RtkAppBar` with individual UI Kit widgets and custom elements.
+
+Import the required components:
+
+```dart
+import 'package:realtimekit/realtimekit.dart';
+import 'package:realtimekit_ui/realtimekit_ui.dart';
+```
+
+#### Create custom header widget
+
+Create a custom header widget that uses the RealtimeKit Flutter components directly. These widgets must be used within an `RtkMeetingUiProvider` context:
+
+```dart title="custom_header.dart"
+import 'package:flutter/material.dart';
+import 'package:realtimekit_ui/realtimekit_ui.dart';
+
+class CustomHeader extends StatelessWidget {
+  final VoidCallback? onReportBugPressed;
+
+  const CustomHeader({
+    Key? key,
+    this.onReportBugPressed,
+  }) : super(key: key);
+
+  void _handleReportBugPressed() {
+    debugPrint('Report Bug Pressed');
+    onReportBugPressed?.call();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 48,
+      color: Colors.black,
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      child: Row(
+        children: [
+          // Left section
+          Expanded(
+            child: Row(
+              children: const [
+                RtkRecordingIndicator(),
+                SizedBox(width: 8),
+                RtkLivestreamIndicator(),
+              ],
+            ),
+          ),
+
+          // Center section
+          const RtkMeetingTitle(),
+
+          // Right section
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                const RtkParticipantCount(),
+                const SizedBox(width: 8),
+                const RtkClock(),
+                const SizedBox(width: 8),
+                OutlinedButton(
+                  onPressed: _handleReportBugPressed,
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    side: const BorderSide(color: Colors.white),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
+                  ),
+                  child: const Text('Report Bug'),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
+#### Use in your meeting screen
+
+In your meeting screen, replace the default `RtkAppBar` with your custom header:
+
+```dart title="meeting_screen.dart"
+import 'package:flutter/material.dart';
+import 'package:realtimekit/realtimekit.dart';
+import 'package:realtimekit_ui/realtimekit_ui.dart';
+import 'custom_header.dart';
+
+class MeetingScreen extends StatefulWidget {
+  const MeetingScreen({Key? key}) : super(key: key);
+
+  @override
+  State<MeetingScreen> createState() => _MeetingScreenState();
+}
+
+class _MeetingScreenState extends State<MeetingScreen> {
+  RealtimeKitClient? _meeting;
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeMeeting();
+  }
+
+  Future<void> _initializeMeeting() async {
+    try {
+      final meeting = await RealtimeKitClient.init(
+        authToken: '<PARTICIPANT_AUTH_TOKEN>',
+      );
+      setState(() {
+        _meeting = meeting;
+      });
+    } catch (e) {
+      debugPrint('Failed to initialize meeting: $e');
+    }
+  }
+
+  void _handleReportBug() {
+    // Add your custom logic here
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Report Bug'),
+        content: const Text('Bug reporting form goes here.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Close'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_meeting == null) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    return RtkMeetingUiProvider(
+      meeting: _meeting!,
+      child: Scaffold(
+        body: Column(
+          children: [
+            // Custom header replaces RtkAppBar
+            CustomHeader(onReportBugPressed: _handleReportBug),
+
+            // Meeting grid
+            const Expanded(child: RtkGrid()),
+
+            // Control bar
+            const RtkControlBar(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _meeting?.leave();
+    super.dispose();
+  }
+}
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+RealtimeKit UI provides the `RtkHeader` component for a default header.
+
+If you need additional controls, replace `RtkHeader` with individual UI Kit components and custom elements.
+
+Import the required components:
+
+```tsx
+import {
+	RtkLogo,
+	RtkRecordingIndicator,
+	RtkLiveStreamIndicator,
+	RtkMeetingTitle,
+	RtkGridPagination,
+	RtkParticipantCount,
+	RtkClock,
+} from "@cloudflare/realtimekit-react-native-ui";
+import {
+	useRealtimeKitMeeting,
+	useRealtimeKitSelector,
+} from "@cloudflare/realtimekit-react-native";
+```
+
+#### Create custom header component
+
+Create a custom header component that uses the RealtimeKit React Native components directly. Each component requires the `meeting` instance as a prop, which you obtain via the `useRealtimeKitMeeting` hook. The component waits for `roomJoined` before rendering to ensure the meeting state is ready:
+
+```tsx title="CustomHeader.tsx"
+import React from "react";
+import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
+import {
+	RtkLogo,
+	RtkRecordingIndicator,
+	RtkLiveStreamIndicator,
+	RtkMeetingTitle,
+	RtkGridPagination,
+	RtkParticipantCount,
+	RtkClock,
+} from "@cloudflare/realtimekit-react-native-ui";
+import {
+	useRealtimeKitMeeting,
+	useRealtimeKitSelector,
+} from "@cloudflare/realtimekit-react-native";
+
+interface CustomHeaderProps {
+	onReportBugPress?: () => void;
+}
+
+export function CustomHeader({ onReportBugPress }: CustomHeaderProps) {
+	const { meeting } = useRealtimeKitMeeting();
+	const { roomJoined } = useRealtimeKitSelector((state) => state.self);
+
+	const handleReportBugPress = () => {
+		console.log("Report Bug Pressed");
+		onReportBugPress?.();
+	};
+
+	if (!roomJoined) {
+		return null;
+	}
+
+	return (
+		<View style={styles.container}>
+			{/* Left section */}
+			<View style={styles.leftSection}>
+				<RtkLogo />
+				<RtkRecordingIndicator meeting={meeting} />
+				<RtkLiveStreamIndicator meeting={meeting} />
+			</View>
+
+			{/* Center section */}
+			<View style={styles.centerSection}>
+				<RtkMeetingTitle meeting={meeting} />
+			</View>
+
+			{/* Right section */}
+			<View style={styles.rightSection}>
+				<RtkGridPagination meeting={meeting} />
+				<RtkParticipantCount meeting={meeting} />
+				<RtkClock meeting={meeting} />
+				<TouchableOpacity
+					style={styles.reportBugButton}
+					onPress={handleReportBugPress}
+				>
+					<Text style={styles.reportBugText}>Report Bug</Text>
+				</TouchableOpacity>
+			</View>
+		</View>
+	);
+}
+
+const styles = StyleSheet.create({
+	container: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+		alignItems: "center",
+		height: 48,
+		paddingHorizontal: 12,
+		backgroundColor: "black",
+	},
+	leftSection: {
+		flexDirection: "row",
+		alignItems: "center",
+		gap: 8,
+	},
+	centerSection: {
+		flexDirection: "row",
+		alignItems: "center",
+	},
+	rightSection: {
+		flexDirection: "row",
+		alignItems: "center",
+		gap: 8,
+	},
+	reportBugButton: {
+		borderWidth: 1,
+		borderColor: "white",
+		borderRadius: 4,
+		paddingHorizontal: 8,
+		paddingVertical: 4,
+	},
+	reportBugText: {
+		color: "white",
+		fontSize: 12,
+	},
+});
+```
+
+:::note
+`useRealtimeKitMeeting` and `useRealtimeKitSelector` must be called inside a component rendered within a `RealtimeKitProvider`. The `roomJoined` guard ensures the header only renders once the participant has successfully joined the meeting. `meeting.join()` is called from the parent `MeetingScreen` so that the join lifecycle is managed in one place.
+:::
+
+#### Use in your meeting screen
+
+In your meeting screen, replace the default `RtkHeader` with your custom header:
+
+```tsx title="MeetingScreen.tsx"
+import React, { useEffect } from "react";
+import { View, StyleSheet } from "react-native";
+import {
+	RealtimeKitProvider,
+	useRealtimeKitClient,
+} from "@cloudflare/realtimekit-react-native";
+import {
+	RtkGrid,
+	RtkControlbar,
+	RtkDialogManager,
+} from "@cloudflare/realtimekit-react-native-ui";
+import { CustomHeader } from "./CustomHeader";
+
+function MeetingContainer() {
+	const [meeting, initMeeting] = useRealtimeKitClient();
+
+	useEffect(() => {
+		initMeeting({
+			authToken: "<PARTICIPANT_AUTH_TOKEN>",
+		});
+	}, [initMeeting]);
+
+	useEffect(() => {
+		if (!meeting) return;
+		meeting.join();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [meeting]);
+
+	if (!meeting) {
+		return null;
+	}
+
+	return (
+		<RealtimeKitProvider value={meeting}>
+			<View style={styles.container}>
+				{/* Custom header replaces RtkHeader */}
+				<CustomHeader
+					onReportBugPress={() => console.log("Report bug pressed")}
+				/>
+
+				{/* Meeting grid */}
+				<View style={styles.gridContainer}>
+					<RtkGrid meeting={meeting} />
+				</View>
+
+				{/* Control bar */}
+				<RtkControlbar meeting={meeting} />
+			</View>
+
+			{/* Required components */}
+			<RtkDialogManager meeting={meeting} />
+		</RealtimeKitProvider>
+	);
+}
+
+export function MeetingScreen() {
+	return <MeetingContainer />;
+}
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		backgroundColor: "black",
+	},
+	gridContainer: {
+		flex: 1,
+	},
+});
+```
+
+:::note
+You must include `RtkDialogManager`. If you leave it out, features like settings toggles will not work.
+:::
 
 </RTKCodeSnippet>

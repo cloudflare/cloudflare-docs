@@ -5,7 +5,7 @@ products:
   - cloudflare-one
 title: DLP profiles
 sidebar:
-  order: 3
+  order: 2
   label: Configure DLP profiles
 tags:
   - Compliance
@@ -13,9 +13,9 @@ tags:
 
 import { Render } from "~/components";
 
-A DLP profile defines what sensitive data looks like so that DLP can detect it in your traffic. Each profile contains one or more [detection entries](/cloudflare-one/data-loss-prevention/detection-entries/) — patterns such as uploaded datasets, document fingerprints, and AI prompt topic classifiers that match specific types of data.
+A DLP profile defines what sensitive data Cloudflare should detect in your traffic. Profiles can combine [detection entries](/cloudflare-one/data-loss-prevention/detection-entries/configure-detection-entries/) with [Data Classification](/cloudflare-one/data-loss-prevention/data-classification/) objects such as data classes, sensitivity levels, and data tags.
 
-Cloudflare DLP provides [predefined profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/predefined-profiles/) for common sensitive data types such as credit card numbers and national identifiers. You can also build custom DLP profiles specific to your data, organization, and risk tolerance.
+Cloudflare DLP provides [predefined profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/predefined-profiles/) for common sensitive data types such as credit card numbers and national identifiers. You can also build custom DLP profiles specific to your data, organization, and risk tolerance by using direct detection entries, data classes, and labels.
 
 ## Configure a predefined profile
 

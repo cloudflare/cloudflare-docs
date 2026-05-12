@@ -1,5 +1,7 @@
 export * from "./apps";
 export * from "./base";
+export * from "./cloudflare-skills-manifest";
+export * from "./cloudflare-mcp-server-card";
 export * from "./catalog-models";
 export * from "./changelog";
 export * from "./release-notes";

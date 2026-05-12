@@ -4,6 +4,8 @@ description: Allow traffic only from specific countries.
 products:
   - waf
 title: Allow traffic from specific countries only
+tags:
+  - Geolocation
 ---
 
 This example [custom rule](/waf/custom-rules/create-dashboard/) blocks requests based on country code using the [`ip.src.country`](/ruleset-engine/rules-language/fields/reference/ip.src.country/) field, only allowing requests from two countries: United States and Mexico.

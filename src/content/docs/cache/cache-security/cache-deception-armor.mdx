@@ -10,15 +10,11 @@ tags:
 
 import { DashButton } from "~/components";
 
-Before learning about Cache Deception Armor, you should first understand how Web Cache Deception attacks work.
-
 ## Web Cache Deception attacks
 
-Web Cache Deceptions attacks occur when an attacker tricks a user into opening a link in the format of `http://www.example.com/newsfeed/foo.jpg`, when `http://www.example.com/newsfeed` is the location of a dynamic script that returns different content for different users.
+A Web Cache Deception attack tricks a user into visiting a URL that appears to point to a static asset but actually returns dynamic, personalized content from the origin.
 
-This scenario becomes problematic when your website is configured to be flexible about what kinds of paths it can handle. To be more specific, when requests to a path that do not exist, such as `/x/y/z` are treated as equivalent to requests to a parent path that does exist `/x`.
-
-For example, an attacker could send a user a link to `http://www.example.com/newsfeed/foo.jpg` so that the user could be taken to their newsfeed. When the request passes through Cloudflare, the request would be cached because the path ends in `.jpg`. The attacker can then visit the same URL themselves, and their request will be served from Cloudflare's cache, exposing your user's sensitive content.
+This attack works when an origin treats requests to non-existent paths as equivalent to a parent path — for example, when `http://www.example.com/newsfeed` is a dynamic page that returns different content for each authenticated user, and the origin also serves that same response for `/newsfeed/foo.jpg`. Because the path ends in `.jpg`, Cloudflare caches the response by default. The attacker then visits the same URL and receives the cached copy of the user's personalized content.
 
 ## Cache Deception Armor protects against attacks
 
@@ -29,7 +25,7 @@ In the newsfeed example above, if `http://www.example.com/newsfeed` is a script 
 ### Exceptions
 
 * If the returned `Content-Type` is `application/octet-stream`, the extension does not matter because that is typically a signal to instruct the browser to save the asset instead of to display it.
-* Cloudflare allows `.jpg` to be served as `image/webp` or `.gif` as `video/webm` and other cases that we think are unlikely to be attacks.
+* Cloudflare allows `.jpg` to be served as `image/webp` or `.gif` as `video/webm` and other cases that are unlikely to be attacks.
 * Keep in mind that Cache Deception Armor depends upon [Origin Cache Control](/cache/concepts/cache-control/). A `Cache-Control` header from the origin, or an [Edge Cache TTL Cache Rule](/cache/how-to/cache-rules/settings/#edge-ttl) may override the protection.
 
 ## Enable Cache Deception Armor

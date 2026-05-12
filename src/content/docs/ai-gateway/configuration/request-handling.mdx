@@ -1,18 +1,18 @@
 ---
 pcx_content_type: configuration
 title: Request handling
-description: Configure AI Gateway request timeouts, retries, and fallback strategies for reliable AI provider interactions.
+description: Configure AI Gateway request timeouts and retries for reliable AI provider interactions.
 sidebar:
   order: 4
 products:
   - ai-gateway
 ---
 
-import { Render, Aside } from "~/components";
+import { Render } from "~/components";
 
 :::note
 
-[Dynamic Routing](/ai-gateway/features/dynamic-routing/) also offers timeouts and retries per model, along with conditional routing, rate limiting, and budget limiting through a visual interface. This page documents request-handling configuration available through Universal Endpoint provider `config` settings as well as per-request `cf-aig-*` headers that work with any provider endpoint. You can also configure retries at the [gateway level](/ai-gateway/configuration/manage-gateway/#retry-requests).
+[Dynamic Routing](/ai-gateway/features/dynamic-routing/) also offers timeouts and retries per model, along with conditional routing, rate limiting, and budget limiting through a visual interface. This page documents request-handling configuration available through per-request `cf-aig-*` headers that work with any provider endpoint. You can also configure retries at the [gateway level](/ai-gateway/configuration/manage-gateway/#retry-requests).
 
 :::
 
@@ -20,83 +20,16 @@ Your AI gateway supports different strategies for handling requests to providers
 
 ## Request timeouts
 
-A request timeout allows you to trigger fallbacks or a retry if a provider takes too long to respond.
+A request timeout allows you to return an error or trigger a retry if a provider takes too long to respond.
 
 These timeouts help:
 
 - Improve user experience, by preventing users from waiting too long for a response
-- Proactively handle errors, by detecting unresponsive providers and triggering a fallback option
+- Proactively handle errors, by detecting unresponsive providers
 
-Request timeouts can be set on a Universal Endpoint or directly on a request to any provider.
-
-### Definitions
-
-A timeout is set in milliseconds. Additionally, the timeout is based on when the first part of the response comes back. As long as the first part of the response returns within the specified timeframe - such as when streaming a response - your gateway will wait for the response.
+A timeout is set in milliseconds. The timeout is based on when the first part of the response comes back. As long as the first part of the response returns within the specified timeframe — such as when streaming a response — your gateway will wait for the response.
 
 ### Configuration
-
-#### Universal Endpoint
-
-If set on a [Universal Endpoint](/ai-gateway/usage/universal/), a request timeout specifies the timeout duration for requests and triggers a fallback.
-
-For a Universal Endpoint, configure the timeout value by setting a `requestTimeout` property within the provider-specific `config` object. Each provider can have a different `requestTimeout` value for granular customization.
-
-```bash title="Provider-level config" {11-13} collapse={15-48}
-curl 'https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}' \
-	--header 'Content-Type: application/json' \
-	--data '[
-    {
-        "provider": "workers-ai",
-        "endpoint": "@cf/meta/llama-3.1-8b-instruct",
-        "headers": {
-            "Authorization": "Bearer {cloudflare_token}",
-            "Content-Type": "application/json"
-        },
-        "config": {
-            "requestTimeout": 1000
-        },
-        "query": {
-            "messages": [
-                {
-                    "role": "system",
-                    "content": "You are a friendly assistant"
-                },
-                {
-                    "role": "user",
-                    "content": "What is Cloudflare?"
-                }
-            ]
-        }
-    },
-    {
-        "provider": "workers-ai",
-        "endpoint": "@cf/meta/llama-3.1-8b-instruct-fast",
-        "headers": {
-            "Authorization": "Bearer {cloudflare_token}",
-            "Content-Type": "application/json"
-        },
-        "query": {
-            "messages": [
-                {
-                    "role": "system",
-                    "content": "You are a friendly assistant"
-                },
-                {
-                    "role": "user",
-                    "content": "What is Cloudflare?"
-                }
-            ]
-        },
-				"config": {
-            "requestTimeout": 3000
-        },
-    }
-]'
-```
-
-#### Direct provider
-
-If set on a [provider](/ai-gateway/usage/providers/) request, request timeout specifies the timeout duration for a request and - if exceeded - returns an error.
 
 For a provider-specific endpoint, configure the timeout value by adding a `cf-aig-request-timeout` header.
 
@@ -112,13 +45,9 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/workers-ai/@
 
 ## Request retries
 
-AI Gateway also supports automatic retries for failed requests, with a maximum of five retry attempts.
+AI Gateway supports automatic retries for failed requests, with a maximum of five retry attempts.
 
 This feature improves your application's resiliency, ensuring you can recover from temporary issues without manual intervention.
-
-Request timeouts can be set on a Universal Endpoint or directly on a request to any provider.
-
-### Definitions
 
 With request retries, you can adjust a combination of three properties:
 
@@ -129,83 +58,6 @@ With request retries, you can adjust a combination of three properties:
 On the final retry attempt, your gateway will wait until the request completes, regardless of how long it takes.
 
 ### Configuration
-
-#### Universal endpoint
-
-If set on a [Universal Endpoint](/ai-gateway/usage/universal/), a request retry will automatically retry failed requests up to five times before triggering any configured fallbacks.
-
-For a Universal Endpoint, configure the retry settings with the following properties in the provider-specific `config`:
-
-```json
-config:{
-	maxAttempts?: number;
-	retryDelay?: number;
-	backoff?: "constant" | "linear" | "exponential";
-}
-```
-
-As with the [request timeout](/ai-gateway/configuration/request-handling/#universal-endpoint), each provider can have a different retry settings for granular customization.
-
-```bash title="Provider-level config" {11-15} collapse={16-55}
-curl 'https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}' \
-	--header 'Content-Type: application/json' \
-	--data '[
-    {
-        "provider": "workers-ai",
-        "endpoint": "@cf/meta/llama-3.1-8b-instruct",
-        "headers": {
-            "Authorization": "Bearer {cloudflare_token}",
-            "Content-Type": "application/json"
-        },
-        "config": {
-            "maxAttempts": 2,
-						"retryDelay": 1000,
-						"backoff": "constant"
-        },
-        "query": {
-            "messages": [
-                {
-                    "role": "system",
-                    "content": "You are a friendly assistant"
-                },
-                {
-                    "role": "user",
-                    "content": "What is Cloudflare?"
-                }
-            ]
-        }
-    },
-    {
-        "provider": "workers-ai",
-        "endpoint": "@cf/meta/llama-3.1-8b-instruct-fast",
-        "headers": {
-            "Authorization": "Bearer {cloudflare_token}",
-            "Content-Type": "application/json"
-        },
-        "query": {
-            "messages": [
-                {
-                    "role": "system",
-                    "content": "You are a friendly assistant"
-                },
-                {
-                    "role": "user",
-                    "content": "What is Cloudflare?"
-                }
-            ]
-        },
-				"config": {
-            "maxAttempts": 4,
-						"retryDelay": 1000,
-						"backoff": "exponential"
-        },
-    }
-]'
-```
-
-#### Direct provider
-
-If set on a [provider](/ai-gateway/usage/universal/) request, a request retry will automatically retry failed requests up to five times. On the final retry attempt, your gateway will wait until the request completes, regardless of how long it takes.
 
 For a provider-specific endpoint, configure the retry settings by adding different header values:
 

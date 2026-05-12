@@ -4,6 +4,8 @@ title: API
 sidebar:
   order: 3
 description: Vite plugin API
+products:
+  - workers
 ---
 
 import { Type, MetaInfo } from "~/components";
@@ -27,8 +29,15 @@ It accepts an optional `PluginConfig` parameter.
 
 - `configPath` <Type text='string' /> <MetaInfo text='optional' />
 
-  An optional path to your Worker config file.
-  By default, a `wrangler.jsonc`, `wrangler.json`, or `wrangler.toml` file in the root of your application will be used as the Worker config.
+  An optional path to your entry Worker config file.
+
+  For the entry Worker, the plugin resolves the config path in this order:
+
+  1. `configPath`
+  2. `CLOUDFLARE_VITE_WRANGLER_CONFIG_PATH` (typically set by a framework or other external tool)
+  3. `wrangler.jsonc`, `wrangler.json`, or `wrangler.toml` in the root of your application
+
+  This applies in `vite dev` and `vite build`.
 
   For more information about the Worker configuration, see [Configuration](/workers/wrangler/configuration/).
 
@@ -67,6 +76,12 @@ It accepts an optional `PluginConfig` parameter.
 
   See [Debugging](/workers/vite-plugin/reference/debugging/) for more information.
 
+- `tunnel` <Type text='boolean' /> <MetaInfo text='optional' />
+
+  Open a publicly reachable Cloudflare Quick Tunnel for sharing a preview, testing webhooks, or accessing the app from another device.
+
+  See [Share a local dev server](/workers/development-testing/local-dev-tunnels/) for more information.
+
 - `auxiliaryWorkers` <Type text='Array<AuxiliaryWorkerConfig>' /> <MetaInfo text='optional' />
 
   An optional array of auxiliary Workers.
@@ -89,6 +104,7 @@ It accepts an optional `PluginConfig` parameter.
 ## `interface AuxiliaryWorkerConfig`
 
 Auxiliary Workers require a `configPath`, a `config` option, or both.
+`CLOUDFLARE_VITE_WRANGLER_CONFIG_PATH` only applies to the entry Worker. Auxiliary Workers do not use this environment variable. If you use a config file for an auxiliary Worker, set `configPath` explicitly.
 
 - `configPath` <Type text='string' /> <MetaInfo text='optional' />
 

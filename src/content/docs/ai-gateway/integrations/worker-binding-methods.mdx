@@ -9,7 +9,7 @@ tags:
 description: >-
   Reference for the AI binding with AI Gateway. Call Workers AI and
   third-party models with env.AI.run(), access log IDs, and use gateway methods
-  for feedback, logging, URLs, and universal requests.
+  for feedback, logging, and URLs.
 products:
   - ai-gateway
 ---
@@ -56,7 +56,7 @@ const resp = await env.AI.run(
 	},
 	{
 		gateway: {
-			id: "my-gateway",
+			id: "default", // or use a specific gateway name
 		},
 	},
 );
@@ -76,7 +76,7 @@ const resp = await env.AI.run(
 	},
 	{
 		gateway: {
-			id: "my-gateway",
+			id: "default", // or use a specific gateway name
 		},
 	},
 );
@@ -98,7 +98,7 @@ The third argument to `env.AI.run()` accepts a `gateway` object with the followi
 
 | Parameter    | Type      | Default    | Description                                                                                      |
 | ------------ | --------- | ---------- | ------------------------------------------------------------------------------------------------ |
-| `id`         | `string`  | _required_ | Name of your [AI Gateway](/ai-gateway/get-started/). Must be in the same account as your Worker. |
+| `id`         | `string`  | _required_ | Name of your [AI Gateway](/ai-gateway/get-started/). Must be in the same account as your Worker. Use `"default"` to automatically create a gateway on the first authenticated request. Refer to [Default gateway](/ai-gateway/configuration/manage-gateway/#default-gateway) for details. |
 | `skipCache`  | `boolean` | `false`    | Skip the [cache](/ai-gateway/features/caching/) for this request.                                |
 | `cacheTtl`   | `number`  | —          | [Cache TTL](/ai-gateway/features/caching/) in seconds.                                           |
 | `cacheKey`   | `string`  | —          | Custom [cache key](/ai-gateway/features/caching/) for this request.                              |
@@ -198,21 +198,4 @@ const anthropic = createAnthropic({
 });
 ```
 
-### `run()`
 
-Executes a [universal request](/ai-gateway/usage/universal/) to any supported provider. Accepts a single request object or an array.
-
-```typescript
-const resp = await gateway.run({
-	provider: "workers-ai",
-	endpoint: "@cf/meta/llama-3.1-8b-instruct",
-	headers: {
-		authorization: "Bearer my-api-token",
-	},
-	query: {
-		prompt: "tell me a joke",
-	},
-});
-```
-
-**Returns:** `Promise<Response>`

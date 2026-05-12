@@ -1,8 +1,11 @@
 ---
 pcx_content_type: get-started
 title: Get started
+description: Create your first Flagship feature flag and evaluate it inside a Cloudflare Worker using the binding API.
 sidebar:
   order: 2
+products:
+  - flagship
 ---
 
 import {
@@ -34,10 +37,12 @@ Add the Flagship binding in your Wrangler configuration file so your Worker can 
 
 ```jsonc
 {
-	"flagship": {
-		"binding": "FLAGS",
-		"app_id": "<APP_ID>",
-	},
+	"flagship": [
+		{
+			"binding": "FLAGS",
+			"app_id": "<APP_ID>",
+		},
+	],
 }
 ```
 

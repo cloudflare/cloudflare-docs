@@ -84,7 +84,7 @@ Cloudflare Access provides optional security settings that can be added to the b
 
 To enable these settings:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Applications**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
 
 2. Locate the application you would like to configure and select **Configure**.
 
@@ -92,7 +92,7 @@ To enable these settings:
 
 4. Configure the desired cookie settings.
 
-5. Select **Save application**.
+5. Select **Save**.
 
 ### SameSite Attribute
 
@@ -138,8 +138,8 @@ The `CF_Authorization` cookie cannot be used without the associated binding cook
 Do not enable Binding Cookie if:
 
 - You are using the Access application for non-browser based tools (such as SSH or RDP).
-- You have enabled [incompatible Cloudflare products](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/#product-compatibility) on the application domain.
-- You have turned on [Device authentication identity](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/) for the application.
+- You have enabled [incompatible Cloudflare products](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/#product-compatibility) on the application domain, such as [Zaraz](/zaraz) or [Google tag gateway](/google-tag-gateway/). Enabling Binding Cookie alongside these products can cause an authentication redirect loop (`ERR_TOO_MANY_REDIRECTS`).
+- You have turned on [Authenticate with Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/) for the application.
 
 ### Cookie Path Attribute
 

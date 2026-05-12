@@ -34,6 +34,8 @@ Most AI applications today are stateless — they process a request, return a re
 
 Each agent runs on a [Durable Object](/durable-objects/) — a stateful micro-server with its own SQL database, WebSocket connections, and scheduling. Deploy once and Cloudflare runs your agents across its global network, scaling to tens of millions of instances. No infrastructure to manage, no sessions to reconstruct, no state to externalize.
 
+The mental model is simple: define a TypeScript class, give each real-world thing a stable name, and route requests or WebSocket connections to that named instance. The instance wakes when something happens, reads its durable state, does work, and hibernates when idle.
+
 ### Get started
 
 Three commands to a running agent. No API keys required — the starter uses [Workers AI](/workers-ai/) by default.
@@ -67,8 +69,8 @@ The starter includes streaming AI chat, server-side and client-side tools, human
 - **Act on their own** — [Schedule tasks](/agents/api-reference/schedule-tasks/) on a delay, at a specific time, or on a cron. Agents can wake themselves up, do work, and go back to sleep — without a user present.
 - **Browse the web** — Give your agents [browser tools](/agents/api-reference/browse-the-web/) powered by the Chrome DevTools Protocol to scrape, screenshot, debug, and interact with web pages.
 - **Talk to users** — Build real-time [voice agents](/agents/api-reference/voice/) with speech-to-text, text-to-speech, and conversation persistence — audio streams over WebSocket.
-- **Orchestrate work** — Run multi-step [workflows](/agents/api-reference/run-workflows/) with automatic retries, or coordinate across multiple agents.
-- **React to events** — Handle [inbound email](/agents/api-reference/email/), HTTP requests, WebSocket messages, and state changes — all from the same class.
+- **Orchestrate work** — Run multi-step [workflows](/agents/api-reference/run-workflows/) with automatic retries, coordinate across [sub-agents](/agents/api-reference/sub-agents/), or run chat-capable [agent tools](/agents/api-reference/agent-tools/) with retained streaming timelines.
+- **React to events** — Handle [inbound email](/agents/api-reference/email/) (see the [email agent example](https://github.com/cloudflare/agents/tree/main/examples/email-agent)), HTTP requests, WebSocket messages, and state changes — all from the same class.
 
 ### How it works
 

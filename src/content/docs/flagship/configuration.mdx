@@ -1,8 +1,11 @@
 ---
 pcx_content_type: configuration
 title: Configuration
+description: Add and configure a Flagship binding in your Wrangler configuration file to evaluate feature flags in a Worker.
 sidebar:
   order: 4
+products:
+  - flagship
 ---
 
 import { WranglerConfig, TypeScriptExample } from "~/components";
@@ -17,10 +20,12 @@ Add the `flagship` block to your Wrangler configuration file with a binding name
 
 ```jsonc
 {
-	"flagship": {
-		"binding": "FLAGS",
-		"app_id": "<APP_ID>",
-	},
+	"flagship": [
+		{
+			"binding": "FLAGS",
+			"app_id": "<APP_ID>",
+		},
+	],
 }
 ```
 

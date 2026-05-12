@@ -3,6 +3,12 @@ title: Connect with Cloudflare Mesh
 pcx_content_type: overview
 sidebar:
   order: 2
+description: Connect your network using Cloudflare Mesh.
+products:
+  - cloudflare-one
+  - access
+  - tunnel
+  - gateway
 ---
 
 [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) (formerly WARP Connector) connects your private networks to Cloudflare using the Cloudflare One Client (`warp-cli`) running in headless mode on a Linux server. Every enrolled device and node receives a private Mesh IP and can communicate with any other participant over TCP, UDP, or ICMP.
@@ -19,8 +25,10 @@ The setup wizard in the dashboard configures enrollment, device profiles, and co
 
 - Replacing a VPN for remote access to private networks
 - Bidirectional connectivity (VoIP, SIP, Active Directory, SCCM, DevOps pipelines)
+- Long-lived TCP connections sensitive to interruptions (SAP, database replication, ERP systems, RDP sessions)
 - Site-to-site networking between offices, data centers, or cloud VPCs
 - Client-to-client connectivity (two laptops reaching each other by private IP)
+- Any L3/L4 workload where source IP preservation matters
 
 ## Best practices
 

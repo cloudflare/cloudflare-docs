@@ -2,7 +2,11 @@
 pcx_content_type: reference
 source: https://support.cloudflare.com/hc/en-us/articles/206973867-Status-code-metrics-in-Cloudflare-Site-Analytics
 title: Status codes
-
+description: Analyze HTTP status code distribution per data center.
+products:
+  - analytics
+sidebar:
+  order: 4
 ---
 
 :::note
@@ -27,7 +31,7 @@ Users may also see `100x` errors which are not reported. These will be displayed
 
 ![Error analytics by Cloudflare data center](~/assets/images/analytics/status-codes.png)
 
-***
+---
 
 ## Common edge status codes
 
@@ -40,7 +44,7 @@ Users may also see `100x` errors which are not reported. These will be displayed
 
 For more information, refer to [4xx Client Error](/support/troubleshooting/http-status-codes/4xx-client-error/).
 
-***
+---
 
 ## Common origin status codes
 
@@ -51,7 +55,7 @@ For more information, refer to [4xx Client Error](/support/troubleshooting/http-
 
 For more information, refer to [4xx Client Error](/support/troubleshooting/http-status-codes/4xx-client-error/) and [Troubleshooting Cloudflare 5XX errors](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/).
 
-***
+---
 
 ## 52x errors
 
@@ -63,6 +67,3 @@ For more information, refer to [4xx Client Error](/support/troubleshooting/http-
 - `526` - The certificate configured at the origin is not valid.
 
 For more information, refer to [Troubleshooting Cloudflare 5XX errors](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/).
-
-
-
