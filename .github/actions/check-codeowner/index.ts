@@ -10,7 +10,7 @@ function getActor(): string {
 	const { eventName, payload } = github.context;
 
 	switch (eventName) {
-		case "pull_request_target":
+		case "pull_request":
 			return payload.pull_request?.user?.login ?? "";
 		case "issue_comment":
 		case "pull_request_review_comment":
