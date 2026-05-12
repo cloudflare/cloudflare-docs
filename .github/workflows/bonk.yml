@@ -91,6 +91,9 @@ jobs:
 
   bonk-auto-triage:
     needs: check-codeowner
+    # pull_request (not pull_request_target) is used here — secrets are available
+    # because this only runs on non-fork PRs (head.repo == base.repo). We do NOT
+    # check out or execute the PR's code — Bonk reads context via the GitHub API only.
     if: |
       needs.check-codeowner.outputs.is-codeowner == 'true' &&
       github.event_name == 'pull_request' &&
