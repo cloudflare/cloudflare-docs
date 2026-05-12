@@ -93,7 +93,12 @@ async function isCodeowner(octokit: Octokit, actor: string): Promise<boolean> {
 
 (async function () {
 	try {
-		const token = core.getInput("GH_ORG_TOKEN", { required: true });
+		const token = core.getInput("GH_ORG_TOKEN");
+		if (!token) {
+			core.warning("GH_ORG_TOKEN not set — skipping CODEOWNERS check");
+			core.setOutput("is-codeowner", "false");
+			return;
+		}
 		const octokit = github.getOctokit(token);
 
 		const actor = getActor();
