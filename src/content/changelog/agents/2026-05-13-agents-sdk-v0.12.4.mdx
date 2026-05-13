@@ -75,15 +75,18 @@ const agent = await getAgentByName(env.AssistantAgent, "user-123", {
 <TypeScriptExample>
 
 ```ts
+import { Think } from "@cloudflare/think";
 import { pruneMessages } from "ai";
 
-beforeTurn(ctx) {
-	return {
-		messages: pruneMessages({
-			messages: ctx.messages,
-			toolCalls: "before-last-2-messages",
-		}),
-	};
+export class MyAgent extends Think<Env> {
+	beforeTurn(ctx) {
+		return {
+			messages: pruneMessages({
+				messages: ctx.messages,
+				toolCalls: "before-last-2-messages",
+			}),
+		};
+	}
 }
 ```
 
