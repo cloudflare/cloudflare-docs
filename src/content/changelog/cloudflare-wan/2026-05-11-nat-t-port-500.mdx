@@ -7,7 +7,7 @@ products:
   - magic-transit
 ---
 
-Cloudflare IPsec now supports the standard NAT traversal (NAT-T) flow defined in [RFC 3947](https://datatracker.ietf.org/doc/rfc3947/) and [RFC 7296](https://datatracker.ietf.org/doc/rfc7296/), where IKE begins on UDP port `500` and switches to UDP port `4500` after NAT is detected.
+Cloudflare IPsec now supports the standard NAT traversal (NAT-T) flow, where IKE begins on UDP port `500` and switches to UDP port `4500` after NAT is detected.
 
 Previously, devices behind NAT had to be configured to initiate IKE on UDP port `4500` directly. Devices that started on UDP port `500` could not complete the IKE handshake when NAT was in the path. This required custom configuration on devices such as VeloCloud SD-WAN edges, Cisco IOS-XE routers, and Juniper SRX firewalls, and was not possible on every platform.
 
