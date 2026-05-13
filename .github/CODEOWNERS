@@ -2,6 +2,9 @@
 
 * @cloudflare/product-owners
 
+# Content ownership
+/src/content/ @kennyj42 @cloudflare/product-owners
+
 # More dev-specific files
 
 /.github/ @cloudflare/content-engineering @kodster28 @mvvmm @colbywhite @ahaywood @MohamedH1998
