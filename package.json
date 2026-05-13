@@ -158,7 +158,7 @@
 		"unist-util-visit": "5.1.0",
 		"unist-util-visit-parents": "6.0.2",
 		"vfile": "6.0.3",
-		"vite-tsconfig-paths": "5.1.4",
+		"vite-tsconfig-paths": "6.1.1",
 		"vitest": "4.1.6",
 		"wrangler": "4.90.1",
 		"zod": "4.4.3"
