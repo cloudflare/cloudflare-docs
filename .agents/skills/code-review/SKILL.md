@@ -103,7 +103,6 @@ Focus deeper analysis on HIGH risk. For critical paths, check blast radius: how 
 - Theoretical performance concerns without evidence
 - Missing features not in scope of the example
 - Pre-existing issues in unchanged code
-- TOML config in existing docs (only flag for new content)
 
 ## Output Format
 

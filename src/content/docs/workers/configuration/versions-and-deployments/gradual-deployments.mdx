@@ -5,6 +5,8 @@ head: []
 description: Incrementally deploy code changes to your Workers with gradual deployments.
 products:
   - workers
+sidebar:
+  order: 2
 ---
 
 import { Example, DashButton, PackageManagers } from "~/components";
@@ -72,7 +74,7 @@ done
 
 You should see 10 responses. Responses will reflect the content returned by the versions in your deployment. Responses will vary depending on the percentages configured in [step #3](/workers/configuration/versions-and-deployments/gradual-deployments/#3-create-a-new-deployment).
 
-You can test also target a specific version using [version overrides](#version-overrides).
+You can also target a specific version using [version overrides](/workers/configuration/versions-and-deployments/version-overrides/).
 
 #### 5. Set your new version to 100% deployment
 
@@ -147,55 +149,9 @@ Selected operation under **Modify request header**: _Set dynamic_
 
 ## Version overrides
 
-You can use version overrides to send a request to a specific version of your Worker in your gradual deployment.
+You can use [version overrides](/workers/configuration/versions-and-deployments/version-overrides/) to send a request to a specific version of your Worker, bypassing the percentage-based routing (even when at 0%). Version overrides also work on subrequests made through [service bindings](/workers/runtime-apis/bindings/service-bindings/).
 
-To specify a version override in your request, you can set the `Cloudflare-Workers-Version-Overrides` header on the request to your Worker. For example:
-
-```sh
-curl -s https://example.com -H 'Cloudflare-Workers-Version-Overrides: my-worker-name="dc8dcd28-271b-4367-9840-6c244f84cb40"'
-```
-
-`Cloudflare-Workers-Version-Overrides` is a [Dictionary Structured Header](https://www.rfc-editor.org/rfc/rfc8941#name-dictionaries).
-
-The dictionary can contain multiple key-value pairs. Each key indicates the name of the Worker the override should be applied to. The value indicates the version ID that should be used and must be a [String](https://www.rfc-editor.org/rfc/rfc8941#name-strings).
-
-A version override will only be applied if the specified version is in the current deployment. The versions in the current deployment can be found using the [`wrangler deployments list`](/workers/wrangler/commands/general/#deployments-list) command or on the **Workers & Pages** page of the Cloudflare dashboard > Select your Workers > Deployments > Active Deployment.
-
-:::note[Verifying that the version override was applied]
-
-There are a number of reasons why a request's version override may not be applied. For example:
-
-- The deployment containing the specified version may not have propagated yet.
-- The header value may not be a valid [Dictionary](https://www.rfc-editor.org/rfc/rfc8941#name-dictionaries).
-
-In the case that a request's version override is not applied, the request will be routed according to the percentages set in the gradual deployment configuration.
-
-To make sure that the request's version override was applied correctly, you can [observe](#observability) the version of your Worker that was invoked. You could even automate this check by using the [runtime binding](#runtime-binding) to return the version in the Worker's response.
-
-:::
-
-### Example
-
-You may want to test a new version in production before gradually deploying it to an increasing proportion of external traffic.
-
-In this example, your deployment is initially configured to route all traffic to a single version:
-
-|              Version ID              | Percentage |
-| :----------------------------------: | :--------: |
-| db7cd8d3-4425-4fe7-8c81-01bf963b6067 |    100%    |
-
-Create a new deployment using [`wrangler versions deploy`](/workers/wrangler/commands/general/#versions-deploy) and specify 0% for the new version whilst keeping the previous version at 100%.
-
-|              Version ID              | Percentage |
-| :----------------------------------: | :--------: |
-| dc8dcd28-271b-4367-9840-6c244f84cb40 |     0%     |
-| db7cd8d3-4425-4fe7-8c81-01bf963b6067 |    100%    |
-
-Now test the new version with a version override before gradually progressing the new version to 100%:
-
-```sh
-curl -s https://example.com -H 'Cloudflare-Workers-Version-Overrides: my-worker-name="dc8dcd28-271b-4367-9840-6c244f84cb40"'
-```
+Refer to [Version overrides](/workers/configuration/versions-and-deployments/version-overrides/) for full details, including usage with service bindings.
 
 ## Gradual deployments for Durable Objects
 

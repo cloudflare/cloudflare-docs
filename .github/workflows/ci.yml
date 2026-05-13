@@ -98,6 +98,9 @@ jobs:
       - name: Validate redirects
         run: pnpm exec tsm bin/validate-redirects.ts
 
+      - name: Check component docs reference
+        run: pnpm exec tsx bin/check-component-docs.ts
+
       - name: Tests
         run: pnpm run test:prebuild
 

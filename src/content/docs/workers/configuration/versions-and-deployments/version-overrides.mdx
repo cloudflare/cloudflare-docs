@@ -1,0 +1,99 @@
+---
+pcx_content_type: configuration
+title: Version overrides
+description: Send requests to a specific version of your Worker in a gradual deployment using version overrides.
+sidebar:
+  order: 3
+---
+
+You can use version overrides to send a request to a specific version of your Worker in your [gradual deployment](/workers/configuration/versions-and-deployments/gradual-deployments/).
+
+To specify a version override in your request, set the `Cloudflare-Workers-Version-Overrides` header on the request to your Worker. For example:
+
+```sh
+curl -s https://example.com -H 'Cloudflare-Workers-Version-Overrides: my-worker-name="dc8dcd28-271b-4367-9840-6c244f84cb40"'
+```
+
+`Cloudflare-Workers-Version-Overrides` is a [Dictionary Structured Header](https://www.rfc-editor.org/rfc/rfc8941#name-dictionaries).
+
+The dictionary can contain multiple key-value pairs. Each key indicates the name of the Worker the override should be applied to. The value indicates the version ID that should be used and must be a [String](https://www.rfc-editor.org/rfc/rfc8941#name-strings).
+
+A version override will only be applied if the specified version is in the current deployment. The versions in the current deployment can be found using the [`wrangler deployments list`](/workers/wrangler/commands/general/#deployments-list) command or on the [**Workers & Pages** page of the Cloudflare dashboard > select your Worker > **Deployments** > **Active Deployment**](https://dash.cloudflare.com/?to=/:account/workers/services/view/:worker/production/deployments).
+
+:::note[Verifying that the version override was applied]
+
+There are a number of reasons why a request's version override may not be applied. For example:
+
+- The deployment may not contain the specified version. It can take up to a couple of seconds to be available globally after a recent change.
+- The header value may not be a valid [Dictionary](https://www.rfc-editor.org/rfc/rfc8941#name-dictionaries).
+
+In the case that a request's version override is not applied, the request will be routed according to the percentages set in the gradual deployment configuration.
+
+You can observe the version of your Worker that was invoked using [Observability](https://developers.cloudflare.com/workers/observability/), including in features such as [Logpush](/workers/observability/logs/logpush/). Alternatively, if you want to inform clients about the version they ran (e.g. for faster and more transparent debugging), you could use the [version metadata binding](/workers/runtime-apis/bindings/version-metadata/) and return the version ID in the Worker's response.
+
+:::
+
+## Example
+
+You may want to test a new version in production before gradually deploying it to an increasing proportion of external traffic. This is commonly referred to as a "smoke test".
+
+In this example, your deployment is initially configured to route all traffic to a single version:
+
+|              Version ID              | Percentage |
+| :----------------------------------: | :--------: |
+| db7cd8d3-4425-4fe7-8c81-01bf963b6067 |    100%    |
+
+Create a new deployment using [`wrangler versions deploy`](/workers/wrangler/commands/general/#versions-deploy) and specify 0% for the new version whilst keeping the previous version at 100%.
+
+|              Version ID              | Percentage |
+| :----------------------------------: | :--------: |
+| dc8dcd28-271b-4367-9840-6c244f84cb40 |     0%     |
+| db7cd8d3-4425-4fe7-8c81-01bf963b6067 |    100%    |
+
+Now test the new version with a version override before gradually progressing the new version to 100%:
+
+```sh
+curl -s https://example.com -H 'Cloudflare-Workers-Version-Overrides: my-worker-name="dc8dcd28-271b-4367-9840-6c244f84cb40"'
+```
+
+## Service bindings
+
+You can set the `Cloudflare-Workers-Version-Overrides` header when making a subrequest from one Worker to another using a [service binding](/workers/runtime-apis/bindings/service-bindings/). This lets you test a specific version of a downstream Worker from an upstream Worker.
+
+If you forward the original request object, the override header carries through automatically:
+
+```js
+// The override header from the inbound request is forwarded to the downstream Worker.
+export default {
+  async fetch(request, env) {
+    return env.MY_SERVICE.fetch(request);
+  },
+};
+```
+
+Alternatively, you can set an override header explicitly:
+
+```js
+// Replace the version ID with the target version from `wrangler versions list`.
+export default {
+  async fetch(request, env) {
+    const response = await env.MY_SERVICE.fetch("https://example.com/", {
+      headers: {
+        "Cloudflare-Workers-Version-Overrides":
+          'my-downstream-worker="dc8dcd28-271b-4367-9840-6c244f84cb40"',
+      },
+    });
+    return response;
+  },
+};
+```
+
+:::note
+Version overrides only apply to `fetch()`-based service binding calls. There is currently no way to specify version overrides when calling a service binding via RPC (`env.MY_SERVICE.someMethod()`), because RPC calls do not support attaching headers.
+:::
+
+## Related resources
+
+- [Gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/) — Learn how percentage-based traffic splitting works, including version affinity and observability.
+- [Service bindings](/workers/runtime-apis/bindings/service-bindings/) — How Workers communicate with each other.
+- [Version metadata binding](/workers/runtime-apis/bindings/version-metadata/) — Access version ID and tag from within your Worker.

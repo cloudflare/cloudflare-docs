@@ -7,6 +7,8 @@ on:
     types: [created]
   pull_request_review:
     types: [submitted]
+  pull_request:
+    types: [opened]
 
 concurrency:
   # intentionally hardcoded so that all Bonk workflows coexist peacefully
@@ -14,8 +16,31 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  check-codeowner:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      is-codeowner: ${{ steps.check.outputs.is-codeowner }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          fetch-depth: 1
+
+      - name: Check CODEOWNERS
+        id: check
+        uses: ./.github/actions/check-codeowner
+        with:
+          GH_ORG_TOKEN: ${{ secrets.GH_ORG_TOKEN }}
+
   bonk:
-    if: github.event.sender.type != 'Bot' && contains(github.event.comment.body, '/bonk') && !contains(github.event.comment.body, '/bigbonk')
+    needs: check-codeowner
+    if: |
+      needs.check-codeowner.outputs.is-codeowner == 'true' &&
+      github.event.sender.type != 'Bot' &&
+      contains(github.event.comment.body, '/bonk') &&
+      !contains(github.event.comment.body, '/bigbonk')
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
@@ -63,3 +88,65 @@ jobs:
           agent: docs
           mentions: "/bonk"
           permissions: CODEOWNERS
+
+  bonk-auto-review:
+    needs: check-codeowner
+    if: |
+      needs.check-codeowner.outputs.is-codeowner == 'true' &&
+      github.event_name == 'pull_request' &&
+      github.event.sender.type != 'Bot' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      id-token: write
+      contents: read
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          fetch-depth: 1
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
+        id: setup-node
+        with:
+          node-version: 24.x
+          cache: pnpm
+
+      - name: Restore node_modules (cache hit)
+        id: node-modules-cache
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-node-${{ steps.setup-node.outputs.node-version }}-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('package.json') }}
+
+      - name: Install node_modules (cache miss)
+        run: pnpm install --frozen-lockfile
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
+
+      - name: Run Lil Bonk (auto-review)
+        uses: ask-bonk/ask-bonk/github@main
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_AI_GATEWAY_ACCOUNT_ID }}
+          CLOUDFLARE_GATEWAY_ID: ${{ secrets.CF_AI_GATEWAY_NAME }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_AI_GATEWAY_TOKEN }}
+        with:
+          model: "cloudflare-ai-gateway/workers-ai/@cf/moonshotai/kimi-k2.6"
+          agent: docs
+          permissions: CODEOWNERS
+          token_permissions: NO_PUSH
+          prompt: |
+            Review this pull request. Review the title, description, and diff.
+            Apply appropriate labels, summarize what the PR changes, and flag
+            any issues that need attention from a maintainer (e.g. missing
+            description, broken links, incorrect frontmatter, style guide
+            violations). You may suggest specific code changes as inline review
+            comments, but do not push commits or open new PRs.
