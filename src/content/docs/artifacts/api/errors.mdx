@@ -1,0 +1,68 @@
+---
+title: Errors
+description: Error codes returned by the Artifacts REST API and Workers binding.
+pcx_content_type: reference
+sidebar:
+  order: 4
+head:
+  - tag: title
+    content: Errors · Artifacts
+products:
+  - artifacts
+---
+
+import { Type } from "~/components";
+
+The Artifacts REST API and Workers binding return errors with a numeric code and message. Use the error code to identify the failure type and decide how to retry or surface the error.
+
+## Error codes
+
+| Name | Code | Description |
+|------|------|-------------|
+| `ALREADY_EXISTS` | 10201 | The target repository already exists in the namespace. |
+| `NOT_FOUND` | 10200 | The repository or remote resource does not exist. |
+| `IMPORT_IN_PROGRESS` | 10302 | The repository is still being imported and is not yet available. |
+| `FORK_IN_PROGRESS` | 10303 | The repository is still being forked and is not yet available. |
+| `INVALID_INPUT` | 10100 | A request parameter is missing, malformed, or outside the accepted range. |
+| `INVALID_REPO_NAME` | 10101 | The repository name does not meet naming requirements. |
+| `INVALID_TTL` | 10103 | The token TTL is outside the allowed range (60–31,536,000 seconds). |
+| `INVALID_URL` | 10104 | The source URL does not point to a valid git repository. |
+| `REMOTE_AUTH_REQUIRED` | 10106 | The remote repository requires authentication. |
+| `UPSTREAM_UNAVAILABLE` | 10401 | The remote git server could not be reached. |
+| `MEMORY_LIMIT` | 10402 | The operation exceeds service memory limits. |
+| `INTERNAL_ERROR` | 10400 | An unexpected internal error occurred. |
+
+## REST API error format
+
+REST API errors use the standard Cloudflare v4 envelope:
+
+```ts
+export interface ApiError {
+	code: number;
+	message: string;
+	documentation_url?: string;
+	source?: {
+		pointer?: string;
+	};
+}
+```
+
+- `code`: The numeric error code from the table above.
+- `message`: A human-readable description of the error.
+- `documentation_url`: A link to relevant documentation, if available.
+- `source.pointer`: The request field that caused the error, when applicable.
+
+## Workers binding errors
+
+When using the Workers binding, errors are thrown as exceptions. Catch binding errors and map them to the same codes for consistent handling:
+
+```ts
+try {
+	const repo = await env.ARTIFACTS.create(repoName);
+} catch (err) {
+	const message = err instanceof Error ? err.message : String(err);
+	// Map known messages to error codes, or treat as INTERNAL_ERROR.
+}
+```
+
+Binding error messages contain the same descriptive text as REST API errors. Parse the message to identify the specific failure, or treat unknown errors as `INTERNAL_ERROR`.

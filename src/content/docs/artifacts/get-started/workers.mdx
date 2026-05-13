@@ -104,35 +104,24 @@ Replace `src/index.ts` with the following code:
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
-interface Env {
-	ARTIFACTS: Artifacts;
-}
-
 export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
+	async fetch(request, env) {
 		const url = new URL(request.url);
 
 		if (request.method === "POST" && url.pathname === "/repos") {
 			// Read the repo name from the request body so the route is reusable.
-			const body = (await request.json().catch(() => ({}))) as {
-				name?: string;
-			};
+			const body = await request.json().catch(() => ({}));
+
 			const repoName = body.name ?? "starter-repo";
 
-			try {
-				// Create the repo and return the remote URL plus initial write token.
-				const created = await env.ARTIFACTS.create(repoName);
-				return Response.json({
-					name: created.name,
-					remote: created.remote,
-					token: created.token,
-				});
-			} catch (err) {
-				// Return an error if the repo name is already taken.
-				const message = err instanceof Error ? err.message : String(err);
-				const status = message.includes("already exists") ? 409 : 500;
-				return Response.json({ error: message }, { status });
-			}
+			// Create the repo and return the remote URL plus initial write token.
+			const created = await env.ARTIFACTS.create(repoName);
+
+			return Response.json({
+				name: created.name,
+				remote: created.remote,
+				token: created.token,
+			});
 		}
 
 		return new Response("Use POST /repos to create an Artifacts repo.", {
@@ -140,7 +129,7 @@ export default {
 			headers: { Allow: "POST" },
 		});
 	},
-} satisfies ExportedHandler<Env>;
+};
 ```
 
 </TypeScriptExample>

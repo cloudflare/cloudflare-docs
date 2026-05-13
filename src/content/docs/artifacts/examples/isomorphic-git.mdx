@@ -12,7 +12,7 @@ import { Details, PackageManagers, TypeScriptExample } from "~/components";
 
 Use [isomorphic-git](https://isomorphic-git.org/) to run Git operations on Artifacts repos directly from a Cloudflare Worker.
 
-The Artifacts binding creates and manages repos, but it can't read or write files inside them — for that, you need Git. Since Workers don't have a git binary or a local filesystem, `isomorphic-git` fills that gap. It provides Git operations like init, commit, and push as JavaScript function calls, using an in-memory filesystem in place of a real disk.
+The Artifacts binding creates and manages repos, but it cannot read or write files inside them — for that, you need Git. Since Workers do not have a git binary or a local filesystem, `isomorphic-git` fills that gap. It provides Git operations like init, commit, and push as JavaScript function calls, using an in-memory filesystem in place of a real disk.
 
 Use this when your Worker needs to programmatically build and push file trees to an Artifacts repo — for example, an AI agent that generates code and commits it, or an automation that clones a repo, modifies files, and pushes changes back.
 
