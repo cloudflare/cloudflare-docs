@@ -1,0 +1,17 @@
+---
+title: Fetch Workers AI model schemas with Wrangler
+description: Wrangler can now fetch Workers AI model input and output schemas from the command line.
+products:
+  - workers-ai
+date: 2026-05-13
+---
+
+`wrangler ai models schema <model>` is now available for fetching a Workers AI model's input and output schema from the command line.
+
+```sh
+wrangler ai models schema "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
+```
+
+The command returns JSON that describes the model request and response fields.
+
+For full usage details, refer to the [Workers AI Wrangler commands documentation](/workers-ai/wrangler-commands/).

@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Wrangler commands
-description: Query the Workers AI model catalog from the command line using Wrangler.
+description: Query the Workers AI model catalog and inspect model schemas from the command line using Wrangler.
 sidebar:
   order: 3
 products:
@@ -46,3 +46,15 @@ The `wrangler ai models` command supports the following options:
 | `--json`              | Return the response as JSON. |
 
 For the underlying API, refer to [Model Search](/api/resources/ai/subresources/models/methods/list/).
+
+## Fetch a model schema
+
+Use `wrangler ai models schema` to fetch a model's input and output schema:
+
+```sh
+npx wrangler ai models schema "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
+```
+
+The command returns JSON that describes the model request and response fields.
+
+For the underlying API, refer to [Get Model Schema](/api/resources/ai/subresources/models/subresources/schema/methods/get/).
