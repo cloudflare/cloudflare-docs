@@ -39,6 +39,12 @@ Cloudflare only serves stale content during revalidation if your origin includes
 
 If your origin sets `stale-while-revalidate` but you want to override it, you can disable stale serving through the [Serve stale content while revalidating](/cache/how-to/cache-rules/settings/#serve-stale-content-while-revalidating) setting in Cache Rules. Directives like `must-revalidate` and `no-cache` also prevent stale content from being served when [Origin Cache Control](/cache/concepts/cache-control/#enable-origin-cache-control) is enabled. For all available options, refer to [Cache-Control directives](/cache/concepts/cache-control/#cache-control-directives).
 
+:::caution[`s-maxage` disables `stale-while-revalidate`]
+The `s-maxage` directive implies `proxy-revalidate` semantics per [RFC 9111](https://www.rfc-editor.org/rfc/rfc9111.html#section-5.2.2.10-4), which prohibits shared caches from serving stale content. If your origin sends `s-maxage` alongside `stale-while-revalidate`, Cloudflare will not serve stale content — requests will return `EXPIRED` instead of `UPDATING`.
+
+To use `stale-while-revalidate` with a different edge TTL than browser TTL, configure your origin to send `max-age` with `stale-while-revalidate` (without `s-maxage`), then use [Edge Cache TTL](/cache/how-to/cache-rules/settings/#edge-ttl) in Cache Rules to set a separate TTL for Cloudflare.
+:::
+
 ## Smart revalidation towards users
 
 When both [`Last-Modified`](https://datatracker.ietf.org/doc/html/rfc7232?cf_history_state=%7B%22guid%22%3A%22C255D9FF78CD46CDA4F76812EA68C350%22%2C%22historyId%22%3A15%2C%22targetId%22%3A%226C8153BAEF7BC0C5A331E28F8BCF1ABA%22%7D#section-2.2) and [`Etag`](https://datatracker.ietf.org/doc/html/rfc7232?cf_history_state=%7B%22guid%22%3A%22C255D9FF78CD46CDA4F76812EA68C350%22%2C%22historyId%22%3A13%2C%22targetId%22%3A%226C8153BAEF7BC0C5A331E28F8BCF1ABA%22%7D#section-2.3) headers are absent from the origin server response, Smart Edge Revalidation will use the time the object was cached on Cloudflare's global network as the `Last-Modified` header value. When a browser sends a revalidation request to Cloudflare using `If-Modified-Since` or `If-None-Match`, our global network can answer those revalidation questions using the `Last-Modified` header generated from Smart Edge Revalidation. In this way, our global network can ensure efficient revalidation even if the headers are not sent from the origin.
