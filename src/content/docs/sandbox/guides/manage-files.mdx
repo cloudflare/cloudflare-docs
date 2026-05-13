@@ -67,17 +67,17 @@ console.log(file.content);
 const configFile = await sandbox.readFile('/workspace/config.json');
 const config = JSON.parse(configFile.content);
 
-// Read binary file
-const imageFile = await sandbox.readFile('/workspace/image.png', { encoding: 'base64' });
-return new Response(atob(imageFile.content), {
-  headers: { 'Content-Type': 'image/png' }
+// Read binary file (v0.10.1 with `rpc` transport)
+const imageFile = await sandbox.readFile('/workspace/image.png', { encoding: 'none' });
+return new Response(imageFile.content, {
+  headers: { 'Content-Type': imageFile.mimeType }
 });
-
-// Force encoding for transmission (text → base64)
-const textAsBase64 = await sandbox.readFile('/workspace/data.txt', { encoding: 'base64' });
-// Useful for transmitting text files without encoding issues
 ```
 </TypeScriptExample>
+
+:::note
+For more details on the `rpc` transport please see the [Transport](/sandbox/configuration/transport/) docs.
+:::
 
 ## Organize files
 
@@ -163,14 +163,26 @@ await sandbox.writeFile('/workspace/data/file.txt', content);
 
 ### Binary file encoding
 
-Use base64 for binary files:
+Use `encoding: "none"` (with `rpc` transport) for binary files:
 
 <TypeScriptExample>
 ```
 // Write binary
-await sandbox.writeFile('/workspace/image.png', base64Data, {
-  encoding: 'base64'
+await sandbox.writeFile('/workspace/image.png', readableStream);
+
+// Read binary
+const file = await sandbox.readFile('/workspace/image.png', {
+  encoding: 'none'
 });
+```
+</TypeScriptExample>
+
+For older SDK versions or `http` transport:
+
+<TypeScriptExample>
+```
+// Write binary
+await sandbox.writeFile('/workspace/image.png', base64data, { encoding: "base64" });
 
 // Read binary
 const file = await sandbox.readFile('/workspace/image.png', {
