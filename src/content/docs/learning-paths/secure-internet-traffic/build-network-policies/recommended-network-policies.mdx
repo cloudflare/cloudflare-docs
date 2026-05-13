@@ -318,6 +318,70 @@ resource "cloudflare_zero_trust_gateway_policy" "all_net_ssh_internet_allowlist"
 </TabItem>
 </Tabs>
 
+## All-NET-UDP-Conferencing-Allow
+
+Allow UDP traffic for well-known audio and video conferencing applications. Voice and video calls in apps such as Discord, Zoom, Microsoft Teams, Google Meet, and Slack rely on UDP. Without an explicit allow rule placed before `All-NET-NO-HTTP-HTTPS-Internet-Deny`, these applications will lose audio and video functionality when the WARP client is connected.
+
+Create a Gateway list (for example, _Conferencing-Domains_) containing the domains used by your organization's conferencing applications. Common domains include:
+
+- `discord.com`, `discord.gg`, `discord.media`, `discordapp.com`
+- `zoom.us`, `zoom.com`
+- `teams.microsoft.com`, `skype.com`
+- `meet.google.com`
+- `slack.com`
+
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
+
+| Selector       | Operator | Value                  | Logic | Action |
+| -------------- | -------- | ---------------------- | ----- | ------ |
+| SNI Domain     | in list  | _Conferencing-Domains_ |       | Allow  |
+
+</TabItem>
+
+<TabItem label="API">
+
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "All-NET-UDP-Conferencing-Allow",
+		description:
+			"Allow UDP traffic for audio and video conferencing applications",
+		precedence: 45,
+		enabled: true,
+		action: "allow",
+		filters: ["l4"],
+		traffic:
+			"any(net.sni.domains[*] in $<CONFERENCING_DOMAINS_LIST_UUID>)",
+	}}
+/>
+
+</TabItem>
+
+<TabItem label="Terraform">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "all_net_udp_conferencing_allow" {
+  account_id  = var.cloudflare_account_id
+  name        = "All-NET-UDP-Conferencing-Allow"
+  description = "Allow UDP traffic for audio and video conferencing applications"
+  precedence  = 45
+  enabled     = true
+  action      = "allow"
+  filters     = ["l4"]
+  traffic     = "any(net.sni.domains[*] in ${"$"}${cloudflare_zero_trust_list.conferencing_domains.id})"
+}
+```
+
+</TabItem>
+</Tabs>
+
+:::note
+Place this policy before any broad non-HTTP/HTTPS block rule. If you only want to allow UDP (not all protocols) for these domains, add **Detected Protocol** `is` `UDP` as an additional selector.
+:::
+
 ## All-NET-NO-HTTP-HTTPS-Internet-Deny
 
 Block all non-web traffic towards the Internet. By using the **Detected Protocol** selector, you will ensure alternative ports for HTTP and HTTPS are allowed.
