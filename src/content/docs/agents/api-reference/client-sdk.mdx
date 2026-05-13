@@ -614,6 +614,23 @@ client.addEventListener("message", () => {});
 
 </TypeScriptExample>
 
+## Agent-tool events
+
+If your chat UI renders retained child runs from [Agent tools](/agents/api-reference/agent-tools/), use `useAgentToolEvents()` alongside `useAgent()` and `useAgentChat()`. The hook subscribes to the parent connection, replays retained child timelines, and groups runs by parent tool call ID.
+
+<TypeScriptExample>
+
+```tsx
+import { useAgent, useAgentToolEvents } from "agents/react";
+import { useAgentChat } from "@cloudflare/ai-chat/react";
+
+const agent = useAgent({ agent: "Assistant", name: userId });
+const { messages } = useAgentChat({ agent });
+const agentTools = useAgentToolEvents({ agent });
+```
+
+</TypeScriptExample>
+
 ## Next steps
 
 <LinkCard

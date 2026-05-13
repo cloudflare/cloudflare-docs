@@ -475,6 +475,24 @@ For agent-specific initialization, use `getAgentByName` instead where you contro
 For `McpAgent`, props are automatically stored and accessible via `this.props`. Refer to [MCP servers](/agents/api-reference/mcp-agent-api/) for details.
 :::
 
+### Routing retry
+
+Use `routingRetry` with `getAgentByName()` when server-side code should retry transient Durable Object routing failures:
+
+<TypeScriptExample>
+
+```ts
+const agent = await getAgentByName(env.MyAgent, "instance-name", {
+	routingRetry: {
+		maxAttempts: 3,
+	},
+});
+```
+
+</TypeScriptExample>
+
+This option is useful for request forwarding and RPC paths where a short-lived routing failure should be retried before returning an error to the caller.
+
 ### Hooks
 
 `routeAgentRequest` supports hooks for intercepting requests before they reach agents:
@@ -803,13 +821,14 @@ Routes a request to the appropriate agent.
 
 Get an agent instance by name for server-side RPC or request forwarding.
 
-| Parameter              | Type                        | Description                           |
-| ---------------------- | --------------------------- | ------------------------------------- |
-| `namespace`            | `DurableObjectNamespace<T>` | Agent binding from env                |
-| `name`                 | `string`                    | Instance name                         |
-| `options.locationHint` | `string`                    | Preferred location                    |
-| `options.jurisdiction` | `string`                    | Data jurisdiction                     |
-| `options.props`        | `Record<string, unknown>`   | Initialization properties for onStart |
+| Parameter              | Type                        | Description                                                       |
+| ---------------------- | --------------------------- | ----------------------------------------------------------------- |
+| `namespace`            | `DurableObjectNamespace<T>` | Agent binding from env                                            |
+| `name`                 | `string`                    | Instance name                                                     |
+| `options.locationHint` | `string`                    | Preferred location                                                |
+| `options.jurisdiction` | `string`                    | Data jurisdiction                                                 |
+| `options.props`        | `Record<string, unknown>`   | Initialization properties for onStart                             |
+| `options.routingRetry` | `object`                    | Retry configuration for transient Durable Object routing failures |
 
 **Returns:** `Promise<DurableObjectStub<T>>` - Typed stub for calling agent methods or forwarding requests.
 
