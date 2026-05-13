@@ -64,6 +64,33 @@ Advanced certificates cover hostnames within a single domain. If you need a cert
 
 :::
 
+## Multi-level subdomain support
+
+Advanced Certificate Manager supports deep, multi-level subdomains (for example, `level3.level2.level1.example.com`). There is no arbitrary limit on the number of subdomain levels, but you must consider the following constraints.
+
+### Domain name length limits
+
+These limits are defined by internet standards ([RFC 1035](https://www.rfc-editor.org/rfc/rfc1035) and [RFC 5280](https://www.rfc-editor.org/rfc/rfc5280)) and apply to all certificates, regardless of the certificate authority:
+
+- **Total domain length**: The entire domain name cannot exceed 253 characters.
+- **Label length**: Each individual level (the text between dots) cannot exceed 63 characters.
+- **Common Name (CN) length**: The Common Name field of a certificate cannot exceed 64 characters. If your multi-level subdomain exceeds this limit, Cloudflare uses `sni.cloudflaressl.com` as the Common Name and places your hostname in the Subject Alternative Name (SAN) field instead.
+
+### Wildcard coverage
+
+Wildcard certificates only cover **one subdomain level**:
+
+- A certificate for `*.example.com` covers `level1.example.com` but **not** `level2.level1.example.com`.
+- To cover multiple levels, you must explicitly add a wildcard for each level to your certificate (for example, `*.example.com`, `*.level1.example.com`, `*.level2.level1.example.com`).
+
+### Hostnames per certificate
+
+A single advanced certificate can include the zone apex and up to **50 hostnames** (SANs). This means you can cover a maximum of 50 distinct multi-level subdomains or wildcards within one certificate.
+
+### Certificate authority differences
+
+The limits described above are the same across all certificate authorities available in Advanced Certificate Manager (Google Trust Services, Let's Encrypt, and SSL.com). These constraints are defined by global standards from the IETF and the CA/Browser Forum, which all certificate authorities must follow.
+
 ## Related resources
 
 <DirectoryListing />
