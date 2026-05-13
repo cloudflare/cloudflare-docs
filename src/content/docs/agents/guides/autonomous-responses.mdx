@@ -253,8 +253,6 @@ async onRequest(request: Request): Promise<Response> {
 
 If the webhook provider expects a quick response, use `submitMessages()` instead. This gives the provider a durable acknowledgement and lets it safely retry with the same idempotency key:
 
-<TypeScriptExample>
-
 ```ts
 async onRequest(request: Request): Promise<Response> {
 	if (request.method !== "POST") return super.onRequest(request);
@@ -280,8 +278,6 @@ async onRequest(request: Request): Promise<Response> {
 	});
 }
 ```
-
-</TypeScriptExample>
 
 ### Injecting context without triggering a response
 
