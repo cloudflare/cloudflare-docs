@@ -48,7 +48,7 @@ If your domain has [HTTP/2 or HTTP/3 enabled](/speed/optimization/protocol/), [p
 :::caution[Universal SSL required for automatic HTTPS records]
 Disabling Universal SSL will prevent automatic HTTPS record generation for proxied hostnames, even if you have [Advanced Certificates](/ssl/edge-certificates/advanced-certificate-manager/) or [custom certificates](/ssl/edge-certificates/custom-certificates/) configured. This is because automatic HTTPS record generation is tied specifically to the Universal SSL feature.
 
-If you need HTTPS records without Universal SSL, you can manually add them for [DNS-only (grey cloud)](/dns/proxy-status/) hostnames only.
+If you need HTTPS records without Universal SSL, you can manually add them, but only if **all records on the same label are DNS-only (grey cloud)**. Refer to [SVCB and HTTPS records](/dns/manage-dns-records/reference/dns-record-types/#svcb-and-https) for details and examples.
 :::
 
 ## OCSP and HTTP versions
