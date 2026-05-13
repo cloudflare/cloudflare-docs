@@ -39,10 +39,14 @@ async function autogenSections() {
 	return sections.map((x) => {
 		return {
 			label: x,
-			autogenerate: {
-				directory: x,
-				collapsed: true,
-			},
+			items: [
+				{
+					autogenerate: {
+						directory: x,
+						collapsed: true,
+					},
+				},
+			],
 		};
 	});
 }

@@ -1,0 +1,13 @@
+id: SmaYeH
+name: Cloudflare One Appliance
+
+entry:
+  title: Cloudflare One Appliance
+  url: /cloudflare-wan/configuration/appliance/
+  group: Cloudflare One
+  additional_groups: [Network security]
+
+meta:
+  title: Cloudflare One Appliance docs
+  description: Connect branch sites to Cloudflare One with a managed hardware or virtual appliance
+  author: "@cloudflare"
