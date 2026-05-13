@@ -21,7 +21,7 @@ package.json @cloudflare/content-engineering
 
 # AI
 
-/src/content/docs/agent-lee/ @asomaiah @kczajkowski @dmmulroy @Brayden @cloudflare/pcx-technical-writing @cloudflare/product-owners
+/src/content/docs/agent-lee/ @asomaiah-cf @kczajkowski @dmmulroy @Brayden @cloudflare/pcx-technical-writing @cloudflare/product-owners
 /src/content/docs/agents/ @irvinebroque @rita3ko @elithrar @thomasgauvin @threepointone @whoiskatrin @cloudflare/pcx-technical-writing @cloudflare/product-owners @cloudflare/ai-agents @cloudflare/dev-plat-leads
 /src/content/partials/agents/ @elithrar @rita3ko @irvinebroque @vy-ton @cloudflare/pcx-technical-writing @cloudflare/product-owners
 /src/content/docs/ai-gateway/ @abhishekkankani @palashgo @thebongy @roerohan @kathayl @mchenco @zeke @superhighfives @bfirsh @mattrothenberg @ethulia @cloudflare/pcx-technical-writing @cloudflare/product-owners
@@ -243,8 +243,8 @@ src/content/docs/smart-shield/ @RebeccaTamachiro @cloudflare/pcx-technical-writi
 
 # Support
 
-/src/content/docs/support/ @cloudflare/pcx-technical-writing @cloudflare/product-owners @cloudflare/customer-support
-/src/assets/images/support/ @cloudflare/pcx-technical-writing @cloudflare/product-owners @cloudflare/customer-support
+/src/content/docs/support/ @asomaiah-cf @cloudflare/pcx-technical-writing @cloudflare/product-owners @cloudflare/customer-support
+/src/assets/images/support/ @asomaiah-cf @cloudflare/pcx-technical-writing @cloudflare/product-owners @cloudflare/customer-support
 /src/content/docs/billing/ @cloudflare/customer-support @cloudflare/pcx-technical-writing @cloudflare/product-owners
 
 # Turnstile
