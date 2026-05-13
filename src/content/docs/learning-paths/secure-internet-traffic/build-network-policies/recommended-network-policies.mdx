@@ -320,7 +320,7 @@ resource "cloudflare_zero_trust_gateway_policy" "all_net_ssh_internet_allowlist"
 
 ## All-NET-UDP-Conferencing-Allow
 
-Allow UDP traffic for well-known audio and video conferencing applications. Voice and video calls in apps such as Discord, Zoom, Microsoft Teams, Google Meet, and Slack rely on UDP. Without an explicit allow rule placed before `All-NET-NO-HTTP-HTTPS-Internet-Deny`, these applications will lose audio and video functionality when the WARP client is connected.
+Allow UDP traffic for well-known audio and video conferencing applications. Voice and video calls in apps such as Discord, Zoom, Microsoft Teams, Google Meet, and Slack rely on UDP. Without an explicit allow rule placed before `All-NET-NO-HTTP-HTTPS-Internet-Deny`, these applications will lose audio and video functionality when the Cloudflare client is connected.
 
 Create a Gateway list (for example, _Conferencing-Domains_) containing the domains used by your organization's conferencing applications. Common domains include:
 
