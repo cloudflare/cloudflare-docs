@@ -137,7 +137,7 @@ Use the [Rulesets API](/ruleset-engine/rulesets-api/) to remove only the invalid
 
 1. <Render file="rulesets/api-zone/step1-get-entrypoint" product="waf" params={{ phaseName: "http_request_firewall_managed" }} />
 
-<APIRequest path="/zones/{zone_id}/rulesets/phases/{ruleset_phase}/entrypoint" method="GET" parameters={{ ruleset_phase: "http_request_firewall_managed", }} roles={false} />
+<APIRequest path="/zones/{zone_id}/rulesets/phases/{ruleset_phase}/entrypoint" method="GET" parameters={{ ruleset_phase: "http_request_firewall_managed" }} roles={false} />
 
    ```json output {4,5}
    {
@@ -171,6 +171,7 @@ Use the [Rulesets API](/ruleset-engine/rulesets-api/) to remove only the invalid
        ]
      }
    }
+```
 
 2. Take note of the following values from the response:
    - Ruleset ID (result.id)
@@ -205,7 +206,5 @@ Use the [Rulesets API](/ruleset-engine/rulesets-api/) to remove only the invalid
  ```
 
    :::note
-   The ... placeholders indicate where you must paste your existing fields from Step 1. Replace the first ... with your complete existing fields (such as matched_data, version, etc.). Replace the second ... with your valid overrides from Step 1, excluding the invalid rule.
+   The `...` placeholders indicate where you must paste your existing fields from Step 1. Replace the first `...` with your complete existing fields (such as `matched_data`, `version`, etc.). Replace the second `...` with your valid overrides from Step 1, excluding the invalid rule.
    :::
-
-5. Verify the change by sending a `GET` request to the rule endpoint or checking the dashboard.
