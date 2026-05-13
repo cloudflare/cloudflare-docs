@@ -13,7 +13,7 @@ products:
 
 import { Type } from "~/components";
 
-The Artifacts REST API and Workers binding return errors with a numeric code and message. Use the error code to identify the failure type and decide how to retry or surface the error.
+This is a list of Artifacts errors. 
 
 ## Error codes
 
@@ -31,38 +31,3 @@ The Artifacts REST API and Workers binding return errors with a numeric code and
 | `UPSTREAM_UNAVAILABLE` | 10401 | The remote git server could not be reached. |
 | `MEMORY_LIMIT` | 10402 | The operation exceeds service memory limits. |
 | `INTERNAL_ERROR` | 10400 | An unexpected internal error occurred. |
-
-## REST API error format
-
-REST API errors use the standard Cloudflare v4 envelope:
-
-```ts
-export interface ApiError {
-	code: number;
-	message: string;
-	documentation_url?: string;
-	source?: {
-		pointer?: string;
-	};
-}
-```
-
-- `code`: The numeric error code from the table above.
-- `message`: A human-readable description of the error.
-- `documentation_url`: A link to relevant documentation, if available.
-- `source.pointer`: The request field that caused the error, when applicable.
-
-## Workers binding errors
-
-When using the Workers binding, errors are thrown as exceptions. Catch binding errors and map them to the same codes for consistent handling:
-
-```ts
-try {
-	const repo = await env.ARTIFACTS.create(repoName);
-} catch (err) {
-	const message = err instanceof Error ? err.message : String(err);
-	// Map known messages to error codes, or treat as INTERNAL_ERROR.
-}
-```
-
-Binding error messages contain the same descriptive text as REST API errors. Parse the message to identify the specific failure, or treat unknown errors as `INTERNAL_ERROR`.
