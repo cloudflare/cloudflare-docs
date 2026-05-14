@@ -3,60 +3,54 @@ pcx_content_type: overview
 title: Previews
 sidebar:
   order: 6
-description: Deploy isolated copies of your Worker to test changes before deploying to production.
+description: Push a branch, get an isolated URL with its own data and configuration. Production is never touched.
 ---
 
-import { Steps, Tabs, TabItem, PackageManagers } from "~/components";
+import { Render } from "~/components";
 
-**Previews** let you test changes to your Worker without affecting production data or traffic. A Preview is an isolated copy of your Worker with its own [bindings](/workers/runtime-apis/bindings/), [environment variables](/workers/configuration/environment-variables/), and [secrets](/workers/configuration/secrets/).
+**Previews** give each branch an isolated, running copy of your Worker with its own [bindings](/workers/runtime-apis/bindings/), [environment variables](/workers/configuration/environment-variables/), and [secrets](/workers/configuration/secrets/), completely separate from production.
 
-You create or update a Preview by:
+Push a commit, get a URL. Share it with your team. Test it against real infrastructure. Merge when you are ready.
 
-- Running `wrangler preview` from the Wrangler CLI.
-- Pushing to a feature branch in a connected Git repository.
-- Calling the [Previews API](/workers/previews/api/) or using the Terraform resource.
+## How it works
 
-Each Preview has two kinds of **URLs**:
+1. Create a Preview by pushing to a branch (if connected to [Workers Builds](/workers/ci-cd/builds/)), running `wrangler preview`, or calling the API.
+2. Cloudflare deploys an isolated copy of your Worker.
+3. Each Preview gets two URLs:
 
-- A **Preview URL** that points at the latest deployment. Think of it as your branch URL — it always serves whatever you pushed most recently.
-- A **Deployment URL** for each individual deployment. Think of it as your commit URL — it is immutable and never changes.
+| URL type | Example | Behavior |
+| --- | --- | --- |
+| **Preview URL** | `my-feature-my-worker.account.workers.dev` | Based on the Preview name. Always serves the latest deployment. Updates on every push. |
+| **Deployment URL** | `a1b2c3d-my-worker.account.workers.dev` | A unique immutable hash per deployment. Points to one specific deployment. |
 
-When you connect your Git repository, Cloudflare posts these URLs on your pull requests as a comment. By default, Previews are served from your `workers.dev` subdomain. You can also route them through a [custom domain](/workers/previews/guides/custom-domains/).
+With a [custom domain](/workers/previews/custom-domains/), these become `my-feature.app.example.com` and `abc123-my-feature.app.example.com`.
 
-## Getting started
+If your repository is connected via [Workers Builds](/workers/ci-cd/builds/), Cloudflare posts these URLs as a comment on your pull request automatically.
 
-<Steps>
-<ol>
-  <li>
-    <strong>Configure your Preview settings.</strong> These settings act as defaults for every new Preview on your Worker unless overridden for a specific deployment.
-    <Tabs>
-      <TabItem label="Wrangler configuration">
-        Add your Preview settings to a `previews` block in your Wrangler configuration file.
-        ```jsonc
-        {
-          "previews": {
-            "d1_databases": [
-              { "binding": "MY_DB", "database_id": "preview-db-id" }
-            ]
-          }
-        }
-        ```
-        Learn more in [Configuring Previews](/workers/previews/configuring-previews/).
-      </TabItem>
-      <TabItem label="Dashboard">
-        Go to your Worker's **Settings** > **Bindings** tab to set up your default Preview settings. You can import Production values to get started quickly.
-      </TabItem>
-    </Tabs>
-  </li>
-  <li>
-    Check out a new branch and make your changes.
-    ```sh
-    git checkout -b my-feature
-    ```
-  </li>
-  <li>
-    Run `wrangler preview`.
-    <PackageManagers type="exec" pkg="wrangler" args="preview" />
-  </li>
-</ol>
-</Steps>
+## Isolation from production
+
+A Preview is not a copy of your production Worker. It is its own isolated entity with its own configuration.
+
+| Feature | What you get |
+| --- | --- |
+| **Separate bindings** | Point your Preview at a staging database, a test R2 bucket, or a dedicated KV namespace. Production resources are never touched unless you explicitly share them. |
+| **Durable Object isolation** | Each Preview gets its own DO namespace with its own storage. No data leaks between Previews or into production. [Learn more](/workers/previews/resources/). |
+| **Environment variables** | Configure once, and every Preview starts with the same baseline. Override individual values per branch when needed. |
+| **Custom domains** | Serve Previews from your own domain (`preview-name.app.example.com`) with cache, WAF, and analytics. [Learn more](/workers/previews/custom-domains/). |
+| **Access control** | Restrict who can view Preview URLs. Enable access control directly from your Worker's Domains tab, or configure with [Cloudflare Access](/cloudflare-one/access-controls/policies/). |
+
+## Limits
+
+| | Free | Paid |
+| --- | --- | --- |
+| Previews per Worker | 10 | 100 |
+| Deployments per Preview | 100 | 100 |
+
+When you hit the Preview limit, the oldest Preview is automatically deleted to make room. The same applies to deployments within a Preview.
+
+## Next steps
+
+- [Create a Preview](/workers/previews/get-started/) - Configure settings and create your first Preview.
+- [Configuration](/workers/previews/configuration/) - How Preview settings, overrides, and secrets work.
+- [Resources and isolation](/workers/previews/resources/) - What is shared and what is isolated between Previews and production.
+- [Custom domains](/workers/previews/custom-domains/) - Serve Previews on your own domain.

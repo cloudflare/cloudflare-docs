@@ -2,7 +2,7 @@
 pcx_content_type: how-to
 title: Custom domains
 sidebar:
-  order: 2
+  order: 4
 description: Serve Worker Previews on your own custom domains instead of workers.dev URLs.
 ---
 
@@ -62,4 +62,4 @@ Preview custom domain URLs are public by default. You can restrict access using 
 ## Limitations
 
 - Previews on custom domains require the domain to be on a Cloudflare zone you control.
-- User-managed triggers like [Worker routes](/workers/configuration/routing/routes/), [cron triggers](/workers/configuration/cron-triggers/), and [Queue consumers](/queues/) do not apply to Previews — only the auto-generated Preview URLs and custom domain wildcard URLs can reach a Preview.
+- User-managed triggers like [Worker routes](/workers/configuration/routing/routes/), [cron triggers](/workers/configuration/cron-triggers/), and [Queue consumers](/queues/) do not apply to Previews. Only the auto-generated Preview URLs and custom domain wildcard URLs can reach a Preview.

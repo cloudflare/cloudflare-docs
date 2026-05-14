@@ -1,0 +1,213 @@
+---
+pcx_content_type: concept
+title: Resources and isolation
+sidebar:
+  order: 3
+description: What is shared between Previews and production, what is isolated, and how to configure each resource type.
+---
+
+import { WranglerConfig } from "~/components";
+
+When you create a Preview, you need to decide how each resource (database, bucket, Durable Object, etc.) should behave. Some resources are **automatically isolated** per Preview. Others are **shared** across Previews and production unless you explicitly point them at different resources.
+
+This page covers every resource type and how it behaves in Previews.
+
+## Quick reference
+
+| Resource | Default behavior | Isolation method |
+| --- | --- | --- |
+| [Durable Objects](#durable-objects) | **Isolated per Preview** (automatic) | Built-in. Each Preview gets its own namespace. |
+| [Workflows](#workflows) | **Isolated per Preview** (automatic) | Built-in. Each Preview gets its own instances. |
+| [Containers](#containers) | **Isolated per Preview** (automatic) | Built-in. Runs on Durable Objects. |
+| [KV](#kv-d1-r2-and-other-storage) | Shared | Point at a different namespace ID, or use [auto-provisioning](/workers/previews/configuration/#auto-provisioning) |
+| [D1](#kv-d1-r2-and-other-storage) | Shared | Point at a different database, or use auto-provisioning |
+| [R2](#kv-d1-r2-and-other-storage) | Shared | Point at a different bucket, or use auto-provisioning |
+| [Queues](#queues) | Shared (producers only) | Point at a different queue |
+| [Vectorize](#other-shared-resources) | Shared | Point at a different index |
+| [Hyperdrive](#other-shared-resources) | Shared | Point at a different config |
+| [Service bindings](#service-bindings) | **Always targets production** | Cannot be changed |
+| [Secrets](#secrets-and-environment-variables) | Shared across all Previews | No per-Preview scoping today |
+| [Environment variables](#secrets-and-environment-variables) | Shared (defaults) or per-branch (config overrides) | Override in Wrangler config on your branch |
+
+## Durable Objects
+
+Durable Objects are **stateful**. Each instance holds in-memory state and persistent storage. If a Preview shared the production namespace, preview traffic could corrupt production state.
+
+The platform automatically provisions a **separate Durable Object namespace for each Preview**, independent from production and from every other Preview. You do not need to create or manage these namespaces yourself.
+
+- `idFromName("some-id")` in a Preview returns a different instance than the same call in production or in another Preview.
+- Storage writes inside a Preview never touch production data or other Previews.
+- State persists across deployments within the same Preview. Pushing new code does not wipe storage.
+- When you delete a Preview, its Durable Object namespaces and all their data are deleted.
+
+### Setup
+
+Every setup requires a **Durable Object class** exported from your Worker and a **migration** in your Wrangler config. How you access the DO in your code determines how much additional config you need:
+
+| Access pattern | What you need |
+| --- | --- |
+| `ctx.exports.Counter` | Just the migration. Nothing else. |
+| `env.COUNTER` | The migration, a DO binding for production, **and** a DO binding in the `previews` block. |
+
+Both patterns get the same isolation.
+
+**Using `ctx.exports` (recommended):**
+
+<WranglerConfig>
+```jsonc
+{
+  "migrations": [
+    { "tag": "v1", "new_classes": ["Counter"] }
+  ]
+}
+```
+</WranglerConfig>
+
+```js
+export default {
+  async fetch(request, env, ctx) {
+    const id = ctx.exports.Counter.idFromName("my-counter");
+    const stub = ctx.exports.Counter.get(id);
+    return stub.fetch(request);
+  },
+};
+```
+
+No binding needed anywhere. The platform provisions an isolated namespace per Preview based on the migration alone.
+
+**Using `env` bindings:**
+
+<WranglerConfig>
+```jsonc
+{
+  "durable_objects": {
+    "bindings": [
+      { "name": "COUNTER", "class_name": "Counter" }
+    ]
+  },
+  "migrations": [
+    { "tag": "v1", "new_classes": ["Counter"] }
+  ],
+  "previews": {
+    "durable_objects": {
+      "bindings": [
+        { "name": "COUNTER", "class_name": "Counter" }
+      ]
+    }
+  }
+}
+```
+</WranglerConfig>
+
+:::caution
+If you use `env.COUNTER` without declaring the binding in your `previews` block or dashboard Preview defaults, the binding will not be available in the Preview and you will get a **1101 error**. This does not apply to `ctx.exports`, which works with just the migration.
+:::
+
+### When isolation does not apply
+
+Isolation only works for classes **defined in the same Worker**. If your binding includes `script_name` (pointing at a DO in a different Worker), it resolves to that Worker's production Durable Object. There is no cross-Worker Preview isolation.
+
+### Verifying isolation
+
+Compare instance IDs between production and your Preview:
+
+```sh
+# Production
+curl https://my-worker.my-subdomain.workers.dev/do
+# {"id":"5ad35ad2...","count":3}
+
+# Preview
+curl https://my-preview-my-worker.my-subdomain.workers.dev/do
+# {"id":"ca4b93df...","count":0}
+```
+
+Different IDs confirm different namespaces. The Preview count starts at 0 (empty storage).
+
+## Workflows
+
+[Workflows](/workflows/) follow the same isolation model as Durable Objects. When the Workflow class is defined in the same Worker, each Preview gets its own isolated Workflow instances. If `script_name` points at another Worker, the binding targets that Worker's production Workflow.
+
+## Containers
+
+[Containers](/containers/) run on Durable Objects. Each Preview gets its own isolated Container instances, built and deployed per Preview.
+
+## KV, D1, R2, and other storage
+
+KV, D1, and R2 are **account-level resources** referenced by ID or name. By default, all Previews pointing at the same resource ID share it - with each other and with production.
+
+To keep Preview data separate from production, you have two options:
+
+### Option 1: Create a dedicated resource
+
+Create a separate KV namespace, D1 database, or R2 bucket for Previews and reference it in your `previews` block:
+
+<WranglerConfig>
+```jsonc
+{
+  "d1_databases": [
+    { "binding": "DB", "database_id": "prod-db-id" }
+  ],
+  "previews": {
+    "d1_databases": [
+      { "binding": "DB", "database_id": "preview-db-id" }
+    ]
+  }
+}
+```
+</WranglerConfig>
+
+### Option 2: Auto-provisioning
+
+Omit the resource identifier and Wrangler will create a new resource the first time you run `wrangler preview`:
+
+<WranglerConfig>
+```jsonc
+{
+  "previews": {
+    "kv_namespaces": [
+      { "binding": "CACHE" }
+    ]
+  }
+}
+```
+</WranglerConfig>
+
+Wrangler writes the new ID back to your configuration file. Auto-provisioning is available for KV, D1, and R2. Other resource types must be created manually.
+
+### Intentionally sharing resources
+
+Sharing a resource between Previews and production is a valid choice. For example, if your R2 bucket contains read-only assets that all environments need, point both production and Previews at the same bucket. Just be aware that Preview writes will affect the shared resource.
+
+## Queues
+
+Previews can **produce** messages to a Queue but cannot **consume** from one. Queue consumer settings (`queues.consumers`) are not Preview bindings.
+
+To avoid publishing test messages to your production queue, point the Preview's queue producer at a separate queue.
+
+## Other shared resources
+
+These resources are account-level and shared by default. To isolate them for Previews, create a dedicated resource and reference it in your `previews` block:
+
+- [Vectorize](/vectorize/) - point at a different `index_name`
+- [Hyperdrive](/hyperdrive/) - point at a different configuration `id`
+- [Analytics Engine](/analytics/analytics-engine/) - point at a different `dataset`
+- [Pipelines](/pipelines/) - point at a different `pipeline`
+- [Secrets Store](/secrets-store/) - point at a different `store_id` / `secret_name`
+- [mTLS certificates](/workers/runtime-apis/bindings/mTLS/) - point at a different `certificate_id`
+- [Dispatch namespaces](/cloudflare-for-platforms/workers-for-platforms/) - point at a different `namespace`
+
+## Service bindings
+
+[Service bindings](/workers/runtime-apis/bindings/service-bindings/) from a Preview **always resolve to the bound Worker's production deployment**. You cannot point a service binding at another Worker's Preview.
+
+If you need to test against a non-production version of another Worker, deploy that Worker separately (for example, as a `staging` service) and bind to it explicitly.
+
+## Secrets and environment variables
+
+**Environment variables** defined in the `previews` block or in the dashboard defaults are shared across all Previews. You can override individual values on a per-branch basis using the Wrangler config. Refer to [per-branch overrides](/workers/previews/configuration/#per-branch-overrides).
+
+**Secrets** are shared across all Previews. `wrangler preview secret put` writes to the shared Preview defaults on the platform, which means every Preview receives it. There is no way to scope a secret to a single Preview today. This is a known limitation.
+
+## External state
+
+Preview isolation only covers resources managed by Cloudflare. If your Worker writes to an external API, publishes to a Queue consumed by production, or mutates a shared database through Hyperdrive, the Preview can still affect production through those channels. Audit for shared side effects and override external endpoints in your `previews` block where it matters.

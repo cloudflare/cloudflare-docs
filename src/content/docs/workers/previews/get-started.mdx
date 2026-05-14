@@ -1,0 +1,111 @@
+---
+pcx_content_type: how-to
+title: Create a Preview
+sidebar:
+  order: 1
+description: Configure Preview settings and create your first Preview.
+---
+
+import { Steps, Tabs, TabItem, PackageManagers, Render } from "~/components";
+
+If your Worker uses bindings, environment variables, or secrets, you will need to [configure Preview settings](/workers/previews/configuration/) first so your Previews know which resources to use. Previews never inherit from production.
+
+You can configure Preview settings in two places:
+
+- **[Dashboard](/workers/previews/configuration/#dashboard)**: Go to your Worker's **Settings** tab to configure environment variables and secrets for Previews, and the **Bindings** tab for bindings. Both have a toggle to switch between Production and Previews. You can import values from production to get started quickly.
+- **[Wrangler config](/workers/previews/configuration/#wrangler-configuration)**: Add a `previews` block to your Wrangler configuration file.
+
+---
+
+## Option 1: Workers Builds (Git push)
+
+If your Worker is connected to a Git repository via [Workers Builds](/workers/ci-cd/builds/), Previews are created automatically when you push to a non-production branch.
+
+<Steps>
+1. Push to a feature branch.
+   ```sh
+   git checkout -b my-feature
+   # make changes
+   git push origin my-feature
+   ```
+2. Open a pull request. Cloudflare posts a comment with your Preview URL and Deployment URL.
+3. Every new commit to the branch updates the Preview automatically.
+</Steps>
+
+That is it. Your Preview URL is live.
+
+---
+
+## Option 2: Wrangler CLI
+
+Use `wrangler preview` to create a Preview from your local machine.
+
+<Steps>
+1. Check out a branch and make your changes.
+   ```sh
+   git checkout -b my-feature
+   ```
+2. Run `wrangler preview`.
+   <PackageManagers type="exec" pkg="wrangler" args="preview" />
+   Wrangler outputs your Preview URL and Deployment URL.
+3. Keep iterating. Each time you run `wrangler preview`, a new deployment is pushed to the same Preview. The Preview URL always serves the latest one.
+</Steps>
+
+---
+
+## Option 3: External CI
+
+If you use GitHub Actions or another CI system, you can create Previews by running `wrangler preview` in your workflow.
+
+```yaml
+name: Preview
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cloudflare/wrangler-action@v4
+        with:
+          command: preview
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+```
+
+Each push to the PR branch creates a new deployment under the same Preview. The Preview URL stays stable across commits.
+
+---
+
+## Option 4: API
+
+You can create Previews and deployments directly via the API. This is useful for building custom tooling or integrating with other platforms.
+
+```bash
+# Create a Preview
+curl --request POST \
+  "https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/workers/{worker_id}/previews" \
+  --header "Authorization: Bearer {api_token}" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "name": "my-feature"
+  }'
+```
+
+```bash
+# Create a deployment on a Preview
+curl --request POST \
+  "https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/workers/{worker_id}/previews/my-feature/deployments" \
+  --header "Authorization: Bearer {api_token}" \
+  --header "Content-Type: multipart/form-data" \
+  --form "main_module=@index.js" \
+  --form "metadata={\"main_module\":\"index.js\"}"
+```
+
+## Next steps
+
+- [Configuration](/workers/previews/configuration/) - understand how Preview settings work, how to override values per branch, and how secrets behave.
+- [Resources and isolation](/workers/previews/resources/) - learn what is shared and what is isolated between Previews and production.
+- [Custom domains](/workers/previews/custom-domains/) - serve Previews on your own domain.

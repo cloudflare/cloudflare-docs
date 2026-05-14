@@ -1,0 +1,219 @@
+---
+pcx_content_type: concept
+title: Configuration
+sidebar:
+  order: 2
+description: How Preview settings work. Covers defaults, overrides, secrets, and how the dashboard and Wrangler interact.
+---
+
+import { Details, Tabs, TabItem, WranglerConfig } from "~/components";
+
+Previews do not inherit anything from production. Every Preview needs its own configuration: [bindings](/workers/runtime-apis/bindings/), [environment variables](/workers/configuration/environment-variables/), and [secrets](/workers/configuration/secrets/).
+
+There are two ways to configure Previews, and each gives you different capabilities:
+
+| | **[Dashboard/API](#dashboard)** | **[Wrangler config](#wrangler-configuration)** |
+| --- | --- | --- |
+| **Where settings live** | Stored on the platform | In your `previews` block, sent per deployment |
+| **Same settings across all Previews** | Yes | Yes (every branch inherits the same `previews` block from main) |
+| **[Override a variable for one branch](#per-branch-overrides)** | Not supported | [Edit the `previews` block on that branch](#per-branch-overrides) |
+| **[Override a secret for one branch](#secrets)** | Not supported | Not supported (secrets cannot go in config files) |
+
+You can use both together. If you do, dashboard values act as a baseline and Wrangler config values override matching keys. See [How the two sources combine](#how-the-two-sources-combine) for details.
+
+[`compatibility_date`](/workers/configuration/compatibility-dates/), [`compatibility_flags`](/workers/configuration/compatibility-flags/), [`placement`](/workers/configuration/smart-placement/), and [`assets`](/workers/static-assets/) apply to both production and Previews. They are configured outside the `previews` block.
+
+---
+
+## Dashboard
+
+Settings you add in the dashboard are stored on the platform. They apply to every Preview on the Worker, regardless of how the Preview was created.
+
+1. Go to **Workers & Pages** > select your Worker.
+2. For environment variables and secrets, go to **Settings** and toggle from **Production** to **Previews**.
+3. For bindings, go to **Bindings** and toggle from **Production** to **Previews**.
+
+You can use **Import from Production** to copy your production values as a starting point, then change resource IDs to point at staging or test resources.
+
+The dashboard does not support per-Preview settings. Every Preview gets identical configuration.
+
+## Wrangler configuration
+
+When you run `wrangler preview` (or Builds runs it for you on a git push), Wrangler reads the `previews` block from your config file and sends those values with the deployment. They are not stored on the platform. They only apply to that deployment.
+
+Everything outside the `previews` block is your production configuration. Everything inside is what your Previews get.
+
+<WranglerConfig>
+```jsonc
+{
+  // Production settings
+  "vars": { "ENVIRONMENT": "production" },
+  "kv_namespaces": [
+    { "binding": "MY_KV", "id": "prod-kv-id" }
+  ],
+  "d1_databases": [
+    { "binding": "DB", "database_id": "prod-db-id" }
+  ],
+
+  // Preview settings
+  "previews": {
+    "vars": { "ENVIRONMENT": "preview" },
+    "kv_namespaces": [
+      { "binding": "MY_KV", "id": "preview-kv-id" }
+    ],
+    "d1_databases": [
+      { "binding": "DB", "database_id": "preview-db-id" }
+    ]
+  }
+}
+```
+</WranglerConfig>
+
+Your Worker code stays the same. `env.MY_KV` and `env.DB` work in both production and Previews. Only the underlying resources are different.
+
+:::note
+Previews do **not** inherit bindings from your production configuration. Any binding you want available in a Preview must be declared in the `previews` block. If you omit a binding, your Preview will not have access to it at runtime.
+:::
+
+<Details header="Full previews configuration reference">
+
+The full configuration reference with every supported binding type is available in the [Workers Previews API documentation](/workers/previews/api/).
+
+</Details>
+
+---
+
+## Per-branch overrides
+
+Because Wrangler reads the `previews` block from whatever branch you are on, each branch can have its own configuration. The values are sent with that deployment only. Nothing on the platform is modified. Other Previews are unaffected.
+
+To test a configuration change on one branch:
+
+1. Create a feature branch.
+2. Edit the `previews` block in your Wrangler config.
+3. Run `wrangler preview`.
+4. When you merge, the change either lands on main (becoming the new baseline for all Previews) or disappears with the branch.
+
+### Example
+
+Your main branch has:
+```jsonc
+"previews": {
+  "kv_namespaces": [
+    { "binding": "CACHE", "id": "shared-preview-cache" }
+  ]
+}
+```
+
+On your feature branch, you add a D1 database:
+```jsonc
+"previews": {
+  "kv_namespaces": [
+    { "binding": "CACHE", "id": "shared-preview-cache" }
+  ],
+  "d1_databases": [
+    { "binding": "DB", "database_id": "my-test-db" }
+  ]
+}
+```
+
+Your Preview has both `CACHE` and `DB`. Other Previews only have `CACHE`. When you merge, `DB` becomes available to all future Previews.
+
+---
+
+## How the two sources combine
+
+If you have settings in both the dashboard and your Wrangler config, the platform merges them when creating a deployment:
+
+| Scenario | Result |
+| --- | --- |
+| Wrangler sends it, dashboard does not have it | Included in the deployment. |
+| Dashboard has it, Wrangler did not send it | Included from the dashboard. |
+| Both have the same key | Wrangler wins. |
+| Wrangler removes something that is in the dashboard | **It comes back.** Omitting a value from your config does not remove the dashboard value. |
+
+Neither source is modified by this merge. The dashboard stays the same. Your config file is unchanged.
+
+:::caution
+If someone adds a variable in the dashboard and you do not have it in your Wrangler config, it appears in your Preview deployments. If you were overriding it and then remove the override, the dashboard value comes back. To remove a dashboard value, use the dashboard or the API.
+:::
+
+**Pick one source of truth.** If your team manages configuration in Wrangler config files, do not also set values in the dashboard. If your team prefers the dashboard, leave the `previews` block out of your Wrangler config.
+
+---
+
+## Secrets
+
+Secrets cannot be stored in configuration files. They are always stored on the platform as shared defaults, which means every Preview on the Worker receives them.
+
+| How | What happens |
+| --- | --- |
+| `wrangler preview secret put` | Writes the secret to shared Preview defaults. All Previews get it. |
+| Dashboard (**Settings** > **Previews**) | Same result. Stored on the platform, shared across all Previews. |
+| Per-Preview secrets | Not supported today. |
+
+:::note
+`wrangler preview secret put` can add and update secrets but cannot remove them. To remove a secret, use the dashboard or the API.
+:::
+
+---
+
+## Auto-provisioning
+
+For KV, D1, and R2, you can omit the resource identifier in your `previews` block and Wrangler will create a new resource the first time you run `wrangler preview`, then write the identifier back to your configuration file.
+
+| Binding | Omit this field | Wrangler creates |
+| --- | --- | --- |
+| `kv_namespaces` | `id` | A new KV namespace |
+| `d1_databases` | `database_name` | A new D1 database |
+| `r2_buckets` | `bucket_name` | A new R2 bucket |
+
+Other resource types (Vectorize, Hyperdrive, Pipelines, etc.) must be created manually before referencing them in the `previews` block.
+
+---
+
+## Syncing Wrangler config to the platform
+
+The `wrangler preview settings update` command pushes your local `previews` block to the platform as the new shared defaults. After running it, the dashboard reflects your Wrangler config, and new Previews created from any surface (dashboard, Builds, API) use those values.
+
+```sh
+npx wrangler preview settings update
+```
+
+This command is:
+- **Additive only.** It can add and modify settings but cannot remove them. To remove a value from the defaults, use the dashboard.
+- **Non-retroactive.** Existing Previews are not affected. Only new Previews use the updated defaults.
+- **Interactive.** It shows a diff before applying and asks for confirmation.
+
+If your team only uses Wrangler and commits the `previews` block to main, you may not need this command. Your Git repository is your source of truth.
+
+---
+
+## Wrangler environments
+
+If you use [Wrangler environments](/workers/wrangler/environments/), you can define `env.<name>.previews` to give one environment a different set of Preview defaults.
+
+```jsonc
+{
+  "previews": {
+    "vars": { "ENVIRONMENT": "preview" },
+    "kv_namespaces": [
+      { "binding": "CACHE", "id": "default-preview-cache" }
+    ]
+  },
+  "env": {
+    "staging": {
+      "previews": {
+        "vars": { "ENVIRONMENT": "staging-preview" },
+        "kv_namespaces": [
+          { "binding": "CACHE", "id": "staging-preview-cache" }
+        ]
+      }
+    }
+  }
+}
+```
+
+When `env.<name>.previews` exists, Wrangler uses values from that block for the fields you define there. For fields not defined, Wrangler falls back to the main `previews` block.
+
+
