@@ -98,7 +98,8 @@ const RUN_LINK_CHECK =
 
 // https://astro.build/config
 export default defineConfig({
-	site: "https://developers.cloudflare.com",
+	site: "https://zmt3.github.io",
+	base: "/cloudflare-docs",
 	markdown: {
 		smartypants: false,
 		remarkPlugins: [remarkValidateImages],
