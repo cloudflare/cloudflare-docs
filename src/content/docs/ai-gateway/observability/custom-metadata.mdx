@@ -44,11 +44,11 @@ Objects are not supported as metadata values.
 To include custom metadata in your request using cURL:
 
 ```bash
-curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
-  --header 'Authorization: Bearer {api_token}' \
-  --header 'Content-Type: application/json' \
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
   --header 'cf-aig-metadata: {"team": "AI", "user": 12345, "test":true}' \
-  --data '{"model": "gpt-4o", "messages": [{"role": "user", "content": "What should I eat for lunch?"}]}'
+  --data '{"model": "openai/gpt-4.1", "messages": [{"role": "user", "content": "What should I eat for lunch?"}]}'
 ```
 
 ### Using SDK
@@ -60,15 +60,15 @@ import OpenAI from "openai";
 
 export default {
  async fetch(request, env, ctx) {
-   const openai = new OpenAI({
-     apiKey: env.OPENAI_API_KEY,
-     baseURL: "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai",
-   });
+    const openai = new OpenAI({
+      apiKey: env.CLOUDFLARE_API_TOKEN,
+      baseURL: `https://api.cloudflare.com/client/v4/accounts/${env.CLOUDFLARE_ACCOUNT_ID}/ai/v1`,
+    });
 
-   try {
-     const chatCompletion = await openai.chat.completions.create(
-       {
-         model: "gpt-4o",
+    try {
+      const chatCompletion = await openai.chat.completions.create(
+        {
+          model: "openai/gpt-4.1",
          messages: [{ role: "user", content: "What should I eat for lunch?" }],
          max_tokens: 50,
        },

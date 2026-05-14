@@ -96,20 +96,19 @@ You can use the header **cf-aig-skip-cache** to bypass the cached version of the
 As an example, when submitting a request to OpenAI, include the header in the following manner:
 
 ```bash title="Request skipping the cache"
-curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
-  --header "Authorization: Bearer $TOKEN" \
-  --header 'Content-Type: application/json' \
-  --header 'cf-aig-skip-cache: true' \
-  --data ' {
-   		 "model": "gpt-4o-mini",
-   		 "messages": [
-   			 {
-   				 "role": "user",
-   				 "content": "how to build a wooden spoon in 3 short steps? give as short as answer as possible"
-   			 }
-   		 ]
-   	 }
-'
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --header "cf-aig-skip-cache: true" \
+  --data '{
+    "model": "openai/gpt-4.1-mini",
+    "messages": [
+      {
+        "role": "user",
+        "content": "how to build a wooden spoon in 3 short steps? give as short as answer as possible"
+      }
+    ]
+  }'
 ```
 
 ### Cache TTL (cf-aig-cache-ttl)
@@ -121,20 +120,19 @@ For example, if you set a TTL of one hour, it means that a request is kept in th
 As an example, when submitting a request to OpenAI, include the header in the following manner:
 
 ```bash title="Request to be cached for an hour"
-curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
-  --header "Authorization: Bearer $TOKEN" \
-  --header 'Content-Type: application/json' \
-  --header 'cf-aig-cache-ttl: 3600' \
-  --data ' {
-   		 "model": "gpt-4o-mini",
-   		 "messages": [
-   			 {
-   				 "role": "user",
-   				 "content": "how to build a wooden spoon in 3 short steps? give as short as answer as possible"
-   			 }
-   		 ]
-   	 }
-'
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --header "cf-aig-cache-ttl: 3600" \
+  --data '{
+    "model": "openai/gpt-4.1-mini",
+    "messages": [
+      {
+        "role": "user",
+        "content": "how to build a wooden spoon in 3 short steps? give as short as answer as possible"
+      }
+    ]
+  }'
 ```
 
 ### Custom cache key (cf-aig-cache-key)
@@ -146,20 +144,19 @@ When you use the **cf-aig-cache-key** header for the first time, you will receiv
 As an example, when submitting a request to OpenAI, include the header in the following manner:
 
 ```bash title="Request with custom cache key"
-curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
-  --header 'Authorization: Bearer {openai_token}' \
-  --header 'Content-Type: application/json' \
-  --header 'cf-aig-cache-key: responseA' \
-  --data ' {
-   		 "model": "gpt-4o-mini",
-   		 "messages": [
-   			 {
-   				 "role": "user",
-   				 "content": "how to build a wooden spoon in 3 short steps? give as short as answer as possible"
-   			 }
-   		 ]
-   	 }
-'
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --header "cf-aig-cache-key: responseA" \
+  --data '{
+    "model": "openai/gpt-4.1-mini",
+    "messages": [
+      {
+        "role": "user",
+        "content": "how to build a wooden spoon in 3 short steps? give as short as answer as possible"
+      }
+    ]
+  }'
 ```
 
 :::caution[AI Gateway caching behavior]
