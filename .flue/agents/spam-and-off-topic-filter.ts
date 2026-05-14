@@ -99,6 +99,14 @@ export default async function ({ init, payload, env }: FlueContext) {
 	// Only act on medium/high confidence — trusted code makes the API calls,
 	// not the agent, so there's no risk of hallucinated curl commands.
 	if (data.is_spam && data.confidence !== "low") {
+		if (item.state !== "open") {
+			return {
+				...data,
+				closed: false,
+				reason: `${data.reason} No action taken because the item is already ${item.state}.`,
+			};
+		}
+
 		const comment =
 			data.reason.toLowerCase().includes("support") ||
 			data.reason.toLowerCase().includes("wrong repo") ||

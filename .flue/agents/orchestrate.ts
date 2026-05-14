@@ -20,7 +20,11 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 	const sig = req?.headers.get("x-hub-signature-256") ?? "";
 	const rawBody = req ? await req.text() : JSON.stringify(payload);
 
-	if (secret && !(await verifyGitHubSignature(rawBody, sig, secret))) {
+	if (!secret) {
+		return new Response("Webhook secret not configured", { status: 500 });
+	}
+
+	if (!(await verifyGitHubSignature(rawBody, sig, secret))) {
 		return new Response("Unauthorized", { status: 401 });
 	}
 
