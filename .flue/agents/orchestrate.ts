@@ -1,0 +1,77 @@
+/**
+ * Orchestrator agent
+ *
+ * Receives GitHub webhooks (issues, pull_request events), verifies the
+ * signature, and dispatches to the appropriate subagent.
+ *
+ * Today the only pipeline is `spam-filter`. Future agents (triage,
+ * code-review, …) can be added here by extending the routing logic below.
+ *
+ * POST /agents/orchestrate/:id
+ */
+import type { FlueContext } from "@flue/sdk/client";
+import { verifyGitHubSignature } from "../lib/github";
+
+export const triggers = { webhook: true };
+
+export default async function ({ id, payload, env, req }: FlueContext) {
+	// ── 1. Verify the GitHub webhook signature ─────────────────────────────
+	const secret = (env as Record<string, string>).GITHUB_WEBHOOK_SECRET;
+	const sig = req?.headers.get("x-hub-signature-256") ?? "";
+	const rawBody = req ? await req.text() : JSON.stringify(payload);
+
+	if (secret && !(await verifyGitHubSignature(rawBody, sig, secret))) {
+		return new Response("Unauthorized", { status: 401 });
+	}
+
+	const body = JSON.parse(rawBody) as Record<string, unknown>;
+	const eventType =
+		(req?.headers.get("x-github-event") as string | null) ?? "unknown";
+
+	// ── 2. Route to the right pipeline ─────────────────────────────────────
+	if (
+		!req ||
+		!(
+			["issues", "pull_request"].includes(eventType) && body.action === "opened"
+		)
+	) {
+		return { acted: false, summary: "No action needed." };
+	}
+
+	// ── 3. Dispatch spam-filter ─────────────────────────────────────────────
+	const number = getIssueOrPullRequestNumber(eventType, body);
+	if (!number) {
+		return { acted: false, summary: "No issue or PR number found." };
+	}
+
+	const url = new URL(req.url);
+	url.pathname = `/agents/spam-filter/${encodeURIComponent(id)}`;
+	const response = await fetch(url, {
+		method: "POST",
+		headers: { "content-type": "application/json" },
+		body: JSON.stringify({ eventType, number }),
+	});
+
+	if (!response.ok) {
+		throw new Error(
+			`Spam filter failed: ${response.status} ${await response.text()}`,
+		);
+	}
+
+	return response.json();
+}
+
+function getIssueOrPullRequestNumber(
+	eventType: string,
+	body: Record<string, unknown>,
+) {
+	if (eventType === "issues") {
+		return (body.issue as Record<string, unknown> | undefined)?.number as
+			| number
+			| undefined;
+	}
+	if (eventType === "pull_request") {
+		return (body.pull_request as Record<string, unknown> | undefined)
+			?.number as number | undefined;
+	}
+}

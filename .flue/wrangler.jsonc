@@ -1,0 +1,15 @@
+{
+	"$schema": "../node_modules/wrangler/config-schema.json",
+	"name": "cloudflare-docs-flue",
+	"compatibility_date": "2026-04-01",
+	"compatibility_flags": ["nodejs_compat"],
+	"ai": {
+		"binding": "AI",
+	},
+	"r2_buckets": [
+		{
+			"binding": "DOCS_FLUE_BUCKET",
+			"bucket_name": "docs-flue-bucket",
+		},
+	],
+}
