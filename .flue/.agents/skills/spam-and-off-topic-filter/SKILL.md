@@ -1,5 +1,5 @@
 ---
-name: spam-filter
+name: spam-and-off-topic-filter
 description: Evaluate a GitHub issue or pull request and decide if it is spam or clearly off-topic for cloudflare/cloudflare-docs.
 ---
 
@@ -41,9 +41,9 @@ Return a JSON object with this shape:
 
 ```json
 {
-  "is_spam": true,
-  "confidence": "high",
-  "reason": "One sentence explaining your decision."
+	"is_spam": true,
+	"confidence": "high",
+	"reason": "One sentence explaining your decision."
 }
 ```
 

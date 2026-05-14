@@ -4,7 +4,7 @@
  * Receives GitHub webhooks (issues, pull_request events), verifies the
  * signature, and dispatches to the appropriate subagent.
  *
- * Today the only pipeline is `spam-filter`. Future agents (triage,
+ * Today the only pipeline is `spam-and-off-topic-filter`. Future agents (triage,
  * code-review, …) can be added here by extending the routing logic below.
  *
  * POST /agents/orchestrate/:id
@@ -38,14 +38,14 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 		return { acted: false, summary: "No action needed." };
 	}
 
-	// ── 3. Dispatch spam-filter ─────────────────────────────────────────────
+	// ── 3. Dispatch spam-and-off-topic-filter ───────────────────────────────
 	const number = getIssueOrPullRequestNumber(eventType, body);
 	if (!number) {
 		return { acted: false, summary: "No issue or PR number found." };
 	}
 
 	const url = new URL(req.url);
-	url.pathname = `/agents/spam-filter/${encodeURIComponent(id)}`;
+	url.pathname = `/agents/spam-and-off-topic-filter/${encodeURIComponent(id)}`;
 	const response = await fetch(url, {
 		method: "POST",
 		headers: { "content-type": "application/json" },
@@ -54,7 +54,7 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 
 	if (!response.ok) {
 		throw new Error(
-			`Spam filter failed: ${response.status} ${await response.text()}`,
+			`Spam and off-topic filter failed: ${response.status} ${await response.text()}`,
 		);
 	}
 

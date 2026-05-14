@@ -1,5 +1,5 @@
 /**
- * Spam-filter agent
+ * Spam-and-off-topic-filter agent
  *
  * Evaluates a GitHub issue or PR and closes it (with a comment) if it is
  * clearly spam or off-topic for cloudflare/cloudflare-docs.
@@ -7,7 +7,7 @@
  * Uses GitHub App auth — no long-lived PAT needed. The agent decides whether
  * to close; the actual API calls happen in trusted code, not in the sandbox.
  *
- * POST /agents/spam-filter/:id  (also callable via session.task())
+ * POST /agents/spam-and-off-topic-filter/:id  (also callable via session.task())
  */
 import type { FlueContext } from "@flue/sdk/client";
 import { getVirtualSandbox } from "@flue/sdk/cloudflare";
@@ -61,7 +61,7 @@ interface PullRequestDiffSummary {
 	}>;
 }
 
-interface SpamFilterPayload {
+interface SpamAndOffTopicFilterPayload {
 	eventType: "issues" | "pull_request";
 	number: number;
 }
@@ -82,7 +82,7 @@ export default async function ({ init, payload, env }: FlueContext) {
 	const token = await getInstallationToken(env as Record<string, string>);
 	const { item, diff } = await getGitHubContext(token, input);
 
-	const { data } = await session.skill("spam-filter/SKILL.md", {
+	const { data } = await session.skill("spam-and-off-topic-filter/SKILL.md", {
 		args: { eventType: input.eventType, item, diff },
 		schema: SpamVerdictSchema,
 	});
@@ -115,20 +115,23 @@ export default async function ({ init, payload, env }: FlueContext) {
 	return { ...data, closed: false };
 }
 
-function parsePayload(payload: unknown): SpamFilterPayload {
-	const input = payload as Partial<SpamFilterPayload>;
+function parsePayload(payload: unknown): SpamAndOffTopicFilterPayload {
+	const input = payload as Partial<SpamAndOffTopicFilterPayload>;
 	if (
 		(input.eventType !== "issues" && input.eventType !== "pull_request") ||
 		typeof input.number !== "number"
 	) {
 		throw new Error(
-			'[flue] spam-filter requires payload { eventType: "issues" | "pull_request", number: number }.',
+			'[flue] spam-and-off-topic-filter requires payload { eventType: "issues" | "pull_request", number: number }.',
 		);
 	}
 	return { eventType: input.eventType, number: input.number };
 }
 
-async function getGitHubContext(token: string, input: SpamFilterPayload) {
+async function getGitHubContext(
+	token: string,
+	input: SpamAndOffTopicFilterPayload,
+) {
 	if (input.eventType === "pull_request") {
 		const pullRequest = await getPullRequest(token, input.number);
 		return {
