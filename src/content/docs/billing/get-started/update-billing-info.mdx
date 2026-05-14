@@ -10,7 +10,7 @@ products:
 
 import { Render, DashButton } from "~/components";
 
-To avoid potential disruptions in your Cloudflare services, make sure your billing information is current and accurate. 
+To avoid potential disruptions in your Cloudflare services, make sure your billing information is current and accurate.
 
 If Cloudflare is unable to process your payment, review [Troubleshooting failed payments](/billing/troubleshoot/troubleshoot-failed-payments/).
 
@@ -22,10 +22,26 @@ If Cloudflare is unable to process your payment, review [Troubleshooting failed 
 
     <DashButton url="/?to=/:account/billing" />
 
-2. Select **Payment**.
-3. Select **Manage** next to your current payment method. The **Manage payment methods** dialog opens.
-4. Select **Edit** next to the payment method you would like to edit.
-5. Enter the required information and select **Save Payment Information**.
+2. Go to the **Subscriptions** page and open the **Payment methods** panel.
+3. Select **Add Payment Method** to add a new method, or **Edit** next to an existing one.
+4. Enter card details or select a supported wallet. Complete 3D Secure authentication if your card issuer requires it.
+5. Confirm the billing address shown on the form. The address is saved with the payment method.
+6. Select **Save**.
+
+### Supported payment methods
+
+The Billing Profile supports:
+
+- Cards (Visa, Mastercard, American Express, Discover, UnionPay)
+- PayPal
+- Apple Pay
+- Google Pay
+- Link
+- [Instant Bank Payments via Link](/billing/payment-methods/instant-bank-payments-link/) (US-based self-serve accounts)
+
+### 3D Secure authentication
+
+Cards issued in regions where 3D Secure is required — for example, the EU under PSD2 or India under RBI — trigger an authentication step with the card issuer. Complete the challenge to save the card.
 
 ## Delete a payment method
 
@@ -41,16 +57,22 @@ You cannot delete a payment method if a payment fails or if there is an outstand
 
     <DashButton url="/?to=/:account/billing" />
 
-2. Select **Payment**.
-3. From **Payment methods**, select **Manage**.
-4. Next to your current payment method, select **Delete**.
-5. Select **Confirm** to finish.
+2. Go to the **Subscriptions** page and open the **Payment methods** panel.
+3. Select **Delete** next to the payment method you want to remove.
+4. Select **Confirm** to finish.
 
 ## Update your billing address
 
-The billing address is associated with your payment method and is used to calculate your sales tax. If you need to update your billing address, you must also enter your payment method. The process for updating your billing address depends on the payment method.
+Two address fields exist on your account:
 
-If paying by credit card:
+| Field | Where it is used |
+| --- | --- |
+| **Billing profile address** | Appears as **Bill to** on every invoice. Used for tax calculation and sanctions screening. |
+| **Payment method billing address** | Captured when you add a payment method. Used by the card issuer to authorize each charge. Does not appear on invoices. |
+
+Updating the billing profile address applies to invoices issued after the change. Past invoices keep the address that was on file when they were issued. Updating the billing profile address does not change the address stored on existing payment methods.
+
+To update the billing profile address:
 
 1. In the Cloudflare dashboard, go to the **Billing** page.
 
@@ -58,6 +80,8 @@ If paying by credit card:
 
 2. From **Billing Address**, select **Edit** and enter your information.
 3. Review the suggested address in the pop-up window. If the information is correct, select **Confirm**.
+
+To update the address stored on a specific payment method, edit that payment method from the **Payment methods** panel on the **Subscriptions** page. The address you enter is saved both with the payment method and with the card issuer.
 
 If paying by PayPal, refer to PayPal's [billing address documentation](https://www.paypal.com/ai/smarthelp/article/how-do-i-edit-the-billing-address-linked-to-my-credit-card-faq680).
 
@@ -85,10 +109,9 @@ You cannot apply a VAT or GST number to past invoices. Adding a VAT or GST numbe
 
     <DashButton url="/?to=/:account/billing" />
 
-2. Go to **Payment**.
-3. From **Billing Address**, select **Edit**.
-4. In the **VAT/GST** field, enter your VAT or GST number.
-5. Select **Confirm**.
+2. From **Billing Address**, select **Edit**.
+3. In the **VAT/GST** field, enter your VAT or GST number.
+4. Select **Confirm**.
 
 ## Remove a Tax ID, VAT, or GST number
 
@@ -100,10 +123,9 @@ You cannot remove a VAT or GST number from past invoices. Removing a VAT or GST 
 
     <DashButton url="/?to=/:account/billing" />
 
-2. Go to **Payment**.
-3. From **Billing Address**, select **Edit**.
-4. In the **VAT/GST** field, delete the VAT or GST number.
-5. Select **Confirm**.
+2. From **Billing Address**, select **Edit**.
+3. In the **VAT/GST** field, delete the VAT or GST number.
+4. Select **Confirm**.
 
 ## Related resources
 

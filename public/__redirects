@@ -21,6 +21,7 @@
 
 # billing restructure
 /billing/create-billing-profile/ /billing/get-started/create-billing-profile/ 301
+/billing/payment-methods/backup-payment-method-auto-retry/ /billing/payment-methods/additional-payment-method-auto-retry/ 301
 /billing/update-billing-info/ /billing/get-started/update-billing-info/ 301
 /billing/pay-invoices-overdue-balances/ /billing/manage/pay-invoices-overdue-balances/ 301
 /billing/change-plan/ /billing/manage/change-plan/ 301
