@@ -1,0 +1,170 @@
+---
+{}
+---
+
+import { AnchorHeading, Type, MetaInfo } from "~/components";
+
+## `artifacts namespaces`
+
+Manage Artifacts namespaces.
+
+<AnchorHeading title="`namespaces list`" slug="artifacts-namespaces-list" depth={3} />
+
+List Artifacts namespaces in your account.
+
+```txt
+wrangler artifacts namespaces list [OPTIONS]
+```
+
+- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Return output as JSON.
+  - Default: false
+
+<AnchorHeading title="`namespaces get`" slug="artifacts-namespaces-get" depth={3} />
+
+Get details for an Artifacts namespace.
+
+```txt
+wrangler artifacts namespaces get <NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the Artifacts namespace.
+- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Return output as JSON.
+  - Default: false
+
+## `artifacts repos`
+
+Manage Artifacts repositories within a namespace.
+
+<AnchorHeading title="`repos create`" slug="artifacts-repos-create" depth={3} />
+
+Create a new Artifacts repository. Returns the repo details and an initial repo-scoped token.
+
+```txt
+wrangler artifacts repos create <NAME> --namespace <NAMESPACE> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the repository to create.
+- `--namespace` <Type text="string" /> <MetaInfo text="required" />
+  - The Artifacts namespace to create the repository in.
+- `--description` <Type text="string" /> <MetaInfo text="optional" />
+  - An optional description for the repository.
+- `--default-branch` <Type text="string" /> <MetaInfo text="optional" />
+  - The default branch for the repository.
+- `--read-only` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Create the repository as read-only.
+- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Return output as JSON.
+  - Default: false
+
+For example, to create a new repository:
+
+```sh
+npx wrangler artifacts repos create starter-repo --namespace sandbox
+```
+
+```sh output
+✨ Created Artifacts repo "starter-repo" in namespace "sandbox"
+
+  id:             aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+  name:           starter-repo
+  default_branch: main
+  read_only:      false
+  remote:         https://0123456789abcdef.artifacts.cloudflare.net/sandbox/starter-repo
+  token:          artifacts:v1:repo:...
+```
+
+:::note
+The returned `token` is a secret. Wrangler uses a secret-safe output path for this value so it is not persisted to debug logs. Store it securely.
+:::
+
+<AnchorHeading title="`repos list`" slug="artifacts-repos-list" depth={3} />
+
+List Artifacts repositories in a namespace.
+
+```txt
+wrangler artifacts repos list --namespace <NAMESPACE> [OPTIONS]
+```
+
+- `--namespace` <Type text="string" /> <MetaInfo text="required" />
+  - The Artifacts namespace to list repositories from.
+- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Return output as JSON.
+  - Default: false
+
+<AnchorHeading title="`repos get`" slug="artifacts-repos-get" depth={3} />
+
+Get details for an Artifacts repository.
+
+```txt
+wrangler artifacts repos get <NAME> --namespace <NAMESPACE> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the repository.
+- `--namespace` <Type text="string" /> <MetaInfo text="required" />
+  - The Artifacts namespace.
+- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Return output as JSON.
+  - Default: false
+
+<AnchorHeading title="`repos delete`" slug="artifacts-repos-delete" depth={3} />
+
+Delete an Artifacts repository. Prompts for confirmation unless `--force` is passed.
+
+```txt
+wrangler artifacts repos delete <NAME> --namespace <NAMESPACE> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the repository to delete.
+- `--namespace` <Type text="string" /> <MetaInfo text="required" />
+  - The Artifacts namespace.
+- `--force, -y` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Skip the interactive deletion confirmation prompt.
+  - Default: false
+- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Return output as JSON.
+  - Default: false
+
+<AnchorHeading title="`repos issue-token`" slug="artifacts-repos-issue-token" depth={3} />
+
+Issue a repo-scoped token for authenticating Git operations against an Artifacts repository.
+
+```txt
+wrangler artifacts repos issue-token <REPO> --namespace <NAMESPACE> [OPTIONS]
+```
+
+- `REPO` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the repository to issue a token for.
+- `--namespace` <Type text="string" /> <MetaInfo text="required" />
+  - The Artifacts namespace.
+- `--scope` <Type text="string" /> <MetaInfo text="optional" />
+  - The token scope. Accepted values: `read`, `write`.
+- `--ttl` <Type text="number" /> <MetaInfo text="optional" />
+  - The token time-to-live in seconds. Must be greater than 0.
+- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Return output as JSON.
+  - Default: false
+
+For example, to issue a read-scoped token:
+
+```sh
+npx wrangler artifacts repos issue-token starter-repo --namespace sandbox --scope read
+```
+
+```sh output
+✨ Issued Artifacts repo token for "starter-repo" in namespace "sandbox"
+
+  id:         aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee
+  scope:      read
+  expires_at: 2026-05-15T12:00:00Z
+  plaintext:  artifacts:v1:repo:...
+```
+
+:::note
+The returned `plaintext` token is a secret. Use it as the password when authenticating Git operations against the repo `remote`. For more information, refer to [Authentication](/artifacts/guides/authentication/).
+:::
