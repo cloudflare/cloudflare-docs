@@ -39,7 +39,7 @@ Models use the `author/model` format:
 - `openai/gpt-4.1` — OpenAI
 - `anthropic/claude-sonnet-4` — Anthropic
 - `google-ai-studio/gemini-2.5-flash` — Google AI Studio
-- `meta/llama-3.3-70b-instruct-fp8-fast` — Workers AI (Llama)
+- `moonshotai/kimi-k2.6` — Workers AI (Kimi)
 - `xai/grok-3` — xAI
 
 Browse available models in the [model catalog](/ai/models/).
@@ -48,7 +48,7 @@ Browse available models in the [model catalog](/ai/models/).
 
 The optional `provider` field lets you specify which provider should serve the request. For third-party models in the catalog today, each model has a single provider, so you can omit this field.
 
-Set `provider` to `"cloudflare"` to run a model on Workers AI:
+When omitted, Cloudflare routes the request to the preferred provider for that model. Set `provider` to `"cloudflare"` to run a model on Workers AI:
 
 ```json
 {
@@ -57,8 +57,6 @@ Set `provider` to `"cloudflare"` to run a model on Workers AI:
   "messages": [...]
 }
 ```
-
-When omitted, Cloudflare routes the request to the preferred provider for that model.
 
 ## `/ai/run` — universal endpoint
 

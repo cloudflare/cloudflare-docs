@@ -17,7 +17,9 @@ When using the [REST API](/ai-gateway/usage/rest-api/), pass your Cloudflare API
 
 1. Go to the Settings for the specific gateway you want to enable authentication for.
 2. Select **Create authentication token** to generate a custom token with the required `Run` permissions. Be sure to securely save this token, as it will not be displayed again.
-3. Include the `cf-aig-authorization` header with your API token in each request for this gateway.
+3. Include the API token in each request:
+   - If using the REST API (`/ai/run`), include your Cloudflare API token in the standard `Authorization` header.
+   - If using [provider-native endpoints](/ai-gateway/usage/providers/) at `gateway.ai.cloudflare.com`, use the `cf-aig-authorization` header.
 4. Return to the settings page and toggle on Authenticated Gateway.
 
 ## Example requests
