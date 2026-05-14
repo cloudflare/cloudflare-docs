@@ -69,6 +69,35 @@ WHERE z.plan = 'enterprise'
 GROUP BY z.plan
 ```
 
+### `NOT IN` on nullable columns
+
+**Symptom**: `NOT IN` subquery returns unexpected results or errors.
+
+**Problem**: `NOT IN` subqueries are not supported when the subquery column can contain `NULL` values.
+
+```sql
+-- Fails: nullable_col may contain NULLs
+SELECT zone_id
+FROM my_namespace.http_requests
+WHERE zone_id NOT IN (
+    SELECT nullable_col FROM my_namespace.other_table
+)
+LIMIT 20
+```
+
+**Solution**: Use `NOT EXISTS` with a correlated subquery instead.
+
+```sql
+-- Works: NOT EXISTS handles NULLs correctly
+SELECT h.zone_id
+FROM my_namespace.http_requests h
+WHERE NOT EXISTS (
+    SELECT 1 FROM my_namespace.other_table o
+    WHERE o.nullable_col = h.zone_id
+)
+LIMIT 20
+```
+
 ### Correlated subquery performance
 
 **Symptom**: `EXISTS` or `NOT EXISTS` subquery runs slowly.

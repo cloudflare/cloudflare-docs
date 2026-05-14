@@ -254,6 +254,18 @@ LIMIT 20
 - Functions are supported in join predicates (for example, `ON LOWER(a.col) = LOWER(b.col)`).
 - Multiple conditions can be combined with `AND`.
 
+:::note
+Nested (parenthesized) joins are not supported. Write multi-way joins as a flat sequence of `JOIN` clauses instead of grouping them with parentheses.
+
+```sql
+-- Not supported
+SELECT * FROM (t1 JOIN t2 ON t1.id = t2.id) JOIN t3 ON t2.id = t3.id
+
+-- Supported
+SELECT * FROM t1 JOIN t2 ON t1.id = t2.id JOIN t3 ON t2.id = t3.id
+```
+:::
+
 ### Best practices for joins
 
 - Include `WHERE` filters to reduce intermediate result sizes, especially for multi-way joins.
@@ -282,6 +294,10 @@ WHERE sub.total_requests > 1000
 ORDER BY sub.total_requests DESC
 LIMIT 20
 ```
+
+:::note
+`LATERAL` derived tables are not supported. Subqueries in `FROM` cannot reference columns from other tables in the same `FROM` clause.
+:::
 
 Derived tables can be joined with other derived tables or regular tables:
 
@@ -323,11 +339,26 @@ LIMIT 20
 SELECT zone_id, COUNT(*) AS cnt
 FROM my_namespace.http_requests
 WHERE zone_id NOT IN (
-    SELECT DISTINCT zone_id FROM my_namespace.firewall_events WHERE action = 'block'
+    SELECT zone_id FROM my_namespace.firewall_events WHERE action = 'block'
 )
 GROUP BY zone_id
 LIMIT 10
 ```
+
+:::caution
+`NOT IN` subqueries are not supported on nullable columns. If the subquery column can contain `NULL` values, use `NOT EXISTS` instead. `SELECT DISTINCT` is also not supported inside subqueries — omit the `DISTINCT` keyword or use `NOT EXISTS`.
+
+```sql
+-- Instead of NOT IN on a nullable column:
+SELECT z.domain
+FROM my_namespace.zones z
+WHERE NOT EXISTS (
+    SELECT 1 FROM my_namespace.firewall_events f
+    WHERE f.zone_id = z.zone_id
+)
+LIMIT 20
+```
+:::
 
 ### `EXISTS` / `NOT EXISTS` subqueries
 
