@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 380" fill="none">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .code { font-size: 13px; fill: #1a1a1a; font-weight: 600; font-family: 'SF Mono', 'Fira Code', monospace; }
+    .env-label { font-size: 14px; fill: #1a1a1a; font-weight: 600; }
+    .env-sub { font-size: 11px; fill: #6b7280; }
+    .note { font-size: 12px; fill: #6b7280; }
+    .note-bold { font-size: 12px; fill: #1a1a1a; font-weight: 600; }
+  </style>
+
+  <!-- Source: your code -->
+  <rect x="230" y="20" width="240" height="50" rx="25" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="350" y="50" text-anchor="middle" class="code">class Counter</text>
+
+  <!-- Fan-out lines -->
+  <line x1="350" y1="70" x2="350" y2="100" stroke="#d1d5db" stroke-width="2"/>
+  <line x1="350" y1="100" x2="120" y2="100" stroke="#d1d5db" stroke-width="2"/>
+  <line x1="350" y1="100" x2="580" y2="100" stroke="#d1d5db" stroke-width="2"/>
+  <line x1="120" y1="100" x2="120" y2="130" stroke="#d1d5db" stroke-width="2"/>
+  <line x1="350" y1="100" x2="350" y2="130" stroke="#d1d5db" stroke-width="2"/>
+  <line x1="580" y1="100" x2="580" y2="130" stroke="#d1d5db" stroke-width="2"/>
+  <circle cx="350" cy="100" r="3" fill="#d1d5db"/>
+
+  <!-- Production container -->
+  <rect x="20" y="135" width="200" height="190" rx="16" fill="#fff7ed" stroke="#f6821f" stroke-width="2"/>
+  <circle cx="120" cy="200" r="40" fill="white" stroke="#fdba74" stroke-width="1.5"/>
+  <rect x="107" y="188" width="26" height="24" rx="4" fill="#f6821f" opacity="0.15"/>
+  <rect x="107" y="188" width="26" height="24" rx="4" fill="none" stroke="#f6821f" stroke-width="1.2"/>
+  <rect x="111" y="196" width="18" height="3" rx="1" fill="#f6821f" opacity="0.5"/>
+  <rect x="111" y="202" width="12" height="3" rx="1" fill="#f6821f" opacity="0.5"/>
+  <text x="120" y="265" text-anchor="middle" class="env-label">Production</text>
+  <text x="120" y="282" text-anchor="middle" class="env-sub">own namespace</text>
+  <text x="120" y="296" text-anchor="middle" class="env-sub">own storage</text>
+
+  <!-- Preview A container -->
+  <rect x="250" y="135" width="200" height="190" rx="16" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+  <circle cx="350" cy="200" r="40" fill="white" stroke="#93c5fd" stroke-width="1.5"/>
+  <rect x="337" y="188" width="26" height="24" rx="4" fill="#3b82f6" opacity="0.15"/>
+  <rect x="337" y="188" width="26" height="24" rx="4" fill="none" stroke="#3b82f6" stroke-width="1.2"/>
+  <rect x="341" y="196" width="18" height="3" rx="1" fill="#3b82f6" opacity="0.5"/>
+  <rect x="341" y="202" width="12" height="3" rx="1" fill="#3b82f6" opacity="0.5"/>
+  <text x="350" y="265" text-anchor="middle" class="env-label">Preview A</text>
+  <text x="350" y="282" text-anchor="middle" class="env-sub">own namespace</text>
+  <text x="350" y="296" text-anchor="middle" class="env-sub">own storage</text>
+
+  <!-- Preview B container -->
+  <rect x="480" y="135" width="200" height="190" rx="16" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+  <circle cx="580" cy="200" r="40" fill="white" stroke="#93c5fd" stroke-width="1.5"/>
+  <rect x="567" y="188" width="26" height="24" rx="4" fill="#3b82f6" opacity="0.15"/>
+  <rect x="567" y="188" width="26" height="24" rx="4" fill="none" stroke="#3b82f6" stroke-width="1.2"/>
+  <rect x="571" y="196" width="18" height="3" rx="1" fill="#3b82f6" opacity="0.5"/>
+  <rect x="571" y="202" width="12" height="3" rx="1" fill="#3b82f6" opacity="0.5"/>
+  <text x="580" y="265" text-anchor="middle" class="env-label">Preview B</text>
+  <text x="580" y="282" text-anchor="middle" class="env-sub">own namespace</text>
+  <text x="580" y="296" text-anchor="middle" class="env-sub">own storage</text>
+
+  <!-- Isolation gaps — X marks between containers -->
+  <text x="235" y="235" text-anchor="middle" font-size="18" fill="#dc2626" font-weight="700">&#xd7;</text>
+  <text x="465" y="235" text-anchor="middle" font-size="18" fill="#dc2626" font-weight="700">&#xd7;</text>
+
+  <!-- Bottom message -->
+  <text x="350" y="358" text-anchor="middle" class="note">Each preview gets its own isolated namespace.</text>
+  <text x="350" y="375" text-anchor="middle" class="note-bold">Nothing to configure. Provisioned automatically.</text>
+</svg>

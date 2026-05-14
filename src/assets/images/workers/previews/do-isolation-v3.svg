@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 340" fill="none">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .code { font-size: 13px; fill: #374151; font-weight: 500; font-family: 'SF Mono', 'Fira Code', monospace; }
+    .env-label { font-size: 15px; fill: #1a1a1a; font-weight: 700; }
+    .env-sub { font-size: 11px; fill: #9ca3af; }
+    .note { font-size: 12px; fill: #6b7280; }
+    .note-bold { font-size: 12px; fill: #1a1a1a; font-weight: 600; }
+  </style>
+
+  <!-- Source pill -->
+  <rect x="220" y="15" width="260" height="40" rx="20" fill="#f3f4f6" stroke="#e5e7eb" stroke-width="1.5"/>
+  <text x="350" y="40" text-anchor="middle" class="code">class Counter + migration</text>
+
+  <!-- Single line down then split -->
+  <path d="M 350 55 L 350 85 Q 350 95 340 95 L 120 95 Q 110 95 110 105 L 110 120" stroke="#d1d5db" stroke-width="1.5" fill="none"/>
+  <path d="M 350 55 L 350 120" stroke="#d1d5db" stroke-width="1.5" fill="none"/>
+  <path d="M 350 55 L 350 85 Q 350 95 360 95 L 580 95 Q 590 95 590 105 L 590 120" stroke="#d1d5db" stroke-width="1.5" fill="none"/>
+
+  <!-- Production card -->
+  <rect x="20" y="120" width="180" height="150" rx="12" fill="#fff7ed" stroke="#f6821f" stroke-width="2"/>
+  <!-- Storage icon: stacked discs -->
+  <ellipse cx="110" cy="185" rx="28" ry="10" fill="#fdba74" opacity="0.3"/>
+  <ellipse cx="110" cy="185" rx="28" ry="10" fill="none" stroke="#f6821f" stroke-width="1.2"/>
+  <path d="M 82 185 L 82 205 Q 82 215 110 215 Q 138 215 138 205 L 138 185" fill="#fdba74" opacity="0.15" stroke="#f6821f" stroke-width="1.2"/>
+  <ellipse cx="110" cy="205" rx="28" ry="10" fill="none" stroke="#f6821f" stroke-width="1.2" opacity="0.5"/>
+  <text x="110" y="245" text-anchor="middle" class="env-label">Production</text>
+
+  <!-- Preview A card -->
+  <rect x="260" y="120" width="180" height="150" rx="12" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+  <ellipse cx="350" cy="185" rx="28" ry="10" fill="#93c5fd" opacity="0.3"/>
+  <ellipse cx="350" cy="185" rx="28" ry="10" fill="none" stroke="#3b82f6" stroke-width="1.2"/>
+  <path d="M 322 185 L 322 205 Q 322 215 350 215 Q 378 215 378 205 L 378 185" fill="#93c5fd" opacity="0.15" stroke="#3b82f6" stroke-width="1.2"/>
+  <ellipse cx="350" cy="205" rx="28" ry="10" fill="none" stroke="#3b82f6" stroke-width="1.2" opacity="0.5"/>
+  <text x="350" y="245" text-anchor="middle" class="env-label">Preview A</text>
+
+  <!-- Preview B card -->
+  <rect x="500" y="120" width="180" height="150" rx="12" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+  <ellipse cx="590" cy="185" rx="28" ry="10" fill="#93c5fd" opacity="0.3"/>
+  <ellipse cx="590" cy="185" rx="28" ry="10" fill="none" stroke="#3b82f6" stroke-width="1.2"/>
+  <path d="M 562 185 L 562 205 Q 562 215 590 215 Q 618 215 618 205 L 618 185" fill="#93c5fd" opacity="0.15" stroke="#3b82f6" stroke-width="1.2"/>
+  <ellipse cx="590" cy="205" rx="28" ry="10" fill="none" stroke="#3b82f6" stroke-width="1.2" opacity="0.5"/>
+  <text x="590" y="245" text-anchor="middle" class="env-label">Preview B</text>
+
+  <!-- Isolation walls between cards — thick subtle lines -->
+  <rect x="212" y="135" width="4" height="120" rx="2" fill="#e5e7eb"/>
+  <rect x="452" y="135" width="4" height="120" rx="2" fill="#e5e7eb"/>
+
+  <!-- Bottom -->
+  <text x="350" y="305" text-anchor="middle" class="note">Same class. Separate storage. Provisioned automatically.</text>
+</svg>

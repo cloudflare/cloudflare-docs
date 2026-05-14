@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 340" fill="none">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .source { font-size: 14px; fill: #374151; font-weight: 500; }
+    .env-label { font-size: 15px; fill: #1a1a1a; font-weight: 700; }
+    .note { font-size: 12px; fill: #9ca3af; }
+  </style>
+
+  <!-- Source pill -->
+  <rect x="225" y="15" width="250" height="44" rx="22" fill="#f3f4f6" stroke="#e5e7eb" stroke-width="1.5"/>
+  <text x="350" y="42" text-anchor="middle" class="source">Your Durable Object</text>
+
+  <!-- Fan-out lines -->
+  <path d="M 350 59 L 350 88 Q 350 98 340 98 L 115 98 Q 105 98 105 108 L 105 125" stroke="#d1d5db" stroke-width="1.5" fill="none"/>
+  <path d="M 350 59 L 350 125" stroke="#d1d5db" stroke-width="1.5" fill="none"/>
+  <path d="M 350 59 L 350 88 Q 350 98 360 98 L 585 98 Q 595 98 595 108 L 595 125" stroke="#d1d5db" stroke-width="1.5" fill="none"/>
+
+  <!-- Production card -->
+  <rect x="15" y="125" width="180" height="155" rx="14" fill="#fff7ed" stroke="#f6821f" stroke-width="2"/>
+  <!-- Storage cylinder -->
+  <ellipse cx="105" cy="185" rx="30" ry="11" fill="#fdba74" opacity="0.3"/>
+  <ellipse cx="105" cy="185" rx="30" ry="11" fill="none" stroke="#f6821f" stroke-width="1.3"/>
+  <path d="M 75 185 L 75 210 Q 75 221 105 221 Q 135 221 135 210 L 135 185" fill="#fdba74" opacity="0.15" stroke="#f6821f" stroke-width="1.3"/>
+  <ellipse cx="105" cy="210" rx="30" ry="11" fill="none" stroke="#f6821f" stroke-width="1.3" opacity="0.4"/>
+  <text x="105" y="258" text-anchor="middle" class="env-label">Production</text>
+
+  <!-- Wall -->
+  <rect x="207" y="145" width="5" height="115" rx="2.5" fill="#e5e7eb"/>
+
+  <!-- Preview A card -->
+  <rect x="260" y="125" width="180" height="155" rx="14" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+  <!-- Storage cylinder -->
+  <ellipse cx="350" cy="185" rx="30" ry="11" fill="#93c5fd" opacity="0.3"/>
+  <ellipse cx="350" cy="185" rx="30" ry="11" fill="none" stroke="#3b82f6" stroke-width="1.3"/>
+  <path d="M 320 185 L 320 210 Q 320 221 350 221 Q 380 221 380 210 L 380 185" fill="#93c5fd" opacity="0.15" stroke="#3b82f6" stroke-width="1.3"/>
+  <ellipse cx="350" cy="210" rx="30" ry="11" fill="none" stroke="#3b82f6" stroke-width="1.3" opacity="0.4"/>
+  <text x="350" y="258" text-anchor="middle" class="env-label">Preview A</text>
+
+  <!-- Wall -->
+  <rect x="452" y="145" width="5" height="115" rx="2.5" fill="#e5e7eb"/>
+
+  <!-- Preview B card -->
+  <rect x="505" y="125" width="180" height="155" rx="14" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+  <!-- Storage cylinder -->
+  <ellipse cx="595" cy="185" rx="30" ry="11" fill="#93c5fd" opacity="0.3"/>
+  <ellipse cx="595" cy="185" rx="30" ry="11" fill="none" stroke="#3b82f6" stroke-width="1.3"/>
+  <path d="M 565 185 L 565 210 Q 565 221 595 221 Q 625 221 625 210 L 625 185" fill="#93c5fd" opacity="0.15" stroke="#3b82f6" stroke-width="1.3"/>
+  <ellipse cx="595" cy="210" rx="30" ry="11" fill="none" stroke="#3b82f6" stroke-width="1.3" opacity="0.4"/>
+  <text x="595" y="258" text-anchor="middle" class="env-label">Preview B</text>
+
+  <!-- Bottom line -->
+  <text x="350" y="318" text-anchor="middle" class="note">Separate storage. Provisioned automatically.</text>
+</svg>

@@ -107,8 +107,9 @@ This reference example shows all supported binding types in `previews`.
 	// Durable Object bindings. When `class_name` refers to a class defined in
 	// this Worker (no `script_name`), each Preview gets its own isolated
 	// Durable Object namespace and instances — independent from production.
-	// For Durable Objects defined in the same Worker, you can also access them
-	// via `ctx.exports.Counter`, but the binding must still be declared here.
+	// Declaring the binding here makes the DO available via `env.COUNTER`.
+	// Alternatively, you can skip the binding and use `ctx.exports.Counter`
+	// instead — isolation works with just the migration.
 	//
 	// Containers are accessed through a Durable Object binding whose `class_name`
 	// matches the container's `class_name`. Each Preview gets its own isolated
@@ -121,8 +122,8 @@ This reference example shows all supported binding types in `previews`.
 		},
 		// Workflow binding. Same isolation rules as Durable Objects: when the
 		// class lives in this Worker, each Preview gets isolated Workflow
-		// instances. For Workflows defined in the same Worker, you can also
-		// access them via `ctx.exports`, but the binding must still be declared here.
+		// instances. Declaring the binding here makes the Workflow available
+		// via `env.MY_WORKFLOW`. You can also use `ctx.exports` instead.
 		"workflows": [
 			{
 				"binding": "MY_WORKFLOW",
@@ -243,7 +244,7 @@ For most binding types — such as [KV](/kv/), [D1](/d1/), [R2](/r2/), [Queues](
 
 If you need a Preview's writes to stay separate from production, create a dedicated resource for Previews, or use [auto-provisioning](#auto-provisioning) for KV, D1, and R2.
 
-The exceptions are [**Durable Objects**](/durable-objects/), [**Workflows**](/workflows/), and [**Containers**](/containers/). When your Worker defines the class itself (no `script_name` on the binding), each Preview automatically gets its own isolated namespace and instances, separate from production and from other Previews. State persists across deployments within the same Preview and is deleted when the Preview is deleted. If you set `script_name` to point at another Worker, the binding targets that Worker's production instance and this isolation does not apply — prefer [`ctx.exports`](/workers/runtime-apis/context/#exports) for Durable Objects and Workflows defined in the same Worker. Refer to [Durable Object isolation](/workers/previews/guides/durable-object-isolation/) for details.
+The exceptions are [**Durable Objects**](/durable-objects/), [**Workflows**](/workflows/), and [**Containers**](/containers/). When your Worker defines the class itself (no `script_name` on the binding), each Preview automatically gets its own isolated namespace and instances, separate from production and from other Previews. State persists across deployments within the same Preview and is deleted when the Preview is deleted. If you set `script_name` to point at another Worker, the binding targets that Worker's production instance and this isolation does not apply. For Durable Objects and Workflows defined in the same Worker, you can use [`ctx.exports`](/workers/runtime-apis/context/#exports) without declaring a binding — isolation works with just the migration. Refer to [Durable Object isolation](/workers/previews/guides/durable-object-isolation/) for details.
 
 [Service bindings](/workers/runtime-apis/bindings/service-bindings/) behave differently from both: they always resolve to the bound Worker's production deployment, and cannot be pointed at another Worker's Preview.
 | `previews` field | How it behaves |
@@ -253,7 +254,7 @@ The exceptions are [**Durable Objects**](/durable-objects/), [**Workflows**](/wo
 | `d1_databases` | For connecting your D1 database binding to a Preview D1 database `database_id`. You need to manually create the D1 database for Previews to use, or leave the `database_name` field empty and Wrangler will auto-provision you a new D1 database and write the `database_name` back to your configuration file. |
 | `r2_buckets` | For connecting your R2 bucket binding to a Preview R2 bucket `bucket_name`. You need to manually create the R2 bucket for Previews to use, or leave the `bucket_name` field empty and Wrangler will auto-provision you a new R2 bucket and write the `bucket_name` back to your configuration file. |
 | `services` | For connecting a Service binding to a Worker `service` and optional `entrypoint`. Service bindings from a Preview always target the production instance of the bound Worker — they cannot be pointed at another Preview. |
-| `durable_objects.bindings` | For connecting a Durable Object binding to the `class_name` (and optional `script_name`) you specify. When the class is defined in the same Worker, each Preview gets its own isolated Durable Object namespace and instances, separate from production. If `script_name` points at another Worker, the binding targets that Worker's production Durable Object. You can also access same-Worker Durable Objects via `ctx.exports`, but the binding must still be declared here. Refer to [Durable Object isolation](/workers/previews/guides/durable-object-isolation/) for details. |
+| `durable_objects.bindings` | For connecting a Durable Object binding to the `class_name` (and optional `script_name`) you specify. When the class is defined in the same Worker, each Preview gets its own isolated Durable Object namespace and instances, separate from production. If `script_name` points at another Worker, the binding targets that Worker's production Durable Object. Declaring the binding here makes the DO available via `env`. Alternatively, you can skip the binding and access same-Worker Durable Objects via [`ctx.exports`](/workers/runtime-apis/context/#exports) — isolation works with just the migration. Refer to [Durable Object isolation](/workers/previews/guides/durable-object-isolation/) for details. |
 | `workflows` | For connecting a Workflow binding to the `class_name`, Workflow `name`, and optional `script_name` you specify. When the class is defined in the same Worker, each Preview gets its own isolated Workflow instances, separate from production. If `script_name` points at another Worker, the binding targets that Worker's production Workflow. |
 | `send_email` | For creating a Send Email binding. The runtime binding name comes from `name`, not `binding`. `destination_address`, `allowed_destination_addresses`, and `allowed_sender_addresses` are preserved when set. |
 | `queues.producers` | For connecting a Queue producer binding to the `queue` name you specify. `delivery_delay` is preserved when set. Queue consumer settings (`queues.consumers`) are not Preview bindings — Previews cannot consume from Queues. |
