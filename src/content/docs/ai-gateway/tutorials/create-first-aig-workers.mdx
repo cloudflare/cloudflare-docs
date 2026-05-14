@@ -34,7 +34,7 @@ Then, create a new AI Gateway.
 
 1. Go to **AI** > **Workers AI** in the Cloudflare dashboard.
 2. Select **Use REST API** and follow the steps to create and copy the API token and Account ID.
-3. Send a request using the [Workers AI REST API](/ai-gateway/usage/rest-api/). Replace `$CLOUDFLARE_ACCOUNT_ID` and `$CLOUDFLARE_API_TOKEN` with your actual account ID and API token:
+3. Send a request using the [REST API](/ai-gateway/usage/rest-api/). Replace `$CLOUDFLARE_ACCOUNT_ID` and `$CLOUDFLARE_API_TOKEN` with your actual account ID and API token:
 
    ```bash
    curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \

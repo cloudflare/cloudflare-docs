@@ -69,7 +69,7 @@ Authenticate with your upstream AI provider using one of the following options:
 
 ## Integration options
 
-### Workers AI REST API
+### REST API
 
 Call any model — whether hosted on Cloudflare or by a third-party provider — through the same Cloudflare API. No provider SDKs or API keys needed — authentication and billing are handled through your Cloudflare account. Three endpoints are available: `/ai/run` for all modalities, `/ai/v1/chat/completions` for OpenAI SDK compatibility, and `/ai/v1/responses` for agentic workflows.
 
@@ -83,7 +83,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_
   }'
 ```
 
-Refer to [Workers AI REST API](/ai-gateway/usage/rest-api/) for details and examples.
+Refer to [REST API](/ai-gateway/usage/rest-api/) for details and examples.
 
 ### Provider-specific endpoints
 

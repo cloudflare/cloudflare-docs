@@ -1,5 +1,5 @@
 ---
-title: Workers AI REST API
+title: REST API
 pcx_content_type: how-to
 description: Call third-party and Workers AI models through the Cloudflare API with AI Gateway features like logging, caching, and rate limiting.
 sidebar:
@@ -10,7 +10,7 @@ products:
   - ai-gateway
 ---
 
-The Workers AI REST API lets you call any model — whether hosted on Cloudflare or by a third-party provider like OpenAI, Anthropic, or Google — through the same Cloudflare API, with all AI Gateway features — logging, caching, rate limiting, and more — applied automatically.
+The REST API lets you call any model — whether hosted on Cloudflare or by a third-party provider like OpenAI, Anthropic, or Google — through the same Cloudflare API, with all AI Gateway features — logging, caching, rate limiting, and more — applied automatically.
 
 No provider SDKs or API keys are needed. Authentication and billing are handled through your Cloudflare account. Third-party models are billed via [Unified Billing](/ai-gateway/features/unified-billing/), while Workers AI models follow [Workers AI pricing](/workers-ai/platform/pricing/).
 
@@ -236,4 +236,4 @@ For more details on these options, refer to [Request handling](/ai-gateway/confi
 
 - [Unified Billing](/ai-gateway/features/unified-billing/) — load credits and manage spend limits.
 - [Workers AI binding](/ai-gateway/integrations/worker-binding-methods/) — call models from within a Cloudflare Worker using `env.AI.run()`.
-- [Model catalog](/ai/models/) — browse models supported by the Workers AI REST API.
+- [Model catalog](/ai/models/) — browse models supported by the REST API.
