@@ -8,18 +8,18 @@ products:
   - workers-ai
 ---
 
-Use `wrangler ai models` to query the Workers AI model catalog from your terminal. The command lists matching models in a table by default.
+Use `wrangler ai models list` to query the Workers AI model catalog from your terminal. The command lists matching models in a table by default.
 
 Before you run this command, authenticate Wrangler with an account that has the `Workers AI Read` permission.
 
 ```sh
-npx wrangler ai models
+npx wrangler ai models list
 ```
 
 To return the response as JSON, add `--json`:
 
 ```sh
-npx wrangler ai models --json
+npx wrangler ai models list --json
 ```
 
 ## Query the model catalog
@@ -27,14 +27,14 @@ npx wrangler ai models --json
 Use filters to narrow model results by keyword, task, author, source, or release status:
 
 ```sh
-npx wrangler ai models --search llama --task "Text Generation" --hide-experimental
+npx wrangler ai models list --search llama --task "Text Generation" --hide-experimental
 ```
 
 ```sh
-npx wrangler ai models --author cloudflare --source 1 --json
+npx wrangler ai models list --author cloudflare --source 1 --json
 ```
 
-The `wrangler ai models` command supports the following options:
+The `wrangler ai models list` command supports the following options:
 
 | Option                | Description                  |
 | --------------------- | ---------------------------- |

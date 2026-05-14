@@ -1,23 +1,23 @@
 ---
-title: Query the Workers AI model catalog with Wrangler filters
-description: Wrangler now supports filters for querying the Workers AI model catalog from the command line.
+title: Query the Workers AI model catalog with Wrangler
+description: Wrangler can now query the Workers AI model catalog from the command line.
 products:
   - workers-ai
 date: 2026-05-12
 ---
 
-`wrangler ai models` now supports filters for querying the Workers AI model catalog from the command line.
+`wrangler ai models list` is now available for querying the Workers AI model catalog from the command line.
 
 Use `--search`, `--task`, `--author`, `--source`, and `--hide-experimental` to narrow model results:
 
 ```sh
-wrangler ai models --search llama --task "Text Generation" --hide-experimental
+wrangler ai models list --search llama --task "Text Generation" --hide-experimental
 ```
 
 You can also combine filters with `--json` for structured output:
 
 ```sh
-wrangler ai models --author cloudflare --source 1 --json
+wrangler ai models list --author cloudflare --source 1 --json
 ```
 
 For full usage details, refer to the [Workers AI Wrangler commands documentation](/workers-ai/wrangler-commands/).
