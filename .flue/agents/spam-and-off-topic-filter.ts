@@ -88,6 +88,17 @@ export default async function ({ init, payload, env }: FlueContext) {
 	});
 
 	if (!data) {
+		console.log({
+			event: "spam_and_off_topic_filter_verdict",
+			eventType: input.eventType,
+			kind: item.kind,
+			number: item.number,
+			url: item.url,
+			is_spam: false,
+			confidence: "low",
+			action: "left_open",
+			reason: "No verdict.",
+		});
 		return {
 			is_spam: false,
 			confidence: "low",
@@ -100,6 +111,18 @@ export default async function ({ init, payload, env }: FlueContext) {
 	// not the agent, so there's no risk of hallucinated curl commands.
 	if (data.is_spam && data.confidence !== "low") {
 		if (item.state !== "open") {
+			console.log({
+				event: "spam_and_off_topic_filter_verdict",
+				eventType: input.eventType,
+				kind: item.kind,
+				number: item.number,
+				url: item.url,
+				is_spam: data.is_spam,
+				confidence: data.confidence,
+				action: "skipped_not_open",
+				reason: data.reason,
+				state: item.state,
+			});
 			return {
 				...data,
 				closed: false,
@@ -117,8 +140,32 @@ export default async function ({ init, payload, env }: FlueContext) {
 		await postComment(token, input.number, comment);
 		await closeIssue(token, input.number);
 
+		console.log({
+			event: "spam_and_off_topic_filter_verdict",
+			eventType: input.eventType,
+			kind: item.kind,
+			number: item.number,
+			url: item.url,
+			is_spam: data.is_spam,
+			confidence: data.confidence,
+			action: "closed",
+			reason: data.reason,
+		});
+
 		return { ...data, closed: true };
 	}
+
+	console.log({
+		event: "spam_and_off_topic_filter_verdict",
+		eventType: input.eventType,
+		kind: item.kind,
+		number: item.number,
+		url: item.url,
+		is_spam: data.is_spam,
+		confidence: data.confidence,
+		action: "left_open",
+		reason: data.reason,
+	});
 
 	return { ...data, closed: false };
 }
