@@ -89,6 +89,7 @@ export default async function ({ init, payload, env }: FlueContext) {
 
 	if (!data) {
 		console.log({
+			message: `${item.kind} #${item.number} left open: no verdict`,
 			event: "spam_and_off_topic_filter_verdict",
 			eventType: input.eventType,
 			kind: item.kind,
@@ -112,6 +113,7 @@ export default async function ({ init, payload, env }: FlueContext) {
 	if (data.is_spam && data.confidence !== "low") {
 		if (item.state !== "open") {
 			console.log({
+				message: `${item.kind} #${item.number} skipped: already ${item.state}`,
 				event: "spam_and_off_topic_filter_verdict",
 				eventType: input.eventType,
 				kind: item.kind,
@@ -141,6 +143,7 @@ export default async function ({ init, payload, env }: FlueContext) {
 		await closeIssue(token, input.number);
 
 		console.log({
+			message: `${item.kind} #${item.number} closed: ${data.confidence} confidence spam/off-topic`,
 			event: "spam_and_off_topic_filter_verdict",
 			eventType: input.eventType,
 			kind: item.kind,
@@ -156,6 +159,7 @@ export default async function ({ init, payload, env }: FlueContext) {
 	}
 
 	console.log({
+		message: `${item.kind} #${item.number} left open: ${data.confidence} confidence not spam/off-topic`,
 		event: "spam_and_off_topic_filter_verdict",
 		eventType: input.eventType,
 		kind: item.kind,

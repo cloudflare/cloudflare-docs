@@ -18,33 +18,82 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 	// ── 1. Verify the GitHub webhook signature ─────────────────────────────
 	const secret = (env as Record<string, string>).GITHUB_WEBHOOK_SECRET;
 	const sig = req?.headers.get("x-hub-signature-256") ?? "";
+	const delivery = req?.headers.get("x-github-delivery") ?? undefined;
+	const eventType =
+		(req?.headers.get("x-github-event") as string | null) ?? "unknown";
 	const rawBody = req ? await req.text() : JSON.stringify(payload);
 
 	if (!secret) {
+		console.log({
+			message: `GitHub webhook rejected: secret not configured`,
+			event: "github_webhook_orchestrator",
+			delivery,
+			eventType,
+			action: "rejected_secret_missing",
+		});
 		return new Response("Webhook secret not configured", { status: 500 });
 	}
 
 	if (!(await verifyGitHubSignature(rawBody, sig, secret))) {
+		console.log({
+			message: `GitHub webhook rejected: invalid signature`,
+			event: "github_webhook_orchestrator",
+			delivery,
+			eventType,
+			action: "rejected_invalid_signature",
+		});
 		return new Response("Unauthorized", { status: 401 });
 	}
 
 	const body = JSON.parse(rawBody) as Record<string, unknown>;
-	const eventType =
-		(req?.headers.get("x-github-event") as string | null) ?? "unknown";
+	const webhookAction = body.action;
+	const number = getIssueOrPullRequestNumber(eventType, body);
+	const sender = body.sender as Record<string, unknown> | undefined;
+
+	console.log({
+		message: `GitHub webhook received: ${eventType}.${String(webhookAction ?? "unknown")}`,
+		event: "github_webhook_orchestrator",
+		delivery,
+		eventType,
+		webhookAction,
+		number,
+		sender: sender?.login,
+		senderType: sender?.type,
+		action: "received",
+	});
 
 	// ── 2. Route to the right pipeline ─────────────────────────────────────
 	if (
 		!req ||
 		!(
-			["issues", "pull_request"].includes(eventType) && body.action === "opened"
+			["issues", "pull_request"].includes(eventType) &&
+			webhookAction === "opened"
 		)
 	) {
+		console.log({
+			message: `GitHub webhook ignored: no action needed`,
+			event: "github_webhook_orchestrator",
+			delivery,
+			eventType,
+			webhookAction,
+			number,
+			action: "ignored",
+			reason: "only issues.opened and pull_request.opened are filtered",
+		});
 		return { acted: false, summary: "No action needed." };
 	}
 
 	// ── 3. Dispatch spam-and-off-topic-filter ───────────────────────────────
-	const number = getIssueOrPullRequestNumber(eventType, body);
 	if (!number) {
+		console.log({
+			message: `GitHub webhook ignored: missing issue or PR number`,
+			event: "github_webhook_orchestrator",
+			delivery,
+			eventType,
+			webhookAction,
+			action: "ignored",
+			reason: "missing issue or PR number",
+		});
 		return { acted: false, summary: "No issue or PR number found." };
 	}
 
@@ -57,12 +106,33 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 	});
 
 	if (!response.ok) {
+		console.log({
+			message: `Spam and off-topic filter dispatch failed for ${eventType} #${number}`,
+			event: "github_webhook_orchestrator",
+			delivery,
+			eventType,
+			webhookAction,
+			number,
+			action: "dispatch_failed",
+			status: response.status,
+		});
 		throw new Error(
 			`Spam and off-topic filter failed: ${response.status} ${await response.text()}`,
 		);
 	}
 
-	return response.json();
+	const result = await response.json();
+	console.log({
+		message: `Spam and off-topic filter completed for ${eventType} #${number}`,
+		event: "github_webhook_orchestrator",
+		delivery,
+		eventType,
+		webhookAction,
+		number,
+		action: "dispatched",
+	});
+
+	return result;
 }
 
 function getIssueOrPullRequestNumber(
