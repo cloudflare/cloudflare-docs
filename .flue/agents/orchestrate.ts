@@ -48,16 +48,20 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 	const body = JSON.parse(rawBody) as Record<string, unknown>;
 	const webhookAction = body.action;
 	const number = getIssueOrPullRequestNumber(eventType, body);
+	const title = getIssueOrPullRequestTitle(eventType, body);
 	const sender = body.sender as Record<string, unknown> | undefined;
+	const senderLogin = sender?.login;
+	const webhookLabel = `${eventType}.${String(webhookAction ?? "unknown")}${number ? ` #${number}` : ""}${title ? ` \"${truncateLogValue(title)}\"` : ""}${senderLogin ? ` by @${senderLogin}` : ""}`;
 
 	console.log({
-		message: `GitHub webhook received: ${eventType}.${String(webhookAction ?? "unknown")}`,
+		message: `GitHub webhook received: ${webhookLabel}`,
 		event: "github_webhook_orchestrator",
 		delivery,
 		eventType,
 		webhookAction,
 		number,
-		sender: sender?.login,
+		title,
+		sender: senderLogin,
 		senderType: sender?.type,
 		action: "received",
 	});
@@ -71,12 +75,14 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 		)
 	) {
 		console.log({
-			message: `GitHub webhook ignored: no action needed`,
+			message: `GitHub webhook ignored: ${webhookLabel}`,
 			event: "github_webhook_orchestrator",
 			delivery,
 			eventType,
 			webhookAction,
 			number,
+			title,
+			sender: senderLogin,
 			action: "ignored",
 			reason: "only issues.opened and pull_request.opened are filtered",
 		});
@@ -86,11 +92,13 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 	// ── 3. Dispatch spam-and-off-topic-filter ───────────────────────────────
 	if (!number) {
 		console.log({
-			message: `GitHub webhook ignored: missing issue or PR number`,
+			message: `GitHub webhook ignored: missing number for ${webhookLabel}`,
 			event: "github_webhook_orchestrator",
 			delivery,
 			eventType,
 			webhookAction,
+			title,
+			sender: senderLogin,
 			action: "ignored",
 			reason: "missing issue or PR number",
 		});
@@ -107,12 +115,14 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 
 	if (!response.ok) {
 		console.log({
-			message: `Spam and off-topic filter dispatch failed for ${eventType} #${number}`,
+			message: `Spam and off-topic filter dispatch failed: ${webhookLabel}`,
 			event: "github_webhook_orchestrator",
 			delivery,
 			eventType,
 			webhookAction,
 			number,
+			title,
+			sender: senderLogin,
 			action: "dispatch_failed",
 			status: response.status,
 		});
@@ -123,12 +133,14 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 
 	const result = await response.json();
 	console.log({
-		message: `Spam and off-topic filter completed for ${eventType} #${number}`,
+		message: `Spam and off-topic filter completed: ${webhookLabel}`,
 		event: "github_webhook_orchestrator",
 		delivery,
 		eventType,
 		webhookAction,
 		number,
+		title,
+		sender: senderLogin,
 		action: "dispatched",
 	});
 
@@ -148,4 +160,24 @@ function getIssueOrPullRequestNumber(
 		return (body.pull_request as Record<string, unknown> | undefined)
 			?.number as number | undefined;
 	}
+}
+
+function getIssueOrPullRequestTitle(
+	eventType: string,
+	body: Record<string, unknown>,
+) {
+	if (eventType === "issues") {
+		return (body.issue as Record<string, unknown> | undefined)?.title as
+			| string
+			| undefined;
+	}
+	if (eventType === "pull_request") {
+		return (body.pull_request as Record<string, unknown> | undefined)?.title as
+			| string
+			| undefined;
+	}
+}
+
+function truncateLogValue(value: string) {
+	return value.length > 100 ? `${value.slice(0, 97)}...` : value;
 }

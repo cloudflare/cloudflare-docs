@@ -81,6 +81,7 @@ export default async function ({ init, payload, env }: FlueContext) {
 	const input = parsePayload(payload);
 	const token = await getInstallationToken(env as Record<string, string>);
 	const { item, diff } = await getGitHubContext(token, input);
+	const itemLabel = `${item.kind} #${item.number} "${truncateLogValue(item.title)}"`;
 
 	const { data } = await session.skill("spam-and-off-topic-filter/SKILL.md", {
 		args: { eventType: input.eventType, item, diff },
@@ -89,7 +90,7 @@ export default async function ({ init, payload, env }: FlueContext) {
 
 	if (!data) {
 		console.log({
-			message: `${item.kind} #${item.number} left open: no verdict`,
+			message: `${itemLabel} left open: no verdict`,
 			event: "spam_and_off_topic_filter_verdict",
 			eventType: input.eventType,
 			kind: item.kind,
@@ -113,7 +114,7 @@ export default async function ({ init, payload, env }: FlueContext) {
 	if (data.is_spam && data.confidence !== "low") {
 		if (item.state !== "open") {
 			console.log({
-				message: `${item.kind} #${item.number} skipped: already ${item.state}`,
+				message: `${itemLabel} skipped: already ${item.state}`,
 				event: "spam_and_off_topic_filter_verdict",
 				eventType: input.eventType,
 				kind: item.kind,
@@ -143,7 +144,7 @@ export default async function ({ init, payload, env }: FlueContext) {
 		await closeIssue(token, input.number);
 
 		console.log({
-			message: `${item.kind} #${item.number} closed: ${data.confidence} confidence spam/off-topic`,
+			message: `${itemLabel} closed: ${data.confidence} confidence spam/off-topic`,
 			event: "spam_and_off_topic_filter_verdict",
 			eventType: input.eventType,
 			kind: item.kind,
@@ -159,7 +160,7 @@ export default async function ({ init, payload, env }: FlueContext) {
 	}
 
 	console.log({
-		message: `${item.kind} #${item.number} left open: ${data.confidence} confidence not spam/off-topic`,
+		message: `${itemLabel} left open: ${data.confidence} confidence not spam/off-topic`,
 		event: "spam_and_off_topic_filter_verdict",
 		eventType: input.eventType,
 		kind: item.kind,
@@ -172,6 +173,10 @@ export default async function ({ init, payload, env }: FlueContext) {
 	});
 
 	return { ...data, closed: false };
+}
+
+function truncateLogValue(value: string) {
+	return value.length > 100 ? `${value.slice(0, 97)}...` : value;
 }
 
 function parsePayload(payload: unknown): SpamAndOffTopicFilterPayload {
