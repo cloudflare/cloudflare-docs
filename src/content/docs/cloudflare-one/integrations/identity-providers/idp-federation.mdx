@@ -1,0 +1,108 @@
+---
+pcx_content_type: how-to
+description: Share an identity provider across multiple Cloudflare accounts in your organization using IdP federation.
+products:
+  - cloudflare-one
+title: IdP federation
+sidebar:
+  order: 100
+tags:
+  - REST API
+---
+
+import { Tabs, TabItem, APIRequest, Details } from "~/components";
+
+IdP federation allows organizations with multiple Cloudflare accounts to share a single identity provider (IdP) configuration across accounts. Instead of configuring the same IdP (for example, Okta or Entra ID) separately in every account, you configure it once in a source account and share it with the other accounts in your organization.
+
+When you share an IdP, each recipient account receives a read-only copy of the IdP connection. Users in those accounts authenticate through the source account's IdP, and each account's Access policies evaluate the resulting identity as normal.
+
+## How it works
+
+IdP federation uses two resources:
+
+1. **Federation grant** — Created in the source account, a grant permits a specific IdP to be shared. Creating a grant also provisions a hidden proxy application that handles the cross-account authentication flow.
+2. **Consumer IdP** — A read-only IdP connection automatically created in each recipient account when the grant is distributed. Consumer IdPs cannot be edited or deleted directly — they are managed by the federation lifecycle.
+
+When a user in a recipient account authenticates, the request is routed through the source account's proxy application to the original IdP. The source IdP handles authentication, and the resulting identity claims are passed back to the recipient account's Access policies.
+
+## Prerequisites
+
+- All accounts must belong to the same Cloudflare organization.
+- The source IdP must already be configured and working in the source account.
+- You must have **Administrator** or equivalent permissions in the source account.
+
+## Create a federation grant
+
+A federation grant permits a specific IdP in your account to be shared with other accounts in your organization.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Integrations** > **Identity providers**.
+2. Find the IdP you want to share and select the three dots menu.
+3. Select **Share**.
+4. Confirm the sharing configuration and select **Create grant**.
+
+The IdP will be distributed to other accounts in your organization automatically.
+
+</TabItem> <TabItem label="API">
+
+Make a `POST` request to create a federation grant:
+
+<APIRequest
+	path="/accounts/{account_id}/access/idp_federation_grants"
+	method="POST"
+	json={{
+		idp_id: "<IDP_UUID>",
+	}}
+/>
+
+The response includes the grant `id`, which you can use to manage or delete the grant later.
+
+To list all federation grants in your account:
+
+<APIRequest
+	path="/accounts/{account_id}/access/idp_federation_grants"
+	method="GET"
+/>
+
+To get a specific grant:
+
+<APIRequest
+	path="/accounts/{account_id}/access/idp_federation_grants/{grant_id}"
+	method="GET"
+/>
+
+</TabItem></Tabs>
+
+## Delete a federation grant
+
+Deleting a federation grant removes the shared IdP from all recipient accounts. Consumer IdP connections in those accounts will be automatically cleaned up.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Integrations** > **Identity providers**.
+2. Find the shared IdP and select the three dots menu.
+3. Select **Remove sharing**.
+4. Confirm the deletion.
+
+</TabItem> <TabItem label="API">
+
+<APIRequest
+	path="/accounts/{account_id}/access/idp_federation_grants/{grant_id}"
+	method="DELETE"
+/>
+
+</TabItem></Tabs>
+
+:::caution
+
+Deleting a federation grant immediately removes the consumer IdP from all recipient accounts. Any Access policies in those accounts that reference the federated IdP will no longer match, which may lock users out. Verify that recipient accounts have alternative authentication methods before deleting a grant.
+
+:::
+
+## Limitations
+
+- Consumer IdPs are **read-only**. You cannot modify or delete a consumer IdP directly — manage it through the federation grant in the source account.
+- The source IdP cannot be deleted while an active federation grant references it. Delete the grant first.
+- Federation grants are currently immutable after creation. To change which IdP is shared, delete the existing grant and create a new one.
+- All participating accounts must be in the same Cloudflare organization.
