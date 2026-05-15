@@ -51,4 +51,64 @@ HTTP endpoints are also available to manage the browser lifecycle without using 
 
 Check the [API reference](/api/resources/browser_rendering/) for the full list of endpoints.
 
+## Multiple connections to the same session
+
+A Browser Run session supports multiple simultaneous CDP connections. Two or more clients can connect to the same browser session, or to the same tab, at the same time.
+
+This is useful when you need to separate concerns between different services interacting with the same browser. For example:
+
+- A primary automation script controls navigation and page interactions, while a separate service connects to the same tab to inject credentials or perform privileged operations.
+- An AI agent drives the browser through one connection, while an MCP server connects independently to the same tab to handle sensitive actions the agent should not have direct access to.
+- A monitoring or debugging tool observes a session in real time while another client drives automation.
+
+To connect multiple clients to the same session, [create the session via HTTP](/browser-run/cdp/session-management/#step-1-acquire-a-browser-session) first to obtain a session-specific `webSocketDebuggerUrl`. Both clients then connect to that URL and can discover pages using `browser.targets()`.
+
+:::note
+You must use the session-specific WebSocket URL (which includes the session ID) returned by `POST /devtools/browser`. Connecting to the generic `/devtools/browser?keep_alive=...` endpoint without a session ID creates a new session each time.
+:::
+
+```js
+import puppeteer from "puppeteer-core";
+
+const ACCOUNT_ID = "<ACCOUNT_ID>";
+const API_TOKEN = "<API_TOKEN>";
+const BASE = `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/browser-rendering`;
+const HEADERS = { Authorization: `Bearer ${API_TOKEN}` };
+
+// Step 1: Create a session via HTTP to get a session-specific WebSocket URL
+const res = await fetch(`${BASE}/devtools/browser?keep_alive=600000`, {
+  method: "POST",
+  headers: HEADERS,
+});
+const { sessionId, webSocketDebuggerUrl } = await res.json();
+
+// Step 2: First client connects and navigates to a page
+const browser1 = await puppeteer.connect({
+  browserWSEndpoint: webSocketDebuggerUrl,
+  headers: HEADERS,
+});
+const page = await browser1.newPage();
+await page.goto("https://example.com/login");
+
+// Step 3: Second client connects to the same session
+const browser2 = await puppeteer.connect({
+  browserWSEndpoint: webSocketDebuggerUrl,
+  headers: HEADERS,
+});
+
+// Step 4: Second client finds the page via targets
+const target = browser2
+  .targets()
+  .find((t) => t.url().includes("example.com/login"));
+const samePage = await target.page();
+
+// Both clients can now interact with the same page independently
+await samePage.type("#username", "user@example.com");
+
+// Changes are visible to both clients
+console.log(await page.title()); // reflects any changes made by browser2
+```
+
+How you share the `webSocketDebuggerUrl` between services depends on your architecture. See [Secure credential injection for AI agents](/browser-run/how-to/secure-credential-injection/) for a full example of this pattern.
+
 <Render file="faq" product="browser-run" />
