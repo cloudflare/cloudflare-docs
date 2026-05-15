@@ -49,6 +49,7 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 	const webhookAction = body.action;
 	const number = getIssueOrPullRequestNumber(eventType, body);
 	const title = getIssueOrPullRequestTitle(eventType, body);
+	const itemUrl = getIssueOrPullRequestUrl(eventType, body, number);
 	const sender = body.sender as Record<string, unknown> | undefined;
 	const senderLogin = sender?.login;
 	const webhookLabel = `${eventType}.${String(webhookAction ?? "unknown")}${number ? ` #${number}` : ""}${title ? ` "${truncateLogValue(title)}"` : ""}${senderLogin ? ` by @${senderLogin}` : ""}`;
@@ -61,6 +62,7 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 		webhookAction,
 		number,
 		title,
+		url: itemUrl,
 		sender: senderLogin,
 		senderType: sender?.type,
 		action: "received",
@@ -82,6 +84,7 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 			webhookAction,
 			number,
 			title,
+			url: itemUrl,
 			sender: senderLogin,
 			action: "ignored",
 			reason: "only issues.opened and pull_request.opened are filtered",
@@ -98,6 +101,7 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 			eventType,
 			webhookAction,
 			title,
+			url: itemUrl,
 			sender: senderLogin,
 			action: "ignored",
 			reason: "missing issue or PR number",
@@ -122,6 +126,7 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 			webhookAction,
 			number,
 			title,
+			url: itemUrl,
 			sender: senderLogin,
 			action: "dispatch_failed",
 			status: response.status,
@@ -132,16 +137,28 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 	}
 
 	const result = await response.json();
+	const filterResult = result as {
+		closed?: boolean;
+		is_spam?: boolean;
+		confidence?: string;
+		reason?: string;
+	};
+	const filterOutcome = filterResult.closed ? "closed" : "left open";
 	console.log({
-		message: `Spam and off-topic filter completed: ${webhookLabel}`,
+		message: `Spam and off-topic filter ${filterOutcome}: ${webhookLabel}`,
 		event: "github_webhook_orchestrator",
 		delivery,
 		eventType,
 		webhookAction,
 		number,
 		title,
+		url: itemUrl,
 		sender: senderLogin,
 		action: "dispatched",
+		closed: filterResult.closed,
+		is_spam: filterResult.is_spam,
+		confidence: filterResult.confidence,
+		reason: filterResult.reason,
 	});
 
 	return result;
@@ -159,6 +176,33 @@ function getIssueOrPullRequestNumber(
 	if (eventType === "pull_request") {
 		return (body.pull_request as Record<string, unknown> | undefined)
 			?.number as number | undefined;
+	}
+}
+
+function getIssueOrPullRequestUrl(
+	eventType: string,
+	body: Record<string, unknown>,
+	number: number | undefined,
+) {
+	if (eventType === "issues") {
+		return (
+			((body.issue as Record<string, unknown> | undefined)?.html_url as
+				| string
+				| undefined) ??
+			(number
+				? `https://github.com/cloudflare/cloudflare-docs/issues/${number}`
+				: undefined)
+		);
+	}
+	if (eventType === "pull_request") {
+		return (
+			((body.pull_request as Record<string, unknown> | undefined)?.html_url as
+				| string
+				| undefined) ??
+			(number
+				? `https://github.com/cloudflare/cloudflare-docs/pull/${number}`
+				: undefined)
+		);
 	}
 }
 
