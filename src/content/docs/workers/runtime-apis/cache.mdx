@@ -130,6 +130,12 @@ The `stale-while-revalidate` and `stale-if-error` directives are not supported w
 
 `cache.put` returns a `413` error if `Cache-Control` instructs not to cache or if the response is too large.
 
+:::note
+
+`cache.put` will silently reject a `301` or `302` redirect response when the cache key does not include the query string and the `Location` header contains the request's query string. Refer to [Cache keys](/cache/how-to/cache-keys/#cache-level-ignore-query-string) for details and workarounds. This restriction does not apply on `.workers.dev` domains, which include the query string in the cache key by default.
+
+:::
+
 ### `Match`
 
 ```js

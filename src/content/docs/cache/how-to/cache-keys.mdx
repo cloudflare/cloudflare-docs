@@ -76,6 +76,14 @@ Understanding how `$scheme` interacts with your caching configuration is essenti
 
 A [Cache Level](/cache/how-to/set-caching-levels/) of Ignore Query String creates a Cache Key that includes all the elements in the default cache key, except for the query string in the URI that is no longer included. For instance, a request for `http://example.com/file.jpg?something=123` and a request for `http://example.com/file.jpg?something=789` will have the same cache key, in this case.
 
+:::caution
+
+When the cache key does not include the query string, Cloudflare will not cache `301` or `302` redirect responses if the `Location` header contains the request's query string. This is a security mitigation to prevent cache poisoning, where an attacker could use an unkeyed query string to poison cached redirects for all users.
+
+If you need to cache redirect responses that preserve query strings, either include the query string in your cache key or ensure your origin does not reflect the query string in the `Location` header.
+
+:::
+
 ## Cache Key Settings
 
 The following fields control the Cache Key Template.
