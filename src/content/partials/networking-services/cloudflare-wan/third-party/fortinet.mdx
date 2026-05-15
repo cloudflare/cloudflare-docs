@@ -24,11 +24,11 @@ The FortiGate configuration was tested on two different FortiGate firewalls:
 
 To set up Cloudflare WAN, add IPsec tunnels and static routes to your Cloudflare account using the dashboard or API.
 
-Before proceeding, ensure that you have the anycast IPs assigned to your account. You can find them in the Cloudflare dashboard under **Address Space** > [**Leased IPs**](https://dash.cloudflare.com/?to=/:account/ip-addresses/address-space).
+Before proceeding, ensure that you have the IPv4 anycast address assigned to your account. You can find it in the Cloudflare dashboard under **Address Space** > [**Leased IPs**](https://dash.cloudflare.com/?to=/:account/ip-addresses/address-space).
 
-### IPsec Tunnels
+### IPsec tunnels
 
-Cloudflare recommends customers configure two IPsec tunnels per firewall/router - one to each of the two anycast IP addresses.
+Cloudflare handles failures on its network automatically by advertising your endpoint IP from multiple nodes across many globally distributed data centers. To handle failures on your network, configure two IPsec tunnels from separate routers.
 
 1. Follow the <a href={props.addTunnelsUrl}>Add tunnels</a> instructions to create the required IPsec tunnels with the following options:
    - **Health check type**: Change to _Request_.
