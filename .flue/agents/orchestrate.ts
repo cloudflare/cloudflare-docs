@@ -51,7 +51,7 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 	const title = getIssueOrPullRequestTitle(eventType, body);
 	const sender = body.sender as Record<string, unknown> | undefined;
 	const senderLogin = sender?.login;
-	const webhookLabel = `${eventType}.${String(webhookAction ?? "unknown")}${number ? ` #${number}` : ""}${title ? ` \"${truncateLogValue(title)}\"` : ""}${senderLogin ? ` by @${senderLogin}` : ""}`;
+	const webhookLabel = `${eventType}.${String(webhookAction ?? "unknown")}${number ? ` #${number}` : ""}${title ? ` "${truncateLogValue(title)}"` : ""}${senderLogin ? ` by @${senderLogin}` : ""}`;
 
 	console.log({
 		message: `GitHub webhook received: ${webhookLabel}`,
