@@ -6,14 +6,8 @@ products:
   - workers
 ---
 
-import { Render, InlineBadge } from "~/components";
+import { WranglerNamespace, InlineBadge } from "~/components";
 
 Manage [Artifacts](/artifacts/) namespaces, repositories, and repo-scoped tokens using Wrangler. <InlineBadge text="Private beta" variant="caution" />
 
-:::note
-Requires Wrangler version `4.91.0` or later.
-:::
-
-All `artifacts` commands support `--json` for machine-readable output. Commands that return tokens use a secret-safe output path so credentials are not persisted to Wrangler debug logs.
-
-<Render file="wrangler-commands/artifacts" product="workers" />
+<WranglerNamespace namespace="artifacts" />
