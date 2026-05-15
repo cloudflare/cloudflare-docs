@@ -70,9 +70,22 @@ The MCP server status indicates the synchronization status of the MCP server to 
 
 | Status  | Description                                                                                                                                                |
 | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Error   | The server's authentication failed due to expired or incorrect credentials. To fix the issue, [reauthenticate the server](#reauthenticate-the-mcp-server). |
+| Error   | The server could not be reached or returned an error. Refer to [error details](#error-details) for more information.                                       |
 | Waiting | The server's tools, prompts, and resources are being synchronized.                                                                                         |
 | Ready   | The server was successfully synchronized and all tools, prompts, and resources are available.                                                              |
+
+#### Error details
+
+When an MCP server is in the **Error** state, the API returns an `error_details` object with structured information to help you diagnose the issue:
+
+| Field | Description |
+| --- | --- |
+| `message` | A human-readable description of the error. |
+| `type` | The category of error — for example, `upstream_error` (the server returned an error response) or `unreachable` (the server could not be contacted). |
+| `http_status_code` | The HTTP status code returned by the upstream server, if applicable. |
+| `mcp_error_code` | The MCP protocol error code, if the server returned an MCP-level error. |
+
+Common causes of server errors include expired OAuth credentials, unreachable server URLs, and upstream server misconfigurations. If the error type is `upstream_error`, check the HTTP and MCP error codes to identify the issue on the upstream server. If the type is `unreachable`, verify that the server URL is correct and accessible.
 
 ### Reauthenticate the MCP server
 
@@ -94,6 +107,8 @@ Cloudflare Access automatically synchronizes with your MCP server every 24 hours
 3. Select the three dots > **Sync capabilities**.
 
 The MCP server page will show the updated list of tools and prompts. New tools and prompts are automatically enabled in the MCP server portal.
+
+You can also trigger a sync via the API. The sync endpoint returns the current server state after synchronization, including the updated [server status](#server-status), tool count, and [error details](#error-details) if the sync failed.
 
 ## Create a portal
 
