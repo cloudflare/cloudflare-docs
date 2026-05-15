@@ -25,7 +25,7 @@ This page covers every resource type and how it behaves in Previews.
 | [Queues](#queues) | Shared (producers only) | Point at a different queue |
 | [Vectorize](#other-shared-resources) | Shared | Point at a different index |
 | [Hyperdrive](#other-shared-resources) | Shared | Point at a different config |
-| [Service bindings](#service-bindings) | **Always targets production** | Cannot be changed |
+| [Service bindings](#service-bindings) | **Always targets production** | Cannot be changed. For same-Worker entry points, use [`ctx.exports`](#same-worker-entry-points) instead. |
 | [Secrets](#secrets-and-environment-variables) | Shared across all Previews | No per-Preview scoping today |
 | [Environment variables](#secrets-and-environment-variables) | Shared (defaults) or per-branch (config overrides) | Override in Wrangler config on your branch |
 
@@ -201,6 +201,40 @@ These resources are account-level and shared by default. To isolate them for Pre
 [Service bindings](/workers/runtime-apis/bindings/service-bindings/) from a Preview **always resolve to the bound Worker's production deployment**. You cannot point a service binding at another Worker's Preview.
 
 If you need to test against a non-production version of another Worker, deploy that Worker separately (for example, as a `staging` service) and bind to it explicitly.
+
+### Same-Worker entry points
+
+If you use service bindings to call [named entrypoints](/workers/runtime-apis/bindings/service-bindings/rpc/#named-entrypoints) within the **same Worker**, those bindings also resolve to production — even though the caller and callee are in the same script.
+
+To get preview isolation for same-Worker entry points, use `ctx.exports` instead of `env`:
+
+```js
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export class EngineService extends WorkerEntrypoint {
+  async fetch(request) {
+    return Response.json({ source: "EngineService", env: this.env.ENVIRONMENT });
+  }
+}
+
+export default {
+  async fetch(request, env, ctx) {
+    // Service binding — always calls production, even in a Preview
+    // const resp = await env.ENGINE.fetch(request);
+
+    // Loopback — calls the Preview's own code in a Preview
+    const resp = await ctx.exports.EngineService.fetch(request);
+    return resp;
+  },
+};
+```
+
+No binding or `previews` block is needed for `ctx.exports`. The Preview deployment automatically uses its own code and environment variables for loopback calls.
+
+| Access pattern | In a Preview, calls... |
+| --- | --- |
+| `env.ENGINE` (service binding to self) | Production code with production env vars |
+| `ctx.exports.EngineService` (loopback) | Preview code with preview env vars |
 
 ## Secrets and environment variables
 
