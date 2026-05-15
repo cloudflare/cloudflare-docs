@@ -282,9 +282,9 @@ package.json @cloudflare/content-engineering
 
 # Support
 
-/src/content/docs/support/ @cloudflare/product-owners @cloudflare/customer-support @Nic
-/src/assets/images/support/ @cloudflare/product-owners @cloudflare/customer-support @Nic
-/src/content/docs/billing/ @cloudflare/customer-support @cloudflare/product-owners @Nic
+/src/content/docs/support/ @cloudflare/product-owners @cloudflare/customer-support @ngayerie
+/src/assets/images/support/ @cloudflare/product-owners @cloudflare/customer-support @ngayerie
+/src/content/docs/billing/ @cloudflare/customer-support @cloudflare/product-owners @ngayerie 
 
 # Turnstile
 
