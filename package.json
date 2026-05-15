@@ -29,7 +29,7 @@
 		"test:postbuild": "vitest --project Workers",
 		"flue:dev": "flue dev --root .flue --output .flue/dist --env .env.local",
 		"flue:build": "flue build --root .flue --output .flue/dist",
-		"flue:deploy": "pnpm run flue:build && wrangler deploy --config .flue/dist/wrangler.jsonc --secrets-file .flue/.env",
+		"flue:deploy": "pnpm run flue:build && pnpm run flue:sync-skills:remote && wrangler deploy --config .flue/dist/wrangler.jsonc --secrets-file .flue/.env",
 		"flue:sync-skills": "pnpm run flue:sync-skills:remote",
 		"flue:sync-skills:local": "wrangler r2 object put docs-flue-bucket/.agents/skills/spam-and-off-topic-filter/SKILL.md --file .flue/.agents/skills/spam-and-off-topic-filter/SKILL.md --local --persist-to .flue/dist/.wrangler/state",
 		"flue:sync-skills:remote": "wrangler r2 object put docs-flue-bucket/.agents/skills/spam-and-off-topic-filter/SKILL.md --file .flue/.agents/skills/spam-and-off-topic-filter/SKILL.md --remote",
