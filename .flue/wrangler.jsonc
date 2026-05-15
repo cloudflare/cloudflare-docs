@@ -22,7 +22,7 @@
 			"invocation_logs": false,
 		},
 		"traces": {
-			"enabled": true,
+			"enabled": false,
 			"persist": true,
 			"head_sampling_rate": 1,
 		},
