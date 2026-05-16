@@ -66,7 +66,8 @@ interface SpamAndOffTopicFilterPayload {
 	number: number;
 }
 
-export default async function ({ init, payload, env }: FlueContext) {
+export default async function ({ init, payload, env, runId }: FlueContext) {
+	const input = parsePayload(payload);
 	const bucket = (env as Record<string, unknown>).DOCS_FLUE_BUCKET as R2Bucket;
 	const sandbox = await getVirtualSandbox(bucket);
 	const harness = await init({
@@ -74,14 +75,16 @@ export default async function ({ init, payload, env }: FlueContext) {
 		model: "cloudflare/@cf/moonshotai/kimi-k2.6",
 		role: "cloudflare-docs-bot",
 	});
-	const session = await harness.session();
+	const session = await harness.session(
+		`filter:${input.eventType}:${input.number}:${runId}`,
+	);
 
 	await seedR2Context(bucket, session.fs);
 
-	const input = parsePayload(payload);
 	const token = await getInstallationToken(env as Record<string, string>);
 	const { item, diff } = await getGitHubContext(token, input);
-	const itemLabel = `${item.kind} #${item.number} "${truncateLogValue(item.title)}"`;
+	const itemType = item.kind === "pull_request" ? "PR" : "Issue";
+	const itemLabel = `${itemType} #${item.number} "${truncateLogValue(item.title)}"`;
 
 	const { data } = await session.skill("spam-and-off-topic-filter/SKILL.md", {
 		args: { eventType: input.eventType, item, diff },
@@ -90,7 +93,7 @@ export default async function ({ init, payload, env }: FlueContext) {
 
 	if (!data) {
 		console.log({
-			message: `${itemLabel} left open: no verdict`,
+			message: `${itemType} Left open: ${itemLabel} (no verdict)`,
 			event: "spam_and_off_topic_filter_verdict",
 			eventType: input.eventType,
 			kind: item.kind,
@@ -114,7 +117,7 @@ export default async function ({ init, payload, env }: FlueContext) {
 	if (data.is_spam && data.confidence !== "low") {
 		if (item.state !== "open") {
 			console.log({
-				message: `${itemLabel} skipped: already ${item.state}`,
+				message: `${itemType} Skipped: ${itemLabel} already ${item.state}`,
 				event: "spam_and_off_topic_filter_verdict",
 				eventType: input.eventType,
 				kind: item.kind,
@@ -144,7 +147,7 @@ export default async function ({ init, payload, env }: FlueContext) {
 		await closeIssue(token, input.number);
 
 		console.log({
-			message: `${itemLabel} closed: ${data.confidence} confidence spam/off-topic`,
+			message: `${itemType} Closed: ${itemLabel} (${data.confidence} confidence spam/off-topic)`,
 			event: "spam_and_off_topic_filter_verdict",
 			eventType: input.eventType,
 			kind: item.kind,
@@ -160,7 +163,7 @@ export default async function ({ init, payload, env }: FlueContext) {
 	}
 
 	console.log({
-		message: `${itemLabel} left open: ${data.confidence} confidence not spam/off-topic`,
+		message: `${itemType} Left open: ${itemLabel} (${data.confidence} confidence not spam/off-topic)`,
 		event: "spam_and_off_topic_filter_verdict",
 		eventType: input.eventType,
 		kind: item.kind,
