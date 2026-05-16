@@ -111,7 +111,7 @@ package.json @cloudflare/content-engineering
 /src/content/docs/fundamentals/ @dcpena @cloudflare/product-owners
 /src/content/docs/learning-paths/ @cloudflare/product-owners
 /src/content/docs/network-error-logging/ @dcpena @cloudflare/product-owners
-/src/content/docs/network-interconnect/ @marciocloudflare @cloudflare/product-owners
+/src/content/docs/network-interconnect/ @marciocloudflare @steve-cloudflare @cloudflare/product-owners
 /src/content/docs/notifications/ @dcpena @cloudflare/product-owners
 /src/content/docs/registrar/ @dcpena @cloudflare/product-owners
 /src/content/docs/rules/ @pedrosousa @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
@@ -210,11 +210,11 @@ package.json @cloudflare/content-engineering
 
 # Magic products
 
-/src/content/docs/magic-transit/ @cloudflare/product-owners
-/src/content/docs/cloudflare-network-firewall/ @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
-/src/content/docs/network-flow/ @cloudflare/product-owners
-/src/content/docs/cloudflare-wan/ @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
-/src/content/docs/multi-cloud-networking/ @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
+/src/content/docs/magic-transit/ @steve-cloudflare @cloudflare/product-owners
+/src/content/docs/cloudflare-network-firewall/ @steve-cloudflare @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
+/src/content/docs/network-flow/ @steve-cloudflare @cloudflare/product-owners
+/src/content/docs/cloudflare-wan/ @steve-cloudflare @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
+/src/content/docs/multi-cloud-networking/ @steve-cloudflare @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
 
 # Migration guides
 
