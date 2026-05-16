@@ -50,9 +50,11 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 	const number = getIssueOrPullRequestNumber(eventType, body);
 	const title = getIssueOrPullRequestTitle(eventType, body);
 	const itemUrl = getIssueOrPullRequestUrl(eventType, body, number);
+	const itemType = getIssueOrPullRequestLabel(eventType);
 	const sender = body.sender as Record<string, unknown> | undefined;
 	const senderLogin = sender?.login;
-	const webhookLabel = `${eventType}.${String(webhookAction ?? "unknown")}${number ? ` #${number}` : ""}${title ? ` "${truncateLogValue(title)}"` : ""}${senderLogin ? ` by @${senderLogin}` : ""}`;
+	const itemLabel = `${itemType}${number ? ` #${number}` : ""}${title ? ` "${truncateLogValue(title)}"` : ""}${senderLogin ? ` by @${senderLogin}` : ""}`;
+	const webhookLabel = `${eventType}.${String(webhookAction ?? "unknown")} ${itemLabel}`;
 
 	console.log({
 		message: `GitHub webhook received: ${webhookLabel}`,
@@ -136,16 +138,19 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 		);
 	}
 
-	const result = await response.json();
-	const filterResult = result as {
+	const result = (await response.json()) as {
+		result?: unknown;
+		_meta?: { runId?: string };
+	};
+	const filterResult = result.result as {
 		closed?: boolean;
 		is_spam?: boolean;
 		confidence?: string;
 		reason?: string;
 	};
-	const filterOutcome = filterResult.closed ? "closed" : "left open";
+	const filterOutcome = filterResult.closed ? "Closed" : "Left open";
 	console.log({
-		message: `Spam and off-topic filter ${filterOutcome}: ${webhookLabel}`,
+		message: `${itemType} ${filterOutcome}: ${itemLabel}`,
 		event: "github_webhook_orchestrator",
 		delivery,
 		eventType,
@@ -155,6 +160,7 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 		url: itemUrl,
 		sender: senderLogin,
 		action: "dispatched",
+		filterRunId: result._meta?.runId,
 		closed: filterResult.closed,
 		is_spam: filterResult.is_spam,
 		confidence: filterResult.confidence,
@@ -204,6 +210,12 @@ function getIssueOrPullRequestUrl(
 				: undefined)
 		);
 	}
+}
+
+function getIssueOrPullRequestLabel(eventType: string) {
+	if (eventType === "pull_request") return "PR";
+	if (eventType === "issues") return "Issue";
+	return "GitHub webhook";
 }
 
 function getIssueOrPullRequestTitle(
