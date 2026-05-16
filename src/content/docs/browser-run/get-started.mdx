@@ -8,24 +8,11 @@ products:
   - browser-run
 ---
 
-import { DashButton, Render } from "~/components";
+import { Render } from "~/components";
 
 Cloudflare Browser Run (formerly Browser Rendering) allows you to programmatically control a headless browser, enabling you to do things like take screenshots, generate PDFs, and perform automated browser tasks. This guide will help you choose the right integration method and get you started with your first project.
 
 <Render file="integration-methods" product="browser-run" />
-
-## Dashboard
-
-You can launch a browser session directly from the Cloudflare dashboard to try Browser Run and see what it can do — no API token or code required. For production use, integrate with [Quick Actions](#quick-actions), [Browser Sessions](#browser-sessions), or the [CDP endpoint](/browser-run/cdp/).
-
-1. Go to **Browser Run** in the Cloudflare dashboard.
-2. Select **Create Session**.
-3. Optionally, toggle **Session Recording** to capture a replayable recording of the session.
-4. Your browser session starts immediately with [Live View](/browser-run/features/live-view/), so you can see and interact with it in real time.
-
-After the session closes, any recordings are available under **Browser Run** > **Runs**. To learn more, refer to [Session recording](/browser-run/features/session-recording/).
-
-<DashButton url="/?to=/:account/workers/browser-run" />
 
 ## Quick Actions
 
