@@ -1,0 +1,79 @@
+---
+type: example
+summary: Send transactional emails from a Node.js application using Nodemailer and Cloudflare Email Service SMTP.
+pcx_content_type: example
+title: Send email with Node.js (Nodemailer)
+description: Use Nodemailer to send transactional emails through Cloudflare Email Service authenticated SMTP.
+sidebar:
+  order: 9
+products:
+  - email-service
+---
+
+This example shows how to send transactional emails from a Node.js application using [Nodemailer](https://nodemailer.com/) and Cloudflare Email Service [authenticated SMTP](/email-service/api/send-emails/smtp/).
+
+## Prerequisites
+
+- A domain onboarded for [Email Sending](/email-service/configuration/domains/).
+- A Cloudflare API token with the **Email Sending: Edit** permission. Set it as `CF_API_TOKEN` in your environment.
+- `npm install nodemailer`.
+
+## Send an email
+
+```js
+import nodemailer from "nodemailer";
+
+const transporter = nodemailer.createTransport({
+	host: "smtp.mx.cloudflare.net",
+	port: 465,
+	secure: true, // implicit TLS
+	auth: {
+		user: "api_token",
+		pass: process.env.CF_API_TOKEN,
+	},
+});
+
+const info = await transporter.sendMail({
+	from: '"Acme" <welcome@yourdomain.com>',
+	to: "user@example.com",
+	subject: "Welcome to Acme",
+	text: "Thanks for signing up.",
+	html: "<h1>Welcome to Acme</h1><p>Thanks for signing up.</p>",
+});
+
+console.log("Message sent:", info.messageId);
+```
+
+## Send with an attachment
+
+```js
+const info = await transporter.sendMail({
+	from: '"Acme Billing" <billing@yourdomain.com>',
+	to: "customer@example.com",
+	subject: "Your invoice",
+	text: "Please find your invoice attached.",
+	attachments: [
+		{
+			filename: "invoice-2026-04.pdf",
+			path: "./invoices/invoice-2026-04.pdf",
+			contentType: "application/pdf",
+		},
+	],
+});
+```
+
+Total message size (including base64-encoded attachments) must not exceed 5 MiB. See [Limits](/email-service/platform/limits/) for details.
+
+## Error handling
+
+Nodemailer rejects the promise with an `Error` whose `.responseCode` reflects the SMTP reply code. See [SMTP response codes](/email-service/api/send-emails/smtp/#response-codes) and [Troubleshooting](/email-service/reference/troubleshooting/#smtp-submission-errors).
+
+```js
+try {
+	await transporter.sendMail({
+		/* ... */
+	});
+} catch (err) {
+	console.error(err.responseCode, err.message);
+}
+```

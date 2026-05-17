@@ -1,0 +1,84 @@
+---
+type: example
+summary: Send transactional emails from Python using smtplib and Cloudflare Email Service SMTP.
+pcx_content_type: example
+title: Send email with Python (smtplib)
+description: Use the Python smtplib standard library to send transactional emails through Cloudflare Email Service authenticated SMTP.
+sidebar:
+  order: 10
+products:
+  - email-service
+---
+
+This example shows how to send a multipart transactional email from Python using the standard-library [`smtplib`](https://docs.python.org/3/library/smtplib.html) and Cloudflare Email Service [authenticated SMTP](/email-service/api/send-emails/smtp/).
+
+## Prerequisites
+
+- A domain onboarded for [Email Sending](/email-service/configuration/domains/).
+- A Cloudflare API token with the **Email Sending: Edit** permission. Set it as `CF_API_TOKEN` in your environment.
+- Python 3.8 or later.
+
+## Send an email
+
+```python
+import os
+import smtplib
+from email.message import EmailMessage
+
+msg = EmailMessage()
+msg["From"] = "Acme <welcome@yourdomain.com>"
+msg["To"] = "user@example.com"
+msg["Subject"] = "Welcome to Acme"
+msg.set_content("Thanks for signing up.")
+msg.add_alternative(
+    "<h1>Welcome to Acme</h1><p>Thanks for signing up.</p>",
+    subtype="html",
+)
+
+with smtplib.SMTP_SSL("smtp.mx.cloudflare.net", 465) as s:
+    s.login("api_token", os.environ["CF_API_TOKEN"])
+    s.send_message(msg)
+```
+
+`smtplib.SMTP_SSL` opens an implicit-TLS connection on port `465`, which is what Cloudflare's SMTP endpoint requires. Do not use `smtplib.SMTP` with `starttls()`; `STARTTLS` is not supported.
+
+## Send to multiple recipients
+
+```python
+msg["To"] = ", ".join([
+    "user1@example.com",
+    "user2@example.com",
+    "user3@example.com",
+])
+```
+
+A single SMTP session can deliver to up to 50 `RCPT TO` addresses. See [Limits](/email-service/platform/limits/).
+
+## Send with an attachment
+
+```python
+from pathlib import Path
+
+pdf = Path("invoice-2026-04.pdf").read_bytes()
+msg.add_attachment(
+    pdf,
+    maintype="application",
+    subtype="pdf",
+    filename="invoice-2026-04.pdf",
+)
+```
+
+## Error handling
+
+`smtplib` raises subclasses of `smtplib.SMTPException` with the SMTP reply code attached. See [SMTP response codes](/email-service/api/send-emails/smtp/#response-codes) and [Troubleshooting](/email-service/reference/troubleshooting/#smtp-submission-errors).
+
+```python
+try:
+    with smtplib.SMTP_SSL("smtp.mx.cloudflare.net", 465) as s:
+        s.login("api_token", os.environ["CF_API_TOKEN"])
+        s.send_message(msg)
+except smtplib.SMTPAuthenticationError as e:
+    print(f"Auth failed: {e.smtp_code} {e.smtp_error!r}")
+except smtplib.SMTPResponseException as e:
+    print(f"SMTP error: {e.smtp_code} {e.smtp_error!r}")
+```
