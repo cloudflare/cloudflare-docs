@@ -198,7 +198,7 @@ export default defineConfig({
 									"/markdown.zip",
 									"/style-guide/index.md",
 									"/videos/**",
-								"/agent-setup/",
+									"/agent-setup/",
 								],
 							}),
 						]
