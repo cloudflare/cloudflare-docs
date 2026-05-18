@@ -11,7 +11,7 @@ head:
     content: Troubleshooting a slow website
 ---
 
-import { Details, Render, Tabs, TabItem, GlossaryTooltip } from "~/components";
+import { Details, DashButton, Tabs, TabItem, GlossaryTooltip } from "~/components";
 
 This guide helps you identify and resolve performance issues affecting your website. It starts with basic diagnostics and progresses to advanced troubleshooting techniques.
 
@@ -66,7 +66,7 @@ The first step is to identify which specific resources are causing slowness. A s
 
 ### Use browser developer tools
 
-1. Open your browser's developer tools (press `F12` or right-click and select **Inspect**).
+1. Open your browser's developer tools.
 2. Go to the **Network** tab.
 3. Reload the page and observe which requests take the longest.
 4. Sort by **Time** or **Duration** to identify the slowest assets.
@@ -90,7 +90,9 @@ For a complete record of all requests, [generate a HAR file](/support/troublesho
 
 ### Run a speed test
 
-1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/:zone/speed).
+1. Go to the Cloudflare dashboard.
+
+   <DashButton url="/?to=/:account/:zone/speed" />
 2. Select **Observatory**.
 3. Enter the URL you want to test and select **Run test**.
 
@@ -103,8 +105,8 @@ Observatory reports key metrics:
 | **Largest Contentful Paint (LCP)** | Time until the largest visible element loads | Under 2.5 seconds |
 | **First Contentful Paint (FCP)** | Time until the first content appears | Under 1.8 seconds |
 | **Cumulative Layout Shift (CLS)** | Visual stability during page load | Under 0.1 |
-| **Time to First Byte (TTFB)** | Time until the first byte of response is received | Under 800ms |
-| **Total Blocking Time (TBT)** | Time the main thread is blocked | Under 200ms |
+| **Time to First Byte (TTFB)** | Time until the first byte of response is received | Under 800 ms |
+| **Total Blocking Time (TBT)** | Time the main thread is blocked | Under 200 ms |
 
 ### Enable recommended optimizations
 
@@ -156,7 +158,9 @@ Time to First Byte: 0.350s
 Total Time: 1.250s
 ```
 
-### Understanding the metrics
+### Understand the metrics
+
+The curl timing breakdown shows the following:
 
 | Metric | Description | High value indicates |
 |--------|-------------|---------------------|
@@ -204,7 +208,9 @@ For a complete list, refer to [Cloudflare cache responses](/cache/concepts/cache
 
 ### Use Cache Analytics
 
-1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/:zone/caching).
+1. Go to the Cloudflare dashboard.
+
+   <DashButton url="/?to=/:account/:zone/caching" />
 2. Review the **Cache Performance** section.
 3. Filter by **Cache status equals MISS** or **DYNAMIC** to identify uncached content.
 
@@ -328,6 +334,8 @@ Common causes of unexpected routing:
 | High latency despite nearby data center | Network congestion on the path |
 
 ### Solutions for origin distance
+
+Consider these solutions based on your needs:
 
 | Solution | Description | Best for |
 |----------|-------------|----------|
