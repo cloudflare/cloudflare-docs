@@ -13,7 +13,6 @@
 *.ts @cloudflare/content-engineering @kodster28
 *.astro @cloudflare/content-engineering @kodster28
 package.json @cloudflare/content-engineering
-/src/schemas/tags.ts @cloudflare/content-engineering @kodster28
 /src/util/api.ts @cloudflare/content-engineering @kodster28
 /src/content/workers-ai-models/ @craigsdennis @cloudflare/content-engineering @cloudflare/product-owners @kodster28
 /public/__redirects @cloudflare/content-engineering @cloudflare/product-owners
@@ -268,7 +267,7 @@ package.json @cloudflare/content-engineering
 
 /src/content/docs/support/ @cloudflare/product-owners @cloudflare/customer-support @ngayerie
 /src/assets/images/support/ @cloudflare/product-owners @cloudflare/customer-support @ngayerie
-/src/content/docs/billing/ @cloudflare/customer-support @cloudflare/product-owners @ngayerie 
+/src/content/docs/billing/ @cloudflare/customer-support @cloudflare/product-owners @ngayerie
 
 # Turnstile
 
