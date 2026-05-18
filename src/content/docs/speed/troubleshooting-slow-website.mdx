@@ -17,7 +17,7 @@ This guide helps you identify and resolve performance issues affecting your webs
 
 ## Before you start
 
-Saying "my website is slow" is not enough to diagnose a performance issue. To effectively troubleshoot, you need to:
+Performance issues are easier to solve when you can pinpoint exactly what is slow. To effectively troubleshoot, start by gathering the following information:
 
 1. **Identify specific slow requests** - Determine which URLs, assets, or API endpoints are slow.
 2. **Measure the slowness** - Quantify the delay (for example, "this image takes 5 seconds to load").
@@ -151,7 +151,7 @@ Uncached content must be fetched from your origin server, adding latency. Use [C
 Use `curl` to check the cache status of a specific asset:
 
 ```bash
-curl -sI https://www.example.com/asset.jpg | grep -i "cf-cache-status"
+curl -s -D- -o /dev/null https://www.example.com/asset.jpg | grep -i "cf-cache-status"
 ```
 
 Possible values:
