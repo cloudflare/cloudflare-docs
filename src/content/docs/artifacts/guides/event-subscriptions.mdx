@@ -1,6 +1,6 @@
 ---
 title: Event subscriptions
-description: Subscribe to Artifacts events for repo lifecycle and Git operations.
+description: Subscribe to Artifacts events for repo lifecycle changes.
 pcx_content_type: how-to
 sidebar:
   order: 4
@@ -9,12 +9,12 @@ products:
 ---
 
 
-Artifacts emits structured events for every repository lifecycle change — pushes, clones, fetches, forks, imports, and more. By subscribing to these events through [event subscriptions](/queues/event-subscriptions/), you can consume them with a Worker or HTTP pull consumer to build commit-driven automation.
+Artifacts emits structured events for repository lifecycle changes — creates, deletes, forks, imports, and clones. By subscribing to these events through [event subscriptions](/queues/event-subscriptions/), you can consume them from a Worker to build commit-driven automation.
 
 For example:
+- Run custom workflows when a repository is created or imported
+- Kick off a build and deploy the change when an agent pushes to a repo
 - Trigger a review agent on every push
-- Mirror repositories to an external provider
-- Run custom lint or deploy workflows when code changes
 
 ## Artifacts events
 
@@ -24,7 +24,7 @@ Subscribe to the `artifacts` source to receive events for any repository in your
 
 #### `repo.created`
 
-Triggered when a repository is created.
+Triggered when a repository is created. Includes the repo ID, default branch, description, and timestamps.
 
 **Example:**
 
@@ -34,30 +34,29 @@ Triggered when a repository is created.
   "source": {
     "type": "artifacts",
     "namespace": "my-namespace",
-    "repoName": "my-repo",
-    "user": {
-      "id": "user-id",
-      "email": "user@example.com"
-    }
+    "repoName": "my-repo"
   },
   "payload": {
-    "repoId": "repo-12345678-90ab-cdef-1234-567890abcdef",
+    "repoId": "0tvugavnogssnwzk",
     "defaultBranch": "main",
     "description": "My Artifacts repository",
-    "readOnly": false
+    "readOnly": false,
+    "createdAt": "2026-05-18T15:53:46.833Z",
+    "updatedAt": "2026-05-18T15:53:46.833Z",
+    "lastPushAt": null
   },
   "metadata": {
     "accountId": "f9f79265f388666de8122cfb508d7776",
     "eventSubscriptionId": "1830c4bb612e43c3af7f4cada31fbf3f",
     "eventSchemaVersion": 1,
-    "eventTimestamp": "2025-05-01T02:48:57.132Z"
+    "eventTimestamp": "2026-05-18T15:53:48.187Z"
   }
 }
 ```
 
 #### `repo.deleted`
 
-Triggered when a repository is deleted.
+Triggered when a repository is deleted. Includes the repo ID, default branch, description, and timestamps.
 
 **Example:**
 
@@ -67,30 +66,29 @@ Triggered when a repository is deleted.
   "source": {
     "type": "artifacts",
     "namespace": "my-namespace",
-    "repoName": "my-repo",
-    "user": {
-      "id": "user-id",
-      "email": "user@example.com"
-    }
+    "repoName": "my-repo"
   },
   "payload": {
-    "repoId": "repo-12345678-90ab-cdef-1234-567890abcdef",
+    "repoId": "0tvugavnogssnwzk",
     "defaultBranch": "main",
     "description": "My Artifacts repository",
-    "readOnly": false
+    "readOnly": false,
+    "createdAt": "2026-05-18T15:53:46.833Z",
+    "updatedAt": "2026-05-18T15:53:46.833Z",
+    "lastPushAt": null
   },
   "metadata": {
     "accountId": "f9f79265f388666de8122cfb508d7776",
     "eventSubscriptionId": "1830c4bb612e43c3af7f4cada31fbf3f",
     "eventSchemaVersion": 1,
-    "eventTimestamp": "2025-05-01T02:48:57.132Z"
+    "eventTimestamp": "2026-05-18T15:53:59.914Z"
   }
 }
 ```
 
 #### `repo.forked`
 
-Triggered when a repository is forked. The source identifies the original repository; the payload contains the target repository.
+Triggered when a repository is forked. Includes the original repo in the source and the new fork's namespace, repo name, repo ID, and timestamps in the payload.
 
 **Example:**
 
@@ -100,32 +98,31 @@ Triggered when a repository is forked. The source identifies the original reposi
   "source": {
     "type": "artifacts",
     "namespace": "source-namespace",
-    "repoName": "source-repo",
-    "user": {
-      "id": "user-id",
-      "email": "user@example.com"
-    }
+    "repoName": "source-repo"
   },
   "payload": {
     "namespace": "target-namespace",
     "repoName": "target-repo",
-    "repoId": "repo-12345678-90ab-cdef-1234-567890abcdef",
+    "repoId": "5ankv1vhl4xnw7wq",
     "defaultBranch": "main",
     "description": "Fork of source-repo",
-    "readOnly": false
+    "readOnly": false,
+    "createdAt": "2026-05-18T15:53:52.384Z",
+    "updatedAt": "2026-05-18T15:53:54.579Z",
+    "lastPushAt": null
   },
   "metadata": {
     "accountId": "f9f79265f388666de8122cfb508d7776",
     "eventSubscriptionId": "1830c4bb612e43c3af7f4cada31fbf3f",
     "eventSchemaVersion": 1,
-    "eventTimestamp": "2025-05-01T02:48:57.132Z"
+    "eventTimestamp": "2026-05-18T15:53:54.641Z"
   }
 }
 ```
 
 #### `repo.imported`
 
-Triggered when a repository is imported from an external Git remote.
+Triggered when a repository is imported from an external Git remote. Includes the repo ID, source URL, branch, and timestamps.
 
 **Example:**
 
@@ -135,17 +132,16 @@ Triggered when a repository is imported from an external Git remote.
   "source": {
     "type": "artifacts",
     "namespace": "my-namespace",
-    "repoName": "my-repo",
-    "user": {
-      "id": "user-id",
-      "email": "user@example.com"
-    }
+    "repoName": "my-repo"
   },
   "payload": {
-    "repoId": "repo-12345678-90ab-cdef-1234-567890abcdef",
+    "repoId": "d7nd72k964cv9kub",
     "defaultBranch": "main",
-    "description": "Imported repository",
+    "description": null,
     "readOnly": false,
+    "createdAt": "2026-05-18T15:53:54.864Z",
+    "updatedAt": "2026-05-18T15:53:57.737Z",
+    "lastPushAt": null,
     "sourceUrl": "https://github.com/example/repo.git",
     "branch": "main"
   },
@@ -153,7 +149,7 @@ Triggered when a repository is imported from an external Git remote.
     "accountId": "f9f79265f388666de8122cfb508d7776",
     "eventSubscriptionId": "1830c4bb612e43c3af7f4cada31fbf3f",
     "eventSchemaVersion": 1,
-    "eventTimestamp": "2025-05-01T02:48:57.132Z"
+    "eventTimestamp": "2026-05-18T15:53:58.195Z"
   }
 }
 ```
@@ -164,7 +160,7 @@ Subscribe to the `artifacts.repo` source and provide a `namespace` and `repo_nam
 
 #### `pushed`
 
-Triggered when a ref is pushed to a repository.
+Triggered when commits are pushed to a repository. Includes the branch, before and after commit SHAs, commit messages, authors, and total commit count.
 
 **Example:**
 
@@ -174,11 +170,7 @@ Triggered when a ref is pushed to a repository.
   "source": {
     "type": "artifacts.repo",
     "namespace": "my-namespace",
-    "repoName": "my-repo",
-    "user": {
-      "id": "user-id",
-      "email": "user@example.com"
-    }
+    "repoName": "my-repo"
   },
   "payload": {
     "ref": "refs/heads/main",
@@ -202,14 +194,14 @@ Triggered when a ref is pushed to a repository.
     "accountId": "f9f79265f388666de8122cfb508d7776",
     "eventSubscriptionId": "1830c4bb612e43c3af7f4cada31fbf3f",
     "eventSchemaVersion": 1,
-    "eventTimestamp": "2025-05-01T02:48:57.132Z"
+    "eventTimestamp": "2026-05-18T15:53:47.132Z"
   }
 }
 ```
 
 #### `cloned`
 
-Triggered when a repository is cloned (full fetch with no existing objects). The payload is empty.
+Triggered when a repository is cloned. Includes the namespace and repo name of the cloned repository.
 
 **Example:**
 
@@ -219,25 +211,21 @@ Triggered when a repository is cloned (full fetch with no existing objects). The
   "source": {
     "type": "artifacts.repo",
     "namespace": "my-namespace",
-    "repoName": "my-repo",
-    "user": {
-      "id": "user-id",
-      "email": "user@example.com"
-    }
+    "repoName": "my-repo"
   },
   "payload": {},
   "metadata": {
     "accountId": "f9f79265f388666de8122cfb508d7776",
-    "eventSubscriptionId": "1830c4bb612e43c3af7f4cada31fbf3f",
+    "eventSubscriptionId": "0ab4c7b45a39491ba5da2973f3d093a6",
     "eventSchemaVersion": 1,
-    "eventTimestamp": "2025-05-01T02:48:57.132Z"
+    "eventTimestamp": "2026-05-18T15:53:51.358Z"
   }
 }
 ```
 
 #### `fetched`
 
-Triggered when incremental updates are fetched from a repository. The payload is empty.
+Triggered when updates are fetched from a repository. Includes the namespace and repo name of the fetched repository.
 
 **Example:**
 
@@ -247,18 +235,14 @@ Triggered when incremental updates are fetched from a repository. The payload is
   "source": {
     "type": "artifacts.repo",
     "namespace": "my-namespace",
-    "repoName": "my-repo",
-    "user": {
-      "id": "user-id",
-      "email": "user@example.com"
-    }
+    "repoName": "my-repo"
   },
   "payload": {},
   "metadata": {
     "accountId": "f9f79265f388666de8122cfb508d7776",
-    "eventSubscriptionId": "1830c4bb612e43c3af7f4cada31fbf3f",
+    "eventSubscriptionId": "0ab4c7b45a39491ba5da2973f3d093a6",
     "eventSchemaVersion": 1,
-    "eventTimestamp": "2025-05-01T02:48:57.132Z"
+    "eventTimestamp": "2026-05-18T15:53:51.358Z"
   }
 }
 ```
