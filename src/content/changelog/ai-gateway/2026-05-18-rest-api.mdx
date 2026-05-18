@@ -3,10 +3,10 @@ title: Call any AI model through AI Gateway's new REST API
 description: Call third-party and Workers AI models through one Cloudflare REST API, with AI Gateway features applied automatically.
 products:
   - ai-gateway
-date: 2026-05-18
+date: 2026-05-19
 ---
 
-AI Gateway now has its own REST API on `api.cloudflare.com`. You can call any model — whether from OpenAI, Anthropic, Google, or hosted on Workers AI — through one unified API, using the same endpoints and authentication regardless of provider. Three endpoints are available:
+AI Gateway now uses the AI REST API on `api.cloudflare.com`. You can call any model — whether from OpenAI, Anthropic, Google, or hosted on Workers AI — through one unified API, using the same endpoints and authentication regardless of provider. Three endpoints are available:
 
 - `POST /ai/run` — universal endpoint for all models and modalities
 - `POST /ai/v1/chat/completions` — OpenAI SDK compatible
@@ -26,6 +26,6 @@ All AI Gateway features — logging, caching, rate limiting, and guardrails — 
 
 Every request through the REST API is routed through your account's default gateway, which is created automatically on first use. To route requests through a specific gateway, add the `cf-aig-gateway-id` header.
 
-If you are already calling Workers AI models through the existing REST API, replace `/ai/run/@cf/{model}` with `/ai/run`, and move the model name into the request body with `"provider": "cloudflare"`.
+If you are already calling Workers AI models through the existing REST API, that path (`/ai/run/@cf/{model}`) continues to work. To call Workers AI models through AI Gateway, replace it with `/ai/run` and move the model name into the request body with `"provider": "cloudflare"`.
 
 For more details and examples, refer to the [REST API documentation](/ai-gateway/usage/rest-api/).
