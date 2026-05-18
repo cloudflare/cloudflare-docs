@@ -19,7 +19,6 @@ export { default as Description } from "./Description.astro";
 export { default as Details } from "./Details.astro";
 export { default as DirectoryListing } from "./DirectoryListing.astro";
 export { default as Example } from "./Example.astro";
-export { default as ExternalResources } from "./ExternalResources.astro";
 export { default as ExtraFlagDetails } from "./ExtraFlagDetails.astro";
 export { default as Feature } from "./Feature.astro";
 export { default as FeatureTable } from "./FeatureTable.astro";

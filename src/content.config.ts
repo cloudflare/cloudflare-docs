@@ -12,7 +12,6 @@ import { granularControlApplicationsCollectionConfig } from "./content/collectio
 import { middlecacheLoader } from "./util/custom-loaders";
 
 import {
-	appsSchema,
 	catalogModelsSchema,
 	changelogSchema,
 	baseSchema,
@@ -112,10 +111,6 @@ export const collections = {
 	videos: defineCollection({
 		loader: file("src/content/videos/index.yaml"),
 		schema: videosSchema,
-	}),
-	apps: defineCollection({
-		loader: file("src/content/apps/index.yaml"),
-		schema: appsSchema,
 	}),
 	"warp-releases": defineCollection({
 		loader: dataLoader("warp-releases"),
