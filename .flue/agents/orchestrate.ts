@@ -9,7 +9,7 @@
  *
  * POST /agents/orchestrate/:id
  */
-import type { FlueContext } from "@flue/sdk/client";
+import type { FlueContext } from "@flue/runtime";
 import { verifyGitHubSignature } from "../lib/github";
 
 export const triggers = { webhook: true };

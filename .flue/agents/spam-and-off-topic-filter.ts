@@ -9,8 +9,12 @@
  *
  * POST /agents/spam-and-off-topic-filter/:id  (also callable via session.task())
  */
-import type { FlueContext } from "@flue/sdk/client";
-import { getVirtualSandbox } from "@flue/sdk/cloudflare";
+import type { FlueContext } from "@flue/runtime";
+import {
+	getDefaultWorkspace,
+	getShellSandbox,
+	hydrateFromBucket,
+} from "@flue/runtime/cloudflare";
 import * as v from "valibot";
 import {
 	closeIssue,
@@ -20,7 +24,6 @@ import {
 	getPullRequestFiles,
 	postComment,
 } from "../lib/github";
-import { seedR2Context } from "../lib/seed-r2";
 
 export const triggers = { webhook: true };
 
@@ -68,18 +71,26 @@ interface SpamAndOffTopicFilterPayload {
 
 export default async function ({ init, payload, env, runId }: FlueContext) {
 	const input = parsePayload(payload);
-	const bucket = (env as Record<string, unknown>).DOCS_FLUE_BUCKET as R2Bucket;
-	const sandbox = await getVirtualSandbox(bucket);
+	const typedEnv = env as Record<string, unknown>;
+	const bucket = typedEnv.DOCS_FLUE_BUCKET as R2Bucket;
+	const loader = typedEnv.LOADER as Parameters<
+		typeof getShellSandbox
+	>[0]["loader"];
+
+	const workspace = getDefaultWorkspace();
+	if (!(await workspace.exists("/.hydrated"))) {
+		await hydrateFromBucket(workspace, bucket);
+		await workspace.writeFile("/.hydrated", new Date().toISOString());
+	}
+
 	const harness = await init({
-		sandbox,
+		sandbox: getShellSandbox({ workspace, loader }),
 		model: "cloudflare/@cf/moonshotai/kimi-k2.6",
 		role: "cloudflare-docs-bot",
 	});
 	const session = await harness.session(
 		`filter:${input.eventType}:${input.number}:${runId}`,
 	);
-
-	await seedR2Context(bucket, session.fs);
 
 	const token = await getInstallationToken(env as Record<string, string>);
 	const { item, diff } = await getGitHubContext(token, input);

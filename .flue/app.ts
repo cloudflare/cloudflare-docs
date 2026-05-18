@@ -1,17 +1,23 @@
-import { registerProvider, flue } from "@flue/sdk/app";
+import { env as workerEnv } from "cloudflare:workers";
+import { registerProvider, flue } from "@flue/runtime/app";
+
+const bindings = workerEnv as unknown as {
+	AI: Ai;
+	DOCS_FLUE_AI_GATEWAY_ID: string;
+};
+
+// Register at module scope so the provider is configured in every isolate,
+// including the per-agent Durable Objects that make model calls.
+registerProvider("cloudflare", {
+	api: "cloudflare-ai-binding" as const,
+	binding: bindings.AI,
+	gateway: {
+		id: bindings.DOCS_FLUE_AI_GATEWAY_ID,
+	},
+});
 
 export default {
 	fetch(req: Request, env: Record<string, string>, ctx: ExecutionContext) {
-		// Use the Workers AI binding directly — no external provider or API key needed.
-		// Requests route through the docs-flue AI Gateway for observability and rate limiting.
-		registerProvider("cloudflare", {
-			api: "cloudflare-ai-binding" as const,
-			binding: (env as unknown as { AI: Ai }).AI,
-			gateway: {
-				id: env.DOCS_FLUE_AI_GATEWAY_ID,
-			},
-		});
-
 		return flue().fetch(req, env, ctx);
 	},
 };
