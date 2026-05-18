@@ -174,27 +174,35 @@ Triggered when commits are pushed to a repository. Includes the branch, before a
   },
   "payload": {
     "ref": "refs/heads/main",
-    "before": "abc123def456",
-    "after": "def789ghi012",
+    "before": "abc123def456abc123def456abc123def456abc1",
+    "after": "def789ghi012def789ghi012def789ghi012def7",
     "commits": [
       {
-        "id": "def789ghi012",
+        "id": "def789ghi012def789ghi012def789ghi012def7",
         "message": "Fix bug in authentication",
-        "truncated": false,
-        "timestamp": 1714522137,
+        "messageTruncated": false,
+        "timestamp": "2025-05-01T02:48:57.000Z",
         "author": {
           "name": "Developer Name",
           "email": "developer@example.com"
-        }
+        },
+        "committer": {
+          "name": "Developer Name",
+          "email": "developer@example.com"
+        },
+        "parents": [
+          "abc123def456abc123def456abc123def456abc1"
+        ]
       }
     ],
-    "totalCommitsCount": 1
+    "totalCommitsCount": 1,
+    "commitsTruncated": false
   },
   "metadata": {
     "accountId": "f9f79265f388666de8122cfb508d7776",
     "eventSubscriptionId": "1830c4bb612e43c3af7f4cada31fbf3f",
     "eventSchemaVersion": 1,
-    "eventTimestamp": "2026-05-18T15:53:47.132Z"
+    "eventTimestamp": "2025-05-01T02:48:57.132Z"
   }
 }
 ```
