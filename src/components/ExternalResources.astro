@@ -8,7 +8,7 @@ import rehypeExternalLinks from "~/plugins/rehype/external-links";
 type Props = z.infer<typeof props>;
 
 const props = z.object({
-	type: z.enum(["apps", "videos"]),
+	type: z.enum(["apps"]),
 	tags: z.string().array().optional(),
 	products: z.string().array().optional(),
 	cloudflareOnly: z.boolean().default(true),

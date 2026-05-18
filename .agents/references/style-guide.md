@@ -8,10 +8,10 @@ Prescriptive rules for writing and reviewing content in this repository. Distill
 
 These characters have special meaning in MDX and **will break the build** if used unescaped in prose, tables, or headings:
 
-| Character | Problem | Fix |
-| --------- | ------- | --- |
-| `{` `}` | Interpreted as JS expressions | Wrap in backticks or use `\{` `\}` |
-| `<` `>` | Interpreted as JSX elements | Use `&lt;` `&gt;` or wrap in backticks |
+| Character | Problem                       | Fix                                    |
+| --------- | ----------------------------- | -------------------------------------- |
+| `{` `}`   | Interpreted as JS expressions | Wrap in backticks or use `\{` `\}`     |
+| `<` `>`   | Interpreted as JSX elements   | Use `&lt;` `&gt;` or wrap in backticks |
 
 Component imports must appear after the frontmatter block. A used-but-not-imported component is a silent build failure.
 
@@ -21,31 +21,31 @@ Component imports must appear after the frontmatter block. A used-but-not-import
 
 ### Required fields
 
-| Field | Rule |
-| ----- | ---- |
-| `title` | Required. Plain text. |
-| `pcx_content_type` | Required. Must be one of the valid values below. |
-| `description` | Required for all pages with `pcx_content_type`. 1–2 self-contained sentences, 50–160 characters. |
+| Field              | Rule                                                                                             |
+| ------------------ | ------------------------------------------------------------------------------------------------ |
+| `title`            | Required. Plain text.                                                                            |
+| `pcx_content_type` | Required. Must be one of the valid values below.                                                 |
+| `description`      | Required for all pages with `pcx_content_type`. 1–2 self-contained sentences, 50–160 characters. |
 
 Valid `pcx_content_type` values: `changelog`, `concept`, `configuration`, `design-guide`, `example`, `faq`, `get-started`, `how-to`, `integration-guide`, `implementation-guide`, `learning-unit`, `navigation`, `overview`, `reference`, `reference-architecture`, `reference-architecture-diagram`, `release-notes`, `solution-guide`, `troubleshooting`, `tutorial`, `video`.
 
 ### Optional fields
 
-| Field | Type | Description |
-| ----- | ---- | ----------- |
-| `sidebar.order` | number | Sort order in the left nav. Lower = higher. |
-| `sidebar.label` | string | Override the nav label (defaults to `title`). |
-| `sidebar.hidden` | boolean | Hide from nav but keep the page accessible. |
-| `products` | array | Related directory entries by filename from `src/content/directory/`. |
-| `tags` | array | Related keywords. Validated against allowlist in `src/schemas/tags.ts` — invalid tags fail the build. |
-| `difficulty` | string | For tutorials: `Beginner`, `Intermediate`, or `Advanced`. Shown in tutorial listings. |
-| `reviewed` | string | `YYYY-MM-DD` of last explicit end-to-end review. |
-| `summary` | string | Short description rendered below the page title on the page itself. |
-| `noindex` | boolean | Adds `noindex` to the page — use for deprecated/legacy content. |
-| `chatbot_deprioritize` | boolean | De-prioritizes the page in Support AI responses. Companion to `noindex`. |
-| `canonical` | string | Override the `<link rel="canonical">` URL. |
-| `hideChildren` | boolean | Collapses this nav group to a single link to the index page. |
-| `feedback` | boolean | Show/hide the feedback prompt. Defaults to `true`. |
+| Field                  | Type    | Description                                                                                           |
+| ---------------------- | ------- | ----------------------------------------------------------------------------------------------------- |
+| `sidebar.order`        | number  | Sort order in the left nav. Lower = higher.                                                           |
+| `sidebar.label`        | string  | Override the nav label (defaults to `title`).                                                         |
+| `sidebar.hidden`       | boolean | Hide from nav but keep the page accessible.                                                           |
+| `products`             | array   | Related directory entries by filename from `src/content/directory/`.                                  |
+| `tags`                 | array   | Related keywords. Validated against allowlist in `src/schemas/tags.ts` — invalid tags fail the build. |
+| `difficulty`           | string  | For tutorials: `Beginner`, `Intermediate`, or `Advanced`. Shown in tutorial listings.                 |
+| `reviewed`             | string  | `YYYY-MM-DD` of last explicit end-to-end review.                                                      |
+| `summary`              | string  | Short description rendered below the page title on the page itself.                                   |
+| `noindex`              | boolean | Adds `noindex` to the page — use for deprecated/legacy content.                                       |
+| `chatbot_deprioritize` | boolean | De-prioritizes the page in Support AI responses. Companion to `noindex`.                              |
+| `canonical`            | string  | Override the `<link rel="canonical">` URL.                                                            |
+| `hideChildren`         | boolean | Collapses this nav group to a single link to the index page.                                          |
+| `feedback`             | boolean | Show/hide the feedback prompt. Defaults to `true`.                                                    |
 
 Example:
 
@@ -93,15 +93,15 @@ Do not use Internet slang: no `tl;dr`, `IMO`, `FYI`.
 
 ### Jargon to avoid
 
-| Instead of | Use |
-| ---------- | --- |
-| whitelist / blacklist | allowlist / blocklist |
-| master / slave | primary / replica (or context-specific terms) |
-| man-in-the-middle attack | on-path attack |
-| sanity check | validate / smoke test |
-| enable / disable (toggle) | turn on / turn off |
-| out-of-the-box | default |
-| on-prem | on-premises |
+| Instead of                | Use                                           |
+| ------------------------- | --------------------------------------------- |
+| whitelist / blacklist     | allowlist / blocklist                         |
+| master / slave            | primary / replica (or context-specific terms) |
+| man-in-the-middle attack  | on-path attack                                |
+| sanity check              | validate / smoke test                         |
+| enable / disable (toggle) | turn on / turn off                            |
+| out-of-the-box            | default                                       |
+| on-prem                   | on-premises                                   |
 
 ### Inclusive language
 
@@ -111,23 +111,23 @@ Do not use racist, gendered, or ableist terminology. Use gender-neutral pronouns
 
 ## Terminology and UI interactions
 
-| Use | Not |
-| --- | --- |
-| select | click |
-| go to | navigate to |
+| Use                | Not              |
+| ------------------ | ---------------- |
+| select             | click            |
+| go to              | navigate to      |
 | turn on / turn off | enable / disable |
-| refer to | see |
+| refer to           | see              |
 
 ---
 
 ## Text formatting
 
-| Element | Convention |
-| ------- | ---------- |
-| Clickable UI elements, menu items, button labels | **Bold**: select **Save**, go to **DNS** > **Records** |
-| Code, paths, IPs, ports, HTTP verbs, status codes, filenames, config keys | `monospace` |
-| Dropdown options the user selects *from* | *Italics* |
-| Nested menu separators | **Bold** the words, plain `>` symbol: **Options** > **Settings** |
+| Element                                                                   | Convention                                                       |
+| ------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| Clickable UI elements, menu items, button labels                          | **Bold**: select **Save**, go to **DNS** > **Records**           |
+| Code, paths, IPs, ports, HTTP verbs, status codes, filenames, config keys | `monospace`                                                      |
+| Dropdown options the user selects _from_                                  | _Italics_                                                        |
+| Nested menu separators                                                    | **Bold** the words, plain `>` symbol: **Options** > **Settings** |
 
 Things that get monospace: IP addresses and ranges, port numbers, API commands (`GET`, `POST`), terminal commands (`wrangler login`), file paths, filenames and extensions (`wrangler.toml`), config keys, data types (`string`, `int64`), environment variable names, HTTP headers (`Content-Length`), HTTP status codes (`400`, `200`), URLs used as input/output, DNS record types (`AAAA`).
 
@@ -146,15 +146,15 @@ Do not use italics for toggle states — "enabled" and "disabled" should not be 
 
 Common terms:
 
-| Correct | Incorrect |
-| ------- | --------- |
-| DDoS | DDOS, ddos |
-| SSL | ssl |
-| TLS | tls |
-| WAF | waf |
-| CAPTCHA | Captcha, captcha |
-| Zero Trust | zero trust |
-| Internet | internet |
+| Correct    | Incorrect        |
+| ---------- | ---------------- |
+| DDoS       | DDOS, ddos       |
+| SSL        | ssl              |
+| TLS        | tls              |
+| WAF        | waf              |
+| CAPTCHA    | Captcha, captcha |
+| Zero Trust | zero trust       |
+| Internet   | internet         |
 
 ---
 
@@ -167,6 +167,7 @@ Common terms:
 - Descriptive link text — never "here", "this page", "read more", "click here"
 
 Standard phrasing:
+
 - `For more information, refer to [Page Title](/path/).`
 - `To <do something>, refer to [Section Title](/path/).`
 
@@ -191,11 +192,13 @@ Do not use: "Learn more about...", "To read more...", "refer the [Page] page/doc
 Use numbered lists for **procedures** (sequential steps). Use bullet points for **facts, data, or options** (unordered).
 
 Do not use bullet points for:
+
 - Processes or steps (use a numbered list)
 - Fewer than three items (write a sentence instead)
 - Items longer than three lines each (break into subsections)
 
 Bullet point rules:
+
 - All items in a list must be parallel (same grammatical form).
 - Do not punctuate bullets unless each item is a full sentence.
 - Aim for 3–6 items; the "six-pack rule" — no more than six bullets, each six words or fewer, is a good default.
@@ -282,59 +285,59 @@ Package install commands must use `PackageManagers`.
 All components are imported from `~/components`. Imports must appear after the frontmatter block.
 
 **Mandatory component usage** — do not use bare fences for these:
+
 - Workers JS/TS examples → `TypeScriptExample`
 - Wrangler config → `WranglerConfig` (TOML input, use `$today` for `compatibility_date`)
 - Package install/exec commands → `PackageManagers`
 - Multi-step procedures → `Steps`
 - Dashboard navigation steps → `DashButton` (not bare links)
 
-| Component | Purpose |
-| --------- | ------- |
-| `Render` | Embed a reusable partial from `src/content/partials/{product}/{file}.mdx` |
-| `TypeScriptExample` | Workers TS example with auto-generated JS tab |
-| `WranglerConfig` | Wrangler config in synced TOML + JSON tabs |
-| `PackageManagers` | Package install/exec command across npm, yarn, pnpm |
-| `WranglerCommand` | Auto-generated full Wrangler command reference |
-| `WranglerNamespace` | Auto-generated Wrangler namespace command listing |
-| `Tabs` / `TabItem` | Switchable tabs (`syncKey="dashPlusAPI"` or `"workersExamples"`) |
-| `Steps` | Visual numbered procedure wrapper |
-| `Details` | Collapsible section for supplementary content |
-| `FileTree` | File and directory tree display |
-| `Width` | Constrain content to `"large"` (75%), `"medium"` (50%), or `"small"` (25%) width |
-| `Plan` | Plan availability badge (`type="all"`, `"paid"`, `"pro"`, `"business"`, `"add-on"`) |
-| `FeatureTable` | Feature availability by plan from `src/content/plans/` (dot-notation `id`) |
-| `ProductFeatures` | Full feature list for a product from `src/content/plans/` |
-| `ProductChangelog` | Inline changelog entries for a product or area |
-| `ProductAvailabilityText` | Inline lifecycle status (Beta, Alpha) — renders nothing for GA |
-| `Feature` | Feature card for product overview pages |
-| `RelatedProduct` | Related product card with icon for overview pages |
-| `GlossaryTooltip` | Hover tooltip from `src/content/glossary/` |
-| `GlossaryDefinition` | Inline glossary definition |
-| `Glossary` | Full product glossary table |
-| `InlineBadge` | Inline status badge — **avoid**, prefer `Badge` in headings or sidebar frontmatter |
-| `Badge` | Coloured status badge (`Beta`, `New`, `Deprecated`) for headings and sidebar |
-| `LinkButton` | Styled link button (`variant="primary"`, `"secondary"`, `"minimal"`) |
-| `Card` / `LinkTitleCard` / `ListCard` | Styled card containers for overview and navigation pages |
-| `LinkCard` / `CardGrid` | Starlight link cards, optionally in a grid |
-| `DashButton` | Button linking to a validated dashboard deeplink |
-| `GitHubCode` | Fetch and display a file from a Cloudflare GitHub repo (use full commit hash) |
-| `DirectoryListing` | Auto-generated child page listing for nav/overview pages |
-| `ListTutorials` | Auto-generated tutorial table for the current product |
-| `ResourcesBySelector` | Filterable list of pages by `pcx_content_type`, tags, or products |
-| `ExternalResources` | Demo apps or videos from central YAML collections, filtered by tags/products |
-| `PublicStats` | Inline live statistic (data centers, bandwidth, etc.) |
-| `YouTube` | Embed a YouTube video by ID |
-| `YouTubeVideos` | Grid of YouTube videos for a product from `src/content/videos/` |
-| `Stream` | Embed a Cloudflare Stream video by ID or collection file |
-| `APIRequest` | Generate a `curl` command from the Cloudflare OpenAPI schema |
-| `CURL` | Generate a `curl` command for arbitrary URLs |
-| `PagesBuildPreset` | Pages framework build preset details |
-| `RuleID` | Copyable rule ID (WAF / security rules) |
-| `SubtractIPCalculator` | Interactive IP range subtraction calculator |
-| `AvailableNotifications` | List available notification types for a product |
-| `AnchorHeading` | Heading with custom anchor ID — for use inside components/non-MDX files |
-| `Description` | Description block rendered below the page title |
-| `Markdown` | Render a Markdown string inside JSX — primarily for formatted partial variables |
+| Component                             | Purpose                                                                             |
+| ------------------------------------- | ----------------------------------------------------------------------------------- |
+| `Render`                              | Embed a reusable partial from `src/content/partials/{product}/{file}.mdx`           |
+| `TypeScriptExample`                   | Workers TS example with auto-generated JS tab                                       |
+| `WranglerConfig`                      | Wrangler config in synced TOML + JSON tabs                                          |
+| `PackageManagers`                     | Package install/exec command across npm, yarn, pnpm                                 |
+| `WranglerCommand`                     | Auto-generated full Wrangler command reference                                      |
+| `WranglerNamespace`                   | Auto-generated Wrangler namespace command listing                                   |
+| `Tabs` / `TabItem`                    | Switchable tabs (`syncKey="dashPlusAPI"` or `"workersExamples"`)                    |
+| `Steps`                               | Visual numbered procedure wrapper                                                   |
+| `Details`                             | Collapsible section for supplementary content                                       |
+| `FileTree`                            | File and directory tree display                                                     |
+| `Width`                               | Constrain content to `"large"` (75%), `"medium"` (50%), or `"small"` (25%) width    |
+| `Plan`                                | Plan availability badge (`type="all"`, `"paid"`, `"pro"`, `"business"`, `"add-on"`) |
+| `FeatureTable`                        | Feature availability by plan from `src/content/plans/` (dot-notation `id`)          |
+| `ProductFeatures`                     | Full feature list for a product from `src/content/plans/`                           |
+| `ProductChangelog`                    | Inline changelog entries for a product or area                                      |
+| `ProductAvailabilityText`             | Inline lifecycle status (Beta, Alpha) — renders nothing for GA                      |
+| `Feature`                             | Feature card for product overview pages                                             |
+| `RelatedProduct`                      | Related product card with icon for overview pages                                   |
+| `GlossaryTooltip`                     | Hover tooltip from `src/content/glossary/`                                          |
+| `GlossaryDefinition`                  | Inline glossary definition                                                          |
+| `Glossary`                            | Full product glossary table                                                         |
+| `InlineBadge`                         | Inline status badge — **avoid**, prefer `Badge` in headings or sidebar frontmatter  |
+| `Badge`                               | Coloured status badge (`Beta`, `New`, `Deprecated`) for headings and sidebar        |
+| `LinkButton`                          | Styled link button (`variant="primary"`, `"secondary"`, `"minimal"`)                |
+| `Card` / `LinkTitleCard` / `ListCard` | Styled card containers for overview and navigation pages                            |
+| `LinkCard` / `CardGrid`               | Starlight link cards, optionally in a grid                                          |
+| `DashButton`                          | Button linking to a validated dashboard deeplink                                    |
+| `GitHubCode`                          | Fetch and display a file from a Cloudflare GitHub repo (use full commit hash)       |
+| `DirectoryListing`                    | Auto-generated child page listing for nav/overview pages                            |
+| `ListTutorials`                       | Auto-generated tutorial table for the current product                               |
+| `ResourcesBySelector`                 | Filterable list of pages by `pcx_content_type`, tags, or products                   |
+| `ExternalResources`                   | Demo apps from central YAML collection, filtered by tags/products                   |
+| `PublicStats`                         | Inline live statistic (data centers, bandwidth, etc.)                               |
+| `YouTube`                             | Embed a YouTube video by ID                                                         |
+| `Stream`                              | Embed a Cloudflare Stream video by ID or collection file                            |
+| `APIRequest`                          | Generate a `curl` command from the Cloudflare OpenAPI schema                        |
+| `CURL`                                | Generate a `curl` command for arbitrary URLs                                        |
+| `PagesBuildPreset`                    | Pages framework build preset details                                                |
+| `RuleID`                              | Copyable rule ID (WAF / security rules)                                             |
+| `SubtractIPCalculator`                | Interactive IP range subtraction calculator                                         |
+| `AvailableNotifications`              | List available notification types for a product                                     |
+| `AnchorHeading`                       | Heading with custom anchor ID — for use inside components/non-MDX files             |
+| `Description`                         | Description block rendered below the page title                                     |
+| `Markdown`                            | Render a Markdown string inside JSX — primarily for formatted partial variables     |
 
 For full props, examples, and edge cases, see `.agents/references/components.md`.
 
@@ -357,6 +360,7 @@ For best practices or opinionated recommendations outside the main content. Defa
 ```
 
 Usage rules:
+
 - Use `note` for supplementary info that cannot be integrated into prose.
 - Use `caution` for actions that could break functionality or impact security.
 - Use `tip` for best practices and opinionated recommendations.
@@ -395,6 +399,7 @@ Use screenshots sparingly — they have a high maintenance cost because UI chang
 Exception: use screenshots freely in changelog entries (accepted as point-in-time references).
 
 Guidelines:
+
 - Maintain original aspect ratio.
 - Width 500–600 px, resolution 72 dpi.
 - Do not include sensitive information (redact if needed).
@@ -406,6 +411,7 @@ Guidelines:
 ```
 
 Alt text rules:
+
 - Describe what the image shows and why it matters (under ~150 characters).
 - Do not start with "Image of" or "Screenshot of".
 - For purely decorative images, use empty alt text: `![]()`.
@@ -430,11 +436,11 @@ In diagrams: do not use color as the only way to distinguish elements — also u
 
 Use these reserved values in examples — they are safe and will not resolve to live origins:
 
-| Type | Values |
-| ---- | ------ |
-| Domains | `example.com`, `example.org`, `myappexample.com` |
-| IPv4 ranges | `192.0.2.0/24`, `198.51.100.0/24`, `203.0.113.0/24` |
-| URL placeholders | `<YOUR_DOMAIN>`, `<ZONE_ID>`, `<ACCOUNT_ID>` |
+| Type                | Values                                               |
+| ------------------- | ---------------------------------------------------- |
+| Domains             | `example.com`, `example.org`, `myappexample.com`     |
+| IPv4 ranges         | `192.0.2.0/24`, `198.51.100.0/24`, `203.0.113.0/24`  |
+| URL placeholders    | `<YOUR_DOMAIN>`, `<ZONE_ID>`, `<ACCOUNT_ID>`         |
 | API shell variables | `$ZONE_ID`, `$CLOUDFLARE_API_TOKEN` (in curl blocks) |
 
 Use angle brackets with `ALL_CAPS_UNDERSCORES` for variable placeholders in non-API contexts. In API examples (curl blocks, `APIRequest` component), use `$VARIABLE_NAME` shell variable format.

@@ -7,7 +7,7 @@ products:
   - style-guide
 ---
 
-The `ExternalResources` component pulls from a central list of [apps](https://github.com/cloudflare/cloudflare-docs/blob/production/src/content/apps/index.yaml) and [videos](https://github.com/cloudflare/cloudflare-docs/blob/production/src/content/videos/index.yaml).
+The `ExternalResources` component pulls from a central list of [apps](https://github.com/cloudflare/cloudflare-docs/blob/production/src/content/apps/index.yaml).
 
 ## Import
 
@@ -21,10 +21,8 @@ import { ExternalResources } from "~/components";
 import { ExternalResources } from "~/components";
 
 ## Demo apps
-<ExternalResources type="apps" tags={["AI"]} products={["Pages"]} />
 
-## Videos
-<ExternalResources type="videos" tags={["AI"]} />
+<ExternalResources type="apps" tags={["AI"]} products={["Pages"]} />
 ```
 
 ## Props
@@ -33,9 +31,9 @@ import { ExternalResources } from "~/components";
 
 **required**
 
-**type:** `"apps" | "videos"`
+**type:** `"apps"`
 
-The type of resources to show, apps or videos.
+The type of resources to show.
 
 ### `tags`
 

@@ -14,6 +14,7 @@ import { Render } from "~/components";
 <Render file="partial-name" product="workers" />
 
 <!-- With parameters: -->
+
 <Render file="partial-name" product="workers" params={{ key: "value" }} />
 ```
 
@@ -34,7 +35,7 @@ Inside the partial, params are referenced as JS expressions: `{props.product}`. 
 
 Renders a TypeScript code block and auto-generates a JavaScript tab using `ts-blank-space`. **Required for all Workers JS/TS examples** — do not use bare `ts`/`js` fences.
 
-```mdx
+````mdx
 import { TypeScriptExample } from "~/components";
 
 <TypeScriptExample filename="src/index.ts">
@@ -44,11 +45,13 @@ export default {
     return new Response("Hello World");
   }
 } satisfies ExportedHandler<Env>;
-```
+````
+
 </TypeScriptExample>
 ```
 
 Props:
+
 - `filename` — optional, must end in `.ts`. The JS tab shows the `.js` equivalent.
 - `playground` — boolean. Adds "Run Worker in Playground" button to the JS tab.
 - `code` — object. Expressive Code options (e.g. `collapse: "1-2"`). Apply to both tabs.
@@ -61,7 +64,7 @@ Note: Expressive Code fence options (`collapse={1-2}`, etc.) cannot be set on th
 
 Renders Wrangler config with synced TOML and JSON tabs, auto-converting between formats. **Required for all Wrangler configuration examples** — do not use bare `toml`/`jsonc` fences.
 
-```mdx
+````mdx
 import { WranglerConfig } from "~/components";
 
 <WranglerConfig>
@@ -74,7 +77,8 @@ compatibility_date = "$today"
 binding = "DB"
 database_name = "prod-d1-tutorial"
 database_id = "<unique-ID-for-your-database>"
-```
+````
+
 </WranglerConfig>
 ```
 
@@ -93,9 +97,11 @@ Shows a command across npm, yarn, and pnpm in synced tabs. **Required for packag
 import { PackageManagers } from "~/components";
 
 <!-- Install a package: -->
+
 <PackageManagers pkg="wrangler" />
 
 <!-- Execute a command: -->
+
 <PackageManagers type="exec" pkg="wrangler" args="init my-project" />
 ```
 
@@ -109,13 +115,14 @@ For showing different ways to accomplish the same thing. Use when there are mutu
 import { Tabs, TabItem } from "~/components";
 
 <Tabs syncKey="dashPlusAPI">
-  <TabItem label="Dashboard">Dashboard instructions</TabItem>
-  <TabItem label="API">API instructions</TabItem>
-  <TabItem label="Terraform">Terraform instructions</TabItem>
+	<TabItem label="Dashboard">Dashboard instructions</TabItem>
+	<TabItem label="API">API instructions</TabItem>
+	<TabItem label="Terraform">Terraform instructions</TabItem>
 </Tabs>
 ```
 
 Standard `syncKey` values (sync tab selection across the page):
+
 - `dashPlusAPI` — Dashboard / API / Terraform
 - `workersExamples` — JavaScript / TypeScript / Python / Rust
 
@@ -146,13 +153,12 @@ Collapsible section. Use for supplementary content that would clutter the main f
 ```mdx
 import { Details } from "~/components";
 
-<Details header="Advanced configuration">
-  Content shown when expanded.
-</Details>
+<Details header="Advanced configuration">Content shown when expanded.</Details>
 
 <!-- Open by default: -->
+
 <Details header="Required reading" open={true}>
-  Content visible without interaction.
+	Content visible without interaction.
 </Details>
 ```
 
@@ -177,6 +183,7 @@ import { Plan } from "~/components";
 <Plan type="workers-paid" /><!-- Workers paid plans -->
 
 <!-- Pull availability from a product's index.json: -->
+
 <Plan id="web3.ethereum.properties.availability.summary" />
 ```
 
@@ -192,10 +199,16 @@ import { GlossaryTooltip } from "~/components";
 <GlossaryTooltip term="active-zone">active zone</GlossaryTooltip>
 
 <!-- With prepended text: -->
-<GlossaryTooltip term="active-zone" prepend="An ">active zone</GlossaryTooltip>
+
+<GlossaryTooltip term="active-zone" prepend="An ">
+	active zone
+</GlossaryTooltip>
 
 <!-- With a link on the inner text: -->
-<GlossaryTooltip term="active-zone" link="/dns/glossary/">active zone</GlossaryTooltip>
+
+<GlossaryTooltip term="active-zone" link="/dns/glossary/">
+	active zone
+</GlossaryTooltip>
 ```
 
 Props: `term` (required, matches a YAML entry key), `prepend` (optional text prepended to the definition), `link` (optional, wraps the inner text in a link).
@@ -278,6 +291,7 @@ import { DashButton } from "~/components";
    <DashButton url="/?to=/:account/application-security/waf" />
 
 <!-- Zero Trust dashboard: -->
+
 <DashButton url="/?to=/:account/access/ai-controls" zeroTrust />
 ```
 
@@ -293,25 +307,28 @@ Fetches and displays a file from a Cloudflare GitHub repository. Use a full 40-c
 import { GitHubCode } from "~/components";
 
 <GitHubCode
-  repo="cloudflare/workers-rs"
-  file="templates/hello-world/src/lib.rs"
-  commit="ab3951b5c95329a600a7baa9f9bb1a7a95f1aeaa"
-  lang="rs"
+	repo="cloudflare/workers-rs"
+	file="templates/hello-world/src/lib.rs"
+	commit="ab3951b5c95329a600a7baa9f9bb1a7a95f1aeaa"
+	lang="rs"
 />
 
 <!-- TypeScript with auto-generated JS tab: -->
+
 <GitHubCode
-  repo="cloudflare/workflows-starter"
-  file="src/index.ts"
-  commit="a844e629ec80968118d4b116d4b26f5dcb107137"
-  lang="ts"
-  useTypeScriptExample={true}
+	repo="cloudflare/workflows-starter"
+	file="src/index.ts"
+	commit="a844e629ec80968118d4b116d4b26f5dcb107137"
+	lang="ts"
+	useTypeScriptExample={true}
 />
 
 <!-- Filter by line range: -->
+
 <GitHubCode repo="..." file="..." commit="..." lang="..." lines="1-3" />
 
 <!-- Filter by tag (source must wrap content in <docs-tag name="..."> comments): -->
+
 <GitHubCode repo="..." file="..." commit="..." lang="..." tag="no-logging" />
 ```
 
@@ -364,19 +381,21 @@ Starlight built-ins for styled card containers. Used on overview and navigation 
 import { Card, LinkTitleCard, ListCard } from "~/components";
 
 <!-- Informational card with icon -->
+
 <Card title="Check this out" icon="puzzle">
-  Interesting content you want to highlight.
+	Interesting content you want to highlight.
 </Card>
 
 <!-- Card that links to another page -->
+
 <LinkTitleCard title="Get started" icon="rocket" href="/workers/get-started/">
-  Deploy your first Worker in minutes.
+	Deploy your first Worker in minutes.
 </LinkTitleCard>
 
 <!-- Card with a list of links -->
+
 <ListCard title="Resources" icon="open-book">
-- [Docs](/workers/)
-- [API reference](/api/)
+	- [Docs](/workers/) - [API reference](/api/)
 </ListCard>
 ```
 
@@ -402,13 +421,15 @@ Embeds a Cloudflare Stream video. Use `id` + `title` for a specific video, or `f
 import { Stream } from "~/components";
 
 <!-- By video ID: -->
+
 <Stream
-  id="86f22d1f760b77cdc349f89b25b63c3e"
-  title="Video title"
-  thumbnail="https://example.com/thumbnail.jpg"
+	id="86f22d1f760b77cdc349f89b25b63c3e"
+	title="Video title"
+	thumbnail="https://example.com/thumbnail.jpg"
 />
 
 <!-- By stream collection file: -->
+
 <Stream file="warp-1-basics" />
 ```
 
@@ -424,24 +445,27 @@ Generates a formatted `curl` command from the Cloudflare OpenAPI schema. Use for
 import { APIRequest } from "~/components";
 
 <!-- GET with query parameters: -->
+
 <APIRequest
-  path="/zones/{zone_id}/page_shield/scripts"
-  method="GET"
-  parameters={{ direction: "asc" }}
+	path="/zones/{zone_id}/page_shield/scripts"
+	method="GET"
+	parameters={{ direction: "asc" }}
 />
 
 <!-- PUT with JSON body: -->
+
 <APIRequest
-  path="/zones/{zone_id}/api_gateway/settings/schema_validation"
-  method="PUT"
-  json={{ validation_default_mitigation_action: "block" }}
+	path="/zones/{zone_id}/api_gateway/settings/schema_validation"
+	method="PUT"
+	json={{ validation_default_mitigation_action: "block" }}
 />
 
 <!-- POST with form data: -->
+
 <APIRequest
-  path="/accounts/{account_id}/images/v2/direct_upload"
-  method="POST"
-  form={{ requireSignedURLs: true }}
+	path="/accounts/{account_id}/images/v2/direct_upload"
+	method="POST"
+	form={{ requireSignedURLs: true }}
 />
 ```
 
@@ -457,10 +481,10 @@ Generates a `curl` command for arbitrary (non-Cloudflare-API) URLs. Use when `AP
 import { CURL } from "~/components";
 
 <CURL
-  url="https://api.example.com/endpoint"
-  method="POST"
-  json={{ key: "value" }}
-  query={{ foo: "bar" }}
+	url="https://api.example.com/endpoint"
+	method="POST"
+	json={{ key: "value" }}
+	query={{ foo: "bar" }}
 />
 ```
 
@@ -479,7 +503,11 @@ import { WranglerCommand } from "~/components";
 <WranglerCommand command="d1 execute" />
 
 <!-- With custom description: -->
-<WranglerCommand command="deploy" description={"Deploy a [Worker](/workers/)"} />
+
+<WranglerCommand
+	command="deploy"
+	description={"Deploy a [Worker](/workers/)"}
+/>
 ```
 
 Use `ExtraFlagDetails` as a child to add or replace help text for specific flags:
@@ -488,12 +516,12 @@ Use `ExtraFlagDetails` as a child to add or replace help text for specific flags
 import { WranglerCommand, ExtraFlagDetails } from "~/components";
 
 <WranglerCommand command="deploy">
-  <ExtraFlagDetails key="dry-run">
-    Additional detail appended to the flag's help text.
-  </ExtraFlagDetails>
-  <ExtraFlagDetails key="compatibility-date" mode="replace">
-    Custom text that replaces the flag's help text entirely.
-  </ExtraFlagDetails>
+	<ExtraFlagDetails key="dry-run">
+		Additional detail appended to the flag's help text.
+	</ExtraFlagDetails>
+	<ExtraFlagDetails key="compatibility-date" mode="replace">
+		Custom text that replaces the flag's help text entirely.
+	</ExtraFlagDetails>
 </WranglerCommand>
 ```
 
@@ -511,6 +539,7 @@ import { Markdown } from "~/components";
 <Markdown text="**bold** and [a link](/path/)" />
 
 <!-- In a partial, for a formatted variable: -->
+
 <Markdown text={props.instructions} />
 ```
 
@@ -523,7 +552,7 @@ Limitations: no MDX features, no Astro image optimization, no syntax highlightin
 Creates a heading with a custom anchor ID — useful when writing headings inside components or non-Markdown files. In regular MDX, headings get anchors automatically via rehype plugins, so this is rarely needed. To override a heading ID in MDX, use an inline comment instead:
 
 ```mdx
-## My heading {/*custom-anchor*/}
+## My heading {/* custom-anchor */}
 ```
 
 When you do need the component:
@@ -531,7 +560,11 @@ When you do need the component:
 ```mdx
 import { AnchorHeading } from "~/components";
 
-<AnchorHeading title="How to use AnchorHeading" slug="use-anchorheading" depth={2} />
+<AnchorHeading
+	title="How to use AnchorHeading"
+	slug="use-anchorheading"
+	depth={2}
+/>
 ```
 
 Props: `title` (required, heading text), `slug` (required, custom anchor ID), `depth` (heading level, e.g. `2` for H2).
@@ -546,8 +579,12 @@ Renders a styled link button. Useful for primary CTAs on overview and get-starte
 import { LinkButton } from "~/components";
 
 <LinkButton href="/workers/get-started/">Get started</LinkButton>
-<LinkButton href="/workers/get-started/" variant="secondary" icon="external">More information</LinkButton>
-<LinkButton href="/workers/get-started/" variant="minimal">Other stuff</LinkButton>
+<LinkButton href="/workers/get-started/" variant="secondary" icon="external">
+	More information
+</LinkButton>
+<LinkButton href="/workers/get-started/" variant="minimal">
+	Other stuff
+</LinkButton>
 ```
 
 Variants: `primary` (default), `secondary`, `minimal`.
@@ -562,14 +599,14 @@ Starlight built-in. Renders a card with a title, description, and link. Use `Car
 import { LinkCard, CardGrid } from "~/components";
 
 <LinkCard
-  title="Get started"
-  description="Deploy your first Worker in minutes."
-  href="/workers/get-started/"
+	title="Get started"
+	description="Deploy your first Worker in minutes."
+	href="/workers/get-started/"
 />
 
 <CardGrid>
-  <LinkCard title="Workers" description="..." href="/workers/" />
-  <LinkCard title="Pages" description="..." href="/pages/" />
+	<LinkCard title="Workers" description="..." href="/workers/" />
+	<LinkCard title="Pages" description="..." href="/pages/" />
 </CardGrid>
 ```
 
@@ -582,12 +619,7 @@ Starlight built-in. Displays a file and directory tree. Use bold to highlight th
 ```mdx
 import { FileTree } from "~/components";
 
-<FileTree>
-- src/
-  - index.ts
-  - **worker.ts**
-- wrangler.toml
-</FileTree>
+<FileTree>- src/ - index.ts - **worker.ts** - wrangler.toml</FileTree>
 ```
 
 ---
@@ -599,9 +631,7 @@ Renders a short description block directly below the page title. Prefer the `sum
 ```mdx
 import { Description } from "~/components";
 
-<Description>
-  A short description rendered below the page title.
-</Description>
+<Description>A short description rendered below the page title.</Description>
 ```
 
 ---
@@ -614,7 +644,7 @@ Renders a feature card with a name and link. Used on product overview pages to l
 import { Feature } from "~/components";
 
 <Feature header="Durable Objects" href="/durable-objects/">
-  Coordinate state and logic across Workers with strongly consistent storage.
+	Coordinate state and logic across Workers with strongly consistent storage.
 </Feature>
 ```
 
@@ -630,7 +660,7 @@ Renders a related product card with an icon, name, and link. Used on overview pa
 import { RelatedProduct } from "~/components";
 
 <RelatedProduct header="R2" href="/r2/" product="r2">
-  Store large amounts of unstructured data without egress fees.
+	Store large amounts of unstructured data without egress fees.
 </RelatedProduct>
 ```
 
@@ -713,16 +743,15 @@ To add or update stats, edit `src/components/PublicStats.astro`.
 
 ## ExternalResources
 
-Pulls demo apps or videos from the central `src/content/apps/index.yaml` and `src/content/videos/index.yaml` collections, filtered by tags and products.
+Pulls demo apps from the central `src/content/apps/index.yaml` collection, filtered by tags and products.
 
 ```mdx
 import { ExternalResources } from "~/components";
 
 <ExternalResources type="apps" tags={["AI"]} products={["Workers"]} />
-<ExternalResources type="videos" tags={["AI"]} />
 ```
 
-Props: `type` (required, `"apps"` or `"videos"`), `tags` (string array, filter by tag), `products` (string array, filter by product), `cloudflareOnly` (boolean, default `true`).
+Props: `type` (required, `"apps"`), `tags` (string array, filter by tag), `products` (string array, filter by product), `cloudflareOnly` (boolean, default `true`).
 
 ---
 
@@ -734,9 +763,9 @@ Displays a filterable list of docs pages pulled by `pcx_content_type`, `tags`, a
 import { ResourcesBySelector } from "~/components";
 
 <ResourcesBySelector
-  directory="workers/examples/"
-  types={["example"]}
-  filterables={["tags"]}
+	directory="workers/examples/"
+	types={["example"]}
+	filterables={["tags"]}
 />
 ```
 
@@ -807,7 +836,11 @@ import SubtractIPCalculator from "~/components/SubtractIPCalculator.tsx";
 <SubtractIPCalculator client:load />
 
 <!-- With defaults: -->
-<SubtractIPCalculator client:load defaults={{ base: "10.0.0.0/8", subtract: ["10.0.0.0/24"] }} />
+
+<SubtractIPCalculator
+	client:load
+	defaults={{ base: "10.0.0.0/8", subtract: ["10.0.0.0/24"] }}
+/>
 ```
 
 Note: imports directly from the `.tsx` file path, not from `~/components`.
@@ -823,24 +856,12 @@ import { Width } from "~/components";
 
 <Width size="large">75% of container width</Width>
 <Width size="medium">50% of container width</Width>
-<Width size="small" center>25%, centered</Width>
+<Width size="small" center>
+	25%, centered
+</Width>
 ```
 
 Props: `size` (required, `"large"` | `"medium"` | `"small"`), `center` (boolean).
-
----
-
-## YouTubeVideos
-
-Renders a grid of YouTube videos associated with one or more products, sourced from `src/content/videos/index.yaml`.
-
-```mdx
-import { YouTubeVideos } from "~/components";
-
-<YouTubeVideos products={["Workers"]} />
-```
-
-Props: `products` (string array — if omitted, uses the current page's product).
 
 ---
 
@@ -852,7 +873,10 @@ Lists available notification types for a product, sourced from `src/content/noti
 import { AvailableNotifications } from "~/components";
 
 <AvailableNotifications product="dns" />
-<AvailableNotifications product="dns" notificationFilter="Secondary DNS all Primaries Failing" />
+<AvailableNotifications
+	product="dns"
+	notificationFilter="Secondary DNS all Primaries Failing"
+/>
 ```
 
 Props: `product` (required, product name or slug), `notificationFilter` (optional, filter to a specific notification type by name).
