@@ -155,12 +155,12 @@ Duration measures wall-clock time from start to end of a Worker invocation.
 
 | Trigger type                                                      | Duration limit |
 | ----------------------------------------------------------------- | -------------- |
-| HTTP request                                                      | 30 seconds     |
+| HTTP request                                                      | No limit       |
 | [Cron Trigger](/workers/configuration/cron-triggers/)             | 15 min         |
 | [Durable Object Alarm](/durable-objects/api/alarms/)              | 15 min         |
 | [Queue Consumer](/queues/configuration/javascript-apis/#consumer) | 15 min         |
 
-For HTTP-triggered Workers, the total invocation wall time is 30 seconds. The response must be returned within this limit. Use [`ctx.waitUntil()`](/workers/runtime-apis/handlers/fetch/) to perform work after returning a response. Any tasks passed to `waitUntil()` must also complete within the same 30-second total wall time.
+There is no hard limit on duration for HTTP-triggered Workers. As long as the client remains connected, the Worker can continue processing, making subrequests, and streaming a response body. When the client disconnects or the response is complete, tasks associated with that request may be canceled. Use [`ctx.waitUntil()`](/workers/runtime-apis/context/#waituntil) to perform work after returning a response. `waitUntil()` can extend execution for up to 30 seconds after the response is sent or the client disconnects.
 
 :::note
 
@@ -195,7 +195,7 @@ A subrequest is any request a Worker makes using the [Fetch API](/workers/runtim
 
 Each subrequest in a redirect chain counts against this limit. The total number of subrequests may exceed the number of `fetch()` calls in your code. You can change the subrequest limit per Worker using the [`limits` configuration](/workers/wrangler/configuration/#limits) in your Wrangler configuration file.
 
-There is no set time limit on individual subrequests, but all subrequests must complete within the 30-second total wall time for the invocation. When the invocation ends, all tasks are canceled.
+There is no set time limit on individual subrequests. As long as the client remains connected, the Worker can continue making subrequests. When the client disconnects or the response is complete, outstanding work may be canceled unless it is passed to [`ctx.waitUntil()`](/workers/runtime-apis/context/#waituntil), which can extend execution for up to 30 seconds.
 
 ### Worker-to-Worker subrequests
 

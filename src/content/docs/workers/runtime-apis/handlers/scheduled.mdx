@@ -148,7 +148,7 @@ The value of `controller.cron` is the exact cron expression string from your con
 
 When a Workers script is invoked by a [Cron Trigger](/workers/configuration/cron-triggers/), the Workers runtime starts a `ScheduledEvent` which will be handled by the `scheduled` function in your Workers Module class. The `ctx` argument represents the context your function runs in, and contains the following methods to control what happens next:
 
-- <code>ctx.waitUntil(promisePromise)</code> : void - Use this method to
+- <code>ctx.waitUntil(promise)</code> : void - Use this method to
   register asynchronous tasks (for example, logging, analytics to third-party
   services, streaming and caching) that should settle before the invocation
   completes. The first `ctx.waitUntil` to fail will be observed and recorded as
@@ -157,9 +157,10 @@ When a Workers script is invoked by a [Cron Trigger](/workers/configuration/cron
 
 :::note
 
-The runtime waits for the promise returned by the `scheduled()` handler to
-resolve (up to the 15-minute duration limit). You do not need to use
-`waitUntil()` for the runtime to wait for a single asynchronous task.
+In module Workers, the runtime waits for the promise returned by the
+`scheduled()` handler to resolve (up to the 15-minute duration limit). You do
+not need to use `waitUntil()` for the runtime to wait for a single asynchronous
+task.
 `waitUntil()` is most useful when you need to run multiple concurrent tasks, or
 when you want the outcome of a specific promise to be recorded as the Cron
 Trigger invocation status.

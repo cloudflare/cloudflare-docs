@@ -278,7 +278,7 @@ Exceptions will show up under the `exceptions` field in the JSON returned by `wr
 
 A Worker can make HTTP requests to any HTTP service on the public Internet. You can use a service like [Sentry](https://sentry.io) to collect error logs from your Worker, by making an HTTP request to the service to report the error. Refer to your service’s API documentation for details on what kind of request to make.
 
-When using an external logging strategy, remember that floating promises (promises that are neither `await`ed, `return`ed, nor passed to `ctx.waitUntil()`) may be canceled when the Worker invocation completes. To ensure that a logging subrequest completes, pass the request promise to [`ctx.waitUntil()`](/workers/runtime-apis/context/#waituntil). For example:
+When using an external logging strategy, remember that floating promises (promises that are neither `await`ed, `return`ed, nor passed to `ctx.waitUntil()`) may be canceled when the Worker invocation completes. A Worker invocation has not completed while it is still streaming a response body to the client. To run logging after the response is complete, pass the request promise to [`ctx.waitUntil()`](/workers/runtime-apis/context/#waituntil). For example:
 
 <Tabs> <TabItem label="Module Worker" icon="seti:javascript">
 
