@@ -87,17 +87,41 @@ Resolve-DnsName -Name example.com -Type CAA
 
 <Render file="error-rate-limiting" product="ssl" />
 
-### Multiple perspective CAA check error
+When you see `The authority has rate limited these domains. Please wait for the rate limit to expire or try another authority`, the certificate authority has temporarily blocked certificate issuance for your domain due to too many recent requests.
 
-The error `Certificate authority encountered a multiple perspective CAA check error, please ensure your DNS is configured to allow CAA queries` means that the CA was not able to resolve the CAA records related to your domain from specific geographic locations.
+**Resolution**: Wait for the rate limit to expire (the error message includes the expiration time), or select a different [certificate authority](/ssl/reference/certificate-authorities/).
 
-You can investigate for resolution error using the [ping.pe tool](https://dig.ping.pe/).
-For example, for a [Google Trust Services](/ssl/reference/certificate-authorities/#google-trust-services) certificate encountering this issue, you can check for: `<hostname>:CAA:8.8.8.8`.
+### CAA records block issuance
 
-Read more from Certificate Authorities specific documentation: [SSL.com](https://www.ssl.com/blogs/multi-perspective-issuance-corroboration-mpic-arrives/), [Let's Encrypt](https://letsencrypt.org/2020/02/19/multi-perspective-validation), and [Google Trust Services](https://pki.goog/faq/#faq-mpic).
+The error `CAA records block issuance. Please remove all CAA records or add records for this authority` indicates that your domain's [CAA records](/ssl/edge-certificates/caa-records/) do not allow the selected certificate authority to issue certificates.
+
+**Resolution**: Either remove all CAA records from your domain, or add CAA records that explicitly allow [Cloudflare's partner certificate authorities](/ssl/reference/certificate-authorities/).
+
+### Multiple perspective validation errors
+
+Certificate authorities perform domain validation from multiple geographic locations to prevent certain attacks. You may encounter one of these errors:
+
+- `Certificate authority encountered a multiple perspective CAA check error, please ensure your DNS is configured to allow CAA queries from all geographic perspectives`
+- `Certificate authority was unable to verify domain ownership from multiple geographic locations (MPIC failure). Please ensure your DNS records are reachable from all geographic perspectives and try again.`
+
+**Resolution**: Ensure your DNS records (including CAA records) are consistently resolvable from all geographic locations. You can investigate resolution errors using the [ping.pe tool](https://dig.ping.pe/). For example, for a [Google Trust Services](/ssl/reference/certificate-authorities/#google-trust-services) certificate, check: `<hostname>:CAA:8.8.8.8`.
+
+Read more from certificate authority documentation: [SSL.com](https://www.ssl.com/blogs/multi-perspective-issuance-corroboration-mpic-arrives/), [Let's Encrypt](https://letsencrypt.org/2020/02/19/multi-perspective-validation), and [Google Trust Services](https://pki.goog/faq/#faq-mpic).
+
+### DNS lookup errors
+
+The error `the Certificate Authority had trouble performing a DNS lookup` indicates that the CA could not resolve your domain's DNS records. Common causes include SERVFAIL responses, NXDOMAIN, or DNSSEC validation failures.
+
+**Resolution**: Verify that your DNS records are correctly configured and resolvable. Use tools like [DNSViz](https://dnsviz.net/) to check for DNSSEC issues, and ensure your authoritative nameservers are responding correctly.
+
+### Rejected identifier
+
+The error `The certificate authority will not issue for this domain. Please check your input or try another authority` means the CA has policies that prevent issuing certificates for your specific domain.
+
+**Resolution**: Verify that your domain name is correctly spelled and does not violate the CA's issuance policies. If the domain is valid, try selecting a different [certificate authority](/ssl/reference/certificate-authorities/).
 
 ### Internal errors
 
-When the certificate authority finds an issue during the CA check portion of the [DCV flow](/ssl/edge-certificates/changing-dcv-method/dcv-flow/), you may see a `Internal error with Certificate Authority` message. In this case, either wait or try a different certificate authority.
+When you see `Internal error with Certificate Authority. Please check later`, the certificate authority encountered a temporary issue during validation.
 
-When the error states that the `certificate authority will not issue for this domain`, you can try a different certificate authority or contact the CA directly.
+**Resolution**: Wait a few minutes and retry. If the issue persists, try selecting a different [certificate authority](/ssl/reference/certificate-authorities/). Cloudflare will automatically retry validation according to the [validation backoff schedule](/ssl/edge-certificates/changing-dcv-method/validation-backoff-schedule/).
