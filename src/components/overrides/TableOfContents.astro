@@ -19,16 +19,14 @@ const { editUrl } = Astro.locals.starlightRoute;
 				<h3 class="mb-3 text-[11px] font-semibold tracking-widest text-[var(--sl-color-gray-3)] uppercase">
 					Tags
 				</h3>
-				<div class="flex flex-wrap gap-2">
-					{tags.map((tag) => (
-						<a
-							href={`/search/?tags=${tag}`}
-							class="rounded-full border border-[var(--sidebar-border)] bg-transparent px-3 py-1 text-[11px] font-medium text-[var(--sl-color-gray-3)] transition-colors duration-150 ease-out hover:border-[var(--sl-color-gray-2)] hover:text-[var(--sl-color-white)] focus-visible:ring-2 focus-visible:ring-[var(--sl-color-text-accent)] focus-visible:outline-none"
-							data-tag-serp-link={true}
-						>
-							{tag}
-						</a>
-					))}
+			<div class="flex flex-wrap gap-2">
+				{tags.map((tag) => (
+					<span
+						class="rounded-full border border-[var(--sidebar-border)] bg-transparent px-3 py-1 text-[11px] font-medium text-[var(--sl-color-gray-3)]"
+					>
+						{tag}
+					</span>
+				))}
 				</div>
 			</div>
 		)
