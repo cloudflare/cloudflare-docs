@@ -335,13 +335,12 @@ Service Binding (SVCB) and HTTPS Service (HTTPS) records allow you to provide a 
 
 If your domain has [HTTP/2 or HTTP/3 enabled](/speed/optimization/protocol/), [proxied DNS records](/dns/proxy-status/), and is also using [Universal SSL](/ssl/edge-certificates/universal-ssl/), Cloudflare automatically generates HTTPS records on the fly, to advertise to clients how they should connect to your server.
 
-:::note[Proxied vs DNS-only hostnames]
+#### Proxied vs DNS-only names
 For [proxied (orange cloud)](/dns/proxy-status/) hostnames, Cloudflare synthesizes HTTPS records automatically when Universal SSL is enabled. Manually-added HTTPS records on proxied hostnames are not served — Cloudflare uses the auto-generated records instead.
 
 If you have disabled Universal SSL (for example, because you use [Advanced Certificates](/ssl/edge-certificates/advanced-certificate-manager/) exclusively), Cloudflare will not generate HTTPS records for proxied hostnames.
 
 For [DNS-only (grey cloud)](/dns/proxy-status/) hostnames, you can manually add HTTPS records and Cloudflare will serve them. However, **all records on the same label must be DNS-only** for the manual HTTPS record to be served.
-:::
 
 <Details header="Example: Manual HTTPS records and proxy status">
 
