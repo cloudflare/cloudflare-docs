@@ -758,7 +758,7 @@ Props: `type` (required, `"apps"` or `"videos"`), `tags` (string array, filter b
 
 ## ResourcesBySelector
 
-Displays a filterable list of docs pages pulled by `pcx_content_type`, `tags`, and/or `products` frontmatter. Used on example and tutorial index pages.
+Displays a filterable list of docs pages pulled by `pcx_content_type` and/or `products` frontmatter. Used on example and tutorial index pages.
 
 ```mdx
 import { ResourcesBySelector } from "~/components";
