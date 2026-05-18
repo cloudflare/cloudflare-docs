@@ -59,6 +59,7 @@ export type Scope = "read" | "write";
 export type TokenState = "active" | "expired" | "revoked";
 export type ArtifactToken = string;
 export type Cursor = string;
+export type RepoStatus = "creating" | "ready" | "importing" | "forking";
 export type RepoSortField =
 	| "created_at"
 	| "updated_at"
@@ -113,6 +114,10 @@ export interface RepoInfo {
 
 export interface RepoWithRemote extends RepoInfo {
 	remote: string;
+}
+
+export interface RepoListItem extends RepoWithRemote {
+	status: RepoStatus;
 }
 
 export interface TokenInfo {
@@ -189,6 +194,8 @@ curl --request POST "$ARTIFACTS_BASE_URL/repos" \
 
 Create, fork, and import responses return the token string only. The token encodes its expiry directly in the `?expires=` suffix. The separate `POST /tokens` route also returns `expires_at` alongside the plaintext token.
 
+When repo creation returns successfully, provisioning is complete and the repository is ready for follow-up control-plane or Git operations.
+
 ### List repos
 
 Route: `GET /repos?limit=&cursor=&search=&sort=&direction=`
@@ -212,7 +219,7 @@ export interface ListReposQuery {
 	direction?: SortDirection;
 }
 
-export type ListReposResponse = ApiEnvelope<RepoWithRemote[]>;
+export type ListReposResponse = ApiEnvelope<RepoListItem[]>;
 ```
 
 ```bash
@@ -233,7 +240,8 @@ curl "$ARTIFACTS_BASE_URL/repos?limit=20&sort=updated_at&direction=desc" \
 			"last_push_at": "<ISO_TIMESTAMP>",
 			"source": null,
 			"read_only": false,
-			"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/starter-repo.git"
+			"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/starter-repo.git",
+			"status": "ready"
 		}
 	],
 	"success": true,
@@ -579,6 +587,14 @@ export interface ApiError {
 	};
 }
 ```
+
+Operations that require a ready repository can return `409 Conflict` while repository provisioning is still in progress. These responses include a retriable message and a `Retry-After` header.
+
+| Repository lifecycle state | HTTP status    | Error code |
+| -------------------------- | -------------- | ---------- |
+| Creating                   | `409 Conflict` | `10304`    |
+| Importing                  | `409 Conflict` | `10302`    |
+| Forking                    | `409 Conflict` | `10303`    |
 
 ## Next steps
 

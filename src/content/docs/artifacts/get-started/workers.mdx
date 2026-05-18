@@ -180,7 +180,7 @@ The response resembles the following:
 
 Use the exact `remote` value from the response. The example above uses `<ACCOUNT_ID>` as a placeholder for your Cloudflare account ID.
 
-The returned token encodes its expiry directly in the `?expires=` suffix.
+The returned token encodes its expiry directly in the `?expires=` suffix. Once this create call succeeds, the repository is ready to use with the returned remote and token.
 
 Copy the `remote` and `token` values into local shell variables:
 

@@ -85,13 +85,15 @@ async function createRepo(artifacts: Artifacts) {
 
 </TypeScriptExample>
 
-The returned token encodes its expiry directly in the `?expires=` suffix.
+The returned token encodes its expiry directly in the `?expires=` suffix. When `create()` resolves, the repository has completed provisioning and is ready for follow-up binding or Git operations.
 
 ### `get(name)`
 
 - `name` <Type text="RepoName" /> <MetaInfo text="required" />
 - Returns <Type text="Promise<ArtifactsRepo>" />
 - Throws if the repo does not exist or is not ready yet.
+
+If repository creation is still completing, Artifacts throws an `ArtifactsError` with code `CREATE_IN_PROGRESS`. Repositories that are still importing or forking use their corresponding in-progress error codes.
 
 <TypeScriptExample>
 
@@ -128,7 +130,7 @@ async function listRepos(artifacts: Artifacts) {
 
 </TypeScriptExample>
 
-Each listed repo includes a `status` value of `ready`, `importing`, or `forking`.
+Each listed repo includes a `status` value of `creating`, `ready`, `importing`, or `forking`.
 
 ### `import(params)`
 
