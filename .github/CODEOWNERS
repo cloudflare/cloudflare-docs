@@ -89,9 +89,9 @@ package.json @cloudflare/content-engineering
 
 # Consumer products
 
-/src/content/docs/1.1.1.1/ @RebeccaTamachiro @cf-rhett @cloudflare/product-owners
-/src/content/partials/1.1.1.1/ @RebeccaTamachiro @cf-rhett @cloudflare/product-owners
-/src/assets/images/1.1.1.1/ @RebeccaTamachiro @cf-rhett @cloudflare/product-owners
+/src/content/docs/1.1.1.1/ @RebeccaTamachiro @cf-rhett @hannes-cf @cloudflare/product-owners
+/src/content/partials/1.1.1.1/ @RebeccaTamachiro @cf-rhett @hannes-cf @cloudflare/product-owners
+/src/assets/images/1.1.1.1/ @RebeccaTamachiro @cf-rhett @hannes-cf @cloudflare/product-owners
 /src/content/docs/warp-client/ @ranbel @cf-rhett @cloudflare/product-owners
 /src/content/partials/warp-client/ @ranbel @cf-rhett @cloudflare/product-owners
 /src/content/warp-releases/ @ranbel @cf-rhett @cloudflare/product-owners
@@ -104,10 +104,10 @@ package.json @cloudflare/content-engineering
 /src/content/docs/cloudflare-for-platforms/cloudflare-for-saas/ @baubuchon-cf @RebeccaTamachiro @cloudflare/product-owners
 /src/content/docs/china-network/ @pedrosousa @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/cloudflare-for-platforms/cloudflare-for-saas/ @RebeccaTamachiro @cloudflare/product-owners
-/src/content/docs/dns/ @RebeccaTamachiro @cloudflare/product-owners
-/src/content/docs/dns/dns-firewall/ @RebeccaTamachiro @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
-/src/content/docs/dns/internal-dns/ @RebeccaTamachiro @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
-/src/content/docs/dns/private-origins/ @RebeccaTamachiro @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
+/src/content/docs/dns/ @RebeccaTamachiro @hannes-cf @cloudflare/product-owners
+/src/content/docs/dns/dns-firewall/ @RebeccaTamachiro @hannes-cf @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
+/src/content/docs/dns/internal-dns/ @RebeccaTamachiro @hannes-cf @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
+/src/content/docs/dns/private-origins/ @RebeccaTamachiro @hannes-cf @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/fundamentals/ @dcpena @cloudflare/product-owners
 /src/content/docs/learning-paths/ @cloudflare/product-owners
 /src/content/docs/network-error-logging/ @dcpena @cloudflare/product-owners
