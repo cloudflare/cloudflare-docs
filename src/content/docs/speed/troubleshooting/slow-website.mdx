@@ -310,7 +310,7 @@ The `colo` field shows the three-letter airport code of the serving data center 
 
 When a request reaches Cloudflare:
 
-1. The request is routed to the nearest Cloudflare data center based on <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> routing.
+1. The request is routed to a nearby Cloudflare data center based on <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> [routing](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/).
 2. If the content is cached, it is served immediately.
 3. If not cached, Cloudflare fetches from your origin server.
 
@@ -318,7 +318,7 @@ If your origin server is geographically distant from the Cloudflare data center 
 
 ### Troubleshoot unexpected routing
 
-If requests are being routed to a data center that seems far from the user, this may be due to Cloudflare's traffic engineering decisions or how the user's ISP routes traffic.
+If requests are being routed to a data center that seems far from the user, this may be due to Cloudflare's automated traffic engineering or a user’s ISP routing traffic.
 
 While Cloudflare always strives to provide the best possible performance by serving traffic from the closest location, reliability is the top priority. In instances where performance and reliability are in conflict, Cloudflare's systems are designed to prioritize a stable connection over a local one.
 
