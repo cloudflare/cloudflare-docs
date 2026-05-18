@@ -1,0 +1,319 @@
+---
+title: Troubleshooting a slow website
+pcx_content_type: troubleshooting
+description: Identify and resolve performance issues affecting your website.
+products:
+  - speed
+sidebar:
+  order: 10
+head:
+  - tag: title
+    content: Troubleshooting a slow website
+---
+
+import { Details, Render, Tabs, TabItem, GlossaryTooltip } from "~/components";
+
+This guide helps you identify and resolve performance issues affecting your website. It starts with basic diagnostics and progresses to advanced troubleshooting techniques.
+
+## Before you start
+
+Saying "my website is slow" is not enough to diagnose a performance issue. To effectively troubleshoot, you need to:
+
+1. **Identify specific slow requests** - Determine which URLs, assets, or API endpoints are slow.
+2. **Measure the slowness** - Quantify the delay (for example, "this image takes 5 seconds to load").
+3. **Reproduce the issue** - Confirm the slowness is consistent and not a one-time occurrence.
+
+---
+
+## Step 1: Identify slow assets
+
+The first step is to identify which specific resources are causing slowness. A slow website is usually caused by one or more slow assets, not the entire site.
+
+### Use browser developer tools
+
+1. Open your browser's developer tools (press `F12` or right-click and select **Inspect**).
+2. Go to the **Network** tab.
+3. Reload the page and observe which requests take the longest.
+4. Sort by **Time** or **Duration** to identify the slowest assets.
+5. Note the specific URLs of slow resources.
+
+Look for:
+- Large images or videos
+- Slow API calls
+- Third-party scripts
+- Render-blocking resources
+
+### Generate a HAR file
+
+For a complete record of all requests, [generate a HAR file](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#generate-a-har-file). This captures timing information for every request and is useful when working with Cloudflare Support.
+
+---
+
+## Step 2: Use Observatory to analyze performance
+
+[Observatory](/speed/observatory/) provides synthetic tests and real user monitoring (RUM) data to assess your website's performance.
+
+### Run a speed test
+
+1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/:zone/speed).
+2. Select **Observatory**.
+3. Enter the URL you want to test and select **Run test**.
+
+### Understand the results
+
+Observatory reports key metrics:
+
+| Metric | What it measures | Target |
+|--------|------------------|--------|
+| **Largest Contentful Paint (LCP)** | Time until the largest visible element loads | Under 2.5 seconds |
+| **First Contentful Paint (FCP)** | Time until the first content appears | Under 1.8 seconds |
+| **Cumulative Layout Shift (CLS)** | Visual stability during page load | Under 0.1 |
+| **Time to First Byte (TTFB)** | Time until the first byte of response is received | Under 800ms |
+| **Total Blocking Time (TBT)** | Time the main thread is blocked | Under 200ms |
+
+### Enable recommended optimizations
+
+Based on Observatory results, enable relevant [Speed optimizations](/speed/optimization/):
+
+- [Auto Minify](/speed/optimization/content/auto-minify/) - Reduce file sizes by removing unnecessary characters
+- [Brotli compression](/speed/optimization/content/brotli/) - Compress responses for faster transfer
+- [Early Hints](/cache/advanced-configuration/early-hints/) - Preload critical resources
+- [HTTP/2 and HTTP/3](/speed/optimization/protocol/) - Use modern protocols for faster connections
+- [Image optimization](/images/) - Automatically optimize and resize images
+
+---
+
+## Step 3: Analyze origin performance
+
+If your website is slow, the issue may be at your origin server. Use Origin Analytics to understand how your origin is performing.
+
+### Check origin response times
+
+In the Cloudflare dashboard:
+
+1. Go to **Analytics & Logs** > **Traffic**.
+2. Review the **Origin Response Time** metrics.
+3. Look for patterns in slow responses (specific paths, times of day, or geographic regions).
+
+High origin response times indicate your origin server is struggling. Consider:
+- Upgrading your hosting plan
+- Optimizing database queries
+- Implementing server-side caching
+- Using a CDN for static assets
+
+---
+
+## Step 4: Measure performance with curl
+
+For detailed timing metrics on specific requests, use `curl` with the `--write-out` option.
+
+### Basic performance test
+
+```bash
+curl -w "\n\nDNS Lookup: %{time_namelookup}s\nTCP Connect: %{time_connect}s\nTLS Handshake: %{time_appconnect}s\nTime to First Byte: %{time_starttransfer}s\nTotal Time: %{time_total}s\n" -o /dev/null -s https://www.example.com/slow-asset.jpg
+```
+
+This outputs:
+
+```txt
+DNS Lookup: 0.025s
+TCP Connect: 0.045s
+TLS Handshake: 0.120s
+Time to First Byte: 0.350s
+Total Time: 1.250s
+```
+
+### Understanding the metrics
+
+| Metric | Description | High value indicates |
+|--------|-------------|---------------------|
+| **DNS Lookup** | Time to resolve the domain name | DNS issues or slow resolver |
+| **TCP Connect** | Time to establish TCP connection | Network latency or server distance |
+| **TLS Handshake** | Time to complete SSL/TLS negotiation | Certificate chain issues or slow server |
+| **Time to First Byte (TTFB)** | Time until first response byte | Slow origin processing |
+| **Total Time** | Complete request duration | Large file size or slow transfer |
+
+### Test from different locations
+
+To test from different geographic locations, use online tools like:
+- [KeyCDN Tools](https://tools.keycdn.com/performance)
+- [Uptrends](https://www.uptrends.com/tools/website-speed-test)
+- [Dotcom-Tools](https://www.dotcom-tools.com/website-speed-test)
+
+---
+
+## Step 5: Investigate caching
+
+Uncached content must be fetched from your origin server, adding latency. Use [Cache Analytics](/cache/performance-review/cache-analytics/) to understand your cache performance.
+
+### Check if assets are cached
+
+Use `curl` to check the cache status of a specific asset:
+
+```bash
+curl -sI https://www.example.com/asset.jpg | grep -i "cf-cache-status"
+```
+
+Possible values:
+
+| Status | Meaning | Action |
+|--------|---------|--------|
+| **HIT** | Served from Cloudflare cache | No action needed |
+| **MISS** | Not in cache, fetched from origin | May need cache rules |
+| **DYNAMIC** | Not eligible for caching | Create a cache rule if static |
+| **BYPASS** | Cache intentionally bypassed | Review cache rules |
+| **EXPIRED** | Cached copy was stale | Increase Edge TTL |
+| **REVALIDATED** | Cloudflare confirmed content is current | Increase Edge TTL |
+
+For a complete list, refer to [Cloudflare cache responses](/cache/concepts/cache-responses/).
+
+### Use Cache Analytics
+
+1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/:zone/caching).
+2. Review the **Cache Performance** section.
+3. Filter by **Cache status equals MISS** or **DYNAMIC** to identify uncached content.
+
+### Cache static content
+
+If static assets (images, CSS, JavaScript) are not being cached:
+
+1. Go to **Caching** > **Cache Rules**.
+2. Create a rule to [cache static content](/cache/how-to/cache-rules/examples/cache-everything/).
+3. Set appropriate [Edge TTLs](/cache/how-to/cache-rules/settings/#edge-ttl).
+
+<Details header="Common reasons content is not cached">
+
+- **Cache-Control headers from origin** - Your origin may send `Cache-Control: no-cache` or `private` headers. Override these with a Cache Rule.
+- **Set-Cookie headers** - Responses with `Set-Cookie` are not cached by default. Use a Cache Rule to ignore cookies for static assets.
+- **Query strings** - Different query strings create different cache entries. Use a [custom cache key](/cache/how-to/cache-rules/examples/custom-cache-key/) to normalize.
+- **Dynamic content type** - HTML and API responses are not cached by default. Create explicit cache rules if appropriate.
+
+</Details>
+
+---
+
+## Step 6: Diagnose network issues
+
+If curl shows high TCP Connect or TLS Handshake times, the issue may be network-related rather than application-related.
+
+### Test your Internet connection
+
+Visit [speed.cloudflare.com](https://speed.cloudflare.com) to test:
+- Download and upload speeds
+- Latency (ping)
+- Jitter
+- Packet loss
+
+Poor results indicate issues with your local network or ISP.
+
+### Run MTR from your location to Cloudflare
+
+MTR combines traceroute and ping to show latency and packet loss at each network hop.
+
+<Tabs>
+<TabItem label="macOS/Linux">
+
+```bash
+mtr -rw www.example.com
+```
+
+</TabItem>
+<TabItem label="Windows">
+
+Download [WinMTR](https://github.com/White-Tiger/WinMTR/releases) and run it with your domain as the target.
+
+</TabItem>
+</Tabs>
+
+Look for:
+- **High latency** at specific hops (indicates slow network segments)
+- **Packet loss** (indicates network congestion or issues)
+- **Timeouts** (may indicate firewalls or routing issues)
+
+For more details, refer to [How to read MTR](https://www.cloudflare.com/learning/network-layer/what-is-mtr/).
+
+### Run MTR from your origin to Cloudflare
+
+If you have access to your origin server, run MTR from the origin to a [Cloudflare IP address](https://www.cloudflare.com/ips/) to test the network path between your origin and Cloudflare.
+
+```bash
+mtr -rw 104.16.132.229
+```
+
+High latency or packet loss on this path affects all requests that miss the cache.
+
+---
+
+## Step 7: Understand network routing
+
+How requests are routed to Cloudflare data centers can significantly impact performance.
+
+### Identify which data center serves your requests
+
+Add `/cdn-cgi/trace` to your domain to see which Cloudflare data center is serving your requests:
+
+```bash
+curl https://www.example.com/cdn-cgi/trace
+```
+
+The `colo` field shows the three-letter airport code of the serving data center (for example, `colo=SJC` for San Jose).
+
+### Why routing matters
+
+When a request reaches Cloudflare:
+
+1. The request is routed to the nearest Cloudflare data center based on <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> routing.
+2. If the content is cached, it is served immediately.
+3. If not cached, Cloudflare fetches from your origin server.
+
+If your origin server is geographically distant from the Cloudflare data center serving your users, uncached requests will be slow.
+
+### Solutions for origin distance
+
+| Solution | Description | Best for |
+|----------|-------------|----------|
+| **Improve cache hit ratio** | Cache more content to reduce origin fetches | All sites |
+| **[Tiered Cache](/cache/how-to/tiered-cache/)** | Use upper-tier data centers to reduce origin requests | Sites with global traffic |
+| **[Argo Smart Routing](/argo-smart-routing/)** | Route traffic over faster network paths | Sites with slow origin connections |
+| **Move origin closer** | Deploy origin servers in multiple regions | Large-scale applications |
+
+### Enable Argo Smart Routing
+
+[Argo Smart Routing](/argo-smart-routing/) analyzes network conditions in real-time and routes traffic over the fastest paths, reducing latency by an average of 30%.
+
+1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/:zone/traffic).
+2. Select **Argo Smart Routing**.
+3. Enable the feature.
+
+Argo is particularly effective when:
+- Your origin is far from your users
+- Network congestion affects certain paths
+- You need consistent performance globally
+
+---
+
+## Summary checklist
+
+Use this checklist to systematically troubleshoot slow website performance:
+
+- [ ] Identify specific slow assets using browser developer tools
+- [ ] Run Observatory tests and review Core Web Vitals
+- [ ] Enable recommended Speed optimizations
+- [ ] Check origin response times in Analytics
+- [ ] Use `curl` to measure detailed timing for slow assets
+- [ ] Verify assets are being cached using Cache Analytics
+- [ ] Create cache rules for static content that is not cached
+- [ ] Test network performance with speed.cloudflare.com
+- [ ] Run MTR to identify network path issues
+- [ ] Check which Cloudflare data center serves your requests
+- [ ] Consider Argo Smart Routing for improved routing
+
+---
+
+## Related resources
+
+- [Observatory](/speed/observatory/) - Test and monitor website performance
+- [Cache Analytics](/cache/performance-review/cache-analytics/) - Analyze cache hit rates
+- [Cache Rules](/cache/how-to/cache-rules/) - Control what gets cached
+- [Argo Smart Routing](/argo-smart-routing/) - Optimize network routing
+- [Gathering information for troubleshooting](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/) - Collect diagnostic data
