@@ -251,7 +251,7 @@ package.json @cloudflare/content-engineering
 # Security products
 
 /src/content/docs/api-shield/ @patriciasantaana @cloudflare/appsec-reviewers @elithrar @xmflsct @cloudflare/product-owners
-/src/content/docs/bots/ @patriciasantaana @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
+/src/content/docs/bots/ @jinhee-c-lee @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/dmarc-management/ @Maddy-Cloudflare @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/firewall/ @pedrosousa @cloudflare/firewall @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/client-side-security/ @pedrosousa @cloudflare/appsec-reviewers @elithrar @xmflsct @cloudflare/product-owners
