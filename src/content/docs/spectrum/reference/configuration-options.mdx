@@ -42,7 +42,9 @@ Additionally, SMTP servers may perform a DNS lookup to find the MX records for a
 
 ## Ports
 
-Cloudflare supports all TCP ports.
+Cloudflare supports all TCP ports. For UDP, a small number of ports are reserved for Cloudflare edge infrastructure and cannot be used. These reserved ports are not published and may change over time. If a UDP port you need is rejected when you create or update an application, contact your account team.
+
+The edge port you choose is independent of the [application type](#application-type). An **HTTP/HTTPS** application is not limited to ports 80 and 443, and a **TCP/UDP** application is not limited to common service ports. For example, you can run an HTTPS application on port 8443, or a TCP application on port 2222, regardless of which port your origin listens on.
 
 ## Port ranges
 
