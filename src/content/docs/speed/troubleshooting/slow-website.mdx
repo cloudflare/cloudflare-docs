@@ -316,20 +316,16 @@ If requests are being routed to a data center that seems far from the user, this
 
 Cloudflare continuously adds capacity to its global network and enhances automated traffic engineering systems to intelligently manage congestion and other network events. While Cloudflare always strives to provide the best possible performance by serving traffic from the closest location, **reliability is the top priority**. In instances where performance and reliability are in conflict, Cloudflare's systems are designed to prioritize a stable connection over a local one.
 
-Additionally, routing behavior varies by plan:
-- **Enterprise zones** are prioritized for routing to the closest data center.
-- **Other plans** may experience routing variations based on operational conditions.
-
 For more details, refer to [Cloudflare traffic not being sent to the geographically closest data center](/support/troubleshooting/general-troubleshooting/geographic-traffic-routing/).
 
 Common causes of unexpected routing:
 
-| Symptom | Likely cause | What you can do |
-|---------|--------------|----------------|
-| Requests route to a distant data center | Cloudflare traffic engineering for reliability, or ISP routing | Enable Argo Smart Routing for optimized paths |
-| Routing changes between requests | Network conditions or ISP load balancing | Normal behavior - routing adapts to conditions |
-| Consistent routing to a distant region | ISP peering location or Cloudflare capacity management | Consider upgrading to Enterprise or enable Argo Smart Routing |
-| High latency despite nearby data center | Network congestion on the path | Enable Argo Smart Routing to optimize the path |
+| Symptom | Explanation |
+|---------|-------------|
+| Requests route to a distant data center | Cloudflare traffic engineering for reliability, or ISP routing decisions |
+| Routing changes between requests | Normal behavior - routing adapts to network conditions or ISP load balancing |
+| Consistent routing to a distant region | ISP peering location or Cloudflare capacity management |
+| High latency despite nearby data center | Network congestion on the path |
 
 ### Solutions for origin distance
 
