@@ -26,6 +26,6 @@ All AI Gateway features — logging, caching, rate limiting, and guardrails — 
 
 Every request through the REST API is routed through your account's default gateway, which is created automatically on first use. To route requests through a specific gateway, add the `cf-aig-gateway-id` header.
 
-If you are already calling Workers AI models through the existing REST API, switching is straightforward: replace `/ai/run/@cf/{model}` with `/ai/run`, and move the model name into the request body with `"provider": "cloudflare"`.
+If you are already calling Workers AI models through the existing REST API, replace `/ai/run/@cf/{model}` with `/ai/run`, and move the model name into the request body with `"provider": "cloudflare"`.
 
 For more details and examples, refer to the [REST API documentation](/ai-gateway/usage/rest-api/).
