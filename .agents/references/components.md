@@ -771,20 +771,6 @@ Props: `framework` (required, framework slug).
 
 ---
 
-## WranglerCLI
-
-Renders a Wrangler command wrapped in `PackageManagers`, with optional argument display. Use when documenting a specific invocation of a Wrangler command (as opposed to `WranglerCommand` which renders the full command reference).
-
-```mdx
-import { WranglerCLI } from "~/components";
-
-<WranglerCLI command="deploy" positionals={["src/index.mjs"]} flags={{ name: "my-worker" }} />
-```
-
-Props: `command` (required), `positionals` (string array of positional args), `flags` (record of flag name → value), `showArgs` (boolean, default `false` — shows available arguments in a `Details` block).
-
----
-
 ## WranglerNamespace
 
 Renders the full command listing for a Wrangler namespace (e.g. `d1`, `hyperdrive`). Used in Wrangler reference docs.
