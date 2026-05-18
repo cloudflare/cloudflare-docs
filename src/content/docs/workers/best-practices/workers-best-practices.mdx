@@ -749,7 +749,7 @@ For more information, refer to [Workers errors](/workers/observability/errors/#c
 
 A `Promise` that is not `await`ed, `return`ed, or passed to `ctx.waitUntil()` is a floating promise. Floating promises cause silent bugs: dropped results, swallowed errors, and unfinished work. The Workers runtime may terminate your isolate before a floating promise completes.
 
-Choose based on whether the work is required. Use `await` or `return` for work that must complete before the response is correct. Use `ctx.waitUntil()` for best-effort work that may run after the response is sent and can finish within the `waitUntil()` time limit. For work that must complete reliably after the response, use [Queues](/queues/) or [Workflows](/workflows/).
+Choose based on whether the response depends on the work. Use `await` or `return` for work that must complete before the response is correct. Use `ctx.waitUntil()` for work that can run after the response is sent and can finish within the `waitUntil()` time limit.
 
 Enable the `no-floating-promises` lint rule to catch these at development time. If you use ESLint, enable [`@typescript-eslint/no-floating-promises`](https://typescript-eslint.io/rules/no-floating-promises/). If you use oxlint, enable [`typescript/no-floating-promises`](https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-floating-promises.html).
 
