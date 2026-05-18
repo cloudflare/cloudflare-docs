@@ -110,7 +110,7 @@ Observatory reports key metrics:
 
 Based on Observatory results, enable relevant [Speed optimizations](/speed/optimization/):
 
-- [Brotli compression](/speed/optimization/content/brotli/) - Compress responses for faster transfer
+- [Brotli compression](/speed/optimization/content/compression/) - Compress responses for faster transfer
 - [Early Hints](/cache/advanced-configuration/early-hints/) - Preload critical resources
 - [HTTP/2 and HTTP/3](/speed/optimization/protocol/) - Use modern protocols for faster connections
 - [Image optimization](/images/) - Automatically optimize and resize images
@@ -217,7 +217,7 @@ If static assets (images, CSS, JavaScript) show a cache status of `DYNAMIC`, `BY
 | `DYNAMIC` status | Content type not in [default file extensions](/cache/concepts/default-cache-behavior/#default-cached-file-extensions) | Create a Cache Rule to cache the content |
 | `DYNAMIC` status | Origin sends `Cache-Control: private` or `no-store` | Create a Cache Rule to [override origin cache control](/cache/how-to/cache-rules/settings/#origin-cache-control) |
 | `BYPASS` status | A Cache Rule is bypassing cache | Review your [Cache Rules](/cache/how-to/cache-rules/) configuration |
-| `MISS` on every request | Response includes `Set-Cookie` header | Configure your origin to not set cookies on static assets, or use a Cache Rule to [ignore cookies](/cache/how-to/cache-rules/examples/ignore-set-cookie-header/) |
+| `MISS` on every request | Response includes `Set-Cookie` header | Configure your origin to not set cookies on static assets, or use a Cache Rule to [ignore cookies](/cache/concepts/cache-behavior/#interaction-of-set-cookie-response-header-with-cache) |
 | `MISS` with query strings | Different query strings create different cache entries | Use a [custom cache key](/cache/how-to/cache-rules/examples/custom-cache-key/) to ignore or normalize query strings |
 
 ### Cache additional static content
