@@ -157,10 +157,9 @@ When a Workers script is invoked by a [Cron Trigger](/workers/configuration/cron
 
 :::note
 
-In module Workers, the runtime waits for the promise returned by the
-`scheduled()` handler to resolve (up to the 15-minute duration limit). You do
-not need to use `waitUntil()` for the runtime to wait for a single asynchronous
-task.
+The runtime waits for the promise returned by the `scheduled()` handler to
+resolve (up to the 15-minute duration limit). You do not need to use
+`waitUntil()` for the runtime to wait for a single asynchronous task.
 `waitUntil()` is most useful when you need to run multiple concurrent tasks, or
 when you want the outcome of a specific promise to be recorded as the Cron
 Trigger invocation status.
