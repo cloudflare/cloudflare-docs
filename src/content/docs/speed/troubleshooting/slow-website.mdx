@@ -15,9 +15,44 @@ import { Details, Render, Tabs, TabItem, GlossaryTooltip } from "~/components";
 
 This guide helps you identify and resolve performance issues affecting your website. It starts with basic diagnostics and progresses to advanced troubleshooting techniques.
 
-## Before you start
+## Before you start: Verify traffic goes through Cloudflare
 
-Performance issues are easier to solve when you can pinpoint exactly what is slow. To effectively troubleshoot, start by gathering the following information:
+Before troubleshooting performance, confirm that your traffic is actually going through Cloudflare. If requests bypass Cloudflare, the issue is not related to Cloudflare and this guide will not help.
+
+### Check for the cf-ray header
+
+Every response served through Cloudflare includes a `cf-ray` header. Use `curl` to check:
+
+```bash
+curl -sI https://www.example.com | grep -i cf-ray
+```
+
+If you see a `cf-ray` header (for example, `cf-ray: 8a1b2c3d4e5f6g7h-SJC`), your traffic is going through Cloudflare. If not, check your DNS configuration.
+
+### Verify DNS is pointing to Cloudflare
+
+Your domain must resolve to Cloudflare IP addresses for traffic to be proxied:
+
+```bash
+dig +short www.example.com
+```
+
+The returned IP addresses should be [Cloudflare IPs](https://www.cloudflare.com/ips/). If they point directly to your origin server, your DNS records are not proxied.
+
+To fix this:
+1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/:zone/dns).
+2. Find the DNS record for the slow hostname.
+3. Ensure the **Proxy status** is set to **Proxied** (orange cloud icon).
+
+:::note
+If your DNS records are set to **DNS only** (gray cloud), Cloudflare does not proxy the traffic and cannot improve performance. The request goes directly to your origin server.
+:::
+
+---
+
+## Gather information about the slow requests
+
+Performance issues are easier to solve when you can pinpoint exactly what is slow. Start by gathering the following information:
 
 1. **Identify specific slow requests** - Determine which URLs, assets, or API endpoints are slow.
 2. **Measure the slowness** - Quantify the delay (for example, "this image takes 5 seconds to load").
@@ -263,7 +298,7 @@ Add `/cdn-cgi/trace` to your domain to see which Cloudflare data center is servi
 curl https://www.example.com/cdn-cgi/trace
 ```
 
-The `colo` field shows the three-letter airport code of the serving data center (for example, `colo=SJC` for San Jose).
+The `colo` field shows the three-letter airport code of the serving data center (for example, `colo=SJC` for San Jose). You can find the full list of Cloudflare data centers and their codes on the [Cloudflare status page](https://www.cloudflarestatus.com/).
 
 ### Why routing matters
 
@@ -274,6 +309,27 @@ When a request reaches Cloudflare:
 3. If not cached, Cloudflare fetches from your origin server.
 
 If your origin server is geographically distant from the Cloudflare data center serving your users, uncached requests will be slow.
+
+### Troubleshoot unexpected routing
+
+If requests are being routed to a data center that seems far from the user, this may be due to Cloudflare's traffic engineering decisions or how the user's ISP routes traffic.
+
+Cloudflare continuously adds capacity to its global network and enhances automated traffic engineering systems to intelligently manage congestion and other network events. While Cloudflare always strives to provide the best possible performance by serving traffic from the closest location, **reliability is the top priority**. In instances where performance and reliability are in conflict, Cloudflare's systems are designed to prioritize a stable connection over a local one.
+
+Additionally, routing behavior varies by plan:
+- **Enterprise zones** are prioritized for routing to the closest data center.
+- **Other plans** may experience routing variations based on operational conditions.
+
+For more details, refer to [Cloudflare traffic not being sent to the geographically closest data center](/support/troubleshooting/general-troubleshooting/geographic-traffic-routing/).
+
+Common causes of unexpected routing:
+
+| Symptom | Likely cause | What you can do |
+|---------|--------------|----------------|
+| Requests route to a distant data center | Cloudflare traffic engineering for reliability, or ISP routing | Enable Argo Smart Routing for optimized paths |
+| Routing changes between requests | Network conditions or ISP load balancing | Normal behavior - routing adapts to conditions |
+| Consistent routing to a distant region | ISP peering location or Cloudflare capacity management | Consider upgrading to Enterprise or enable Argo Smart Routing |
+| High latency despite nearby data center | Network congestion on the path | Enable Argo Smart Routing to optimize the path |
 
 ### Solutions for origin distance
 
@@ -308,6 +364,7 @@ For detailed information about how Argo Smart Routing works, refer to the [Argo 
 
 Use this checklist to systematically troubleshoot slow website performance:
 
+- [ ] Verify traffic is going through Cloudflare (check for `cf-ray` header)
 - [ ] Identify specific slow assets using browser developer tools
 - [ ] Run Observatory tests and review Core Web Vitals
 - [ ] Enable recommended Speed optimizations
