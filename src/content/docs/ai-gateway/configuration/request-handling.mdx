@@ -33,12 +33,15 @@ A timeout is set in milliseconds. The timeout is based on when the first part of
 
 For a provider-specific endpoint, configure the timeout value by adding a `cf-aig-request-timeout` header.
 
-```bash title="Provider-specific endpoint example" {4}
-curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/workers-ai/@cf/meta/llama-3.1-8b-instruct \
- --header 'Authorization: Bearer {cf_api_token}' \
- --header 'Content-Type: application/json' \
- --header 'cf-aig-request-timeout: 5000'
- --data '{"prompt": "What is Cloudflare?"}'
+```bash title="Request with timeout" {4}
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --header "cf-aig-request-timeout: 5000" \
+  --data '{
+    "model": "openai/gpt-4.1-mini",
+    "messages": [{"role": "user", "content": "What is Cloudflare?"}]
+  }'
 ```
 
 ---

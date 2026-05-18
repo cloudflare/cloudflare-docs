@@ -87,9 +87,6 @@ export const baseSchema = (_context: SchemaContext) =>
 					.enum(["default", "note", "tip", "caution", "danger"])
 					.optional()
 					.default("default"),
-				dismissible: z
-					.object({ id: z.string(), days: z.number().optional().default(7) })
-					.optional(),
 			})
 			.optional()
 			.describe(

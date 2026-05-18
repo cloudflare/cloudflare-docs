@@ -9,7 +9,6 @@ export { default as AnimatedWorkflowDiagram } from "./AnimatedWorkflowDiagram.as
 export { default as APIRequest } from "./APIRequest.astro";
 export { default as AutoconfigDiagram } from "./AutoconfigDiagram.astro";
 export { default as AvailableNotifications } from "./AvailableNotifications.astro";
-export { default as Checkbox } from "./Checkbox.astro";
 export { default as CompatibilityFlag } from "./CompatibilityFlag.astro";
 export { default as CompatibilityFlags } from "./CompatibilityFlags.astro";
 export { default as ComponentUsage } from "./ComponentUsage.astro";
@@ -63,7 +62,6 @@ export { default as TagsUsage } from "./TagsUsage.astro";
 export { default as TunnelCalculator } from "./TunnelCalculator.astro";
 export { default as Type } from "./Type.astro";
 export { default as TypeScriptExample } from "./TypeScriptExample.astro";
-export { default as WranglerCLI } from "./WranglerCLI.astro";
 export { default as WranglerCommand } from "./WranglerCommand.astro";
 export { default as WranglerNamespace } from "./WranglerNamespace.astro";
 export { default as WranglerConfig } from "./WranglerConfig.astro";

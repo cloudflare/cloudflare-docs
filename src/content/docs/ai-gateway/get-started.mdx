@@ -16,9 +16,7 @@ import {
 	Render,
 	TabItem,
 	Tabs,
-	Badge,
 } from "~/components";
-import CodeSnippets from "~/components/ai-gateway/code-examples.astro";
 
 In this guide, you will learn how to set up and use your first AI Gateway.
 
@@ -34,11 +32,12 @@ Before making requests, you need two things:
 Run the following command to make your first request through AI Gateway:
 
 ```bash
-curl -X POST https://gateway.ai.cloudflare.com/v1/$CLOUDFLARE_ACCOUNT_ID/default/compat/chat/completions \
-  --header "cf-aig-authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-  --header 'Content-Type: application/json' \
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
   --data '{
-    "model": "workers-ai/@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+    "model": "moonshotai/kimi-k2.6",
+    "provider": "cloudflare",
     "messages": [
       {
         "role": "user",
@@ -49,7 +48,7 @@ curl -X POST https://gateway.ai.cloudflare.com/v1/$CLOUDFLARE_ACCOUNT_ID/default
 ```
 
 :::note
-AI Gateway automatically creates a gateway for you on the first request. The gateway is created with [authentication](/ai-gateway/configuration/authentication/) turned on, so the `cf-aig-authorization` header is required for all requests. For more details on how the default gateway works, refer to [Default gateway](/ai-gateway/configuration/manage-gateway/#default-gateway).
+You do not need to create a gateway before sending requests. When no gateway ID is specified, AI Gateway uses `default` as the gateway ID and automatically creates it on the first authenticated request. To use a specific gateway, add the `cf-aig-gateway-id` header to your request. For more details, refer to [Default gateway](/ai-gateway/configuration/manage-gateway/#default-gateway).
 :::
 
 <Details header="Create a gateway manually">
@@ -70,31 +69,21 @@ Authenticate with your upstream AI provider using one of the following options:
 
 ## Integration options
 
-### Unified API Endpoint
+### REST API
 
-<Badge text="OpenAI Compatible" variant="tip" size="small" /><Badge text="Recommended" variant="success" size="small" />
-<br />
-<br />
+Call any model — whether hosted on Cloudflare or by a third-party provider — through the same Cloudflare API. No provider SDKs or API keys needed — authentication and billing are handled through your Cloudflare account. Three endpoints are available: `/ai/run` for all modalities, `/ai/v1/chat/completions` for OpenAI SDK compatibility, and `/ai/v1/responses` for agentic workflows.
 
-The easiest way to get started with AI Gateway is through our OpenAI-compatible `/chat/completions` endpoint. This allows you to use existing OpenAI SDKs and tools with minimal code changes while gaining access to multiple AI providers.
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "model": "openai/gpt-4.1-mini",
+    "messages": [{"role": "user", "content": "What is Cloudflare?"}]
+  }'
+```
 
-`
-https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/completions
-`
-
-**Key benefits:**
-
-- Drop-in replacement for OpenAI API, works with existing OpenAI SDKs and other OpenAI compliant clients
-- Switch between providers by changing the `model` parameter
-- Dynamic Routing - Define complex routing scenarios requiring conditional logic, conduct A/B tests, set rate / budget limits, etc
-
-
-#### Example:
-
-<CodeSnippets forceAPI="unified" />
-
-
-Refer to [Unified API](/ai-gateway/usage/chat-completion/) to learn more about OpenAI compatibility.
+Refer to [REST API](/ai-gateway/usage/rest-api/) for details and examples.
 
 ### Provider-specific endpoints
 

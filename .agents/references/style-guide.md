@@ -294,7 +294,6 @@ All components are imported from `~/components`. Imports must appear after the f
 | `TypeScriptExample` | Workers TS example with auto-generated JS tab |
 | `WranglerConfig` | Wrangler config in synced TOML + JSON tabs |
 | `PackageManagers` | Package install/exec command across npm, yarn, pnpm |
-| `WranglerCLI` | Wrangler command invocation wrapped in `PackageManagers` |
 | `WranglerCommand` | Auto-generated full Wrangler command reference |
 | `WranglerNamespace` | Auto-generated Wrangler namespace command listing |
 | `Tabs` / `TabItem` | Switchable tabs (`syncKey="dashPlusAPI"` or `"workersExamples"`) |
