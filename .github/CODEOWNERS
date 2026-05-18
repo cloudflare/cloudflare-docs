@@ -100,10 +100,7 @@ package.json @cloudflare/content-engineering
 # Core platform
 
 /src/content/docs/byoip/ @RebeccaTamachiro @cloudflare/product-owners
-/src/content/docs/china-network/ @pedrosousa @cloudflare/product-owners
-/src/content/docs/cloudflare-for-platforms/cloudflare-for-saas/ @baubuchon-cf @RebeccaTamachiro @cloudflare/product-owners
 /src/content/docs/china-network/ @pedrosousa @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
-/src/content/docs/cloudflare-for-platforms/cloudflare-for-saas/ @RebeccaTamachiro @cloudflare/product-owners
 /src/content/docs/dns/ @RebeccaTamachiro @hannes-cf @cloudflare/product-owners
 /src/content/docs/dns/dns-firewall/ @RebeccaTamachiro @hannes-cf @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/dns/internal-dns/ @RebeccaTamachiro @hannes-cf @cloudflare/cf1-reviewers @elithrar @cloudflare/product-owners
@@ -126,7 +123,6 @@ package.json @cloudflare/content-engineering
 /src/content/docs/d1/ @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @harshil1712 @cloudflare/product-owners
 /src/content/release-notes/d1.yaml @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @cloudflare/product-owners
 /src/content/partials/d1/ @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @harshil1712 @cloudflare/product-owners
-/src/content/docs/ai-crawl-control/ @oxyjun @cloudflare/product-owners
 /src/content/docs/durable-objects/ @elithrar @vy-ton @joshthoward @oxyjun @lambrospetrou @mikenomitch @cloudflare/product-owners
 /src/content/partials/durable-objects/ @elithrar @rita3ko @irvinebroque @vy-ton @cloudflare/product-owners
 /src/content/release-notes/durable-objects.yaml @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @cloudflare/product-owners
@@ -180,7 +176,7 @@ package.json @cloudflare/content-engineering
 /src/content/docs/analytics/analytics-engine/ @irvinebroque @elithrar @nevikashah @WalshyDev @cloudflare/product-owners
 /src/content/docs/cloudflare-for-platforms/ @irvinebroque @dinasaur404 @cloudflare/product-owners
 /src/content/docs/cloudflare-for-platforms/workers-for-platforms/ @irvinebroque @dinasaur404 @cloudflare/deploy-config @cloudflare/product-owners
-/src/content/docs/cloudflare-for-platforms/cloudflare-for-saas/ @irvinebroque @dinasaur404 @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
+/src/content/docs/cloudflare-for-platforms/cloudflare-for-saas/ @baubuchon-cf @irvinebroque @dinasaur404 @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/workers/observability/ @irvinebroque @mikenomitch @nevikashah @cloudflare/product-owners
 /src/content/docs/workers/static-assets @irvinebroque @GregBrimble @WalshyDev @cloudflare/deploy-config @cloudflare/product-owners @MattieTK
 /src/content/docs/workflows/ @elithrar @celso @mia303 @jonesphillip @cloudflare/product-owners
@@ -254,24 +250,12 @@ package.json @cloudflare/content-engineering
 
 # Security products
 
-/src/content/docs/api-shield/ @patriciasantaana @xmflsct @cloudflare/product-owners
-/src/content/docs/bots/ @patriciasantaana @cloudflare/product-owners
-/src/content/docs/dmarc-management/ @Maddy-Cloudflare @cloudflare/product-owners
-/src/content/docs/firewall/ @pedrosousa @cloudflare/firewall @cloudflare/product-owners
-/src/content/docs/client-side-security/ @pedrosousa @xmflsct @cloudflare/product-owners
-/src/content/docs/secrets-store/ @baubuchon-cf @RebeccaTamachiro @cloudflare/product-owners
-/src/content/docs/security-center/ @alexmoraru7 @cloudflare/product-owners
-/src/content/docs/ssl/ @baubuchon-cf @RebeccaTamachiro @cloudflare/product-owners
-/src/content/docs/ssl/post-quantum-cryptography @lukevalenta @cjpatton @bwesterb @cloudflare/product-owners
-/src/content/docs/waf/ @pedrosousa @cloudflare/firewall @cloudflare/product-owners
-/src/content/docs/waf/change-log/ @pedrosousa @cloudflare/firewall @vs-mg @cloudflare/product-owners
-/src/content/docs/cloudflare-challenges/ @patriciasantaana @cloudflare/product-owners
 /src/content/docs/api-shield/ @patriciasantaana @cloudflare/appsec-reviewers @elithrar @xmflsct @cloudflare/product-owners
 /src/content/docs/bots/ @patriciasantaana @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/dmarc-management/ @Maddy-Cloudflare @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/firewall/ @pedrosousa @cloudflare/firewall @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/client-side-security/ @pedrosousa @cloudflare/appsec-reviewers @elithrar @xmflsct @cloudflare/product-owners
-/src/content/docs/secrets-store/ @RebeccaTamachiro @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
+/src/content/docs/secrets-store/ @baubuchon-cf @RebeccaTamachiro @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/security/ @cloudflare/appsec-reviewers @elithrar @xmflsct @cloudflare/product-owners
 /src/content/docs/security-center/ @alexmoraru7 @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
 /src/content/docs/ssl/ @RebeccaTamachiro @cloudflare/appsec-reviewers @elithrar @cloudflare/product-owners
