@@ -75,7 +75,6 @@ Observatory reports key metrics:
 
 Based on Observatory results, enable relevant [Speed optimizations](/speed/optimization/):
 
-- [Auto Minify](/speed/optimization/content/auto-minify/) - Reduce file sizes by removing unnecessary characters
 - [Brotli compression](/speed/optimization/content/brotli/) - Compress responses for faster transfer
 - [Early Hints](/cache/advanced-configuration/early-hints/) - Preload critical resources
 - [HTTP/2 and HTTP/3](/speed/optimization/protocol/) - Use modern protocols for faster connections
@@ -91,7 +90,7 @@ If your website is slow, the issue may be at your origin server. Use Origin Anal
 
 In the Cloudflare dashboard:
 
-1. Go to **Analytics & Logs** > **Traffic**.
+1. Go to **Speed** > **Origin Analytics**.
 2. Review the **Origin Response Time** metrics.
 3. Look for patterns in slow responses (specific paths, times of day, or geographic regions).
 
@@ -99,7 +98,6 @@ High origin response times indicate your origin server is struggling. Consider:
 - Upgrading your hosting plan
 - Optimizing database queries
 - Implementing server-side caching
-- Using a CDN for static assets
 
 ---
 
@@ -144,7 +142,9 @@ To test from different geographic locations, use online tools like:
 
 ## Step 5: Investigate caching
 
-Uncached content must be fetched from your origin server, adding latency. Use [Cache Analytics](/cache/performance-review/cache-analytics/) to understand your cache performance.
+Caching is one of the most effective ways to improve website performance. When content is cached, Cloudflare serves it directly from a data center close to your visitors, eliminating the round trip to your origin server. This can reduce response times from hundreds of milliseconds to just a few milliseconds.
+
+Uncached content must travel from the visitor to Cloudflare, then to your origin server, and back again. Use [Cache Analytics](/cache/performance-review/cache-analytics/) to understand your cache performance and identify opportunities to cache more content.
 
 ### Check if assets are cached
 
@@ -173,22 +173,29 @@ For a complete list, refer to [Cloudflare cache responses](/cache/concepts/cache
 2. Review the **Cache Performance** section.
 3. Filter by **Cache status equals MISS** or **DYNAMIC** to identify uncached content.
 
-### Cache static content
+### Investigate why static content is not cached
 
-If static assets (images, CSS, JavaScript) are not being cached:
+If static assets (images, CSS, JavaScript) show a cache status of `DYNAMIC`, `BYPASS`, or `MISS`, investigate the cause:
+
+| Symptom | Likely cause | Solution |
+|---------|--------------|----------|
+| `DYNAMIC` status | Content type not in [default file extensions](/cache/concepts/default-cache-behavior/#default-cached-file-extensions) | Create a Cache Rule to cache the content |
+| `DYNAMIC` status | Origin sends `Cache-Control: private` or `no-store` | Create a Cache Rule to [override origin cache control](/cache/how-to/cache-rules/settings/#origin-cache-control) |
+| `BYPASS` status | A Cache Rule is bypassing cache | Review your [Cache Rules](/cache/how-to/cache-rules/) configuration |
+| `MISS` on every request | Response includes `Set-Cookie` header | Configure your origin to not set cookies on static assets, or use a Cache Rule to [ignore cookies](/cache/how-to/cache-rules/examples/ignore-set-cookie-header/) |
+| `MISS` with query strings | Different query strings create different cache entries | Use a [custom cache key](/cache/how-to/cache-rules/examples/custom-cache-key/) to ignore or normalize query strings |
+
+### Cache additional static content
+
+By default, Cloudflare only caches certain [file extensions](/cache/concepts/default-cache-behavior/#default-cached-file-extensions). To cache additional static content:
 
 1. Go to **Caching** > **Cache Rules**.
-2. Create a rule to [cache static content](/cache/how-to/cache-rules/examples/cache-everything/).
+2. Create a rule to [cache specific content](/cache/how-to/cache-rules/examples/cache-everything/).
 3. Set appropriate [Edge TTLs](/cache/how-to/cache-rules/settings/#edge-ttl).
 
-<Details header="Common reasons content is not cached">
-
-- **Cache-Control headers from origin** - Your origin may send `Cache-Control: no-cache` or `private` headers. Override these with a Cache Rule.
-- **Set-Cookie headers** - Responses with `Set-Cookie` are not cached by default. Use a Cache Rule to ignore cookies for static assets.
-- **Query strings** - Different query strings create different cache entries. Use a [custom cache key](/cache/how-to/cache-rules/examples/custom-cache-key/) to normalize.
-- **Dynamic content type** - HTML and API responses are not cached by default. Create explicit cache rules if appropriate.
-
-</Details>
+:::caution
+Be careful when caching HTML or API responses. These often contain personalized or dynamic content that should not be cached. Only cache content you are certain is static.
+:::
 
 ---
 
@@ -281,14 +288,19 @@ If your origin server is geographically distant from the Cloudflare data center 
 
 [Argo Smart Routing](/argo-smart-routing/) analyzes network conditions in real-time and routes traffic over the fastest paths, reducing latency by an average of 30%.
 
-1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/:zone/traffic).
-2. Select **Argo Smart Routing**.
-3. Enable the feature.
+Argo Smart Routing is part of [Smart Shield](/smart-shield/), which bundles multiple Cloudflare performance and reliability features.
+
+To enable Argo Smart Routing:
+
+1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/:zone/smart-shield).
+2. Follow the [Smart Shield setup guide](/smart-shield/get-started/) to enable the feature.
 
 Argo is particularly effective when:
 - Your origin is far from your users
 - Network congestion affects certain paths
 - You need consistent performance globally
+
+For detailed information about how Argo Smart Routing works, refer to the [Argo Smart Routing documentation](/argo-smart-routing/).
 
 ---
 
