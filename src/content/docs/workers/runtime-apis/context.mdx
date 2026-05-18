@@ -188,7 +188,7 @@ When declaring an entrypoint class that accepts `props`, make sure to declare it
 
 `ctx.waitUntil()` extends the lifetime of your Worker, allowing you to perform work without blocking returning a response, and that may continue after a response is returned. It accepts a `Promise`, which the Workers runtime will continue executing, even after a response has been returned by the Worker's [handler](/workers/runtime-apis/handlers/).
 
-Use `ctx.waitUntil()` for work that can run after the response is sent, such as non-critical logging, analytics, or cache writes. If the client is still receiving the response, including a streamed response body, the Worker invocation remains active without `ctx.waitUntil()`. If your response depends on the work, `await` the work before returning the response or stream the response as the work completes.
+Use `ctx.waitUntil()` for work that can run after the response is sent, such as logging, analytics, or cache writes, as long as the work can finish within the `waitUntil()` time limit. If the client is still receiving the response, including a streamed response body, the Worker invocation remains active without `ctx.waitUntil()`. If your response depends on the work, `await` the work before returning the response or stream the response as the work completes.
 
 `waitUntil` is commonly used to:
 
@@ -199,7 +199,7 @@ Use `ctx.waitUntil()` for work that can run after the response is sent, such as 
 
 For HTTP-triggered Workers, `ctx.waitUntil()` can extend execution for up to 30 seconds after the response is sent or the client disconnects. This is not a limit on the total wall time of an HTTP request. This time limit is shared across all `waitUntil()` calls within the same request. If any Promises have not settled after 30 seconds, they are canceled. When `waitUntil` tasks are canceled, the following warning will be logged to [Workers Logs](/workers/observability/logs/workers-logs/) and any attached [Tail Workers](/workers/observability/logs/tail-workers/): `waitUntil() tasks did not complete within the allowed time after invocation end and have been cancelled.`
 
-If you need to guarantee that work completes successfully, you should send messages to a [Queue](/queues/) and process them in a separate consumer Worker. Queues provide reliable delivery and automatic retries, ensuring your work is not lost.
+If the work cannot finish within the `waitUntil()` time limit, send messages to a [Queue](/queues/) and process them in a separate consumer Worker. Queues provide reliable delivery and automatic retries.
 
 :::
 
