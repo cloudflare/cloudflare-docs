@@ -240,8 +240,8 @@ package.json @cloudflare/content-engineering
 
 # Radar
 
-/src/content/docs/radar/ @andre-j3sus @cloudflare/product-owners
-/src/content/release-notes/radar.yaml @andre-j3sus @cloudflare/product-owners
+/src/content/docs/radar/ @andre-j3sus @devandrepascoa @rubenalex @cloudflare/product-owners
+/src/content/release-notes/radar.yaml @andre-j3sus @devandrepascoa @rubenalex @cloudflare/product-owners
 
 # Reference architecture
 
