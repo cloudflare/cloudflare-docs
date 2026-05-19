@@ -141,7 +141,6 @@ jobs:
         with:
           model: "cloudflare-ai-gateway/workers-ai/@cf/moonshotai/kimi-k2.6"
           agent: docs
-          permissions: write
           token_permissions: NO_PUSH
           prompt: |
             Review this pull request. Review the title, description, and diff.
