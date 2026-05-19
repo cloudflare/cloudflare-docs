@@ -71,13 +71,13 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 	});
 
 	// ── 2. Route to the right pipeline ─────────────────────────────────────
-	if (
-		!req ||
-		!(
-			["issues", "pull_request"].includes(eventType) &&
-			webhookAction === "opened"
-		)
-	) {
+	const shouldFilter =
+		["issues", "pull_request"].includes(eventType) &&
+		(["opened", "reopened"].includes(webhookAction as string) ||
+			(eventType === "pull_request" &&
+				webhookAction === "ready_for_review"));
+
+	if (!req || !shouldFilter) {
 		console.log({
 			message: `GitHub webhook ignored: ${webhookLabel}`,
 			event: "github_webhook_orchestrator",
@@ -89,7 +89,8 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 			url: itemUrl,
 			sender: senderLogin,
 			action: "ignored",
-			reason: "only issues.opened and pull_request.opened are filtered",
+			reason:
+				"only issues/pull_request opened, reopened, and pull_request ready_for_review events are filtered",
 		});
 		return { acted: false, summary: "No action needed." };
 	}
