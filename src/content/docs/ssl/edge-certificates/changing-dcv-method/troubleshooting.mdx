@@ -13,14 +13,23 @@ head:
 
 import { GlossaryTooltip, Render, Tabs, TabItem } from "~/components";
 
-Taking into account the [steps involved in DCV](/ssl/edge-certificates/changing-dcv-method/dcv-flow/), some situations may interfere with certificate issuance and renewal.
-
-[Blocked validation URLs](#blocked-validation-url) or [misconfigured DNS settings](#dns-settings-and-records) might interfere with the <GlossaryTooltip term="Certificate Authority (CA)">certificate authority's</GlossaryTooltip> ability to finish the validation process. In these situations, you may need to update your configuration at Cloudflare or at your authoritative DNS provider. Additionally, there can also be [errors on the CA side](#ca-errors).
+If your certificate is stuck in **Pending Validation** or failing to issue, the <GlossaryTooltip term="Certificate Authority (CA)">certificate authority (CA)</GlossaryTooltip> may be unable to complete [domain control validation (DCV)](/ssl/edge-certificates/changing-dcv-method/dcv-flow/). This page helps you identify and resolve common DCV issues.
 
 :::note
-
 If you are using the Cloudflare API, error messages are presented under the `validation_errors` parameter.
 :::
+
+## Quick checklist
+
+Use this checklist to identify common DCV issues:
+
+- [ ] [No rules blocking the validation URL](#blocked-validation-url) - WAF rules, IP access rules, or Under Attack mode can block the CA
+- [ ] [No redirects on the validation path](#redirection) - The `/.well-known/*` path must not redirect (especially HTTP to HTTPS in partial setups)
+- [ ] [DNS records are resolvable](#dns-settings-and-records) - DNSSEC must be valid, and records must resolve from all locations
+- [ ] [CAA records allow the CA](#caa-records) - CAA records must permit Cloudflare's partner CAs to issue certificates
+- [ ] [No CA-side errors](#ca-errors) - Rate limits, policy blocks, or temporary CA issues
+
+---
 
 ## Blocked validation URL
 
@@ -42,7 +51,17 @@ Enabling [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use
 
 In a [Partial (CNAME) setup](/ssl/edge-certificates/changing-dcv-method/#partial-dns-setup---action-sometimes-required) where you are managing the token on the origin side, please ensure that no redirection from HTTP to HTTPS occurs on the `/.well-known/*` path.
 
-When using [Redirect Rules](/rules/url-forwarding/single-redirects/) the `/.well-known/*` path should be excluded from redirections.
+When using [Redirect Rules](/rules/url-forwarding/single-redirects/), exclude the `/.well-known/*` path from redirections by adding a condition to your rule:
+
+```txt
+not starts_with(http.request.uri.path, "/.well-known/")
+```
+
+For example, if you have a rule that redirects all HTTP traffic to HTTPS, modify the rule expression to:
+
+```txt
+(http.request.scheme eq "http") and not starts_with(http.request.uri.path, "/.well-known/")
+```
 
 ## DNS settings and records
 
