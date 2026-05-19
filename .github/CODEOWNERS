@@ -281,8 +281,8 @@ package.json @cloudflare/content-engineering
 # Web Analytics
 
 /src/content/docs/web-analytics/ @angelampcosta @dcpena @ryantownsend @cloudflare/product-owners
-/src/content/changelog/web-analytics/ @ryantownsend @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/content/release-notes/beacon-min-js.yaml @ryantownsend @cloudflare/product-owners
+/src/content/changelog/web-analytics/ @angelampcosta @dcpena @ryantownsend @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/release-notes/beacon-min-js.yaml @angelampcosta @dcpena @ryantownsend @cloudflare/product-owners
 
 # AI Prompts for Cloudflare Workers development
 /public/workers/prompts/ @jahands @Maximo-Guk @cloudflare/product-owners @MattieTK
