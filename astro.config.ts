@@ -123,6 +123,9 @@ export default defineConfig({
 	experimental: {
 		contentIntellisense: true,
 	},
+	build: {
+		concurrency: 4,
+	},
 	server: {
 		port: 1111,
 	},
