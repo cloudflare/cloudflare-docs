@@ -6,13 +6,14 @@ products:
 date: 2025-08-15
 ---
 
-Earlier this year, we announced the launch of the new [Terraform v5 Provider](/changelog/2025-02-03-terraform-v5-provider/). We are aware of the high number of [issues](https://github.com/cloudflare/terraform-provider-cloudflare) reported by the Cloudflare Community related to the v5 release. We have committed to releasing improvements on a two week cadence to ensure stability and reliability. 
+Earlier this year, we announced the launch of the new [Terraform v5 Provider](/changelog/2025-02-03-terraform-v5-provider/). We are aware of the high number of [issues](https://github.com/cloudflare/terraform-provider-cloudflare) reported by the Cloudflare Community related to the v5 release. We have committed to releasing improvements on a two week cadence to ensure stability and reliability.
 
-One key change we adopted in recent weeks is a pivot to more comprehensive, test-driven development. We are still evaluating individual issues, but are also investing in much deeper testing to drive our stabilization efforts. We will subsequently be investing in comprehensive migration scripts. As a result, you will see several of the highest traffic APIs have been stabilized in the most recent release, and are supported by comprehensive acceptance tests. 
+One key change we adopted in recent weeks is a pivot to more comprehensive, test-driven development. We are still evaluating individual issues, but are also investing in much deeper testing to drive our stabilization efforts. We will subsequently be investing in comprehensive migration scripts. As a result, you will see several of the highest traffic APIs have been stabilized in the most recent release, and are supported by comprehensive acceptance tests.
 
 Thank you for continuing to raise issues. We triage them weekly and they help make our products stronger.
 
 ### Changes
+
 - Resources stabilized:
   - `cloudflare_argo_smart_routing`
   - `cloudflare_bot_management`
@@ -40,6 +41,7 @@ Thank you for continuing to raise issues. We triage them weekly and they help ma
 For a more detailed look at all of the changes, refer to the [changelog](https://github.com/cloudflare/terraform-provider-cloudflare/releases/tag/v5.8.4) in GitHub.
 
 ### Issues Closed
+
 - [#5017: 'Uncaught Error: No such module' using cloudflare_snippets](https://github.com/cloudflare/terraform-provider-cloudflare/issues/5017)
 - [#5701: cloudflare_workers_script migrations for Durable Objects not recorded in tfstate; cannot be upgraded between versions](https://github.com/cloudflare/terraform-provider-cloudflare/issues/5701)
 - [#5640: cloudflare_argo_smart_routing importing doesn't read the actual value](https://github.com/cloudflare/terraform-provider-cloudflare/issues/5640)

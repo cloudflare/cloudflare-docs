@@ -118,13 +118,13 @@ When generating presigned URLs for uploads, you can limit abuse and misuse by:
 
 ```json
 [
-  {
-    "AllowedOrigins": ["https://example.com"],
-    "AllowedMethods": ["PUT"],
-    "AllowedHeaders": ["Content-Type"],
-    "ExposeHeaders": ["ETag"],
-    "MaxAgeSeconds": 3600
-  }
+	{
+		"AllowedOrigins": ["https://example.com"],
+		"AllowedMethods": ["PUT"],
+		"AllowedHeaders": ["Content-Type"],
+		"ExposeHeaders": ["ETag"],
+		"MaxAgeSeconds": 3600
+	}
 ]
 ```
 
@@ -145,5 +145,6 @@ put_url = s3.generate_presigned_url(
 ```
 
 When a client uses this presigned URL, they must:
+
 - Make the request from an allowed origin (enforced by CORS)
 - Include the `Content-Type: image/png` header (enforced by the signature)

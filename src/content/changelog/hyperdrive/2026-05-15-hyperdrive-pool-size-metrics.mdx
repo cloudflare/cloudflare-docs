@@ -1,23 +1,23 @@
 ---
-title: Hyperdrive now exposes pool size metrics
-description: Hyperdrive configurations now export connection pool size metrics via GraphQL and a new dashboard chart.
+title: Hyperdrive exposes database connection pool size metrics
+description: Hyperdrive now exports connection pool size metrics via the dashboard and GraphQL API.
 products:
   - hyperdrive
 date: 2026-05-15
 ---
 
-You can now view the size of your Hyperdrive connection pools, giving you the ability to self-diagnose connection contention. Using the new `hyperdrivePoolSizesAdaptiveGroups` node in the GraphQL Analytics API, you can see **waiting connections**, **open connections**, and the **pool size maximum** (the configured ceiling) for each of your configurations.
+You can now view the size of your Hyperdrive connection pools in the Cloudflare dashboard, giving you the ability to self-diagnose connection contention.
 
-A new **Pool connections** chart has been added to the **Metrics** tab of each Hyperdrive configuration in the Cloudflare dashboard. The chart displays an aggregate "All locations" view by default, and you can use the location selector to drill down into individual Points of Presence (PoP) by airport code.
+A new **Pool connections** chart has been added to the **Metrics** tab of each Hyperdrive configuration in the [Cloudflare dashboard](/?to=/:account/workers/hyperdrive). The chart displays an aggregate "All locations" view by default, and you can use the location selector to drill down into specific locations by airport code.
 
 ![Hyperdrive pool size metrics chart.](~/assets/images/hyperdrive/changelog/poolsize.png)
 
-Connection contention appears as a spike in **waiting connections** (client requests waiting for an available connection), or when **open connections** consistently approach the **pool size maximum**. If your open connections regularly approach this limit, consider increasing your Hyperdrive connection limit.
+The chart shows **waiting connections** (client requests waiting for an available connection), **open connections** (active connections to your database), and the **pool size maximum** (your configured [origin connection limit](/hyperdrive/configuration/tune-connection-pool/)).
 
-To view pool size metrics, navigate to the **Metrics** tab of any Hyperdrive configuration that is receiving traffic. As long as there is traffic, the chart will populate with pool size data.
+Connection contention appears as a spike in **waiting connections**, or when **open connections** consistently approach the **pool size maximum**. If your open connections regularly approach this limit, [request a limit increase](/hyperdrive/platform/limits/#request-a-limit-increase).
 
-You can also query these metrics programmatically via the [GraphQL Analytics API](/analytics/graphql-api/). All members in an account can access pool size metrics.
+You can also query these metrics programmatically via the `hyperdrivePoolSizesAdaptiveGroups` node in the [GraphQL Analytics API](/analytics/graphql-api/).
 
 **Note:** In the dashboard, historic data is limited to one month. You can query older data directly through the GraphQL API.
 
-For more information, refer to [Metrics and analytics](/hyperdrive/observability/metrics/#write-graphql-queries) and [Connection pooling](/hyperdrive/concepts/connection-pooling/).
+For more information, refer to [Metrics and analytics](/hyperdrive/observability/metrics/) and [Connection pooling](/hyperdrive/concepts/connection-pooling/).

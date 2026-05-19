@@ -1,9 +1,8 @@
 ---
 inputParameters: quarantinePolicy
-
 ---
 
-import { Markdown } from "~/components"
+import { Markdown } from "~/components";
 
 You first need to configure the domains you are onboarding on the Email Security (formerly Area 1) dashboard. To configure your domains:
 
@@ -12,9 +11,9 @@ You first need to configure the domains you are onboarding on the Email Security
 3. Go to **Email configuration** > **Domains & Routing** > **Domains**.
 4. Make sure each domain you are onboarding has been added.
 5. For each domain you are configuring, select **...** > **Edit**, and set the following options:
-   * **Domain** - `<YOUR_DOMAIN>`.
-   * **Configured as** - `MX Records`.
-   * **Forwarding to** - This should match the expected MX record for each domain in your [Office 365 account](https://admin.microsoft.com/#/Domains/).
-   * **IP Restrictions** - Leave this field empty.
-   * **Outbound TLS** - `Forward all messages over TLS`.
-   * **Quarantine Policy** - {props.one}
+   - **Domain** - `<YOUR_DOMAIN>`.
+   - **Configured as** - `MX Records`.
+   - **Forwarding to** - This should match the expected MX record for each domain in your [Office 365 account](https://admin.microsoft.com/#/Domains/).
+   - **IP Restrictions** - Leave this field empty.
+   - **Outbound TLS** - `Forward all messages over TLS`.
+   - **Quarantine Policy** - {props.one}

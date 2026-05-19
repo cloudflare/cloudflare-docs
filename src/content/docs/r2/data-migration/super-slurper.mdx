@@ -32,6 +32,7 @@ For migration use cases that do not meet the above criteria, we recommend using 
 1. In the Cloudflare dashboard, go to the **R2 data migration** page.
 
    <DashButton url="/?to=/:account/r2/slurper" />
+
 2. Select **Migrate files**.
 3. Select the source cloud storage provider that you will be migrating data from.
 4. Enter your source bucket name and associated credentials and select **Next**.
@@ -136,7 +137,11 @@ You can now use this JSON key file when enabling Super Slurper.
 
 ### ETags
 
-<Render file="migrator-etag-caveat" params={{ one: "Super Slurper" }} product="r2" />
+<Render
+	file="migrator-etag-caveat"
+	params={{ one: "Super Slurper" }}
+	product="r2"
+/>
 
 ### Archive storage classes
 

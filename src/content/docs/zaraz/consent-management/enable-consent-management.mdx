@@ -9,14 +9,14 @@ sidebar:
 head:
   - tag: title
     content: Enable the Consent Management platform (CMP)
-
 ---
 
 import { DashButton } from "~/components";
 
 1. In the Cloudflare dashboard, go to the **Consent** page.
 
-	<DashButton url="/?to=/:account/tag-management/consent" />
+   <DashButton url="/?to=/:account/tag-management/consent" />
+
 2. Turn on **Enable Consent Management**.
 3. In **Consent modal text** fill in any legal information required in your country. Use HTML code to format your information as you would in any other HTML editor.
 4. Under **Purposes**, select **Add new Purpose**. Give your new purpose a name and a description. Purposes are the reasons for using third-party tools in your website.
@@ -31,7 +31,8 @@ In your Zaraz consent settings, you can add your consent modal text and purposes
 
 1. In the Cloudflare dashboard, go to the **Consent** page.
 
-	<DashButton url="/?to=/:account/tag-management/consent" />
+   <DashButton url="/?to=/:account/tag-management/consent" />
+
 2. Select a default language of your choice. The default setting is English.
 3. In **Consent modal text** and **Purposes**, you can select different languages and add translations.
 
@@ -44,7 +45,7 @@ Below is an example that forces the language shown to be American English.
 
 ```html
 <script>
-  zaraz.set('__zarazConsentLanguage', 'en-US')
+	zaraz.set("__zarazConsentLanguage", "en-US");
 </script>
 ```
 

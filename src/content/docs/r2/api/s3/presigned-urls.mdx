@@ -6,7 +6,7 @@ products:
   - r2
 ---
 
-import {Tabs, TabItem, LinkCard } from "~/components";
+import { Tabs, TabItem, LinkCard } from "~/components";
 
 Presigned URLs are an [S3 concept](https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-presigned-url.html) for granting temporary access to objects without exposing your API credentials. A presigned URL includes signature parameters in the URL itself, authorizing anyone with the URL to perform a specific operation (like `GetObject` or `PutObject`) on a specific object until the URL expires.
 
@@ -24,10 +24,10 @@ Presigned URLs are generated client-side with no communication with R2, requirin
 
 R2 supports two patterns for time-limited access. They overlap but have different trade-offs:
 
-| Pattern | Grants | Good for |
-| --- | --- | --- |
-| Presigned URLs (this page) | A single S3 operation on a single object | Granting direct HTTP access to a single object without an S3 client, such as a browser upload or a shareable download link |
-| [Temporary credentials](/r2/api/s3/temporary-credentials/) | Multiple S3 operations, scoped to a bucket and a set of permitted operations, and optionally to specific paths | Callers that use a standard S3 client or SDK to perform multiple operations in a scoped session |
+| Pattern                                                    | Grants                                                                                                         | Good for                                                                                                                   |
+| ---------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| Presigned URLs (this page)                                 | A single S3 operation on a single object                                                                       | Granting direct HTTP access to a single object without an S3 client, such as a browser upload or a shareable download link |
+| [Temporary credentials](/r2/api/s3/temporary-credentials/) | Multiple S3 operations, scoped to a bucket and a set of permitted operations, and optionally to specific paths | Callers that use a standard S3 client or SDK to perform multiple operations in a scoped session                            |
 
 ## Generate a presigned URL
 
@@ -136,6 +136,7 @@ aws s3 presign --endpoint-url https://<ACCOUNT_ID>.r2.cloudflarestorage.com \
 </Tabs>
 
 For complete examples and additional operations, refer to the SDK-specific documentation:
+
 - [AWS SDK for JavaScript](/r2/examples/aws/aws-sdk-js-v3/#generate-presigned-urls)
 - [AWS SDK for Python (Boto3)](/r2/examples/aws/boto3/#generate-presigned-urls)
 - [AWS CLI](/r2/examples/aws/aws-cli/#generate-presigned-urls)

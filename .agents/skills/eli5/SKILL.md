@@ -67,7 +67,7 @@ Use this skill for content that targets a broad or mixed audience — not every 
 
 - **Developer-focused API and SDK references** (e.g. Workers, D1, R2, Durable Objects, KV) — the audience is developers who are expected to know programming concepts, database terminology, and API conventions
 - **Code-heavy tutorials targeting developers** — readers self-select into these and already have the prerequisite knowledge
-- **Configuration references with purely technical audiences** — parameter tables, CLI references, and schema docs where jargon *is* the content
+- **Configuration references with purely technical audiences** — parameter tables, CLI references, and schema docs where jargon _is_ the content
 
 **Use your judgment for everything else.** Ask: "Would a reasonable reader of this page already know these terms?" If yes, this skill adds little value. On the other hand, if the following are true, this skill could provide significant value.
 
@@ -105,13 +105,13 @@ I read the file, detect sections, analyze organization, and identify the content
 
 After detection, I ask you to confirm the content type. Different types require different strategies:
 
-| Type | Strategy |
-|------|----------|
-| Overview | Problem → Solution → Benefit |
-| Concept | Analogy → Plain explanation → Technical details |
-| How To | Context → Multi-path steps (Dashboard + API) |
+| Type      | Strategy                                         |
+| --------- | ------------------------------------------------ |
+| Overview  | Problem → Solution → Benefit                     |
+| Concept   | Analogy → Plain explanation → Technical details  |
+| How To    | Context → Multi-path steps (Dashboard + API)     |
 | Reference | Use-case organization with two-tier descriptions |
-| Tutorial | Progressive complexity with code explanations |
+| Tutorial  | Progressive complexity with code explanations    |
 
 **3. Apply Enhancement Constraints**
 
@@ -225,7 +225,7 @@ These are the highest-risk categories when documentation has been simplified. Pr
 
 1. **Simplified mechanism descriptions** — Any "how it works" explanation added during simplification that was not in the original. These carry the highest risk: a plausible-sounding explanation that describes the wrong mechanism is worse than the original jargon. Verify the actual mechanism against the source docs in this repository.
 
-2. **Misleading nuance** — Statements that are not outright wrong but flatten important nuance, creating a wrong mental model. Example: "Cloudflare generates a `robots.txt` file that instructs AI crawlers to stay away from your content" is misleading — `robots.txt` is a per-path allow/disallow mechanism, not a blanket block. The sentence omits that it specifies *where* crawlers may and may not go. Flag any statement where the simplification loses a meaningful distinction.
+2. **Misleading nuance** — Statements that are not outright wrong but flatten important nuance, creating a wrong mental model. Example: "Cloudflare generates a `robots.txt` file that instructs AI crawlers to stay away from your content" is misleading — `robots.txt` is a per-path allow/disallow mechanism, not a blanket block. The sentence omits that it specifies _where_ crawlers may and may not go. Flag any statement where the simplification loses a meaningful distinction.
 
 3. **Net-new claims** — Any explanation, context, or framing added during simplification that was not present in the original document. Every piece of new information requires a citation. If the original said "zones pair with resolver policies" and the simplification adds "based on source IP, user identity, or domain," verify that all three of those selectors are actually supported.
 
@@ -249,12 +249,12 @@ These are the highest-risk categories when documentation has been simplified. Pr
    - **low** — Claim is minor or widely accepted common knowledge.
 5. **Report** — Present findings in this format:
 
-| # | Claim (exact text) | Source | Status |
-|---|---|---|---|
-| 1 | "Workers KV supports keys up to 512 bytes" | `src/content/docs/kv/api/write-key-value-pairs.mdx` | ✅ sourced |
-| 2 | "Latency is under 50 ms globally" | — | ❌ unsourced (high) |
-| 3 | "instructs crawlers to stay away from your content" | `src/content/docs/bots/robots-txt.mdx` — source says per-path allow/disallow, not blanket block | ⚠️ misleading (critical) |
-| 4 | "zones pair with resolver policies" | present in original — `path/to/file.mdx:34` | ✅ sourced (original) |
+| #   | Claim (exact text)                                  | Source                                                                                          | Status                   |
+| --- | --------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ------------------------ |
+| 1   | "Workers KV supports keys up to 512 bytes"          | `src/content/docs/kv/api/write-key-value-pairs.mdx`                                             | ✅ sourced               |
+| 2   | "Latency is under 50 ms globally"                   | —                                                                                               | ❌ unsourced (high)      |
+| 3   | "instructs crawlers to stay away from your content" | `src/content/docs/bots/robots-txt.mdx` — source says per-path allow/disallow, not blanket block | ⚠️ misleading (critical) |
+| 4   | "zones pair with resolver policies"                 | present in original — `path/to/file.mdx:34`                                                     | ✅ sourced (original)    |
 
 ### Rules
 
@@ -397,10 +397,12 @@ Produce output following this template exactly. All sections are required.
 ## Simplification Overview
 
 **What was confusing:**
+
 - [Issue pattern 1]
 - [Issue pattern 2]
 
 **Approach taken:**
+
 - [Strategy 1]
 - [Strategy 2]
 
@@ -409,14 +411,17 @@ Produce output following this template exactly. All sections are required.
 ## Section: [Original Heading]
 
 ### Original Content
+
 [Exact text from source, preserved]
 
 ### Issues Identified
+
 **Jargon:** [terms and why problematic]
 **Assumptions:** [unstated prerequisites]
 **Unclear Logic:** [structural issues]
 
 ### Simplified Version
+
 **In Plain Language:** [One-sentence distillation]
 **What It Is:** [2-3 paragraphs building from basics]
 **Why It Matters:** [Benefits and value]
@@ -434,9 +439,9 @@ Produce output following this template exactly. All sections are required.
 
 ## Terminology Index
 
-| Term | Line | Defined? | Suggested Action |
-| ---- | ---- | -------- | ---------------- |
-| [term] | [line number] | Yes/No | Add glossary tooltip / Add cross-link to [page] / Add inline definition |
+| Term   | Line          | Defined? | Suggested Action                                                        |
+| ------ | ------------- | -------- | ----------------------------------------------------------------------- |
+| [term] | [line number] | Yes/No   | Add glossary tooltip / Add cross-link to [page] / Add inline definition |
 
 ---
 
@@ -449,9 +454,9 @@ Produce output following this template exactly. All sections are required.
 
 Line-numbered recommendations for further improvements:
 
-| Line(s) | Current Approach | Suggested Enhancement | Why | Priority |
-| ------- | ---------------- | --------------------- | --- | -------- |
-| [lines] | [what exists] | [what to change] | [why it improves accessibility] | High/Medium/Low |
+| Line(s) | Current Approach | Suggested Enhancement | Why                             | Priority        |
+| ------- | ---------------- | --------------------- | ------------------------------- | --------------- |
+| [lines] | [what exists]    | [what to change]      | [why it improves accessibility] | High/Medium/Low |
 ```
 
 ## References

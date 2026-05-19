@@ -10,8 +10,12 @@ products:
   - cloudflare-one
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 To verify that your DNS traffic is sent to Gateway:
 
-<Render file="gateway/verify-connectivity" product="cloudflare-one" params={{ one: "DNS", two: "queries" }} />
+<Render
+	file="gateway/verify-connectivity"
+	product="cloudflare-one"
+	params={{ one: "DNS", two: "queries" }}
+/>

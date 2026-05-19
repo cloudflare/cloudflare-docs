@@ -14,9 +14,7 @@ WebSockets allow you to communicate in real time with your Cloudflare Workers se
 
 :::note
 
-
 If your application needs to coordinate among multiple WebSocket connections, such as a chat room or game match, you will need clients to send messages to a single-point-of-coordination. Durable Objects provide a single-point-of-coordination for Cloudflare Workers, and are often used in parallel with WebSockets to persist state over multiple clients and connections. In this case, refer to [Durable Objects](/durable-objects/) to get started, and prefer using the Durable Objects' extended [WebSockets API](/durable-objects/best-practices/websockets/).
-
 
 :::
 
@@ -39,148 +37,97 @@ let [client, server] = Object.values(new WebSocketPair());
 
 ### accept
 
-
-
-* <code>accept(options?)</code>
-
-  * Accepts the WebSocket connection and begins terminating requests for the WebSocket on Cloudflare's global network. This effectively enables the Workers runtime to begin responding to and handling WebSocket requests.
+- <code>accept(options?)</code>
+  - Accepts the WebSocket connection and begins terminating requests for the WebSocket on Cloudflare's global network. This effectively enables the Workers runtime to begin responding to and handling WebSocket requests.
 
 #### Parameters
 
-
-
-* `options` object optional
-
-  * An optional configuration object with the following properties:
-
-    * `allowHalfOpen` boolean optional — When `true`, the runtime will not automatically send a reciprocal Close frame when a Close frame is received from the peer. Instead, `readyState` remains `CLOSING` until you explicitly call `close()`. This is useful for [WebSocket proxying](#close-behavior) where you need to coordinate the close across both sides of the proxy. Defaults to `false`.
-
-
+- `options` object optional
+  - An optional configuration object with the following properties:
+    - `allowHalfOpen` boolean optional — When `true`, the runtime will not automatically send a reciprocal Close frame when a Close frame is received from the peer. Instead, `readyState` remains `CLOSING` until you explicitly call `close()`. This is useful for [WebSocket proxying](#close-behavior) where you need to coordinate the close across both sides of the proxy. Defaults to `false`.
 
 ### addEventListener
 
-
-
-* <code>addEventListener(eventWebSocketEvent, callbackFunctionFunction)</code>
-
-  * Add callback functions to be executed when an event has occurred on the WebSocket.
-
-
+- <code>addEventListener(eventWebSocketEvent, callbackFunctionFunction)</code>
+  - Add callback functions to be executed when an event has occurred on the WebSocket.
 
 #### Parameters
 
+- `event` WebSocketEvent
+  - The WebSocket event (refer to [Events](/workers/runtime-apis/websockets/#events)) to listen to.
 
-
-* `event` WebSocketEvent
-
-  * The WebSocket event (refer to [Events](/workers/runtime-apis/websockets/#events)) to listen to.
-
-* <code>callbackFunction(messageMessage)</code> Function
-
-  * A function to be called when the WebSocket responds to a specific event.
-
-
+- <code>callbackFunction(messageMessage)</code> Function
+  - A function to be called when the WebSocket responds to a specific event.
 
 ### close
 
-
-
-* <code>close(codenumber, reasonstring)</code>
-
-  * Close the WebSocket connection.
-
-
+- <code>close(codenumber, reasonstring)</code>
+  - Close the WebSocket connection.
 
 #### Parameters
 
+- <code>codeinteger</code> optional
+  - An integer indicating the close code sent by the server. This should match an option from the [list of status codes](https://developer.mozilla.org/en-US/docs/Web/API/CloseEvent#status_codes) provided by the WebSocket spec.
 
-
-* <code>codeinteger</code> optional
-
-  * An integer indicating the close code sent by the server. This should match an option from the [list of status codes](https://developer.mozilla.org/en-US/docs/Web/API/CloseEvent#status_codes) provided by the WebSocket spec.
-
-* <code>reasonstring</code> optional
-
-  * A human-readable string indicating why the WebSocket connection was closed.
-
-
+- <code>reasonstring</code> optional
+  - A human-readable string indicating why the WebSocket connection was closed.
 
 ### send
 
-
-
-* <code>send(messagestring | ArrayBuffer | ArrayBufferView)</code>
-
-  * Send a message to the other WebSocket in this WebSocket pair.
-
-
+- <code>send(messagestring | ArrayBuffer | ArrayBufferView)</code>
+  - Send a message to the other WebSocket in this WebSocket pair.
 
 #### Parameters
 
+- <code>messagestring</code>
+  - The message to send down the WebSocket connection to the corresponding client. This should be a string or something coercible into a string; for example, strings and numbers will be simply cast into strings, but objects and arrays should be cast to JSON strings using <code>JSON.stringify</code>, and parsed in the client.
 
-
-* <code>messagestring</code>
-
-  * The message to send down the WebSocket connection to the corresponding client. This should be a string or something coercible into a string; for example, strings and numbers will be simply cast into strings, but objects and arrays should be cast to JSON strings using <code>JSON.stringify</code>, and parsed in the client.
-
-
-
-***
+---
 
 ## Properties
 
 ### readyState
 
-* `readyState` number
+- `readyState` number
+  - Returns the current state of the WebSocket connection. Possible values:
 
-  * Returns the current state of the WebSocket connection. Possible values:
-
-    | Constant | Value | Description |
-    | --- | --- | --- |
-    | `WebSocket.CONNECTING` | `0` | The connection is not yet open. |
-    | `WebSocket.OPEN` | `1` | The connection is open and ready to communicate. |
-    | `WebSocket.CLOSING` | `2` | The connection is in the process of closing. |
-    | `WebSocket.CLOSED` | `3` | The connection is closed. |
+    | Constant               | Value | Description                                      |
+    | ---------------------- | ----- | ------------------------------------------------ |
+    | `WebSocket.CONNECTING` | `0`   | The connection is not yet open.                  |
+    | `WebSocket.OPEN`       | `1`   | The connection is open and ready to communicate. |
+    | `WebSocket.CLOSING`    | `2`   | The connection is in the process of closing.     |
+    | `WebSocket.CLOSED`     | `3`   | The connection is closed.                        |
 
 ### binaryType
 
-* `binaryType` string
+- `binaryType` string
+  - Controls how binary frames received on this WebSocket are surfaced to the `message` event. Valid values are `"blob"` and `"arraybuffer"`. The value is consulted when each incoming binary frame is dispatched, so assigning a new value affects subsequent messages only. The default is controlled by the [`websocket_standard_binary_type`](/workers/configuration/compatibility-flags/#websocket-standard-binary-type) compatibility flag. Refer to [Binary messages](#binary-messages) for details.
 
-  * Controls how binary frames received on this WebSocket are surfaced to the `message` event. Valid values are `"blob"` and `"arraybuffer"`. The value is consulted when each incoming binary frame is dispatched, so assigning a new value affects subsequent messages only. The default is controlled by the [`websocket_standard_binary_type`](/workers/configuration/compatibility-flags/#websocket-standard-binary-type) compatibility flag. Refer to [Binary messages](#binary-messages) for details.
-
-***
+---
 
 ## Events
 
+- <code>close</code>* An event indicating the WebSocket has closed. The
+  `CloseEvent` includes `code` (number), `reason` (string), and `wasClean`
+  (boolean) properties.
 
+- <code>error</code>* An event indicating there was an error with the WebSocket.
 
-* <code>close</code>
-  * An event indicating the WebSocket has closed. The `CloseEvent` includes `code` (number), `reason` (string), and `wasClean` (boolean) properties.
-
-* <code>error</code>
-  * An event indicating there was an error with the WebSocket.
-
-* <code>message</code>
-  * An event indicating a new message received from the client, including the data passed by the client.
-
-
+- <code>message</code>
+  - An event indicating a new message received from the client, including the data passed by the client.
 
 :::note
-WebSocket messages received by a Worker have a size limit of 32 MiB (33,554,432 bytes).  If a larger message is sent, the WebSocket will be automatically closed with a `1009` "Message is too large" response.
+WebSocket messages received by a Worker have a size limit of 32 MiB (33,554,432 bytes). If a larger message is sent, the WebSocket will be automatically closed with a `1009` "Message is too large" response.
 :::
 
 ## Types
 
 ### Message
 
+- `data` any - The data passed back from the other WebSocket in your pair.
+- `type` string - Defaults to `message`.
 
-
-* `data` any - The data passed back from the other WebSocket in your pair.
-* `type` string - Defaults to `message`.
-
-
-
-***
+---
 
 ## Close behavior
 
@@ -190,10 +137,10 @@ If you still call `close()` inside the `close` event handler, the call is silent
 
 ```js
 server.addEventListener("close", (event) => {
-  // readyState is already CLOSED — no need to call server.close().
-  console.log(server.readyState); // WebSocket.CLOSED
-  console.log(event.code);        // 1000
-  console.log(event.wasClean);    // true
+	// readyState is already CLOSED — no need to call server.close().
+	console.log(server.readyState); // WebSocket.CLOSED
+	console.log(event.code); // 1000
+	console.log(event.wasClean); // true
 });
 ```
 
@@ -205,12 +152,12 @@ The automatic close behavior can interfere with WebSocket proxying, where a Work
 server.accept({ allowHalfOpen: true });
 
 server.addEventListener("close", (event) => {
-  // readyState is still CLOSING here, giving you time
-  // to coordinate the close on the other side.
-  console.log(server.readyState); // WebSocket.CLOSING
+	// readyState is still CLOSING here, giving you time
+	// to coordinate the close on the other side.
+	console.log(server.readyState); // WebSocket.CLOSING
 
-  // Manually close when ready.
-  server.close(event.code, "done");
+	// Manually close when ready.
+	server.close(event.code, "done");
 });
 ```
 
@@ -224,7 +171,7 @@ WebSockets created with `new WebSocket(url)` always auto-reply to Close frames a
 
 On compatibility dates before `2026-04-07` (or with the `web_socket_manual_reply_to_close` flag), receiving a Close frame leaves the WebSocket in `CLOSING` state, and your code must call `close()` to complete the handshake. Failing to do so can result in `1006` abnormal closure errors on the client.
 
-***
+---
 
 ## Binary messages
 
@@ -236,7 +183,7 @@ The `binaryType` property itself is always available. To opt back into `ArrayBuf
 
 ```js
 const resp = await fetch("https://example.com", {
-  headers: { Upgrade: "websocket" },
+	headers: { Upgrade: "websocket" },
 });
 const ws = resp.webSocket;
 
@@ -245,11 +192,11 @@ ws.binaryType = "arraybuffer";
 ws.accept();
 
 ws.addEventListener("message", (event) => {
-  if (typeof event.data === "string") {
-    // Text frame.
-  } else {
-    // event.data is an ArrayBuffer because we set binaryType above.
-  }
+	if (typeof event.data === "string") {
+		// Text frame.
+	} else {
+		// event.data is an ArrayBuffer because we set binaryType above.
+	}
 });
 ```
 
@@ -276,9 +223,9 @@ This flag has no effect on the Durable Object hibernatable WebSocket [`webSocket
 
 :::
 
-***
+---
 
 ## Related resources
 
-* [Mozilla Developer Network's (MDN) documentation on the WebSocket class](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)
-* [Our WebSocket template for building applications on Workers using WebSockets](https://github.com/cloudflare/websocket-template)
+- [Mozilla Developer Network's (MDN) documentation on the WebSocket class](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)
+- [Our WebSocket template for building applications on Workers using WebSockets](https://github.com/cloudflare/websocket-template)

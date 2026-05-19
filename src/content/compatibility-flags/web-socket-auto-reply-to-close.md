@@ -19,12 +19,16 @@ Previously, receiving a server-initiated Close frame left the WebSocket in `CLOS
 const [client, server] = Object.values(new WebSocketPair());
 server.accept();
 
-server.addEventListener("close", (event) => {
-  // readyState is already CLOSED — no need to call server.close().
-  console.log(server.readyState); // WebSocket.CLOSED
-  console.log(event.code); // 1000
-  console.log(event.wasClean); // true
-}, { once: true });
+server.addEventListener(
+	"close",
+	(event) => {
+		// readyState is already CLOSED — no need to call server.close().
+		console.log(server.readyState); // WebSocket.CLOSED
+		console.log(event.code); // 1000
+		console.log(event.wasClean); // true
+	},
+	{ once: true },
+);
 ```
 
 If you do still call `close()` inside the handler, the call is silently ignored. This means existing code that manually replies to Close frames will not break when you update your compatibility date.
@@ -37,14 +41,18 @@ const [client, server] = Object.values(new WebSocketPair());
 // Opt into half-open mode for proxying
 server.accept({ allowHalfOpen: true });
 
-server.addEventListener("close", (event) => {
-  // With allowHalfOpen true, readyState is still CLOSING here,
-  // giving you time to coordinate the close on the other side.
-  console.log(server.readyState); // WebSocket.CLOSING
+server.addEventListener(
+	"close",
+	(event) => {
+		// With allowHalfOpen true, readyState is still CLOSING here,
+		// giving you time to coordinate the close on the other side.
+		console.log(server.readyState); // WebSocket.CLOSING
 
-  // Manually close when ready.
-  server.close(1000, "done");
-}, { once: true });
+		// Manually close when ready.
+		server.close(1000, "done");
+	},
+	{ once: true },
+);
 ```
 
 Note that there is no corresponding option to the `WebSocket` constructor. WebSockets constructed with `new WebSocket` will always auto-reply to closes after this flag takes effect. WebSockets constructed this way are automatically "accepted", so there is no opportunity to pass the option to `accept()`. If you are creating a WebSocket with `new WebSocket`, but you need half-open behavior, you will need to switch to using `fetch()` instead.
@@ -55,10 +63,10 @@ let ws = new WebSocket("wss://example.com");
 
 // But you can do this instead:
 let resp = await fetch("https://example.com", {
-  headers: { "Upgrade": "websocket" }
+	headers: { Upgrade: "websocket" },
 });
 if (!resp.webSocket) {
-  throw new Error("WebSocket handshake not accepted");
+	throw new Error("WebSocket handshake not accepted");
 }
 let ws = resp.webSocket;
 ws.accept({ allowHalfOpen: true });

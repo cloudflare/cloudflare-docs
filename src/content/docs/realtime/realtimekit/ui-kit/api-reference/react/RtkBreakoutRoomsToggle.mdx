@@ -5,45 +5,45 @@ description: API reference for RtkBreakoutRoomsToggle component (React Library)
 products:
   - realtime
 ---
+
 A button which toggles visibility of breakout rooms.
- You need to pass the `meeting` object to it.
+You need to pass the `meeting` object to it.
 
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ✅ | - | Icon pack |
-| `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `size` | `Size` | ✅ | - | Size |
-| `states` | `States` | ✅ | - | States object |
-| `t` | `RtkI18n` | ✅ | - | Language |
-| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+| Property   | Type                | Required | Default | Description    |
+| ---------- | ------------------- | -------- | ------- | -------------- |
+| `iconPack` | `IconPack`          | ✅       | -       | Icon pack      |
+| `meeting`  | `Meeting`           | ✅       | -       | Meeting object |
+| `size`     | `Size`              | ✅       | -       | Size           |
+| `states`   | `States`            | ✅       | -       | States object  |
+| `t`        | `RtkI18n`           | ✅       | -       | Language       |
+| `variant`  | `ControlBarVariant` | ✅       | -       | Variant        |
 
 ## Usage Examples
 
 ### Basic Usage
 
 ```tsx
-import { RtkBreakoutRoomsToggle } from '@cloudflare/realtimekit-react-ui';
+import { RtkBreakoutRoomsToggle } from "@cloudflare/realtimekit-react-ui";
 
 function MyComponent() {
-  return <RtkBreakoutRoomsToggle />;
+	return <RtkBreakoutRoomsToggle />;
 }
 ```
 
 ### With Properties
 
 ```tsx
-import { RtkBreakoutRoomsToggle } from '@cloudflare/realtimekit-react-ui';
+import { RtkBreakoutRoomsToggle } from "@cloudflare/realtimekit-react-ui";
 
 function MyComponent() {
-  return (
-    <RtkBreakoutRoomsToggle
-      iconPack={defaultIconPack}
-      meeting={meeting}
-      size="md"
-    />
-  );
+	return (
+		<RtkBreakoutRoomsToggle
+			iconPack={defaultIconPack}
+			meeting={meeting}
+			size="md"
+		/>
+	);
 }
 ```
-

@@ -5,17 +5,18 @@ description: API reference for rtk-ai component (Web Components (HTML) Library)
 products:
   - realtime
 ---
+
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | Config |
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `size` | `Size` | ✅ | - | Size |
-| `states` | `States` | ✅ | - | States object |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `view` | `AIView` | ✅ | - | View type |
+| Property   | Type       | Required | Default                 | Description    |
+| ---------- | ---------- | -------- | ----------------------- | -------------- |
+| `config`   | `UIConfig` | ❌       | `createDefaultConfig()` | Config         |
+| `iconPack` | `IconPack` | ❌       | `defaultIconPack`       | Icon pack      |
+| `meeting`  | `Meeting`  | ✅       | -                       | Meeting object |
+| `size`     | `Size`     | ✅       | -                       | Size           |
+| `states`   | `States`   | ✅       | -                       | States object  |
+| `t`        | `RtkI18n`  | ❌       | `useLanguage()`         | Language       |
+| `view`     | `AIView`   | ✅       | -                       | View type      |
 
 ## Usage Examples
 
@@ -28,16 +29,13 @@ products:
 ### With Properties
 
 ```html
-<rtk-ai
- size="md">
-</rtk-ai>
+<rtk-ai size="md"> </rtk-ai>
 ```
-
 
 ```html
 <script>
-  const el = document.querySelector("rtk-ai");
+	const el = document.querySelector("rtk-ai");
 
-  el.meeting= meeting
+	el.meeting = meeting;
 </script>
 ```

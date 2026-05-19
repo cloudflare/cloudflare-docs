@@ -16,10 +16,10 @@ RealtimeKit provides AI-powered features using Cloudflare's AI infrastructure to
 
 ## Available features
 
-| Feature | Description |
-|---------|-------------|
+| Feature                                                  | Description                               |
+| -------------------------------------------------------- | ----------------------------------------- |
 | [Transcription](/realtime/realtimekit/ai/transcription/) | Real-time and post-meeting speech-to-text |
-| [Summary](/realtime/realtimekit/ai/summary/) | AI-generated meeting summaries |
+| [Summary](/realtime/realtimekit/ai/summary/)             | AI-generated meeting summaries            |
 
 ## Quick start
 
@@ -27,16 +27,16 @@ Enable AI features when creating a meeting:
 
 ```json
 {
-  "title": "Team Standup",
-  "ai_config": {
-    "transcription": {
-      "language": "en-US"
-    },
-    "summarization": {
-      "summary_type": "team_meeting"
-    }
-  },
-  "summarize_on_end": true
+	"title": "Team Standup",
+	"ai_config": {
+		"transcription": {
+			"language": "en-US"
+		},
+		"summarization": {
+			"summary_type": "team_meeting"
+		}
+	},
+	"summarize_on_end": true
 }
 ```
 

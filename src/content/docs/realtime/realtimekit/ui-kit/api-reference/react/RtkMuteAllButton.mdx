@@ -5,41 +5,35 @@ description: API reference for RtkMuteAllButton component (React Library)
 products:
   - realtime
 ---
+
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
-| `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `size` | `Size1` | ✅ | - | Size |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+| Property   | Type                | Required | Default           | Description    |
+| ---------- | ------------------- | -------- | ----------------- | -------------- |
+| `iconPack` | `IconPack1`         | ❌       | `defaultIconPack` | Icon pack      |
+| `meeting`  | `Meeting`           | ✅       | -                 | Meeting object |
+| `size`     | `Size1`             | ✅       | -                 | Size           |
+| `t`        | `RtkI18n`           | ❌       | `useLanguage()`   | Language       |
+| `variant`  | `ControlBarVariant` | ✅       | -                 | Variant        |
 
 ## Usage Examples
 
 ### Basic Usage
 
 ```tsx
-import { RtkMuteAllButton } from '@cloudflare/realtimekit-react-ui';
+import { RtkMuteAllButton } from "@cloudflare/realtimekit-react-ui";
 
 function MyComponent() {
-  return <RtkMuteAllButton />;
+	return <RtkMuteAllButton />;
 }
 ```
 
 ### With Properties
 
 ```tsx
-import { RtkMuteAllButton } from '@cloudflare/realtimekit-react-ui';
+import { RtkMuteAllButton } from "@cloudflare/realtimekit-react-ui";
 
 function MyComponent() {
-  return (
-    <RtkMuteAllButton
-      meeting={meeting}
-      size="md"
-      variant="button"
-    />
-  );
+	return <RtkMuteAllButton meeting={meeting} size="md" variant="button" />;
 }
 ```
-

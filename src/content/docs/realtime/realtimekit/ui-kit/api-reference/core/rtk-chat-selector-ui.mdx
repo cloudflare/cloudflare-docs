@@ -5,16 +5,17 @@ description: API reference for rtk-chat-selector-ui component (Web Components (H
 products:
   - realtime
 ---
+
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `groups` | `ChatGroup[]` | ✅ | - | Participants |
-| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
-| `selectedGroupId` | `string` | ✅ | - | Selected participant |
-| `selfUserId` | `string` | ✅ | - | Self User ID |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `unreadCounts` | `Record<string, number>` | ✅ | - | Unread counts |
+| Property          | Type                     | Required | Default           | Description          |
+| ----------------- | ------------------------ | -------- | ----------------- | -------------------- |
+| `groups`          | `ChatGroup[]`            | ✅       | -                 | Participants         |
+| `iconPack`        | `IconPack1`              | ❌       | `defaultIconPack` | Icon pack            |
+| `selectedGroupId` | `string`                 | ✅       | -                 | Selected participant |
+| `selfUserId`      | `string`                 | ✅       | -                 | Self User ID         |
+| `t`               | `RtkI18n`                | ❌       | `useLanguage()`   | Language             |
+| `unreadCounts`    | `Record<string, number>` | ✅       | -                 | Unread counts        |
 
 ## Usage Examples
 
@@ -27,17 +28,14 @@ products:
 ### With Properties
 
 ```html
-<rtk-chat-selector-ui
- selectedGroupId="example"
- selfUserId="example">
+<rtk-chat-selector-ui selectedGroupId="example" selfUserId="example">
 </rtk-chat-selector-ui>
 ```
 
-
 ```html
 <script>
-  const el = document.querySelector("rtk-chat-selector-ui");
+	const el = document.querySelector("rtk-chat-selector-ui");
 
-  el.groups= [];
+	el.groups = [];
 </script>
 ```

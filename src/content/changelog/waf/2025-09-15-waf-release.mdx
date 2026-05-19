@@ -12,11 +12,11 @@ This week's focus highlights newly disclosed vulnerabilities in DevOps tooling, 
 
 **Key Findings**
 
-* Argo CD (CVE-2025-55190): Exposure of sensitive information could allow attackers to access credential data stored in configurations, potentially leading to compromise of Kubernetes workloads and secrets.
+- Argo CD (CVE-2025-55190): Exposure of sensitive information could allow attackers to access credential data stored in configurations, potentially leading to compromise of Kubernetes workloads and secrets.
 
-* DataEase (CVE-2025-57773): Insufficient input validation enables JNDI injection and insecure deserialization, resulting in remote code execution (RCE). Successful exploitation grants attackers control over the application server.
+- DataEase (CVE-2025-57773): Insufficient input validation enables JNDI injection and insecure deserialization, resulting in remote code execution (RCE). Successful exploitation grants attackers control over the application server.
 
-* Sitecore (CVE-2025-53694): A sensitive information disclosure flaw allows unauthorized access to confidential information stored in Sitecore deployments, raising the risk of data breaches and privilege escalation.
+- Sitecore (CVE-2025-53694): A sensitive information disclosure flaw allows unauthorized access to confidential information stored in Sitecore deployments, raising the risk of data breaches and privilege escalation.
 
 **Impact**
 
@@ -25,50 +25,50 @@ These vulnerabilities expose organizations to serious risks, including credentia
 Administrators are strongly advised to apply vendor patches immediately, rotate exposed credentials, and review access controls to mitigate these risks.
 
 <table style="width: 100%">
-  <thead>
-    <tr>
-      <th>Ruleset</th>
-      <th>Rule ID</th>
-      <th>Legacy Rule ID</th>
-      <th>Description</th>
-      <th>Previous Action</th>
-      <th>New Action</th>
-      <th>Comments</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Cloudflare Managed Ruleset</td>
-      <td>
-        <RuleID id="199cce9ab21e40bcb535f01b2ee2085f" />
-      </td>
-      <td>100646</td>
-      <td>Argo CD - Information Disclosure - CVE:CVE-2025-55190s</td>
-      <td>Log</td>
-      <td>Disabled</td>
-      <td>This is a New Detection</td>
-    </tr>
-    <tr>
-      <td>Cloudflare Managed Ruleset</td>
-      <td>
-        <RuleID id="e513bb21b6a44f9cbfcd2462f5e20788" />
-      </td>
-      <td>100874</td>
-      <td>DataEase - JNDI injection - CVE:CVE-2025-57773</td>
-      <td>Log</td>
-      <td>Disabled</td>
-      <td>This is a New Detection</td>
-    </tr>
-    <tr>
-      <td>Cloudflare Managed Ruleset</td>
-      <td>
-        <RuleID id="be097f5a71a04f27aa87b60d005a12fd" />
-      </td>
-      <td>100880</td>
-      <td>Sitecore - Information Disclosure - CVE:CVE-2025-53694</td>
-      <td>Log</td>
-      <td>Block</td>
-      <td>This is a New Detection</td>
-    </tr>
-  </tbody>
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="199cce9ab21e40bcb535f01b2ee2085f" />
+			</td>
+			<td>100646</td>
+			<td>Argo CD - Information Disclosure - CVE:CVE-2025-55190s</td>
+			<td>Log</td>
+			<td>Disabled</td>
+			<td>This is a New Detection</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="e513bb21b6a44f9cbfcd2462f5e20788" />
+			</td>
+			<td>100874</td>
+			<td>DataEase - JNDI injection - CVE:CVE-2025-57773</td>
+			<td>Log</td>
+			<td>Disabled</td>
+			<td>This is a New Detection</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="be097f5a71a04f27aa87b60d005a12fd" />
+			</td>
+			<td>100880</td>
+			<td>Sitecore - Information Disclosure - CVE:CVE-2025-53694</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This is a New Detection</td>
+		</tr>
+	</tbody>
 </table>

@@ -5,42 +5,36 @@ description: API reference for RtkDebuggerToggle component (React Library)
 products:
   - realtime
 ---
+
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `size` | `Size` | ✅ | - | Size |
-| `states` | `States` | ✅ | - | States object |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+| Property   | Type                | Required | Default           | Description    |
+| ---------- | ------------------- | -------- | ----------------- | -------------- |
+| `iconPack` | `IconPack`          | ❌       | `defaultIconPack` | Icon pack      |
+| `meeting`  | `Meeting`           | ✅       | -                 | Meeting object |
+| `size`     | `Size`              | ✅       | -                 | Size           |
+| `states`   | `States`            | ✅       | -                 | States object  |
+| `t`        | `RtkI18n`           | ❌       | `useLanguage()`   | Language       |
+| `variant`  | `ControlBarVariant` | ✅       | -                 | Variant        |
 
 ## Usage Examples
 
 ### Basic Usage
 
 ```tsx
-import { RtkDebuggerToggle } from '@cloudflare/realtimekit-react-ui';
+import { RtkDebuggerToggle } from "@cloudflare/realtimekit-react-ui";
 
 function MyComponent() {
-  return <RtkDebuggerToggle />;
+	return <RtkDebuggerToggle />;
 }
 ```
 
 ### With Properties
 
 ```tsx
-import { RtkDebuggerToggle } from '@cloudflare/realtimekit-react-ui';
+import { RtkDebuggerToggle } from "@cloudflare/realtimekit-react-ui";
 
 function MyComponent() {
-  return (
-    <RtkDebuggerToggle
-      meeting={meeting}
-      size="md"
-      variant="button"
-    />
-  );
+	return <RtkDebuggerToggle meeting={meeting} size="md" variant="button" />;
 }
 ```
-

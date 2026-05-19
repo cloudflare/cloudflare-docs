@@ -17,8 +17,8 @@ You can check the status of your DNS records in the **Settings** section of Emai
 
 Check the status of your account's DNS records in the **Email DNS records** card:
 
-* **Email DNS records configured** - DNS records are properly configured.
-* **Email DNS records misconfigured** - There is a problem with your accounts DNS records. Select **Enable Email Routing** to [start troubleshooting problems](/email-routing/troubleshooting/).
+- **Email DNS records configured** - DNS records are properly configured.
+- **Email DNS records misconfigured** - There is a problem with your accounts DNS records. Select **Enable Email Routing** to [start troubleshooting problems](/email-routing/troubleshooting/).
 
 ### Start disabling
 
@@ -36,8 +36,8 @@ Select **View DNS records** for a list of the required `MX` and sender policy fr
 
 If you are having trouble with your account's DNS records, refer to the [Troubleshooting](/email-routing/troubleshooting/) section.
 
-## _dc-mx DNS responses
+## \_dc-mx DNS responses
 
 If you see a DNS response with a `_dc-mx` prefix (for example, `_dc-mx.a1b2c3d4e5f6.example.com`), Cloudflare inserted it automatically. This response appears when your `MX` record points to a hostname that is [proxied](/dns/proxy-status/) through Cloudflare. The `_dc-mx` target itself resolves directly to your origin IP address so that mail traffic bypasses the proxy and reaches your mail server.
 
-For more information, refer to [_dc-mx and dc-##### subdomains](/dns/manage-dns-records/troubleshooting/unexpected-dns-records/#dc--and-_dc-mx-subdomains).
+For more information, refer to [\_dc-mx and dc-##### subdomains](/dns/manage-dns-records/troubleshooting/unexpected-dns-records/#dc--and-_dc-mx-subdomains).

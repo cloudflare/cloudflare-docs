@@ -35,16 +35,16 @@ await promisifiedFoo(args);
 Similarly to `promisify`, `callbackify` converts a Promise-returning async function into a Node.js-style callback function:
 
 ```js
-import { callbackify } from 'node:util';
+import { callbackify } from "node:util";
 
 async function foo(args) {
-  throw new Error('boom');
+	throw new Error("boom");
 }
 
 const callbackifiedFoo = callbackify(foo);
 
 callbackifiedFoo(args, (err, value) => {
-  if (err) throw err;
+	if (err) throw err;
 });
 ```
 

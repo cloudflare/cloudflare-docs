@@ -126,8 +126,8 @@ try {
 Containers with [`keepAlive: true`](/sandbox/configuration/sandbox-options/#keepalive) require explicit management since they do not timeout automatically:
 
 ```typescript
-const sandbox = getSandbox(env.Sandbox, 'persistent-task', {
-  keepAlive: true
+const sandbox = getSandbox(env.Sandbox, "persistent-task", {
+	keepAlive: true,
 });
 
 // Later, when done with long-running work

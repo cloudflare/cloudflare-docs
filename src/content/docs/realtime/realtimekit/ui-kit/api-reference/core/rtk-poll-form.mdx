@@ -5,14 +5,15 @@ description: API reference for rtk-poll-form component (Web Components (HTML) Li
 products:
   - realtime
 ---
+
 A component that lets you create a poll.
 
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| Property   | Type       | Required | Default           | Description |
+| ---------- | ---------- | -------- | ----------------- | ----------- |
+| `iconPack` | `IconPack` | ❌       | `defaultIconPack` | Icon pack   |
+| `t`        | `RtkI18n`  | ❌       | `useLanguage()`   | Language    |
 
 ## Usage Examples
 
@@ -25,15 +26,13 @@ A component that lets you create a poll.
 ### With Properties
 
 ```html
-<rtk-poll-form>
-</rtk-poll-form>
+<rtk-poll-form> </rtk-poll-form>
 ```
-
 
 ```html
 <script>
-  const el = document.querySelector("rtk-poll-form");
+	const el = document.querySelector("rtk-poll-form");
 
-  el.iconPack= defaultIconPack
+	el.iconPack = defaultIconPack;
 </script>
 ```

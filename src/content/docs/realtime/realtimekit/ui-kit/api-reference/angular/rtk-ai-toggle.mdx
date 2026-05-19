@@ -5,16 +5,17 @@ description: API reference for rtk-ai-toggle component (Angular Library)
 products:
   - realtime
 ---
+
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `size` | `Size` | ✅ | - | Size |
-| `states` | `States` | ✅ | - | States object |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
-| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+| Property   | Type                | Required | Default           | Description    |
+| ---------- | ------------------- | -------- | ----------------- | -------------- |
+| `iconPack` | `IconPack`          | ❌       | `defaultIconPack` | Icon pack      |
+| `meeting`  | `Meeting`           | ✅       | -                 | Meeting object |
+| `size`     | `Size`              | ✅       | -                 | Size           |
+| `states`   | `States`            | ✅       | -                 | States object  |
+| `t`        | `RtkI18n`           | ❌       | `useLanguage()`   | Language       |
+| `variant`  | `ControlBarVariant` | ✅       | -                 | Variant        |
 
 ## Usage Examples
 
@@ -29,10 +30,5 @@ products:
 
 ```html
 <!-- component.html -->
-<rtk-ai-toggle
- [meeting]="meeting"
- size="md"
- variant="button">
-</rtk-ai-toggle>
+<rtk-ai-toggle [meeting]="meeting" size="md" variant="button"> </rtk-ai-toggle>
 ```
-

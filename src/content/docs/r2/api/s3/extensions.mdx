@@ -16,12 +16,10 @@ HTTP header names and values may only contain ASCII characters, which is a small
 
 :::caution[Metadata variance]
 
-Be mindful when using both Workers and S3 API endpoints to access the same data. If the R2 metadata keys contain Unicode, they are stripped when accessed through the S3 API and the `x-amz-missing-meta` header is set to the number of keys that were omitted. 
+Be mindful when using both Workers and S3 API endpoints to access the same data. If the R2 metadata keys contain Unicode, they are stripped when accessed through the S3 API and the `x-amz-missing-meta` header is set to the number of keys that were omitted.
 :::
 
 These headers map to the `httpMetadata` field in the [R2 bindings](/workers/runtime-apis/bindings/):
-
-
 
 | HTTP Header           | Property Name                     |
 | --------------------- | --------------------------------- |
@@ -73,8 +71,6 @@ The `x-amz-metadata-directive` allows a `MERGE` value, in addition to the standa
 
 `ListBuckets` supports all the same search parameters as `ListObjectsV2` in R2 because some customers may have more than 1,000 buckets. Because tooling, like existing S3 libraries, may not expose a way to set these search parameters, these values may also be sent in via headers. Values in headers take precedence over the search parameters.
 
-
-
 | Search parameter     | HTTP Header             | Meaning                                                           |
 | -------------------- | ----------------------- | ----------------------------------------------------------------- |
 | `prefix`             | `cf-prefix`             | Show buckets with this prefix only.                               |
@@ -84,8 +80,6 @@ The `x-amz-metadata-directive` allows a `MERGE` value, in addition to the standa
 |                      |                         |                                                                   |
 
 The XML response contains a `NextContinuationToken` and `IsTruncated` elements as appropriate. Since these may not be accessible from existing S3 APIs, these are also available in response headers:
-
-
 
 | XML Response Element    | HTTP Response Header         | Meaning                                                                                        |
 | ----------------------- | ---------------------------- | ---------------------------------------------------------------------------------------------- |
@@ -101,15 +95,15 @@ The XML response contains a `NextContinuationToken` and `IsTruncated` elements a
 
 :::note
 
-This feature is currently in beta. If you have feedback, reach out to us on the [Cloudflare Developer Discord](https://discord.cloudflare.com) in the #r2-storage channel or open a thread on the [Community Forum](https://community.cloudflare.com/c/developers/storage/81). 
+This feature is currently in beta. If you have feedback, reach out to us on the [Cloudflare Developer Discord](https://discord.cloudflare.com) in the #r2-storage channel or open a thread on the [Community Forum](https://community.cloudflare.com/c/developers/storage/81).
 :::
 
 `CopyObject` already supports conditions that relate to the source object through the `x-amz-copy-source-if-...` headers as part of our compliance with the S3 API. In addition to this, R2 supports an R2 specific set of headers that allow the `CopyObject` operation to be conditional on the target object:
 
-* `cf-copy-destination-if-match`
-* `cf-copy-destination-if-none-match`
-* `cf-copy-destination-if-modified-since`
-* `cf-copy-destination-if-unmodified-since`
+- `cf-copy-destination-if-match`
+- `cf-copy-destination-if-none-match`
+- `cf-copy-destination-if-modified-since`
+- `cf-copy-destination-if-unmodified-since`
 
 These headers work akin to the similarly named conditional headers supported on `PutObject`. When the preceding state of the destination object to does not match the specified conditions the `CopyObject` operation will be rejected with a `412 PreconditionFailed` error code.
 

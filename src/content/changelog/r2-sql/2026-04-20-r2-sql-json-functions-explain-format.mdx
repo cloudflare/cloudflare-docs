@@ -20,6 +20,7 @@ SELECT
 FROM my_namespace.sales_data
 WHERE json_contains(doc, 'email')
 ```
+
 For a full list of available functions, refer to [JSON functions](/r2-sql/sql-reference/scalar-functions/#json-functions).
 
 `EXPLAIN FORMAT JSON` returns query execution plans as structured JSON for programmatic analysis and observability integrations:
@@ -66,6 +67,7 @@ npx wrangler r2 sql query "${WAREHOUSE}" "EXPLAIN FORMAT JSON SELECT * FROM logp
 │ }                                    │
 └──────────────────────────────────────┘
 ```
+
 For more details, refer to [EXPLAIN](/r2-sql/sql-reference/#explain).
 
 Unpartitioned Iceberg tables can now be queried directly, which is useful for smaller datasets or data without natural time dimensions. For tables with more than 1000 files, partitioning is still recommended for better performance.

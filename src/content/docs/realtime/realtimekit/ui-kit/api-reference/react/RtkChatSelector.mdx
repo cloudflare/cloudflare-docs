@@ -5,42 +5,37 @@ description: API reference for RtkChatSelector component (React Library)
 products:
   - realtime
 ---
+
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `config` | `UIConfig1` | ❌ | `createDefaultConfig()` | Config |
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `overrides` | `Overrides1` | ❌ | `defaultOverrides` | UI Overrides |
-| `size` | `Size` | ✅ | - | Size |
-| `states` | `States1` | ✅ | - | States object |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| Property    | Type         | Required | Default                 | Description    |
+| ----------- | ------------ | -------- | ----------------------- | -------------- |
+| `config`    | `UIConfig1`  | ❌       | `createDefaultConfig()` | Config         |
+| `iconPack`  | `IconPack`   | ❌       | `defaultIconPack`       | Icon pack      |
+| `meeting`   | `Meeting`    | ✅       | -                       | Meeting object |
+| `overrides` | `Overrides1` | ❌       | `defaultOverrides`      | UI Overrides   |
+| `size`      | `Size`       | ✅       | -                       | Size           |
+| `states`    | `States1`    | ✅       | -                       | States object  |
+| `t`         | `RtkI18n`    | ❌       | `useLanguage()`         | Language       |
 
 ## Usage Examples
 
 ### Basic Usage
 
 ```tsx
-import { RtkChatSelector } from '@cloudflare/realtimekit-react-ui';
+import { RtkChatSelector } from "@cloudflare/realtimekit-react-ui";
 
 function MyComponent() {
-  return <RtkChatSelector />;
+	return <RtkChatSelector />;
 }
 ```
 
 ### With Properties
 
 ```tsx
-import { RtkChatSelector } from '@cloudflare/realtimekit-react-ui';
+import { RtkChatSelector } from "@cloudflare/realtimekit-react-ui";
 
 function MyComponent() {
-  return (
-    <RtkChatSelector
-      meeting={meeting}
-      size="md"
-    />
-  );
+	return <RtkChatSelector meeting={meeting} size="md" />;
 }
 ```
-

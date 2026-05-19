@@ -53,20 +53,22 @@ URLs with auto-generated tokens change when you unexpose and re-expose a port.
 For production deployments or shared URLs, specify a custom token to maintain consistency across container restarts:
 
 ```typescript
-const stable = await sandbox.exposePort(8000, { 
-  hostname, 
-  token: 'api_v1' 
+const stable = await sandbox.exposePort(8000, {
+	hostname,
+	token: "api_v1",
 });
 // https://8000-sandbox-id-api_v1.yourdomain.com
 // Same URL every time ✓
 ```
 
 **Token requirements:**
+
 - 1-16 characters long
-- Lowercase letters (a-z), numbers (0-9), and underscores (_) only
+- Lowercase letters (a-z), numbers (0-9), and underscores (\_) only
 - Must be unique within each sandbox
 
 **Use cases for custom tokens:**
+
 - Production APIs with stable endpoints
 - Sharing demo URLs with external users
 - Documentation with consistent examples
@@ -80,7 +82,7 @@ Preview URLs extract the sandbox ID from the hostname to route requests. Since h
 
 ```typescript
 // Problem scenario
-const sandbox = getSandbox(env.Sandbox, 'MyProject-123');
+const sandbox = getSandbox(env.Sandbox, "MyProject-123");
 // Durable Object ID: "MyProject-123"
 await sandbox.exposePort(8080, { hostname });
 // Preview URL: 8080-myproject-123-token123.yourdomain.com
@@ -90,8 +92,8 @@ await sandbox.exposePort(8080, { hostname });
 **The solution**: Use `normalizeId: true` to lowercase IDs when creating sandboxes:
 
 ```typescript
-const sandbox = getSandbox(env.Sandbox, 'MyProject-123', {
-  normalizeId: true
+const sandbox = getSandbox(env.Sandbox, "MyProject-123", {
+	normalizeId: true,
 });
 // Durable Object ID: "myproject-123" (lowercased)
 // Preview URL: 8080-myproject-123-token123.yourdomain.com

@@ -23,9 +23,7 @@ Different from the default hostname of your Mastodon instance, object storage fo
 
 :::note
 
-
 If you move from R2 to another S3 compatible service later on, you can continue using the same hostname determined in this step. We do not recommend changing the hostname after the instance has been running to avoid breaking historical file references. In such a scenario, [Bulk Redirects](/rules/url-forwarding/bulk-redirects/) can be used to instruct requests reaching the previous hostname to refer to the new hostname.
-
 
 :::
 
@@ -34,6 +32,7 @@ If you move from R2 to another S3 compatible service later on, you can continue 
 1. In the Cloudflare dashboard, go to the **R2 object storage** page.
 
    <DashButton url="/?to=/:account/r2/overview" />
+
 2. Select **Create bucket**.
 3. Enter your bucket name and then select **Create bucket**. This name is internal when setting up your Mastodon instance and is not publicly accessible.
 4. Once the bucket is created, navigate to the **Settings** tab of this bucket and copy the value of **S3 API**.

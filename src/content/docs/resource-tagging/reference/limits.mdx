@@ -8,14 +8,14 @@ description: API limits, tag key validation rules, and pagination behavior.
 
 ## API limits
 
-| Limit | Value | Error code |
-| --- | --- | --- |
-| Maximum tags per account | 10,000 (beta) | N/A |
-| Maximum tag key length | 256 characters | `1011` |
-| Maximum tag value length | 1,024 characters | `1012` |
-| Maximum tag filters per query | 20 | `1010` |
-| Maximum OR values per filter | 10 | `1013` |
-| Results per page | 100 (fixed) | N/A |
+| Limit                         | Value            | Error code |
+| ----------------------------- | ---------------- | ---------- |
+| Maximum tags per account      | 10,000 (beta)    | N/A        |
+| Maximum tag key length        | 256 characters   | `1011`     |
+| Maximum tag value length      | 1,024 characters | `1012`     |
+| Maximum tag filters per query | 20               | `1010`     |
+| Maximum OR values per filter  | 10               | `1013`     |
+| Results per page              | 100 (fixed)      | N/A        |
 
 When a limit is exceeded, the API returns `400 Bad Request` with the corresponding error code.
 
@@ -45,16 +45,16 @@ Tag keys must follow these character rules:
 
 ### Examples
 
-| Key | Valid | Reason |
-| --- | --- | --- |
-| `environment` | Yes | Letters only |
-| `team_name` | Yes | Underscore |
-| `cost-center` | Yes | Hyphen |
-| `owner.email` | Yes | Period |
-| `env123` | Yes | Letters and digits |
-| `env name` | **No** | Contains space |
-| `team@work` | **No** | Special character `@` |
-| (empty) | **No** | Empty string |
+| Key           | Valid  | Reason                |
+| ------------- | ------ | --------------------- |
+| `environment` | Yes    | Letters only          |
+| `team_name`   | Yes    | Underscore            |
+| `cost-center` | Yes    | Hyphen                |
+| `owner.email` | Yes    | Period                |
+| `env123`      | Yes    | Letters and digits    |
+| `env name`    | **No** | Contains space        |
+| `team@work`   | **No** | Special character `@` |
+| (empty)       | **No** | Empty string          |
 
 Invalid tag keys return `400 Bad Request` with error code `1014`.
 
@@ -63,6 +63,7 @@ Invalid tag keys return `400 Bad Request` with error code `1014`.
 List endpoints use cursor-based pagination with a fixed page size of 100. The page size is not configurable.
 
 Paginated endpoints:
+
 - `GET /accounts/{account_id}/tags/keys`
 - `GET /accounts/{account_id}/tags/resources`
 - `GET /accounts/{account_id}/tags/values/{tag_key}`

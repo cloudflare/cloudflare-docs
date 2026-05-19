@@ -5,7 +5,6 @@ title: Set build commands per branch
 description: Run different build commands on specific branches in your Cloudflare Pages project.
 products:
   - pages
-
 ---
 
 import { DashButton } from "~/components";
@@ -46,6 +45,7 @@ To put your changes into effect:
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
+
 2. Select your Pages project.
 3. Go to **Settings** > **Build & deployments** > **Build configurations** > **Edit configurations**.
 4. Update the **Build command** field value to `bash build.sh` and select **Save**.

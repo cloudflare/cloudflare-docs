@@ -30,7 +30,7 @@ The following table provides a high-level comparison of all connectivity options
 | [Cloudflare Tunnel](#cloudflare-tunnel) | HTTP/2, QUIC | Off-ramp only | Software daemon (`cloudflared`) on server | Exposing private applications without a public IP |
 | [Cloudflare One Client](#cloudflare-one-client) | MASQUE (default), WireGuard | Bidirectional | Client software on end-user devices | Securing remote workforce devices |
 | [Cloudflare Mesh](#cloudflare-mesh) | MASQUE | Bidirectional | Software client on Linux host | Connecting sites with IoT or VoIP devices |
-| [DNS locations](#dns-locations) |  DNS (DoH, DoT, IPv4/IPv6) | On-ramp only | DNS resolver configuration  | Filtering DNS traffic without device agents |
+| [DNS locations](#dns-locations) | DNS (DoH, DoT, IPv4/IPv6) | On-ramp only | DNS resolver configuration | Filtering DNS traffic without device agents |
 | [Proxy endpoints](#proxy-endpoints) | HTTP/HTTPS | On-ramp only | Browser PAC file configuration | Filtering web traffic without device agents |
 | [Clientless Web Isolation](#clientless-web-isolation) | HTTP/HTTPS | On-ramp only | Prefixed URL with Access authentication | Secure web access for unmanaged devices |
 | [GRE tunnels](#gre-tunnels) | GRE | Bidirectional | Network tunnel from router or firewall | Connecting sites with existing network hardware |
@@ -97,9 +97,9 @@ DNS locations allow you to filter DNS traffic from networks without deploying th
 
 DNS locations support multiple endpoint types:
 
-* **IPv4/IPv6**: Standard DNS resolution using Cloudflare's resolver IPs
-* **DNS over HTTPS (DoH)**: Encrypted DNS queries over HTTPS
-* **DNS over TLS (DoT)**: Encrypted DNS queries over TLS
+- **IPv4/IPv6**: Standard DNS resolution using Cloudflare's resolver IPs
+- **DNS over HTTPS (DoH)**: Encrypted DNS queries over HTTPS
+- **DNS over TLS (DoT)**: Encrypted DNS queries over TLS
 
 Use DNS locations when you need to filter DNS traffic for an entire office or network, per device without installing agents on devices, or integrate with existing network infrastructure.
 
@@ -119,8 +119,8 @@ Proxy endpoints allow you to apply Cloudflare Gateway HTTP policies without inst
 
 Cloudflare One supports two types of proxy endpoints:
 
-* **Authorization endpoints**: Use Cloudflare Access for identity-based authentication
-* **Source IP endpoints**: Authorize traffic based on originating IP address (Enterprise only)
+- **Authorization endpoints**: Use Cloudflare Access for identity-based authentication
+- **Source IP endpoints**: Authorize traffic based on originating IP address (Enterprise only)
 
 Use proxy endpoints when you need to filter web traffic without device agents, integrate with existing proxy infrastructure, or deploy Gateway alongside other security tools.
 
@@ -283,7 +283,7 @@ The connectivity options on this page connect your private infrastructure, sites
 
 - **Non-HTTP traffic** (TCP/UDP protocols such as gaming, email, or custom services) — refer to [Spectrum](/spectrum/).
 - **Network-level DDoS protection** (for on-premises, cloud-hosted, and hybrid networks) — refer to [Magic Transit](/magic-transit/).
-:::
+  :::
 
 ### Cloudflare One recommendations by team
 
@@ -301,14 +301,14 @@ The team driving your Cloudflare One connectivity project influences which optio
 
 Cloudflare Mesh and Cloudflare One Appliance both provide site-level connectivity, but serve different deployment scenarios.
 
-| Aspect | Cloudflare Mesh | Cloudflare One Appliance |
-| ---- | ---- | ---- |
-| **Protocol** | MASQUE | IPsec |
-| **Deployment model** | Software on Linux host (can run alongside other workloads) | Dedicated hardware appliance or virtual machine |
-| **Best for** | Cloud VPCs, development environments, smaller deployments with an available Linux host | Enterprise branch offices, data centers, sites requiring high throughput (1 Gbps+) |
-| **Platform support** | Linux only (x86_64, ARM64). Currently in beta. | Hardware appliance (Dell VEP1460) or virtual (VMware ESXi, Proxmox) |
-| **High availability** | [Active-passive replicas](/cloudflare-one/networks/connectors/cloudflare-mesh/high-availability/) for nodes with routes | Supported through multiple connectors per site |
-| **Management** | Configured as a device in the Cloudflare One Client settings | Centralized through the Cloudflare WAN dashboard with zero-touch provisioning |
+| Aspect                | Cloudflare Mesh                                                                                                         | Cloudflare One Appliance                                                           |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| **Protocol**          | MASQUE                                                                                                                  | IPsec                                                                              |
+| **Deployment model**  | Software on Linux host (can run alongside other workloads)                                                              | Dedicated hardware appliance or virtual machine                                    |
+| **Best for**          | Cloud VPCs, development environments, smaller deployments with an available Linux host                                  | Enterprise branch offices, data centers, sites requiring high throughput (1 Gbps+) |
+| **Platform support**  | Linux only (x86_64, ARM64). Currently in beta.                                                                          | Hardware appliance (Dell VEP1460) or virtual (VMware ESXi, Proxmox)                |
+| **High availability** | [Active-passive replicas](/cloudflare-one/networks/connectors/cloudflare-mesh/high-availability/) for nodes with routes | Supported through multiple connectors per site                                     |
+| **Management**        | Configured as a device in the Cloudflare One Client settings                                                            | Centralized through the Cloudflare WAN dashboard with zero-touch provisioning      |
 
 Use Cloudflare Mesh when you need lightweight, software-only connectivity for cloud workloads or sites where a Linux host is available. Use Cloudflare One Appliance when you need enterprise-grade throughput, high availability, or integration with existing network infrastructure.
 
@@ -457,7 +457,8 @@ This pattern serves organizations with strict compliance requirements that prohi
 - [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/)
 - [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/)
 - [Cloudflare WAN](/cloudflare-wan/)
-- <a href={props.onRampsURL}>WAN Connectors on-ramps</a> - Full list of supported on-ramps
+- <a href={props.onRampsURL}>WAN Connectors on-ramps</a> - Full list of
+  supported on-ramps
 - [Multi-Cloud Networking](/multi-cloud-networking/) - Automate cloud VPC connectivity
 - [Magic Transit](/magic-transit/)
 - <a href={props.connectorURL}>Cloudflare One Appliance</a>
@@ -467,4 +468,4 @@ This pattern serves organizations with strict compliance requirements that prohi
 - [Proxy endpoints](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) - Filter web traffic using PAC files
 - [Clientless Web Isolation](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/) - Secure web access without device agents
 
-For implementation guidance on combining Cloudflare One connectivity options, refer to the [SASE reference architecture](/reference-architecture/architectures/sase/). 
+For implementation guidance on combining Cloudflare One connectivity options, refer to the [SASE reference architecture](/reference-architecture/architectures/sase/).

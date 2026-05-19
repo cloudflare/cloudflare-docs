@@ -17,7 +17,7 @@ The `binaryType` property itself is available on every `WebSocket` regardless of
 
 ```js
 const resp = await fetch("https://example.com", {
-  headers: { Upgrade: "websocket" },
+	headers: { Upgrade: "websocket" },
 });
 const ws = resp.webSocket;
 
@@ -26,7 +26,7 @@ ws.binaryType = "arraybuffer";
 ws.accept();
 
 ws.addEventListener("message", (event) => {
-  // event.data is an ArrayBuffer for binary frames.
+	// event.data is an ArrayBuffer for binary frames.
 });
 ```
 

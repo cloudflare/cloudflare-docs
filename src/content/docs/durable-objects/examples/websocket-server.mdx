@@ -12,7 +12,13 @@ products:
   - durable-objects
 ---
 
-import { TabItem, Tabs, GlossaryTooltip, WranglerConfig, TypeScriptExample } from "~/components";
+import {
+	TabItem,
+	Tabs,
+	GlossaryTooltip,
+	WranglerConfig,
+	TypeScriptExample,
+} from "~/components";
 
 This example shows how to build a WebSocket server using <GlossaryTooltip term="Durable Object">Durable Objects</GlossaryTooltip> and Workers. The example exposes an endpoint to create a new WebSocket connection. This WebSocket connection echos any message while including the total number of WebSocket connections currently established. For more information, refer to [Use Durable Objects with WebSockets](/durable-objects/best-practices/websockets/).
 

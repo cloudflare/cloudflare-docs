@@ -5,19 +5,20 @@ description: API reference for rtk-notification component (Angular Library)
 products:
   - realtime
 ---
+
 A component which shows a notification.
- You need to remove the element after you receive the
- `rtkNotificationDismiss` event.
+You need to remove the element after you receive the
+`rtkNotificationDismiss` event.
 
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `notification` | `Notification` | ✅ | - | Message |
-| `paused` | `boolean` | ✅ | - | Stops timeout when true |
-| `size` | `Size` | ✅ | - | Size |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| Property       | Type           | Required | Default           | Description             |
+| -------------- | -------------- | -------- | ----------------- | ----------------------- |
+| `iconPack`     | `IconPack`     | ❌       | `defaultIconPack` | Icon pack               |
+| `notification` | `Notification` | ✅       | -                 | Message                 |
+| `paused`       | `boolean`      | ✅       | -                 | Stops timeout when true |
+| `size`         | `Size`         | ✅       | -                 | Size                    |
+| `t`            | `RtkI18n`      | ❌       | `useLanguage()`   | Language                |
 
 ## Usage Examples
 
@@ -32,10 +33,6 @@ A component which shows a notification.
 
 ```html
 <!-- component.html -->
-<rtk-notification
- [notification]="notification"
- [paused]="true"
- size="md">
+<rtk-notification [notification]="notification" [paused]="true" size="md">
 </rtk-notification>
 ```
-

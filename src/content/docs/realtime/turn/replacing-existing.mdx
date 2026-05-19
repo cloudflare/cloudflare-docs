@@ -14,12 +14,12 @@ If you are a existing TURN provider but would like to switch to providing Cloudf
 
 Cloudflare Realtime TURN service can reduce tangible and untangible costs associated with TURN servers:
 
-* Server costs (AWS EC2 etc)
-* Bandwidth costs (Egress, load balancing etc)
-* Time and effort to set up a TURN process and maintenance of server
-* Scaling the servers up and down
-* Maintain the TURN server with security and feature updates
-* Maintain high availability
+- Server costs (AWS EC2 etc)
+- Bandwidth costs (Egress, load balancing etc)
+- Time and effort to set up a TURN process and maintenance of server
+- Scaling the servers up and down
+- Maintain the TURN server with security and feature updates
+- Maintain high availability
 
 ## Recommendations
 
@@ -56,8 +56,8 @@ When billing for TURN usage in your application, it's crucial to understand and 
 
 The sampling process in TURN analytics works on two levels:
 
-* At data collection: Usage data points may be sampled if they are generated too quickly.
-* At query time: Additional sampling may occur if the query is too complex or covers a large time range.
+- At data collection: Usage data points may be sampled if they are generated too quickly.
+- At query time: Additional sampling may occur if the query is too complex or covers a large time range.
 
 To ensure accurate billing, write a single query that sums TURN usage per customer per time period, returning a single value. Avoid using queries that list usage for multiple customers simultaneously.
 
@@ -65,9 +65,7 @@ By following these guidelines and understanding how TURN analytics handles sampl
 
 :::note
 
-
 Cloudflare Realtime only bills for traffic from Cloudflare's servers to your client, called `egressBytes`.
-
 
 :::
 
@@ -75,9 +73,7 @@ Cloudflare Realtime only bills for traffic from Cloudflare's servers to your cli
 
 :::caution[Incorrect approach example]
 
-
 Querying TURN usage for multiple customers in a single query can lead to inaccurate results. This is because the usage pattern of one customer could affect the sampling rate applied to another customer's data, potentially skewing the results.
-
 
 :::
 

@@ -189,18 +189,18 @@ A separate Semgrep workflow checks style guide compliance (dates, "coming soon" 
 
 The site defines 20 content collections in `src/content.config.ts` with schemas in `src/schemas/`. The major ones:
 
-| Collection          | Location                         | Description                             |
-| ------------------- | -------------------------------- | --------------------------------------- |
-| `docs`              | `src/content/docs/`              | Main documentation pages (MDX)          |
-| `partials`          | `src/content/partials/`          | Reusable content snippets (MDX)         |
-| `changelog`         | `src/content/changelog/`         | Product changelogs (MDX)                |
-| `glossary`          | `src/content/glossary/`          | Glossary terms (YAML)                   |
-| `products`          | `src/content/products/`          | Product metadata (YAML)                 |
-| `plans`             | `src/content/plans/`             | Plan/pricing data (YAML)                |
-| `workers-ai-models` | `src/content/workers-ai-models/` | AI model definitions (JSON)             |
+| Collection          | Location                         | Description                              |
+| ------------------- | -------------------------------- | ---------------------------------------- |
+| `docs`              | `src/content/docs/`              | Main documentation pages (MDX)           |
+| `partials`          | `src/content/partials/`          | Reusable content snippets (MDX)          |
+| `changelog`         | `src/content/changelog/`         | Product changelogs (MDX)                 |
+| `glossary`          | `src/content/glossary/`          | Glossary terms (YAML)                    |
+| `products`          | `src/content/products/`          | Product metadata (YAML)                  |
+| `plans`             | `src/content/plans/`             | Plan/pricing data (YAML)                 |
+| `workers-ai-models` | `src/content/workers-ai-models/` | AI model definitions (JSON)              |
 | `directory`         | `src/content/directory/`         | Product/feature directory entries (YAML) |
-| `fields`            | `src/content/fields/`            | Ruleset engine field definitions (YAML) |
-| `learning-paths`    | `src/content/learning-paths/`    | Learning path definitions (JSON)        |
+| `fields`            | `src/content/fields/`            | Ruleset engine field definitions (YAML)  |
+| `learning-paths`    | `src/content/learning-paths/`    | Learning path definitions (JSON)         |
 
 ### Directory entry IDs
 
@@ -255,22 +255,22 @@ Existing components (`warp-download`, `stream-player`, `rule-id`, `check-box`, `
 
 Repo-specific skills live in `.agents/skills/`. Each skill provides specialized instructions for a particular task. Load a skill when the task matches its description.
 
-| Skill | When to use |
-| ----- | ----------- |
-| `changelog` | Creating, editing, or reviewing changelog entries |
-| `code-review` | Reviewing Workers/platform code for type correctness and API usage |
-| `dependabot-review` | Analyzing a Dependabot PR for impact on this repo |
-| `docs-review` | Reviewing documentation PRs for style, structure, and correctness |
-| `eli5` | Simplifying technical documentation for broader audiences |
-| `pr` | Creating or updating GitHub pull requests |
+| Skill               | When to use                                                        |
+| ------------------- | ------------------------------------------------------------------ |
+| `changelog`         | Creating, editing, or reviewing changelog entries                  |
+| `code-review`       | Reviewing Workers/platform code for type correctness and API usage |
+| `dependabot-review` | Analyzing a Dependabot PR for impact on this repo                  |
+| `docs-review`       | Reviewing documentation PRs for style, structure, and correctness  |
+| `eli5`              | Simplifying technical documentation for broader audiences          |
+| `pr`                | Creating or updating GitHub pull requests                          |
 
 Shared reference files in `.agents/references/`:
 
-| File | Contents |
-| ---- | -------- |
+| File             | Contents                                                    |
+| ---------------- | ----------------------------------------------------------- |
 | `style-guide.md` | Canonical writing and formatting rules for all content work |
-| `components.md` | Full MDX component catalog with props and usage examples |
-| `procedures.md` | Rules for writing step-by-step procedural instructions |
+| `components.md`  | Full MDX component catalog with props and usage examples    |
+| `procedures.md`  | Rules for writing step-by-step procedural instructions      |
 
 ## Commit conventions
 

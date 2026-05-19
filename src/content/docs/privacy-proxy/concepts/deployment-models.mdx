@@ -65,12 +65,12 @@ In a double-hop deployment, you operate the first proxy (Proxy A), and Cloudflar
 
 The double-hop architecture ensures:
 
-| Information | Proxy A (you) | Proxy B (Cloudflare) |
-| ------------- | --------------- | ---------------------- |
-| Client IP address | Yes | No |
-| User account | Yes | No |
-| Destination server | Encrypted | Yes |
-| Request content | Encrypted | Encrypted |
+| Information        | Proxy A (you) | Proxy B (Cloudflare) |
+| ------------------ | ------------- | -------------------- |
+| Client IP address  | Yes           | No                   |
+| User account       | Yes           | No                   |
+| Destination server | Encrypted     | Yes                  |
+| Request content    | Encrypted     | Encrypted            |
 
 Proxy A knows who the user is but cannot see where they are going (the destination is encrypted). Proxy B knows the destination but not who is making the request. Neither party has the complete picture.
 
@@ -90,13 +90,13 @@ Double-hop deployment works well when:
 
 ## Comparison
 
-| Aspect | Single-hop | Double-hop |
-| -------- | ------------ | ------------ |
-| Infrastructure | Cloudflare only | You + Cloudflare |
-| Privacy separation | Proxy sees identity + destination | Split across two parties |
-| Operational complexity | Lower | Higher |
-| Authentication | Cloudflare-managed | You manage first-hop auth |
-| Use case | Browser VPNs, simple privacy | Maximum privacy separation |
+| Aspect                 | Single-hop                        | Double-hop                 |
+| ---------------------- | --------------------------------- | -------------------------- |
+| Infrastructure         | Cloudflare only                   | You + Cloudflare           |
+| Privacy separation     | Proxy sees identity + destination | Split across two parties   |
+| Operational complexity | Lower                             | Higher                     |
+| Authentication         | Cloudflare-managed                | You manage first-hop auth  |
+| Use case               | Browser VPNs, simple privacy      | Maximum privacy separation |
 
 ---
 

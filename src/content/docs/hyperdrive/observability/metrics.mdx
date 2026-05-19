@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Metrics and analytics
-description: Inspect query volume, latency, and cache hit ratios for your Hyperdrive configurations.
+description: Inspect query volume, latency, cache hit ratios, and connection pool sizes for your Hyperdrive configurations.
 sidebar:
   order: 20
 products:
@@ -10,7 +10,7 @@ products:
 
 import { DashButton } from "~/components";
 
-Hyperdrive exposes analytics that allow you to inspect query volume, query latency, and cache hit ratios for each Hyperdrive configuration in your account.
+Hyperdrive exposes analytics that allow you to inspect query volume, query latency, cache hit ratios, and connection pool sizes for each Hyperdrive configuration in your account.
 
 ## Metrics
 
@@ -28,6 +28,18 @@ Hyperdrive currently exports the below metrics as part of the `hyperdriveQueries
 
 The `volatile` cache status indicates the query contains a PostgreSQL function categorized as `STABLE` or `VOLATILE` (for example, `NOW()`, `RANDOM()`). Refer to [Query caching](/hyperdrive/concepts/query-caching/) for details on which functions affect cacheability.
 
+## Pool size metrics
+
+Hyperdrive also exports the following pool size metrics as part of the `hyperdrivePoolSizesAdaptiveGroups` GraphQL dataset:
+
+| Metric              | GraphQL Field Name   | Description                                                                          |
+| ------------------- | -------------------- | ------------------------------------------------------------------------------------ |
+| Waiting Connections | `waitingConnections` | The number of client requests waiting for an available connection from the pool.     |
+| Open Connections    | `openConnections`    | The number of active connections from Hyperdrive to your origin database.            |
+| Pool Size Maximum   | `poolSizeMaximum`    | The configured maximum number of connections (origin connection limit) for the pool. |
+
+These metrics can help you identify connection contention. A spike in **waiting connections** or **open connections** consistently approaching the **pool size maximum** indicates that your pool is being exhausted. If you see this pattern, consider [tuning your connection pool size](/hyperdrive/configuration/tune-connection-pool/) or [requesting a limit increase](/hyperdrive/platform/limits/#request-a-limit-increase).
+
 Metrics can be queried (and are retained) for the past 31 days.
 
 ## View metrics in the dashboard
@@ -42,6 +54,8 @@ Per-database analytics for Hyperdrive are available in the Cloudflare dashboard.
 3. Select the **Metrics** tab.
 
 You can optionally select a time window to query. This defaults to the last 24 hours.
+
+The **Metrics** tab also includes a **Pool connections** chart that displays waiting connections, open connections, and the pool size maximum for your configuration. You can use the location selector to view metrics by individual Point of Presence (PoP).
 
 ## Query via the GraphQL API
 
@@ -134,6 +148,36 @@ query HyperdriveQueryAndResultBytesForSuccessfulQueries(
 				sum {
 					queryBytes
 					resultBytes
+				}
+			}
+		}
+	}
+}
+```
+
+### Get pool size metrics for a Hyperdrive config
+
+```graphql graphql-api-explorer
+query HyperdrivePoolSizes(
+	$accountTag: string!
+	$configId: string!
+	$datetimeStart: Time!
+	$datetimeEnd: Time!
+) {
+	viewer {
+		accounts(filter: { accountTag: $accountTag }) {
+			hyperdrivePoolSizesAdaptiveGroups(
+				limit: 10000
+				filter: {
+					configId: $configId
+					datetime_geq: $datetimeStart
+					datetime_leq: $datetimeEnd
+				}
+			) {
+				avg {
+					waitingConnections
+					openConnections
+					poolSizeMaximum
 				}
 			}
 		}

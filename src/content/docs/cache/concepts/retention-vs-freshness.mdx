@@ -4,7 +4,6 @@ pcx_content_type: concept
 description: How cache retention and TTL freshness differ in Cloudflare.
 products:
   - cache
-
 ---
 
 In the context of Cloudflare CDN (Content Delivery Network), retention and freshness refer to two separate but related concepts. For an object in cache, freshness is how long it should be considered valid without consulting its source, while retention refers to how long it stays in cache before being removed.
@@ -19,8 +18,8 @@ Cloudflare uses a Least Recently Used (LRU) algorithm to decide which objects to
 
 Freshness, also known as Time to Live (TTL), determines how long a cache can use an object without checking with the origin again. For example, if an object has a TTL of five minutes, the cache serves it directly for five minutes after first receiving it. After five minutes, Cloudflare must check with the origin to confirm the object is still valid before serving it again. There are a few ways to configure TTLs for resources served through Cloudflare's CDN:
 
-* Include [Origin Cache Control](/cache/concepts/cache-control/) or [CDN Cache Control](/cache/concepts/cache-control/) directives, like `max-age` or `s-maxage`, in the origin cache-control response header.
+- Include [Origin Cache Control](/cache/concepts/cache-control/) or [CDN Cache Control](/cache/concepts/cache-control/) directives, like `max-age` or `s-maxage`, in the origin cache-control response header.
 
-* Use [Cache Rules](/cache/how-to/cache-rules/) or [Workers](/cache/interaction-cloudflare-products/workers/).
+- Use [Cache Rules](/cache/how-to/cache-rules/) or [Workers](/cache/interaction-cloudflare-products/workers/).
 
 If an object in cache is no longer fresh, Cloudflare revalidates it with the origin. When [`stale-while-revalidate`](/cache/concepts/cache-control/#revalidation) is set, revalidation happens asynchronously at expiry — visitors continue to be served from cache while Cloudflare fetches a fresh copy in the background. Without this directive, incoming requests wait for the origin to respond before receiving content. The origin can either confirm the cached object is still valid (refreshing its TTL) or return a new version to replace it. Refer to [Revalidation](/cache/concepts/revalidation/) for details.

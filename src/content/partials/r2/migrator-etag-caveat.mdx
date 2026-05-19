@@ -1,9 +1,8 @@
 ---
 inputParameters: param1
-
 ---
 
-import { Markdown } from "~/components"
+import { Markdown } from "~/components";
 
 While R2's ETag generation is compatible with S3's during the regular course of operations, ETags are not guaranteed to be equal when an object is migrated using {props.one}.
 {props.one} makes autonomous decisions about the operations it uses when migrating objects to optimize for performance and network usage. It may choose to migrate an object in multiple parts, which affects [ETag calculation](/r2/objects/upload-objects/#etags).

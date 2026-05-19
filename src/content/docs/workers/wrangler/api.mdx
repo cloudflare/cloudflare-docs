@@ -50,9 +50,7 @@ const result = await experimental_generateTypes(options);
 ### Parameters
 
 - `options` <Type text="object" /> <MetaInfo text="optional" />
-
   - Optional options object mirroring the `wrangler types` CLI flags:
-
     - `config` `string | string[]`
 
       Path to the Wrangler configuration file to use. Can be an array for multi-config type resolution.
@@ -90,19 +88,15 @@ const result = await experimental_generateTypes(options);
 `experimental_generateTypes()` returns a `Promise` resolving to an object containing the following fields:
 
 - `content` `string`
-
   - Combined formatted output containing all generated sections, including headers and both env and runtime types.
 
 - `env` `string | null`
-
   - Generated environment and bindings types, or `null` when env types are excluded.
 
 - `path` `string`
-
   - Target declaration file path associated with this generation run.
 
 - `runtime` `string | null`
-
   - Generated runtime types, or `null` when runtime types are excluded.
 
 ### Usage
@@ -506,22 +500,22 @@ The bindings supported by `getPlatformProxy` are:
     For example, you might have the following binding in a Wrangler configuration file read by `getPlatformProxy`.
 
     <WranglerConfig>
-            
-                ```jsonc
-                {
-                  "durable_objects": {
-                    "bindings": [
-                      {
-                        "name": "MyDurableObject",
-                        "class_name": "MyDurableObject",
-                        "script_name": "external-do-worker"
+                
+                    ```jsonc
+                    {
+                      "durable_objects": {
+                        "bindings": [
+                          {
+                            "name": "MyDurableObject",
+                            "class_name": "MyDurableObject",
+                            "script_name": "external-do-worker"
+                          }
+                        ]
                       }
-                    ]
-                  }
-                }
-                ```
-            
-                </WranglerConfig>
+                    }
+                    ```
+                
+                    </WranglerConfig>
 
     You will need to declare your Durable Object `"MyDurableObject"` in another Worker, called `external-do-worker` in this example.
 
@@ -541,14 +535,14 @@ The bindings supported by `getPlatformProxy` are:
     That Worker also needs a Wrangler configuration file that looks like this:
 
     <WranglerConfig>
-                    ```json
-                    {
-                    	"name": "external-do-worker",
-                    	"main": "src/index.ts",
-                    	"compatibility_date": "XXXX-XX-XX"
-                    }
-                    ```
-                    </WranglerConfig>
+                        ```json
+                        {
+                        	"name": "external-do-worker",
+                        	"main": "src/index.ts",
+                        	"compatibility_date": "XXXX-XX-XX"
+                        }
+                        ```
+                        </WranglerConfig>
 
     If you are not using RPC with your Durable Object, you can run a separate Wrangler dev session alongside your framework development server.
 

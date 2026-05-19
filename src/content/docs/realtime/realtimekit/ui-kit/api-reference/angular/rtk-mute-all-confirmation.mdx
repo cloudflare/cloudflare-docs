@@ -5,14 +5,15 @@ description: API reference for rtk-mute-all-confirmation component (Angular Libr
 products:
   - realtime
 ---
+
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `states` | `States` | ✅ | - | States object |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| Property   | Type       | Required | Default           | Description    |
+| ---------- | ---------- | -------- | ----------------- | -------------- |
+| `iconPack` | `IconPack` | ❌       | `defaultIconPack` | Icon pack      |
+| `meeting`  | `Meeting`  | ✅       | -                 | Meeting object |
+| `states`   | `States`   | ✅       | -                 | States object  |
+| `t`        | `RtkI18n`  | ❌       | `useLanguage()`   | Language       |
 
 ## Usage Examples
 
@@ -27,8 +28,5 @@ products:
 
 ```html
 <!-- component.html -->
-<rtk-mute-all-confirmation
- [meeting]="meeting">
-</rtk-mute-all-confirmation>
+<rtk-mute-all-confirmation [meeting]="meeting"> </rtk-mute-all-confirmation>
 ```
-

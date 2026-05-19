@@ -10,31 +10,33 @@ Previously, this telemetry was only available via the `Server-Timing: cfL4` resp
 
 ### New properties
 
-| Property | Type | Description |
-| --- | --- | --- |
-| `clientTcpRtt` | number \| undefined | The smoothed TCP round-trip time (RTT) between Cloudflare and the client in milliseconds. Only present for TCP connections (HTTP/1, HTTP/2). For example, `22`. |
-| `clientQuicRtt` | number \| undefined | The smoothed QUIC round-trip time (RTT) between Cloudflare and the client in milliseconds. Only present for QUIC connections (HTTP/3). For example, `42`. |
-| `edgeL4` | Object \| undefined | Layer 4 transport statistics. Contains `deliveryRate` (number) — the most recent data delivery rate estimate for the connection, in bytes per second. For example, `123456`. |
+| Property        | Type                | Description                                                                                                                                                                  |
+| --------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `clientTcpRtt`  | number \| undefined | The smoothed TCP round-trip time (RTT) between Cloudflare and the client in milliseconds. Only present for TCP connections (HTTP/1, HTTP/2). For example, `22`.              |
+| `clientQuicRtt` | number \| undefined | The smoothed QUIC round-trip time (RTT) between Cloudflare and the client in milliseconds. Only present for QUIC connections (HTTP/3). For example, `42`.                    |
+| `edgeL4`        | Object \| undefined | Layer 4 transport statistics. Contains `deliveryRate` (number) — the most recent data delivery rate estimate for the connection, in bytes per second. For example, `123456`. |
 
 ### Example: Log connection quality metrics
 
 ```js
 export default {
-  async fetch(request) {
-    const cf = request.cf;
+	async fetch(request) {
+		const cf = request.cf;
 
-    const rtt = cf.clientTcpRtt ?? cf.clientQuicRtt ?? 0;
-    const deliveryRate = cf.edgeL4?.deliveryRate ?? 0;
-    const transport = cf.clientTcpRtt ? "TCP" : "QUIC";
+		const rtt = cf.clientTcpRtt ?? cf.clientQuicRtt ?? 0;
+		const deliveryRate = cf.edgeL4?.deliveryRate ?? 0;
+		const transport = cf.clientTcpRtt ? "TCP" : "QUIC";
 
-    console.log(`Transport: ${transport}, RTT: ${rtt}ms, Delivery rate: ${deliveryRate} B/s`);
+		console.log(
+			`Transport: ${transport}, RTT: ${rtt}ms, Delivery rate: ${deliveryRate} B/s`,
+		);
 
-    const headers = new Headers(request.headers);
-    headers.set("X-Client-RTT", String(rtt));
-    headers.set("X-Delivery-Rate", String(deliveryRate));
+		const headers = new Headers(request.headers);
+		headers.set("X-Client-RTT", String(rtt));
+		headers.set("X-Delivery-Rate", String(deliveryRate));
 
-    return fetch(new Request(request, { headers }));
-  },
+		return fetch(new Request(request, { headers }));
+	},
 };
 ```
 

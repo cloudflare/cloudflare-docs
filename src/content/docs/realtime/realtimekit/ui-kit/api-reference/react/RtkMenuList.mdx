@@ -5,39 +5,35 @@ description: API reference for RtkMenuList component (React Library)
 products:
   - realtime
 ---
+
 A menu list component.
 
 ## Properties
 
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
-| `menuVariant` | `'primary' \| 'secondary'` | ✅ | - | Variant |
-| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| Property      | Type                       | Required | Default           | Description |
+| ------------- | -------------------------- | -------- | ----------------- | ----------- |
+| `iconPack`    | `IconPack`                 | ❌       | `defaultIconPack` | Icon pack   |
+| `menuVariant` | `'primary' \| 'secondary'` | ✅       | -                 | Variant     |
+| `t`           | `RtkI18n`                  | ❌       | `useLanguage()`   | Language    |
 
 ## Usage Examples
 
 ### Basic Usage
 
 ```tsx
-import { RtkMenuList } from '@cloudflare/realtimekit-react-ui';
+import { RtkMenuList } from "@cloudflare/realtimekit-react-ui";
 
 function MyComponent() {
-  return <RtkMenuList />;
+	return <RtkMenuList />;
 }
 ```
 
 ### With Properties
 
 ```tsx
-import { RtkMenuList } from '@cloudflare/realtimekit-react-ui';
+import { RtkMenuList } from "@cloudflare/realtimekit-react-ui";
 
 function MyComponent() {
-  return (
-    <RtkMenuList
-      menuVariant={'primary' | 'secondary'}
-    />
-  );
+	return <RtkMenuList menuVariant={"primary" | "secondary"} />;
 }
 ```
-

@@ -34,31 +34,31 @@ Refer to [Minimum TLS version](/ssl/edge-certificates/additional-options/minimum
 
 There are several mitigations Cloudflare performs against known vulnerabilities for TLS versions prior to 1.2. For example, Cloudflare does not support:
 
-* Header compression in TLS
-* Header compression in SPDY 3.1
-* RC4
-* SSL 3.0
-* Renegotiation with clients
-* DHE ciphersuites
-* Export-grade ciphers
+- Header compression in TLS
+- Header compression in SPDY 3.1
+- RC4
+- SSL 3.0
+- Renegotiation with clients
+- DHE ciphersuites
+- Export-grade ciphers
 
 Cloudflare mitigations protect against several attacks:
 
-* CRIME
-* BREACH
-* POODLE
-* RC4 Cryptographic Weaknesses
-* SSL Renegotiation Attack
-* Protocol Downgrade Attacks
-* FREAK
-* LogJam
-* 3DES is disabled entirely for TLS 1.1 and 1.2 and Cloudflare implements mitigations for TLS 1.0
+- CRIME
+- BREACH
+- POODLE
+- RC4 Cryptographic Weaknesses
+- SSL Renegotiation Attack
+- Protocol Downgrade Attacks
+- FREAK
+- LogJam
+- 3DES is disabled entirely for TLS 1.1 and 1.2 and Cloudflare implements mitigations for TLS 1.0
 
 Cloudflare provides additional mitigations for:
 
-* Heartbleed
-* Lucky Thirteen
-* CCS injection vulnerability
+- Heartbleed
+- Lucky Thirteen
+- CCS injection vulnerability
 
 Cloudflare has patched all servers against these vulnerabilities. Also, the [Cloudflare Web Application Firewall](/waf/) has managed rules that mitigate several of these vulnerabilities including Heartbleed and ShellShock.
 
@@ -70,5 +70,5 @@ Security scans that note the presence of ROBOT while on Cloudflare are a false p
 
 A vulnerability in the use of the Triple DES (3DES) encryption algorithm in the Transport Layer Security (TLS) protocol. Sweet32 is currently a proof of concept attack, there are no known examples of this in the wild. Cloudflare has manually mitigated the vulnerability for TLS 1.0 in the following manner:
 
-* The attacker must collect 32GB of data from a single TLS session.
-* Cloudflare forces new TLS 1.0 session keys on the affected 3DES cipher well before 32GB of data is collected.
+- The attacker must collect 32GB of data from a single TLS session.
+- Cloudflare forces new TLS 1.0 session keys on the affected 3DES cipher well before 32GB of data is collected.

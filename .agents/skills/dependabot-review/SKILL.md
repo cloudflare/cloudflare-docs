@@ -62,7 +62,7 @@ grep -r "require(['\"]<package>['\"]" src/ worker/ bin/ -l
 grep '"<package>"' package.json
 
 # If transitive, who pulls it in?
-node -e "const lock = require('./pnpm-lock.yaml'); ..." 
+node -e "const lock = require('./pnpm-lock.yaml'); ..."
 # or just:
 grep -A2 '"<package>"' pnpm-lock.yaml | grep -v "^--$" | head -20
 ```
@@ -79,6 +79,7 @@ grep -r "<method_name>\|<export_name>" src/ worker/ bin/ --include="*.ts" --incl
 ```
 
 For Astro/MDX source files under `src/content/docs/`, map them to their route:
+
 - `src/content/docs/workers/get-started/index.mdx` → `/workers/get-started/`
 - `src/content/docs/pages/platform/limits.mdx` → `/pages/platform/limits/`
 
@@ -88,13 +89,13 @@ If more than ~5 files use the changed API, list a representative sample (pick th
 
 Rate the probability that this bump causes a **visible change to the docs site**:
 
-| Rating | Meaning |
-|--------|---------|
-| **None** | Package not used directly; transitive only; or only internal/type changes |
-| **Very Low** | Direct dependency, but changed APIs are not called in this repo |
-| **Low** | Changed APIs are called, but only in build tooling (not runtime or content rendering) |
-| **Medium** | Changed APIs affect content rendering (Astro components, MDX processing, syntax highlighting) |
-| **High** | Changed APIs affect output seen by users — rendered HTML, search index, Worker behavior |
+| Rating       | Meaning                                                                                       |
+| ------------ | --------------------------------------------------------------------------------------------- |
+| **None**     | Package not used directly; transitive only; or only internal/type changes                     |
+| **Very Low** | Direct dependency, but changed APIs are not called in this repo                               |
+| **Low**      | Changed APIs are called, but only in build tooling (not runtime or content rendering)         |
+| **Medium**   | Changed APIs affect content rendering (Astro components, MDX processing, syntax highlighting) |
+| **High**     | Changed APIs affect output seen by users — rendered HTML, search index, Worker behavior       |
 
 For **security fixes**: note what the vulnerability affects and whether our usage is in the vulnerable code path.
 
@@ -142,5 +143,6 @@ For grouped PRs (non-major group), the PR body lists each package separately. Pr
 ### Packages with no public changelog
 
 If a package has no changelog and the upstream repo is private or unavailable:
+
 1. Check npm for version diff: `npm diff <package>@<old> <package>@<new>`
 2. If that also fails, note it explicitly and rate impact conservatively based on usage alone.

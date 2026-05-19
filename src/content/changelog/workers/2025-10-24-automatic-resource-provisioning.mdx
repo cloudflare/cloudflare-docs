@@ -10,7 +10,7 @@ import { Render, TypeScriptExample, WranglerConfig } from "~/components";
 
 Previously, if you wanted to develop or deploy a worker with attached resources, you'd have to first manually create the desired resources. Now, if your Wrangler configuration file includes a KV namespace, D1 database, or R2 bucket that does not yet exist on your account, you can develop locally and deploy your application seamlessly, without having to run additional commands.
 
-Automatic provisioning is launching as an open beta, and we'd love to hear your feedback to help us make improvements! It currently works for KV, R2, and D1 bindings. You can disable the feature using the `--no-x-provision` flag. 
+Automatic provisioning is launching as an open beta, and we'd love to hear your feedback to help us make improvements! It currently works for KV, R2, and D1 bindings. You can disable the feature using the `--no-x-provision` flag.
 
 To use this feature, update to wrangler@4.45.0 and add bindings to your config file _without_ resource IDs e.g.:
 

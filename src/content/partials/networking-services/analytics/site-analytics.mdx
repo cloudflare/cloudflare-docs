@@ -7,51 +7,45 @@ params:
   - setGeoCoordinatesURL
 ---
 
-
-
-import { Details, Markdown, DashButton } from "~/components"
+import { Details, Markdown, DashButton } from "~/components";
 
 After adding your sites, the {props.networkOverviewPageName} section of the dashboard provides a summary of the connectivity status and traffic analytics for all your sites. This is a great place to start if you receive a Cloudflare WAN alert, need to begin the troubleshooting process, or are performing routine monitoring. <Markdown text={props.instructions} />
 
 {props.networkOverviewPageName} has the following data types available:
 
 <Details header="Geographic map summary">
-	- [Aggregate Cloudflare WAN site health](#site-health)
-	- [Cloudflare WAN availability status for sites](#no-status-available)
-	- [Cloudflare WAN site geographic location](#no-location-set)
+	- [Aggregate Cloudflare WAN site health](#site-health) - [Cloudflare WAN
+	availability status for sites](#no-status-available) - [Cloudflare WAN site
+	geographic location](#no-location-set)
 </Details>
 
 <Details header="Cloudflare WAN site data table">
-	- Site Name
-	- Site Health
-	- Site Tunnel Names
-	- Site Tunnel Statuses
-	- Site Traffic Sent
-	- Site Traffic Received
+	- Site Name - Site Health - Site Tunnel Names - Site Tunnel Statuses - Site
+	Traffic Sent - Site Traffic Received
 </Details>
 
 <Details header="Cloudflare WAN site data">
-	- Traffic Sent by Tunnel
-	- Traffic Received by Tunnel
+	- Traffic Sent by Tunnel - Traffic Received by Tunnel
 </Details>
 
 To start using network overview:
 
 { props.magicWord === "CF1 Cloudflare WAN" ? (
-	<>
-	<Markdown
-		text={`
+<>
+<Markdown
+text={`
 		1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
 		2. Go to **Insights** > **${props.networkOverviewPageName}**.
 		`}
-		inline={false}
-	/>
-	</>
+inline={false}
+/>
+</>
 ) : (
-	<>
+<>
 
-	<DashButton url="/?to=/:account/networking-insights/health" />
-	</>
+    <DashButton url="/?to=/:account/networking-insights/health" />
+    </>
+
 )
 }
 
@@ -82,7 +76,6 @@ The status of a site refers to its health. If your sites show a **No status avai
 #### No location set
 
 The dashboard displays the number of sites with no location set, meaning sites for which you did not set up a geographic location. To add a location to a site, find the site you want to add location to, and select **no location set** to edit its location settings. Refer to <a href={props.setGeoCoordinatesURL}>Set geographic coordinates</a> for more information.
-
 
 ### Traffic overview
 

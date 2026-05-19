@@ -49,6 +49,7 @@ Look at all the unstaged changes to markdown (.md, .mdx) files, pull out the lin
 ## Output Format
 
 For each issue found, report:
+
 - The problematic text (quote it)
 - Which rule it violates
 - A suggested fix

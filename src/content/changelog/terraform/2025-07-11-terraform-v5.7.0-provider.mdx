@@ -11,6 +11,7 @@ Earlier this year, we announced the launch of the new [Terraform v5 Provider](/c
 Thank you for continuing to raise issues and please keep an eye on this changelog for more information about upcoming releases.
 
 ### Changes
+
 - Addressed permanent diff bug on Cloudflare Tunnel config
 - State is now saved correctly for Zero Trust Access applications
 - Exact match is now working as expected within `data.cloudflare_zero_trust_access_applications`
@@ -24,6 +25,7 @@ For a more detailed look at all of the changes, see the
 [changelog](https://github.com/cloudflare/terraform-provider-cloudflare/releases/tag/v5.7.0) in GitHub.
 
 ### Issues Closed
+
 - [#5563: cloudflare_logpull_retention is missing import](https://github.com/cloudflare/terraform-provider-cloudflare/issues/5563)
 - [#5608: cloudflare_zero_trust_access_policy in 5.5.0 provider gives error upon apply unexpected new value: .app_count: was cty.NumberIntVal(0), but now cty.NumberIntVal(1)](https://github.com/cloudflare/terraform-provider-cloudflare/issues/5608)
 - [#5612: data.cloudflare_zero_trust_access_applications does not exact match](https://github.com/cloudflare/terraform-provider-cloudflare/issues/5612)
@@ -31,7 +33,6 @@ For a more detailed look at all of the changes, see the
 - [#5662: cloudflare_zero_trust_access_policy does not support OIDC claims](https://github.com/cloudflare/terraform-provider-cloudflare/issues/5662)
 - [#5565: Running Terraform with the cloudflare_zero_trust_access_policy resource results in updates on every apply, even when no changes are made - breaks idempotency](https://github.com/cloudflare/terraform-provider-cloudflare/issues/5565)
 - [#5529: cloudflare_zero_trust_access_application: self hosted applications with private ips require public domain ](https://github.com/cloudflare/terraform-provider-cloudflare/issues/5529)
-
 
 If you have an unaddressed issue with the provider, we encourage you to check the [open issues](https://github.com/cloudflare/terraform-provider-cloudflare/issues) and open a new one if one does not already exist for what you are experiencing.
 

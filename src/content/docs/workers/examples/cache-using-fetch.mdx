@@ -1,5 +1,4 @@
 ---
-
 summary: Determine how to cache a resource by setting TTLs, custom cache keys,
   and cache headers in a fetch request.
 tags:
@@ -564,6 +563,6 @@ When `no-cache` is supplied the cache is forced to revalidate the currently cach
 origin.
 
 ```js
-fetch(request, { cache: 'no-store'});
-fetch(request, { cache: 'no-cache'});
+fetch(request, { cache: "no-store" });
+fetch(request, { cache: "no-cache" });
 ```
