@@ -56,7 +56,7 @@ package.json @cloudflare/content-engineering
 
 # Browser Run
 
-/src/content/docs/browser-run/ @mchenco @cloudflare/product-owners @celso @kathayl @dcpena
+/src/content/docs/browser-run/ @mchenco @cloudflare/product-owners @celso @kathayl @dcpena @meddulla @simonabadoiu @jonnyparris @ruifigueira
 
 # Changelogs
 
