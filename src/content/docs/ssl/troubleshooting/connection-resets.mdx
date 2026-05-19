@@ -1,0 +1,111 @@
+---
+title: ERR_SSL_PROTOCOL_ERROR
+pcx_content_type: troubleshooting
+products:
+  - ssl
+sidebar:
+  order: 3
+head:
+  - tag: title
+    content: Troubleshoot ERR_SSL_PROTOCOL_ERROR
+description: Learn how to troubleshoot ERR_SSL_PROTOCOL_ERROR and similar SSL/TLS protocol errors when using Cloudflare.
+---
+
+import { DashButton } from "~/components";
+
+If visitors to your site experience SSL protocol errors such as:
+
+- `ERR_SSL_PROTOCOL_ERROR` (Chrome)
+- `Secure Connection Failed` or `PR_END_OF_FILE_ERROR` (Firefox)
+- `Safari can't open the page because it couldn't establish a secure connection to the server` (Safari)
+
+These errors can occur when something between the visitor and Cloudflare interferes with the SSL/TLS handshake. Common causes include protocol incompatibilities with HTTP/3 or TLS 1.3, or interference from ISP security features.
+
+## Quick checklist
+
+Use this checklist to identify common causes:
+
+- [ ] [Disable HTTP/3](#disable-http3) - Some networks or devices have issues with QUIC/HTTP/3
+- [ ] [Disable TLS 1.3](#disable-tls-13) - Older security software may interfere with TLS 1.3
+- [ ] [Check for ISP or network interference](#isp-and-network-interference) - Security features on the network path can interfere with SSL/TLS
+
+---
+
+## Disable HTTP/3
+
+HTTP/3 uses the QUIC protocol over UDP, which some networks, firewalls, or devices do not fully support. If visitors experience intermittent SSL protocol errors, try disabling HTTP/3.
+
+### How to disable HTTP/3
+
+1. <DashButton path="speed/optimization" label="Go to Protocol Optimization" />
+2. Turn off **HTTP/3 (with QUIC)**.
+
+### When to suspect HTTP/3 issues
+
+- Errors occur intermittently, not on every request
+- The issue affects only some visitors (often those on corporate networks or certain ISPs)
+- Visitors report the site works after refreshing multiple times
+- The issue does not occur when using a VPN
+
+If disabling HTTP/3 resolves the issue, the visitor's network likely blocks or mishandles UDP traffic on port 443.
+
+---
+
+## Disable TLS 1.3
+
+TLS 1.3 is the latest version of the TLS protocol and is enabled by default on Cloudflare. However, some older security software, firewalls, or network inspection devices may not fully support TLS 1.3 and can cause SSL protocol errors.
+
+### How to disable TLS 1.3
+
+1. <DashButton path="ssl-tls/edge-certificates" label="Go to Edge Certificates" />
+2. Find **TLS 1.3** and turn it off.
+
+### When to suspect TLS 1.3 issues
+
+- Visitors using corporate networks with SSL inspection report connection issues
+- The issue affects visitors using older operating systems or browsers
+- Antivirus software with HTTPS scanning is installed on the visitor's device
+- The error occurs consistently for specific visitors but not others
+
+---
+
+## ISP and network interference
+
+Some Internet Service Providers (ISPs) and corporate networks deploy security features that can interfere with HTTPS connections. These include:
+
+- **Deep packet inspection (DPI)** - Inspects encrypted traffic and may interfere with connections it cannot analyze
+- **SSL/TLS interception proxies** - Intercept and re-encrypt traffic, which can fail with newer protocols
+- **Parental controls or content filters** - May block or interfere with connections to certain sites
+- **Carrier-grade NAT (CGNAT)** - Can cause connection issues, especially with UDP-based protocols like QUIC
+
+### How to identify ISP interference
+
+Ask the affected visitor to:
+
+1. **Try a different network** - Use mobile data instead of Wi-Fi, or try a different ISP
+2. **Use a VPN** - If the site works through a VPN, the ISP or local network is likely interfering
+3. **Check with their ISP** - Some ISPs have security features that can be disabled upon request
+4. **Disable local security software** - Temporarily disable antivirus or firewall software to test
+
+### If ISP interference is confirmed
+
+If the issue is caused by the visitor's ISP or network:
+
+- The visitor may need to contact their ISP to whitelist the domain or disable specific security features
+- For corporate networks, the IT department may need to update firewall or proxy rules
+- As a site owner, you have limited options since the interference occurs outside of Cloudflare
+
+---
+
+## Additional troubleshooting
+
+If the above steps do not resolve the issue:
+
+1. **Check Cloudflare Status** - Visit [cloudflarestatus.com](https://www.cloudflarestatus.com/) to see if there are any ongoing incidents
+2. **Test from multiple locations** - Use tools like [Uptrends](https://www.uptrends.com/tools/uptime-checker) to test connectivity from different geographic locations
+3. **Collect diagnostic information** - Ask affected visitors to provide:
+   - Their IP address (from [whatismyipaddress.com](https://whatismyipaddress.com/))
+   - The exact error message and browser version
+   - Whether the issue occurs on other devices or networks
+
+If the issue persists and affects many visitors, [contact Cloudflare Support](/support/contacting-cloudflare-support/) with the diagnostic information collected.
