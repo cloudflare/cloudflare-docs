@@ -16,13 +16,14 @@ No provider SDKs or API keys are needed. Authentication and billing are handled 
 
 ## Endpoints
 
-Three endpoints are available, each suited to different use cases:
+Four endpoints are available, each suited to different use cases:
 
 | Endpoint | Format | Use case |
 | -------- | ------ | -------- |
 | `POST /ai/run` | Envelope with `model`, `provider`, `input` | All models and modalities (LLM, image, TTS, ASR) |
 | `POST /ai/v1/chat/completions` | OpenAI chat completions | LLMs — OpenAI SDK compatible |
 | `POST /ai/v1/responses` | OpenAI Responses API | Agentic workflows — OpenAI SDK compatible |
+| `POST /ai/v1/messages` | Anthropic Messages API | LLMs — Anthropic SDK compatible |
 
 ## Authentication
 
@@ -175,6 +176,43 @@ const openai = new OpenAI({
 const response = await openai.responses.create({
   model: "openai/gpt-4.1",
   input: "What is Cloudflare?",
+});
+```
+
+## `/ai/v1/messages` — Anthropic compatible
+
+Uses the Anthropic Messages API format. Compatible with the Anthropic SDK.
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/messages" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "model": "anthropic/claude-sonnet-4-5",
+    "max_tokens": 512,
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is Cloudflare?"
+      }
+    ]
+  }'
+```
+
+Point the Anthropic SDK `baseURL` at the Cloudflare API:
+
+```javascript
+import Anthropic from "@anthropic-ai/sdk";
+
+const anthropic = new Anthropic({
+  apiKey: CLOUDFLARE_API_TOKEN,
+  baseURL: `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/ai/v1`,
+});
+
+const message = await anthropic.messages.create({
+  model: "anthropic/claude-sonnet-4-5",
+  max_tokens: 512,
+  messages: [{ role: "user", content: "What is Cloudflare?" }],
 });
 ```
 

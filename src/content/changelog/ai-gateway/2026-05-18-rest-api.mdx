@@ -11,6 +11,7 @@ AI Gateway now uses the AI REST API on `api.cloudflare.com`. You can call any mo
 - `POST /ai/run` — universal endpoint for all models and modalities
 - `POST /ai/v1/chat/completions` — OpenAI SDK compatible
 - `POST /ai/v1/responses` — OpenAI Responses API compatible
+- `POST /ai/v1/messages` — Anthropic SDK compatible
 
 ```bash
 curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
