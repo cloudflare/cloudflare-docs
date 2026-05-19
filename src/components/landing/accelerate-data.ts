@@ -36,7 +36,7 @@ export const phases: readonly WaterfallPhase[] = [
 		product: "DNS",
 		icon: "dns",
 		href: "/dns/",
-		outcome: "Get the fastest, most resilient query responses",
+		outcome: "Fast, reliable and resilient DNS queries",
 		detail:
 			"The world's fastest and most reliable DNS — 11ms average. DNSSEC, wildcard records, proxy control.",
 		cta: "Set up Authoritative DNS",
@@ -52,7 +52,7 @@ export const phases: readonly WaterfallPhase[] = [
 		product: "Argo Smart Routing",
 		icon: "argo-smart-routing",
 		href: "/argo-smart-routing/",
-		outcome: "Make web apps faster with intelligent routing",
+		outcome: "Durable and fast origin access for APIs and dynamic content",
 		detail:
 			"Detects and routes around real-time network congestion. On average, makes web applications 30% faster.",
 		cta: "Integrate Argo Smart Routing",
@@ -68,7 +68,8 @@ export const phases: readonly WaterfallPhase[] = [
 		product: "CDN",
 		icon: "cache",
 		href: "/cache/get-started/",
-		outcome: "Make your site faster and stop overpaying for bandwidth",
+		outcome:
+			"Clever caching for faster user experiences and lower infrastructure costs",
 		detail:
 			"CDN caches content in 330+ cities worldwide with cache rules, tiered caching, and zero-configuration setup.",
 		cta: "Set up Cache Rules",

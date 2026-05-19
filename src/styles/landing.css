@@ -39,8 +39,8 @@
 	--color-foreground: #18181b;
 	--color-foreground-muted: #52525b;
 	--color-foreground-subtle: #71717a;
-	--color-accent-100: #ff4801;
-	--color-accent-200: #ff7038;
+	--color-accent-100: #ff5e1f; /* primary */
+	--color-accent-200: #ff7038; /* hover/secondary */
 	--color-light-foreground: #fffbf5;
 	--color-border-100: #e4e4e7;
 
@@ -175,8 +175,8 @@
 	--color-foreground: #18181b;
 	--color-foreground-muted: #52525b;
 	--color-foreground-subtle: #71717a;
-	--color-accent-100: #ff4801;
-	--color-accent-200: #ff7038;
+	--color-accent-100: #ff5e1f; /* primary */
+	--color-accent-200: #ff7038; /* hover/secondary */
 	--color-light-foreground: #fffbf5;
 	--color-border-100: #e4e4e7;
 	--color-selection-bg: #ffe9e0;
