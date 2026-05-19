@@ -17,6 +17,7 @@ import {
 } from "@flue/runtime/cloudflare";
 import * as v from "valibot";
 import {
+	addLabels,
 	closeIssue,
 	getIssue,
 	getInstallationToken,
@@ -147,13 +148,14 @@ export default async function ({ init, payload, env, runId }: FlueContext) {
 			};
 		}
 
-		const comment =
+		const isOffTopic =
 			data.reason.toLowerCase().includes("support") ||
 			data.reason.toLowerCase().includes("wrong repo") ||
-			data.reason.toLowerCase().includes("feature")
-				? OFF_TOPIC_COMMENT
-				: SPAM_COMMENT;
+			data.reason.toLowerCase().includes("feature");
+		const comment = isOffTopic ? OFF_TOPIC_COMMENT : SPAM_COMMENT;
+		const label = isOffTopic ? "off topic" : "spam";
 
+		await addLabels(token, input.number, [label]);
 		await postComment(token, input.number, comment);
 		await closeIssue(token, input.number);
 

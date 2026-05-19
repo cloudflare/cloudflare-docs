@@ -156,6 +156,26 @@ export async function getPullRequestFiles(
 	return (await res.json()) as PullRequestFile[];
 }
 
+export async function addLabels(
+	token: string,
+	issueNumber: number,
+	labels: string[],
+): Promise<void> {
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/issues/${issueNumber}/labels`,
+		{
+			method: "POST",
+			headers: apiHeaders(token),
+			body: JSON.stringify({ labels }),
+		},
+	);
+	if (!res.ok) {
+		throw new Error(
+			`Failed to add labels to ${issueNumber} (HTTP ${res.status}): ${await res.text()}`,
+		);
+	}
+}
+
 export async function verifyGitHubSignature(
 	body: string,
 	signature: string,
