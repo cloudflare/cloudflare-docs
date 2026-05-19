@@ -82,6 +82,7 @@
 		"@types/react-dom": "19.0.4",
 		"@types/unist": "3.0.3",
 		"@typescript-eslint/parser": "8.59.3",
+		"agents": "0.12.3",
 		"algoliasearch": "5.52.1",
 		"astro": "6.3.1",
 		"astro-breadcrumbs": "3.4.0",
