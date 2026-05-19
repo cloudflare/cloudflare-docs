@@ -22,6 +22,7 @@ import {
 	compatibilityFlagsSchema,
 	glossarySchema,
 	learningPathsSchema,
+	videosSchema,
 	workersAiModelsSchema,
 	warpReleasesSchema,
 	releaseNotesSchema,
@@ -107,6 +108,10 @@ export const collections = {
 	"catalog-models": defineCollection({
 		loader: dataLoader("catalog-models"),
 		schema: catalogModelsSchema,
+	}),
+	videos: defineCollection({
+		loader: file("src/content/videos/index.yaml"),
+		schema: videosSchema,
 	}),
 	apps: defineCollection({
 		loader: file("src/content/apps/index.yaml"),
