@@ -56,19 +56,19 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 	const itemLabel = `${itemType}${number ? ` #${number}` : ""}${title ? ` "${truncateLogValue(title)}"` : ""}${senderLogin ? ` by @${senderLogin}` : ""}`;
 	const webhookLabel = `${eventType}.${String(webhookAction ?? "unknown")} ${itemLabel}`;
 
-	console.log({
-		message: `GitHub webhook received: ${webhookLabel}`,
-		event: "github_webhook_orchestrator",
-		delivery,
-		eventType,
-		webhookAction,
-		number,
-		title,
-		url: itemUrl,
-		sender: senderLogin,
-		senderType: sender?.type,
-		action: "received",
-	});
+	// console.log({
+	// 	message: `GitHub webhook received: ${webhookLabel}`,
+	// 	event: "github_webhook_orchestrator",
+	// 	delivery,
+	// 	eventType,
+	// 	webhookAction,
+	// 	number,
+	// 	title,
+	// 	url: itemUrl,
+	// 	sender: senderLogin,
+	// 	senderType: sender?.type,
+	// 	action: "received",
+	// });
 
 	// ── 2. Route to the right pipeline ─────────────────────────────────────
 	const shouldFilter =
@@ -77,37 +77,37 @@ export default async function ({ id, payload, env, req }: FlueContext) {
 			(eventType === "pull_request" && webhookAction === "ready_for_review"));
 
 	if (!req || !shouldFilter) {
-		console.log({
-			message: `GitHub webhook ignored: ${webhookLabel}`,
-			event: "github_webhook_orchestrator",
-			delivery,
-			eventType,
-			webhookAction,
-			number,
-			title,
-			url: itemUrl,
-			sender: senderLogin,
-			action: "ignored",
-			reason:
-				"only issues/pull_request opened, reopened, and pull_request ready_for_review events are filtered",
-		});
+		// console.log({
+		// 	message: `GitHub webhook ignored: ${webhookLabel}`,
+		// 	event: "github_webhook_orchestrator",
+		// 	delivery,
+		// 	eventType,
+		// 	webhookAction,
+		// 	number,
+		// 	title,
+		// 	url: itemUrl,
+		// 	sender: senderLogin,
+		// 	action: "ignored",
+		// 	reason:
+		// 		"only issues/pull_request opened, reopened, and pull_request ready_for_review events are filtered",
+		// });
 		return { acted: false, summary: "No action needed." };
 	}
 
 	// ── 3. Dispatch spam-and-off-topic-filter ───────────────────────────────
 	if (!number) {
-		console.log({
-			message: `GitHub webhook ignored: missing number for ${webhookLabel}`,
-			event: "github_webhook_orchestrator",
-			delivery,
-			eventType,
-			webhookAction,
-			title,
-			url: itemUrl,
-			sender: senderLogin,
-			action: "ignored",
-			reason: "missing issue or PR number",
-		});
+		// console.log({
+		// 	message: `GitHub webhook ignored: missing number for ${webhookLabel}`,
+		// 	event: "github_webhook_orchestrator",
+		// 	delivery,
+		// 	eventType,
+		// 	webhookAction,
+		// 	title,
+		// 	url: itemUrl,
+		// 	sender: senderLogin,
+		// 	action: "ignored",
+		// 	reason: "missing issue or PR number",
+		// });
 		return { acted: false, summary: "No issue or PR number found." };
 	}
 
